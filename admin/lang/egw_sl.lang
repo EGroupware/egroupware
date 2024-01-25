@@ -875,6 +875,7 @@ user csv import	admin	sl	Uvoz uporabnika CSV
 user data	common	sl	Podatki o uporabniku
 user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za avtentikacijo SMTP (pustite prazno, če ni zahtevana)
 user groups	admin	sl	Uporabniške skupine
+user-agent	admin	sl	User-Agent
 userdata	admin	sl	Podatki o uporabniku
 userid@domain eg. u1234@domain	admin	sl	UserId@domain eg. u1234@domain
 username (standard)	admin	sl	Uporabnik (standardno)

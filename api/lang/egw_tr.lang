@@ -25,7 +25,7 @@ accounts	common	tr	Hesaplar
 action	common	tr	Eylem
 actions	common	tr	Eylemler
 add	common	tr	ekle
-add a new contact	common	tr	Yeni bir ba?lant? ekle
+add a new contact	common	tr	Yeni bir kişi ekleyin
 add current	common	tr	Favori olarak mevcut görünüm
 add to clipboard	common	tr	Panoya ekle
 add user to responsibles	groupdav	tr	Kullanıcıyı sorumlulara ekle
@@ -45,21 +45,21 @@ allow editing the %1	common	tr	%1'in düzenlenmesine izin ver
 and	common	tr	Ve
 answering no will not ask you again for this browser.	common	tr	Hayır yanıtını verirseniz, artık bu tarayıcı istenmeyecektir.
 application	common	tr	Uygulama
-apply	common	tr	uygula
+apply	common	tr	Uygula
 attention: action will be applied to all rows, not only visible ones!	api	tr	Dikkat: eylem yalnızca görünen satırlara değil, tüm satırlara uygulanacaktır!
 authenticate	common	tr	Kimlik Doğrulama
 avatar	common	tr	Avatar
 back	common	tr	Geri
-bottom	common	tr	taban
+bottom	common	tr	Taban
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	tr	Tarayıcı %1 %2 önerilmez. Sorunlarla ve çalışmayan özelliklerle karşılaşabilirsiniz. Lütfen Chrome, Firefox veya Edge'in en son sürümünü kullanın. Teşekkürler!
 calendar	common	tr	Takvim
 cancel	common	tr	Ýptal
 change	common	tr	Deðiþtir
-charset	common	tr	utf-8
+charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
 colour	common	tr	Renk
-company	common	tr	?irket
+company	common	tr	Şirket
 copy	common	tr	Anlaşıldı
 copy "%1"	common	tr	Kopyala "%1"
 copy of:	common	tr	Kopyası:
@@ -77,14 +77,14 @@ date + time	common	tr	Tarih + Saat
 date+time	common	tr	Tarih+Saat
 delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
-disabled	common	tr	engellendi
+disabled	common	tr	Engellendi
 domestic	common	tr	Ev
 don't ask again!	common	tr	Tekrar sorma!
-done	common	tr	tamam
-download	common	tr	?ndir
+done	common	tr	Tamam
+download	common	tr	İndir
 edit	common	tr	Düzenle
-enabled	common	tr	etkin
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+enabled	common	tr	Etkin
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -143,8 +143,11 @@ name	common	tr	Ýsim
 new password	common	tr	Yeni şifre
 no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
+open	common	tr	Açık
+open existing contact	common	tr	Mevcut kontağı aç
 or	common	tr	ya da
 original	common	tr	Orjinal
+ownership	common	tr	Sahiplik
 parcel	common	tr	Parsel
 permission denied!	common	tr	İzin reddedildi!
 permission denied! this is an administration only feature.	common	tr	İzin reddedildi! Bu sadece yönetimin kullanabileceği bir özelliktir.
@@ -159,7 +162,7 @@ placeholders	common	tr	Yer Tutucular
 play/pause	common	tr	Oynat/Duraklat
 please %1 by hand	common	tr	Lütfen el ile %1
 please enter a name	common	tr	Litfen bir isim giriniz
-please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Cmd+r).
+please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	tr	Lütfen bundan sonra yerel girişler için kullanıcı adı olarak '%1' kullanmayı unutmayın!
 please run setup to become current	common	tr	Güncel olmak için kurulumu çalýþtýrýnýz
 please select	common	tr	Lütfen seçiniz
@@ -168,13 +171,13 @@ please type 1 more character	common	tr	Lütfen 1 karakter daha yazın
 postal	common	tr	Posta
 preference	common	tr	Tercih
 preferences	common	tr	Tercihler
-primary group	common	tr	ana grup
+primary group	common	tr	Ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
 repeat password	common	tr	Şifreyi tekrarla
 saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kaydedin.
 search accounts	common	tr	Hesaplarý ara
-select all	common	tr	Tamam?n? seç
+select all	common	tr	Tümünü seçin
 show password	common	tr	Şifreyi göster
 sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon

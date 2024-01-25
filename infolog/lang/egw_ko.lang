@@ -71,9 +71,12 @@ data exchange settings	infolog	ko	데이터 교환 설정
 date completed	infolog	ko	완료일
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ko	완료된 날짜입니다. 상태가 완료 또는 청구된 경우 자동으로 설정되도록 비워 두세요.
 datecreated	infolog	ko	개설일
+dates, status, access	infolog	ko	날짜, 상태, 액세스
 days	infolog	ko	일동안
 default category for new infolog entries	infolog	ko	새 정보 로그 항목의 기본 카테고리
 default document to insert entries	infolog	ko	항목을 삽입할 기본 문서
+default filter for infolog	infolog	ko	InfoLog의 기본 필터
+default status for a new log entry	infolog	ko	새 InfoLog 항목의 기본 상태
 delegated	infolog	ko	위임됨
 delegated open	infolog	ko	위임된 공개
 delegated open and upcoming	infolog	ko	위임된 공개 및 예정
@@ -81,6 +84,7 @@ delegated overdue	infolog	ko	위임 기한 초과
 delegated upcomming	infolog	ko	위임 예정
 delegation	infolog	ko	위임
 delete	infolog	ko	삭제
+delete one record by passing its id.	infolog	ko	ID를 전달하여 하나의 레코드를 삭제합니다.
 delete selected entries?	infolog	ko	선택한 항목을 삭제하시겠습니까?
 delete this entry and all listed sub-entries	infolog	ko	하위 엔트리를 포함 삭제
 deleted	infolog	ko	삭제됨
@@ -88,7 +92,9 @@ deletes the selected typ	infolog	ko	선택된 형식 삭제
 deletes this field	infolog	ko	이 필드 삭제
 deletes this status	infolog	ko	이 상태 삭제
 description	infolog	ko	내용
+determines the order the fields are displayed	infolog	ko	필드가 표시되는 순서를 결정합니다.
 directory with documents to insert entries	infolog	ko	항목을 삽입할 문서가 있는 폴더
+disables a status without deleting it	infolog	ko	상태를 삭제하지 않고 비활성화합니다.
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ko	작업 수락, 완료 또는 둘 다에 대한 책임자 확인을 원하시나요?
 do you want a notification if items owned by groups you are part of get updated ?	infolog	ko	내가 속한 그룹이 소유한 항목이 업데이트될 때 알림을 받으시겠습니까?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ko	나에게 항목이 할당되거나 할당된 항목이 업데이트되면 알림을 받습니다.
@@ -100,12 +106,13 @@ do you want a notification, if items you delegated are due?	infolog	ko	위임한
 do you want to receive notifications as html-mails or plain text?	infolog	ko	HTML 이메일 또는 일반 텍스트로 통지를 받습니다.
 don't show infolog	infolog	ko	인포로그 보이지 않기
 done	infolog	ko	완료
-download	infolog	ko	다운로드
+download	infolog	ko	파일 저장
 download url for links	infolog	ko	링크 다운로드 URL
 due %1	infolog	ko	마감일 %1
 due date	infolog	ko	마감일
 duration	infolog	ko	기간
 e-mail:	infolog	ko	이메일:
+each value is a line like <id>[=<label>]	infolog	ko	<id>[=<label>]라벨>]과 같은 줄입니다.
 edit	infolog	ko	수정
 edit or create categories for ingolog	infolog	ko	인포로그전용 카테고리 편집/수정
 edit rights (full edit rights incl. making someone else responsible!)	infolog	ko	편집 권한 (특정인 혹은 응답자를 포함한 수정의 모든권한)
@@ -113,9 +120,13 @@ edit status	infolog	ko	상태 수정
 edit the entry	infolog	ko	엔트리 수정
 edit this entry	infolog	ko	이 엔트리 수정
 empty for all	infolog	ko	모두 비우기
+encrypt description	infolog	ko	설명 암호화
 end	infolog	ko	종료
 enddate	infolog	ko	만기일
 enddate can not be before startdate	infolog	ko	만기일은 시작일보다 앞설수 없습니다.
+enter a custom contact, leave empty if linked entry should be used	infolog	ko	사용자 지정 연락처를 입력하고, 링크된 항목을 사용해야 하는 경우 비워둡니다.
+enter a custom phone/email, leave empty if linked entry should be used	infolog	ko	사용자 지정 전화/이메일을 입력하고, 링크된 항목을 사용해야 하는 경우 비워둡니다.
+enter a textual description of the log-entry	infolog	ko	인포로그 항목의 텍스트 설명을 입력합니다.
 enter the query pattern	infolog	ko	질의 패턴 입력
 entry and all files	infolog	ko	항목 및 모든 파일
 error: importing the ical	infolog	ko	오류: ical 불러오기 오류
@@ -163,7 +174,7 @@ if not set, the line with search and filters is hidden for less entries then "ma
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	ko	여기에 폴더(전체 VFS 경로)를 지정하면 %1은 각 문서에 대한 작업을 표시합니다. 이 작업을 통해 데이터가 삽입된 지정된 문서를 다운로드할 수 있습니다.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	ko	여기에 문서(전체 VFS 경로)를 지정하면 %1은(는) 각 항목에 대해 추가 문서 아이콘을 표시합니다. 이 아이콘을 사용하면 데이터가 삽입된 지정한 문서를 다운로드할 수 있습니다.
 if you specify an export definition, it will be used when you export	infolog	ko	내보내기 정의를 지정하면 내보낼 때 이 정의가 사용됩니다.
-import next set	infolog	ko	** 다음 집합(set)에서 가져오기
+import next set	infolog	ko	다음 집합(set)에서 가져오기
 importance	infolog	ko	가져오기
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	ko	CSV 파일에서 InfoLog로 항목을 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 imports todos into infolog from an ical file.	infolog	ko	iCal 파일에서 InfoLog로 할 일 가져오기.
@@ -217,12 +228,18 @@ list all categories	infolog	ko	모든 카테고리 목록
 list of files linked to the current record	infolog	ko	현재 레코드에 링크된 파일 목록
 load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	ko	선택한 유형으로 필터링된 경우 인덱스에 사용자 정의 필드 로드(예: 유형별 인덱스 템플릿에 표시하기 위해)
 location	infolog	ko	장소
+longer textual description	infolog	ko	더 긴 텍스트 설명
 low	infolog	ko	낮음
+manage mapping	infolog	ko	매핑 관리
+max length of the input [, length of the inputfield (optional)]	infolog	ko	입력의 최대 길이 [, 입력 필드의 길이(선택 사항)].
 modifier	infolog	ko	수정자
 modifierer	infolog	ko	수정자
 name must not be empty !!!	infolog	ko	이름을 입력하세요
+name of current user, all other contact fields are valid too	infolog	ko	현재 사용자의 이름, 다른 모든 연락처 필드도 유효합니다.
 name of new type to create	infolog	ko	새 형식을 만들기 위한 명칭
 never hide search and filters	infolog	ko	검색 및 필터 숨기지 않음
+new %1	infolog	ko	새 %1
+new %1 created by %2 at %3	infolog	ko	%2에서 %3에 새 %1을(를) 만들었습니다.
 new name	infolog	ko	새 이름
 new search	infolog	ko	새 검색
 no - cancel	infolog	ko	아니오 - 취소
@@ -254,7 +271,7 @@ own overdue	infolog	ko	소유 만기초과
 own upcoming	infolog	ko	소유 예정
 owner, responsible	infolog	ko	소유자, 책임자
 participants for scheduling an appointment	infolog	ko	약속 예약을 위한 참가자
-path to user and group files has to be outside of the webservers document-root!!!	infolog	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!
 pattern for search in addressbook	infolog	ko	주소록에서 검색 패턴
 pattern for search in projects	infolog	ko	프로젝트에서 검색 패턴
 percent completed	infolog	ko	퍼센트 완료
@@ -290,6 +307,7 @@ responsible open and upcoming	infolog	ko	책임감 있는 공개 및 예정
 responsible overdue	infolog	ko	응답자 만기초과
 responsible upcoming	infolog	ko	응답자 예정
 responsible user, priority	infolog	ko	응답대상,중요도
+returns a list / search for records.	infolog	ko	레코드 목록/검색을 반환합니다.
 rights for the responsible	infolog	ko	응답자에 대한 권한
 rows	infolog	ko	줄
 same day	infolog	ko	같은 날
@@ -306,6 +324,7 @@ select a price	infolog	ko	가격을 선택하세요
 select a priority for this task	infolog	ko	이 엔트리의 중요도를 선택하세요
 select a project	infolog	ko	프로젝트를 선택하세요
 select a responsible user: a person you want to delegate this task	infolog	ko	응답자를 선택하세요 (이업무를 위임할 사람)
+select a typ to edit it's status-values or delete it	infolog	ko	유형을 선택하여 상태 값을 편집하거나 삭제합니다.
 select an action	infolog	ko	작업 선택
 select an action...	infolog	ko	작업 선택...
 select new category	infolog	ko	새 카테고리 선택
@@ -339,6 +358,7 @@ status	infolog	ko	상태
 status ...	infolog	ko	상태 ...
 status, percent and date completed are always allowed.	infolog	ko	상태, 백분율 및 완료 날짜는 항상 허용됩니다.
 sub	infolog	ko	하위
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	ko	상위 항목이 없는 경우 하위 항목은 상위 또는 상위 항목의 하위 항목이 됩니다.
 sub-entries will not be closed	infolog	ko	하위 항목은 닫히지 않습니다.
 sub-entry	infolog	ko	하위 항목
 subject	infolog	ko	제목
@@ -346,6 +366,7 @@ sum	infolog	ko	합계
 tag to mark positions for address labels	infolog	ko	주소 라벨의 위치를 표시하는 태그
 task	infolog	ko	할일
 tasks of	infolog	ko	작업
+template	infolog	ko	템플릿
 test import (show importable records <u>only</u> in browser)	infolog	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	ko	문서에 데이터로 대체할 {{%1}}과 같은 자리 표시자를 포함할 수 있습니다.
 times	infolog	ko	시간

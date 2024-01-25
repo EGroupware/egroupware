@@ -3,11 +3,12 @@ acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av AC
 add as new	mail	no	Legg til som ny
 add files as %1	mail	no	Legg til filer som %1
 add this certificate into contact	mail	no	Legg til dette sertifikatet i kontakt
-add to addressbook	mail	no	legg til i adressebok
+add to addressbook	mail	no	Legg til i adressebok
 adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
 all of	mail	no	alle av
-allways a new window	mail	no	altid et nytt vindu
+allways a new window	mail	no	Altid et nytt vindu
+always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
 attach files	mail	no	Legge ved filer
@@ -20,7 +21,10 @@ be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
 can not resolve the winmail.dat attachment!	mail	no	Kan ikke løse vedlegget winmail.dat!
+certificate details	mail	no	Detaljer om sertifikatet
+certificate in text	mail	no	Sertifikat i tekst
 certificate info for email %1	mail	no	Sertifikatinfo for e-post %1
+certificate issued by	mail	no	Sertifikat utstedt av
 changing subject failed because of %1	mail	no	Endring av emne mislyktes på grunn av %1
 changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
@@ -48,6 +52,8 @@ don't use sent	mail	no	Ikke bruk Sendt
 don't use trash	mail	no	Ikke bruk Søppelkurv
 edit account	mail	no	Rediger konto
 edit vacation settings	mail	no	Redigere ferieinnstillinger
+email address	mail	no	E-postadresse
+emailaddress	admin	no	E-postadresse
 emailadmin: profilemanagement	mail	no	eMailAdmin: Profiladministrasjon
 emails in whitelisted domains are not marked as spam	mail	no	E-poster i hvitelistede domener blir ikke merket som spam
 empty trash	mail	no	tøm søppelkurv
@@ -55,6 +61,7 @@ enable	mail	no	Aktivere
 enabled	mail	no	Aktivert
 encrypt your message with smime certificate	mail	no	Krypter meldingen din med S/MIME-sertifikat
 event details follow	mail	no	Hendelses Detaljer Følger
+every %1. day	mail	no	Hver %1. dag
 everyone	mail	no	Alle
 examine namespace to retrieve folders in others and shared	mail	no	Undersøke navnerom for å hente mapper i andre og delte mapper
 extended	mail	no	Forlenget
@@ -130,6 +137,7 @@ move to trash	mail	no	Flytt til søppelkurv
 name and email	mail	no	Navn og e-post
 never display html emails	mail	no	Vis aldri HTML e-post
 on	mail	no	på
+once per day	mail	no	En gang per dag
 one address is not valid	mail	no	En av adressene er ikke gyldig
 only email	mail	no	Bare e-post
 only name	mail	no	Bare navn
@@ -173,6 +181,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som søppelpost - spamløsninger som spamTitan vil lære seg det
 required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse Mail/mimeDecode.php ikke funnet.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	no	S/MIME-kryptering mislyktes fordi det ikke ble funnet noe sertifikat for avsenderadressen: %1
 save all	mail	no	Lagre alle
 save as infolog on send	mail	no	Kryss av for knappen for å opprette som InfoLog etter sending
 save as tracker on send	mail	no	Kryss av for at meldingen skal opprettes som ticket etter sending
@@ -199,7 +208,9 @@ show vertical	mail	no	Vis vertikalt
 show vertical with all columns	mail	no	Vis vertikalt med alle kolonner
 show/hide preview pane in mail list view	mail	no	Vis/skjul forhåndsvisningsrute i postlistevisningen
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	no	Viser et midlertidig synlig varsel med avsenderadresse, emne og et utdrag av e-posten.
+sign your message with smime certificate	mail	no	Signer meldingen med S/MIME-sertifikat
 signature	mail	no	Signatur
+signed by	mail	no	Signert av
 size(...->0)	mail	no	Størrelse (...->0)
 size(0->...)	mail	no	Størrelse (0->...)
 small view	mail	no	liten visning

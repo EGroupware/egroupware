@@ -11,6 +11,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjels
 adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
 after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
 aliases+forwards	mail	da	Fremmedord + viderestillinger
+always respond / auto-responder	mail	da	Always respond / auto-responder
 always show html emails	mail	da	Vis altid HTML e-mails
 always show notifiction	mail	da	Vis altid meddelelse
 answered	mail	da	Besvaret
@@ -24,7 +25,10 @@ be aware that all attachments will be sent as %1!	mail	da	Vær opmærksom på, a
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	da	Som standard erstattes 'http://' bare med 'https://'. Du er velkommen til at konfigurere 'https://proxy.egroupware.org/' til også at indlæse billeder, der kun er tilgængelige via http.
 caching of flags	mail	da	Caching af flag
 can not resolve the winmail.dat attachment!	mail	da	Kan ikke løse winmail.dat-vedhæftningen!
+certificate details	mail	da	Detaljer om certifikatet
+certificate in text	mail	da	Certifikat i tekst
 certificate info for email %1	mail	da	Certifikatinfo for e-mail %1
+certificate issued by	mail	da	Certifikat udstedt af
 changing subject failed because of %1	mail	da	Ændring af emne mislykkedes på grund af %1
 changing subject failed folder %1 does not exist	mail	da	Ændring af emne mislykkedes mappe %1 findes ikke
 compose	mail	da	Ny meddelse
@@ -59,6 +63,8 @@ draft folder	mail	da	Udkast til mappe
 drafts	mail	da	Udkast
 drafts folder	mail	da	Mappe med udkast
 edit account	mail	da	Redigér konto
+email address	mail	da	E-mail adresse
+emailaddress	admin	da	E-mail adresse
 emailadmin: profilemanagement	mail	da	eMailAdmin: Profilhåndtering
 emails in whitelisted domains are not marked as spam	mail	da	E-mails i hvidlistede domæner markeres ikke som spam
 empty trash	mail	da	Tøm skraldespanden
@@ -66,7 +72,8 @@ enable	mail	da	Aktivere
 enabled	mail	da	Aktiveret
 encrypt your message with smime certificate	mail	da	Cifrar su mensaje con certificado S/MIME
 event details follow	mail	da	Hændelses detajler følger
-everyone	mail	da	enhver
+every %1. day	mail	da	Every %1. day
+everyone	mail	da	Enhver
 examine namespace to retrieve folders in others and shared	mail	da	Undersøg navnerummet for at hente mapper i andre og delte mapper
 extended	mail	da	Udvidet
 file into	mail	da	Flyt til
@@ -157,6 +164,7 @@ new subject	mail	da	Nyt emne
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	da	Ingen mappedestination angivet, og ingen mappe til at gemme beskeden eller anden foranstaltning til at gemme mailen (gem til InfoLog/Ticketsystem) angivet, men påkrævet.
 no sneak preview in list	mail	da	Ingen visning af meddelelser
 non	mail	da	Nej
+once per day	mail	da	Once per day
 only email	mail	da	Kun e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	da	Giver kun mening, hvis du transporterer adgangskoden gennem en anden kanal/uden for denne mail til modtageren!
 only name	mail	da	Kun navn
@@ -207,6 +215,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	da	Rapporter denne e-mail som spam - spamløsninger som spamTitan vil lære det
 required pear class mail/mimedecode.php not found.	mail	da	Påkrævet PEAR-klasse Mail/mimeDecode.php ikke fundet.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	da	Påkrævet at deaktivere, hvis du bruger Dovecot med private seen flags på delt eller brugermappe!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	da	S/MIME-kryptering mislykkedes, fordi der ikke blev fundet et certifikat til afsenderadressen: %1
 save all	mail	da	Gem alle
 save all attachments to filemanager	mail	da	Gem alle vedhæftede filer i filemanager
 save as infolog on send	mail	da	Gem som InfoLog ved afsendelse
@@ -237,9 +246,11 @@ show vertical	mail	da	Vis lodret
 show vertical with all columns	mail	da	Vis lodret med alle kolonner
 show/hide preview pane in mail list view	mail	da	Vis/skjul forhåndsvisningsrude i postlistevisning
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	da	Viser en midlertidig synlig notifikation med afsenderadresse, emne og et uddrag af e-mailen
+sign your message with smime certificate	mail	da	Signer din besked med S/MIME-certifikat
 signature	mail	da	Signatur
 signature at top	mail	da	signatur øverst
 signature position and visibility	mail	da	Signaturens placering og synlighed
+signed by	mail	da	Signeret af
 size(...->0)	mail	da	Størrelse (...->0)
 size(0->...)	mail	da	Størrelse (0->...)
 small view	mail	da	Lille overblik
@@ -279,4 +290,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	da	Du skal først gemme beskeden som kladde, før du kan gemme den i VFS.
 you will loose current message body, unless you save it to your clipboard!	mail	da	Du vil miste den aktuelle meddelelsestekst, medmindre du gemmer den i udklipsholderen!
 you've got new mail	mail	da	Du har fået en ny e-mail
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.\n Selvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.\n Hvis det ikke hjalp, kan du bede din administrator om mere kvote.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.<br>Selvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.<br>Hvis det ikke hjalp, kan du bede din administrator om mere kvote.

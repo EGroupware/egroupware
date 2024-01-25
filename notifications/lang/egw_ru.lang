@@ -1,19 +1,23 @@
 (update in sec. %s)	notifications	ru	Обновлено за %s с
 account:	notifications	ru	Учётная запись
 all possible notification backends	notifications	ru	Все возможные уведомления обработаны
+are you sure you want to delete all notifications?	notifications	ru	Вы уверены, что хотите удалить все уведомления?
 browser	notifications	ru	Обзор (браузер)
 browser is starting.	notifications	ru	Браузер запущен
 cancal settings?	notifications	ru	Установки отмены
 cancal?	notifications	ru	Отменить?
 certification-information:	notifications	ru	Информация по сертификации
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	ru	Проверьте оба. Сначала попробуйте учетную запись активного пользователя, если нет - используйте профиль администратора почты.
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ru	Выберите цепочку извещений. Вы можете быть извещены через обработчики встроенные в цепочки.<br/>Примечание: Если цепочка извещений отмечена как "отключено", значит ваш Администратор не разрешает использование одного или более обработчиков сообщений встроенных в цепочку и извещения для вас будут приходить на эл. почту.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ru	Выберите цепочку извещений. Вы можете быть извещены через обработчики встроенные в цепочки.<br>Примечание: Если цепочка извещений отмечена как "отключено", значит ваш Администратор не разрешает использование одного или более обработчиков сообщений встроенных в цепочку и извещения для вас будут приходить на эл. почту.
 choose from mailsettings used for notification	admin	ru	Выберите установки почты, используемые для почтовых уведомлений
 common chains	notifications	ru	Общие цепочки
 connection error.	notifications	ru	Ошибка соединения
 connection error. please check connection to server.	notifications	ru	Ошибка соединения. Пожалуйста, проверьте установки соединения на сервере
 continue to connect?	notifications	ru	Продолжить соединение?
 cookies are required to login to this site.	notifications	ru	Для входа на этот сайт необходимы cookie-файлы
+delete all messages	notifications	ru	Удалить все сообщения
+delete notifications	notifications	ru	Удалить уведомления
+delete this message	notifications	ru	Удалить это сообщение
 disabled chains	notifications	ru	Отключенные цепочки
 do not notify me at all	notifications	ru	Не уведомлять меня вообще
 domain not found, please check serveraddress.	notifications	ru	Домен не найден, проверьте адрес сервера
@@ -30,6 +34,7 @@ egroupware-popup backend	admin	ru	Обработчик всплавающих о
 egroupware-popup first, if that fails notify me by e-mail	notifications	ru	Сначала всплывающие уведомления EGroupware, если это невозможно, уведомляйте по почте
 egroupware-popup only	notifications	ru	Только всплывающие уведомления EGroupware
 egroupware-popup verbosity	notifications	ru	Многословие всплавающих окон EGroupware
+email notifications only, if user is not logged in	notifications	ru	Уведомления по электронной почте, только если пользователь не вошел в систему
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	ru	Только профиль администратора почты. НЕ использовать для уведомлений определенный пользователем активный профиль почты.
 enable egroupware-popup backend	admin	ru	Включить
 enable windows-popup backend	admin	ru	Включить обработчик всплывающих окон
@@ -41,25 +46,32 @@ exit	notifications	ru	Выход
 folder	notifications	ru	Папка
 from	notifications	ru	От
 host:	notifications	ru	Host
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	ru	Насколько многословно всплывающее уведомление EGroupware, если уведомление посылается пользователю: <br />low: только показывать знак уведомления в верхнем меню - меню верхнего уровня должно быть доступно! <br />мedium: переместить окно уведомления на передний план<br />hight: переместить окно уведомлений на передний план и позволить браузеру сделать тоже самое самому
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	ru	Насколько многословно всплывающее уведомление EGroupware, если уведомление посылается пользователю: <br>low: только показывать знак уведомления в верхнем меню - меню верхнего уровня должно быть доступно! <br>мedium: переместить окно уведомления на передний план<br>hight: переместить окно уведомлений на передний план и позволить браузеру сделать тоже самое самому
 if set, embedded links get rendered special for external clients	notifications	ru	Если установлено, внутренние ссылки преобразуются для использования внешними клиентами
 info on load config file: create config file.	notifications	ru	Информация о загрузке файла конфигурации
 issuer dn:	notifications	ru	Идентификатор запрашивающей стороны
 java desktop notification app	preferences	ru	Приложение Java-уведомлений рабочего стола
+last month	notifications	ru	Прошлый месяц
 linked entries:	common	ru	Связанные записи:
 login aborted, application exit?	notifications	ru	Авторизация прервана. Выйти из приложения?
 login in egroupware:	notifications	ru	Авторизация в EGroupware
+mail account to use for notifications	admin	ru	Почтовый аккаунт для уведомлений
 mail backend	admin	ru	Письмо обработано
+mark all as read	notifications	ru	Пометить все как прочитанные
+mark as read	notifications	ru	Отметить как прочитанное
 message from	notifications	ru	Сообщение от
 minutes	notifications	ru	Минуты
+more info	notifications	ru	Дополнительная информация
 notification	common	ru	Извещения
 notifier	notifications	ru	Уведомитель
 notify me by	notifications	ru	Уведомлять меня через
+open notified entry	notifications	ru	Открыть запись с уведомлением
 optimize e-mails for external mail client	notifications	ru	Оптимизировать эл. письма для внешних почтовых клиентов
 page not found, please check serveraddress.	notifications	ru	Страница не найдена. Проверьте адрес сервера
 password:	notifications	ru	Пароль:
 permission	notifications	ru	разрешение
 permission denied for notifications application.	notifications	ru	Для уведомлений приложения разрешение отменено
+placeholders with user/ prefix	admin	ru	Заполнители с пользователем/префиксом
 please contact your egroupware admin.	notifications	ru	Пожалуйста, обратитесь к администратору EGroupware
 please enter the url of your egroupware.	notifications	ru	Пожалуйста, введите URL-адрес своей копии EGroupware
 please enter your egroupware username.	notifications	ru	Имя пользователя
@@ -75,16 +87,23 @@ setting	notifications	ru	Установки
 setting aborted, application exit	notifications	ru	Задание установок прервано. Выйти из приложения?
 settings	notifications	ru	Настройки
 signature	admin	ru	Подпись
+signature added to every change notification	admin	ru	Подпись добавляется к каждому уведомлению об изменении
+sorry, your login has expired	notifications	ru	Извините, срок действия вашего логина истек
 step	notifications	ru	Шаг
 subject dn:	notifications	ru	Идентификатор стороны назначения
 the server certificate is not a valid trust center certificate!	notifications	ru	Сертификат сервера не имеет подтверждения центра сертификации!
 this egroupware notification has been sent to you by mail because your	notifications	ru	Это извещение от EGroupware было вам послано по почте так-как ваш
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	ru	Это уведомление Egroupware было послано Вам по почте потому, что выбранный Вами способ уведомлений был отклонен администратором. Выберите другой способ уведомлений в настройках!
+this month	notifications	ru	В этом месяце
 user:	notifications	ru	Пользователь:
 warning	notifications	ru	Предупреждение
 windows-popup and e-mail	notifications	ru	Всплывающие уведомления Windows и почтой
 windows-popup backend	admin	ru	Всплывающее уведомление Windows обработано
 windows-popup first, if that fails notify me by e-mail	notifications	ru	Сначала всплывающие уведомления Windows, если невозможно, уведомляйте по почте
 windows-popup only	notifications	ru	Только всплывающие уведомления Windows
+yesterday	notifications	ru	Вчера
+you can also use	admin	ru	Вы также можете использовать
+you have %1 unread notifications	notifications	ru	У вас %1 непрочитанных уведомлений
+you have been successfully logged out	notifications	ru	Вы успешно вышли из системы
 you've got new mail	notifications	ru	Вы получили новое письмо
 your session could not be verified.	notifications	ru	Сессия не может быть проверена

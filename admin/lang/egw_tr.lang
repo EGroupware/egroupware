@@ -1,6 +1,32 @@
+%1 %2 rights for %3 on %4 to %5	admin	tr	%4 ila %5 arasında %3 için %1 %2 hakları
 %1 - %2 of %3 user accounts	admin	tr	%3 kullanıcı hesabı arasından %1 - %2
 %1 - %2 of %3 user groups	admin	tr	%3 kullanıcı grubu arasından %1 - %2
-%1 not found or not executable !!!	admin	tr	%1 bulunamadı veya çalıştırılamıyor !!!
+%1 access to other data	admin	tr	Diğer verilere %1 erişim
+%1 accounts being activated	admin	tr	%1 hesap etkinleştiriliyor
+%1 acl entries deleted.	admin	tr	%1 ACL girişleri silindi.
+%1 acl records of not (longer) existing accounts deleted.	admin	tr	Artık mevcut olmayan hesapların %1 ACL kaydı silindi.
+%1 categories of not (longer) existing accounts deleted.	admin	tr	(Artık) mevcut olmayan hesapların %1 kategorileri silindi.
+%1 category '%2' %3	admin	tr	%1 kategori '%2' %3
+%1 category(s) %2	admin	tr	%1 kategori(ler) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	tr	%1 kategori(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
+%1 class not instanciated	admin	tr	%1 sınıfı kurulmadı
+%1 entries deleted	admin	tr	%1 giriş silindi
+%1 entries deleted.	admin	tr	%1 giriş silindi.
+%1 group %2	admin	tr	%1 grup %2
+%1 is no command!	admin	tr	%1 komut değil!
+%1 log entries deleted.	admin	tr	%1 günlük girdisi silindi.
+%1 mail credentials deleted	admin	tr	%1 posta kimlik bilgileri silindi
+%1 not found or not executable !!!	admin	tr	%1 bulunamadı veya çalıştırılamıyor!
+%1 phrases saved.	admin	tr	%1 cümle kaydedildi.
+%1 rights for %2 and applications %3	admin	tr	%2 için %1 hak ve %3 uygulama(lar).
+%1 run rights for applications	admin	tr	Uygulamalar için %1 çalıştırma hakkı
+%1 sessions killed	admin	tr	%1 oturum öldürüldü.
+%1 successful	admin	tr	%1 başarılı
+%1 token %2.	admin	tr	%1 belirteci %2.
+%1 user %2	admin	tr	%1 kullanıcı %2
+(de)activate mail accounts	admin	tr	Posta hesaplarını (de)Etkinleştir
+(default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	tr	(imapclass, ilgili yapılandırma değerini sorgulayarak bu özelliği desteklemeli ve IMAP sunucusuna defaultquota olarak aktarmalıdır)
 (stored password will not be shown here)	admin	tr	(Kayıtlı şifreler burada görüntülenmeyecektir.)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	tr	(Yeni uygulama yüklemek için <br><a href="setup/" target="setup">Kurulum</a>u kullanınız. !!!)
 1 year	admin	tr	1 yıl
@@ -25,11 +51,11 @@ acl rights	common	tr	ACL Hakları
 action	admin	tr	Eylem
 actions	admin	tr	Eylemler
 activate wysiwyg-editor	admin	tr	WYSIWYG editörünü etkinleştir
-add a category	admin	tr	kategori ekle
-add a group	admin	tr	grup ekle
+add a category	admin	tr	Kategori ekle
+add a group	admin	tr	Grup ekle
 add a new account.	admin	tr	Yeni hesap oluştur
 add a subcategory	admin	tr	Alt-kategori oluştur
-add a user	admin	tr	kullanıcı ekle
+add a user	admin	tr	Kullanıcı ekle
 add account	admin	tr	Hesap oluştur
 add application	admin	tr	Uygulama ekle
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	tr	Otomatik oluşturulmuş kullanıcıları bu gruba ekle (Burası boş olursa 'Varsayılan' seçeneği kullanılacaktır.)
@@ -67,19 +93,19 @@ are you sure you want to delete this server?	admin	tr	Bu sunucuyu silmek istedi�
 are you sure you want to kill this session ?	admin	tr	Bu oturumu silmek istediğinize emin misiniz?
 async services last executed	admin	tr	Son çalıştırılan asenkron servisler
 asynchronous timed services	admin	tr	Asenkron zamanlı servisler
-asyncservices not yet installed or other error (%1) !!!	admin	tr	asenkron servisler kurulu değil ya da başka hata (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	tr	FTP için 'application/octet-stream' yerine doğru mimetype kullanınız.
+asyncservices not yet installed or other error (%1) !!!	admin	tr	Asenkron servisler kurulu değil ya da başka hata (%1)!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	tr	FTP için 'application/octet-stream' yerine doğru MIMEtype kullanınız.
 authentication / accounts	admin	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	admin	tr	Giriş yapan kullanıcılar için kayıt tut.
-back to the list	admin	tr	listeye geri dön
+back to the list	admin	tr	Listeye geri dön
 bi-dir passthrough	admin	tr	çift-yön içiçe
 bi-directional	admin	tr	çift yönlü
-bottom	admin	tr	taban
+bottom	admin	tr	Taban
 calculate next run	admin	tr	SIradaki çalıştırmayı hesapla
 can change password	admin	tr	Şifre değiştirebilir
 cancel testjob!	admin	tr	Test görevini iptal et!
 categories list	admin	tr	Kategori listesi
-category %1 has been saved !	admin	tr	Kategori %1 kaydedildi !
+category %1 has been saved !	admin	tr	Kategori %1 kaydedildi!
 category list	admin	tr	Kategori listesi
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
@@ -109,11 +135,11 @@ delete application	admin	tr	Uygulamayı sil
 delete category	admin	tr	Kategori sil
 delete group	admin	tr	Grup sil
 delete peer server	admin	tr	Peer sunucu sil
-delete the category	admin	tr	kategoriyi sil
-delete the group	admin	tr	grubu sil
-delete this category	admin	tr	bu kategoriyi sil
-delete this group	admin	tr	bu grubu sil
-delete this user	admin	tr	bu kullanıcıyı kaldır
+delete the category	admin	tr	Kategoriyi sil
+delete the group	admin	tr	Grubu sil
+delete this category	admin	tr	Bu kategoriyi sil
+delete this group	admin	tr	Bu grubu sil
+delete this user	admin	tr	Bu kullanıcıyı kaldır
 deleted	admin	tr	Silindi
 deny access to access log	admin	tr	Erişim kayıtlarına erişmi engelle
 deny access to application registery	admin	tr	Uygulama Kütüğüne erişimi engelle
@@ -128,14 +154,14 @@ deny access to peer servers	admin	tr	Peer sunucularına erişimi engelle
 deny access to phpinfo	admin	tr	phpinfo'ya erişimi engelle
 deny access to site configuration	admin	tr	Site ayarlarına erişimi engelle
 deny access to user accounts	admin	tr	Kullanıcı hesaplarına erişimi engelle
-deny all users access to grant other users access to their entries ?	admin	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle ?
-description can not exceed 255 characters in length !	admin	tr	Açıklama en fazla 255 karakter olabilir !
+deny all users access to grant other users access to their entries ?	admin	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle?
+description can not exceed 255 characters in length !	admin	tr	Açıklama en fazla 255 karakter olabilir!
 disable	admin	tr	Engelle
 disable "auto completion" of the login form	admin	tr	Sistem girişi "Otomatik tamamla" özelliğini kullanma
 disable wysiwyg-editor	admin	tr	WYSIWYG editör kullanma
 disabled (not recomended)	admin	tr	Kullanılmıyor (Önerilmiyor)
 display	admin	tr	Görüntüle
-do not delete the category and return back to the list	admin	tr	kategoriyi <b>silme</b> ve listeye geri dön
+do not delete the category and return back to the list	admin	tr	Kategoriyi <b>silme</b> ve listeye geri dön
 do you also want to delete all global subcategories ?	admin	tr	Bütün genel alt-kategorileri de silmek ister misiniz?
 do you want to delete all global subcategories ?	admin	tr	Bütün genel alt-kategorileri silmek ister misiniz?
 do you want to move all global subcategories one level down ?	admin	tr	Bir seviye alt bütün genel alt-kategorileri silmek ister misiniz?
@@ -147,23 +173,23 @@ edit group	admin	tr	Grup düzenle
 edit group acl's	admin	tr	Grup ACL ayarlarını düzenle
 edit peer server	admin	tr	Peer Sunucu düzenle
 edit table format	admin	tr	Tablo düzenini düzenle
-edit this category	admin	tr	bu kategoriyi düzenle
-edit this group	admin	tr	bu grubu düzenle
-edit this user	admin	tr	bu kullanıcıyı düzenle
-edit user	admin	tr	kullanıcı düzenle
+edit this category	admin	tr	Bu kategoriyi düzenle
+edit this group	admin	tr	Bu grubu düzenle
+edit this user	admin	tr	Bu kullanıcıyı düzenle
+edit user	admin	tr	Kullanıcı düzenle
 edit user account	admin	tr	Kullanıcı hesabı düzenle
 enable	admin	tr	Etkinleştir
 enable debug-messages	admin	tr	Hata ayıklama mesajlarını etkinleştir
 enabled - hidden from navbar	admin	tr	Etkin - Gezgin çubuğunda görünmez
 enabled - popup window	admin	tr	Etkin - Pop pencere
-enter a description for the category	admin	tr	kategori için açıklama giriniz
+enter a description for the category	admin	tr	Kategori için açıklama giriniz
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	tr	app_session için gerekli rastgele bir metin giriniz. (mcrypt için gerekli)
 enter the background color for the login page	admin	tr	Sistem giriş ekranı arkaplan rengi giriniz
 enter the background color for the site title	admin	tr	Site başlığı için arkaplan rengi giriniz
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	tr	Geçici dosyalar için tam yol giriniz. <br>Örnekler: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	tr	Kullanıcı ve grup dosyaları için tam yol giriniz.<br>Örnekler: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü işareti kullanmayınız.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü işareti kullanmayınız.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	tr	Aranacak ifadeyi giriniz. Bütün girdileri göstermek için, bu alanı boş bırakınız ve GÖNDER (Submit) butonuna basınız.
 enter the site password for peer servers	admin	tr	Peer sunucular için site şifresi giriniz.
 enter the site username for peer servers	admin	tr	Peer sunucular için site kullanıcı adı giriniz.
@@ -176,34 +202,35 @@ enter your http proxy server	admin	tr	HTTP Proxy sunucunuzu giriniz.
 enter your http proxy server port	admin	tr	HTTP Proxy sunucu portunuzu giriniz.
 enter your smtp server hostname or ip address	admin	tr	SMTP sunucu hostname ve IP'nizi giriniz.
 enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz.
-error canceling timer, maybe there's none set !!!	admin	tr	Zamanlayıcıyı iptal ederken hata oluştu, hiç ayarlı olmayabilir !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	tr	Zamanlayıcı ayarlarken hata oluştu, yanlış sözdizimi ya da halihazırda çalışan bir tane olabilir !!!
-error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata !!!
+error canceling timer, maybe there's none set !!!	admin	tr	Zamanlayıcıyı iptal ederken hata oluştu, hiç ayarlı olmayabilir!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	tr	Zamanlayıcı ayarlarken hata oluştu, yanlış sözdizimi ya da halihazırda çalışan bir tane olabilir!
+error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata!
 event details follow	admin	tr	Etkinlik Detayları Ektedir
 expires	admin	tr	Sona Eriyor
-fallback (after each pageview)	admin	tr	fallback (her sayfa görüntülemeden sonra)
+fallback (after each pageview)	admin	tr	Fallback (her sayfa görüntülemeden sonra)
 file space	admin	tr	Dosya Kotası
 file space must be an integer	admin	tr	Dosya Kotası tam sayı olmalıdır
 for the times above	admin	tr	yukarıdaki zamanlar için
-for the times below (empty values count as '*', all empty = every minute)	admin	tr	aşağıdaki zamanlar için (boş değerler '*' yerine geçer, tümü boş=her dakika)
+for the times below (empty values count as '*', all empty = every minute)	admin	tr	Aşağıdaki zamanlar için (boş değerler '*' yerine geçer, tümü boş=her dakika)
 force selectbox	admin	tr	Seçimn kurusunu mecburi tut
-full name	admin	tr	Tam ?sim
+full name	admin	tr	Tam isim
 global categories	common	tr	Genel kategoriler
-group ?	admin	tr	grup ?
+group ?	admin	tr	Grup?
 group has been added	common	tr	Grup eklendi
 group has been deleted	common	tr	Grup silindi
 group has been updated	common	tr	Grup güncellendi
 group list	admin	tr	Grup listesi
 group manager	admin	tr	Grup Yöneticisi
 group name	admin	tr	Grup İsmi
-hide php information	admin	tr	php bilgisini sakla
+hide php information	admin	tr	PHP bilgisini sakla
 home directory	admin	tr	Ev dizini
 home screen message	admin	tr	Ana ekran mesajı
 host information	admin	tr	Host bilgisi
+hostname or ip	admin	tr	Ana Bilgisayar Adı veya IP
 hour<br>(0-23)	admin	tr	Saat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	tr	Erişim kütüklerindeki kayıtlar en fazla kaç günlük oalcaktır (varsayılan 90) ?
 icon	admin	tr	Simge
-idle	admin	tr	boşta
+idle	admin	tr	Boşta
 if no acl records for user or any group the user is a member of	admin	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	tr	LDAP kullanıyorsanız, ev dizini ve erişim ayarlarını yönetmek ister misiniz?
 inbound	admin	tr	gelen
@@ -217,8 +244,8 @@ kill	admin	tr	Yoket
 kill session	admin	tr	Oturum yoket
 last %1 logins	admin	tr	Son %1 giriş
 last %1 logins for %2	admin	tr	Son %1 giriş [Toplam: %2]
-last login	admin	tr	son giriş
-last login from	admin	tr	son giriş yeri
+last login	admin	tr	Son giriş
+last login from	admin	tr	Son giriş yeri
 last time read	admin	tr	Son okunan zaman
 last updated	admin	tr	Son güncelleme
 ldap accounts context	admin	tr	LDAP hesap içeriği
@@ -228,10 +255,10 @@ ldap encryption type	admin	tr	LDAP şifreleme tipi
 ldap groups context	admin	tr	LDAP grup içeriği
 ldap host	admin	tr	LDAP hostları
 ldap root password	admin	tr	LDAP yönetici şifresi
-ldap rootdn	admin	tr	LDAP rootdn
+ldap rootdn	admin	tr	LDAP root DN
 leave empty for no quota	admin	tr	Kota olmaması için boş bırakın
 leave empty to use oauth, if supported	admin	tr	Destekleniyorsa OAuth kullanmak için boş bırakın
-leave the category untouched and return back to the list	admin	tr	kategoriye dokunmadan listeye geri dön
+leave the category untouched and return back to the list	admin	tr	Kategoriye dokunmadan listeye geri dön
 leave the group untouched and return back to the list	admin	tr	Gruba dokunmadan listeye geri dön
 list config settings	admin	tr	Ayarları listele
 list current sessions	admin	tr	Şu anki oturumları listele
@@ -244,27 +271,27 @@ login time	admin	tr	Giriş zamanı
 loginid	admin	tr	Kullanıcı Adı
 mail settings	admin	tr	Mail ayarları
 manager	admin	tr	Yönetici
-maximum account id (e.g. 65535 or 1000000)	admin	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
-maximum entries in click path history	admin	tr	Yol kayıtlarındaki maksimum kayıt #
-message has been updated	admin	tr	mesaj güncellendi
+maximum account id (e.g. 65535 or 1000000)	admin	tr	Meksimum hesap ID'si (ör: 65535 ya da 1000000)
+maximum entries in click path history	admin	tr	Tıklama yolu geçmişinde maksimum girişler
+message has been updated	admin	tr	Mesaj güncellendi
 method	admin	tr	Metod
-minimum account id (e.g. 500 or 100, etc.)	admin	tr	Minimum hesap id'si (ör 500 ya da 100)
+minimum account id (e.g. 500 or 100, etc.)	admin	tr	Minimum hesap ID'si (ör 500 ya da 100)
 minute	admin	tr	Dakika
 mode	admin	tr	Tip
 modified	admin	tr	Değiştirilmiş
 month	admin	tr	Ay
 new group name	admin	tr	Yeni grup adı
-new password [ leave blank for no change ]	admin	tr	Yeni şifre [ Değişiklik yapmak istemiyorsanız boş bırakınız ]
+new password [ leave blank for no change ]	admin	tr	Yeni şifre (Değişiklik yapmak istemiyorsanız boş bırakınız)
 next run	admin	tr	Sıradaki çalıştırma
-no algorithms available	admin	tr	mevcut hiç algoritma yok
+no algorithms available	admin	tr	Mevcut hiç algoritma yok
 no jobs in the database !!!	admin	tr	Veritabanında görev yok
 no login history exists for this user	admin	tr	Bu kullanıcı için giriş geçmişi bulunmamakta
 no matches found	admin	tr	Hiç eşleşme yok
-no modes available	admin	tr	mevcut hiç mod yok
-no permission to add groups	admin	tr	grup eklemek için izin yok
-no permission to add users	admin	tr	kullanıcı eklemek için izin yok
-no permission to create groups	admin	tr	grup eklemek için izin yok
-note: ssl available only if php is compiled with curl support	admin	tr	Not: SSL desteğinin olması için PHP'nin curl desteği ile derlenmiş olması gerekir.
+no modes available	admin	tr	Mevcut hiç mod yok
+no permission to add groups	admin	tr	Grup eklemek için izin yok
+no permission to add users	admin	tr	Kullanıcı eklemek için izin yok
+no permission to create groups	admin	tr	Grup eklemek için izin yok
+note: ssl available only if php is compiled with curl support	admin	tr	Not: SSL desteğinin olması için PHP'nin Curl desteği ile derlenmiş olması gerekir.
 oauth authentiction	admin	tr	OAuth Kimlik Doğrulaması
 offer to installing egroupware as mail-handler	admin	tr	EGroupware'i posta işleyicisi olarak yükleme teklifi
 one day	admin	tr	Bir gün
@@ -273,11 +300,11 @@ one month	admin	tr	Bir ay
 one week	admin	tr	Bir hafta
 order	admin	tr	Sıralama
 other security configuration	admin	tr	Diğer güvenlik yapılandırması
-outbound	admin	tr	giden
+outbound	admin	tr	Giden
 own categories	admin	tr	Kendi kategorileriniz
 own install id	admin	tr	Kendi kurulum kimliği
 own install id:	admin	tr	Kendi kurulum kimliği:
-passthrough	admin	tr	içiçe
+passthrough	admin	tr	Içiçe
 password for smtp-authentication	admin	tr	SMTP doğrulaması için şifre
 path information	admin	tr	Yol bilgisi
 peer server list	admin	tr	Peer sunucu listesi
@@ -293,16 +320,16 @@ please enter a name for that server !	admin	tr	Lütfen sunucu için bir isim gir
 please run setup to become current	admin	tr	Güncel olmak için kurulumu çalıştırınız
 please select	admin	tr	Lütfen seçiniz
 preferences	admin	tr	Ayarlar
-primary group	admin	tr	ana grup
+primary group	admin	tr	Ana grup
 re-enter password	admin	tr	Şifreyi yeniden giriniz
 read this list of methods.	admin	tr	Method listesini oku
 register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 remove	admin	tr	Kaldır
 remove all users from this group	admin	tr	Bu gruptaki tüm kullanıcıları kaldır
-remove all users from this group ?	admin	tr	Bu gruptaki tüm kullanıcıları kaldır ?
+remove all users from this group ?	admin	tr	Bu gruptaki tüm kullanıcıları kaldır?
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
-save the category	admin	tr	kategoriyi kaydet
-save the category and return back to the list	admin	tr	kategoriyi kaydet ve listeye geri dön
+save the category	admin	tr	Kategoriyi kaydet
+save the category and return back to the list	admin	tr	Kategoriyi kaydet ve listeye geri dön
 search accounts	admin	tr	Hesapları ara
 search categories	admin	tr	Kategorileri ara
 search groups	admin	tr	Grupları ara
@@ -337,7 +364,7 @@ sorry, the above users are still a member of the group %1	admin	tr	Üzgünüm, y
 sorry, the follow users are still a member of the group %1	admin	tr	Üzgünüm, şu kullanıcılar hala %1 grubunun üyeleridir.
 sort the entries	admin	tr	Girdileri sırala
 ssl	admin	tr	SSL
-standard	admin	tr	standart
+standard	admin	tr	Standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!
 submit the search string	admin	tr	Arama kriterini gönder
@@ -355,8 +382,8 @@ the login and password can not be the same	admin	tr	Kullanıcı adı ve şifre a
 the loginid can not be more then 8 characters	admin	tr	Kullanıcı adı 8 karakterden az olamaz
 the testjob sends you a mail everytime it is called.	admin	tr	Test görevi her çağrıldığında size bir e-mail gönderir.
 the two passwords are not the same	admin	tr	İki şifre birbirinden farklı
-the users bellow are still members of group %1	admin	tr	aşağıdaki kullanıcılar hala %1 grubunun üyeleridir.
-there already is a group with this name. userid's can not have the same name as a groupid	admin	tr	Bu grup isminde bir grup bulunmaktadır. Kullanıcı id'leri (userid) grup id'si (groupid) olarak aynı isme sahip olamaz.
+the users bellow are still members of group %1	admin	tr	Aşağıdaki kullanıcılar hala %1 grubunun üyeleridir.
+there already is a group with this name. userid's can not have the same name as a groupid	admin	tr	Bu grup isminde bir grup bulunmaktadır. Kullanıcı ID'leri (userID) grup id'si (groupID) olarak aynı isme sahip olamaz.
 they must be removed before you can continue	admin	tr	Devam etmeniz için onların kaldırılması gerekmektedir.
 this application is current	admin	tr	Uygulamanız güncel
 this application requires an upgrade	admin	tr	Uygulamanız güncelleme gerektirmektedir. (Yeni sürüm var)
@@ -378,14 +405,15 @@ user accounts	admin	tr	Kullanıcı hesapları
 user data	common	tr	Kullanıcı verileri
 user for smtp-authentication (leave it empty if no auth required)	admin	tr	SMTP doğrulaması için kullanılacak kullanıcı (Doğrulama gerekmiyorsa boş bırakınız)
 user groups	admin	tr	Kullanıcı grupları
-userdata	admin	tr	kullanıcı verileri
+user-agent	admin	tr	User-Agent
+userdata	admin	tr	Kullanıcı verileri
 users choice	admin	tr	Kullanıcı Seçimleri
 view access log	admin	tr	Erişim kütüğünü görüntüle
 view account	admin	tr	Hesap görüntüle
 view category	admin	tr	Kategori görüntüle
 view error log	admin	tr	Hata kütüğünü görüntüle
 view sessions	admin	tr	Oturumları görüntüle
-view this user	admin	tr	bu kullanıcıyı görüntüle
+view this user	admin	tr	Bu kullanıcıyı görüntüle
 view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
 would you like egroupware to cache the egw info array ?	admin	tr	EGroupware bilgi dizisini önbelleğe alır.

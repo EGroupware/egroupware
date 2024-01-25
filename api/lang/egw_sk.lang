@@ -1,7 +1,7 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	sk	%1 (%2 nových) správ bolo napísaných pre aplikáciu '%3' a jazyky '%4'
 %1 active file(s) with same name as directory inactivated!	admin	sk	Bolo inaktivovaných %1 aktívnych súborov s rovnakým menom ako bol názov priečinku!
 %1 copied - the copy can now be edited	common	sk	%1 skopírovaný - kópia sa odteraz dá upravovať
-%1 directories %2 found!	admin	sk	našlo sa %1 priečinkov %2
+%1 directories %2 found!	admin	sk	Našlo sa %1 priečinkov %2
 %1 email addresses inserted	common	sk	%1 e-mailových adries bolo vložených
 %1 email(s) added into %2	common	sk	%1 e-mailov bolo pridaných do %2
 %1 entries found, select one ...	common	sk	Našlo sa %1 položiek, vyberte si jednu ...
@@ -9,29 +9,29 @@
 %1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eTemplate pre aplikáciu '%2' urobilo výpis do '%3'
 %1 etemplates found	common	sk	Našlo sa %1 eTemplate.
 %1 file	common	sk	%1 súbor
-%1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!!!
+%1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!
 %1 matches on search criteria	common	sk	Nájdených bolo %1 zhôd s vyhľadávacím kritériom
 %1 more %2 selected ...	common	sk	Vybraných bolo o %1 viac %2 ...
-%1 more...	common	sk	O %1 viac...
+%1 more...	common	sk	O %1 viac ...
 %1 new etemplates imported for application '%2'	common	sk	Naimportovaných %1 nových eTemplate pre aplikáciu '%2'
 %1 not implemented for %2!	common	sk	%1 nie je implementované pre %2!
 %1 proxy of %2	common	sk	%1 proxy k %2
 %1 setting "%2" = %3 disallows access via http!	admin	sk	%1nastavenie "%2" = %3 neumožňuje prístup cez http!
 %1 to sync	groupdav	sk	%1 na synchronizáciu
 %1, duplicate id	common	sk	%1, duplicitné ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br />alebo nastavte pre webserver právo zápisu do %3
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sk	%1Vyberte iný adresár%2<br>alebo nastavte pre webserver právo zápisu do %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1EGroupware%2 je viacpoužívateľský, webovo orientovaný grupvérový balík napísaný v %3PHP%4.
 %s disabled	common	sk	%s je vypnuté
 %s needed	common	sk	%s je potrebné
 %s notranslation	common	sk	%s BezPrekladu
-%s onchange	common	sk	%s priZmene
+%s onchange	common	sk	%s onchange
 %s readonly	common	sk	%s lenNaČítanie
 '%1' copied to clipboard	common	sk	'%1' skopírované do schránky
 '%1' has an invalid format	common	sk	'%1' má nesprávny formát!
 '%1' has an invalid format !!!	common	sk	'%1' má nesprávny formát!
 '%1' is not a valid date !!!	common	sk	'%1' nie je platný dátum!
 '%1' is not a valid floatingpoint number !!!	common	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou!
-'%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo !
+'%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo!
 '%1' is not a valid json file!	common	sk	'%1' nie je platný súbor JSON
 '%1' is not a valid timezone!	common	sk	'%1' nie je platné časové pásmo!
 '%1' is not allowed ('%2')!	common	sk	'%1' NIE je dovolené ('%2')!
@@ -75,7 +75,7 @@ acl	common	sk	ACL práva
 action	common	sk	Akcia
 action when category is an email address	groupdav	sk	Akcia keď kategória je e-mailovou adresou
 actions	common	sk	Akcie
-actions...	common	sk	Akcie...
+actions...	common	sk	Akcie ...
 active	common	sk	Aktívne
 active directory requires ssl or tls to change passwords!	common	sk	AD vyžaduje pre zmenu hesla podporu SSL alebo TLS!
 add	common	sk	Pridať
@@ -127,12 +127,13 @@ allow editing the %1	common	sk	Povoliť úpravu %1
 allowed file type: %1	common	sk	Povolený typ súboru: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	sk	Umožňuje zmenu zodpovedných používateľov pre zariadenia bez ich podpory tak, že e-mailovú adresu používateľa nastaví ako kategóriu
 alt	common	sk	Alt
+alternate style-sheet:	common	sk	Alternatívny list štýlu:
 am	common	sk	dp
 american samoa	common	sk	AMERICKÁ SAMOA
 an admin required that you must change your password upon login.	common	sk	Správca žiada, aby ste si pri prihlásení zmenili heslo.
 an error happened	common	sk	Nastala nejaká chyba
 an existing and by the webserver readable directory enables the image browser and upload.	common	sk	Adresár, ktorý existuje a je čitateľný webserverom, umožňuje prehliadanie a odovzdávanie obrázkov.
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	sk	indexovaný stĺpec zrýchľuje hľadanie v danom stĺpci (avšak na úkor miesta na disku !!!)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	sk	indexovaný stĺpec zrýchľuje hľadanie v danom stĺpci (avšak na úkor miesta na disku!)
 and	common	sk	A
 andorra	common	sk	ANDORA
 angola	common	sk	ANGOLA
@@ -145,7 +146,7 @@ api-accounts	common	sk	Používateľské účty
 application	common	sk	Aplikácia
 application has no etemplates (no file %1) to restore!	common	sk	Aplikácia nemá eTemplates (žiadny súbor %1) ktoré by sa dali obnoviť!
 application name needed to restore etemplates!	common	sk	Pre obnovu eTemplates je potrebný názov aplikácie!
-application name needed to write a langfile or dump the etemplates !!!	common	sk	Názov aplikácie potrebuje zapísať jazykový súbor alebo urobiť výpis z eTemplates !!!
+application name needed to write a langfile or dump the etemplates !!!	common	sk	Názov aplikácie potrebuje zapísať jazykový súbor alebo urobiť výpis z eTemplates!
 applications	common	sk	Aplikácie
 applies the changes made	common	sk	Uplatnia sa vykonané zmeny
 applies the changes to the given version of the template	common	sk	vykoná zmeny urobené na danej verzii šablóny
@@ -173,8 +174,6 @@ author	common	sk	Autor
 autohide sidebox menu's	common	sk	Automaticky skrývať ponuku bočného panelu
 autohide sidebox menus	common	sk	Automaticky skrývať ponuku bočného panelu
 automatic update check failed, you need to check manually!	common	sk	Automatická kontrola aktualizácie zlyhala, prosím skontrolujte ručne!
-automatically hide the sidebox menu's?	common	sk	Automaticky skrývať ponuku bočného panelu?
-automatically hide the sidebox menus?	common	sk	Automaticky skrývať ponuku bočného panelu?
 automatically refresh list	common	sk	Automaticky obnovovať zoznam
 autosave default category	common	sk	Automaticky ukladať štandardnú kategóriu
 avatar	common	sk	Avatar
@@ -234,9 +233,9 @@ cancel	common	sk	Zrušiť
 cannot replace %1 because it is a directory	common	sk	Nemôžem prepísať %1 pretože je to adresár
 cannot set a category as parent, which is part of this categorys subtree!	common	sk	Nemôžem nastaviť ako rodičovskú takú kategóriu, ktorá je súčasťou svojej vlastnej štruktúry!
 cannot set this cat as its own parent!	common	sk	Nemôžem nastaviť túto kategóriu ako svojho vlastného rodiča!
-cant delete a single widget from a grid !!!	common	sk	Nedá sa odstrániť jednotlivý widget z matice!!!
-cant delete the only column of a grid !!!	common	sk	Nedá sa odstrániť jediný stĺpec matice!!!
-cant delete the only row in a grid !!!	common	sk	Nedá sa odstrániť jediný riadok matice!!!
+cant delete a single widget from a grid !!!	common	sk	Nedá sa odstrániť jednotlivý widget z matice!
+cant delete the only column of a grid !!!	common	sk	Nedá sa odstrániť jediný stĺpec matice!
+cant delete the only row in a grid !!!	common	sk	Nedá sa odstrániť jediný riadok matice!
 cant open %1, needs ziparchive	common	sk	Nemôžem otvoriť %1, je potrebný ZipArchív
 cant open '%1' for %2	common	sk	Nemôžem otvoriť '%1' pre %2
 cape verde	common	sk	KAPVERDY
@@ -260,7 +259,7 @@ chad	common	sk	ČAD
 change	common	sk	Zmeniť
 change owner	common	sk	Zmeniť vlastníka
 changed	common	sk	Zmenené
-charset	common	sk	utf-8
+charset	common	sk	Charset
 check all	common	sk	Označiť všetko
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sk	Začiarknite pre prázdne hodnoty v deklarácii IF. Napríklad {{IF url~EMPTY~~Website:}} - Ak URL nie je prázdna, napíše "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	sk	Začiarknite, ak sa obsah má iba zobrazovať ale nie meniť (obsah sa potom neposiela naspäť!)
@@ -351,6 +350,8 @@ creator	preferences	sk	Tvorca
 croatia	common	sk	CHORVÁTSKO
 css class for the table-tag	common	sk	CSS trieda pre tag tabuľky
 css properties	common	sk	CSS nastavenia
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	sk	CSS class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	sk	CSS class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 css-styles	common	sk	CSS štýly
 ctrl	common	sk	Ctrl
 cuba	common	sk	KUBA
@@ -359,7 +360,7 @@ current	common	sk	Aktuálne
 current users	common	sk	Prihlásených používateľov
 custom	common	sk	Vlastné
 custom fields	common	sk	Vlastné polia
-custom javascript for onchange	common	sk	Vlastný JavaScript pre onChange
+custom javascript for onchange	common	sk	Vlastný JavaScript pre onchange
 cut	common	sk	Vystrihnúť
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ČESKÁ REPUBLIKA
@@ -390,6 +391,7 @@ del	common	sk	Del
 delete	common	sk	Odstrániť
 delete a single entry by passing the id.	common	sk	Odstrániť položku podľa zadaného ID.
 delete all selected etemplates, without further inquiry	common	sk	Odstrániť VŠETKY označené eTemplates, BEZ ďalšieho varovania
+delete and cut save the template!	common	sk	Odstráňte a vystrihnutím uložte šablónu!
 delete backup	common	sk	Odstrániť zálohu
 delete backup key	common	sk	Odstrániť záložný kľúč
 delete category	common	sk	Odstrániť kategóriu
@@ -408,7 +410,7 @@ delete this etemplate	common	sk	Odstrániť túto eTemplate
 delete this file	common	sk	Odstrániť tento súbor
 delete this photo?	common	sk	Odstrániť túto fotografiu?
 delete this row	common	sk	Odstrániť tento riadok
-delete whole column (can not be undone!!!)	common	sk	Odstrániť celý stĺpec (NEDÁ sa vrátiť späť !!!)
+delete whole column (can not be undone!!!)	common	sk	Odstrániť celý stĺpec (NEDÁ sa vrátiť späť!)
 deletes the above spez. etemplate from the database, can not be undone	common	sk	Odstráni vyššieuvedenú eTemplate, NEDÁ sa vrátiť späť
 deletes the etemplate spez. above	common	sk	Odstráni vyššieuvedenú eTemplate
 deletes this column	common	sk	Odstráni tento stĺpec
@@ -417,16 +419,11 @@ denmark	common	sk	DÁNSKO
 description	common	sk	Popis
 detail	common	sk	Podrobnosti
 details	common	sk	Podrobnosti
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť spúšťanie opravného skriptu pre IE5.5 a vyšší, ktorý napráva zobrazovanie priesvitnosti v obrázkoch PNG?
 direction left to right	common	sk	Tok zľava doprava
 directory	common	sk	Priečinok
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sk	Adresár neexistuje, nie je čitateľný webserverom, alebo nesúvisí s koreňovým adresárom dokumentov!
 directory for storing merged documents	preferences	sk	Priečinok pre ukladanie zlúčených dokumentov
 directory with documents to insert entries	preferences	sk	Priečinok pre dokumenty na vkladanie položiek
-disable internet explorer png-image-bugfix	common	sk	Vypnúť opravu chyby pre obrázky PNG v Internet Explorer-i
-disable slider effects	common	sk	Vypnúť efekty posuvníka
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnúť animované efekty posuvníka, keď sa zobrazujú alebo skrývajú ponuky na stránke? Používatelia Opery a Konquerer-a to pravdepodobne musia zvoliť.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnúť opravný skript pre Internet Explorer 5.5 a novšie pre zobrazenie priesvitnosti v obrázkoch PNG?
 disabled	common	sk	Neaktívny
 discard changes	common	sk	Zahodiť zmeny
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	sk	Zobrazené na začiatku vstupu, alebo vstup je vložený pre '%s' v menovke tlačítka pre Odoslanie alebo názvu súboru obrázku
@@ -447,18 +444,19 @@ document title:	common	sk	Nadpis dokumentu
 documentation	common	sk	Dokumentácia
 doesn't matter	common	sk	Nezáleží
 domain	common	sk	Doména
-domain name for mail-address, eg. "%1"	common	sk	názov domény pre mailovú adresu, napr. "%1"
+domain name for mail-address, eg. "%1"	common	sk	Názov domény pre mailovú adresu, napr. "%1"
 domestic	common	sk	Domáce
 dominica	common	sk	DOMINIKA
 dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
 don't ask again!	common	sk	Už sa nepýtaj!
 don't show this again	common	sk	Toto už nezobrazuj
 done	common	sk	Hotovo
+dos international	common	sk	DOS International
 download	common	sk	Stiahnuť
 download link	common	sk	Odkaz na stiahnutie
-drag markers to pick a color	common	sk	Posunom značky sa vyberá farba
 drop a table - this can not be undone	common	sk	Zahodiť tabuľku -NEDÁ sa vrátiť späť
 drop table	common	sk	Zahodiť tabuľku
+dump4setup	common	sk	Dump4Setup
 duration	common	sk	Trvanie
 e-mail	common	sk	E-Mail
 east timor	common	sk	VÝCHODNÝ TIMOR
@@ -469,7 +467,7 @@ edit %1 category for	common	sk	Uprav %1 kategóriu pre
 edit avatar	common	sk	Upraviť obrázok používateľa
 edit categories	common	sk	Upraviť kategórie
 edit category	common	sk	Upraviť kategóriu
-edit embeded css styles or of the applications app.css file	common	sk	upraviť vložené CSS štýly alebo súbor app.css aplikácie
+edit embeded css styles or of the applications app.css file	common	sk	Upraviť vložené CSS štýly alebo súbor app.css aplikácie
 edit the etemplate spez. above	common	sk	Upraviť túto eTemplate
 edit...	common	sk	Upraviť...
 editable templates - db-tools	common	sk	Upraviteľné šablóny - DB-Nástroje
@@ -491,8 +489,9 @@ el salvador	common	sk	SALVADOR
 element role title	common	sk	Názov úlohy v prvku
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sk	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	sk	Prázdny súbor
-enable javascript onchange submit	common	sk	Zapnúť odosielanie JavaScript onChange
+enable javascript onchange submit	common	sk	Zapnúť odosielanie JavaScript onchange
 enable logging	groupdav	sk	Povoliť záznam protokolu
 enabled	common	sk	Aktívny
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	sk	Povolí záznam protokolu prevádzky CalDAV/CardDAV za účelom diagnostiky problémov so zariadeniami.
@@ -501,7 +500,7 @@ end time	common	sk	Čas ukončenia
 enter '' for an empty default, nothing mean no default	common	sk	Vložte '' pre prázdnu predvolenú hodnotu; prázdne znamená: bez predvolenej hodnoty
 enter a search pattern	common	sk	Zadajte hľadaný výraz
 enter filename to upload and attach, use [browse...] to search for it	common	sk	Zadajte názov súboru, ktorý chcete priložiť, prípadne použite tlačítko "Prehľadávať"
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre EGroupware.<br>Príklad: https://egw.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 enter the new version number here (> old_version), empty for no update-file	common	sk	Zadajte sem nové číslo verzie (> stará verzia), prázdne znamená: bez aktualizácie súboru
 enter the new version number here (has to be > old_version)	common	sk	Zadajte sem nové číslo verzie (musí byť > stará verzia)
 enter your file name	common	sk	Zadajte názov súboru
@@ -519,10 +518,11 @@ error create parent directory %1!	common	sk	Chyba pri vytváraní rodičovského
 error creating %1 %2 directory	common	sk	Chyba počas vytvárania adresára %1 %2
 error deleting %1 %2 directory	common	sk	Chyba počas odstraňovania adresára %1 %2
 error deleting %1!	common	sk	Chyba pri odstraňovaní %1!
+error enabling push	common	sk	Chyba pri povolení tlačenia
 error renaming %1 %2 directory	common	sk	Chyba počas premenúvania adresára %1 %2
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
-error: template not found !!!	common	sk	Chyba: Šablóna sa nenašla !!!
-error: webserver is not allowed to write into '%1' !!!	common	sk	Chyba: webserver nemá povolený zápis do '%1' !!!
+error: template not found !!!	common	sk	Chyba: Šablóna sa nenašla!
+error: webserver is not allowed to write into '%1' !!!	common	sk	Chyba: webserver nemá povolený zápis do '%1'!
 error: while saving !!!	common	sk	Chyba počas ukladania!
 error: writing file (no write-permission for the webserver) !!!	common	sk	Chyba počas ukladania súboru: webserver nemá povolený zápis!
 estonia	common	sk	ESTÓNSKO
@@ -561,16 +561,16 @@ fax number	common	sk	Ččíslo faxu
 features of the editor?	common	sk	Možnosti editora?
 february	common	sk	Február
 field	common	sk	Pole
-field must not be empty !!!	common	sk	Pole nesmie byť prázdne!!!
+field must not be empty !!!	common	sk	Pole nesmie byť prázdne!
 fields	common	sk	Polia
 fiji	common	sk	FIDŽI
 file	common	sk	Súbor
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 --> odstránenie súboru zlyhalo!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 --> súbor odstránený!
-file %1 has no content in physical filesystem %2!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2 !
+file %1 has no content in physical filesystem %2!	admin	sk	Súbor %1 nemá obsah na fyzickom súborovom systéme %2!
 file '%1' not found!	common	sk	Súbor '%1' sa nenašiel!
 file a file	common	sk	Uloženie súboru
-file contains more than one etemplate, last one is shown !!!	common	sk	Súbor obsahuje viac než jednu eTemplate, zobrazuje sa iba posledná!!!
+file contains more than one etemplate, last one is shown !!!	common	sk	Súbor obsahuje viac než jednu eTemplate, zobrazuje sa iba posledná!
 file information	common	sk	Informácie o súbore
 file is of wrong type (%1 != %2)!	common	sk	Súbor je nesprávneho typu (%1 != %2)!
 file too large.  maximum %1	common	sk	Súbor je príliš veľký. Maximum je %1
@@ -600,7 +600,7 @@ formatselect	common	sk	Formát
 formatted business address	common	sk	Formátovaná obchodná adresa
 formatted private address	common	sk	Formátovaná súkromná adresa
 formatted text (html)	common	sk	Formátovaný text (HTML)
-found unconnected %1 %2!	admin	sk	Našli sa nepripojené %1 %2 !
+found unconnected %1 %2!	admin	sk	Našli sa nepripojené %1 %2!
 fr	common	sk	Pi
 france	common	sk	FRANCÚZSKO
 french guiana	common	sk	FRANCÚZSKA GUAYANA
@@ -626,6 +626,7 @@ go to the first entry	common	sk	Choď na prvý záznam
 go to the last entry	common	sk	Choď na posledný záznam
 go to the next page of entries	common	sk	Choď na nasledujúcu stránku so záznamami
 go to the previous page of entries	common	sk	Choď na predchádzajúcu stránku so záznamami
+go to your home directory	common	sk	Choď do domovského priečinku
 grant access	common	sk	Povoliť prístup
 greece	common	sk	GRÉCKO
 greek	common	sk	Grécky
@@ -642,7 +643,7 @@ group has been updated	common	sk	Skupina bola aktualizovaná
 group name	common	sk	Názov skupiny
 group public	common	sk	Verejný pre skupiny
 groupbox	common	sk	Skupina ovládacích prvkov
-groupdav	common	sk	Server pre CalDAV, CardCAV a GroupDAV
+groupdav	common	sk	Synchronizácia CalDAV / CardDAV
 groups	common	sk	Skupiny
 groups with permission for %1	common	sk	Skupiny, kde máte prístup ku %1
 groups without permission for %1	common	sk	Skupiny, kde nemáte prístup ku %1
@@ -654,6 +655,7 @@ guinea-bissau	common	sk	GUINEA-BISSAU
 guyana	common	sk	GUAYANA
 h	common	sk	h
 haiti	common	sk	HAITI
+hbox	common	sk	HBox
 heard island and mcdonald islands	common	sk	HEARDOVE MCDONALDOVE OSTROVY
 height	common	sk	Výška
 height of row (in % or pixel)	common	sk	Výška riadku (v % alebo pixeloch)
@@ -687,7 +689,6 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	sk	MAĎARSKO
 iceland	common	sk	ISLAND
 id	common	sk	ID
-iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nenašiel. Kliknutím na OK sa presuniete na stránku, odkiaľ ho môžete stiahnuť.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sk	Ak je položka vypnutá, zobrazuje sa prázdna bunka tabuľky
 if the clock is enabled would you like it to update it every second or every minute?	common	sk	Ak sú hodiny zapnuté, chcete aby sa aktualizovali každú sekundu, alebo stačí každú minútu?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	sk	Ak prblém pretrváva, obráťte sa na svojho správcu - nech skontroluje error-log na webserveri.
@@ -702,7 +703,6 @@ import	common	sk	Import
 import an etemplate from a xml-file	common	sk	Importovať eTemplate zo súboru XML
 import table-definitions from existing db-table	common	sk	Importovať definície tabuľky z existujúcej db-tabuľky
 import xml	common	sk	Importovať XML
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	sk	Ak chcete používať funkciu scránky, musíte povoliť prehrávač Flashkliknutím v šedom okienku.\nAk chcete prehrávač Flash povoliť natrvalo, urobte tak v nastaveniach vášho prehliadača.
 include access to any linked files (links tab)	common	sk	Vrátane prístupu k akýmkoľvek pripojeným súborom (karta Odkazy)
 increment version to not overwrite the existing template	common	sk	Zvýšte verziu, aby sa neprepísala existujúca šablóna
 indent	common	sk	Odsadenie
@@ -778,10 +778,11 @@ korean	common	sk	Kórejsky
 kuwait	common	sk	KUVAJT
 kyrgyzstan	common	sk	KIRGIZSKO
 label	common	sk	Menovka
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	sk	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 landscape	common	sk	Na šírku
 lang	common	sk	Jazyk
 language	common	sk	Jazyk
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	sk	Skratka jazyka (napr. 'en' pre English) pre jazykovo závislú šablónu ('' znamená vaše uprednostňované jazyky alebo predvolený, použite 'default' pre načítanie predvolenej šablóny '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	sk	Skratka jazyka (napr. 'en' pre English) pre jazykovo závislú šablónu (''znamená vaše uprednostňované jazyky alebo predvolený, použite 'default' pre načítanie predvolenej šablóny'')
 language_direction_rtl	common	sk	orientácia_jazyka_sprava_doľava
 lao peoples democratic republic	common	sk	LAOS
 last	common	sk	Posledné
@@ -794,7 +795,7 @@ latvia	common	sk	LOTYŠSKO
 ldap-mgr	common	sk	Správca LDAP
 lebanon	common	sk	LIBANON
 left	common	sk	Vľavo
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	sk	dĺžka pre char+varchar, presnosť celočís: 2, 4, 8 a pláv.čiar: 4, 8
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	sk	Dĺžka pre char+varchar, presnosť celočís: 2, 4, 8 a pláv.čiar: 4, 8
 lesotho	common	sk	LESOTHO
 liberia	common	sk	LIBÉRIA
 libyan arab jamahiriya	common	sk	LÍBIA
@@ -802,12 +803,13 @@ license	common	sk	Licencia
 liechtenstein	common	sk	LICHTENŠTAJNSKO
 light mode	common	sk	Svetlý režim
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta obsahujú ##last-check-run## tabuľky %3 ==> ignorované</b>
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><b>csv dáta nesúhlasia s počtom stĺpcov tabuľky %3 ==> ignorované</b>
 link	common	sk	Odkaz
 link is appended to mail allowing recipients to download currently attached version of files	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť si aktuálne priloženú verziu súborov
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť alebo zmeniť aktuálne verzie súborov (len EPL)
 link is appended to mail allowing recipients to download up to date version of files	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť si aktuálnu verziu súborov
 link target %1 not found!	common	sk	Cieľ odkazu %1 sa nenašiel!
+link title of current record	common	sk	Názov odkazu aktuálneho záznamu
 linkapps	common	sk	Aplikácia odkazu
 linked	common	sk	Odkazuje
 linkentry	common	sk	Záznam o odkaze
@@ -895,10 +897,12 @@ move	common	sk	Presunúť
 moved %1 children from directory fs_id=%2 to %3	admin	sk	Presunutých %1 potomkov zpriečinka fs_id=%2 do %3
 moved unconnected %1 %2 to %3.	admin	sk	Presunuté nepripojené %1 %2 do %3
 mozambique	common	sk	MOZAMBIK
+multicolumn indices	common	sk	Indexy viacerých stĺpcov
 multiple	common	sk	Viacero
 myanmar	common	sk	MYANMAR
 name	common	sk	Meno
 name of other table where column is a key from	common	sk	názov inej tabuľky, kde stĺpec je kľúčom z
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	sk	Názov sady šablón phpgw (napr. verdilak): ''= predvolená (načíta predvolenú šablónu, pre načítanie predvolenej šablóny použite 'default''')
 name of table to add	common	sk	Názov tabuľky, ktorá sa má pridať
 name of the etemplate, should be in form application.function[.subtemplate]	common	sk	Názov eTemplate, mal by byť vo forme aplikácia.funkcia[.podŠablóna]
 name of the user, eg. "%1"	common	sk	Meno používateľa, napr. "%1"
@@ -925,13 +929,18 @@ newer version '%1' exists !!!	common	sk	Novšia verzia '%1' existuje!!!
 next	common	sk	Ďalší
 next page	common	sk	Ďalšia stránka
 nextmatch	common	sk	Ďalšia zhoda
+nextmatch accountfilter	common	sk	Filter účtu nextmatch
+nextmatch custom filterheader	common	sk	Hlavička vlastného filtra nextmatch
+nextmatch filterheader	common	sk	Záhlavie filtra nextmatch
+nextmatch header	common	sk	Záhlavie nextmatch
+nextmatch sortheader	common	sk	Záhlavie triedenia nextmatch
 nicaragua	common	sk	NIKARAGUA
 niger	common	sk	NIGER
 nigeria	common	sk	NIGÉRIA
 niue	common	sk	NIUE
 no	common	sk	Nie
 no - cancel	common	sk	Nie - Zrušiť
-no column to swap with !!!	common	sk	Nemám žiadny stĺpec pre zámenu !!!
+no column to swap with !!!	common	sk	Nemám žiadny stĺpec pre zámenu!
 no default set	common	sk	Predvolená hodnota zatiaľ nebola nastavená
 no entries found, try again ...	common	sk	Nič som nenašiel, skúste znovu...
 no file	common	sk	Žiadny súbor
@@ -940,6 +949,7 @@ no filters	common	sk	Bez filtrov
 no history for this record	common	sk	Žiadna história pre tento záznam
 no key for recipient:	common	sk	Žiadny kľúč pre adresáta:
 no matches found	common	sk	Nastaveniu filtrov nezodpovedajú žiadne položky.
+no response from server: your data is probably not saved	common	sk	Žiadna odpoveď zo servera: vaše údaje pravdepodobne NIE sú uložené
 no results match	common	sk	Žiadna zhoda
 no rights to export more than %1 entries!	common	sk	Nemáte právo exportovať viac než %1 položiek!
 no row to swap with !!!	common	sk	Nemám žiadny riadok pre zámenu!
@@ -971,6 +981,8 @@ notify window	common	sk	Upozorňujúce okno
 notify your administrator to correct this situation	common	sk	Upozornite svojho správcu, aby napravil vzniknutú situáciu
 november	common	sk	November
 now	common	sk	Teraz
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	sk	Počet stĺpcov, ktoré má pole/bunka obsiahnuť, alebo "všetky" pre zvyšné stĺpce, názov triedy CSS (pre značku TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	sk	Počet riadkov/stôp v poli V/HBox, Cellpadding, Cellspacing
 numbers	common	sk	čísla
 october	common	sk	Október
 of	common	sk	z
@@ -980,14 +992,15 @@ old value	common	sk	Stará hodnota
 oman	common	sk	OMÁN
 on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napíšte: %1
 on mouse over	common	sk	Pri namierení myši
-onchange	common	sk	priZmene
-onclick	common	sk	priKliknutí
+onchange	common	sk	onchange
+onclick	common	sk	onclick
 only an other version found !!!	common	sk	Našla sa iná verzia!
 only private	common	sk	Iba súkromné
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	sk	Podporované iba niektorými plne kompatibilnými klientmi (napr. od Apple). Ak musíte zadať URL, pravdepodobne to nebude podporované!
 only yours	common	sk	Iba vaše
 oops! you caught us in the middle of system maintainance.	common	sk	Ajajaj! Zastihli ste nás práve počas údržby systému.
 open	common	sk	Otvoriť
+open existing contact	common	sk	Otvoriť existujúci kontakt
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
 open sidebox	common	sk	Otvor bočnú ponuku
@@ -1015,7 +1028,7 @@ papua new guinea	common	sk	PAPUA NOVÁ GUINEA
 paraguay	common	sk	PARAGUAY
 parcel	common	sk	Parcela
 parent category	common	sk	Rodičovská kategória
-parent is a '%1' !!!	common	sk	Rodič je '%1' !!!
+parent is a '%1' !!!	common	sk	Rodič je '%1'!
 password	common	sk	Heslo
 password contains only %1 of required %2 character classes: no %3	common	sk	Heslo obsahuje iba %1 z požadovaných %2 tried znakov: nie %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	sk	Heslo obsahuje s "%1" časti používateľského alebo plného mena (dlhé 3 a viac znakov)
@@ -1031,7 +1044,7 @@ path	common	sk	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 permission denied!	common	sk	Prístup bol odopretý!
 permission denied! this is an administration only feature.	common	sk	Prístup odopretý! Táto funkcia je len pre správcov.
-permissions to the files/users directory	common	sk	Oprávnenia k adresáru pre súbory / používateľov
+permissions to the files/users directory	common	sk	Oprávnenia k adresáru pre súbory/používateľov
 permisson denied!	common	sk	Prístup bol odopretý!
 personal	common	sk	Osobný
 peru	common	sk	PERU
@@ -1046,8 +1059,8 @@ placeholders	common	sk	Zástupcovia
 play/pause	common	sk	Prehrať/pozastaviť
 please %1 by hand	common	sk	Prosím %1 ručne
 please enter a name	common	sk	Prosím zadajte meno!
-please enter table-name first !!!	common	sk	Prosím, zadajte najprv názov tabuľky !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	sk	Prosím znovu načítajte plochu EGroupware (F5 alebo Cmd+r)
+please enter table-name first !!!	common	sk	Prosím, zadajte najprv názov tabuľky!
+please reload the egroupware desktop (f5 / cmd+r).	common	sk	Prosím znovu načítajte plochu EGroupware (F5 alebo Cmd+R)
 please remember to use '%1' as username for local login's from now on!	common	sk	Prosím nezabudnite odteraz používať '%1' ako používateľské meno pre miestne prihlásenie!
 please run setup to become current	common	sk	Prosím spusťte setup pre aktualizáciu
 please select	common	sk	Prosím vyberte
@@ -1075,6 +1088,7 @@ previous page	common	sk	Predchádzajúca stránka
 primary group	common	sk	Základná skupina
 primary key	common	sk	Primárny kľúč
 primary key for the table, gets automaticaly indexed	common	sk	Primárny kľúč pre tabuľku, indexuje sa automaticky
+primary style-sheet:	common	sk	List primárneho štýlu:
 print	common	sk	Tlač
 priority	common	sk	Priorita
 private	common	sk	Súkromné
@@ -1085,6 +1099,7 @@ protocol is required	common	sk	Vyžaduje sa protokol
 public	common	sk	Verejné
 puerto rico	common	sk	PORTORIKO
 qatar	common	sk	KATAR
+quick add	common	sk	Rýchle pridanie
 radiobutton	common	sk	Tlačítko vypnutia
 read	common	sk	Čítať
 read a list of entries.	common	sk	Čítať zoznam záznamov
@@ -1113,7 +1128,8 @@ rename	common	sk	Premenovať
 repeat password	common	sk	Zopakovať heslo
 replace	common	sk	Nahradiť
 replace with	common	sk	Zameniť za
-request could not be processed, please reload your window (press f5 or cmd r)!	common	sk	Požiadavka sa nedala spracovať, prosím znovu načítajte okno pomocu F5 alebo Cmd R!
+request could not be processed, please reload your window (press f5 or cmd r)!	common	sk	Požiadavka sa nedala spracovať, prosím znovu načítajte okno pomocu F5 alebo Cmd+R!
+requested resource '%1' does not exist or has expired	common	sk	Požadovaný prostriedok "%1" neexistuje alebo jeho platnosť vypršala
 requests and full responses to files directory	common	sk	Požiadavky a plné odpovede do priečinka súborov
 requests and truncated responses to apache error-log	groupdav	sk	Požiadavky a skrátené odpovede do chybového protokolu Apache
 required	common	sk	Vyžadované
@@ -1156,7 +1172,7 @@ san marino	common	sk	SAN MARINO
 sao tome and principe	common	sk	SVÄTÝ TOMÁŠ A PRINCOV OSTROV
 saturday	common	sk	Sobota
 saudi arabia	common	sk	SAUDSKÁ ARÁBIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br/>Táto verzia: %1 <br/>Verzia Savant: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sk	Verzia Savant2 sa líši od wrappera Savant2. <br>Táto verzia: %1 <br>Verzia Savant: %2
 save	common	sk	Uložiť
 save all	common	sk	Uložiť všetko
 save as	common	sk	Uložiť ako
@@ -1169,6 +1185,8 @@ saves changes to tables_current.inc.php	common	sk	Uloží zmeny do tables_curren
 saves the template with given version number and closes the window	common	sk	Uloží šablónu s uvedeným číslom verzie a zavrie okno.
 scale	common	sk	Prispôsobiť
 scale for float	common	sk	Prispôsobiť pre pohyblivú desatinnú čiarku
+scheduling inbox	common	sk	Plánovanie doručenej pošty
+scheduling outbox	common	sk	Plánovanie odoslanej pošty
 search	common	sk	Hľadať
 search %1 '%2'	common	sk	Hľadaj %1 '%2'
 search accounts	common	sk	Hľadať v účtoch
@@ -1176,6 +1194,7 @@ search for '%1'	common	sk	Hľadať '%1'
 search letter	common	sk	Hľadať znak
 search or select accounts	common	sk	Hľadať alebo vyberať medzi účtami
 search...	common	sk	Hľadať...
+searchreplace	common	sk	Nájsť a nahradiť
 second	common	sk	Sekunda
 section	common	sk	Sekcia
 securest	common	sk	Najbezpečnejšie
@@ -1191,7 +1210,7 @@ select action	common	sk	Vyberte akciu
 select all	common	sk	Označiť všetko
 select all %1 %2 for %3	common	sk	Vyberte všetky %1 %2 pre %3
 select all entries	common	sk	Označiť všetky položky
-select an app first !!!	common	sk	Najprv vyberte aplikáciu !!!
+select an app first !!!	common	sk	Najprv vyberte aplikáciu!
 select an app to search in	common	sk	Vyberte, v ktorej aplikácii chcete hľadať
 select an application	common	sk	Vyberte aplikáciu
 select an application, (*) = uninstalled	common	sk	Vyberte aplikáciu, (*) = odinštalované
@@ -1243,8 +1262,8 @@ senegal	common	sk	SENEGAL
 september	common	sk	September
 serbia	common	sk	Srbsko
 server %1 has been added	common	sk	Server %1 bol pridaný
-server answered. processing response...	common	sk	Server odpovedal. Spracúvam odpoveď...
-server contacted. waiting for response...	common	sk	Pripájam sa na server. Čakám na odpoveď...
+server answered. processing response...	common	sk	Server odpovedal. Spracúvam odpoveď ...
+server contacted. waiting for response...	common	sk	Pripájam sa na server. Čakám na odpoveď ...
 server error	common	sk	Chyba na strane servera
 server is unwilling to perform.	common	sk	Server neráči posúchať.
 server name	common	sk	Meno servera
@@ -1289,7 +1308,7 @@ show password	common	sk	Ukázať heslo
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazovať na desktope logá EGroupware a x-desktopu.
 show values	common	sk	Zobraziť hodnoty
 show/hide	common	sk	Zobraziť/skryť bočný panel
-show_more_apps	common	sk	ukázať viacero aplikácií
+show_more_apps	common	sk	Show_more_apps
 showing	common	sk	Zobrazujem
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
@@ -1312,6 +1331,8 @@ south georgia and the south sandwich islands	common	sk	JUŽNÁ GEORGIA A JUŽNÉ
 space	common	sk	Medzerník
 spacing	common	sk	Rozostupy
 spain	common	sk	ŠPANIELSKO
+span	common	sk	Span
+span, class	common	sk	Span, Class
 special characters	common	sk	špeciálne znaky
 sri lanka	common	sk	SRÍ LANKA
 stack	common	sk	Zásobník
@@ -1338,6 +1359,7 @@ suggest password	common	sk	Poradiť heslo
 sunday	common	sk	Nedeľa
 sure	common	sk	Určite
 suriname	common	sk	SURINAM
+svalbard and jan mayen	common	sk	SVALBARD AND JAN MAYEN
 swap	common	sk	Vymeniť
 swap widget with next one	common	sk	Vymeniť widget s nasledujúcim
 swap with next column	common	sk	Vymeniť s nasledujúcim stĺpcom
@@ -1350,6 +1372,7 @@ switzerland	common	sk	ŠVAJČIARSKO
 sync all selected into one	groupdav	sk	Synchronizovať celý výber do jedného
 syrian arab republic	common	sk	SÝRIA
 tab	common	sk	Tab
+tabindex	common	sk	Index tab
 table %1 is excluded from backup and restore. data will not be restored.	common	sk	Tabuľka %1 je vyňatá zo zálohovania a obnovy. Údaje nebudú obnovené.
 table properties	common	sk	Nastavenia tabuľky
 table unchanged, no write necessary !!!	common	sk	Tabuľka sa nezmenila, zápis nie je nevyhnutný!
@@ -1367,15 +1390,15 @@ textarea	common	sk	Oblasť textu
 th	common	sk	Št
 thailand	common	sk	THAJSKO
 the backup key has been deleted.	common	sk	Zálohový kľúč bol odstránený
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sk	Je aktívne blokovanie vyskakovacích okien na strane prehliadača. Ak chcete vidieť okno, prosím kliknite na tlačítko OK.\n\n Ak si nabudúce neželáte vidieť túto správu, povoľte vášmu prehliadaču výnimku v blokovaní vyskakovacích okien pre %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	sk	Je aktívne blokovanie vyskakovacích okien na strane prehliadača. Ak chcete vidieť okno, prosím kliknite na tlačítko OK.<br>Ak si nabudúce neželáte vidieť túto správu, povoľte vášmu prehliadaču výnimku v blokovaní vyskakovacích okien pre %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the following applications require upgrades	common	sk	Nasledujúce aplikácie vyžadujú aktualizáciu
 the following document-types are supported:	preferences	sk	Podporované sú nasledovné typy dokumentov:
 the mail server returned	common	sk	Poštový server vrátil
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	sk	Systémový používateľ s takýmto menom už existuje. Používatelia nemôžu mať rovnaké meno ako systémoví používatelia.
 they will be sub-folders in users home (%1 attribute).	common	sk	Budú pod-priečinkami v používateľovom domovskom priečinku (%1 atribút).
-this feature is only available in epl version.	common	sk	Táto funkcia je dostupná len vo verzii EPL-
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sk	Toto je Vaše vlastné zdieľanie. Môžete ho odskúšať v anonymnom resp. inkognito okne prehliadača.<br/>%1
+this feature is only available in epl version.	common	sk	Táto funkcia je k dispozícii len vo verzii EPL.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	sk	Toto je Vaše vlastné zdieľanie. Môžete ho odskúšať v anonymnom resp. inkognito okne prehliadača.<br>%1
 this name has been used already	common	sk	Toto meno sa už používa!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	sk	Text sa zobrazí keď je vstupné pole prázdne a nemá fokus (rozmazanie)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	sk	Týmto sa vymažú nastavenia panelu nástrojov pre všetkých používateľov a obnovia sa predvolené nastavenia.
@@ -1399,7 +1422,7 @@ todays date, eg. "%1"	common	sk	Dnešný dátum, napr. "%1"
 togo	common	sk	TOGO
 tokelau	common	sk	TOKELAU
 tonga	common	sk	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.<br />Vyberte všetky alebo menej ako %1 riadkov
+too many rows selected.<br />select all, or less than %1 rows	common	sk	Vybraných príliš veľa riadkov.<br>Vyberte všetky alebo menej ako %1 riadkov
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príliš veľa neúspešných pokusov o prihlásenie: %1 na používateľa '%2', %3 na IP %4
 top	common	sk	Vrch
 total	common	sk	Celkovo
@@ -1445,6 +1468,8 @@ upload new photo	common	sk	Odovzdať novú fotku
 upload requires the directory to be writable by the webserver!	common	sk	Odoslanie vyžaduje, aby bol adresár zapisovateľný webserverom!
 uppercase letters	common	sk	veľké písmená
 url	common	sk	URL adresa
+url of current record	common	sk	Adresa URL aktuálneho záznamu
+urls of any entries linked to the current record, excluding attached files	common	sk	URL všetkých záznamov prepojených s aktuálnym záznamom, okrem pripojených súborov
 uruguay	common	sk	URUGUAY
 use button to search for	common	sk	Stlačte tlačidlo pre vyhľadanie
 use button to search for address	common	sk	Stlačte tlačidlo pre vyhľadanie adresy
@@ -1453,14 +1478,15 @@ use button to search for project	common	sk	Stlačte tlačidlo pre vyhľadanie pr
 user	common	sk	Používateľ
 user accounts	common	sk	Používateľské účty
 user groups	common	sk	Používateľské skupiny
+user-agent & action	common	sk	Agent používateľa a akcia
 username	common	sk	Používateľské meno
 users	common	sk	Používatelia
 users choice	common	sk	Používateľská Voľba
 uzbekistan	common	sk	UZBEKISTAN
 valign	common	sk	vZarovnanie
 value	common	sk	Hodnota
-value has to be at least '%1' !!!	common	sk	Hodnota musí byť najmenej '%1' !!!
-value has to be at maximum '%1' !!!	common	sk	Hodnota musí byť nanajvýš '%1' !!!
+value has to be at least '%1' !!!	common	sk	Hodnota musí byť najmenej '%1'!
+value has to be at maximum '%1' !!!	common	sk	Hodnota musí byť nanajvýš '%1'!
 vanuatu	common	sk	VANUATU
 vbox	common	sk	VBox
 venezuela	common	sk	VENEZUELA
@@ -1487,7 +1513,6 @@ western european	common	sk	Západoeurópske
 western sahara	common	sk	ZÁPADNÁ SAHARA
 what color should all the blank space on the desktop have	common	sk	Akú farbu má mať všetok prázdny priestor na desktope
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sk	Čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
-what style would you like the image to have?	common	sk	Aký štýl má mať obrázok?
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sk	Keď zlúčite položky do dokumentov, budú uložené na tomto mieste. Ak neposkytnete priečinok, uložia sa do Vášho domovského priečinku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
@@ -1496,6 +1521,7 @@ which infolog types should be synced with the device, default only tasks.	common
 whole query	common	sk	Celý výber
 widget copied into clipboard	common	sk	Widget skopírovaný do schránky
 width	common	sk	Šírka
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	sk	Šírka stĺpca v % alebo pixeloch, vypnutie stĺpca: [! = nie]<hodnota>[=<kontrola>] napr.: '!@data' zakázať stĺpec, ak je obsah údajov prázdny
 width of column (in % or pixel)	common	sk	Šírka stĺpca (v % alebo pixeloch)
 width of the table in % or pixels for the table-tag and (optional) div	common	sk	Šírka tabuľky v % alebo pixeloch pre table-tag a (voliteľne) div
 width, disabled	common	sk	Šírka, Vypnuté
@@ -1534,6 +1560,7 @@ you have not entered participants	common	sk	Nezadali ste spolupracovníkov.
 you have selected an invalid date	common	sk	Vybrali ste chybný dátum!
 you have selected an invalid main category	common	sk	Vybrali ste chybnú hlavnú kategóriu!
 you have successfully logged out	common	sk	Boli ste úspešne odhlásení.
+you may drag files out to your desktop	common	sk	Súbory môžete pretiahnuť na pracovnú plochu
 you need to %1set your timezone preference%2.	common	sk	Je potrebné, aby ste %1nastavili svoju časovú zónu%2.
 you need to add the webserver user '%1' to the group '%2'.	common	sk	Je potrebné, aby ste priradili webserverového používateľa '%1' do skupiny '%2'.
 you need to be an egroupware administrator to access this functionality!	common	sk	Iba správca EGroupware má prístup k tejto funkcionalite!

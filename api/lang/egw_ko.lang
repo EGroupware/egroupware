@@ -292,15 +292,23 @@ old value	common	ko	이전 값
 on *nix systems please type: %1	common	ko	유닉스 기반 시스템의 경우 다음과 같이 입력하세요: %1
 on mouse over	common	ko	마우스를 올렸을때
 only private	common	ko	개인적인것만
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	ko	완전히 호환되는 일부 클라이언트(예: Apple)에서만 지원됩니다. URL을 입력해야 하는 경우에는 지원되지 않을 가능성이 높습니다!
 only yours	common	ko	자신의 것만
 open	common	ko	개설
+open existing contact	common	ko	기존 연락처 열기
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
 open sidebox	common	ko	사이드박스 열기
+open the online help.	common	ko	온라인 도움말 열기
+operator	common	ko	운영자
+optional note about the link	common	ko	링크에 대한 선택적 참고 사항
+options	common	ko	옵션
 or	common	ko	이거나(OR연산)
+order to navigating by tab key through the form	common	ko	양식을 탭 키로 탐색하려면 주문하기
 ordered list	common	ko	번호 매기기
 original	common	ko	원본
 owner	common	ko	소유자
+ownership	common	ko	소유권
 page	common	ko	페이지
 page was generated in %1 seconds	common	ko	페이지 생성에 소요된 시간 : %1 초
 parcel	common	ko	소포

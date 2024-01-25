@@ -8,16 +8,16 @@ cancal settings?	notifications	sl	Prekinem nastavitve?
 cancal?	notifications	sl	Prekinem?
 certification-information:	notifications	sl	Informacije o potrjevanju:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	sl	Preverite oba. Najprej poskusite aktivno uporabniško definiran račun, če nimate, uporabite profil eMailAdmin.
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sl	Izberite verigo obveščanja. Opozorilo: če je veriga obveščanja označena kot "onemogočena", vaš skrbnik ne dovoljuje, da je v verigo vključen eden ali več zadnjih hrbtnih strani, obvestila padajo nazaj na "E-pošta", medtem ko vas obvešča.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sl	Izberite verigo obveščanja. Obveščeni boste prek zalednih koncev, vključenih v verigo.<br>Opomba: Če je veriga obveščanja označena kot "onemogočena", vaš skrbnik ne dovoli enega ali več zalednih koncev, vključenih v verigo, se obveščanje med obveščanjem vrne na "e-pošto".
 choose from mailsettings used for notification	admin	sl	Izberite nastavitve pošte, ki se uporabljajo za e-poštno obvestilo
 common chains	notifications	sl	Skupne verige
 connection error.	notifications	sl	Napaka v povezavi.
 connection error. please check connection to server.	notifications	sl	Napaka v povezavi. Preverite povezavo s strežnikom.
 continue to connect?	notifications	sl	Se še naprej povezujete?
 cookies are required to login to this site.	notifications	sl	Piškotki se morajo prijaviti na to spletno mesto.
-delete all messages	notifications	sl	izbrišite vsa sporočila
+delete all messages	notifications	sl	Izbrišite vsa sporočila
 delete notifications	notifications	sl	Izbriši obvestila
-delete this message	notifications	sl	izbriši to sporočilo
+delete this message	notifications	sl	Izbriši to sporočilo
 disabled chains	notifications	sl	Onemogoči verige
 do not notify me at all	notifications	sl	Sploh me ne obvesti
 domain not found, please check serveraddress.	notifications	sl	Domene ni mogoče najti, preverite naslov strežnika.
@@ -46,7 +46,7 @@ exit	notifications	sl	Izhod
 folder	notifications	sl	Mapa
 from	notifications	sl	Od
 host:	notifications	sl	Gostitelj:
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sl	Kako bi se obnašal program EGroupware-Popup, če bo uporabniku poslano obvestilo: <br /> nizko: samo v zgornjem meniju prikažite zvonjenje za obvestila - glavni meni mora biti omogočen! <br /> medij: prinesite obvestilno okno na sprednji strani <br /> visoko: prinesite obvestilno okno na sprednji strani in dovolite, da brskalnik naredi nekaj, da se napove
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sl	Kako bi se obnašal program EGroupware-Popup, če bo uporabniku poslano obvestilo:<br>nizko: samo v zgornjem meniju prikažite zvonjenje za obvestila - glavni meni mora biti omogočen!<br>medij: prinesite obvestilno okno na sprednji strani<br>visoko: prinesite obvestilno okno na sprednji strani in dovolite, da brskalnik naredi nekaj, da se napove
 if set, embedded links get rendered special for external clients	notifications	sl	Če je nastavljeno, vdelane povezave postanejo posebne za zunanje naročnike
 info on load config file: create config file.	notifications	sl	Informacije o konfiguracijski datoteki nalaganja: ustvarite konfiguracijsko datoteko.
 issuer dn:	notifications	sl	Izdajatelj DN:
@@ -54,23 +54,24 @@ java desktop notification app	preferences	sl	Aplikacija za namizje Java
 last month	notifications	sl	Prejšnji mesec
 linked entries:	common	sl	Povezani vnosi:
 login aborted, application exit?	notifications	sl	Prijava prekinjena, izstop iz aplikacije?
-login in egroupware:	notifications	sl	prijava v EGroupware:
+login in egroupware:	notifications	sl	Prijava v EGroupware:
+mail account to use for notifications	admin	sl	Poštni račun, ki se uporablja za obvestila
 mail backend	admin	sl	Pošta beckend
-mark all as read	notifications	sl	označi vse kot prebrano
+mark all as read	notifications	sl	Označi vse kot prebrano
 mark as read	notifications	sl	Označi kot prebrano
 message from	notifications	sl	Sporočilo od
-minutes	notifications	sl	minut
+minutes	notifications	sl	Minut
 more info	notifications	sl	Več informacij
 notification	common	sl	Obvestilo
 notifier	notifications	sl	Obveščevalec
 notify me by	notifications	sl	Obvesti me
-open notified entry	notifications	sl	odprti vnešeno obvestilo
+open notified entry	notifications	sl	Odprti vnešeno obvestilo
 optimize e-mails for external mail client	notifications	sl	Optimizirajte e-pošto za zunanji e-poštni odjemalec
 page not found, please check serveraddress.	notifications	sl	Stran ni našel, prosimo, preverite naslov strežnika.
 password:	notifications	sl	Geslo:
 permission	notifications	sl	Dovoljenja
 permission denied for notifications application.	notifications	sl	Dovoljenje za zavrnitev prijave.
-placeholders with user/ prefix	admin	sl	mesta z uporabnikom / predpono
+placeholders with user/ prefix	admin	sl	mesta z uporabnikom/predpono
 please contact your egroupware admin.	notifications	sl	Obrnite se na skrbnika programa EGroupware.
 please enter the url of your egroupware.	notifications	sl	Prosimo, vnesite URL vašega programa EGroupware.
 please enter your egroupware username.	notifications	sl	Vnesite svoje uporabniško ime za skupino.
@@ -80,8 +81,8 @@ preferences for notification	notifications	sl	Lastnosti za obvestila
 received	notifications	sl	Prejeto
 refresh notifications	notifications	sl	Osvežitev obvestil
 repeat login?	notifications	sl	Ponovite prijavo?
-run application	notifications	sl	zagnati aplikacijo
-save password	notifications	sl	shranite geslo
+run application	notifications	sl	Zagnati aplikacijo
+save password	notifications	sl	Shranite geslo
 setting	notifications	sl	Nastavitev
 setting aborted, application exit	notifications	sl	Nastavitev prekinjenega, izhoda aplikacije
 settings	notifications	sl	Nastavitve
@@ -100,7 +101,7 @@ windows-popup and e-mail	notifications	sl	Windows popup in e-pošta
 windows-popup backend	admin	sl	Windows popup zadnji konec
 windows-popup first, if that fails notify me by e-mail	notifications	sl	Windows popup najprej, če me ne obvesti po e-pošti
 windows-popup only	notifications	sl	Samo Windows popup
-yesterday	notifications	sl	včeraj
+yesterday	notifications	sl	Včeraj
 you can also use	admin	sl	Uporabite lahko tudi
 you have %1 unread notifications	notifications	sl	Imate %1 neprebranih obvestil
 you have been successfully logged out	notifications	sl	Uspešno ste se odjavili

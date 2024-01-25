@@ -1,8 +1,8 @@
 %1 entries %2	infolog	tr	%1 girişler %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	%1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 entries %2, %3 failed.	infolog	tr	%1 girişleri %2, %3 başarısız oldu.
 %1 records imported	infolog	tr	%1 kay?t ithal edildi.
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kay?t okundu. (Henüz ithal edilmedi, %2geri%3 giderek ?thal Etme seçene?indeki tik i?aretini kald?rabilirsiniz.)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kayıt okundu. Henüz içe aktarılmadı, %2geri%3'e gidebilir ve İçe aktarmayı test et seçeneğinin işaretini kaldırabilirsiniz.
 (and children) deleted	infolog	tr	(ve çocuklar) silindi.
 accept	infolog	tr	Kabul Et
 action	infolog	tr	Eylem
@@ -20,12 +20,12 @@ change	infolog	tr	Değiştir
 change responsible	infolog	tr	Sorumlu değişikliği
 check to set startday	infolog	tr	Başlangıç gününü ayarlamak için kontrol edin
 configuration	infolog	tr	Ayarlar
-contact	infolog	tr	?leti?im
+contact	infolog	tr	İletişim
 contact cf	infolog	tr	İletişim CF
 convert to a ticket	infolog	tr	Bilete dönüştürme
 created	infolog	tr	Oluşturuldu
-csv-fieldname	infolog	tr	CSV Alan-Ad?
-csv-filename	infolog	tr	CSV Dosya Ad?
+csv-fieldname	infolog	tr	CSV alan adı
+csv-filename	infolog	tr	CSV dosya adı
 current user	infolog	tr	Mevcut kullanıcı
 custom	infolog	tr	Özel
 custom fields	infolog	tr	Özel alanlar
@@ -44,14 +44,14 @@ description	infolog	tr	Açıklama
 directory with documents to insert entries	infolog	tr	Girişleri eklemek için belgelerin bulunduğu klasör
 do you want a notification if items owned by groups you are part of get updated ?	infolog	tr	Dahil olduğunuz grupların sahip olduğu öğeler güncellendiğinde bildirim almak ister misiniz?
 done	infolog	tr	Tamam
-download	infolog	tr	İndir
+download	infolog	tr	Dosyayı kaydet
 download url for links	infolog	tr	Bağlantılar için URL'yi indirin
 due %1	infolog	tr	Son ödeme tarihi %1
 due date	infolog	tr	Son tarih
 duration	infolog	tr	Süre
 e-mail:	infolog	tr	E-posta:
 edit	infolog	tr	Düzenle
-empty for all	infolog	tr	Tamam? için bo?
+empty for all	infolog	tr	Herkes için boş
 encrypt description	infolog	tr	Açıklamayı şifrele
 enddate	infolog	tr	BitişTarih
 enter the query pattern	infolog	tr	Sorgu desenini girin
@@ -126,7 +126,7 @@ modifierer	infolog	tr	Değiştirici
 name of current user, all other contact fields are valid too	infolog	tr	Mevcut kullanıcının adı, diğer tüm iletişim alanları da geçerlidir
 no custom field "%1" for %2.	infolog	tr	%2 için "%1" özel alanı yok.
 notification settings	infolog	tr	Bildirim ayarları
-number of records to read (%1)	infolog	tr	Okunacak kay?t say?s? (1%)
+number of records to read (%1)	infolog	tr	Okunacak kayıt sayısı (%1)
 old fixed definition	infolog	tr	Eski sabit tanım
 one day after	infolog	tr	Bir gün sonra
 one day in advance	infolog	tr	Bir gün önceden
@@ -199,12 +199,12 @@ sub-entry	infolog	tr	Alt giriş
 sum	infolog	tr	Toplam
 tag to mark positions for address labels	infolog	tr	Adres etiketlerinin konumlarını işaretlemek için etiket
 tasks of	infolog	tr	Görevleri
-test import (show importable records <u>only</u> in browser)	infolog	tr	?thal test (?thal edilebilecek ba?lant?lar? <u>sadece</u> görüntüle.
+test import (show importable records <u>only</u> in browser)	infolog	tr	İçe aktarmayı test edin . Tarayıcıda <u>sadece</u> içe aktarılabilir kayıtları gösterin.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	tr	Belge, verilerle değiştirilmek üzere {{%1}} gibi yer tutucu içerebilir.
 the following document-types are supported:	infolog	tr	Aşağıdaki belge türleri desteklenmektedir:
 times	infolog	tr	Kere
 titles of any entries linked to the current record, excluding attached files	infolog	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlerin başlıkları
-to many might exceed your execution-time-limit	infolog	tr	çok fazlas? execution-time-limit'inizi a?abilir!
+to many might exceed your execution-time-limit	infolog	tr	Çok fazla sayıda olması yürütme süresi sınırınızı aşabilir
 today	infolog	tr	Bugün
 type of field	infolog	tr	Alan türü
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	tr	"%1" özel alanı ile %3'e bağlantı kurulamıyor: "%4". 2 eşleşiyor.

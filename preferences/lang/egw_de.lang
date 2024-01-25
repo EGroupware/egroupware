@@ -33,23 +33,23 @@ country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
-dark mode theme	preferences	de	Dark Mode Thema
-dark moono theme	preferences	de	Dunkles Moono Schema
+dark mode theme	preferences	de	Dark Mode-Thema
+dark moono theme	preferences	de	Dunkles Moono-Thema
 data exchange settings	preferences	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
 default font	preferences	de	Standard-Schrift
 default font size	preferences	de	Standard-Schriftgröße
-default format block	preferences	de	Standard Formatierung
+default format block	preferences	de	Standard-Formatierung
 default preferences	preferences	de	Voreinstellungen
 delete categories	preferences	de	Kategorie löschen
 deny following groups access to acl (grant access)	admin	de	Verweigere folgenden Gruppen den Zugriff in den ACL's
 deny following groups access to application passwords	preferences	de	Verweigere folgenden Gruppen den Zugriff zu Anwendungspasswörtern
 deny following groups access to edit categories	admin	de	Verweigere folgenden Gruppen den Zugriff zum Ändern der Kategorien
 deny following groups access to preferences	admin	de	Verweigere folgenden Gruppen den Zugriff zu den Einstellungen
-deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Pop-up Sicherheit
-description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein !
+deny following groups access to security popup	admin	de	Verweigere folgenden Gruppen den Zugriff auf das Pop-up-Sicherheit
+description can not exceed 255 characters in length !	preferences	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 disable	preferences	de	Deaktivieren
 disable two factor auth	preferences	de	2-Faktor-Authentifizierung deaktivieren
 disabling allows to again log in without a second factor.	preferences	de	Abschalten erlaubt sich wieder ohne einen zweiten Faktor einzuloggen.
@@ -65,7 +65,7 @@ enable/disable menubar from top of the editor.	preferences	de	Aktivieren/Deaktiv
 enabled features in toolbar	preferences	de	Aktivierte Funktionen in der Symbolleiste
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Hier können die die Funktion aktiveren oder deaktivieren, die es Ihnen im Internet Explorer ermöglicht Auswahl Boxen automatisch auf Ihre wirkliche Größe (bei langen Texten) zu erweitern. Falls Sie einen anderen Browser verwenden, hat dies keine Auswirkungen. Diese Funktion ist noch in der Erprobung.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist, wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menu Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert.
 encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	de	Eine verschlüsselte LDAP Verbindung ist erforderlich um Passwörter zu ändern, aber in Ihre Installation nicht konfiguriert.
 enter code to verify correct setup	preferences	de	Bitte geben sie den Code ein um die Einrichtung zu überprüfen
@@ -76,7 +76,7 @@ failed to change password.	preferences	de	Passwortänderung fehlgeschlagen!
 failed to delete secret!	preferences	de	Löschen des Schlüssels fehlgeschlagen!
 failed to store secret!	preferences	de	Speichern des Schlüssels fehlgeschlagen!
 fast	preferences	de	Schnell
-fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	de	Schnelles aktualisieren fügt neue Einträge immer oben in der Liste hinzu und aktualisiert bestehende in ihrer aktuellen Position, außer die Liste ist nach letzter Änderung sortiert. Exaktes Aktualisieren lädt die Liste komplett neu, außer sie ist nach letzter Änderung sortiert.
+fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	de	Schnelles Aktualisieren fügt neue Einträge immer oben in der Liste hinzu und aktualisiert bestehende in ihrer aktuellen Position, außer die Liste ist nach letzter Änderung sortiert. Exaktes Aktualisieren lädt die Liste komplett neu, außer sie ist nach letzter Änderung sortiert.
 features of the editor	preferences	de	Funktionsauswahl des Editors
 font size unit	preferences	de	Einheit der Schriftgröße
 forced preferences	preferences	de	Erzwungene Einstellungen
@@ -87,7 +87,7 @@ google authenticator for android	preferences	de	Google Authenticator für Androi
 google authenticator for ios	preferences	de	Google Authenticator für iOS
 heading %1	preferences	de	Überschrift %1
 help off	preferences	de	Keine Hilfe
-holding ctrl/cmd key and click on the line	preferences	de	halten der Strg/Cmd Taste und anklicken der Zeile
+holding ctrl/cmd key and click on the line	preferences	de	Halten der Strg/Cmd Taste und anklicken der Zeile
 hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
@@ -98,23 +98,23 @@ how should egroupware display dates for you.	preferences	de	Wie soll EGroupware 
 how to update lists	preferences	de	Wie sollen Listen aktualisiert werden
 icon	preferences	de	Symbol
 icons and text	preferences	de	Symbole und Text
-icons only	preferences	de	nur Symbole
+icons only	preferences	de	Nur Symbole
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) und anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox, ausgewählt. Wenn keine Zeile ausgewählt ist, wählt anklicken diese immer aus. Das Halten der Umschalt-Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 it sets content size (text only) according to selected size.	preferences	de	Stellt die Schriftgröße des Inhalts (nur Text) entsprechend der gewählten Größe ein.
-just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
-kama theme	preferences	de	Kama Farbschema
+just clicking on the line, like a checkbox	preferences	de	Einfaches anklicken der Zeile, wie eine Checkbox
+kama theme	preferences	de	Kama-Theme
 keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Machen Sie die Anwendungsliste im Seitenmenü über Scroll-Tasten nach oben/unten scrollbar (nützlich für Benutzer, die mit einer Maus ohne Scrollrad arbeiten).
-max matches per page	preferences	de	maximale Treffer pro Seite
+max matches per page	preferences	de	Maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
-moono color theme	preferences	de	Farbiges Schema (Moono)
-moono theme (default)	preferences	de	Einfarbiges Schema (Moono)
+moono color theme	preferences	de	Farbiges Thema (Moono)
+moono theme (default)	preferences	de	Einfarbiges Thema (Moono)
 new secret generated, you need to save it to disable the old one!	preferences	de	Neuer Schlüssel generiert, Sie müssen ihn jetzt speichern und den alten ungültig zu machen!
 no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
@@ -123,7 +123,7 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 numbers	preferences	de	Zahlen
-old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist ungültig. Sie müssen ein neues Passwort vergeben.
+old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist nicht erlaubt. Sie müssen ein neues Passwort vergeben.
 or other compatible apps	preferences	de	Oder andere kompatible Apps
 p: paragraph	preferences	de	p: Absatz
 paragraph	preferences	de	Absatz
@@ -134,8 +134,8 @@ password is invalid	preferences	de	Das Passwort ist ungültig
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
-please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone
-please, select a new theme	preferences	de	Bitte ein neues Schema wählen
+please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
+please, select a new theme	preferences	de	Bitte ein neues Thema wählen
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert
 preformatted	preferences	de	Vorformatiert
@@ -146,15 +146,15 @@ read prefs for the specified application.	preferences	de	Liest Einstellungen von
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
-rich text editor theme	preferences	de	Farbschema des Editors
+rich text editor theme	preferences	de	Thema des Editors
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-Time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
-select different theme	preferences	de	Anderes Schema wählen
+select different theme	preferences	de	Anderes Thema wählen
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.
-select the theme (visualization) of the rich text editor.	preferences	de	Farbschema (Aussehen) des Editors auswählen.
+select the theme (visualization) of the rich text editor.	preferences	de	Thema (Aussehen) des Editors auswählen.
 selectbox	preferences	de	Auswahlfeld
 selectbox with groupmembers	common	de	Auswahlbox mit Gruppenmitgliedern
 selectbox with primary group and search	preferences	de	Auswahlfeld mit primärer Gruppe und Suche
@@ -170,7 +170,7 @@ show links between egroupware aps as	common	de	Zeige Verknüpfungen zwischen EGr
 show navigation bar as	preferences	de	Anzeige der Navigationsleiste
 show number of current users	preferences	de	Anzahl gegenwärtiger Benutzer anzeigen
 show qrcode	preferences	de	QR-Code anzeigen
-show qrcode to enable on an additional device.	preferences	de	Zeigt den QRCode wieder an um ihn auf weiteren Geräten einzurichten.
+show qrcode to enable on an additional device.	preferences	de	Zeigt den QR-Code wieder an um ihn auf weiteren Geräten einzurichten.
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
 small paragraph	preferences	de	Schmaler Absatz
@@ -200,7 +200,7 @@ use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	de	Wenn Sie mehrere Optionen auswählen können, soll die Optionsliste geöffnet bleiben, bis Sie sie schließen, oder geschlossen werden, nachdem Sie eine Option ausgewählt haben.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import|Export. Der Standard Zeichensatz, ist der Zeichensatz Ihrer EGroupware Installation.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import/Export. Der Standard-Zeichensatz ist der Zeichensatz Ihrer EGroupware Installation.
 which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
 write prefs for the specified application.	preferences	de	Schreibt die Einstellungen für die jeweilige Anwendung.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
@@ -211,5 +211,5 @@ you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 you need to enter your password to make any security changes!	preferences	de	Sie müssen Ihr Passwort eingeben um sicherheitskritische Änderungen zu machen.
 your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
 your password does not have required strength:	preferences	de	Ihr Passwort hat nicht die erforderliche Stärke:
-your password might not match the password policy.	preferences	de	Ihr Passwort erfüllt möglicherweise nicht die Passwort Richtlinie.
+your password might not match the password policy.	preferences	de	Ihr Passwort erfüllt möglicherweise nicht die Passwort-Richtlinie.
 your preferences	preferences	de	Persönliche Einstellungen

@@ -1,3 +1,8 @@
+%1 days in advance	infolog	lt	%1 dienų į priekį
+%1 deleted	infolog	lt	%1 ištrintas.
+%1 deleted by %2 at %3	infolog	lt	%1 ištrintas %2 %3
+%1 entries %2	infolog	lt	%1 įrašai %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	lt	%1 įrašai %2, %3 nepavyko dėl nepakankamų teisių!
 %1 entries %2, %3 failed.	infolog	lt	%1 įrašai %2, %3 nepavyko.
 (and children) deleted	infolog	lt	(ir vaikai) ištrinti.
 addressbook placeholders available	infolog	lt	Galimos adresų knygelės vietos žymos
@@ -19,7 +24,7 @@ customfields	infolog	lt	Pasirinktiniai laukai
 data exchange settings	infolog	lt	Keitimosi duomenimis nustatymai
 date completed	infolog	lt	Įvykdymo data
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	lt	Įvykdymo data. Palikite tuščią, jei norite, kad ji būtų nustatyta automatiškai, jei būsena yra baigta arba išrašyta sąskaita.
-default category for new infolog entries	infolog	lt	Numatytoji naujų "InfoLog" įrašų kategorija
+default category for new infolog entries	infolog	lt	Numatytoji naujų InfoLog įrašų kategorija
 default document to insert entries	infolog	lt	Numatytasis dokumentas įrašams įterpti
 delegated	infolog	lt	Deleguota
 delegated open	infolog	lt	Deleguota atidaryti
@@ -39,6 +44,7 @@ do you want a notification, if items you delegated are about to start?	infolog	l
 do you want a notification, if items you delegated are due?	infolog	lt	Gaukite pranešimą, jei jūsų deleguoti įrašai turi būti pradėti.
 do you want to receive notifications as html-mails or plain text?	infolog	lt	Gaukite pranešimus kaip HTML el. laiškus arba paprastą tekstą.
 don't show infolog	infolog	lt	NERODYTI informacijos žurnalo
+done	infolog	lt	Išsaugoti failą
 download	infolog	lt	Atsisiųsti
 download url for links	infolog	lt	Atsisiųsti nuorodų URL
 due %1	infolog	lt	Dėl %1
@@ -134,7 +140,7 @@ pattern for search in addressbook	infolog	lt	Paieškos adresų knygoje šablonas
 pattern for search in projects	infolog	lt	Paieškos projektuose šablonas
 performance optimization for huge infolog tables	admin	lt	Didžiulių InfoLog lentelių našumo optimizavimas
 permissions error - %1 could not %2	infolog	lt	Leidimų klaida - %1 negalėjo %2
-prefix for sub-entries (default: re:)	infolog	lt	subįrašų priešdėlis (numatytoji reikšmė: Re:)
+prefix for sub-entries (default: re:)	infolog	lt	Subįrašų priešdėlis (numatytoji reikšmė: Re:)
 print this infolog	infolog	lt	Spausdinti šį informacinį žurnalą
 printing...	infolog	lt	Spausdinti...
 project id	infolog	lt	Projekto ID

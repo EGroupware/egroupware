@@ -5,11 +5,14 @@
 %1 is not readable	importexport	it	%1 non è leggibile
 %1 is not writable	importexport	it	%1 non è scrivibile
 %1 records processed	importexport	it	%1 voci processate
-%s just me	importexport	it	% Solo io
+%s all users	importexport	it	%s tutti gli utenti
+%s just me	importexport	it	%s Solo io
 (* for all)	importexport	it	(* per tutti)
 (0-23)	importexport	it	(0-23)
 (0-6, 0=sun)	importexport	it	(0-6, 0=Domenica)
 *contact id cannot be changed by import	importexport	it	* L'ID contatto non può essere modificato dall'importazione
+add a new definition	importexport	it	Aggiungere una nuova definizione
+add an additional condition	importexport	it	Aggiungere una condizione supplementare
 addressbook csv import	importexport	it	Importazione da CSV rubrica
 addressbook vcard import	importexport	it	Importazione da vCard rubrica
 admin disabled exporting	importexport	it	L'amministratore ha disabilitato l'esportazione
@@ -19,6 +22,8 @@ all users	importexport	it	Tutti gli utenti
 allowed users	importexport	it	Utenti consentiti
 automatically created by importexport	importexport	it	Automaticamente creto da Importa|Esporta
 basic csv import	importexport	it	Importazione base CSV
+change allowed users	importexport	it	Modificare gli utenti consentiti
+change owner when updating	importexport	it	Cambiare il proprietario durante l'aggiornamento
 changed	importexport	it	Modificato
 changed allowed_users	importexport	it	Gli utenti consentiti sono stati modificati
 changed owner	importexport	it	Proprietario modificato
@@ -42,6 +47,7 @@ database values	importexport	it	Valori del database
 day of week	importexport	it	Giorni della settimana
 define imports|exports	common	it	Definisci Importazioni | Esportazioni
 definition	importexport	it	Definizione
+definition filter	importexport	it	Filtro definizione
 delete all selected definitions	importexport	it	Rimuovi TUTTE le definizioni selezionate
 delete files after import	importexport	it	Elimina dopo l'importazione
 deleted	importexport	it	Eliminato
@@ -136,7 +142,9 @@ unable to delete	importexport	it	Impossibile eliminare
 unable to link to %1 "%2"	importexport	it	Impossibile collegare %1 a "%2"
 unable to schedule	importexport	it	Impossibile pianificare.
 update categories	importexport	it	Aggiorna categorie
+update default-definitions	importexport	it	Aggiornare le definizioni predefinite
 use default	importexport	it	Usa il predefinito
+use definition filter	importexport	it	Utilizzare il filtro delle definizioni
 use field from csv if possible	importexport	it	Usa campo da CSV se possibile
 use search results	common	it	Usa i risultati della ricerca
 user preference	importexport	it	Preferenza utente

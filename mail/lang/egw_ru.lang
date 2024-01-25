@@ -21,6 +21,7 @@ all of	mail	ru	Все из
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML
 allways a new window	mail	ru	Всегда новое окно
+always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
 always show html emails	mail	ru	Всегда показывать письма формата HTML
 always show notifiction	mail	ru	Всегда показывать уведомление
 answered	mail	ru	ответил
@@ -43,7 +44,10 @@ by default 'http://' is just replaced with 'https://'. feel free to configure 'h
 caching of flags	mail	ru	Etichetă de contact
 can not open imap connection	mail	ru	Невозможно установить подключение IMAP
 can not resolve the winmail.dat attachment!	mail	ru	Не удается разрешить вложение winmail.dat!
+certificate details	mail	ru	Детали сертификата
+certificate in text	mail	ru	Сертификат в тексте
 certificate info for email %1	mail	ru	Информация о сертификате для письма %1
+certificate issued by	mail	ru	Сертификат выдан
 changing subject failed because of %1	mail	ru	Не удалось изменить тему из-за %1
 changing subject failed folder %1 does not exist	mail	ru	Изменение темы не удалось, папка %1 не существует
 check message against next rule also	mail	ru	Проверить сообщение также на соответствие следующему правилу
@@ -109,6 +113,7 @@ drafts	mail	ru	Черновики
 edit account	mail	ru	Редактировать учётную запись
 edit vacation settings	mail	ru	Редактировать настройки на случай отсутствия
 effective only if server supports acl at all	admin	ru	Действует, если сервер поддерживает ACL
+email address	mail	ru	Адрес электронной почты
 email notification update failed	mail	ru	Неудачное обновление уведомления по почте
 emailaddress	admin	ru	Адрес электронной почты
 emailadmin: profilemanagement	mail	ru	Администрирование почты: управление профилем
@@ -125,6 +130,7 @@ error: could not send message.	mail	ru	Ошибка: Не могу послат�
 error: message could not be displayed.	mail	ru	ОШИБКА: Сообщение не может быть показано.
 esync will fail without a working email configuration!	mail	ru	eSync не работает без действующей настройки eMail!
 event details follow	mail	ru	Детали события следуют
+every %1. day	mail	ru	Каждый %1. день
 everyone	mail	ru	Все
 examine namespace to retrieve folders in others and shared	mail	ru	Исследование пространства имен для получения папок в других и общих папках
 extended	mail	ru	Расширено.
@@ -257,6 +263,7 @@ none, create all	mail	ru	Нет, создать всё
 nothing to change.	mail	ru	Нечего менять.
 notify when new mails arrive in these folders	mail	ru	Оповещать, когда в эти ящики приходят новые письма
 on	mail	ru	На
+once per day	mail	ru	Один раз в день
 one address is not valid	mail	ru	Один из адресов неверен
 only email	mail	ru	Только электронная почта
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ru	Имеет смысл только в том случае, если пароль передается получателям по другому каналу / вне этой почты!
@@ -323,6 +330,7 @@ required pear class mail/mimedecode.php not found.	mail	ru	Необходимы�
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ru	Требуется отключить, если вы используете Dovecot с флагами private seen на общей или пользовательской папке!
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	ru	S/MIME Encryption failed because no certificate has been found for sender address: %1
 save all	mail	ru	Сохранить всё
 save all attachments to filemanager	mail	ru	Сохранить все вложения в файловом менеджере
 save as calendar	mail	ru	Сохранить как событие Календаря
@@ -369,9 +377,11 @@ show/hide preview pane in mail list view	mail	ru	Показать/скрыть �
 sieve	mail	ru	Sieve
 sieve connection status	mail	ru	Статус соединения Sieve
 sieve script name	mail	ru	название скрипта Sieve
+sign your message with smime certificate	mail	ru	Подпишите свое сообщение с помощью сертификата S/MIME
 signature	mail	ru	Подпись
 signature at top	mail	ru	Подпись сверху
 signature position and visibility	mail	ru	Положение и видимость подписи
+signed by	mail	ru	Подписано
 size(...->0)	mail	ru	Размер (...->0)
 size(0->...)	mail	ru	Размер (0->...)
 small view	mail	ru	Просмотр в небольшом окне
@@ -452,4 +462,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	ru	Для сохранения сообщения в VFS необходимо сначала сохранить его как черновик
 you will loose current message body, unless you save it to your clipboard!	mail	ru	Текущее тело сообщения будет потеряно, если не сохранить его в буфер обмена!
 you've got new mail	mail	ru	Вы получили новое письмо
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ru	Ваша оставшаяся квота %1 слишком мала, вы не сможете отправлять/получать дальнейшие сообщения.\n Хотя очистка сообщений в корзине или нежелательной папке может помочь вам вернуть немного свободного места.\n Если это не помогло, пожалуйста, попросите вашего администратора увеличить квоту.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ru	Ваша оставшаяся квота %1 слишком мала, вы не сможете отправлять/получать дальнейшие сообщения.<br>Хотя очистка сообщений в корзине или нежелательной папке может помочь вам вернуть немного свободного места.<br>Если это не помогло, пожалуйста, попросите вашего администратора увеличить квоту.

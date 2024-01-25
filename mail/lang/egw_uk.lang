@@ -9,6 +9,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	uk	Не вд�
 adding %1 to whiltelisted email addresses failed because of %2	mail	uk	Не вдалося додати %1 до білого списку через причину %2
 after reply, visible during compose	mail	uk	Після відповіді, видно під час створення листа
 aliases+forwards	mail	uk	Псевдоніми + переадресація
+always respond / auto-responder	mail	uk	Завжди відповідати / автовідповідач
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
 attach files	mail	uk	Прикріплення файлів
@@ -20,7 +21,10 @@ be aware that all attachments will be sent as %1!	mail	uk	Майте на ува
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	uk	За замовчуванням 'http://' просто замінено на 'https://'. Ви можете налаштувати 'https://proxy.egroupware.org/', щоб також завантажувати зображення, доступні лише через http.
 caching of flags	mail	uk	Кешування прапорів
 can not resolve the winmail.dat attachment!	mail	uk	Не вдається вирішити проблему з вкладеним файлом winmail.dat!
+certificate details	mail	uk	Інформація про сертифікат
+certificate in text	mail	uk	Сертифікат в тексті
 certificate info for email %1	mail	uk	Інформація про сертифікат для email %1
+certificate issued by	mail	uk	Сертифікат виданий
 changing subject failed because of %1	mail	uk	Не вдалося змінити тему через %1
 changing subject failed folder %1 does not exist	mail	uk	Змінити тему не вдалося, папка %1 не існує
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
@@ -38,12 +42,15 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	uk	Ви дійсно хочете ввімкнути мітку %1 для ВСІХ повідомлень у поточному поданні?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	uk	Ви хочете, щоб вас запитували про підтвердження, перш ніж прикріплювати вибрані повідомлення до нового листа?
 edit account	mail	uk	Редагувати рахунок
+email address	mail	uk	Адреса електронної пошти
+emailaddress	admin	uk	Адреса електронної пошти
 emailadmin: profilemanagement	mail	uk	eMailAdmin: Керування профілем
 emails in whitelisted domains are not marked as spam	mail	uk	Листи в білих доменах не позначаються як спам
 enable	mail	uk	Включити
 enabled	mail	uk	Увімкнено
 encrypt your message with smime certificate	mail	uk	Шифрувати повідомлення за допомогою S/MIME сертифікату
 event details follow	mail	uk	Подробиці події
+every %1. day	mail	uk	Кожного %1. дня
 everyone	mail	uk	Всі
 examine namespace to retrieve folders in others and shared	mail	uk	Вивчення простору імен для пошуку папок в інших та спільних теках
 extended	mail	uk	Розширений
@@ -119,6 +126,7 @@ new subject	mail	uk	Нова тема
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	uk	Папка призначення не надається, а також не надається папка для збереження повідомлень або інший спосіб зберігання пошти (збереження в InfoLog/Ticketsystem), але це необхідно.
 no sneak preview in list	mail	uk	Немає попереднього перегляду повідомлень
 non	mail	uk	Ні
+once per day	mail	uk	Раз на день
 only email	mail	uk	Тільки email
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	uk	Має сенс, тільки якщо ви передаєте пароль іншим каналом/поза межами цього листа одержувачам!
 only name	mail	uk	Тільки ім'я
@@ -132,8 +140,8 @@ original message	mail	uk	Оригінальне повідомлення
 outbox	mail	uk	Вихідні
 permission denied	mail	uk	Заборонено
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	uk	Будь ласка, налаштуйте ваш S/MIME сертифікат на вкладці Шифрування в діалоговому вікні Редагування облікового запису.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до вашого адміністратора, щоб дізнатися, чи підтримує ваш сервер правила фільтрації на стороні сервера, і як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до свого адміністратора, щоб дізнатися, чи підтримує ваш сервер серверні повідомлення про відпустку та як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до вашого адміністратора, щоб дізнатися, чи підтримує ваш сервер правила фільтрації на стороні сервера, і як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	uk	Зверніться до свого адміністратора, щоб дізнатися, чи підтримує ваш сервер серверні повідомлення про відпустку та як їх увімкнути в EGroupware для вашого активного облікового запису (%1) з ID: %2.
 please enter password	mail	uk	Будь ласка, введіть пароль
 please select a address	mail	uk	Будь ласка, виберіть адресу
 post	mail	uk	відправити
@@ -148,7 +156,7 @@ quicksearch (with cc)	mail	uk	Швидкий пошук (+Копіювати)
 read / unread	mail	uk	Прочитано / Не прочитано
 real name	mail	uk	Справжнє ім'я
 real name email	mail	uk	Справжнє ім'я [Email]
-real name organization email	mail	uk	Справжнє ім'я Організація [email] [email protected
+real name organization email	mail	uk	Справжнє ім'я Організація [email]
 remember the password for	mail	uk	Запам'ятайте пароль для
 remove all	mail	uk	Видалити всі
 removing %1 from blacklisted email addresses failed because of %2	mail	uk	Видалення %1 з чорного списку не вдалося через %2
@@ -161,6 +169,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	uk	Повідомити про вміст цього листа як спам - рішення для боротьби зі спамом, такі як spamTitan, дізнаються про це
 required pear class mail/mimedecode.php not found.	mail	uk	Необхідний клас PEAR Mail/mimeDecode.php не знайдено.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	uk	Необхідно вимкнути, якщо ви використовуєте Dovecot з прапорами приватного перегляду у спільній або користувацькій папці!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	uk	Шифрування S/MIME не вдалося, оскільки для адреси відправника не знайдено сертифіката: %1
 save all attachments to filemanager	mail	uk	Зберегти всі вкладення у файл-менеджер
 save as infolog on send	mail	uk	Позначте кнопку, щоб створити інфо-лог після відправлення
 save as tracker on send	mail	uk	Поставте галочку, щоб після відправлення створити тікет
@@ -188,9 +197,11 @@ show vertical	mail	uk	Показати вертикаль
 show vertical with all columns	mail	uk	Показувати вертикаль з усіма стовпчиками
 show/hide preview pane in mail list view	mail	uk	Показати/приховати панель попереднього перегляду в списку листів
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	uk	Показувати тимчасове видиме сповіщення з адресою, темою та фрагментом листа
+sign your message with smime certificate	mail	uk	Підписати повідомлення S/MIME сертифікатом
 signature	mail	uk	Підпис
 signature at top	mail	uk	підпис зверху
 signature position and visibility	mail	uk	Положення та видимість підпису
+signed by	mail	uk	Підписано
 small view	mail	uk	маленький вигляд
 smime encrypted message	mail	uk	S/MIME зашифроване повідомлення
 smime signed message	mail	uk	Повідомлення з підписом S/MIME
@@ -220,4 +231,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	uk	Щоб зберегти повідомлення у VFS, вам потрібно спочатку зберегти його як чернетку.
 you will loose current message body, unless you save it to your clipboard!	mail	uk	Якщо ви не збережете його в буфер обміну, ви втратите тіло повідомлення!
 you've got new mail	mail	uk	Ви отримали новий лист
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	uk	Ваша залишкова квота %1 занадто мала, можливо, ви не зможете надсилати/отримувати подальші листи.\n Хоча очищення листів у смітнику або папці небажаної пошти може допомогти вам повернути трохи вільного місця.\n Якщо це не допомогло, зверніться до адміністратора за додатковою квотою.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	uk	Ваша залишкова квота %1 занадто мала, можливо, ви не зможете надсилати/отримувати подальші листи.<br>Хоча очищення листів у смітнику або папці небажаної пошти може допомогти вам повернути трохи вільного місця.<br>Якщо це не допомогло, зверніться до адміністратора за додатковою квотою.

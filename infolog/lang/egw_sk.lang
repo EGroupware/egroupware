@@ -53,7 +53,7 @@ all links and attachments	infolog	sk	Všetky odkazy a prílohy
 all other %1 fields are valid	infolog	sk	Všetky ostatné %1 polia sú platné
 all projects	infolog	sk	Všetky projekty
 allow to save entries with due date in the past	infolog	sk	Umožniť vytváranie záznamov ktorých termín splnenia je v minulosti
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	Umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu)
 alternatives	infolog	sk	Alternatívy
 always show them	infolog	sk	Vždy ich ukázať
 application mail expected but got: %1	infolog	sk	Očakával som e-mail aplikácie no dostal som: %1
@@ -145,7 +145,7 @@ delegated open	infolog	sk	Delegované - otvorené
 delegated open and upcoming	infolog	sk	Delegované - otvorené a blížiace sa
 delegated overdue	infolog	sk	Delegované - meškajúce
 delegated upcomming	infolog	sk	Delegované - blížiace sa
-delegation	infolog	sk	Delegovať
+delegation	infolog	sk	Delegovanie
 delete	infolog	sk	Odstrániť
 delete one record by passing its id.	infolog	sk	Odstrániť konkrétny záznam podľa zadaného ID.
 delete selected entries?	infolog	sk	Odstrániť vybrané položky?
@@ -169,13 +169,13 @@ do you want a notification, if items you delegated are due?	infolog	sk	Chcete do
 do you want to receive notifications as html-mails or plain text?	infolog	sk	E-mailové pripomienky chcete dostávať ako HTML, alebo ako čistý text?
 don't show infolog	infolog	sk	NEzobrazovať Záznamník
 done	infolog	sk	Hotovo
-download	infolog	sk	Stiahnuť
+download	infolog	sk	Uložiť súbor
 download url for links	infolog	sk	Stiahnuť URL pre odkazy
 due %1	infolog	sk	Termín %1
 due date	infolog	sk	Termín splnenia
 duration	infolog	sk	Trvanie
 e-mail:	infolog	sk	E-mail:
-each value is a line like <id>[=<label>]	infolog	sk	každá hodnota je riadok v tvare <id>[=<label>]
+each value is a line like <id>[=<label>]	infolog	sk	Každá hodnota je riadok v tvare <id>[=<label>]
 edit	infolog	sk	Upraviť
 edit or create categories for ingolog	infolog	sk	Upraviť alebo vytvoriť kategórie pre Záznamník
 edit rights (full edit rights incl. making someone else responsible!)	infolog	sk	Plné práva úprav (vrátane nastavenia niekoho iného za zodpovednú osobu!)
@@ -188,7 +188,7 @@ end	infolog	sk	Koniec
 enddate	infolog	sk	Termín splnenia
 enddate can not be before startdate	infolog	sk	Termín splnenia nemôže byť pred dátumom začatia
 enter a custom contact, leave empty if linked entry should be used	infolog	sk	Zadajte používateľsky definovaný kontakt, alebo ponechajte prázdne ak sa má použiť záznam pripojený odkazom
-enter a custom phone/email, leave empty if linked entry should be used	infolog	sk	zadajte používateľsky definovaný telefón/E-mail, alebo ponechajte prázdne ak sa má použiť záznam pripojený odkazom
+enter a custom phone/email, leave empty if linked entry should be used	infolog	sk	Zadajte používateľsky definovaný telefón/E-mail, alebo ponechajte prázdne ak sa má použiť záznam pripojený odkazom
 enter a textual description of the log-entry	infolog	sk	Zadajte text popisujúci tento záznam
 enter the query pattern	infolog	sk	Zadajte výraz pre vyhľadávanie
 entry and all files	infolog	sk	Záznam a všetky súbory
@@ -269,7 +269,7 @@ invalid filename	infolog	sk	Chybný názov súboru
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	sk	Chybné ID používateľa: %1. Použil som radšej %2.
 invalid status for entry type %1.	infolog	sk	Chybný stav pre položku typu %1.
 label<br>helptext	infolog	sk	Označenie<br>Pomocný text
-last changed	infolog	sk	Naposledy zmenené
+last changed	infolog	sk	Posledná zmena
 last modified	infolog	sk	Naposledy upravil
 leave blank to get the used time calculated by timesheet entries	infolog	sk	Ak chcete, aby bol čas spočítaný na základe záznamov Harmonogramu, tak ponechajte prázdne.
 leave it empty	infolog	sk	Ponechať prázdne
@@ -380,7 +380,7 @@ projectmanager	infolog	sk	Projektovník
 re-planned	infolog	sk	Pre-plánované
 re-planned time	infolog	sk	Pre-plánovaný čas
 re:	infolog	sk	Re:
-read one record by passing its id.	infolog	sk	Načítaj jednotlivý záznam zadaním id.
+read one record by passing its id.	infolog	sk	Načítaj jednotlivý záznam zadaním ID.
 read rights (default)	infolog	sk	Právo na čítanie (predvolené)
 receive notifications about due entries you are responsible for	infolog	sk	Dostávať pripomienky o záznamoch, ktorým nastáva termín splnenia a ste za ne zodpovední
 receive notifications about due entries you delegated	infolog	sk	Dostávať pripomienky o záznamoch, ktoré ste delegovali
@@ -493,7 +493,7 @@ today	infolog	sk	Dnes
 todays date	infolog	sk	Dnešný dátum
 todo	infolog	sk	Úloha
 typ	infolog	sk	Typ
-typ '%1' already exists !!!	infolog	sk	Typ '%1' už existuje !!!
+typ '%1' already exists !!!	infolog	sk	Typ '%1' už existuje!
 type	infolog	sk	Typ
 type ...	infolog	sk	Typ ...
 type of customfield	infolog	sk	Typ používateľského poľa
@@ -520,7 +520,7 @@ view parent with children	infolog	sk	Zobraziť rodčovské s potomkami
 view subs	infolog	sk	Zobraziť podradené záznamy
 view the parent of this entry and all his subs	infolog	sk	Zobraziť rodičovský záznam a všetky jeho podradené
 view this linked entry in its application	infolog	sk	Zobraziť tento odkaz v jeho aplikácii
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	keď má byť začatá Úloha alebo Telefonát, ukáže sa akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	Keď má byť začatá Úloha alebo Telefonát, ukáže sa akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	sk	Ktoré prídavné položky majú byť zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?
 which implicit acl rights should the responsible get	infolog	sk	Ktoré implicitné ACL prístupové oprávnenia má obdržať zodpovedná osoba
 which participants should be preselected when scheduling an appointment.	infolog	sk	Ktorí účastníci majú byť predvybratí pri plánovaní pozvania.
@@ -537,7 +537,7 @@ yes, only admins can purge deleted items	infolog	sk	Áno, iba správcovia môžu
 yes, with larger fontsize	infolog	sk	Áno, s väčším písmom
 yes, with purging of deleted items possible	infolog	sk	Áno, s možnosťou vyčistenia odstránených položiek
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	sk	Môžete si vybrať, ktorá kategória bude predvybraná, keď budete vytvárať nový záznam Záznamníka.
-you can't delete one of the stock types !!!	infolog	sk	Nemôžete odstrániť východiskový typ!!
+you can't delete one of the stock types !!!	infolog	sk	Nemôžete odstrániť východiskový typ!
 you have entered an invalid ending date	infolog	sk	Zadali ste chybný termín ukončenia
 you have entered an invalid starting date	infolog	sk	Zadali ste chybný dátum začatia
 you have to enter a name, to create a new type!	infolog	sk	Ak chcete vytvoriť typ, musíte zadať nejaké meno!

@@ -1,1 +1,72 @@
+(update in sec. %s)	notifications	lt	(Atnaujinimas per sek. %s)
+account:	notifications	lt	Sąskaita:
+all possible notification backends	notifications	lt	Visi galimi pranešimų galiniai serveriai
+are you sure you want to delete all notifications?	notifications	lt	Ar tikrai norite ištrinti visus pranešimus?
+browser	notifications	lt	Naršyklė
+browser is starting.	notifications	lt	Naršyklė paleidžiama.
+cancal settings?	notifications	lt	Atšaukti nustatymus?
+cancal?	notifications	lt	Atšaukti?
+certification-information:	notifications	lt	Sertifikavimo informacija:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	lt	Pažymėkite abu. Pirmiausia pabandykite aktyvią vartotojo apibrėžtą paskyrą, jei jos nėra, naudokite "eMailAdmin" profilį.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	lt	Pasirinkite pranešimų grandinę. Jums bus pranešama per į grandinę įtrauktus galinius įrenginius.<br>Pastaba: jei pranešimų grandinė pažymėta kaip "disabled" (išjungta), jūsų administratorius neleidžia naudoti vieno ar daugiau į grandinę įtrauktų galinių galų, pranešimai grįžta į "Email" (el. paštas), o jums pranešama.
+connection error.	notifications	lt	Ryšio klaida.
+connection error. please check connection to server.	notifications	lt	Ryšio klaida. Patikrinkite ryšį su serveriu.
+continue to connect?	notifications	lt	Tęsti ryšį?
+cookies are required to login to this site.	notifications	lt	Norint prisijungti prie šios svetainės, reikia slapukų.
+delete all messages	notifications	lt	Ištrinti visus pranešimus
+delete notifications	notifications	lt	Ištrinti pranešimus
+delete this message	notifications	lt	Ištrinti šį pranešimą
+domain not found, please check serveraddress.	notifications	lt	Domenas nerastas, patikrinkite serverio adresą.
+egroupware login is starting, please wait.	notifications	lt	Pradedamas "EGroupware" prisijungimas, palaukite.
+egroupware logindomain:	notifications	lt	EGroupware prisijungimo domenas:
+egroupware logindomains founds, please select.	notifications	lt	EGroupware Logindomains rasta, pasirinkite.
+egroupware not found by url or connection lost to server.	notifications	lt	EGroupware nerastas pagal URL arba prarastas ryšys su serveriu.
+egroupware not found by url.	notifications	lt	EGroupware nerastas pagal URL adresą.
+email notifications only, if user is not logged in	notifications	lt	Tik el. pašto pranešimai, jei naudotojas nėra prisijungęs
+error browser can`t start.	notifications	lt	Klaida Naršyklė negali įsijungti.
+error on loading tray icon	notifications	lt	Klaida įkeliant dėklo piktogramą
+error ssl	notifications	lt	Klaida SSL
+exit	notifications	lt	Išeiti iš
+host:	notifications	lt	Serveris :
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	lt	Kaip verbaliai turėtų elgtis "EGroupware-Popup", jei naudotojui siunčiamas pranešimas:<br>mažas: tiesiog rodyti pranešimo varpelį viršutiniame meniu - viršutiniame meniu turi būti įjungtas!<br>vidutinis: iškelti pranešimo langą į priekį<br>didelis: išryškinkite pranešimo langą ir leiskite naršyklei padaryti ką nors, kad praneštų apie save
+info on load config file: create config file.	notifications	lt	Informacija apie konfigūracijos failo įkėlimą: sukurti konfigūracijos failą.
+issuer dn:	notifications	lt	Issuer DN:
+java desktop notification app	preferences	lt	Java darbalaukio pranešimų programa
+last month	notifications	lt	Praėjusį mėnesį
+login aborted, application exit?	notifications	lt	Prisijungimas nutrauktas, programos išėjimas?
+login in egroupware:	notifications	lt	Prisijungimas prie EGroupware:
+mail account to use for notifications	admin	lt	Pašto paskyra, kuri bus naudojama pranešimams
+mark all as read	notifications	lt	Pažymėti visus kaip perskaitytus
+mark as read	notifications	lt	Pažymėti kaip perskaitytą
+more info	notifications	lt	Daugiau informacijos
+notifier	notifications	lt	Pranešėjas
+open notified entry	notifications	lt	Atidaryti įrašą su pranešimais
+page not found, please check serveraddress.	notifications	lt	Puslapis nerastas, patikrinkite serverio adresą.
+password:	notifications	lt	Slaptažodis:
+permission	notifications	lt	Leidimas
+permission denied for notifications application.	notifications	lt	Atsisakyta išduoti leidimą taikyti pranešimus.
+placeholders with user/ prefix	admin	lt	vietoj žymenų su vartotoju/priešdėliu
+please contact your egroupware admin.	notifications	lt	Kreipkitės į "EGroupware" administratorių.
+please enter the url of your egroupware.	notifications	lt	Įveskite savo "EGroupware" URL adresą.
+please enter your egroupware username.	notifications	lt	Įveskite savo EGroupware vartotojo vardą.
+please enter your password	notifications	lt	Įveskite savo slaptažodį
 refresh notifications	notifications	lt	Atnaujinti pranešimus
+repeat login?	notifications	lt	Kartojasi prisijungimas?
+run application	notifications	lt	Paleisti programą
+save password	notifications	lt	Išsaugoti slaptažodį
+setting	notifications	lt	Nustatymas
+setting aborted, application exit	notifications	lt	Nustatymas nutrauktas, programa išeina
+settings	notifications	lt	Nustatymai
+signature added to every change notification	admin	lt	Prie kiekvieno pranešimo apie pokyčius pridedamas parašas
+sorry, your login has expired	notifications	lt	Atsiprašome, jūsų prisijungimo laikas baigėsi
+subject dn:	notifications	lt	Tema DN:
+the server certificate is not a valid trust center certificate!	notifications	lt	Serverio sertifikatas nėra galiojantis pasitikėjimo centro sertifikatas!
+this egroupware notification has been sent to you by mail because your	notifications	lt	Šis "EGroupware" pranešimas buvo išsiųstas jums el. paštu, nes jūsų
+this month	notifications	lt	Šį mėnesį
+user:	notifications	lt	Vartotojas:
+yesterday	notifications	lt	Vakar
+you can also use	admin	lt	Taip pat galite naudoti
+you have %1 unread notifications	notifications	lt	Turite %1 neperskaitytų pranešimų
+you have been successfully logged out	notifications	lt	Jūs sėkmingai atsijungėte
+you've got new mail	notifications	lt	Gavote naują laišką
+your session could not be verified.	notifications	lt	Jūsų seanso nepavyko patikrinti.

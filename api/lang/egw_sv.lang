@@ -6,14 +6,14 @@
 %1 etemplates found	common	sv	Hittade %1 eTemplate
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
 %1 matches on search criteria	common	sv	%1 resultat hittade på sökning
-%1 more %2 selected ...	common	sv	%1 fler %2 valda...
+%1 more %2 selected ...	common	sv	%1 fler %2 valda ...
 %1 new etemplates imported for application '%2'	common	sv	%1 nya eTemplate importerade för applikation '%2'
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br> eller gör %3 skrivbar för webbservern
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1EGroupware%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 %s disabled	common	sv	%s Inaktiverad
 %s needed	common	sv	%s Krävs
 %s notranslation	common	sv	%s Inte översatt
-%s onchange	common	sv	%s onChange
+%s onchange	common	sv	%s onchange
 %s readonly	common	sv	%s Skrivskyddad
 '%1' copied to clipboard	common	sv	"%1" kopieras till urklipp
 '%1' has an invalid format !!!	common	sv	'%1' har ett ogiltigt format
@@ -39,6 +39,8 @@
 5 seconds	common	sv	5 sekunder
 80 (http)	admin	sv	80 (http)
 a pattern to be searched for	common	sv	Sökord att söka efter
+a request to the egroupware server returned with an error	common	sv	En förfrågan till EGroupware-servern returnerades med ett felmeddelande
+abcdefghijklmnopqrstuvwxyz	common	sv	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	sv	Avbryt
 about	common	sv	Om
 about %1	common	sv	Om %1
@@ -47,6 +49,7 @@ access	common	sv	Åtkomst
 access not permitted	common	sv	Åtkomst nekad
 accesskey	common	sv	Åtkomstnyckel
 accesskeys can also be specified with an & in the label (eg. &name)	common	sv	Åtkomstnyckel kan specifieras med ett & i en etikett (ex. &Namn)
+account contactdata	common	sv	Konto kontaktuppgifter
 account has been created	common	sv	Kontot skapat
 account has been deleted	common	sv	Kontot raderat
 account has been updated	common	sv	Kontot uppdaterat
@@ -54,10 +57,13 @@ account is expired	common	sv	Kontot har förfallit
 accounts	common	sv	Konton
 acl	common	sv	ACL
 action	common	sv	Åtgärd
+action when category is an email address	groupdav	sv	Åtgärd när kategorin är en e-postadress
 actions	common	sv	Åtgärder
 actions...	common	sv	Åtgärder
 active	common	sv	Aktiv
+active directory requires ssl or tls to change passwords!	common	sv	Active Directory kräver SSL eller TLS för att ändra lösenord!
 add	common	sv	Lägg till
+add %1	common	sv	Lägg till %1
 add %1 category for	common	sv	Lägg till %1 kategori för
 add a new column (after the existing ones)	common	sv	Infoga kolumn (efter existerande)
 add a new contact	common	sv	Lägg till ny kontakt
@@ -131,8 +137,6 @@ authenticate	common	sv	Autentisera
 author	common	sv	Författare
 autohide sidebox menu's	common	sv	Autogöm Länkboxen
 autohide sidebox menus	common	sv	Autogöm Länkboxen
-automatically hide the sidebox menu's?	common	sv	Göm automatiskt Länkboxens menyer?
-automatically hide the sidebox menus?	common	sv	Göm automatiskt Länkboxens menyer?
 autosave default category	common	sv	Autospara standard kategori
 avatar	common	sv	Avatar
 azerbaijan	common	sv	AZERBAIJAN
@@ -167,6 +171,7 @@ box	common	sv	Ruta
 box...	common	sv	Ruta ...
 brazil	common	sv	BRASILIEN
 british indian ocean territory	common	sv	BRITISH INDIAN OCEAN TERRITORY
+broken link	common	sv	Bruten länk
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	sv	Webbläsaren %1 %2 rekommenderas inte. Du kan uppleva problem och funktioner som inte fungerar. Använd den senaste versionen av Chrome, Firefox eller Edge. Tack för hjälpen!
 brunei darussalam	common	sv	BRUNEI DARUSSALAM
 bulgaria	common	sv	BULGARIEN
@@ -179,8 +184,8 @@ can not have special sql-value null	common	sv	Kan inte ha SQL reserverat värde 
 canada	common	sv	KANADA
 cancel	common	sv	Avbryt
 cannot replace %1 because it is a directory	common	sv	Kan inte ersätta %1 eftersom det är en katalog
-cant delete a single widget from a grid !!!	common	sv	Kan inte ta bort en enstaka widget från en grid!!
-cant delete the only column of a grid !!!	common	sv	Kan inte ta bort den enda kolumnen från en grid!!
+cant delete a single widget from a grid !!!	common	sv	Kan inte ta bort en enstaka widget från en grid!
+cant delete the only column of a grid !!!	common	sv	Kan inte ta bort den enda kolumnen från en grid!
 cant delete the only row in a grid !!!	common	sv	Kan inte ta bort den enda raden i en grid
 cant open '%1' for %2	common	sv	Kan inte öppna '%1' åt %2
 cape verde	common	sv	KAP VERDE
@@ -188,8 +193,8 @@ caption	common	sv	Överskrift
 categories	common	sv	Kategorier
 categories for	common	sv	Kategorier för
 category	common	sv	Kategori
-category %1 has been added !	common	sv	Kategori %1 tillagd
-category %1 has been updated !	common	sv	Kategori %1 uppdaterad
+category %1 has been added !	common	sv	Kategori %1 tillagd!
+category %1 has been updated !	common	sv	Kategori %1 uppdaterad!
 cayman islands	common	sv	CAYMANÖARNA
 cc	common	sv	Cc
 cellpadding for the table-tag	common	sv	Cellfyllnad för tabell kod
@@ -201,7 +206,7 @@ central african republic	common	sv	CENTRAL AFRIKANSKA REPUBLIKEN
 chad	common	sv	TCHAD
 change	common	sv	Ändra
 changed	common	sv	Ändrad
-charset	common	sv	utf-8
+charset	common	sv	Charset
 check all	common	sv	Markera alla
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sv	Kontrollera om det finns tomma värden i IF-satser. Exempel {{IF url~EMPTY~~Webbplats:}} - Om url inte är tom, skriv "Webbplats:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	sv	Kontrollera om innehållet bara ska visas men inte förändras (innehållet skickas då inte tillbaks)
@@ -251,6 +256,7 @@ confirmation necesary or custom java-script	common	sv	Bekräftelse nödvändig e
 congo	common	sv	KONGO, REPUBLIKEN
 congo, the democratic republic of the	common	sv	KONGO, DEMOKRATISKA REPUBLIKEN
 contact	common	sv	Kontakt
+contact field to show	common	sv	Kontaktfält att visa
 contact fields	common	sv	Kontakt fält
 contacting server...	common	sv	Kontaktar server ...
 contains	common	sv	Innehåller
@@ -262,7 +268,7 @@ copy to	common	sv	Kopiera till
 copy to clipboard	common	sv	Kopiera till klippbordet
 costa rica	common	sv	COSTA RICA
 cote d ivoire	common	sv	ELFENBENSKUSTEN
-could not contact server. operation timed out!	common	sv	Kunde inte kontakta server.
+could not contact server. operation timed out!	common	sv	Kunde inte kontakta server!
 create	common	sv	Skapa
 create a new table for the application	common	sv	Skapa ny tabell för applikationen
 create directory	common	sv	Skapa en mapp
@@ -284,7 +290,7 @@ current	common	sv	Aktuell
 current users	common	sv	Aktuella användare
 custom	common	sv	Anpassa
 custom fields	common	sv	Anpassade fält
-custom javascript for onchange	common	sv	Anpassat JavaScript för onChange
+custom javascript for onchange	common	sv	Anpassat JavaScript för onchange
 cut	common	sv	Klipp ut
 cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
@@ -328,13 +334,8 @@ denmark	common	sv	DANMARK
 description	common	sv	Beskrivning
 detail	common	sv	Detalj
 details	common	sv	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
 direction left to right	common	sv	Riktning från vänster till höger
 directory	common	sv	Katalog
-disable internet explorer png-image-bugfix	common	sv	Inaktivera Internet Explorer png-bild-bugfix
-disable slider effects	common	sv	Inaktivera animerade effekter
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
 disabled	common	sv	Inaktiverad
 discard changes	common	sv	Ångra ändringar
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	sv	Visas framför indata eller indata skrivs för en '%s' i etiketten (etikett på Sparaknapp eller bild fil)
@@ -376,20 +377,20 @@ editable templates - editor	common	sv	Ändringsbar mall - Editor
 editable templates - search	common	sv	Ändringsbar mall - Sök
 editable templates - show template	common	sv	Ändringsbar mall - Visa mall
 egroupware	common	sv	EGroupware
-egroupware: login blocked for user '%1', ip %2	common	sv	EGroupware: inloggning spärrad för '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	sv	Inloggning spärrad för '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
 email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sv	Inbäddade CSS stilar, ex. '.red { background: red; }' (notera '.' före class namnet) eller '@import url(...)' (class namn är globala för hela sidan!)
-enable javascript onchange submit	common	sv	Aktivera JavaScript OnChange submit
+enable javascript onchange submit	common	sv	Aktivera JavaScript onchange submit
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
 end time	common	sv	Sluttid
 enter '' for an empty default, nothing mean no default	common	sv	Ange '' för tom standard, tomt betyder ingen standard
 enter a search pattern	common	sv	Ange sökord
 enter filename to upload and attach, use [browse...] to search for it	common	sv	Använd [Bläddra...] för att söka efter fil
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till EGroupware's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till EGroupware's URL.<br>Example: https://egw.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
 enter the new version number here (> old_version), empty for no update-file	common	sv	Ange nytt högre versionsnummer, tomt för ingen uppdateringsfil
 enter the new version number here (has to be > old_version)	common	sv	Ange nytt högre versionsnummer
 entry has been deleted sucessfully	common	sv	Post raderad
@@ -447,7 +448,7 @@ first name	common	sv	Förnamn
 first name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
 first page	common	sv	Första sidan
 firstname	common	sv	Förnamn
-fixme!	common	sv	FIXAMIG!!!!
+fixme!	common	sv	FIXAMIG!
 floating point	common	sv	Flyttal
 folder already exists.	common	sv	Katalogen finns redan
 force selectbox	common	sv	Tvinga Valruta
@@ -479,6 +480,7 @@ go to the first entry	common	sv	Gå till första posten
 go to the last entry	common	sv	Gå till sista posten
 go to the next page of entries	common	sv	Gå till nästa sida
 go to the previous page of entries	common	sv	Gå till föregående sida
+go to your home directory	common	sv	Gå till din hemkatalog
 grant access	common	sv	Reglera åtkomst
 greece	common	sv	GREKLAND
 greenland	common	sv	GRÖNLAND
@@ -494,6 +496,7 @@ group has been updated	common	sv	Grupp uppdaterad
 group name	common	sv	Gruppnamn
 group public	common	sv	Grupp publik
 groupbox	common	sv	Gruppruta
+groupdav	common	sv	CalDAV/CardDAV-synkronisering
 groups	common	sv	Grupper
 groups with permission for %1	common	sv	Grupper med åtkomst till %1
 groups without permission for %1	common	sv	Grupper utan åtkomst till %1
@@ -517,6 +520,7 @@ high	common	sv	Hög
 highest	common	sv	Högsta
 history	common	sv	Historia
 history log	common	sv	Historik
+hold [%1] key to select text eg. to copy it	common	sv	Håll ned [%1]-tangenten för att markera text, t.ex. för att kopiera den
 holy see (vatican city state)	common	sv	VATIKANEN
 home	common	sv	Hem
 home email	common	sv	Hem e-post
@@ -533,10 +537,11 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	sv	Hur många rader som ska skrivas ut
 how to show the general egroupware menu ?	common	sv	Hur den allmänna EGroupware-menyn ska visas
 html	common	sv	HTML
+html link to the current record	common	sv	HTML-länk till den aktuella posten
+html links to any entries linked to the current record, excluding attached files	common	sv	HTML-länkar till alla poster som är länkade till den aktuella posten, exklusive bifogade filer
 hungary	common	sv	UNGERN
 iceland	common	sv	ISLAND
 id	common	sv	ID
-iespell not detected. click ok to go to download page.	common	sv	ieSpell hittades inte. Klicka OK för att gå till nerladdnings sidan.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	sv	Om fält är inaktiverat visas en tom tabell cell, för (temporär) borttagning av ett fält/cell
 if the clock is enabled would you like it to update it every second or every minute?	common	sv	Vill du att klockan uppdateras varje sekund eller minut om den aktiveras?
 if there are some images in the background folder you can choose the one you would like to see.	common	sv	Om det finns bilder i bakgrundskatalogen, kan du välja den du vill se.
@@ -556,6 +561,7 @@ india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
 infolog types to sync	common	sv	InfoLog-typer som ska synkroniseras
 initial	common	sv	Inledande
+input required	common	sv	Inmatning krävs
 insert a column before	common	sv	Infoga kolumn före
 insert a column behind	common	sv	Infoga kolumn efter
 insert a row above	common	sv	Infoga rad övanför
@@ -565,6 +571,9 @@ insert a widget behind	common	sv	Infoga widget efter
 insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser för %2 kontakterna i %3
 insert column after	common	sv	Infoga kolumn efter
 insert column before	common	sv	Infoga kolumn före
+insert in %1	common	sv	Infoga i %1
+insert in document	common	sv	Infoga i dokument
+insert in dokument	common	sv	Infoga i dokument
 insert new column behind this one	common	sv	Skapa kolumn efter denna
 insert new column in front of all	common	sv	Skapa kolumn före alla
 insert new row after this one	common	sv	Skapa rad efter denna
@@ -645,12 +654,15 @@ linkstring	common	sv	LinkString
 linkto	common	sv	LinkTo
 list	common	sv	Lista
 list members	common	sv	Lista medlemmar
+list of files linked to the current record	preferences	sv	Lista över filer som är länkade till den aktuella posten
 lithuania	common	sv	LITAUEN
 load	common	sv	Ladda
 load this template into the editor	common	sv	Ladda mallen i editorn
 loading	common	sv	Laddar
 local	common	sv	Lokal
+location calendars	groupdav	sv	Plats kalendrar
 locations	common	sv	Placering
+logging / debuging	groupdav	sv	Loggning/felsökning
 login	common	sv	Inloggning
 login rejected by epl firewall, please contact your administrator	common	sv	Inloggningen avvisas av EGroupwares brandvägg, kontakta din administratör.
 loginid	common	sv	Inloggnings ID
@@ -679,11 +691,14 @@ martinique	common	sv	MARTINIQUE
 mauritania	common	sv	MAURITANIA
 mauritius	common	sv	MAURITIUS
 max number of icons in navbar	common	sv	Max antal ikoner i navigeringslisten
+maximum size for uploads	filemanager	sv	Maximal uppladdningsstorlek
 may	common	sv	Maj
 mayotte	common	sv	MAYOTTE
 medium	common	sv	Medium
 menu	common	sv	Meny
+merged document filename	preferences	sv	Filnamn för sammanslaget dokument
 message	common	sv	Meddelande
+message prepared for sending.	common	sv	Meddelande förberett för sändning.
 mexico	common	sv	MEXICO
 micronesia, federated states of	common	sv	MIKRONESIEN
 middle	common	sv	Mitten
@@ -704,20 +719,22 @@ multiple	common	sv	Flera
 myanmar	common	sv	MYANMAR
 name	common	sv	Namn
 name of other table where column is a key from	common	sv	Namnet på den andra tabellen kolumnen är en nyckel till
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	sv	namnet på phpgw mall-set (ex. verdilak): '' = standard (läser pref. template, använd 'standard' för att läsa standard template '')
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	sv	Namnet på phpgw mall-set (ex. verdilak): '' = standard (läser pref. template, använd 'standard' för att läsa standard template '')
 name of table to add	common	sv	Namnet på tabell
 name of the etemplate, should be in form application.function[.subtemplate]	common	sv	Namn på eTemplate, ska vara i formatet applikation.funktion[.subTemplate]
 name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
 namibia	common	sv	NAMIBIA
 nauru	common	sv	NAURU
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	sv	måste vara unikt för tabellen och inte ett reserverat SQL ord. Rekomenderas att använda 2 tecken prefix för aplikations namnet, ex. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	sv	Måste vara unikt för tabellen och inte ett reserverat SQL ord. Rekomenderas att använda 2 tecken prefix för aplikations namnet, ex. 'et_'
 nepal	common	sv	NEPAL
 netherlands	common	sv	NEDERLÄNDERNA
 netherlands antilles	common	sv	NEDERLÄNDSKA ANTILLERNA
 never	common	sv	Aldrig
 new	common	sv	Nytt
 new caledonia	common	sv	NYA KALEDONIEN
+new egroupware release %1 available	common	sv	Ny EGroupware release %1 tillgänglig
 new entry added sucessfully	common	sv	Ny post tillagd
+new favorite	common	sv	Ny favorit
 new main category	common	sv	Ny huvudkategori
 new password	common	sv	Nytt lösenord
 new search	common	sv	Ny sökning
@@ -737,15 +754,18 @@ niue	common	sv	NIUE
 no	common	sv	Nej
 no - cancel	common	sv	Nej - Avbryt
 no column to swap with !!!	common	sv	Ingen kolumn att byta med!
+no default set	common	sv	Ingen standardinställning
 no entries found, try again ...	common	sv	Inga poster hittades, försök igen ...
 no file	common	sv	Ingen fil
 no filename given or selected via browse...	common	sv	Ingen fil angiven eller vald
 no filters	common	sv	Inga filter
 no history for this record	common	sv	Ingen historik för posten
+no key for recipient:	common	sv	Ingen nyckel för mottagaren:
 no matches found	common	sv	Inga träffar
 no row to swap with !!!	common	sv	Ingen rad att byta med!
 no savant2 template directories were found in:	common	sv	Ingen Savant2 mall katalog hittades i:
 no subject	common	sv	Inget ämne
+no suggestions	common	sv	Inga förslag
 none	common	sv	Ingen
 norfolk island	common	sv	NORFOLKÖN
 normal	common	sv	Normal
@@ -761,6 +781,7 @@ nothing	common	sv	Ingenting
 nothing found - try again !!!	common	sv	Inga träffar - försök igen
 nothing in clipboard to paste !!!	common	sv	Ingenting i urklipp att infoga
 nothing matched search criteria !!!	common	sv	Inga träffar på sökord
+nothing to save.	common	sv	Inget att spara.
 notifications	common	sv	Meddelanden
 notify window	common	sv	Meddelande fönster
 notify your administrator to correct this situation	common	sv	Meddela administratör om problemet.
@@ -775,12 +796,15 @@ old value	common	sv	Gammalt värde
 oman	common	sv	OMAN
 on *nix systems please type: %1	common	sv	På *nix system skriv: %1
 on mouse over	common	sv	När pekaren förs över
-onchange	common	sv	onChange
-onclick	common	sv	onClick
+onchange	common	sv	onchange
+onclick	common	sv	onclick
 only an other version found !!!	common	sv	Kunde bara hitta annan version
 only private	common	sv	Endast privata
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	sv	Stöds endast av ett fåtal klienter som är helt kompatibla (t.ex. från Apple). Om du måste ange en URL kommer den troligen inte att stödjas!
 only yours	common	sv	Endast dina
+oops! you caught us in the middle of system maintainance.	common	sv	Hoppsan! Vi är mitt uppe i ett systemunderhåll.
 open	common	sv	Öppen
+open existing contact	common	sv	Öppna befintlig kontakt
 open notify window	common	sv	Öppna meddelande fönster
 open popup window	common	sv	Öppna popup fönster
 open sidebox	common	sv	Öppna Länkboxen
@@ -796,6 +820,7 @@ other	common	sv	Övriga
 overflow	common	sv	Overflow
 overview	common	sv	Översikt
 owner	common	sv	Ägare
+ownership	common	sv	Ägande
 padding	common	sv	Fyllnad
 page	common	sv	Sida
 page was generated in %1 seconds	common	sv	Sidan genererades på %1 sekunder
@@ -807,7 +832,7 @@ papua new guinea	common	sv	PAPUA NYA GUINEA
 paraguay	common	sv	PARAGUAY
 parcel	common	sv	Paket
 parent category	common	sv	Huvudkategori
-parent is a '%1' !!!	common	sv	Överst är en '%1' !
+parent is a '%1' !!!	common	sv	Överst är en '%1'!
 password	common	sv	Lösenord
 password could not be changed	common	sv	Lösenordet kunde inte ändras
 password has been updated	common	sv	Lösenordet uppdaterat
@@ -837,7 +862,7 @@ play/pause	common	sv	Spela/pausa
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
 please enter table-name first !!!	common	sv	Var god och ange tabell namnet först
-please reload the egroupware desktop (f5 / cmd+r).	common	sv	Ladda om EGroupware-skrivbordet (F5 / Cmd+r).
+please reload the egroupware desktop (f5 / cmd+r).	common	sv	Ladda om EGroupware-skrivbordet (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	sv	Kom ihåg att använda '%1' som användarnamn för lokala inloggningar från och med nu!
 please run setup to become current	common	sv	Kör installationen för att uppdatera
 please select	common	sv	Välj
@@ -846,6 +871,7 @@ please set your preferences for this application	common	sv	Gör dina inställnin
 please type %1 more characters	common	sv	Vänligen skriv %1 mer tecken
 please type 1 more character	common	sv	Vänligen skriv 1 tecken till
 please wait...	common	sv	Var god vänta ...
+please, check back with us shortly.	common	sv	Vänligen återkom till oss inom kort.
 pm	common	sv	em
 poland	common	sv	POLEN
 popup	common	sv	Popup
@@ -876,16 +902,20 @@ read etemplate from database (for the keys above)	common	sv	Läs eTemplate från
 read this list of methods.	common	sv	Läs lista på metoder
 reading	common	sv	Läser
 readonly	common	sv	Skrivskyddad
+readonly filemanager directory	common	sv	Read-only filemanager folder
 register	common	sv	Registrera
 reject	common	sv	Avvisa
+remember me for %1	common	sv	Kom ihåg mig för %1
 remove row (can not be undone!!!)	common	sv	Radera rad (kan INTE återskapas)
 remove selected accounts	common	sv	Radera valda konton
 remove shortcut	common	sv	Radera genväg
 remove this link (not the entry itself)	common	sv	Radera länk (inte posten i sig)
+removed (now) empty directory fs_id=%1	admin	sv	Borttagen (nu) tom mapp fs_id=%1
 rename	common	sv	Byt namn
 repeat password	common	sv	Upprepa lösenordet
 replace	common	sv	Ersätt
 replace with	common	sv	Ersätt med
+requested resource '%1' does not exist or has expired	common	sv	Begärd resurs '%1' existerar inte eller har löpt ut
 required	common	sv	Krävs
 reset	common	sv	Återställ
 resources	common	sv	Resurser
@@ -910,7 +940,7 @@ san marino	common	sv	SAN MARINO
 sao tome and principe	common	sv	SAO TOME OCH PRINCIPE
 saturday	common	sv	Lördag
 saudi arabia	common	sv	SAUDI ARABIEN
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. <br/>Denna version: %1 <br/>Savants version: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. <br>Denna version: %1 <br>Savants version: %2
 save	common	sv	Spara
 save all	common	sv	Spara alla
 save the changes made and close the window	common	sv	Spara ändringar och stäng fönster
@@ -934,23 +964,29 @@ select access	common	sv	Välj åtkomst
 select account	common	sv	Välj konto
 select all	common	sv	Välj samtliga
 select all %1 %2 for %3	common	sv	Välj alla %1 %2 för %3
+select all entries	common	sv	Markera alla poster
 select an app first !!!	common	sv	Välj en applikaiton
 select an app to search in	common	sv	Välj en applikaiton att söka i
 select an application	common	sv	Välj en applikation
 select an application, (*) = uninstalled	common	sv	Välj en applikation, (*) = avinstallerad
 select an entry to link with	common	sv	Välj en post att länka till
+select an opened dialog	common	sv	Välj en öppnad dialog
 select an table of the application	common	sv	Välj en tabell för applikationen
 select application	common	sv	Välj applikation
+select application to search	common	sv	Välj applikation att söka i
 select category	common	sv	Välj kategori
 select country	common	sv	Välj land
 select date	common	sv	Välj datum
 select day	common	sv	Välj dag
 select day of week	common	sv	Välj veckodag
 select entry	common	sv	Välj post
+select file(s) from vfs	common	sv	Välj fil(er) från EGroupwares filhanterare
+select files from filemanager ...	common	sv	Välj filer från filhanteraren ...
 select group	common	sv	Välj grupp
 select home email address	common	sv	Välj hem e-postadress
 select hour	common	sv	Välj timme
 select if content of field should not be translated (label gets always translated)	common	sv	Välj om innehållet i fälten ska översättas (etikett översätts alltid)
+select language	common	sv	Välj språk
 select month	common	sv	Välj månad
 select multiple accounts	common	sv	Välj flera konton
 select number	common	sv	Välj nummer
@@ -958,12 +994,15 @@ select one	common	sv	Välj en
 select one ...	common	sv	Välj en ...
 select percentage	common	sv	Välj procent
 select priority	common	sv	Välj prioritet
+select some options	common	sv	Välj några alternativ
 select state	common	sv	Välj läge
+select the columns to display in the list	common	sv	Välj kolumner som ska visas i listan
 select the default height for the application windows	common	sv	Välj standard höjd för applikationsfönstret
 select the default width for the application windows	common	sv	Välj standard bredd för applikationsfönstret
 select the indexed columns in their desired order	common	sv	Välj indexerade kolumner i önskad ordning
 select this etemplate to delete it	common	sv	Välj detta eTemplate för att radera det
 select user	common	sv	Välj användare
+select user or group	common	sv	Välj användare eller grupp
 select which accounts to show	common	sv	Välj vilka konton som ska visas
 select which values to show	common	sv	Välj vilka värden att visa
 select work email address	common	sv	Välj Företagets e-postadres
@@ -971,6 +1010,7 @@ select year	common	sv	Välj år
 selectbox	common	sv	Valruta
 selection	common	sv	Val
 send	common	sv	Skicka
+send succeeded to %1	common	sv	Skicka lyckats till %1
 senegal	common	sv	SENEGAL
 september	common	sv	September
 server %1 has been added	common	sv	Server %1 tillagd
@@ -978,10 +1018,14 @@ server answered. processing response...	common	sv	Servern svarade. Behandlar sva
 server contacted. waiting for response...	common	sv	Servern kontaktad. Väntar på svar ...
 server name	common	sv	Server namn
 session has been killed	common	sv	Sessionen avslutad
+set user as only responsible, removing all existing responsibles	groupdav	sv	Ange användaren som enda ansvariga, ta bort alla befintliga ansvariga
 sets today as date	common	sv	Sätt dagens datum
+settings saved.	common	sv	Inställningar sparade.
 setup	common	sv	Installation
 setup main menu	common	sv	Installations Meny
 seychelles	common	sv	SEYCHELLERNA
+share filemanager directory	common	sv	Mapp i filhanteraren
+share this %1 via url	common	sv	Dela detta %1 via URL
 should the form be submitted or any custom javascript be executed	common	sv	Ska formuläret skickas eller något anpassat JavaScript exekveras
 show	common	sv	Visa
 show (no save)	common	sv	Visa (spara inte)
@@ -991,6 +1035,7 @@ show clock?	common	sv	Visa klockan?
 show home and logout button in main application bar?	common	sv	Visa Hem- och utloggnings knappen i navigeringslisten?
 show logo's on the desktop.	common	sv	Visa logotyp på skrivbordet
 show menu	common	sv	Visa meny
+show next login	common	sv	Visa nästa inloggning
 show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
 show page generation time?	common	sv	Visa sidans genereringstid?
@@ -1029,6 +1074,7 @@ start time	common	sv	Starttid
 start with	common	sv	Börja med
 starting up...	common	sv	Startar ...
 status	common	sv	Status
+store your public key in addressbook?	common	sv	Lagra din publika nyckel i Adressboken?
 stretched	common	sv	Utsträckt
 subject	common	sv	Ämne
 submit	common	sv	Utför
@@ -1048,6 +1094,7 @@ sweden	common	sv	SVERIGE
 switch to a parent widget	common	sv	Byt till översta widget
 switch to an other widgets of that container	common	sv	Byt till annan widget i kontainern
 switzerland	common	sv	SCHWEIZ
+sync all selected into one	groupdav	sv	Synkronisera alla valda till en
 syrian arab republic	common	sv	SYRIEN
 tabindex	common	sv	Tabindex
 table properties	common	sv	Tabell egenskaper
@@ -1116,6 +1163,8 @@ update from version '%s' to	common	sv	Uppdatera från version '%s' till
 update the clock per minute or per second	common	sv	Uppdatera klockan per minut eller sekund
 upload	common	sv	Ladda upp
 upload directory does not exist, or is not writeable by webserver	common	sv	Uppladdningskatalogen finns inte eller är inte skrivbar av webbservern
+upload file(s) from filemanager...	common	sv	Ladda upp fil(er) från filhanteraren ...
+upload new photo	common	sv	Ladda upp nytt foto
 url	common	sv	URL
 uruguay	common	sv	URUGUAI
 use button to search for	common	sv	Använd knappen för att söka
@@ -1139,6 +1188,7 @@ venezuela	common	sv	VENEZUELA
 version	common	sv	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	sv	Versions nummer, ska vara i formatet: major.minor.revision.nummer (ex. 0.9.13.001 alla nummer fylls ut med 0)
 vertical alignment of row	common	sv	Vertikal justering av rad
+video tutorials	common	sv	Handledning för video
 viet nam	common	sv	VIETNAM
 view	common	sv	Visa
 view this etemplate	common	sv	Visa eTemplate
@@ -1152,7 +1202,6 @@ welcome	common	sv	Välkommen
 western sahara	common	sv	VÄSTRA SAHARA
 what color should all the blank space on the desktop have	common	sv	Vilken färg ska alla blanka utrymmen på skrivbordet ha
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sv	Vad händer med innehålls "overflow": synligt (default), göms, skroll, auto (browser bestämmer)
-what style would you like the image to have?	common	sv	Vilken stil vill du att bilden ska ha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper
 whole query	common	sv	Hela frågan
@@ -1179,7 +1228,9 @@ yemen	common	sv	YEMEN
 yes	common	sv	Ja
 yes - delete	common	sv	Ja - Radera
 yes - delete including sub-entries	common	sv	Ja - Radera inklusive under
+you are not allowed to export more than %1 entries!	common	sv	Du får inte exportera mer än %1 poster!
 you are required to change your password during your first login	common	sv	Du måste byta lösenord vid första inloggningen
+you can not choose more then %1 item(s)!	common	sv	Du kan inte välja mer än %1 artikel(er)!
 you can respond by visiting:	common	sv	Du kan svara genom att besöka:
 you have been successfully logged out	login	sv	Du är utloggad
 you have not entered a title	common	sv	Rubriken saknas
@@ -1189,7 +1240,11 @@ you have not entered participants	common	sv	Deltagare saknas
 you have selected an invalid date	common	sv	Ogiltigt datum
 you have selected an invalid main category	common	sv	Ogiltig huvudkategori
 you have successfully logged out	common	sv	Du är utloggad
+you may drag files out to your desktop	common	sv	Du kan dra ut filer till skrivbordet
 you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behöver lägga till webbserver användare '%1' till gruppen '%2'.
+you need to be an egroupware administrator to access this functionality!	common	sv	Du måste vara EGroupware-administratör för att få tillgång till denna funktion!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	sv	Du måste installera Mailvelope-plugin tillgängligt för Chrome och Firefox från www.mailvelope.com eller genom att klicka på installationsknappen.
+you need to select some entries first!	common	sv	Du måste först välja några poster!
 your account has been updated with new data from your identity provider.	common	sv	Ditt konto har uppdaterats med nya uppgifter från din identitetsleverantör.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	sv	Din webbläsare är inte uppdaterad (JavaScript ES6-kompatibel), du kan uppleva att vissa av funktionerna inte fungerar.
 your key has been restored successfully.	common	sv	Din nyckel har återställts framgångsrikt.

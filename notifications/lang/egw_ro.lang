@@ -1,1 +1,72 @@
+(update in sec. %s)	notifications	ro	(Actualizare în sec. %s)
+account:	notifications	ro	Cont:
+all possible notification backends	notifications	ro	Toate backend-urile de notificare posibile
+are you sure you want to delete all notifications?	notifications	ro	Sunteți sigur că doriți să ștergeți toate notificările?
+browser	notifications	ro	Browser
+browser is starting.	notifications	ro	Browserul este în curs de pornire.
+cancal settings?	notifications	ro	Anulați setările?
+cancal?	notifications	ro	Anulați?
+certification-information:	notifications	ro	Certificare-informații:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	ro	Bifați ambele. Încercați mai întâi un cont activ definit de utilizator, dacă nu există, utilizați profilul eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ro	Alegeți un lanț de notificare. Veți fi notificat prin intermediul back-end-urilor incluse în lanț.<br>Notă: Dacă un lanț de notificare este marcat ca fiind "disabled" (dezactivat), administratorul dvs. nu permite unul sau mai multe dintre back-end-urile incluse în lanț, notificările revin la "Email" în timp ce vă notifică.
+connection error.	notifications	ro	Eroare de conexiune.
+connection error. please check connection to server.	notifications	ro	Eroare de conexiune. Vă rugăm să verificați conexiunea cu serverul.
+continue to connect?	notifications	ro	Continuați să vă conectați?
+cookies are required to login to this site.	notifications	ro	Cookie-urile sunt necesare pentru a vă conecta la acest site.
+delete all messages	notifications	ro	Ștergeți toate mesajele
+delete notifications	notifications	ro	Ștergeți notificările
+delete this message	notifications	ro	Ștergeți acest mesaj
+domain not found, please check serveraddress.	notifications	ro	Domeniul nu a fost găsit, vă rugăm să verificați adresa serverului.
+egroupware login is starting, please wait.	notifications	ro	Începe autentificarea EGroupware, vă rugăm să așteptați.
+egroupware logindomain:	notifications	ro	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	ro	EGroupware Logindomains found, please select.
+egroupware not found by url or connection lost to server.	notifications	ro	EGroupware nu a fost găsit prin URL sau s-a pierdut conexiunea cu serverul.
+egroupware not found by url.	notifications	ro	EGroupware nu a fost găsit prin URL.
+email notifications only, if user is not logged in	notifications	ro	Notificări prin e-mail numai dacă utilizatorul nu este logat
+error browser can`t start.	notifications	ro	Eroare Browserul nu poate porni.
+error on loading tray icon	notifications	ro	Eroare la încărcarea pictogramei Tray
+error ssl	notifications	ro	Eroare SSL
+exit	notifications	ro	Leșire
+host:	notifications	ro	Server:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	ro	Cât de verbos ar trebui să se comporte EGroupware-Popup în cazul în care o notificare este trimisă utilizatorului:<br>scăzut: afișează doar clopotul de notificare în meniul de sus - meniul de sus trebuie să fie activat!<br>mediu: aduceți fereastra de notificare în față<br>mare: aduceți fereastra de notificare în față și lăsați browserul să facă ceva pentru a se anunța singur
+info on load config file: create config file.	notifications	ro	Informații despre încărcarea fișierului de configurare: creați fișierul de configurare.
+issuer dn:	notifications	ro	Issuer DN:
+java desktop notification app	preferences	ro	Aplicație de notificare Java pentru desktop
+last month	notifications	ro	Luna trecută
+login aborted, application exit?	notifications	ro	Autentificare anulată, ieșire din aplicație?
+login in egroupware:	notifications	ro	Autentificare în EGroupware:
+mail account to use for notifications	admin	ro	Contul de poștă electronică care să fie utilizat pentru notificări
+mark all as read	notifications	ro	Marcați toate ca fiind citite
+mark as read	notifications	ro	Marcați ca citit
+more info	notifications	ro	Mai multe informații
+notifier	notifications	ro	Notifier
+open notified entry	notifications	ro	Deschideți intrarea notificată
+page not found, please check serveraddress.	notifications	ro	Pagina nu a fost găsită, vă rugăm să verificați adresa serverului.
+password:	notifications	ro	Parola:
+permission	notifications	ro	Permisiune
+permission denied for notifications application.	notifications	ro	Permisiune refuzată pentru aplicația de notificări.
+placeholders with user/ prefix	admin	ro	spații libere cu user/prefix
+please contact your egroupware admin.	notifications	ro	Vă rugăm să contactați administratorul EGroupware.
+please enter the url of your egroupware.	notifications	ro	Vă rugăm să introduceți URL-ul EGroupware-ului dumneavoastră.
+please enter your egroupware username.	notifications	ro	Vă rugăm să introduceți numele de utilizator EGroupware.
+please enter your password	notifications	ro	Vă rugăm să introduceți parola dvs.
 refresh notifications	notifications	ro	Osvežitev obvestil
+repeat login?	notifications	ro	Repetați autentificarea?
+run application	notifications	ro	Rulați aplicația
+save password	notifications	ro	Salvați parola
+setting	notifications	ro	Setarea
+setting aborted, application exit	notifications	ro	Setare anulată, ieșire din aplicație
+settings	notifications	ro	Setări
+signature added to every change notification	admin	ro	Semnătură adăugată la fiecare notificare de modificare
+sorry, your login has expired	notifications	ro	Ne pare rău, autentificarea dvs. a expirat
+subject dn:	notifications	ro	Subiect DN:
+the server certificate is not a valid trust center certificate!	notifications	ro	Certificatul serverului nu este un certificat valid al centrului de încredere!
+this egroupware notification has been sent to you by mail because your	notifications	ro	Această notificare EGroupware v-a fost trimisă prin e-mail deoarece
+this month	notifications	ro	Luna aceasta
+user:	notifications	ro	Utilizator:
+yesterday	notifications	ro	Ieri
+you can also use	admin	ro	De asemenea, puteți utiliza
+you have %1 unread notifications	notifications	ro	Aveți %1 notificări necitite
+you have been successfully logged out	notifications	ro	Ați fost deconectat cu succes
+you've got new mail	notifications	ro	Ați primit un mesaj nou
+your session could not be verified.	notifications	ro	Sesiunea dvs. nu a putut fi verificată.

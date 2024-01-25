@@ -29,7 +29,10 @@ by date	mail	id	menurut tanggal
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	id	Secara default, 'http://' hanya diganti dengan 'https://'. Jangan ragu untuk mengonfigurasi 'https://proxy.egroupware.org/' untuk juga memuat gambar yang hanya tersedia melalui http.
 caching of flags	mail	id	Menyimpan bendera dalam cache
 can not resolve the winmail.dat attachment!	mail	id	Tidak dapat menyelesaikan lampiran winmail.dat!
+certificate details	mail	id	Rincian Sertifikat
+certificate in text	mail	id	Sertifikat dalam bentuk teks
 certificate info for email %1	mail	id	Info sertifikat untuk email %1
+certificate issued by	mail	id	Sertifikat dikeluarkan oleh
 changing subject failed because of %1	mail	id	Mengubah subjek gagal karena %1
 changing subject failed folder %1 does not exist	mail	id	Mengubah subjek gagal folder %1 tidak ada
 compose	mail	id	Tulis
@@ -60,7 +63,8 @@ do you want to be asked for confirmation before attaching selected messages to n
 draft folder	mail	id	draft folder
 drafts	mail	id	Drafts
 edit account	mail	id	Edit akoun
-emailaddress	admin	id	alamat email
+email address	mail	id	Alamat email
+emailaddress	admin	id	Alamat email
 emailadmin: profilemanagement	mail	id	eMailAdmin: Manajemen profil
 emails in whitelisted domains are not marked as spam	mail	id	Email di domain yang masuk daftar putih tidak ditandai sebagai spam
 empty trash	mail	id	kosongkan trash
@@ -217,6 +221,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	id	Laporkan konten email ini sebagai Spam - solusi spam seperti spamTitan akan mempelajarinya
 required pear class mail/mimedecode.php not found.	mail	id	Kelas PEAR yang diperlukan Mail/mimeDecode.php tidak ditemukan.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	id	Wajib dinonaktifkan jika Anda menggunakan Dovecot dengan bendera private seen pada folder bersama atau pengguna!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	id	Enkripsi S/MIME gagal karena tidak ada sertifikat yang ditemukan untuk alamat pengirim: %1
 save all	mail	id	Simpan semuanya
 save all attachments to filemanager	mail	id	Simpan semua lampiran ke filemanager
 save as draft	mail	id	Simpan sbg draft
@@ -251,9 +256,11 @@ show vertical	mail	id	Tampilkan vertikal
 show vertical with all columns	mail	id	Tampilkan vertikal dengan semua kolom
 show/hide preview pane in mail list view	mail	id	Menampilkan/menyembunyikan panel pratinjau dalam tampilan daftar surat
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	id	Menampilkan notifikasi yang terlihat sementara termasuk dari alamat, subjek, dan cuplikan email
+sign your message with smime certificate	mail	id	Tanda tangani pesan Anda dengan sertifikat S/MIME
 signature	mail	id	Tandatangan
 signature at top	mail	id	Tanda tangan di bagian atas
 signature position and visibility	mail	id	Posisi dan visibilitas tanda tangan
+signed by	mail	id	Ditandatangani oleh
 size(...->0)	mail	id	Ukuran (...->0)
 size(0->...)	mail	id	Ukuran (0->...)
 small view	mail	id	small view

@@ -24,6 +24,7 @@ charset for the csv export	addressbook	sk	Znaková sada pre export CSV
 charset for the csv export/import	preferences	sk	Znaková sada
 click to install	preferences	sk	Kliknutím nainštalujete
 click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
+close after selection	preferences	sk	Zavrieť po výbere
 code is invalid	preferences	sk	Kód je chybný
 color	preferences	sk	Farba
 country	preferences	sk	Krajina
@@ -42,6 +43,7 @@ default format block	preferences	sk	Predvolený formátovací blok
 default preferences	preferences	sk	Predvolené nastavenia
 delete categories	preferences	sk	Zmazať kategórie
 deny following groups access to acl (grant access)	admin	sk	Zakázať nasledovným skupinám prístup do ACL (pridelenie práv)
+deny following groups access to application passwords	preferences	sk	Zakázať nasledovným skupinám prístup ke aplikačným heslám
 deny following groups access to edit categories	admin	sk	Zakázať nasledovným skupinám prístup k úprave kategórií
 deny following groups access to preferences	admin	sk	Zakázať nasledovným skupinám prístup k predvoľbám
 deny following groups access to security popup	admin	sk	Zakázať nasledovným skupinám prístup k bezpečnostným oznámeniam
@@ -101,6 +103,7 @@ interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablón
 it sets content size (text only) according to selected size.	preferences	sk	Nastaví veľkosť obsahu (iba textu) podľa zvolenej veľkosti.
 just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím na riadok, ako začiarkávacie políčko
 kama theme	preferences	sk	Kama téma
+keep list open for selecting multiple	preferences	sk	Ponechať zoznam otvorený pre výber viacerých možností
 language	preferences	sk	Jazyk
 look & feel	preferences	sk	Vzhľad a použiteľnosť
 lowercase letters	preferences	sk	malé písmená
@@ -170,6 +173,8 @@ show_more_apps	common	sk	Zobraziť ďalšie aplikácie
 small paragraph	preferences	sk	Malý odstavec
 special characters	preferences	sk	špeciálne znaky
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
+stay open	preferences	sk	Ponechať otvorené
+stay open, but not for email	preferences	sk	Ponechať otvorené, ale nie pre E-mail
 text editor settings	preferences	sk	Nastavenia textového editora
 text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.
@@ -190,6 +195,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	sk	Veľké písmená
 use default	preferences	sk	Použiť predvolené
 users choice	preferences	sk	Používateľova voľba
+when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	sk	Keď môžete vybrať viacero možností, má ostať zoznam možností otvorený až kým ho nezavriete, alebo sa má zavrieť po výbere možnosti.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	sk	Ktorý symbol alebo názov meny sa má používať v EGroupware.

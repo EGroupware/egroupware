@@ -13,7 +13,10 @@ be aware that all attachments will be sent as %1!	mail	ko	모든 첨부 파일�
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ko	기본적으로 'http://'는 'https://'로 대체됩니다. 'https://proxy.egroupware.org/'를 설정하여 http를 통해서만 사용할 수 있는 이미지도 로드하도록 자유롭게 설정할 수 있습니다.
 caching of flags	mail	ko	플래그 캐싱
 can not resolve the winmail.dat attachment!	mail	ko	winmail.dat 첨부 파일을 확인할 수 없습니다!
+certificate details	mail	ko	인증서 세부 정보
+certificate in text	mail	ko	텍스트 인증서
 certificate info for email %1	mail	ko	이메일 %1에 대한 인증서 정보
+certificate issued by	mail	ko	인증서 발급처
 changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다.
 changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다.
 contact label	mail	ko	연락처 레이블
@@ -22,6 +25,8 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 레이블을 전환하시겠습니까?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ko	선택한 메시지를 새 전자 메일에 첨부하기 전에 확인 메시지를 표시하시겠습니까?
 edit account	mail	ko	계정 편집
+email address	mail	ko	이메일 주소
+emailaddress	admin	ko	이메일 주소
 emailadmin: profilemanagement	mail	ko	이메일 관리자: 프로필 관리
 emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 도메인의 이메일은 스팸으로 표시되지 않습니다.
 enable	mail	ko	사용
@@ -125,6 +130,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 스팸으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다.
 required pear class mail/mimedecode.php not found.	mail	ko	필수 PEAR 클래스 Mail/mimeDecode.php를 찾을 수 없습니다.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ko	공유 폴더 또는 사용자 폴더에서 비공개로 표시됨 플래그와 함께 도브콧을 사용하는 경우 비활성화하는 데 필요합니다!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	ko	보낸 사람 주소에 대한 인증서를 찾을 수 없으므로 S/MIME 암호화에 실패했습니다: %1
 save as infolog on send	mail	ko	전송 후 인포로그로 생성하려면 체크 버튼 선택
 save as tracker on send	mail	ko	전송 후 티켓으로 생성하려면 체크 버튼
 save the drafted message as eml file into vfs	mail	ko	초안 작성된 메시지를 파일 관리자에 EML 파일로 저장합니다.
@@ -150,6 +156,8 @@ show vertical	mail	ko	세로로 보기(3열 보기)
 show vertical with all columns	mail	ko	모든 열을 세로로 표시
 show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미리보기 창 표시/숨기기
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ko	보낸 사람 주소, 제목 및 이메일 스니펫을 포함하여 임시로 표시되는 알림을 표시합니다.
+sign your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 서명
+signed by	mail	ko	서명자
 small view	mail	ko	미니뷰
 the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
 the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!

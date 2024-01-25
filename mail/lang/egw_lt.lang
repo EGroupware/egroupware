@@ -20,7 +20,10 @@ be aware that all attachments will be sent as %1!	mail	lt	Žinokite, kad visi pr
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lt	Pagal numatytuosius nustatymus "http://" tiesiog pakeičiama "https://". Galite laisvai konfigūruoti 'https://proxy.egroupware.org/', kad taip pat būtų įkeliami vaizdai, prieinami tik per http.
 caching of flags	mail	lt	Vėliavų spartinimas
 can not resolve the winmail.dat attachment!	mail	lt	Negalima išspręsti winmail.dat priedo!
+certificate details	mail	lt	Sertifikato informacija
+certificate in text	mail	lt	Sertifikato tekstas
 certificate info for email %1	mail	lt	Sertifikato informacija apie el. pašto %1
+certificate issued by	mail	lt	Sertifikatą išdavė
 changing subject failed because of %1	mail	lt	Pakeisti temą nepavyko dėl %1
 changing subject failed folder %1 does not exist	mail	lt	Pakeisti temą nepavyko aplankas %1 neegzistuoja
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
@@ -35,6 +38,8 @@ disable caching of flags	mail	lt	Išjungti vėliavų spartinimą
 do you really want to toggle flag %1 for all messages in the current view?	mail	lt	Ar tikrai norite perjungti žymę %1 VISIEMS dabartiniame rodinyje esantiems laiškams?
 do you really want to toggle label %1 for all messages in the current view?	mail	lt	Ar tikrai norite perjungti žymę %1 VISIEMS dabartiniame rodinyje esantiems pranešimams?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lt	Ar norite, kad prieš prisegant pasirinktus pranešimus prie naujo el. pašto būtų prašoma patvirtinimo?
+email address	mail	lt	El. pašto adresas
+emailaddress	admin	lt	El. pašto adresas
 emailadmin: profilemanagement	mail	lt	eMailAdmin: Profilio valdymas
 emails in whitelisted domains are not marked as spam	mail	lt	Į baltąjį sąrašą įtrauktų domenų laiškai nepažymimi kaip šlamštas
 enable	mail	lt	Įjungti
@@ -151,6 +156,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	lt	Praneškite apie šį el. pašto turinį kaip Spam - spam sprendimai, tokie kaip spamTitan, išmoks.
 required pear class mail/mimedecode.php not found.	mail	lt	Reikalinga PEAR klasė Mail/mimeDecode.php nerasta.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lt	Būtina išjungti, jei naudojate Dovecot su private seen vėliavėlėmis bendrajame arba naudotojo aplanke!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	lt	S/MIME šifravimas nepavyko, nes siuntėjo adresui nerasta sertifikato: %1
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
 save as infolog on send	mail	lt	Pažymėti mygtuką, kad po išsiuntimo būtų sukurtas kaip InfoLog
 save as tracker on send	mail	lt	Pažymėkite mygtuką, kad po išsiuntimo būtų sukurtas kaip bilietas
@@ -178,9 +184,11 @@ show vertical	mail	lt	Rodyti vertikaliai
 show vertical with all columns	mail	lt	Rodyti vertikaliai su visais stulpeliais
 show/hide preview pane in mail list view	mail	lt	Pašto sąrašo rodinyje rodyti / slėpti peržiūros langą
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	lt	Rodyti laikinai matomą pranešimą, įskaitant adresą, temą ir el. laiško ištrauką
+sign your message with smime certificate	mail	lt	Pasirašykite pranešimą naudodami S/MIME sertifikatą
 signature	mail	lt	Parašas
 signature at top	mail	lt	parašas viršuje
 signature position and visibility	mail	lt	Parašo padėtis ir matomumas
+signed by	mail	lt	Pasirašė
 smime encrypted message	mail	lt	S/MIME užšifruotas pranešimas
 smime signed message	mail	lt	S/MIME pasirašytas pranešimas
 smtp	mail	lt	SMTP
@@ -207,4 +215,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	lt	Kad galėtumėte išsaugoti pranešimą kaip juodraštį, pirmiausia turite jį išsaugoti VFS
 you will loose current message body, unless you save it to your clipboard!	mail	lt	Prarasite esamą žinutės tekstą, nebent išsaugosite jį iškarpinėje!
 you've got new mail	mail	lt	Gavote naują laišką
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lt	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.\n Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.\n Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lt	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.<br>Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.<br>Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.

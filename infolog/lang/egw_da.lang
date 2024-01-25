@@ -133,7 +133,7 @@ do you want a notification, if items you delegated are due?	infolog	da	Få beske
 do you want to receive notifications as html-mails or plain text?	infolog	da	Modtag notifikationer som HTML-e-mails eller almindelig tekst.
 don't show infolog	infolog	da	Vis IKKE InfoLog
 done	infolog	da	Udført
-download	infolog	da	Download
+download	infolog	da	Gem fil
 download url for links	infolog	da	Download URL til links
 due %1	infolog	da	Forfald %1
 due date	infolog	da	Forfaldsdato
@@ -141,7 +141,7 @@ duration	infolog	da	Varighed
 e-mail:	infolog	da	E-mail:
 each value is a line like <id>[=<label>]	infolog	da	Hver værdi er en linie som <id>[=<label>]
 edit	infolog	da	Redigér
-edit or create categories for ingolog	infolog	da	Redigér eller opretter katogorier i Infolog
+edit or create categories for ingolog	infolog	da	Redigér eller opretter katogorier i InfoLog
 edit rights (full edit rights incl. making someone else responsible!)	infolog	da	Redigeringsrettigheder. Fuld redigeringsret inkl. at gøre en anden ansvarlig!
 edit status	infolog	da	Redigér status
 edit the entry	infolog	da	Redigér indstasningen
@@ -153,7 +153,7 @@ enddate	infolog	da	Slut dato
 enddate can not be before startdate	infolog	da	Slut dato kan ikke være før start dato
 enter a custom contact, leave empty if linked entry should be used	infolog	da	indtast egen kontakt, efterlad tom hvis den linkede kontakt skal bruges
 enter a custom phone/email, leave empty if linked entry should be used	infolog	da	indtast egen telefon/e-mail, efterlad tom hvis den linkede skal bruges
-enter a textual description of the log-entry	infolog	da	Skriv en tekst-beskrivelse af log-indtastningen
+enter a textual description of the log-entry	infolog	da	Skriv en tekst-beskrivelse af InfoLog-indtastningen
 enter the query pattern	infolog	da	Indtast forspørgelses mønster
 entry and all files	infolog	da	Indtastning og alle filer
 error: importing the ical	infolog	da	Fejl: I at importere iCal'en
@@ -183,6 +183,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	da	Til hvilken type skal dette felt bruges til
 from	infolog	da	Fra
 full list of placeholder names	infolog	da	Komplet liste over navne på pladsholdere
+general fields:	infolog	da	Generelle felter:
 general settings	infolog	da	Generelle indstillinger
 global categories	infolog	da	Globale Kategorier
 group owner for	infolog	da	Gruppeejer for
@@ -256,12 +257,16 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	da	Sted
 longer textual description	infolog	da	Længere tekstet beskrivelse
 low	infolog	da	Lav
+manage mapping	infolog	da	Administrer kortlægning
 max length of the input [, length of the inputfield (optional)]	infolog	da	Maks længde af inputtet [længde af input feltet (valg frit)]
 modifier	infolog	da	Modifikator
 modifierer	infolog	da	Modifikator
 name must not be empty !!!	infolog	da	Navn må ikke være tomt!!!
+name of current user, all other contact fields are valid too	infolog	da	Navn på aktuel bruger, alle andre kontaktfelter er også gyldige
 name of new type to create	infolog	da	Navn på den nye type der skal oprettes
 never hide search and filters	infolog	da	Gem aldrig 'Søg' og ' Filtre'
+new %1	infolog	da	Ny %1
+new %1 created by %2 at %3	infolog	da	Ny %1 oprettet af %2 kl. %3
 new name	infolog	da	Nyt navn
 new search	infolog	da	Ny søgning
 no - cancel	infolog	da	No - Annullere
@@ -271,16 +276,21 @@ no details	infolog	da	Ingen detaljer
 no entries found, try again ...	infolog	da	ingen resultater fundet, prøv igen....
 no filter	infolog	da	Ingen filter
 no links or attachments	infolog	da	Ingen links eller vedhæftet filer
+no project	infolog	da	Intet projekt
+nonactive	infolog	da	Ikke aktiv
 none	infolog	da	Ingen
 normal	infolog	da	Normal
 not	infolog	da	Ikke
 not assigned	infolog	da	Ikke tildelt
+not-started	infolog	da	Ikke påbegyndt
 note	infolog	da	Note
 notification settings	infolog	da	Indstillinger for meddelelser
 number of records to read (%1)	infolog	da	Antal posteringer at læse (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
 offer	infolog	da	Tilbyde
 old fixed definition	infolog	da	Gammel fast definition
+one day after	infolog	da	En dag efter
+one day in advance	infolog	da	En dag i forvejen
 ongoing	infolog	da	I gang
 only show them if there is a filter	infolog	da	Vis dem kun, hvis der er et filter
 only show them while searching	infolog	da	Vis dem kun under søgning
@@ -336,6 +346,7 @@ responsible overdue	infolog	da	Ansvarlig forfalden
 responsible upcoming	infolog	da	Ansvarlig kommende
 returns a list / search for records.	infolog	da	Viser en liste / Søger efter posteringer
 rows	infolog	da	Rækker
+same day	infolog	da	Samme dag
 save	infolog	da	Gem
 saves the changes made and leaves	infolog	da	Gem ændringerne og afslut
 saves this entry	infolog	da	Gem denne postering
@@ -354,6 +365,7 @@ select an action	infolog	da	Vælg en handling
 select an action...	infolog	da	Vælg en handling...
 select an app to search in	infolog	da	Vælg en appilkation at søge i
 select an entry to link with	infolog	da	Vælg en opgave at linke med
+select multiple contacts for a further action	infolog	da	Vælg flere kontakter til en yderligere handling
 select new category	infolog	da	Vælg ny kategori
 select to filter by owner	infolog	da	Filtrer ved ejer
 select to filter by responsible	infolog	da	Filtrer ved ansvarlig
@@ -368,6 +380,7 @@ sets the status of this entry to done	infolog	da	Sætter status for denne post t
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	da	Skal InfoLog vise underkategorier, -telefon beskeder eller -noter i det normale vindue eller ikke. Du kan altid vise underkategorierne via deres forældre.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	da	Skal InfoLog vise links til andre programmer og/eller til vedhæftelser i InfoLog listen (Standard view når du er i InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	da	Skal InfoLog vise fulde navne (efternavne og familienavn) eller kun brugernavne.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	da	Skal InfoLog-listen vise et unikt numerisk ID, som f.eks. kan bruges som billet-ID?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	da	Skal denne opgave kun være tilgængelig for dig og andre du har givet privat adgang til via ACL.
 show a column for used and planned times in the list.	infolog	da	Vis en kolonne for brugt og planlagt tid i listen
 show a x if content equals this compare value, otherwise show nothing	infolog	da	Vis et X, hvis indholdet er lig med denne sammenligningsværdi, ellers vises intet

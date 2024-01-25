@@ -26,7 +26,7 @@ creating new entry	timesheet	fr	nouvelle entrée en création
 custom fields	timesheet	fr	Champs personnalisés
 default document to insert entries	timesheet	fr	Document par défaut pour insérer les entrées.
 delete this status	admin	fr	Supprimer ce status
-deleted	timesheet	fr	supprimé
+deleted	timesheet	fr	Supprimé
 deletes this field	timesheet	fr	Supprimer ce champ
 determines the order the fields are displayed	timesheet	fr	Détermine l'ordre d'afficahge des champs
 directory with documents to insert entries	timesheet	fr	Répertoire avec les documents pour insérer les entrées
@@ -37,12 +37,12 @@ do you want to stop your working time?	common	fr	Souhaitez-vous arrêter votre t
 each value is a line like <id>[=<label>]	timesheet	fr	Chaque valeur est une ligne comme <id>[=<label>]
 edit status	common	fr	Modifier Statut
 edit this entry	timesheet	fr	Modifier cette entrée
-empty if identical to duration	timesheet	fr	vide si identique à la durée
+empty if identical to duration	timesheet	fr	Vide si identique à la durée
 end	timesheet	fr	Fin
 entry deleted	timesheet	fr	Entrée supprimée
 entry saved	timesheet	fr	Entrée enregistrée
-error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !!!
-error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
+error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !
+error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !
 error storing working time	timesheet	fr	Erreur de stockage du temps travaillé
 events	timesheet	fr	Evénements
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fr	Exemple {{IF  n_prefix~Mr~Bonjour M.~Bonjour Mme}} - chercher "Mr" dans le champs "n_prefix", s'il est trouvé, écrire Bonjour M., sinon écrire Bonjour Mme
@@ -52,20 +52,20 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	fr	Liens existants
 exists	timesheet	fr	Existe
 export definition to use for nextmatch export	timesheet	fr	Définition de l'export à utiliser pour l'export "nextmatch"
-export to openoffice spreadsheet	timesheet	fr	Export vers un classeur OpenOffice
+export to openoffice spreadsheet	timesheet	fr	Export vers un classeur Office
 exports entries from your timesheet into a csv file.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
 favorites	timesheet	fr	Favoris
-field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
+field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
-forgot to switch off working time?	common	fr	Avez-vous oublié d'arrêter votre compteur de temps de travail?
+forgot to switch off working time?	common	fr	Avez-vous oublié d'arrêter votre compteur de temps de travail ?
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 general fields:	timesheet	fr	Champs généraux :
 global categories	timesheet	fr	Catégorie globale
 history	timesheet	fr	Historique
 history logging	admin	fr	Enregistrement de l'historique
 html link to the current record	timesheet	fr	Lien HTML vers l'enregistrement courant
-id	timesheet	fr	Id
+id	timesheet	fr	ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	fr	Si vous spécifiez ici un dossier (chemin vfs complet), %1 affiche une action pour chaque document. Cette action permet de télécharger le document correspondant avec les données %1 insérées.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you specify an export definition, it will be used when you export	timesheet	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
@@ -75,7 +75,7 @@ imports entries into the timesheet from a csv file.	timesheet	fr	Importer des é
 insert	timesheet	fr	Insérer
 invalid field: %1 = %2, it needs to be a number.	timesheet	fr	Champ invalide :  %1 = %2, cela doit être un nombre.
 invalid input	common	fr	Input invalide
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	fr	ID de propriétaire invalide: %1. %2 utilisé à la place.
 last modified	timesheet	fr	Dernière modification
 last month	timesheet	fr	Le mois dernier
 last week	timesheet	fr	La semaine dernière
@@ -95,7 +95,7 @@ modify status	timesheet	fr	Modifier le statut
 name of current user, all other contact fields are valid too	timesheet	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 new ticket submitted by %1 at %2	timesheet	fr	Nouveau ticket soumis par %1 à %2
 new timesheet submitted by %1 at %2	timesheet	fr	Nouvelle feuille de temps soumis par %1 à %2
-no details	timesheet	fr	pas de détails
+no details	timesheet	fr	Pas de détails
 no project	timesheet	fr	Pas de projet
 no status	timesheet	fr	Pas de statut
 none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
@@ -126,24 +126,25 @@ saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en 
 select a price	timesheet	fr	Choisissez un prix
 select a project	timesheet	fr	Choisissez un projet
 select a status of the timesheet	timesheet	fr	Choisissez un statut de la feuille de temps
-select infolog	timesheet	fr	Choisissez un infolog
+select infolog	timesheet	fr	Choisissez un InfoLog
 select multiple timeshhets for a further action	timesheet	fr	Sélectionner plusieurs feuilles de temps pour un action
 select the predefined status, whan creating a new timesheet	preferences	fr	Choisissez un statut par défaut pour la création d'une nouvelle entrée.
 select the predefined status, when creating a new timesheet	preferences	fr	Choisissez un statut par défaut pour la création d'une nouvelle entrée.
 set to	timesheet	fr	Mettre à
+show a quantity sum (eg. to sum up negative overtime)	admin	fr	Afficher une somme de quantité, par exemple pour additionner des heures supplémentaires négatives
 skip record	timesheet	fr	Ignorer l'enregistrement
 start	timesheet	fr	Début
 start & stop timer	common	fr	Lancer et arrêter le timer
 start timer	common	fr	Lancer le timer
-start-time can not be before last stop- or pause-time %1!	common	fr	L'heure de début ne peut pas être après l'heure de fin ou de pause %1!
+start-time can not be before last stop- or pause-time %1!	common	fr	L'heure de début ne peut pas être après l'heure de fin ou de pause %1 !
 starttime	timesheet	fr	Heure de début
-starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
+starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !
 status	timesheet	fr	Statut
 status deleted.	timesheet	fr	Statut supprimé.
 status of created timesheets	timesheet	fr	Statut des feuilles de temps créés.
 status updated.	timesheet	fr	Statut mis à jour.
 stop	common	fr	Arrêter
-stop- or pause-time can not be before the start-time %1!	common	fr	L'heure de fin ou de pause ne peut pas être avant l'heure de début %1!
+stop- or pause-time can not be before the start-time %1!	common	fr	L'heure de fin ou de pause ne peut pas être avant l'heure de début %1 !
 sum	timesheet	fr	Somme
 sum %1:	timesheet	fr	Somme %1 :
 tag to mark positions for address labels	timesheet	fr	Balise pour marquer les positions des étiquettes d'adresses

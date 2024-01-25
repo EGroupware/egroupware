@@ -9,6 +9,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	tr	Kara liste
 adding %1 to whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerine %1 ekleme işlemi %2 nedeniyle başarısız oldu
 after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırasında görünür
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
+always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
 attach files	mail	tr	Dosya ekleme
@@ -20,7 +21,10 @@ be aware that all attachments will be sent as %1!	mail	tr	Tüm eklerin %1 olarak
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
 caching of flags	mail	tr	Bayrakların önbelleğe alınması
 can not resolve the winmail.dat attachment!	mail	tr	winmail.dat eki çözümlenemiyor!
+certificate details	mail	tr	Sertifika Detayları
+certificate in text	mail	tr	Metin içinde sertifika
 certificate info for email %1	mail	tr	E-posta %1 için sertifika bilgisi
+certificate issued by	mail	tr	Tarafından verilen sertifika
 changing subject failed because of %1	mail	tr	Konu değiştirme %1 nedeniyle başarısız oldu
 changing subject failed folder %1 does not exist	mail	tr	Konu değiştirme başarısız %1 klasörü mevcut değil
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
@@ -38,12 +42,15 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
 edit account	mail	tr	Hesap düzenle
+email address	mail	tr	E-posta adresi
+emailaddress	admin	tr	E-posta adresi
 emailadmin: profilemanagement	mail	tr	eMailAdmin: Profil yönetimi
 emails in whitelisted domains are not marked as spam	mail	tr	Beyaz listedeki alan adlarındaki e-postalar spam olarak işaretlenmez
 enable	mail	tr	Etkinleştir
 enabled	mail	tr	Etkin
 encrypt your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile şifreleyin
 event details follow	mail	tr	Etkinlik Detayları Ektedir
+every %1. day	mail	tr	Her %1. günde
 everyone	mail	tr	Herkes
 examine namespace to retrieve folders in others and shared	mail	tr	Diğer ve paylaşılan klasörleri almak için ad alanını inceleyin
 extended	mail	tr	Genişletilmiş
@@ -114,6 +121,7 @@ new subject	mail	tr	Yeni konu
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	tr	Klasör hedefi sağlanmadı ve mesajı kaydetmek için bir klasör veya postayı saklamak için başka bir önlem (InfoLog/Ticketsystem'e kaydet) sağlanmadı, ancak gerekli.
 no sneak preview in list	mail	tr	Mesaj önizlemesi yok
 non	mail	tr	Olmayan
+once per day	mail	tr	Günde bir kez
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	tr	Yalnızca parolayı farklı bir kanaldan / bu postanın dışında alıcılara iletirseniz anlamlıdır!
 only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	tr	Sadece kök seviyesindeki sorgularda tüm klasörleri döndürmeyen bazı sunucular için bu seviyedeki tüm klasörleri almak için gereklidir
 open in html mode	mail	tr	HTML modunda açın
@@ -154,6 +162,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	tr	Bu e-posta içeriğini Spam olarak bildir - spamTitan gibi spam çözümleri öğrenecek
 required pear class mail/mimedecode.php not found.	mail	tr	Gerekli PEAR sınıfı Mail/mimeDecode.php bulunamadı.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	tr	Paylaşılan veya kullanıcı klasöründe özel görülen bayraklarla Dovecot kullanıyorsanız devre dışı bırakmanız gerekir!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	tr	Gönderen adresi için sertifika bulunamadığından S/MIME Şifreleme başarısız oldu: %1
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak oluşturmak için düğmeyi işaretleyin
 save as ticket	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
@@ -182,9 +191,11 @@ show vertical	mail	tr	Dikey göster
 show vertical with all columns	mail	tr	Tüm sütunlarla birlikte dikey göster
 show/hide preview pane in mail list view	mail	tr	Posta listesi görünümünde önizleme bölmesini gösterme/gizleme
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	tr	Kimden adresi, konu ve e-posta parçacığını içeren geçici bir görünür bildirim gösterir
+sign your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile imzalayın
 signature	mail	tr	İmza
 signature at top	mail	tr	üstteki imza
 signature position and visibility	mail	tr	İmza konumu ve görünürlüğü
+signed by	mail	tr	İmza sahibi
 smime encrypted message	mail	tr	S/MIME şifreli mesaj
 smime signed message	mail	tr	S/MIME imzalı mesaj
 smtp	mail	tr	SMTP
@@ -212,4 +223,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	tr	Mesajı VFS'ye kaydedebilmek için önce taslak olarak kaydetmeniz gerekir
 you will loose current message body, unless you save it to your clipboard!	mail	tr	Panoya kaydetmediğiniz sürece mevcut mesaj gövdesini kaybedeceksiniz!
 you've got new mail	mail	tr	Yeni e-posta aldınız
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	tr	Kalan %1 kotanız çok düşük, daha fazla e-posta gönderip alamayabilirsiniz.\n Çöp kutusundaki veya önemsiz klasördeki e-postaları temizlemek biraz boş alan kazanmanıza yardımcı olabilir.\n Bu işe yaramadıysa, lütfen yöneticinizden daha fazla kota isteyin.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	tr	Kalan %1 kotanız çok düşük, daha fazla e-posta gönderip alamayabilirsiniz.<br>Çöp kutusundaki veya önemsiz klasördeki e-postaları temizlemek biraz boş alan kazanmanıza yardımcı olabilir.<br>Bu işe yaramadıysa, lütfen yöneticinizden daha fazla kota isteyin.

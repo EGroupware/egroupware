@@ -5,7 +5,7 @@
 %1 accounts being activated	admin	de	%1 Konten wurden aktiviert
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
-%1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
+%1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Konten gelöscht.
 %1 category '%2' %3	admin	de	%1 Kategorie '%2' %3
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
@@ -13,10 +13,10 @@
 %1 entries deleted	admin	de	%1 Einträge gelöscht
 %1 entries deleted.	admin	de	%1 Einträge gelöscht
 %1 group %2	admin	de	%1 Benutzergruppe %2
-%1 is no command!	admin	de	%1 ist kein Befehl !
+%1 is no command!	admin	de	%1 ist kein Befehl!
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.
 %1 mail credentials deleted	admin	de	%1 Mail Zugangsdaten gelöscht
-%1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
+%1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!
 %1 phrases saved.	admin	de	%1 Phrasen gespeichert.
 %1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
 %1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
@@ -25,11 +25,11 @@
 %1 token %2.	admin	de	%1 Token %2.
 %1 user %2	admin	de	%1 Benutzer %2
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
-(default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
+(default no, leave it off if you dont use it)	admin	de	(Vorgabe = Nein. Ausgeschaltet lassen, wenn nicht benutzt)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfigurationswert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 (no subject)	admin	de	(Kein Betreff)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten]!)
 -  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
 2 month	admin	de	2 Monate
@@ -44,7 +44,7 @@ access token revoked.	admin	de	Zugangstoken widerrufen.
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account	admin	de	Konto
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail-Adresse --> nicht benachrichtigt!
-account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
+account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext-Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Konto '%1' gelöscht.
 account '%1' not found !!!	admin	de	Mail-Konto '%1' nicht gefunden !
@@ -58,7 +58,7 @@ account list	admin	de	Benutzerkonten anzeigen
 account not found!	common	de	Mail-Konto nicht gefunden!
 account permissions	admin	de	Zugriffsrechte
 account preferences	admin	de	Einstellungen der Benutzerkonten
-account saved.	admin	de	E-Mail-Konto gespeichert.
+account saved.	admin	de	Mail-Konto gespeichert.
 account-id's have to be integers!	admin	de	Konten-ID`s müssen vom Typ Integer (Zahl) sein!
 acl added.	admin	de	ACL hinzugefügt.
 acl csv export	admin	de	ACL CSV Export
@@ -73,8 +73,8 @@ action	admin	de	Befehl
 actions	admin	de	Befehle
 activate	admin	de	Aktivieren
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
-activated	admin	de	aktiviert
-activated again	admin	de	wieder aktiviert
+activated	admin	de	Aktiviert
+activated again	admin	de	Wieder aktiviert
 active mail accounts	admin	de	E-Mail Konten aktivieren
 active templates	admin	de	Aktive Vorlagen
 active this token again	admin	de	Diese Token wieder aktivieren
@@ -98,7 +98,7 @@ add profile	admin	de	Profil hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
 add user	admin	de	Neuen Benutzer erstellen
 add user or group	admin	de	Benutzer oder Gruppen eingeben
-added	admin	de	hinzugefügt
+added	admin	de	Hinzugefügt
 admin dn	admin	de	Admin DN
 admin email	admin	de	E-Mail-Administration
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	de	E-Mail-Adressen der Administratoren (mit Komma getrennt), die über eine Sperre benachrichtigt werden sollen ('leer' für keine Benachrichtigung)
@@ -121,7 +121,7 @@ all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installations IDs
+allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installation-IDs
 allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich erinnern" Token zu setzen
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen
@@ -148,10 +148,10 @@ applications available on mobile devices	admin	de	Anwendungen, die auf Mobilger�
 applications list	admin	de	Liste der Anwendungen
 applications run rights updated.	admin	de	Anwendungsrechte aktualisiert.
 applications this group can use	admin	de	Anwendungen die diese Gruppe benutzen darf
-applies the changes	admin	de	übernimmt Änderungen
+applies the changes	admin	de	Übernimmt Änderungen
 apply changes	admin	de	Änderungen übernehmen
 apply the changes	admin	de	Änderungen übernehmen
-archive: zip or tar	admin	de	Archive: ZIP oder TAR
+archive: zip or tar	admin	de	Archive: ZIP oder tar
 are you sure you want to %1 mail for selected accounts?	admin	de	Sind Sie sicher, dass Sie Mail %1 für die ausgewählten Konten?
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen möchten?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen möchten?
@@ -163,7 +163,7 @@ are you sure you want to delete this server?	admin	de	Sind sie sicher, dass sie 
 are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie diese Session beenden möchten?
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
-asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
+asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Es wird versucht, den richtigen MIME-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream".
 attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
 attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb EGw verwendet.
@@ -177,7 +177,7 @@ automatically transfer entries owned by the user:	admin	de	Übertrage Einträge 
 available placeholders	admin	de	Verfügbare Platzhalter
 back to admin/grouplist	admin	de	Zurück zu: Admin / Gruppenverwaltung
 back to admin/userlist	admin	de	Zurück zu: Admin / Benutzerverwaltung
-back to the list	admin	de	zurück zur Liste
+back to the list	admin	de	Zurück zur Liste
 backup directory %1 mounted as %2	admin	de	Datensicherungsverzeichnis %1 unter %2 gemountet
 bad login name or password.	admin	de	Falscher Benutzername oder Passwort.
 bad or malformed request. server responded: %s	admin	de	Falsche oder ungültige Anfrage. Server antwortet: %s
@@ -185,16 +185,16 @@ bad request: %s	admin	de	Falsche Anfrage: %s
 bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 blocking after wrong password	admin	de	Blockierung nach falschem Passwort
-bottom	admin	de	unten
+bottom	admin	de	Unten
 bulk password reset	admin	de	Rücksetzen mehrerer Passwörter
 by	admin	de	Von
-by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!\n\nSind Sie wirklich sicher, dass Sie das wollen?
-calculate next run	admin	de	nächste Ausführung berechnen
+by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!<br>Sind Sie wirklich sicher, dass Sie das wollen?
+calculate next run	admin	de	Nächste Ausführung berechnen
 calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs-Bereich in Tagen (Vorgabe sind 1000)
 can be used by application	admin	de	Kann von folgender Anwendung verwendet werden
 can be used by group	admin	de	Kann von folgender Gruppe verwendet werden
 can be used by user	admin	de	Kann von folgendem Benutzer verwendet werden
-can change password	admin	de	darf Passwort ändern
+can change password	admin	de	Darf Passwort ändern
 can not change users into groups, same sign required!	admin	de	Das Ändern von Benutzern in Gruppen ist nicht möglich. Gleiches Kennzeichen wird benötigt.
 cancel changes	admin	de	Änderungen abbrechen
 cancel testjob!	admin	de	Test-Job abbrechen!
@@ -208,7 +208,7 @@ category saved.	admin	de	Kategorie gespeichert
 certificate	admin	de	Zertifikat
 certificate details	admin	de	Details des Zertifikat
 certificate validation in days	admin	de	Gültigkeit des Zertifikats in Tagen
-change account_id	admin	de	Änderung der account_id
+change account_id	admin	de	Änderung der Konto-ID
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
 change domain of email address and aliases	admin	de	ändert Domain von E-Mail-Adressen oder Aliase
@@ -219,11 +219,12 @@ change password for %1	admin	de	Ändern des Passworts für %1
 change password hash to	admin	de	Passwort Verschlüsselung ändern in
 changed password hash for %1 to %2.	admin	de	Passwort Verschlüsselung für %1 ändern in %2.
 changelog	admin	de	Änderungslog
-changelog and versions	admin	de	Änderungslog und Versionen
+changelog and versions	admin	de	Änderungs-Log und Versionen
 check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Einträge auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check categories for not (longer) existing accounts	admin	de	Prüfe Kategorien auf Bezüge zu nicht (mehr) existierenden Benutzerkonten
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
+checking push (green for success or red for failure)	admin	de	Überprüfung von PUSH (grün = i.O., rot für n.i.O.)
 children	admin	de	Kinder
 clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
 clear credentials	admin	de	Anmeldeinformationen löschen
@@ -231,7 +232,7 @@ clear mail credentials	admin	de	E-Mail-Anmeldeinformationen löschen
 clear security tokens	admin	de	Sicherheits-Tokens löschen
 click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
-comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	de	Komma getrennte Liste von IP Adressen die nicht blockiert werden (:optional Anzahl Fehlversuche)
+comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	de	Komma getrennte Liste von IP-Adressen die nicht blockiert werden (:optional Anzahl Fehlversuche)
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 command was run %1 on %2	admin	de	Kommando wurde um %1 auf %2 ausgeführt
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
@@ -239,27 +240,27 @@ config password or md5 hash from the header.inc.php	admin	de	Konfigurationspassw
 configuration	admin	de	Konfiguration
 configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
-connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann zB. Ihr Passwort lesen.
+connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann z. B. Ihr Passwort lesen.
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain<br>(Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere EGw-Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
-could not append message:	admin	de	Diese Mail lässt sich nicht anzeigen
+could not append message:	admin	de	Diese E-Mail lässt sich nicht anzeigen
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
-could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12 Datei extrahieren. Entweder ist die p12 Datei kaputt oder das Passwort ist falsch!
+could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12-Datei extrahieren. Entweder ist die p12-Datei kaputt oder das Passwort ist falsch!
 could not open secure connection to the imap server. %s : %s.	admin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
-could not remote execute the command	admin	de	Kann den Befehl nicht Remote ausführen.
+could not remote execute the command	admin	de	Kann den Befehl nicht remote ausführen.
 country	admin	de	Land
 country selection	admin	de	Länderauswahl
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	de	CRAM-MD5 oder DIGEST-MD5 erfordert, das das Auth_SASL Packet installiert ist.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	de	CRAM-MD5 oder DIGEST-MD5 erfordert, das das Auth_SASL-Packet installiert ist.
 create group	admin	de	Erstelle Gruppe
 create new account	admin	de	Neues E-Mail-Konto erstellen
 create new identity	admin	de	Neue Identität erstellen
 created	admin	de	Erstellt
-created with id #%1	admin	de	erstellt mit der ID #%1
-creates / updates user accounts from csv file	admin	de	Erstellt / aktualisiert Benutzerkonten durch Import von Daten aus einer CSV Datei
-creates / updates user groups from csv file	admin	de	Erstellt / aktualisiert Benutzergruppen durch Import von Daten aus einer CSV Datei
-creates a new field	admin	de	erstellt ein neues Feld
-crontab only (recomended)	admin	de	nur Crontab (empfohlen)
+created with id #%1	admin	de	Erstellt mit der ID #%1
+creates / updates user accounts from csv file	admin	de	Erstellt / aktualisiert Benutzerkonten durch Import von Daten aus einer CSV-Datei
+creates / updates user groups from csv file	admin	de	Erstellt / aktualisiert Benutzergruppen durch Import von Daten aus einer CSV-Datei
+creates a new field	admin	de	Erstellt ein neues Feld
+crontab only (recomended)	admin	de	Nur Crontab (empfohlen)
 current certificate	admin	de	Aktuelles Zertifikat
 current default	admin	de	Aktuelle Vorgabe
 current hash	admin	de	Aktueller Schlüssel:
@@ -312,7 +313,7 @@ delete this log entry	admin	de	Diesen Protokolleintrag löschen
 delete this user	admin	de	Benutzer löschen
 deleted	admin	de	gelöscht
 deletes this field	admin	de	Löscht dieses Feld
-deliver extern	admin	de	extern ausliefern
+deliver extern	admin	de	Extern ausliefern
 deny access	admin	de	Zugriff verweigern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
@@ -335,10 +336,10 @@ description can not exceed 255 characters in length !	admin	de	Die Beschreibung 
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	de	Zielkonto #%1 besteht und wurde nicht umbenannt. Konten wurden nicht zusammengeführt, da die eindeutige Kennzeichnung gestört würde. Alternativ sollten Sie löschen mit übertragen des Inhalts anwählen.
 determines the order the fields are displayed	admin	de	Bestimmt die Reihenfolge der angezeigten Felder
 direct login without password or second factor	admin	de	Direkter Login ohne Passwort oder als zweiter Faktor
-disable	admin	de	abschalten
+disable	admin	de	Abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
-disable minifying of javascript and css files	admin	de	Komprimierung von Javascript und CSS Dateien deaktivieren
+disable minifying of javascript and css files	admin	de	Komprimierung von JavaScript- und CSS-Dateien deaktivieren
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled	admin	de	Deaktiviert
@@ -346,8 +347,8 @@ disabled (not recomended)	admin	de	Abgeschaltet (nicht empfohlen)
 disabled, do not show on login page	admin	de	Deaktiviert, wird auf der Anmelde-Seite nicht angezeigt
 display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	angezeigte Länge des Eingabefelds (setze Zeilen=1 um die Eingabe zu beschränken)
-displaying html messages is disabled	admin	de	Das Anzeigen von HTML Nachrichten ist deaktiviert
-displaying plain messages is disabled	admin	de	Das Anzeigen von Text Nachrichten ist deaktiviert
+displaying html messages is disabled	admin	de	Das Anzeigen von HTML-Nachrichten ist deaktiviert
+displaying plain messages is disabled	admin	de	Das Anzeigen von Text-Nachrichten ist deaktiviert
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
@@ -361,10 +362,10 @@ do you want to delete all global subcategories ?	admin	de	Möchten Sie alle glob
 do you want to move all global subcategories one level down ?	admin	de	Wollen Sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 domainname	admin	de	Domänenname
-down	admin	de	unten
+down	admin	de	Nach unten
 download csv	admin	de	CSV herunterladen
-each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	de	jeder Wert ist eine Zeile im Format Wert[=Anzeige], oder benutzen Sie @Pfad um die Optionen aus einer Datei aus dem EGroupware Verzeichnis zu lesen
-each value is a line like label=[javascript]	admin	de	jeder Wert ist eine Zeile im Format Anzeige[=Javascript]
+each value is a line like id[=label], or use @path to read options from a file in egroupware directory	admin	de	jeder Wert ist eine Zeile im Format Wert[=Anzeige], oder benutzen Sie @Pfad um die Optionen aus einer Datei aus dem EGroupware-Verzeichnis zu lesen
+each value is a line like label=[javascript]	admin	de	jeder Wert ist eine Zeile im Format Anzeige[javascript]
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit email settings	admin	de	E-Mail-Einstellungen
@@ -384,7 +385,7 @@ educational: universities, schools, ...	admin	de	Ausbildung: Universitäten, Sch
 egroupware directory	admin	de	EGroupware Verzeichnis
 egroupware tutorial	admin	de	EGroupware Video-Anleitungen
 egroupware version	admin	de	EGroupware Version
-either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Installations ID UND das Konfigurationspasswort ODER den Remote Hash!
+either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Installations-ID UND das Konfigurationspasswort ODER den Remote Hash!
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
 email settings	common	de	E-Mail-Konto
@@ -392,30 +393,30 @@ emailadmin	admin	de	E-Mail-Admin
 emailadmin: group assigned profile	common	de	E-Mail-Admin: Vordefiniertes Gruppenprofil
 emailadmin: user assigned profile	common	de	E-Mail-Admin: Vordefiniertes Benutzerprofil
 empty to not change	admin	de	leer lassen um NICHT zu ändern
-enable	admin	de	einschalten
+enable	admin	de	Einschalten
 enable cyrus imap server administration	admin	de	Cyrus IMAP-Server Administration aktivieren
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable sieve	admin	de	Sieve aktivieren
-enable spellcheck in rich text editor	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
-enable the soap service	admin	de	soap Service einschalten
-enable the xmlrpc service	admin	de	xmlrpc Service einschalten
+enable spellcheck in rich text editor	admin	de	Aktiviere die Rechtschreibprüfung im RichText-Editor
+enable the soap service	admin	de	SOAP Service einschalten
+enable the xmlrpc service	admin	de	XML-RPC Service einschalten
 enabled	admin	de	Einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
-encrypted connection	admin	de	verschlüsselte Verbindung
+encrypted connection	admin	de	Verschlüsselte Verbindung
 encryption	admin	de	Verschlüsselung
 encryption settings	admin	de	Verschlüsselungseinstellungen
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
 enter a passphrase if you would like to protect your private key by password.	admin	de	Bitte geben Sie ein Passphrase ein, wenn Sie Ihren privaten Schlüssel mit einem Passwort sichern wollen.
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (braucht mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (benötigt mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.<br>Beispiel: https://egw.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal.
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
@@ -433,17 +434,17 @@ enter your smtp server port	admin	de	SMTP-Server Port
 entries	admin	de	Einträge
 entries owned by the user:	admin	de	Einträge des Benutzers:
 entry saved	admin	de	Eintrag gespeichert
-error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job !!!
-error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
+error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job!
+error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1!
 error connecting to imap server. %s : %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. [%s] %s.
-error deleting entry!	admin	de	Fehler beim Löschen des Eintrags
+error deleting entry!	admin	de	Fehler beim Löschen des Eintrags!
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error revoking token!	admin	de	Fehler beim Widerrufen des Token!
 error saving	admin	de	Fehler beim Speichern
 error saving account!	admin	de	Fehler beim Speichern des Mail-Kontos!
 error saving the command!	admin	de	Fehler beim Speichern des Befehls!
-error saving the entry!!!	admin	de	Fehler beim Speichern !
+error saving the entry!!!	admin	de	Fehler beim Speichern!
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!
 error storing token!	admin	de	Fehler beim Speichern des Token!
@@ -451,8 +452,8 @@ error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error, no username!	admin	de	Fehler, kein Benutzername!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
 event details follow	admin	de	Hier die Details des Termins
-exists	admin	de	existiert
-expired	admin	de	abgelaufen
+exists	admin	de	Existiert
+expired	admin	de	Abgelaufen
 expires	admin	de	Läuft ab
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 export certificate as p12	admin	de	Exportiere Zertifikat als p12 Datei
@@ -468,24 +469,24 @@ failed to save user!	admin	de	Speichern dieses Benutzers ist nicht möglich.
 failed to upload %1	admin	de	Hochladen von '%1' fehlgeschlagen
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
 false	admin	de	Falsch
-field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
-file rejected, no %2. is:%1	admin	de	Datei wurde abgewiesen, kein %2. ist:%1
+field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits!
+file rejected, no %2. is:%1	admin	de	Datei wurde abgewiesen, kein %2. Ist: %1
 file space	admin	de	Speicherplatz
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
 filesystem quota	admin	de	Dateisystem Quota
-filtered by account	admin	de	Suche nach Benutzerprofilen
-filtered by group	admin	de	Suche nach Gruppenprofilen
+filtered by account	admin	de	Suche nach Benutzern
+filtered by group	admin	de	Suche nach Gruppen
 folder acl	admin	de	Zugriffsrechte
 for the times above	admin	de	für die oben angegebenen Zeiten
-for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
+for the times below (empty values count as '*', all empty = every minute)	admin	de	Für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 forbid users to create identities	admin	de	Anwender dürfen keine Identitäten anlegen
 force selectbox	admin	de	Auswahl erzwingen
 force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das Ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
-forward also to	admin	de	zusätzlich weiterleiten
+forward also to	admin	de	Zusätzlich weiterleiten
 forward email's to	admin	de	E-Mails weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
-forward only	admin	de	nur weiterleiten
-forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	de	Nur weiterleiten schaltet die IMAP Mailbox / das Speichern der Mails aus und leitet diese an die angegebene Adresse weiter.
+forward only	admin	de	Nur weiterleiten
+forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	de	Nur weiterleiten schaltet das Postfach / das Speichern der E-Mails aus und leitet diese an die angegebene Adresse weiter.
 full name	admin	de	Vollständiger Name
 general	admin	de	Allgemein
 generate certificate	admin	de	Zertifikat erzeugen
@@ -502,9 +503,9 @@ grant	admin	de	Berechtigungen
 group #%1 must have negative sign!	admin	de	Benutzergruppe #%1 muss ein negatives Vorzeichen besitzen
 group %1 %2	admin	de	Gruppe %1 %2
 group '%1' deleted.	admin	de	Gruppe '%1' wurde gelöscht.
-group ?	admin	de	Gruppe ?
-group csv export	admin	de	CSV Export von Gruppen
-group csv import	admin	de	CSV Import von Gruppen
+group ?	admin	de	Gruppe?
+group csv export	admin	de	CSV-Export von Gruppen
+group csv import	admin	de	CSV-Import von Gruppen
 group excepted from above export limit (admins are always excepted)	admin	de	Gruppen, die vom oben angegeben Exportlimit ausgenommen sind (Administratoren sind immer ausgenommen)
 group has been added	common	de	Gruppe wurde hinzugefügt
 group has been deleted	common	de	Gruppe wurde gelöscht
@@ -526,27 +527,27 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 1)?
 how should email addresses for new users be constructed?	admin	de	In welchem Format sollen E-Mail-Adressen von neuen Benutzern erzeugt werden?
 how username get constructed	admin	de	Wie wird der Benutzername gebildet
-html/plaintext	admin	de	HTML/Plaintext
+html/plaintext	admin	de	HTML/Text
 icon	admin	de	Symbol
 identity	admin	de	Identität
 identity deleted	admin	de	Identität gelöscht.
 identity saved.	admin	de	Identität gespeichert.
-idle	admin	de	im Leerlauf
+idle	admin	de	Im Leerlauf
 if different from email address	admin	de	falls unterschiedlich zu E-Mail-Adresse
 if disabled existing tokens immediatly stop working.	admin	de	Wenn deaktiviert funktionieren bereits existierende Token sofort nicht mehr.
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört, gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, möchten Sie Benutzerverzeichnisse und Kommandointerpreter verwalten?
-if using ssl or tls, you must have the php openssl extension loaded.	admin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP Erweiterung geladen haben.
+if using ssl or tls, you must have the php openssl extension loaded.	admin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP-Erweiterung geladen haben.
 if you delete the user without selecting an account to move the data to, all entries get deleted!	admin	de	Wenn Sie den Benutzer löschen, ohne jemanden auszuwählen, zu dem die Daten verschoben werden sollen, werden alle Einträge gelöscht!
 if you ignore that error as admin, you should check "%1"!	admin	de	Falls Sie den Fehler als Administrator ignorieren, sollten Sie "%1" abhacken!
-if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	de	Wenn Sie als Sieve Server Port 5190 eintragen, wird für die Kommunikation mit dem Sieve-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	de	Wenn Sie als Sieve-Server-Port 5190 eintragen, wird für die Kommunikation mit dem Sieve-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
 if you wish to have randomly selected images you may upload multiple images.	admin	de	Wenn Sie zufällig ausgewählte Bilder haben möchten, können Sie mehrere Bilder hochladen.
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
 imap c-client version < 2001	admin	de	IMAP C-Client Version < 2001
-imap server	admin	de	IMAP Server
-imap server closed the connection.	admin	de	IMAP Server hat die Verbindung beendet.
-imap server closed the connection. server responded: %s	admin	de	IMAP Server hat die Verbindung beendet. Server Antwort: %s
+imap server	admin	de	IMAP-Server
+imap server closed the connection.	admin	de	IMAP-Server hat die Verbindung beendet.
+imap server closed the connection. server responded: %s	admin	de	IMAP-Server hat die Verbindung beendet. Server Antwort: %s
 imap server hostname or ip address	admin	de	IMAP-Server Hostname oder IP-Adresse
 imap server logintyp	admin	de	IMAP-Server Loginverfahren
 imap server name	admin	de	IMAP-Server Name
@@ -554,11 +555,11 @@ imap server port	admin	de	IMAP-Server Port
 imap/pop3 server name	admin	de	IMAP/POP3-Server Name
 importance	admin	de	wichtig
 in mbyte	admin	de	in MByte
-inactive	admin	de	inaktiv
+inactive	admin	de	Inaktiv
 inbound	admin	de	eingehend
 initial	admin	de	Anfangsbuchstabe
 install crontab	admin	de	Crontab installieren
-install id	admin	de	Installations ID
+install id	admin	de	Installations-ID
 installation type	admin	de	Installationstyp
 installed applications	common	de	Installierte Anwendungen
 installed applications, percentage of allowed users and total number of entries.	admin	de	Installierte Anwendungen, Prozentsatz erlaubte Benutzer und Gesamtzahl der Einträge.
@@ -569,9 +570,9 @@ international use	admin	de	Internationale Benutzung
 invalid argument '%1' !!!	admin	de	Ungültiges Argument "%1"!
 invalid email	admin	de	Ungültige E-Mail-Adresse
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
-invalid remote id or name "%1"!	admin	de	Ungültige RemoteID oder Name "%1"!
-invalid type "%1"!	admin	de	Ungültiger Type "%1"!
-invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein (yes/no)
+invalid remote id or name "%1"!	admin	de	Ungültige Remote-ID oder Name "%1"!
+invalid type "%1"!	admin	de	Ungültiger Typ "%1"!
+invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein
 invalid value "%1", use only:	admin	de	Ungültiger Wert "%1". Verwenden Sie nur:
 ip	admin	de	IP
 jobs	admin	de	Jobs
@@ -591,15 +592,15 @@ last submission:	admin	de	Letzte Absendung:
 last time read	admin	de	Zuletzt gelesen
 last updated	admin	de	Zuletzt aktualisiert
 ldap accounts context	admin	de	LDAP-Kontext für Benutzerkonten
-ldap basedn	admin	de	LDAP BaseDN
+ldap basedn	admin	de	LDAP Base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
 ldap default shell (e.g. /bin/bash)	admin	de	LDAP-Vorgabewert für Kommandointerpreter (Shell) (z.B. /bin/bash)
 ldap encryption type	admin	de	LDAP-Verschlüsselungstyp
 ldap groups context	admin	de	LDAP-Kontext für Gruppen
 ldap host	admin	de	LDAP-Host
 ldap root password	admin	de	LDAP-Root-Passwort
-ldap rootdn	admin	de	LDAP rootdn
-ldap server	admin	de	LDAP Server
+ldap rootdn	admin	de	LDAP root DN
+ldap server	admin	de	LDAP-Server
 ldap server accounts dn	admin	de	LDAP-Server Benutzerkonten DN
 ldap server admin dn	admin	de	LDAP-Server Administrator DN
 ldap server admin password	admin	de	LDAP-Server Administrator-Passwort
@@ -609,19 +610,19 @@ leave empty for no quota	admin	de	Leer lassen um Quota zu deaktivieren
 leave empty to use oauth, if supported	admin	de	Leer lassen um OAuth zu benutzen, wenn unterstützt
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
-leave unchanged	admin	de	unverändert lassen
-leave without saveing the entry	admin	de	beendet ohne den Eintrag zu speichern
-leaves without saveing	admin	de	beendet ohne zu speichern
+leave unchanged	admin	de	Unverändert lassen
+leave without saveing the entry	admin	de	Beendet ohne den Eintrag zu speichern
+leaves without saveing	admin	de	Beendet ohne zu speichern
 length	admin	de	Länge
 length<br>rows	admin	de	Länge<br>Zeilen
 lifetime of 'remember me' token	admin	de	Gültigkeit des "An mich erinnern" Token
 limit global category to members of a certain group	admin	de	Beschränkt die global Kategorie auf der Mitglieder einer bestimmten Gruppe
-limit to members of	admin	de	beschränken auf Mitglieder von
+limit to members of	admin	de	Beschränken auf Mitglieder von
 list config settings	admin	de	Konfigurationseinstellungen auflisten
-list current sessions	admin	de	aktive Sitzungen anzeigen
+list current sessions	admin	de	Aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
 log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und -Aktion von Änderungen in der Historie der Einträge
-logged out	admin	de	abgemeldet
+logged out	admin	de	Abgemeldet
 login history	admin	de	Login-Kontrolle
 login id	admin	de	Benutzername
 login message	admin	de	Meldung der Anmelde-Seite
@@ -653,23 +654,23 @@ minute	admin	de	Minute
 mode	admin	de	Modus
 modified	admin	de	Geändert
 month	admin	de	Monat
-more secure	admin	de	sicherer
+more secure	admin	de	Sicherer
 mount backup directory to %1	admin	de	Datensicherungsverzeichnis unter %1 mounten
 must change password upon next login	admin	de	Muss das Passwort beim nächsten Login ändern
 name must not be empty !!!	admin	de	Name darf nicht leer sein!
 name of account	admin	de	Name des Kontos
 name of organisation	admin	de	Name der Organisation
-name of the egroupware instance, eg. default	admin	de	Name der EGroupware Instanz, z.B. default
+name of the egroupware instance, eg. default	admin	de	Name der EGroupware-Instanz, z.B. default
 new group name	admin	de	Neuer Gruppenname
-new name	admin	de	neuer Name
+new name	admin	de	Neuer Name
 new password	admin	de	Neues Passwort
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leer lassen, wenn das Passwort nicht geändert werden soll ]
-next run	admin	de	nächste Ausführung
+next run	admin	de	Nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
-no alternate email address	admin	de	keine zusätzlichen E-Mail-Adressen
+no alternate email address	admin	de	Keine zusätzlichen E-Mail-Adressen
 no default account found!	admin	de	Kein Standard Mail-Konto gefunden!
-no encryption	admin	de	keine Verschlüsselung
-no forwarding email address	admin	de	keine Weiterleitungsadresse definiert
+no encryption	admin	de	Keine Verschlüsselung
+no forwarding email address	admin	de	Keine Weiterleitungsadresse definiert
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
@@ -685,7 +686,7 @@ no sieve support detected, either fix configuration manually or leave it switche
 no supported imap authentication method could be found.	admin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
 not enabled	admin	de	Nicht einschalten
-note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
+note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit Curl-Unterstützung gebaut wurde
 notification mail	admin	de	Benachrichtigungs-E-Mail
 notify user by email	admin	de	Benutzer per E-Mail benachrichtigen
 notifying account "%1" %2 failed!	admin	de	Benachrichtigen von Benutzer "%1" %2 fehlgeschlagen!
@@ -695,27 +696,27 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	de	
 number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzungen / EGroupware Logins in den letzten 30 Tagen
 number of users	admin	de	Anzahl Benutzer
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	de	Numeriere Anwendungen aufeinander folgend. Wenn sie nicht aufeinander folgend numeriert sind, funktioniert das Sortieren der Anwendungen nicht. Ändert nicht die Reihenfolge der Anwendungen
-nummeric account id	admin	de	numerische Benutzer ID
+nummeric account id	admin	de	Numerische Benutzer ID
 oauth authentiction	admin	de	OAuth Authentifizierung
 offer to installing egroupware as mail-handler	admin	de	Anbieten EGroupware als Mail-Handler zu installieren
 official egroupware usage statistic	admin	de	Offizielle EGroupware Nutzungsstatistik
-one day	admin	de	ein Tag
-one hour	admin	de	eine Stunde
-one month	admin	de	ein Monat
-one week	admin	de	eine Woche
+one day	admin	de	Ein Tag
+one hour	admin	de	Eine Stunde
+one month	admin	de	Ein Monat
+one week	admin	de	Eine Woche
 only below displayed information is directly submitted to %s.	admin	de	Nur die unterhalb angezeigte Information wird direkt zu %s übertragen.
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 organisation	admin	de	Organisation
 other security configuration	admin	de	Andere sicherheitsrelevante Konfigurationen
-outbound	admin	de	ausgehend
-own categories	admin	de	eigene Kategorien
+outbound	admin	de	Ausgehend
+own categories	admin	de	Eigene Kategorien
 own install id	admin	de	Eigene Install-ID
 own install id:	admin	de	Eigene Install-ID:
 owner "%1" removed, please select group-owner	admin	de	Besitzer "%1" entfernt, bitte einen Gruppenbesitzer auswählen.
 passphrase	admin	de	Passphrase
-passthrough	admin	de	durchgehend
-password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
+passthrough	admin	de	Durchreichen
+password for smtp-authentication	admin	de	Passwort für SMTP-Authentifizierung
 password to unlock encrypted p12	admin	de	Passwort zum Entsperren von verschlüsseltem Zertifikat
 password updated	admin	de	Passwort aktualisiert
 passwords	admin	de	Passwörter
@@ -729,11 +730,11 @@ percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt
 percent this user has logged out	admin	de	Prozentsatz, wie oft sich dieser Benutzer abgemeldet hat
 periodic	admin	de	Periodisch
 permission denied	admin	de	Zugriff verweigert
-permission denied !!!	admin	de	Zugriff verweigert !
-permission denied!!!	admin	de	Zugriff verweigert !!!
+permission denied !!!	admin	de	Zugriff verweigert!
+permission denied!!!	admin	de	Zugriff verweigert!
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
-personal: eg. within a family	admin	de	Persönlich: z.B. innerhalb einer Familie
+personal: eg. within a family	admin	de	Persönlich: z. B. innerhalb einer Familie
 php version	admin	de	PHP Version
 phpinfo	admin	de	PHP-Informationen
 phrase	admin	de	Phrase
@@ -747,8 +748,8 @@ please select	admin	de	Bitte auswählen
 please submit (or postpone) statistic first	admin	de	Bitte Statistik erst abschicken (oder aufschieben)
 plesk can't rename users --> request ignored	admin	de	Plesk kann keine Benutzer umbenennen --> Anforderung ignoriert
 plesk imap server (courier)	admin	de	Plesk IMAP Server (Courier)
-plesk mail script '%1' not found !!!	admin	de	Plesk Mail Skript '%1' nicht gefunden !!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	de	Plesk verlangt, dass Passwörter mindestens 5 Zeichen lang sind und nicht den Benutzernamen enthalten --> Passwort nicht gesetzt!!!
+plesk mail script '%1' not found !!!	admin	de	Plesk Mail Skript '%1' nicht gefunden!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	de	Plesk verlangt, dass Passwörter mindestens 5 Zeichen lang sind und nicht den Benutzernamen enthalten --> Passwort nicht gesetzt!
 plesk smtp-server (qmail)	admin	de	Plesk SMTP-Server (Qmail)
 pop3 server hostname or ip address	admin	de	POP3-Server Hostname oder IP-Adresse
 pop3 server port	admin	de	POP3-Server Port
@@ -756,7 +757,7 @@ port	admin	de	Port
 postfix with ldap	admin	de	Postfix mit LDAP
 postpone for	admin	de	Aufschieben um
 preferences	admin	de	Einstellungen
-primary group	admin	de	primäre Gruppe
+primary group	admin	de	Primäre Gruppe
 processing of file %1 failed. failed to meet basic restrictions.	admin	de	Die Verarbeitung der Datei %1 fehlgeschlagen. Die Basis Voraussetzungen wurden nicht erfülltt
 profile access rights	admin	de	Profilzugriffsrechte
 profile is active	admin	de	Profil ist aktiv
@@ -769,7 +770,7 @@ re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
 reject passwords containing part of username or full name (3 or more characters long)	admin	de	Passwörter zurückweisen die einen Teil des Benutzernamen oder vollständigen Namens beinhalten (3 oder mehr Zeichen lang)
-relay access checked	admin	de	nicht angemeldetes Senden überprüft
+relay access checked	admin	de	Nicht angemeldetes Senden überprüft
 remark	admin	de	Bemerkung
 remote administration instances	admin	de	Remote Administrations Instanzen
 remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
@@ -780,7 +781,7 @@ remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Grup
 remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
-requested	admin	de	angefordert
+requested	admin	de	Angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
 requires 'openid / oauth2 server' app.	admin	de	Benötigt die 'Open ID / OAuth2 Server' Anwendung.
@@ -791,20 +792,20 @@ revoked	admin	de	Widerrufen
 rights	admin	de	Rechte
 route all mails to	admin	de	Alle E-Mails senden an
 rows	admin	de	Zeilen
-rpm or debian package	admin	de	RPM oder Debian Pakete
+rpm or debian package	admin	de	RPM oder deb Pakete
 run	admin	de	Ausführen
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 run rights for applications	admin	de	Ausführungsrechte für Anwendungen
-samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	de	SameSite Cooke Attribute (Cookie übertragen, wenn die Adressleiste des Browsers eine andere Domain anzeigt)
+samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	de	SameSite Cookie Attribute (Cookie übertragen, wenn die Adressleiste des Browsers eine andere Domain anzeigt)
 save as default	admin	de	Als Vorgabe speichern
 save changes	admin	de	Änderungen speichern
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	de	Das Speichern der Nachricht %1 ist fehlgeschlagen. Die Nachricht konnte nicht in das Verzeichniss %2 bzw.: %3
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
-saves the changes made and leaves	admin	de	beendet und speichert die Änderungen
-saves this entry	admin	de	speichert diesen Eintrag
+saves the changes made and leaves	admin	de	Beendet und speichert die Änderungen
+saves this entry	admin	de	Speichert diesen Eintrag
 saving of message %1 failed. destination folder %2 does not exist.	admin	de	Das Speichern der Nachricht %1 ist fehlgeschlagen. Der Ordner %2 ist nicht vorhanden.
-scheduled	admin	de	geplant
+scheduled	admin	de	Geplant
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
@@ -817,7 +818,7 @@ select group managers	admin	de	Gruppenmanager auswählen
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	de	Wählen Sie die Sprache, um eine sprachabhängige Nachricht zu definieren. Sprache 'Englisch' ist die Standardseite für alle Sprachen, daher müssen Sie für die Einstellung einer allgemeinen Nachricht für allen Sprachen nur die Seite 'Englisch' erstellen.
 select multiple	admin	de	Mehrere auswählen
 select owner	admin	de	Besitzer auswählen
-select permissions this group will have	admin	de	wählen Sie die Zugriffsrechte für diese Gruppe.
+select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	de	Wählen Sie die Anwendungen auf die das Token beschränkt sein soll, oder lassen Sie die Vorgabe alle Anwendungen.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select type of imap server	admin	de	IMAP-Server Typ auswählen
@@ -825,11 +826,11 @@ select type of imap/pop3 server	admin	de	IMAP/POP3-Server Typ auswählen
 select type of smtp server	admin	de	SMTP-Server Typ auswählen
 select users	admin	de	Benutzer auswählen
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
-select where you want to store/retrieve filesystem information	admin	de	Wo möchten Sie Datei Informationen ablegen / lesen
+select where you want to store/retrieve filesystem information	admin	de	Wo möchten Sie Dateisystem-Informationen ablegen/lesen
 select where you want to store/retrieve user accounts	admin	de	Wo möchten Sie die Benutzerkonten speichern
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 selectbox	admin	de	Auswahlfeld
-send using this email-address	admin	de	zum Versenden wird diese E-Mail-Adresse benutzt
+send using this email-address	admin	de	Zum Versenden wird diese E-Mail-Adresse benutzt
 server %1 has been updated	admin	de	Server %1 wurde aktualisiert
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
@@ -844,11 +845,11 @@ set preference values.	admin	de	Einstellungswert wurde geändert
 settings	admin	de	Einstellungen
 should exceptions contain a trace (including function arguments)	admin	de	Sollen Ausnahmefehler eine Rückverfolgung enthalten (einschl. Funktionsargumente)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten?
-show 'powered by' logo on	admin	de	Zeige "powered by" Logo
+show 'powered by' logo on	admin	de	Zeige "Powered by"
 show access log	admin	de	Zugangsprotokoll anzeigen
 show as optional, but required once user has it setup	admin	de	Als optional anzeigen, aber erforderlich wenn der Benutzer sie eingerichtet hat
 show as required, but only once user has it setup	admin	de	Als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
-show current action	admin	de	aktuelle Aktion anzeigen
+show current action	admin	de	Aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
 show members	admin	de	Mitglieder dieser Gruppe anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
@@ -858,29 +859,29 @@ sieve server port	admin	de	Sieve-Server Port
 sieve settings	admin	de	Sieve Einstellungen
 site	admin	de	Site
 skip imap	admin	de	IMAP auslassen
-skipping imap configuration!	admin	de	IMAP Konfiguration ausgelassen!
-smtp authentication	admin	de	SMTP Anmeldung
-smtp options	admin	de	SMTP Optionen
-smtp server	admin	de	SMTP Server
-smtp server name	admin	de	SMTP Server Name
-smtp settings	admin	de	SMTP Einstellungen
-smtp-server hostname or ip address	admin	de	SMTP Server Hostname oder IP-Adresse
-smtp-server port	admin	de	SMTP Server Port
+skipping imap configuration!	admin	de	IMAP-Konfiguration ausgelassen!
+smtp authentication	admin	de	SMTP-Anmeldung
+smtp options	admin	de	SMTP-Optionen
+smtp server	admin	de	SMTP-Server
+smtp server name	admin	de	SMTP-Server Name
+smtp settings	admin	de	SMTP-Einstellungen
+smtp-server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
+smtp-server port	admin	de	SMTP-Server Port
 soap	admin	de	SOAP
 sorry, that group name has already been taken.	admin	de	Dieser Gruppenname wird bereits verwendet.
 sorry, the above users are still a member of the group %1	admin	de	Diese Benutzer sind noch Mitglied der Gruppe %1.
 sorry, the follow users are still a member of the group %1	admin	de	Die folgenden Benutzer sind noch Mitglied der Gruppe %1.
 sort the entries	admin	de	Einträge sortieren
 source account #%1 does not exist!	admin	de	Quellaccount #%1 besteht nicht!
-ssl	admin	de	verschlüsselt (SSL)
+ssl	admin	de	Verschlüsselt (SSL)
 standard	admin	de	Vorgabe
 standard identity	admin	de	Standard Identität
 standard imap server	admin	de	Standard IMAP-Server
 standard pop3 server	admin	de	Standard POP3-Server
 standard smtp-server	admin	de	Standard SMTP-Server
 start	admin	de	Start
-start testjob!	admin	de	Testjob starten!
-starts with	admin	de	startet mit
+start testjob!	admin	de	Test-Job starten!
+starts with	admin	de	Startet mit
 stationery	admin	de	Briefpapier
 strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
@@ -890,33 +891,33 @@ submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
 submit to egroupware.org	admin	de	Übertragen an egroupware.org
 subtype	admin	de	Untertyp
 subversion checkout	admin	de	Subversion checkout (svn)
-success	admin	de	erfolgreich
+success	admin	de	Erfolgreich
 successful connected to %1 server%2.	admin	de	Erfolgreich zu %1 Server verbunden%2.
-successfull, but no refresh-token received!	admin	de	Erfolgreiche, aber keine Refresh-Token erhalten!
+successfull, but no refresh-token received!	admin	de	Erfolgreich, aber keine Refresh-Token erhalten!
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
 switch it off, if users are randomly thrown out	admin	de	Schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
 template selection	admin	de	Auswahl der Benutzeroberfläche
-templates	admin	de	Templates
+templates	admin	de	Vorlagen
 text entry	admin	de	Texteingabe
 that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
 that application order must be a number.	admin	de	Die Anwendungsreihenfolge muss eine Zahl sein.
 that loginid has already been taken	admin	de	Diese Login-ID ist bereits vergeben
 that name has been used already	admin	de	Dieser Name wird bereits verwendet
 that server name has been used already !	admin	de	Dieser Server-Name wird bereits verwendet!
-the api is current	admin	de	Die API ist aktuell
-the api requires an upgrade	admin	de	Die API benötigt ein Upgrade
+the api is current	admin	de	Das API ist aktuell
+the api requires an upgrade	admin	de	Das API benötigt ein Upgrade
 the cumulated and anonymised data will be publically available:	admin	de	Die kumulierten und anonymisierten Daten werden öffentlich verfügbar sein:
 the groups must include the primary group	admin	de	Die Gruppen müssen die primäre Gruppe beinhalten
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	de	Der IMAP Server scheint die eingestellte Authentifizierungsmethode nicht zu unterstützen. Bitte fragen Sie Ihren Systemadministrator.
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	de	Der IMAP-Server scheint die eingestellte Authentifizierungsmethode nicht zu unterstützen. Bitte fragen Sie Ihren Systemadministrator.
 the install id of an instance can be found under admin &gt; site configuration	admin	de	Die Installation-ID dieser Instanz wird unter Administration >> Konfiguration der Anwendung angezeigt
-the install id of an instance can be found under admin > site configuration	admin	de	Installations ID für diese Instanz wird unter Admin >> Konfiguration der Anwendung angezeigt
+the install id of an instance can be found under admin > site configuration	admin	de	Die Installations-ID für diese Instanz wird unter Admin >> Konfiguration der Anwendung angezeigt
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein
-the mimeparser can not parse this message.	admin	de	Der Mimeparser versteht diese Nachricht nicht
+the mimeparser can not parse this message.	admin	de	Der MIME-Parser versteht diese Nachricht nicht
 the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzter Name (<= 20 Buchstaben), Veränderungen machen existierende Daten unerreichbar!
-the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
+the testjob sends you a mail everytime it is called.	admin	de	Der Test-Job sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Die unten angezeigten Benutzer sind Mitglied der Gruppe %1
@@ -926,46 +927,46 @@ this application is current	admin	de	Diese Anwendung ist aktuell
 this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgrade
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten
-this is a mail account for all users!	admin	de	Das ist ein Mailkonto für ALLE Benutzer!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!\n\nDas Konto wird für ALLE Benutzer gelöscht!\n\nSind Sie wirklich sicher, dass Sie das wollen?
+this is a mail account for all users!	admin	de	Das ist ein Mail-Konto für ALLE Benutzer!
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!<br>Das Konto wird für ALLE Benutzer gelöscht!<br>Sind Sie wirklich sicher, dass Sie das wollen?
 this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
-this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!!!
+this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	de	Diese geheime Schlüssel wird in der Kommunikation zwischen Ihrem Server und Google verwendet. Sorgen Sie dafür, dass er geheim bleibt.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
 times	admin	de	Zeiten
-to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	de	Benutzen Sie diese Übertragungs ID damit wir das Wachstum Ihrer individuellen Installation erfassen können, ansonsten löschen sie diese:
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	de	Um eine TLS Verbindung zu verwenden, benötigen Sie PHP 5.1.0 oder aktueller.
+to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	de	Benutzen Sie diese Übertragungs-ID damit wir das Wachstum Ihrer individuellen Installation erfassen können, ansonsten löschen sie diese:
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	de	Um eine TLS-Verbindung zu verwenden, benötigen Sie PHP 5.1.0 oder aktueller.
 token created.	admin	de	Token erzeugt.
 token not found!	admin	de	Token nicht gefunden!
 token revoked.	admin	de	Token widerrufen.
 token saved.	admin	de	Token gespeichert.
-top	admin	de	oben
-total of %1 accounts deleted.	admin	de	Insgesammt %1 Benutzerkonten gelöscht.
+top	admin	de	Oben
+total of %1 accounts deleted.	admin	de	Insgesamt %1 Benutzerkonten gelöscht.
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.
 total records	admin	de	Anzahl Datensätze insgesamt
 translation	admin	de	Übersetzung
 true	admin	de	Wahr
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
-two days	admin	de	zwei Tage
-two hours	admin	de	zwei Stunden
-two months	admin	de	zwei Monate
-two weeks	admin	de	zwei Wochen
-type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
-type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
+two days	admin	de	Zwei Tage
+two hours	admin	de	Zwei Stunden
+two months	admin	de	Zwei Monate
+two weeks	admin	de	Zwei Wochen
+type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits!
+type of customfield	admin	de	Typ des benutzerdefinierten Feldes
 type of field	admin	de	Feldtyp
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!
 unexpected response from server to authenticate command.	admin	de	Unerwartete Antwort des Servers auf das AUTHENTICATE Kommando.
 unexpected response from server to digest-md5 response.	admin	de	Unerwartete Antwort des Servers auf die Digest-MD5 Antwort.
 unexpected response from server to login command.	admin	de	Unerwartete Antwort des Servers auf das LOGIN Kommando.
-unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1 !!!
-unknown command %1!	admin	de	Unbekannter Befehl %1 !
+unknown account: %1 !!!	admin	de	Unbekanntes Benutzerkonto: %1!
+unknown command %1!	admin	de	Unbekannter Befehl %1!
 unknown imap response from the server. server responded: %s	admin	de	Unbekannte IMAP Antwort vom Server. Server antwortet: %s
 unknown option %1	admin	de	Unbekannte Option %1
-unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1' !!!
-unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten
-up	admin	de	hoch
+unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1'!
+unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten.
+up	admin	de	Hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
 updated	admin	de	Aktualisiert
 upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
@@ -974,28 +975,28 @@ upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder ge
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	de	Laden Sie Ihr Header-Logo hoch oder geben Sie die URL ein (lassen Sie sie leer, wenn sie mit dem Login-Logo identisch ist)
 upload your logo or enter the url	admin	de	Laden Sie Ihr Logo hoch oder geben Sie eine URL dafür ein
 uppercase, lowercase, number, special char	admin	de	Großbuchstaben, Kleinbuchstaben, Zahlen, Sonderzeichen
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. http://domain.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	URL der EGroupware Installation, z.B. https://egw.domain.com/egroupware
 usage	admin	de	Einsatz
-use admin credentials to connect without a session-password, e.g. for sso	admin	de	Benutze Admin Zugangsdaten zur Verbindung ohne Sitzungspasswort, z.B. für SingleSignOn
+use admin credentials to connect without a session-password, e.g. for sso	admin	de	Benutze Admin-Zugangsdaten zur Verbindung ohne Sitzungspasswort, z.B. für SingleSignOn
 use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
 use default	admin	de	Vorgabe verwenden
 use ldap defaults	admin	de	LDAP Standardeinstellungen benutzen
 use predefined username and password defined below	admin	de	Verwende den unten vordefinierten Benutzernamen und Passwort
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
-use save or apply to store the received oauth token!	admin	de	Benutze Speicher oder Übernehmen um das erhaltene OAuth Token zu speichern!
-use secure cookies (transmitted only via https)	admin	de	Benutze sichere Cookies (werden nur per https übertragen)
+use save or apply to store the received oauth token!	admin	de	Benutze Speicher oder Übernehmen um das erhaltene OAuth-Token zu speichern!
+use secure cookies (transmitted only via https)	admin	de	Benutze sichere Cookies (werden nur per HTTPS übertragen)
 use smtp auth	admin	de	SMTP Authentifizierung benutzen
 use theme	admin	de	Benutztes Farbschema
-use tls authentication	admin	de	TLS Authentifizierung benutzen
-use tls encryption	admin	de	TLS Verschlüsselung benutzen
+use tls authentication	admin	de	TLS-Authentifizierung benutzen
+use tls encryption	admin	de	TLS-Verschlüsselung benutzen
 use users email-address (as seen in useraccount)	admin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Mail-Konto angezeigt wird)
 user accounts	admin	de	Benutzerkonten
 user can edit forwarding address	admin	de	Anwender können ihre Weiterleitungsadresse bearbeiten
 user choice	admin	de	Benutzerauswahl
-user csv export	admin	de	CSV Export von Benutzern
-user csv import	admin	de	CSV Import von Benutzern
+user csv export	admin	de	CSV-Export von Benutzern
+user csv import	admin	de	CSV-Import von Benutzern
 user data	common	de	Benutzerdaten
-user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP Authentifizierung (leer lassen falls keine Authentifizierung nötig)
+user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP-Authentifizierung (leer lassen falls keine Authentifizierung nötig)
 user groups	admin	de	Benutzergruppen
 user-agent	admin	de	Browser
 userdata	admin	de	Benutzerkonto
@@ -1010,7 +1011,9 @@ users can define their own signatures	admin	de	Anwender können ihre eigenen Sig
 users can utilize these stationery templates	admin	de	Benutzer können diese Briefpapiervorlagen verwenden
 users choice	admin	de	Benutzerauswahl
 using data from mozilla ispdb for provider %1	admin	de	Benutze Mozilla ISPDB für Provider %1
+using fallback via regular json requests	admin	de	Verwendung von Fallback über reguläre JSON-Anfragen
 using imap:%1, smtp:%2, oauth:%3:	admin	de	Benutze IMAP: %1, SMTP: %2, OAuth: %3:
+using native swoole push	admin	de	Verwendung von nativem Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 vacation notice	admin	de	Abwesenheitsnotiz
 valid for	admin	de	Gültig für
@@ -1030,12 +1033,12 @@ we hope you understand the importance for this voluntary statistic and not deny 
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
 who would you like to transfer records owned by the deleted user to?	admin	de	An wen wollen Sie die Einträge dieses Benutzers übertragen?
 would you like egroupware to cache the egw info array ?	admin	de	Soll EGroupware das egw_info Array cachen ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll EGroupware prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
-would you like egroupware to check for new application versions when admins login ?	admin	de	Soll EGroupware auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch geladen werden (beim Login) ?
-would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
-wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e) %2 !!!
-wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort !!!
+would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll EGroupware prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet?
+would you like egroupware to check for new application versions when admins login ?	admin	de	Soll EGroupware auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch geladen werden (beim Login)?
+would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden?
+wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e) %2!
+wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort!
 wrong credentials to access the header.inc.php file!	admin	de	Falsche Zugangsdaten um auf die header.inc.php Datei zuzugreifen!
 xml-rpc	admin	de	XML-RPC
 yes, but no scayt	admin	de	Ja, aber keine automatische Rechtschreibüberprüfung
@@ -1049,7 +1052,7 @@ you can use wizard to fix account settings or delete account.	admin	de	Sie könn
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.
 you have received a new message on the	admin	de	Sie haben eine neue Nachricht erhalten.
-you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
+you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!
 you have to enter a name, to create a new type!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
@@ -1060,10 +1063,10 @@ you must enter an application name.	admin	de	Sie müssen der Anwendung einen Nam
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
 you must select at least one group member.	admin	de	Sie müssen mindestens ein Gruppenmitglied auswählen.
-you need to enter install id and password!	admin	de	Sie müssen die Install-ID UND das Passwort eingeben!
+you need to enter install id and password!	admin	de	Sie müssen die Installations-ID UND das Passwort eingeben!
 you need to select as least one action!	admin	de	Sie müssen mindestens einen Befehl auswählen!
 you need to select some users first!	admin	de	Sie müssen zuerst einige Benutzer auswählen!
-you need to specify a forwarding address, when checking "%1"!	admin	de	Sie müssen eine Weiterleitungsadresse angeben, wenn "%1" abgehackt ist!
+you need to specify a forwarding address, when checking "%1"!	admin	de	Sie müssen eine Weiterleitungs-Adresse angeben, wenn "%1" angehakt ist!
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
 your last submission was less then %1 days ago!	admin	de	Ihre letzte Übertragung liegt weniger als %1 Tage zurück!
 your message to  %1 was displayed.	admin	de	Ihre Nachricht %1 wurde angezeigt

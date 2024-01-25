@@ -16,6 +16,7 @@ aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
 allways a new window	mail	pl	zawsze w nowym oknie
+always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
 answered	mail	pl	Odpowiedź na
@@ -32,7 +33,10 @@ by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
 caching of flags	mail	pl	Buforowanie flag
 can not resolve the winmail.dat attachment!	mail	pl	Nie można rozwiązać załącznika winmail.dat!
+certificate details	mail	pl	Szczegóły certyfikatu
+certificate in text	mail	pl	Certyfikat w wersji tekstowej
 certificate info for email %1	mail	pl	Informacje o certyfikacie dla wiadomości e-mail %1
+certificate issued by	mail	pl	Certyfikat wydany przez
 changing subject failed because of %1	mail	pl	Zmiana tematu nie powiodła się z powodu %1
 changing subject failed folder %1 does not exist	mail	pl	Zmiana tematu nie powiodła się folder %1 nie istnieje
 check message against next rule also	mail	pl	Sprawdź również kolejnę regułę
@@ -80,12 +84,13 @@ don't use sent	mail	pl	Nie używaj Wysłanych
 don't use template folder	mail	pl	Nie używaj folderu szablonów
 don't use trash	mail	pl	Nie używaj Kosza
 draft	mail	pl	Szkic
-draft folder	mail	pl	folder szkiców
+draft folder	mail	pl	Folder szkiców
 drafts	mail	pl	Szkice
 edit account	mail	pl	Edytuj konto użytkownika
-edit vacation settings	mail	pl	edytuj ustawienia autorespondera
-email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
-emailaddress	admin	pl	adres_email
+edit vacation settings	mail	pl	Edytuj ustawienia autorespondera
+email address	mail	pl	Adres e-mail
+email notification update failed	mail	pl	Aktualizacja powiadomień e-mail nie powiodła się
+emailaddress	admin	pl	Adres e-mail
 emailadmin: profilemanagement	mail	pl	eMailAdmin: Zarządzanie profilami
 emails in whitelisted domains are not marked as spam	mail	pl	Wiadomości e-mail w domenach z białej listy nie są oznaczane jako spam
 empty trash	mail	pl	opróżnij kosz
@@ -98,6 +103,7 @@ error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiado
 error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
 error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
 event details follow	mail	pl	Detale Wydarzenia Następują
+every %1. day	mail	pl	Co %1. dzień
 everyone	mail	pl	Wszyscy
 examine namespace to retrieve folders in others and shared	mail	pl	Zbadaj przestrzeń nazw, aby pobrać foldery w innych i udostępnione
 extended	mail	pl	Rozszerzone
@@ -208,6 +214,7 @@ non	mail	pl	Nie
 none, create all	mail	pl	żaden, utwórz wszystko
 nothing to change.	mail	pl	Brak elementów do wprowadzenia zmian.
 on	mail	pl	na
+once per day	mail	pl	Raz dziennie
 one address is not valid	mail	pl	Jeden adres nie jest poprawny
 only email	mail	pl	Tylko email
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	pl	Ma sens tylko w przypadku przesyłania hasła innym kanałem / poza tą pocztą do odbiorców!
@@ -266,6 +273,7 @@ report this email content as spam - spam solutions like spamtitan will learn	mai
 required pear class mail/mimedecode.php not found.	mail	pl	Nie znaleziono wymaganej klasy PEAR Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pl	Wymagane do wyłączenia, jeśli używasz Dovecot z prywatnymi flagami widocznymi w folderze współdzielonym lub folderze użytkownika!
 row order style	mail	pl	styl porządku wierszy
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	pl	Szyfrowanie S/MIME nie powiodło się, ponieważ nie znaleziono certyfikatu dla adresu nadawcy: %1
 save all	mail	pl	Zapisz wszystko
 save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
 save as draft	mail	pl	Zapisz jako szkic
@@ -304,9 +312,11 @@ show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w 
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pl	Wyświetla tymczasowo widoczne powiadomienie zawierające adres, temat i fragment wiadomości e-mail.
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
+sign your message with smime certificate	mail	pl	Podpisz wiadomość certyfikatem S/MIME
 signature	mail	pl	Sygnaturka
 signature at top	mail	pl	podpis na górze
 signature position and visibility	mail	pl	Pozycja i widoczność podpisu
+signed by	mail	pl	Podpisany przez
 size(...->0)	mail	pl	Rozmiar (...->0)
 size(0->...)	mail	pl	Rozmiar (0->...)
 small view	mail	pl	widok uproszczony
@@ -361,4 +371,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	pl	Aby móc zapisać wiadomość w VFS, należy najpierw zapisać ją jako wersję roboczą.
 you will loose current message body, unless you save it to your clipboard!	mail	pl	Utracisz aktualną treść wiadomości, chyba że zapiszesz ją w schowku!
 you've got new mail	mail	pl	Masz nową pocztę
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.\n Chociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.\n Jeśli to nie pomogło, poproś administratora o zwiększenie limitu.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.<br>Chociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.<br>Jeśli to nie pomogło, poproś administratora o zwiększenie limitu.

@@ -1,6 +1,6 @@
 %1 added	addressbook	en	%1 added
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	en	%1 contact(s) %2, %3 failed because of %4 !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	en	%1 contact(s) %2, %3 failed because of %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficient rights!
 %1 contacts updated (%2 errors).	addressbook	en	%1 contacts updated (%2 errors).
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organization member(s) changed.
@@ -30,7 +30,7 @@ add a single entry by passing the fields.	addressbook	en	Add a single entry by p
 add appointment	addressbook	en	Add appointment
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add custom field
-add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	en	Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	en	Add customfield to links of address book, which displays in other applications. The default value is none customfield.
 add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
 add or delete categories	addressbook	en	Add or delete categories
 add to bcc	addressbook	en	Add to BCc
@@ -58,12 +58,12 @@ addressbook of	addressbook	en	Address book of
 addressbook preferences	addressbook	en	Address Book preferences
 addressbook the contact should be saved to	addressbook	en	Address book the contact should be saved to
 addressbook the contact should be shown	addressbook	en	Address book the contact should be shown
-addressbook vcard export	addressbook	en	Addressbook vCard export
-addressbook vcard import	addressbook	en	Addressbook vCard import
+addressbook vcard export	addressbook	en	Address book vCard export
+addressbook vcard import	addressbook	en	Address book vCard import
 addressbook-fieldname	addressbook	en	Address book field name
 addvcard	addressbook	en	Add vCard
 advanced search	addressbook	en	Advanced search
-all addressbooks	addressbook	en	All addressbooks
+all addressbooks	addressbook	en	All address books
 all contacts	addressbook	en	All contacts
 all in one field	addressbook	en	All in one field
 all types	addressbook	en	All types
@@ -100,7 +100,7 @@ calendar fields:	addressbook	en	Calendar fields:
 calendar integration	addressbook	en	Calendar integration
 calendar uri	addressbook	en	Calendar URI
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
-can't create dn %1	addressbook	en	Can't create dn %1
+can't create dn %1	addressbook	en	Can't create DN %1
 car phone	addressbook	en	Car phone
 categorie	addressbook	en	Category
 categorie added	addressbook	en	Category added.
@@ -109,7 +109,7 @@ categories, notes, ...	addressbook	en	Categories, Notes, ...
 category path	addressbook	en	Category path
 category tree	admin	en	Category tree
 cell phone	addressbook	en	Mobile phone
-change addressbook when updating	addressbook	en	Change addressbook when updating
+change addressbook when updating	addressbook	en	Change address book when updating
 change all organisation members	addressbook	en	Change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
 charset for the vcard export	addressbook	en	Charset for the vCard export
@@ -123,7 +123,7 @@ choose pre-defined map source or use custom url (use %r = street, %t = city, %c 
 chosse an etemplate for this contact type	admin	en	Chose an eTemplate for this contact type
 city	common	en	City
 city (private)	addressbook	en	City (private)
-cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup address book fields, apply if synchronization creates duplicates.
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup address book fields, apply if synchronization creates duplicates
 company	common	en	Company
 company name	addressbook	en	Company name
 configuration	common	en	Configuration
@@ -161,7 +161,7 @@ create new links	addressbook	en	Create new links
 created	addressbook	en	Created
 credit	addressbook	en	Credit
 crm view list	addressbook	en	CRM view list
-crm-view	addressbook	en	CRM-View
+crm-view	addressbook	en	CRM View
 csv-fieldname	addressbook	en	CSV field name
 csv-filename	addressbook	en	CSV file name
 custom	addressbook	en	Custom
@@ -178,7 +178,7 @@ default file as format	addressbook	en	Default file as format
 default filter	addressbook	en	Default filter
 default format for fileas, eg. for new entries.	addressbook	en	Default format for fileas, eg. for new entries.
 default geolocation source address	addressbook	en	Default GeoLocation source address
-default is to open email addresses in egroupware email application, if user has access to it.	addressbook	en	Default is to open EMail addresses in EGroupware EMail application, if user has access to it.
+default is to open email addresses in egroupware email application, if user has access to it.	addressbook	en	Default is to open email addresses in EGroupware EMail application, if user has access to it.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	en	Which email address is used as preferred one for distribution lists.
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the ID.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!
@@ -190,9 +190,9 @@ department	common	en	Department
 departments	addressbook	en	Departments
 directory with documents to insert contacts	addressbook	en	Directory with documents to insert contacts
 disable	addressbook	en	Disable
-disable last/next event column	addressbook	en	Disable Last/Next Event column
+disable last/next event column	addressbook	en	Disable last/next event column
 display contact	addressbook	en	Display contact
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Display birthdays on the Home page.
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Display birthdays on Home.
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution list renamed	addressbook	en	Distribution list renamed
 distribution lists	addressbook	en	Distribution lists
@@ -221,10 +221,10 @@ edit phonenumbers	addressbook	en	Edit Phonenumbers
 edit phonenumbers -	addressbook	en	Edit phone numbers -
 either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addresses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
-email (private)	addressbook	en	email (private)
+email (private)	addressbook	en	Email (private)
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses, comma separated, to send the contact data.
 empty	admin	en	Empty
-empty addressbook before importing	addressbook	en	Delete Addressbook entries Not in the CSV list
+empty addressbook before importing	addressbook	en	Delete address book entries NOT in the CSV list
 empty for all	addressbook	en	Empty for all
 enable an extra private addressbook	addressbook	en	Extra private address book
 enclosure	addressbook	en	Enclosure
@@ -249,8 +249,8 @@ export from addressbook	addressbook	en	Export from address book
 export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 exports contacts from your addressbook into a csv file.	addressbook	en	Exports contacts from address book into a CSV file.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
-exports contacts from your addressbook into a vcard file.	addressbook	en	Exports contacts from your Addressbook into a vCard File.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from address book into a CSV file. In the options tab you can choose separators.
+exports contacts from your addressbook into a vcard file.	addressbook	en	Exports contacts from your address book into a vCard file.
 extra	addressbook	en	Extra
 extra encodings	addressbook	en	Extra encodings
 extra private	addressbook	en	Extra private
@@ -307,7 +307,7 @@ if accounts are already in ldap	admin	en	If accounts are already in LDAP
 ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
 import contacts	addressbook	en	Import contacts
-import csv-file into addressbook	addressbook	en	Import CSV file into Address book
+import csv-file into addressbook	addressbook	en	Import CSV file into address book
 import file	addressbook	en	Import file
 import from	addressbook	en	Import from
 import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or vCard
@@ -316,8 +316,8 @@ import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	en	Importer's personal
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
-imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your Addressbook from a vCard File.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. In the options tab you can choose separators.
+imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your address book from a vCard file.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog contact
@@ -366,7 +366,7 @@ migration finished	addressbook	en	Migration finished
 migration to ldap	admin	en	Migration to LDAP
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile phone
-mobile phone (private)	addressbook	en	mobile phone (private)
+mobile phone (private)	addressbook	en	Mobile phone (private)
 modem phone	addressbook	en	Modem phone
 more ...	addressbook	en	More ...
 move to addressbook	addressbook	en	Move to address book
@@ -388,7 +388,7 @@ not shared	addressbook	en	not shared
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 open %1 crm view	addressbook	en	Open %1 CRM view
-open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
+open email addresses in external mail program	addressbook	en	Open email addresses in external mail program
 open for editing?	addressbook	en	Open for editing?
 open infolog crm view	preferences	en	Open InfoLog CRM view of the contact
 open tracking system crm view	preferences	en	Open Tracking System CRM view
@@ -398,7 +398,7 @@ organisations	addressbook	en	Organisations
 organisations by departments	addressbook	en	Organisations by departments
 organisations by location	addressbook	en	Organisations by location
 other number	addressbook	en	Other number
-other phone	addressbook	en	Other Phone
+other phone	addressbook	en	Other phone
 own sorting	addressbook	en	Own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
@@ -456,13 +456,13 @@ select multiple contacts for a further action	addressbook	en	Select multiple con
 select phone number as prefered way of contact	addressbook	en	Select phone number as preferred way of contact
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
-select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved.
+select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved
 selected contacts	addressbook	en	Selected contacts
 send emailcopy to receiver	addressbook	en	Send email copy to receiver
 send fax via email by replacing fax number with an email address	addressbook	en	Send fax via email by replacing fax number with an email address
 send succeeded to %1	common	en	Send succeeded to %1
 seperator	addressbook	en	Separator
-set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'fileas' field in contacts of all users. Either all or only empty values.
+set full name and file as field in contacts of all users (either all or only empty values)	admin	en	Set full name and 'fileas' field in contacts of all users. Either all or only empty values
 set only full name	addressbook	en	Set only full name
 share into addressbook	addressbook	en	Share into addressbook
 share writable	addressbook	en	Share writable
@@ -477,7 +477,7 @@ show all accounts	addressbook	en	Show all accounts
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show contacts of this organisation
 similar contacts found:	addressbook	en	Similar contacts found:
-size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup. Width x Height e.g. 400x300
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup. Width x height e.g. 400x300
 smime key	addressbook	en	S/MIME key
 special	addressbook	en	Special
 stadt	addressbook	en	City
@@ -499,7 +499,7 @@ that field name has been used already !	addressbook	en	The field name has been u
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
-the following document-types are supported:	addressbook	en	The following document-types are supported:
+the following document-types are supported:	addressbook	en	The following document types are supported:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in LibreOffice or MS Office documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.
@@ -520,7 +520,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	en	unable to delete
 unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
-unique id<br />(to update existing records)	addressbook	en	Unique ID<br />to update existing records
+unique id<br />(to update existing records)	addressbook	en	Unique ID<br>to update existing records
 unknown type %1, imported as %2	addressbook	en	Unknown type %1, imported as %2
 unshare	addressbook	en	Unshare
 unshared	addressbook	en	unshared
@@ -530,7 +530,7 @@ updated	addressbook	en	Updated
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url (business)	addressbook	en	URL (business)
 url (private)	addressbook	en	URL (private)
-url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link phone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
 use a category tree?	addressbook	en	Use a tree for selecting categories
 use addressbooks "own sorting" attribute	addressbook	en	Use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields

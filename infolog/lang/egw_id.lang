@@ -110,7 +110,7 @@ default document to insert entries	infolog	id	Dokumen default untuk memasukkan e
 default filter for infolog	infolog	id	Saringan bawaan untuk InfoLog
 default status for a new log entry	infolog	id	Status bawaan untuk entri baru InfoLog
 delegated	infolog	id	Didelegasikan
-delegated open	infolog	id	Delegated open
+delegated open	infolog	id	Didelegasikan terbuka
 delegated open and upcoming	infolog	id	Didelegasikan terbuka dan mendatang
 delegated overdue	infolog	id	Didelegasikan terlambat
 delegated upcomming	infolog	id	Didelegasikan akan datang
@@ -135,7 +135,7 @@ do you want a notification, if items you delegated are due?	infolog	id	Dapatkan 
 do you want to receive notifications as html-mails or plain text?	infolog	id	Menerima pemberitahuan sebagai email HTML atau teks biasa.
 don't show infolog	infolog	id	JANGAN tampilkan InfoLog
 done	infolog	id	Selesai
-download	infolog	id	Unduh
+download	infolog	id	Menyimpan file
 download url for links	infolog	id	Unduh URL untuk tautan
 due %1	infolog	id	Jatuh Tempo %1
 due date	infolog	id	Tanggal jatuh tempo
@@ -301,7 +301,7 @@ pattern for search in addressbook	infolog	id	Pola untuk pencarian di buku alamat
 pattern for search in projects	infolog	id	Pola untuk pencarian dalam proyek
 percent completed	infolog	id	Persentasi rampung
 performance optimization for huge infolog tables	admin	id	Optimalisasi kinerja untuk tabel InfoLog yang besar
-permission denied	infolog	id	Ijin Ditolak
+permission denied	infolog	id	Izin ditolak!
 permissions error - %1 could not %2	infolog	id	Kesalahan izin - %1 tidak bisa %2
 phone	infolog	id	Panggilan Telepon
 phone/email	infolog	id	Telepon/Email

@@ -1,6 +1,6 @@
 (update in sec. %s)	notifications	cs	(Obnovení za %s vteřin)
 account:	notifications	cs	Účet:
-all possible notification backends	notifications	cs	všechny dostupné backendy pro upozornění
+all possible notification backends	notifications	cs	Všechny dostupné backendy pro upozornění
 are you sure you want to delete all notifications?	notifications	cs	Opravdu chcete smazat všechna oznámení?
 browser	notifications	cs	Prohlížeč
 browser is starting.	notifications	cs	Spouští se prohlížeč.
@@ -8,35 +8,35 @@ cancal settings?	notifications	cs	Zrušit nastavení?
 cancal?	notifications	cs	Zrušit?
 certification-information:	notifications	cs	Informace o certifikátu:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	cs	Zkusit obojí (nejprve aktivní, uživatelem definovaný účet a pokud neexistuje, tak emailadmin profil)
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	cs	Vyberte si posloupnost upozornění. Budete upozorňování na základě backendů zahrnutých v posloupnosti.<br />Poznámka: Pokud je posloupnost upozornění označena jako "zakázaná", znamená to, že Váš Administrátor nepovoluje jeden či více backendů zahrnutých v posloupnosti a tak budete upozorňování jen e-mailem.
-choose from mailsettings used for notification	admin	cs	vyberte nastavení e-mailu pro zasílání upozornění
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	cs	Vyberte si posloupnost upozornění. Budete upozorňování na základě backendů zahrnutých v posloupnosti.<br>Poznámka: Pokud je posloupnost upozornění označena jako "zakázaná", znamená to, že Váš Administrátor nepovoluje jeden či více backendů zahrnutých v posloupnosti a tak budete upozorňování jen e-mailem.
+choose from mailsettings used for notification	admin	cs	Cyberte nastavení e-mailu pro zasílání upozornění
 common chains	notifications	cs	Společné posloupnosti
 connection error.	notifications	cs	Chyba spojení.
 connection error. please check connection to server.	notifications	cs	Chyba spojení. Zkontrolujte prosím spojení se serverem.
 continue to connect?	notifications	cs	Pokračovat ve spojení?
 cookies are required to login to this site.	notifications	cs	Pro přihlášení jsou vyžadovány soubory cookies.
-delete all messages	notifications	cs	smazat všechny zprávy
+delete all messages	notifications	cs	Smazat všechny zprávy
 delete notifications	notifications	cs	Smazat oznámení
-delete this message	notifications	cs	smazat tuto zprávu
+delete this message	notifications	cs	Smazat tuto zprávu
 disabled chains	notifications	cs	Zakázané posloupnosti
-do not notify me at all	notifications	cs	vůbec mě neupozorňuj
+do not notify me at all	notifications	cs	Vůbec mě neupozorňuj
 domain not found, please check serveraddress.	notifications	cs	Doména nebyla nalezena, zkontrolujte adresu serveru.
-e-mail only	notifications	cs	jen e-mail
+e-mail only	notifications	cs	Jen e-mail
 egroupware has notifications for you	notifications	cs	EGroupware má pro Vás upozornění
 egroupware login is starting, please wait.	notifications	cs	Spouští se přihlášení EGroupware, čekejte prosím.
 egroupware logindomain:	notifications	cs	Doména pro přihlášení EGroupware:
 egroupware logindomains founds, please select.	notifications	cs	Doména byla nalezena, vyberte prosím:
 egroupware not found by url or connection lost to server.	notifications	cs	EGroupware nebyl nalezen pomocí URL, nebo bylo přerušeno spojení se serverem.
 egroupware not found by url.	notifications	cs	EGroupware nebyl nalezen pomocí URL
-egroupware-popup and e-mail	notifications	cs	Překryvná okna v eGroupWaru a e-mail
-egroupware-popup and windows-popup	notifications	cs	Překryvná okna v eGroupWaru a překryvná okna ve Windows
-egroupware-popup backend	admin	cs	Backend Překryvná okna v eGroupWaru
-egroupware-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna v eGroupWaru, pokud se nezdaří, upozorni mě e-mailem
-egroupware-popup only	notifications	cs	Jen překryvná okna v eGroupWaru
-egroupware-popup verbosity	notifications	cs	Intenzita sdělení pro Překryvná okna v eGroupWaru
+egroupware-popup and e-mail	notifications	cs	Překryvná okna v EGroupware a e-mail
+egroupware-popup and windows-popup	notifications	cs	Překryvná okna v EGroupware a překryvná okna ve Windows
+egroupware-popup backend	admin	cs	Backend Překryvná okna v EGroupware
+egroupware-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna v EGroupware, pokud se nezdaří, upozorni mě e-mailem
+egroupware-popup only	notifications	cs	Jen překryvná okna v EGroupware
+egroupware-popup verbosity	notifications	cs	Intenzita sdělení pro Překryvná okna v EGroupware
 email notifications only, if user is not logged in	notifications	cs	Pouze oznámení e-mailem, pokud uživatel není přihlášen
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	cs	Jen emailadmin profil (Nepoužívat aktivní, uživatelem definovaný účet, pro zasílání upozornění)
-enable egroupware-popup backend	admin	cs	Povolit backend Překryvná okna v eGroupWaru
+enable egroupware-popup backend	admin	cs	Povolit backend Překryvná okna v EGroupware
 enable windows-popup backend	admin	cs	Povolit backend Překryvná okna ve Windows
 enabled chains	notifications	cs	Povolené posloupnosti
 error browser can`t start.	notifications	cs	Chyba při spouštění prohlížeče.
@@ -46,7 +46,7 @@ exit	notifications	cs	Konec
 folder	notifications	cs	Složka
 from	notifications	cs	Od
 host:	notifications	cs	Hostitel:
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	cs	Jak důrazně se mají překryvná okna eGroupWaru chovat, když je uživateli zasláno upozornění:<br />nízká: jen zobrazit zvoneček v horním menu - horní menu musí být povoleno!<br />střední: na popředí zobrazit okno s upozorněním<br />vysoká: na popředí zobrazit okno s upozorněním a nechat prohlížeč, ať na sebe nějak upozorní
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	cs	Jak důrazně se mají překryvná okna eGroupWaru chovat, když je uživateli zasláno upozornění:<br>nízká: jen zobrazit zvoneček v horním menu - horní menu musí být povoleno!<br>střední: na popředí zobrazit okno s upozorněním<br>vysoká: na popředí zobrazit okno s upozorněním a nechat prohlížeč, ať na sebe nějak upozorní
 if set, embedded links get rendered special for external clients	notifications	cs	Pokud je nastaveno, vložené odkazy jsou speciálně renderovány pro externí klienty
 info on load config file: create config file.	notifications	cs	Informace o načtení konfiguračního souboru: vytvoření konfiguračního souboru.
 issuer dn:	notifications	cs	Upozornění způsobeno:
@@ -55,11 +55,12 @@ last month	notifications	cs	Poslední měsíc
 linked entries:	common	cs	Odkazované záznamy:
 login aborted, application exit?	notifications	cs	Přihlášení přerušeno, ukončit aplikaci?
 login in egroupware:	notifications	cs	Přihlášení do EGroupware
+mail account to use for notifications	admin	cs	Poštovní účet, který se má používat pro oznámení
 mail backend	admin	cs	Poštovní backend
-mark all as read	notifications	cs	označit vše jako přečtené
-mark as read	notifications	cs	označit jako přečtený
+mark all as read	notifications	cs	Označit vše jako přečtené
+mark as read	notifications	cs	Označit jako přečtený
 message from	notifications	cs	Zpráva od
-minutes	notifications	cs	minut
+minutes	notifications	cs	Minut
 more info	notifications	cs	Více informací
 notification	common	cs	Upozornění
 notifier	notifications	cs	Oznamovatel:
@@ -70,8 +71,8 @@ page not found, please check serveraddress.	notifications	cs	Stránka nebyla nal
 password:	notifications	cs	Heslo:
 permission	notifications	cs	Oprávnění
 permission denied for notifications application.	notifications	cs	Přístup do aplikace pro upozornění byl odepřen.
-placeholders with user/ prefix	admin	cs	Zástupci pro automatizaci
-please contact your egroupware admin.	notifications	cs	Kontaktujte prosím správce eGroupWaru.
+placeholders with user/ prefix	admin	cs	zástupné znaky s uživatel/předčíslí
+please contact your egroupware admin.	notifications	cs	Kontaktujte prosím správce EGroupware.
 please enter the url of your egroupware.	notifications	cs	Zadejte URL EGroupware.
 please enter your egroupware username.	notifications	cs	Zadejte vaše uživatelské jméno do EGroupware
 please enter your password	notifications	cs	Zadejte vaše heslo do EGroupware
@@ -92,7 +93,7 @@ step	notifications	cs	Krok
 subject dn:	notifications	cs	Předmět upozornění:
 the server certificate is not a valid trust center certificate!	notifications	cs	Certifikát serveru není platným zabezpečeným certifikátem!
 this egroupware notification has been sent to you by mail because your	notifications	cs	Toto upozornění z EGroupware vám bylo zasláno e-mailem, protože váš
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění z eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění z EGroupware Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
 this month	notifications	cs	Tento měsíc
 user:	notifications	cs	Uživatel:
 warning	notifications	cs	Varování
@@ -100,7 +101,7 @@ windows-popup and e-mail	notifications	cs	Překryvná okna ve Windows a e-mail
 windows-popup backend	admin	cs	Backend Překryvná okna ve Windows
 windows-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě e-mailem
 windows-popup only	notifications	cs	Jen překryvná okna ve Windows
-yesterday	notifications	cs	včera
+yesterday	notifications	cs	Včera
 you can also use	admin	cs	Také můžete použít
 you have %1 unread notifications	notifications	cs	Máte %1 nepřečtených oznámení
 you have been successfully logged out	notifications	cs	Odhlášení proběhlo úspěšně

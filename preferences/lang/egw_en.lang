@@ -5,12 +5,12 @@
 12 hour	preferences	en	12 hour
 24 hour	preferences	en	24 hour
 a template defines the layout of egroupware and it contains icons for each application.	preferences	en	A template defines the layout of EGroupware and it contains icons for each application.
-a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colors and fonts used by the template.
+a theme defines the colors and fonts used by the template.	preferences	en	A theme defines the colours and fonts used by the template.
 access token revoked.	preferences	en	Access Token revoked.
 acl grants have been updated	preferences	en	ACL grants have been updated.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
 applications list scroll area	preferences	en	Applications list scroll area
-are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
+are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category?
 audio effect	preferences	en	Audio effect
 audio effect enables|disables sound effects used in the theme	preferences	en	Audio effect enables|disables sound effects used in the theme
 automatically start with this font	preferences	en	Automatically start with this font
@@ -25,16 +25,16 @@ change your settings	preferences	en	Change settings
 charset for the csv export	addressbook	en	Charset for the CSV export
 charset for the csv export/import	preferences	en	Character set
 click to install	preferences	en	click to install
-click to select a color	preferences	en	Click to select a color
+click to select a color	preferences	en	Click to select a colour
 close after selection	preferences	en	Close after selection
 code is invalid	preferences	en	Code is invalid
-color	preferences	en	Color
+color	preferences	en	Colour
 country	preferences	en	Country
 current password	preferences	en	Current password
-custom login box color, defaults to above color darkened	preferences	en	Custom login box color, defaults to above color darkened
-custom sidebar menu active color, defaults to above color darkened	preferences	en	Custom sidebar menu active color, defaults to above color darkened
+custom login box color, defaults to above color darkened	preferences	en	Custom login box colour, defaults to above colour darkened
+custom sidebar menu active color, defaults to above color darkened	preferences	en	Custom sidebar menu active colour, defaults to above colour darkened
 dark mode theme	preferences	en	Dark mode theme
-dark moono theme	preferences	en	Dark Moono Theme
+dark moono theme	preferences	en	Dark Moono theme
 data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format
 default	preferences	en	Default
@@ -49,7 +49,7 @@ deny following groups access to application passwords	preferences	en	Deny follow
 deny following groups access to edit categories	admin	en	Deny following groups access to edit categories
 deny following groups access to preferences	admin	en	Deny following groups access to preferences
 deny following groups access to security popup	admin	en	Deny following groups access to security popup
-description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length !
+description can not exceed 255 characters in length !	preferences	en	Description can not exceed 255 characters in length!
 disable	preferences	en	Disable
 disable two factor auth	preferences	en	Disable Two Factor Auth
 disabling allows to again log in without a second factor.	preferences	en	Disabling allows to again log in without a second factor.
@@ -87,7 +87,7 @@ google authenticator for android	preferences	en	Google Authenticator for Android
 google authenticator for ios	preferences	en	Google Authenticator for iOS
 heading %1	preferences	en	Heading %1
 help off	preferences	en	Help off
-holding ctrl/cmd key and click on the line	preferences	en	holding Ctrl/Cmd key and click on the line
+holding ctrl/cmd key and click on the line	preferences	en	Holding Ctrl/Cmd key and click on the line
 hours	preferences	en	Hours
 how do you like to display accounts	preferences	en	Account display
 how do you like to select accounts	preferences	en	Account select
@@ -104,7 +104,7 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	en	Select the country. It sets some defaults e.g. in Calendar.
 interface/template selection	preferences	en	Interface | Template
 it sets content size (text only) according to selected size.	preferences	en	It sets content size (text only) according to selected size.
-just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
+just clicking on the line, like a checkbox	preferences	en	Just clicking on the line, like a checkbox
 kama theme	preferences	en	Kama theme
 keep list open for selecting multiple	preferences	en	Keep list open for selecting multiple
 language	preferences	en	Language
@@ -113,7 +113,7 @@ lowercase letters	preferences	en	lowercase letters
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	en	Make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
-moono color theme	preferences	en	Moono color theme
+moono color theme	preferences	en	Moono colour theme
 moono theme (default)	preferences	en	Moono theme (Default)
 new secret generated, you need to save it to disable the old one!	preferences	en	New secret generated, you need to save it to disable the old one!
 no default	preferences	en	No default
@@ -174,7 +174,7 @@ show qrcode to enable on an additional device.	preferences	en	Show QRCode to ena
 show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
 small paragraph	preferences	en	Small Paragraph
-special characters	preferences	en	special characters
+special characters	preferences	en	Special characters
 spellchecker language	addressbook	en	Spellchecker language
 stay open	preferences	en	Stay open
 stay open, but not for email	preferences	en	Stay open, but not for email
@@ -182,9 +182,9 @@ text editor settings	preferences	en	Text editor settings
 text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.
 the old password is not correct	preferences	en	The old password is not correct!
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	en	The selectbox shows all available users (can be slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	en	The two passwords are not the same!
 theme (colors/fonts) selection	preferences	en	Theme
@@ -200,7 +200,7 @@ use default	preferences	en	Use default
 users choice	preferences	en	Users choice
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	en	When you can select multiple options, should the option list stay open until you close it, or close after you pick an option.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	en	Show Home and Logout buttons as applications in the top bar.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Select character set for the CSV Import|Export.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Select character set for the CSV import/export.
 which currency symbol or name should be used in egroupware.	preferences	en	Currency symbol or name.
 write prefs for the specified application.	preferences	en	Write preferences for the specified application.
 you can show the applications as icons only, icons with app-name or both.	preferences	en	You can show the applications as icons only, icons with app-name or both.

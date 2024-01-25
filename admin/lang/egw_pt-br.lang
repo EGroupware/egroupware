@@ -1,14 +1,32 @@
+%1 %2 rights for %3 on %4 to %5	admin	pt-br	%1 %2 direitos para %3 em %4 a %5
 %1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usuários
 %1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usuários
+%1 access to other data	admin	pt-br	%1 acesso a outros dados
+%1 accounts being activated	admin	pt-br	%1 contas sendo ativadas
+%1 acl entries deleted.	admin	pt-br	%1 entradas de ACL excluídas.
 %1 acl records of not (longer) existing accounts deleted.	admin	pt-br	%1 registro(s) ACL de contas inexistentes removido(s).
+%1 categories of not (longer) existing accounts deleted.	admin	pt-br	%1 categorias de contas não (mais) existentes excluídas.
+%1 category '%2' %3	admin	pt-br	%1 categoria "%2" %3
+%1 category(s) %2	admin	pt-br	%1 categoria(s) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	pt-br	%1 categoria(s) %2, %3 falhou devido a direitos insuficientes!
 %1 class not instanciated	admin	pt-br	Classe %1 não instanciada
+%1 entries deleted	admin	pt-br	%1 entradas excluídas
 %1 entries deleted.	admin	pt-br	% 1 cadastros excluídos.
 %1 group %2	admin	pt-br	%1 grupo %2
 %1 is no command!	admin	pt-br	%1 não é um comando!
-%1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável !!!
+%1 log entries deleted.	admin	pt-br	%1 entradas de registro excluídas.
+%1 mail credentials deleted	admin	pt-br	%1 credenciais de e-mail excluídas
+%1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável!
+%1 phrases saved.	admin	pt-br	%1 frases salvas.
 %1 rights for %2 and applications %3	admin	pt-br	%1 direitos para %2 e aplicativos %3
+%1 run rights for applications	admin	pt-br	%1 direitos de execução para aplicativos
+%1 sessions killed	admin	pt-br	%1 sessões eliminadas.
+%1 successful	admin	pt-br	%1 bem-sucedida
+%1 token %2.	admin	pt-br	%1 token %2.
 %1 user %2	admin	pt-br	%1 usuário %2
+(de)activate mail accounts	admin	pt-br	(Des)Ativar contas de e-mail
 (default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim se você não o usa)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt-br	(a classe imap deve oferecer suporte a esse recurso consultando o valor de configuração correspondente e passando-o como cota padrão para o servidor IMAP)
 (no subject)	admin	pt-br	(sem assunto)
 (stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
@@ -24,7 +42,7 @@ accesslog and bruteforce defense	admin	pt-br	Registro de acesso e defesa de For�
 account	admin	pt-br	Conta
 account %1 %2	admin	pt-br	Conta %1 %2
 account '%1' deleted.	admin	pt-br	Conta '%1' removida.
-account '%1' not found !!!	admin	pt-br	Conta '%1' não encontrada !!!
+account '%1' not found !!!	admin	pt-br	Conta '%1' não encontrada!
 account active	admin	pt-br	Conta ativa
 account deleted.	admin	pt-br	% 1 cadastros excluídos.
 account has been created	common	pt-br	A conta foi criada
@@ -35,7 +53,7 @@ account not found!	common	pt-br	Conta não encontrado!
 account permissions	admin	pt-br	Permissões da conta
 account preferences	admin	pt-br	Preferências da conta
 account saved.	admin	pt-br	Conta salvo.
-account-id's have to be integers!	admin	pt-br	Id da conta deve ser número inteiro!
+account-id's have to be integers!	admin	pt-br	ID da conta deve ser número inteiro!
 acl added.	admin	pt-br	ACL adicionada
 acl csv export	admin	pt-br	Exportação de ACL CSV
 acl deleted.	admin	pt-br	ACL removida.
@@ -44,13 +62,13 @@ acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
 actions	admin	pt-br	Ações
 activate	admin	pt-br	Ativar
-activate wysiwyg-editor	admin	pt-br	ativar editor WYSIWYG
+activate wysiwyg-editor	admin	pt-br	Ativar editor WYSIWYG
 active templates	admin	pt-br	Modelos de Ativos
-add a category	admin	pt-br	adicionar uma categoria
-add a group	admin	pt-br	adicionar um grupo
+add a category	admin	pt-br	Adicionar uma categoria
+add a group	admin	pt-br	Adicionar um grupo
 add a new account.	admin	pt-br	Adicionar uma nova conta.
-add a subcategory	admin	pt-br	adicionar uma subcategoria
-add a user	admin	pt-br	adicionar um usuário
+add a subcategory	admin	pt-br	Adicionar uma subcategoria
+add a user	admin	pt-br	Adicionar um usuário
 add account	admin	pt-br	Adicionar uma conta
 add application	admin	pt-br	Adicionar um aplicativo
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pt-br	Adicionar usuários criados automaticamente para este grupo (o grupo 'Default' será tentado se este campo estiver vazio.)
@@ -63,16 +81,16 @@ add new email address:	admin	pt-br	Adicionar novo e-mail:
 add peer server	admin	pt-br	Adicionar servidor remoto
 add profile	admin	pt-br	Adicionar Perfil
 add sub-category	admin	pt-br	Adicionar subcategoria
-admin dn	admin	pt-br	dn do administrador
+admin dn	admin	pt-br	DN do administrador
 admin email	admin	pt-br	Email do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	Endereços eletrônicos dos administradores (seprados por vírgula) a serem notificados em caso de bloqueio (em branco para não notificar)
 admin name	admin	pt-br	Nome do Administrador
-admin password	admin	pt-br	senha do administrador
+admin password	admin	pt-br	Senha do administrador
 admin queue and history	admin	pt-br	Lista de administradores e histórico
-admin username	admin	pt-br	nome de usuário do administrador
+admin username	admin	pt-br	Nome de usuário do administrador
 administration	admin	pt-br	Administração
 admins	admin	pt-br	Administradores
-advanced options	admin	pt-br	opções avançadas
+advanced options	admin	pt-br	Opções avançadas
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)?
 aliases	admin	pt-br	Apelidos
 all applications	admin	pt-br	Todos aplicativos
@@ -80,16 +98,16 @@ all categories	admin	pt-br	Todas as categorias
 all records and account information will be lost!	admin	pt-br	Todos registros e informações de contas serão perdidos!
 all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
-allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDS (separados por vírgulas)
-alternate email address	admin	pt-br	endereço de e-mail alternativo
+allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDs (separados por vírgulas)
+alternate email address	admin	pt-br	Endereço de e-mail alternativo
 and logged in	admin	pt-br	e registrada no
 anonymous user	admin	pt-br	Usuário Anônimo
 anonymous user (not shown in list sessions)	admin	pt-br	Usuário Anônimo (não é exibido na lista de sessões)
 anonymous user does not exist!	admin	pt-br	Usuário Anônimo não existe!
 anonymous user has no run-rights for the application!	admin	pt-br	Usuário Anônimo não tem acesso de execução para este aplicativo!
-any application	admin	pt-br	qualquer aplicação
-any group	admin	pt-br	qualquer grupo
-any user	admin	pt-br	qualquer usuário
+any application	admin	pt-br	Qualquer aplicação
+any group	admin	pt-br	Qualquer grupo
+any user	admin	pt-br	Qualquer usuário
 appearance	admin	pt-br	Aparência
 application	admin	pt-br	Aplicativo
 application '%1' not found (maybe not installed or misspelled)!	admin	pt-br	Aplicativo '%1' não encontrado (talvez não esteja instalado ou nome mal informado)!
@@ -98,8 +116,8 @@ application title	admin	pt-br	Título do Aplicativo
 applications	admin	pt-br	Aplicativos
 applications list	admin	pt-br	Lista de Aplicativos
 applications run rights updated.	admin	pt-br	Direitos de execução dos aplicativos atualizados.
-applies the changes	admin	pt-br	aplicar as alterações
-apply the changes	admin	pt-br	aplicar as alterações
+applies the changes	admin	pt-br	Aplicar as alterações
+apply the changes	admin	pt-br	Aplicar as alterações
 are you sure you want to delete the application %1 ?	admin	pt-br	Você tem certeza que deseja remover o aplicativo %1 ?
 are you sure you want to delete this account ?	admin	pt-br	Você tem certeza que deseja remover esta conta?
 are you sure you want to delete this application ?	admin	pt-br	Você tem certeza que deseja remover este aplicativo?
@@ -110,27 +128,27 @@ are you sure you want to delete this server?	admin	pt-br	Você tem certeza que d
 are you sure you want to kill this session ?	admin	pt-br	Você tem certeza que deseja terminar esta seção?
 async services last executed	admin	pt-br	Última execução dos Serviços Assíncronos
 asynchronous timed services	admin	pt-br	Serviços Assíncronos agendados
-asyncservices not yet installed or other error (%1) !!!	admin	pt-br	Serviços Assíncronos ainda não estão instalados, ou outro erro não definido.
+asyncservices not yet installed or other error (%1) !!!	admin	pt-br	Serviços assíncronos ainda não instalados ou outro erro (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt-br	Tentar usar mimetype correto para FTP ao invés do padrão 'application/octet-stream'
 attribute accountstatus explained	admin	pt-br	Isto trata o atributo <b><i>-accountStatus-</i></b> do esquema do QMAIL.
-attribute mail explained	admin	pt-br	Isto trata o atributo <b><i>-mail-</i></b> do esquema do QMAIL e nunca pode estar vazio. É também o campo de e-mail interno do eGW.
+attribute mail explained	admin	pt-br	Isto trata o atributo <b><i>-mail-</i></b> do esquema do QMAIL e nunca pode estar vazio. É também o campo de e-mail interno do EGw.
 attribute mailalternateaddress explained	admin	pt-br	Isto trata o atributo <b><i>-mailAlternateAddress-</i></b> do esquema do QMAIL e pode ser tratado como maps virtual ou apelidos.
 attribute mailforwardingaddress explained	admin	pt-br	Isto trata o atributo <b><i>-mailForwardingAddress-</i></b> do esquema do QMAIL e não deve estar vazio se designado.
 authentication / accounts	admin	pt-br	Autenticação / Contas
 auto create account records for authenticated users	admin	pt-br	Automaticamente criar registros de conta para usuários autenticados
 back to admin/grouplist	admin	pt-br	Voltar para Administração/Lista de Grupos
 back to admin/userlist	admin	pt-br	Voltar para Administração/Lista de Usuários
-back to the list	admin	pt-br	voltar à lista
+back to the list	admin	pt-br	Voltar à lista
 bad login name or password.	admin	pt-br	Nome de usuário ou senha inválido(s).
 bad or malformed request. server responded: %s	admin	pt-br	Solicitação inválida. Resposta do servidor: %s
 bad request: %s	admin	pt-br	Solicitação inválida: %s
 bi-dir passthrough	admin	pt-br	Pular bi-direcional
 bi-directional	admin	pt-br	bi-direcional
-bottom	admin	pt-br	inferior
+bottom	admin	pt-br	Inferior
 calculate next run	admin	pt-br	Calcular próxima execução
-can be used by application	admin	pt-br	pode ser usado pela aplicação
-can be used by group	admin	pt-br	pode ser usado pelo grupo
-can be used by user	admin	pt-br	pode ser usado pelo usuário
+can be used by application	admin	pt-br	Pode ser usado pela aplicação
+can be used by group	admin	pt-br	Pode ser usado pelo grupo
+can be used by user	admin	pt-br	Pode ser usado pelo usuário
 can change password	admin	pt-br	Permite alterar a senha
 cancel testjob!	admin	pt-br	Cancelar trabalhos de teste!
 categories list	admin	pt-br	Lista de Categorias
@@ -138,11 +156,11 @@ category %1 has been saved !	admin	pt-br	Categoria %1 foi salva!
 category deleted.	admin	pt-br	Categoria removida.
 category list	admin	pt-br	Lista de Categorias
 category saved.	admin	pt-br	Categoria salva.
-change account_id	admin	pt-br	Alterar id da conta
+change account_id	admin	pt-br	Alterar ID da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
 change login screen message	admin	pt-br	Alterar mensagem da tela principal
-change password for %1	admin	pt-br	alterar senha para %1
+change password for %1	admin	pt-br	Alterar senha para %1
 check acl for entries of not (longer) existing accounts	admin	pt-br	Verificar registros ACL para contas não mais existentes.
 check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sessões
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
@@ -152,7 +170,7 @@ command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
 connection dropped by imap server.	admin	pt-br	Conexão interrompida pelo servidor IMAP.
 continue	admin	pt-br	Continuar
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões eGW com diferentes diretórios, mas tem problemas com SiteMgr!)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões EGw com diferentes diretórios, mas tem problemas com SiteMgr!)
 could not append message:	admin	pt-br	Não foi possível anexar Mensagem:
 could not complete request. reason given: %s	admin	pt-br	Não foi possível completar a solicitação. Resposta do servidor: %s
 could not open secure connection to the imap server. %s : %s.	admin	pt-br	Não foi possível abrir conexão segura com o servidor IMAP. %s : %s.
@@ -164,9 +182,9 @@ create group	admin	pt-br	Criar Grupo
 create new account	admin	pt-br	Criar uma nova conta
 create new identity	admin	pt-br	Criar uma nova identidade
 created	admin	pt-br	Criado
-created with id #%1	admin	pt-br	criado com id #%1
-creates a new field	admin	pt-br	criar um novo campo
-crontab only (recomended)	admin	pt-br	somente crontab (recomendado)
+created with id #%1	admin	pt-br	Criado com ID #%1
+creates a new field	admin	pt-br	Criar um novo campo
+crontab only (recomended)	admin	pt-br	Somente crontab (recomendado)
 custom 1	admin	pt-br	Personalizada 1
 custom 2	admin	pt-br	Personalizada 2
 custom 3	admin	pt-br	Personalizada 3
@@ -177,7 +195,7 @@ data	admin	pt-br	Dados
 day	admin	pt-br	Dia
 day of week<br>(0-6, 0=sun)	admin	pt-br	Dia da Semana <br> (0-6, 0=Dom)
 db backup and restore	admin	pt-br	Backup e Restauração do BD
-default	admin	pt-br	padrão
+default	admin	pt-br	Padrão
 default file system space per user	admin	pt-br	Espaço em disco padrão por usuário?
 default file system space per user/group ?	admin	pt-br	Espaço em disco padrão por usuário/grupo?
 deinstall crontab	admin	pt-br	Desinstalar crontab
@@ -194,10 +212,10 @@ delete the group	admin	pt-br	Remover o grupo
 delete this account	admin	pt-br	Apagar esta conta
 delete this category	admin	pt-br	Remover esta categoria
 delete this group	admin	pt-br	Remover este grupo
-delete this user	admin	pt-br	remover este usuário
-deleted	admin	pt-br	removido
+delete this user	admin	pt-br	Remover este usuário
+deleted	admin	pt-br	Removido
 deletes this field	admin	pt-br	Remover este campo
-deliver extern	admin	pt-br	entrega externa
+deliver extern	admin	pt-br	Entrega externa
 deny access	admin	pt-br	Negar acesso
 deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
 deny access to application registery	admin	pt-br	Negar acesso ao registro de aplicativos
@@ -215,58 +233,58 @@ deny access to site configuration	admin	pt-br	Negar acesso à configuração do 
 deny access to user accounts	admin	pt-br	Negar acesso às contas de usuários
 deny all users access to grant other users access to their entries ?	admin	pt-br	Não permitir que usuários concedam acesso aos seus registros para outros usuários ?
 description can not exceed 255 characters in length !	admin	pt-br	A descrição não deverá exceder 255 caracteres!
-determines the order the fields are displayed	admin	pt-br	determinar a ordem de exibição dos campos
+determines the order the fields are displayed	admin	pt-br	Determinar a ordem de exibição dos campos
 disable	admin	pt-br	Desabilitada
 disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formulário de entrada
-disable wysiwyg-editor	admin	pt-br	desabilitar editor WYSIWYG
-disabled (not recomended)	admin	pt-br	desabilitar (não recomendado)
+disable wysiwyg-editor	admin	pt-br	Desabilitar editor WYSIWYG
+disabled (not recomended)	admin	pt-br	Desabilitar (não recomendado)
 display	admin	pt-br	Exibir
 displaying html messages is disabled	admin	pt-br	exibir mensagens em HTML é desativada
 displaying plain messages is disabled	admin	pt-br	exibição de mensagens simples é desativado
 do not delete the category and return back to the list	admin	pt-br	NÃO remova essa categoria e retorne à lista
-do not validate certificate	admin	pt-br	não validar certificado
+do not validate certificate	admin	pt-br	Não validar certificado
 do you also want to delete all global subcategories ?	admin	pt-br	Deseja também remover todas subcategorias globais ?
 do you really want to delete this profile	admin	pt-br	Tem certeza que deseja remover esse perfil?
 do you really want to reset the filter for the profile listing	admin	pt-br	Tem certeza que deseja reiniciar o filtro para a listagem do perfil
 do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais ?
 do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
 document root (default)	admin	pt-br	Pasta raiz (padrão)
-domainname	admin	pt-br	nome do domínio
-down	admin	pt-br	baixo
+domainname	admin	pt-br	Nome do domínio
+down	admin	pt-br	Baixo
 edit account	admin	pt-br	Editar conta
 edit application	admin	pt-br	Editar Aplicativo
-edit email settings	admin	pt-br	editar configurações de e-mail
+edit email settings	admin	pt-br	Editar configurações de e-mail
 edit global category	admin	pt-br	Editar categoria global
 edit global category for %1	admin	pt-br	Editar categoria global para %1
 edit group	admin	pt-br	Editar Grupo
 edit group acl's	admin	pt-br	Editar grupo ACL
 edit peer server	admin	pt-br	Editar servidor parceiro
 edit table format	admin	pt-br	Editar formato de tabela
-edit this category	admin	pt-br	editar esta categoria
-edit this group	admin	pt-br	editar este grupo
-edit this user	admin	pt-br	editar este usuário
-edit user	admin	pt-br	editar usuário
+edit this category	admin	pt-br	Editar esta categoria
+edit this group	admin	pt-br	Editar este grupo
+edit this user	admin	pt-br	Editar este usuário
+edit user	admin	pt-br	Editar usuário
 edit user account	admin	pt-br	Editar conta de usuário
 egroupware directory	admin	pt-br	Diretório EGroupware
 either install id and config password needed or the remote hash!	admin	pt-br	Necessário ID de instalação E senha de configuração OU o hash remoto!
-email account active	admin	pt-br	conta de e-mail ativa
-email address	admin	pt-br	endrereço de e-mail
+email account active	admin	pt-br	Conta de e-mail ativa
+email address	admin	pt-br	Endrereço de e-mail
 email settings	common	pt-br	Configurações do E-mail
 emailadmin	admin	pt-br	Administração do E-Mail
 emailadmin: group assigned profile	common	pt-br	Administração de eMail: Perfil de Grupo
 emailadmin: user assigned profile	common	pt-br	Administração de eMail: Perfil de Usuário
-enable	admin	pt-br	habilitado
-enable cyrus imap server administration	admin	pt-br	habilitar administração do Servidor Cyrus IMAP
+enable	admin	pt-br	Habilitado
+enable cyrus imap server administration	admin	pt-br	Habilitar administração do Servidor Cyrus IMAP
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
-enable sieve	admin	pt-br	habilitar Sieve
+enable sieve	admin	pt-br	Habilitar Sieve
 enable spellcheck in rich text editor	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
-enable the soap service	admin	pt-br	Habilitar o serviço soap
-enable the xmlrpc service	admin	pt-br	Habilitar o serviço xmlrpc
+enable the soap service	admin	pt-br	Habilitar o serviço SOAP
+enable the xmlrpc service	admin	pt-br	Habilitar o serviço XML-RPC
 enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegação
 enabled - popup window	admin	pt-br	Habilitar Janelas instantâneas
-encrypted connection	admin	pt-br	conexão criptografada
-encryption settings	admin	pt-br	configurações de criptografia
-enter a description for the category	admin	pt-br	digite uma descrição para a categoria
+encrypted connection	admin	pt-br	Conexão criptografada
+encryption settings	admin	pt-br	Configurações de criptografia
+enter a description for the category	admin	pt-br	Digite uma descrição para a categoria
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt-br	Digite um texto aleatório para a encriptação de sessão (requer mcrypt)
 enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a página de login
 enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o título do site
@@ -275,7 +293,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	D
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do EGroupware.<br>Exemplo: https://egw.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
 enter the site password for peer servers	admin	pt-br	Digite a senha do servidor para comunicação com servidores parceiros
 enter the site username for peer servers	admin	pt-br	Digite o usuário do servidor para comunicação com servidores parceiros
@@ -290,47 +308,47 @@ enter your http proxy server port	admin	pt-br	Digite a porta do servidor proxy H
 enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de seu servidor SMTP
 enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
 entry saved	admin	pt-br	Registro salvo
-error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum está configurado !!!
-error changing the password for %1 !!!	admin	pt-br	Erro alterando a senha para %1 !!!
+error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum está configurado!
+error changing the password for %1 !!!	admin	pt-br	Erro alterando a senha para %1 !
 error connecting to imap server. %s : %s.	admin	pt-br	Erro conectando ao servidor IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	admin	pt-br	Erro conectando ao servidor IMAP: [%s] %s.
 error deleting entry!	admin	pt-br	Erro ao excluir a entrada!
 error saving	admin	pt-br	Erro salvando
 error saving account!	admin	pt-br	Erro ao salvar conta!
 error saving the command!	admin	pt-br	Erro salvando o comando!
-error saving the entry!!!	admin	pt-br	Erro salvando o registro!!
+error saving the entry!!!	admin	pt-br	Erro salvando o registro!
 error saving to db:	admin	pt-br	Erro salvando no banco de dados:
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado!
 error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado
 error, no username!	admin	pt-br	Erro, nenhum nome de usuário!
-error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
+error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido!
 event details follow	admin	pt-br	Detalhes do Evento seguir
 exists	admin	pt-br	Existe
 expires	admin	pt-br	Expira
 explanation of ldapman	admin	pt-br	Até o momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
 failed to change password.	admin	pt-br	Erro ao moudar a senha.
 failed to delete account!	admin	pt-br	Falha ao excluir conta!
-fallback (after each pageview)	admin	pt-br	recuperar (após cada página visualizada)
-false	admin	pt-br	falso
-field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe !!!
+fallback (after each pageview)	admin	pt-br	Recuperar (após cada página visualizada)
+false	admin	pt-br	Falso
+field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe !
 file rejected, no %2. is:%1	admin	pt-br	Arquivo rejeitado, sem% 2. É: 1%
 file space	admin	pt-br	Espaço para arquivos
 file space must be an integer	admin	pt-br	Espaço para arquivos deve ser um número inteiro
-filtered by account	admin	pt-br	filtrado por Conta
-filtered by group	admin	pt-br	filtrado por Grupo
+filtered by account	admin	pt-br	Filtrado por Conta
+filtered by group	admin	pt-br	Filtrado por Grupo
 for the times above	admin	pt-br	para os horários acima
-for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os horários abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
+for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	Para os horários abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
 force selectbox	admin	pt-br	Forçar Caixa de seleção
-forward also to	admin	pt-br	encaminhar também para
-forward email's to	admin	pt-br	encaminhar mensagens para
-forward emails to	admin	pt-br	encaminhar e-mails para
-forward only	admin	pt-br	encaminhar somente
+forward also to	admin	pt-br	Encaminhar também para
+forward email's to	admin	pt-br	Encaminhar mensagens para
+forward emails to	admin	pt-br	Encaminhar e-mails para
+forward only	admin	pt-br	Encaminhar somente
 full name	admin	pt-br	Nome Completo
 general	admin	pt-br	Geral
 global categories	common	pt-br	Categorias globais
-global options	admin	pt-br	opções globais
+global options	admin	pt-br	Opções globais
 grant	admin	pt-br	Conceder
-group ?	admin	pt-br	grupo?
+group ?	admin	pt-br	Grupo?
 group has been added	common	pt-br	Grupo adicionado
 group has been deleted	common	pt-br	Grupo removido
 group has been updated	common	pt-br	Grupo atualizado
@@ -351,10 +369,10 @@ how should email addresses for new users be constructed?	admin	pt-br	Como dever�
 icon	admin	pt-br	Ícone
 identity deleted	admin	pt-br	Identidade eliminado
 identity saved.	admin	pt-br	Identidade salvo.
-idle	admin	pt-br	ocioso
+idle	admin	pt-br	Ocioso
 if different from email address	admin	pt-br	se for diferente do endereço de email
 if no acl records for user or any group the user is a member of	admin	pt-br	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	Se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pt-br	Se estiver usando SSL ou TLS, você deverá ter a extensão PHP 'openssl' carretada.
 imap admin password	admin	pt-br	Senha do administrador IMAP
 imap admin user	admin	pt-br	Usuário administrador do IMAP
@@ -364,19 +382,19 @@ imap server closed the connection.	admin	pt-br	O servidor IMAP fechou a conexão
 imap server closed the connection. server responded: %s	admin	pt-br	O servidor IMAP fechou a conexão. Resposta do servidor: %s
 imap server hostname or ip address	admin	pt-br	Nome ou IP do servidor IMAP
 imap server logintyp	admin	pt-br	Tipo de login do servidor IMAP
-imap server name	admin	pt-br	nome do servidor imap
+imap server name	admin	pt-br	Nome do servidor imap
 imap server port	admin	pt-br	Porta do servidor IMAP
 imap/pop3 server name	admin	pt-br	Nome do servidor IMAP/POP3
 importance	admin	pt-br	importância
 in mbyte	admin	pt-br	em Mbytes
-inactive	admin	pt-br	inativo
+inactive	admin	pt-br	Inativo
 inbound	admin	pt-br	Entrada
 initial	admin	pt-br	Inicial
 install crontab	admin	pt-br	Instalar crontab
 installed applications	common	pt-br	Aplicativos Instalados
 installed crontab	admin	pt-br	Crontab instalado
 interface	admin	pt-br	Interface
-invalid argument '%1' !!!	admin	pt-br	Argumento inválido: '%1' !!!
+invalid argument '%1' !!!	admin	pt-br	Argumento inválido: '%1' !
 invalid formated date "%1"!	admin	pt-br	Data formatada inválida "%1"!
 invalid remote id or name "%1"!	admin	pt-br	ID remoto ou nome inválido "%1"!
 invalid value "%1" use yes or no!	admin	pt-br	Valor inválido "%1"! Use sim ou não!
@@ -386,19 +404,19 @@ kill	admin	pt-br	Terminar
 kill session	admin	pt-br	Terminar sessão
 last %1 logins	admin	pt-br	Últimas %1 conexões
 last %1 logins for %2	admin	pt-br	Últimas %1 conexões para %2
-last login	admin	pt-br	última conexão
-last login from	admin	pt-br	última conexão de
+last login	admin	pt-br	Última conexão
+last login from	admin	pt-br	Última conexão de
 last time read	admin	pt-br	Última vez lido
 last updated	admin	pt-br	Última atualização
-ldap accounts context	admin	pt-br	contexto de contas LDAP
+ldap accounts context	admin	pt-br	Contexto de contas LDAP
 ldap basedn	admin	pt-br	DN Base do LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt-br	Prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
 ldap default shell (e.g. /bin/bash)	admin	pt-br	shell padrão LDAP (Exemplo: /bin/bash)
-ldap encryption type	admin	pt-br	tipo de encriptação LDAP
-ldap groups context	admin	pt-br	contexto de grupos LDAP
-ldap host	admin	pt-br	servidor LDAP
-ldap root password	admin	pt-br	senha do super usuário LDAP
-ldap rootdn	admin	pt-br	super usuário LDAP
+ldap encryption type	admin	pt-br	Tipo de encriptação LDAP
+ldap groups context	admin	pt-br	Contexto de grupos LDAP
+ldap host	admin	pt-br	Servidor LDAP
+ldap root password	admin	pt-br	Senha do super usuário LDAP
+ldap rootdn	admin	pt-br	Super usuário LDAP
 ldap server	admin	pt-br	Servidor LDAP
 ldap server accounts dn	admin	pt-br	Contas DN de servidores LDAP
 ldap server admin dn	admin	pt-br	Administrador DN de servidor LDAP
@@ -407,14 +425,14 @@ ldap server hostname or ip address	admin	pt-br	Nome ou endereço IP do servidor 
 ldap settings	admin	pt-br	Configurações do LDAP
 leave empty for no quota	admin	pt-br	Deixe em branco para nenhuma quota
 leave empty to use oauth, if supported	admin	pt-br	Deixar vazio para usar o OAuth, se suportado
-leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar à lista
-leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar à lista
+leave the category untouched and return back to the list	admin	pt-br	Deixar a categoria intocada e retornar à lista
+leave the group untouched and return back to the list	admin	pt-br	Deixar o grupo intocado e retornar à lista
 leave without saveing the entry	admin	pt-br	Sair sem salvar o registro
-leaves without saveing	admin	pt-br	sair sem salvar
+leaves without saveing	admin	pt-br	Sair sem salvar
 length<br>rows	admin	pt-br	Tamanho<br>Linhas
 list config settings	admin	pt-br	Listar parâmetros de configuração
 list current sessions	admin	pt-br	Listar sessões correntes
-list of current users	admin	pt-br	lista de usuários conectados
+list of current users	admin	pt-br	Lista de usuários conectados
 login history	admin	pt-br	Histórico de conexões
 login message	admin	pt-br	Mensagem de entrada
 login screen	admin	pt-br	Tela de Conexão
@@ -427,48 +445,48 @@ manage mapping	admin	pt-br	Gerenciar mapeamento
 manage stationery templates	admin	pt-br	Gerenciar modelos de papelaria
 manager	admin	pt-br	Gerenciador
 manual entry	admin	pt-br	Entrada manual
-maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id máximo para contas (Exemplo: 65535 ou 1000000)
+maximum account id (e.g. 65535 or 1000000)	admin	pt-br	ID máximo para contas (Exemplo: 65535 ou 1000000)
 maximum entries in click path history	admin	pt-br	Máximo de entradas no histórico de caminho de cliques
 mb used	admin	pt-br	MB usado
 members	admin	pt-br	Membros
 message has been updated	admin	pt-br	Mensagem foi atualizada
 method	admin	pt-br	Método
-minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mínimo para contas (Exemplo: 500 ou 100, etc.)
+minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	ID mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt-br	Minuto
 mode	admin	pt-br	Modo
 modified	admin	pt-br	Modificado
 month	admin	pt-br	Mês
-more secure	admin	pt-br	mais seguro
-name must not be empty !!!	admin	pt-br	Nome não pode estar vazio !!!
+more secure	admin	pt-br	Mais seguro
+name must not be empty !!!	admin	pt-br	Nome não pode estar vazio !
 name of organisation	admin	pt-br	Nome da organização
 new group name	admin	pt-br	Nome do novo Grupo
-new name	admin	pt-br	novo nome
-new password [ leave blank for no change ]	admin	pt-br	Nova senha [ Deixe em branco para não alterar ]
+new name	admin	pt-br	Novo nome
+new password [ leave blank for no change ]	admin	pt-br	Nova senha (Deixe em branco para não alterar)
 next run	admin	pt-br	Próxima execução
-no algorithms available	admin	pt-br	nenhum algoritmo disponível
-no alternate email address	admin	pt-br	sem conta de e-mail alternativa
-no encryption	admin	pt-br	sem criptografia
-no forwarding email address	admin	pt-br	sem conta de e-mail para encaminhar
-no jobs in the database !!!	admin	pt-br	Nenhum trabalho na base de dados !!!
+no algorithms available	admin	pt-br	Nenhum algoritmo disponível
+no alternate email address	admin	pt-br	Sem conta de e-mail alternativa
+no encryption	admin	pt-br	Sem criptografia
+no forwarding email address	admin	pt-br	Sem conta de e-mail para encaminhar
+no jobs in the database !!!	admin	pt-br	Nenhum trabalho na base de dados !
 no login history exists for this user	admin	pt-br	Não existe histórico de conexões para este usuário
 no matches found	admin	pt-br	Nenhuma ocorrência encontrada
 no message returned.	admin	pt-br	Nenhuma mensagem retornada.
-no modes available	admin	pt-br	nenhum modo disponível
-no permission to add groups	admin	pt-br	sem permissão para adicionar grupos
-no permission to add users	admin	pt-br	sem permissão para adicionar grupos
-no permission to create groups	admin	pt-br	sem permissão para criar grupos
-no plain text part found	admin	pt-br	nenhuma parte de texto simples encontrado
+no modes available	admin	pt-br	Nenhum modo disponível
+no permission to add groups	admin	pt-br	Sem permissão para adicionar grupos
+no permission to add users	admin	pt-br	Sem permissão para adicionar grupos
+no permission to create groups	admin	pt-br	Sem permissão para criar grupos
+no plain text part found	admin	pt-br	Nenhuma parte de texto simples encontrado
 no supported imap authentication method could be found.	admin	pt-br	Nenhum método de autenticação IMAP suportado pôde ser encontrado.
-note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estará disponível somente se o PHP houver sido compilado com suporte a curl
-number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
+note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estará disponível somente se o PHP houver sido compilado com suporte a Curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	Número de linhas para um campo de entrada ou linhas para uma caixa de seleção
 oauth authentiction	admin	pt-br	OAuth Authentiction
 offer to installing egroupware as mail-handler	admin	pt-br	Oferta para instalação de EGroupware como correio
 one day	admin	pt-br	Um dia
 one hour	admin	pt-br	Uma hora
-one month	admin	pt-br	um mês
-one week	admin	pt-br	uma semana
-order	admin	pt-br	ordem
-organisation	admin	pt-br	organização
+one month	admin	pt-br	Um mês
+one week	admin	pt-br	Uma semana
+order	admin	pt-br	Ordem
+organisation	admin	pt-br	Organização
 other security configuration	admin	pt-br	Outra configuração de segurança
 outbound	admin	pt-br	Saída
 own categories	admin	pt-br	Categorias próprias
@@ -483,8 +501,8 @@ peer servers	admin	pt-br	Servidores parceiros
 percent of users that logged out	admin	pt-br	Percentual de usuários que desconectaram
 percent this user has logged out	admin	pt-br	Percentagem de vezes que este usuário desconectou
 permission denied	admin	pt-br	Permissão negada
-permission denied !!!	admin	pt-br	Permissão negada !!!
-permission denied!!!	admin	pt-br	Permissão negada !!
+permission denied !!!	admin	pt-br	Permissão negada !
+permission denied!!!	admin	pt-br	Permissão negada !
 permissions	admin	pt-br	Permissões
 permissions this group has	admin	pt-br	Permissões do grupo
 phpinfo	admin	pt-br	Informações do PHP
@@ -494,22 +512,22 @@ please run setup to become current	admin	pt-br	Por favor execute a Configuraçã
 please select	admin	pt-br	Por favor selecione
 plesk can't rename users --> request ignored	admin	pt-br	Plesk não pode renomear usuários --> solicitação ignorada
 plesk imap server (courier)	admin	pt-br	Servidor IMAP Plesk (Courier)
-plesk mail script '%1' not found !!!	admin	pt-br	Script de e-mail Plesk '%1' não encontrado !!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	pt-br	Plesk exige que senhas tenha no mínimo 5 caracteres e não contenham o nome da conta --> senha NÃO configurada!!!
+plesk mail script '%1' not found !!!	admin	pt-br	Script de e-mail Plesk '%1' não encontrado !
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	pt-br	Plesk exige que senhas tenha no mínimo 5 caracteres e não contenham o nome da conta --> senha NÃO configurada!
 plesk smtp-server (qmail)	admin	pt-br	Servidor SMTP Plesk (Qmail)
 pop3 server hostname or ip address	admin	pt-br	Nome ou endereço IP do servidor POP3
 pop3 server port	admin	pt-br	Porta do servidor POP3
-port	admin	pt-br	porta
+port	admin	pt-br	Porta
 postfix with ldap	admin	pt-br	Postfix com LDAP
 preferences	admin	pt-br	Preferências
 primary group	admin	pt-br	Grupo primário
-profile access rights	admin	pt-br	direito de acesso aos perfis
-profile is active	admin	pt-br	perfil está ativo
+profile access rights	admin	pt-br	Direito de acesso aos perfis
+profile is active	admin	pt-br	Perfil está ativo
 profile list	admin	pt-br	Lista de perfis
 profile name	admin	pt-br	Nome do perfil
 qmaildotmode	admin	pt-br	modo dos arquivos qmail (.qmail)
-quota settings	admin	pt-br	configurações de quota
-quota size in mbyte	admin	pt-br	tamanho da cota em MByte
+quota settings	admin	pt-br	Configurações de quota
+quota size in mbyte	admin	pt-br	Tamanho da cota em MByte
 re-enter password	admin	pt-br	Redigite a senha
 read this list of methods.	admin	pt-br	Ler esta lista de métodos
 register application hooks	admin	pt-br	Registrar configurações das aplicações
@@ -517,18 +535,18 @@ relay access checked	admin	pt-br	Acesso Relé verificado
 remote administration instances	admin	pt-br	Instâncias de administração remotas
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pt-br	Administração remota deve ser habilitada na instância remoda em Administrador > Configuração do Servidor!
 remote instance saved	admin	pt-br	Instância remota salva
-remove	admin	pt-br	remover
+remove	admin	pt-br	Remover
 remove all users from this group	admin	pt-br	Remover todos os usuários deste grupo
 remove all users from this group ?	admin	pt-br	Remover todos os usuários desse grupo?
 required pear class mail/mimedecode.php not found.	admin	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
-reset filter	admin	pt-br	reiniciar filtro
+reset filter	admin	pt-br	Reiniciar filtro
 rights	admin	pt-br	Direitos
 route all mails to	admin	pt-br	Remeter todos e-mails para
 rows	admin	pt-br	Fileiras
 run asynchronous services	admin	pt-br	Executar Serviços Assícronos
-save the category	admin	pt-br	salvar a categoria
-save the category and return back to the list	admin	pt-br	salvar a categoria e retornar à lista
-saves the changes made and leaves	admin	pt-br	salvar as alterações feitas e sair
+save the category	admin	pt-br	Salvar a categoria
+save the category and return back to the list	admin	pt-br	Salvar a categoria e retornar à lista
+saves the changes made and leaves	admin	pt-br	Salvar as alterações feitas e sair
 saves this entry	admin	pt-br	Salvar este registro
 search accounts	admin	pt-br	Pesquisar contas
 search categories	admin	pt-br	Pesquisar categorias
@@ -539,7 +557,7 @@ security	admin	pt-br	Segurança
 select group managers	admin	pt-br	Selecione Manutenção de Grupos
 select permissions this group will have	admin	pt-br	Selecione as permissões que este grupo terá
 select the parent category. if this is a main category select no category	admin	pt-br	Selecione a categoria pai. Caso seja um categoria pai selecione SEM CATEGORIA
-select type of imap server	admin	pt-br	selecione o tipo de servidor IMAP
+select type of imap server	admin	pt-br	Selecione o tipo de servidor IMAP
 select type of imap/pop3 server	admin	pt-br	Selecione o tipo de servidor IMAP/POP3
 select type of smtp server	admin	pt-br	Selecione o tipo de servidor SMTP
 select users for inclusion	admin	pt-br	Selecione usuários para inclusão
@@ -557,7 +575,7 @@ server url	admin	pt-br	URL do servidor
 server username	admin	pt-br	Usuário do servidor
 set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
-show 'powered by' logo on	admin	pt-br	Área para exibição de 'powered by EGroupware'
+show 'powered by' logo on	admin	pt-br	Área para exibição de 'Powered by EGroupware'
 show access log	admin	pt-br	Exibir registros de acessos
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
@@ -569,19 +587,19 @@ sieve settings	admin	pt-br	Configurações Sieve
 site	admin	pt-br	Site
 skip imap	admin	pt-br	Ir IMAP
 skipping imap configuration!	admin	pt-br	Ignorando configuração IMAP!
-smtp authentication	admin	pt-br	autenticação smtp
-smtp options	admin	pt-br	opções smtp
+smtp authentication	admin	pt-br	Autenticação smtp
+smtp options	admin	pt-br	Opções smtp
 smtp server	admin	pt-br	Servidor SMTP
 smtp server name	admin	pt-br	Nome do Servidor SMTP
-smtp settings	admin	pt-br	configurações SMTP
+smtp settings	admin	pt-br	Configurações SMTP
 smtp-server hostname or ip address	admin	pt-br	Nome ou endereço IP do servidor SMTP
 smtp-server port	admin	pt-br	Porta do servidor SMTP
 soap	admin	pt-br	SOAP
 sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo já está em uso.
 sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1
 sorry, the follow users are still a member of the group %1	admin	pt-br	Desculpe, os seguintes usuários ainda são membros do grupo %1
-sort the entries	admin	pt-br	ordenar as entradas
-ssl	admin	pt-br	ssl
+sort the entries	admin	pt-br	Ordenar as entradas
+ssl	admin	pt-br	SSL
 standard	admin	pt-br	Padrão
 standard identity	admin	pt-br	Identidade padrão
 standard imap server	admin	pt-br	Servidor IMAP padrão
@@ -596,7 +614,7 @@ submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao servidor% 1% 2.
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
-switch it off, if users are randomly thrown out	admin	pt-br	desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
+switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
 template selection	admin	pt-br	Seleção de modelos
 templates	admin	pt-br	Templates
 text entry	admin	pt-br	Entrada de texto
@@ -611,12 +629,12 @@ the groups must include the primary group	admin	pt-br	Os grupos devem incluír o
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	pt-br	O servidor IMAP não parece suportar o método de autenticação selecionado. Por favor contacte o administrador do seu sistema.
 the login and password can not be the same	admin	pt-br	O login e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt-br	O código de usuário não pode ter mais de 8 caracteres
-the mimeparser can not parse this message.	admin	pt-br	O mimeparser não pode analisar essa mensagem.
+the mimeparser can not parse this message.	admin	pt-br	O MIMEparser não pode analisar essa mensagem.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt-br	o nome usado internamente (<= 20 caracteres), alterando-o fará dados existentes ficarem inacessíveis
 the testjob sends you a mail everytime it is called.	admin	pt-br	O TestJob lhe envia um email sempre que é executado.
-the text displayed to the user	admin	pt-br	o texto exibido para o usuário
+the text displayed to the user	admin	pt-br	O texto exibido para o usuário
 the two passwords are not the same	admin	pt-br	As senhas não conferem
-the users bellow are still members of group %1	admin	pt-br	os usuários abaixo ainda são membros do grupo %1
+the users bellow are still members of group %1	admin	pt-br	Os usuários abaixo ainda são membros do grupo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	pt-br	Já existe um grupo com este nome. O nome do usuário não pode ser o mesmo de um grupo.
 they must be removed before you can continue	admin	pt-br	Eles devem ser removidos antes de continuar
 this application is current	admin	pt-br	Este aplicativo está atualizado
@@ -627,52 +645,53 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	pt
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt-br	Tempo para expiração da sessões em segundos (padrão 14400 = 4 horas)
 times	admin	pt-br	Horários
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	pt-br	Para usar uma conexão TLS, você deve estar rodando PHP versão 5.1.0 ou maior.
-top	admin	pt-br	topo
+top	admin	pt-br	Topo
 total of %1 id's changed.	admin	pt-br	Total de %1 IDs alterada(s)
 total records	admin	pt-br	Total de registros
 translation	admin	pt-br	Tradução
-true	admin	pt-br	verdadeiro
+true	admin	pt-br	Verdadeiro
 trust level	admin	pt-br	Nível de confiança
 trust relationship	admin	pt-br	Relação de confiança
-two weeks	admin	pt-br	duas semanas
-type '%1' already exists !!!	admin	pt-br	tipo '%1' já existe !!
+two weeks	admin	pt-br	Duas semanas
+type '%1' already exists !!!	admin	pt-br	Tipo '%1' já existe !
 type of customfield	admin	pt-br	Tipo do campo personalizado
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows você precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos serão verificados somente após cada visualização de página!!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows você precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos serão verificados somente após cada visualização de página!
 unexpected response from server to authenticate command.	admin	pt-br	Resposta inesperada do servidor para o comando AUTHENTICATE.
 unexpected response from server to digest-md5 response.	admin	pt-br	Resposta inesperada do servidor para a resposta Digest-MD5.
 unexpected response from server to login command.	admin	pt-br	Resposta inesperada do servidor para o comando LOGIN.
-unknown account: %1 !!!	admin	pt-br	Conta desconhecida: %1 !!!
-unknown command %1!	admin	pt-br	Comando desconhecido %1!
+unknown account: %1 !!!	admin	pt-br	Conta desconhecida: %1 !
+unknown command %1!	admin	pt-br	Comando desconhecido %1 !
 unknown imap response from the server. server responded: %s	admin	pt-br	Resposta desconhecida do servidor IMAP. Resposta do servidor: %s
 unknown option %1	admin	pt-br	Opção desconhecida %1
-unsupported action '%1' !!!	admin	pt-br	Ação não suportada: '%1' !!!
-up	admin	pt-br	para cima
+unsupported action '%1' !!!	admin	pt-br	Ação não suportada: '%1' !
+up	admin	pt-br	Para cima
 update current email address:	admin	pt-br	Atualizar e-mail atual:
-updated	admin	pt-br	atualizado
-usage	admin	pt-br	uso
-use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
+updated	admin	pt-br	Atualizado
+usage	admin	pt-br	Uso
+use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir ID de sessão
 use default	admin	pt-br	Usar o padrão
-use ldap defaults	admin	pt-br	usar padrões LDAP
+use ldap defaults	admin	pt-br	Usar padrões LDAP
 use predefined username and password defined below	admin	pt-br	Usar usuário e senha pré-definidos abaixo
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)
-use smtp auth	admin	pt-br	usar SMTP Autenticado
+use smtp auth	admin	pt-br	Usar SMTP Autenticado
 use theme	admin	pt-br	Usar tema
 use tls authentication	admin	pt-br	Usar autenticação TLS
 use tls encryption	admin	pt-br	Usar encriptação TLS
 use users email-address (as seen in useraccount)	admin	pt-br	Use usuários endereço de e-mail, conforme definido na conta do usuário
 user accounts	admin	pt-br	Contas de usuários
-user can edit forwarding address	admin	pt-br	usuário pode editar endereço de encaminhamento
+user can edit forwarding address	admin	pt-br	Usuário pode editar endereço de encaminhamento
 user data	common	pt-br	Dados de usuários
 user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
+user-agent	admin	pt-br	User-Agent
 userdata	admin	pt-br	Dados de usuário
 userid@domain eg. u1234@domain	admin	pt-br	Domínio @ UserID por exemplo. u1234 @ domínio
-username (standard)	admin	pt-br	nome do usuário (padrão)
+username (standard)	admin	pt-br	Nome do usuário (padrão)
 username/password defined by admin	admin	pt-br	Nome de usuário/Senha definidos pelo administrador
 username@domainname (virtual mail manager)	admin	pt-br	nomedousuario@nomedodominio (Gerenciador Virtual Mail)
 users can define their own emailaccounts	admin	pt-br	Os usuários podem definir sua próprias contas de correio
-users can define their own identities	admin	pt-br	usuários podem definir suas próprias identidades
-users can define their own signatures	admin	pt-br	usuários podem definir suas próprias assinaturas
+users can define their own identities	admin	pt-br	Usuários podem definir suas próprias identidades
+users can define their own signatures	admin	pt-br	Usuários podem definir suas próprias assinaturas
 users can utilize these stationery templates	admin	pt-br	Os usuários podem utilizar esses modelos de papel de carta
 users choice	admin	pt-br	Escolha do usuário
 using data from mozilla ispdb for provider %1	admin	pt-br	Usando dados da Mozilla ISPDB do fornecedor% 1
@@ -682,21 +701,21 @@ view account	admin	pt-br	Exibir conta
 view category	admin	pt-br	Exibir categoria
 view error log	admin	pt-br	Exibir registro de erros
 view sessions	admin	pt-br	Exibir sessões
-view this user	admin	pt-br	exibir este usuário
-view user account	admin	pt-br	exibir conta de usuário
+view this user	admin	pt-br	Exibir este usuário
+view user account	admin	pt-br	Exibir conta de usuário
 virtual mail manager	admin	pt-br	Gerenciador Virtual Mail
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
-would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o EGroupware faça cache do vetor de informações egw ?
+would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o EGroupware faça cache do vetor de informações EGw ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o EGroupware verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o EGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
 would you like to show each application's upgrade status ?	admin	pt-br	Deseja exibir se cada aplicação está atualizada ?
-wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2 !!!
-wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada !!!
+wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2 !
+wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada !
 xml-rpc	admin	pt-br	XML-RPC
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida
 you have received a new message on the	admin	pt-br	Você recebeu uma nova mensagem na
-you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!!!
+you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!
 you have to enter a name, to create a new type!	admin	pt-br	Você precisa informar um novo para criar um novo tipo!
 you must add at least 1 permission or group to this account	admin	pt-br	Você deve adicionar no mínimo uma permissão ou grupo para esta conta
 you must enter a group name.	admin	pt-br	Você deve digitar um nome de grupo.

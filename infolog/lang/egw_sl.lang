@@ -57,7 +57,7 @@ allows to set the status of an entry, eg. set a todo to done if it's finished (v
 alternatives	infolog	sl	Alternativa
 always show them	infolog	sl	Vedno jih pokažite
 application mail expected but got: %1	infolog	sl	Pričakovana prijava je bila priąeta: %1
-apply the action on the whole query, not only the shown entries!!!	infolog	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazane vnose !!!
+apply the action on the whole query, not only the shown entries!!!	infolog	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazane vnose!
 apply the changes	infolog	sl	Uveljavi spremembe
 archive	infolog	sl	Arhiv
 are you shure you want to close this entry ?	infolog	sl	Ali ste prepričani, da želite zapreti ta vnos?
@@ -98,7 +98,7 @@ close	infolog	sl	Zapri
 close all	infolog	sl	Zapri vse
 close this entry and all listed sub-entries	infolog	sl	Zaprite ta vnos in vse podmape, naštete na seznamu
 closed	infolog	sl	Zaprto
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	sl	dvopičje (:) ločeni seznam imen polj za uporabo, če je vrednost prazna ali se sumi
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	sl	Dvopičje (:) ločeni seznam imen polj za uporabo, če je vrednost prazna ali se sumi
 comment	infolog	sl	Opomba
 compare	infolog	sl	Primerjaj
 completed	infolog	sl	Končano
@@ -155,7 +155,7 @@ deletes the selected typ	infolog	sl	Izbriše izbrani tip
 deletes this field	infolog	sl	Izbriše to polje
 deletes this status	infolog	sl	Izbriše ta status
 description	infolog	sl	Opis
-determines the order the fields are displayed	infolog	sl	ugotovi vrstni red polj, ki so prikazana
+determines the order the fields are displayed	infolog	sl	Ugotovi vrstni red polj, ki so prikazana
 directory with documents to insert entries	infolog	sl	Mapa z dokumenti za vstavljanje
 disables a status without deleting it	infolog	sl	Onemogoči status brez brisanja
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sl	Ali želite potrdilo odgovornosti za: sprejemanje, končanje naloge ali oboje?
@@ -169,13 +169,13 @@ do you want a notification, if items you delegated are due?	infolog	sl	Želite p
 do you want to receive notifications as html-mails or plain text?	infolog	sl	Želite prejemati obvestila v obliki HTML ali kot navadno besedilo?
 don't show infolog	infolog	sl	Ne prikaži InfoDnevnika
 done	infolog	sl	Končano
-download	infolog	sl	Prenos
+download	infolog	sl	Shranite datoteko
 download url for links	infolog	sl	Prenesi url za povezave
 due %1	infolog	sl	Zaradi %1
 due date	infolog	sl	Datum zapadlosti
 duration	infolog	sl	Trajanje
 e-mail:	infolog	sl	E-naslov:
-each value is a line like <id>[=<label>]	infolog	sl	vsaka vrednost je vrstice kot <šifra>[=<oznaka>]
+each value is a line like <id>[=<label>]	infolog	sl	Vsaka vrednost je vrstice kot <šifra>[=<oznaka>]
 edit	infolog	sl	Uredi
 edit or create categories for ingolog	infolog	sl	Uredi ali ustvari kategorije za InfoDnevnik
 edit rights (full edit rights incl. making someone else responsible!)	infolog	sl	Uredi pravice (vse pravice, vključno z vnosom namestnika!)
@@ -297,7 +297,7 @@ manage mapping	infolog	sl	Upravljaj mapiranje
 max length of the input [, length of the inputfield (optional)]	infolog	sl	Največja dolžina vhoda [dolžina vhodnega polja (neobvezno)]
 modifier	infolog	sl	Modifikator
 modifierer	infolog	sl	Modifikator
-name must not be empty !!!	infolog	sl	Ime ne sme biti prazno!!!
+name must not be empty !!!	infolog	sl	Ime ne sme biti prazno!
 name of current user, all other contact fields are valid too	infolog	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 name of new type to create	infolog	sl	Ime novega tipa, ki ga ustvarjate
 never hide search and filters	infolog	sl	Nikoli skriti iskanja in filtrov
@@ -461,7 +461,7 @@ start a new search, cancel this link	infolog	sl	Zaženi novo iskanje, prekini to
 startdate	infolog	sl	Začetni datum
 startdate enddate	infolog	sl	Začetni datum Končni datum
 startdate for new entries	infolog	sl	Začetni datum za nove vnose
-startdate must be before enddate!!!	infolog	sl	Začetni datum mora biti pred končnim datumom !!!
+startdate must be before enddate!!!	infolog	sl	Začetni datum mora biti pred končnim datumom!
 starting %1	infolog	sl	Začetek %1
 startrecord	infolog	sl	Začetni zapis
 status	infolog	sl	Status
@@ -469,7 +469,7 @@ status ...	infolog	sl	Status ...
 status, percent and date completed are always allowed.	infolog	sl	Status, odstotek in datum opravljenega so vedno dovoljeni.
 sub	infolog	sl	Podrejeni
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	sl	Podrejeni vnosi postanejo podrejeni staršu ali glavnemu vnosu, če ni starša
-sub-entries will not be closed	infolog	sl	podrejeni vnosi ne bodo zaprti
+sub-entries will not be closed	infolog	sl	Podrejeni vnosi ne bodo zaprti
 sub-entry	infolog	sl	Podrejeni vnos
 subject	infolog	sl	Predmet
 sum	infolog	sl	Vsota
@@ -482,7 +482,7 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the following document-types are supported:	infolog	sl	Podprte so naslednje vrste dokumentov:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sl	Ime, ki se uporablja interno (manj kot 10 znakov). Sprememba tega bo povzročila, da obstoječ podatek ne bo na voljo.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sl	Ime, ki se uporablja interno (manj kot 20 znakov). Sprememba tega bo povzročila, da obstoječ podatek ne bo na voljo.
-the text displayed to the user	infolog	sl	besedilo, ki se prikaže uporabniku
+the text displayed to the user	infolog	sl	Besedilo, ki se prikaže uporabniku
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sl	To je filter, ki ga InfoDnevnik uporablja, ko vstopite v aplikacijo. Filter omejuje število prikazanih zapisov v trenutnem pogledu. Obstajajo filtri, ki prikazujejo samo dokončane, še odprte ali zapise v prihodnosti, vaše ali tuje zapise.
 til when should the todo or phonecall be finished	infolog	sl	Do kdaj naj bo opravilo ali telefonski klic opravljen
 times	infolog	sl	Časi

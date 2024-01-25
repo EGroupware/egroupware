@@ -576,19 +576,26 @@ oman	common	bg	Оман
 on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
 on mouse over	common	bg	При посочване с мишката
 only private	common	bg	само "лични"
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	bg	Поддържа се само от няколко напълно съвместими клиенти (например от Apple). Ако трябва да въведете URL адрес, той най-вероятно няма да се поддържа!
 only yours	common	bg	само Вашите
 oops! you caught us in the middle of system maintainance.	common	bg	Съжалаваме, в момента се извършва профилактика на системата.
 open	common	bg	отвори
+open existing contact	common	bg	Отваряне на съществуващ контакт
 open notify window	common	bg	Отваряне на прозореца за известяване
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
 open sidebox	common	bg	Отваряне на страничната кутия
+open the online help.	common	bg	Отваряне на онлайн помощ
+operator	common	bg	Оператор
+optional note about the link	common	bg	Незадължителна бележка за връзката
 options	common	bg	Опции
 or	common	bg	или
+order to navigating by tab key through the form	common	bg	Ред за навигиране чрез клавиша tab през формуляра
 ordered list	common	bg	Подреден списък
 original	common	bg	Оригинал
 other	common	bg	Други
 overview	common	bg	Преглед
 owner	common	bg	Собственик
+ownership	common	bg	Собственост
 page	common	bg	Страница
 page was generated in %1 seconds	common	bg	Страницата беше създадена за %1 секунди
 pakistan	common	bg	Пакистан
@@ -640,6 +647,8 @@ postal	common	bg	Пощенски
 powered by	common	bg	Работи с
 preference	common	bg	Предпочитания
 preferences	common	bg	Настройки
+preferences for the %1 template set	preferences	bg	Предпочитания за набор от шаблони %1
+preview with entry	common	bg	Предварителен преглед с въвеждане
 previous page	common	bg	Предишна страница
 primary style-sheet:	common	bg	Основен набор стилове (style-sheet):
 print	common	bg	Печат
@@ -647,9 +656,13 @@ priority	common	bg	Приоритет
 private	common	bg	Личен
 programs	common	bg	Програми
 project	common	bg	Проект
+properties	common	bg	Свойства
+protocol is required	common	bg	Протоколът е задължителен
 public	common	bg	общ
 puerto rico	common	bg	Пуерто Рико
 qatar	common	bg	Катар
+quick add	common	bg	Бързо добавяне
+radiobutton	common	bg	Радио бутон
 read	common	bg	Четене
 read a list of entries.	common	bg	Четене на списък със записи.
 read a single entry by passing the id and fieldlist.	common	bg	Четене на единичен запис чрез подаване на id и списък с полета

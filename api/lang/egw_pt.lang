@@ -5,13 +5,14 @@
 %1 etemplates deleted	common	pt	%1 modelos Web eliminados
 %1 etemplates for application '%2' dumped to '%3'	common	pt	%1 modelos Web para a aplicação %2' deixados em '%3'
 %1 etemplates found	common	pt	%1 modelos Web encontrados
-%1 is not executable by the webserver !!!	common	pt	%1 não é executável pelo servidor Web !!!
+%1 file	common	pt	Ficheiro %1
+%1 is not executable by the webserver !!!	common	pt	%1 não é executável pelo servidor Web!
 %1 matches on search criteria	common	pt	%1 ocorrências da pesquisa
-%1 more %2 selected ...	common	pt	%1 mais %2 seleccionados...
+%1 more %2 selected ...	common	pt	%1 mais %2 seleccionados ...
 %1 more...	common	pt	% Mais 1 ...
 %1 new etemplates imported for application '%2'	common	pt	%1 modelos Web novos importados para a aplicação '%2'
 %1 not implemented for %2!	common	pt	% 1 não implementado para% 2!
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br />ou torne %3 editável pelo servidor Web
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br>ou torne %3 editável pelo servidor Web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1EGroupware%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
 %s disabled	common	pt	%s desactivados
 %s needed	common	pt	%s necessários
@@ -20,12 +21,15 @@
 %s readonly	common	pt	%s apenas para leitura
 '%1' copied to clipboard	common	pt	%1' copiado para prancheta
 '%1' has an invalid format	common	pt	'% 1' tem um formato inválido
-'%1' has an invalid format !!!	common	pt	'%1' tem um formato inválido !!!
-'%1' is not a valid date !!!	common	pt	'%1' não é uma data válida !!!
-'%1' is not a valid floatingpoint number !!!	common	pt	%1' não é um número de ponto de flutuação válido !!!
-'%1' is not a valid integer !!!	common	pt	'%1' não é um inteiro válido !!!
+'%1' has an invalid format !!!	common	pt	'%1' tem um formato inválido!
+'%1' is not a valid date !!!	common	pt	'%1' não é uma data válida!
+'%1' is not a valid floatingpoint number !!!	common	pt	%1' não é um número de ponto de flutuação válido!
+'%1' is not a valid integer !!!	common	pt	'%1' não é um inteiro válido!
 '%1' is not a valid json file!	common	pt	'%1' não é um ficheiro JSON válido
+'%1' is not a valid timezone!	common	pt	'%1' não é um fuso horário válido!
 '%1' is not allowed ('%2')!	common	pt	'% 1' não é permitido ('% 2')!
+'%1' is not allowed%2)!	common	pt	'%1' NÃO é permitido (%2)!
+(session restored in %1 seconds)	common	pt	Session restored in %1 seconds.
 00 (disable)	admin	pt	00 (desactivado)
 1 day	common	pt	1 Dia
 1 hour	common	pt	1 Hora
@@ -44,6 +48,8 @@
 5 seconds	common	pt	5 segundos
 80 (http)	admin	pt	80 (http)
 a pattern to be searched for	common	pt	Um padrão a pesquisar
+a request to the egroupware server returned with an error	common	pt	Um pedido efectuado ao servidor EGroupware deu origem a um erro
+abcdefghijklmnopqrstuvwxyz	common	pt	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	pt	Abortar
 about	common	pt	Sobre
 about %1	common	pt	Sobre a aplicação %1
@@ -102,11 +108,11 @@ all languages	common	pt	Todos os idiomas
 all operations save the template!	common	pt	Todas as operações foram guardadas no modelo!
 all users	common	pt	Todos os usuários
 allow editing the %1	common	pt	Permitir a edição de %1
-allowed file type: %1	common	pt	Admitidos tipo de arquivo:% 1
+allowed file type: %1	common	pt	Admitidos tipo de arquivo: %1
 alternate style-sheet:	common	pt	Folha de estilo alternativa
 am	common	pt	Manhã
 american samoa	common	pt	Samoa Americana
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pt	As querys utilizam uma coluna com maior eficiência se esta estiver indexada (ocupa espaço em disco !!!)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pt	As querys utilizam uma coluna com maior eficiência se esta estiver indexada (ocupa espaço em disco!)
 and	common	pt	E
 andorra	common	pt	Andorra
 angola	common	pt	Angola
@@ -115,16 +121,17 @@ answering no will not ask you again for this browser.	common	pt	Se responder "n�
 antarctica	common	pt	Antárctida
 antigua and barbuda	common	pt	Antígua e Barduda
 api	common	pt	API EGroupware
+api-accounts	common	pt	Contas de utilizador
 application	common	pt	Aplicação
 application name needed to restore etemplates!	common	pt	Nome do aplicativo necessário para restaurar eTemplates!
-application name needed to write a langfile or dump the etemplates !!!	common	pt	É necessário o nome da aplicação para editar um ficheiro de idioma ou deixar os modelos Web !!!
+application name needed to write a langfile or dump the etemplates !!!	common	pt	É necessário o nome da aplicação para editar um ficheiro de idioma ou deixar os modelos Web!
 applications	common	pt	Aplicações
 applies the changes made	common	pt	Aplica as alterações efectuadas
 applies the changes to the given version of the template	common	pt	Aplica as alterações em determinada versão do modelo
 apply	common	pt	Aplicar
 april	common	pt	Abril
-are you sure you want to delete these entries ?	common	pt	Tem a certeza de que deseja eliminar estes registos ?
-are you sure you want to delete this entry ?	common	pt	Tem a certeza de que deseja eliminar este registo ?
+are you sure you want to delete these entries ?	common	pt	Tem a certeza de que deseja eliminar estes registos?
+are you sure you want to delete this entry ?	common	pt	Tem a certeza de que deseja eliminar este registo?
 argentina	common	pt	Argentina
 armenia	common	pt	Arménia
 aruba	common	pt	Aruba
@@ -140,8 +147,6 @@ authenticate	common	pt	Autenticar
 author	common	pt	Autor
 autohide sidebox menu's	common	pt	Esconder automaticamente menus da caixa lateral
 autohide sidebox menus	common	pt	Esconder automaticamente menus da caixa lateral
-automatically hide the sidebox menu's?	common	pt	Esconder automaticamente os menus da caixa lateral?
-automatically hide the sidebox menus?	common	pt	Esconder automaticamente os menus da caixa lateral?
 autosave default category	common	pt	Guardar automaticamente categoria por omissão
 avatar	common	pt	Avatar
 azerbaijan	common	pt	Azerbaijão
@@ -156,6 +161,7 @@ bangladesh	common	pt	Bangladesh
 barbados	common	pt	Barbados
 baseline	common	pt	Linha de base
 bcc	common	pt	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	pt	Antes de prosseguir, recomendamos vivamente que veja este pequeno vídeo, para ver como o plugin Mailvelope funciona com o EGroupware.
 belarus	common	pt	Bielorrússia
 belgium	common	pt	Bélgica
 belize	common	pt	Belize
@@ -173,7 +179,7 @@ botswana	common	pt	Botsuana
 bottom	common	pt	Fundo
 bouvet island	common	pt	Ilha Bouvet
 box	common	pt	Caixa
-box...	common	pt	Caixa...
+box...	common	pt	Caixa ...
 brazil	common	pt	Brasil
 british indian ocean territory	common	pt	Território Britânico do Oceano Índico
 broken link	common	pt	Link quebrado
@@ -189,17 +195,18 @@ can not have special sql-value null	common	pt	Não pode ter um valor nulo de SQL
 canada	common	pt	Canadá
 cancel	common	pt	Cancelar
 cannot replace %1 because it is a directory	common	pt	Não é possível substituir %1 porque é uma directoria
-cant delete a single widget from a grid !!!	common	pt	Não é possível eliminar um único widget da grelha !!!
-cant delete the only column of a grid !!!	common	pt	Não é possível eliminar a única coluna da grelha !!!
-cant delete the only row in a grid !!!	common	pt	Não é possível eliminar a única linha da grelha !!!
+cant delete a single widget from a grid !!!	common	pt	Não é possível eliminar um único widget da grelha!
+cant delete the only column of a grid !!!	common	pt	Não é possível eliminar a única coluna da grelha!
+cant delete the only row in a grid !!!	common	pt	Não é possível eliminar a única linha da grelha!
 cant open '%1' for %2	common	pt	Não é possível abrir '%1' para %2
 cape verde	common	pt	Cabo Verde
 caption	common	pt	Subtítulo
 categories	common	pt	Categorias
-categories for	common	pt	categorias para
+categories for	common	pt	Categorias para
 category	common	pt	Categoria
-category %1 has been added !	common	pt	Categoria %1 foi adicionada !
-category %1 has been updated !	common	pt	Categoria %1 foi actualizada !
+category %1 has been added !	common	pt	Categoria %1 foi adicionada!
+category %1 has been updated !	common	pt	Categoria %1 foi actualizada!
+category owner	common	pt	Proprietário da categoria
 category tree	common	pt	Categoria árvore
 cayman islands	common	pt	Ilhas Caimão
 cc	common	pt	Cc
@@ -207,12 +214,13 @@ cellpadding for the table-tag	common	pt	Preenchimento de célula da tabela
 cells	common	pt	Células
 cellspacing for the table-tag	common	pt	Espaçamento da célula da tabela
 center	common	pt	Centro
-centered	common	pt	centrado
+centered	common	pt	Centrado
 central african republic	common	pt	República Centro-Africana
 chad	common	pt	Chade
 change	common	pt	Alterar
+change owner	common	pt	Alterar proprietário
 changed	common	pt	Alterado/a
-charset	common	pt	utf-8
+charset	common	pt	Conjunto de carateres
 check all	common	pt	Marcar todas
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pt	Verifique se há valores vazios em instruções IF. Exemplo {{IF url~EMPTY~~Website:}} - Se o url não estiver vazio, escreve "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	pt	Marcar se o conteúdo deve ser exibido, mas não alterado (o conteúdo não será devolvido!)
@@ -232,7 +240,7 @@ choose the default filename for merged documents.	preferences	pt	Escolha o nome 
 choose the parent category	common	pt	Escolha a categoria principal
 christmas island	common	pt	Ilha Natal
 class	common	pt	Classe
-class, valign	common	pt	Classe, Alinhamento vertical
+class, valign	common	pt	Class, Valign
 clear	common	pt	Cancelar
 clear form	common	pt	Limpar Formulário
 click	common	pt	Clicar
@@ -241,7 +249,7 @@ click here to create the link	common	pt	Clique aqui para criar a ligação
 click here to start the search	common	pt	Clique aqui para iniciar a pesquisa
 click here to upload the file	common	pt	Clique aqui para enviar o ficheiro
 click or mouse over to show menus	common	pt	Clicar ou passar com o rato por cima para exibir menus
-click or mouse over to show menus?	common	pt	Clicar ou passar com o rato por cima para exibir menus?
+click or mouse over to show menus?	common	pt	Clicar ou passar com o rato por cima para exibir menus.
 click to order after that criteria	common	pt	Clique para ordenar sob esse critério
 clickable path	common	pt	Caminho clicável
 close	common	pt	Fechar
@@ -250,7 +258,7 @@ closes the window without saving the changes	common	pt	Fecha a janela sem guarda
 cocos (keeling) islands	common	pt	Ilhas Cocos (Keeling)
 colombia	common	pt	Colômbia
 colour	common	pt	Cor
-column...	common	pt	Coluna...
+column...	common	pt	Coluna ...
 columnname	common	pt	Nome da coluna
 comment	common	pt	Comentário
 common preferences	common	pt	Preferências gerais
@@ -265,7 +273,7 @@ congo, the democratic republic of the	common	pt	Congo, República Democrática d
 contact	common	pt	Contacto
 contact field to show	common	pt	Contacte-campo para mostrar
 contact fields	common	pt	Campos de contato
-contacting server...	common	pt	A ligar ao servidor...
+contacting server...	common	pt	A ligar ao servidor ...
 contains	common	pt	Contém
 cook islands	common	pt	Ilhas Cook
 copy	common	pt	Copiar
@@ -297,7 +305,7 @@ current	common	pt	Actual
 current users	common	pt	Utilizadores actuais
 custom	common	pt	Personalizar
 custom fields	common	pt	Campos personalizados
-custom javascript for onchange	common	pt	JavaScript personalizado para onChange
+custom javascript for onchange	common	pt	JavaScript personalizado para onchange
 cut	common	pt	Cortar
 cyprus	common	pt	Chipre
 czech republic	common	pt	República Checa
@@ -329,26 +337,21 @@ delete row	common	pt	Eliminar linha
 delete selected entries?	common	pt	Apagar entradas selecionadas?
 delete the spezified etemplate	common	pt	Eliminar modelo Web específico
 delete this column	common	pt	Eliminar esta coluna
-delete this entry	common	pt	eliminar este registo
+delete this entry	common	pt	Eliminar este registo
 delete this etemplate	common	pt	Eliminar este modelo Web
 delete this file	common	pt	Eliminar este ficheiro
 delete this row	common	pt	Eliminar esta linha
-delete whole column (can not be undone!!!)	common	pt	Eliminar a coluna inteira (NÃO poderá voltar atrás!!!)
+delete whole column (can not be undone!!!)	common	pt	Eliminar a coluna inteira (NÃO poderá voltar atrás!)
 deletes the above spez. etemplate from the database, can not be undone	common	pt	Elimina o modelo Web da base de dados especificado em cima. Esta acção NÃO pode ser anulada.
-deletes the etemplate spez. above	common	pt	Elimina o modelo Web especificado em cima
+deletes the etemplate spez. above	common	pt	Elimina o eTemplate.
 deletes this column	common	pt	Elimina esta coluna
 deletes this index	common	pt	Elimina este índice
 denmark	common	pt	Dinamarca
 description	common	pt	Descrição
 detail	common	pt	Detalhe
 details	common	pt	Detalhes
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execução de um script de correcção de falhas do Internet Explorer 5.5 ou superior para exibir as transparências nas imagens .png?
 direction left to right	common	pt	Da esquerda para a direita
 directory	common	pt	Directoria
-disable internet explorer png-image-bugfix	common	pt	Desactivar o corrector de falhas de imagens .png do Internet Explorer
-disable slider effects	common	pt	Desactivar efeitos de deslizamento
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt	Desactivar os efeitos de deslizamento animado ao exibir ou esconder os menus na página? Os utilizadores de Opera e Konqueror deverão achar esta opção útil.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt	Desactivar a execução de um script de correcção de falhas do Internet Explorer 5.5 ou superior para exibir as transparências nas imagens .png?
 disabled	common	pt	Desactivado
 discard changes	common	pt	Ignorar alterações
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt	Surge em frente do campo ou o campo é inserido para um(a) %s' na etiqueta (etiqueta do botão de submissão ou nome do ficheiro da imagem)
@@ -356,7 +359,7 @@ displayed in statusline of browser if input-field gets focus	common	pt	Surge na 
 displayed in the top line of the groupbox (legend)	common	pt	Surge na linha de topo da caixa de grupo (legenda)
 djibouti	common	pt	Jibuti
 do not notify of these changes	common	pt	Não notificar dessas mudanças
-do you also want to delete all subcategories ?	common	pt	Deseja eliminar também todas subcategorias ?
+do you also want to delete all subcategories ?	common	pt	Deseja eliminar também todas subcategorias?
 do you want to save the changes you made in table %s?	common	pt	Deseja guardar as alterações efectuadas na tabela %s?
 doctype:	common	pt	Tipo de documento:
 document properties	common	pt	Propriedades do documento
@@ -364,7 +367,7 @@ document title:	common	pt	Título do documento
 documentation	common	pt	Documentação
 doesn't matter	common	pt	Não interessa
 domain	common	pt	Domínio
-domain name for mail-address, eg. "%1"	common	pt	nome de domínio para endereço de correio electrónico. Ex: "%1"
+domain name for mail-address, eg. "%1"	common	pt	Nome de domínio para endereço de correio electrónico. Ex: "%1"
 domestic	common	pt	Doméstico
 dominica	common	pt	Dominica
 dominican republic	common	pt	República Dominicana
@@ -384,7 +387,7 @@ edit categories	common	pt	Editar categorias
 edit category	common	pt	Editar categorias
 edit embeded css styles or of the applications app.css file	common	pt	Editar estilos de CSS embebidos ou de ficheiros app.css de aplicações.
 edit the etemplate spez. above	common	pt	Editar o modelo Web especificado em cima
-edit...	common	pt	Editar...
+edit...	common	pt	Editar ...
 editable templates - db-tools	common	pt	Modelos editáveis - Ferramentas da base de dados
 editable templates - delete template	common	pt	Modelos editáveis - Eliminar modelo
 editable templates - editor	common	pt	Modelos editáveis - Editor
@@ -395,16 +398,16 @@ egypt	common	pt	Egipto
 el salvador	common	pt	Salvador
 element role title	common	pt	Título papel de elemento
 email	common	pt	Correio Electrónico
-email-address of the user, eg. "%1"	common	pt	endereço de correio electrónico para o utilizador. Ex: "%1"
+email-address of the user, eg. "%1"	common	pt	Endereço de correio electrónico para o utilizador. Ex: "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt	Estilos de CSS embebidos. Ex: '.red { background: red; }' (repare no'.' antes do nome de classe) ou '@import url(...)' (nomes de classe são gerais para toda a página!)
-enable javascript onchange submit	common	pt	Activar a submissão de JavaScript onChange
+enable javascript onchange submit	common	pt	Activar a submissão de JavaScript onchange
 enabled	common	pt	Activado
 end date	common	pt	Data de fim
 end time	common	pt	Hora de fim
 enter '' for an empty default, nothing mean no default	common	pt	Insira " para uma definição por omissão vazia. Nada significa sem definição por omissão.
 enter a search pattern	common	pt	Insira um padrão de pesquisa
 enter filename to upload and attach, use [browse...] to search for it	common	pt	Insira um nome de ficheiro a enviar e anexar, utilize [Navegar...] para o pesquisar
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a localização da URL do EGroupware.<br>Exemplo: https://egw.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
 enter the new version number here (> old_version), empty for no update-file	common	pt	Insira o número da nova versão aqui (> versão antiga). Deixe vazio para não actualizar ficheiro.
 enter the new version number here (has to be > old_version)	common	pt	Insira o número da nova versão aqui (tem de ser maior do que a versão antiga)
 entry has been deleted sucessfully	common	pt	O registo foi eliminado com sucesso
@@ -414,16 +417,17 @@ equatorial guinea	common	pt	Guiné Equatorial
 eritrea	common	pt	Eritreia
 error	common	pt	Erro
 error copying uploaded file to vfs!	common	pt	Erro ao copiar arquivo carregado para VFS!
-error create parent directory %1!	common	pt	Erro ao criar diretório pai% 1!
+error create parent directory %1!	common	pt	Erro ao criar diretório pai %1!
 error creating %1 %2 directory	common	pt	Erro ao criar a directoria %1 %2
 error deleting %1 %2 directory	common	pt	Erro ao eliminar a directoria %1 %2
-error deleting %1!	common	pt	Erro ao excluir% 1!
+error deleting %1!	common	pt	Erro ao excluir %1!
+error enabling push	common	pt	Erro ao ativar o envio
 error renaming %1 %2 directory	common	pt	Erro ao renomear a directoria %1 %2
 error uploading file!	filemanager	pt	O upload de arquivos de erro!
-error: template not found !!!	common	pt	Erro: modelo não encontrado !!!
-error: webserver is not allowed to write into '%1' !!!	common	pt	Erro: O servidor Web não ter permissões de escrita no '%1' !!!
-error: while saving !!!	common	pt	Erro ao guardar !!!
-error: writing file (no write-permission for the webserver) !!!	common	pt	Erro ao editar ficheiro (servidor Web sem permissões de escrita) !!!
+error: template not found !!!	common	pt	Erro: modelo não encontrado!
+error: webserver is not allowed to write into '%1' !!!	common	pt	Erro: O servidor Web não ter permissões de escrita no '%1'!
+error: while saving !!!	common	pt	Erro ao guardar!
+error: writing file (no write-permission for the webserver) !!!	common	pt	Erro ao editar ficheiro (servidor Web sem permissões de escrita)!
 estonia	common	pt	Estónia
 etemplate	common	pt	Modelos Web
 etemplate '%1' imported, use save to put it in the database	common	pt	Modelo Web '%1' importado. Guarde-o para o inserir na base de dados
@@ -448,16 +452,16 @@ failed to contact server or invalid response from server. try to relogin. contac
 falkland islands (malvinas)	common	pt	Ilhas Malvinas (Falkland)
 faroe islands	common	pt	Ilhas Faroe
 favorites	common	pt	Favoritos
-fax number	common	pt	número de fax
+fax number	common	pt	Número de fax
 february	common	pt	Fevereiro
 field	common	pt	Campo
-field must not be empty !!!	common	pt	O campo não pode estar vazio !!!
+field must not be empty !!!	common	pt	O campo não pode estar vazio!
 fields	common	pt	Campos
 fiji	common	pt	Fiji
 file	common	pt	Ficheiro
 file '%1' not found!	common	pt	Arquivo '% 1' não encontrado!
 file a file	common	pt	Armazenar um ficheiro
-file contains more than one etemplate, last one is shown !!!	common	pt	O ficheiro contém mais do que um modelo Web. Será exibido o último !!!
+file contains more than one etemplate, last one is shown !!!	common	pt	O ficheiro contém mais do que um modelo Web. Será exibido o último!
 file is of wrong type (%1 != %2)!	common	pt	Arquivo é o tipo errado (% 1! =% 2)!
 file writen	common	pt	Ficheiro editado
 files	common	pt	Ficheiros
@@ -466,13 +470,13 @@ filter	common	pt	Filtro
 finland	common	pt	Finlândia
 first	common	pt	Primeiro
 first name	common	pt	Nome
-first name of the user, eg. "%1"	common	pt	primeiro nome do utilizador. Ex:"%1"
+first name of the user, eg. "%1"	common	pt	Primeiro nome do utilizador. Ex:"%1"
 first page	common	pt	Primeira página
 firstname	common	pt	Primeiro nome
 fixme!	common	pt	Corrija-me!
 floating point	common	pt	Ponto de flutuação
 folder already exists.	common	pt	Pasta já existente.
-force	common	pt	força
+force	common	pt	Força
 force selectbox	common	pt	Forçar caixa de selecção
 foreign key	common	pt	Chave estrangeira
 forever	common	pt	Para sempre
@@ -542,9 +546,10 @@ high	common	pt	Alta
 highest	common	pt	Mais alta
 history	common	pt	História
 history log	common	pt	Diário de história
+hold [%1] key to select text eg. to copy it	common	pt	Manter premida a tecla [%1] para selecionar texto, por exemplo, para o copiar
 holy see (vatican city state)	common	pt	Santa Sé (Cidade do Estado do Vaticano)
 home	common	pt	Página inicial
-home email	common	pt	endereço de correio electrónico principal
+home email	common	pt	E-mail de origem
 home screen	common	pt	Ecrã principal
 honduras	common	pt	Honduras
 hong kong	common	pt	Hong Kong
@@ -563,7 +568,6 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	pt	Hungria
 iceland	common	pt	Islândia
 id	common	pt	ID
-iespell not detected. click ok to go to download page.	common	pt	O ieSpell não foi detectado. Clique em OK para ir para a página de transferências.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt	Se o campo estiver desactivado, será apresentada uma célula vazia da tabela, para remoção (temporária) do campo/célula
 if the clock is enabled would you like it to update it every second or every minute?	common	pt	Se o relógio estiver activo, deseja actualizá-lo ao segundo ou ao minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	pt	Se existirem imagens na pasta de fundo, pode escolher a que gosta mais.
@@ -648,9 +652,9 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 language_direction_rtl	common	pt	Direcção do idioma da direita para a esquerda
 lao peoples democratic republic	common	pt	Laos, República Popular Democrática de
 last	common	pt	Último/a
-last modified	common	pt	última modificação
+last modified	common	pt	Última modificação
 last name	common	pt	Apelido
-last name of the user, eg. "%1"	common	pt	apelido do utilizador. Ex: "%1"
+last name of the user, eg. "%1"	common	pt	Apelido do utilizador. Ex: "%1"
 last page	common	pt	Última página
 lastname	common	pt	Apelido
 latvia	common	pt	Letónia
@@ -692,7 +696,7 @@ luxembourg	common	pt	Luxemburgo
 macau	common	pt	Macau
 macedonia, the former yugoslav republic of	common	pt	Macedónia, Antiga República Jugoslava da
 madagascar	common	pt	Madagáscar
-mail domain, eg. "%1"	common	pt	domínio de correio electrónico. Ex: "%1"
+mail domain, eg. "%1"	common	pt	Domínio de correio electrónico. Ex: "%1"
 mailvelope addon installation failed! please try again.	common	pt	A instalação do addon Mailvelope falhou! Por favor, tente novamente.
 mailvelope addon installation succeded. now you may configure the options.	common	pt	A instalação do addon Mailvelope foi bem sucedida. Agora pode configurar as opções.
 main category	common	pt	Cetegoria principal
@@ -738,14 +742,14 @@ morocco	common	pt	Marrocos
 move	common	pt	Mover
 mozambique	common	pt	Moçambique
 multicolumn indices	common	pt	Índices de várias colunas
-multiple	common	pt	vários/as
+multiple	common	pt	Vários/as
 myanmar	common	pt	Mianmar
 name	common	pt	Nome
 name of other table where column is a key from	common	pt	Nome de outra tabela onde uma coluna é a chave.
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pt	Nome do conjunto phpgw-template (ex: verdilak): '' = por omissão (irá ler as preferências do modelo; o EGroupware lê 'por omissão' o modelo por omissão '')
 name of table to add	common	pt	Nome da tabela a adicionar
 name of the etemplate, should be in form application.function[.subtemplate]	common	pt	Nome do modelo Web, deve surgir no formulário application.function[.subTemplate].
-name of the user, eg. "%1"	common	pt	nome do utilizador, ex."%1"
+name of the user, eg. "%1"	common	pt	Nome do utilizador, ex."%1"
 namibia	common	pt	Namíbia
 nauru	common	pt	Nauru
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	pt	É necessário ser único na tabela e sem palavra reservada do SQL. É melhor definir todos os prefixos com dois digitos para a aplicação. Ex: 'et_'.
@@ -762,14 +766,14 @@ new search	common	pt	Nova pesquisa
 new table created	common	pt	Nova tabela criada
 new value	common	pt	Novo valor
 new zealand	common	pt	Nova Zelândia
-newer version '%1' exists !!!	common	pt	Existe uma versão mais recente de '%1' !!!
+newer version '%1' exists !!!	common	pt	Existe uma versão mais recente de '%1'!
 next	common	pt	Seguinte
 next page	common	pt	Página seguinte
 nextmatch	common	pt	Ocorrência seguinte
 nextmatch accountfilter	common	pt	Ocorrência seguinte do filtro de contas
 nextmatch custom filterheader	common	pt	Cabeçalho personalizado filtro NextMatch
 nextmatch filterheader	common	pt	Ocorrência seguinte do filtro de cabeçalhos
-nextmatch header	common	pt	Cabeçalho NextMatch
+nextmatch header	common	pt	Cabeçalho nextmatch
 nextmatch sortheader	common	pt	Ocorrência seguinte da lista de cabeçalhos
 nicaragua	common	pt	Nicarágua
 niger	common	pt	Níger
@@ -777,15 +781,15 @@ nigeria	common	pt	Nigéria
 niue	common	pt	Niue
 no	common	pt	Não
 no - cancel	common	pt	Não - Cancelar
-no column to swap with !!!	common	pt	Nenhuma coluna com que trocar !!!
-no entries found, try again ...	common	pt	nenhum resgisto encontrado, tente novamente...
+no column to swap with !!!	common	pt	Nenhuma coluna com que trocar!
+no entries found, try again ...	common	pt	Nenhum resgisto encontrado, tente novamente ...
 no file	common	pt	Nenhum ficheiro
-no filename given or selected via browse...	common	pt	Nenhum nome de ficheiro inserido ou seleccionado a partir do Navegar...
+no filename given or selected via browse...	common	pt	Nenhum nome de ficheiro inserido ou seleccionado a partir do Navegar ...
 no filters	common	pt	Filtros não
 no history for this record	common	pt	Nenhum histórico para este registro
 no matches found	common	pt	Nenhuma ocorrência encontrada
 no rights to export more than %1 entries!	common	pt	Nenhum direito a exportar mais de 1% entradas!
-no row to swap with !!!	common	pt	Nenhuma linha com que trocar !!!
+no row to swap with !!!	common	pt	Nenhuma linha com que trocar!
 no savant2 template directories were found in:	common	pt	Nenhuma directoria do modelo Savant2 foi encontrada em:
 no subject	common	pt	Sem assunto
 none	common	pt	Nenhum(a)
@@ -795,14 +799,14 @@ northern mariana islands	common	pt	Ilhas Marianas do Norte
 norway	common	pt	Noruega
 not	common	pt	não
 not a user yet? register now	common	pt	Ainda não é um utilizador? Registe-se agora
-not assigned	common	pt	não assinado/a
+not assigned	common	pt	Não assinado/a
 not null	common	pt	Não nulo
 note	common	pt	Nota
 notes	common	pt	Notas
 nothing	common	pt	Nada
-nothing found - try again !!!	common	pt	Nada encontrado - tente de novo !!!
-nothing in clipboard to paste !!!	common	pt	Nada na área de transferência para colar !!!
-nothing matched search criteria !!!	common	pt	Não houve resultados para a pesquisa !!!
+nothing found - try again !!!	common	pt	Nada encontrado - tente de novo!
+nothing in clipboard to paste !!!	common	pt	Nada na área de transferência para colar!
+nothing matched search criteria !!!	common	pt	Não houve resultados para a pesquisa!
 notifications	common	pt	Avisos
 notify window	common	pt	Janela de Aviso
 notify your administrator to correct this situation	common	pt	Avisar o seu administrador para corrigir esta situação
@@ -818,12 +822,13 @@ old value	common	pt	Valor Antigo
 oman	common	pt	Omã
 on *nix systems please type: %1	common	pt	Em sistemas *nix, por favor escreva: %1
 on mouse over	common	pt	Ao passar com o rato por cima
-onchange	common	pt	OnChange
-onclick	common	pt	OnClick
-only an other version found !!!	common	pt	Apenas outra versão foi encontrada !!!
+onchange	common	pt	onchange
+onclick	common	pt	onclick
+only an other version found !!!	common	pt	Apenas outra versão foi encontrada!
 only private	common	pt	Apenas privado
 only yours	common	pt	Apenas as suas
 open	common	pt	Abrir
+open existing contact	common	pt	Abrir contacto existente
 open notify window	common	pt	Abrir janela de aviso
 open popup window	common	pt	Abrir janela popup
 open sidebox	common	pt	Abrir caixa lateral
@@ -839,6 +844,7 @@ other	common	pt	Outro
 overflow	common	pt	Excedente
 overview	common	pt	Visão geral
 owner	common	pt	Dono
+ownership	common	pt	Propriedade
 padding	common	pt	Preenchimento
 page	common	pt	Página
 page was generated in %1 seconds	common	pt	A página foi gerada em %1 segundos
@@ -850,7 +856,7 @@ papua new guinea	common	pt	Papua Nova Guiné
 paraguay	common	pt	Paraguai
 parcel	common	pt	Parcela
 parent category	common	pt	Categoria principal
-parent is a '%1' !!!	common	pt	Principal é um(a) '%1' !!!
+parent is a '%1' !!!	common	pt	Principal é um(a) '%1'!
 password	common	pt	Senha
 password could not be changed	common	pt	Não foi possível alterar a senha
 password has been updated	common	pt	A senha foi alterada
@@ -877,14 +883,14 @@ pitcairn	common	pt	Ilha Pitcairn
 placeholders	common	pt	Marcadores de lugar
 play/pause	common	pt	Reproduzir/Pausa
 please %1 by hand	common	pt	Por favor, %1 manualmente
-please enter a name	common	pt	Por favor, insira um nome !
-please enter table-name first !!!	common	pt	Por favor, insira o nome da tabela primeiro !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	pt	Por favor, recarregue o ambiente de trabalho do EGroupware (F5 / Cmd+r).
+please enter a name	common	pt	Por favor, insira um nome!
+please enter table-name first !!!	common	pt	Por favor, insira o nome da tabela primeiro!
+please reload the egroupware desktop (f5 / cmd+r).	common	pt	Por favor, recarregue o ambiente de trabalho do EGroupware (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	pt	Lembre-se de utilizar '%1' como nome de utilizador para iniciar sessão local a partir de agora!
 please run setup to become current	common	pt	Por favor, execute a configuração para actualizar o sistema
 please select	common	pt	Por favor, seleccione
 please set your global preferences	common	pt	Por favor, defina as suas preferências gerais
-please set your preferences for this application	common	pt	Configure suas preferências para esta aplicação !
+please set your preferences for this application	common	pt	Configure suas preferências para esta aplicação!
 please type %1 more characters	common	pt	Por favor, introduza mais %1 carácter(es)
 please type 1 more character	common	pt	Por favor, introduza mais 1 carácter
 please wait...	common	pt	Por favor, aguarde...
@@ -916,13 +922,13 @@ read a list of entries.	common	pt	Ler uma lista de registos.
 read a single entry by passing the id and fieldlist.	common	pt	Ler um registo único passando a ID e a lista de campos.
 read etemplate from database (for the keys above)	common	pt	Ler modelo Web da base de dados (para as chaves em cima)
 read this list of methods.	common	pt	Lê esta lista de métodos.
-reading	common	pt	a ler
+reading	common	pt	A ler
 readonly	common	pt	Apenas para leitura
 refresh	common	pt	Atualizar
 register	common	pt	Registar
 reject	common	pt	Rejeitar
 remember me	common	pt	Lembrar-se de mim
-remove row (can not be undone!!!)	common	pt	Remover linha (não será possível anular esta acção!!!)
+remove row (can not be undone!!!)	common	pt	Remover linha (não será possível anular esta acção!)
 remove selected accounts	common	pt	Eliminar contas seleccionadas
 remove shortcut	common	pt	Eliminar Atalho
 remove this link (not the entry itself)	common	pt	Remover esta ligação (não o registo em si)
@@ -943,7 +949,7 @@ returns struct of users application access	common	pt	Fornece a estrutura de aces
 reunion	common	pt	Reunião
 right	common	pt	Direita
 romania	common	pt	Roménia
-row...	common	pt	Linha...
+row...	common	pt	Linha ...
 russian federation	common	pt	Federação Russa
 rwanda	common	pt	Ruanda
 sa	common	pt	Sa
@@ -957,7 +963,7 @@ san marino	common	pt	San Marino
 sao tome and principe	common	pt	São Tomé e Príncipe
 saturday	common	pt	Sábado
 saudi arabia	common	pt	Arábia Saudita
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A versão Savant2 é diferente da Savant2 wrapper.<br/>Esta versão: %1 <br/>Versão Savant2:%2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt	A versão Savant2 é diferente da Savant2 wrapper.<br>Esta versão: %1 <br>Versão Savant2:%2
 save	common	pt	Guardar
 save all	common	pt	Salve todo
 save as	common	pt	Salvar como
@@ -982,7 +988,7 @@ select access	common	pt	Seleccionar acesso
 select account	common	pt	Seleccionar conta
 select all	common	pt	Seleccionar tudo
 select all %1 %2 for %3	common	pt	Seleccionar todos %1 %2 para %3
-select an app first !!!	common	pt	Seleccione uma aplicação primeiro !!!
+select an app first !!!	common	pt	Seleccione uma aplicação primeiro!
 select an app to search in	common	pt	Seleccione a aplicação a pesquisar
 select an application	common	pt	Seleccione uma aplicação
 select an application, (*) = uninstalled	common	pt	Seleccione uma aplicação, (*) = desinstalada
@@ -1005,7 +1011,7 @@ select hour	common	pt	Selecione hora
 select if content of field should not be translated (label gets always translated)	common	pt	Seleccionar se o conteúdo de um campo não deve ser traduzido (a etiqueta será sempre traduzida)
 select language	common	pt	Selecione o idioma
 select month	common	pt	Seleccionar mês
-select multiple accounts	common	pt	seleccionar várias contas
+select multiple accounts	common	pt	Seleccionar várias contas
 select number	common	pt	Seleccionar número
 select one	common	pt	Seleccione um
 select one ...	common	pt	Seleccione um(a) ...
@@ -1029,8 +1035,8 @@ send	common	pt	Enviar
 senegal	common	pt	Senegal
 september	common	pt	Setembro
 server %1 has been added	common	pt	O servidor %1 foi adicionado
-server answered. processing response...	common	pt	O servidor respondeu. A processar resposta...
-server contacted. waiting for response...	common	pt	O servidor foi contactado. A aguardar resposta...
+server answered. processing response...	common	pt	O servidor respondeu. A processar resposta ...
+server contacted. waiting for response...	common	pt	O servidor foi contactado. A aguardar resposta ...
 server name	common	pt	Nome do Servidor
 session has been killed	common	pt	Sessão foi terminada
 set these columns as the default	common	pt	Defina essas colunas como padrão
@@ -1047,20 +1053,20 @@ show all categorys	common	pt	Exibir todas as categorias
 show clock?	common	pt	Exibir relógio?
 show home and logout button in main application bar?	common	pt	Deseja exibir os botões "página inicial" e "sair" na barra da aplicação principal?
 show logo's on the desktop.	common	pt	Exibir logótipo no ambiente de trabalho.
-show menu	common	pt	exibir menu
+show menu	common	pt	Exibir menu
 show page generation time	common	pt	Exibir tempo de geração da página
 show page generation time on the bottom of the page?	common	pt	Exibir tempo de geração da página no final da página?
 show page generation time?	common	pt	Exibir tempo de geração da página?
 show password	common	pt	Mostrar palavra-passe
 show the logo's of egroupware and x-desktop on the desktop.	common	pt	Exibir o logótipo da EGroupware e da x-desktop no ambiente de trabalho.
 show values	common	pt	Exibir valores
-show/hide	common	pt	mostrar/ocultar barra lateral
+show/hide	common	pt	Mostrar/ocultar barra lateral
 show_more_apps	common	pt	Exibir mais aplicações
 showing	common	pt	A exibir
 showing %1	common	pt	A exibir %1
 showing %1 - %2 of %3	common	pt	A exibir %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	pt	exibe / permite-lhe a submissão de valores no modelo Web para testes
-shows/displays etemplate for testing, does not save it before	common	pt	exibr/apresenta o modelo Web para testes. NÃO o guarda antes
+shows/displays etemplate for testing, does not save it before	common	pt	Exibr/apresenta o modelo Web para testes. NÃO o guarda antes
 sierra leone	common	pt	Serra Leoa
 sign up	common	pt	Inscrever-se
 singapore	common	pt	Singapura
@@ -1084,7 +1090,7 @@ start date	common	pt	Data de início
 start new search for the above pattern	common	pt	Iniciar uma nova pesquisa com o padrão acima
 start time	common	pt	Hora de início
 start with	common	pt	Iniciar com
-starting up...	common	pt	A iniciar...
+starting up...	common	pt	A iniciar ...
 status	common	pt	Estado
 stretched	common	pt	Esticado
 su	common	pt	Su
@@ -1109,7 +1115,7 @@ switzerland	common	pt	Suíça
 syrian arab republic	common	pt	Síria, República Árabe
 tabindex	common	pt	Indíce de tabelas
 table properties	common	pt	Propriedades da tabela
-table unchanged, no write necessary !!!	common	pt	Tabela inalterada, não é necessário editar !!!
+table unchanged, no write necessary !!!	common	pt	Tabela inalterada, não é necessário editar!
 tablename	common	pt	Nome da tabela
 tabs	common	pt	Tabelas
 taiwan	common	pt	Taiwan (Formosa)/Taipé
@@ -1126,7 +1132,7 @@ thailand	common	pt	Tailândia
 the following applications require upgrades	common	pt	As seguintes aplicações requerem actualização
 the following document-types are supported:	preferences	pt	Os seguintes tipos de documentos são suportados:
 the mail server returned	common	pt	O servidor de correio electrónico retornou
-this name has been used already	common	pt	Este nome já está a ser utilizado !
+this name has been used already	common	pt	Este nome já está a ser utilizado!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	pt	Este texto surge se o campo de entrada estiver vazio e se não tiver focus (blur)
 thursday	common	pt	Quinta
 tiled	common	pt	Mosaico
@@ -1142,7 +1148,7 @@ to start the db-tools	common	pt	Para iniciar as ferramentas da base de dados
 to start the etemplate editor	common	pt	Para iniciar o editor de modelos Web
 to start the search	common	pt	Para iniciar a pesquisa
 today	common	pt	Hoje
-todays date, eg. "%1"	common	pt	data de hoje, ex: "%1"
+todays date, eg. "%1"	common	pt	Data de hoje, ex: "%1"
 togo	common	pt	Togo
 tokelau	common	pt	Toquelau
 tonga	common	pt	Tonga
@@ -1182,10 +1188,10 @@ upload directory does not exist, or is not writeable by webserver	common	pt	A di
 upload file(s) from filemanager...	common	pt	Carregar arquivo (s) a partir de Filemanager ...
 url	common	pt	URL
 uruguay	common	pt	Uruguai
-use button to search for	common	pt	utilizar Botão para pesquisar por
-use button to search for address	common	pt	utilizar Botão para pesquisar por Endereço
-use button to search for calendarevent	common	pt	utilizar Botão para pesquisar por Evento do Calendário
-use button to search for project	common	pt	utilizar Botão para pesquisar por Projecto
+use button to search for	common	pt	Utilizar Botão para pesquisar por
+use button to search for address	common	pt	Utilizar Botão para pesquisar por Endereço
+use button to search for calendarevent	common	pt	Utilizar Botão para pesquisar por Evento do Calendário
+use button to search for project	common	pt	Utilizar Botão para pesquisar por Projecto
 user	common	pt	Usuário
 user accounts	common	pt	Contas do utilizador
 user groups	common	pt	Grupos do utilizador
@@ -1196,13 +1202,13 @@ users choice	common	pt	À escolha dos usuários
 uzbekistan	common	pt	Usbequistão
 valign	common	pt	Alinhamento vertical
 value	common	pt	Valor
-value has to be at least '%1' !!!	common	pt	O valor tem de ser pelo menos '%1' !!!
-value has to be at maximum '%1' !!!	common	pt	O valor tem de ser no máximo '%1' !!!
+value has to be at least '%1' !!!	common	pt	O valor tem de ser pelo menos '%1'!
+value has to be at maximum '%1' !!!	common	pt	O valor tem de ser no máximo '%1'!
 vanuatu	common	pt	Vanuatu
 vbox	common	pt	Caixa vertical
 venezuela	common	pt	Venezuela
 version	common	pt	Versão
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt	número da versão, deve estar no formulário: major.minor.revision.number (ex: 0.9.13.001 todos os números preenchidos com zeros)
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt	Número da versão, deve estar no formulário: major.minor.revision.number (ex: 0.9.13.001 todos os números preenchidos com zeros)
 vertical alignment of row	common	pt	Alinhamento vertical da linha
 viet nam	common	pt	Vietname
 view	common	pt	Ver
@@ -1218,7 +1224,6 @@ welcome	common	pt	Bem-vindo
 western sahara	common	pt	Saara Ocidental
 what color should all the blank space on the desktop have	common	pt	Que cor deve preencher todos os espaços em branco do ambiente de trabalho?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt	O que acontece ao conteúdo excedente: visível (por omissão), oculto, consultável utilizando a barra de deslocamento, automático (decisão do navegador)
-what style would you like the image to have?	common	pt	Que estilo deseja que a imagem tenha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os botões "página inicial" e "sair" serão apresentados como aplicações na barra de aplicações.
 which groups	common	pt	Que grupo(s)
 whole query	common	pt	Consulta Whole
@@ -1229,14 +1234,14 @@ width of column (in % or pixel)	common	pt	Largura da coluna (em % ou píxeis)
 width of the table in % or pixels for the table-tag and (optional) div	common	pt	Largura da tabela em % ou pixeis para a tag e div (opcional) da tabela.
 width, disabled	common	pt	Largura, Desactivada
 wk	common	pt	Wk
-work email	common	pt	endereço de correio electrónico do trabalho
+work email	common	pt	Email de trabalho
 working days	common	pt	Dias de trabalho
 would you like to display the page generation time at the bottom of every window?	common	pt	Deseja apresentar o tempo de geração da página no final de cada janela?
 write <app>/setup/tables_current.inc.php	common	pt	Editar <app>/setup/tables_current.inc.php
 write langfile	common	pt	Editar ficheiro de idioma
 write tables	common	pt	Editar tabelas
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	pt	Edita um ficheiro 'etemplates.inc.php' (para aplicação no Nome) na directoria de configuração da aplicação.
-writing	common	pt	a escrever
+writing	common	pt	A escrever
 written by:	common	pt	Escrito por:
 xml-file to import	common	pt	Ficheiro XML para importar
 xslt template	common	pt	Modelo XSLT
@@ -1252,8 +1257,8 @@ you have not entered a title	common	pt	Não inseriu um título
 you have not entered a valid date	common	pt	Não inseriu uma data válida
 you have not entered a valid time of day	common	pt	Não inseriu uma hora do dia válida
 you have not entered participants	common	pt	Não inseriu participantes
-you have selected an invalid date	common	pt	Seleccionou uma data inválida !
-you have selected an invalid main category	common	pt	Seleccionou uma categoria principal inválida !
+you have selected an invalid date	common	pt	Seleccionou uma data inválida!
+you have selected an invalid main category	common	pt	Seleccionou uma categoria principal inválida!
 you have successfully logged out	common	pt	Saiu com sucesso
 you need to add the webserver user '%1' to the group '%2'.	common	pt	É necessário adicionar o utilizador '%1' do servidor Web ao grupo '%2'
 you need to select a file first!	common	pt	Selecione um arquivo primeiro!

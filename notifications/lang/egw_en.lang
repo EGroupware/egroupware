@@ -4,74 +4,74 @@ all possible notification backends	notifications	en	All possible notification ba
 are you sure you want to delete all notifications?	notifications	en	Are you sure you want to delete all notifications?
 browser	notifications	en	Browser
 browser is starting.	notifications	en	Browser is starting.
-cancal settings?	notifications	en	Cancal settings?
-cancal?	notifications	en	Cancal?
-certification-information:	notifications	en	Certification-information:
+cancal settings?	notifications	en	Cancel settings?
+cancal?	notifications	en	Cancel?
+certification-information:	notifications	en	Certification information:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	en	Check both. First try active user defined account, if none, use eMailAdmin profile.
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification chain. You will be notified over the back ends included in the chain.<br />Note: If a notification chain is marked as "disabled", your administrator does not allow one or more of the back ends included in the chain, the notifications falls back to "Email" while notifying you.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	en	Choose a notification chain. You will be notified over the back ends included in the chain.<br>Note: If a notification chain is marked as "disabled", your administrator does not allow one or more of the back ends included in the chain, the notifications falls back to "Email" while notifying you.
 choose from mailsettings used for notification	admin	en	Choose mail settings used for email notification
 common chains	notifications	en	Common chains
 connection error.	notifications	en	Connection error.
 connection error. please check connection to server.	notifications	en	Connection error. Please check connection to server.
 continue to connect?	notifications	en	Continue to connect?
 cookies are required to login to this site.	notifications	en	Cookies are required to login to this site.
-delete all messages	notifications	en	delete all messages
+delete all messages	notifications	en	Delete all messages
 delete notifications	notifications	en	Delete notifications
-delete this message	notifications	en	delete this message
+delete this message	notifications	en	Delete this message
 disabled chains	notifications	en	Disabled chains
 do not notify me at all	notifications	en	Do not notify me at all
-domain not found, please check serveraddress.	notifications	en	Domain not found, please check Serveraddress.
+domain not found, please check serveraddress.	notifications	en	Domain not found, please check server address.
 e-mail only	notifications	en	Email only
 egroupware has notifications for you	notifications	en	EGroupware has notifications for you
 egroupware login is starting, please wait.	notifications	en	EGroupware login is starting, please wait.
 egroupware logindomain:	notifications	en	EGroupware Logindomain:
-egroupware logindomains founds, please select.	notifications	en	EGroupware Logindomains founds, please select.
+egroupware logindomains founds, please select.	notifications	en	EGroupware Logindomains found, please select.
 egroupware not found by url or connection lost to server.	notifications	en	EGroupware not found by URL or connection lost to server.
 egroupware not found by url.	notifications	en	EGroupware not found by URL.
 egroupware-popup and e-mail	notifications	en	EGroupware popup and email
 egroupware-popup and windows-popup	notifications	en	EGroupware popup and Windows popup
-egroupware-popup backend	admin	en	EGroupware popup back end
+egroupware-popup backend	admin	en	EGroupware popup backend
 egroupware-popup first, if that fails notify me by e-mail	notifications	en	EGroupware popup first, if that fails notify me by email
 egroupware-popup only	notifications	en	EGroupware popup only
 egroupware-popup verbosity	notifications	en	EGroupware popup verbosity
 email notifications only, if user is not logged in	notifications	en	Email notifications only, if user is not logged in
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	en	EmailAdmin profile only. Do NOT use user defined active mail profiles for notification.
-enable egroupware-popup backend	admin	en	Enable EGroupware popup back end
-enable windows-popup backend	admin	en	Enable Windows popup back end
+enable egroupware-popup backend	admin	en	Enable EGroupware popup backend
+enable windows-popup backend	admin	en	Enable Windows popup backend
 enabled chains	notifications	en	Enabled chains
-error browser can`t start.	notifications	en	Error Browser can`t start.
-error on loading tray icon	notifications	en	Error on loading Tray icon
+error browser can`t start.	notifications	en	Error browser can`t start.
+error on loading tray icon	notifications	en	Error on loading tray icon
 error ssl	notifications	en	Error SSL
 exit	notifications	en	Exit
 folder	notifications	en	Folder
 from	notifications	en	From
 host:	notifications	en	Host:
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the EGroupware-Popup behave if a notification is sent to the user:<br />low: just display the notification bell in the top menu - top menu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself
-if set, embedded links get rendered special for external clients	notifications	en	If set, embedded links get rendered special for external clients
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	en	How verbose should the EGroupware popup behave if a notification is sent to the user:<br>low: just display the notification bell in the top menu - top menu must be enabled!<br>medium: bring notification window to front<br>high: bring notification window to front and let the browser do something to announce itself
+if set, embedded links get rendered special for external clients	notifications	en	If set, embedded links get rendered special for external clients.
 info on load config file: create config file.	notifications	en	Info on load config file: create config file.
 issuer dn:	notifications	en	Issuer DN:
 java desktop notification app	preferences	en	Java desktop notification app
 last month	notifications	en	Last month
 linked entries:	common	en	Linked entries:
 login aborted, application exit?	notifications	en	Login aborted, application exit?
-login in egroupware:	notifications	en	login in EGroupware:
+login in egroupware:	notifications	en	Login in EGroupware:
 mail account to use for notifications	admin	en	Mail account to use for notifications
 mail backend	admin	en	Mail backend
-mark all as read	notifications	en	mark all as read
-mark as read	notifications	en	mark as read
+mark all as read	notifications	en	Mark all as read
+mark as read	notifications	en	Mark as read
 message from	notifications	en	Message from
 minutes	notifications	en	Minutes
 more info	notifications	en	More info
 notification	common	en	Notification
 notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
-open notified entry	notifications	en	open notified entry
+open notified entry	notifications	en	Open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client
-page not found, please check serveraddress.	notifications	en	Page not found, please check Serveraddress.
+page not found, please check serveraddress.	notifications	en	Page not found, please check server address.
 password:	notifications	en	Password:
 permission	notifications	en	Permission
 permission denied for notifications application.	notifications	en	Permission denied for notifications application.
-placeholders with user/ prefix	admin	en	placeholders with user/ prefix
+placeholders with user/ prefix	admin	en	placeholders with user/prefix
 please contact your egroupware admin.	notifications	en	Please contact your EGroupware admin.
 please enter the url of your egroupware.	notifications	en	Please enter the URL of your EGroupware.
 please enter your egroupware username.	notifications	en	Please enter your EGroupware username.
@@ -79,10 +79,10 @@ please enter your password	notifications	en	Please enter your password
 poll interval	notifications	en	Poll interval
 preferences for notification	notifications	en	Preferences for notification
 received	notifications	en	Received
-refresh notifications	notifications	en	Refresh Notifications
-repeat login?	notifications	en	Repeat Login?
-run application	notifications	en	run application
-save password	notifications	en	save password
+refresh notifications	notifications	en	Refresh notifications
+repeat login?	notifications	en	Repeat login?
+run application	notifications	en	Run application
+save password	notifications	en	Save password
 setting	notifications	en	Setting
 setting aborted, application exit	notifications	en	Setting aborted, application exit
 settings	notifications	en	Settings
@@ -92,18 +92,18 @@ sorry, your login has expired	notifications	en	Sorry, your login has expired
 step	notifications	en	Step
 subject dn:	notifications	en	Subject DN:
 the server certificate is not a valid trust center certificate!	notifications	en	The server certificate is not a valid trust center certificate!
-this egroupware notification has been sent to you by mail because your	notifications	en	This EGroupware notification has been sent to you by mail because your
-this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by mail because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
+this egroupware notification has been sent to you by mail because your	notifications	en	This EGroupware notification has been sent to you by email because your
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	en	This EGroupware notification has been sent to you by email because your chosen notification chain has been disabled by the administrator. Please choose another notification chain in your preferences!
 this month	notifications	en	This month
 user:	notifications	en	User:
 warning	notifications	en	Warning
 windows-popup and e-mail	notifications	en	Windows popup and email
-windows-popup backend	admin	en	Windows popup back end
+windows-popup backend	admin	en	Windows popup backend
 windows-popup first, if that fails notify me by e-mail	notifications	en	Windows popup first, if that fails notify me by email
 windows-popup only	notifications	en	Windows popup only
-yesterday	notifications	en	yesterday
+yesterday	notifications	en	Yesterday
 you can also use	admin	en	You can also use
 you have %1 unread notifications	notifications	en	You have %1 unread notifications
 you have been successfully logged out	notifications	en	You have been successfully logged out
-you've got new mail	notifications	en	You've got a new mail
+you've got new mail	notifications	en	You've got a new email
 your session could not be verified.	notifications	en	Your session could not be verified.

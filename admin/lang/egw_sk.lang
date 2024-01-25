@@ -10,15 +10,19 @@
 %1 category(s) %2	admin	sk	%1 kategórií %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	sk	%1 kategórií %2, %3 zlyhalo kvôli nedostatočným oprávneniam!!!
 %1 class not instanciated	admin	sk	%1 trieda nie je inštancionalizovaná
+%1 entries deleted	admin	sk	%1 záznamy odstránené
 %1 entries deleted.	admin	sk	%1 položiek bolo odstránených.
 %1 group %2	admin	sk	%1 skupina %2
 %1 is no command!	admin	sk	%1 nie je príkaz!
 %1 log entries deleted.	admin	sk	%1 položiek záznamu bolo zmazaných.
+%1 mail credentials deleted	admin	sk	%1 mailové poverenia odstránené
 %1 not found or not executable !!!	admin	sk	%1 sa nenašiel alebo nie je spustiteľný !!!
 %1 phrases saved.	admin	sk	%1 fráz uložených.
 %1 rights for %2 and applications %3	admin	sk	%1 práva pre %2 a aplikácie %3
 %1 run rights for applications	admin	sk	%1 práva spustenia aplikácií
 %1 sessions killed	admin	sk	%1 relácií ukončených.
+%1 successful	admin	sk	%1 úspešne
+%1 token %2.	admin	sk	%1 token %2.
 %1 user %2	admin	sk	%1 používateľ %2
 (de)activate mail accounts	admin	sk	(de)aktivovať poštové účty
 (default no, leave it off if you dont use it)	admin	sk	(zvyčajne Nie; ak to nepoužívate, ponechajte prázdne)
@@ -43,7 +47,7 @@ account "%1" has no email address --> not notified!	admin	sk	Účet "%1" nemá e
 account "%1" has no plaintext password!	admin	sk	Účet "%1" nemá heslo v čistom texte!
 account %1 %2	admin	sk	Účet %1 %2
 account '%1' deleted.	admin	sk	Účet '%1' bol zmazaný.
-account '%1' not found !!!	admin	sk	Účet '%1' sa nenašiel !!!
+account '%1' not found !!!	admin	sk	Účet '%1' sa nenašiel!
 account active	admin	sk	Platnosť účtu
 account deleted.	admin	sk	Účet bol odstránený.
 account has been created	common	sk	Účet bol vytvorený
@@ -68,16 +72,18 @@ acl updated.	admin	sk	ACL boli aktualizované.
 action	admin	sk	Akcia
 actions	admin	sk	Akcie
 activate	admin	sk	Aktivovať
-activate wysiwyg-editor	admin	sk	zapni WYSIWYG-editor
+activate wysiwyg-editor	admin	sk	Zapni WYSIWYG-editor
 activated	admin	sk	aktivované
+activated again	admin	sk	znovu aktivovaný
 active mail accounts	admin	sk	Aktívne poštové účty
 active templates	admin	sk	Aktívne šablóny
-add a category	admin	sk	pridať kategóriu
-add a group	admin	sk	pridať skupinu
+active this token again	admin	sk	Opätovne aktivovať tento token
+add a category	admin	sk	Pridať kategóriu
+add a group	admin	sk	Pridať skupinu
 add a new account.	admin	sk	Pridať nový účet.
 add a new remote instance	admin	sk	Pridať novú vzdialenú inštanciu
-add a subcategory	admin	sk	pridať podkategóriu
-add a user	admin	sk	pridať používateľa
+add a subcategory	admin	sk	Pridať podkategóriu
+add a user	admin	sk	Pridať používateľa
 add account	admin	sk	Pridať účet
 add application	admin	sk	Pridať aplikáciu
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	sk	Pridať automaticky vytvorených používateľov do tejto skupiny (Ak je prázdne, použije sa predvolená.)
@@ -93,7 +99,7 @@ add sub-category	admin	sk	Pridať podkategóriu
 add user	admin	sk	Pridať používateľa
 add user or group	admin	sk	Pridať používateľa alebo skupinu
 added	admin	sk	pridané
-admin dn	admin	sk	Správcov dn
+admin dn	admin	sk	Správcov DN
 admin email	admin	sk	Správcova E-mailová adresa
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	E-mailové adresy správcov (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia)
 admin name	admin	sk	Meno správcu
@@ -133,15 +139,17 @@ appearance	admin	sk	Vzhľad
 application	admin	sk	Aplikácia
 application '%1' not found (maybe not installed or misspelled)!	admin	sk	Aplikácia '%1' sa nenašla (možno nie je nainštalovaná, alebo je chybne uvedený názov)!
 application name	admin	sk	Názov aplikácie
+application passwords	admin	sk	Heslá aplikácie
 application title	admin	sk	Titulok aplikácie
 applications	admin	sk	Aplikácie
 applications available on mobile devices	admin	sk	Aplikácie dostupné pre mobilné zariadenia
 applications list	admin	sk	Zoznam aplikácií
 applications run rights updated.	admin	sk	Aplikácie bežia s aktualizovanými právami.
-applies the changes	admin	sk	vykoná zmeny
+applications this group can use	admin	sk	Aplikácie dostupné pre túto skupinu
+applies the changes	admin	sk	Vykoná zmeny
 apply changes	admin	sk	Vykonať zmeny
 apply the changes	admin	sk	Vykonať zmeny
-archive: zip or tar	admin	sk	Archív: zip alebo tar
+archive: zip or tar	admin	sk	Archív: ZIP alebo tar
 are you sure you want to %1 mail for selected accounts?	admin	sk	Naozaj chcete %1 email pre vybrané účty?
 are you sure you want to delete the application %1 ?	admin	sk	Ste si istí, že chcete odstrániť aplikáciu %1 ?
 are you sure you want to delete this account ?	admin	sk	Naozaj chcete odstrániť tento účet?
@@ -153,10 +161,10 @@ are you sure you want to delete this server?	admin	sk	Naozaj chcete odstrániť 
 are you sure you want to kill this session ?	admin	sk	Naozaj chcete ukončiť túto reláciu?
 async services last executed	admin	sk	Asynchrónne služby naposledy spustené
 asynchronous timed services	admin	sk	Asynchrónne časované služby
-asyncservices not yet installed or other error (%1) !!!	admin	sk	Asyncslužby zatiaľ nie sú nainštalované, alebo iná chyba (%1) !!!
+asyncservices not yet installed or other error (%1) !!!	admin	sk	Asyncslužby zatiaľ nie sú nainštalované, alebo iná chyba (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sk	Pokúsiť sa použiť korektný MIME typ pre FTP namiesto predvoleného 'application/octet-stream'
 attribute accountstatus explained	admin	sk	Toto zabezpečuje príznak <b><i>-accountStatus-</i></b> zo schémy QMAIL.
-attribute mail explained	admin	sk	Toto zabezpečuje príznak <b><i>-mail-</i></b> zo schémy QMAIL, pole nesmie byť prázdne. Je to taktiež pole interného E-mailu eGW.
+attribute mail explained	admin	sk	Toto zabezpečuje príznak <b><i>-mail-</i></b> zo schémy QMAIL, pole nesmie byť prázdne. Je to taktiež pole interného E-mailu EGw.
 attribute mailalternateaddress explained	admin	sk	Toto zabezpečuje príznak <b><i>-mailAlternateAddress-</i></b> zo schémy QMAIL a môže byť použitý ako virtuálne mapy alebo aliasy.
 attribute mailforwardingaddress explained	admin	sk	Toto zabezpečuje príznak <b><i>-mailForwardingAddress-</i></b> zo schémy QMAIL, pole nesmie byť prázdne ak je priradené.
 attributes	admin	sk	Atribúty
@@ -167,7 +175,7 @@ automatically transfer entries owned by the user:	admin	sk	Automaticky presunú�
 available placeholders	admin	sk	Dostupné premenné
 back to admin/grouplist	admin	sk	Späť na Správu/Skupiny
 back to admin/userlist	admin	sk	Späť na Správu/Používateľov
-back to the list	admin	sk	naspäť na zoznam
+back to the list	admin	sk	Naspäť na zoznam
 backup directory %1 mounted as %2	admin	sk	Zálohovací priečinok %1 primontovaný ako %2
 bad login name or password.	admin	sk	Chybné prihlasovacie meno alebo heslo.
 bad or malformed request. server responded: %s	admin	sk	Chybná požiadavka. Odpoveď servera: %s
@@ -175,7 +183,7 @@ bad request: %s	admin	sk	Chybná požiadavka: %s
 bi-dir passthrough	admin	sk	obojsmerné prepojenie
 bi-directional	admin	sk	obojsmerné
 blocking after wrong password	admin	sk	Blokované kvôli chybnému heslu
-bottom	admin	sk	naspodku
+bottom	admin	sk	Naspodku
 bulk password reset	admin	sk	Reset hesla
 calculate next run	admin	sk	Vypočítať ďalší prechod
 calendar recurrence horizont in days (default 1000)	admin	sk	Horizont opakovania v kalendári (predvolené: 1000)
@@ -188,7 +196,7 @@ cancel changes	admin	sk	Zrušiť zmeny
 cancel testjob!	admin	sk	Zrušiť testovaciu úlohu!
 cancel this scheduled command	admin	sk	Zrušiť tento naplánovaný príkaz
 categories list	admin	sk	Zoznam kategórií
-category %1 has been saved !	admin	sk	Kategória %1 bola uložená !
+category %1 has been saved !	admin	sk	Kategória %1 bola uložená!
 category '%1' deleted	admin	sk	Kategória '%1' odstránená
 category deleted.	admin	sk	Kategória odstránená.
 category list	admin	sk	Zoznam kategórií
@@ -203,7 +211,7 @@ change domain of email address and aliases	admin	sk	zmeniť doménu e-mailových
 change login screen message	admin	sk	Zmeniť text na hlavnej stránke
 change owner	admin	sk	Zmeniť vlastníka
 change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	sk	Súbory v /home budú mať zmenené vlastníctvo na nového používateľa. Domovský priečinok bude premiestnený do /home/novy_pouzivatel/stary_home_pouzivatel.
-change password for %1	admin	sk	zmeniť heslo pre %1
+change password for %1	admin	sk	Zmeniť heslo pre %1
 change password hash to	admin	sk	Zmeniť hešované heslo na
 changed password hash for %1 to %2.	admin	sk	Hešované heslo pre %1 zmenené na %2.
 changelog	admin	sk	Záznam zmien
@@ -212,7 +220,10 @@ check acl for entries of not (longer) existing accounts	admin	sk	Skontrolovať A
 check categories for not (longer) existing accounts	admin	sk	Skontrolovať kategórie pre účty ktoré už neexistujú
 check ip address of all sessions	admin	sk	Skontrolovať IP adresu všetkých relácií
 check items to <b>%1</b> to %2 for %3	admin	sk	Skontrolovať položky po <b>%1</b> po %2 pre %3
+checking push (green for success or red for failure)	admin	sk	Kontrolujem PUSH (zelená=úspech, červená=chyba)
 children	admin	sk	Deti
+clear credentials	admin	sk	Odstrániť prihlasovacie údaje
+clear mail credentials	admin	sk	Odstrániť prihlasovacie údaje pre mail
 clear security tokens	admin	sk	Vyčistič bezpečnostné tokeny
 click to select a color	admin	sk	Ak chcete vybrať farbu, kliknite sem
 color	admin	sk	Farba
@@ -239,7 +250,7 @@ create group	admin	sk	Vytvoriť skupinu
 create new account	admin	sk	Vytvoriť nový účet
 create new identity	admin	sk	Vytvoriť novú identitu
 created	admin	sk	Vytvorený
-created with id #%1	admin	sk	Vytvorené s IS #%1
+created with id #%1	admin	sk	Vytvorené s ID #%1
 creates / updates user accounts from csv file	admin	sk	Vytvorí / aktualizuje používateľské účty z CSV súboru
 creates / updates user groups from csv file	admin	sk	Vytvorí / aktualizuje používateľské skupiny z CSV súboru
 creates a new field	admin	sk	Vytvorí nové pole
@@ -284,17 +295,17 @@ delete identity	admin	sk	Odstrániť identitu
 delete including sub-entries	admin	sk	Odstrániť vrátane pod-položiek
 delete peer server	admin	sk	Odstrániť peer server
 delete selected entries	admin	sk	Odstrániť označené položky
-delete the category	admin	sk	odstráň kategóriu
-delete the group	admin	sk	odstráň skupinu
+delete the category	admin	sk	Odstráň kategóriu
+delete the group	admin	sk	Odstráň skupinu
 delete the selected entries	admin	sk	Odstrániť vybrané položky
 delete this access control	admin	sk	Odstrániť toto prístupové oprávnenie
 delete this account	admin	sk	Odstrániť tento účet
-delete this category	admin	sk	odstráň túto kategóriu
-delete this group	admin	sk	odstráň túto skupinu
+delete this category	admin	sk	Odstráň túto kategóriu
+delete this group	admin	sk	Odstráň túto skupinu
 delete this log entry	admin	sk	Odstrániť túto položku záznamu
-delete this user	admin	sk	odstráň tohto používateľa
+delete this user	admin	sk	Odstráň tohto používateľa
 deleted	admin	sk	Odstránené
-deletes this field	admin	sk	odstráni túto položku
+deletes this field	admin	sk	Odstráni túto položku
 deliver extern	admin	sk	Doručiť extern
 deny access	admin	sk	Zakáž prístup
 deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
@@ -316,15 +327,15 @@ deny all users access to grant other users access to their entries ?	admin	sk	Za
 deny all users access to preferences ?	admin	sk	Zakázať všetkým používateľom prístup k predvoľbám?
 description can not exceed 255 characters in length !	admin	sk	Dĺžka popisu nemôže presiahnuť 255 znakov!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	sk	Cieľový účet #%1 neexistuje a NIE je premenovaný! Nemôžem zlúčiť účty, porušilo by to jedinečný obsah. Namiesto toho zmazať s prenosom dát.
-determines the order the fields are displayed	admin	sk	určuje poradie, v akom sa položky zobrazujú
+determines the order the fields are displayed	admin	sk	Určuje poradie, v akom sa položky zobrazujú
 direct login without password or second factor	admin	sk	priame prihlásenie bez hesla alebo druhého faktora
 disable	admin	sk	Vypnúť
 disable "auto completion" of the login form	admin	sk	Vypnúť automatické dopĺňanie v prihlasovacej stránke
 disable all	admin	sk	Vypnúť všetko
 disable pgp encryption (mailvelope)	admin	sk	Vypnúť PGP šifrovanie (Mailvelope)
-disable wysiwyg-editor	admin	sk	vypnúť WYSIWYG-editor
+disable wysiwyg-editor	admin	sk	Vypnúť WYSIWYG-editor
 disabled	admin	sk	Vypnuté
-disabled (not recomended)	admin	sk	vypnuté (neodporúča sa)
+disabled (not recomended)	admin	sk	Vypnuté (neodporúča sa)
 disabled, do not show on login page	admin	sk	vypnuté, nezobrazovať na prihlasovacej stránke
 display	admin	sk	Zobraziť
 displayed length of input field (set rows=1 to limit length)	admin	sk	Zobrazovaná dĺžka vstupného poľa (ak chcete obmedziť dĺžku, nastavte rows=1)
@@ -353,13 +364,13 @@ edit email settings	admin	sk	Upraviť nastavenia E-mailu
 edit global category	admin	sk	Upraviť globálnu kategóriu
 edit global category for %1	admin	sk	Upraviť globálnu kategóriu pre %1
 edit group	admin	sk	Upraviť skupinu
-edit group acl's	admin	sk	upraviť prístupové práva (ACL) skupiny
+edit group acl's	admin	sk	Upraviť prístupové práva (ACL) skupiny
 edit peer server	admin	sk	Upraviť peer server
 edit table format	admin	sk	Upraviť formát tabuľky
-edit this category	admin	sk	uprav túto kategóriu
-edit this group	admin	sk	uprav túto skupinu
-edit this user	admin	sk	uprav tohoto používateľa
-edit user	admin	sk	uprav používateľa
+edit this category	admin	sk	Uprav túto kategóriu
+edit this group	admin	sk	Uprav túto skupinu
+edit this user	admin	sk	Uprav tohoto používateľa
+edit user	admin	sk	Uprav používateľa
 edit user account	admin	sk	Upraviť používateľský účet
 edited	admin	sk	upravené
 educational: universities, schools, ...	admin	sk	Vzdelávacie: univerzity, školy,...
@@ -380,14 +391,14 @@ enable debug-messages	admin	sk	Zapnúť ladiace správy
 enable sieve	admin	sk	Zapnúť Sieve
 enable spellcheck in rich text editor	admin	sk	Zapnúť kontrolu pravopisu v textovom editore?
 enable the soap service	admin	sk	Zapnúť službu SOAP
-enable the xmlrpc service	admin	sk	Zapnúť službu XMLRPC
+enable the xmlrpc service	admin	sk	Zapnúť službu XML-RPC
 enabled	admin	sk	Zapnuté
 enabled - hidden from navbar	admin	sk	Zapnuté - Skryté v navigačnom paneli
 enabled - popup window	admin	sk	Zapnuté - Vyskakovacie okno
 encrypted connection	admin	sk	Šifrované spojenie
 encryption	admin	sk	Šifrovanie
 encryption settings	admin	sk	Nastavenia šifrovania
-enter a description for the category	admin	sk	zadajte opis tejto kategórie
+enter a description for the category	admin	sk	Zadajte opis tejto kategórie
 enter a passphrase if you would like to protect your private key by password.	admin	sk	Ak chcete chrániť svoj súkromný kľúč heslom, zadajte ho sem.
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk	Zadajte náhodný text pre app_session <br>kryptovanie (vyžaduje mcrypt)
 enter the background color for the login page	admin	sk	Zadajte farbu pozadia prihlasovacej stránky
@@ -397,7 +408,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zada
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sk	Zadajte názov stroja (hostname) na ktorom beží tento server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre EGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre EGroupware.<br>Príklad: https://egw.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sk	Zadajte reťazec pre vyhľadávanie. Pre zobrazenie všetkých záznamov, vyčistite toto pole a stlačte znovu tlačítko ODOSLAŤ
 enter the site password for peer servers	admin	sk	Zadajte heslo stránky pre peer servre
 enter the site username for peer servers	admin	sk	Zadajte používateľské meno stránky pre peer servre
@@ -415,47 +426,51 @@ enter your smtp server port	admin	sk	Zadajte port Vášho SMTP servera
 entries	admin	sk	Položky
 entries owned by the user:	admin	sk	Položky vo vlastníctve tohto používateľa:
 entry saved	admin	sk	Položka bola uložená
-error canceling timer, maybe there's none set !!!	admin	sk	Chyba pri rušení časovača, možnože nie je žiadny nastavený !!!
-error changing the password for %1 !!!	admin	sk	Chyba pri zmene hesla pre %1 !!!
+error canceling timer, maybe there's none set !!!	admin	sk	Chyba pri rušení časovača, možnože nie je žiadny nastavený!
+error changing the password for %1 !!!	admin	sk	Chyba pri zmene hesla pre %1 !
 error connecting to imap server. %s : %s.	admin	sk	Chyba počas pripájania k IMAP serveru. %s : %s.
 error connecting to imap server: [%s] %s.	admin	sk	Chyba počas pripájania k IMAP serveru: [%s] %s.
 error deleting entry!	admin	sk	Chyba pri odstraňovaní položky!
 error deleting log entry!	admin	sk	Chyba pri mazaní položky záznamu!
+error revoking token!	admin	sk	Chyba pri odvolaní tokenu!
 error saving	admin	sk	Chyba pri ukladaní
 error saving account!	admin	sk	Chyba pri ukladaní účtu!
 error saving the command!	admin	sk	Chyba pri ukladaní príkazu!
-error saving the entry!!!	admin	sk	Chyba pri ukladaní položky!!!
+error saving the entry!!!	admin	sk	Chyba pri ukladaní položky!
 error saving to db:	admin	sk	Chyba pri ukladaní do db:
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	sk	Chyba pri nastavovaní časovača, chybná syntax alebo možno už nejaký beží !!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	sk	Chyba pri nastavovaní časovača, chybná syntax alebo možno už nejaký beží!
+error storing token!	admin	sk	Chyba pri ukladaní tokenu!
 error! no appname found	admin	sk	CHYBA! Nenašiel sa názov aplikácie
 error, no username!	admin	sk	Chýba používateľské meno!
-error: %1 not found or other error !!!	admin	sk	Chyba: %1 sa nenašiel, alebo iná chyba !!!
+error: %1 not found or other error !!!	admin	sk	Chyba: %1 sa nenašiel, alebo iná chyba!
 event details follow	admin	sk	Podrobnosti o udalosti:
 exists	admin	sk	Existuje
 expired	admin	sk	Expirované
 expires	admin	sk	Vyprší
 explanation of ldapman	admin	sk	Tento modul bol testovaný doposiaľ pre POSTFIX, LDAP, Courier-IMAP a vyžaduje schémy CORE a QMAIL (OID7914). Podrobnosti o používaní a nastavení tohto systému nájdete v README.ldapman v doc adresári ADMIN-a.
-export certificate as p12	admin	sk	exportovať certifikát ako p12
+export certificate as p12	admin	sk	Exportovať certifikát ako p12
 exports groups into a csv file.	admin	sk	Exportuje skupiny do CSV súboru.
 exports permission settings into a csv file.	admin	sk	Exportuje nastavenia prístupových oprávnení do súboru CSV.
 exports users into a csv file.	admin	sk	Exportuje používateľov do CSV súboru
+failed	admin	sk	zlyhalo
 failed to change password for account "%1"!	admin	sk	Nepodarilo sa zmeniť heslo pre účet "%1"!
 failed to change password.	admin	sk	Nepodarilo sa zmeniť heslo.
 failed to delete account!	admin	sk	Nepodarilo sa odstrániť účet!
 failed to mount backup directory!	admin	sk	Nepodarilo sa primontovať zálohovací priečinok!
 failed to save user!	admin	sk	Uloženie používateľa zlyhalo!
 failed to upload %1	admin	sk	Nepodarilo sa nahrať %1
-fallback (after each pageview)	admin	sk	návrat (po každom zobrazení stránky)
+fallback (after each pageview)	admin	sk	Návrat (po každom zobrazení stránky)
 false	admin	sk	Nepravda
 field '%1' already exists !!!	admin	sk	Pole '%1' už existuje
 file rejected, no %2. is:%1	admin	sk	Súbor odmietnutý, žiadny %2. Je:%1
 file space	admin	sk	Priestor pre súbory
 file space must be an integer	admin	sk	Priestor pre súbory musí byť celé číslo
+filesystem quota	admin	sk	Kvóta súborového systému
 filtered by account	admin	sk	Filtrované podľa Účtu
 filtered by group	admin	sk	Filtrované podľa Skupiny
 folder acl	admin	sk	ACL priečinka
 for the times above	admin	sk	pre vyššieuvedené časy
-for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
+for the times below (empty values count as '*', all empty = every minute)	admin	sk	Pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
 forbid users to create identities	admin	sk	Zakázať používateľom vytváranie identít
 force selectbox	admin	sk	Vynútiť ponuku pre výber
 force users to change their password regularily?(empty for no,number for after that number of days	admin	sk	Vynútiť pravidelnú obmenu hesla? (prázdne=nie, číslo určuje po koľkých dňoch)
@@ -467,6 +482,7 @@ forward only disables imap mailbox / storing of mails and just forwards them to 
 full name	admin	sk	Plné meno
 general	admin	sk	Všeobecné
 generate certificate	admin	sk	Vygenerovať certifikát
+generate new token and display it once after saving	admin	sk	Vytvoriť nový token a jednorázovo ho zobraziť po uložení
 global categories	common	sk	Globálne kategórie
 global options	admin	sk	Globálne možnosti
 go directly to admin menu, returning here the next time you click on administration.	admin	sk	Choďte priamo do správcovskej ponuky, vrátite sa sem ďalším kliknutím na Správu.
@@ -486,7 +502,7 @@ group list	admin	sk	Zoznam skupín
 group manager	admin	sk	Správca skupín
 group name	admin	sk	Názov skupiny
 hash	admin	sk	Hash
-hide php information	admin	sk	skryť php informácie
+hide php information	admin	sk	Skryť php informácie
 hide sidebox video tutorials	admin	sk	Skryť video tutoriály v bočnom paneli
 home directory	admin	sk	Domovský adresár
 home screen message	admin	sk	Text správy hlavnej stránky
@@ -499,6 +515,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	sk	Koľko minút má trvať zablokovanie účtu alebo IP? (predvolené: 30)
 how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvárať E-mailové adresy pre nových používateľov?
 how username get constructed	admin	sk	Z čoho sa skladá používateľské meno
+html/plaintext	admin	sk	HTML/text
 icon	admin	sk	Ikona
 identity	admin	sk	Identita
 identity deleted	admin	sk	Identita bola odstránená
@@ -523,7 +540,7 @@ imap server hostname or ip address	admin	sk	Názov (hostname) alebo IP adresa IM
 imap server logintyp	admin	sk	Typ prihlásenia IMAP servera
 imap server name	admin	sk	Názov IMAP servera
 imap server port	admin	sk	Port IMAP servera
-imap/pop3 server name	admin	sk	názov IMAP/POP3 servera
+imap/pop3 server name	admin	sk	Názov IMAP/POP3 servera
 importance	admin	sk	Dôležitosť
 in mbyte	admin	sk	v Megabajtoch
 inactive	admin	sk	Neaktívne
@@ -538,7 +555,7 @@ installed crontab	admin	sk	Nainštalovaný crontab
 instance	admin	sk	Inštancia
 interface	admin	sk	Rozhranie
 international use	admin	sk	Medzinárodné použitie
-invalid argument '%1' !!!	admin	sk	Neplatý argument '%1' !!!
+invalid argument '%1' !!!	admin	sk	Neplatý argument '%1' !
 invalid email	admin	sk	Neplatný e-mail
 invalid formated date "%1"!	admin	sk	Chybný formát dátumu "%1"!
 invalid remote id or name "%1"!	admin	sk	Chybné vzdialené ID alebo meno "%1"!
@@ -570,7 +587,7 @@ ldap encryption type	admin	sk	Typ LDAP šifrovania
 ldap groups context	admin	sk	LDAP kontext skupín
 ldap host	admin	sk	LDAP hostiteľ
 ldap root password	admin	sk	Heslo LDAP root-a
-ldap rootdn	admin	sk	LDAP koreňový dn
+ldap rootdn	admin	sk	LDAP koreňový DN
 ldap server	admin	sk	LDAP server
 ldap server accounts dn	admin	sk	DN účtov LDAP servera
 ldap server admin dn	admin	sk	DN správcu LDAP servera
@@ -579,11 +596,11 @@ ldap server hostname or ip address	admin	sk	Názov (hostname) alebo IP adresa LD
 ldap settings	admin	sk	Nastavenia LDAP
 leave empty for no quota	admin	sk	Ak nechcete kvóty, ponechajte prázdne
 leave empty to use oauth, if supported	admin	sk	Ak je podporovaný OAuth, použije sa, ak ponecháte prázdne
-leave the category untouched and return back to the list	admin	sk	nechať kategóriu bezo zmien a vrátiť sa späť na zoznam
+leave the category untouched and return back to the list	admin	sk	Nechať kategóriu bezo zmien a vrátiť sa späť na zoznam
 leave the group untouched and return back to the list	admin	sk	Nechať skupinu bezo zmien a vrátiť sa na zoznam
 leave unchanged	admin	sk	Ponechať bez zmeny
-leave without saveing the entry	admin	sk	odísť bez uloženia tejto položky
-leaves without saveing	admin	sk	odísť bez uloženia
+leave without saveing the entry	admin	sk	Odísť bez uloženia tejto položky
+leaves without saveing	admin	sk	Odísť bez uloženia
 length	admin	sk	Dĺžka
 length<br>rows	admin	sk	Dĺžka/<br>Riadkov
 lifetime of 'remember me' token	admin	sk	Životnosť tokenu 'Zapamätaj si ma'
@@ -591,9 +608,9 @@ limit global category to members of a certain group	admin	sk	Obmedziť globálnu
 limit to members of	admin	sk	Obmedziť na členov skupiny
 list config settings	admin	sk	Zobraziť voľby nastavení
 list current sessions	admin	sk	Zobraziť aktuálne relácie
-list of current users	admin	sk	zoznam aktuálnych používateľov
+list of current users	admin	sk	Zoznam aktuálnych používateľov
 log user-agent and action of changes in history-log of entries	admin	sk	Zaznamenať prehliadač a akciu v zázname o zmenách
-logged out	admin	sk	odhlásené
+logged out	admin	sk	Odhlásené
 login history	admin	sk	História prihlásení
 login id	admin	sk	Prihlasovacie ID
 login message	admin	sk	Text správy prihlásenia
@@ -616,14 +633,14 @@ maximum account id (e.g. 65535 or 1000000)	admin	sk	Maximálne ID účtu (napr. 
 maximum entries in click path history	admin	sk	Maximálny počet záznamov v histórii kliknutí
 mb used	admin	sk	Použitých MB
 members	admin	sk	Členovia
-message has been updated	admin	sk	správa bola upravená
+message has been updated	admin	sk	Správa bola upravená
 method	admin	sk	Metóda
 minimum account id (e.g. 500 or 100, etc.)	admin	sk	Najmenšie ID účtu (napr. 500 alebo 100, atď.)
 minute	admin	sk	Minúta
 mode	admin	sk	Režim
 modified	admin	sk	Zmenený
 month	admin	sk	Mesiac
-more secure	admin	sk	bezpečnejšie
+more secure	admin	sk	Bezpečnejšie
 mount backup directory to %1	admin	sk	Primontovať zálohový priečinok na %1
 must change password upon next login	admin	sk	Musí zmeniť heslo pri ďalšom prihlásení
 name must not be empty !!!	admin	sk	Názov nemôže byť prázdny!
@@ -631,36 +648,37 @@ name of account	admin	sk	Názov účtu
 name of organisation	admin	sk	Názov organizácie
 name of the egroupware instance, eg. default	admin	sk	Názov inštancie EGroupware, napríklad predvolený
 new group name	admin	sk	Názov novej skupiny
-new name	admin	sk	nový názov
+new name	admin	sk	Nový názov
 new password	admin	sk	Nové heslo
-new password [ leave blank for no change ]	admin	sk	Nové heslo [ Ak nechcete zmenu, nechajte prázdne ]
+new password [ leave blank for no change ]	admin	sk	Nové heslo (Ak nechcete zmenu, nechajte prázdne)
 next run	admin	sk	Ďalší prechod
-no algorithms available	admin	sk	nie sú dostupné žiadne algoritmy
+no algorithms available	admin	sk	Nie sú dostupné žiadne algoritmy
 no alternate email address	admin	sk	Bez alternatívnej E-mailovej adresy
 no default account found!	admin	sk	Predvolený účet sa nenašiel
 no encryption	admin	sk	Bez šifrovania
 no forwarding email address	admin	sk	Bez emailovej adresy pre preposielanie
-no jobs in the database !!!	admin	sk	V databáze nie sú žiadne úlohy !!!
+no jobs in the database !!!	admin	sk	V databáze nie sú žiadne úlohy!
 no login history exists for this user	admin	sk	Pre používateľa neexistuje žiadna história prihlásení
 no matches found	admin	sk	Nenašlo sa
 no message returned.	admin	sk	Žiadne správy sa nevrátili.
 no modes available	admin	sk	žiadne režimy nie sú dostupné
-no permission to add groups	admin	sk	nemáte oprávnenie pridávať skupiny
-no permission to add users	admin	sk	nemáte oprávnenie pridávať používateľov
-no permission to create groups	admin	sk	nemáte oprávnenie vytvárať skupiny
+no oauth client secret for provider '%1'!	admin	sk	Žiadne tajomstvo klienta OAuth pre poskytovateľa '%1'!
+no permission to add groups	admin	sk	Nemáte oprávnenie pridávať skupiny
+no permission to add users	admin	sk	Nemáte oprávnenie pridávať používateľov
+no permission to create groups	admin	sk	Nemáte oprávnenie vytvárať skupiny
 no plain text part found	admin	sk	Nebola nájdená žiadna čisto textová časť
 no profile defined for user %1	admin	sk	Pre používateľa %1 nebol zadefinovaný profil
 no sieve support detected, either fix configuration manually or leave it switched off.	admin	sk	Nezistila sa podpora Sieve, prosím opravte nastavenia ručne alebo ponechajte voľbu vypnutú.
 no supported imap authentication method could be found.	admin	sk	Nenašiel som žiadnu podporovanú overovaciu metódu IMAP.
 non profit: clubs, associations, ...	admin	sk	Neziskové: Kluby, asociácie,...
 not enabled	admin	sk	Nie je zapnuté
-note: ssl available only if php is compiled with curl support	admin	sk	Upozornenie: SSL je dostupné iba v prípade, že PHP bolo skompilované s podporou curl
+note: ssl available only if php is compiled with curl support	admin	sk	Upozornenie: SSL je dostupné iba v prípade, že PHP bolo skompilované s podporou Curl
 notification mail	admin	sk	Upozorňovacia správa
 notify user by email	admin	sk	Upozorniť používateľa emailom
 notifying account "%1" %2 failed!	admin	sk	Upozornenie účtu "%1" %2 zlyhalo!
 number applications serially	admin	sk	Očíslovať aplikácie zaradom
 number of active users	admin	sk	počet aktívnych používateľov
-number of row for a multiline inputfield or line of a multi-select-box	admin	sk	počet riadkov vo viacriadkovom vstupnom poli alebo v ponuke pre výber
+number of row for a multiline inputfield or line of a multi-select-box	admin	sk	Počet riadkov vo viacriadkovom vstupnom poli alebo v ponuke pre výber
 number of sessions / egroupware logins in the last 30 days	admin	sk	Počet relácií / prihlásení do EGroupware za ostatných 30 dní
 number of users	admin	sk	Počet používateľov
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	sk	Očíslovať aplikácie zaradom. Ak nie sú očíslované zaradom, zoradenie aplikácií môže fungovať chybne. Táto akcia nezmení poradie aplikácií.
@@ -668,22 +686,22 @@ nummeric account id	admin	sk	Číselné ID účtu
 oauth authentiction	admin	sk	Overovanie OAuth
 offer to installing egroupware as mail-handler	admin	sk	Ponuka inštalácie EGroupware ako mail-handler
 official egroupware usage statistic	admin	sk	Oficiálna štatistika používania EGroupware
-one day	admin	sk	jeden deň
-one hour	admin	sk	jedna hodina
-one month	admin	sk	jeden mesiac
-one week	admin	sk	jeden týždeň
+one day	admin	sk	Jeden deň
+one hour	admin	sk	Jedna hodina
+one month	admin	sk	Jeden mesiac
+one week	admin	sk	Jeden týždeň
 only below displayed information is directly submitted to %s.	admin	sk	Len zobrazené informácie sa odošlú priamo do %s.
 operating system	admin	sk	Operačný systém
 order	admin	sk	Poradie
 organisation	admin	sk	Organizácia
 other security configuration	admin	sk	Iná konfigurácia zabezpečenia
-outbound	admin	sk	odchodzie
+outbound	admin	sk	Odchodzie
 own categories	admin	sk	Vlastné kategórie
 own install id	admin	sk	Vlastné ID inštalácie
 own install id:	admin	sk	Vlastné ID inštalácie:
 owner "%1" removed, please select group-owner	admin	sk	Používateľ "%1" bol odstránený, prosím vyberte skupinového vlastníka
-passphrase	admin	sk	heslo
-passthrough	admin	sk	prechádzajúce
+passphrase	admin	sk	Heslo
+passthrough	admin	sk	Prechádzajúce
 password for smtp-authentication	admin	sk	Heslo pre SMTP overovanie
 password to unlock encrypted p12	admin	sk	Heslo pre odomknutie šifrované p12
 password updated	admin	sk	Heslo bolo zmenené
@@ -698,8 +716,8 @@ percent of users that logged out	admin	sk	Koľko percent používateľov sa odhl
 percent this user has logged out	admin	sk	Na koľko percent sa odhlasoval tento používateľ
 periodic	admin	sk	Opakovane
 permission denied	admin	sk	Prístup bol odmietnutý
-permission denied !!!	admin	sk	Prístup bol odmietnutý!!!
-permission denied!!!	admin	sk	Prístup bol odmietnutý !!!
+permission denied !!!	admin	sk	Prístup bol odmietnutý!
+permission denied!!!	admin	sk	Prístup bol odmietnutý!
 permissions	admin	sk	Oprávnenia
 permissions this group has	admin	sk	Oprávnenia prináležiace tejto skupine
 personal: eg. within a family	admin	sk	Osobné: napr. v rámci rodiny
@@ -709,15 +727,15 @@ phrase	admin	sk	Fráza
 phrase deleted	admin	sk	Fráza odstránená
 please check email.  it gets automatically deleted if email integration is used.	admin	sk	Prosím skontrolujte e-mail. Ak sa používa e-mailová integrácia, bude automaticky odstránený.
 please enter a name	admin	sk	Prosím zadajte meno
-please enter a name for that server !	admin	sk	Prosím zadajte názov toho servera !
+please enter a name for that server !	admin	sk	Prosím zadajte názov toho servera!
 please manually deal with entries owned by the user:	admin	sk	Prosím, vyriešte ručne položky vo vlastníctve tohto používateľa:
 please run setup to become current	admin	sk	Prosím spusťte setup pre aktualizáciu
 please select	admin	sk	Prosím vyberte
 please submit (or postpone) statistic first	admin	sk	Prosím najprv odošlite (alebo odložte) štatistiku používania
 plesk can't rename users --> request ignored	admin	sk	Plesk používatelia sa nedajú premenovať --> požiadavka ignorovaná
 plesk imap server (courier)	admin	sk	Plesk IMAP Server (Courier)
-plesk mail script '%1' not found !!!	admin	sk	Plesk mail script '%1' sa nenašlo !!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	sk	Plesk vyžaduje, aby heslá mali aspoň 5 znakov a neobsahovali názov účtu --> heslo NEBOLO nastavené!!!
+plesk mail script '%1' not found !!!	admin	sk	Plesk mail script '%1' sa nenašlo!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	sk	Plesk vyžaduje, aby heslá mali aspoň 5 znakov a neobsahovali názov účtu --> heslo NEBOLO nastavené!
 plesk smtp-server (qmail)	admin	sk	Plesk SMTP-Server (qmail)
 pop3 server hostname or ip address	admin	sk	Názov (hostname) alebo IP adresa POP3 servera
 pop3 server port	admin	sk	Port POP3 servera
@@ -739,13 +757,14 @@ read this list of methods.	admin	sk	Načítaj tento zoznam metód.
 register application hooks	admin	sk	Zaregistruj všetky aplikácie
 reject passwords containing part of username or full name (3 or more characters long)	admin	sk	Odmietnuť heslá ktoré obsahujú časti plného alebo používateľského mena (v dĺžke 3 a viac znakov)
 relay access checked	admin	sk	Relačný prístup bol skontrolovaný
+remark	admin	sk	Poznámka
 remote administration instances	admin	sk	Vzdialené správcovské inštancie
 remote administration need to be enabled in the remote instance under admin &gt; site configuration!	admin	sk	Vzdialená správa sa dá používať len ak je zapnutá vo vzdialenej relácii pod stránkou Správca > Nastavenia stránky!
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sk	Vzdialená správa musí byť najprv zapnutá pre vzdialenú inštanciu pod Správca > Nastavenia stránky!
 remote instance saved	admin	sk	Vzdialená inštancia bola uložená
 remove	admin	sk	Odstrániť
 remove all users from this group	admin	sk	Odstrániť všetkých používateľov z tejto skupiny
-remove all users from this group ?	admin	sk	Odstrániť všetkých používateľov z tejto skupiny ?
+remove all users from this group ?	admin	sk	Odstrániť všetkých používateľov z tejto skupiny?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	sk	Odstránenie prístupu pre skupiny môže spôsobiť problémy pre údaje v tejto kategórii. Ste si istí? Používatelia v týchto skupinách môžu stratiť prístup:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	sk	Premenovanie používateľa 'anonymous' naruší zdieľanie súborov a Collabora Online Office!
 requested	admin	sk	Vyžiadané
@@ -753,13 +772,17 @@ required pear class mail/mimedecode.php not found.	admin	sk	Nenašla sa požadov
 required to embed egroupware via iframe eg. for lti	admin	sk	vyžaduje sa pre vnorenie EGroupware pomocou iframe, napr. pre LTI
 requires 'openid / oauth2 server' app.	admin	sk	Vyžaduje aplikáciu 'OpenID / OAuth2 Server'.
 reset filter	admin	sk	Vynulovať filter
+revoke	admin	sk	Odvolať
+revoke this token	admin	sk	Odvolať tento token
+revoked	admin	sk	Odvolaný
 rights	admin	sk	Oprávnenia
 route all mails to	admin	sk	Všetky správy smerovať cez
 rows	admin	sk	Riadky
-rpm or debian package	admin	sk	RPM alebo balíček Debian
+rpm or debian package	admin	sk	RPM alebo balíček deb
 run	admin	sk	Spustiť
 run asynchronous services	admin	sk	Spustiť asynchrónne služby
-save as default	admin	sk	uložiť ako predvolené
+run rights for applications	admin	sk	Práva spustenia aplikácií
+save as default	admin	sk	Uložiť ako predvolené
 save changes	admin	sk	Uložiť zmeny
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	sk	Uloženie správy %1 zlyhalo. Nepodarilo sa uložiť správu do priečinka %2 z dôvodu: %3
 save the category	admin	sk	Uložiť kategóriu.
@@ -780,6 +803,7 @@ select language to define language based message. language 'english' is default 
 select multiple	admin	sk	Vybrať viacero
 select owner	admin	sk	Vyberte vlastníka
 select permissions this group will have	admin	sk	Vyberte, aké oprávnenia má mať táto skupina
+select the applications you want the token to be limited to, or leave the default of all applications.	admin	sk	Vyberte, pre ktoré aplikácie má byť tento token vyhradený, alebo ponechajte prázdne pre všetky aplikácie.
 select the parent category. if this is a main category select no category	admin	sk	Vyberte rodičovskú kategóriu. Ak toto je hlavná kategória, vyberte ŽIADNA KATEGÓRIA
 select type of imap server	admin	sk	Vyberte typ IMAP servera
 select type of imap/pop3 server	admin	sk	Vyberte typ IMAP/POP3 servera
@@ -807,8 +831,8 @@ should exceptions contain a trace (including function arguments)	admin	sk	Chcete
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sk	Chcete, aby sa na prihlasovacej stránke zobrazoval výber jazyka (vhodné pre demo-stránky)?
 show 'powered by' logo on	admin	sk	Kde zobrazovať logo "powered by"
 show access log	admin	sk	Zobraziť prístupové záznamy
-show as optional, but required once user has it setup	admin	sk	zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
-show as required, but only once user has it setup	admin	sk	zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
+show as optional, but required once user has it setup	admin	sk	Zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
+show as required, but only once user has it setup	admin	sk	Zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
 show current action	admin	sk	Zobraziť aktuálnu akciu
 show error log	admin	sk	Zobraziť záznamy o chybách
 show members	admin	sk	Zobraziť členov
@@ -831,9 +855,9 @@ soap	admin	sk	SOAP
 sorry, that group name has already been taken.	admin	sk	Ľutujem, také meno skupiny tu už bolo.
 sorry, the above users are still a member of the group %1	admin	sk	Ľutujem, uvedení používatelia sú stále členmi skupiny %1
 sorry, the follow users are still a member of the group %1	admin	sk	Ľutujem, nasledujúci používatelia sú stále členmi skupiny %1
-sort the entries	admin	sk	triediť záznamy
+sort the entries	admin	sk	Triediť záznamy
 source account #%1 does not exist!	admin	sk	Zdrojový účet #%1 NEexistuje!
-ssl	admin	sk	ssl
+ssl	admin	sk	SSL
 standard	admin	sk	Štandard
 standard identity	admin	sk	Štandardná identita
 standard imap server	admin	sk	Štandardný IMAP server
@@ -842,7 +866,8 @@ standard smtp-server	admin	sk	Štandardný SMTP server
 start	admin	sk	Štart
 start testjob!	admin	sk	Spustiť testovaciu úlohu
 starts with	admin	sk	Začať s
-strictly required, user can not login without	admin	sk	striktne vyžadovať, používateľ sa bez toho neprihlási
+stationery	admin	sk	Kancelárske potreby
+strictly required, user can not login without	admin	sk	Striktne vyžadovať, používateľ sa bez toho neprihlási
 submit changes	admin	sk	Vykonať Zmeny
 submit displayed information?	admin	sk	Odoslať zobrazené informácie?
 submit statistic information	admin	sk	Odoslať štatistické informácie
@@ -850,12 +875,12 @@ submit the search string	admin	sk	Hľadaj podľa zadaného reťazca
 submit to egroupware.org	admin	sk	Odoslať do egroupware.org
 subtype	admin	sk	Podtyp
 subversion checkout	admin	sk	Kontrola podverzie
-success	admin	sk	úspešné
+success	admin	sk	Úspešne
 successful connected to %1 server%2.	admin	sk	Pripojenie na %1 server %2 bolo úspešne nadviazané.
 successfull, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme obnovovací token!
 switch back to standard identity to save account.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie účtu.
 switch back to standard identity to save other account data.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie údajov účtu.
-switch it off, if users are randomly thrown out	admin	sk	vypnite to, ak sú používatelia náhodne odpájaní
+switch it off, if users are randomly thrown out	admin	sk	Vypnite to, ak sú používatelia náhodne odpájaní
 template selection	admin	sk	Výber šablóny
 templates	admin	sk	Šablóny
 text entry	admin	sk	Textová položka
@@ -863,7 +888,7 @@ that application name already exists.	admin	sk	Takýto názov aplikácie už exi
 that application order must be a number.	admin	sk	Poradie aplikácie musí byť číslom.
 that loginid has already been taken	admin	sk	Takéto ID prihlásenia sa už používa
 that name has been used already	admin	sk	Toto meno sa už používa
-that server name has been used already !	admin	sk	Toto meno servera sa už používa !
+that server name has been used already !	admin	sk	Toto meno servera sa už používa!
 the api is current	admin	sk	API je aktuálne
 the api requires an upgrade	admin	sk	API potrebuje aktualizáciu
 the cumulated and anonymised data will be publically available:	admin	sk	Zhromaždené anonymizované údaje budú verejne dostupné:
@@ -877,7 +902,7 @@ the mimeparser can not parse this message.	admin	sk	Analyzátor MIME nedokázal 
 the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sk	Vnútorne používané meno (nanajvýš 20 znakov), jeho zmena zneprístupní existujúce údaje
 the testjob sends you a mail everytime it is called.	admin	sk	Testovacia úloha vám pošle správu, kedykoľvek sa spustí.
-the text displayed to the user	admin	sk	text zobrazený používateľovi
+the text displayed to the user	admin	sk	Text zobrazený používateľovi
 the two passwords are not the same	admin	sk	Heslá sa nezhodujú
 the users bellow are still members of group %1	admin	sk	Nasledujúci používatelia sú stále členmi skupiny %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	sk	Skupina tohto mena už existuje. ID používateľa a ID skupiny nesmú byť totožné
@@ -886,16 +911,21 @@ this application is current	admin	sk	Táto aplikácia je aktuálna
 this application requires an upgrade	admin	sk	Táto aplikácia vyžaduje aktualizáciu
 this category is currently being used by applications as a parent category	admin	sk	Táto kategória je práve používaná aplikáciami ako rodičovská.
 this controls exports and merging.	admin	sk	Týmto sa riadia exporty a hromadné tlače.
+this is a mail account for all users!	admin	sk	Toto je poštové konto pre VŠETKÝCH používateľov!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	sk	Toto NIE je osobný poštový účet!\n\nÚčet bude ostránený pre VŠETKÝCH používateľov!\n\nSte si istí že to chcete urobiť?
 this key used in the html code your site serves to users.	admin	sk	Tento kľúč sa používa v HTML kóde, ktorý vaša stránka poskytuje používateľom.
-this php has no imap support compiled in!!	admin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP !!
+this php has no imap support compiled in!!	admin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	sk	Tento tajný kľúč sa používa na komunikáciu medzi vašou stránkou a Google. Dajte si naň pozor a uchovajte ho v tajnosti.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Čas vypršania údajov o relácii aplikácie, v sekundách (predvolené: 86400 = 1 deň)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Čas vypršania údajov o relácii, v sekundách (predvolené: 14400 = 4 hodiny)
 times	admin	sk	Časy
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	sk	Ak nám chcete umožniť sledovať rast vašej inštalácie, použite toto odosielacie ID, v opačnom prípade ho odstráňte:
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	sk	Ak chcete používať pripojenie TLS, musíte fungovať na verzii PHP 5.1.0 alebo vyššej.
-top	admin	sk	navrchu
+token created.	admin	sk	Vytvorený token.
+token not found!	admin	sk	Token nebol nájdený!
+token revoked.	admin	sk	Token bol zrušený.
+token saved.	admin	sk	Token uložený.
+top	admin	sk	Navrchu
 total of %1 accounts deleted.	admin	sk	Celkovo bolo odstránených %1 účtov.
 total of %1 id's changed.	admin	sk	Celkovo bolo zmenených %1 ID.
 total records	admin	sk	Záznamov spolu
@@ -903,41 +933,42 @@ translation	admin	sk	Preklad
 true	admin	sk	Pravda
 trust level	admin	sk	Úroveň dôvery
 trust relationship	admin	sk	Vzťah dôvery
-two days	admin	sk	dva dni
-two hours	admin	sk	dve hodiny
-two months	admin	sk	dva mesiace
-two weeks	admin	sk	dva týždne
-type '%1' already exists !!!	admin	sk	typ '%1' už existuje !!!
+two days	admin	sk	Dva dni
+two hours	admin	sk	Dve hodiny
+two months	admin	sk	Dva mesiace
+two weeks	admin	sk	Dva týždne
+type '%1' already exists !!!	admin	sk	Typ '%1' už existuje!
 type of customfield	admin	sk	Typ vlastného poľa
 type of field	admin	sk	Typ poľa
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sk	Pod windows musíte asyncslužby nainštalovať %1manuálne%2 alebo použiť fallback režim. Fallback znamená, že úlohy sú skontrolované iba po jednotlivých zobrazeniach stránky !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sk	Pod windows musíte asyncslužby nainštalovať %1manuálne%2 alebo použiť fallback režim. Fallback znamená, že úlohy sú skontrolované iba po jednotlivých zobrazeniach stránky!
 unexpected response from server to authenticate command.	admin	sk	Neočakávaná odpoveď od servera na príkaz AUTENTICATE.
 unexpected response from server to digest-md5 response.	admin	sk	Neočakávaná odpoveď od servera na Digest-MD5 odpoveď.
 unexpected response from server to login command.	admin	sk	Neočakávaná odpoveď od servera na príkaz LOGIN.
-unknown account: %1 !!!	admin	sk	Neznámy účet: %1 !!!
-unknown command %1!	admin	sk	Neznámy príkaz %1!
+unknown account: %1 !!!	admin	sk	Neznámy účet: %1 !
+unknown command %1!	admin	sk	Neznámy príkaz %1 !
 unknown imap response from the server. server responded: %s	admin	sk	Neznáma IMAP odpoveď od servera. Server odpovedal: %s
 unknown option %1	admin	sk	Neznáma možnosť %1
-unsupported action '%1' !!!	admin	sk	Nepodporovaná akcia '%1' !!!
+unsupported action '%1' !!!	admin	sk	Nepodporovaná akcia '%1' !
 unwilling to save category with current settings. check for inconsistency:	admin	sk	Nepodarilo sa uložiť kategóriu so súčasnými nastaveniami. Skontrolujte nekonzistentnosť:
 up	admin	sk	Hore
 update current email address:	admin	sk	Aktualizovať súčasnú E-mailovú adresu:
-updated	admin	sk	aktualizované
+updated	admin	sk	Aktualizované
 upload your background image or enter the url	admin	sk	Nahrať svoj obrázok pozadia alebo zadať URL
 upload your certificate .p12/.pfx file	admin	sk	Nahrať svoj súbor certifikátu .p12/.pfx
 upload your favicon or enter the url	admin	sk	Nahrať svoju ikonu stránky (favicon) alebo zadať URL
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	sk	Nahrajte svoje hlavičkové logo alebo zadajte URL (ak je rovnaké ako prihlasovacie logo, tak ho ponechajte prázdne)
 upload your logo or enter the url	admin	sk	Nahrať svoje logo alebo zadať URL
 uppercase, lowercase, number, special char	admin	sk	Veľké a malé písmená, čísla, špeciálne znaky
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	sk	URL inštalácie EGroupware, napríklad http://domain.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	sk	URL inštalácie EGroupware, napríklad https://egw.domain.com/egroupware
 usage	admin	sk	Využitie
+use admin credentials to connect without a session-password, e.g. for sso	admin	sk	Na pripojenie bez hesla relácie, napr. pre SSO, použite poverenia správcu
 use cookies to pass sessionid	admin	sk	Použiť cookies na odovzdanie ID relácie
 use default	admin	sk	Použiť predvolené
 use ldap defaults	admin	sk	Použiť predvolené hodnoty LDAP
 use predefined username and password defined below	admin	sk	Použiť preddefinované používateľské meno a heslo, uvedené nižšie
 use pure html compliant code (not fully working yet)	admin	sk	Použiť čistý HTML kód (zatiaľ nie je plne funkčné)
 use save or apply to store the received oauth token!	admin	sk	Použite funkciu Uložiť, alebo Použiť, aby sa obdržaný OAuth token zachoval!
-use secure cookies (transmitted only via https)	admin	sk	Použiť bezpečné cookie (prenášané len cez https)
+use secure cookies (transmitted only via https)	admin	sk	Použiť bezpečné cookie (prenášané len cez HTTPS)
 use smtp auth	admin	sk	Použiť SMTP overovanie
 use theme	admin	sk	Použiť tému
 use tls authentication	admin	sk	Použiť TLS overovanie
@@ -951,7 +982,8 @@ user csv import	admin	sk	CSV import používateľov
 user data	common	sk	Používateľské údaje
 user for smtp-authentication (leave it empty if no auth required)	admin	sk	Používateľ pre SMTP overovanie (ak netreba, ponechajte prázdne)
 user groups	admin	sk	Používateľské skupiny
-userdata	admin	sk	používateľské údaje
+user-agent	admin	sk	User-Agent
+userdata	admin	sk	Používateľské údaje
 userid@domain eg. u1234@domain	admin	sk	PoužívateľskéID@doména napr. u1234@domain
 username (standard)	admin	sk	Používateľské meno (štandardné)
 username specified below for all	admin	sk	Nižšieuvedené používateľské meno pre všetkých
@@ -963,9 +995,12 @@ users can define their own signatures	admin	sk	Používatelia môžu definovať 
 users can utilize these stationery templates	admin	sk	Používatelia môžu využívať tieto statické šablóny
 users choice	admin	sk	Používateľská voľba
 using data from mozilla ispdb for provider %1	admin	sk	Používajú sa údaje z Mozilla ISPDB pre poskytovateľa %1
+using fallback via regular json requests	admin	sk	Použitie záložného riešenia prostredníctvom bežných požiadaviek JSON
 using imap:%1, smtp:%2, oauth:%3:	admin	sk	Používa sa IMAP:%1, SMTP:%2, OAUTH:%3:
+using native swoole push	admin	sk	Použitie natívneho Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	sk	Oznámenia o neprítomnosti so zadaným dátumom začiatku a konca vyžadujú,aby bol nastavený účet správcu!
 vacation notice	admin	sk	Dovolenkové upozornenie
+valid for	admin	sk	Platí pre
 value for column %1 is not unique!	admin	sk	Hodnota pre stĺpec %1 nie je jedinečná!
 vfs directory "%1" not found!	admin	sk	Adresár VFS "%1" sa NEnašiel!
 view access log	admin	sk	Zobraziť prístupové záznamy
@@ -973,7 +1008,7 @@ view account	admin	sk	Zobraziť účet
 view category	admin	sk	Zobraziť kategóriu
 view error log	admin	sk	Zobraziť záznam o chybách
 view sessions	admin	sk	Zobraziť relácie
-view this user	admin	sk	zobraziť tohto používateľa
+view this user	admin	sk	Zobraziť tohto používateľa
 view user account	admin	sk	Zobraziť používateľský účet
 virtual mail manager	admin	sk	Virtuálny MAIL ManaGeR
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	sk	Nastavte počet dní, koľko vopred sa majú používatelia upozorňovať na vynútenú obmenu hesla. Prázdne = bez informácie
@@ -986,8 +1021,9 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	sk	Chcete, abyEEGroupware kontroloval aktuálnosť verzie aplikácií po prihlásení správcu?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sk	Chcete, aby sa nové jazykové súbory uplatnili počas prihlasovania?
 would you like to show each application's upgrade status ?	admin	sk	Chcete, aby sa zobrazoval stav aktualizácie každej aplikácie?
-wrong account type: %1 is no %2 !!!	admin	sk	Nesprávny typ účtu: %1 NIE je %2!!!
-wrong admin-account or -password !!!	admin	sk	Nesprávny účet alebo heslo správcu!!!
+wrong account type: %1 is no %2 !!!	admin	sk	Nesprávny typ účtu: %1 NIE je %2 !
+wrong admin-account or -password !!!	admin	sk	Nesprávny účet alebo heslo správcu!
+wrong credentials to access the header.inc.php file!	admin	sk	Nesprávne poverenia na prístup k súboru header.inc.php!
 xml-rpc	admin	sk	XML-RPC
 yes, but no scayt	admin	sk	Áno, ale bez kontroly pravopisu pri písaní (online)
 yes, use browser based spell checking engine	admin	sk	Áno, používať kontrolu pravopisu v prehliadači
@@ -998,9 +1034,9 @@ you can not use --dry-run together with --skip-checks!	admin	sk	NEmôžete použ
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sk	Ak nastavíte náhodné heslo alebo používateplaintextové heslá , môžete zmeniť len heš!
 you can use wizard to fix account settings or delete account.	admin	sk	Ohľadom opravy nastavení účtu alebo odstránenia účtu môžete použiť Sprievodcu.
 you have entered an invalid expiration date	admin	sk	Zadali ste nesprávny čas vypršania
-you have no email address for your user set !!!	admin	sk	Nemáte nastavenú žiadnu e-mailovú adresu pre vášho používateľa !!!
+you have no email address for your user set !!!	admin	sk	Nemáte nastavenú žiadnu e-mailovú adresu pre vášho používateľa!
 you have received a new message on the	admin	sk	Obdržali ste novú správu ohľadom
-you have to enter a name, to create a new field!!!	admin	sk	Ak chcete vytvoriť nové pole, musíte zadať názov!!!
+you have to enter a name, to create a new field!!!	admin	sk	Ak chcete vytvoriť nové pole, musíte zadať názov!
 you have to enter a name, to create a new type!	admin	sk	Ak chcete vytvoriť nový typ, musíte zadať názov!
 you must add at least 1 permission or group to this account	admin	sk	Tomuto účtu musíte pridať aspoň 1 oprávnenie alebo skupinu
 you must enter a group name.	admin	sk	Musíte zadať názov skupiny

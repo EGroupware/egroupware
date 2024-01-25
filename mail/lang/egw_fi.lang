@@ -16,6 +16,7 @@ aliases+forwards	mail	fi	Aliasit+Edelleenlähetys
 all of	mail	fi	kaikki /
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allways a new window	mail	fi	Aina uusi ikkuna
+always respond / auto-responder	mail	fi	Vastaa aina / automaattinen vastaus
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
 always show notifiction	mail	fi	Näytä aina ilmoitus
 answered	mail	fi	Vastattu
@@ -32,7 +33,10 @@ by date	mail	fi	Päivämäärän mukaan
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	fi	Oletusarvoisesti "http://" korvataan vain "https://". Voit vapaasti määrittää 'https://proxy.egroupware.org/' lataamaan myös kuvia, jotka ovat saatavilla vain http:n kautta.
 caching of flags	mail	fi	Lippujen välimuistiin tallentaminen
 can not resolve the winmail.dat attachment!	mail	fi	Winmail.dat-liitettä ei voida ratkaista!
+certificate details	mail	fi	Todistuksen tiedot
+certificate in text	mail	fi	Todistus tekstinä
 certificate info for email %1	mail	fi	Sähköpostin %1 varmenteen tiedot
+certificate issued by	mail	fi	Todistuksen on myöntänyt
 changing subject failed because of %1	mail	fi	Aiheen vaihtaminen epäonnistui %1:n takia
 changing subject failed folder %1 does not exist	mail	fi	Aiheen vaihtaminen epäonnistui kansiota %1 ei ole olemassa.
 check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sääntöä vastaan
@@ -82,6 +86,7 @@ draft folder	mail	fi	Luonnokset -kansio
 drafts	mail	fi	Luonnokset
 edit account	mail	fi	Muokkaa käyttäjätiliä
 edit vacation settings	mail	fi	Muokkaa lomavastaaja-asetuksia
+email address	mail	fi	Sähköpostiosoite
 email notification update failed	mail	fi	Sähköpostin huomautusviestipäivitys epäonnistui
 emailaddress	admin	fi	Sähköpostiosoite
 emailadmin: profilemanagement	mail	fi	eMailAdmin: : Profiilinhallinta
@@ -97,6 +102,7 @@ error: could not save rule	mail	fi	Virhe: Sääntöä ei voitu tallentaa
 error: could not send message.	mail	fi	Virhe: Viestiä ei voitu lähettää.
 error: message could not be displayed.	mail	fi	Virhe: Viestiä ei voida näyttää.
 event details follow	mail	fi	Tapahtuman yksityiskohdat alla
+every %1. day	mail	fi	Joka %1. päivä
 everyone	mail	fi	Kaikki käyttäjät
 examine namespace to retrieve folders in others and shared	mail	fi	Tutki nimiavaruutta hakeaksesi kansioita toisissa ja jaetuissa
 extended	mail	fi	Laajennettu
@@ -202,6 +208,7 @@ no subject given!	mail	fi	Aihe puuttuu!
 non	mail	fi	Ei
 none, create all	mail	fi	Ei mitään, luo kaikki
 nothing to change.	mail	fi	Ei muutettavaa.
+once per day	mail	fi	Kerran päivässä
 one address is not valid	mail	fi	Yksi osoite ei kelpaa
 only email	mail	fi	Vain sähköpostiosoite
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	fi	Vain järkevää, jos kuljetat salasanan eri kanavan kautta / tämän sähköpostin ulkopuolella vastaanottajille!
@@ -260,6 +267,7 @@ report this email content as spam - spam solutions like spamtitan will learn	mai
 required pear class mail/mimedecode.php not found.	mail	fi	Tarvittavaa PEAR-luokkaa Mail/mimeDecode.php ei löydy.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fi	Vaaditaan poistettavaksi käytöstä, jos käytät Dovecotia, jossa on private seen -liput jaetussa tai käyttäjäkansiossa!
 row order style	mail	fi	Rivijärjestyksen muotoilu
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	fi	S/MIME-salaus epäonnistui, koska lähettäjän osoitteelle ei löytynyt sertifikaattia: %1
 save all	mail	fi	Tallenna kaikki
 save all attachments to filemanager	mail	fi	Tallenna kaikki liitetiedostot tiedostonhallintaan
 save as draft	mail	fi	Tallenna luonnoksena
@@ -301,9 +309,11 @@ show/hide preview pane in mail list view	mail	fi	Näytä/piilota esikatseluruutu
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	fi	Näyttää tilapäisen näkyvän ilmoituksen, joka sisältää lähettäjän osoitteen, aiheen ja pätkän sähköpostista.
 sieve	mail	fi	Sieve
 sieve script name	mail	fi	Sieve skriptin nimi
+sign your message with smime certificate	mail	fi	Allekirjoita viestisi S/MIME-varmenteella
 signature	mail	fi	Allekirjoitus
 signature at top	mail	fi	allekirjoitus ylhäällä
 signature position and visibility	mail	fi	Allekirjoituksen sijainti ja näkyvyys
+signed by	mail	fi	Allekirjoittanut
 size(...->0)	mail	fi	Koko (...->0)
 size(0->...)	mail	fi	Koko (0->...)
 small view	mail	fi	Pieni näkymä
@@ -358,4 +368,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	fi	Sinun on tallennettava viesti ensin luonnoksena, ennen kuin voit tallentaa sen VFS:ään.
 you will loose current message body, unless you save it to your clipboard!	mail	fi	Menetät nykyisen viestin rungon, ellet tallenna sitä leikepöydälle!
 you've got new mail	mail	fi	Sinulle on uusi sähköposti
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fi	Jäljellä oleva kiintiö %1 on liian pieni, et ehkä pysty lähettämään/vastaanottamaan lisää sähköposteja.\n Vaikka sähköpostien siivoaminen roskakoriin tai roskapostikansioon saattaa auttaa sinua saamaan hieman vapaata tilaa takaisin.\n Jos tämä ei auttanut, pyydä ylläpitäjältäsi lisää kiintiötä.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	fi	Jäljellä oleva kiintiö %1 on liian pieni, et ehkä pysty lähettämään/vastaanottamaan lisää sähköposteja.<br>Vaikka sähköpostien siivoaminen roskakoriin tai roskapostikansioon saattaa auttaa sinua saamaan hieman vapaata tilaa takaisin.<br>Jos tämä ei auttanut, pyydä ylläpitäjältäsi lisää kiintiötä.

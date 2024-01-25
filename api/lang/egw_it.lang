@@ -9,7 +9,7 @@
 %1 etemplates for application '%2' dumped to '%3'	common	it	%1 eTemplate per l'applicazione '%2' scaricati in '%3'
 %1 etemplates found	common	it	%1 eTemplate trovati
 %1 file	common	it	%1 file
-%1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
+%1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver!
 %1 matches on search criteria	common	it	%1 occorrenze trovate
 %1 more %2 selected ...	common	it	%1 più %2 selezionati...
 %1 more...	common	it	%1 ancora...
@@ -108,7 +108,7 @@ afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 align	common	it	Allinea
-alignment of label and input-field in table-cell	common	it	allineamento di etichetta e campo-input in cella-tabella
+alignment of label and input-field in table-cell	common	it	Allineamento di etichetta e campo-input in cella-tabella
 alignment of the v/hbox containing table-cell	common	it	Allineamento del V/HBox contenente cella-tabella
 all	common	it	Tutto
 all addressbooks	groupdav	it	Tutte le rubriche
@@ -142,15 +142,15 @@ api-accounts	common	it	Account utenti
 application	common	it	Applicazione
 application has no etemplates (no file %1) to restore!	common	it	L'applicazione non ha eTemplate (nessun file %1) da ripristinare!
 application name needed to restore etemplates!	common	it	Nome dell'applicazione obbligatorio per ripristinare gli eTemplate!
-application name needed to write a langfile or dump the etemplates !!!	common	it	Il nome applicazione è necessario per scrivere un file linguaggio o dump degli eTemplate !!!
+application name needed to write a langfile or dump the etemplates !!!	common	it	Il nome applicazione è necessario per scrivere un file linguaggio o dump degli eTemplate!
 applications	common	it	Applicazioni
-applies the changes made	common	it	applica le modifiche fatte
-applies the changes to the given version of the template	common	it	applica le modifiche alla data versione del template
+applies the changes made	common	it	Applica le modifiche fatte
+applies the changes to the given version of the template	common	it	Applica le modifiche alla data versione del template
 apply	common	it	Applica
 apply the action on the whole query, not only the shown entries	common	it	Applica l'azione all'intera query, NON solo le voci visualizzate
 apps &amp; license	common	it	Applicazioni e licenza
 april	common	it	Aprile
-are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
+are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci?
 are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
 are you sure you want to logout?	common	it	Sei sicuro di voler uscire?
 are you sure, you would like to delete the backup key?	common	it	Sicuro di voler eliminare la chiave di backup?
@@ -171,7 +171,7 @@ autohide sidebox menu's	common	it	Nascondi automaticamente i menù laterali
 autohide sidebox menus	common	it	Nascondi automaticamente i menù laterali
 automatic update check failed, you need to check manually!	common	it	Il controllo degli aggiornamenti automatico non ha funzionato... Dovrai controllare manualmente!
 automatically hide the sidebox menu's?	common	it	Nascondere automaticamente i menù laterali?
-automatically hide the sidebox menus?	common	it	Nascondo automaticamente i menù laterali ?
+automatically hide the sidebox menus?	common	it	Nascondo automaticamente i menù laterali?
 automatically refresh list	common	it	Aggiorna l'elenco automaticamente
 autosave default category	common	it	Categoria predefinita per il salvataggio automatico
 avatar	common	it	Avatar
@@ -182,8 +182,8 @@ backcolor	common	it	Colore di fondo
 background color:	common	it	Colore di sfondo:
 backup key	common	it	Chiave di backup
 backup/restore	common	it	Backup/Ripristino
-backup/restore ...	common	it	Backup/Ripristino ...
-backupdir '%1' is not writeable by the webserver	common	it	directory di backup '%1' non è scrivibile dal webserver
+backup/restore ...	common	it	Backup/Ripristino...
+backupdir '%1' is not writeable by the webserver	common	it	Directory di backup '%1' non è scrivibile dal webserver
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
 bahrain	common	it	BAHRAIN
@@ -224,16 +224,16 @@ calendar	common	it	Agenda
 calendars to sync in addition to personal calendar	groupdav	it	Agende da sincronizzare oltre a quella personale
 cambodia	common	it	CAMBOGIA
 cameroon	common	it	CAMEROON
-can not have special sql-value null	common	it	non può avere NULL come valore-SQL speciale
+can not have special sql-value null	common	it	Non può avere NULL come valore-SQL speciale
 can't create directory %1 to connect found unconnected nodes to it!	admin	it	Non è stato possibile creare la cartella %1 da connettere. Sono stati trovati nodi disconnessi.
 canada	common	it	CANADA
 cancel	common	it	Annulla
 cannot replace %1 because it is a directory	common	it	Non è possibile sostituire %1 perché è una directory
 cannot set a category as parent, which is part of this categorys subtree!	common	it	Impossibile impostare una categoria come padre, quando fa parte del sotto-albero di questa categoria!
 cannot set this cat as its own parent!	common	it	Impossibile impostare questa categoria come padre di se stessa!
-cant delete a single widget from a grid !!!	common	it	non si può cancellare un singolo widget da una griglia !!!
-cant delete the only column of a grid !!!	common	it	non si può cancellare l'unica colonna di una griglia !!!
-cant delete the only row in a grid !!!	common	it	non si può cancellare l'unica riga di una griglia !!!
+cant delete a single widget from a grid !!!	common	it	Non si può cancellare un singolo widget da una griglia!
+cant delete the only column of a grid !!!	common	it	Non si può cancellare l'unica colonna di una griglia!
+cant delete the only row in a grid !!!	common	it	Non si può cancellare l'unica riga di una griglia!
 cant open %1, needs ziparchive	common	it	Non posso aprire %1, per farlo è necessario ZipArchive
 cant open '%1' for %2	common	it	Non è possibile aprire '%1' per %2
 cape verde	common	it	CAPO VERDE
@@ -251,17 +251,17 @@ cellpadding for the table-tag	common	it	Cellpadding per table-tag
 cells	common	it	Celle
 cellspacing for the table-tag	common	it	Spaziatura celle per table-tag
 center	common	it	Centrato
-centered	common	it	centrato
+centered	common	it	Centrato
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
 change owner	common	it	Cambia proprietario
 changed	common	it	Modificato
-charset	common	it	utf-8
+charset	common	it	Set di caratteri
 check all	common	it	Seleziona tutto
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	it	Controlla i valori vuoti nelle istruzioni IF. Esempio {{IF url~EMPTY~~Website:}} - Se url non è vuoto, scrive "Website:".
-check if content should only be displayed but not altered (the content is not send back then!)	common	it	spunta se il contenuto deve essere solo visualizzato ma non alterato (il contenuto non viene rispedito allora!)
-check if field has to be filled by user	common	it	spunta se il campo deve essere riempito dall'utente
+check if content should only be displayed but not altered (the content is not send back then!)	common	it	Spunta se il contenuto deve essere solo visualizzato ma non alterato (il contenuto non viene rispedito allora!)
+check if field has to be filled by user	common	it	Spunta se il campo deve essere riempito dall'utente
 check installation	common	it	Controlla installazione
 check now	common	it	Controlla Adesso
 checkbox	common	it	Checkbox
@@ -279,27 +279,27 @@ choose the parent category	common	it	Scegli la categoria superiore
 choose time	common	it	Seleziona orario
 chosen parent category no longer exists	common	it	La categoria scelta non esiste più
 christmas island	common	it	ISOLA DI NATALE
-class	common	it	Classe
-class, valign	common	it	classe, Valign
+class	common	it	Class
+class, valign	common	it	Class, Valign
 clear	common	it	Pulisci
 clear form	common	it	Svuota il modulo
 clear window	common	it	Pulisci finestra
 click	common	it	Clicca
-click here to attach the file	common	it	premi qui per allegare il file
-click here to create the link	common	it	premi qui per creare il Link
+click here to attach the file	common	it	Premi qui per allegare il file
+click here to create the link	common	it	Premi qui per creare il Link
 click here to resume your egroupware session.	common	it	Clicca qui per ripristinare la tua sessione EGroupware
 click here to start the search	common	it	Premi qui per iniziare la ricerca
 click here to upload the file	common	it	Premi qui per caricare il file
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
-click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
+click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù?
 click this image on the navbar: %1	common	it	Clicca su questa immagine sulla barra di navigazione: %1
 click to open colorpicker	common	it	Clicca per aprire il selettore dei colori
-click to order after that criteria	common	it	premi qui per ordinare con questo criterio
-clickable path	common	it	percorso cliccabile
+click to order after that criteria	common	it	Premi qui per ordinare con questo criterio
+clickable path	common	it	Percorso cliccabile
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	it	I client che non esplicitano un limite, saranno limitati a questo numero di giorni. Un limite alto può causare problemi con alcuni client
 close	common	it	Chiudi
 close sidebox	common	it	Chiudi riquadro laterale
-closes the window without saving the changes	common	it	chiude la finestra senza salvare le modifiche
+closes the window without saving the changes	common	it	Chiude la finestra senza salvare le modifiche
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 collection empty.	common	it	Collezione vuota
 collection listing	common	it	Elenco collezione
@@ -313,17 +313,17 @@ comment	common	it	Commento
 common preferences	common	it	Preferenze generiche
 comoros	common	it	COMORE
 company	common	it	Azienda
-confirm	common	it	conferma
-confirmation message or custom javascript (returning true or false)	common	it	messaggio di conferma o JavaScript personalizzato (che restituisce vero o falso)
-confirmation necesary or custom java-script	common	it	conferma necessaria o JavaScript personalizzato
+confirm	common	it	Conferma
+confirmation message or custom javascript (returning true or false)	common	it	Messaggio di conferma o JavaScript personalizzato (che restituisce vero o falso)
+confirmation necesary or custom java-script	common	it	Conferma necessaria o JavaScript personalizzato
 confirmation required	common	it	Conferma richiesta
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 contact	common	it	Contatto
 contact field to show	common	it	Campo contatto da mostrare
-contact fields	common	it	campi Contatti
+contact fields	common	it	Campi Contatti
 contacting server...	common	it	Sto contattando il Server...
-contains	common	it	contiene
+contains	common	it	Contiene
 content type	common	it	Tipo contenuto
 cook islands	common	it	ISOLE COOK
 cookies are required to login to this site	login	it	Sono necessari i cookie per effettuare il login
@@ -342,21 +342,21 @@ create link	common	it	Crea collegamento
 created	common	it	Creati
 created by	common	it	Creato da
 created by %1	common	it	Creato da %1
-creates an english ('en') langfile from label and helptexts (for application in name)	common	it	creates an english ('en') langfile from label and helptexts (for application in Name)
+creates an english ('en') langfile from label and helptexts (for application in name)	common	it	Creates an english ('en') langfile from label and helptexts (for application in Name)
 creator	preferences	it	Creatore
 croatia	common	it	CROAZIA
-css class for the table-tag	common	it	classe CSS per table-tag
-css properties	common	it	proprietà CSS
+css class for the table-tag	common	it	Classe CSS per table-tag
+css properties	common	it	Proprietà CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	it	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	it	Nome classe CSS per questa riga, preset: 'th' = header, 'row' = riga alternativa, 'row_off'+'row_on' righe
-css-styles	common	it	stili-CSS
+css-styles	common	it	Stili CSS
 ctrl	common	it	Ctrl
 cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
 current users	common	it	Sessioni attive
-custom	common	it	personalizzato
-custom fields	common	it	campi personalizzati
+custom	common	it	Personalizzato
+custom fields	common	it	Campi personalizzati
 custom javascript for onchange	common	it	JavaScript personalizzato per onChange
 cut	common	it	Taglia
 cyprus	common	it	CIPRO
@@ -374,7 +374,7 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 day	common	it	Giorno
 days	common	it	giorni
 db ensures that every row has a unique value in that column	common	it	DB assicura che ogni riga abbia un unico valore in quella colonna
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	it	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	it	Opzioni di indice specifiche del DB, separate da virgole, ad esempio mysql(FULLTEXT) o mysql(100) per la lunghezza indicizzata di una colonna.
 db-tools	common	it	DB-Tools
 december	common	it	Dicembre
 deck	common	it	Deck (interno)
@@ -386,9 +386,9 @@ default visible actions	common	it	Azioni visibili predefinite
 default width for the windows	common	it	Larghezza predefinita per le finestre
 del	common	it	Canc
 delete	common	it	Elimina
-delete a single entry by passing the id.	common	it	Delete a single entry by passing the id.
-delete all selected etemplates, without further inquiry	common	it	cancella TUTTI gli eTemplate selezionati, SENZA ulteriori domande
-delete and cut save the template!	common	it	cancella e taglia-salva il template!
+delete a single entry by passing the id.	common	it	Delete a single entry by passing the ID.
+delete all selected etemplates, without further inquiry	common	it	Cancella TUTTI gli eTemplate selezionati, SENZA ulteriori domande
+delete and cut save the template!	common	it	Cancella e taglia-salva il template!
 delete backup	common	it	Elimina backup
 delete backup key	common	it	Elimina la chiave di backup
 delete category	common	it	Elimina categoria
@@ -401,15 +401,15 @@ delete row	common	it	Cancella riga
 delete selected entries?	common	it	Eliminare le voci selezionate?
 delete the spezified etemplate	common	it	Cancella eTemplate specificato
 delete these entries	common	it	Elimina queste voci
-delete this column	common	it	cancella questa colonna
+delete this column	common	it	Cancella questa colonna
 delete this entry	common	it	Elimina questa voce
-delete this etemplate	common	it	cancella questo eTemplate
+delete this etemplate	common	it	Cancella questo eTemplate
 delete this file	common	it	Cancella questo file
 delete this photo?	common	it	Eliminare questa foto?
-delete this row	common	it	cancella questa riga
-delete whole column (can not be undone!!!)	common	it	cancella intera colonna  (NON si può annullare!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	it	cancella il suddetto eTemplate dal database, NON può essere annullato
-deletes the etemplate spez. above	common	it	cancella il suddetto eTemplate
+delete this row	common	it	Cancella questa riga
+delete whole column (can not be undone!!!)	common	it	Cancella intera colonna  (NON si può annullare!)
+deletes the above spez. etemplate from the database, can not be undone	common	it	Cancella il suddetto eTemplate dal database, NON può essere annullato
+deletes the etemplate spez. above	common	it	Cancella il suddetto eTemplate
 deletes this column	common	it	Cancella questa colonna
 deletes this index	common	it	Cancella questo index
 denmark	common	it	DANIMARCA
@@ -427,10 +427,10 @@ disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilitare l'esecuzione di bugfixscript per Internet Explorer 5.5 e superiori per mostrare la trasparenza nelle immagini PNG?
 disabled	common	it	Disabilitato
-discard changes	common	it	annulla i cambiamenti
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	it	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
-displayed in statusline of browser if input-field gets focus	common	it	displayed in statusline of browser if input-field gets focus
-displayed in the top line of the groupbox (legend)	common	it	visualizzato nella riga più alta del groupbox (legenda)
+discard changes	common	it	Annulla i cambiamenti
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	it	Displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
+displayed in statusline of browser if input-field gets focus	common	it	Displayed in statusline of browser if input-field gets focus
+displayed in the top line of the groupbox (legend)	common	it	Visualizzato nella riga più alta del groupbox (legenda)
 distribution lists as groups	groupdav	it	Liste di distribuzione come gruppi
 djibouti	common	it	DJIBOUTI
 do not notify	common	it	Non avvisare
@@ -444,7 +444,7 @@ document '%1' does not exist or is not readable for you!	preferences	it	Il docum
 document properties	common	it	Proprietà documento
 document title:	common	it	Titolo documento:
 documentation	common	it	Documentazione
-doesn't matter	common	it	non importa
+doesn't matter	common	it	Non importa
 domain	common	it	Dominio
 domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-mail, es. "%1"
 domestic	common	it	Domestico
@@ -470,8 +470,8 @@ edit %1 category for	common	it	Modifica categoria %1 per
 edit avatar	common	it	Modifica l'avatar
 edit categories	common	it	Modifica Categorie
 edit category	common	it	Modifica Categoria
-edit embeded css styles or of the applications app.css file	common	it	modifica gli stili CSS incorporati o del file applicazioni app.css
-edit the etemplate spez. above	common	it	edit the eTemplate spez. above
+edit embeded css styles or of the applications app.css file	common	it	Modifica gli stili CSS incorporati o del file applicazioni app.css
+edit the etemplate spez. above	common	it	Modifica del eTemplate
 edit...	common	it	Modifica...
 editable templates - db-tools	common	it	Editable Templates - DB-Tools
 editable templates - delete template	common	it	Editable Templates - Delete Template
@@ -484,7 +484,7 @@ egroupware all users group, do not delete	common	it	Gruppo per tutti gli utenti:
 egroupware anonymous users group, do not delete	common	it	Gruppo utenti anonimi: NON eliminare
 egroupware api version	common	it	Versione API EGroupware
 egroupware maintenance update %1 available	common	it	Aggiornamento di manutenzione %1 EPL disponibile
-egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1!
+egroupware security update %1 needs to be installed!	common	it	E' necessario installare l'aggiornamento di sicurezza %1 !
 egroupware version	common	it	Versione EGroupware
 egroupware: login blocked for user '%1', ip %2	common	it	EGroupware: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
@@ -492,7 +492,7 @@ el salvador	common	it	EL SALVADOR
 element role title	common	it	Titolo ruolo elemento
 email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	it	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	it	Embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	it	File vuoto
 enable javascript onchange submit	common	it	Abilita JavaScript onChange submit
 enable logging	groupdav	it	Abilita registro
@@ -500,12 +500,12 @@ enabled	common	it	Abilitato
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	it	Abilita registro del traffico dati CalDAV/CardDAV per diagnosticare problemi con i dispositivi
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
-enter '' for an empty default, nothing mean no default	common	it	inserisci '' per un predefinito vuoto, niente significa nessun predefinito
+enter '' for an empty default, nothing mean no default	common	it	Inserisci '' per un predefinito vuoto, niente significa nessun predefinito
 enter a search pattern	common	it	Inserisci una stringa di ricerca
 enter filename to upload and attach, use [browse...] to search for it	common	it	Enter filename to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
-enter the new version number here (> old_version), empty for no update-file	common	it	enter the new version number here (> old_version), empty for no update-file
-enter the new version number here (has to be > old_version)	common	it	inserisci il numero della nuova versione qui (deve essere > old_version)
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di EGroupware.<br>Esempio: https://egw.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
+enter the new version number here (> old_version), empty for no update-file	common	it	Inserire il numero della nuova versione, > old_version, vuoto per nessun file di aggiornamento
+enter the new version number here (has to be > old_version)	common	it	Inserisci il numero della nuova versione qui (deve essere > old_version)
 enter your file name	common	it	Inserisci il nome del file
 enter your password	common	it	Inserisci la password
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
@@ -521,11 +521,12 @@ error create parent directory %1!	common	it	Errore di creazione della cartella f
 error creating %1 %2 directory	common	it	Errore durante la creazione della directory %1 %2
 error deleting %1 %2 directory	common	it	Errore durante l'eliminazione della directory %1 %2
 error deleting %1!	common	it	Errore di eliminazione di %1
+error enabling push	common	it	Errore nell'abilitazione del push
 error renaming %1 %2 directory	common	it	Errore durante la rinomina della directory %1 %2
 error uploading file!	filemanager	it	Errore di caricamento file!
-error: template not found !!!	common	it	Errore: Template non trovato !!!
-error: webserver is not allowed to write into '%1' !!!	common	it	Errore: il webserver non può scrivere in '%1' !!!
-error: while saving !!!	common	it	Errore: durante salvataggio !!!
+error: template not found !!!	common	it	Errore: Template non trovato!
+error: webserver is not allowed to write into '%1' !!!	common	it	Errore: il webserver non può scrivere in '%1'!
+error: while saving !!!	common	it	Errore: durante salvataggio!
 error: writing file (no write-permission for the webserver) !!!	common	it	Error: writing file (no write-permission for the webserver) !!!
 estonia	common	it	ESTONIA
 et2 rendering took %1s	common	it	Il rendering di eT2 ha richiesto %1s
@@ -538,16 +539,16 @@ etemplate reference	common	it	Riferimenti eTemplate
 etemplate tutorial	common	it	Tutorial eTemplate
 ethiopia	common	it	ETIOPIA
 everything	common	it	Tutto
-exact	common	it	esatta
+exact	common	it	Esatta
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	it	Esempio {{LETTERPREFIX}} - Fornisce un prefisso senza doppi spazi, se per esempio il titolo fosse vuoto.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	it	Esempio {{LETTERPREFIX}} - Fornisce un prefisso di lettere senza doppi spazi, se il titolo è vuoto, ad esempio
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	it	Esempio {{nenvlf role}} - se il campo non è vuoto, impostare un LF senza alcun valore del campo
-exchange this row with the one above	common	it	scambia questa riga con quella superiore
-exchange this two columns	common	it	scambia queste due colonne
+exchange this row with the one above	common	it	Scambia questa riga con quella superiore
+exchange this two columns	common	it	Scambia queste due colonne
 expiration	common	it	Scadenza
-export the loaded etemplate into a xml-file	common	it	esporta l'eTemplate caricato in un file xml
+export the loaded etemplate into a xml-file	common	it	Esporta l'eTemplate caricato in un file XML
 export xml	common	it	Esporta XML
 extensions loaded:	common	it	Estensioni caricate:
 failed to change mode of required directory "%1" to %2!	admin	it	Non è stato possibile modificare i permessi della cartella da "%1" a %2!
@@ -559,11 +560,11 @@ falkland islands (malvinas)	common	it	ISOLE FALKLAND (MALVINAS)
 faroe islands	common	it	ISOLE FAROE
 favorite queries	common	it	Query preferite
 favorites	common	it	Preferiti
-fax number	common	it	numero di fax
+fax number	common	it	Numero di fax
 features of the editor?	common	it	Funzioni dell'editor
 february	common	it	Febbraio
 field	common	it	Campo
-field must not be empty !!!	common	it	Il campo non può essere vuoto !!!
+field must not be empty !!!	common	it	Il campo non può essere vuoto!
 fields	common	it	Campi
 fiji	common	it	FIJI
 file	common	it	File
@@ -572,7 +573,7 @@ file %1 has no content in physical filesystem %2 --> file removed!	admin	it	Il f
 file %1 has no content in physical filesystem %2!	admin	it	Il file %1 non ha contenuto nel filesystem fisico %2
 file '%1' not found!	common	it	File '%1' non trovato
 file a file	common	it	Caricare il file
-file contains more than one etemplate, last one is shown !!!	common	it	Il file contiene più di un eTemplate, l'ultimo è visualizzato !!!
+file contains more than one etemplate, last one is shown !!!	common	it	Il file contiene più di un eTemplate, l'ultimo è visualizzato!
 file information	common	it	Informazioni del file
 file is of wrong type (%1 != %2)!	common	it	Il file è di tipo non corretto (%1 != %2)
 file too large.  maximum %1	common	it	File troppo grande. Massimo %1
@@ -587,18 +588,18 @@ first name	common	it	Nome
 first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 first page	common	it	Prima pagina
 firstname	common	it	Nome
-fixme!	common	it	CORREGGIMI !
-floating point	common	it	Virgola Mobile
+fixme!	common	it	CORREGGIMI!
+floating point	common	it	Virgola mobile
 folder already exists.	common	it	La cartella esiste già.
 for more than one contact in a document use the tag pagerepeat!	preferences	it	Usare il tag di ripetizione pagina per riportare più di un contatto in un documento!
-force	common	it	forza
+force	common	it	Forza
 force selectbox	common	it	Forza Casella di Selezione
 foreign key	common	it	Tasto straniero
 forever	common	it	Per sempre
 formatted business address	common	it	Indirizzo aziendale formattato
 formatted private address	common	it	Indirizzo privato formattato
 formatted text (html)	common	it	Testo Formattato (HTML)
-found unconnected %1 %2!	admin	it	Trovati disconnessi %1 %2!
+found unconnected %1 %2!	admin	it	Trovati disconnessi %1 %2 !
 fr	common	it	Fr
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
@@ -620,10 +621,11 @@ ghana	common	it	GHANA
 gibraltar	common	it	GIBILTERRA
 global	common	it	Globale
 global public	common	it	Pubblico Globale
-go to the first entry	common	it	vai alla prima voce
-go to the last entry	common	it	vai all'ultima voce
-go to the next page of entries	common	it	vai alla pagina seguente delle voci
-go to the previous page of entries	common	it	go to the previous page of entries
+go to the first entry	common	it	Vai alla prima voce
+go to the last entry	common	it	Vai all'ultima voce
+go to the next page of entries	common	it	Vai alla pagina seguente delle voci
+go to the previous page of entries	common	it	Vai alla pagina precedente delle voci
+go to your home directory	common	it	Andare alla propria directory principale
 grant access	common	it	Autorizza Accesso
 greece	common	it	GRECIA
 greek	common	it	Greco
@@ -637,10 +639,10 @@ group access	common	it	Accesso Gruppo
 group has been added	common	it	Gruppo aggiunto
 group has been deleted	common	it	Gruppo cancellato
 group has been updated	common	it	Gruppo aggiornato
-group name	common	it	nome gruppo
-group public	common	it	Gruppo Pubblico
+group name	common	it	Nome gruppo
+group public	common	it	Gruppo pubblico
 groupbox	common	it	GroupBox
-groupdav	common	it	Server CalDAV, CardCAV e GroupDAV
+groupdav	common	it	Sincronizzazione CalDAV / CardDAV
 groups	common	it	Gruppi
 groups with permission for %1	common	it	Gruppi con permessi per %1
 groups without permission for %1	common	it	Gruppi senza permessi per %1
@@ -655,8 +657,8 @@ haiti	common	it	HAITI
 hbox	common	it	HBox
 heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
 height	common	it	Altezza
-height of row (in % or pixel)	common	it	altezza della riga (in % o pixel)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	it	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
+height of row (in % or pixel)	common	it	Altezza della riga (in % o pixel)
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	it	Height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
 height of the table in % or pixels for the table-tag and (optional) div	common	it	Height of the table in % or pixels for the table-tag and (optional) div
 height, disabled	common	it	Altezza, Disabilitata
 help	common	it	Aiuto
@@ -680,30 +682,29 @@ how many entries should the list show	common	it	Quante voci deve mostrare l'elen
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many rows to print	common	it	Quante righe stampare
 how to show the general egroupware menu ?	common	it	Come mostrare il menù generale di EGroupware
-html	common	it	Html
+html	common	it	HTML
 html link to the current record	common	it	Collegamento HTML al record attuale
 html links to any entries linked to the current record, excluding attached files	common	it	Collegamenti HTML a tutte le voci collegate al record corrente, esclusi i file allegati.
 hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
 id	common	it	ID
 iespell not detected. click ok to go to download page.	common	it	ieSpell non trovato. Clicca OK per andare alla pagina di download.
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	it	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	it	If field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 if the clock is enabled would you like it to update it every second or every minute?	common	it	Se l'orologio è abilitato, vuoi che si aggiorni ogni secondo oppure ogni minuto?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	it	Se l'errore persiste, contattare il proprio amministratore e chiedere di controllare il registro degli errori del server web.
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso vfs completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso VFS completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso VFS completo) %1 mostra un'icona di documento aggiuntiva per ogni inserimento. Quella icona permette di scaricare il documento specificato con la data inserita.
 if you use "2-factor-authentication", please enter the code here.	common	it	Se si utilizza l'autenticazione a due fattori, inserire il codice qui.
 image	common	it	Immagine
 image directory relative to document root (use / !), example:	common	it	La cartella delle immagini relativa alla base dei documenti (docroot) (usare / !), esempio:
 image url	common	it	URL immagine
 import	common	it	Importa
-import an etemplate from a xml-file	common	it	import an eTemplate from a xml-file
-import table-definitions from existing db-table	common	it	Import table-definitions from existing db-table
+import an etemplate from a xml-file	common	it	Import an eTemplate from a XML-file
+import table-definitions from existing db-table	common	it	Import table-definitions from existing DB-table
 import xml	common	it	Importa XML
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	it	Per copiare negli appunti c'è bisogno del Flash player.\n Puoi abilitarlo con la barra in alto per adesso, oppure permanentemente usando le impostazioni del browser.
 include access to any linked files (links tab)	common	it	Includere l'accesso a qualsiasi file collegato (scheda Collegamenti)
-increment version to not overwrite the existing template	common	it	incrementa la versione per non sovrascrivere il template esistente
+increment version to not overwrite the existing template	common	it	Incrementa la versione per non sovrascrivere il template esistente
 index/name of returned content (name of the template, link / method for image)	common	it	index/name of returned content (name of the Template, Link / Method for Image)
 indexed	common	it	Indicizzato
 indexoptions	common	it	Indexoptions
@@ -712,22 +713,22 @@ indonesia	common	it	INDONESIA
 infolog types to sync	common	it	Tipi di Attività da sincronizzare
 initial	common	it	Iniziale
 input required	common	it	Input richiesto
-insert a column before	common	it	inserisci una colonna prima
-insert a column behind	common	it	inserisci una colonna dopo
-insert a row above	common	it	inserisci una riga sopra
-insert a row below	common	it	inserisci una riga sotto
-insert a widget before	common	it	inserisci un widget prima
-insert a widget behind	common	it	inserisci un widget dopo
+insert a column before	common	it	Inserisci una colonna prima
+insert a column behind	common	it	Inserisci una colonna dopo
+insert a row above	common	it	Inserisci una riga sopra
+insert a row below	common	it	Inserisci una riga sotto
+insert a widget before	common	it	Inserisci un widget prima
+insert a widget behind	common	it	Inserisci un widget dopo
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert column after	common	it	Inserisci colonna dopo
 insert column before	common	it	Inserisci colonna prima
 insert in %1	common	it	Inserisci in %1
 insert in document	common	it	Inserisci in documento
 insert in dokument	common	it	Inserisci nel documento
-insert new column behind this one	common	it	insert new column behind this one
-insert new column in front of all	common	it	insert new column in front of all
-insert new row after this one	common	it	insert new row after this one
-insert new row in front of first line	common	it	insert new row in front of first Line
+insert new column behind this one	common	it	Inserire una nuova colonna dopo
+insert new column in front of all	common	it	Inserire una nuova colonna prima di tutte
+insert new row after this one	common	it	Inserire una nuova riga dopo
+insert new row in front of first line	common	it	Inserire una nuova riga prima della prima riga
 insert placeholder	common	it	Inserire un segnaposto
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
@@ -779,7 +780,7 @@ label	common	it	Etichetta
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	it	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 lang	common	it	Lingua
 language	common	it	Lingua
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	it	language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	it	Lingua breve (es. 'en' per l'inglese) per il template dipendente dalla lingua ('' legge le lingue preferite o quella predefinita, usiamo 'default' per leggere il template predefinito '')
 language_direction_rtl	common	it	language_direction_rtl
 lao peoples democratic republic	common	it	REPUBBLICA DEMOCRATICA POPOLARE DEL LAOS
 last	common	it	Ultimo
@@ -792,7 +793,7 @@ latvia	common	it	LATVIA
 ldap-mgr	common	it	LDAP-Manager
 lebanon	common	it	LIBANO
 left	common	it	Sinistra
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	it	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	it	Lunghezza per char+varchar, precisioni int: 2, 4, 8 e float: 4, 8
 lesotho	common	it	LESOTHO
 liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
@@ -814,17 +815,17 @@ linklist	common	it	Elenco Link
 links and attached files	preferences	it	Collegamenti e file allegati
 links to specified application.  example: {{links/addressbook}}	common	it	Link verso specifica applicazione. P.es.: {{links/addressbook}}
 linkstring	common	it	Stringa Link
-linkto	common	it	Link A
+linkto	common	it	Link a
 list	common	it	Lista
 list members	common	it	Elenco membri
 list of files linked to the current record	preferences	it	Elenco dei file collegati al record attuale
 lithuania	common	it	LITUANIA
 load	common	it	Carica
-load this template into the editor	common	it	carica questo template nell'editor
+load this template into the editor	common	it	Carica questo template nell'editor
 loading	common	it	Sto caricando...
 local	common	it	Locale
 location calendars	groupdav	it	Calendari locali
-locations	common	it	località
+locations	common	it	Località
 logging / debuging	groupdav	it	Resgistro/Debug
 login	common	it	Login
 login rejected by epl firewall, please contact your administrator	common	it	Instalasi addon Mailvelope berhasil. Sekarang Anda dapat mengkonfigurasi opsi.
@@ -839,7 +840,7 @@ luxembourg	common	it	LUSSEMBURGO
 macau	common	it	MACAO
 macedonia, the former yugoslav republic of	common	it	MACEDONIA, EX REPUBBLICA YUGOSLAVA DI
 madagascar	common	it	MADAGASCAR
-mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
+mail domain, eg. "%1"	common	it	Dominio e-mail, es. "%1"
 mailvelope addon installation failed! please try again.	common	it	Installazione componente aggiuntivo Mailvelope fallita! Per favore riprovare.
 mailvelope addon installation succeded. now you may configure the options.	common	it	L'installazione di Mailvelope è stata portata a termine con successo. Ora potrai configurarne le opzioni.
 main category	common	it	Categoria principale
@@ -894,18 +895,18 @@ moved %1 children from directory fs_id=%2 to %3	admin	it	Spostato %1 figli dalla
 moved unconnected %1 %2 to %3.	admin	it	Spostato disconnessi %1 %2 a %3
 mozambique	common	it	MOZAMBICO
 multicolumn indices	common	it	Multicolumn Indices
-multiple	common	it	multiplo
+multiple	common	it	Multiplo
 myanmar	common	it	MYANMAR
 name	common	it	Nome
-name of other table where column is a key from	common	it	name of other table where column is a key from
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	it	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
+name of other table where column is a key from	common	it	Nome dell'altra tabella in cui la colonna è una chiave da
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	it	Name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	common	it	Nome della tabella da aggiungere
-name of the etemplate, should be in form application.function[.subtemplate]	common	it	name of the eTemplate, should be in form application.function[.subTemplate]
+name of the etemplate, should be in form application.function[.subtemplate]	common	it	Name of the eTemplate, should be in form application.function[.subTemplate]
 name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 namespace	common	it	Spazio dei nomi
 namibia	common	it	NAMIBIA
 nauru	common	it	NAURU
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	it	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	it	Need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 nepal	common	it	NEPAL
 netherlands	common	it	OLANDA
 netherlands antilles	common	it	ANTILLE OLANDESI
@@ -921,7 +922,7 @@ new search	common	it	Nuova ricerca
 new table created	common	it	Nuova tabella creata
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
-newer version '%1' exists !!!	common	it	newer version '%1' exists !!!
+newer version '%1' exists !!!	common	it	Newer version '%1' exists!
 next	common	it	Successivo
 next page	common	it	Pagina successiva
 nextmatch	common	it	Nextmatch
@@ -936,11 +937,11 @@ nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
 no - cancel	common	it	No - Annulla
-no column to swap with !!!	common	it	nessuna colonna con cui scambiare !!!
+no column to swap with !!!	common	it	Nessuna colonna con cui scambiare!
 no default set	common	it	Nessun set predefinito
-no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
-no file	common	it	nessun file
-no filename given or selected via browse...	common	it	no filename given or selected via Browse...
+no entries found, try again ...	common	it	Nessuna voce trovata, prova ancora...
+no file	common	it	Nessun file
+no filename given or selected via browse...	common	it	No filename given or selected via Browse...
 no filters	common	it	Nessun filtro
 no history for this record	common	it	Nessuna history per questo record
 no key for recipient:	common	it	Nessuna chiave per il destinatario:
@@ -948,7 +949,7 @@ no matches found	common	it	Nessuna corrispondenza trovata.
 no response from server: your data is probably not saved	common	it	Nessuna risposta dal server: probabilmente i dati NON sono stati salvati
 no results match	common	it	Non ci sono risultati che corrispondono
 no rights to export more than %1 entries!	common	it	Diritti insufficienti per esportare più di %1 voci!
-no row to swap with !!!	common	it	nessuna riga con cui scambiare !!!
+no row to swap with !!!	common	it	Nessuna riga con cui scambiare!
 no savant2 template directories were found in:	common	it	Nessuna directory template Savant2 trovata in:
 no subject	common	it	Nessun Oggetto
 no suggestions	common	it	Nessun suggerimento
@@ -961,24 +962,24 @@ northern mariana islands	common	it	ISOLE NORTHERN MARIANA
 norway	common	it	NORVEGIA
 not	common	it	non
 not a user yet? register now	common	it	Non hai un account? registrati adesso!
-not assigned	common	it	non assegnato
+not assigned	common	it	Non assegnato
 not null	common	it	NON VUOTO
 not readable %1 entry of user %2	common	it	Non leggibile: voce %1 dell'utente %2
 not supported by current application!	common	it	Non supportato dall'applicazione corrente!
 note	common	it	Nota
 notes	common	it	Note
-nothing	common	it	niente
-nothing found - try again !!!	common	it	Non è stato trovato niente - prova ancora !!!
-nothing in clipboard to paste !!!	common	it	niente negli appunti da incollare !!!
-nothing matched search criteria !!!	common	it	Nothing matched search criteria !!!
+nothing	common	it	Niente
+nothing found - try again !!!	common	it	Non è stato trovato niente - prova ancora!
+nothing in clipboard to paste !!!	common	it	niente negli appunti da incollare!
+nothing matched search criteria !!!	common	it	Nothing matched search criteria!
 nothing to save.	common	it	Nulla da salvare
 notifications	common	it	Notifiche
 notify window	common	it	Finestra di Notifica
 notify your administrator to correct this situation	common	it	Chiedi all'Amministratore di correggere questa Situazione
 november	common	it	Novembre
 now	common	it	Adesso
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	it	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	it	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	it	Numero di colonne che il campo/la cella deve coprire o 'all' per le colonne rimanenti, nome della classe CSS (per il tag TD)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	it	Numero di righe/colonne in una V/HBox, Cellpadding, Cellspacing
 numbers	common	it	numeri
 october	common	it	Ottobre
 of	common	it	di
@@ -990,20 +991,21 @@ on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
 on mouse over	common	it	Al passaggio del mouse
 onchange	common	it	onChange
 onclick	common	it	onClick
-only an other version found !!!	common	it	only an other Version found !!!
-only private	common	it	solo privati
+only an other version found !!!	common	it	Trovata un'altra versione!
+only private	common	it	Solo privati
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	it	Supportato solo da alcuni client conformi (p.es. Apple). Se devi inserire un URL, con ogni probabilità non sarà supportato!
-only yours	common	it	solo personali
+only yours	common	it	Solo personali
 oops! you caught us in the middle of system maintainance.	common	it	Ops! Ci avete presi mentre stiamo facendo lavori di manutenzione!
 open	common	it	Apri
+open existing contact	common	it	Aprire il contatto esistente
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 open sidebox	common	it	Apri riquadro laterale
 open the online help.	common	it	Apre help online.
 operator	common	it	Operatore
-optional note about the link	common	it	optional note about the Link
+optional note about the link	common	it	Optional note about the Link
 options	common	it	Opzioni
-or	common	it	o
+or	common	it	O
 order to navigating by tab key through the form	common	it	Ordine per spostarsi con tasto TAB attraverso modulo
 ordered list	common	it	Lista ordinata
 original	common	it	Originale
@@ -1023,10 +1025,10 @@ papua new guinea	common	it	PAPUA NUOVA GUINEA
 paraguay	common	it	PARAGUAY
 parcel	common	it	Parcella
 parent category	common	it	Categoria superiore
-parent is a '%1' !!!	common	it	superiore è un '%1' !!!
+parent is a '%1' !!!	common	it	superiore è un '%1'!
 password	common	it	Password
-password contains only %1 of required %2 character classes: no %3	common	it	la password contiene solo %1 di %2 classi di caratteri richieste: no %3
-password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	it	la password contiene "%1" una parte o tutto il tuo nome (3 o più caratteri di lunghezza)
+password contains only %1 of required %2 character classes: no %3	common	it	La password contiene solo %1 di %2 classi di caratteri richieste: no %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	it	La password contiene "%1" una parte o tutto il tuo nome (3 o più caratteri di lunghezza)
 password could not be changed	common	it	La password non può essere cambiata
 password has been updated	common	it	La password è stata aggiornata
 password must contain at least %1 lowercase letters	common	it	La Password deve contenere almeno %1 lettere minuscole
@@ -1036,7 +1038,7 @@ password must contain at least %1 uppercase letters	common	it	La Password deve c
 password must have at least %1 characters	common	it	La Password deve avere almeno %1 caratteri
 paste	common	it	Incolla
 path	common	it	Percorso
-path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!
 permission denied!	common	it	Permesso negato
 permission denied! this is an administration only feature.	common	it	Autorizzazione negata! Questa è una funzione riservata all'amministrazione.
 permissions to the files/users directory	common	it	Permessi per la directory dei files/utenti
@@ -1050,20 +1052,20 @@ pgp encryption installation	common	it	Installazione cifratura PGP
 philippines	common	it	FILIPPINE
 phone number	common	it	Numero telefonico
 pitcairn	common	it	PITCAIRN
-placeholders	common	it	Segnaposto (variabili metasintattiche)
+placeholders	common	it	Segnaposto
 play/pause	common	it	Riproduzione/Pausa
 please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
-please enter table-name first !!!	common	it	Please enter table-name first !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	it	Per favore ricaricare il desktop di EGroupware (F5 / Ctrl+r).
+please enter table-name first !!!	common	it	Please enter table-name first!
+please reload the egroupware desktop (f5 / cmd+r).	common	it	Per favore ricaricare il desktop di EGroupware (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	it	Ricordatevi di usare '%1' come nome utente per i login locali d'ora in poi!
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
-please set your global preferences	common	it	Per favore imposta le preferenze globali !
-please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
+please set your global preferences	common	it	Per favore imposta le preferenze globali!
+please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione!
 please type %1 more characters	common	it	Per favore digitare %1 caratteri ancora
 please type 1 more character	common	it	Per favore digitare 1 carattere ancora
-please wait...	common	it	Attendere per Favore...
+please wait...	common	it	Attendere prego ...
 please, check back with us shortly.	common	it	Per favore torna a trovarci più tardi
 pm	common	it	pm
 poland	common	it	POLONIA
@@ -1092,18 +1094,18 @@ programs	common	it	Programmi
 project	common	it	Progetto
 properties	common	it	Proprietà
 protocol is required	common	it	Protocollo richiesto
-public	common	it	pubblico
+public	common	it	Pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 quick add	common	it	Aggiunta rapida
 radiobutton	common	it	Radiobutton
 read	common	it	Leggi
 read a list of entries.	common	it	Leggi un elenco di voci
-read a single entry by passing the id and fieldlist.	common	it	Read a single entry by passing the id and fieldlist.
-read etemplate from database (for the keys above)	common	it	read eTemplate from database (for the keys above)
+read a single entry by passing the id and fieldlist.	common	it	Leggere una singola voce passando l'ID e l'elenco dei campi.
+read etemplate from database (for the keys above)	common	it	Leggere eTemplate dal database (per le chiavi di cui sopra)
 read this list of methods.	common	it	Leggi questo elenco di metodi.
-reading	common	it	leggendo
-readonly	common	it	sola lettura
+reading	common	it	Leggendo
+readonly	common	it	Sola lettura
 readonly filemanager directory	common	it	Cartella del filemanager di sola lettura
 readonly share	common	it	Condivisione in sola lettura
 redo	common	it	Ripeti
@@ -1115,9 +1117,9 @@ remember me	common	it	Memorizza
 remember me for %1	common	it	Ricordami per %1
 remove	api	it	Rimuovi
 remove row (can not be undone!!!)	common	it	Rimuovi riga
-remove selected accounts	common	it	rimuovi gli account selezionati
+remove selected accounts	common	it	Rimuovi gli account selezionati
 remove shortcut	common	it	Rimuovi scorciatoie
-remove this link (not the entry itself)	common	it	Remove this link (not the entry itself)
+remove this link (not the entry itself)	common	it	Rimuovi link
 removed (now) empty directory fs_id=%1	admin	it	Rimossa (adesso) cartella vuota fs_id=%1
 rename	common	it	Rinomina
 repeat password	common	it	Ripeti la password
@@ -1145,7 +1147,7 @@ restore password	common	it	Password di ripristino
 retry	common	it	Riprovare
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
-returns savely, without deleting	common	it	returns savely, WITHOUT deleting
+returns savely, without deleting	common	it	Restituisce SENZA eliminare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
 right	common	it	Destra
@@ -1171,15 +1173,15 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	it	Salva
 save all	common	it	Salva tutti
 save as	common	it	Salva con nome
-save as zip	common	it	Salva come file compresso (zip)
+save as zip	common	it	Salva come file compresso (ZIP)
 save selected columns as default preference for all users.	common	it	Salva le colonne come preferenza predefinita per tutti gli utenti
 save the changes made and close the window	common	it	Salva le modifiche fatte e chiude la finestra
-save the etemplate under the above keys (name, ...), change them for a saveas	common	it	save the eTemplate under the above keys (name, ...), change them for a SaveAs
+save the etemplate under the above keys (name, ...), change them for a saveas	common	it	Save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saved column sizes to preferences.	common	it	Larghezza colonne salvata nelle preferenze.
-saves changes to tables_current.inc.php	common	it	saves changes to tables_current.inc.php
-saves the template with given version number and closes the window	common	it	salva il template con il numero di versione dato e chiude la finestra
+saves changes to tables_current.inc.php	common	it	Salva le modifiche a tables_current.inc.php
+saves the template with given version number and closes the window	common	it	Salva il template con il numero di versione dato e chiude la finestra
 scale	common	it	Scala
-scale for float	common	it	scale for float
+scale for float	common	it	Scale for float
 scheduling inbox	common	it	Programmazione inbox
 scheduling outbox	common	it	Programmazione outbox
 search	common	it	Cerca
@@ -1197,7 +1199,7 @@ security & password	common	it	Sicurezza e Password
 select	common	it	Seleziona
 select "%1", if your client does not support multiple addressbooks.	groupdav	it	Seleziona "%1", se il tuo client non supporta rubriche multiple
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	it	Seleziona "%1", se il tuo client supporta gruppi, p.es. rubrica OS X oppure iOS
-select a category	common	it	seleziona una Categoria
+select a category	common	it	Seleziona una Categoria
 select a primary contact, to show in the list	common	it	Seleziona un contatto primario, da mostrare in elenco
 select access	common	it	Seleziona Accesso
 select account	common	it	Seleziona Account
@@ -1205,7 +1207,7 @@ select action	common	it	Scegli azione
 select all	common	it	Seleziona tutto
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select all entries	common	it	Seleziona tutte le voci
-select an app first !!!	common	it	Seleziona prima un'applicazione !!!
+select an app first !!!	common	it	Seleziona prima un'applicazione!
 select an app to search in	common	it	Seleziona un'applicazione in cui cercare
 select an application	common	it	Seleziona una applicazione
 select an application, (*) = uninstalled	common	it	Seleziona una applicazione, (*) = disinstallata
@@ -1220,20 +1222,20 @@ select columns	common	it	Seleziona colonne
 select country	common	it	Seleziona Nazione
 select date	common	it	Selezione data
 select day	common	it	Seleziona Giorno
-select day of week	common	it	scegli giorno della settimana
+select day of week	common	it	Scegli giorno della settimana
 select entry	common	it	Scegli voce
-select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (vfs)
+select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (VFS)
 select files from filemanager ...	common	it	Seleziona file dal filemanager
 select group	common	it	Selezione gruppo
 select home email address	common	it	Selezione indirizzo e-mail abitazione
 select hour	common	it	Scegli ora
-select if content of field should not be translated (label gets always translated)	common	it	scegli se il contenuto del campo non deve essere tradotto (l'etichetta viene sempre tradotta)
+select if content of field should not be translated (label gets always translated)	common	it	Scegli se il contenuto del campo non deve essere tradotto (l'etichetta viene sempre tradotta)
 select language	common	it	Seleziona lingua
 select month	common	it	Seleziona Mese
-select multiple accounts	common	it	seleziona molteplici account
+select multiple accounts	common	it	Seleziona molteplici account
 select number	common	it	Seleziona Numero
 select one	common	it	Seleziona uno
-select one ...	common	it	Seleziona Uno ...
+select one ...	common	it	Seleziona Uno...
 select percentage	common	it	Seleziona Percentuale
 select priority	common	it	Seleziona Priorità
 select some options	common	it	Seleziona alcune opzioni
@@ -1242,7 +1244,7 @@ select the columns to display in the list	common	it	Seleziona le colonne da most
 select the default height for the application windows	common	it	Seleziona l'altezza predefinita per le finestre dell'applicazione
 select the default width for the application windows	common	it	Seleziona la larghezza predefinita per le finestre dell'applicazione
 select the indexed columns in their desired order	common	it	Seleziona le colonne indicizzate nel loro ordine desiderato
-select this etemplate to delete it	common	it	seleziona questo eTemplate per cancellarlo
+select this etemplate to delete it	common	it	Seleziona questo eTemplate per cancellarlo
 select user	common	it	Selezione utente
 select user or group	common	it	Seleziona Utente o Gruppo
 select which accounts to show	common	it	seleziona quali account mostrare
@@ -1265,12 +1267,12 @@ server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
 set as default	common	it	Imposta come predefinito
 set these columns as the default	common	it	Imposta queste colonne come predefinite
-set user as only responsible user, but keeping groups	groupdav	it	imposta utente come unico responsabile, mantenendo i gruppi
-set user as only responsible, removing all existing responsibles	groupdav	it	imposta utente come unico responsabile, rimuovendo tutti gli esistenti
-sets today as date	common	it	imposta oggi come data
+set user as only responsible user, but keeping groups	groupdav	it	Imposta utente come unico responsabile, mantenendo i gruppi
+set user as only responsible, removing all existing responsibles	groupdav	it	Imposta utente come unico responsabile, rimuovendo tutti gli esistenti
+sets today as date	common	it	Imposta oggi come data
 settings saved.	common	it	Impostazioni salvate.
 setup	common	it	Setup
-setup main menu	common	it	Menù Principale Setup
+setup main menu	common	it	Menu principale di impostazione
 seychelles	common	it	SEYCHELLES
 share	common	it	Condividi
 share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	it	Condividere in sola lettura, ma consentire il caricamento. I caricamenti sono nascosti e accessibili solo da chi ha un account.
@@ -1284,7 +1286,7 @@ shift ⇧	common	it	Maiusc ⇧
 should the form be submitted or any custom javascript be executed	common	it	Il form andrebbe inviato oppure del JavaScript andrebbe eseguito?
 show	common	it	Mostra
 show (no save)	common	it	Mostra (non salva)
-show all	common	it	visualizza tutto
+show all	common	it	Visualizza tutto
 show all / cancel filter	common	it	Mostra tutto / annulla il filtro
 show all categorys	common	it	Visualizza tutte le categorie
 show as topmenu	common	it	Mostra come menù in cima
@@ -1293,7 +1295,7 @@ show home and logout button in main application bar?	common	it	Mostrare i pulsan
 show in sidebox	common	it	Mostra nel menù laterale
 show log of following device	groupdav	it	Mostra il registro del seguente dispositivo
 show logo's on the desktop.	common	it	Mostra logo sul desktop
-show menu	common	it	visualizza menu
+show menu	common	it	Visualizza menu
 show next login	common	it	Mostra al prossimo login
 show now	common	it	Mostra adesso
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
@@ -1304,11 +1306,11 @@ show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il 
 show values	common	it	Mostra Valori
 show/hide	common	it	Mostra/nascondi barra laterale
 show_more_apps	common	it	show_more_apps
-showing	common	it	showing
-showing %1	common	it	visualizzati %1
-showing %1 - %2 of %3	common	it	visualizzati da %1 a %2 di %3
-shows / allows you to enter values into the etemplate for testing	common	it	shows / allows you to enter values into the eTemplate for testing
-shows/displays etemplate for testing, does not save it before	common	it	shows/displays eTemplate for testing, does NOT save it before
+showing	common	it	Showing
+showing %1	common	it	Visualizzati %1
+showing %1 - %2 of %3	common	it	Visualizzati da %1 a %2 di %3
+shows / allows you to enter values into the etemplate for testing	common	it	Mostra / permette di inserire valori nell'eTemplate per il test
+shows/displays etemplate for testing, does not save it before	common	it	Mostra/visualizza l'eTemplate per il test, NON lo salva.
 sierra leone	common	it	SIERRA LEONE
 sign up	common	it	Accedi
 simple	common	it	Semplice
@@ -1331,20 +1333,20 @@ span, class	common	it	Classe, Span
 special characters	common	it	caratteri speciali
 sri lanka	common	it	SRI LANKA
 stack	common	it	Stack
-start a new search, cancel this link	common	it	inizia una nuova ricerca, annulla questo link
+start a new search, cancel this link	common	it	Inizia una nuova ricerca, annulla questo link
 start date	common	it	Data Inizio
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	it	Directory iniziale per il browser dell'editor di testo in EGroupware File Manager
-start new search for the above pattern	common	it	inizia nuova ricerca della stringa
+start new search for the above pattern	common	it	Inizia nuova ricerca della stringa
 start time	common	it	Ora Inizio
 start with	common	it	Inizia con
 starting up...	common	it	Inizializzazione...
 status	common	it	Status
 store your public key in addressbook?	common	it	Salvare la chiave nella rubrica?
-stretched	common	it	adattato
+stretched	common	it	Adattato
 su	common	it	Su
 subject	common	it	Oggetto
 submit	common	it	Invia
-submit form	common	it	invia modulo
+submit form	common	it	Invia modulo
 submitbutton	common	it	Submitbutton
 substitutions and their meanings:	common	it	Sostituzioni e loro significati:
 successful created new directory %1 for unconnected nods.	admin	it	Creato nuova directory %1 per i nodi disconnessi con successo
@@ -1354,14 +1356,14 @@ sunday	common	it	Domenica
 sure	common	it	Sicuro
 suriname	common	it	SURINAME
 svalbard and jan mayen	common	it	SVALBARD E JAN MAYEN
-swap	common	it	scambia
-swap widget with next one	common	it	scambia widget con il seguente
-swap with next column	common	it	scambia con colonna seguente
-swap with next row	common	it	scambia con riga seguente
+swap	common	it	Scambia
+swap widget with next one	common	it	Scambia widget con il seguente
+swap with next column	common	it	Scambia con colonna seguente
+swap with next row	common	it	Scambia con riga seguente
 swaziland	common	it	SWAZILAND
 sweden	common	it	SVEZIA
-switch to a parent widget	common	it	commuta a un widget superiore
-switch to an other widgets of that container	common	it	commuta a un altro widget di quel contenitore
+switch to a parent widget	common	it	Commuta a un widget superiore
+switch to an other widgets of that container	common	it	Commuta a un altro widget di quel contenitore
 switzerland	common	it	SVIZZERA
 sync all selected into one	groupdav	it	Sincronizza tutti i selezionati in uno
 syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
@@ -1369,7 +1371,7 @@ tab	common	it	Tab
 tabindex	common	it	Tabindex
 table %1 is excluded from backup and restore. data will not be restored.	common	it	La tabella %1 è esclusa dal backup e ripristino. I dati non verranno ripristinati.
 table properties	common	it	Table properties
-table unchanged, no write necessary !!!	common	it	Tabella non modificata, scrittura non necessaria!!!
+table unchanged, no write necessary !!!	common	it	Tabella non modificata, scrittura non necessaria!
 tablename	common	it	TableName
 tabs	common	it	Tabs
 taiwan	common	it	TAIWAN/TAIPEI
@@ -1394,10 +1396,10 @@ they will be sub-folders in users home (%1 attribute).	common	it	Saranno sottoca
 this feature is only available in epl version.	common	it	Questa funzionalità è disponibile solo con la versione EPL.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	it	This is your own share. To test it, use an anonymous / incognito window.<br/>%1
 this name has been used already	common	it	Questo nome è già stato usato!
-this text gets displayed if the input-field is empty and has no focus (blur)	common	it	this text gets displayed if the input-field is empty and has no focus (blur)
+this text gets displayed if the input-field is empty and has no focus (blur)	common	it	This text gets displayed if the input-field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	it	In questo modo si ripristinano le preferenze della barra degli strumenti per tutti gli utenti e si impostano quelle predefinite.
 thursday	common	it	Giovedì
-tiled	common	it	tiled
+tiled	common	it	Piastrelle
 time	common	it	Tempo
 time zone	common	it	Fuso orario
 time zone offset	common	it	Differenza di fuso orario
@@ -1433,7 +1435,7 @@ turks and caicos islands	common	it	ISOLE TURKS E CAICOS
 tuvalu	common	it	TUVALU
 type	common	it	Tipo
 type of the column	common	it	Tipo di colonna
-type of the field (select label if field should be empty)	common	it	type of the field (select Label if field should be empty)
+type of the field (select label if field should be empty)	common	it	Type of the field (select Label if field should be empty)
 uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
 un-delete	common	it	Ripristina
@@ -1479,14 +1481,14 @@ users choice	common	it	Scelta Utente
 uzbekistan	common	it	UZBEKISTAN
 valign	common	it	vAlign
 value	common	it	Valore
-value has to be at least '%1' !!!	common	it	Value has to be at least '%1' !!!
-value has to be at maximum '%1' !!!	common	it	Value has to be at maximum '%1' !!!
+value has to be at least '%1' !!!	common	it	Il valore deve essere almeno '%1' !
+value has to be at maximum '%1' !!!	common	it	Il valore deve essere massimo '%1' !
 vanuatu	common	it	VANUATU
 vbox	common	it	VBox
 venezuela	common	it	VENEZUELA
 version	common	it	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	it	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
-vertical alignment of row	common	it	allineamento verticale della riga
+version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	it	Numero di versione, dovrebbe essere nella forma: major.minor.revision.number ad esempio 0.9.13.001 tutti i numeri riempiti di zeri
+vertical alignment of row	common	it	Allineamento verticale della riga
 vfs upload directory	common	it	Directory di upload VFS
 video tutorials	common	it	Tutorial video
 viet nam	common	it	VIET NAM
@@ -1506,7 +1508,7 @@ welcome	common	it	Benvenuto
 western european	common	it	Europeo occidentale
 western sahara	common	it	SAHARA OCCIDENTALE
 what color should all the blank space on the desktop have	common	it	Di che colore dovrebbe essere lo spazio vuoto sul desktop?
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	Cosa succede con i contenuti in eccesso: visibile (default), nascosto, scroll, auto (decide il browser)
 what style would you like the image to have?	common	it	Che stile vuoi che abbia l'immagine?
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	it	Quando si uniscono le voci in un documento, queste vengono memorizzate qui. Se non viene fornita alcuna cartella, verranno memorizzate nella propria home directory (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni
@@ -1514,15 +1516,15 @@ where and how will the egroupware links like preferences, about and logout be di
 which groups	common	it	Quali gruppi
 which infolog types should be synced with the device, default only tasks.	common	it	Quali tipi di Attività dovrebbero essere sincronizzati con il dispositivo? Predefinito = solo task
 whole query	common	it	Tutta la query
-widget copied into clipboard	common	it	widget copiato negli appunti
+widget copied into clipboard	common	it	Widget copiato negli appunti
 width	common	it	Larghezza
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	it	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
-width of column (in % or pixel)	common	it	larghezza della colonna (in % o pixel)
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	it	Width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
+width of column (in % or pixel)	common	it	Larghezza della colonna (in % o pixel)
 width of the table in % or pixels for the table-tag and (optional) div	common	it	Larghezza della tabella in % o pixel per table-tag e (opzionale)div
-width, disabled	common	it	Larghezza, Disabilitata
+width, disabled	common	it	Larghezza, disabilitata
 wk	common	it	Sett
-work email	common	it	e-mail ufficio
-working days	common	it	giorni lavorativi
+work email	common	it	E-mail ufficio
+working days	common	it	Giorni lavorativi
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	it	Funziona bene con 1-2 MB, potrà funzionare per 5-10 MB, fallirà molto probabilmente con dimensioni > 10 MB
 would you like to display the page generation time at the bottom of every window?	common	it	Mostra il tempo per la generazione della pagina in fondo ad ogni finestra
 writable	common	it	Scrivibile
@@ -1531,10 +1533,10 @@ writable share	common	it	Condivisione scrivibile
 write <app>/setup/tables_current.inc.php	common	it	Scrivi <app>/setup/tables_current.inc.php
 write langfile	common	it	Scrivi File Linguaggio
 write tables	common	it	Scrivi Tabelle
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	it	scrive un file 'etemplates.inc.php' (per applicazione in Nome) nella directory setup dell'applicazione
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	it	Scrive un file 'etemplates.inc.php' (per applicazione in Nome) nella directory setup dell'applicazione
 writing	common	it	Scrittura
 written by:	common	it	Scritto da:
-xml-file to import	common	it	file XML da importare
+xml-file to import	common	it	File XML da importare
 xslt template	common	it	Template XSLT
 year	common	it	Anno
 yemen	common	it	YEMEN
@@ -1561,11 +1563,11 @@ you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiun
 you need to be an egroupware administrator to access this functionality!	common	it	Devi essere un amministratore per accedere a questa funzione!
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	it	Bisogna installare Mailvelope disponibile per Chrome e Firefox da www.mailvelope.com oppure cliccando sul pulsante di installazione.
 you need to select a file first!	common	it	Selezionare prima un file!
-you need to select some entries first!	common	it	Devi prima selezionare alcune voci"
+you need to select some entries first!	common	it	Devi prima selezionare alcune voci!
 you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi impostare la registrazione a "%1" per creare e aggiornare i registri
 you tried to automatically size a flex column, which always takes the rest of the space	common	it	Hai tentato di ridimensionare automaticamente una colonna flessibile, che prende sempre il resto dello spazio
 you will not be able to send or receive encrypted mails before completing that step!	common	it	Non potrai inviare e ricevere email cifrate senza completare questo step!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1 !
 your account has been updated with new data from your identity provider.	common	it	Il vostro account è stato aggiornato con i nuovi dati del vostro fornitore di identità.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	it	Se il vostro browser non è aggiornato (compatibile con JavaScript ES6), è possibile che alcune funzioni non funzionino.
 your code is incorrect !!!	common	it	Codice errato!

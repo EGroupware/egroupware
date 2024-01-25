@@ -50,6 +50,7 @@ allow users to create further identities	mail	it	Permetti agli utenti di creare 
 allways a new window	mail	it	Sempre in una nuova finestra
 always	mail	it	Sempre
 always allow external sources from %1	mail	it	Permetti sempre sorgenti esterne/remote da %1
+always respond / auto-responder	mail	it	Rispondere sempre / autorisponditore
 always show html emails	mail	it	Visualizza sempre le e-mail HTML
 always show notifiction	mail	it	Mostra sempre la notifica
 an error happend while trying to remove acl rights from the account %1!	mail	it	Errore di rimozione permessi ACL dall'account %1!
@@ -85,8 +86,11 @@ caching of flags	mail	it	Caching dei flag
 can not open imap connection	mail	it	Impossibile stabilire una connessione IMAP
 can not resolve the winmail.dat attachment!	mail	it	Non è stato possibile risolvere l'allegato winmail.dat!
 canceled deletion due to user interaction	mail	it	Eliminazione interrotta a causa di azione da parte dell'utente
+certificate details	mail	it	Dettagli del certificato
+certificate in text	mail	it	Certificato in testo
 certificate info for email %1	mail	it	Informazione del certificato per email %1
-change editor type	mail	it	passare all'editor HTML
+certificate issued by	mail	it	Certificato rilasciato da
+change editor type	mail	it	Passare all'editor HTML
 changed profile	mail	it	profilo modificato
 changing subject failed because of %1	mail	it	La modifica dell'oggetto non è riuscita a causa di %1
 changing subject failed folder %1 does not exist	mail	it	Modifica dell'oggetto fallita la cartella %1 non esiste
@@ -114,7 +118,7 @@ contains(*)	mail	it	Contiene(*)
 convert mail to item and attach its attachments to this item (standard)	mail	it	Converti il messaggio email in elemento e allega i suoi allegati a questo elemento (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	it	Converti il messaggio email in elemento e allega i suoi allegati  e aggiungi un messaggio "raw" (messaggio/rfc822 (.eml)) come allegato
 convert only mail to item (ignore possible attachments)	mail	it	Converti solo Mail a elemento (ignora gli allegati)
-copied %1 message(s) from %2 to %3	mail	it	copiato %1 messaggi(o) da %2  %3
+copied %1 message(s) from %2 to %3	mail	it	Copiato %1 messaggi(o) da %2  %3
 copy to	mail	it	Copia in
 could not append message:	mail	it	Il messaggio non è stato incluso:
 could not save the acl because some names are empty	mail	it	Impossibile salvare le regole dei permessi ACL! Alcuni nomi sono vuoti!
@@ -190,6 +194,7 @@ edit folder acl	mail	it	Modifica i permessi della cartella
 edit folder acl ...	mail	it	Modifica i permessi della cartella...
 edit vacation settings	mail	it	Modifica impostazioni messaggio "ferie"
 effective only if server supports acl at all	admin	it	effettivo solo se il server supporta l'impostazione di permessi ACL
+email address	mail	it	Indirizzo e-mail
 email notification successfully updated!	mail	it	la notifica per le email è stata aggiornata!
 email notification update failed	mail	it	L'aggiornamento della notifica email è fallita!
 email notification update failed! you need to set an email address!	mail	it	la notifica non è stata aggiornata! Devi prima impostare un indirizzo di posta elettronica!
@@ -218,6 +223,7 @@ error: could not send message.	mail	it	Errore: il messaggio non può essere invi
 error: message could not be displayed.	mail	it	Errore: il messaggio non può essere visualizzato
 esync will fail without a working email configuration!	mail	it	La sincronizzazione via eSync non funzionerà senza una configurazione corretta di eMail
 event details follow	mail	it	Dettagli dell'evento
+every %1. day	mail	it	Ogni %1. giorno
 everyone	mail	it	Ognuno
 examine namespace to retrieve folders in others and shared	mail	it	Esaminare lo spazio dei nomi per recuperare le cartelle in altri e condivise
 extended	mail	it	Esteso
@@ -408,6 +414,7 @@ notify when new mails arrive in these folders	mail	it	Notifica quando arrivano n
 on	mail	it	Su
 on behalf of	mail	it	Per conto di
 on vacation	mail	it	In vacanza
+once per day	mail	it	Una volta al giorno
 one address is not valid	mail	it	Un indirizzo non è valido
 only email	mail	it	Solo l'e-mail
 only if currently in an other app	mail	it	Solo se si è in un'altra applicazione
@@ -590,6 +597,7 @@ sign your message with smime certificate	mail	it	Firma il messaggio con il certi
 signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 signature position and visibility	mail	it	Posizione e visibilità della firma
+signed by	mail	it	Firmato da
 size(...->0)	mail	it	Dimensione (...->0)
 size(0->...)	mail	it	Dimensione (0->...)
 small view	mail	it	visualizzazione ridotta
@@ -710,4 +718,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	it	Devi prima salvare il messaggio come bozza per poterlo salvare nel VFS
 you will loose current message body, unless you save it to your clipboard!	mail	it	Il corpo del messaggio attuale verrà perso, a meno che non venga salvato negli appunti!
 you've got new mail	mail	it	C'è nuova posta
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare / ricevere ulteriori email.\n Ripulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.\n Se ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	it	La quota rimanente% 1 è troppo bassa, potresti non essere in grado di inviare/ricevere ulteriori email.<br>Ripulire i messaggi di posta elettronica nel cestino o nella cartella della posta indesiderata potrebbe aiutarti a recuperare spazio.<br>Se ciò non è stato di aiuto , chiedi al tuo amministratore di aumentare la quota disponibile.

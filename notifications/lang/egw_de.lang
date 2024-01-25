@@ -1,6 +1,6 @@
 (update in sec. %s)	notifications	de	(Aktualisierung in sec. %s)
 account:	notifications	de	Benutzername:
-all possible notification backends	notifications	de	alle verfügbaren Benachrichtigungs-Schnittstellen
+all possible notification backends	notifications	de	Alle verfügbaren Benachrichtigungs-Schnittstellen
 are you sure you want to delete all notifications?	notifications	de	Sind Sie sicher, dass Sie alle Benachrichtigungen löschen möchten?
 browser	notifications	de	Browser
 browser is starting.	notifications	de	Browser ist am starten.
@@ -8,31 +8,31 @@ cancal settings?	notifications	de	Einstellungen abbrechen?
 cancal?	notifications	de	Abbrechen?
 certification-information:	notifications	de	Informationen zum Zertifikat:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	de	Prüfe beides (wenn vorhanden verwende das aktive Benutzerdefinierte Konto, sonst das E-Mail-Admin-Profil)
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	de	Wählen Sie eine Benachrichtigungskette. Sie werden über die Schnittstellen benachrichtigt, die in der Kette enthalten sind.<br />Bitte beachten: Wenn eine Benachrichtigungskette als "deaktiviert" markiert ist oder Ihr Administrator erlaubt ein oder mehrere Schnittstellen nicht, die in der Kette enthalten sind, so weicht die EGroupware-Benachrichtigung auf die Methode "E-Mail" aus.
-choose from mailsettings used for notification	admin	de	Auswahl der für die Benachrichtigung per E-Mail verwendeten Mailprofile
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	de	Wählen Sie eine Benachrichtigungskette. Sie werden über die Schnittstellen benachrichtigt, die in der Kette enthalten sind.<br>Bitte beachten: Wenn eine Benachrichtigungskette als "deaktiviert" markiert ist oder Ihr Administrator erlaubt ein oder mehrere Schnittstellen nicht, die in der Kette enthalten sind, so weicht die EGroupware-Benachrichtigung auf die Methode "E-Mail" aus.
+choose from mailsettings used for notification	admin	de	Auswahl der für die Benachrichtigung per E-Mail verwendeten Mail-Profile
 common chains	notifications	de	Einfache Ketten
 connection error.	notifications	de	Verbindungsfehler.
 connection error. please check connection to server.	notifications	de	Verbindungsfehler. Bitte überprüfen Sie die Verbindung zum Server.
-continue to connect?	notifications	de	Weiter versuche zu Verbinden?
+continue to connect?	notifications	de	Weiter versuchen zu verbinden?
 cookies are required to login to this site.	notifications	de	Cookies werden zum Login auf diese Seite benötigt.
 delete all messages	notifications	de	Alle Benachrichtigungen löschen
 delete notifications	notifications	de	Benachrichtigungen löschen
 delete this message	notifications	de	Diese Benachrichtigung löschen
 disabled chains	notifications	de	Deaktivierte Ketten
-do not notify me at all	notifications	de	benachrichtige mich niemals
-domain not found, please check serveraddress.	notifications	de	Domain nicht gefunden, bitte Serveradresse überprüfen.
-e-mail only	notifications	de	nur E-Mail
+do not notify me at all	notifications	de	Benachrichtige mich niemals
+domain not found, please check serveraddress.	notifications	de	Domain nicht gefunden, bitte Server-Adresse überprüfen.
+e-mail only	notifications	de	Nur E-Mail
 egroupware has notifications for you	notifications	de	EGroupware hat Benachrichtigungen für Sie
 egroupware login is starting, please wait.	notifications	de	EGroupware Login wird ausgeführt, bitte warten.
-egroupware logindomain:	notifications	de	EGroupware Logindomain:
-egroupware logindomains founds, please select.	notifications	de	Folgende EGroupware Logindomains gefunden, bitte auswählen.
-egroupware not found by url or connection lost to server.	notifications	de	Keine EGroupware Installation unter der Adresse gefunden oder Verbindung zum Server verloren.
+egroupware logindomain:	notifications	de	EGroupware Login-Domain:
+egroupware logindomains founds, please select.	notifications	de	Folgende EGroupware Login-Domains gefunden, bitte auswählen.
+egroupware not found by url or connection lost to server.	notifications	de	Keine EGroupware-Installation unter der Adresse gefunden oder Verbindung zum Server verloren.
 egroupware not found by url.	notifications	de	Keine EGroupware Installation unter der Adresse gefunden.
 egroupware-popup and e-mail	notifications	de	EGroupware-Popup und E-Mail
 egroupware-popup and windows-popup	notifications	de	EGroupware-Popup und Windows-Popup
 egroupware-popup backend	admin	de	EGroupware-Popup Schnittstelle
-egroupware-popup first, if that fails notify me by e-mail	notifications	de	zuerst EGroupware-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
-egroupware-popup only	notifications	de	nur EGroupware-Popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	de	Zuerst EGroupware-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
+egroupware-popup only	notifications	de	Nur EGroupware-Popup
 egroupware-popup verbosity	notifications	de	EGroupware-Popup Mitteilungspriorität
 email notifications only, if user is not logged in	notifications	de	E-Mail, wenn der Benutzer nicht angemeldet ist.
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	de	Nur E-Mail-Admin-Profil (aktive Benutzerdefinierte Konten werden nicht für die Notifizierung per E-Mail verwendet)
@@ -41,22 +41,22 @@ enable windows-popup backend	admin	de	Windows-Popup Schnittstelle aktivieren
 enabled chains	notifications	de	Aktivierte Ketten
 error browser can`t start.	notifications	de	Fehler beim Starten des Browsers.
 error on loading tray icon	notifications	de	Fehler beim Laden des Tray-Symbols für die Taskleiste
-error ssl	notifications	de	SSL Fehler
+error ssl	notifications	de	SSL-Fehler
 exit	notifications	de	Beenden
 folder	notifications	de	Ordner
-from	notifications	de	von
+from	notifications	de	Von
 host:	notifications	de	Server:
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	de	Wie hoch soll das EGroupware-Popup die Priorität setzen wenn eine Benachrichtigung an den Benutzer gesendet wird:<br />Niedrig: Es wird nur die Benachrichtigungsglocke im Topmenü angezeigt - das Topmenü muss hierfür eingeschaltet sein!<br />Mittel: Holt das Benachrichtigungsfenster in den Vordergrund<br />Hoch: Holt das Benachrichtigungsfenster in den Vordergrund und aktiviert den Browser zur besseren Erkennung der Benachrichtigung.
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	de	Wie hoch soll das EGroupware-Popup die Priorität setzen wenn eine Benachrichtigung an den Benutzer gesendet wird:<br>Niedrig: Es wird nur die Benachrichtigungsglocke im Topmenü angezeigt - das Topmenü muss hierfür eingeschaltet sein!<br>Mittel: Holt das Benachrichtigungsfenster in den Vordergrund<br>Hoch: Holt das Benachrichtigungsfenster in den Vordergrund und aktiviert den Browser zur besseren Erkennung der Benachrichtigung.
 if set, embedded links get rendered special for external clients	notifications	de	Wenn diese Option aktiviert ist, werden "eingebettete Links" besser graphisch aufbereitet.
 info on load config file: create config file.	notifications	de	Information zum Laden der Konfigurationsdatei: Datei wird angelegt.
 issuer dn:	notifications	de	Herausgeber:
-java desktop notification app	preferences	de	Java Anwendung für Desktop Benachrichtigungen
-last month	notifications	de	letzter Monat
+java desktop notification app	preferences	de	Java-Anwendung für Desktop-Benachrichtigungen
+last month	notifications	de	Letzter Monat
 linked entries:	common	de	Verknüpfte Einträge:
 login aborted, application exit?	notifications	de	Login abgebrochen, Anwendung beenden?
 login in egroupware:	notifications	de	Login in EGroupware
 mail account to use for notifications	admin	de	E-Mail-Konto, das für Benachrichtigungen verwendet werden soll
-mail backend	admin	de	E-Mail Schnittstelle
+mail backend	admin	de	E-Mail-Schnittstelle
 mark all as read	notifications	de	Alle als gelesen markieren
 mark as read	notifications	de	Als gelesen markieren
 message from	notifications	de	Nachricht von
@@ -67,13 +67,13 @@ notifier	notifications	de	Benachrichtiger
 notify me by	notifications	de	Benachrichtige mich per
 open notified entry	notifications	de	Eintrag öffnen
 optimize e-mails for external mail client	notifications	de	Optimiere E-Mails für externe E-Mail-Programme
-page not found, please check serveraddress.	notifications	de	Seite nicht gefunden, bitte überprüfen Sie die Serveradresse
+page not found, please check serveraddress.	notifications	de	Seite nicht gefunden, bitte überprüfen Sie die Server-Adresse
 password:	notifications	de	Passwort:
 permission	notifications	de	Berechtigung
 permission denied for notifications application.	notifications	de	Zugriff verweigert zur Benachrichtigungen Anwendung.
 placeholders with user/ prefix	admin	de	Platzhalter mit user/prefix
 please contact your egroupware admin.	notifications	de	Bitte kontaktieren Sie Ihren EGroupware Administrator
-please enter the url of your egroupware.	notifications	de	Bitte geben Sie die Serveradresse (URL) Ihre EGroupware ein.
+please enter the url of your egroupware.	notifications	de	Bitte geben Sie die Serveradresse (URL) Ihrer EGroupware ein.
 please enter your egroupware username.	notifications	de	Bitte geben Sie Ihren EGroupware Benutzernamen ein.
 please enter your password	notifications	de	Bitte geben Sie Ihr Passwort ein.
 poll interval	notifications	de	Abfrageintervall
@@ -88,19 +88,19 @@ setting aborted, application exit	notifications	de	Einstellungen abgebrochen, An
 settings	notifications	de	Einstellungen
 signature	admin	de	Signatur
 signature added to every change notification	admin	de	Signatur zu allen Änderungen hinzugefügt
-sorry, your login has expired	notifications	de	Entschuldigung, Ihre Benutzerkennung ist abgelaufen
+sorry, your login has expired	notifications	de	Entschuldigung, Ihr Benutzerkonto ist abgelaufen
 step	notifications	de	Schritt
-subject dn:	notifications	de	Serveradresse
+subject dn:	notifications	de	Serveradresse:
 the server certificate is not a valid trust center certificate!	notifications	de	Das Zertifikat des Webservers ist nicht vertrauenswürdig!
 this egroupware notification has been sent to you by mail because your	notifications	de	Diese EGroupware Benachrichtigung wurde Ihnen per E-Mail zugestellt.
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt, da Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
-this month	notifications	de	diesen Monat
+this month	notifications	de	Diesen Monat
 user:	notifications	de	Benutzer:
 warning	notifications	de	Warnung
 windows-popup and e-mail	notifications	de	Windows-Popup und E-Mail
 windows-popup backend	admin	de	Windows-Popup Schnittstelle
 windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst Win-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
-windows-popup only	notifications	de	nur Windows-Popup
+windows-popup only	notifications	de	Nur Windows-Popup
 yesterday	notifications	de	Gestern
 you can also use	admin	de	Sie können ebenso folgendes verwenden:
 you have %1 unread notifications	notifications	de	Sie haben %1 ungelesene Nachrichten

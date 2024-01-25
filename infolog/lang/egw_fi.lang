@@ -169,7 +169,7 @@ do you want a notification, if items you delegated are due?	infolog	fi	Haluatko 
 do you want to receive notifications as html-mails or plain text?	infolog	fi	Haluatko muistutusviestiesi olevan HTML vai pelkkänä tekstinä?
 don't show infolog	infolog	fi	Älä näytä tehtäviä
 done	infolog	fi	Valmis
-download	infolog	fi	Lataa
+download	infolog	fi	Tallenna tiedosto
 download url for links	infolog	fi	Linkkien URL
 due %1	infolog	fi	Erääntyy %1
 due date	infolog	fi	Eräpäivä
@@ -297,7 +297,7 @@ manage mapping	infolog	fi	Hallitse mappingiä
 max length of the input [, length of the inputfield (optional)]	infolog	fi	Kentän tekstin maksimipituus [, kentän maksimi pituus(vaihtoehtoinen)]
 modifier	infolog	fi	Muokkaaja
 modifierer	infolog	fi	Muokkaaja
-name must not be empty !!!	infolog	fi	Nimikenttä ei saa olla tyhjä !!!
+name must not be empty !!!	infolog	fi	Nimikenttä ei saa olla tyhjä!
 name of current user, all other contact fields are valid too	infolog	fi	Käyttäjän nimi, muut kentät ovat myös voimassa
 name of new type to create	infolog	fi	Luotavan tyypin nimi
 never hide search and filters	infolog	fi	Hakua ja suodattimia ei piiloiteta koskaan
@@ -352,7 +352,7 @@ parent	infolog	fi	Päämerkintä
 parent infolog	infolog	fi	Päämerkintä
 participants for scheduling an appointment	infolog	fi	Osallistujat ajanvarauksen suunnitteluun
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	Polku (web-)palvelimella<br>esim. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	fi	Polku käyttäjän ja ryhmän tiedostoihin pitää olla palvelimen tiedostojuuren ULKOPUOLELLA!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	fi	Polku käyttäjän ja ryhmän tiedostoihin pitää olla palvelimen tiedostojuuren ULKOPUOLELLA!
 pattern for search in addressbook	infolog	fi	Osoitekirjan hakukuvio
 pattern for search in projects	infolog	fi	Kuvio hakua varten projekteissa
 percent completed	infolog	fi	Prosenttia valmistunut
@@ -537,7 +537,7 @@ yes, only admins can purge deleted items	infolog	fi	Kyllä, ainoastaan ylläpit�
 yes, with larger fontsize	infolog	fi	Kyllä, Isompi fonttikoko
 yes, with purging of deleted items possible	infolog	fi	Kyllä, Poistettujen merkintöjen lopullinen poistaminen on mahdollista
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	fi	Minkä kategorian pitäisi olla oletuksena, kun luot uutta Tehtävienhallinnan merkintää?
-you can't delete one of the stock types !!!	infolog	fi	Et voi poistaa mitään tyyppien ryhmästä !!!
+you can't delete one of the stock types !!!	infolog	fi	Et voi poistaa mitään tyyppien ryhmästä!
 you have entered an invalid ending date	infolog	fi	Virheellinen erääntymispäivä
 you have entered an invalid starting date	infolog	fi	Virheellinen alkamispäivä
 you have to enter a name, to create a new type!	infolog	fi	Du skal indtaste et navn for at oprette en ny type!

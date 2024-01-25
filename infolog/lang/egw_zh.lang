@@ -2,7 +2,7 @@
 %1 deleted	infolog	zh	%1 删除。
 %1 deleted by %2 at %3	infolog	zh	%1 由 %2 在 %3 删除
 %1 entries %2	infolog	zh	%1 条目 %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	zh	%1 条目 %2, %3 因权限不足而失败！！！
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	zh	%1 条目 %2, %3 因权限不足而失败！
 %1 entries %2, %3 failed.	infolog	zh	%1 条目 %2, %3 失败。
 %1 modified	infolog	zh	修改 %1
 %1 modified by %2 at %3	infolog	zh	%1 由 %2 在 %3 时修改
@@ -32,7 +32,9 @@ abort without deleting	infolog	zh	放弃，不作任何删除
 accept	infolog	zh	接受
 action	infolog	zh	操作
 actions...	infolog	zh	操作...
+actual date and time	infolog	zh	实际日期和时间
 add	infolog	zh	新建事项
+add / remove link	infolog	zh	添加/删除链接
 add a file	infolog	zh	添加文件
 add a new entry	infolog	zh	新建事项
 add a new note	infolog	zh	新建备注
@@ -40,6 +42,7 @@ add a new phonecall	infolog	zh	新建函电
 add a new sub-task, -note, -call to this entry	infolog	zh	新建该事项的子任务, 备注, 或函电
 add a new todo	infolog	zh	新建任务
 add file	infolog	zh	添加文件
+add or delete links	infolog	zh	添加或删除链接
 add sub	infolog	zh	添加子类别
 add timesheet entry	infolog	zh	添加时间表条目
 add:	infolog	zh	添加:
@@ -138,7 +141,7 @@ disables a status without deleting it	infolog	zh	禁用状态，但不删除
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	zh	在接受或结束任务时，是否等待确认
 do you want a notification if items owned by groups you are part of get updated ?	infolog	zh	如果您所在的组拥有的条目被更新，您需要收到通知吗？
 done	infolog	zh	已完成
-download	infolog	zh	下载
+download	infolog	zh	保存文件
 download url for links	infolog	zh	链接的下载 URL
 due %1	infolog	zh	到期 %1
 due date	infolog	zh	到期日期
@@ -146,7 +149,7 @@ duration	infolog	zh	持续时间
 each value is a line like <id>[=<label>]	infolog	zh	请设定选择框的选项, 格式: <选项名>=<显示名>, 每行代表一个选项.
 edit	infolog	zh	编辑
 edit or create categories for ingolog	infolog	zh	编辑或创建记事薄的类别
-edit status	infolog	zh	Edit Status
+edit status	infolog	zh	编辑状态
 edit the entry	infolog	zh	编辑该事项
 edit this entry	infolog	zh	编辑该事项
 empty for all	infolog	zh	全部清空
@@ -267,6 +270,7 @@ modifierer	infolog	zh	修改人
 name must not be empty !!!	infolog	zh	名称不能为空!!!
 name of current user, all other contact fields are valid too	infolog	zh	目前用户的名称，所有其他联系人字段也是正确的
 name of new type to create	infolog	zh	请输入新建类型的名称
+never hide search and filters	infolog	zh	永不隐藏搜索和筛选器
 new %1	infolog	zh	新建%1
 new name	infolog	zh	新名称
 new search	infolog	zh	重新搜索
@@ -280,8 +284,9 @@ no project	infolog	zh	无项目
 nonactive	infolog	zh	未激活
 none	infolog	zh	无
 normal	infolog	zh	普通
-not	infolog	zh	not
+not	infolog	zh	不是
 not assigned	infolog	zh	未指定
+not-started	infolog	zh	未启动
 note	infolog	zh	备注
 notification settings	infolog	zh	通知设置
 number of records to read (%1)	infolog	zh	待读取记录数(%1)

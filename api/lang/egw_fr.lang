@@ -4,15 +4,15 @@
 %1 directories %2 found!	admin	fr	%1 répertoire %2 trouvé !
 %1 email addresses inserted	common	fr	%1 adresse(s) email insérée(s)
 %1 email(s) added into %2	common	fr	%1 adresse(s) email insérée(s) dans %2
-%1 entries found, select one ...	common	fr	%1 élément(s) trouvé(s), sélectionnez en un...
+%1 entries found, select one ...	common	fr	%1 élément(s) trouvé(s), sélectionnez en un ...
 %1 etemplates deleted	common	fr	%1 eTemplate(s) supprimé(s).
 %1 etemplates for application '%2' dumped to '%3'	common	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	common	fr	%1 eTemplate(s) trouvé(s).
 %1 file	common	fr	%1 fichier
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !
 %1 matches on search criteria	common	fr	%1 occurences sur les critères de recherche
-%1 more %2 selected ...	common	fr	%1 plus %2 sélectionné(s)...
-%1 more...	common	fr	%1 plus...
+%1 more %2 selected ...	common	fr	%1 plus %2 sélectionné(s) ...
+%1 more...	common	fr	%1 plus ...
 %1 new etemplates imported for application '%2'	common	fr	%1 eTemplate(s) importé(s) pour l'Application '%2'
 %1 not implemented for %2!	common	fr	%1 pas implémenté pour %2 !
 %1 proxy of %2	common	fr	%1 proxy sur %2
@@ -28,7 +28,7 @@
 %s readonly	common	fr	%s LectureSeule
 '%1' copied to clipboard	common	fr	'%1' copié dans le presse-papiers
 '%1' has an invalid format	common	fr	'%1' a un format invalide
-'%1' has an invalid format !!!	common	fr	'%1' a un format invalide !!!
+'%1' has an invalid format !!!	common	fr	'%1' a un format invalide !
 '%1' is not a valid date !!!	common	fr	'%1'  n'est pas une date valide !
 '%1' is not a valid floatingpoint number !!!	common	fr	'%1' n'est pas un nombre à virgule flottante valide !
 '%1' is not a valid integer !!!	common	fr	'%1' n'est pas un entier valide !
@@ -40,7 +40,7 @@
 00 (disable)	admin	fr	00 (non actif)
 1 day	common	fr	1 Jour
 1 hour	common	fr	1 Heure
-1 minute	common	fr	1 minute
+1 minute	common	fr	1 Minute
 1 month	common	fr	1 Mois
 1 week	common	fr	1 Semaine
 13 (ntp)	admin	fr	13 (ntp)
@@ -50,9 +50,9 @@
 2-factor-authentication required	common	fr	Authentication à double facteur requise
 3 minutes	common	fr	3 minutes
 30 minutes	common	fr	30 Minutes
-30 seconds	common	fr	30 secondes
-5 minutes	common	fr	5 minutes
-5 seconds	common	fr	5 secondes
+30 seconds	common	fr	30 Secondes
+5 minutes	common	fr	5 Minutes
+5 seconds	common	fr	5 Secondes
 80 (http)	admin	fr	80 (http)
 a pattern to be searched for	common	fr	Chaine de caractères à rechercher
 a request to the egroupware server returned with an error	common	fr	Une requête au serveur EGroupware a retourné une erreur
@@ -94,8 +94,8 @@ add shortcut	common	fr	Ajouter raccourci
 add sub	common	fr	Ajouter enfant
 add table	common	fr	Ajouter une table
 add to clipboard	common	fr	Ajouter au presse-papier
-add user to responsibles	groupdav	fr	rattacher un utilisateur à des responsables
-add user to responsibles, removing evtl. previous category user	groupdav	fr	rattacher un utilisateur à des responsables, éventuellement supprimer les anciennes catégories de l'utilisateur
+add user to responsibles	groupdav	fr	Rattacher un utilisateur à des responsables
+add user to responsibles, removing evtl. previous category user	groupdav	fr	Rattacher un utilisateur à des responsables, éventuellement supprimer les anciennes catégories de l'utilisateur
 add your domain as "%1" in options to list of email providers and enable api.	common	fr	Ajouter votre domaine comme "%1" dans les option pour lister les fournisseurs et activer les API.
 addressbook	common	fr	Carnet d'adresses
 addressbooks to sync in addition to personal addressbook	groupdav	fr	Carnets d'adresses à synchroniser en plus du carnet personnel
@@ -152,7 +152,7 @@ applies the changes made	common	fr	Applique les modifications
 applies the changes to the given version of the template	common	fr	Applique les modifications à la version mentionnée du modèle
 apply	common	fr	Appliquer
 apply the action on the whole query, not only the shown entries	common	fr	Appliquer l'action sur la requête entière, pas seulement sur les entrées affichées
-apps &amp; license	common	fr	Applications & Licences
+apps &amp; license	common	fr	Applications et licence
 april	common	fr	Avril
 are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir supprimer ces entrées ?
 are you sure you want to delete this entry ?	common	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
@@ -161,7 +161,7 @@ are you sure, you would like to delete the backup key?	common	fr	Etes-vous sûr 
 argentina	common	fr	ARGENTINE
 armenia	common	fr	ARMENIE
 aruba	common	fr	ARUBA
-as default	common	fr	comme par défaut
+as default	common	fr	Comme par défaut
 attach	common	fr	Joindre
 attach file	common	fr	Joindre un fichier
 attachment	common	fr	Pièce jointe
@@ -174,8 +174,6 @@ author	common	fr	Auteur
 autohide sidebox menu's	common	fr	Cacher automatiquement la barre de menu latérale
 autohide sidebox menus	common	fr	Cacher automatiquement la barre de menu latérale
 automatic update check failed, you need to check manually!	common	fr	Vérification automatique de la mise à jour en échec, vous devriez vérifier manuellement !
-automatically hide the sidebox menu's?	common	fr	Cacher automatiquement la barre de menu latérale ?
-automatically hide the sidebox menus?	common	fr	Cacher automatiquement la barre de menu latérale ?
 automatically refresh list	common	fr	Rafraîchir la liste automatiquement
 autosave default category	common	fr	Enregistrement automatique dans catégorie par défaut
 avatar	common	fr	Avatar
@@ -203,7 +201,7 @@ benin	common	fr	BENIN
 bermuda	common	fr	BERMUDES
 bhutan	common	fr	BOUTAN
 blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
-blue moono theme	common	fr	thème blue moono
+blue moono theme	common	fr	Thème blue moono
 blurtext	common	fr	texteFlou
 bold	common	fr	Gras
 bolivia	common	fr	BOLIVIE
@@ -236,15 +234,15 @@ cancel	common	fr	Annuler
 cannot replace %1 because it is a directory	common	fr	Impossible de remplacer %1 car est un répertoire.
 cannot set a category as parent, which is part of this categorys subtree!	common	fr	Impossible de choisir une catégorie comme parente dans cette sous-arborescence !
 cannot set this cat as its own parent!	common	fr	Impossible de définir cette catégorie comme sa propre catégorie mère
-cant delete a single widget from a grid !!!	common	fr	ne peut pas supprimer un widget d'une grille !
-cant delete the only column of a grid !!!	common	fr	ne peut pas supprimer la seule colonne d'une grille !
-cant delete the only row in a grid !!!	common	fr	ne peut pas supprimer la seule ligne d'une grille !
+cant delete a single widget from a grid !!!	common	fr	Ne peut pas supprimer un widget d'une grille !
+cant delete the only column of a grid !!!	common	fr	Ne peut pas supprimer la seule colonne d'une grille !
+cant delete the only row in a grid !!!	common	fr	Ne peut pas supprimer la seule ligne d'une grille !
 cant open %1, needs ziparchive	common	fr	Impossible d'ouvrir %1, ZipArchive est nécessaire
 cant open '%1' for %2	common	fr	Impossible d'ouvrir '%1' pour %2
 cape verde	common	fr	CAP VERT
 caption	common	fr	Légende
 categories	common	fr	Catégories
-categories for	common	fr	catégories pour
+categories for	common	fr	Catégories pour
 category	common	fr	Catégorie
 category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
 category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
@@ -256,13 +254,13 @@ cellpadding for the table-tag	common	fr	Remplissage de cellule pour le tag de la
 cells	common	fr	Cellules
 cellspacing for the table-tag	common	fr	Espacement des cellules pour le tag de la table
 center	common	fr	Centre
-centered	common	fr	centré
+centered	common	fr	Centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
 change owner	common	fr	Changer le propriétaire
 changed	common	fr	Modifié
-charset	common	fr	utf-8
+charset	common	fr	Jeu de caractères
 check all	common	fr	Tout cocher
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fr	Vérifier les valeurs vides dans les structures conditionnelles IF. Par exemple {{IF url~EMPTY~~Website:}} - Si url n'est pas vide, écrit "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	fr	Le contenu doit être seulement affiché mais non modifié.
@@ -284,8 +282,8 @@ choose the parent category	common	fr	Choisir la catégorie parent
 choose time	common	fr	Choisir une heure
 chosen parent category no longer exists	common	fr	La catégorie mère sélectionnée n'existe plus
 christmas island	common	fr	ILE NOEL
-class	common	fr	Classe
-class, valign	common	fr	Vlass, Valign
+class	common	fr	Class
+class, valign	common	fr	Class, Valign
 clear	common	fr	Effacer
 clear form	common	fr	Effacer le formulaire
 clear window	common	fr	Fermer la fenêtre
@@ -345,16 +343,16 @@ create	common	fr	Créer
 create a new table for the application	common	fr	Créer une nouvelle table pour l'application
 create directory	common	fr	Créer le répertoire
 create link	common	fr	Créer le lien
-created	common	fr	créé
+created	common	fr	Créé
 created by	common	fr	Créé par
 created by %1	common	fr	Créé par %1
 creates an english ('en') langfile from label and helptexts (for application in name)	common	fr	Crée un fichier lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
 creator	preferences	fr	Créateur
 croatia	common	fr	CROATIE
 css class for the table-tag	common	fr	Classe CSS pour le tag de la table
-css properties	common	fr	propriétés CSS
+css properties	common	fr	Propriétés CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	fr	Nom de la classe CSS pour cette ligne, préréglé: 'nmh' = entête prochaine correspondance, 'nmr' = alterne la ligne prochaine correspondance, 'nmr0'+'nmr1' lignes prochaines correspondances
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	fr	nom de la classe CSS pour cette ligne, préréglé: 'th' = en-tête, 'row' = ligne alternante, 'row_off'+'row_on' lignes
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	fr	Nom de la classe CSS pour cette ligne, préréglé: 'th' = en-tête, 'row' = ligne alternante, 'row_off'+'row_on' lignes
 css-styles	common	fr	Styles CSS
 ctrl	common	fr	Ctrl
 cuba	common	fr	CUBA
@@ -380,7 +378,7 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 day	common	fr	Jour
 days	common	fr	Jours
 db ensures that every row has a unique value in that column	common	fr	La base de données s'assure que chaque ligne a une valeur unique dans cette colonne
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	fr	les options d'index spécifiques à la base de données (séparés par des virgules), p.ex. mysql(FULLTEXT) ou mysql(100) pour la longeur indexée d'une colonne
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	fr	Les options d'index spécifiques à la base de données (séparés par des virgules), p.ex. mysql(FULLTEXT) ou mysql(100) pour la longeur indexée d'une colonne
 db-tools	common	fr	Outils base de données
 december	common	fr	Décembre
 deck	common	fr	Bureau (interne)
@@ -422,21 +420,16 @@ denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
 direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
 directory for storing merged documents	preferences	fr	Dossier des documents fusionnés
 directory with documents to insert entries	preferences	fr	Dossier des documents où ajouter les éléments
-disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
-disable slider effects	common	fr	Désactiver les effets de glisse
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script de déboguage visant à afficher la transparence dans les images PNG sous Internet Explorer 5.5 ou plus?
 disabled	common	fr	Désactivé
 discard changes	common	fr	Annuler les changements
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	fr	affiché en face de l'entrée où l'entrée est insérée pour un '%s' dans le label (le label du bouton Submit ou Image-filename)
-displayed in statusline of browser if input-field gets focus	common	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
-displayed in the top line of the groupbox (legend)	common	fr	affiché en ligne de tête de la groupbox (légende)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	fr	Affiché en face de l'entrée où l'entrée est insérée pour un '%s' dans le label (le label du bouton Submit ou Image-filename)
+displayed in statusline of browser if input-field gets focus	common	fr	Affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
+displayed in the top line of the groupbox (legend)	common	fr	Affiché en ligne de tête de la groupbox (légende)
 distribution lists as groups	groupdav	fr	Les listes de distribution comme des groupes
 djibouti	common	fr	DJIBOUTI
 do not notify	common	fr	Ne pas modifier
@@ -450,7 +443,7 @@ document '%1' does not exist or is not readable for you!	preferences	fr	Le docum
 document properties	common	fr	Propriétés du document
 document title:	common	fr	Titre du document:
 documentation	common	fr	Documentation
-doesn't matter	common	fr	pas d'importance
+doesn't matter	common	fr	Pas d'importance
 domain	common	fr	Domaine
 domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresses email, p.ex. "%1"
 domestic	common	fr	Intérieur
@@ -462,7 +455,6 @@ done	common	fr	Fait
 dos international	common	fr	DOS International
 download	common	fr	Télécharger
 download link	common	fr	Lien de téléchargement
-drag markers to pick a color	common	fr	Tirer sur les marqueur pour choisir une couleur
 drop a table - this can not be undone	common	fr	Supprimer une table - ceci ne peut PAS être annulé
 drop table	common	fr	Supprimer la table (drop)
 dump4setup	common	fr	Dump4Setup
@@ -476,7 +468,7 @@ edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit avatar	common	fr	Modifier l'avatar
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
-edit embeded css styles or of the applications app.css file	common	fr	modifier les feuilles de style CSS imbriquées ou celle de app.css
+edit embeded css styles or of the applications app.css file	common	fr	Modifier les feuilles de style CSS imbriquées ou celle de app.css
 edit the etemplate spez. above	common	fr	Modifier l'eTemplate spécifié ci-dessus
 edit...	common	fr	Modifier...
 editable templates - db-tools	common	fr	Templates modifiables - outils de bases de données
@@ -509,7 +501,7 @@ end time	common	fr	Heure de fin
 enter '' for an empty default, nothing mean no default	common	fr	Entrez '' pour une valeur par défaut vide, rien signifie pas de valeur par défaut
 enter a search pattern	common	fr	Entrez une chaîne de recherche
 enter filename to upload and attach, use [browse...] to search for it	common	fr	Entrez un nom de fichier à uploader et attacher, utilisez [naviguer...] pour le rechercher
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´EGroupware.<br>Exemple: https://egw.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 enter the new version number here (> old_version), empty for no update-file	common	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	common	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
 enter your file name	common	fr	Entrer le nom du fichier
@@ -531,7 +523,7 @@ error enabling push	common	fr	Erreur à l'activation de push
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
 error: template not found !!!	common	fr	Erreur : Template non trouvé !
-error: webserver is not allowed to write into '%1' !!!	common	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
+error: webserver is not allowed to write into '%1' !!!	common	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !
 error: while saving !!!	common	fr	Erreur lors de l'enregistrement !
 error: writing file (no write-permission for the webserver) !!!	common	fr	Erreur sur l'écriture du fichier (pas d'autorisation pour le serveur Web) !
 estonia	common	fr	ESTONIE
@@ -545,7 +537,7 @@ etemplate reference	common	fr	Référence eTemplate
 etemplate tutorial	common	fr	Tutoriel eTemplate
 ethiopia	common	fr	ETHIOPIE
 everything	common	fr	Tout
-exact	common	fr	exact
+exact	common	fr	Exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	fr	Exemple {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - recherche le champ "n_prefix", sur "Mr", si trouvé, écrit Hello Mr., sinon écrit Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	fr	Exemple {{LETTERPREFIX}} - Ajoute un préfixe à une lettre sans double espaces, si le titre est vide par exemple.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	fr	Exemple {{LETTERPREFIX}} - Donne une lettre préfixe sans double espace, si le titre est vide par exemple
@@ -579,14 +571,14 @@ file %1 has no content in physical filesystem %2 --> file removed!	admin	fr	Le f
 file %1 has no content in physical filesystem %2!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2
 file '%1' not found!	common	fr	Fichier  '%1'  non trouvé !
 file a file	common	fr	Déposer un fichier
-file contains more than one etemplate, last one is shown !!!	common	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
+file contains more than one etemplate, last one is shown !!!	common	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !
 file information	common	fr	Informations du fichier
 file is of wrong type (%1 != %2)!	common	fr	Le fichier est d'un mauvais type (%1 != %2) !
 file too large.  maximum %1	common	fr	Le fichier est trop volumineux. Maximum %1
 file writen	common	fr	Fichier écrit
 files	common	fr	Fichiers
 files without content in physical filesystem will be removed.	admin	fr	Les fichiers sans contenu dans le système de fichier physique seront supprimés.
-fileupload	common	fr	UploadFichier
+fileupload	common	fr	Upload fichier
 filter	common	fr	Filtrer
 finland	common	fr	FINLANDE
 first	common	fr	Premier
@@ -600,7 +592,7 @@ folder already exists.	common	fr	Le dossier existe déjà.
 fontselect	common	fr	Police
 fontsizeselect	common	fr	Taille de la police
 for more than one contact in a document use the tag pagerepeat!	preferences	fr	Utiliser l'étiquette de répétition de page pour plus d'un contact dans un document!
-force	common	fr	forcer
+force	common	fr	Forcer
 force selectbox	common	fr	Forcer la boîte de sélection
 forecolor	common	fr	Couleur
 foreign key	common	fr	Clé étrangère
@@ -635,6 +627,7 @@ go to the first entry	common	fr	Aller à la première entrée
 go to the last entry	common	fr	Aller à la dernière entrée
 go to the next page of entries	common	fr	Aller à la page suivante d'entrées
 go to the previous page of entries	common	fr	Aller à la page précédente d'entrées
+go to your home directory	common	fr	Allez dans votre répertoire personnel
 grant access	common	fr	Autoriser l'accès
 greece	common	fr	GRECE
 greek	common	fr	Grec
@@ -651,7 +644,7 @@ group has been updated	common	fr	Le groupe a été mis à jour
 group name	common	fr	Nom du groupe
 group public	common	fr	Public par groupe
 groupbox	common	fr	GroupBox
-groupdav	common	fr	Serveurs CalDAV, CardCAV et GroupDAV
+groupdav	common	fr	Synchronisation CalDAV / CardDAV
 groups	common	fr	Groupes
 groups with permission for %1	common	fr	Groupes avec la permission pour %1
 groups without permission for %1	common	fr	Groupes sans la permission pour %1
@@ -666,7 +659,7 @@ haiti	common	fr	HAITI
 hbox	common	fr	BoiteH
 heard island and mcdonald islands	common	fr	ILE HEARD ET ILES MCDONALD
 height	common	fr	Hauteur
-height of row (in % or pixel)	common	fr	hauteur d'une ligne (en % ou pixel)
+height of row (in % or pixel)	common	fr	Hauteur d'une ligne (en % ou pixel)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	fr	Hauteur de la ligne (en % ou pixels), désactiver la ligne: [! = pas]<valeur>[=<vérifier>] p.ex.: '!@donnees' désactive la ligne si le contenu de donnees est vide
 height of the table in % or pixels for the table-tag and (optional) div	common	fr	Hauteur de la table en % ou pixels pour le tag de la table et div (optionnel)
 height, disabled	common	fr	Hauteur, désactivé
@@ -691,37 +684,35 @@ how many entries should the list show	common	fr	combien d'entrées la liste doit
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être affichées sur la barre de navigation (haut de page). Les icônes suplémentaires seront placées dans une liste que l'on appellera via une icône à droite de la barre de navigation.
 how many rows to print	common	fr	Combien de lignes sont à imprimer
 how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'EGroupware ?
-html	common	fr	Html
+html	common	fr	HTML
 html link to the current record	common	fr	Lien HTML vers l'enregistrement courant
 html links to any entries linked to the current record, excluding attached files	common	fr	Liens HTML vers toutes les entrées liées à l'enregistrement actuel, à l'exclusion des fichiers joints
 hungary	common	fr	HONGRIE
 iceland	common	fr	ISLANDE
 id	common	fr	ID
-iespell not detected. click ok to go to download page.	common	fr	ieSpell non détecté. Cliquez sur Ok pour aller à la page de téléchargement.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	fr	Si le champ est désactivé, une cellule de table vide est affiché pour suppression (temporaire) d'un champ/cellule
 if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	fr	Si le problème persiste, contacter votre administrateur et demander de vérifier les journaux d'erreurs sur le serveur.
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin vfs complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin VFS complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin VFS complet), %1 affiche une icône de document supplémentaire pour chaque entrée. Cette icône autorise le téléchargement du document spécifié avec les données insérée
 if you use "2-factor-authentication", please enter the code here.	common	fr	Si vous utilisez l'authentification à 2 facteurs, merci d'entre le code ici
 image	common	fr	Image
 image directory relative to document root (use / !), example:	common	fr	Répertoire image relative à la racine des documents (utiliser / !), par exemple :
 image url	common	fr	URL de l'Image
 import	common	fr	Importer
-import an etemplate from a xml-file	common	fr	import an eTemplate from a xml-file
+import an etemplate from a xml-file	common	fr	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
 import xml	common	fr	Importer XML
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	fr	Pour copy dans le presse-papier, vous devez autoriser le lecteur Flash en cliquant sur la boîte grise.\nVous pouvez autoriser le lecteur Flash de manière permanente pour EGroupware dans les paramètres de votre navigateur
 include access to any linked files (links tab)	common	fr	Ajout de l'accès à tous liens de fichiers (onglet Liens)
-increment version to not overwrite the existing template	common	fr	incrémente la version pour ne pas écraser le modèle existant
+increment version to not overwrite the existing template	common	fr	Incrémente la version pour ne pas écraser le modèle existant
 indent	common	fr	Indenter
 index/name of returned content (name of the template, link / method for image)	common	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
 indexed	common	fr	Indexé.
 indexoptions	common	fr	Options d'Index
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
-infolog types to sync	common	fr	Types d'infolog à synchroniser
+infolog types to sync	common	fr	Types d'InfoLog à synchroniser
 initial	common	fr	Initial
 input required	common	fr	Input nécessaire
 insert a column before	common	fr	Insérer une colonne avant
@@ -753,7 +744,7 @@ invalid 2-factor authentication code	common	fr	Code d'authentification à double
 invalid email	common	fr	Email invalide
 invalid filename	common	fr	Nom de fichier invalide
 invalid ip address	common	fr	Adresse IP invalide
-invalid or expired 'remember me' token	common	fr	jeton "remember me" invalide ou expiré.
+invalid or expired 'remember me' token	common	fr	Jeton "remember me" invalide ou expiré.
 invalid password	common	fr	Mot de passe invalide
 iran, islamic republic of	common	fr	IRAN, REPUBLIQUE ISLAMIQUE D'
 iraq	common	fr	IRAK
@@ -834,7 +825,7 @@ list of files linked to the current record	preferences	fr	Listes des fichiers li
 lithuania	common	fr	LITHUANIE
 load	common	fr	Charger
 load this template into the editor	common	fr	Charger ce template dans l'éditeur
-loading	common	fr	chargement
+loading	common	fr	Chargement
 local	common	fr	Local
 location calendars	groupdav	fr	Localisations des calendriers
 locations	common	fr	Localisations
@@ -907,7 +898,7 @@ moved %1 children from directory fs_id=%2 to %3	admin	fr	Déplacement %1 enfants
 moved unconnected %1 %2 to %3.	admin	fr	Déplacement de %1 non connectés %2 vers %3.
 mozambique	common	fr	MOZAMBIQUE
 multicolumn indices	common	fr	Indices Multi-colonnes
-multiple	common	fr	multiple
+multiple	common	fr	Multiple
 myanmar	common	fr	MYANMAR
 name	common	fr	Nom
 name of other table where column is a key from	common	fr	Nom de l'autre table où la colonne est une clé de
@@ -949,9 +940,9 @@ nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
 no - cancel	common	fr	Non, annuler
-no column to swap with !!!	common	fr	aucune colonne à intervertir !
+no column to swap with !!!	common	fr	Aucune colonne à intervertir !
 no default set	common	fr	Aucun défaut défini
-no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
+no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore...
 no file	common	fr	Pas de fichier
 no filename given or selected via browse...	common	fr	Pas de nom de fichier donné ou sélectionnée avec le navigateur...
 no filters	common	fr	Pas de filtre
@@ -974,16 +965,16 @@ northern mariana islands	common	fr	ILES MARIANA DU NORD
 norway	common	fr	NORVEGE
 not	common	fr	pas
 not a user yet? register now	common	fr	Pas encore identifié? Enregisrez-vous maintenant
-not assigned	common	fr	non assigné
+not assigned	common	fr	Non assigné
 not null	common	fr	NOT NULL
 not readable %1 entry of user %2	common	fr	L'entrée %1 de l'utilisateur %2 est illisible
 not supported by current application!	common	fr	Non supporté par l'application active
 note	common	fr	Note
 notes	common	fr	Notes
-nothing	common	fr	rien
+nothing	common	fr	Rien
 nothing found - try again !!!	common	fr	Rien trouvé - essayez encore !
 nothing in clipboard to paste !!!	common	fr	Rien à coller !
-nothing matched search criteria !!!	common	fr	Aucune occurrence correspondant aux critères de recherche !!!
+nothing matched search criteria !!!	common	fr	Aucune occurrence correspondant aux critères de recherche !
 nothing to save.	common	fr	Rien à enregistrer.
 notifications	common	fr	Notifications
 notify window	common	fr	Fenêtre de notification
@@ -996,7 +987,7 @@ numbers	common	fr	nombres
 numlist	common	fr	Liste numérotée
 october	common	fr	Octobre
 of	common	fr	de
-off	common	fr	désactivé
+off	common	fr	Désactivé
 ok	common	fr	OK
 old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
@@ -1005,11 +996,12 @@ on mouse over	common	fr	Sur le relâchement du clic de la souris
 onchange	common	fr	onChange
 onclick	common	fr	onClick
 only an other version found !!!	common	fr	Une seule autre version trouvée !
-only private	common	fr	seulement privés
+only private	common	fr	Seulement privés
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	fr	Seulement supporté par les clients pleinement respectueux de la norme (ie. d'Apple).  Si vous devez entrer une URL, cela ne sera probablement pas supporté.
 only yours	common	fr	Seulement les vôtres
 oops! you caught us in the middle of system maintainance.	common	fr	Oups ! Vous êtes arrivé en pleine maintenance système.
 open	common	fr	Ouvrir
+open existing contact	common	fr	Ouvrir un contact existant
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open sidebox	common	fr	Ouvrir la barre de menu latérale
@@ -1038,10 +1030,10 @@ papua new guinea	common	fr	PAPOUASIE NOUVELLE GUINEE
 paraguay	common	fr	PARAGUAY
 parcel	common	fr	Colis
 parent category	common	fr	Catégorie parente
-parent is a '%1' !!!	common	fr	le parent est un '%1' !
+parent is a '%1' !!!	common	fr	Le parent est un '%1' !
 password	common	fr	Mot de passe
-password contains only %1 of required %2 character classes: no %3	common	fr	le mot de passe contient seulement %1 sur %2 classes de caractères nécessaires : pas de %3
-password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	fr	le mot de passe contient "%1" ce qui est une partie de votre nom d'utilisateur ou non complet (3 caractères ou plus)
+password contains only %1 of required %2 character classes: no %3	common	fr	Le mot de passe contient seulement %1 sur %2 classes de caractères nécessaires : pas de %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	fr	Le mot de passe contient "%1" ce qui est une partie de votre nom d'utilisateur ou non complet (3 caractères ou plus)
 password could not be changed	common	fr	Le mot de passe n'a pas pu être modifié !
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 password must contain at least %1 lowercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères minuscules
@@ -1097,7 +1089,7 @@ prev	common	fr	Préc.
 preview with entry	common	fr	Entrée précédente
 previous	common	fr	Précédent
 previous page	common	fr	Page précédente
-primary group	common	fr	groupe initial
+primary group	common	fr	Groupe primaire
 primary key	common	fr	Clé primaire
 primary key for the table, gets automaticaly indexed	common	fr	Clé primaire pour la table, est automatiquement indexée
 primary style-sheet:	common	fr	Feuille de style primaire:
@@ -1108,7 +1100,7 @@ programs	common	fr	Programmes
 project	common	fr	Projet
 properties	common	fr	Propriétés
 protocol is required	common	fr	Le protocole est requis
-public	common	fr	public
+public	common	fr	Public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
 quick add	common	fr	Ajout rapide
@@ -1131,7 +1123,7 @@ remember me	common	fr	Se souvenir de moi
 remember me for %1	common	fr	Se souvenir de moi pour %1
 remove	api	fr	Supprimer
 remove row (can not be undone!!!)	common	fr	Enlever la ligne (ne peut PAS être annulé !)
-remove selected accounts	common	fr	supprimer les comptes sélectionnés
+remove selected accounts	common	fr	Supprimer les comptes sélectionnés
 remove shortcut	common	fr	Supprimer le raccourci
 remove this link (not the entry itself)	common	fr	Enlever ce lien (pas l'entrée elle-même)
 removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
@@ -1140,7 +1132,7 @@ rename	common	fr	Renommer
 repeat password	common	fr	Répéter le mot de passe
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
-request could not be processed, please reload your window (press f5 or cmd r)!	common	fr	La requête n'a pas pu être traitée, veuillez recharger la page (appui sur F5 our [CTRL]+R) !
+request could not be processed, please reload your window (press f5 or cmd r)!	common	fr	La requête n'a pas pu être traitée, veuillez recharger la page (appui sur F5 our CTRL+R) !
 requested resource '%1' does not exist or has expired	common	fr	La ressource nécessaire '%1' n'existe pas ou est expirée
 requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
 requests and truncated responses to apache error-log	groupdav	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
@@ -1188,15 +1180,15 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	fr	Enregistrer
 save all	common	fr	Tout enregistrer
 save as	common	fr	Enregistrer comme
-save as zip	common	fr	Sauvegarder en zip
+save as zip	common	fr	Sauvegarder en ZIP
 save selected columns as default preference for all users.	common	fr	Enregistrer les colonnes sélectionnées comme préférence par défaut pour tous les utilisateurs.
 save the changes made and close the window	common	fr	Enregistrer les modifications et fermer la fenêtre
 save the etemplate under the above keys (name, ...), change them for a saveas	common	fr	Enregistrer l'eTemplate sous les clés ci-dessus (nom, ...), changez-les pour un Sauvegarder-sous
 saved column sizes to preferences.	common	fr	Enregistrez la taille des colonnes dans les préférences.
 saves changes to tables_current.inc.php	common	fr	Enregistrer les changements dans tables_current.inc.php
-saves the template with given version number and closes the window	common	fr	enregistre le modèle avec la version donnée et ferme la fenêtre
+saves the template with given version number and closes the window	common	fr	Enregistre le modèle avec la version donnée et ferme la fenêtre
 scale	common	fr	Echelle
-scale for float	common	fr	échelle pour les flottants
+scale for float	common	fr	Échelle pour les flottants
 scheduling inbox	common	fr	Plannification inbox
 scheduling outbox	common	fr	Plannification outbox
 search	common	fr	Rechercher
@@ -1214,13 +1206,13 @@ security & password	common	fr	Sécurité & mot de passe
 select	common	fr	Sélectionner
 select "%1", if your client does not support multiple addressbooks.	groupdav	fr	Sélectionner "%1" si votre client ne supporte pas plusieurs carnets d'adresses.
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	fr	Sélectionner "%1" si votre client supporte les groupes (ex : OS X ou carnet d'adresses iOS)
-select a category	common	fr	choisissez une catégorie
+select a category	common	fr	Choisissez une catégorie
 select a primary contact, to show in the list	common	fr	Choisissez un contact primaire, à montrer dans la liste
 select access	common	fr	Choisissez l'accès
 select account	common	fr	Choisissez le compte
 select action	common	fr	Sélectionner une action
 select all	common	fr	Tout sélectionner
-select all %1 %2 for %3	common	fr	Sélectionner tous les %11 %2 pour %3
+select all %1 %2 for %3	common	fr	Sélectionner tous les %1 %2 pour %3
 select all entries	common	fr	Sélectionner tous les éléments
 select an app first !!!	common	fr	Choisissez d'abord une application  !
 select an app to search in	common	fr	Choisissez une application dans laquelle rechercher
@@ -1237,20 +1229,20 @@ select columns	common	fr	Sélectionnez les colonnes
 select country	common	fr	Choisissez un pays
 select date	common	fr	Sélectionner la date
 select day	common	fr	Choisissez un jour
-select day of week	common	fr	sélectionnez le jour de la semaine
+select day of week	common	fr	Sélectionnez le jour de la semaine
 select entry	common	fr	Sélectionnez l'entrée
 select file(s) from vfs	common	fr	Sélectionner des fichiers du VFS
 select files from filemanager ...	common	fr	Sélectionner dans le gestionnaire de fichiers...
 select group	common	fr	Sélectionner le groupe
 select home email address	common	fr	Sélectionner l'email privé
 select hour	common	fr	Sélectionnez l'heure
-select if content of field should not be translated (label gets always translated)	common	fr	choisissez si le contenu du champ ne devrait pas être traduit (le label est toujours traduit)
+select if content of field should not be translated (label gets always translated)	common	fr	Choisissez si le contenu du champ ne devrait pas être traduit (le label est toujours traduit)
 select language	common	fr	Sélectionnez la langue
 select month	common	fr	Choisissez un mois
 select multiple accounts	common	fr	Sélectionner des comptes multiples
 select number	common	fr	Choisissez un numéro
 select one	common	fr	Sélectionner un(e)
-select one ...	common	fr	CHoisissez un ...
+select one ...	common	fr	CHoisissez un...
 select percentage	common	fr	Choisissez un pourcentage
 select priority	common	fr	Choisissez une priorité
 select some options	common	fr	Sélectionner plusieurs options
@@ -1259,11 +1251,11 @@ select the columns to display in the list	common	fr	Sélectionnez les colonnes �
 select the default height for the application windows	common	fr	Choisissez la hauteur par défaut de la fenêtre d'application
 select the default width for the application windows	common	fr	Choisissez la largeur par défaut de la fenêtre d'application
 select the indexed columns in their desired order	common	fr	Sélectionnez la colonne indexée dans leur ordre désiré
-select this etemplate to delete it	common	fr	choisissez cet eTemplate pour l'effacer
+select this etemplate to delete it	common	fr	Choisissez cet eTemplate pour l'effacer
 select user	common	fr	Sélectionner l'utilisateur
 select user or group	common	fr	Sélectioner un utilisateur ou groupe
-select which accounts to show	common	fr	sélectionnez quels comptes à afficher
-select which values to show	common	fr	sélectionnez les valeurs à afficher
+select which accounts to show	common	fr	Sélectionnez quels comptes à afficher
+select which values to show	common	fr	Sélectionnez les valeurs à afficher
 select work email address	common	fr	Sélectionner l'email professionnel
 select year	common	fr	Choisissez l'année
 selectbox	common	fr	Boîte de sélection
@@ -1282,8 +1274,8 @@ server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été interrompue
 set as default	common	fr	Définir par défaut
 set these columns as the default	common	fr	Définir ces colonnes par défaut
-set user as only responsible user, but keeping groups	groupdav	fr	définir l'utilisateur comme l'unique responsable, mais garder les groupes
-set user as only responsible, removing all existing responsibles	groupdav	fr	définir l'utilisateur comme l'unique responsable, et supprimer les autres responsables existant
+set user as only responsible user, but keeping groups	groupdav	fr	Définir l'utilisateur comme l'unique responsable, mais garder les groupes
+set user as only responsible, removing all existing responsibles	groupdav	fr	Définir l'utilisateur comme l'unique responsable, et supprimer les autres responsables existant
 sets today as date	common	fr	Fixe la date à aujourd'hui
 settings saved.	common	fr	Paramètres enregistrés.
 setup	common	fr	Setup
@@ -1314,18 +1306,18 @@ show menu	common	fr	Afficher le menu
 show next login	common	fr	Afficher à la prochaine connexion
 show now	common	fr	Afficher maintenant
 show page generation time	common	fr	Afficher le temps de génération de la page
-show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page?
-show page generation time?	common	fr	Afficher le temps de génération de la page?
+show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page ?
+show page generation time?	common	fr	Afficher le temps de génération de la page ?
 show password	common	fr	Afficher le mot de passe
 show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher les logos d'EGroupware et x-desktop sur le bureau?
 show values	common	fr	Montrer les valeurs
-show/hide	common	fr	afficher/masquer la barre latérale
+show/hide	common	fr	Afficher/masquer la barre latérale
 show_more_apps	common	fr	Voir plus d'applications
-showing	common	fr	montre
+showing	common	fr	Montre
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
-shows / allows you to enter values into the etemplate for testing	common	fr	montre / autorise à entrer des valeurs dans l'eTemplate pour tester
-shows/displays etemplate for testing, does not save it before	common	fr	montre/affiche l'eTemplate pour tester, ne l'enregistre pas avant
+shows / allows you to enter values into the etemplate for testing	common	fr	Montre / autorise à entrer des valeurs dans l'eTemplate pour tester
+shows/displays etemplate for testing, does not save it before	common	fr	Montre/affiche l'eTemplate pour tester, ne l'enregistre pas avant
 sierra leone	common	fr	SIERRA LEONE
 sign up	common	fr	S'inscrire
 simple	common	fr	Simple
@@ -1372,14 +1364,14 @@ sunday	common	fr	Dimanche
 sure	common	fr	Sûr
 suriname	common	fr	SURINAM
 svalbard and jan mayen	common	fr	SVALBARD ETJAN MAYEN
-swap	common	fr	rocade
+swap	common	fr	Rocade
 swap widget with next one	common	fr	faire une rocade du widget avec le suivant
-swap with next column	common	fr	faire une rocade avec la colonne suivante
-swap with next row	common	fr	faire une rocade avec la ligne suivante
+swap with next column	common	fr	Faire une rocade avec la colonne suivante
+swap with next row	common	fr	Faire une rocade avec la ligne suivante
 swaziland	common	fr	SWAZILAND
 sweden	common	fr	SUEDE
-switch to a parent widget	common	fr	change pour un widget parent
-switch to an other widgets of that container	common	fr	change pour un autre widget de ce container
+switch to a parent widget	common	fr	Change pour un widget parent
+switch to an other widgets of that container	common	fr	Change pour un autre widget de ce container
 switzerland	common	fr	SUISSE
 sync all selected into one	groupdav	fr	Synchroniser toute la sélection vers un seul
 syrian arab republic	common	fr	SYRIE
@@ -1415,7 +1407,7 @@ this name has been used already	common	fr	Ce nom est déjà utilisé !
 this text gets displayed if the input-field is empty and has no focus (blur)	common	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	fr	Ceci va mettre à zéro les préférences de barre d'outil de tous les utilisateurs vers les préférences par défaut.
 thursday	common	fr	Jeudi
-tiled	common	fr	mosaïque
+tiled	common	fr	Mosaïque
 time	common	fr	Heure
 time zone	common	fr	Fuseau horaire
 time zone offset	common	fr	Décalage du fuseau horaire
@@ -1434,7 +1426,7 @@ todays date, eg. "%1"	common	fr	Date d'aujourd'hui, p.ex. "%1"
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	fr	Too many rows selected.<br />Select all, or less than %1 rows
+too many rows selected.<br />select all, or less than %1 rows	common	fr	Trop de lignes sélectionnées <br />Sélectionner tout ou moins de %1 lignes
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop de tentatives de connexion infructueuses: %1 pour l'utilisateur '%2', %3 pour l'IP %4
 top	common	fr	Sommet
 total	common	fr	Total
@@ -1523,16 +1515,15 @@ weekend	common	fr	Weekend
 welcome	common	fr	Bienvenue
 western european	common	fr	Europe occidentale
 western sahara	common	fr	SAHARA OCCIDENTAL
-what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
-what style would you like the image to have?	common	fr	Quel style  souhaitez-vous pour l'image?
+what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir ?
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	Ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fr	Quand vous fusionnez les entités dans des documents, ils seront stockés ici. Si aucun dossier n'est indiqué, il seront stockés dans votre dossier personnel (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
 which groups	common	fr	Quels groupes
 which infolog types should be synced with the device, default only tasks.	common	fr	Quels types d'infolog doivent-ils être synchronisés avec l'appareil ? (par défaut, les tâches uniquement)
 whole query	common	fr	Requête entière
-widget copied into clipboard	common	fr	widget copié dans le presse-papiers
+widget copied into clipboard	common	fr	Widget copié dans le presse-papiers
 width	common	fr	Largeur
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	fr	Largeur de la colonne (en % ou pixels), désactiver col: [! = pas]<valeur>[=<verifier>] p.e.: '!@donnees' désactive la colonne  si le contenu de donnees est vide
 width of column (in % or pixel)	common	fr	Largeur de la colonne (en % ou pixel)
@@ -1542,7 +1533,7 @@ wk	common	fr	S.
 work email	common	fr	Email professionnel
 working days	common	fr	Jours ouvrables
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	fr	Fiable pour les fichiers de 1-2Mo, doit fonctionner pour les fichiers 5-10Mo, avec un échec probable pour les fichiers > 10Mo
-would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
+would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre ?
 writable	common	fr	Inscriptible
 writable filemanager directory	common	fr	Dossier filemanager inscriptible
 writable share	common	fr	Dossier inscriptible
@@ -1550,7 +1541,7 @@ write <app>/setup/tables_current.inc.php	common	fr	Ecrire <app>/setup/tables_cur
 write langfile	common	fr	Ecrire le fichier de langage
 write tables	common	fr	Ecrire les tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	fr	Ecrit un fichier 'etemplates.inc.php' (pour l'application dans le nom) dans le répertoire setup de l'application
-writing	common	fr	écriture
+writing	common	fr	Écriture
 written by:	common	fr	Ecrit par:
 xml-file to import	common	fr	Fichier XML à importer
 xslt template	common	fr	Template XSLT

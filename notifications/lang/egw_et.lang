@@ -1,6 +1,63 @@
-minutes	notifications	et	minutit
+(update in sec. %s)	notifications	et	(Värskendus sek. %s)
+account:	notifications	et	Konto:
+all possible notification backends	notifications	et	Kõik võimalikud teavitamise tagaküljed: Kõik võimalikud teavitamise tagaküljed
+are you sure you want to delete all notifications?	notifications	et	Kas olete kindel, et soovite kustutada kõik teated?
+browser	notifications	et	Brauser
+browser is starting.	notifications	et	Brauser käivitub.
+cancal settings?	notifications	et	Tühistage seaded?
+cancal?	notifications	et	Tühistada?
+certification-information:	notifications	et	Sertifitseerimisandmed:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	et	Märkige mõlemad. Proovige esmalt aktiivset kasutaja määratud kontot, kui seda ei ole, kasutage eMailAdmin profiili.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	et	Valige teatamisahel. Teid teavitatakse üle ahelas sisalduvate tagakülgede.<br>Märkus: Kui teatamisahel on märgitud kui "disabled", teie administraator ei luba ühte või mitut ahelas sisalduvat tagasisidet, langevad teated teile teatamise ajal tagasi kategooriasse "Email".
+connection error.	notifications	et	Ühendusviga.
+connection error. please check connection to server.	notifications	et	Ühendusviga. Palun kontrollige ühendust serveriga.
+continue to connect?	notifications	et	Jätkake ühendust?
+cookies are required to login to this site.	notifications	et	Sellele saidile sisselogimiseks on vaja küpsiseid.
+delete all messages	notifications	et	Kustutage kõik sõnumid
+delete notifications	notifications	et	Kustutage teated
+delete this message	notifications	et	Kustutage see teade
+domain not found, please check serveraddress.	notifications	et	Domeeni ei leitud, palun kontrollige serveri aadressi.
+egroupware login is starting, please wait.	notifications	et	EGroupware sisselogimine käivitub, palun oodake.
+egroupware logindomain:	notifications	et	EGroupware Logindomeen:
+egroupware logindomains founds, please select.	notifications	et	EGroupware Logindomeenid leitud, palun valige.
+egroupware not found by url or connection lost to server.	notifications	et	EGroupware ei leitud URL-i järgi või ühendus serveriga kadunud.
+egroupware not found by url.	notifications	et	EGroupware ei ole URL-i järgi leitud.
+email notifications only, if user is not logged in	notifications	et	Ainult e-posti teated, kui kasutaja ei ole sisse logitud.
+error browser can`t start.	notifications	et	Error Browser can`t start.
+error on loading tray icon	notifications	et	Tray ikooni laadimise viga
+error ssl	notifications	et	Viga SSL
+exit	notifications	et	Väljumine
+host:	notifications	et	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	et	Kui üksikasjalikult peaks EGroupware-Popup käituma, kui kasutajale saadetakse teade:<br>madal: Lihtsalt kuvada teavituskella ülemises menüüs - ülemine menüü peab olema sisse lülitatud!<br>keskmine: tuua teavitusaken ettepoole<br>high: tuua teavitusaken ette ja lasta brauseril teha midagi, et endast teada anda
+info on load config file: create config file.	notifications	et	Konfigufaili laadimise info: Loo konfigufaili.
+issuer dn:	notifications	et	Väljaandja DN:
+java desktop notification app	preferences	et	Java desktop notification app
+last month	notifications	et	Eelmine kuu
+login aborted, application exit?	notifications	et	Sisselogimine katkestatud, rakendusest väljumine?
+login in egroupware:	notifications	et	Sisselogimine EGroupware'is:
+mail account to use for notifications	admin	et	Maili konto, mida kasutada teavituste jaoks
+mark all as read	notifications	et	Märgi kõik loetud
+mark as read	notifications	et	Märgistada loetud kujul
+minutes	notifications	et	Minutit
+more info	notifications	et	Rohkem infot
 notification	common	et	Teavitus
+notifier	notifications	et	Teavitaja
+open notified entry	notifications	et	Avage teavitatud kanne
+page not found, please check serveraddress.	notifications	et	Lehekülge ei leitud, palun kontrollige serveri aadressi.
+password:	notifications	et	Parool:
+permission	notifications	et	Luba
 preferences for notification	notifications	et	Teavituse eelistused
 settings	notifications	et	Seadistused
 step	notifications	et	Samm
+subject dn:	notifications	et	Teema DN:
+the server certificate is not a valid trust center certificate!	notifications	et	Serveri sertifikaat ei ole kehtiv usalduskeskuse sertifikaat!
+this egroupware notification has been sent to you by mail because your	notifications	et	See EGroupware'i teade on teile saadetud e-posti teel, sest teie
+this month	notifications	et	See kuu
+user:	notifications	et	Ukasutaja:
 warning	notifications	et	Ettevaatust
+yesterday	notifications	et	Eile
+you can also use	admin	et	Võite kasutada ka
+you have %1 unread notifications	notifications	et	Teil on %1 lugemata teateid
+you have been successfully logged out	notifications	et	Teid on edukalt välja logitud
+you've got new mail	notifications	et	Teil on uus postitus
+your session could not be verified.	notifications	et	Teie seanssi ei suudetud kontrollida.

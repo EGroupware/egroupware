@@ -1,12 +1,80 @@
+(update in sec. %s)	notifications	sv	(Uppdatering i sek. %s)
+account:	notifications	sv	Konto:
+all possible notification backends	notifications	sv	Alla möjliga backends för aviseringar
+are you sure you want to delete all notifications?	notifications	sv	Är du säker på att du vill ta bort alla aviseringar?
+browser	notifications	sv	Webbläsare
+browser is starting.	notifications	sv	Webbläsaren startar.
+cancal settings?	notifications	sv	Avbryt inställningar?
+cancal?	notifications	sv	Avbryt?
+certification-information:	notifications	sv	Information om certifiering:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	sv	Kontrollera båda. Försök först med aktivt användardefinierat konto, om inget, använd eMailAdmin-profilen.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	sv	Välj en aviseringskedja. Du kommer att meddelas via de backends som ingår i kedjan.<br>Observera: Om en aviseringskedja är markerad som "inaktiverad" och din administratör inte tillåter en eller flera av de backends som ingår i kedjan, återgår aviseringarna till "E-post" när du får aviseringar.
+connection error.	notifications	sv	Fel i anslutningen.
+connection error. please check connection to server.	notifications	sv	Fel i anslutningen. Vänligen kontrollera anslutningen till servern.
+continue to connect?	notifications	sv	Fortsätt att ansluta?
+cookies are required to login to this site.	notifications	sv	Cookies krävs för att logga in på denna webbplats.
+delete all messages	notifications	sv	Radera alla meddelanden
+delete notifications	notifications	sv	Ta bort meddelanden
+delete this message	notifications	sv	Ta bort detta meddelande
+domain not found, please check serveraddress.	notifications	sv	Domänen hittades inte, kontrollera serveradressen.
+egroupware login is starting, please wait.	notifications	sv	EGroupware inloggning startar, vänligen vänta.
+egroupware logindomain:	notifications	sv	EGroupware Logindomän:
+egroupware logindomains founds, please select.	notifications	sv	EGroupware Logindomäner hittades, vänligen välj.
+egroupware not found by url or connection lost to server.	notifications	sv	EGroupware hittades inte av URL eller anslutningen förlorad till servern.
+egroupware not found by url.	notifications	sv	EGroupware hittades inte av URL.
+email notifications only, if user is not logged in	notifications	sv	Endast e-postmeddelanden om användaren inte är inloggad
+error browser can`t start.	notifications	sv	Fel Webbläsaren kan inte starta.
+error on loading tray icon	notifications	sv	Fel vid laddning av ikonen för facket
+error ssl	notifications	sv	Fel SSL
+exit	notifications	sv	Avsluta
 folder	notifications	sv	Katalog
 from	notifications	sv	Från
+host:	notifications	sv	Server:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	sv	Hur detaljerad ska EGroupware-popupen vara om ett meddelande skickas till användaren:<br>låg: visa bara aviseringsklockan i toppmenyn - toppmenyn måste vara aktiverad!<br>medium: visa meddelandefönstret på framsidan<br>hög: ta fram meddelandefönstret och låt webbläsaren göra något för att meddela sig själv
+info on load config file: create config file.	notifications	sv	Info om laddning av konfigurationsfil: skapa konfigurationsfil.
+issuer dn:	notifications	sv	DN för utfärdare:
+java desktop notification app	preferences	sv	Java-app för skrivbordsmeddelanden
+last month	notifications	sv	Förra månaden
+login aborted, application exit?	notifications	sv	Avbruten inloggning, avsluta programmet?
+login in egroupware:	notifications	sv	Logga in i EGroupware:
+mail account to use for notifications	admin	sv	E-postkonto att använda för aviseringar
+mark all as read	notifications	sv	Markera alla som lästa
+mark as read	notifications	sv	Markera som läst
 message from	notifications	sv	Meddelande från
 minutes	notifications	sv	Minuter
+more info	notifications	sv	Mer info
 notification	common	sv	Meddelande
+notifier	notifications	sv	Anmälare
+open notified entry	notifications	sv	Öppna aviserad post
+page not found, please check serveraddress.	notifications	sv	Sidan hittades inte, kontrollera serveradressen.
+password:	notifications	sv	Lösenord:
 permission	notifications	sv	Behörighet
+permission denied for notifications application.	notifications	sv	Behörighet nekad för notifieringsapplikation.
+placeholders with user/ prefix	admin	sv	platshållare med användare/prefix
+please contact your egroupware admin.	notifications	sv	Kontakta administratören för din EGroupware.
+please enter the url of your egroupware.	notifications	sv	Ange webbadressen till din EGroupware.
+please enter your egroupware username.	notifications	sv	Ange ditt användarnamn för EGroupware.
+please enter your password	notifications	sv	Ange ditt lösenord
 refresh notifications	notifications	sv	Uppdatera meddelanden
+repeat login?	notifications	sv	Upprepa inloggning?
+run application	notifications	sv	Kör applikation
+save password	notifications	sv	Spara lösenord
+setting	notifications	sv	Inställning
+setting aborted, application exit	notifications	sv	Inställning avbruten, avsluta programmet
 settings	notifications	sv	Alternativ
 signature	admin	sv	Signatur
+signature added to every change notification	admin	sv	Signatur läggs till i varje ändringsmeddelande
+sorry, your login has expired	notifications	sv	Tyvärr, din inloggning har gått ut
 step	notifications	sv	Steg
+subject dn:	notifications	sv	Ämne DN:
+the server certificate is not a valid trust center certificate!	notifications	sv	Servercertifikatet är inte ett giltigt Trust Center-certifikat!
+this egroupware notification has been sent to you by mail because your	notifications	sv	Detta EGroupware-meddelande har skickats till dig via e-post eftersom din
+this month	notifications	sv	Denna månad
+user:	notifications	sv	Användare:
 warning	notifications	sv	Varning
+yesterday	notifications	sv	Igår
+you can also use	admin	sv	Du kan också använda
+you have %1 unread notifications	notifications	sv	Du har %1 olästa meddelanden
+you have been successfully logged out	notifications	sv	Du har blivit utloggad
+you've got new mail	notifications	sv	Du har fått ett nytt e-postmeddelande
 your session could not be verified.	notifications	sv	Din session kunde inte verifieras

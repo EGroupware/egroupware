@@ -149,7 +149,7 @@ do you want a notification, if items you delegated are due?	infolog	bg	Жела�
 do you want to receive notifications as html-mails or plain text?	infolog	bg	Известията да бъдат във вид на HTML или текстови съобщения?
 don't show infolog	infolog	bg	НЕ показвай Дневника
 done	infolog	bg	приключен
-download	infolog	bg	Изтегляне
+download	infolog	bg	Запазване на файла
 download url for links	infolog	bg	URL адрес за изтегляне на връзки
 due %1	infolog	bg	Задължение %1
 due date	infolog	bg	Дата на падежа
@@ -314,7 +314,8 @@ only show them if there is a filter	infolog	bg	Показвайте ги сам�
 only show them while searching	infolog	bg	Показвайте ги само при търсене
 only the attachments	infolog	bg	само приложенията
 only the links	infolog	bg	само връзките
-open(status)	infolog	bg	отвори
+open and upcoming	infolog	bg	Отваряне и предстоящи
+open(status)	infolog	bg	Отвори
 optional note to the link	infolog	bg	бележка към връзката
 order	infolog	bg	Ред
 organization	infolog	bg	организация
@@ -322,10 +323,13 @@ other configurations	infolog	bg	Други конфигурации
 overdue	infolog	bg	просрочен
 own	infolog	bg	собствен
 own open	infolog	bg	отворен от собственика
+own open and upcoming	infolog	bg	Собствени отворени и предстоящи
 own overdue	infolog	bg	просрочен от собственика
 own upcoming	infolog	bg	предстоящ за собственика
+owner does not have edit rights	infolog	bg	Собственикът няма права за редактиране
 owner, responsible	infolog	bg	Собственик, Отговорник
 parent	infolog	bg	Родителски
+parent infolog	infolog	bg	Родителски InfoLog
 participants for scheduling an appointment	infolog	bg	Участници за насрочване на среща
 path on (web-)serverside<br>eg. /var/samba/share	infolog	bg	път от страна на (web-)сървъра<br>напр. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	bg	Пътят до файловете на потребителите и групите ТРЯБВА ДА БЪДЕ ИЗВЪН document-root на WEB сървъра!!!
@@ -334,6 +338,7 @@ pattern for search in projects	infolog	bg	Модел за търсене в пр
 percent completed	infolog	bg	Степен на изпълнение
 performance optimization for huge infolog tables	admin	bg	Оптимизиране на производителността за огромни таблици на InfoLog
 permission denied	infolog	bg	Достъпът отказан
+permissions error - %1 could not %2	infolog	bg	Грешка в разрешенията - %1 не може да %2
 phone	infolog	bg	Телефонен разговор
 phone/email	infolog	bg	Телефон/E-Mail
 phonecall	infolog	bg	Телефонен разговор
@@ -343,12 +348,17 @@ prefix for sub-entries (default: re:)	infolog	bg	Префикс за подвъ�
 price	infolog	bg	Цена
 pricelist	infolog	bg	Ценова листа
 primary link	infolog	bg	основна връзка
+print this infolog	infolog	bg	Отпечатване на този информационен дневник
+printing...	infolog	bg	Отпечатване...
 priority	infolog	bg	Приоритет
 private	infolog	bg	Личен
 project	infolog	bg	Проект
 project id	infolog	bg	Идентификатор на проекта
 project name	infolog	bg	Име на проекта
 project settings: price, times	infolog	bg	Параметри на проекта: цена, срокове
+projectmanager	infolog	bg	Ръководител на проект
+re-planned	infolog	bg	Повторно планиране
+re-planned time	infolog	bg	Повторно планирано време
 re:	infolog	bg	Отг:
 read one record by passing its id.	infolog	bg	Прочита един запис чрез предаване на ИД №
 read rights (default)	infolog	bg	право за четене (по подразбиране)

@@ -1,5 +1,76 @@
+(update in sec. %s)	notifications	tr	(Saniye içinde güncelleme %s)
+account:	notifications	tr	Hesap:
+all possible notification backends	notifications	tr	Tüm olası bildirim arka uçları
+are you sure you want to delete all notifications?	notifications	tr	Tüm bildirimleri silmek istediğinizden emin misiniz?
+browser	notifications	tr	Tarayıcı
+browser is starting.	notifications	tr	Tarayıcı başlatılıyor.
+cancal settings?	notifications	tr	Ayarları iptal et?
+cancal?	notifications	tr	İptal mi?
+certification-information:	notifications	tr	Sertifika bilgileri:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	tr	Her ikisini de kontrol edin. Önce aktif kullanıcı tanımlı hesabı deneyin, yoksa eMailAdmin profilini kullanın.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	tr	Bir bildirim zinciri seçin. Zincire dahil olan arka uçlar üzerinden bilgilendirileceksiniz.<br>Not: Bir bildirim zinciri "devre dışı" olarak işaretlenmişse, yöneticiniz zincire dahil olan arka uçlardan birine veya daha fazlasına izin vermez, bildirimler sizi bilgilendirirken "E-posta" ya geri döner.
+connection error.	notifications	tr	Bağlantı hatası.
+connection error. please check connection to server.	notifications	tr	Bağlantı hatası. Lütfen sunucu bağlantısını kontrol edin.
+continue to connect?	notifications	tr	Bağlanmaya devam ediyor musunuz?
+cookies are required to login to this site.	notifications	tr	Bu siteye giriş yapmak için çerezler gereklidir.
+delete all messages	notifications	tr	Tüm mesajları sil
+delete notifications	notifications	tr	Bildirimleri sil
+delete this message	notifications	tr	Bu mesajı sil
+domain not found, please check serveraddress.	notifications	tr	Etki alanı bulunamadı, lütfen sunucu adresini kontrol edin.
+egroupware login is starting, please wait.	notifications	tr	EGroupware oturum açma başlatılıyor, lütfen bekleyin.
+egroupware logindomain:	notifications	tr	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	tr	EGroupware Logindomains bulundu, lütfen seçin.
+egroupware not found by url or connection lost to server.	notifications	tr	EGroupware URL tarafından bulunamadı veya sunucuyla bağlantı kesildi.
+egroupware not found by url.	notifications	tr	EGroupware URL tarafından bulunamadı.
+email notifications only, if user is not logged in	notifications	tr	Kullanıcı oturum açmamışsa yalnızca e-posta bildirimleri
+error browser can`t start.	notifications	tr	Hata Tarayıcı başlatılamıyor.
+error on loading tray icon	notifications	tr	Tepsi simgesi yüklenirken hata oluştu
+error ssl	notifications	tr	Hata SSL
+exit	notifications	tr	Çıkış
 from	notifications	tr	Nereden
+host:	notifications	tr	Sunucu:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	tr	Kullanıcıya bir bildirim gönderilirse EGroupware-Popup ne kadar ayrıntılı davranmalıdır:<br>düşük: sadece üst menüde bildirim zilini göster - üst menü etkinleştirilmelidir!<br>orta: bildirim penceresini öne getir<br>yüksek: bildirim penceresini öne getirin ve tarayıcının kendini duyurmak için bir şeyler yapmasına izin verin
+info on load config file: create config file.	notifications	tr	Yapılandırma dosyası yükleme hakkında bilgi: yapılandırma dosyası oluştur.
+issuer dn:	notifications	tr	Veren DN:
+java desktop notification app	preferences	tr	Java masaüstü bildirim uygulaması
+last month	notifications	tr	Geçen ay
+login aborted, application exit?	notifications	tr	Giriş iptal edildi, uygulamadan çıkılıyor?
+login in egroupware:	notifications	tr	EGroupware'de oturum açın:
+mail account to use for notifications	admin	tr	Bildirimler için kullanılacak posta hesabı
+mark all as read	notifications	tr	Hepsini okundu olarak işaretle
+mark as read	notifications	tr	Okundu olarak işaretle
 message from	notifications	tr	Mesaj sahibi:
-minutes	notifications	tr	dakika
+minutes	notifications	tr	Dakika
+more info	notifications	tr	Daha fazla bilgi
+notifier	notifications	tr	Bildirici
+open notified entry	notifications	tr	Açık bildirimli giriş
+page not found, please check serveraddress.	notifications	tr	Sayfa bulunamadı, lütfen sunucu adresini kontrol edin.
+password:	notifications	tr	Şifre
+permission	notifications	tr	İzin
+permission denied for notifications application.	notifications	tr	Bildirim uygulaması için izin reddedildi.
+placeholders with user/ prefix	admin	tr	user/prefix ile yer tutucular
+please contact your egroupware admin.	notifications	tr	Lütfen EGroupware yöneticinizle iletişime geçin.
+please enter the url of your egroupware.	notifications	tr	Lütfen EGroupware'inizin URL'sini girin.
+please enter your egroupware username.	notifications	tr	Lütfen EGroupware kullanıcı adınızı girin.
+please enter your password	notifications	tr	Lütfen şifrenizi giriniz
+repeat login?	notifications	tr	Girişi tekrarlayın?
+run application	notifications	tr	Uygulamayı çalıştır
+save password	notifications	tr	Şifreyi kaydet
+setting	notifications	tr	Ayar
+setting aborted, application exit	notifications	tr	Ayar iptal edildi, uygulamadan çıkıldı
+settings	notifications	tr	Ayarlar
+signature added to every change notification	admin	tr	Her değişiklik bildirimine imza eklendi
+sorry, your login has expired	notifications	tr	Üzgünüz, oturum açma süreniz doldu
 step	notifications	tr	Adım
+subject dn:	notifications	tr	Konu DN:
+the server certificate is not a valid trust center certificate!	notifications	tr	Sunucu sertifikası geçerli bir güven merkezi sertifikası değil!
+this egroupware notification has been sent to you by mail because your	notifications	tr	Bu EGroupware bildirimi size e-posta ile gönderilmiştir çünkü
+this month	notifications	tr	Bu ay
+user:	notifications	tr	Kullanıcı:
 warning	notifications	tr	Uyarı
+yesterday	notifications	tr	Dün
+you can also use	admin	tr	Ayrıca şunları da kullanabilirsiniz
+you have %1 unread notifications	notifications	tr	%1 okunmamış bildiriminiz var
+you have been successfully logged out	notifications	tr	Başarıyla çıkış yaptınız
+you've got new mail	notifications	tr	Yeni bir postan var.
+your session could not be verified.	notifications	tr	Oturumunuz doğrulanamadı.

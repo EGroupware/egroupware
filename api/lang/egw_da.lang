@@ -1,8 +1,8 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
 %1 email(s) added into %2	common	da	%1 e-mail(e) tilføjet til %2
-%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
+%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af web server
 %1 more %2 selected ...	common	da	%1 flere %2 valgt...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br>eller gør %3 skrivbar for web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 '%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
 '%1' is not a valid json file!	common	da	'%1' er ikke en gyldig JSON-fil
@@ -60,7 +60,7 @@ algeria	common	da	Algeriet
 all	common	da	Alle
 all addressbooks	groupdav	da	Alle adressebøger
 all categories	common	da	Alle kategorier
-all fields	common	da	alle felter
+all fields	common	da	Alle felter
 all in one	groupdav	da	Alle i én
 all users	common	da	Alle brugere
 allow editing the %1	common	da	Tillad redigering af %1
@@ -134,7 +134,7 @@ cannot replace %1 because it is a directory	common	da	Kan ikke erstatte %1, ford
 cant open '%1' for %2	common	da	Kan ikke åbne '%1' for %2
 cape verde	common	da	Cape Verde
 categories	common	da	Kategorier
-categories for	common	da	kategorier for
+categories for	common	da	Kategorier for
 category	common	da	Kategori
 category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
 category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
@@ -145,7 +145,7 @@ central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
 changed	common	da	Ændret
-charset	common	da	utf-8
+charset	common	da	Tegnsæt
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	da	Tjek for tomme værdier i IF-sætninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
 check installation	common	da	Kontroller installation
 check now	common	da	Check nu
@@ -164,8 +164,8 @@ christmas island	common	da	Juleøen
 clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
-click here to create the link	common	da	klik her for at oprette linket
-click here to start the search	common	da	klik her for at starte søgningen
+click here to create the link	common	da	Clik her for at oprette linket
+click here to start the search	common	da	Klik her for at starte søgningen
 click or mouse over to show menus	common	da	Klik eller før musen over til sidemenuen
 click or mouse over to show menus?	common	da	Klik eller før musen over til sidemenuen?
 close	common	da	Luk
@@ -230,7 +230,7 @@ details	common	da	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
 direction left to right	common	da	Retning venstre til højre
 directory	common	da	Bibliotek
-disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
+disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer png image bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
@@ -241,9 +241,9 @@ doctype:	common	da	Dokument type:
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
 documentation	common	da	Dokumentation
-doesn't matter	common	da	det gør ikke noget
+doesn't matter	common	da	Det gør ikke noget
 domain	common	da	Domæne
-domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser, f.eks "%1"
+domain name for mail-address, eg. "%1"	common	da	Domænenavn til e-mail adresser, f.eks "%1"
 domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
@@ -258,15 +258,15 @@ edit	common	da	Redigér
 edit %1 category for	common	da	Redigér kategorien %1 for
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
-egroupware: login blocked for user '%1', ip %2	common	da	EGroupware: login blokeret for bruger '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	da	Login blokeret for bruger '%1', IP %2
 egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
-email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks. "%1"
+email-address of the user, eg. "%1"	common	da	E-mail-adresse for brugeren, f.eks. "%1"
 enabled	common	da	Slået til
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for EGroupware's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for EGroupware's URL.<br>Eksempel: https://egw.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
 equatorial guinea	common	da	Equatorial Guinea
@@ -277,7 +277,7 @@ error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %
 error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
-exact	common	da	nøjagtig
+exact	common	da	Nøjagtig
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	da	Eksempel {{LETTERPREFIX}} - Giver et bogstavpræfiks uden dobbeltmellemrum, hvis titlen er tom, f.eks.
 failed to change password.	common	da	Det lykkedes ikke at ændre adgangskoden.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
@@ -331,7 +331,7 @@ group access	common	da	Gruppeadgang
 group has been added	common	da	Gruppe er tilføjet
 group has been deleted	common	da	Gruppe er slettet
 group has been updated	common	da	Gruppe er opdateret
-group name	common	da	gruppe navn
+group name	common	da	Gruppe navn
 group public	common	da	Adgang til gruppe
 groups	common	da	Grupper
 groups with permission for %1	common	da	Grupper med rettigheder til %1
@@ -353,11 +353,11 @@ history	common	da	Historie
 history log	common	da	Versionshistorik
 holy see (vatican city state)	common	da	Vatikanet
 home	common	da	Startside
-home email	common	da	privat e-mail
+home email	common	da	Privat e-mail
 home screen	common	da	Hovedside
 honduras	common	da	Honduras
 hong kong	common	da	Hong Kong
-hours	common	da	timer
+hours	common	da	Timer
 how many days to sync in the future (default %1)	groupdav	da	Hvor mange dage skal synkroniseres i fremtiden (standard %1)
 how many days to sync in the past (default %1)	groupdav	da	Hvor mange dage til synkronisering i fortiden (standard %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
@@ -417,10 +417,10 @@ kyrgyzstan	common	da	Kyrgystan
 label	common	da	Mærkat
 language	common	da	Sprog
 lao peoples democratic republic	common	da	Lao, Folkets Demokratiske Republik
-last	common	da	sidste
+last	common	da	Sidste
 last modified	common	da	Sidst opdateret
 last name	common	da	Efternavn
-last name of the user, eg. "%1"	common	da	efternavn på brugeren, f.eks. "%1"
+last name of the user, eg. "%1"	common	da	Efternavn på brugeren, f.eks. "%1"
 last page	common	da	Sidste side
 lastname	common	da	Efternavn
 latvia	common	da	Letland
@@ -439,7 +439,7 @@ load	common	da	Indlæs
 local	common	da	Lokal
 login	common	da	Login
 login rejected by epl firewall, please contact your administrator	common	da	Login afvist af EGroupware firewall, kontakt venligst din administrator.
-loginid	common	da	LoginID
+loginid	common	da	Login-ID
 logout	common	da	Log ud
 lost login id	common	da	Mistet login-ID
 lost password	common	da	Mistet adgangskode
@@ -449,7 +449,7 @@ luxembourg	common	da	Luxembourg
 macau	common	da	Macau
 macedonia, the former yugoslav republic of	common	da	Makedonien, Tidl. Jugoslaviske Republik
 madagascar	common	da	Madagaskar
-mail domain, eg. "%1"	common	da	post domæne, f.eks. "%1"
+mail domain, eg. "%1"	common	da	Post domæne, f.eks. "%1"
 mailvelope addon installation failed! please try again.	common	da	Mailvelope addon installation mislykkedes! Prøv venligst igen.
 mailvelope addon installation succeded. now you may configure the options.	common	da	Mailvelope addon installation lykkedes. Nu kan du konfigurere indstillingerne.
 main category	common	da	Hovedkategori
@@ -486,7 +486,7 @@ move	common	da	Flyt
 mozambique	common	da	Mozambique
 myanmar	common	da	Myanmar
 name	common	da	Navn
-name of the user, eg. "%1"	common	da	fornavnet på brugeren, f.eks. "%1"
+name of the user, eg. "%1"	common	da	Fornavnet på brugeren, f.eks. "%1"
 namibia	common	da	Namibia
 nauru	common	da	Nauru
 nepal	common	da	Nepal
@@ -509,8 +509,8 @@ nigeria	common	da	Nigeria
 niue	common	da	Niue
 no	common	da	Nej
 no - cancel	common	da	No - Annullere
-no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
-no file	common	da	ingen fil
+no entries found, try again ...	common	da	Ingen resultater fundet, prøv igen....
+no file	common	da	Ingen fil
 no filters	common	da	Ingen filtre
 no history for this record	common	da	Ingen historie fundet for denne post
 no matches found	common	da	Ingen resultater fundet
@@ -522,7 +522,7 @@ northern mariana islands	common	da	Nordligt Mariana Øerne
 norway	common	da	Norge
 not	common	da	ikke
 not a user yet? register now	common	da	Ikke en bruger endnu? Registrere nu
-not assigned	common	da	ikke tildelt
+not assigned	common	da	Ikke tildelt
 note	common	da	Note
 notes	common	da	Noter
 notifications	common	da	Alarmer
@@ -534,18 +534,25 @@ old value	common	da	Gammel Værdi
 oman	common	da	Oman
 on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 on mouse over	common	da	Ved mus over
-only private	common	da	kun private
+only private	common	da	Kun private
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	da	Understøttes kun af nogle få fuldt kompatible klienter (f.eks. fra Apple). Hvis du skal indtaste en URL, vil den højst sandsynligt ikke blive understøttet!
 only yours	common	da	Kun Din
-open	common	da	åben
+open	common	da	Åben
+open existing contact	common	da	Åbn eksisterende kontakt
 open notify window	common	da	Åben Notificer Vindue
-open popup window	common	da	åben popup vindue
-options	common	da	indstillinger
+open popup window	common	da	Åben popup vindue
+open the online help.	common	da	Åbn online-hjælp
+operator	common	da	Operatør
+optional note about the link	common	da	Valgfri note til link
+options	common	da	Indstillinger
 or	common	da	eller
+order to navigating by tab key through the form	common	da	Ordre til at navigere med tabulatortasten gennem formularen
 ordered list	common	da	Nummerliste
 original	common	da	Original
 other	common	da	Anden
 overview	common	da	Oversigt
 owner	common	da	Ejer
+ownership	common	da	Ejerskab
 page	common	da	Side
 page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
 pakistan	common	da	Pakistan
@@ -559,7 +566,7 @@ parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
-path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!
 permission denied!	common	da	Tilladelse nægtet!
 permission denied! this is an administration only feature.	common	da	Tilladelse nægtet! Dette er kun en administrationsfunktion.
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
@@ -577,7 +584,8 @@ placeholders	common	da	Pladsholdere
 play/pause	common	da	Afspilning/Pause
 please %1 by hand	common	da	Udfør venligst %1 manuelt
 please enter a name	common	da	Indtast venligst et navn!
-please reload the egroupware desktop (f5 / cmd+r).	common	da	Genindlæs venligst EGroupware-skrivebordet (F5 / Cmd+r).
+please enter table-name first !!!	common	da	Indtast bordets navn først!
+please reload the egroupware desktop (f5 / cmd+r).	common	da	Genindlæs venligst EGroupware-skrivebordet (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	da	Husk at bruge '%1' som brugernavn til lokale login fra nu af!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
 please select	common	da	Vælg venligst
@@ -586,27 +594,31 @@ please set your preferences for this application	common	da	Indtast venligst dine
 please type %1 more characters	common	da	Skriv venligst %1 tegn mere
 please type 1 more character	common	da	Skriv venligst 1 tegn mere
 please wait...	common	da	Vent venligst...
+please, check back with us shortly.	common	da	Vent venligst ...  Venligst kontakt os igen om lidt.
 poland	common	da	Polen
 popup with search	common	da	Popup vindue med søg
 portugal	common	da	Portugal
 postal	common	da	Post
+powered by	common	da	Powered by
 preference	common	da	Præferencer
 preferences	common	da	Præferencer
+preferences for the %1 template set	preferences	da	Præferencer for %1-skabelonsættet
+preview with entry	common	da	Forhåndsvisning med indtastning
 previous page	common	da	Forrige side
-primary group	common	da	primær gruppe
+primary group	common	da	Primær gruppe
 print	common	da	Udskriv
 priority	common	da	Prioritet
 private	common	da	Privat
 project	common	da	Projekt
-public	common	da	offentlig
+public	common	da	Offentlig
 puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
 read a list of entries.	common	da	Læs en liste af indtastninger
-read a single entry by passing the id and fieldlist.	common	da	Læs et enkelt element ved at give id og fil-liste
+read a single entry by passing the id and fieldlist.	common	da	Læs et enkelt element ved at give ID og fil-liste
 read this list of methods.	common	da	Læs denne liste over metoder
-reading	common	da	læser
-readonly	common	da	læs-kun
+reading	common	da	Læser
+readonly	common	da	Læs-kun
 refresh	common	da	Opdater
 reject	common	da	Afvis
 remove this link (not the entry itself)	common	da	Fjern dette link (ikke opgaven selv)
@@ -660,12 +672,12 @@ server %1 has been added	common	da	Server %1 er tilføjet
 server name	common	da	Servernavn
 session has been killed	common	da	Sessionen er afsluttet
 setup	common	da	Setup
-setup main menu	common	da	Setup Hoved menu
+setup main menu	common	da	Setup hovedmenu
 seychelles	common	da	Seychellerne
 show	common	da	Vis
 show all	common	da	Vis alt
 show all categorys	common	da	Vis alle kategorier
-show menu	common	da	vis menu
+show menu	common	da	Vis menu
 show page generation time	common	da	Vis side generations tid
 show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden?
 show password	common	da	Vis adgangskode
@@ -686,7 +698,7 @@ south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
 sri lanka	common	da	Sri Lanka
-start a new search, cancel this link	common	da	start en ny søgning, annullere dette link
+start a new search, cancel this link	common	da	Start en ny søgning, annullere dette link
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
@@ -719,7 +731,7 @@ to	common	da	Til
 to correct this error for the future you will need to properly set the	common	da	For at rette denne fejl for fremtiden skal Du korrekt opsætte
 to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilbage til beskedlisten, klik <a href="%1">her</a>
 today	common	da	I dag
-todays date, eg. "%1"	common	da	i dags dato, f.eks. "%1"
+todays date, eg. "%1"	common	da	I dags dato, f.eks. "%1"
 togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
@@ -733,7 +745,7 @@ turkey	common	da	Tyrkiet
 turkmenistan	common	da	Turkmenistan
 turks and caicos islands	common	da	Tyrkiske og Caicos Øerne
 tuvalu	common	da	Tuvalu
-type	common	da	type
+type	common	da	Type
 uganda	common	da	Uganda
 ukraine	common	da	Ukraine
 underline	common	da	Understreg
@@ -744,17 +756,17 @@ united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
 unlink	common	da	Fjern link
 update	common	da	Opdater
-update a single entry by passing the fields.	common	da	opdater et enkelt element ve at sende felter.
+update a single entry by passing the fields.	common	da	Opdater et enkelt element ve at sende felter.
 upload	common	da	Upload
 url	common	da	URL
 uruguay	common	da	Uruguay
-use button to search for	common	da	brug knappen for at søge efter
-use button to search for address	common	da	brug knappen for at søge efter adresser
-use button to search for calendarevent	common	da	brug knappen for at søge efter kalender hændelser
-use button to search for project	common	da	brug knappen for at søge efter projekter
+use button to search for	common	da	Brug knappen for at søge efter
+use button to search for address	common	da	Brug knappen for at søge efter adresser
+use button to search for calendarevent	common	da	Brug knappen for at søge efter kalender hændelser
+use button to search for project	common	da	Brug knappen for at søge efter projekter
 user	common	da	Bruger
-user accounts	common	da	bruger kontoer
-user groups	common	da	bruger grupper
+user accounts	common	da	Bruger kontoer
+user groups	common	da	Bruger grupper
 username	common	da	Brugernavn
 users	common	da	Brugere
 users choice	common	da	Brugerens Valg
@@ -764,7 +776,7 @@ venezuela	common	da	Venezuela
 version	common	da	Version
 viet nam	common	da	Viet Nam
 view	common	da	Se
-view this linked entry in its application	common	da	se det linkede emne i dets program
+view this linked entry in its application	common	da	Se det linkede emne i dets program
 virgin islands, british	common	da	Jomfru Øer, De Britiske
 virgin islands, u.s.	common	da	Jomfru Øer, De Amerikanske
 wallis and futuna	common	da	Wallis og Futuna
@@ -775,8 +787,8 @@ when you say yes the home and logout buttons are presented as applications in th
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde
 wk	common	da	Uge
-work email	common	da	arbejds e-mail
-writing	common	da	skriver
+work email	common	da	Arbejds e-mail
+writing	common	da	Skriver
 written by:	common	da	Skrevet af:
 year	common	da	År
 yemen	common	da	Yemen
@@ -795,7 +807,7 @@ you have successfully logged out	common	da	Du har logget ud
 your account has been updated with new data from your identity provider.	common	da	Din konto er blevet opdateret med nye data fra din identitetsudbyder.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	da	Din browser er ikke opdateret (JavaScript ES6-kompatibel), du kan opleve, at nogle af funktionerne ikke virker.
 your key has been restored successfully.	common	da	Din nøgle er blevet gendannet med succes.
-your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!
+your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!<br>
 your message has been sent	common	da	Din besked er afsendt
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	da	Din adgangskode har ikke den krævede styrke på %1 tegnklasser og en minimumslængde på %2 tegn.
 your password does not have required strength:	common	da	Din adgangskode har ikke den krævede styrke:

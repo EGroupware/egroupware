@@ -10,7 +10,7 @@ forced	home	cs	Povinný
 home	home	cs	Hlavní strana
 in %1 days (%2) is %3's birthday.	home	cs	Za %1 dní (%2) má %3 narozeniny.
 list of entries	home	cs	Seznam záznamů
-remove	home	cs	odstranit
+remove	home	cs	Odstranit
 remove default %1	home	cs	Odstranit výchozí %1
 removed default	home	cs	Výchozí byl odstraněn
 set as default	home	cs	Nastavit jako výchozí

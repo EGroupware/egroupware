@@ -34,7 +34,7 @@ acl added.	filemanager	it	Regola ACL aggiunta.
 acl deleted.	filemanager	it	Regola ACL eliminata.
 actions	filemanager	it	Azioni
 add to clipboard	filemanager	it	Aggiungi agli appunti.
-administrators	filemanager	it	amministratori
+administrators	filemanager	it	Amministratori
 all files	filemanager	it	Tutti i file
 all subdirectories	filemanager	it	Tutte le sottocartelle
 all types	filemanager	it	Tutti i tipi
@@ -109,10 +109,10 @@ do you want more information about epl subscription?	common	it	Si vorrebbero ric
 do you want to overwrite existing file %1 in directory %2?	filemanager	it	Vuoi sovrascrivere il file esistente %1 nella cartella %2?
 do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere il file esistente?
 download	filemanager	it	Download
-download documents	filemanager	it	scarica documenti
+download documents	filemanager	it	Scarica documenti
 edit comments	filemanager	it	Modifica commenti
 edit settings	filemanager	it	Modifica le impostazioni
-edit share	filemanager	it	modifica condivisione
+edit share	filemanager	it	Modifica condivisione
 enable	filemanager	it	Abilita
 enable versioning for given mountpoint	filemanager	it	Abilitare il controllo delle versioni per il mountpoint selezionato
 enter a file size, e.g. 100k, 200m or 2g	filemanager	it	Inserire una dimensione del file, ad esempio 100K, 200M o 2G.
@@ -120,7 +120,7 @@ enter setup user and password	filemanager	it	Inserisci il nome utente e la passw
 enter setup user and password to get root rights	filemanager	it	Inserisci il nome utente e la password dell'utente di setup per ottenere diritti amministrativi (root)
 enter the complete vfs path to specify a fast access link to a folder	filemanager	it	Inserisci il percorso VFS completo per specificare un link veloce verso una cartella
 enter the complete vfs path to specify your desired start folder.	filemanager	it	Inserisci il percorso VFS completo per specificare la tua cartella di avvio
-enter your file name	filemanager	it	inserisci il nome del file
+enter your file name	filemanager	it	Inserisci il nome del file
 error adding the acl!	filemanager	it	Errore nell'aggiunta della regola ACL!
 error creating symlink to target %1!	filemanager	it	Errore di creazione del link simbolico verso %1!
 error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola ACL!
@@ -277,7 +277,7 @@ select file(s) from vfs	common	it	Seleziona file dal sistema virtuale di file (V
 setting for document merge saved.	filemanager	it	Impostazione stampa unione salvata.
 share files	filemanager	it	Condividi file
 share link copied into clipboard	filemanager	it	Condividi il collegamento copiato negli appunti
-share mounted at %1.<br/>please close this tab.	filemanager	it	Condivisione attivata su %1.<br/>Si può chiudere il pannello ora
+share mounted at %1.<br/>please close this tab.	filemanager	it	Condivisione attivata su %1.<br>Si può chiudere il pannello ora
 shared files	filemanager	it	File condivisi
 shared with	filemanager	it	Condivisi con
 show	filemanager	it	Mostra
@@ -289,10 +289,10 @@ show link "your home directory" in side box menu?	filemanager	it	Mostra collegam
 show link "your home directory*" in side box menu?*	filemanager	it	Mostra collegamento "La tua direcroy principale*" nel menù laterale*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	it	Mostrare il collegamento alla cartella principale (/) nel menù laterale?
 size	filemanager	it	Dimensione
-smb, webdavs and vfs require a username!	filemanager	it	SMB, WebDAVs e filesystem virtulale (VFS) richiede un nome utente
+smb, webdavs and vfs require a username!	filemanager	it	SMB, WebDAV e filesystem virtulale (VFS) richiede un nome utente
 smb: mount samba or windows fileserver shares	filemanager	it	SMB: monta un server Samba o una condivisione Windows
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	it	Alcune funzionalità richiedono l'accesso come super utente. Per favore effettuare il login qui come super utente. Gli utenti consentiti sono definiti nel setup.
-sqlfs statistics	filemanager	it	Statistiche filesystem sql
+sqlfs statistics	filemanager	it	Statistiche filesystem (VFS)
 start search	filemanager	it	Avvia ricerca
 startfolder	filemanager	it	Cartella di avvio
 successful mounted %1 on %2.	filemanager	it	Montato con successo %1 su %2
@@ -317,7 +317,7 @@ unmount	filemanager	it	Smonta
 unused space	filemanager	it	Spazio inutilizzato
 up	filemanager	it	Su
 updated comment for %1	filemanager	it	Ho aggiornato i commenti per %1
-upload fields	filemanager	it	campi caricamento
+upload fields	filemanager	it	Campi caricamento
 upload files	filemanager	it	Carica File
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used space	filemanager	it	Spazio utilizzato
@@ -329,7 +329,7 @@ versioning	filemanager	it	Registrazione Versioni di file
 versioning requires egroupware epl	filemanager	it	Registrazione Versioni di file necessita di EGroupware EPL
 vfs mounts and versioning	common	it	Montaggi VFS e registrazione versioni
 view link	filemanager	it	Mostra Indirizzo
-webdav link copied into clipboard	filemanager	it	Link webDAV copiato negli appunti
+webdav link copied into clipboard	filemanager	it	Link WebDAV copiato negli appunti
 webdavs: mount egroupware or *cloud shares	filemanager	it	WebDAV: montare le condivisioni EGroupware o *Cloud
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	it	Chi dovrebbe poter eliminare definitivamente file o vecchie versioni di file:
 writable share link	filemanager	it	Collegamento condiviso in scrittura

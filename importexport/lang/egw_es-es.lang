@@ -63,7 +63,7 @@ load sample file	importexport	es-es	Cargar un fichero de ejemplo
 manage mapping	importexport	es-es	Gestionar mapeo
 next	importexport	es-es	Siguiente
 next run	importexport	es-es	Siguiente ejecución
-no matches	importexport	es-es	no hay coincidencias
+no matches	importexport	es-es	No hay coincidencias
 no matching records	importexport	es-es	No hay registros coincidentes
 no notifications	importexport	es-es	No hay notificaciones
 no records selected	importexport	es-es	No se seleccionaron registros
@@ -78,8 +78,8 @@ schedule not found	importexport	es-es	No se encontró la planificación
 select definition	importexport	es-es	Seleccionar definición
 select plugin	importexport	es-es	Seleccionar plugin
 some nice text	importexport	es-es	Algún texto agradable
-too many matches	importexport	es-es	demasiadas coincidencias
-translation	importexport	es-es	modificación personalizada
+too many matches	importexport	es-es	Demasiadas coincidencias
+translation	importexport	es-es	Modificación personalizada
 true	importexport	es-es	Verdadero
 unable to delete	importexport	es-es	No se pudo suprimir
 unable to schedule	importexport	es-es	No se pudo planificar

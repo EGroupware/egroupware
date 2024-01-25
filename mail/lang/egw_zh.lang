@@ -15,6 +15,7 @@ aliases+forwards	mail	zh	别名+转发
 all of	mail	zh	所有的
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
 allways a new window	mail	zh	允许新窗口
+always respond / auto-responder	mail	zh	始终回复/自动回复
 always show html emails	mail	zh	总是显示HTML邮件
 always show notifiction	mail	zh	总是显示通知
 answered	mail	zh	已回答
@@ -31,7 +32,10 @@ by date	mail	zh	以日期
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	zh	默认情况下，"http://"只是用 "https://"代替。您可以随意配置 "https://proxy.egroupware.org/"，使其也能加载仅通过 http 提供的图片。
 caching of flags	mail	zh	标记缓存
 can not resolve the winmail.dat attachment!	mail	zh	无法解析 winmail.dat 附件！
+certificate details	mail	zh	证书详细信息
+certificate in text	mail	zh	证书文本
 certificate info for email %1	mail	zh	电子邮件 %1 的证书信息
+certificate issued by	mail	zh	颁发证书的机构
 changing subject failed because of %1	mail	zh	更改主题失败，因为 %1
 changing subject failed folder %1 does not exist	mail	zh	更改主题失败 文件夹 %1 不存在
 check message against next rule also	mail	zh	也用下一个规则检查邮件
@@ -71,6 +75,7 @@ don't use trash	mail	zh	不使用回收站
 draft folder	mail	zh	草稿夹
 edit account	mail	zh	编辑账户
 edit vacation settings	mail	zh	编辑假期设置
+email address	mail	zh	邮件地址
 emailaddress	admin	zh	邮件地址
 emailadmin: profilemanagement	mail	zh	eMailAdmin： 资料管理
 emails in whitelisted domains are not marked as spam	mail	zh	白名单域名中的电子邮件不会被标记为垃圾邮件
@@ -79,6 +84,7 @@ enable	mail	zh	启用
 enabled	mail	zh	已启用
 encrypt your message with smime certificate	mail	zh	使用 S/MIME 证书加密邮件
 event details follow	mail	zh	事件细节
+every %1. day	mail	zh	每 %1.
 everyone	mail	zh	所有人
 examine namespace to retrieve folders in others and shared	mail	zh	检查命名空间以检索他人和共享文件夹
 extended	mail	zh	扩展
@@ -179,6 +185,7 @@ no sneak preview in list	mail	zh	没有信息预览
 no subject given!	mail	zh	没有指定的主题！
 non	mail	zh	非
 on	mail	zh	在
+once per day	mail	zh	每天一次
 one address is not valid	mail	zh	其中一个地址无效
 only email	mail	zh	仅电子邮件
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	zh	只有在通过不同渠道/在此邮件之外向收件人发送密码时才有意义！
@@ -269,6 +276,7 @@ sieve script name	mail	zh	Sieve 脚本名
 signature	mail	zh	签名
 signature at top	mail	zh	签名在顶部
 signature position and visibility	mail	zh	签名的位置和可见性
+signed by	mail	zh	签名者
 size(...->0)	mail	zh	大小 (...->0)
 size(0->...)	mail	zh	大小(0->...)
 small view	mail	zh	小视图
@@ -313,4 +321,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	zh	您需要先将邮件保存为草稿，然后才能将其保存到 VFS 中。
 you will loose current message body, unless you save it to your clipboard!	mail	zh	您将丢失当前邮件正文，除非将其保存到剪贴板！
 you've got new mail	mail	zh	您有新邮件
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	zh	您的剩余配额 %1 太少，您可能无法继续收发邮件。
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	zh	您的剩余配额 %1 太低，您可能无法继续发送/接收电子邮件。<br>虽然清理垃圾邮件或垃圾文件夹中的电子邮件可能会帮您恢复一些可用空间。<br>如果这还无济于事，请向管理员申请更多配额。

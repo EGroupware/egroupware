@@ -1,4 +1,7 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	fi	%1(%2 uudet) viestit kirjoitetaan sovelluksella %3 ja kielillä %4
+%1 active file(s) with same name as directory inactivated!	admin	fi	%1 aktiivinen(t) tiedosto(t), jolla on sama nimi kuin kansiolla, poistettu käytöstä!
+%1 copied - the copy can now be edited	common	fi	%1 kopioitu - kopiota voidaan nyt muokata.
+%1 directories %2 found!	admin	fi	%1 hakemistoja %2 löytyi!
 %1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty.
 %1 email(s) added into %2	common	fi	%1 sähköposti(t) lisätty %2:een
 %1 entries found, select one ...	common	fi	%1 tapahtuma(a) löydetty, valitse yksi...
@@ -8,25 +11,29 @@
 %1 file	common	fi	%1 tiedosto(a)
 %1 is not executable by the webserver !!!	common	fi	%1 ei ole web-palvelimen suoritettavissa!
 %1 matches on search criteria	common	fi	Hakuehdolla löytyi %1 kpl
-%1 more %2 selected ...	common	fi	%1 lisää %2 valittu...
-%1 more...	common	fi	%1 lisää...
+%1 more %2 selected ...	common	fi	%1 lisää %2 valittu ...
+%1 more...	common	fi	%1 lisää ...
 %1 new etemplates imported for application '%2'	common	fi	%1 sovelluksen %2 uutta eMallipohjaa tuotu
 %1 not implemented for %2!	common	fi	%1 ei ole implementoitu '%2':een
 %1 to sync	groupdav	fi	Synkronoitava %1
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<bt />tai salli veb palvelimelle kirjoitusoikeudet: %3
+%1, duplicate id	common	fi	%1, kaksoistunnus
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<br>tai salli veb palvelimelle kirjoitusoikeudet: %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1EGroupware%2 on %3PHP%4 kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
 %s disabled	common	fi	%s ei käytössä
 %s needed	common	fi	%s tarvitaan
 %s notranslation	common	fi	%s Ei käännöstä
-%s onchange	common	fi	%s onChange
+%s onchange	common	fi	%s onchange
 %s readonly	common	fi	%s vain lukuoikeus
 '%1' copied to clipboard	common	fi	'%1' kopioitu leikepöydälle
+'%1' has an invalid format	common	fi	'%1' on virheellisessä muodossa
 '%1' has an invalid format !!!	common	fi	%1 on väärässä muodossa!
 '%1' is not a valid date !!!	common	fi	%1 on epäkelpo päiväys!
 '%1' is not a valid floatingpoint number !!!	common	fi	%1 ei ole desimaaliluku!
 '%1' is not a valid integer !!!	common	fi	%1 ei ole kokonaisluku!
 '%1' is not a valid json file!	common	fi	'%1' ei ole kelvollinen JSON-tiedosto
+'%1' is not a valid timezone!	common	fi	'%1' ei ole kelvollinen aikavyöhyke!
 '%1' is not allowed ('%2')!	common	fi	'%1' ei ole sallittu ('%2')!
+'%1' is not allowed%2)!	common	fi	'%1' ei ole sallittu (%2)!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
 00 (disable)	admin	fi	00 (ei käytössä)
 1 day	common	fi	1 Päivä
@@ -46,10 +53,12 @@
 5 seconds	common	fi	5 sekuntia
 80 (http)	admin	fi	80 (http)
 a pattern to be searched for	common	fi	Hakuehdot
+a request to the egroupware server returned with an error	common	fi	EGroupware-palvelimelle lähetetty pyyntö palautti virheen.
+abcdefghijklmnopqrstuvwxyz	common	fi	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	fi	Keskeytä
 about	common	fi	Tietoja
 about %1	common	fi	Tietoja sovelluksesta %1
-about egroupware	common	fi	Tietoja EGroupwaresta
+about egroupware	common	fi	Tietoja EGroupware
 access	common	fi	Käyttöoikeus
 access not permitted	common	fi	Ei pääsyä
 accesskey	common	fi	Käyttöavain
@@ -126,7 +135,7 @@ antarctica	common	fi	ETELÄNAPAMANNER
 antigua and barbuda	common	fi	ANTIGUA JA BARBUDA
 api	common	fi	EGroupware API
 application	common	fi	Sovellus
-application name needed to write a langfile or dump the etemplates !!!	common	fi	Sovelluksen nimi pitää kirjoittaa kielitiedostoon tai vedostaa eMallipohjat !!!
+application name needed to write a langfile or dump the etemplates !!!	common	fi	Sovelluksen nimi pitää kirjoittaa kielitiedostoon tai vedostaa eTemplates!
 applications	common	fi	Sovellukset
 applies the changes made	common	fi	Hyväksytään tehdyt muutokset
 applies the changes to the given version of the template	common	fi	Hyväksy muutokset annetun version pohjaan.
@@ -214,6 +223,7 @@ categories for	common	fi	Kategoriat kohteelle
 category	common	fi	Kategoria
 category %1 has been added !	common	fi	Kategoria %1 on lisätty!
 category %1 has been updated !	common	fi	Kategoria %1 on päivitetty!
+category owner	common	fi	Luokan omistaja
 category tree	common	fi	Kategorian runko
 cayman islands	common	fi	CAYMANSAARET
 cc	common	fi	Cc
@@ -227,7 +237,7 @@ chad	common	fi	TSAD
 change	common	fi	Muuta
 change owner	common	fi	Vaihda omistaja
 changed	common	fi	Muokattu
-charset	common	fi	utf-8
+charset	common	fi	Merkistö
 check all	common	fi	Tarkista kaikki
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fi	Tarkista tyhjät arvot IF-lausekkeissa. Esimerkki {{IF url~EMPTY~~Website:}}} - Jos url ei ole tyhjä, kirjoittaa "Verkkosivusto:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	fi	Onko sisältö vain nähtävillä mutta ei vaihdettavissa
@@ -242,9 +252,11 @@ choose a background color for the icons	common	fi	Valitse taustaväri ikoneille
 choose a background image.	common	fi	Valitse taustakuva
 choose a background style.	common	fi	Valitse taustan tyyli
 choose a text color for the icons	common	fi	Valitse ikoneiden tekstien väri
+choose file...	common	fi	Valitse tiedosto ...
 choose the category	common	fi	Valitse kategoria
 choose the default filename for merged documents.	preferences	fi	Valitse yhdistettyjen asiakirjojen oletustiedostonimi.
 choose the parent category	common	fi	Valitse yläkategoria
+choose time	common	fi	Valitse aika
 chosen parent category no longer exists	common	fi	Valistemaasi pääkategoriaa ei ole olemassa
 christmas island	common	fi	JOULUSAARI
 class	common	fi	Luokka
@@ -261,6 +273,7 @@ click here to upload the file	common	fi	Lataa tiedosto
 click or mouse over to show menus	common	fi	Näytetäänkö valikot napsauttamalla vai osoittamalla hiirellä?
 click or mouse over to show menus?	common	fi	Näytetäänkö valikot napsauttamalla vai osoittamalla hiirellä?
 click this image on the navbar: %1	common	fi	Napsauta navigointipalkin kuvaa: %1
+click to open colorpicker	common	fi	Avaa värivalinta napsauttamalla sitä
 click to order after that criteria	common	fi	Järjestä kriteerin jälkeen
 clickable path	common	fi	Klikattava polku
 close	common	fi	Sulje
@@ -271,13 +284,15 @@ colombia	common	fi	KOLUMBIA
 colour	common	fi	Väri
 column...	common	fi	Sarake...
 columnname	common	fi	Sarakkeen nimi
+columns to print	common	fi	Tulostettavat sarakkeet
 comment	common	fi	Kommentti
 common preferences	common	fi	Yleiset asetukset
 comoros	common	fi	KOMORIT
 company	common	fi	Yritys
 confirm	common	fi	Vahvista
 confirmation message or custom javascript (returning true or false)	common	fi	Vahvistusviesti tai oma JavaScript, palauttaa true=totta tai false=väärin
-confirmation necesary or custom java-script	common	fi	Vahvistus vaaditaan tai oma javaskripti
+confirmation necesary or custom java-script	common	fi	Vahvistus vaaditaan tai oma JavaScript
+confirmation required	common	fi	Vahvistus vaaditaan
 congo	common	fi	KONGO
 congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
 contact	common	fi	Yhteystiedot
@@ -287,6 +302,7 @@ contacting server...	common	fi	Otetaan yhteyttä palvelimeen...
 contains	common	fi	Sisältää
 content type	common	fi	Sisällön tyyppi
 cook islands	common	fi	COOKSAARET
+cookies are required to login to this site	login	fi	Sivustolle kirjautuminen edellyttää evästeitä
 copy	common	fi	Kopioi
 copy "%1"	common	fi	Kopioi "%1"
 copy of:	common	fi	Kopioi:
@@ -322,6 +338,7 @@ cut	common	fi	Leikkaa
 cyprus	common	fi	KYPROS
 czech republic	common	fi	TSEKKI
 dark mode	common	fi	Tumma tila
+data type	common	fi	Tietotyyppi
 database error	common	fi	Virhe tietokannassa
 database error!	common	fi	Virhe tietokannassa!
 date	common	fi	Päiväys
@@ -337,16 +354,20 @@ db-tools	common	fi	Tietokanta -työkalut
 december	common	fi	Joulukuu
 default	common	fi	Oletus
 default category	common	fi	Oletuskategoria
+default document to insert entries	preferences	fi	Oletusasiakirja, johon merkinnät lisätään
 default height for the windows	common	fi	Ikkunan oletuskorkeus
+default visible actions	common	fi	Näkyvät oletustoiminnot
 default width for the windows	common	fi	Ikkunan oletusleveys
 del	common	fi	Del
 delete	common	fi	Poista
-delete a single entry by passing the id.	common	fi	Poista yksittainen tietue ohittaen id.
+delete a single entry by passing the id.	common	fi	Poista yksittainen tietue ohittaen ID.
 delete all selected etemplates, without further inquiry	common	fi	Poistaa kaikki valitut eMallipohjat välittömästi.
+delete backup	common	fi	Poista varmuuskopio
 delete category	common	fi	Poista kategoria
 delete column	common	fi	Poista sarake
 delete file	common	fi	Poista tiedosto
 delete index	common	fi	Poista indeksi
+delete link	common	fi	Poista linkki
 delete row	common	fi	Poista rivi
 delete selected entries?	common	fi	Poista merkinnät
 delete the spezified etemplate	common	fi	Poista määritelty eMallipohja
@@ -355,10 +376,11 @@ delete this column	common	fi	Poista tämä sarake
 delete this entry	common	fi	Poista merkintä
 delete this etemplate	common	fi	Poista tämä eMallipohja
 delete this file	common	fi	Poista tämä tiedosto
+delete this photo?	common	fi	Poista tämä kuva?
 delete this row	common	fi	Poista tämä rivi
-delete whole column (can not be undone!!!)	common	fi	Poista koko sarake (lopullisesti, ei voida palauttaa!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	fi	Poistaa valitut eMallipohjat tietokannasta
-deletes the etemplate spez. above	common	fi	Poistaa eMallipohjan
+delete whole column (can not be undone!!!)	common	fi	Poista koko sarake
+deletes the above spez. etemplate from the database, can not be undone	common	fi	Poistaa valitut eTemplate tietokannasta
+deletes the etemplate spez. above	common	fi	Poistaa eTemplate
 deletes this column	common	fi	Poistaa sarakkeen
 deletes this index	common	fi	Poistaa indeksin
 denmark	common	fi	TANSKA
@@ -394,9 +416,11 @@ domestic	common	fi	Kotimainen
 dominica	common	fi	DOMINICA
 dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
 don't ask again!	common	fi	Älä kysy uudelleen!
+don't show this again	common	fi	Älä näytä tätä uudelleen
 done	common	fi	Valmis
 dos international	common	fi	Dos International
 download	common	fi	Lataa
+drag markers to pick a color	common	fi	Valitse väri vetämällä markkereita
 drop a table - this can not be undone	common	fi	Poista tietokannan taulu - tätä EI voi peruuttaa
 drop table	common	fi	Poista tietokannan taulu
 dump4setup	common	fi	Dump4Setup
@@ -407,6 +431,7 @@ eastern european	common	fi	Eastern european
 ecuador	common	fi	ECUADOR
 edit	common	fi	Muokkaa
 edit %1 category for	common	fi	Muokkaa %1 kategoriaa
+edit avatar	common	fi	Muokkaa avataria
 edit categories	common	fi	Muokkaa kategorioita
 edit category	common	fi	Muokkaa kategoriaa
 edit embeded css styles or of the applications app.css file	common	fi	Muokkaa upotettua CSS tyyliä tai sovelluksen app.css tiedostoa
@@ -418,6 +443,7 @@ editable templates - editor	common	fi	Muokattavat mallipohjat - Muokkaus
 editable templates - search	common	fi	Muokattavat mallipohjat - Haku
 editable templates - show template	common	fi	Muokattavat mallipohjat - Näytä sivupohja
 egroupware	common	fi	EGroupware
+egroupware administrators group, do not delete	common	fi	EGroupwaren ylläpitäjien ryhmä, ÄLÄ poista.
 egroupware api version	common	fi	EGroupware API versio
 egroupware version	common	fi	EGroupware versio
 egroupware: login blocked for user '%1', ip %2	common	fi	Käyttäjän '%1' pääsy estetty, IP %2
@@ -427,7 +453,7 @@ email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fi	Upotetut CSS tyylit, esim. .red { background: red; }' (huomaa '.' ennen luokan nimeä) tai '@import url(...)' (luokan nimi on globaali koko sivulla!)
 empty file	common	fi	Tyhjä tiedosto
-enable javascript onchange submit	common	fi	Salli JavaScript onChange lähetys
+enable javascript onchange submit	common	fi	Salli JavaScript onchange lähetys
 enable logging	groupdav	fi	Salli loki
 enabled	common	fi	Käytössä
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fi	Sallii CalDAV/CardDAV lokimerkinnät
@@ -436,13 +462,14 @@ end time	common	fi	Loppumisaika
 enter '' for an empty default, nothing mean no default	common	fi	Syötä '' määritelläksesi tyhjä arvo, tyhjä=ei oletusarvoa.
 enter a search pattern	common	fi	Syötä haun kaava
 enter filename to upload and attach, use [browse...] to search for it	common	fi	Anna ladattavan ja liitettävän tiedoston nimi, käytä [Selaa...] löytääksesi tiedosto
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>Ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.<br>Esimerkki: https://egw.yritys.com/egroupware  tai  /egroupware<br>(<b>Ei kauttaviivaa loppuun</b>)
 enter the new version number here (> old_version), empty for no update-file	common	fi	Anna uusi versio numero (>vanha_versio), tyhjä jos ei ole päivitettävää tiedostoa
 enter the new version number here (has to be > old_version)	common	fi	Anna uusi versio numero (täytyy olla > vanha_versio)
 entry has been deleted sucessfully	common	fi	Kohde poistettu
 entry not found!	common	fi	Kohdetta ei löytynyt!
 entry saved	common	fi	Merkintä tallennettu
 entry updated sucessfully	common	fi	Kohde päivitetty
+epl only	common	fi	Vain EPL
 equatorial guinea	common	fi	PÄIVÄNTASAAJAN GUINEA
 eritrea	common	fi	ERITREA
 error	common	fi	Virhe
@@ -451,20 +478,21 @@ error create parent directory %1!	common	fi	Virhe luotaessa päähakemistoa %1!
 error creating %1 %2 directory	common	fi	Virhe luotaessa hakemistoa %1 %2
 error deleting %1 %2 directory	common	fi	Virhe poistettaessa hakemistoa %1 %2
 error deleting %1!	common	fi	Virhe poistaessa: %1!
+error enabling push	common	fi	Virhe pushin käyttöönotossa
 error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen %1 %2
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
-error: template not found !!!	common	fi	Virhe: Mallipohjaa ei löytynyt !!!
-error: webserver is not allowed to write into '%1' !!!	common	fi	Virhe: Webpalvelin ei sallinut kirjoittaa %1 !!!
-error: while saving !!!	common	fi	Virhe tallentaessa !!!
+error: template not found !!!	common	fi	Virhe: Mallipohjaa ei löytynyt!
+error: webserver is not allowed to write into '%1' !!!	common	fi	Virhe: Webpalvelin ei sallinut kirjoittaa %1!
+error: while saving !!!	common	fi	Virhe tallentaessa!
 error: writing file (no write-permission for the webserver) !!!	common	fi	Virhe: kirjoitettaessa tiedostoa, ei kirjoittamisoikeutta webpalvelimelle!
 estonia	common	fi	VIRO
 etag	common	fi	ETag
-etemplate	common	fi	eMallipohja
-etemplate '%1' imported, use save to put it in the database	common	fi	eMallipohja '%1' tuotu, tallenna se tietokantaan.
-etemplate '%1' written to '%2'	common	fi	eMallipohja %1 kirjoitetaan %2
-etemplate editor	common	fi	eMallipohjan muokkain
-etemplate reference	common	fi	eMallipohjan referenssit
-etemplate tutorial	common	fi	eMallipohjan opetusohjelma
+etemplate	common	fi	eTemplate
+etemplate '%1' imported, use save to put it in the database	common	fi	eTemplate '%1' tuotu, tallenna se tietokantaan.
+etemplate '%1' written to '%2'	common	fi	eTemplate %1 kirjoitetaan %2
+etemplate editor	common	fi	eTemplate muokkain
+etemplate reference	common	fi	eTemplate referenssit
+etemplate tutorial	common	fi	eTemplate opetusohjelma
 ethiopia	common	fi	ETIOPIA
 everything	common	fi	Kaikki
 exact	common	fi	Täsmällinen
@@ -477,10 +505,13 @@ exchange this two columns	common	fi	Vaihda nämä kaksi saraketta keskenään
 export the loaded etemplate into a xml-file	common	fi	Vie ladattu eMallipohja XML-tiedostoksi
 export xml	common	fi	Vie XML-tiedostoon
 extensions loaded:	common	fi	Ladatut laajennukset:
+failed to change mode of required directory "%1" to %2!	admin	fi	Vaaditun kansion "%1" tilan muuttaminen %2:ksi epäonnistui!
 failed to change password.	common	fi	Salasanan vaihto ei onnistunut.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
+failed to create required directory "%1"!	admin	fi	Vaaditun kansion "%1" luominen epäonnistui!
 falkland islands (malvinas)	common	fi	FALKLANDSAARET
 faroe islands	common	fi	FÄRSAARET
+favorite queries	common	fi	Suosikkikyselyt
 favorites	common	fi	Suosikit
 fax number	common	fi	Faksi
 features of the editor?	common	fi	Editorin ominaisuudet
@@ -492,7 +523,7 @@ fiji	common	fi	FIDJI
 file	common	fi	Tiedosto
 file '%1' not found!	common	fi	Tiedostoa '%1' ei löytynyt!
 file a file	common	fi	Tallenna tiedosto
-file contains more than one etemplate, last one is shown !!!	common	fi	Tiedosto sisältää enemmän kuin yhden eMallipohjan, viimeisin näytetään !!!
+file contains more than one etemplate, last one is shown !!!	common	fi	Tiedosto sisältää enemmän kuin yhden eMallipohjan, viimeisin näytetään!
 file is of wrong type (%1 != %2)!	common	fi	Tiedosto on vääräntyyppinen (%1 !=%2)!
 file writen	common	fi	Tiedostoa kirjoitetaan
 files	common	fi	Tiedostot
@@ -553,7 +584,7 @@ group has been deleted	common	fi	Ryhmä on poistettu
 group has been updated	common	fi	Ryhmä on päivitetty
 group name	common	fi	Ryhmän nimi
 group public	common	fi	Ryhmän julkinen
-groupdav	common	fi	CalDAV, CardCAV ja GroupDAV
+groupdav	common	fi	CalDAV / CardDAV-synkronointi
 groups	common	fi	Ryhmät
 groups with permission for %1	common	fi	Ryhmät, joilla on oikeus %1
 groups without permission for %1	common	fi	Ryhmät, joilla ei ole oikeutta %1
@@ -577,6 +608,7 @@ high	common	fi	Korkea
 highest	common	fi	Korkein
 history	common	fi	Historia
 history log	common	fi	Versiohistoria
+hold [%1] key to select text eg. to copy it	common	fi	Pidä [%1]-näppäintä painettuna tekstin valitsemiseksi, esim. kopioimiseksi.
 holy see (vatican city state)	common	fi	VATIKAANI
 home	common	fi	Etusivu
 home email	common	fi	Kotisähköposti
@@ -593,6 +625,7 @@ how many icons should be shown in the navbar (top of the page). additional icons
 how many rows to print	common	fi	Kuinka monta riviä tulostetaan
 how to show the general egroupware menu ?	common	fi	Kuinka päävalikko näytetään?
 html	common	fi	HTML
+html link to the current record	common	fi	HTML-linkki nykyiseen tietueeseen
 html links to any entries linked to the current record, excluding attached files	common	fi	HTML-linkit kaikkiin nykyiseen tietueeseen linkitettyihin merkintöihin, lukuun ottamatta liitetiedostoja.
 hungary	common	fi	UNKARI
 iceland	common	fi	ISLANTI
@@ -600,6 +633,7 @@ id	common	fi	Tunniste
 iespell not detected. click ok to go to download page.	common	fi	ieSpell:ä ei havaittu, paina Ok siirtyäksesi lataussivulle.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	fi	Jo kenttä ei ole sallittu, tyhjä solu näytetään
 if the clock is enabled would you like it to update it every second or every minute?	common	fi	Jos kello on käytössä, päivitetäänkö se sekunnin vai minuutin välein?
+if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	fi	Jos virhe ei poistu, ota yhteyttä järjestelmänvalvojaan ja pyydä tarkistamaan verkkopalvelimen virheloki.
 if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
@@ -608,7 +642,7 @@ image	common	fi	Kuva
 image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston suhteellinen dokumentin juurihakemisto (käytä / !), esimerkiksi:
 image url	common	fi	Kuvan URL
 import	common	fi	Tuonti
-import an etemplate from a xml-file	common	fi	Tuo eMallipohja XML-tiedostosta
+import an etemplate from a xml-file	common	fi	Tuo eTemplate XML-tiedostosta
 import table-definitions from existing db-table	common	fi	Tuo taulumääritykset valmiista tietokannasta
 import xml	common	fi	Tuo XML
 include access to any linked files (links tab)	common	fi	Sisällytä pääsy linkitettyihin tiedostoihin (Linkit-välilehti).
@@ -616,7 +650,7 @@ indexed	common	fi	Indeksoitu
 indexoptions	common	fi	Indeksointiasetukset
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
-infolog types to sync	common	fi	Tehtävähallinnan synkronoitavat tyypit
+infolog types to sync	common	fi	Synkronoitavat InfoLog-tyypit
 initial	common	fi	Alkukirjain
 insert a column before	common	fi	Lisää sarake ennen
 insert a column behind	common	fi	Lisää sarake jälkeen
@@ -642,6 +676,7 @@ install	common	fi	Asenna
 install egroupware as mail-handler?	common	fi	Asennetaanko EGroupware sähköpostin käsittelijäksi?
 integer	common	fi	Kokonaisluku
 international	common	fi	Kansainvälinen
+introduction	common	fi	Johdanto
 invalid 2-factor authentication code	common	fi	Virheellinen 2-tekijätodennuskoodi
 invalid email	common	fi	Virheellinen sähköpostiosoite
 invalid filename	common	fi	Virheellinen tiedostonnimi.
@@ -703,8 +738,13 @@ light mode	common	fi	Vaalea tila
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot sisältävät ##last-check-run## taulukon %3 ==> ohita</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
 link	common	fi	Linkki
+link is appended to mail allowing recipients to download currently attached version of files	common	fi	Linkki liitetään sähköpostiviestiin, jolloin vastaanottajat voivat ladata liitteenä olevan version tiedostoista.
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	fi	Linkki liitetään sähköpostiviestiin, jonka avulla vastaanottajat voivat ladata tai muokata tiedostojen ajantasaista versiota (vain EPL).
+link is appended to mail allowing recipients to download up to date version of files	common	fi	Linkki liitetään sähköpostiviestiin, jotta vastaanottajat voivat ladata tiedostojen ajantasaisen version.
 link target %1 not found!	common	fi	Linkkikohdetta %1 ei löytynyt!
+link title of current record	common	fi	Nykyisen tietueen linkin otsikko
 linkapps	common	fi	Linkki sovellukseen
+linked	common	fi	Linkitetty
 linkentry	common	fi	Linkki tietueeseen
 linklist	common	fi	Linkkiluettelo
 links and attached files	preferences	fi	Linkit ja liitetyt tiedostot
@@ -795,6 +835,7 @@ netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
 never	common	fi	Ei koskaan
 new	common	fi	Uusi
 new caledonia	common	fi	UUSI KALEDONIA
+new egroupware release %1 available	common	fi	Uusi EGroupware-julkaisu %1 saatavilla
 new entry added sucessfully	common	fi	Uusi tietue lisätty
 new favorite	common	fi	Uusi suosikki
 new main category	common	fi	Uusi pääkategoria
@@ -812,17 +853,19 @@ nigeria	common	fi	NIGERIA
 niue	common	fi	NIUE
 no	common	fi	Ei
 no - cancel	common	fi	Ei - Peruuta
-no column to swap with !!!	common	fi	Ei saraketta johon voisi vaihtaa !!!
+no column to swap with !!!	common	fi	Ei saraketta johon voisi vaihtaa!
 no entries found, try again ...	common	fi	Ei merkintöjä, yritä uudelleen ...
 no file	common	fi	Ei tiedostoa
-no filename given or selected via browse...	common	fi	Tiedostonimeä ei annettu tai valittu Selaa... -valinnan kautta
+no filename given or selected via browse...	common	fi	Ei tiedostonimeä
 no filters	common	fi	Ei suodattimia
 no history for this record	common	fi	Tällä merkinnällä ei ole historiatietoja
+no key for recipient:	common	fi	Ei näppäintä vastaanottajalle:
 no matches found	common	fi	Ei osumia löydetty!
 no rights to export more than %1 entries!	common	fi	Sallittu vientimäärä: %1 merkintää!
-no row to swap with !!!	common	fi	Ei riviä johon voisi vaihtaa !!!
+no row to swap with !!!	common	fi	Ei riviä johon voisi vaihtaa!
 no savant2 template directories were found in:	common	fi	Savant2 mallipohjan hakemistoa ei löydy:
 no subject	common	fi	Ei aihetta
+no suggestions	common	fi	Ei ehdotuksia
 none	common	fi	Ei mitään
 none of %1	common	fi	0 / %1
 norfolk island	common	fi	NORFOLKSAARET
@@ -834,12 +877,13 @@ not a user yet? register now	common	fi	Ei käyttäjätiliä? Kirjaudu.
 not assigned	common	fi	Ei osoitettu
 not null	common	fi	EI NULL
 not readable %1 entry of user %2	common	fi	Henkilön %2 tietue %1 ei luettavissa
+not supported by current application!	common	fi	Nykyinen sovellus ei tue!
 note	common	fi	Muistiinpano
 notes	common	fi	Muistiinpanot
 nothing	common	fi	Ei mitään
-nothing found - try again !!!	common	fi	Mitään ei löydetty - yritä uudelleen !!!
-nothing in clipboard to paste !!!	common	fi	Leikepöydällä ei ole mitään liitettävää !!!
-nothing matched search criteria !!!	common	fi	Mikään ei ole yhteensopiva haun kriteerien kanssa !!!
+nothing found - try again !!!	common	fi	Mitään ei löydetty - yritä uudelleen!
+nothing in clipboard to paste !!!	common	fi	Leikepöydällä ei ole mitään liitettävää!
+nothing matched search criteria !!!	common	fi	Mikään ei ole yhteensopiva haun kriteerien kanssa!
 nothing to save.	common	fi	Ei tallennettavaa
 notifications	common	fi	Huomautusviestit
 notify window	common	fi	Huomautusikkuna
@@ -853,14 +897,15 @@ old value	common	fi	Vanha arvo
 oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
 on mouse over	common	fi	Hiirellä osoittamalla
-onchange	common	fi	onChange
-onclick	common	fi	onClick
-only an other version found !!!	common	fi	Vain toinen versio löydetty !!!
+onchange	common	fi	onchange
+onclick	common	fi	onclick
+only an other version found !!!	common	fi	Vain toinen versio löydetty!
 only private	common	fi	Vain yksityiset
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	fi	Toiminto tuettu vain muutamissa laitteissa. Jos URL täytyy syöttää, toiminto todennäköisesti ei ole tuettu.
 only yours	common	fi	Vain omat
 oops! you caught us in the middle of system maintainance.	common	fi	Hups... Huoltokatko meneillään!
 open	common	fi	Avaa
+open existing contact	common	fi	Avaa olemassa oleva yhteyshenkilö
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
 open sidebox	common	fi	Avaa sivuvalikko
@@ -876,6 +921,7 @@ other	common	fi	Muu
 overflow	common	fi	Ylivuoto
 overview	common	fi	Yleiskuva
 owner	common	fi	Omistaja
+ownership	common	fi	Omistus
 padding	common	fi	Padding
 page	common	fi	Sivu
 page was generated in %1 seconds	common	fi	Sivun luominen kesti %1 sekuntia
@@ -887,7 +933,7 @@ papua new guinea	common	fi	PAPUA UUSI GUINEA
 paraguay	common	fi	PARAGUAY
 parcel	common	fi	Parcel
 parent category	common	fi	Yläkategoria
-parent is a '%1' !!!	common	fi	'%1' on isäntä !!!
+parent is a '%1' !!!	common	fi	'%1' on isäntä!
 password	common	fi	Salasana
 password could not be changed	common	fi	Salasanaa ei voitu muuttaa
 password has been updated	common	fi	Salasana on päivitetty
@@ -898,7 +944,7 @@ password must contain at least %1 uppercase letters	common	fi	Salasanassa pitä�
 password must have at least %1 characters	common	fi	Salasanassa pitää olla vähintään %1 merkkiä.
 paste	common	fi	Liitä
 path	common	fi	Polku
-path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA web palvelimen juurihakemiston ulkopuolella!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA web palvelimen juurihakemiston ulkopuolella!
 permission denied!	common	fi	Käyttöoikeus estetty!
 permission denied! this is an administration only feature.	common	fi	Lupa evätty! Tämä on vain järjestelmänvalvojille tarkoitettu ominaisuus.
 permissions to the files/users directory	common	fi	Tiedostojen/käyttäjien hakemiston käyttöoikeudet
@@ -916,8 +962,8 @@ placeholders	common	fi	Paikannimet
 play/pause	common	fi	Toista/tauko
 please %1 by hand	common	fi	Suorita manuaalisesti: %1
 please enter a name	common	fi	Anna nimi!
-please enter table-name first !!!	common	fi	Kirjoita ensin taulukon nimi !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	fi	Lataa EGroupware-työpöytä uudelleen (F5 / Cmd+r).
+please enter table-name first !!!	common	fi	Kirjoita ensin taulukon nimi!
+please reload the egroupware desktop (f5 / cmd+r).	common	fi	Lataa EGroupware-työpöytä uudelleen (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	fi	Muista käyttää '%1' käyttäjätunnusta paikallisissa kirjautumisissa tästä lähtien!
 please run setup to become current	common	fi	Päivitä asennus
 please select	common	fi	Valitse
@@ -925,7 +971,7 @@ please set your global preferences	common	fi	Määrittele yleiset asetukset!
 please set your preferences for this application	common	fi	Määrittele tämän sovelluksen asetukset!
 please type %1 more characters	common	fi	Kirjoita %1 lisää merkkiä (merkkejä)
 please type 1 more character	common	fi	Kirjoita 1 lisämerkki
-please wait...	common	fi	Odota hetki...
+please wait...	common	fi	Odota hetki ...
 please, check back with us shortly.	common	fi	Yritä hetken kuluttua uudestaan!
 pm	common	fi	pm
 poland	common	fi	PUOLA
@@ -938,6 +984,7 @@ precision	common	fi	Esitystarkkuus
 preference	common	fi	Asetukset
 preferences	common	fi	Asetukset
 preferences for the %1 template set	preferences	fi	Asetukset mallipohjalle: %1
+preview with entry	common	fi	Esikatselu merkinnällä
 previous page	common	fi	Edellinen sivu
 primary group	common	fi	Ensisijainen ryhmä
 primary key	common	fi	Pää avain (ensisijainen)
@@ -949,14 +996,16 @@ private	common	fi	Yksityinen
 programs	common	fi	Ohjelmat
 project	common	fi	Projekti
 properties	common	fi	Ominaisuudet
+protocol is required	common	fi	Pöytäkirja vaaditaan
 public	common	fi	Julkinen
 puerto rico	common	fi	PUERTO RICO
 qatar	common	fi	QATAR
+quick add	common	fi	Nopea lisäys
 radiobutton	common	fi	Valintaruutu
 read	common	fi	Luku
 read a list of entries.	common	fi	Lue tietueiden listaa
 read a single entry by passing the id and fieldlist.	common	fi	Lue yksittäinen tietue ohittaen id ja kentän lista.
-read etemplate from database (for the keys above)	common	fi	Lue eMallipohja tietokannasta (avaimet yläpuolella)
+read etemplate from database (for the keys above)	common	fi	Lue eTemplate tietokannasta (avaimet yläpuolella)
 read this list of methods.	common	fi	Lue tämä lista
 reading	common	fi	Luetaan
 readonly	common	fi	Vain lukuoikeus
@@ -965,7 +1014,7 @@ register	common	fi	Rekisteröidy
 regular	common	fi	Tavallinen
 reject	common	fi	Hylkää
 remember me	common	fi	Muista minut
-remove row (can not be undone!!!)	common	fi	Siirrä rivi (lopullinen, ei voida palauttaa !!!)
+remove row (can not be undone!!!)	common	fi	Siirrä rivi
 remove selected accounts	common	fi	Poista valitut käyttäjättilit
 remove shortcut	common	fi	Poista pikakuvake
 remove this link (not the entry itself)	common	fi	Poista tämä linkki (ei poista itse merkintää)
@@ -1031,21 +1080,25 @@ select account	common	fi	Valitse käyttäjätili
 select action	common	fi	Valitse toiminto
 select all	common	fi	Valitse kaikki
 select all %1 %2 for %3	common	fi	Valitse kaikki %1 %2 for %3
-select an app first !!!	common	fi	Valitse sovellus ensin !!!
+select all entries	common	fi	Valitse kaikki merkinnät
+select an app first !!!	common	fi	Valitse sovellus ensin!
 select an app to search in	common	fi	Valitse sovellus etsimiseen
 select an application	common	fi	Valitse sovellus
 select an application, (*) = uninstalled	common	fi	Valitse sovellus, (*) = ei asennettu
 select an entry to link with	common	fi	Valitse tietue linkkiin
+select an opened dialog	common	fi	Avatun valintaikkunan valitseminen
 select an table of the application	common	fi	Valitse sovelluksen taulukko
 select application	common	fi	Valitse sovellus
 select application to search	common	fi	Valitse etsittävä sovellus
 select category	common	fi	Valitse kategoria
+select color	common	fi	Valitse väri
 select columns	common	fi	Valitse sarakkeet
 select country	common	fi	Valitse maa
 select date	common	fi	Valitse päivämäärä
 select day	common	fi	Valitse päivä
 select day of week	common	fi	Valitse viikonpäivä
 select entry	common	fi	Valitse tietue
+select file(s) from vfs	common	fi	Valitse tiedosto(t) EGroupware File Managerista.
 select group	common	fi	Valitse ryhmä
 select home email address	common	fi	Valitse kotisähköpostiosoite
 select hour	common	fi	Valitse tunti
@@ -1055,15 +1108,16 @@ select month	common	fi	Valitse kuukausi
 select multiple accounts	common	fi	Valitse useita käyttäjättilejä
 select number	common	fi	Valitse numero
 select one	common	fi	Valitse
-select one ...	common	fi	Valitse yksi...
+select one ...	common	fi	Valitse yksi ...
 select percentage	common	fi	Valitse prosenttiosuus
 select priority	common	fi	Valitse ensisijaisuus
+select some options	common	fi	Valitse joitakin vaihtoehtoja
 select state	common	fi	Valitse osavaltio
 select the columns to display in the list	common	fi	Valitse sarakkeet, jotka näytetään listalla.
 select the default height for the application windows	common	fi	Valitse sovellusikkunan oletuskorkeus.
 select the default width for the application windows	common	fi	Valitse sovellusikkunan oletusleveys.
 select the indexed columns in their desired order	common	fi	Valitse indeksoidut sarakkeet halutussa järjestyksessä.
-select this etemplate to delete it	common	fi	Valitse poistettava eMallipohja
+select this etemplate to delete it	common	fi	Valitse poistettava eTemplate
 select user	common	fi	Valitse käyttäjä
 select which accounts to show	common	fi	Valitse mitkä käyttäjätilit näytetään
 select which values to show	common	fi	Valitse mitkä arvot näytetään
@@ -1072,18 +1126,23 @@ select year	common	fi	Valitse vuosi
 selectbox	common	fi	Valintalaatikko
 selection	common	fi	Valinta
 send	common	fi	Lähetä
+send succeeded to %1	common	fi	Lähetä onnistui osoitteeseen %1
 senegal	common	fi	SENEGAL
 september	common	fi	Syyskuu
 serbia	common	fi	Serbia
 server %1 has been added	common	fi	Palvelin %1 on lisätty
 server answered. processing response...	common	fi	Palvelin vastaa, prosessoidaan vastausta...
-server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta...
+server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta ...
+server error	common	fi	Palvelimen virhe
+server is unwilling to perform.	common	fi	Palvelin ei ole halukas suorittamaan.
 server name	common	fi	Palvelimen nimi
 session has been killed	common	fi	Istunto on keskeytetty
 set as default	common	fi	Aseta oletukseksi
+set these columns as the default	common	fi	Aseta nämä sarakkeet oletusarvoiksi
 set user as only responsible user, but keeping groups	groupdav	fi	Valitse käyttäjä vastuulliseksi, mutta säilytä ryhmät
 set user as only responsible, removing all existing responsibles	groupdav	fi	Valitse käyttäjä ainoaksi vastuulliseksi, poistaa kaikki muut vastuulliset
-sets today as date	common	fi	aseta tämä päivä päivämääräksi
+sets today as date	common	fi	Aseta tämä päivä päivämääräksi
+settings saved.	common	fi	Asetukset tallennetaan.
 setup	common	fi	Asennus
 setup main menu	common	fi	Asennuksen päävalikko
 seychelles	common	fi	SEYCHELLIT
@@ -1111,8 +1170,8 @@ show_more_apps	common	fi	show_more_apps
 showing	common	fi	Näkyvissä
 showing %1	common	fi	Näytetään %1
 showing %1 - %2 of %3	common	fi	Näytetään %1 - %2 / %3
-shows / allows you to enter values into the etemplate for testing	common	fi	Näyttää / sallii arvojen syötön eMallipohjaan testitarkoituksessa.
-shows/displays etemplate for testing, does not save it before	common	fi	Näyttää eMallipohjan testitarkoituksessa, EI tallenna mallipohjaa.
+shows / allows you to enter values into the etemplate for testing	common	fi	Näyttää / sallii arvojen syötön eTemplate testitarkoituksessa.
+shows/displays etemplate for testing, does not save it before	common	fi	Näyttää eTemplate testitarkoituksessa, EI tallenna mallipohjaa.
 sierra leone	common	fi	SIERRA LEONE
 sign up	common	fi	Rekisteröidy
 simple	common	fi	Yksinkertainen
@@ -1141,6 +1200,7 @@ start time	common	fi	Aloitusaika
 start with	common	fi	Alkaa
 starting up...	common	fi	Aloitetaan
 status	common	fi	Tila
+store your public key in addressbook?	common	fi	Tallenna julkinen avain osoitekirjaan?
 stretched	common	fi	Venytetty
 subject	common	fi	Aihe
 submit	common	fi	Lähetä
@@ -1148,6 +1208,7 @@ submit form	common	fi	Lähetä lomake
 submitbutton	common	fi	Lähetä-painike
 substitutions and their meanings:	common	fi	Korvaukset ja niiden merkitykset:
 sudan	common	fi	SUDAN
+suggest password	common	fi	Ehdota salasanaa
 sunday	common	fi	Sunnuntai
 suriname	common	fi	SURINAMI
 svalbard and jan mayen	common	fi	SVALBARD JA JAN MAYEN
@@ -1158,13 +1219,14 @@ swap with next row	common	fi	Vaihda seuraavaa riviin
 swaziland	common	fi	SWAZIMAA
 sweden	common	fi	RUOTSI
 switch to a parent widget	common	fi	Vaihda isäntä widgetiin
+switch to an other widgets of that container	common	fi	Siirtyminen kyseisen säiliön muihin widgetteihin
 switzerland	common	fi	SVEITSI
 sync all selected into one	groupdav	fi	Synkronoi kaikki yhteen
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
 tab	common	fi	Tab
 table %1 is excluded from backup and restore. data will not be restored.	common	fi	Taulu %1 ei sisälly varmuuskopioon eikä palautukseen. Tietoja ei palauteta.
 table properties	common	fi	Taulukon ominaisuudet
-table unchanged, no write necessary !!!	common	fi	Taulukkoa ei ole muutettu, joten kirjoittaminen ei ole tarpeellinen !!!
+table unchanged, no write necessary !!!	common	fi	Taulukkoa ei ole muutettu, joten kirjoittaminen ei ole tarpeellinen!
 tablename	common	fi	Taulukon nimi
 tabs	common	fi	Sarkaimet
 taiwan	common	fi	TAIWAN / TAIPEI
@@ -1177,6 +1239,7 @@ text	common	fi	Teksti
 text color:	common	fi	Tekstin väri:
 textarea	common	fi	Tekstialue
 thailand	common	fi	THAIMAA
+the backup key has been deleted.	common	fi	Varmistusavain on poistettu.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2
 the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
 the following document-types are supported:	preferences	fi	Seuraavat tiedostotyypit ovat tuettuja:
@@ -1196,14 +1259,14 @@ to correct this error for the future you will need to properly set the	common	fi
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	fi	Jos haluat tutkia tai palauttaa käytöstä poistettuja tiedostoja, sinun on ehkä otettava versionhallinta käyttöön.
 to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
 to start the db-tools	common	fi	Käynnistääksesi Tietokantatyökalut
-to start the etemplate editor	common	fi	Käynnistääksesi eMallipohjan muokkauksen
+to start the etemplate editor	common	fi	Käynnistääksesi eTemplate muokkauksen
 to start the search	common	fi	Aloitetaan etsiminen
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	Tämä päivämäärä, esim. "%1"
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.<br />Valitse kaikki tai vähemmän kuin %1 riviä.
+too many rows selected.<br />select all, or less than %1 rows	common	fi	Liian monta riviä valittu.<br>Valitse kaikki tai vähemmän kuin %1 riviä.
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
 top	common	fi	Ylälaita
 total	common	fi	Yhteensä
@@ -1254,8 +1317,8 @@ users choice	common	fi	Käyttäjän valinta
 uzbekistan	common	fi	UZBEKISTAN
 valign	common	fi	vAlign
 value	common	fi	Arvo
-value has to be at least '%1' !!!	common	fi	Arvo pitää olla ainakin %1 !!!
-value has to be at maximum '%1' !!!	common	fi	Arvo pitää olla maksimissaan %1 !!!
+value has to be at least '%1' !!!	common	fi	Arvo pitää olla ainakin %1!
+value has to be at maximum '%1' !!!	common	fi	Arvo pitää olla maksimissaan %1!
 vanuatu	common	fi	VANUATU
 vbox	common	fi	VBox
 venezuela	common	fi	VENEZUELA
@@ -1297,16 +1360,17 @@ write langfile	common	fi	Kirjoita kielitiedosto
 write tables	common	fi	Kirjoita taulukko
 writing	common	fi	Kirjoitetaan
 written by:	common	fi	Kirjoittanut:
-xml-file to import	common	fi	tuotava xml-tiedosto
+xml-file to import	common	fi	Tuotava xml-tiedosto
 xslt template	common	fi	XSLT -mallipohja
 year	common	fi	Vuosi
 yemen	common	fi	JEMEN
 yes	common	fi	Kyllä
 yes - delete	common	fi	Kyllä - Poista
 yes - delete including sub-entries	common	fi	Kyllä - Poista myös alamerkinnät
-you are not allowed to export more than %1 entries!	common	fi	Sinulla ei ole riittäviä oikeuksia viedä enemmän kuin %1 tietuetta!!!
+you are not allowed to export more than %1 entries!	common	fi	Sinulla ei ole riittäviä oikeuksia viedä enemmän kuin %1 tietuetta!
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
 you can customize how many icons and toolbars the editor shows.	common	fi	Määritele montako kuvaketta ja työkaluriviä editori näyttää
+you can not choose more then %1 item(s)!	common	fi	Et voi valita enempää kuin %1 kohdetta (kohteita)!
 you can respond by visiting:	common	fi	Voit vastata vierailemalla:
 you have been successfully logged out	login	fi	Olet kirjautunut ulos
 you have not entered a title	common	fi	Et määritellyt otsikkoa
@@ -1316,6 +1380,7 @@ you have not entered participants	common	fi	Et ole määritellyt osallistujia
 you have selected an invalid date	common	fi	Olet valinnut virheellisen päivämäärän!
 you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääkategorian!
 you have successfully logged out	common	fi	Olet kirjautunut ulos
+you may drag files out to your desktop	common	fi	Voit raahata tiedostoja työpöydälle
 you need to %1set your timezone preference%2.	common	fi	Määrittele %1aikavyöhykkeesi asetuksissa%2.
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää web palvelimen käyttäjä '%1' ryhmään '%2'.
 you need to be an egroupware administrator to access this functionality!	common	fi	Vain ylläpitäjillä on käyttöoikeus tähän!

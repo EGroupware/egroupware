@@ -50,6 +50,7 @@ allow users to create further identities	mail	es-es	Permitir a los usuarios crea
 allways a new window	mail	es-es	Siempre una ventana nueva
 always	mail	es-es	Siempre
 always allow external sources from %1	mail	es-es	Siempre permitir fuentes externas desde %1
+always respond / auto-responder	mail	es-es	Responder siempre / autoresponder
 always show html emails	mail	es-es	Mostrar siempre los correos HTML
 always show notifiction	mail	es-es	Mostrar siempre notificación
 an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (Autorizaciones de acceso) de la cuenta %1.
@@ -85,7 +86,10 @@ caching of flags	mail	es-es	Almacenamiento en caché de banderas
 can not open imap connection	mail	es-es	No se puede abrir la conexión IMAP
 can not resolve the winmail.dat attachment!	mail	es-es	¡No se puede resolver el archivo adjunto winmail.dat!
 canceled deletion due to user interaction	mail	es-es	supresión cancelada debido a la interacción del usuario
+certificate details	mail	es-es	Detalles del certificado
+certificate in text	mail	es-es	Certificado en texto
 certificate info for email %1	mail	es-es	Información del certificado para el correo-e %1
+certificate issued by	mail	es-es	Certificado expedido por
 change editor type	mail	es-es	Cambiar el editor al modo HTML
 changed profile	mail	es-es	perfil cambiado
 changing subject failed because of %1	mail	es-es	El cambio de asunto ha fallado debido a %1
@@ -190,6 +194,7 @@ edit folder acl	mail	es-es	Editar la lista de control de acceso de la carpeta
 edit folder acl ...	mail	es-es	Editar la lista de control de acceso de la carpeta ...
 edit vacation settings	mail	es-es	Editar configuración de vacaciones
 effective only if server supports acl at all	admin	es-es	eficaz sólo si el servidor admite lista de control de acceso en todo
+email address	mail	es-es	Dirección de correo-e
 email notification successfully updated!	mail	es-es	¡notificación por correo-e actualizada éxitosamente!
 email notification update failed	mail	es-es	falló la actualización de la notificación de correo electrónico
 email notification update failed! you need to set an email address!	mail	es-es	¡Falló la actualización de la notificación por correo-e! ¡Necesita establecer una dirección de correo-e!
@@ -218,6 +223,7 @@ error: could not send message.	mail	es-es	Error: No se pudo enviar el mensaje.
 error: message could not be displayed.	mail	es-es	ERROR: No se pudo mostrar el mensaje
 esync will fail without a working email configuration!	mail	es-es	¡eSync fallará sin una configuración de eMail de trabajo!
 event details follow	mail	es-es	A continuación, los detalles del evento
+every %1. day	mail	es-es	Cada %1. día
 everyone	mail	es-es	Todos
 examine namespace to retrieve folders in others and shared	mail	es-es	Examinar espacio de nombres para recuperar carpetas en otros y compartidas
 extended	mail	es-es	Extendido
@@ -408,6 +414,7 @@ notify when new mails arrive in these folders	mail	es-es	notificar cuando llegan
 on	mail	es-es	en
 on behalf of	mail	es-es	En nombre de
 on vacation	mail	es-es	En vacaciones
+once per day	mail	es-es	Una vez al día
 one address is not valid	mail	es-es	Una dirección no es válida
 only email	mail	es-es	Sólo email
 only if currently in an other app	mail	es-es	Sólo si está en otra aplicación
@@ -590,6 +597,7 @@ sign your message with smime certificate	mail	es-es	Firme su mensaje con un cert
 signature	mail	es-es	Firma
 signature at top	mail	es-es	firma en la parte superior
 signature position and visibility	mail	es-es	Posición y visibilidad de la firma
+signed by	mail	es-es	Firmado por
 size(...->0)	mail	es-es	Tamaño (...->0)
 size(0->...)	mail	es-es	Tamaño (0->...)
 small view	mail	es-es	Vista reducida
@@ -710,4 +718,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	es-es	Debe guardar primero el mensaje como borrador para poder guardarlo en VFS
 you will loose current message body, unless you save it to your clipboard!	mail	es-es	Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
 you've got new mail	mail	es-es	Tiene correo nuevo
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	es-es	Su cuota restante %1 es demasiado baja, es posible que no pueda enviar/recibir correos-e adicionales.\n Aunque la limpieza de correos electrónicos en la papelera o en la carpeta basura podría ayudarle a recuperar el espacio libre.\n Si eso no ayuda, solicite más cuota a su administrador.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	es-es	Su cuota restante %1 es demasiado baja, es posible que no pueda enviar/recibir correos-e adicionales.<br>Aunque la limpieza de correos electrónicos en la papelera o en la carpeta basura podría ayudarle a recuperar el espacio libre.<br>Si eso no ayuda, solicite más cuota a su administrador.

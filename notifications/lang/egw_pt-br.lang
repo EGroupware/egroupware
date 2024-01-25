@@ -1,31 +1,41 @@
 (update in sec. %s)	notifications	pt-br	(Atualização em seg.% S)
 account:	notifications	pt-br	Conta:
 all possible notification backends	notifications	pt-br	Todas as possíveis backends de notificação
+are you sure you want to delete all notifications?	notifications	pt-br	Tem certeza de que deseja excluir todas as notificações?
 browser	notifications	pt-br	Navegador
 browser is starting.	notifications	pt-br	Navegador está começando.
 cancal settings?	notifications	pt-br	Configurações Cancal?
 cancal?	notifications	pt-br	Cancal?
 certification-information:	notifications	pt-br	Certificação-informação:
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt-br	Escolha uma série de notificação. Você será notificado pelos métodos incluídos na série. <br />Nota: Se uma série de notificação estiver marcada como "desabilitada", seu administrador não permitiu um ou mais métodos incluídos naquela série e as notificações usarão o método "E-Mail".
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	pt-br	Verifique ambos. Primeiro, tente uma conta ativa definida pelo usuário; se não houver nenhuma, use o perfil eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt-br	Escolha uma série de notificação. Você será notificado pelos métodos incluídos na série. <br>Nota: Se uma série de notificação estiver marcada como "desabilitada", seu administrador não permitiu um ou mais métodos incluídos naquela série e as notificações usarão o método "E-Mail".
 choose from mailsettings used for notification	admin	pt-br	Escolha as configurações de e-mail utilizado para a notificação de e-mail
 common chains	notifications	pt-br	Séries comuns
 connection error.	notifications	pt-br	Erro de conexão.
+connection error. please check connection to server.	notifications	pt-br	Erro de conexão. Verifique a conexão com o servidor.
 continue to connect?	notifications	pt-br	Continue a conectar?
 cookies are required to login to this site.	notifications	pt-br	Cookies são necessários para acessar este site.
+delete all messages	notifications	pt-br	Excluir todas as mensagens
+delete notifications	notifications	pt-br	Excluir notificações
+delete this message	notifications	pt-br	Excluir esta mensagem
 disabled chains	notifications	pt-br	Séries desabilitadas
 do not notify me at all	notifications	pt-br	Não me notificar a todos
-domain not found, please check serveraddress.	notifications	pt-br	Domínio não encontrado, por favor verifique ServerAddress.
+domain not found, please check serveraddress.	notifications	pt-br	Domínio não encontrado, verifique o endereço do servidor.
 e-mail only	notifications	pt-br	Email só
 egroupware has notifications for you	notifications	pt-br	O EGroupware possui notificações para você
 egroupware login is starting, please wait.	notifications	pt-br	EGroupware de login está começando, aguarde.
 egroupware logindomain:	notifications	pt-br	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	pt-br	EGroupware Logindomains funda, por favor selecione.
+egroupware not found by url or connection lost to server.	notifications	pt-br	O EGroupware não foi encontrado pelo URL ou a conexão com o servidor foi perdida.
 egroupware not found by url.	notifications	pt-br	EGroupware não foi encontrado pela URL.
 egroupware-popup and e-mail	notifications	pt-br	EGroupware pop-up e e-mail
 egroupware-popup and windows-popup	notifications	pt-br	EGroupware pop-up e pop-up do Windows
 egroupware-popup backend	admin	pt-br	Método EGroupware-Popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	pt-br	Primeiro, pop-up do EGroupware; se isso falhar, notifique-me por e-mail
 egroupware-popup only	notifications	pt-br	EGroupware pop-up só
 egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do EGroupware-Popup
+email notifications only, if user is not logged in	notifications	pt-br	Notificações por e-mail somente se o usuário não estiver conectado
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	pt-br	Somente perfil EmailAdmin. NÃO use perfis de correio ativo definidos pelo usuário para notificação.
 enable egroupware-popup backend	admin	pt-br	Habilitar método EGroupware-Popup
 enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
 enabled chains	notifications	pt-br	Séries habilitadas
@@ -33,28 +43,35 @@ error browser can`t start.	notifications	pt-br	Erro navegador pode `t começar.
 error on loading tray icon	notifications	pt-br	Erro no carregamento ícone da bandeja
 error ssl	notifications	pt-br	SSL erro
 exit	notifications	pt-br	Saída
-folder	notifications	pt-br	pasta
+folder	notifications	pt-br	Pasta
 from	notifications	pt-br	De
 host:	notifications	pt-br	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pt-br	Quão detalhado deve ser o comportamento do popup do EGroupware se uma notificação for enviada ao usuário:<br>baixo: exibir apenas o sino de notificação no menu superior - o menu superior deve estar ativado!<br>médio: trazer a janela de notificação para a frente<br>alto: trazer a janela de notificação para a frente e deixar o navegador fazer algo para se anunciar
 if set, embedded links get rendered special for external clients	notifications	pt-br	Se definido, links embutidos serão exibidos de forma especial para clientes externos
 info on load config file: create config file.	notifications	pt-br	Informações sobre o arquivo de configuração de carga: criar arquivo de configuração.
 issuer dn:	notifications	pt-br	Issuer DN:
 java desktop notification app	preferences	pt-br	Aplicativo notificação de desktop Java
+last month	notifications	pt-br	Mês passado
 linked entries:	common	pt-br	Registros linkados:
 login aborted, application exit?	notifications	pt-br	Entrada abortada, sair da aplicação?
-login in egroupware:	notifications	pt-br	entrar em EGroupware:
+login in egroupware:	notifications	pt-br	Entrar em EGroupware:
+mail account to use for notifications	admin	pt-br	Conta de e-mail a ser usada para notificações
 mail backend	admin	pt-br	Correio backend
+mark all as read	notifications	pt-br	Marcar tudo como lido
+mark as read	notifications	pt-br	Marcar como lido
 message from	notifications	pt-br	Mensagem de
-minutes	notifications	pt-br	minutos
+minutes	notifications	pt-br	Minutos
+more info	notifications	pt-br	Mais informações
 notification	common	pt-br	Notificação
 notifier	notifications	pt-br	Notifier
 notify me by	notifications	pt-br	Notificar-me por
+open notified entry	notifications	pt-br	Abrir registro notificado
 optimize e-mails for external mail client	notifications	pt-br	Optmizar e-mails para clientes externos
-page not found, please check serveraddress.	notifications	pt-br	Página não encontrada, por favor, verifique ServerAddress.
+page not found, please check serveraddress.	notifications	pt-br	Página não encontrada, verifique o endereço do servidor.
 password:	notifications	pt-br	Senha:
 permission	notifications	pt-br	Permissões
 permission denied for notifications application.	notifications	pt-br	Permissão negada a aplicação notificações.
-placeholders with user/ prefix	admin	pt-br	espaços reservados com usuário / prefixo
+placeholders with user/ prefix	admin	pt-br	espaços reservados com usuário/prefixo
 please contact your egroupware admin.	notifications	pt-br	Por favor, contate o administrador EGroupware.
 please enter the url of your egroupware.	notifications	pt-br	Por favor, digite a URL do seu Egroupware.
 please enter your egroupware username.	notifications	pt-br	Digite seu nome de usuário Egroupware.
@@ -64,8 +81,8 @@ preferences for notification	notifications	pt-br	Preferências para notificaçã
 received	notifications	pt-br	Recebido
 refresh notifications	notifications	pt-br	Notificações de Atualização
 repeat login?	notifications	pt-br	Repita o Login?
-run application	notifications	pt-br	executar o aplicativo
-save password	notifications	pt-br	salvar senha
+run application	notifications	pt-br	Executar o aplicativo
+save password	notifications	pt-br	Salvar senha
 setting	notifications	pt-br	Cenário
 setting aborted, application exit	notifications	pt-br	Definir abortado, saída do aplicativo
 settings	notifications	pt-br	Configurações
@@ -74,12 +91,19 @@ signature added to every change notification	admin	pt-br	Assinatura adicionado a
 sorry, your login has expired	notifications	pt-br	Desculpe, seu login expirou
 step	notifications	pt-br	Etapa
 subject dn:	notifications	pt-br	Assunto DN:
+the server certificate is not a valid trust center certificate!	notifications	pt-br	O certificado do servidor não é um certificado válido da central de confiança!
+this egroupware notification has been sent to you by mail because your	notifications	pt-br	Essa notificação do EGroupware foi enviada a você por e-mail porque seu
+this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	pt-br	Essa notificação do EGroupware foi enviada a você por e-mail porque a cadeia de notificação escolhida foi desativada pelo administrador. Escolha outra cadeia de notificação em suas preferências!
+this month	notifications	pt-br	Este mês
 user:	notifications	pt-br	Usuário:
 warning	notifications	pt-br	Atenção
 windows-popup and e-mail	notifications	pt-br	Janelas pop-up e e-mail
 windows-popup backend	admin	pt-br	Método Windows-Popup
+windows-popup first, if that fails notify me by e-mail	notifications	pt-br	Primeiro, pop-up do Windows; se isso falhar, notifique-me por e-mail
 windows-popup only	notifications	pt-br	Janelas pop-up só
+yesterday	notifications	pt-br	Ontem
 you can also use	admin	pt-br	Você também pode usar
+you have %1 unread notifications	notifications	pt-br	Você tem %1 notificações não lidas
 you have been successfully logged out	notifications	pt-br	Você foi desconectado com sucesso
 you've got new mail	notifications	pt-br	Você tem um novo e-mail
 your session could not be verified.	notifications	pt-br	Sua sessão não pôde ser verificada

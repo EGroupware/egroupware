@@ -1,20 +1,32 @@
 %1 %2 rights for %3 on %4 to %5	admin	nl	%1 %2 rechten voor %3 op %4 tot %5
 %1 - %2 of %3 user accounts	admin	nl	%1 - %2 van %3 gebruikersaccounts
 %1 - %2 of %3 user groups	admin	nl	%1 - %2 van %3 gebruikersgroepen
+%1 access to other data	admin	nl	%1 toegang tot andere gegevens
+%1 accounts being activated	admin	nl	%1 accounts worden geactiveerd
+%1 acl entries deleted.	admin	nl	%1 ACL entries verwijderd.
 %1 acl records of not (longer) existing accounts deleted.	admin	nl	%1 ACL records van niet (meer) bestaande accounts zijn verwijderd.
+%1 categories of not (longer) existing accounts deleted.	admin	nl	%1 categorieën van niet (meer) bestaande accounts verwijderd.
+%1 category '%2' %3	admin	nl	%1 categorie '%2' %3
+%1 category(s) %2	admin	nl	%1 categorie(ën) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	nl	%1 categorie(ën) %2, %3 mislukt vanwege onvoldoende rechten!
 %1 class not instanciated	admin	nl	%1 klasse niet geinstantieerd
 %1 entries deleted	admin	nl	%1 vermeldingen verwijderd
 %1 entries deleted.	admin	nl	%1 vermeldingen verwijderd.
 %1 group %2	admin	nl	%1 groep %2
 %1 is no command!	admin	nl	%1 is geen commando!
+%1 log entries deleted.	admin	nl	%1 logboekvermeldingen verwijderd.
 %1 mail credentials deleted	admin	nl	%1 mailgegevens verwijderd
 %1 not found or not executable !!!	admin	nl	%1 niet gevonden of niet uitvoerbaar!
+%1 phrases saved.	admin	nl	%1 zinnen opgeslagen.
 %1 rights for %2 and applications %3	admin	nl	%1 rechten voor %2 en toepassingen %3
+%1 run rights for applications	admin	nl	%1 run rechten voor applicaties
 %1 sessions killed	admin	nl	%1 sessies beëindigd.
 %1 successful	admin	nl	%1 succesvol
 %1 token %2.	admin	nl	%1 token %2.
 %1 user %2	admin	nl	%1 gebruiker %2
+(de)activate mail accounts	admin	nl	(De)Activeer mailaccounts
 (default no, leave it off if you dont use it)	admin	nl	(standaard Nee, laat dit uit als je het niet gebruikt)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	nl	(imapclass moet deze functie ondersteunen door de corresponderende config-waarde op te vragen en door te geven als standaardquota aan de IMAP-server)
 (no subject)	admin	nl	(geen onderwerp)
 (stored password will not be shown here)	admin	nl	(Opgeslagen wachtwoord word hier niet weergegeven)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	(Gebruik <a href="setup/" target="setup">Setup</a>[Beheer toepassingen] om nieuwe toepassingen te installeren.)
@@ -30,7 +42,7 @@ accesslog and bruteforce defense	admin	nl	Toegangslogboek en bescherming procesv
 account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
 account '%1' deleted.	admin	nl	Account '%1' verwijderd.
-account '%1' not found !!!	admin	nl	Account '%1' niet gevonden !!!
+account '%1' not found !!!	admin	nl	Account '%1' niet gevonden!
 account active	admin	nl	Account actief
 account has been created	common	nl	Account is aangemaakt.
 account has been deleted	common	nl	Account is verwijderd.
@@ -39,7 +51,7 @@ account id	admin	nl	Account ID
 account list	admin	nl	Accountlijst
 account permissions	admin	nl	Toegangsrechten account
 account preferences	admin	nl	Voorkeuren account
-account-id's have to be integers!	admin	nl	Account-ids moeten integers zijn!
+account-id's have to be integers!	admin	nl	Account-IDs moeten integers zijn!
 acl added.	admin	nl	ACL toegevoegd.
 acl csv export	admin	nl	ACL CSV export
 acl deleted.	admin	nl	ACL verwijderd.
@@ -67,7 +79,7 @@ add new email address:	admin	nl	Voeg nieuw emailadres toe:
 add peer server	admin	nl	Peer-server toevoegen
 add profile	admin	nl	Profiel toevoegen
 add sub-category	admin	nl	Subcategorieën toevoegen
-admin dn	admin	nl	admin dn
+admin dn	admin	nl	Admin DN
 admin email	admin	nl	Emailadres beheerder
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	nl	Emailadressen beheerder (gescheiden door komma's) om gewaarschuwd te worden blokkeringen (laat leeg om geen notificaties te sturen)
 admin name	admin	nl	Naam beheerder
@@ -79,7 +91,7 @@ admins	admin	nl	Beheerders
 advanced options	admin	nl	Geavanceerde opties
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een IP-adres geblokkeerd worden (standaard 3)?
 aliases	admin	nl	Aliassen
-all applications	admin	nl	alle toepassingen
+all applications	admin	nl	Alle toepassingen
 all categories	admin	nl	Alle categorieën
 all records and account information will be lost!	admin	nl	Alle records en gebruikersinformatie zal verloren gaan!
 all users	admin	nl	Alle gebruikers
@@ -90,9 +102,9 @@ anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
 anonymous user does not exist!	admin	nl	Anonieme gebruiker bestaat NIET!
 anonymous user has no run-rights for the application!	admin	nl	Anonieme gebruiker heeft geen uitvoer rechten voor deze toepassing.
-any application	admin	nl	Iedere toepassing
-any group	admin	nl	Iedere groep
-any user	admin	nl	iedere gebruiker
+any application	admin	nl	Ledere toepassing
+any group	admin	nl	Ledere groep
+any user	admin	nl	Iedere gebruiker
 appearance	admin	nl	Weergave
 application	admin	nl	Toepassing
 application '%1' not found (maybe not installed or misspelled)!	admin	nl	Toepassing '%1' niet gevonden (misschien niet geinstalleerd of verkeerd gespeld)!
@@ -101,8 +113,8 @@ application title	admin	nl	Toepassingstitel
 applications	admin	nl	Toepassingen
 applications list	admin	nl	Toepassingenlijst
 applications run rights updated.	admin	nl	Toepassings executie rechten bijgewerkt.
-applies the changes	admin	nl	past de wijzigingen toe
-apply the changes	admin	nl	wijzigingen doorvoeren
+applies the changes	admin	nl	Past de wijzigingen toe
+apply the changes	admin	nl	Wijzigingen doorvoeren
 are you sure you want to delete the application %1 ?	admin	nl	Weet u zeker dat de toepassing %1 wilt verwijderen?
 are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
 are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
@@ -123,17 +135,17 @@ authentication / accounts	admin	nl	Authenticatie / Accounts
 auto create account records for authenticated users	admin	nl	Automatisch accounts aanmaken for geauthenticeerde gebruikers
 back to admin/grouplist	admin	nl	Terug naar Beheer/Groepslijst
 back to admin/userlist	admin	nl	Terug naar Beheer/Gebruikerslijst
-back to the list	admin	nl	terug naar de lijst
+back to the list	admin	nl	Terug naar de lijst
 bad login name or password.	admin	nl	Ongeldige login of paswoord
 bad or malformed request. server responded: %s	admin	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
 bad request: %s	admin	nl	Slechte vraag: %s
 bi-dir passthrough	admin	nl	bi-directionele doorgave
 bi-directional	admin	nl	bi-directioneel
-bottom	admin	nl	onderaan
+bottom	admin	nl	Onderaan
 calculate next run	admin	nl	Volgende uitvoer berekenen
 can be used by application	admin	nl	Kan gebruikt worden door toepassing
 can be used by group	admin	nl	Kan gebruikt worden door groep
-can be used by user	admin	nl	kan door gebruiker gebruikt worden
+can be used by user	admin	nl	Kan door gebruiker gebruikt worden
 can change password	admin	nl	Kan wachtwoord wijzigen
 cancel testjob!	admin	nl	Annuleer testtaak!
 categories list	admin	nl	Categorieënlijst
@@ -141,11 +153,11 @@ category %1 has been saved !	admin	nl	Categorie %1 is opgeslagen!
 category deleted.	admin	nl	Categorie verwijderd.
 category list	admin	nl	Categorieënlijst
 category saved.	admin	nl	Categorie opgeslagen.
-change account_id	admin	nl	Wijzig account_id
+change account_id	admin	nl	Wijzig Account-ID
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
 change login screen message	admin	nl	Bericht op start- of loginpagina wijzigen
-change password for %1	admin	nl	wijzig wachtwoord voor %1
+change password for %1	admin	nl	Wijzig wachtwoord voor %1
 check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
@@ -155,7 +167,7 @@ command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd t
 connection dropped by imap server.	admin	nl	Verbinding viel uit door IMAP server
 continue	admin	nl	Doorgaan
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	nl	Cook domein (standaard leeg wat betekent dat de volledige domeinnaam gebruikt wordt. Voorbeeld: ".domein.nl" maakt het mogelijk om hetzelfde cookie te gebruiken voor verschillende subdomeinen als egw.domein.nl en www.domein.nl.
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	nl	Cookie pad (maakt het mogelijk om meerdere eGW sessies in verschillende directories te gebruiken. Dit geeft problemen met SiteMgr!
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	nl	Cookie pad (maakt het mogelijk om meerdere EGroupware sessies in verschillende directories te gebruiken. Dit geeft problemen met SiteMgr!
 could not append message:	admin	nl	Kon niet aan bericht toevoegen:
 could not complete request. reason given: %s	admin	nl	Kan verzoek niet afmaken. Opgegeven reden: %s
 could not open secure connection to the imap server. %s : %s.	admin	nl	Kon geen veilige verbinding openen met de IMAP server. %s : %s
@@ -166,8 +178,8 @@ cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	nl	
 create group	admin	nl	Groep aanmaken
 create new account	admin	nl	Maak een nieuwe gebruiker aan
 created	admin	nl	Aangemaakt
-created with id #%1	admin	nl	aangemaakt met id #%1
-creates a new field	admin	nl	creëert een nieuw veld
+created with id #%1	admin	nl	Aangemaakt met ID #%1
+creates a new field	admin	nl	Creëert een nieuw veld
 crontab only (recomended)	admin	nl	Alleen crontab (aanbevolen)
 custom 1	admin	nl	Aangepast 1
 custom 2	admin	nl	Aangepast 2
@@ -179,7 +191,7 @@ data	admin	nl	Data
 day	admin	nl	Dag
 day of week<br>(0-6, 0=sun)	admin	nl	Dag van de week <br />(0-6, 0=Zondag)
 db backup and restore	admin	nl	DB backup en restore
-default	admin	nl	standaard
+default	admin	nl	Standaard
 default file system space per user	admin	nl	Standaard bestandssysteemruimte per gebruiker
 default file system space per user/group ?	admin	nl	Standaard bestandssysteemruimte per gebruiker/groep
 deinstall crontab	admin	nl	Deïnstalleer crontab
@@ -190,14 +202,14 @@ delete application	admin	nl	Toepassing verwijderen
 delete category	admin	nl	Categorie verwijderen
 delete group	admin	nl	Groep verwijderen
 delete peer server	admin	nl	Peer-server verwijderen
-delete the category	admin	nl	de categorie verwijderen
-delete the group	admin	nl	de groep verwijderen
-delete this category	admin	nl	deze categorie verwijderen
-delete this group	admin	nl	deze groep verwijderen
-delete this user	admin	nl	deze gebruiker verwijderen
+delete the category	admin	nl	De categorie verwijderen
+delete the group	admin	nl	De groep verwijderen
+delete this category	admin	nl	Deze categorie verwijderen
+delete this group	admin	nl	Deze groep verwijderen
+delete this user	admin	nl	Deze gebruiker verwijderen
 deleted	admin	nl	verwijderd
-deletes this field	admin	nl	verwijdert dit veld
-deliver extern	admin	nl	bezorg extern
+deletes this field	admin	nl	Verwijdert dit veld
+deliver extern	admin	nl	Bezorg extern
 deny access	admin	nl	Toegang weigeren
 deny access to access log	admin	nl	Toegang tot toegangslogboek weigeren
 deny access to application registery	admin	nl	Toegang tot toepassingsregister weigeren
@@ -215,16 +227,16 @@ deny access to site configuration	admin	nl	Toegang tot site configuratie weigere
 deny access to user accounts	admin	nl	Toegang tot gebruikersaccounts weigeren
 deny all users access to grant other users access to their entries ?	admin	nl	Ontneem alle gebruikers de mogelijkheid elkaar toegang te geven tot hun gegevens
 description can not exceed 255 characters in length !	admin	nl	Beschrijving mag niet de 255 tekens overschreiden in lengte!
-determines the order the fields are displayed	admin	nl	bepaalt de volgorde waarin de velden worden getoond
+determines the order the fields are displayed	admin	nl	Bepaalt de volgorde waarin de velden worden getoond
 disable	admin	nl	Deactiveren
 disable "auto completion" of the login form	admin	nl	"Automatisch afmaken" uischakelen in het loginformulier
 disable wysiwyg-editor	admin	nl	WYSIWYG-editor uitschakelen
-disabled (not recomended)	admin	nl	uitgeschakeld (niet aanbevolen)
+disabled (not recomended)	admin	nl	Uitgeschakeld (niet aanbevolen)
 display	admin	nl	Weergave
-displaying html messages is disabled	admin	nl	weergeven van html berichten is uitgeschakeld
+displaying html messages is disabled	admin	nl	Weergeven van HTML berichten is uitgeschakeld
 displaying plain messages is disabled	admin	nl	Weergeven standaard vericht is uitgeschakeld
-do not delete the category and return back to the list	admin	nl	de categorie NIET verwijderen en terugkeren naar de lijst
-do not validate certificate	admin	nl	het certificaat niet valideren
+do not delete the category and return back to the list	admin	nl	De categorie NIET verwijderen en terugkeren naar de lijst
+do not validate certificate	admin	nl	Het certificaat niet valideren
 do you also want to delete all global subcategories ?	admin	nl	Wilt u tevens alle globale subcategorieën verwijderen?
 do you really want to delete this profile	admin	nl	Weet u zeker dat u dit profiel wilt verwijderen
 do you really want to reset the filter for the profile listing	admin	nl	Wilt u werkelijk het filter voor de profielenlijst opnieuw instellen
@@ -232,20 +244,20 @@ do you want to delete all global subcategories ?	admin	nl	Wilt u  alle globale s
 do you want to move all global subcategories one level down ?	admin	nl	Wilt u alle globale subcategorieën een niveau naar beneden verplaatsen?
 document root (default)	admin	nl	Document root (standaard)
 domainname	admin	nl	Domeinnaam
-down	admin	nl	omlaag
+down	admin	nl	Omlaag
 edit account	admin	nl	Account bewerken
 edit application	admin	nl	Toepassing bewerken
 edit email settings	admin	nl	Wijzig emailinstellingen
 edit global category	admin	nl	Algemene catergorie bewerken
 edit global category for %1	admin	nl	Algemene catergorie bewerken voor %1
 edit group	admin	nl	Groep bewerken
-edit group acl's	admin	nl	groepsrechten bewerken
+edit group acl's	admin	nl	Groepsrechten bewerken
 edit peer server	admin	nl	Peer-server bewerken
 edit table format	admin	nl	Tabelformaat bewerken
-edit this category	admin	nl	deze categorie bewerken
-edit this group	admin	nl	deze groep bewerken
-edit this user	admin	nl	deze gebruiker bewerken
-edit user	admin	nl	gebruiker bewerken
+edit this category	admin	nl	Deze categorie bewerken
+edit this group	admin	nl	Deze groep bewerken
+edit this user	admin	nl	Deze gebruiker bewerken
+edit user	admin	nl	Gebruiker bewerken
 edit user account	admin	nl	Gebruikersaccount bewerken
 egroupware directory	admin	nl	EGroupware directory
 either install id and config password needed or the remote hash!	admin	nl	Of installatie ID met configuratie wachtwoord is nodig of het remote hash!
@@ -255,18 +267,18 @@ email settings	common	nl	Emailinstellingen
 emailadmin	admin	nl	EmailAdmin
 emailadmin: group assigned profile	common	nl	eMailAdmin: Groep heeft profiel toegewezen gekregen
 emailadmin: user assigned profile	common	nl	eMailAdmin: Gebruiker heeft profiel toegewezen gekregen
-enable	admin	nl	inschakelen
-enable cyrus imap server administration	admin	nl	activier Cyrus IMAP serverbeheer
+enable	admin	nl	Inschakelen
+enable cyrus imap server administration	admin	nl	Activier Cyrus IMAP serverbeheer
 enable debug-messages	admin	nl	Debugberichten activeren
-enable sieve	admin	nl	activeer Sieve
+enable sieve	admin	nl	Activeer Sieve
 enable spellcheck in rich text editor	admin	nl	Schakel de spellingcontrole in de Rich Text Editor in?
 enable the soap service	admin	nl	De SOAP service inschakelen
 enable the xmlrpc service	admin	nl	De XML-RPC service inschakelen
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
 enabled - popup window	admin	nl	Ingeschakeld - Popup Window
-encrypted connection	admin	nl	versleutelde verbinding
-encryption settings	admin	nl	encryptie instellingen
-enter a description for the category	admin	nl	voer een beschrijving in voor de categorie
+encrypted connection	admin	nl	Versleutelde verbinding
+encryption settings	admin	nl	Encryptie instellingen
+enter a description for the category	admin	nl	Voer een beschrijving in voor de categorie
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	nl	Voer wat willekeurige tekst in voor 'app_session' <br />encryptie (dit vereist mcrypt)
 enter the background color for the login page	admin	nl	Voer de achtergrondkleur in voor de loginpagina
 enter the background color for the site title	admin	nl	Voer de achtergrondkleur in voor de websitetitel
@@ -275,7 +287,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van EGroupware's URL.<br />Bijv.: http://www.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van EGroupware's URL.<br />Bijv.: https://egw.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
 enter the site password for peer servers	admin	nl	Voer het websitewachtwoord in voor peer-servers
 enter the site username for peer servers	admin	nl	Voer het websitegebruikersnaam in voor peer-servers
@@ -291,13 +303,13 @@ enter your smtp server hostname or ip address	admin	nl	Uw SMTP server host of IP
 enter your smtp server port	admin	nl	Uw SMTP port
 entry saved	admin	nl	Record opgeslagen
 error canceling timer, maybe there's none set !!!	admin	nl	Fout bij het annuleren van de timer, misschien is er geen timer ingesteld!
-error changing the password for %1 !!!	admin	nl	Fout bij wijzigen van wachtwoord voor %1 !!!
+error changing the password for %1 !!!	admin	nl	Fout bij wijzigen van wachtwoord voor %1 !
 error connecting to imap server. %s : %s.	admin	nl	Fout verbinden met de IMAP server. %s : %s
 error connecting to imap server: [%s] %s.	admin	nl	Fout verbinden met de IMAP server: [%s] %s
 error saving	admin	nl	Fout bij opslaan
 error saving account!	admin	nl	Fout bij opslaan van account!
 error saving the command!	admin	nl	Fout bij opslaan van commando!
-error saving the entry!!!	admin	nl	Fout bij het bewaren van de invoer!!!
+error saving the entry!!!	admin	nl	Fout bij het bewaren van de invoer!
 error saving to db:	admin	nl	Fout bij opslaan in database:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	nl	Fout bij het zetten van de timer. verkeerde syntax of misschien draait er al een timer!
 error! no appname found	admin	nl	Fout! geen appname gevonden
@@ -307,27 +319,27 @@ exists	admin	nl	Bestaat
 expires	admin	nl	Verloopt
 explanation of ldapman	admin	nl	Deze module is getest voor POSTFIX, LDAP, Courier-IMAP en vereist de schema's CORE en QMAIL (OID7914). Meer details over het gebruik en configureren van dit systeem is te vinden in README.ldapman in de doc map van ADMIN.
 failed to change password.	admin	nl	Wachtwoord kan niet worden gewijzigd.
-fallback (after each pageview)	admin	nl	terugval (na iedere paginaweergave)
-false	admin	nl	onwaar
-field '%1' already exists !!!	admin	nl	Veld '%1' bestaat al !!!
+fallback (after each pageview)	admin	nl	Terugval (na iedere paginaweergave)
+false	admin	nl	Onwaar
+field '%1' already exists !!!	admin	nl	Veld '%1' bestaat al !
 file rejected, no %2. is:%1	admin	nl	Bestand geweigerd, geen %2.is:%1
 file space	admin	nl	Bestandsruimte
 file space must be an integer	admin	nl	Bestandsruimte moet een integer zijn
-filtered by account	admin	nl	gefilterd op Account
-filtered by group	admin	nl	gefilterd op Groep
+filtered by account	admin	nl	Gefilterd op Account
+filtered by group	admin	nl	Gefilterd op Groep
 for the times above	admin	nl	voor de tijden hierboven
-for the times below (empty values count as '*', all empty = every minute)	admin	nl	voor de tijden hieronder (lege waarden gelden als '*', alles leeg = elke minuut)
+for the times below (empty values count as '*', all empty = every minute)	admin	nl	Voor de tijden hieronder (lege waarden gelden als '*', alles leeg = elke minuut)
 force selectbox	admin	nl	Forceer Selectbox
 forward also to	admin	nl	Ook doorsturen naar
 forward email's to	admin	nl	Emails doorsturen naar
-forward emails to	admin	nl	stuurt emails door naar
+forward emails to	admin	nl	Stuurt emails door naar
 forward only	admin	nl	Alleen doorsturen
 full name	admin	nl	Volledige naam
 general	admin	nl	Algemeen
 global categories	common	nl	Algemene Categorieën
 global options	admin	nl	Algemene opties
 grant	admin	nl	Sta toe
-group ?	admin	nl	groep?
+group ?	admin	nl	Groep?
 group has been added	common	nl	Groep is toegevoegd.
 group has been deleted	common	nl	Groep is verwijderd.
 group has been updated	common	nl	Groep is bijgewerkt.
@@ -346,7 +358,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	nl	Hoeveel minuten moet een account of IP-adres worden geblokkeerd (standaard 30 minuten)?
 how should email addresses for new users be constructed?	admin	nl	Hoe moet het Emailadres voor nieuwe gebruikers samengesteld worden?
 icon	admin	nl	Pictogram
-idle	admin	nl	inactief
+idle	admin	nl	Inactief
 if different from email address	admin	nl	Indien afwijkend van EMAIL adres
 if no acl records for user or any group the user is a member of	admin	nl	Als er geen ACL-records if groepen zijn voor de gebruiker is de gebruiker lid van
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	nl	Als u LDAP gebruikt, wilt u dan homedirectory en loginshell attributen beheren?
@@ -360,18 +372,18 @@ imap server closed the connection. server responded: %s	admin	nl	IMAP Server slo
 imap server hostname or ip address	admin	nl	IMAP-server hostnaam of IP-adres
 imap server logintyp	admin	nl	IMAP-server logintype
 imap server name	admin	nl	imap server naam
-imap server port	admin	nl	IMAP-serverpoort
+imap server port	admin	nl	IMAP server poort
 imap/pop3 server name	admin	nl	IMAP/POP3-servernaam
 importance	admin	nl	Belangrijk
 in mbyte	admin	nl	in MBytes
-inactive	admin	nl	inactief
+inactive	admin	nl	Inactief
 inbound	admin	nl	inkomend
 initial	admin	nl	Initiaal
 install crontab	admin	nl	Installeer crontab
 installed applications	common	nl	Geïnstalleerde toepassingen
 installed crontab	admin	nl	Geïnstalleerde crontab
 interface	admin	nl	Interface
-invalid argument '%1' !!!	admin	nl	Ongeldig argument '%1' !!!
+invalid argument '%1' !!!	admin	nl	Ongeldig argument '%1' !
 invalid formated date "%1"!	admin	nl	Ongeldig datumformaat "%1"!
 invalid remote id or name "%1"!	admin	nl	Ongeldig id of naam "%1" op afstand!
 invalid value "%1" use yes or no!	admin	nl	Ongeldige waarde "%1" gebruik ja of nee!
@@ -386,14 +398,14 @@ last login from	admin	nl	Laatste login vanaf
 last time read	admin	nl	Laatste keer gelezen
 last updated	admin	nl	Laatst bijgewerkt
 ldap accounts context	admin	nl	LDAP accountscontext
-ldap basedn	admin	nl	LDAP basedn
+ldap basedn	admin	nl	LDAP base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	nl	LDAP standaard homedirectory voorvoegsel (bij.: /home/ voor /home/gebruikersnaam)
 ldap default shell (e.g. /bin/bash)	admin	nl	LDAP standaard shell (bijv. /bin/bash)
 ldap encryption type	admin	nl	LDAP encryption type
 ldap groups context	admin	nl	LDAP groepen context
 ldap host	admin	nl	LDAP host
 ldap root password	admin	nl	LDAP root wachtwoord
-ldap rootdn	admin	nl	LDAP rootdn
+ldap rootdn	admin	nl	LDAP root DN
 ldap server	admin	nl	LDAP-server
 ldap server accounts dn	admin	nl	LDAP server accounts DN
 ldap server admin dn	admin	nl	LDAP server admin DN
@@ -402,10 +414,10 @@ ldap server hostname or ip address	admin	nl	LDAP-serverhostnaam of IP-adres
 ldap settings	admin	nl	LDAP-instellingen
 leave empty for no quota	admin	nl	Laat leeg voor geen quota
 leave empty to use oauth, if supported	admin	nl	Leeg laten om OAuth te gebruiken, indien ondersteund
-leave the category untouched and return back to the list	admin	nl	laat de categorie ongewijzigd en ga terug naar de lijst
-leave the group untouched and return back to the list	admin	nl	laat de groep ongewijzigd en ga terug naar de lijst
-leave without saveing the entry	admin	nl	weggaan zonder op te slaan
-leaves without saveing	admin	nl	verlaat zonder opslaan
+leave the category untouched and return back to the list	admin	nl	Laat de categorie ongewijzigd en ga terug naar de lijst
+leave the group untouched and return back to the list	admin	nl	Laat de groep ongewijzigd en ga terug naar de lijst
+leave without saveing the entry	admin	nl	Weggaan zonder op te slaan
+leaves without saveing	admin	nl	Verlaat zonder opslaan
 length<br>rows	admin	nl	Lengte<br />Rijen
 list config settings	admin	nl	Configuratie-instellingen weergeven
 list current sessions	admin	nl	Huidige sessies weergeven
@@ -423,36 +435,36 @@ manager	admin	nl	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	nl	Max. account id (bijv. 65535 of 100000)
 maximum entries in click path history	admin	nl	Max. aantal records in klikpad-historie
 members	admin	nl	Deelnemers
-message has been updated	admin	nl	bericht is bijgewerkt
+message has been updated	admin	nl	Bericht is bijgewerkt
 method	admin	nl	Methode
-minimum account id (e.g. 500 or 100, etc.)	admin	nl	Min. account id (bijv. 500 of 1000, etc.)
+minimum account id (e.g. 500 or 100, etc.)	admin	nl	Min. account ID (bijv. 500 of 1000, etc.)
 minute	admin	nl	Minuut
 mode	admin	nl	Modus
 modified	admin	nl	Gewijzigd
 month	admin	nl	Maand
-more secure	admin	nl	veiliger
+more secure	admin	nl	Veiliger
 name must not be empty !!!	admin	nl	Naam mag niet leeg zijn !!!
 name of organisation	admin	nl	Naam van de Organisatie
 new group name	admin	nl	Nieuwe groepsnaam
-new name	admin	nl	nieuwe naam
+new name	admin	nl	Nieuwe naam
 new password [ leave blank for no change ]	admin	nl	Nieuw wachtwoord [Leeg laten om dit niet te wijzigen]
 next run	admin	nl	Volgende uitvoer
-no algorithms available	admin	nl	geen algoritmen verkrijgbaar
-no alternate email address	admin	nl	geen alternatief emailadres
-no encryption	admin	nl	geen versleuteling
-no forwarding email address	admin	nl	geen emailadres om naar door te sturen
-no jobs in the database !!!	admin	nl	Geen taken in
+no algorithms available	admin	nl	Geen algoritmen verkrijgbaar
+no alternate email address	admin	nl	Geen alternatief emailadres
+no encryption	admin	nl	Geen versleuteling
+no forwarding email address	admin	nl	Geen emailadres om naar door te sturen
+no jobs in the database !!!	admin	nl	Geen taken in DB
 no login history exists for this user	admin	nl	Er is geen loginhistorie aanwezig voor deze gebruiker
 no matches found	admin	nl	Geen overeenkomsten gevonden
 no message returned.	admin	nl	Geen bericht teruggekomen.
-no modes available	admin	nl	geen modi beschikbaar
-no permission to add groups	admin	nl	geen toelating om groepen toe te voegen
-no permission to add users	admin	nl	geen toelating om gebruikers toe te voegen
-no permission to create groups	admin	nl	geen toelating om gebruikers toe te voegen
-no plain text part found	admin	nl	geen platte tekst onderdeel gevonden
+no modes available	admin	nl	Geen modi beschikbaar
+no permission to add groups	admin	nl	Geen toelating om groepen toe te voegen
+no permission to add users	admin	nl	Geen toelating om gebruikers toe te voegen
+no permission to create groups	admin	nl	Geen toelating om gebruikers toe te voegen
+no plain text part found	admin	nl	Geen platte tekst onderdeel gevonden
 no supported imap authentication method could be found.	admin	nl	Geen ondersteunde IMAP authenticatiemethode kon gevonden worden.
-note: ssl available only if php is compiled with curl support	admin	nl	Let op: SSL is alleen beschikbaar als PHP is gecompileerd met curl ondersteuning.
-number of row for a multiline inputfield or line of a multi-select-box	admin	nl	aantal rijen voor een meer-regelig invoerveld of regel in een meervoudige selectie veld
+note: ssl available only if php is compiled with curl support	admin	nl	Let op: SSL is alleen beschikbaar als PHP is gecompileerd met Curl ondersteuning.
+number of row for a multiline inputfield or line of a multi-select-box	admin	nl	Aantal rijen voor een meer-regelig invoerveld of regel in een meervoudige selectie veld
 oauth authentiction	admin	nl	OAuth authenticatie
 offer to installing egroupware as mail-handler	admin	nl	Aanbod voor installatie van EGroupware als mail-handler
 one day	admin	nl	1 dag
@@ -462,11 +474,11 @@ one week	admin	nl	1 week
 order	admin	nl	Volgorde
 organisation	admin	nl	Organisatie
 other security configuration	admin	nl	Andere beveiligingsconfiguratie
-outbound	admin	nl	uitgaand
+outbound	admin	nl	Uitgaand
 own categories	admin	nl	Eigen categorieën
 own install id	admin	nl	Eigen installatie-ID
 own install id:	admin	nl	Eigen installatie ID:
-passthrough	admin	nl	doorgeven
+passthrough	admin	nl	Doorgeven
 password for smtp-authentication	admin	nl	Wachtwoord voor SMTP-authenticatie
 password updated	admin	nl	Wachtwoord bijgewerkt
 path information	admin	nl	Path informatie
@@ -475,8 +487,8 @@ peer servers	admin	nl	Peer-servers
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 percent this user has logged out	admin	nl	Percentage dat deze gebruiker uitgelogd heeft
 permission denied	admin	nl	Toestemming geweigerd
-permission denied !!!	admin	nl	Toestemming geweigerd !!!
-permission denied!!!	admin	nl	Toegang geweigerd!!!
+permission denied !!!	admin	nl	Toestemming geweigerd!
+permission denied!!!	admin	nl	Toegang geweigerd!
 permissions	admin	nl	Toestemmingen
 permissions this group has	admin	nl	Toestemmingen van deze groep
 phpinfo	admin	nl	PHP informatie
@@ -486,23 +498,23 @@ please run setup to become current	admin	nl	Voer a.u.b. de setup uit om een actu
 please select	admin	nl	Selecteer a.u.b.
 plesk can't rename users --> request ignored	admin	nl	Plesk kan gebruikers niet hernoemen --> verzoek genegeerd
 plesk imap server (courier)	admin	nl	Plesk IMAP Server (Courier)
-plesk mail script '%1' not found !!!	admin	nl	Plesk mail script '%1' niet gevonden !!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	nl	Plesk vereist dat wachtwoorden minstens 5 karakters bevatten en niet de accountnaam mogen bevatten --> wachtwoord niet gewijzigd !!!
+plesk mail script '%1' not found !!!	admin	nl	Plesk mail script '%1' niet gevonden!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	nl	Plesk vereist dat wachtwoorden minstens 5 karakters bevatten en niet de accountnaam mogen bevatten --> wachtwoord niet gewijzigd!
 plesk smtp-server (qmail)	admin	nl	Plesk SMTP-Server (Qmail)
 pop3 server hostname or ip address	admin	nl	POP3-server hostnaam of IP-adres
 pop3 server port	admin	nl	POP3-serverpoort
-port	admin	nl	poort
+port	admin	nl	Poort
 postfix with ldap	admin	nl	Postfix met LDAP
 preferences	admin	nl	Voorkeuren
 primary group	admin	nl	Primaire groep
 processing of file %1 failed. failed to meet basic restrictions.	admin	nl	Uitvoeren van bestand %1 mislukt. Mislukt om aan de basis beperkingen te voldoen.
-profile access rights	admin	nl	profiel toegangsrechten
-profile is active	admin	nl	profiel is actief
+profile access rights	admin	nl	Profiel toegangsrechten
+profile is active	admin	nl	Profiel is actief
 profile list	admin	nl	Profiellijst
 profile name	admin	nl	Profielnaam
 qmaildotmode	admin	nl	qmaildotmode
 quota settings	admin	nl	Quota-installingen
-quota size in mbyte	admin	nl	quota grootte in MByte
+quota size in mbyte	admin	nl	Quota grootte in MByte
 re-enter password	admin	nl	Wachtwoord opnieuw invoeren
 read this list of methods.	admin	nl	Lees deze lijst met methodes.
 register application hooks	admin	nl	Registreer alle toepassingsproblemen
@@ -513,7 +525,7 @@ remove	admin	nl	Verwijderen
 remove all users from this group	admin	nl	Alle gebruikers uit deze groep verwijderen
 remove all users from this group ?	admin	nl	Alle gebruikers uit deze groep verwijderen?
 required pear class mail/mimedecode.php not found.	admin	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
-reset filter	admin	nl	filter opnieuw instellen
+reset filter	admin	nl	Filter opnieuw instellen
 rights	admin	nl	Rechten
 route all mails to	admin	nl	Routeer alle emails naar
 rows	admin	nl	Rijen
@@ -521,8 +533,8 @@ run asynchronous services	admin	nl	Asynchrone services uitvoeren
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	nl	Bewaren van bericht %1 is mislukt. Kon het bericht niet opslaan naar map %2 om de volgende reden %3
 save the category	admin	nl	De categorie opslaan
 save the category and return back to the list	admin	nl	De categorie opslaan en teruggaan naar de lijst
-saves the changes made and leaves	admin	nl	bewaart de gemaakte wijzigingen en verlaat
-saves this entry	admin	nl	Slaat deze infolog op
+saves the changes made and leaves	admin	nl	Bewaart de gemaakte wijzigingen en verlaat
+saves this entry	admin	nl	Slaat deze InfoLog op
 saving of message %1 failed. destination folder %2 does not exist.	admin	nl	Bewaren van bericht %1 mislukt. De doelmap %2 bestaat niet.
 search accounts	admin	nl	Doorzoek de accounts
 search categories	admin	nl	Doorzoek de categorieën
@@ -532,7 +544,7 @@ security	admin	nl	Beveiliging
 select group managers	admin	nl	Selecteer Groepsmanagers
 select permissions this group will have	admin	nl	Selecteer de rechten die deze groep krijgt
 select the parent category. if this is a main category select no category	admin	nl	Selecteer de bovenliggende categorieën. Als dit een hoofdcategorie is selecteer dan GEEN CATEGORIE
-select type of imap server	admin	nl	selecteer IMAP servertype
+select type of imap server	admin	nl	Selecteer IMAP servertype
 select type of imap/pop3 server	admin	nl	Selecteer IMAP/POP3-servertype
 select type of smtp server	admin	nl	Selecteer SMTP-servertype
 select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
@@ -543,7 +555,7 @@ selectbox	admin	nl	Selectbox
 server %1 has been updated	admin	nl	Server %1 is bijgewerkt.
 server list	admin	nl	Serverlijst
 server password	admin	nl	Serverwachtwoord
-server settings	admin	nl	server instellingen
+server settings	admin	nl	Server instellingen
 server type(mode)	admin	nl	Servertype(modus)
 server url	admin	nl	Server-URL
 server username	admin	nl	Servergebruikersnaam
@@ -571,18 +583,18 @@ sorry, that group name has already been taken.	admin	nl	Sorry, die groepsnaam be
 sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.
 sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
 sort the entries	admin	nl	Sorteer de records
-ssl	admin	nl	ssl
+ssl	admin	nl	SSL
 standard	admin	nl	Standaard
 standard imap server	admin	nl	Standaard IMAP-server
 standard pop3 server	admin	nl	Standaard POP3-server
 standard smtp-server	admin	nl	Standaard SMTP-server
 start	admin	nl	Start
 start testjob!	admin	nl	Testtaak starten
-stationery	admin	nl	stationery
+stationery	admin	nl	Stationery
 submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
-switch it off, if users are randomly thrown out	admin	nl	schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
+switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
 template selection	admin	nl	Templateselectie
 templates	admin	nl	Sjablonen
 text entry	admin	nl	Tekstinvoer
@@ -598,49 +610,49 @@ the imap server does not appear to support the authentication method selected. p
 the login and password can not be the same	admin	nl	De loginnaam en het wachtwoord mogen niet gelijk zijn
 the loginid can not be more then 8 characters	admin	nl	De loginnaam mag de 8 tekens in lengte niet overschreiden.
 the mimeparser can not parse this message.	admin	nl	De mimeparsers kan dit bericht niet lezen.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	nl	de intern gebruikte naam (<= 20 tekens), wijziging maakt bestaande gegevens onbereikbaar
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	nl	De intern gebruikte naam (<= 20 tekens), wijziging maakt bestaande gegevens onbereikbaar
 the testjob sends you a mail everytime it is called.	admin	nl	De testtaak verzend elke als het wordt uitgevoerd een email.
-the text displayed to the user	admin	nl	de tekst die aan de gebruiker getoond wordt
+the text displayed to the user	admin	nl	De tekst die aan de gebruiker getoond wordt
 the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen.
-the users bellow are still members of group %1	admin	nl	de gebruikers hieronder zijn nog steeds lid van groep %1.
+the users bellow are still members of group %1	admin	nl	De gebruikers hieronder zijn nog steeds lid van groep %1.
 there already is a group with this name. userid's can not have the same name as a groupid	admin	nl	Er bestaat reeds een groep met deze naam. GebruikersID's mogen niet dezelfde naam als een groepID hebben.
 they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt gaan.
 this application is current	admin	nl	Deze toepassing is actueel.
 this application requires an upgrade	admin	nl	Deze toepassing vereist een upgrade.
 this category is currently being used by applications as a parent category	admin	nl	Deze categorie wordt momenteel gebruikt door toepassingen als bovenliggende categorie.
-this php has no imap support compiled in!!	admin	nl	Deze PHP heeft geen IMAP ondersteuning verzamelt in!!
+this php has no imap support compiled in!!	admin	nl	Deze PHP heeft geen IMAP ondersteuning verzamelt in!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	nl	Uitvoertijd is overschreden voor toepassingssessiegegevens in seconden.(standaard 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	nl	Uitvoertijd is overschreden voor sessies in seconden. (standaard 14400 =4 uren)
 times	admin	nl	Tijden
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	nl	Om een TLS verbinding te gebruiken, moet u een versie van PHP 5.1.0 of hoger gebruiken.
-top	admin	nl	boven
+top	admin	nl	Boven
 total of %1 id's changed.	admin	nl	Totaal van %1 IDs gewijzigd.
 total records	admin	nl	Totaal aantal records
 translation	admin	nl	Vertaling
-true	admin	nl	waar
+true	admin	nl	Waar
 trust level	admin	nl	Vertrouwensniveau
 trust relationship	admin	nl	Vertrouwensrelatie
 two days	admin	nl	2 dagen
 two hours	admin	nl	2 uren
 two months	admin	nl	2 maanden
 two weeks	admin	nl	2 weken
-type '%1' already exists !!!	admin	nl	type '%1' bestaat al !!!
+type '%1' already exists !!!	admin	nl	Type '%1' bestaat al!
 type of customfield	admin	nl	Type van een aangepast veld
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows moet u de asynservice %1handmatig%2 installeren of gebruiken van de fallback methode. De fallback methode houdt in dat de taak alleen wordt uitgevoerd na iedere pagina raadpleging !!!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows moet u de asynservice %1handmatig%2 installeren of gebruiken van de fallback methode. De fallback methode houdt in dat de taak alleen wordt uitgevoerd na iedere pagina raadpleging!
 unexpected response from server to authenticate command.	admin	nl	Onverwachte reactie van de server om de opdracht te AUTHENTICEREN.
 unexpected response from server to digest-md5 response.	admin	nl	Onverwachte reactie van de server op Digest-MD5 reactie.
 unexpected response from server to login command.	admin	nl	Onverwachte reactie van de server op LOGIN opdracht.
-unknown account: %1 !!!	admin	nl	Onbekend account: %1 !!!
-unknown command %1!	admin	nl	Onbekend commando %1!
+unknown account: %1 !!!	admin	nl	Onbekend account: %1 !
+unknown command %1!	admin	nl	Onbekend commando %1 !
 unknown imap response from the server. server responded: %s	admin	nl	Onverwachte IMAP reactie van de server. Server reageerde: %s
 unknown option %1	admin	nl	Onbekende optie %1
 unsupported action '%1' !!!	admin	nl	Niet-ondersteunde actie '%1'
-up	admin	nl	boven
+up	admin	nl	Boven
 update current email address:	admin	nl	Huidige emailadres bijwerken:
-updated	admin	nl	bijgewerkt
+updated	admin	nl	Bijgewerkt
 use cookies to pass sessionid	admin	nl	Gebruik cookies om sessie-ID door te geven
 use default	admin	nl	Gebruik standaard
-use ldap defaults	admin	nl	gebruik LDAP standaard instellingen
+use ldap defaults	admin	nl	Gebruik LDAP standaard instellingen
 use predefined username and password defined below	admin	nl	Gebruik voorgekozen gebruikersnaam en wachtwoord zoals hieronder is ingesteld
 use pure html compliant code (not fully working yet)	admin	nl	Gebruik pure HTML compatible code (werk momenteel niet volledig)
 use smtp auth	admin	nl	Gebruik SMTP authenticatie
@@ -652,13 +664,14 @@ user can edit forwarding address	admin	nl	Gebruiker kan het doorstuuradres aanpa
 user data	common	nl	Gebruikersgegevens
 user for smtp-authentication (leave it empty if no auth required)	admin	nl	Gebruikersnaam voor SMTP-authenticatie (leeglaten indien geen auth vereist is)
 user groups	admin	nl	Gebruikersgroepen
-userdata	admin	nl	gebruikersgegevens
-username (standard)	admin	nl	gebruikersnaam (standaard)
+user-agent	admin	nl	User-Agent
+userdata	admin	nl	Gebruikersgegevens
+username (standard)	admin	nl	Gebruikersnaam (standaard)
 username/password defined by admin	admin	nl	Gebruikersnaam/Wachtwoord ingesteld door beheerder
 username@domainname (virtual mail manager)	admin	nl	gebruikersnaam@domeinnaam (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
-users can define their own identities	admin	nl	gebruikers kunnen hun eigen identiteit instellen
-users can define their own signatures	admin	nl	gebruikers kunnen hun eigen ondertekening instellen
+users can define their own identities	admin	nl	Gebruikers kunnen hun eigen identiteit instellen
+users can define their own signatures	admin	nl	Gebruikers kunnen hun eigen ondertekening instellen
 users choice	admin	nl	Gebruikerskeuze
 value for column %1 is not unique!	admin	nl	Waarde in kolom %1 is niet uniek!
 view access log	admin	nl	Toegangslog bekijken
@@ -675,12 +688,12 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u EGroupware laten controleren op nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
-wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !!!
-wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -wachtwoord !!!
+wrong account type: %1 is no %2 !!!	admin	nl	Verkeerde account type: %1 is GEEN %2 !
+wrong admin-account or -password !!!	admin	nl	Verkeerde beheerders account of -wachtwoord!
 xml-rpc	admin	nl	XML-RPC
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
 you have received a new message on the	admin	nl	U heeft een nieuw bericht ontvangen op de
-you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te creëeren!!!
+you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te creëeren!
 you have to enter a name, to create a new type!	admin	nl	U moet een naam invullen om een nieuwe type te creëeren!
 you must add at least 1 permission or group to this account	admin	nl	U moet op z'n minst 1 permissie of groep toewijzen aan dit account.
 you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.

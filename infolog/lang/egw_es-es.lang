@@ -133,10 +133,10 @@ customfields	infolog	es-es	Campos personalizados
 data exchange settings	infolog	es-es	Opciones para intercambio de datos
 date completed	infolog	es-es	Fecha completada
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	es-es	Fecha completada (dejar en blanco para tenerlo automático si el estado es hecho o facturado)
-datecreated	infolog	es-es	fecha de creación
+datecreated	infolog	es-es	Fecha de creación
 dates, status, access	infolog	es-es	Fechas, estado, acceso
 days	infolog	es-es	Días
-default category for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del Registro
+default category for new infolog entries	infolog	es-es	Categoría predeterminada para nuevas entradas del registro
 default document to insert entries	infolog	es-es	Documento predeterminado para insertar entradas
 default filter for infolog	infolog	es-es	Filtro predeterminado para el Registro
 default status for a new log entry	infolog	es-es	Estado predeterminado para una entrada nueva en el registro
@@ -169,7 +169,7 @@ do you want a notification, if items you delegated are due?	infolog	es-es	¿Dese
 do you want to receive notifications as html-mails or plain text?	infolog	es-es	¿Desea recibir las notifaciones como correo en HTML o texto sencillo?
 don't show infolog	infolog	es-es	NO mostrar el Registro de notas y tareas
 done	infolog	es-es	Hecho
-download	infolog	es-es	Descargar
+download	infolog	es-es	Guardar fichero
 download url for links	infolog	es-es	Descargar URL para enlaces
 due %1	infolog	es-es	Vencido %1
 due date	infolog	es-es	Fecha de vencimiento
@@ -177,7 +177,7 @@ duration	infolog	es-es	Duración
 e-mail:	infolog	es-es	Dirección de correo:
 each value is a line like <id>[=<label>]	infolog	es-es	Cada valor es una línea como <id>[=<etiqueta>]
 edit	infolog	es-es	Editar
-edit or create categories for ingolog	infolog	es-es	Editar o crear categorías para el Registro
+edit or create categories for ingolog	infolog	es-es	Editar o crear categorías para el registro
 edit rights (full edit rights incl. making someone else responsible!)	infolog	es-es	Derechos de edición (editar todos los derechos, incluyendo hacer a alguien responsable)
 edit status	infolog	es-es	Editar estado
 edit the entry	infolog	es-es	Editar la entrada
@@ -216,7 +216,7 @@ finish	infolog	es-es	Finalizar
 first argument for preg_replace	infolog	es-es	Primer argumento para preg_replace
 for infolog type %1, %2 is required	infolog	es-es	Para el tipo de InfoLog %1, se requiere %2
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
-for which types should this field be used	infolog	es-es	para qué tipos se usa este campo
+for which types should this field be used	infolog	es-es	Para qué tipos se usa este campo
 from	infolog	es-es	De
 full list of placeholder names	infolog	es-es	Lista completa de nombres de marcadores de posición
 general fields:	infolog	es-es	Campos generales:
@@ -235,7 +235,7 @@ id#	infolog	es-es	ID nº
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	es-es	Si un tipo tiene un propietario para el grupo, todas las entradas de ese tipo pertenecerán al grupo y NO al usuario que las creó.
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no hay valor inicial, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	es-es	Si especifica aquí una carpeta (ruta VFS completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos insertados.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	es-es	Si especifica un directorio aquí (la ruta VFS completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
 if you specify an export definition, it will be used when you export	infolog	es-es	Si especifica una definición de exportación, se usará al exportar
 import next set	infolog	es-es	Importar juego siguiente
 importance	infolog	es-es	Importancia
@@ -352,7 +352,7 @@ parent	infolog	es-es	Superior
 parent infolog	infolog	es-es	Elemento padre de la tarea
 participants for scheduling an appointment	infolog	es-es	Participantes para programar una cita
 path on (web-)serverside<br>eg. /var/samba/share	infolog	es-es	Ruta en el servidor ej. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la estructura del servidor web!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡DEBE ESTAR FUERA de la estructura del servidor web!
 pattern for search in addressbook	infolog	es-es	Expresión a buscar en la Libreta de direcciones
 pattern for search in projects	infolog	es-es	Expresión a buscar en Proyectos
 percent completed	infolog	es-es	Porcentaje completado
@@ -380,7 +380,7 @@ projectmanager	infolog	es-es	Administrador de proyectos
 re-planned	infolog	es-es	Replanificado
 re-planned time	infolog	es-es	Tiempo Replanificado
 re:	infolog	es-es	Re:
-read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
+read one record by passing its id.	infolog	es-es	Leer un registro pasando su ID.
 read rights (default)	infolog	es-es	Derecho de lectura (predeterminado)
 receive notifications about due entries you are responsible for	infolog	es-es	Recibir notificaciones acerca de las entradas vencidas de las que es responsable
 receive notifications about due entries you delegated	infolog	es-es	Recibir notificaciones acerca de las entradas vencidas delegadas por usted
@@ -389,7 +389,7 @@ receive notifications about items of type owned by groups you are part of	infolo
 receive notifications about own items	infolog	es-es	Recibir notificaciones acerca de los elementos propios
 receive notifications about starting entries you are responsible for	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan de las que usted es responsable
 receive notifications about starting entries you delegated	infolog	es-es	Recibir notificaciones acerca de las entradas que comienzan que usted ha delegado
-receive notifications as html-mails	infolog	es-es	Recibir notificaciones como correo html
+receive notifications as html-mails	infolog	es-es	Recibir notificaciones como correo HTML
 regular expression	infolog	es-es	Expresión regular
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
@@ -537,7 +537,7 @@ yes, only admins can purge deleted items	infolog	es-es	Sí, sólo los administra
 yes, with larger fontsize	infolog	es-es	Sí, con un tamaño de letra más grande
 yes, with purging of deleted items possible	infolog	es-es	Sí, con la posibilidad de purgar los elementos borrados
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	es-es	Puede elegir una categoría para estar preseleccionada cuando cree una nueva entrada del Registro
-you can't delete one of the stock types !!!	infolog	es-es	¡¡No puede borrar uno de los tipos almacenados!!
+you can't delete one of the stock types !!!	infolog	es-es	¡No puede borrar uno de los tipos almacenados!
 you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha de finalización que no es válida
 you have entered an invalid starting date	infolog	es-es	Ha introducido una fecha de inicio que no es válida
 you have to enter a name, to create a new type!	infolog	es-es	Debe introducir un nombre para crear un nuevo tipo.

@@ -43,7 +43,7 @@ add a new sub-task, -note, -call to this entry	infolog	cs	Přidat novou pod-úlo
 add a new todo	infolog	cs	Přidat nový úkol
 add file	infolog	cs	Přidat soubor
 add or delete links	infolog	cs	Přidat nebo smazat propojení
-add sub	infolog	cs	přidat podpoložku
+add sub	infolog	cs	Přidat podpoložku
 add timesheet entry	infolog	cs	Přidat pracovní výkaz
 add:	infolog	cs	Přidat:
 added	infolog	cs	Přidáno
@@ -147,7 +147,7 @@ delegated overdue	infolog	cs	Delegované po termínu
 delegated upcomming	infolog	cs	Delegované nadcházející
 delegation	infolog	cs	Pověření
 delete	infolog	cs	Smazat
-delete one record by passing its id.	infolog	cs	Smazat jeden záznam zadáním jeho id.
+delete one record by passing its id.	infolog	cs	Smazat jeden záznam zadáním jeho ID.
 delete selected entries?	infolog	cs	Smazat vybrané záznamy?
 delete this entry and all listed sub-entries	infolog	cs	Smazat tento záznam a všechny zobrazené podpoložky
 deleted	infolog	cs	Smazané
@@ -166,10 +166,10 @@ do you want a notification, if items you are responsible for are due?	infolog	cs
 do you want a notification, if items you created get updated?	infolog	cs	Chcete dostávat upozornění při aktualizaci položek, které jste vytvořil(a)?
 do you want a notification, if items you delegated are about to start?	infolog	cs	Chcete dostávat upozornění na počáteční termín položek, které jste delegoval(a)?
 do you want a notification, if items you delegated are due?	infolog	cs	Chcete dostávat upozornění na konečný termín položek, které jste delegoval(a)?
-do you want to receive notifications as html-mails or plain text?	infolog	cs	Chcete dostávat upozornění jako html e-maily nebo jako prostý text?
+do you want to receive notifications as html-mails or plain text?	infolog	cs	Chcete dostávat upozornění jako HTML e-maily nebo jako prostý text?
 don't show infolog	infolog	cs	NEzobrazovat InfoLog
 done	infolog	cs	Hotovo
-download	infolog	cs	Stáhnout
+download	infolog	cs	Uložit soubor
 download url for links	infolog	cs	Stáhnout URL propojení
 due %1	infolog	cs	Do %1
 due date	infolog	cs	Datum splatnosti
@@ -208,7 +208,7 @@ exports in ical format.	infolog	cs	Export událostí do formátu iCal
 exports infolog entries into a csv file.	infolog	cs	Export událostí do formátu CSV
 favorites	infolog	cs	Oblíbené
 fax	infolog	cs	Fax
-field must not be empty !!!	infolog	cs	Položka nesmí být prázdná!!!
+field must not be empty !!!	infolog	cs	Položka nesmí být prázdná!
 fields to exclude when copying an infolog:	infolog	cs	Pole, která se při kopírování úkolu nemají kopírovat:
 fields to exclude when creating a sub-entry:	infolog	cs	Pole, která se při vytváření podúkolu nemají kopírovat:
 fieldseparator	infolog	cs	Oddělovač položek
@@ -297,7 +297,7 @@ manage mapping	infolog	cs	Spravovat mapování
 max length of the input [, length of the inputfield (optional)]	infolog	cs	Maximální délka vstupu (volitelné)
 modifier	infolog	cs	Změnil
 modifierer	infolog	cs	Změnil
-name must not be empty !!!	infolog	cs	Název nemůže být prázdný !!!
+name must not be empty !!!	infolog	cs	Název nemůže být prázdný!
 name of current user, all other contact fields are valid too	infolog	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 name of new type to create	infolog	cs	Název nově vytvářeného typu
 never hide search and filters	infolog	cs	Nikdy neskrývat hledání a filtry
@@ -352,7 +352,7 @@ parent	infolog	cs	Nadřazený
 parent infolog	infolog	cs	Nadřazený InfoLog
 participants for scheduling an appointment	infolog	cs	Účastníci pro plánování schůzky
 path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	Cesta (umístění) na WWW serveru<br>např. /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenovou složku dokumentů WWW serveru!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenovou složku dokumentů WWW serveru!
 pattern for search in addressbook	infolog	cs	Vzor pro vyhledávání v adresáři
 pattern for search in projects	infolog	cs	Vzor pro vyhledávání v projektech
 percent completed	infolog	cs	Procent dokončeno
@@ -380,7 +380,7 @@ projectmanager	infolog	cs	Správce projektů
 re-planned	infolog	cs	Přeplánováno
 re-planned time	infolog	cs	Přeplánovaný čas
 re:	infolog	cs	Re:
-read one record by passing its id.	infolog	cs	Načíst jeden záznam zadáním jeho id.
+read one record by passing its id.	infolog	cs	Načíst jeden záznam zadáním jeho ID.
 read rights (default)	infolog	cs	Práva ke čtení (výchozí)
 receive notifications about due entries you are responsible for	infolog	cs	Přijímat upozornění na záznamy po termínu, za které jste odpovědný/á
 receive notifications about due entries you delegated	infolog	cs	Přijímat upozornění na záznamy po termínu, které jste delegoval(a)
@@ -416,7 +416,7 @@ search	infolog	cs	Hledat
 search for:	infolog	cs	Hledat (co):
 second parameter for preg_replace	infolog	cs	Druhý parametr funkce preg_replace
 select	infolog	cs	Vybrat
-select a category for this entry	infolog	cs	vybrat kategorii pro tento záznam
+select a category for this entry	infolog	cs	Vybrat kategorii pro tento záznam
 select a price	infolog	cs	Vybrat cenu
 select a priority for this task	infolog	cs	Vybrat prioritu pro tento úkol
 select a project	infolog	cs	Vybrat projekt
@@ -493,7 +493,7 @@ today	infolog	cs	Dnes
 todays date	infolog	cs	Dnešní datum
 todo	infolog	cs	Úkol
 typ	infolog	cs	Typ
-typ '%1' already exists !!!	infolog	cs	Typ '%1' už existuje !!!
+typ '%1' already exists !!!	infolog	cs	Typ '%1' už existuje!
 type	infolog	cs	Typ
 type ...	infolog	cs	Typ ...
 type of customfield	infolog	cs	Typ uživatelsky definované položky

@@ -1,18 +1,35 @@
 %1 %2 rights for %3 on %4 to %5	admin	sv	%1 %2 rättigheter för %3 på %4 till %5
 %1 - %2 of %3 user accounts	admin	sv	%1 - %2 av %3 användarkonton
 %1 - %2 of %3 user groups	admin	sv	%1 - %2 av %3 användargrupper
+%1 access to other data	admin	sv	%1 tillgång till andra uppgifter
+%1 accounts being activated	admin	sv	%1 konton som aktiveras
+%1 acl entries deleted.	admin	sv	%1 ACL-poster raderade.
 %1 acl records of not (longer) existing accounts deleted.	admin	sv	%1 ACL poster med inte längre existernade konton raderade.
+%1 categories of not (longer) existing accounts deleted.	admin	sv	%1 kategorier av ej (längre) existerande konton raderade.
+%1 category '%2' %3	admin	sv	%1 kategori '%2' %3
+%1 category(s) %2	admin	sv	%1 kategori(er) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	sv	%1 kategori(er) %2, %3 misslyckades på grund av otillräckliga rättigheter!
+%1 class not instanciated	admin	sv	%1 klass inte instansierad
 %1 entries deleted	admin	sv	%1 poster raderade
 %1 entries deleted.	admin	sv	%1 poster raderade.
+%1 group %2	admin	sv	%1 grupp %2
+%1 is no command!	admin	sv	%1 är inget kommando!
+%1 log entries deleted.	admin	sv	%1 loggposter raderade.
 %1 mail credentials deleted	admin	sv	%1 autentiseringsuppgifter för e-post borttagna
-%1 not found or not executable !!!	admin	sv	Kunde inte hitta %1 eller så är den inte körbar!!!
+%1 not found or not executable !!!	admin	sv	Kunde inte hitta %1 eller så är den inte körbar!
+%1 phrases saved.	admin	sv	%1 fraser sparade.
+%1 rights for %2 and applications %3	admin	sv	%1 rättigheter för %2 och applikation(er) %3 .
+%1 run rights for applications	admin	sv	%1 kör rättigheter för applikationer
 %1 sessions killed	admin	sv	%1 sessioner dödade.
 %1 successful	admin	sv	%1 framgångsrik
 %1 token %2.	admin	sv	%1 token %2.
+%1 user %2	admin	sv	%1 användare %2
+(de)activate mail accounts	admin	sv	(de)Aktivera e-postkonton
 (default no, leave it off if you dont use it)	admin	sv	(standard Nej, lämna tom om du inte använder det)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sv	(imapclass måste stödja denna funktion genom att fråga efter motsvarande konfigurationsvärde och skicka det som defaultquota till IMAP-servern)
 (no subject)	admin	sv	(ingen rubrik)
 (stored password will not be shown here)	admin	sv	(lagrade lösenord visas ej här)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sv	(För att installera nya applikationer används<br><a href="setup/" target="setup">Installationen</a> [Hantera Applikationer] !!!
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sv	(För att installera nya applikationer används<br><a href="setup/" target="setup">Installationen</a> [Hantera Applikationer]!
 -  type	admin	sv	- typ
 1 year	admin	sv	1 år
 2 month	admin	sv	2 månader
@@ -53,7 +70,7 @@ add new application	admin	sv	Lägg till ny application
 add peer server	admin	sv	Lägg till Peer Server
 add profile	admin	sv	Skapa profil
 add sub-category	admin	sv	Lägg till underkategori
-admin dn	admin	sv	Admin dn
+admin dn	admin	sv	Admin DN
 admin email	admin	sv	Admin e-postadress
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sv	Administrativa e-postadresser (komma-separerad) som skall notifieras om blockeringen. (lämna tom om ingen notifiering skall ske)
 admin name	admin	sv	Admin namn
@@ -92,10 +109,10 @@ are you sure you want to delete this server?	admin	sv	Vill du verkligen radera s
 are you sure you want to kill this session ?	admin	sv	Vill du verkligen avsluta sessionen?
 async services last executed	admin	sv	Asynkrona tjänster senast körda
 asynchronous timed services	admin	sv	Asynkrona tidsbundna tjänster
-asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjänster är inte installerade ännu eller annat fel (%1)!!!
+asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjänster är inte installerade ännu eller annat fel (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sv	Försök att använda korrekt mime-typ istället för standard 'application/octet-stream'
 attribute accountstatus explained	admin	sv	Detta hanterar attributet <b><i>-accountStatus-</i></b> från QMAIL schemat
-attribute mail explained	admin	sv	Detta hanterar attributet <b><i>-mail-</i></b> från QMAIL schemat och bör aldrig vara tomt. Det är också eGW's intern e-postfält
+attribute mail explained	admin	sv	Detta hanterar attributet <b><i>-mail-</i></b> från QMAIL schemat och bör aldrig vara tomt. Det är också EGw intern e-postfält
 attribute mailalternateaddress explained	admin	sv	Detta hanterar attributet<b><i>-mailAlternateAddress-</i></b> från QMAIL schemat och kan hanteras som virtuella kopplingar eller alias.
 attribute mailforwardingaddress explained	admin	sv	Detta hanterar attributet <b><i>-mailForwardingAddress-</i></b> från QMAIL schemat och får inte vara tomt om vidarebefodran används.
 authentication / accounts	admin	sv	Autentisering / Konton
@@ -217,7 +234,7 @@ enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navigationslisten
 enabled - popup window	admin	sv	Aktiv - Popup fönster
 encrypted connection	admin	sv	Krypterad anslutning
 enter a description for the category	admin	sv	Skriv en kategoribeskrivning
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	sv	Skriv slumpmässig text för <br> kryptering av app_session (kräver mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	sv	Skriv slumpmässig text för<br>kryptering av app_session (kräver mcrypt)
 enter the background color for the login page	admin	sv	Ange bakgrundsfärg för loginformuläret
 enter the background color for the site title	admin	sv	Ange bakgrundsfärg för sajtens rubtik
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
@@ -246,7 +263,7 @@ error connecting to imap server: [%s] %s.	admin	sv	Kunde inte ansluta till IMAP 
 error saving the entry!!!	admin	sv	Fel uppstod vid sparandet av posten!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sv	Fel vid inställning av timer, fel syntax eller det kanske redan körs en?
 error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
-error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!!
+error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!
 event details follow	admin	sv	Händelse detaljer följer
 expires	admin	sv	Förfaller
 explanation of ldapman	admin	sv	Denna modul har hittils testats för POSTFIX, LDAP, Courier-IMAP och behöver schema för Core och QMAIL (OID7914). Ytterligare detaljer gällande användning och konfiguration av detta system kan du finna i README.ldapman i dokumentkatalogen under ADMIN.
@@ -266,7 +283,7 @@ forward only	admin	sv	Vidarebefodra endast
 full name	admin	sv	Fullständigt namn
 general	admin	sv	Allmänt
 global categories	common	sv	Globala kategorier
-group ?	admin	sv	grupp?
+group ?	admin	sv	Grupp?
 group has been added	common	sv	Grupp har lagts till
 group has been deleted	common	sv	Grupp har raderats
 group has been updated	common	sv	Grupp har uppdaterats
@@ -314,14 +331,14 @@ last login from	admin	sv	Senaste inloggning från
 last time read	admin	sv	Senast läst
 last updated	admin	sv	Senast uppdaterad
 ldap accounts context	admin	sv	Kontext för LDAP konton
-ldap basedn	admin	sv	LDAP basedn
+ldap basedn	admin	sv	LDAP base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sv	Hemkatalogsprefix för LDAP (t ex: /home för /home/användarnamn
 ldap default shell (e.g. /bin/bash)	admin	sv	LDAP standardskal (t ex: /bin/bash)
 ldap encryption type	admin	sv	LDAP krypteringstyp
 ldap groups context	admin	sv	Gruppkontext för LDAP
 ldap host	admin	sv	LDAP värd
 ldap root password	admin	sv	LDAP root lösenord
-ldap rootdn	admin	sv	LDAP root dn
+ldap rootdn	admin	sv	LDAP root DN
 ldap server	admin	sv	LDAP server
 ldap server accounts dn	admin	sv	LDAP server konton DN
 ldap server admin dn	admin	sv	LDAP server admin DN
@@ -337,7 +354,7 @@ leaves without saveing	admin	sv	lämnas utan att sparas
 length<br>rows	admin	sv	Längd<br>Rader
 list config settings	admin	sv	Lista konfigurations inställningar
 list current sessions	admin	sv	Lista aktiva sessioner
-list of current users	admin	sv	lista över aktiva användare
+list of current users	admin	sv	Lista över aktiva användare
 login history	admin	sv	Inloggningshistorik
 login message	admin	sv	Inloggningsmeddelande
 login screen	admin	sv	Inloggningssida
@@ -361,23 +378,23 @@ name must not be empty !!!	admin	sv	Namnet får inte vara tomt!
 name of organisation	admin	sv	Organisations namn
 new group name	admin	sv	Nytt gruppnamn
 new name	admin	sv	Nytt namn
-new password [ leave blank for no change ]	admin	sv	Nytt lösenord [ Låt fältet vara tomt för att inte ändra ]
+new password [ leave blank for no change ]	admin	sv	Nytt lösenord (Låt fältet vara tomt för att inte ändra)
 next run	admin	sv	Nästa körning
-no algorithms available	admin	sv	inga algoritmer tillgängliga
+no algorithms available	admin	sv	Inga algoritmer tillgängliga
 no alternate email address	admin	sv	Ingen alternerande e-post adress
 no encryption	admin	sv	Ingen kryptering
 no forwarding email address	admin	sv	Ingen e-post vidarebefodrings adress
-no jobs in the database !!!	admin	sv	Inga jobb i databasen!!!
+no jobs in the database !!!	admin	sv	Inga jobb i databasen!
 no login history exists for this user	admin	sv	Inloggningshistorik saknas för användaren
 no matches found	admin	sv	Inga träffar
 no message returned.	admin	sv	Inget svar meddelandes
-no modes available	admin	sv	inga lägen tillgängliga
+no modes available	admin	sv	Inga lägen tillgängliga
 no permission to add groups	admin	sv	Behörighet saknas för att lägga till grupper
 no permission to add users	admin	sv	Behörighet saknas för att lägga till användare
 no permission to create groups	admin	sv	Behörighet saknas för att skapa grupper
 no plain text part found	admin	sv	Hittade inget textfält
 no supported imap authentication method could be found.	admin	sv	Kunde inte hitta supporterad IMAP autentiserings metod
-note: ssl available only if php is compiled with curl support	admin	sv	Not: SSL är bara tillgängligt om PHP kompilerats med stöd för curl
+note: ssl available only if php is compiled with curl support	admin	sv	Not: SSL är bara tillgängligt om PHP kompilerats med stöd för Curl
 number of row for a multiline inputfield or line of a multi-select-box	admin	sv	Antal rader för flerraders indatafält eller flervalsruta
 oauth authentiction	admin	sv	OAuth-autentisering
 offer to installing egroupware as mail-handler	admin	sv	Erbjudande om att installera EGroupware som e-posthanterare
@@ -457,7 +474,7 @@ server url	admin	sv	URL för servern
 server username	admin	sv	Användarnamn för servern
 set preference values.	admin	sv	Gör inställningar
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sv	Skall inloginsidan ha en valruta för språk (praktisk vid demosajter)?
-show 'powered by' logo on	admin	sv	Visa "Powered By" logga
+show 'powered by' logo on	admin	sv	Visa "Powered by" logga
 show access log	admin	sv	Visa Accesslogg
 show current action	admin	sv	Visa nuvarande aktivitet
 show error log	admin	sv	Visa fellogg
@@ -502,7 +519,7 @@ the loginid can not be more then 8 characters	admin	sv	Inloggnings ID kan inte v
 the mimeparser can not parse this message.	admin	sv	MIME-tolken kunde inte tolka meddelandet
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sv	det interna namnet (<= 20 tecken), att ändra det gör existerande data otillgängligt
 the testjob sends you a mail everytime it is called.	admin	sv	Testjobbet skickar ett e-post varje gång det anropas
-the text displayed to the user	admin	sv	texten som visas för användaren
+the text displayed to the user	admin	sv	Texten som visas för användaren
 the two passwords are not the same	admin	sv	Lösenorden är inte identiska
 the users bellow are still members of group %1	admin	sv	Användarna nedan är fortfarande medlem av gruppen %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	sv	Det finns redan en grupp med det namnet. Ett användarnamn kan inte heta likadant som ett grupp
@@ -543,6 +560,7 @@ user accounts	admin	sv	Användarkonton
 user data	common	sv	Användardata
 user for smtp-authentication (leave it empty if no auth required)	admin	sv	Användare för SMTP autentisering (lämna tomt om autentisering ej krävs)
 user groups	admin	sv	Användargrupper
+user-agent	admin	sv	User-Agent
 userdata	admin	sv	Användaradata
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton?
 users choice	admin	sv	Användares val

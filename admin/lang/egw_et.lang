@@ -1,9 +1,21 @@
-%1 entries deleted.	admin	et	%1 kirjed kustutatud
+%1 access to other data	admin	et	%1 juurdepääs muudele andmetele
+%1 accounts being activated	admin	et	%1 aktiveeritavad kontod
+%1 acl entries deleted.	admin	et	%1 ACL-kirjed kustutatud.
+%1 categories of not (longer) existing accounts deleted.	admin	et	%1 mitte(enam) olemasolevate kontode kategooriad kustutatud.
+%1 category '%2' %3	admin	et	%1 kategooria '%2' %3
+%1 category(s) %2	admin	et	%1 kategooria(d) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	et	%1 kategooria(d) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
+%1 entries deleted	admin	et	%1 kirjed kustutatud
+%1 entries deleted.	admin	et	%1 kirjed kustutatud.
 %1 mail credentials deleted	admin	et	%1 maili mandaat kustutatud
+%1 phrases saved.	admin	et	%1 fraasid salvestatud.
+%1 run rights for applications	admin	et	%1 rakenduste käivitamise õigused
 %1 sessions killed	admin	et	%1 sessioonid tapetud.
 %1 successful	admin	et	%1 edukas
 %1 token %2.	admin	et	%1 sümbol %2.
+(de)activate mail accounts	admin	et	(de)Aktiveerige postikontod
 (default no, leave it off if you dont use it)	admin	et	(vaikimisi Ei, jäta see välja kui sa seda ei kasuta)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	et	(imapclass peab seda funktsiooni toetama, küsides vastavat config-väärtust ja edastades selle vaikekvoodina IMAP-serverile)
 1 year	admin	et	1 aasta
 2 month	admin	et	2 kuud
 2 weeks	admin	et	2 nädalat
@@ -12,7 +24,7 @@
 6 month	admin	et	6 kuud
 access token revoked.	admin	et	Juurdepääsutunnistus tühistatud.
 account	admin	et	Konto
-account '%1' not found !!!	admin	et	Kontot '%1' ei leitud !!!
+account '%1' not found !!!	admin	et	Kontot '%1' ei leitud!
 account active	admin	et	Konto aktiivne
 account has been created	common	et	Konto on tehtud
 account has been deleted	common	et	Konto on kustutatud
@@ -25,11 +37,13 @@ acl manager	admin	et	ACL Manageerija
 acl rights	common	et	ACL Õigused
 actions	admin	et	Tegevused
 activate	admin	et	Aktiveeri
-add a category	admin	et	lisa kategooria
-add a group	admin	et	lisa grupp
+activated again	admin	et	uuesti aktiveeritud
+active this token again	admin	et	Aktiveerige see sümbol uuesti
+add a category	admin	et	Lisa kategooria
+add a group	admin	et	Lisa grupp
 add a new account.	admin	et	Lisa uus konto
-add a subcategory	admin	et	lisa alam kategooria
-add a user	admin	et	lisa kasutaja
+add a subcategory	admin	et	Lisa alam kategooria
+add a user	admin	et	Lisa kasutaja
 add account	admin	et	Lisa konto
 add application	admin	et	Lisa rakendus
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	et	Lisa automaatselt tehtud kasutajad sellesse gruppi (selleks on 'Default' kui väli on tühi.)
@@ -42,9 +56,9 @@ add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
-admin password	admin	et	admin parool
-admin username	admin	et	admin kasutajanimi
-all applications	admin	et	kõik rakendused
+admin password	admin	et	Admin parool
+admin username	admin	et	Admin kasutajanimi
+all applications	admin	et	Kõik rakendused
 all categories	admin	et	Kõik kategooriad
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
@@ -57,21 +71,21 @@ application name	admin	et	Rakenduse nimi
 application title	admin	et	Rakenduse pealkiri
 applications	admin	et	Rakendused
 applications list	admin	et	Rakenduste nimekiri
-apply the changes	admin	et	rakenda uuendused
+apply the changes	admin	et	Rakenda uuendused
 are you sure you want to delete the application %1 ?	admin	et	Oled kindel, et soovid kustutada seda rakendust %1 ?
-are you sure you want to delete this account ?	admin	et	Oled kindel, et tahad kustutada seda kontot ?
-are you sure you want to delete this application ?	admin	et	Oled kindel, et soovid kustutada seda rakendust ?
-are you sure you want to delete this category ?	common	et	Oled kindel, et tahad kustutada kategooriat ?
+are you sure you want to delete this account ?	admin	et	Oled kindel, et tahad kustutada seda kontot?
+are you sure you want to delete this application ?	admin	et	Oled kindel, et soovid kustutada seda rakendust?
+are you sure you want to delete this category ?	common	et	Oled kindel, et tahad kustutada kategooriat?
 are you sure you want to delete this global category ?	admin	et	Oled kindel, et tahad kustutada globaalset kategooriat ?
-are you sure you want to delete this group ?	admin	et	Oled kindel, et tahad kustutada seda gruppi ?
-are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kustutada seda serverit ?
-are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni ?
+are you sure you want to delete this group ?	admin	et	Oled kindel, et tahad kustutada seda gruppi?
+are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kustutada seda serverit?
+are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
 authentication / accounts	admin	et	Autentimine / Kontod
 bad login name or password.	admin	et	Vale kasutajanimi või parool
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
-change acl rights	admin	et	muuda ACL Õigusi
+change acl rights	admin	et	Muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
@@ -80,7 +94,7 @@ country	admin	et	Riik
 country selection	admin	et	Riigi Valik
 create group	admin	et	Tee Grupp
 created	admin	et	Tehtud
-creates a new field	admin	et	teeb uue välja
+creates a new field	admin	et	Teeb uue välja
 custom 1	admin	et	Kohandatud 1
 custom 2	admin	et	Kohandatud 2
 custom 3	admin	et	Kohandatud 3
@@ -88,16 +102,16 @@ cyrus imap server	admin	et	Cyrus IMAP Server
 cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
 day	admin	et	Päev
 db backup and restore	admin	et	DB tagavara ja taastamine
-default	admin	et	vaikimisi
+default	admin	et	Vaikimisi
 delete account	admin	et	Kustuta konto
 delete application	admin	et	Kustuta rakendus
 delete category	admin	et	Kustuta kategooria
 delete group	admin	et	Kustuta grupp
-delete this category	admin	et	kustuta see kategooria
-delete this group	admin	et	kustuta see grupp
-delete this user	admin	et	kustuta see kasutaja
-deleted	admin	et	kustutatud
-deletes this field	admin	et	kustutab selle välja
+delete this category	admin	et	Kustuta see kategooria
+delete this group	admin	et	Kustuta see grupp
+delete this user	admin	et	Kustuta see kasutaja
+deleted	admin	et	Kustutatud
+deletes this field	admin	et	Kustutab selle välja
 deny access	admin	et	Keela Ligipääs
 deny access to access log	admin	et	Keela ligipääs külastus logile
 deny access to application registery	admin	et	Keela ligipääs rakenduse registrile
@@ -111,35 +125,35 @@ deny access to home screen message	admin	et	Keela ligipääs pealehe sõnumile
 deny access to phpinfo	admin	et	Keela ligipääs phpinfo-le
 deny access to user accounts	admin	et	Keela ligipääs kasutaja kontodele
 disable	admin	et	Keela
-disabled (not recomended)	admin	et	väljalülitatud (pole soovitav)
-displaying html messages is disabled	admin	et	html kirjade näitamine on välja lülitatud
-do not validate certificate	admin	et	ära valideeri sertifikaati
-do you also want to delete all global subcategories ?	admin	et	Kas tahad kustutada samuti kõik globaalsed alamkategooriad ?
+disabled (not recomended)	admin	et	Väljalülitatud (pole soovitav)
+displaying html messages is disabled	admin	et	HTML kirjade näitamine on välja lülitatud
+do not validate certificate	admin	et	Ära valideeri sertifikaati
+do you also want to delete all global subcategories ?	admin	et	Kas tahad kustutada samuti kõik globaalsed alamkategooriad?
 do you really want to delete this profile	admin	et	Tahad tõesti kustutada seda Profiili
-do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada kõik globaalsed alamkategooriad ?
-do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla ?
+do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada kõik globaalsed alamkategooriad?
+do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla?
 document root (default)	admin	et	Dokument root (vaikimisi)
 domainname	admin	et	Doomeninimi
-down	admin	et	alla
+down	admin	et	Alla
 edit account	admin	et	Muuda kontot
 edit application	admin	et	Muuda rakendust
-edit email settings	admin	et	muuda emaili setinguid
+edit email settings	admin	et	Muuda emaili setinguid
 edit global category	admin	et	Muuda globaalset kategooriat
 edit group	admin	et	Muuda Gruppi
-edit group acl's	admin	et	muuda grupi ACL'e
+edit group acl's	admin	et	Muuda grupi ACL'e
 edit table format	admin	et	Muuda Tabeli formaati
-edit this category	admin	et	muuda seda kategooriat
-edit this group	admin	et	muuda seda gruppi
-edit this user	admin	et	muuda seda kasutajat
-edit user	admin	et	muuda kasutajat
+edit this category	admin	et	Muuda seda kategooriat
+edit this group	admin	et	Muuda seda gruppi
+edit this user	admin	et	Muuda seda kasutajat
+edit user	admin	et	Muuda kasutajat
 edit user account	admin	et	Muuda kasutaja kontot
 egroupware directory	admin	et	EGroupware kaust
-email account active	admin	et	email konto aktiivne
-email address	admin	et	email aadress
+email account active	admin	et	Email konto aktiivne
+email address	admin	et	Email aadress
 email settings	common	et	Email setingud
-enable	admin	et	luba
+enable	admin	et	Luba
 enabled - popup window	admin	et	Lubatud - Hüpikaknad
-encrypted connection	admin	et	krüpteeritud ühendus
+encrypted connection	admin	et	Krüpteeritud ühendus
 encryption settings	admin	et	Krüpteerimise setingud
 enter the hostname of the machine on which this server is running	admin	et	Sisesta hostinimi kus see server töötab
 enter your default ftp server	admin	et	Sisesta oma vaikimisi FTP server
@@ -149,20 +163,20 @@ enter your http proxy server port	admin	et	Sisesta oma HTTP proksi serveri port
 enter your smtp server hostname or ip address	admin	et	Sisesta oma SMTP serveri nimi või IP aadress
 enter your smtp server port	admin	et	Sisesta oma SMTP serveri port
 entry saved	admin	et	Kirje salvestatud
-error canceling timer, maybe there's none set !!!	admin	et	Viga taimleri tühistamisel, võibolla pole seda seatud !!!
-error saving the entry!!!	admin	et	Viga kirje salvestamisel !!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	et	Viga taimleri seadmisel, vale süntaks või võibolla üks juba töötab !!!
-error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga !!!
+error canceling timer, maybe there's none set !!!	admin	et	Viga taimleri tühistamisel, võibolla pole seda seatud!
+error saving the entry!!!	admin	et	Viga kirje salvestamisel!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	et	Viga taimleri seadmisel, vale süntaks või võibolla üks juba töötab!
+error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga!
 expires	admin	et	Aegub
-field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba !!!
+field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba!
 full name	admin	et	Täis nimi
 general	admin	et	Üldine
 global categories	common	et	Globaalsed Kategooriad
 global options	admin	et	Globaalsed omadused
-group ?	admin	et	grupp ?
+group ?	admin	et	Grupp?
 group list	admin	et	Gruppi nimekiri
 group name	admin	et	Grupi Nimi
-hide php information	admin	et	peida php informatsioon
+hide php information	admin	et	Peida php informatsioon
 home directory	admin	et	Kodu kataloog
 host information	admin	et	Hosti informatsioon
 how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30) ?
@@ -174,7 +188,7 @@ imap c-client version < 2001	admin	et	IMAP C-Client Versioon < 2001
 imap server	admin	et	IMAP Server
 imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
 imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
-imap server name	admin	et	imap serveri nimi
+imap server name	admin	et	IMAP serveri nimi
 imap server port	admin	et	IMAP serveri port
 imap/pop3 server name	admin	et	IMAP/POP3 server nimi
 installed applications	common	et	Installeeritud rakendused
@@ -183,45 +197,45 @@ kill	admin	et	Tapa
 kill session	admin	et	Tapa sessioon
 last %1 logins	admin	et	Viimased %1 logimised
 last %1 logins for %2	admin	et	Viimased %1 sisselogimised %2 jaoks
-last login	admin	et	viimane login
+last login	admin	et	Viimane login
 last time read	admin	et	Viimane lugemisaeg
 last updated	admin	et	Viimati uuendatud
 ldap encryption type	admin	et	LDAP krüpteeringu tüüp
 ldap root password	admin	et	LDAP root parool
-ldap rootdn	admin	et	LDAP rootdn
+ldap rootdn	admin	et	LDAP root DN
 ldap settings	admin	et	LDAP setingud
 leave empty for no quota	admin	et	Jäta tühjaks, kui kvooti ei ole
 leave empty to use oauth, if supported	admin	et	Jäta tühjaks, et kasutada OAuthi, kui see on toetatud.
-leaves without saveing	admin	et	lahkub ilma salvestamatta
+leaves without saveing	admin	et	Lahkub ilma salvestamata
 list current sessions	admin	et	Nimekiri hetke sessioonidest
-list of current users	admin	et	nimekiri hetke kasutajatest
+list of current users	admin	et	Nimekiri hetke kasutajatest
 login history	admin	et	Sisselogimise ajalugu
 login message	admin	et	Sisselogimise teade
 login screen	admin	et	Sisselogimise aken
 login shell	admin	et	Sisselogimise shell
 login time	admin	et	Sisselogimise Aeg
-loginid	admin	et	SisselogimiseID
+loginid	admin	et	Sisselogimise ID
 mail settings	admin	et	Mail setingud
 minute	admin	et	Mi
 modified	admin	et	Muudetud
 month	admin	et	Kuu
-name must not be empty !!!	admin	et	Nimi ei tohi olla tühi !!!
+name must not be empty !!!	admin	et	Nimi ei tohi olla tühi!
 new group name	admin	et	Uus grupi nimi
-new name	admin	et	uus nimi
-new password [ leave blank for no change ]	admin	et	Uus parool [ Jäta tühjaks kui ei soovi muuta ]
-no alternate email address	admin	et	pole alternatiivset email aadressi
-no encryption	admin	et	ilna krüpteeringutta
+new name	admin	et	Uus nimi
+new password [ leave blank for no change ]	admin	et	Uus parool (Jäta tühjaks kui ei soovi muuta)
+no alternate email address	admin	et	Pole alternatiivset email aadressi
+no encryption	admin	et	Ilna krüpteeringutta
 no login history exists for this user	admin	et	Pole sisselogimise ajalugu sellel kasutajal
-no matches found	admin	et	sobivaid ei leitud
-no permission to add groups	admin	et	pole õigusi gruppide lisamiseks
-no permission to add users	admin	et	pole õigusi kasutajate lisamiseks
-no permission to create groups	admin	et	pole õigusi gruppide tegemiseks
+no matches found	admin	et	Sobivaid ei leitud
+no permission to add groups	admin	et	Pole õigusi gruppide lisamiseks
+no permission to add users	admin	et	Pole õigusi kasutajate lisamiseks
+no permission to create groups	admin	et	Pole õigusi gruppide tegemiseks
 oauth authentiction	admin	et	OAuth autentimine
 offer to installing egroupware as mail-handler	admin	et	Pakkumine EGroupware'i paigaldamiseks posti käitlejana
 one day	admin	et	Üks päev
 one hour	admin	et	Üks tund
-one month	admin	et	üks kuu
-one week	admin	et	üks kuu
+one month	admin	et	Üks kuu
+one week	admin	et	Üks kuu
 organisation	admin	et	Organisatsioon
 other security configuration	admin	et	Muud turvakonfiguratsioonid
 own install id	admin	et	Oma paigaldus ID
@@ -229,23 +243,23 @@ own install id:	admin	et	Oma paigaldus ID:
 password for smtp-authentication	admin	et	Parool SMTP-audentimiseks
 path information	admin	et	Teekonna informatsioon
 permission denied	admin	et	Õigused puuduvad
-permission denied !!!	admin	et	Õigused puuduvad !!!
-permission denied!!!	admin	et	Ligipääs keelatud !!!
+permission denied !!!	admin	et	Õigused puuduvad!
+permission denied!!!	admin	et	Ligipääs keelatud!
 permissions	admin	et	Õigused
 phpinfo	admin	et	PHP informatsioon
 please enter a name	admin	et	Palun sisesta nimi
 please select	admin	et	Palun Vali
 pop3 server port	admin	et	POP3 serveri port
-port	admin	et	port
-primary group	admin	et	primaarne Grupp
+port	admin	et	Port
+primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
-remove	admin	et	eemalda
+remove	admin	et	Eemalda
 search accounts	admin	et	Otsi kontosid
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus
-select type of imap server	admin	et	vali IMAP serveri tüüp
-select type of imap/pop3 server	admin	et	vali IMAP/POP3 serveri tüüp
+select type of imap server	admin	et	Vali IMAP serveri tüüp
+select type of imap/pop3 server	admin	et	Vali IMAP/POP3 serveri tüüp
 select type of smtp server	admin	et	Vali SMTP serveri tüüp
 select where you want to store/retrieve filesystem information	admin	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni
 select where you want to store/retrieve user accounts	admin	et	Vali kuhu sa tahad salvestada kasutaja kontosid
@@ -264,14 +278,14 @@ smtp server name	admin	et	SMTP serveri nimi
 smtp settings	admin	et	SMTP setingud
 smtp-server port	admin	et	SMTP serveri port
 sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi on juba võetud
-ssl	admin	et	ssl
+ssl	admin	et	SSL
 start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
 text entry	admin	et	Järgmine Kirje
 that application name already exists.	admin	et	See rakenduse nimi juba eksisteerib
 that loginid has already been taken	admin	et	See logimis-ID on juba võetud
 that name has been used already	admin	et	See nimi on juba kasutusel
-that server name has been used already !	admin	et	See serveri nimi on juba kasutusel !
+that server name has been used already !	admin	et	See serveri nimi on juba kasutusel!
 the api is current	admin	et	API on kaasaegne
 the api requires an upgrade	admin	et	API vajab uuendamist
 the login and password can not be the same	admin	et	Kasutajanimi ja parool ei tohi olla samad
@@ -280,26 +294,27 @@ the two passwords are not the same	admin	et	Kaks parooli pole identsed
 this application is current	admin	et	See rakendus on kaasaegne
 this application requires an upgrade	admin	et	See rakendus vajab uuendust
 translation	admin	et	Tõlkimine
-two weeks	admin	et	kaks nädalat
-unknown account: %1 !!!	admin	et	Tundmatu konto:: %1 !!!
-up	admin	et	üles
-updated	admin	et	uuendatud
+two weeks	admin	et	Kaks nädalat
+unknown account: %1 !!!	admin	et	Tundmatu konto:: %1 !
+up	admin	et	Üles
+updated	admin	et	Uuendatud
 use default	admin	et	Kasuta vaikimisi
 use theme	admin	et	Kasuta nahka
 user accounts	admin	et	Kasutaja kontod
 user for smtp-authentication (leave it empty if no auth required)	admin	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav)
 user groups	admin	et	Kasutajate grupid
+user-agent	admin	et	User-Agent
 users choice	admin	et	Kasutajate Valik
 view access log	admin	et	Vaata sisselogimise logi
 view account	admin	et	Vaata kontot
 view category	admin	et	Vaata kategooriat
 view error log	admin	et	Vaata vigade logi
 view sessions	admin	et	Vaata aktiivseid sessioone
-view this user	admin	et	vaata seda kasutajat
+view this user	admin	et	Vaata seda kasutajat
 view user account	admin	et	Vaata kasutaja kontot
-would you like egroupware to check for a new version<br>when admins login ?	admin	et	Kas soovid, et EGroupware kontrollib uusi versioone<br>kui adminnid sisselogivad ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	et	Kas soovid automaatselt sisselugeda uued keelefailid (sisselogimisel) ?
-you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime uuele väljale !!!
+would you like egroupware to check for a new version<br>when admins login ?	admin	et	Kas soovid, et EGroupware kontrollib uusi versioone<br>kui adminnid sisselogivad?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	et	Kas soovid automaatselt sisselugeda uued keelefailid (sisselogimisel)?
+you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime uuele väljale!
 you must enter a group name.	admin	et	Pead sisestama grupi nime.
 you must enter a lastname	admin	et	Pead sisestama perekonnanime
 you must enter a loginid	admin	et	Pead sisestama sisselogimise nime
@@ -308,4 +323,4 @@ you must enter an application name.	admin	et	Pead sisestama rakenduse nime.
 you must enter an application title.	admin	et	Pead sisesestama rakenduse pealkirja.
 you must select a file type	admin	et	Pead valima failitüübi
 you must select at least one group member.	admin	et	Pead valima vähemalt ühe grupiliikme.
-you will need to remove the subcategories before you can delete this category	admin	et	Pead eemaldama kõigepealt alamkategoorjad kustutamaks seda kategooriat !
+you will need to remove the subcategories before you can delete this category	admin	et	Pead eemaldama kõigepealt alamkategoorjad kustutamaks seda kategooriat!
