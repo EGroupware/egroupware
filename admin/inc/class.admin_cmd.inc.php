@@ -184,7 +184,7 @@ abstract class admin_cmd
 	 */
 	function __construct(array $data)
 	{
-		$this->created = time();
+		$this->created = new Api\DateTime('now');
 		$this->creator = $GLOBALS['egw_info']['user']['account_id'];
 		$this->creator_email = admin_cmd::user_email();
 
@@ -363,7 +363,7 @@ abstract class admin_cmd
 		}
 		if (!is_null($this->id))
 		{
-			$this->modified = time();
+			$this->modified = new Api\DateTime('now');
 			$this->modifier = $set_modifier ? $GLOBALS['egw_info']['user']['account_id'] : 0;
 			if ($set_modifier) $this->modifier_email = admin_cmd::user_email();
 		}
@@ -669,7 +669,8 @@ abstract class admin_cmd
 	{
 		if (is_null(admin_cmd::$sql))
 		{
-			admin_cmd::$sql = new Api\Storage\Base('admin','egw_admin_queue',null,'cmd_');
+			admin_cmd::$sql = new Api\Storage\Base('admin','egw_admin_queue',null,'cmd_', true, 'object');
+			admin_cmd::$sql->convert_all_timestamps();
 		}
 	}
 
