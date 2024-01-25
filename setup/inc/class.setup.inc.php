@@ -133,7 +133,6 @@ class setup
 					),__LINE__,__FILE__)->fetchColumn()))
 				{
 					$this->system_charset = $charset;
-					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
 
 					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
 					if (substr($this->db->Type,0,5) === 'mysql')	// we need to check the api version
