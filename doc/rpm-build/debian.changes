@@ -1,3 +1,23 @@
+egroupware-docker (23.1.20240125) hardy; urgency=low
+
+  * Mail: New option "Name and domain" to show e.g. "John Smith (example.org)" set under "Information to show on email tag"
+  * Mail: fix diverse problems of rich-text editor, if small paragraphs are used
+  * Mail REST Api: added reply to an uploaded eml file (with optional preset body and attachments)
+  * REST Api: allow to create new fields with PATCH for application/json content-type and error on not existing custom fields
+  * Adressbook/Calendar/REST: fix not parsed custom fields
+  * Addressbook: Fix distribution list rename
+  * Api: Fix favorites button in nextmatch header did not work
+  * Calendar/CalDAV: new calendar-config to allow party-crashers with email matching a given regular expression
+  * Calendar: update holidays with new thunderbird.net URLs/data for a lot more countries
+  * Filemanager: fix not working setting "No Access" permission on directories e.g. to hide (unwanted) group-directories
+  * OpenIDConnect: allow to show as button on login page to use together with regular password login
+  * Importexport: Fix import through dialog fails
+  * Tracker: Fix missing assigned users with some access / group configurations
+  * ActiveDirectory: optionally also use/import groups of type distribution-list
+  * EPL S3: fix not working upload of backups
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 25 Jan 2024 10:02:46 +0100
+
 egroupware-docker (23.1.20231220) hardy; urgency=low
 
   * Mail: fix regressions with new email widget selecting from search result with mouse
