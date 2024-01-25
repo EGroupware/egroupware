@@ -1,24 +1,92 @@
-common chains	notifications	id	common chains
-disabled chains	notifications	id	disabled chains
+(update in sec. %s)	notifications	id	(Pembaruan dalam hitungan detik. %s)
+account:	notifications	id	Akun:
+all possible notification backends	notifications	id	Semua backend notifikasi yang memungkinkan
+are you sure you want to delete all notifications?	notifications	id	Apakah Anda yakin ingin menghapus semua notifikasi?
+browser	notifications	id	Browser
+browser is starting.	notifications	id	Peramban sedang dimulai.
+cancal settings?	notifications	id	Membatalkan pengaturan?
+cancal?	notifications	id	Batal?
+certification-information:	notifications	id	Informasi sertifikasi:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	id	Centang keduanya. Pertama-tama coba akun yang ditetapkan pengguna aktif, jika tidak ada, gunakan profil eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	id	Pilih rantai notifikasi. Anda akan menerima notifikasi di ujung belakang yang termasuk dalam rantai tersebut.<br>Catatan: Jika rantai notifikasi ditandai sebagai "dinonaktifkan", administrator Anda tidak mengizinkan satu atau beberapa ujung belakang yang disertakan dalam rantai, notifikasi akan kembali ke "Email" saat memberi tahu Anda.
+common chains	notifications	id	Common chains
+connection error.	notifications	id	Kesalahan koneksi.
+connection error. please check connection to server.	notifications	id	Kesalahan koneksi. Silakan periksa koneksi ke server.
+continue to connect?	notifications	id	Lanjutkan untuk terhubung?
+cookies are required to login to this site.	notifications	id	Cookie diperlukan untuk masuk ke situs ini.
+delete all messages	notifications	id	Hapus semua pesan
+delete notifications	notifications	id	Menghapus pemberitahuan
+delete this message	notifications	id	Hapus pesan ini
+disabled chains	notifications	id	Disabled chains
+domain not found, please check serveraddress.	notifications	id	Domain tidak ditemukan, silakan periksa alamat server.
 e-mail only	notifications	id	Hanya E-Mail
-egroupware-popup backend	admin	id	EGroupware-Popup backend
-egroupware-popup only	notifications	id	EGroupware-Popup only
-egroupware-popup verbosity	notifications	id	EGroupware-Popup verbosity
-enabled chains	notifications	id	enabled chains
-folder	notifications	id	folder
-from	notifications	id	dari
-linked entries:	common	id	entri terkait:
-message from	notifications	id	pesan dari
-minutes	notifications	id	menit
-notification	common	id	notifikasi
-poll interval	notifications	id	poll interval
-preferences for notification	notifications	id	kesukaan untuk notifikasi
-received	notifications	id	received
+egroupware login is starting, please wait.	notifications	id	Login EGroupware sedang dimulai, harap tunggu.
+egroupware logindomain:	notifications	id	Logindomain EGroupware:
+egroupware logindomains founds, please select.	notifications	id	Logindomain EGroupware ditemukan, silakan pilih.
+egroupware not found by url or connection lost to server.	notifications	id	EGroupware tidak ditemukan oleh URL atau koneksi terputus ke server.
+egroupware not found by url.	notifications	id	EGroupware tidak ditemukan berdasarkan URL.
+egroupware-popup backend	admin	id	Munculan munculan EGroupware
+egroupware-popup only	notifications	id	Munculan EGroupware saja
+egroupware-popup verbosity	notifications	id	Munculan munculan EGroupware
+email notifications only, if user is not logged in	notifications	id	Pemberitahuan email saja, jika pengguna tidak masuk
+enabled chains	notifications	id	Rantai yang diaktifkan
+error browser can`t start.	notifications	id	Kesalahan Peramban tidak dapat dimulai.
+error on loading tray icon	notifications	id	Kesalahan saat memuat ikon Baki
+error ssl	notifications	id	Kesalahan SSL
+exit	notifications	id	Keluar
+folder	notifications	id	Map
+from	notifications	id	Dari
+host:	notifications	id	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	id	Bagaimana perilaku EGroupware-Popup yang bertele-tele jika notifikasi dikirim ke pengguna:<br>rendah: hanya menampilkan lonceng notifikasi di menu atas - menu atas harus diaktifkan!<br>sedang: membawa jendela notifikasi ke depan<br>tinggi: membawa jendela notifikasi ke depan dan membiarkan browser melakukan sesuatu untuk mengumumkannya sendiri
+info on load config file: create config file.	notifications	id	Info tentang memuat file konfigurasi: buat file konfigurasi.
+issuer dn:	notifications	id	Penerbit DN:
+java desktop notification app	preferences	id	Aplikasi pemberitahuan desktop Java
+last month	notifications	id	Bulan lalu
+linked entries:	common	id	Entri terkait:
+login aborted, application exit?	notifications	id	Login dibatalkan, aplikasi keluar?
+login in egroupware:	notifications	id	Masuk di EGroupware:
+mail account to use for notifications	admin	id	Akun email yang akan digunakan untuk notifikasi
+mark all as read	notifications	id	Tandai semua sebagai telah dibaca
+mark as read	notifications	id	Tandai sebagai telah dibaca
+message from	notifications	id	Pesan dari
+minutes	notifications	id	Menit
+more info	notifications	id	Info lebih lanjut
+notification	common	id	Notifikasi
+notifier	notifications	id	Pemberi notifikasi
+open notified entry	notifications	id	Buka entri notifikasi
+page not found, please check serveraddress.	notifications	id	Halaman tidak ditemukan, silakan periksa alamat server.
+password:	notifications	id	Kata sandi:
+permission	notifications	id	Izin
+permission denied for notifications application.	notifications	id	Izin ditolak untuk aplikasi pemberitahuan.
+placeholders with user/ prefix	admin	id	penampung dengan pengguna/awalan
+please contact your egroupware admin.	notifications	id	Silakan hubungi admin EGroupware Anda.
+please enter the url of your egroupware.	notifications	id	Masukkan URL EGroupware Anda.
+please enter your egroupware username.	notifications	id	Masukkan nama pengguna EGroupware Anda.
+please enter your password	notifications	id	Silakan masukkan kata sandi Anda
+poll interval	notifications	id	Interval jajak pendapat
+preferences for notification	notifications	id	Kesukaan untuk notifikasi
+received	notifications	id	Diterima
+repeat login?	notifications	id	Mengulangi login?
+run application	notifications	id	Jalankan aplikasi
+save password	notifications	id	Simpan kata sandi
+setting	notifications	id	Pengaturan
+setting aborted, application exit	notifications	id	Pengaturan dibatalkan, keluar dari aplikasi
 settings	notifications	id	Seting
 signature	admin	id	Tandatangan
+signature added to every change notification	admin	id	Tanda tangan ditambahkan ke setiap pemberitahuan perubahan
+sorry, your login has expired	notifications	id	Maaf, login Anda telah kedaluwarsa
 step	notifications	id	Langkah
+subject dn:	notifications	id	Subjek DN:
+the server certificate is not a valid trust center certificate!	notifications	id	Sertifikat server bukan merupakan sertifikat pusat kepercayaan yang valid!
+this egroupware notification has been sent to you by mail because your	notifications	id	Pemberitahuan EGroupware ini telah dikirimkan kepada Anda melalui email karena
+this month	notifications	id	Bulan ini
+user:	notifications	id	Pengguna:
 warning	notifications	id	Peringatan
-windows-popup backend	admin	id	Windows-Popup backend
+windows-popup backend	admin	id	Munculan popup Windows
 windows-popup only	notifications	id	Hanya Windows-Popup
+yesterday	notifications	id	Kemarin
+you can also use	admin	id	Anda juga dapat menggunakan
+you have %1 unread notifications	notifications	id	Anda memiliki %1 notifikasi yang belum dibaca
+you have been successfully logged out	notifications	id	Anda telah berhasil keluar
 you've got new mail	notifications	id	Anda mendapat email baru
 your session could not be verified.	notifications	id	Sesi anda tidak dapat diperiksa.

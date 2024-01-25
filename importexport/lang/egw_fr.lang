@@ -19,7 +19,6 @@ admin disabled exporting	importexport	fr	L'administrateur a désactivé les expo
 all custom fields	importexport	fr	Tous les champs personnalisés
 all encodings	importexport	fr	Tous les encodages
 all users	importexport	fr	Tous les utilisateurs
-all...	importexport	fr	Tout...
 allowed users	importexport	fr	Utilisateurs autorisés
 automatically created by importexport	importexport	fr	Automatiquement créé par l' Import | Export
 basic csv import	importexport	fr	Import CSV simple
@@ -57,7 +56,6 @@ duplicate name, please choose another.	importexport	fr	Nom en double, veuillez e
 edit conditions	importexport	fr	Modifier les conditions
 edit definition <a href="%1">%2</a> to match your file	importexport	fr	Modifier la définition <a href="%1">%2</a> pour la faire correspondre à votre fichier
 edit your file to match the definition:	importexport	fr	Modifier votre fichier pour répondre à la définition :
-encoding mismatch.  expected %1 file, you uploaded %2.<br />\n	importexport	fr	Différence d'encodage. %1 Fichier attendu, mais %2 uploadé.<br />\n
 errors	importexport	fr	Erreurs
 execute	importexport	fr	Exécuter
 expert options	importexport	fr	Options expert
@@ -90,7 +88,7 @@ import data is	importexport	fr	L'import des données est
 import definition	importexport	fr	Définition d'import
 import definitions	common	fr	Définitions d'import
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	fr	Importer des définitions. Attention : les définitions avec les mêmes nom seront écrasées !
-imported	importexport	fr	importé
+imported	importexport	fr	Importé
 importexport	common	fr	Import | Export
 importexport wizard finished successfully!	importexport	fr	L'assistant Import|Export s'est terminé avec succès !
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	fr	Importer les informations depuis un fichier CSV. Il s'agit seulement d'une fonction de base, et ne fait rien toute seule.
@@ -100,10 +98,10 @@ last run	importexport	fr	Dernière exécution
 load sample file	importexport	fr	Charger un fichier exemple
 lock expired on previous run	importexport	fr	Verrou expiré lors de la précédente exécution
 manage mapping	importexport	fr	Gestion des correspondances
-next	importexport	fr	prochain
+next	importexport	fr	Prochain
 next run	importexport	fr	Prochaine exécution
 no custom field "%1" for %2.	importexport	fr	Pas de champ personnalisé "%1" pour %2
-no matches	importexport	fr	pas de résutlat
+no matches	importexport	fr	Pas de résutlat
 no matching records	importexport	fr	Aucun enregistrement correspondant
 no notifications	importexport	fr	Aucune notification
 no records selected	importexport	fr	Aucun enregistrement sélectionné !
@@ -113,12 +111,10 @@ please select file to import	importexport	fr	Veuillez sélectionner un fichier �
 plugin	importexport	fr	Plugin
 preview	importexport	fr	Aperçu
 preview not supported by %1	importexport	fr	Prévisualisation non supporté par %1
-previous	importexport	fr	précédent
+previous	importexport	fr	Précédent
 problems during import:	importexport	fr	Problèmes pendant l'import :
-results	importexport	fr	Résultats
-row_cont[index]	importexport	fr	row_cont[index]
 save as definition	importexport	fr	Sauvegarder comme une définition
-schedule	common	fr	planification
+schedule	common	fr	Planification
 schedule import / export	common	fr	Planifier l'import | export
 schedule import | export	importexport	fr	Planifier import | export
 schedule not found	importexport	fr	Planification non trouvée.
@@ -138,17 +134,15 @@ target	importexport	fr	Cible
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	fr	Exemples de cible : vfs://default/home/user/export.csv ou http://server.net/prices.csv
 target field	importexport	fr	Champ cible
 test only	importexport	fr	Test seulement
-too many matches	importexport	fr	trop de résultats
+too many matches	importexport	fr	Trop de résultats
 translation	importexport	fr	Traduction
 true	importexport	fr	Vrai
 try	importexport	fr	Essayer
-unable to delete	importexport	fr	incapable de supprimer
+unable to delete	importexport	fr	Incapable de supprimer
 unable to link to %1 "%2"	importexport	fr	Incapable de lier %1 "%2"
-unable to link to %3 by custom field "%1": "%4".  %2 matches.	importexport	fr	Incapable de lier %3 par son champ personnalisé %1 : "%4". %2 correspondent.
 unable to schedule	importexport	fr	Incapable d'établir la planification
 update categories	importexport	fr	Mettre à jour les catégories
 update default-definitions	importexport	fr	Mettre à jour les définitions par défaut
-use all	importexport	fr	Tout utiliser
 use default	importexport	fr	Utiliser le défaut
 use definition filter	importexport	fr	Utiliser les filtres de définition
 use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible

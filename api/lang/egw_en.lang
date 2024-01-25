@@ -5,27 +5,27 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted.
 %1 email(s) added into %2	common	en	%1 email(s) added into %2
 %1 entries found, select one ...	common	en	%1 entries found, select one ...
-%1 etemplates deleted	common	en	%1 eTemplates deleted.
-%1 etemplates for application '%2' dumped to '%3'	common	en	%1 eTemplates for application '%2' dumped to '%3'
-%1 etemplates found	common	en	%1 eTemplates found.
+%1 etemplates deleted	common	en	%1 eTemplate(s) deleted.
+%1 etemplates for application '%2' dumped to '%3'	common	en	%1 eTemplate(s) for application '%2' dumped to '%3'
+%1 etemplates found	common	en	%1 eTemplate(s) found.
 %1 file	common	en	%1 file
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the web server!
 %1 matches on search criteria	common	en	%1 matches on search criteria
-%1 more %2 selected ...	common	en	%1 more %2 selected...
-%1 more...	common	en	%1 more...
+%1 more %2 selected ...	common	en	%1 more %2 selected ...
+%1 more...	common	en	%1 more ...
 %1 new etemplates imported for application '%2'	common	en	%1 new eTemplates imported for application '%2'
 %1 not implemented for %2!	common	en	%1 not implemented for %2!
 %1 proxy of %2	common	en	%1 proxy of %2
 %1 setting "%2" = %3 disallows access via http!	admin	en	%1 setting "%2" = %3 disallows access via http!
 %1 to sync	groupdav	en	%1 to sync
 %1, duplicate id	common	en	%1, duplicate ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other folder%2<br />or make %3 writable by web server.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other folder%2<br>or make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 %s disabled	common	en	%s disabled
 %s needed	common	en	%s needed
 %s notranslation	common	en	%s NoTranslation
-%s onchange	common	en	%s onChange
-%s readonly	common	en	%s readonly
+%s onchange	common	en	%s onchange
+%s readonly	common	en	%s read-only
 '%1' copied to clipboard	common	en	'%1' copied to clipboard
 '%1' has an invalid format	common	en	'%1' has an invalid format
 '%1' has an invalid format !!!	common	en	'%1' has an invalid format!
@@ -35,7 +35,7 @@
 '%1' is not a valid json file!	common	en	'%1' is not a valid JSON file
 '%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
 '%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
-'%1' is not allowed%2)!	common	en	'%1' is NOT allowed%2)!
+'%1' is not allowed%2)!	common	en	'%1' is NOT allowed (%2)!
 (session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 00 (disable)	admin	en	00 (disable)
 1 day	common	en	1 day
@@ -73,11 +73,11 @@ account is expired	common	en	Account is expired.
 accounts	common	en	Accounts
 acl	common	en	ACL
 action	common	en	Action
-action when category is an email address	groupdav	en	Action when category is an EMail address
+action when category is an email address	groupdav	en	Action when category is an email address
 actions	common	en	Actions
-actions...	common	en	Actions...
+actions...	common	en	Actions ...
 active	common	en	Active
-active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
+active directory requires ssl or tls to change passwords!	common	en	Active Directory requires SSL or TLS to change passwords!
 add	common	en	Add
 add %1	common	en	Add %1
 add %1 category for	common	en	Add %1 category for
@@ -125,7 +125,7 @@ all operations save the template!	common	en	All operations save the template!
 all users	common	en	All users
 allow editing the %1	common	en	Allow editing the %1
 allowed file type: %1	common	en	Allowed file type: %1
-allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting email address of a user as category.
 alt	common	en	Alt
 alternate style-sheet:	common	en	Alternate style sheet:
 am	common	en	am
@@ -174,16 +174,14 @@ author	common	en	Author
 autohide sidebox menu's	common	en	Autohide side menu
 autohide sidebox menus	common	en	Autohide side menu
 automatic update check failed, you need to check manually!	common	en	Automatic update check failed, you need to check manually!
-automatically hide the sidebox menu's?	common	en	Automatically hide the side menu?
-automatically hide the sidebox menus?	common	en	Automatically hide the side menu?
 automatically refresh list	common	en	Automatically refresh list
 autosave default category	common	en	Auto-save default category.
 avatar	common	en	Avatar
 azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
-backcolor	common	en	Backcolor
-background color:	common	en	Background color:
+backcolor	common	en	Backcolour
+background color:	common	en	Background colour:
 backup key	common	en	Backup Key
 backup/restore	common	en	Backup/Restore
 backup/restore ...	common	en	Backup/Restore ...
@@ -195,7 +193,7 @@ bangladesh	common	en	BANGLADESH
 barbados	common	en	BARBADOS
 baseline	common	en	Baseline
 bcc	common	en	Bcc
-before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	en	Before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with EGroupware.
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	en	Before proceeding further, we do highly recommend you to watch this short video, to see how Mailvelope plugin works with EGroupware.
 belarus	common	en	BELARUS
 belgium	common	en	BELGIUM
 belize	common	en	BELIZE
@@ -214,7 +212,7 @@ botswana	common	en	BOTSWANA
 bottom	common	en	Bottom
 bouvet island	common	en	BOUVET ISLAND
 box	common	en	Box
-box...	common	en	Box...
+box...	common	en	Box ...
 brazil	common	en	BRAZIL
 british indian ocean territory	common	en	BRITISH INDIAN OCEAN TERRITORY
 broken link	common	en	Broken link
@@ -239,8 +237,8 @@ cannot set this cat as its own parent!	common	en	Can not set this category as it
 cant delete a single widget from a grid !!!	common	en	Can't delete a single widget from a grid!
 cant delete the only column of a grid !!!	common	en	Can't delete the only column of a grid!
 cant delete the only row in a grid !!!	common	en	Can't delete the only row in a grid!
-cant open %1, needs ziparchive	common	en	Cant open %1, needs ZIP archive
-cant open '%1' for %2	common	en	Cant open '%1' for %2
+cant open %1, needs ziparchive	common	en	Can't open %1, needs PHP ZipArchive
+cant open '%1' for %2	common	en	Can't open '%1' for %2
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
@@ -262,7 +260,7 @@ chad	common	en	CHAD
 change	common	en	Change
 change owner	common	en	Change Owner
 changed	common	en	Changed
-charset	common	en	utf-8
+charset	common	en	Charset
 check all	common	en	Check all
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	en	Check for empty values in IF statements.  Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	en	Should content be displayed only, but not altered.
@@ -272,20 +270,20 @@ check now	common	en	Check now
 checkbox	common	en	Checkbox
 chile	common	en	CHILE
 china	common	en	CHINA
-choose a background color	common	en	Choose a background color
-choose a background color for the icons	common	en	Choose a background color for the icons
+choose a background color	common	en	Choose a background colour
+choose a background color for the icons	common	en	Choose a background colour for the icons
 choose a background image.	common	en	Choose a background image
 choose a background style.	common	en	Choose a background style
-choose a text color for the icons	common	en	Choose a text color for the icons
-choose file...	common	en	Choose file...
+choose a text color for the icons	common	en	Choose a text colou for the icons
+choose file...	common	en	Choose file ...
 choose the category	common	en	Choose the category
 choose the default filename for merged documents.	preferences	en	Choose the default filename for merged documents.
 choose the parent category	common	en	Choose the parent category
-choose time	common	en	Choose Time
+choose time	common	en	Choose time
 chosen parent category no longer exists	common	en	Chosen parent category no longer exists
 christmas island	common	en	CHRISTMAS ISLAND
 class	common	en	Class
-class, valign	common	en	Vlass, Valign
+class, valign	common	en	Class, Valign
 clear	common	en	Clear
 clear form	common	en	Clear form
 clear window	common	en	Clear window
@@ -298,7 +296,7 @@ click here to upload the file	common	en	Upload the file
 click or mouse over to show menus	common	en	Click or mouse over to show menus.
 click or mouse over to show menus?	common	en	Click or mouse over to show menus.
 click this image on the navbar: %1	common	en	Click this image on the navbar: %1
-click to open colorpicker	common	en	Click to open colorpicker
+click to open colorpicker	common	en	Click to open colourpicker
 click to order after that criteria	common	en	Order after criteria
 clickable path	common	en	Clickable path
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	en	Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.
@@ -311,7 +309,7 @@ collection empty.	common	en	Collection empty.
 collection listing	common	en	Collection listing
 colombia	common	en	COLOMBIA
 colour	common	en	Colour
-column...	common	en	Column...
+column...	common	en	Column ...
 columnname	common	en	Column name
 columns to print	common	en	Columns to print
 command ⌘	common	en	Command ⌘
@@ -328,7 +326,7 @@ congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC O
 contact	common	en	Contact
 contact field to show	common	en	Contact field to show
 contact fields	common	en	Contact fields
-contacting server...	common	en	Contacting server...
+contacting server...	common	en	Contacting server ...
 contains	common	en	Contains
 content type	common	en	Content type
 cook islands	common	en	COOK ISLANDS
@@ -363,7 +361,7 @@ current	common	en	Current
 current users	common	en	Current users
 custom	common	en	Custom
 custom fields	common	en	Custom fields
-custom javascript for onchange	common	en	Custom JavaScript for onChange
+custom javascript for onchange	common	en	Custom JavaScript for onchange
 cut	common	en	Cut
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
@@ -422,19 +420,14 @@ denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in .png images?
 direction left to right	common	en	Direction left to right
 directory	common	en	Folder
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
 directory for storing merged documents	preferences	en	Folder for storing merged documents
 directory with documents to insert entries	preferences	en	Folder with documents to insert entries
-disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png image bugfix
-disable slider effects	common	en	Disable slider effects
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in PNG-images.
 disabled	common	en	Disabled
 discard changes	common	en	Discard changes
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	en	Displayed in front of input or input is inserted for a '%s' in the label of the Submit button or image file name.
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	en	Displayed in front of input or input is inserted for a '%s' in the label of the submit button or image file name.
 displayed in statusline of browser if input-field gets focus	common	en	Displayed in status line of browser if input field gets focus.
 displayed in the top line of the groupbox (legend)	common	en	Displayed in the top line of the group box (legend).
 distribution lists as groups	groupdav	en	Distribution lists as groups
@@ -462,7 +455,6 @@ done	common	en	Done
 dos international	common	en	DOS International
 download	common	en	Download
 download link	common	en	Download link
-drag markers to pick a color	common	en	Drag markers to pick a color
 drop a table - this can not be undone	common	en	Drop a table - this can NOT be undone
 drop table	common	en	Drop table
 dump4setup	common	en	Dump4Setup
@@ -478,7 +470,7 @@ edit categories	common	en	Edit categories
 edit category	common	en	Edit category
 edit embeded css styles or of the applications app.css file	common	en	Edit embedded CSS styles or of the applications app.css file
 edit the etemplate spez. above	common	en	Edit eTemplate
-edit...	common	en	Edit...
+edit...	common	en	Edit ...
 editable templates - db-tools	common	en	Editable Templates - DB-Tools
 editable templates - delete template	common	en	Editable Templates - Delete template
 editable templates - editor	common	en	Editable Templates - Editor
@@ -500,7 +492,7 @@ email	common	en	Email
 email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	en	Empty file
-enable javascript onchange submit	common	en	Enable JavaScript onChange submit
+enable javascript onchange submit	common	en	Enable JavaScript onchange submit
 enable logging	groupdav	en	Enable logging
 enabled	common	en	Enabled
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	en	Enables logging of CalDAV/CardDAV traffic to diagnose problems with devices.
@@ -508,8 +500,8 @@ end date	common	en	End date
 end time	common	en	End time
 enter '' for an empty default, nothing mean no default	common	en	Enter '' for an empty default, nothing means no default
 enter a search pattern	common	en	Enter a search pattern
-enter filename to upload and attach, use [browse...] to search for it	common	en	Enter file name to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or   /egroupware<br><b>No trailing slash</b>
+enter filename to upload and attach, use [browse...] to search for it	common	en	Enter file name to upload and attach, use [Browse ...] to search for it
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or   /egroupware<br><b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	en	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	en	Enter new version number, has to be > old_version
 enter your file name	common	en	Enter your file name
@@ -531,7 +523,7 @@ error enabling push	common	en	Error enabling push
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 folder!
 error uploading file!	filemanager	en	Error uploading file!
 error: template not found !!!	common	en	Error: Template not found!
-error: webserver is not allowed to write into '%1' !!!	common	en	Error: web server is not allowed to write into '%1' !!!
+error: webserver is not allowed to write into '%1' !!!	common	en	Error: web server is not allowed to write into '%1'!
 error: while saving !!!	common	en	Error while saving!
 error: writing file (no write-permission for the webserver) !!!	common	en	Error writing file, no write permission for the web server!
 estonia	common	en	ESTONIA
@@ -554,7 +546,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 exchange this row with the one above	common	en	Exchange this row with the one above
 exchange this two columns	common	en	Exchange these two columns
 expiration	common	en	Expiration
-export the loaded etemplate into a xml-file	common	en	Export the loaded eTemplate into a xml-file
+export the loaded etemplate into a xml-file	common	en	Export the loaded eTemplate into a XML-file
 export xml	common	en	Export XML
 extensions loaded:	common	en	Extensions loaded:
 failed to change mode of required directory "%1" to %2!	admin	en	Failed to change mode of required folder "%1" to %2!
@@ -600,9 +592,9 @@ folder already exists.	common	en	Folder already exists!
 fontselect	common	en	Fontselect
 fontsizeselect	common	en	Fontsizeselect
 for more than one contact in a document use the tag pagerepeat!	preferences	en	Use the tag page repeat for more than one contact in a document!
-force	common	en	force
+force	common	en	Force
 force selectbox	common	en	Force select box
-forecolor	common	en	Forecolor
+forecolor	common	en	Forecolour
 foreign key	common	en	Foreign key
 forever	common	en	Forever
 formatselect	common	en	Formatselect
@@ -635,6 +627,7 @@ go to the first entry	common	en	Go to the first entry
 go to the last entry	common	en	Go to the last entry
 go to the next page of entries	common	en	Go to the next page of entries
 go to the previous page of entries	common	en	Go to the previous page of entries
+go to your home directory	common	en	Go to your home directory
 grant access	common	en	Grant access
 greece	common	en	GREECE
 greek	common	en	Greek
@@ -669,7 +662,7 @@ height	common	en	Height
 height of row (in % or pixel)	common	en	Height of row (in % or pixel)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	en	Height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
 height of the table in % or pixels for the table-tag and (optional) div	common	en	Height of the table in % or pixels for the table tag and (optional) div
-height, disabled	common	en	Height, Disabled
+height, disabled	common	en	Height, disabled
 help	common	en	Help
 high	common	en	High
 highest	common	en	Highest
@@ -697,22 +690,20 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 id	common	en	ID
-iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	en	If field is disabled an empty table cell is displayed
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	en	If the error persists, contact your administrator for help and ask to check the error-log of the webserver.
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a folder, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a folder, full VFS path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full VFS path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you use "2-factor-authentication", please enter the code here.	common	en	If you use "2-Factor-Authentication", please enter the code here.
 image	common	en	Image
 image directory relative to document root (use / !), example:	common	en	Image folder relative to document root (use / !), example:
 image url	common	en	Image URL
 import	common	en	Import
-import an etemplate from a xml-file	common	en	Import an eTemplate from a xml-file
+import an etemplate from a xml-file	common	en	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	en	Import table definitions from existing DB table
 import xml	common	en	Import XML
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	en	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
 include access to any linked files (links tab)	common	en	Include access to any linked files (Links tab)
 increment version to not overwrite the existing template	common	en	Increment version to not overwrite the existing template.
 indent	common	en	Indent
@@ -880,7 +871,7 @@ message	common	en	Message
 message ...	common	en	Message ...
 message prepared for sending.	common	en	Message prepared for sending.
 message(s) send failed!	common	en	Message(s) send failed!
-message(s) send ok.	common	en	Message(s) send ok.
+message(s) send ok.	common	en	Message(s) send OK.
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 middle	common	en	Middle
@@ -897,7 +888,7 @@ mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 month	common	en	Month
 montserrat	common	en	MONTSERRAT
-moono color theme	common	en	moono color theme
+moono color theme	common	en	moono colour theme
 moono theme (default)	common	en	moono theme (default)
 more	common	en	More
 more than 1 match for '%1'	common	en	More than 1 match for '%1'
@@ -997,26 +988,27 @@ numbers	common	en	numbers
 numlist	common	en	Numlist
 october	common	en	October
 of	common	en	of
-off	common	en	off
+off	common	en	Off
 ok	common	en	OK
 old value	common	en	Old Value
 oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
 on mouse over	common	en	On mouse over
-onchange	common	en	onChange
-onclick	common	en	onClick
+onchange	common	en	onchange
+onclick	common	en	onclick
 only an other version found !!!	common	en	Other version found!
 only private	common	en	Only private
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	en	Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likely not be supported!
 only yours	common	en	Only yours
 oops! you caught us in the middle of system maintainance.	common	en	Oops! You caught us in the middle of system maintenance.
 open	common	en	Open
+open existing contact	common	en	Open existing contact
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open sidebox	common	en	Open side box
 open the online help.	common	en	Open the online help
 operator	common	en	Operator
-optional note about the link	common	en	Optional note for Link
+optional note about the link	common	en	Optional note for link
 options	common	en	Options
 or	common	en	OR
 order to navigating by tab key through the form	common	en	Order to navigating by tab key through the form
@@ -1039,7 +1031,7 @@ papua new guinea	common	en	PAPUA NEW GUINEA
 paraguay	common	en	PARAGUAY
 parcel	common	en	Parcel
 parent category	common	en	Parent category
-parent is a '%1' !!!	common	en	Parent is a '%1' !
+parent is a '%1' !!!	common	en	Parent is a '%1'!
 password	common	en	Password
 password contains only %1 of required %2 character classes: no %3	common	en	password contains only %1 of required %2 character classes: no %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	en	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
@@ -1071,7 +1063,7 @@ play/pause	common	en	Play/Pause
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Enter a name!
 please enter table-name first !!!	common	en	Enter table name first!
-please reload the egroupware desktop (f5 / cmd+r).	common	en	Please reload the EGroupware desktop (F5 / Cmd+r).
+please reload the egroupware desktop (f5 / cmd+r).	common	en	Please reload the EGroupware desktop (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	en	Please remember to use '%1' as username for local login's from now on!
 please run setup to become current	common	en	Run setup to become current
 please select	common	en	Please select
@@ -1079,7 +1071,7 @@ please set your global preferences	common	en	Set your global preferences!
 please set your preferences for this application	common	en	Set your preferences for this application!
 please type %1 more characters	common	en	Please type %1 more character(s)
 please type 1 more character	common	en	Please type 1 more character
-please wait...	common	en	please wait...
+please wait...	common	en	Please wait ...
 please, check back with us shortly.	common	en	Please, check back with us shortly.
 pm	common	en	pm
 poland	common	en	POLAND
@@ -1120,9 +1112,9 @@ read a single entry by passing the id and fieldlist.	common	en	Read a single ent
 read etemplate from database (for the keys above)	common	en	Read eTemplate from database (for the keys above)
 read this list of methods.	common	en	Read this list of methods
 reading	common	en	Reading
-readonly	common	en	Read only
-readonly filemanager directory	common	en	Readonly filemanager folder
-readonly share	common	en	Readonly share
+readonly	common	en	Read-only
+readonly filemanager directory	common	en	Read-only filemanager folder
+readonly share	common	en	Read-only share
 redo	common	en	Redo
 refresh	common	en	Refresh
 register	common	en	Register
@@ -1141,7 +1133,7 @@ rename	common	en	Rename
 repeat password	common	en	Repeat password
 replace	common	en	Replace
 replace with	common	en	Replace with
-request could not be processed, please reload your window (press f5 or cmd r)!	common	en	Request could not be processed, please reload your window (press F5 or Cmd R)!
+request could not be processed, please reload your window (press f5 or cmd r)!	common	en	Request could not be processed, please reload your window (press F5 or Cmd+R)!
 requested resource '%1' does not exist or has expired	common	en	Requested resource '%1' does not exist or has expired
 requests and full responses to files directory	common	en	Requests and full responses to files directory
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
@@ -1170,7 +1162,7 @@ right	common	en	Right
 romania	common	en	ROMANIA
 rotate left	common	en	Rotate left
 rotate right	common	en	Rotate right
-row...	common	en	Row...
+row...	common	en	Row ...
 rtl	common	en	Rtl
 russian	common	en	Russian
 russian federation	common	en	RUSSIAN FEDERATION
@@ -1186,7 +1178,7 @@ san marino	common	en	SAN MARINO
 sao tome and principe	common	en	SAO TOME AND PRINCIPE
 saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br>This version: %1 <br>Savants version: %2
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
@@ -1207,7 +1199,7 @@ search accounts	common	en	Search accounts
 search for '%1'	common	en	Search for '%1'
 search letter	common	en	Search letter
 search or select accounts	common	en	Search or select accounts
-search...	common	en	Search...
+search...	common	en	Search ...
 searchreplace	common	en	Searchreplace
 second	common	en	second
 section	common	en	Section
@@ -1234,15 +1226,15 @@ select an table of the application	common	en	Select application table
 select application	common	en	Select application
 select application to search	common	en	Select application to search
 select category	common	en	Select category
-select color	common	en	Select color
+select color	common	en	Select colour
 select columns	common	en	Select columns
 select country	common	en	Select country
 select date	common	en	Select date
 select day	common	en	Select day
 select day of week	common	en	Select week day
 select entry	common	en	Select entry
-select file(s) from vfs	common	en	Select file(s) from VFS
-select files from filemanager ...	common	en	Select files from Filemanager ...
+select file(s) from vfs	common	en	Select file(s) from EGroupware File Manager
+select files from filemanager ...	common	en	Select files from File Manager ...
 select group	common	en	Select group
 select home email address	common	en	Select home email address
 select hour	common	en	Select hour
@@ -1255,7 +1247,7 @@ select one	common	en	Select one
 select one ...	common	en	Select ...
 select percentage	common	en	Select percentage
 select priority	common	en	Select priority
-select some options	common	en	Select Some Options
+select some options	common	en	Select some options
 select state	common	en	Select state
 select the columns to display in the list	common	en	Select columns to display in the list
 select the default height for the application windows	common	en	Select the default height for the application windows.
@@ -1276,26 +1268,26 @@ senegal	common	en	SENEGAL
 september	common	en	September
 serbia	common	en	Serbia
 server %1 has been added	common	en	Server %1 has been added.
-server answered. processing response...	common	en	Server answered. Processing response...
-server contacted. waiting for response...	common	en	Server contacted. Waiting for response...
+server answered. processing response...	common	en	Server answered. Processing response ...
+server contacted. waiting for response...	common	en	Server contacted. Waiting for response ...
 server error	common	en	Server error
 server is unwilling to perform.	common	en	Server is unwilling to perform.
 server name	common	en	Server name
 session has been killed	common	en	Session has been killed.
 set as default	common	en	Set as default
 set these columns as the default	common	en	Set these columns as the default
-set user as only responsible user, but keeping groups	groupdav	en	set user as only responsible user, but keeping groups
-set user as only responsible, removing all existing responsibles	groupdav	en	set user as only responsible, removing all existing responsibles
+set user as only responsible user, but keeping groups	groupdav	en	Set user as only responsible user, but keeping groups
+set user as only responsible, removing all existing responsibles	groupdav	en	Set user as only responsible, removing all existing responsibles
 sets today as date	common	en	Set today as date
 settings saved.	common	en	Settings saved.
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
-share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as readonly, but allow uploads.  Uploads are hidden, and only accessable by those with an account
-share filemanager directory	common	en	Filemanager folder
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as read-only, but allow uploads.  Uploads are hidden, and only accessible by those with an account
+share filemanager directory	common	en	File Manager folder
 share files	common	en	Share files
-share just the associated filemanager directory, not the %1	common	en	Share just the associated filemanager folder, not the %1
+share just the associated filemanager directory, not the %1	common	en	Share just the associated File Manager folder, not the %1
 share link	common	en	Share link
 share this %1 via url	common	en	Share this %1 via URL
 shift	common	en	Shift
@@ -1321,8 +1313,8 @@ show page generation time?	common	en	Show page generation time
 show password	common	en	Show password
 show the logo's of egroupware and x-desktop on the desktop.	common	en	Show the logo of EGroupware and x-desktop on the desktop.
 show values	common	en	Show values
-show/hide	common	en	show/hide sidebar
-show_more_apps	common	en	show_more_apps
+show/hide	common	en	Show/hide sidebar
+show_more_apps	common	en	Show_more_apps
 showing	common	en	Showing
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
@@ -1356,7 +1348,7 @@ start directory for image browser of rich text editor in egroupware vfs (fileman
 start new search for the above pattern	common	en	Start new search for the above pattern
 start time	common	en	Start time
 start with	common	en	Start with
-starting up...	common	en	Starting up...
+starting up...	common	en	Starting up ...
 status	common	en	Status
 store your public key in addressbook?	common	en	Store your public key in Addressbook?
 stretched	common	en	Stretched
@@ -1399,12 +1391,12 @@ template	common	en	Template
 template deleted	common	en	Template deleted.
 template saved	common	en	Template saved.
 text	common	en	Text
-text color:	common	en	Text color:
+text color:	common	en	Text colour:
 textarea	common	en	Text area
 th	common	en	Th
 thailand	common	en	THAILAND
 the backup key has been deleted.	common	en	The backup key has been deleted.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.<br>If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	en	The document can contain placeholder like {{%3}}, to be replaced with the data. %1Full list of placeholder names%2.
 the following applications require upgrades	common	en	The following applications require upgrades
 the following document-types are supported:	preferences	en	The following document types are supported:
@@ -1412,7 +1404,7 @@ the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
 this feature is only available in epl version.	common	en	This feature is only available in EPL version.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share.  To test it, use an anonymous / incognito window.<br/>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share.  To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
@@ -1436,7 +1428,7 @@ todays date, eg. "%1"	common	en	Todays date, eg. "%1"
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.<br />Select all, or less than %1 rows
+too many rows selected.<br />select all, or less than %1 rows	common	en	Too many rows selected.<br>Select all, or less than %1 rows
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsuccessful attempts to log in: %1 for the user '%2', %3 for the IP %4
 top	common	en	Top
 total	common	en	Total
@@ -1477,7 +1469,7 @@ update the clock per minute or per second	common	en	Update the clock per minute 
 updating your account with new data from your identity provider failed!	common	en	Updating your account with new data from your identity provider failed!
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload folder does not exist, or is not writable by web server.
-upload file(s) from filemanager...	common	en	Upload file(s) from Filemanager...
+upload file(s) from filemanager...	common	en	Upload file(s) from File Manager ...
 upload new photo	common	en	Upload new photo
 upload requires the directory to be writable by the webserver!	common	en	Upload requires the folder to be writable by the web server!
 uppercase letters	common	en	uppercase letters
@@ -1499,8 +1491,8 @@ users choice	common	en	Users choice
 uzbekistan	common	en	UZBEKISTAN
 valign	common	en	vAlign
 value	common	en	Value
-value has to be at least '%1' !!!	common	en	Value has to be at least '%1' !
-value has to be at maximum '%1' !!!	common	en	Value has to be maximum '%1' !
+value has to be at least '%1' !!!	common	en	Value has to be at least '%1'!
+value has to be at maximum '%1' !!!	common	en	Value has to be maximum '%1'!
 vanuatu	common	en	VANUATU
 vbox	common	en	VBox
 venezuela	common	en	VENEZUELA
@@ -1525,9 +1517,8 @@ weekend	common	en	Weekend
 welcome	common	en	Welcome
 western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
-what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have?
+what color should all the blank space on the desktop have	common	en	What colour should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-what style would you like the image to have?	common	en	Image style
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here.  If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
@@ -1546,7 +1537,7 @@ working days	common	en	Working days
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	en	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	en	Display the page generation time at the bottom of every window
 writable	common	en	Writable
-writable filemanager directory	common	en	Writable filemanager folder
+writable filemanager directory	common	en	Writable File Manager folder
 writable share	common	en	Writable share
 write <app>/setup/tables_current.inc.php	common	en	Write <app>/setup/tables_current.inc.php
 write langfile	common	en	Write language file
@@ -1554,7 +1545,7 @@ write tables	common	en	Write tables
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	en	Writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
 writing	common	en	Writing
 written by:	common	en	Written by:
-xml-file to import	common	en	Xml file to import
+xml-file to import	common	en	XML file to import
 xslt template	common	en	XSLT Template
 year	common	en	Year
 yemen	common	en	YEMEN
@@ -1585,7 +1576,7 @@ you need to select some entries first!	common	en	You need to select some entries
 you need to set enable logging to "%1" to create/update a log.	groupdav	en	You need to set enable logging to "%1" to create/update a log.
 you tried to automatically size a flex column, which always takes the rest of the space	common	en	You tried to automatically size a flex column, which always takes the rest of the space.
 you will not be able to send or receive encrypted mails before completing that step!	common	en	You will NOT be able to send or receive encrypted mails before completing that step!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application %1!
 your account has been updated with new data from your identity provider.	common	en	Your account has been updated with new data from your identity provider.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	en	Your browser is not up-to-date (JavaScript ES6 compatible), you may experience some of the features not working.
 your code is incorrect !!!	common	en	Code is incorrect!

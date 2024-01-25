@@ -17,7 +17,7 @@ add files as %1	mail	pt	Adicionar ficheiros como %1
 add folder	mail	pt	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt	Converter correio em item, adicionar mensagem em bruto (ignorar anexos de correio)
 add this certificate into contact	mail	pt	Adicionar este certificado ao contacto
-add to addressbook	mail	pt	adicionar ao livro de endereços
+add to addressbook	mail	pt	Adicionar ao livro de endereços
 adding %1 to blacklisted email addresses failed because of %2	mail	pt	A adição de %1 a endereços de correio eletrónico na lista negra falhou devido a %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pt	A adição de %1 aos endereços de correio eletrónico incluídos na lista negra falhou devido a %2
 after reply, visible during compose	mail	pt	Após resposta, visível durante a composição
@@ -27,9 +27,10 @@ all available info	admin	pt	odas as informações disponíveis
 all messages in the folder will be lost	mail	pt	Todas as mensagens da pasta serão perdidas
 all of	mail	pt	todos de
 allow external images	mail	pt	Permitir imagens externas
-allow images from external sources in html emails	mail	pt	permitir imagens de fontes externas em HTML e-mails
+allow images from external sources in html emails	mail	pt	Permitir imagens de fontes externas em HTML e-mails
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allways a new window	mail	pt	Sempre numa nova janela
+always respond / auto-responder	mail	pt	Responder sempre / resposta automática
 always show html emails	mail	pt	Exibir sempre mensagens HTML
 always show notifiction	mail	pt	Mostrar sempre notificação
 answered	mail	pt	Respondeu
@@ -53,7 +54,10 @@ by default 'http://' is just replaced with 'https://'. feel free to configure 'h
 caching of flags	mail	pt	Armazenamento em cache de bandeiras
 can not open imap connection	mail	pt	Não é possível abrir conexão IMAP
 can not resolve the winmail.dat attachment!	mail	pt	Não é possível resolver o anexo winmail.dat!
+certificate details	mail	pt	Detalhes do certificado
+certificate in text	mail	pt	Certificado em texto
 certificate info for email %1	mail	pt	Informação de certificado para o correio eletrónico %1
+certificate issued by	mail	pt	Certificado emitido por
 changed profile	mail	pt	perfil alterado
 changing subject failed because of %1	mail	pt	A alteração do assunto falhou devido a %1
 changing subject failed folder %1 does not exist	mail	pt	Falha na alteração do assunto A pasta %1 não existe
@@ -74,10 +78,10 @@ connection status	mail	pt	Status da conexão
 contact label	mail	pt	Etiqueta de contacto
 contains	mail	pt	Contém
 contains(*)	mail	pt	Contém (*)
-copied %1 message(s) from %2 to %3	mail	pt	copiados %1 mensagem (s) de %2 a 3%
+copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem (s) de %2 a 3%
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
-create new account	mail	pt	criar nova conta
+create new account	mail	pt	Criar nova conta
 cross account forward attachment is not allowed!	mail	pt	Não é permitido o envio de anexos de contas cruzadas!
 current subject	mail	pt	Assunto actual
 currently:	mail	pt	Atualmente:
@@ -87,7 +91,7 @@ deactive	mail	pt	Desativado
 default sorting order	mail	pt	Ordenar por (por omissão)
 default toolbar actions shown in mail's html editor	mail	pt	Funções activadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt	Valor por defeito para recordar a frase-chave S/MIME em minutos
-default your name and email	common	pt	padrão o seu nome e e-mail
+default your name and email	common	pt	Padrão o seu nome e e-mail
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pt	Define o que mostrar como etiqueta de contacto para contacto adicional na cópia To/Copy/Blind quando se compõe um e-mail. O primeiro nome por defeito é o último nome e os meios vazios incluem tudo o que está disponível.
 defines what to show as identity label on mail folder header	common	pt	Define o que mostrar como etiqueta de identidade no cabeçalho da pasta de correio
 delete folder	mail	pt	Excluir pasta
@@ -121,8 +125,8 @@ don't use sent	mail	pt	Não utilizar a pasta Enviados
 don't use template folder	mail	pt	Não use pasta de modelo
 don't use trash	mail	pt	Não utilizar a pasta Lixo
 download attachments	mail	pt	Descarregar anexos
-draft	mail	pt	rascunho
-draft folder	mail	pt	pasta de rascunhos
+draft	mail	pt	Rascunho
+draft folder	mail	pt	Pasta de rascunhos
 drafts	mail	pt	Rascunhos
 drafts folder	mail	pt	Pasta Rascunhos
 edit account	mail	pt	Editar Conta
@@ -131,9 +135,10 @@ edit folder acl	mail	pt	Pasta Editar ACL
 edit folder acl ...	mail	pt	Editar pasta ACL ...
 edit vacation settings	mail	pt	Editar configurações de férias
 effective only if server supports acl at all	admin	pt	efetiva apenas se o servidor suporta ACL em tudo
-email notification successfully updated!	mail	pt	notificação de email atualizado com sucesso!
-email notification update failed	mail	pt	atualização notificação por email falhou
-emailaddress	admin	pt	endereço de email
+email address	mail	pt	Endereço de email
+email notification successfully updated!	mail	pt	Notificação de email atualizado com sucesso!
+email notification update failed	mail	pt	Atualização notificação por email falhou
+emailaddress	admin	pt	Endereço de email
 emailadmin: profilemanagement	mail	pt	emailadmin: ProfileManagement
 emails in whitelisted domains are not marked as spam	mail	pt	Os e-mails em domínios da lista branca não são marcados como spam
 empty trash	mail	pt	Esvaziar o Lixo
@@ -150,6 +155,7 @@ error: could not save rule	mail	pt	Erro: Não foi possível salvar regra
 error: could not send message.	mail	pt	Erro: Não foi possível enviar mensagem.
 error: message could not be displayed.	mail	pt	ERRO: A mensagem não pode ser exibida.
 event details follow	mail	pt	Seguem detalhes do evento
+every %1. day	mail	pt	Cada %1. dia
 everyone	mail	pt	Todos
 examine namespace to retrieve folders in others and shared	mail	pt	Examinar o espaço de nomes para obter pastas noutros e partilhadas
 extended	mail	pt	Estendido
@@ -180,10 +186,10 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder settings	mail	pt	Definições das pastas
 for e.g.: mpeg	mail	pt	por exemplo: mpeg
 for eg.: mpeg	mail	pt	por exemplo:. mpeg
-force html	mail	pt	força htm
-force plain text	mail	pt	forçar texto simples
+force html	mail	pt	Força HTML
+force plain text	mail	pt	Forçar texto
 forward	mail	pt	Para a frente
-forward as attachment	mail	pt	enviar como anexo
+forward as attachment	mail	pt	Enviar como anexo
 forward inline	mail	pt	linha para a frente
 forward messages to:	mail	pt	Encaminhar mensagens para:
 forward messages:	mail	pt	Encaminhar mensagens:
@@ -229,7 +235,7 @@ imap - incoming mail	mail	pt	IMAP - de entrada de correio
 imap administration	mail	pt	Administração IMAP
 imap server	mail	pt	Servidor IMAP
 imap timeout	mail	pt	IMAP tempo limite
-import message	mail	pt	mensagem de importação
+import message	mail	pt	Mensagem de importação
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt	A importação da mensagem %1 falhou. Não foi possível guardar a mensagem na pasta %2 devido a: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	pt	A importação da mensagem %1 falhou. A pasta de destino %2 não existe.
 import of message %1 failed. destination folder not set.	mail	pt	A importação da mensagem %1 falhou. Pasta de destino não definida.
@@ -272,7 +278,7 @@ mark as deleted	mail	pt	Marcar como apagada
 match:	mail	pt	Jogo:
 matches	mail	pt	Coincide
 matches regexp	mail	pt	Coincide com regexp
-message body	mail	pt	corpo da mensagem
+message body	mail	pt	Corpo da mensagem
 message learned as spam and moved to spam folder	mail	pt	Mensagem identificada como spam e movida para a pasta de spam
 message preview area	mail	pt	Área de visualização de mensagens
 message saved successfully.	mail	pt	Mensagem gravada com sucesso.
@@ -296,8 +302,8 @@ no action defined!	mail	pt	Nenhuma ação definida!
 no adress, to send this mail to, supplied	mail	pt	sem endereço, para enviar este e-mail para, fornecido
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pt	Não foi fornecido nenhum destino de pasta e não foi fornecida nenhuma pasta para guardar a mensagem ou outra medida para armazenar o correio (guardar no InfoLog/Ticketsystem), mas é necessário.
 no folders	mail	pt	Não há pastas
-no message body supplied	mail	pt	nenhum corpo da mensagem fornecido
-no plain text part found	mail	pt	nenhuma parte de texto simples encontrado
+no message body supplied	mail	pt	Nenhum corpo da mensagem fornecido
+no plain text part found	mail	pt	Nenhuma parte de texto simples encontrado
 no recipient address given!	mail	pt	No endereço do destinatário dado!
 no send folder set in preferences	mail	pt	Sem envio de pasta definido nas preferências
 no signature	mail	pt	sem assinatura
@@ -310,6 +316,7 @@ none, create all	mail	pt	nenhum, criar todos
 notify about new mail in this folders	mail	pt	Notificar sobre novas mensagens neste pastas
 notify when new mails arrive in these folders	mail	pt	notifique quando novos e-mails chegam nestas pastas
 on	mail	pt	em
+once per day	mail	pt	Uma vez por dia
 one address is not valid	mail	pt	Um endereço não é válido
 only email	mail	pt	Apenas o correio eletrónico
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	pt	Só faz sentido se a palavra-passe for transportada para os destinatários através de um canal diferente/fora deste correio!
@@ -320,14 +327,14 @@ open in html mode	mail	pt	Abrir em modo HTML
 open in text mode	mail	pt	Abrir em modo de texto
 open with collabora office	mail	pt	Abrir com Collabora Online
 organisation	admin	pt	Organização
-organization	mail	pt	empresa
+organization	mail	pt	Organização
 organization | real name email	mail	pt	Organização | Nome real [Email]
 original message	mail	pt	Mensagem original
 outbox	mail	pt	Caixa de saída
 permission denied	mail	pt	Permissão negada
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt	Configure o seu certificado S/MIME no separador Encriptação localizado na caixa de diálogo Editar conta.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu administrador para verificar se o seu servidor suporta regras de filtragem do lado do servidor e como activá-las no EGroupware para a sua conta ativa (%1) com ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu Administrador para validar se o seu servidor suporta mensagens de férias no servidor e como as ativar no EGroupware para a sua conta ativa (%1) com ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu administrador para verificar se o seu servidor suporta regras de filtragem do lado do servidor e como activá-las no EGroupware para a sua conta ativa (%1) com ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu Administrador para validar se o seu servidor suporta mensagens de férias no servidor e como as ativar no EGroupware para a sua conta ativa (%1) com ID: %2.
 please enter password	mail	pt	Introduzir palavra-passe
 please select a address	mail	pt	Por favor, seleccione um endereço
 please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
@@ -341,7 +348,7 @@ prevent managing vacation notice	mail	pt	Impedir gestão aviso de férias
 preview pane	mail	pt	Apresentação da janela
 primary profile	mail	pt	Perfil primário
 printing	mail	pt	Impressão
-printview	mail	pt	printview
+printview	mail	pt	Visualização de impressão
 processing of file %1 failed. failed to meet basic restrictions.	mail	pt	Falha no processamento do ficheiro %1. Não cumpriu as restrições básicas.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pt	Fornecer um texto de férias predefinido, (utilizado em novas mensagens de férias quando não existia uma mensagem configurada anteriormente)
 push notifications	mail	pt	Notificações push
@@ -350,7 +357,7 @@ quicksearch (with cc)	mail	pt	Pesquisa rápida (+Cópia)
 quota not provided by server	mail	pt	Cota não fornecido pelo servidor
 quota: %1	mail	pt	Quota: 1%
 read	mail	pt	ler
-read / unread	mail	pt	Lido / não lido
+read / unread	mail	pt	Lido / Não lido
 readable	mail	pt	legível
 real name	mail	pt	Nome real
 real name email	mail	pt	Nome real [Email]
@@ -389,6 +396,7 @@ restrict acl management	admin	pt	restringir gestão ACL
 row order style	mail	pt	estilo ordem de linha
 rule priority position	mail	pt	Regra posição prioridade
 rule with priority	mail	pt	governar com prioridade
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	pt	A encriptação S/MIME falhou porque não foi encontrado nenhum certificado para o endereço do remetente: %1
 save all	mail	pt	Guardar tudo
 save all attachments to filemanager	mail	pt	Guardar todos os anexos para o gestor de ficheiros
 save as default	mail	pt	salvar como padrão
@@ -428,11 +436,11 @@ serverside filterrules (sieve) are not activated	mail	pt	Serverside Filterrules 
 set / remove flags	mail	pt	Set / Remover Bandeiras
 set / remove labels	mail	pt	Set / Remover Rótulos
 set flags	mail	pt	Bandeiras de bandeira
-set it as default:	mail	pt	defini-lo como padrão:
+set it as default:	mail	pt	Defini-lo como padrão:
 set predefined values for compose...	mail	pt	Definir valores pré-definidos para compor ...
 should new messages show up on the home page	mail	pt	Caso as novas mensagens aparecem na página inicial
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt	A assinatura deve ser inserida depois (padrão) ou antes de uma resposta ou reencaminhamento, e a assinatura deve ser visível e alterável durante a composição.
-show all folders	mail	pt	mostrar todas as pastas
+show all folders	mail	pt	Mostrar todas as pastas
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt	Mostrar todas as pastas (subscritas e não subscritas) no painel de pastas do ecrã principal
 show new messages on home page	mail	pt	mostrar novas mensagens em home page
 show notification for new arriving mails	mail	pt	Mostrar notificação de novas mensagens recebidas
@@ -448,9 +456,11 @@ sieve connection status	mail	pt	Peneira Status da conexão
 sieve not activated	mail	pt	Peneirar a não activação
 sieve script name	mail	pt	Nome do script peneira
 sieve server	mail	pt	Servidor Sieve
+sign your message with smime certificate	mail	pt	Assine a sua mensagem com um certificado S/MIME
 signature	mail	pt	Assinatura
 signature at top	mail	pt	assinatura no topo
 signature position and visibility	mail	pt	Posição da assinatura e visibilidade
+signed by	mail	pt	Assinado por
 size(...->0)	mail	pt	Tamanho (...->0)
 size(0->...)	mail	pt	Tamanho (0->...)
 small view	mail	pt	Sumário
@@ -473,13 +483,13 @@ subscribe folder ...	mail	pt	Assinar pasta ...
 subscription folders	mail	pt	Pastas de Subscrição
 subscription successfully saved.	mail	pt	Assinatura salvo com sucesso.
 successfully connected	mail	pt	Conectado com sucesso
-template folder	mail	pt	pasta de modelo
+template folder	mail	pt	Pasta de modelo
 templates	mail	pt	Templates
 templates folder	mail	pt	Pasta Modelos
 test connection	mail	pt	Teste de conexão
 text	mail	pt	Texto
 text mode	mail	pt	O modo de texto
-text/plain	mail	pt	text / plain
+text/plain	mail	pt	Texto
 the imap server need to meet certain requirements and be configured for it:	mail	pt	O servidor IMAP tem de cumprir determinados requisitos E estar configurado para o efeito:
 the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
 the rule with priority %1 successfully saved!	mail	pt	A regra com prioridade 1% salvo com sucesso!
@@ -494,7 +504,7 @@ toggle all folders view for %1	mail	pt	Alternar todas as pastas para visualizar 
 toggled on actions	mail	pt	Acções alternadas
 trash	mail	pt	Lixo
 trash folder	mail	pt	Pasta Lixo
-trust servers seen / unseen info	mail	pt	servidores de confiança VISTO / info UNSEEN
+trust servers seen / unseen info	mail	pt	Servidores de confiança VISTO / info UNSEEN
 trying to recover from session data	mail	pt	Tentando recuperar de dados da sessão
 unable to fetch vacation!	mail	pt	Não foi possível buscar férias!
 undelete	mail	pt	Undelete
@@ -502,7 +512,7 @@ unflagged	mail	pt	Unflagged
 unread	mail	pt	Não lida
 unsubscribe folder	mail	pt	Pasta Subscrição
 use default timeout (20 seconds)	mail	pt	usar tempo limite padrão (20 segundos)
-use source as displayed, if applicable	mail	pt	usar fonte como apresentado, se for o caso
+use source as displayed, if applicable	mail	pt	Usar fonte como apresentado, se for o caso
 use username+password from current user	mail	pt	Use nome de usuário + senha do usuário atual
 vacation notice	mail	pt	Aviso de ausência
 vacation notice is active	mail	pt	Aviso de Férias está ativo
@@ -517,18 +527,18 @@ view full mail source	mail	pt	Ver completo Correio Fonte
 view header lines	mail	pt	Exibir linhas de cabeçalho
 what do do with html email	mail	pt	O que fazer com html e-mail
 what order the list columns are in	mail	pt	Em que ordem as colunas da lista estão em
-what to do when you delete a message	mail	pt	o que fazer quando você excluir uma mensagem
-what to do when you send a message	mail	pt	o que fazer quando você envia uma mensagem
+what to do when you delete a message	mail	pt	O que fazer quando você excluir uma mensagem
+what to do when you send a message	mail	pt	O que fazer quando você envia uma mensagem
 when deleting messages	mail	pt	Ao eliminar mensagens
-when saving messages as item of a different app	mail	pt	ao salvar mensagens como um item de um aplicativo diferente
-when sending messages	mail	pt	ao enviar mensagens
+when saving messages as item of a different app	mail	pt	Ao salvar mensagens como um item de um aplicativo diferente
+when sending messages	mail	pt	Ao enviar mensagens
 which method to use when forwarding a message	mail	pt	Qual o método a ser usado ao encaminhar uma mensagem
 with message:	mail	pt	Com a mensagem:
 write	mail	pt	escrever
 wrote	mail	pt	Escreveu
 yes, but mask all passwords	mail	pt	Sim, mas mascarar todas as senhas
 yes, but mask all usernames and passwords	mail	pt	Sim, mas mascarar todos os nomes de usuários e senhas
-yes, offer copy option	mail	pt	sim, oferecer opção de cópia
+yes, offer copy option	mail	pt	Sim, oferecer opção de cópia
 yes, only trigger connection reset	mail	pt	sim, apenas desencadear redefinição de conexão
 yes, show all debug information available for the user	mail	pt	sim, mostrar todas as informações de depuração disponíveis para o utilizador
 yes, show basic info only	mail	pt	sim, mostrar apenas informações básicas
@@ -541,4 +551,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	pt	É necessário guardar a mensagem como rascunho antes de a poder guardar no VFS
 you will loose current message body, unless you save it to your clipboard!	mail	pt	Perderá o corpo da mensagem atual, a menos que o guarde na sua área de transferência!
 you've got new mail	mail	pt	Você tem novas mensagens
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt	A sua quota restante %1 é demasiado baixa, pelo que poderá não conseguir enviar/receber mais mensagens de correio eletrónico.\n Embora a limpeza de mensagens de correio eletrónico no lixo ou na pasta de lixo eletrónico possa ajudá-lo a recuperar algum espaço livre.\n Se isso não ajudar, peça mais quota ao seu administrador.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt	A sua quota restante %1 é demasiado baixa, pelo que poderá não conseguir enviar/receber mais mensagens de correio eletrónico.<br>Embora a limpeza de mensagens de correio eletrónico no lixo ou na pasta de lixo eletrónico possa ajudá-lo a recuperar algum espaço livre.<br>Se isso não ajudar, peça mais quota ao seu administrador.

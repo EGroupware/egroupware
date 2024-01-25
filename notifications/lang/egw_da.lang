@@ -1,11 +1,79 @@
+(update in sec. %s)	notifications	da	(Opdatering i sek. %s)
+account:	notifications	da	Konto:
+all possible notification backends	notifications	da	Alle mulige notifikations-backends
+are you sure you want to delete all notifications?	notifications	da	Er du sikker på, at du vil slette alle notifikationer?
+browser	notifications	da	Browser
+browser is starting.	notifications	da	Browseren er ved at starte.
+cancal settings?	notifications	da	Annuller indstillinger?
+cancal?	notifications	da	Annuller?
+certification-information:	notifications	da	Certificerings-information:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	da	Tjek begge dele. Prøv først aktiv brugerdefineret konto, hvis ingen, så brug eMailAdmin-profilen.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	da	Vælg en notifikationskæde. Du vil få besked via de backends, der er inkluderet i kæden.<br>Bemærk: Hvis en notifikationskæde er markeret som "deaktiveret", tillader din administrator ikke en eller flere af de backends, der er inkluderet i kæden, og notifikationerne falder tilbage til "E-mail", mens de giver dig besked.
+connection error.	notifications	da	Forbindelsesfejl.
+connection error. please check connection to server.	notifications	da	Forbindelsesfejl. Tjek venligst forbindelsen til serveren.
+continue to connect?	notifications	da	Fortsæt med at oprette forbindelse?
+cookies are required to login to this site.	notifications	da	Cookies er nødvendige for at logge ind på denne side.
+delete all messages	notifications	da	Slet alle meddelelser
+delete notifications	notifications	da	Slet meddelelser
+delete this message	notifications	da	Slet denne besked
+domain not found, please check serveraddress.	notifications	da	Domæne ikke fundet, tjek venligst serveradressen.
+egroupware login is starting, please wait.	notifications	da	EGroupware-login er ved at starte, vent venligst.
+egroupware logindomain:	notifications	da	EGroupware Logindomæne:
+egroupware logindomains founds, please select.	notifications	da	EGroupware Logindomains fundet, vælg venligst.
+egroupware not found by url or connection lost to server.	notifications	da	EGroupware ikke fundet via URL eller mistet forbindelse til server.
+egroupware not found by url.	notifications	da	EGroupware ikke fundet af URL.
+email notifications only, if user is not logged in	notifications	da	Kun e-mail-notifikationer, hvis brugeren ikke er logget ind
+error browser can`t start.	notifications	da	Fejl Browseren kan ikke starte.
+error on loading tray icon	notifications	da	Fejl ved indlæsning af Tray-ikon
+error ssl	notifications	da	Fejl SSL
+exit	notifications	da	Afslut
 folder	notifications	da	Bibliotek
 from	notifications	da	Fra
+host:	notifications	da	Server:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	da	Hvor detaljeret skal EGroupware-Popup opføre sig, hvis der sendes en notifikation til brugeren:<br>lav: bare vis notifikationsklokken i topmenuen - topmenuen skal være aktiveret!<br>medium: vis notifikationsvinduet forrest<br>høj: vis notifikationsvinduet og lad browseren gøre noget for at annoncere sig selv
+info on load config file: create config file.	notifications	da	Info om indlæsning af konfigurationsfil: Opret konfigurationsfil.
+issuer dn:	notifications	da	Udsteder DN:
+java desktop notification app	preferences	da	Java desktop notification app
+last month	notifications	da	Sidste måned
+login aborted, application exit?	notifications	da	Login afbrudt, program afsluttes?
+login in egroupware:	notifications	da	Login i EGroupware:
+mail account to use for notifications	admin	da	Mailkonto, der skal bruges til notifikationer
+mark all as read	notifications	da	Markér alle som læst
+mark as read	notifications	da	Markér som læst
 message from	notifications	da	Besked fra
 minutes	notifications	da	Minutter
+more info	notifications	da	Mere info
+notifier	notifications	da	Notificering
+open notified entry	notifications	da	Åbn notificeret post
+page not found, please check serveraddress.	notifications	da	Siden blev ikke fundet, tjek venligst serveradressen.
+password:	notifications	da	Adgangskode:
 permission	notifications	da	Tilladelse
+permission denied for notifications application.	notifications	da	Tilladelse nægtet til notifikationsapplikation.
+placeholders with user/ prefix	admin	da	pladsholdere med bruger/præfiks
+please contact your egroupware admin.	notifications	da	Kontakt venligst din EGroupware-administrator.
+please enter the url of your egroupware.	notifications	da	Indtast venligst URL'en til din EGroupware.
+please enter your egroupware username.	notifications	da	Indtast venligst dit EGroupware-brugernavn.
+please enter your password	notifications	da	Indtast venligst din adgangskode
 refresh notifications	notifications	da	Opdatering af meddelelser
-settings	notifications	da	indstillinger
+repeat login?	notifications	da	Gentag login?
+run application	notifications	da	Kør applikation
+save password	notifications	da	Gem adgangskode
+setting	notifications	da	Indstilling
+setting aborted, application exit	notifications	da	Indstilling afbrudt, programmet afsluttes
+settings	notifications	da	Indstillinger
 signature	admin	da	Signatur
+signature added to every change notification	admin	da	Signatur tilføjet til hver ændringsmeddelelse
+sorry, your login has expired	notifications	da	Beklager, dit login er udløbet
 step	notifications	da	Trin
+subject dn:	notifications	da	Emne DN:
+the server certificate is not a valid trust center certificate!	notifications	da	Servercertifikatet er ikke et gyldigt trust center-certifikat!
+this egroupware notification has been sent to you by mail because your	notifications	da	Denne EGroupware-meddelelse er blevet sendt til dig via e-mail, fordi din
+this month	notifications	da	Denne måned
+user:	notifications	da	Bruger:
 warning	notifications	da	Advarsel
+yesterday	notifications	da	I går
+you can also use	admin	da	Du kan også bruge
+you have %1 unread notifications	notifications	da	Du har %1 ulæste meddelelser
+you have been successfully logged out	notifications	da	Du er blevet logget ud med succes
+you've got new mail	notifications	da	Du har fået en ny mail
 your session could not be verified.	notifications	da	Din session kunne ikke verificeres

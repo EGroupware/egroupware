@@ -2,7 +2,7 @@
 %1 deleted	infolog	pt-br	%1 removido
 %1 deleted by %2 at %3	infolog	pt-br	%1 removido por %2 em %3
 %1 entries %2	infolog	pt-br	%1 entradas %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pt-br	%1 entradas %2, %3 falharam devido a direitos insuficientes !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pt-br	%1 entradas %2, %3 falharam devido a direitos insuficientes!
 %1 entries %2, %3 failed.	infolog	pt-br	%1 entradas %2, %3 falharam.
 %1 modified	infolog	pt-br	%1 modificado
 %1 modified by %2 at %3	infolog	pt-br	%1 modificado por %2 em %3
@@ -34,6 +34,7 @@ action	infolog	pt-br	Ação
 actions...	infolog	pt-br	Ações...
 actual date and time	infolog	pt-br	Data e Hora atuais
 add	infolog	pt-br	Adicionar
+add / remove link	infolog	pt-br	Adicionar / remover link
 add a file	infolog	pt-br	Adicionar um arquivo
 add a new entry	infolog	pt-br	Adicionar um novo registro
 add a new note	infolog	pt-br	Adicionar uma nota
@@ -41,6 +42,7 @@ add a new phonecall	infolog	pt-br	Adicionar uma nova ligação
 add a new sub-task, -note, -call to this entry	infolog	pt-br	Adicionar um sub-tarefa, -nota, -ligação para este registro
 add a new todo	infolog	pt-br	Adicionar um Apontamento
 add file	infolog	pt-br	Adicionar um arquivo
+add or delete links	infolog	pt-br	Adicionar ou excluir links
 add sub	infolog	pt-br	Adicionar uma Sub
 add timesheet entry	infolog	pt-br	Adicionar registro à planilha de tempo
 add:	infolog	pt-br	Adicionar:
@@ -52,10 +54,13 @@ all other %1 fields are valid	infolog	pt-br	Todos os outros campos %1 são váli
 all projects	infolog	pt-br	Todos projetos
 allow to save entries with due date in the past	infolog	pt-br	Permitir salvar entradas com data de vencimento no passado
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt-br	Permite configurar o status de um registro. Ex. marque um Apontamento com o Status finalizado quando esta estiver terminada. (Os valores dependem do tipo de registro)
+alternatives	infolog	pt-br	Alternativas
 always show them	infolog	pt-br	Sempre mostrá-los
 application mail expected but got: %1	infolog	pt-br	E-mail do aplicativo esperado, mas recebido: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	pt-br	Aplique a ação em toda a consulta, NÃO apenas nas entradas mostradas!
 apply the changes	infolog	pt-br	Aplicar as alterações
 archive	infolog	pt-br	Arquivar
+are you shure you want to close this entry ?	infolog	pt-br	Tem certeza de que deseja fechar esta entrada?
 are you shure you want to delete this entry ?	infolog	pt-br	Você tem certeza que deseja apagar este registro?
 attach a file	infolog	pt-br	Anexar um arquivo
 attach file	infolog	pt-br	Anexar arquivo
@@ -74,7 +79,10 @@ categories	infolog	pt-br	Categorias
 category	infolog	pt-br	Categoria
 change	infolog	pt-br	Alterar
 change category	infolog	pt-br	Alterar categoria
+change completed	infolog	pt-br	Modificação concluída.
+change completion	infolog	pt-br	Conclusão da modificação
 change history	infolog	pt-br	Mudar a história
+change owner when updating	infolog	pt-br	Alterar proprietário ao atualizar
 change responsible	infolog	pt-br	Mudança responsável
 change the status of an entry, eg. close it	infolog	pt-br	Alterar o status de um registro (ex. fechado)
 check to set startday	infolog	pt-br	Selecione para determinar a data de início
@@ -84,6 +92,7 @@ click here to create the link	infolog	pt-br	Clique aqui para inserir um hyperlin
 click here to start the search	infolog	pt-br	Clique aqui para iniciar uma pesquisa
 close	infolog	pt-br	Fechar
 close all	infolog	pt-br	Fechar todos
+close this entry and all listed sub-entries	infolog	pt-br	Fechar essa entrada e todas as subentradas listadas
 closed	infolog	pt-br	Fechado
 comment	infolog	pt-br	Comentário
 completed	infolog	pt-br	Completada
@@ -131,7 +140,7 @@ delegated overdue	infolog	pt-br	Designado e prazo excedido
 delegated upcomming	infolog	pt-br	Designado e prazo excedendo
 delegation	infolog	pt-br	Atribuição
 delete	infolog	pt-br	Apagar
-delete one record by passing its id.	infolog	pt-br	Apagar um registro contornando seu id.
+delete one record by passing its id.	infolog	pt-br	Apagar um registro contornando seu ID.
 delete selected entries?	infolog	pt-br	Excluir entradas selecionadas?
 delete this entry and all listed sub-entries	infolog	pt-br	Apagar este registro e todos os sub-registros listados
 deleted	infolog	pt-br	Removido
@@ -142,7 +151,7 @@ description	infolog	pt-br	Descrição
 determines the order the fields are displayed	infolog	pt-br	Determine a ordem em que os campos aparecerão
 directory with documents to insert entries	infolog	pt-br	Diretório com documentos para inserir entradas
 disables a status without deleting it	infolog	pt-br	Desabilitar o status após a remoção
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt-br	você quer uma confirmação do responsável quanto à: aceitação, encerramento ou ambos
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt-br	Você quer uma confirmação do responsável quanto à: aceitação, encerramento ou ambos
 do you want a notification if items owned by groups you are part of get updated ?	infolog	pt-br	Deseja receber uma notificação se os itens pertencentes a grupos dos quais você faz parte forem atualizados?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	pt-br	Você quer receber uma notificação, caso itens forem designados a você ou caso itens designados a você forem atualizados?
 do you want a notification, if items you are responsible for are about to start?	infolog	pt-br	Você quer receber uma notificação, caso algum item esteja prestes a iniciar e você seja o responsável?
@@ -153,7 +162,7 @@ do you want a notification, if items you delegated are due?	infolog	pt-br	Você 
 do you want to receive notifications as html-mails or plain text?	infolog	pt-br	Você quer receber notificações em HTML ou texto puro?
 don't show infolog	infolog	pt-br	Não exibir Tarefas
 done	infolog	pt-br	Encerrado
-download	infolog	pt-br	Baixar
+download	infolog	pt-br	Salvar arquivo
 download url for links	infolog	pt-br	URL de download para links
 due %1	infolog	pt-br	Vencimento %1
 due date	infolog	pt-br	Data de vencimento
@@ -187,12 +196,12 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	pt-br	Executar uma outra ação para este registro
 existing links	infolog	pt-br	Links existentes
 exists	infolog	pt-br	Existe
-export definition to use for nextmatch export	infolog	pt-br	Definição Exportar para usar para exportação NextMatch
+export definition to use for nextmatch export	infolog	pt-br	Definição Exportar para usar para exportação nextmatch
 exports in ical format.	infolog	pt-br	Exporta no formato iCal.
 exports infolog entries into a csv file.	infolog	pt-br	Exporta entradas do InfoLog em um arquivo CSV.
 favorites	infolog	pt-br	Favoritos
 fax	infolog	pt-br	Fax
-field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!!!
+field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!
 fields to exclude when copying an infolog:	infolog	pt-br	Campos a serem excluídos ao copiar um InfoLog:
 fields to exclude when creating a sub-entry:	infolog	pt-br	Campos a serem excluídos ao criar uma subentrada:
 fieldseparator	infolog	pt-br	Separador de Campos
@@ -272,13 +281,13 @@ manage mapping	infolog	pt-br	Gerenciar mapeamento
 max length of the input [, length of the inputfield (optional)]	infolog	pt-br	Tamanho máximo para inclusão [, tamanho para o campo (opcional)]
 modifier	infolog	pt-br	Modifier
 modifierer	infolog	pt-br	Modificador
-name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
+name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!
 name of current user, all other contact fields are valid too	infolog	pt-br	Nome do usuário atual, todos outros campos são válidos também
 name of new type to create	infolog	pt-br	Nome para o novo tipo
 never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros
 new %1	infolog	pt-br	Novo %1
 new %1 created by %2 at %3	infolog	pt-br	Novo %1 criado por %2 em %3
-new name	infolog	pt-br	novo nome
+new name	infolog	pt-br	Novo nome
 new search	infolog	pt-br	Nova pesquisa
 no - cancel	infolog	pt-br	Não - Cancelar
 no custom field "%1" for %2.	infolog	pt-br	Nenhum campo personalizado "%1" para %2.
@@ -309,6 +318,7 @@ only show them if there is a filter	infolog	pt-br	Mostrar apenas se houver um fi
 only show them while searching	infolog	pt-br	Mostrar apenas durante a pesquisa
 only the attachments	infolog	pt-br	Apenas arquivos anexos
 only the links	infolog	pt-br	Apenas links
+open and upcoming	infolog	pt-br	Aberto e futuro
 open(status)	infolog	pt-br	Abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
 order	infolog	pt-br	Ordem
@@ -317,10 +327,13 @@ other configurations	infolog	pt-br	Outras configurações
 overdue	infolog	pt-br	Atrasado
 own	infolog	pt-br	Suas tarefas
 own open	infolog	pt-br	Suas tarefas abertas
+own open and upcoming	infolog	pt-br	Próprios abertos e futuros
 own overdue	infolog	pt-br	Suas tarefas em Atraso
 own upcoming	infolog	pt-br	Suas tarefas futuras
+owner does not have edit rights	infolog	pt-br	O proprietário não tem direitos de edição
 owner, responsible	infolog	pt-br	Proprietário, Responsável
 parent	infolog	pt-br	Pai
+parent infolog	infolog	pt-br	Registro de informações dos pais
 participants for scheduling an appointment	infolog	pt-br	Participantes para agendamento de um compromisso
 path on (web-)serverside<br>eg. /var/samba/share	infolog	pt-br	Caminho (web-)serverside<br>ex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pt-br	O diretório para os arquivos de usuário ou grupo DEVE ESTAR FORA da raiz de documentos do servidor web!!!
@@ -345,12 +358,13 @@ priority	infolog	pt-br	Prioridade
 private	infolog	pt-br	Particular
 project	infolog	pt-br	Projeto
 project id	infolog	pt-br	ID de Projeto
+project name	infolog	pt-br	Nome do projeto
 project settings: price, times	infolog	pt-br	Configurações do projeto: preço, tempo
 projectmanager	infolog	pt-br	Gerenciador de Projetos
 re-planned	infolog	pt-br	Re-planejado
 re-planned time	infolog	pt-br	Tempo re-planejado
 re:	infolog	pt-br	Re:
-read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
+read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu ID.
 read rights (default)	infolog	pt-br	Permissões de leitura (padrão)
 receive notifications about due entries you are responsible for	infolog	pt-br	Receber notificações sobre registros com prazos excedidos, cujo responsável seja você.
 receive notifications about due entries you delegated	infolog	pt-br	Receber notificações sobre registros com prazos excedidos que você tenha designado
@@ -463,7 +477,7 @@ today	infolog	pt-br	Para Hoje
 todays date	infolog	pt-br	Data de hoje
 todo	infolog	pt-br	Pendências
 typ	infolog	pt-br	Tipo
-typ '%1' already exists !!!	infolog	pt-br	O tipo '%1' já existe!!!
+typ '%1' already exists !!!	infolog	pt-br	O tipo '%1' já existe!
 type	infolog	pt-br	Tipo
 type ...	infolog	pt-br	Tipo ...
 type of customfield	infolog	pt-br	Tipo de campo personalizado
@@ -476,8 +490,11 @@ unlinked from %1	infolog	pt-br	Desvinculado de %1
 upcoming	infolog	pt-br	Futuras
 urgency	infolog	pt-br	Urgência
 urgent	infolog	pt-br	Urgente
+use all	infolog	pt-br	Usar tudo
 use custom notification message	infolog	pt-br	Usar mensagem de notificação personalizada
 use field from csv if possible	infolog	pt-br	Use o campo de CSV, se possível
+use search results	infolog	pt-br	Usar resultados de pesquisa
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	pt-br	Use essa tag para etiquetas de endereço. Coloque o conteúdo que você deseja repetir entre duas tags.
 used time	infolog	pt-br	Horas utilizadas
 values for selectbox	infolog	pt-br	Valores para a caixa de seleção
 view all subs of this entry	infolog	pt-br	Ver todas as subs para este registro
@@ -504,7 +521,7 @@ yes, only admins can purge deleted items	infolog	pt-br	Sim, somente administrado
 yes, with larger fontsize	infolog	pt-br	Sim, com fontes grandes
 yes, with purging of deleted items possible	infolog	pt-br	Sim, com possibilidade de limpeza de registros removidos
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pt-br	Você pode selecionar uma categoria para ser pré-selecionada, quando você criar um novo registro.
-you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!!!
+you can't delete one of the stock types !!!	infolog	pt-br	Você não pode apagar um destes tipos!
 you have entered an invalid ending date	infolog	pt-br	Você informou uma data final inválida
 you have entered an invalid starting date	infolog	pt-br	Você informou uma data inícial inválida
 you have to enter a name, to create a new type!	infolog	pt-br	É necessário inserir um nome para criar um novo tipo!

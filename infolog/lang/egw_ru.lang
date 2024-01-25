@@ -2,7 +2,7 @@
 %1 deleted	infolog	ru	%1 удален
 %1 deleted by %2 at %3	infolog	ru	%1 удален %2 в %3
 %1 entries %2	infolog	ru	%1 записей %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ru	%1 записей %2, %3 не выполнено из-за недостаточности прав !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ru	%1 записей %2, %3 не выполнено из-за недостаточности прав!
 %1 entries %2, %3 failed.	infolog	ru	%1 записей %2, %3 не выполнено
 %1 modified	infolog	ru	%1 изменен
 %1 modified by %2 at %3	infolog	ru	%1 изменен %2 в %3
@@ -60,8 +60,8 @@ application mail expected but got: %1	infolog	ru	Ожидалось письмо
 apply the action on the whole query, not only the shown entries!!!	infolog	ru	Применить действие ко всему запросу, НЕ ТОЛЬКО к показываемым записям !!!
 apply the changes	infolog	ru	Применить изменения
 archive	infolog	ru	Архивировать
-are you shure you want to close this entry ?	infolog	ru	Уверены, что хотите закрыть эту запись ?
-are you shure you want to delete this entry ?	infolog	ru	Уверены, что хотите удалить эту запись ?
+are you shure you want to close this entry ?	infolog	ru	Уверены, что хотите закрыть эту запись?
+are you shure you want to delete this entry ?	infolog	ru	Уверены, что хотите удалить эту запись?
 attach a file	infolog	ru	Прикрепить файл
 attach file	infolog	ru	Прикрепить файл
 attachments	infolog	ru	Приложения
@@ -126,8 +126,8 @@ custom contact-address, leave empty to use information from most recent link	inf
 custom contact-information, leave emtpy to use information from most recent link	infolog	ru	Пользовательская информация для контакта, оставьте незаполненным для использования информации из наиболее свежей ссылки
 custom fields	infolog	ru	Пользовательские Поля
 custom fields, type and status	common	ru	Пользовательские поля, тип и состояние
-custom from	infolog	ru	Пользовательский из (?)
-custom regarding	infolog	ru	Пользовательский относительно (?)
+custom from	infolog	ru	Пользовательский из
+custom regarding	infolog	ru	Пользовательский относительно
 custom status for typ	infolog	ru	Пользовательское состояние для типа
 customfields	infolog	ru	Пользовательские поля
 data exchange settings	infolog	ru	Установки обмена данных
@@ -169,7 +169,7 @@ do you want a notification, if items you delegated are due?	infolog	ru	Вы же
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста?
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
 done	infolog	ru	Выполнено
-download	infolog	ru	Загрузить
+download	infolog	ru	Сохранить файл
 download url for links	infolog	ru	Загрузить URL ссылок
 due %1	infolog	ru	Выполнено %1
 due date	infolog	ru	Дата выполнения
@@ -208,7 +208,7 @@ exports in ical format.	infolog	ru	Экспорт в формате iCal.
 exports infolog entries into a csv file.	infolog	ru	Экспорт записей ИнфоЖурнала в файл CSV.
 favorites	infolog	ru	Избранное
 fax	infolog	ru	Факс
-field must not be empty !!!	infolog	ru	Поле должно быть заполнено !!!
+field must not be empty !!!	infolog	ru	Поле должно быть заполнено!
 fields to exclude when copying an infolog:	infolog	ru	Поля для исключения при копировании записей ИнфоЖурнала:
 fields to exclude when creating a sub-entry:	infolog	ru	Поля для исключения при создании дочерних записей:
 fieldseparator	infolog	ru	Разделитель полей
@@ -231,7 +231,7 @@ how many description lines should be directly visible. further lines are availab
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ru	Какова должна быть ширина области описания. Цифровая величина, например, 60.
 html link to the current record	infolog	ru	HTML-ссылка на запись
 id	infolog	ru	ID идентификатор
-id#	infolog	ru	ID # идентификатор
+id#	infolog	ru	ID# идентификатор
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	ru	Если указан каталог с полным путем, %1 показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными.
@@ -297,7 +297,7 @@ manage mapping	infolog	ru	Управление отображениями
 max length of the input [, length of the inputfield (optional)]	infolog	ru	максимальная длина ввода [, длина поля ввода (необязательно)]
 modifier	infolog	ru	Кто изменил
 modifierer	infolog	ru	Кто изменил
-name must not be empty !!!	infolog	ru	Имя не должно быть пустым !!!
+name must not be empty !!!	infolog	ru	Имя не должно быть пустым!
 name of current user, all other contact fields are valid too	infolog	ru	Имя текущего пользователя, все остальные поля контакта также верны
 name of new type to create	infolog	ru	имя вновь создаваемого типа
 never hide search and filters	infolog	ru	никогда не скрывать поиск и фильтры
@@ -493,7 +493,7 @@ today	infolog	ru	Сегодня
 todays date	infolog	ru	сегодняшняя дата
 todo	infolog	ru	Задание
 typ	infolog	ru	Тип
-typ '%1' already exists !!!	infolog	ru	Тип '%1' уже существует !!!
+typ '%1' already exists !!!	infolog	ru	Тип '%1' уже существует!
 type	infolog	ru	Тип
 type ...	infolog	ru	Тип ...
 type of customfield	infolog	ru	Тип пользовательского поля
@@ -520,7 +520,7 @@ view parent with children	infolog	ru	Просмотр родителя с дет
 view subs	infolog	ru	Смотреть дочерние записи
 view the parent of this entry and all his subs	infolog	ru	Показать родительскую запись данной записи и всех подзаписей
 view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница) (?..)
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница)
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?
 which implicit acl rights should the responsible get	infolog	ru	Какие неявные права ACL должен получить ответственный
 which participants should be preselected when scheduling an appointment.	infolog	ru	Какие участники должны быть предварительно выбраны для расписания встречи.

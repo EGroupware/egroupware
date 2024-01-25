@@ -169,8 +169,6 @@ author	common	ja	著者
 autohide sidebox menu's	common	ja	サイドメニューを自動的に隠す
 autohide sidebox menus	common	ja	サイドメニューを自動的に隠す
 automatic update check failed, you need to check manually!	common	ja	Automatic update check failed, you need to check manually!
-automatically hide the sidebox menu's?	common	ja	サイドメニューを自動的に隠しますか?
-automatically hide the sidebox menus?	common	ja	サイドメニューを自動的に隠しますか?
 automatically refresh list	common	ja	リストの自動リフレッシュ
 autosave default category	common	ja	既定のカテゴリを自動保存
 avatar	common	ja	アバター
@@ -406,14 +404,9 @@ denmark	common	ja	デンマーク
 description	common	ja	説明
 detail	common	ja	詳細
 details	common	ja	詳細
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ja	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in .png images?
 direction left to right	common	ja	左から右方法
 directory	common	ja	ディレクトリ
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ja	Directory does not exist, is not readable by the web server or is not relative to the document root!
-disable internet explorer png-image-bugfix	common	ja	Disable Internet Explorer png image bugfix
-disable slider effects	common	ja	スライダー効果を無効化
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ja	Disable the animated slider effects when showing or hiding menus in the page.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ja	Disable the execution a bugfix script for Internet Explorer 5.5 and higher to show transparency in PNG-images.
 disabled	common	ja	不可
 discard changes	common	ja	変更を破棄
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	ja	Displayed in front of input or input is inserted for a '%s' in the label of the Submit button or image file name.
@@ -624,7 +617,7 @@ group has been updated	common	ja	グループを訂正しました。
 group name	common	ja	グループ名
 group public	common	ja	パブリック
 groupbox	common	ja	グループ・ボックス
-groupdav	common	ja	CalDAV / CardCAV 同期
+groupdav	common	ja	CalDAV / CardDAV 同期
 groups	common	ja	グループ
 groups with permission for %1	common	ja	1 に対する権限があるグループ
 groups without permission for %1	common	ja	1 に対する権限がないグループ
@@ -670,7 +663,6 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	ja	ハンガリー
 iceland	common	ja	アイスランド
 id	common	ja	ID
-iespell not detected. click ok to go to download page.	common	ja	ieSpell not detected. Click OK to go to download page.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	ja	If field is disabled an empty table cell is displayed
 if the clock is enabled would you like it to update it every second or every minute?	common	ja	If the clock is enabled would you like it to update it every second or every minute.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	ja	もしエラーの発生が続くようであれば、管理者にエラー・ログのチェック等を依頼してください。
@@ -685,7 +677,6 @@ import	common	ja	インポート
 import an etemplate from a xml-file	common	ja	eTemplate を XML ファイルからインポート
 import table-definitions from existing db-table	common	ja	Import table definitions from existing DB table
 import xml	common	ja	XMLをインポート
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	ja	In order to copy to clipboard, you need to allow Flash player by clicking on gray box.\nYou can permanently allow Flash player for EGroupware in your browser settings.
 include access to any linked files (links tab)	common	ja	リンク先のファイルへのアクセスを含める（リンクタブ）
 increment version to not overwrite the existing template	common	ja	Increment version to not overwrite the existing template.
 index/name of returned content (name of the template, link / method for image)	common	ja	Index/name of returned content, name of the Template, link / method for image.
@@ -970,6 +961,7 @@ only supported by a few fully conformant clients (eg. from apple). if you have t
 only yours	common	ja	自分自身のみ
 oops! you caught us in the middle of system maintainance.	common	ja	Oops! You caught us in the middle of system maintenance.
 open	common	ja	開く
+open existing contact	common	ja	既存のコンタクトを開く
 open notify window	common	ja	通知ウィンドウを開く
 open popup window	common	ja	ポップアップ・ウィンドウを開く
 open sidebox	common	ja	サイド・ボックスを開く
@@ -1447,7 +1439,6 @@ western european	common	ja	西ヨーロッパ
 western sahara	common	ja	西サハラ
 what color should all the blank space on the desktop have	common	ja	What color should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ja	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-what style would you like the image to have?	common	ja	画像スタイル
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ja	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	ja	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	ja	Which groups

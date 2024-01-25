@@ -1,8 +1,17 @@
+%1 days in advance	infolog	pl	%1 dni wcześniej
+%1 deleted	infolog	pl	%1 usunięty.
+%1 deleted by %2 at %3	infolog	pl	%1 usunięty przez %2 w %3
 %1 entries %2	infolog	pl	%1 wpisy %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pl	%1 wpisy %2, %3 nie powiodło się z powodu niewystarczających uprawnień !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pl	%1 wpisy %2, %3 nie powiodło się z powodu niewystarczających uprawnień!
 %1 entries %2, %3 failed.	infolog	pl	%1 wpisy %2, %3 nie powiodły się.
+%1 modified	infolog	pl	%1 zmodyfikowany
+%1 modified by %2 at %3	infolog	pl	%1 zmodyfikowany przez %2 w %3
 %1 records imported	infolog	pl	Zaimportowano %1 rekordów
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pl	%1 rekordów wczytano (jeszcze nie zaimportowano, możesz %2wrócić%3 i odznaczyć Test Import)
+%1 you are responsible for is due at %2	infolog	pl	%1, za który jesteś odpowiedzialny, jest wymagalny w %2
+%1 you are responsible for is starting at %2	infolog	pl	%1, za który jesteś odpowiedzialny, zaczyna się od %2
+%1 you delegated is due at %2	infolog	pl	%1, który delegowałeś, jest wymagalny w %2
+%1 you delegated is starting at %2	infolog	pl	%1, który delegowałeś, zaczyna się od %2
 (and children) deleted	infolog	pl	(i dzieci) usunięte.
 (no subject)	infolog	pl	(bez tematu)
 - subprojects from	infolog	pl	- Projekty podrzędne od
@@ -22,8 +31,10 @@ a short subject for the entry	infolog	pl	Krótki temat tego wpisu
 abort without deleting	infolog	pl	Anuluj bez kasowania
 accept	infolog	pl	Akceptuj
 action	infolog	pl	Czynność
+actions...	infolog	pl	Działania...
 actual date and time	infolog	pl	Aktualna data i czas
 add	infolog	pl	Dodaj
+add / remove link	infolog	pl	Dodaj / usuń link
 add a file	infolog	pl	Dodaj plik
 add a new entry	infolog	pl	Dodaj nowy wpis
 add a new note	infolog	pl	Dodaj nową Notatkę
@@ -31,6 +42,7 @@ add a new phonecall	infolog	pl	Dodaj nowa Rozmowę telefoniczną
 add a new sub-task, -note, -call to this entry	infolog	pl	Dodaj nowe zadanie podrzędne, notatkę podrz. lub rozmowę do tego wpisu
 add a new todo	infolog	pl	Dodaj nowe Do Zrobienia
 add file	infolog	pl	Dodaj plik
+add or delete links	infolog	pl	Dodawanie lub usuwanie linków
 add sub	infolog	pl	Dodaj podrz
 add timesheet entry	infolog	pl	Dodaj wpis czasu pracy
 add:	infolog	pl	Dodaj:
@@ -118,7 +130,7 @@ delegated overdue	infolog	pl	Delegowany zaległy
 delegated upcomming	infolog	pl	Delegowane nadchodzące
 delegation	infolog	pl	Delegacja
 delete	infolog	pl	Kasuj
-delete one record by passing its id.	infolog	pl	Skasuj jeden rekord przekazując jego id.
+delete one record by passing its id.	infolog	pl	Skasuj jeden rekord przekazując jego ID.
 delete selected entries?	infolog	pl	Usunąć wybrane wpisy?
 delete this entry and all listed sub-entries	infolog	pl	Skasuj ten wpis oraz wszystkie podane podwpisy
 deleted	infolog	pl	Skasowany
@@ -140,7 +152,7 @@ do you want a notification, if items you delegated are due?	infolog	pl	Otrzymuj 
 do you want to receive notifications as html-mails or plain text?	infolog	pl	Otrzymuj powiadomienia w postaci wiadomości e-mail w formacie HTML lub zwykłego tekstu.
 don't show infolog	infolog	pl	NIE pokazuj InfoLog
 done	infolog	pl	Wykonano
-download	infolog	pl	Pobierz
+download	infolog	pl	Zapisz plik
 download url for links	infolog	pl	Adres URL pobierania dla linków
 due %1	infolog	pl	Termin %1
 due date	infolog	pl	Termin płatności
@@ -191,10 +203,13 @@ for which types should this field be used	infolog	pl	Dla jakich typów to pole b
 from	infolog	pl	Od
 full list of placeholder names	infolog	pl	Pełna lista nazw zastępczych
 general fields:	infolog	pl	Pola ogólne:
+general settings	infolog	pl	Ustawienia ogólne
 global categories	infolog	pl	Kategorie globalne
 group owner for	infolog	pl	Właściciel grupowy dla
 high	infolog	pl	Wysoki
 history	infolog	pl	Historia
+history logging	infolog	pl	Rejestrowanie historii
+history logging and deleting of items	infolog	pl	Rejestrowanie historii i usuwanie elementów
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	pl	Ile wierszy opisu powinno być bezpośrednio widocznych. Dalsze wiersze są dostępne za pomocą paska przewijania.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	pl	Jak szeroki powinien być obszar opisu. Ta wartość jest numeryczna, np. 60.
 html link to the current record	infolog	pl	Łącze HTML do bieżącego rekordu
@@ -256,11 +271,12 @@ manage mapping	infolog	pl	Zarządzaj mapowaniem
 max length of the input [, length of the inputfield (optional)]	infolog	pl	Maksymalna długość wprowadzanego tekstu [, długość pola (opcjonalnie)]
 modifier	infolog	pl	Modyfikator
 modifierer	infolog	pl	Modyfikator
-name must not be empty !!!	infolog	pl	Nazwa nie może być pusta!!!
+name must not be empty !!!	infolog	pl	Nazwa nie może być pusta!
 name of current user, all other contact fields are valid too	infolog	pl	Nazwa aktualnego użytkownika, wszystkie pozostałe pola kontaktu są prawidłowe
 name of new type to create	infolog	pl	Nazwa nowego tworzonego typu
 never hide search and filters	infolog	pl	Nigdy nie ukrywaj pól wyszukiwania i filtrów
 new %1	infolog	pl	Nowy %1
+new %1 created by %2 at %3	infolog	pl	Nowy %1 utworzony przez %2 w %3
 new name	infolog	pl	Nowa nazwa
 new search	infolog	pl	Nowe wyszukiwanie
 no - cancel	infolog	pl	Nie - Anuluj
@@ -283,12 +299,16 @@ number of records to read (%1)	infolog	pl	Liczba rekordów do wczytania (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	pl	Ilość wierszy dla pól składających się z wielu linijek lub zespołu boksów wielokrotnego wyboru
 offer	infolog	pl	Oferta
 old fixed definition	infolog	pl	Stara stała definicja
+one day after	infolog	pl	Jeden dzień po
+one day in advance	infolog	pl	Jeden dzień wcześniej
 ongoing	infolog	pl	W toku
 only for details	infolog	pl	Tylko dla szczegółów
+only if i get assigned or removed	infolog	pl	Tylko jeśli zostanę przydzielony lub usunięty
 only show them if there is a filter	infolog	pl	Wyświetlanie ich tylko wtedy, gdy istnieje filtr
 only show them while searching	infolog	pl	Wyświetlaj je tylko podczas wyszukiwania
 only the attachments	infolog	pl	Tylko załączniki
 only the links	infolog	pl	Tylko linki
+open and upcoming	infolog	pl	Otwarte i nadchodzące
 open(status)	infolog	pl	Otwarte
 optional note to the link	infolog	pl	Opcjonalna notatka do linku
 order	infolog	pl	Kolejność
@@ -297,8 +317,10 @@ other configurations	infolog	pl	Inne konfiguracje
 overdue	infolog	pl	Zaległe
 own	infolog	pl	Stworzone przez Ciebie - wszystkie
 own open	infolog	pl	Stworzone przez Ciebie - otwarte
+own open and upcoming	infolog	pl	Własne otwarte i nadchodzące
 own overdue	infolog	pl	Stworzone przez Ciebie - zaległe
 own upcoming	infolog	pl	Stworzone przez Ciebie - nadchodzące
+owner does not have edit rights	infolog	pl	Właściciel nie ma praw do edycji
 owner, responsible	infolog	pl	Właściciel, Odpowiedzialny
 parent	infolog	pl	Nadrzędny
 participants for scheduling an appointment	infolog	pl	Uczestnicy planujący spotkanie
@@ -331,7 +353,7 @@ projectmanager	infolog	pl	Menedżer Projektów
 re-planned	infolog	pl	Re-planowany
 re-planned time	infolog	pl	Ponownie zaplanowany czas
 re:	infolog	pl	Odp:
-read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazując jego id.
+read one record by passing its id.	infolog	pl	Odczytaj jeden rekord przekazując jego ID.
 read rights (default)	infolog	pl	Prawda odczytu (domyślne)
 receive notifications about items of type owned by groups you are part of	infolog	pl	Otrzymywanie powiadomień o elementach typu należących do grup, do których należysz
 regular expression	infolog	pl	Wyrażenie regularne
@@ -437,7 +459,7 @@ today	infolog	pl	Dzisiaj
 todays date	infolog	pl	Dzisiejsza data
 todo	infolog	pl	Do zrobienia
 typ	infolog	pl	Typ
-typ '%1' already exists !!!	infolog	pl	Typ %1 już istnieje !!!
+typ '%1' already exists !!!	infolog	pl	Typ %1 już istnieje!
 type	infolog	pl	Typ
 type ...	infolog	pl	Typ ..
 type of customfield	infolog	pl	Typ pola dodatkowego
@@ -450,7 +472,10 @@ unlinked from %1	infolog	pl	Brak powiązania z %1
 upcoming	infolog	pl	Nadchodzące
 urgency	infolog	pl	Pilność
 urgent	infolog	pl	Pilne
+use all	infolog	pl	Użyj wszystkich
 use custom notification message	infolog	pl	Użyj niestandardowego komunikatu powiadomienia
+use field from csv if possible	infolog	pl	Użyj pola z CSV, jeśli to możliwe
+use search results	infolog	pl	Użyj wyników wyszukiwania
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	pl	Użyj tego znacznika dla etykiet adresu. Wstaw zawartość którą chcesz powtórzyć pomiędzy dwa znaczniki.
 used time	infolog	pl	Wykorzystany czas
 values for selectbox	infolog	pl	Wartości selectboxa
@@ -477,7 +502,8 @@ yes, noone can purge deleted items	infolog	pl	Tak, nikt nie może usuwać usuni�
 yes, only admins can purge deleted items	infolog	pl	Tak, tylko administratorzy mogą usuwać usunięte elementy
 yes, with larger fontsize	infolog	pl	Tak, z większą czcionką
 yes, with purging of deleted items possible	infolog	pl	Tak, z możliwością usuwania usuniętych elementów
-you can't delete one of the stock types !!!	infolog	pl	Nie możesz usunąć jesdnego z typów!!!
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pl	Możesz wybrać kategorię, która ma być wstępnie wybrana podczas tworzenia nowego wpisu InfoLog.
+you can't delete one of the stock types !!!	infolog	pl	Nie możesz usunąć jesdnego z typów!
 you have entered an invalid ending date	infolog	pl	Podałeś niepoprawną datę zakończenia
 you have entered an invalid starting date	infolog	pl	Podałeś niepoprawną datę rozpoczęcia
 you have to enter a name, to create a new type!	infolog	pl	Musisz wprowadzić nazwę, aby utworzyć nowy typ!

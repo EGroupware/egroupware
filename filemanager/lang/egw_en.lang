@@ -76,7 +76,7 @@ create directory	filemanager	en	Create folder
 create file	filemanager	en	Create file
 create folder	filemanager	en	Create folder
 created	filemanager	en	Created
-created %1,%2	filemanager	en	Created %1,%2
+created %1,%2	filemanager	en	Created %1, %2
 created directory %1	filemanager	en	Created folder %1
 current directory	filemanager	en	Current folder
 custom fields	filemanager	en	Custom fields
@@ -86,7 +86,7 @@ default action on double-click	filemanager	en	Default action on double-click
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
 default document to insert entries	filemanager	en	Default document to insert entries
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	en	Defines how to handle double click action on a document file. Images are always opened in the expose-view and emails with mail application. All other MIME-types are handled by the browser itself.
-defines how to open a merge print document	filemanager	en	Defines how to open a merge print document
+defines how to open a merge print document	filemanager	en	What should happen to documents after they have been filled?<br><br><b>If Collabora Online is available</b>,  these documents can be opened (and further processed) directly in the browser with Collabora Online.<br><br> <b>Without Collabora Online</b>,  filled document is offered for download.<br><br>More information about Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	en	Delete all older versions and deleted files older than %s days
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete these shares?	filemanager	en	Delete these shares?
@@ -147,7 +147,7 @@ file	common	en	File
 file %1 already exists	filemanager	en	File %1 already exists
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 might be too big.
-file a file is only available with an epl subscription.	filemanager	en	File a file is only available with an EPL subscription.
+file a file is only available with an epl subscription.	filemanager	en	File a file is available with an EPL subscription.
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file or directory not found!	filemanager	en	File or folder not found!
@@ -164,7 +164,7 @@ filesystem	filemanager	en	Filesystem
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	en	Filesystem: mount directory (inside /var/lib/egroupware !) from host filesystem
 finally delete	filemanager	en	Finally delete
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder.\n\nThis can NOT be undone!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	en	Finally delete all older versions and deleted files under given folder.<br>This can NOT be undone!
 finally delete this version	filemanager	en	Finally delete this version
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
@@ -227,9 +227,9 @@ open documents with collabora, if permissions are given	filemanager	en	Open docu
 open odt documents with collabeditor	filemanager	en	Open odt documents with Collabora Online
 operation	filemanager	en	Operation
 password for webdav and smb, use $pass for password of logged in user	filemanager	en	Password for WebDAV and SMB, use $pass for password of logged in user
-paste link	filemanager	en	Paste Link
+paste link	filemanager	en	Paste link
 path %1 not found or not a directory!	filemanager	en	Path %1 not found or not a folder!
-path and query-parameters, smb: share and optional path (with /)	filemanager	en	Path and query-parameters, SMB: share and optional path (with /)
+path and query-parameters, smb: share and optional path (with /)	filemanager	en	Path and query parameters, SMB: share and optional path (with /)
 percentage	filemanager	en	Percentage
 permission denied!	filemanager	en	Permission denied!
 permissions	filemanager	en	Permissions
@@ -247,7 +247,7 @@ quota	filemanager	en	Quota
 quota exceeded	filemanager	en	Quota exceeded
 read & write access	filemanager	en	Read & write access
 read access only	filemanager	en	Read access only
-readonly share link	filemanager	en	Readonly Share link
+readonly share link	filemanager	en	Readonly share link
 recalculate	filemanager	en	Recalculate
 recalculate directory sizes	filemanager	en	Recalculate directory sizes
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	en	Recalculated %1 directories in %2 iterations and %3 seconds
@@ -277,7 +277,7 @@ select file(s) from vfs	common	en	Select file(s) from VFS
 setting for document merge saved.	filemanager	en	Setting for document merge saved.
 share files	filemanager	en	Share files
 share link copied into clipboard	filemanager	en	Share link copied into clipboard
-share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.<br/>Please close this tab.
+share mounted at %1.<br/>please close this tab.	filemanager	en	Share mounted at %1.<br>Please close this tab.
 shared files	filemanager	en	Shared files
 shared with	filemanager	en	Shared with
 show	filemanager	en	Show
@@ -289,10 +289,10 @@ show link "your home directory" in side box menu?	filemanager	en	Show link "Your
 show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home folder*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base folder (/) in side menu?
 size	filemanager	en	Size
-smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAVs and VFS require a username!
+smb, webdavs and vfs require a username!	filemanager	en	SMB, WebDAV and VFS require a username!
 smb: mount samba or windows fileserver shares	filemanager	en	SMB: mount Samba or Windows fileserver shares
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	en	Some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.
-sqlfs statistics	filemanager	en	VFS Statistics
+sqlfs statistics	filemanager	en	VFS statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
 successful mounted %1 on %2.	filemanager	en	Successful mounted %1 on %2.
@@ -308,7 +308,7 @@ the uploaded file is only visible to the person sharing these files with you, no
 there's already a directory with that name!	filemanager	en	There's already a folder with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
 tile view	filemanager	en	Tile view
-to overwrite the existing file store again.	filemanager	en	To overwrite the existing filestore again
+to overwrite the existing file store again.	filemanager	en	To overwrite the existing file store again
 total files	filemanager	en	Total files
 ui mode	filemanager	en	Standard Toolbar
 under directory	filemanager	en	under folder
@@ -319,7 +319,7 @@ up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
 upload fields	filemanager	en	Upload fields
 upload files	filemanager	en	Upload files
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 user color indicator	filemanager	en	User color indicator
 user home quota	filemanager	en	User home quota
@@ -330,7 +330,7 @@ versioning requires egroupware epl	filemanager	en	Versioning requires EGroupware
 vfs mounts and versioning	common	en	VFS mounts and versioning
 view link	filemanager	en	View link
 webdav link copied into clipboard	filemanager	en	WebDAV link copied into clipboard
-webdavs: mount egroupware or *cloud shares	filemanager	en	WebDAVs: mount EGroupware or *Cloud shares
+webdavs: mount egroupware or *cloud shares	filemanager	en	WebDAV: mount EGroupware or *Cloud shares
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	en	Who should be allowed to finally delete deleted files or old versions of a file:
 writable share link	filemanager	en	Writable Share link
 wrong username or password!	filemanager	en	Wrong username or password!
@@ -345,5 +345,5 @@ you need to select an owner!	filemanager	en	You need to select an owner!
 you need to select some files first!	filemanager	en	You need to select some files first!
 you will be redirected to your home directory.	filemanager	en	You will be redirected to your home folder.
 you will be redirected to your start folder.	filemanager	en	You will be redirected to your start folder.
-your home dir did not exist, egroupware created a new one.	filemanager	en	Your Home Dir did not exist, EGroupware created a new one.
+your home dir did not exist, egroupware created a new one.	filemanager	en	Your home directory did not exist, EGroupware created a new one.
 your home directory	filemanager	en	Home folder

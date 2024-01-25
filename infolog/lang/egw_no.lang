@@ -2,7 +2,7 @@
 %1 deleted	infolog	no	%1 slettet.
 %1 deleted by %2 at %3	infolog	no	%1 slettet av %2 kl. %3
 %1 entries %2	infolog	no	%1 oppføringer %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	no	%1 oppføringer %2, %3 mislyktes på grunn av utilstrekkelige rettigheter !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	no	%1 oppføringer %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 entries %2, %3 failed.	infolog	no	%1 oppføringer %2, %3 mislyktes.
 %1 modified	infolog	no	%1 endret
 %1 modified by %2 at %3	infolog	no	%1 endret av %2 kl. %3
@@ -31,8 +31,10 @@ a short subject for the entry	infolog	no	En kort emnebeskrivelse for innslaget
 abort without deleting	infolog	no	Avslutt uten å slette
 accept	infolog	no	Aksepter
 action	infolog	no	Funksjon
+actions...	infolog	no	Handlinger...
 actual date and time	infolog	no	Aktuell dato og tid
 add	infolog	no	Legg til
+add / remove link	infolog	no	Legg til/fjern lenke
 add a file	infolog	no	Legg til fil
 add a new entry	infolog	no	Legg til ny oppføring
 add a new note	infolog	no	Legg til ny notat
@@ -40,6 +42,7 @@ add a new phonecall	infolog	no	Legg til nytt telefon-oppkall
 add a new sub-task, -note, -call to this entry	infolog	no	Legg til under-oppgave - notat eller -oppkall
 add a new todo	infolog	no	Legg til nytt gjøremål
 add file	infolog	no	Vedlegg fil
+add or delete links	infolog	no	Legg til eller slett lenker
 add sub	infolog	no	Legg til under
 add timesheet entry	infolog	no	Legg til forekomst i timeregistrering
 add:	infolog	no	Legg til:
@@ -54,6 +57,7 @@ always show them	infolog	no	Vis dem alltid
 application mail expected but got: %1	infolog	no	Forventet, men mottatt søknads-e-post: %1
 apply the changes	infolog	no	Lagre endringene
 archive	infolog	no	Arkiver
+are you shure you want to close this entry ?	infolog	no	Er du sikker på at du vil lukke denne oppføringen?
 are you shure you want to delete this entry ?	infolog	no	Er du sikker på at du vil slette dette innslaget?
 attach a file	infolog	no	Vedlegg en fil
 attach file	infolog	no	Vedlegg fil
@@ -76,7 +80,7 @@ click here to create the link	infolog	no	Klikk her for å lage lenke
 click here to start the search	infolog	no	Klikk her for å starte søket
 close	infolog	no	Lukk
 close all	infolog	no	Lukk alle
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	no	kolon (:)-separert liste over feltnavn som skal brukes hvis verdien er tom eller for å summere opp
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	no	Kolon (:)-separert liste over feltnavn som skal brukes hvis verdien er tom eller for å summere opp
 comment	infolog	no	Kommentar
 completed	infolog	no	Utført
 configuration	infolog	no	Konfigurasjon
@@ -122,7 +126,7 @@ delegated overdue	infolog	no	Delegert forfalt
 delegated upcomming	infolog	no	Delegert kommende
 delegation	infolog	no	Delegering
 delete	infolog	no	Slett
-delete one record by passing its id.	infolog	no	Slett en rekke etter ID
+delete one record by passing its id.	infolog	no	Slett en rekke etter ID.
 delete selected entries?	infolog	no	Slette valgte oppføringer?
 delete this entry and all listed sub-entries	infolog	no	Slette dette forekomsten og alle listede underforekomster
 deleted	infolog	no	Slettet
@@ -144,7 +148,7 @@ do you want a notification, if items you delegated are due?	infolog	no	Bli varsl
 do you want to receive notifications as html-mails or plain text?	infolog	no	Motta varsler som HTML-e-post eller ren tekst.
 don't show infolog	infolog	no	IKKE vis InfoLog
 done	infolog	no	Ferdig
-download	infolog	no	Nedlasting
+download	infolog	no	Lagre fil
 download url for links	infolog	no	Last ned URL for lenker
 due %1	infolog	no	Forfall %1
 due date	infolog	no	Forfallsdato
@@ -158,6 +162,7 @@ edit status	infolog	no	Endre status
 edit the entry	infolog	no	Endre dette innslaget
 edit this entry	infolog	no	Endre dette innslaget
 empty for all	infolog	no	Tømme alle
+encrypt description	infolog	no	Krypter beskrivelse
 end	infolog	no	Slutt
 enddate	infolog	no	Sluttdato
 enddate can not be before startdate	infolog	no	Sluttdato kan ikke være før startdato
@@ -230,6 +235,7 @@ infolog entry deleted	infolog	no	InfoLog forekomst slettet
 infolog entry saved	infolog	no	InfoLog forekomst lagret
 infolog ical export	infolog	no	InfoLog iCal-eksport
 infolog ical import	infolog	no	InfoLog iCal-import
+infolog id	infolog	no	InfoLog ID
 infolog list	infolog	no	InfoLog liste
 infolog preferences	common	no	InfoLog preferanser
 infolog-fieldname	infolog	no	InfoLog Feltnavn
@@ -271,6 +277,7 @@ no details	infolog	no	Ingen detaljer
 no entries found, try again ...	infolog	no	Ingen innslag funnet, prøv igjen ...
 no filter	infolog	no	Ufiltrert
 no links or attachments	infolog	no	Ingen lenker eller vedlegg
+no project	infolog	no	Ikke noe prosjekt
 nonactive	infolog	no	Ikke aktiv
 none	infolog	no	Ingen
 normal	infolog	no	Normal
@@ -283,11 +290,16 @@ number of records to read (%1)	infolog	no	Antall rekker som skal leses (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	no	Antall rekker i multi-linje felter eller linjer i multi-valg bokser
 offer	infolog	no	Tilbud
 old fixed definition	infolog	no	Gammel fast definisjon
+one day after	infolog	no	En dag etter
+one day in advance	infolog	no	En dag i forveien
 ongoing	infolog	no	Pågående
+only for details	infolog	no	Bare for detaljer
+only if i get assigned or removed	infolog	no	Bare hvis jeg blir tildelt eller fjernet
 only show them if there is a filter	infolog	no	Vis dem bare hvis det finnes et filter
 only show them while searching	infolog	no	Vis dem bare under søk
 only the attachments	infolog	no	Kun vedlegg
 only the links	infolog	no	Kun lenker
+open and upcoming	infolog	no	Åpne og kommende
 open(status)	infolog	no	Åpen
 optional note to the link	infolog	no	Valgfri notat om Lenken
 order	infolog	no	Ordre
@@ -296,10 +308,13 @@ other configurations	infolog	no	Andre konfigurasjoner
 overdue	infolog	no	Forfalt
 own	infolog	no	Egen
 own open	infolog	no	Egen åpen
+own open and upcoming	infolog	no	Egen åpen og kommende
 own overdue	infolog	no	Egen forfalt
 own upcoming	infolog	no	Egen kommende
+owner does not have edit rights	infolog	no	Eier har ikke redigeringsrettigheter
 owner, responsible	infolog	no	Eier, ansvarlig
 parent	infolog	no	Overordnet
+parent infolog	infolog	no	Overordnet InfoLog
 participants for scheduling an appointment	infolog	no	Deltakere for planlegging av en avtale
 path on (web-)serverside<br>eg. /var/samba/share	infolog	no	Sti på (web-)tjener<br>f.eks /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	no	Sti til bruker og gruppefiler. MÅ VÆRE UTENFOR web tjenerens dokument-rot!!!
@@ -365,6 +380,7 @@ select an action	infolog	no	Velg en handling
 select an action...	infolog	no	Velg en handling...
 select an app to search in	infolog	no	Velg applikasjon det skal søkes i
 select an entry to link with	infolog	no	Velg innslag som skal lenkes med
+select multiple contacts for a further action	infolog	no	Velg flere kontakter for videre handling
 select new category	infolog	no	Velg ny kategori
 select to filter by owner	infolog	no	Velg å filtrere for eier
 select to filter by responsible	infolog	no	Velg å filtrere for ansvarlig
@@ -413,12 +429,14 @@ tasks of	infolog	no	Oppgaver av
 template	infolog	no	Mal
 test import (show importable records <u>only</u> in browser)	infolog	no	Test Import (vis importerbare rekker, <u>kun</u> i webleser)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	no	Dokumentet kan inneholde plassholdere som {{%1}}, som erstattes med dataene.
+the following document-types are supported:	infolog	no	Følgende dokumenttyper støttes:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	no	Navnet benyttet intertnt(<= 10 kar.), endring gjør eksisterende data utilgjengelige.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	no	Navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
 the text displayed to the user	infolog	no	Teksten som vises til bruker
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	no	Dette er filteret InfoLog bruker når du starter applikasjonen. Et filter begrenser antall innslag som vises på skjermen. Det finnes filter som viser kun lukkede, åpne eller fremtidige innslag for deg selv eller alle brukere.
 til when should the todo or phonecall be finished	infolog	no	Innen hvilket tidspunkt skal gjøremål eller telefonoppkall være avsluttet
 times	infolog	no	Ant. ganger
+titles of any entries linked to the current record, excluding attached files	infolog	no	Titler på alle oppføringer som er knyttet til den aktuelle posten, unntatt vedlagte filer.
 to many might exceed your execution-time-limit	infolog	no	For mange kan overgå din uførelse-tids-begrensning
 to what should the startdate of new entries be set.	infolog	no	Hva skal startdato for nye forekomster settes lik
 today	infolog	no	Idag
@@ -428,6 +446,7 @@ typ	infolog	no	Type
 typ '%1' already exists !!!	infolog	no	Typen '%1' eksisterer allerede!
 type	infolog	no	Type
 type ...	infolog	no	Type ...
+type of customfield	infolog	no	Type egendefinert felt
 type of field	infolog	no	Type felt
 type of the log-entry: note, phonecall or todo	infolog	no	Type oppføring i InfoLog
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	no	Kan ikke lenke til %3 via det egendefinerte feltet "%1": "%4". %2 samsvarer.
@@ -437,6 +456,7 @@ unlinked from %1	infolog	no	Ikke lenket fra %1
 upcoming	infolog	no	Nært forestående
 urgency	infolog	no	Nødvendighet
 urgent	infolog	no	Haster
+use all	infolog	no	Bruk alle
 use custom notification message	infolog	no	Bruk egendefinert varslingsmelding
 used time	infolog	no	Brukt tid
 values for selectbox	infolog	no	Verdier for valgboksene
@@ -447,8 +467,10 @@ view parent with children	infolog	no	Vis forelder med barn
 view subs	infolog	no	Vis Subs
 view the parent of this entry and all his subs	infolog	no	Vis hovedsak for dette innslaget og alle subs
 view this linked entry in its application	infolog	no	Vis lenken i den egens applikasjon
-when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	no	Når gjøremål eller telefonoppkall startes vil dette vises fra den datoen blablabla
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	no	Når gjøremål eller telefonoppkall startes vil dette vises fra den datoen
+which additional fields should the responsible be allowed to edit without having edit rights?	infolog	no	Hvilke tilleggsfelt skal den ansvarlige kunne redigere uten å ha redigeringsrettigheter?
 which implicit acl rights should the responsible get	infolog	no	Hvilke implisitte ACL-rettigheter skal den ansvarlige få?
+which participants should be preselected when scheduling an appointment.	infolog	no	Hvilke deltakere som skal forhåndsvelges når du planlegger en avtale.
 which types should the calendar show	infolog	no	Hvilke typer skal kalenderen vise
 which types should the calendar show like events?	infolog	no	Hvilke deltakere skal forhåndsvelges når du planlegger en avtale?
 will-call	infolog	no	Vil ringe
@@ -461,7 +483,8 @@ yes, noone can purge deleted items	infolog	no	Ja, ingen kan slette slettede post
 yes, only admins can purge deleted items	infolog	no	Ja, bare administratorer kan slette slettede poster
 yes, with larger fontsize	infolog	no	Ja, med større skriftstørrelse
 yes, with purging of deleted items possible	infolog	no	Ja, med mulighet for rensing av slettede poster
-you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av lagertypene !!!
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	no	Du kan velge en kategori som skal forhåndsvelges når du oppretter en ny InfoLog-oppføring.
+you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av lagertypene!
 you have entered an invalid ending date	infolog	no	Du har skrevet inn en ugyldig sluttdato
 you have entered an invalid starting date	infolog	no	Du har skrevet inn en ugyldig startdato
 you have to enter a name, to create a new type!	infolog	no	Du må oppgi et navn for å opprette en ny type!

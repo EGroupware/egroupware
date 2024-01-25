@@ -10,6 +10,7 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisami
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
 aliases+forwards	mail	et	Pseudonimed + Edasisaatmine
 all of	mail	et	kõik välja
+always respond / auto-responder	mail	et	Alati vastata / automaatne vastus
 always show html emails	mail	et	Alati näita HTML emaile
 always show notifiction	mail	et	Näita alati teavitust
 answered	mail	et	Vastatud
@@ -24,7 +25,10 @@ by date	mail	et	Kuupäeva järgi
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	et	Vaikimisi asendatakse "http://" lihtsalt "https://". Saate vabalt konfigureerida 'https://proxy.egroupware.org/', et laadida ka pilte, mis on saadaval ainult http kaudu.
 caching of flags	mail	et	Lipude vahemälu
 can not resolve the winmail.dat attachment!	mail	et	Ei saa lahendada winmail.dat manustust!
+certificate details	mail	et	Sertifikaadi üksikasjad
+certificate in text	mail	et	Sertifikaadi tekst
 certificate info for email %1	mail	et	Sertifikaadi info e-posti %1 jaoks
+certificate issued by	mail	et	Sertifikaadi on välja andnud
 changing subject failed because of %1	mail	et	Teema muutmine ebaõnnestus %1 tõttu
 changing subject failed folder %1 does not exist	mail	et	Teema muutmine ebaõnnestus kaust %1 ei ole olemas.
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
@@ -55,12 +59,15 @@ don't use sent	mail	et	Ära kasuta Sent
 don't use trash	mail	et	Ära kasuta Trash
 draft	mail	et	Eelnõu
 edit account	mail	et	Muuda kontot
+email address	mail	et	E-posti aadress
+emailaddress	admin	et	E-posti aadress
 emailadmin: profilemanagement	mail	et	eMailAdmin: Profiili haldamine
 emails in whitelisted domains are not marked as spam	mail	et	Lubatud
 empty trash	mail	et	tühjenda prügi
 enable	mail	et	Luba
 enabled	mail	et	Lubatud
 encrypt your message with smime certificate	mail	et	Krüpteerige oma sõnum S/MIME sertifikaadiga
+every %1. day	mail	et	Iga %1. päev
 examine namespace to retrieve folders in others and shared	mail	et	Uurige nimeruumi, et otsida kaustu teistes ja jagatud
 extended	mail	et	Laiendatud
 failed to subscribe folder %1!	mail	et	Ei õnnestunud tellida kausta %1!
@@ -137,6 +144,7 @@ no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub
 non	mail	et	Mitte
 on	mail	et	:
+once per day	mail	et	Üks kord päevas
 only email	mail	et	Ainult e-post
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	et	Ainult siis mõttekas, kui te edastate parooli läbi teise kanali / väljaspool seda posti saajatele!
 only name	mail	et	Ainult nimi
@@ -180,6 +188,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	et	Teatage sellest e-posti sisust kui rämpspost - rämpsposti lahendused, nagu spamTitan, õpivad ära
 required pear class mail/mimedecode.php not found.	mail	et	Vajalikku PEAR klassi Mail/mimeDecode.php ei leitud.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	et	Vajalik keelata, kui kasutate Dovecot'i koos privaatse nähtud lipuga jagatud või kasutaja kausta!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	et	S/MIME krüpteerimine ebaõnnestus, sest saatja aadressi jaoks ei leitud sertifikaati: %1
 save all attachments to filemanager	mail	et	Salvesta kõik manused failihaldurisse
 save as infolog on send	mail	et	Salvesta infoLogina saatmisel
 save the drafted message as eml file into vfs	mail	et	Salvesta koostatud sõnum eml-failina failihaldurisse
@@ -208,9 +217,11 @@ show vertical	mail	et	Näita vertikaalset
 show vertical with all columns	mail	et	Näita vertikaalselt kõiki veergusid
 show/hide preview pane in mail list view	mail	et	Näita/peida eelvaatepaneel postide loendi vaates
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	et	Näitab ajutiselt nähtavat teadet, mis sisaldab aadressi, teemat ja katkendit e-kirjast
+sign your message with smime certificate	mail	et	S/MIME sertifikaadiga signeerige oma sõnum
 signature	mail	et	Allkiri
 signature at top	mail	et	allkiri üleval
 signature position and visibility	mail	et	Allkirja asukoht ja nähtavus
+signed by	mail	et	Allkirjastanud
 size(...->0)	mail	et	Suurus (...->0)
 size(0->...)	mail	et	Suurus (0->...)
 small view	mail	et	väike vaade
@@ -243,4 +254,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	et	Te peate enne sõnumi VFS-i salvestamist salvestama selle eelnõuna.
 you will loose current message body, unless you save it to your clipboard!	mail	et	Te kaotate praeguse sõnumi teksti, kui te ei salvesta seda lõikelauale!
 you've got new mail	mail	et	Teil on uus e-kiri
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.\n Kuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.\n Kui see ei aidanud, paluge administraatoril suurendada kvooti.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.<br>Kuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.<br>Kui see ei aidanud, paluge administraatoril suurendada kvooti.

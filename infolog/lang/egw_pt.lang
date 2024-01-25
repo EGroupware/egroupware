@@ -2,7 +2,7 @@
 %1 deleted	infolog	pt	%1 excluído.
 %1 deleted by %2 at %3	infolog	pt	%1 %2 deletado por em %3
 %1 entries %2	infolog	pt	%1 %2 entradas
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pt	%1 entradas %2, %3 falharam devido a direitos insuficientes !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	pt	%1 entradas %2, %3 falharam devido a direitos insuficientes!
 %1 entries %2, %3 failed.	infolog	pt	%1 %2 entradas, 3% falharam.
 %1 modified	infolog	pt	%1 modificado
 %1 modified by %2 at %3	infolog	pt	%1 %2 modificado por a 3%
@@ -53,14 +53,15 @@ all links and attachments	infolog	pt	Todas as ligações e anexos
 all other %1 fields are valid	infolog	pt	Todos os outros campos %1 são válidos
 all projects	infolog	pt	Todos os projetos
 allow to save entries with due date in the past	infolog	pt	Permitir guardar registos com data de vencimento no passado
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt	permite definir o estado de um registo, por exemplo: definir uma tarefa a executar quando acabar (valores dependentes do tipo de registo)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt	Permite definir o estado de um registo, por exemplo: definir uma tarefa a executar quando acabar (valores dependentes do tipo de registo)
 alternatives	infolog	pt	Alternativas
 always show them	infolog	pt	Mostrá-las sempre
 application mail expected but got: %1	infolog	pt	Correio Aplicação esperava, mas tenho: 1%
+apply the action on the whole query, not only the shown entries!!!	infolog	pt	Aplicar a ação a toda a consulta, NÃO apenas às entradas apresentadas!
 apply the changes	infolog	pt	Aplicar alterações
 archive	infolog	pt	Arquivo
 are you shure you want to close this entry ?	infolog	pt	Você tem certeza que deseja fechar esta entrada?
-are you shure you want to delete this entry ?	infolog	pt	Tem a certeza de que deseja eliminar este registo ?
+are you shure you want to delete this entry ?	infolog	pt	Tem a certeza de que deseja eliminar este registo?
 attach a file	infolog	pt	Anexar  um ficheiro
 attach file	infolog	pt	Anexar ficheiro
 attachments	infolog	pt	Anexos
@@ -70,6 +71,7 @@ back to main list	infolog	pt	Voltar à lista principal
 billed	infolog	pt	Facturado
 both	infolog	pt	Ambos
 call	infolog	pt	A telefonar
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	pt	Pode ser utilizado para mostrar outros tipos de InfoLog no calendário ou limitá-lo a mostrar, por exemplo, apenas tarefas.
 can not return an exact number of rows and therefore hides the count.	admin	pt	Não pode devolver um número exato de linhas, pelo que oculta a contagem.
 cancel	infolog	pt	Cancelar
 cancelled	infolog	pt	Cancelado
@@ -91,12 +93,12 @@ check to set startday	infolog	pt	Marcar para configurar dia de início
 check to specify custom contact	infolog	pt	Verifique para especificar contato personalizado
 choose owner of imported data	infolog	pt	Escolha proprietário de dados importada
 click here to create the link	infolog	pt	Clique aqui para criar a Ligação
-click here to start the search	infolog	pt	clique aqui para iniciar a pesquisa
+click here to start the search	infolog	pt	Clique aqui para iniciar a pesquisa
 close	infolog	pt	Fechar
 close all	infolog	pt	Fechar tudo
 close this entry and all listed sub-entries	infolog	pt	Feche esta entrada e todos os sub entradas listadas
 closed	infolog	pt	Fechado.
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	pt	lista separada por dois pontos (:) de nomes de campos a utilizar se o valor estiver vazio ou para somar
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	pt	Lista separada por dois pontos (:) de nomes de campos a utilizar se o valor estiver vazio ou para somar
 comment	infolog	pt	Comentário
 compare	infolog	pt	Comparar
 completed	infolog	pt	Concluído
@@ -134,7 +136,7 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	pt	Data de criação
 dates, status, access	infolog	pt	Datas, Estado, Acesso
 days	infolog	pt	Dias
-default category for new infolog entries	infolog	pt	Categoria padrão para novas entradas Infolog
+default category for new infolog entries	infolog	pt	Categoria padrão para novas entradas InfoLog
 default document to insert entries	infolog	pt	Documento padrão para inserir entradas
 default filter for infolog	infolog	pt	Filtro do acesso à informação por omissão
 default status for a new log entry	infolog	pt	Estado de um novo registo de acesso por omissão
@@ -167,13 +169,13 @@ do you want a notification, if items you delegated are due?	infolog	pt	Ser notif
 do you want to receive notifications as html-mails or plain text?	infolog	pt	Receber notificações como mensagens de correio eletrónico HTML ou texto simples.
 don't show infolog	infolog	pt	NÃO exibir acesso à informação
 done	infolog	pt	Concluído
-download	infolog	pt	Transferir
+download	infolog	pt	Guardar ficheiro
 download url for links	infolog	pt	Baixe url para links
 due %1	infolog	pt	Devido 1%
 due date	infolog	pt	Data de vencimento
 duration	infolog	pt	Duração
 e-mail:	infolog	pt	Email:
-each value is a line like <id>[=<label>]	infolog	pt	Cada valor é uma linha como <id>[=<etiqueta>]
+each value is a line like <id>[=<label>]	infolog	pt	Cada valor é uma linha como <id>[=<label>]
 edit	infolog	pt	Editar
 edit or create categories for ingolog	infolog	pt	Editar ou criar ctegorias para o acesso à informação
 edit rights (full edit rights incl. making someone else responsible!)	infolog	pt	Direitos de edição. Direitos de edição totais, incluindo a responsabilização de outra pessoa!
@@ -201,13 +203,13 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	pt	Executar uma ação adicional para esta entrada
 existing links	infolog	pt	Ligações existentes
 exists	infolog	pt	Existe
-export definition to use for nextmatch export	infolog	pt	Definição Exportar para usar para exportação NextMatch
+export definition to use for nextmatch export	infolog	pt	Definição Exportar para usar para exportação nextmatch
 exports in ical format.	infolog	pt	Exportações em formato iCal.
-exports infolog entries into a csv file.	infolog	pt	Exportações Infolog entradas para um arquivo CSV.
+exports infolog entries into a csv file.	infolog	pt	Exportações InfoLog entradas para um arquivo CSV.
 favorites	infolog	pt	Favoritos
 fax	infolog	pt	Fax
-field must not be empty !!!	infolog	pt	O campo não pode estar vazio !!!
-fields to exclude when copying an infolog:	infolog	pt	Os campos a serem excluídos ao copiar um infolog:
+field must not be empty !!!	infolog	pt	O campo não pode estar vazio!
+fields to exclude when copying an infolog:	infolog	pt	Os campos a serem excluídos ao copiar um InfoLog:
 fields to exclude when creating a sub-entry:	infolog	pt	Campos para excluir a criação de uma sub-entrada:
 fieldseparator	infolog	pt	Separador de campos
 finish	infolog	pt	Fim
@@ -223,8 +225,8 @@ global categories	infolog	pt	Categorias gerais
 group owner for	infolog	pt	Proprietário do grupo para
 high	infolog	pt	Alta
 history	infolog	pt	Histórico
-history logging	infolog	pt	Logging História
-history logging and deleting of items	infolog	pt	Logging História e exclusão de itens
+history logging	infolog	pt	Logging história
+history logging and deleting of items	infolog	pt	Logging história e exclusão de itens
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	pt	Quantas linhas de descrição devem ser diretamente visíveis. Estão disponíveis mais linhas através de uma barra de deslocação.
 how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	pt	Qual deve ser a largura da área de descrição. Este valor é numérico, por exemplo, 60.
 html link to the current record	infolog	pt	Link HTML para o registro atual
@@ -264,14 +266,18 @@ insert	infolog	pt	Inserir
 insert in document	infolog	pt	Insira no documento
 insert timestamp into description field	infolog	pt	Inserir carimbo da hora no campo de descrição
 invalid filename	infolog	pt	Nome de ficheiro inválido
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	pt	ID do proprietário inválido: %1. Utilizado em vez de %2.
 invalid status for entry type %1.	infolog	pt	Estado inválido para o tipo de entrada %1.
 label<br>helptext	infolog	pt	Etiqueta<br>Texto de ajuda
 last changed	infolog	pt	Última alteração
 last modified	infolog	pt	Última modificação
+leave blank to get the used time calculated by timesheet entries	infolog	pt	Deixar em branco para obter o tempo utilizado calculado pelas entradas da folha de horas de trabalho
 leave it empty	infolog	pt	Deixar vazio
 leave it empty for a full week	infolog	pt	Deixar vário para uma semana interira
 leave without saveing the entry	infolog	pt	Continua sem guardar o registo
 leaves without saveing	infolog	pt	Continua sem guardar
+length	infolog	pt	Duração
+limit list to last n month, if ordering by last-modified and not searching.	admin	pt	Limitar a lista aos últimos N meses, se a ordenação for feita pela última modificação e não for efectuada uma pesquisa.
 limit number of description lines (default 5, 0 for no limit)	infolog	pt	Limite do número de linhas de descrição. Predefinição = 5, 0 = sem limite.
 limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	pt	Limitar a largura da coluna de descrição. Só é efetivo se o limite de linhas estiver definido. 0 = sem limite.
 link	infolog	pt	Ligação
@@ -291,7 +297,7 @@ manage mapping	infolog	pt	Gerenciar mapeamento
 max length of the input [, length of the inputfield (optional)]	infolog	pt	Comprimento máximo do campo [, comprimento do campo (opcional)]
 modifier	infolog	pt	Modifier
 modifierer	infolog	pt	Modifier
-name must not be empty !!!	infolog	pt	O campo do nome não pode estar vazio !!!
+name must not be empty !!!	infolog	pt	O campo do nome não pode estar vazio!
 name of current user, all other contact fields are valid too	infolog	pt	Nome do utilizador atual, todos os outros campos de contacto também são válidos
 name of new type to create	infolog	pt	Nome do novo tipo a criar
 never hide search and filters	infolog	pt	Nunca esconder a pesquisa e filtros
@@ -343,7 +349,7 @@ own upcoming	infolog	pt	Minhas -- a chegar
 owner does not have edit rights	infolog	pt	Proprietário não tem direitos de edição
 owner, responsible	infolog	pt	Proprietário, Responsável
 parent	infolog	pt	Principal
-parent infolog	infolog	pt	Infolog Pais
+parent infolog	infolog	pt	InfoLog Pais
 participants for scheduling an appointment	infolog	pt	Participantes para agendar uma consulta
 path on (web-)serverside<br>eg. /var/samba/share	infolog	pt	Caminho no lado do servidor (Web)<br>ex: /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pt	O caminho para os ficheiros do utilizador ou grupo tem de ser externo ao root de documentos de servidores Web.
@@ -376,9 +382,13 @@ re-planned time	infolog	pt	Tempo re-planejado
 re:	infolog	pt	Re:
 read one record by passing its id.	infolog	pt	Ler um registo ao passar a sua ID
 read rights (default)	infolog	pt	Direitos de leitura (por omissão)
+receive notifications about due entries you are responsible for	infolog	pt	Receber notificações sobre os lançamentos vencidos pelos quais é responsável
+receive notifications about due entries you delegated	infolog	pt	Receber notificações sobre as entradas a vencer que delegou
 receive notifications about items assigned to you	infolog	pt	Receba notificações sobre os itens atribuídos a você
 receive notifications about items of type owned by groups you are part of	infolog	pt	Receber notificações sobre itens do tipo pertencente a grupos de que faz parte
 receive notifications about own items	infolog	pt	Receber notificações sobre próprios itens
+receive notifications about starting entries you are responsible for	infolog	pt	Receber notificações sobre entradas iniciais pelas quais é responsável
+receive notifications about starting entries you delegated	infolog	pt	Receber notificações sobre o início de entradas que delegou
 receive notifications as html-mails	infolog	pt	Receber notificações de mensagens em HTML.
 regular expression	infolog	pt	Expressão regular
 remark	infolog	pt	Remarcar
@@ -393,13 +403,13 @@ responsible open	infolog	pt	Responsável -- abertas
 responsible open and upcoming	infolog	pt	Responsável aberta e próxima
 responsible overdue	infolog	pt	Responsável -- atrasadas
 responsible upcoming	infolog	pt	Responsável -- a chegar
-responsible user, priority	infolog	pt	utilizador responsável, prioridade
+responsible user, priority	infolog	pt	Utilizador responsável, prioridade
 returns a list / search for records.	infolog	pt	Volta à lista / pesquisa por registos.
 rights for the responsible	infolog	pt	Direitos do responsável
 rows	infolog	pt	Linhas
 same day	infolog	pt	Mesmo dia
 save	infolog	pt	Guardar
-saves the changes made and leaves	infolog	pt	guarda as alterações e deixa
+saves the changes made and leaves	infolog	pt	Guarda as alterações e deixa
 saves this entry	infolog	pt	Guarda este registo
 schedule appointment	infolog	pt	Horário nomeação
 search	infolog	pt	Pesquisar
@@ -410,7 +420,7 @@ select a category for this entry	infolog	pt	Seleccionar uma categoria para este 
 select a price	infolog	pt	Seleccione um preço
 select a priority for this task	infolog	pt	Seleccionar uma prioridade para esta tarefa
 select a project	infolog	pt	Seleccionar um projecto
-select a responsible user: a person you want to delegate this task	infolog	pt	seleccionar um utilizador responsável: uma pessoa a quem deseja delegar esta tarefa
+select a responsible user: a person you want to delegate this task	infolog	pt	Seleccionar um utilizador responsável: uma pessoa a quem deseja delegar esta tarefa
 select a typ to edit it's status-values or delete it	infolog	pt	Seleccionar um tipo para editar os seus valores de estado ou para o eliminar
 select an action	infolog	pt	Selecione uma ação
 select an action...	infolog	pt	Selecione uma ação ...
@@ -483,7 +493,7 @@ today	infolog	pt	Hoje
 todays date	infolog	pt	Data de hoje
 todo	infolog	pt	Tarefas
 typ	infolog	pt	Tipo
-typ '%1' already exists !!!	infolog	pt	Tipo '%1' já existe !!!
+typ '%1' already exists !!!	infolog	pt	Tipo '%1' já existe!
 type	infolog	pt	Tipo
 type ...	infolog	pt	Tipo ...
 type of customfield	infolog	pt	Tipo de campo personalizado
@@ -527,7 +537,7 @@ yes, only admins can purge deleted items	infolog	pt	Sim, só os administradores 
 yes, with larger fontsize	infolog	pt	Sim, com maior tamanho da fonte
 yes, with purging of deleted items possible	infolog	pt	Sim, com o expurgo de itens excluídos possíveis
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pt	Pode escolher uma categoria a ser pré-selecionada, quando cria uma nova entrada no InfoLog.
-you can't delete one of the stock types !!!	infolog	pt	Não pode eliminar um dos tipos de armazenamento !!!
+you can't delete one of the stock types !!!	infolog	pt	Não pode eliminar um dos tipos de armazenamento!
 you have entered an invalid ending date	infolog	pt	Inseriu uma data de fim inválida
 you have entered an invalid starting date	infolog	pt	Inseriu uma data de início inválida
 you have to enter a name, to create a new type!	infolog	pt	É necessário introduzir um nome para criar um novo tipo!

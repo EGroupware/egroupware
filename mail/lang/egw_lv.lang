@@ -24,7 +24,10 @@ be aware that all attachments will be sent as %1!	mail	lv	Ņemiet vērā, ka vis
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	lv	Pēc noklusējuma "http://" tiek aizstāts ar "https://". Varat konfigurēt 'https://proxy.egroupware.org/', lai ielādētu arī attēlus, kas pieejami tikai caur http.
 caching of flags	mail	lv	Karodziņu kešēšana
 can not resolve the winmail.dat attachment!	mail	lv	Nevar atrisināt winmail.dat pielikumu!
+certificate details	mail	lv	Sertifikāta informācija
+certificate in text	mail	lv	Sertifikāts tekstā
 certificate info for email %1	mail	lv	Sertifikāta informācija par e-pasta %1
+certificate issued by	mail	lv	Sertifikātu izdevis
 changing subject failed because of %1	mail	lv	Tēmas maiņa neizdevās, jo %1
 changing subject failed folder %1 does not exist	mail	lv	Mainīt tēmu neizdevās mape %1 neeksistē
 compose	mail	lv	Rakstīt jaunu
@@ -56,6 +59,8 @@ does not match	mail	lv	neatbilst
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
 edit account	mail	lv	Rediģēt kontu
+email address	mail	lv	E-pasta adrese
+emailaddress	admin	lv	E-pasta adrese
 emailadmin: profilemanagement	mail	lv	eMailAdmin: Profilu pārvaldība
 emails in whitelisted domains are not marked as spam	mail	lv	E-pasti baltajos sarakstos iekļautajos domēnos netiek atzīmēti kā surogātpasts
 empty trash	mail	lv	atbrīvot atkritumus
@@ -201,6 +206,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	lv	Ziņot par šo e-pasta saturu kā par surogātpastu - tādi surogātpasta risinājumi kā spamTitan to uzzinās.
 required pear class mail/mimedecode.php not found.	mail	lv	Nepieciešamā PEAR klase Mail/mimeDecode.php nav atrasta.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lv	Nepieciešams atslēgt, ja izmantojat Dovecot ar privātiem redzamajiem karogiem koplietošanas vai lietotāja mapē!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	lv	S/MIME Šifrēšana neizdevās, jo sūtītāja adresei nav atrasts sertifikāts: %1
 save all	mail	lv	Saglabāt visus
 save all attachments to filemanager	mail	lv	Saglabāt visus pielikumus failu pārvaldniekā
 save as infolog on send	mail	lv	Atzīmējiet pogu pēc nosūtīšanas izveidot kā InfoLog
@@ -231,9 +237,11 @@ show vertical	mail	lv	Rādīt vertikāli
 show vertical with all columns	mail	lv	Rādīt vertikāli ar visām kolonnām
 show/hide preview pane in mail list view	mail	lv	Rādīt/noslēpt priekšskatījuma paneli pasta saraksta skatā
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	lv	Parādīt īslaicīgi redzamu paziņojumu, tostarp no adreses, tēmas un e-pasta fragmentu.
+sign your message with smime certificate	mail	lv	Parakstiet savu ziņojumu ar S/MIME sertifikātu
 signature	mail	lv	Paraksts
 signature at top	mail	lv	Paraksts augšpusē
 signature position and visibility	mail	lv	Paraksta pozīcija un redzamība
+signed by	mail	lv	Parakstījis
 size(...->0)	mail	lv	Izmērs (...->0)
 size(0->...)	mail	lv	Izmērs (0->...)
 small view	mail	lv	mazais skats
@@ -273,4 +281,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	lv	Pirms ziņojuma saglabāšanas VFS jums vispirms ir jāsaglabā ziņojums kā melnraksts.
 you will loose current message body, unless you save it to your clipboard!	mail	lv	Jūs pazaudēsiet pašreizējā ziņojuma tekstu, ja vien jūs to nesaglabāsiet savā starpliktuvē!
 you've got new mail	mail	lv	Jums ir jauns e-pasts
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lv	Jūsu atlikusī kvota %1 ir pārāk maza, iespējams, jūs nevarēsiet sūtīt/saņemt turpmākos e-pastus.\n Lai gan e-pastu notīrīšana miskastē vai mēstuļu mapē varētu palīdzēt jums atgūt nedaudz brīvas vietas.\n Ja tas nepalīdzēja, lūdzu, lūdziet administratoram piešķirt lielāku kvotu.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	lv	Jūsu atlikusī kvota %1 ir pārāk maza, iespējams, jūs nevarēsiet sūtīt/saņemt turpmākos e-pastus.<br>Lai gan e-pastu notīrīšana miskastē vai mēstuļu mapē varētu palīdzēt jums atgūt nedaudz brīvas vietas.<br>Ja tas nepalīdzēja, lūdzu, lūdziet administratoram piešķirt lielāku kvotu.

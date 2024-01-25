@@ -50,6 +50,7 @@ allow users to create further identities	mail	bg	позволява на пот�
 allways a new window	mail	bg	винаги в нов прозорец
 always	mail	bg	Винаги
 always allow external sources from %1	mail	bg	Винаги позволява външни източници от %1
+always respond / auto-responder	mail	bg	Винаги отговаряй / автоматичен отговор
 always show html emails	mail	bg	Винаги показва HTML съобщения
 always show notifiction	mail	bg	Винаги показвайте известие
 an error happend while trying to remove acl rights from the account %1!	mail	bg	Възникна грешка, докато се опитвате да премахнете ACL права от акаунта %1!
@@ -85,7 +86,10 @@ caching of flags	mail	bg	Кеширане на флагове
 can not open imap connection	mail	bg	Не може да се отвори IMAP връзка
 can not resolve the winmail.dat attachment!	mail	bg	Не може да разреши прикачения winmail.dat файл !
 canceled deletion due to user interaction	mail	bg	анулирано изтриване поради взаимодействие с потребителя
+certificate details	mail	bg	Подробности за сертификата
+certificate in text	mail	bg	Сертификат в текст
 certificate info for email %1	mail	bg	Информация за сертификат за имейл %1
+certificate issued by	mail	bg	Сертификат, издаден от
 change editor type	mail	bg	превключете редактора в режим HTML
 changed profile	mail	bg	променен профил
 changing subject failed because of %1	mail	bg	Промяната на субекта не бе успешна поради %1
@@ -190,6 +194,7 @@ edit folder acl	mail	bg	Редактиране на ACL папката
 edit folder acl ...	mail	bg	Редактиране на ACL папката...
 edit vacation settings	mail	bg	редактиране на настройките за "ваканция"
 effective only if server supports acl at all	admin	bg	използваем, само ако сървърът изобщо поддържа ACL
+email address	mail	bg	e-mail адрес
 email notification successfully updated!	mail	bg	Актуализацията на e-mail известието е успешно!
 email notification update failed	mail	bg	Актуализацията на e-mail известието беше неуспешна.
 email notification update failed! you need to set an email address!	mail	bg	Актуализацията на e-mail известието беше неуспешна. Трябва да зададете e-mail адрес!
@@ -218,6 +223,7 @@ error: could not send message.	mail	bg	Грешка: Съобщението не
 error: message could not be displayed.	mail	bg	ГРЕШКА: Съобщението не може да бъде показано.
 esync will fail without a working email configuration!	mail	bg	eSync няма да бъде успешно, без работеща конфигурация на електронната поща!
 event details follow	mail	bg	Следват подробности за събитието
+every %1. day	mail	bg	Всеки %1. ден
 everyone	mail	bg	Всеки
 examine namespace to retrieve folders in others and shared	mail	bg	Проучване на пространството от имена за извличане на папки в други и споделени
 extended	mail	bg	Разширен
@@ -250,6 +256,8 @@ folder %1 is moving to folder %2	mail	bg	Папка %1 се премества �
 folder management	mail	bg	Управление на папката
 folder management ...	mail	bg	Управление на папката...
 folder settings	mail	bg	Настройки на папката
+for e.g.: mpeg	mail	bg	за напр.: mpeg
+for eg.: mpeg	mail	bg	за напр.: mpeg
 force html	mail	bg	форсиране на HTML
 force plain text	mail	bg	форсиране на обикновен текст
 forward	mail	bg	Препращане
@@ -366,6 +374,7 @@ no sneak preview in list	mail	bg	Няма предварителен прегл�
 no subject given!	mail	bg	Не е посочена Тема!
 non	mail	bg	Не
 on	mail	bg	на
+once per day	mail	bg	Веднъж на ден
 only email	mail	bg	Само имейл
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	bg	Има смисъл, само ако пренасяте паролата по друг канал / извън тази поща до получателите!
 only name	mail	bg	Само име
@@ -422,6 +431,7 @@ report this email content as spam - spam solutions like spamtitan will learn	mai
 required pear class mail/mimedecode.php not found.	mail	bg	Не е намерен необходимият PEAR клас Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	bg	Задължително се деактивира, ако използвате Dovecot с флагове за частно виждане на споделена или потребителска папка!
 row order style	mail	bg	Стил на изгледа
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	bg	S/MIME Криптирането е неуспешно, тъй като не е намерен сертификат за адреса на подателя: %1
 save all attachments to filemanager	mail	bg	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	bg	запис като чернова
 save as infolog	mail	bg	запис в Дневника
@@ -459,9 +469,11 @@ show/hide preview pane in mail list view	mail	bg	Показване/скрива
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	bg	Показва временно видимо известие, включващо от адрес, тема и откъс от имейл
 sieve script name	mail	bg	име на sieve скрипт
 sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (* ,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
+sign your message with smime certificate	mail	bg	Подпишете съобщението си със сертификат S/MIME
 signature	mail	bg	Подпис
 signature at top	mail	bg	подпис в горната част
 signature position and visibility	mail	bg	Позиция и видимост на подписа
+signed by	mail	bg	Подписан от
 size(...->0)	mail	bg	Размер (...->0)
 size(0->...)	mail	bg	Размер (0->...)
 small view	mail	bg	умален изглед
@@ -507,4 +519,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	bg	Трябва първо да запазите съобщението като чернова, преди да можете да го запазите във VFS
 you will loose current message body, unless you save it to your clipboard!	mail	bg	Ще загубите текущото тяло на съобщението, освен ако не го запазите в клипборда си!
 you've got new mail	mail	bg	Получили сте нов имейл
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	bg	Оставащата ви квота %1 е твърде ниска, може да не сте в състояние да изпращате/получавате по-нататъшни имейли.\n Въпреки че почистването на имейли в кошчето или папката с нежелани съобщения може да ви помогне да си върнете малко свободно място.\n Ако това не е помогнало, моля, помолете администратора си за повече квота.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	bg	Оставащата ви квота %1 е твърде ниска, може да не сте в състояние да изпращате/получавате по-нататъшни имейли.<br>Въпреки че почистването на имейли в кошчето или папката с нежелани съобщения може да ви помогне да си върнете малко свободно място.<br>Ако това не е помогнало, моля, помолете администратора си за повече квота.

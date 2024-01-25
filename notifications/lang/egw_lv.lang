@@ -1,10 +1,79 @@
+(update in sec. %s)	notifications	lv	(Atjaunināšana sek. %s)
+account:	notifications	lv	Konts:
+all possible notification backends	notifications	lv	Visi iespējamie paziņojuma backendi
+are you sure you want to delete all notifications?	notifications	lv	Vai esat pārliecināts, ka vēlaties dzēst visus paziņojumus?
+browser	notifications	lv	Pārlūkprogramma
+browser is starting.	notifications	lv	Tiek palaists pārlūks.
+cancal settings?	notifications	lv	Atcelt iestatījumus?
+cancal?	notifications	lv	Atcelt?
+certification-information:	notifications	lv	Sertifikācijas informācija:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	lv	Pārbaudiet abas. Vispirms izmēģiniet aktīvu lietotāja definētu kontu, ja tāda nav, izmantojiet eMailAdmin profilu.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	lv	Izvēlieties paziņojumu ķēdi. Jums tiks paziņots pa ķēdē iekļautajiem aizmugurējiem galiem.<br>Piezīme: Ja paziņojumu ķēde ir atzīmēta kā "atspējota", jūsu administrators neatļauj vienu vai vairākus ķēdē iekļautos aizmugurējos galus, paziņojumi, paziņojot jums, atgriežas pie "E-pasts".
+connection error.	notifications	lv	Savienojuma kļūda.
+connection error. please check connection to server.	notifications	lv	Savienojuma kļūda. Lūdzu, pārbaudiet savienojumu ar serveri.
+continue to connect?	notifications	lv	Turpināt savienojumu?
+cookies are required to login to this site.	notifications	lv	Lai pieteiktos šajā vietnē, ir nepieciešamas sīkdatnes.
+delete all messages	notifications	lv	Dzēst visus ziņojumus
+delete notifications	notifications	lv	Dzēst paziņojumus
+delete this message	notifications	lv	Dzēst šo ziņojumu
+domain not found, please check serveraddress.	notifications	lv	Domēns nav atrasts, lūdzu, pārbaudiet servera adresi.
+egroupware login is starting, please wait.	notifications	lv	Sākas EGroupware pieteikšanās, lūdzu, uzgaidiet.
+egroupware logindomain:	notifications	lv	EGroupware pieteikšanāsdomēna:
+egroupware logindomains founds, please select.	notifications	lv	EGroupware Logindomains atrasts, lūdzu, izvēlieties.
+egroupware not found by url or connection lost to server.	notifications	lv	EGroupware nav atrasts pēc URL vai ir zaudēts savienojums ar serveri.
+egroupware not found by url.	notifications	lv	EGroupware nav atrasts pēc URL.
+email notifications only, if user is not logged in	notifications	lv	Tikai e-pasta paziņojumi, ja lietotājs nav pieteicies
+error browser can`t start.	notifications	lv	Kļūda Pārlūkprogrammu nevar palaist.
+error on loading tray icon	notifications	lv	Kļūda, ielādējot Tray ikonu
+error ssl	notifications	lv	Kļūda SSL
+exit	notifications	lv	Iziet no
 folder	notifications	lv	Mape
 from	notifications	lv	No
+host:	notifications	lv	Serveris:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	lv	Cik daudzrunīgi EGroupware-Popup jārīkojas, ja lietotājam tiek nosūtīts paziņojums:<br>zems: augšējā izvēlnē tikai parādīt paziņojuma zvaniņu - augšējā izvēlnē jābūt iespējotai!<br>vidējs: izcelt paziņojuma logu priekšā<br>augsts: paziņojuma logu izcelt priekšā un ļaut pārlūkprogrammai kaut ko darīt, lai paziņotu par sevi.
+info on load config file: create config file.	notifications	lv	Informācija par konfigurācijas faila ielādi: izveidot konfigurācijas failu.
+issuer dn:	notifications	lv	Izdevēja DN:
+java desktop notification app	preferences	lv	Java darbvirsmas paziņojumu lietotne
+last month	notifications	lv	Pagājušajā mēnesī
+login aborted, application exit?	notifications	lv	Pieteikšanās pārtraukta, lietojumprogrammas izeja?
+login in egroupware:	notifications	lv	Pieteikšanās EGroupware:
+mail account to use for notifications	admin	lv	Pasta konts, ko izmantot paziņojumiem
+mark all as read	notifications	lv	Atzīmēt visus kā izlasītus
+mark as read	notifications	lv	Atzīmēt kā izlasītu
 message from	notifications	lv	Ziņa no
-minutes	notifications	lv	minūtes
+minutes	notifications	lv	Minūtes
+more info	notifications	lv	Vairāk informācijas
+notifier	notifications	lv	Paziņotājs
+open notified entry	notifications	lv	Atvērt paziņojumu ierakstu
+page not found, please check serveraddress.	notifications	lv	Lapa nav atrasta, lūdzu, pārbaudiet servera adresi.
+password:	notifications	lv	Parole:
+permission	notifications	lv	Atļauja
+permission denied for notifications application.	notifications	lv	Atļauja par paziņojumu iesniegšanu ir atteikta.
+placeholders with user/ prefix	admin	lv	vietzīmes ar lietotāju/prefiksu
+please contact your egroupware admin.	notifications	lv	Lūdzu, sazinieties ar savu EGroupware administratoru.
+please enter the url of your egroupware.	notifications	lv	Lūdzu, ievadiet sava EGroupware URL.
+please enter your egroupware username.	notifications	lv	Lūdzu, ievadiet savu EGroupware lietotājvārdu.
+please enter your password	notifications	lv	Lūdzu, ievadiet savu paroli
 refresh notifications	notifications	lv	Atjaunināt paziņojumus
+repeat login?	notifications	lv	Atkārtota pieteikšanās?
+run application	notifications	lv	Palaist lietojumprogrammu
+save password	notifications	lv	Saglabāt paroli
+setting	notifications	lv	Iestatīšana
+setting aborted, application exit	notifications	lv	Iestatīšana pārtraukta, lietojumprogrammas izeja
 settings	notifications	lv	Uzstādījumi
 signature	admin	lv	Paraksts
+signature added to every change notification	admin	lv	Katram izmaiņu paziņojumam pievienots paraksts
+sorry, your login has expired	notifications	lv	Atvainojiet, jūsu pieteikšanās ir beigusies
 step	notifications	lv	Solis
+subject dn:	notifications	lv	Temats DN:
+the server certificate is not a valid trust center certificate!	notifications	lv	Servera sertifikāts nav derīgs uzticības centra sertifikāts!
+this egroupware notification has been sent to you by mail because your	notifications	lv	Šis EGroupware paziņojums jums ir nosūtīts pa e-pastu, jo jūsu
+this month	notifications	lv	Šis mēnesis
+user:	notifications	lv	Lietotājs:
 warning	notifications	lv	Brīdinājums
+yesterday	notifications	lv	Vakar
+you can also use	admin	lv	Varat arī izmantot
+you have %1 unread notifications	notifications	lv	Jums ir %1 nelasīts paziņojums
+you have been successfully logged out	notifications	lv	Jūs esat veiksmīgi atteicies
+you've got new mail	notifications	lv	Jūs esat saņēmis jaunu vēstuli
 your session could not be verified.	notifications	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

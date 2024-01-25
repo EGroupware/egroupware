@@ -1,4 +1,4 @@
-(update in sec. %s)	notifications	fr	(mise à jour dans sec. %s)
+(update in sec. %s)	notifications	fr	(Mise à jour dans sec. %s)
 account:	notifications	fr	Compte :
 all possible notification backends	notifications	fr	Tous les backends de notification possibles
 are you sure you want to delete all notifications?	notifications	fr	Confirmez-vous vouloir supprimer toutes les notifications ?
@@ -8,15 +8,16 @@ cancal settings?	notifications	fr	Annuler le paramétrage ?
 cancal?	notifications	fr	Annuler ?
 certification-information:	notifications	fr	Information sur le certificat
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	fr	Cocher les deux. D'abord essayer le compte de utilisateur actif, puis le profil eMailAdmin
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	fr	Choose a notification chain. You will be notified over the back ends included in the chain.<br>Note: If a notification chain is marked as "disabled", your administrator does not allow one or more of the back ends included in the chain, the notifications falls back to "Email" while notifying you.
 choose from mailsettings used for notification	admin	fr	Utiliser les paramètres email utilisés pour la notification
 common chains	notifications	fr	Chaînes communes
 connection error.	notifications	fr	Erreur de connexion
 connection error. please check connection to server.	notifications	fr	Erreur de connexion. Veuillez vérifier la connectivité au serveur.
 continue to connect?	notifications	fr	Continuer la connexion ?
 cookies are required to login to this site.	notifications	fr	Les cookies sont nécessaires pour la connexion à ce site.
-delete all messages	notifications	fr	supprimer tous les messages
-delete notifications	notifications	fr	supprimer toutes les notifications
-delete this message	notifications	fr	supprimer ce message
+delete all messages	notifications	fr	Supprimer tous les messages
+delete notifications	notifications	fr	Supprimer toutes les notifications
+delete this message	notifications	fr	Supprimer ce message
 disabled chains	notifications	fr	Chaînes désactivées
 do not notify me at all	notifications	fr	Ne pas me notifier du tout.
 domain not found, please check serveraddress.	notifications	fr	Domaine non trouvé, veuillez vérifier l'adresse du serveur
@@ -45,6 +46,7 @@ exit	notifications	fr	Sortir
 folder	notifications	fr	Dossier
 from	notifications	fr	Depuis
 host:	notifications	fr	Hôte :
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	fr	Le degré de verbosité de la fenêtre contextuelle d'EGroupware si une notification est envoyée à l'utilisateur :<br>faible : il suffit d'afficher la cloche de notification dans le menu supérieur - le menu supérieur doit être activé !<br>moyen : afficher la fenêtre de notification au premier plan<br>élevé : mettre la fenêtre de notification en avant et laisser le navigateur faire quelque chose pour s'annoncer.
 if set, embedded links get rendered special for external clients	notifications	fr	Si coché, les liens sont spécialement adaptés aux clients externes
 info on load config file: create config file.	notifications	fr	Info sur le chargement du fichier de configuration : créer le fichier de configuration.
 issuer dn:	notifications	fr	DN de l'émetteur :
@@ -55,8 +57,8 @@ login aborted, application exit?	notifications	fr	Login échoué, sortir de l'ap
 login in egroupware:	notifications	fr	login EGroupware
 mail account to use for notifications	admin	fr	Compte de messagerie à utiliser pour les notifications
 mail backend	admin	fr	Backend email
-mark all as read	notifications	fr	tout marquer comme lu
-mark as read	notifications	fr	marquer comme lu
+mark all as read	notifications	fr	Tout marquer comme lu
+mark as read	notifications	fr	Marquer comme lu
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
 more info	notifications	fr	Plus d'info
@@ -67,9 +69,9 @@ open notified entry	notifications	fr	Ouvrir l'entrée notifiée
 optimize e-mails for external mail client	notifications	fr	Optimizer les emails pour des clients de messagerie externes
 page not found, please check serveraddress.	notifications	fr	Page non trouvée, veuillez vérifier l'adresse du esrveur
 password:	notifications	fr	Mot de passe :
-permission	notifications	fr	permission
+permission	notifications	fr	Permission
 permission denied for notifications application.	notifications	fr	Permission refusée pour l'applications de notification
-placeholders with user/ prefix	admin	fr	caractères de remplacement avec le préfixe user/
+placeholders with user/ prefix	admin	fr	caractères de remplacement avec utilisateur/préfixe
 please contact your egroupware admin.	notifications	fr	Veuillez contacter votre admin EGroupware
 please enter the url of your egroupware.	notifications	fr	Veuillez entrer l'URL de votre EGroupware
 please enter your egroupware username.	notifications	fr	Veuillez entrer votre nom d'utilisateur EGroupware
@@ -99,7 +101,7 @@ windows-popup and e-mail	notifications	fr	Popup et email Windows
 windows-popup backend	admin	fr	Backend popup Windows
 windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup windows en premier, en cas d'échec, me notifier par email
 windows-popup only	notifications	fr	Popup windows seulement
-yesterday	notifications	fr	hier
+yesterday	notifications	fr	Hier
 you can also use	admin	fr	Vous pouvez aussi utiliser
 you have %1 unread notifications	notifications	fr	Vous avez %1 notification(s) non lue(s)
 you have been successfully logged out	notifications	fr	Vous avez été déconnecté avec succès

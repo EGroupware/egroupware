@@ -9,29 +9,29 @@
 %1 etemplates for application '%2' dumped to '%3'	common	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
 %1 etemplates found	common	de	%1 eTemplate(s) gefunden
 %1 file	common	de	%1 Datei
-%1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
+%1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver!
 %1 matches on search criteria	common	de	%1 Treffer bei der Suche
 %1 more %2 selected ...	common	de	%1 weitere %2 ausgewählt ...
-%1 more...	common	de	%1 mehr...
+%1 more...	common	de	%1 mehr ...
 %1 new etemplates imported for application '%2'	common	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
 %1 not implemented for %2!	common	de	%1 ist nicht implementiert für '%2'
 %1 proxy of %2	common	de	%1 beauftragt von %2
 %1 setting "%2" = %3 disallows access via http!	admin	de	%1 Einstellung "%2" = %3 verbietet den Zugriff über http!
 %1 to sync	groupdav	de	%1 zum synchronisieren
 %1, duplicate id	common	de	%1, doppelte ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 geben Sie dem Webserver Schreibrechte für dieses Verzeichnis.
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br>oder %3 geben Sie dem Webserver-Schreibrechte für dieses Verzeichnis.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
 %s disabled	common	de	%s deaktiviert
 %s needed	common	de	%s benötigt
 %s notranslation	common	de	%s nicht übersetzen
-%s onchange	common	de	%s onChange
+%s onchange	common	de	%s onchange
 %s readonly	common	de	%s Schreibschutz
 '%1' copied to clipboard	common	de	'%1' in die Zwischenablage kopiert
-'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format !!!
-'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format !!!
-'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum !!!
-'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl !!!
-'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl !!!
+'%1' has an invalid format	common	de	'%1' hat ein ungültiges Format!
+'%1' has an invalid format !!!	common	de	'%1' hat ein ungültiges Format!
+'%1' is not a valid date !!!	common	de	'%1' ist ein ungültiges Datum!
+'%1' is not a valid floatingpoint number !!!	common	de	'%1' ist keine gültige Gleitkommazahl!
+'%1' is not a valid integer !!!	common	de	'%1' ist keine gültige Ganzzahl!
 '%1' is not a valid json file!	common	de	'%1' ist keine gültigeJSON Datei
 '%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
@@ -54,7 +54,7 @@
 5 minutes	common	de	5 Minuten
 5 seconds	common	de	5 Sekunden
 80 (http)	admin	de	80 (http)
-a pattern to be searched for	common	de	ein Muster nach dem gesucht werden soll
+a pattern to be searched for	common	de	Ein Muster nach dem gesucht werden soll
 a request to the egroupware server returned with an error	common	de	Eine Anfrage an den EGroupware Server ergab einen Fehler
 abcdefghijklmnopqrstuvwxyz	common	de	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	de	Abbrechen
@@ -117,8 +117,8 @@ alignright	common	de	Rechtsbündig ausrichten
 all	common	de	Alle
 all addressbooks	groupdav	de	Alle Adressbücher
 all categories	common	de	Alle Kategorien
-all days	common	de	alle Tage
-all fields	common	de	alle Felder
+all days	common	de	Alle Tage
+all fields	common	de	Alle Felder
 all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
 all operations save the template!	common	de	Alle Operation speichern das Template!
@@ -133,7 +133,7 @@ american samoa	common	de	AMERICANISCH SAMOA
 an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. Dies wurde von einem Administrator veranlasst.
 an error happened	common	de	Ein Fehler ist aufgetreten.
 an existing and by the webserver readable directory enables the image browser and upload.	common	de	Ein existierendes, und vom Webserver lesbares Verzeichnis, schaltet den Bild Browser und Upload ein.
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz!)
 and	common	de	UND
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
@@ -146,10 +146,10 @@ api-accounts	common	de	Benutzerkonten
 application	common	de	Anwendung
 application has no etemplates (no file %1) to restore!	common	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherstellen!
 application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
-application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
+application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-dump zu schreiben!
 applications	common	de	Anwendungen
 applies the changes made	common	de	Übernimmt die Änderungen
-applies the changes to the given version of the template	common	de	übernimmt die Änderungen in die angegebene Version des Templates
+applies the changes to the given version of the template	common	de	Übernimmt die Änderungen in die angegebene Version des Templates
 apply	common	de	Übernehmen
 apply the action on the whole query, not only the shown entries	common	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Einträge
 apps &amp; license	common	de	Apps & Lizenzen
@@ -165,7 +165,7 @@ as default	common	de	Als Vorgabe
 attach	common	de	Anhängen
 attach file	common	de	Datei anhängen
 attachment	common	de	Anhang
-attention: action will be applied to all rows, not only visible ones!	api	de	Achtung: Die Aktion wird auf alle Zeilen angewendet, nicht nur auf die sichtbaren!
+attention: action will be applied to all rows, not only visible ones!	api	de	<br>Achtung: Die Aktion wird auf alle Zeilen angewendet, nicht nur auf die sichtbaren!
 august	common	de	August
 australia	common	de	AUSTRALIEN
 austria	common	de	ÖSTERREICH
@@ -174,8 +174,6 @@ author	common	de	Autor
 autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
 autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
 automatic update check failed, you need to check manually!	common	de	Automatischer Test fehlgeschlagen, Sie müssen selbst überprüfen ob neue Updates vorliegen!
-automatically hide the sidebox menu's?	common	de	Automatisch linkes Navigationsmenü ausblenden?
-automatically hide the sidebox menus?	common	de	Automatisch linkes Navigationsmenü ausblenden?
 automatically refresh list	common	de	Liste automatisch aktualisieren
 autosave default category	common	de	Standard-Kategorie automatisch speichern
 avatar	common	de	Avatar
@@ -187,7 +185,7 @@ background color:	common	de	Hintergrund Farbe:
 backup key	common	de	Schlüssel sichern
 backup/restore	common	de	Backup/Wiederherstellung
 backup/restore ...	common	de	Backup/Wiederherstellung ...
-backupdir '%1' is not writeable by the webserver	common	de	Der Webserver hat keine Schreibrechte auf den Backupordner '%1' .
+backupdir '%1' is not writeable by the webserver	common	de	Der Webserver hat keine Schreibrechte auf den Backup-Ordner '%1' .
 bad login or password	common	de	Falscher Benutzername oder Passwort
 bahamas	common	de	BAHAMAS
 bahrain	common	de	BAHRAIN
@@ -203,7 +201,7 @@ benin	common	de	BENIN
 bermuda	common	de	BERMUDA
 bhutan	common	de	BHUTAN
 blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
-blue moono theme	common	de	Bau Mono Theme
+blue moono theme	common	de	Blue Mono Theme
 blurtext	common	de	blurText
 bold	common	de	Fett
 bolivia	common	de	BOLIVIEN
@@ -217,8 +215,8 @@ box	common	de	Box
 box...	common	de	Box...
 brazil	common	de	BRASILIEN
 british indian ocean territory	common	de	BRITISCH INDIEN OZEAN TERRITORIUM
-broken link	common	de	Beschädigte Verknüpfung (Broken Link)
-browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	de	Browser %1 %2 wird nicht empfohlen. Möglicherweise gibt es Probleme und nicht funktionierende Anwendungen. Bitte verwenden Sie die neueste Version von Chrome, Firefox oder Edge. Danke
+broken link	common	de	Beschädigte Verknüpfung
+browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	de	Browser %1 %2 wird nicht empfohlen. Möglicherweise gibt es Probleme und nicht funktionierende Anwendungen. Bitte verwenden Sie die neueste Version von Chrome, Firefox oder Edge.
 brunei darussalam	common	de	BRUNEI DARUSSALAM
 bulgaria	common	de	BULGARIEN
 bulgarian	common	de	Bulgarisch
@@ -229,16 +227,16 @@ calendar	common	de	Kalender
 calendars to sync in addition to personal calendar	groupdav	de	Kalender die zusätzlich zum persönlichen synchronisiert werden sollen.
 cambodia	common	de	KAMBODSCHA
 cameroon	common	de	KAMERUN
-can not have special sql-value null	common	de	darf nicht den speziellen SQL Wert NULL annehmen
+can not have special sql-value null	common	de	Darf nicht den speziellen SQL Wert NULL annehmen
 can't create directory %1 to connect found unconnected nodes to it!	admin	de	Das Verzeichnis %1 konnte nicht erstellt werden, da es nicht verbundene Knoten (nodes) für dieses Objekt gibt
 canada	common	de	KANADA
 cancel	common	de	Abbruch
 cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Ordner ist
 cannot set a category as parent, which is part of this categorys subtree!	common	de	Eine Kategorie, die ein Element der eignen Unterelemente ist, kann nicht als neues Elternelement ausgewählt werden.
 cannot set this cat as its own parent!	common	de	Eine Kategorie kann nicht als Ihr eigenes Elternelement ausgewählt werden.
-cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen !!!
-cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen !!!
-cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen !!!
+cant delete a single widget from a grid !!!	common	de	Kann kein einzelnes Widget aus einer Tabelle löschen!
+cant delete the only column of a grid !!!	common	de	Kann nicht die einzige Spalte einer Tabelle löschen!
+cant delete the only row in a grid !!!	common	de	Kann nicht die einzige Zeile einer Tabelle löschen!
 cant open %1, needs ziparchive	common	de	Kann die %1 nicht öffnen, benötigt ZIPArchive
 cant open '%1' for %2	common	de	Kann '%1' nicht zum %2 öffnen
 cape verde	common	de	KAP VERDE
@@ -246,26 +244,26 @@ caption	common	de	Text
 categories	common	de	Kategorien
 categories for	common	de	Kategorien für
 category	common	de	Kategorie
-category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt !
-category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet !
+category %1 has been added !	common	de	Kategorie %1 wurde hinzugefügt!
+category %1 has been updated !	common	de	Kategorie %1 wurde überarbeitet!
 category owner	common	de	Eigentümer der Kategorie
 category tree	common	de	Kategoriebaum
 cayman islands	common	de	KAIMAN INSELN
 cc	common	de	Kopie
-cellpadding for the table-tag	common	de	Innenabstand (cellpadding) der Tabelle
+cellpadding for the table-tag	common	de	Innenabstand der Tabelle
 cells	common	de	Zellen
-cellspacing for the table-tag	common	de	Zellenabstand (cellspacing) der Tabelle
+cellspacing for the table-tag	common	de	Zellenabstand der Tabelle
 center	common	de	Zentriert
-centered	common	de	zentriert
+centered	common	de	Zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
 change	common	de	Ändern
 change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
-charset	common	de	UTF-8
+charset	common	de	Zeichensatz
 check all	common	de	Alle auswählen
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	de	Sie können auch auf EMPTY prüfen in If-Abfragen. Beispiel {{IF url~EMPTY~~Webseite: }}{{IF url~EMPTY~~url}} - fügt Webseite & URL ein, falls das Feld url nicht leer ist.
-check if content should only be displayed but not altered (the content is not send back then!)	common	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
+check if content should only be displayed but not altered (the content is not send back then!)	common	de	Abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
 check if field has to be filled by user	common	de	Abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
 check installation	common	de	Installation überprüfen
 check now	common	de	Jetzt überprüfen
@@ -296,7 +294,7 @@ click here to resume your egroupware session.	common	de	Hier klicken um die EGro
 click here to start the search	common	de	Hier klicken um die Suche zu starten
 click here to upload the file	common	de	Hier klicken um die Datei hochzuladen
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
-click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
+click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
 click to open colorpicker	common	de	Farbauswahl
 click to order after that criteria	common	de	Anklicken um nach diesem Kriterium zu sortieren
@@ -304,7 +302,7 @@ clickable path	common	de	Anklickbarer Pfad
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	de	Geräte die kein explicites Limit setzen, verwenden die angegebene Anzahl Tage. Ein zu hohes Limit kann bei einigen Geräte zu Problemen führen.
 close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
-closes the window without saving the changes	common	de	schließt das Fenster ohne zu speichern
+closes the window without saving the changes	common	de	Schließt das Fenster ohne zu speichern
 cocos (keeling) islands	common	de	COCOS INSELN
 code	common	de	Quelltext
 collection empty.	common	de	Collection ist leer
@@ -329,7 +327,7 @@ contact	common	de	Kontakt
 contact field to show	common	de	Kontaktfeld zum Anzeigen
 contact fields	common	de	Kontaktfelder
 contacting server...	common	de	Kontaktiere Server...
-contains	common	de	enthalten
+contains	common	de	Enthalten
 content type	common	de	Content Typ
 cook islands	common	de	COOK INSELN
 cookies are required to login to this site	login	de	Cookies werden benötigt um sich hier anzumelden
@@ -348,10 +346,10 @@ create link	common	de	Verknüpfung erstellen
 created	common	de	Erstellt
 created by	common	de	Erstellt von
 created by %1	common	de	Erstellt von %1
-creates an english ('en') langfile from label and helptexts (for application in name)	common	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
+creates an english ('en') langfile from label and helptexts (for application in name)	common	de	Erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 creator	preferences	de	Ersteller
 croatia	common	de	KROATIEN
-css class for the table-tag	common	de	CSS class der Tabelle
+css class for the table-tag	common	de	CSS-Klasse der Tabelle
 css properties	common	de	CSS Attribute
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
@@ -379,7 +377,7 @@ date+time	common	de	Datum+Zeit
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn Sie Port 13 benutzen, passen Sie bitte die Regeln der Firewall an bevor Sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 day	common	de	Tag
 days	common	de	Tage
-db ensures that every row has a unique value in that column	common	de	die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
+db ensures that every row has a unique value in that column	common	de	Die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	de	DB-spezifische Index-Optionen (Komma-getrennt), z.B. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
 db-tools	common	de	DB-Tools
 december	common	de	Dezember
@@ -392,11 +390,11 @@ default visible actions	common	de	Standardmäßig sichtbare Aktionen
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
 del	common	de	Entf
 delete	common	de	Löschen
-delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine Id.
-delete all selected etemplates, without further inquiry	common	de	löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
+delete a single entry by passing the id.	common	de	Löscht einen einzelnen Eintrag über seine ID.
+delete all selected etemplates, without further inquiry	common	de	Löscht ALLE ausgewählten eTemplates OHNE weitere Rückfrage
 delete and cut save the template!	common	de	Löschen und Ausschneiden speichern das Template!
 delete backup	common	de	Backup löschen
-delete backup key	common	de	Backup Schlüssel löschen
+delete backup key	common	de	Backup-Schlüssel löschen
 delete category	common	de	Kategorie entfernen
 delete column	common	de	Spalte löschen
 delete file	common	de	Datei löschen
@@ -405,36 +403,31 @@ delete link	common	de	Verknüpfung löschen
 delete link?	common	de	Verknüpfung löschen?
 delete row	common	de	Zeile löschen
 delete selected entries?	common	de	Möchten Sie die markierten Einträge löschen?
-delete the spezified etemplate	common	de	löscht das angegebene eTemplate
+delete the spezified etemplate	common	de	Löscht das angegebene eTemplate
 delete these entries	common	de	Diese Einträge löschen
-delete this column	common	de	diese Spalte löschen
+delete this column	common	de	Diese Spalte löschen
 delete this entry	common	de	Diesen Eintrag löschen
-delete this etemplate	common	de	dieses eTemplate löschen
+delete this etemplate	common	de	Dieses eTemplate löschen
 delete this file	common	de	Diese Datei löschen
 delete this photo?	common	de	Dieses Foto löschen?
-delete this row	common	de	diese Zeile löschen
-delete whole column (can not be undone!!!)	common	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
-deletes the above spez. etemplate from the database, can not be undone	common	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
-deletes the etemplate spez. above	common	de	löscht das oben spezifizierte eTemplate
+delete this row	common	de	Diese Zeile löschen
+delete whole column (can not be undone!!!)	common	de	Ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
+deletes the above spez. etemplate from the database, can not be undone	common	de	Löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
+deletes the etemplate spez. above	common	de	Löscht das oben spezifizierte eTemplate
 deletes this column	common	de	Löscht diese Spalte
 deletes this index	common	de	Löscht diesen Index
 denmark	common	de	DÄNEMARK
 description	common	de	Beschreibung
 detail	common	de	Detail
 details	common	de	Details
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
 direction left to right	common	de	Richtung von links nach rechts
 directory	common	de	Ordner
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	de	Verzeichnis existiert nicht, ist nicht vom Webserver lesbar oder ist nicht entsprechend zur Dokumentroot!
 directory for storing merged documents	preferences	de	Ordner für zusammengeführte Platzhalter-Dokumente
 directory with documents to insert entries	preferences	de	Vorlagen-Ordner für Einfügen in Dokument
-disable internet explorer png-image-bugfix	common	de	Internet Explorer PNG-Bilder-Bugfix abschalten
-disable slider effects	common	de	Schwebeeffekte des Navigationsmenüs abschalten
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	de	Die animierten Schwebeeffekte beim Anzeigen oder Verstecken des Navigationsmenüs in der Seite abschalten? Benutzer von Opera oder Konquerer müssen diese Funktion abschalten.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	de	Deaktivieren des Fehlerbehebungsskripts für den Internetexplorer 5.5 und höher, um transparente PNG-Bilder anzuzeigen?
 disabled	common	de	Deaktiviert
-discard changes	common	de	verwirft Änderungen
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	de	wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
+discard changes	common	de	Verwirft Änderungen
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	de	Wird vor dem Eingabefeld angezeigt oder das Feld wird für ein '%s' eingefügt (Beschriftung einer Schaltfläche oder Dateiname eine Grafik)
 displayed in statusline of browser if input-field gets focus	common	de	Wird in der Statuszeile des Browsers angezeigt, wenn das Eingabefeld angesprochen wird
 displayed in the top line of the groupbox (legend)	common	de	Wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 distribution lists as groups	groupdav	de	Verteilerlisten als Gruppen
@@ -442,7 +435,7 @@ djibouti	common	de	DSCHIBUTI
 do not notify	common	de	Nicht benachrichtigen
 do not notify of these changes	common	de	Es werden keine Benachrichtigungen beim Anlegen oder Ändern versendet
 do not use on public computers!	common	de	NICHT auf öffentlichen Computern verwenden!
-do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
+do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden?
 do you want to save the changes you made in table %s?	common	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 do you want to send the message to all selected entries, without further editing?	common	de	Wollen Sie die Nachricht an alle ausgewählten Einträge OHNE weitere Bearbeitung versenden?
 doctype:	common	de	DOCTYPE:
@@ -450,7 +443,7 @@ document '%1' does not exist or is not readable for you!	preferences	de	Das Doku
 document properties	common	de	Dokument Eigenschaften
 document title:	common	de	Titel des Dokuments:
 documentation	common	de	Dokumentation
-doesn't matter	common	de	spielt keine Rolle
+doesn't matter	common	de	Spielt keine Rolle
 domain	common	de	Domain
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
 domestic	common	de	Inland
@@ -458,12 +451,11 @@ dominica	common	de	DOMINICA
 dominican republic	common	de	DOMINIKANISCHE REPUBLIK
 don't ask again!	common	de	Nicht wieder fragen!
 don't show this again	common	de	Text nicht mehr anzeigen
-done	common	de	erledigt
+done	common	de	Erledigt
 dos international	common	de	DOS International
 download	common	de	Herunterladen
 download link	common	de	Link zum Herunterladen
-drag markers to pick a color	common	de	Zur Farbauswahl den Marker bewegen
-drop a table - this can not be undone	common	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
+drop a table - this can not be undone	common	de	Tabelle löschen - NICHT rückgängig zu machen
 drop table	common	de	Tabelle löschen
 dump4setup	common	de	Dump4Setup
 duration	common	de	Dauer
@@ -476,8 +468,8 @@ edit %1 category for	common	de	%1 Kategorie editieren für
 edit avatar	common	de	Avatar bearbeiten
 edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
-edit embeded css styles or of the applications app.css file	common	de	bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
-edit the etemplate spez. above	common	de	das oben spezifizierte eTemplate bearbeiten
+edit embeded css styles or of the applications app.css file	common	de	Bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
+edit the etemplate spez. above	common	de	Das oben spezifizierte eTemplate bearbeiten
 edit...	common	de	Bearbeiten...
 editable templates - db-tools	common	de	eTemplates - DB-Tools
 editable templates - delete template	common	de	eTemplates - Löschen
@@ -498,7 +490,7 @@ el salvador	common	de	EL SALVADOR
 element role title	common	de	Element Rolle Titel
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	Eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 empty file	common	de	Datei leeren
 enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enable logging	groupdav	de	Logging einschalten
@@ -509,7 +501,7 @@ end time	common	de	Endzeit
 enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	common	de	Suchmuster eingeben
 enter filename to upload and attach, use [browse...] to search for it	common	de	Dateinamen zum Hochladen oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: https://egw.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
 enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 enter your file name	common	de	Dateiname
@@ -518,7 +510,7 @@ entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry not found!	common	de	Eintrag nicht gefunden!
 entry saved	common	de	Eintrag gespeichert
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
-epl only	common	de	nur EPL
+epl only	common	de	Nur EPL
 equatorial guinea	common	de	EQUATORIAL GUINEA
 eritrea	common	de	ERITREA
 error	common	de	Fehler
@@ -530,10 +522,10 @@ error deleting %1!	common	de	Fehler beim Löschen von %1!
 error enabling push	common	de	Fehler beim Aktivieren von Push.
 error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Ordners %1 %2
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
-error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden !!!
-error: webserver is not allowed to write into '%1' !!!	common	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1' !!!
-error: while saving !!!	common	de	Fehler: beim Speichern !!!
-error: writing file (no write-permission for the webserver) !!!	common	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver) !!!
+error: template not found !!!	common	de	Fehler: eTemplate nicht gefunden!
+error: webserver is not allowed to write into '%1' !!!	common	de	Fehler: der Webserver hat keine Schreibberechtigung in '%1'!
+error: while saving !!!	common	de	Fehler: beim Speichern!
+error: writing file (no write-permission for the webserver) !!!	common	de	Fehler: Datei schreiben (keine Schreibberechtigung für den Webserver)!
 estonia	common	de	ESTONIEN
 et2 rendering took %1s	common	de	eT2 Rendering benötigte %1s
 etag	common	de	ETag
@@ -545,17 +537,17 @@ etemplate reference	common	de	eTemplate Handbuch
 etemplate tutorial	common	de	eTemplate Einführung
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
-exact	common	de	exakt
+exact	common	de	Exakt
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, wenn es nicht DEUTSCHLAND ist: }
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	de	Beispiel: {{LETTERPREFIX}} - Ergibt eine Anrede ohne doppelte Leerzeichen, wenn z.B. der Titel leer ist
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	de	Beispiel {{LETTERPREFIX}} - Gibt ein Buchstabenpräfix ohne doppelte Leerzeichen an, wenn der Titel z.B. leer ist
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{nenvlf role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
-exchange this row with the one above	common	de	diese Zeile mit der darüber austauschen
-exchange this two columns	common	de	diese beiden Spalten austauschen
+exchange this row with the one above	common	de	Diese Zeile mit der darüber austauschen
+exchange this two columns	common	de	Diese beiden Spalten austauschen
 expiration	common	de	Ablaufdatum
-export the loaded etemplate into a xml-file	common	de	das geladene eTemplate als XML Datei (.xet) exportieren
-export xml	common	de	XML Export
+export the loaded etemplate into a xml-file	common	de	Das geladene eTemplate als XML Datei (.xet) exportieren
+export xml	common	de	XML-Export
 extensions loaded:	common	de	Erweiterungen geladen:
 failed to change mode of required directory "%1" to %2!	admin	de	Ändern der Zugriffsrechte für benötigtes Ordners "%1" zu %2 fehlgeschlagen!
 failed to change password.	common	de	Ändern des Passworts fehlgeschlagen.
@@ -570,7 +562,7 @@ fax number	common	de	Fax Nummer
 features of the editor?	common	de	Funktionen des Editors?
 february	common	de	Februar
 field	common	de	Feld
-field must not be empty !!!	common	de	Das Feld darf nicht leer sein !!!
+field must not be empty !!!	common	de	Das Feld darf nicht leer sein!
 fields	common	de	Felder
 fiji	common	de	FIJI
 file	common	de	Datei
@@ -579,7 +571,7 @@ file %1 has no content in physical filesystem %2 --> file removed!	admin	de	Date
 file %1 has no content in physical filesystem %2!	admin	de	Datei %1 ist im Dateisystem nicht vorhanden
 file '%1' not found!	common	de	Datei '%1' nicht gefunden!
 file a file	common	de	Datei ablegen
-file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
+file contains more than one etemplate, last one is shown !!!	common	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt!
 file information	common	de	Datei Information
 file is of wrong type (%1 != %2)!	common	de	Datei hat ungültigen Typ (%1 != %2)!
 file too large.  maximum %1	common	de	Datei ist zu gross. Maximal %1
@@ -631,10 +623,11 @@ ghana	common	de	GHANA
 gibraltar	common	de	GIBRALTAR
 global	common	de	Global
 global public	common	de	Global Public
-go to the first entry	common	de	gehe zum ersten Eintrag
-go to the last entry	common	de	gehe zum letzten Eintrag
-go to the next page of entries	common	de	gehe zur nächsten Seite
-go to the previous page of entries	common	de	gehe zur vorherigen Seite
+go to the first entry	common	de	Gehe zum ersten Eintrag
+go to the last entry	common	de	Gehe zum letzten Eintrag
+go to the next page of entries	common	de	Gehe zur nächsten Seite
+go to the previous page of entries	common	de	Gehe zur vorherigen Seite
+go to your home directory	common	de	Wechseln Sie in Ihr Home-Verzeichnis
 grant access	common	de	Zugriff gewähren
 greece	common	de	GRIECHENLAND
 greek	common	de	Griechisch
@@ -651,7 +644,7 @@ group has been updated	common	de	Gruppe wurde  aktualisiert
 group name	common	de	Gruppenname
 group public	common	de	Group Public
 groupbox	common	de	Gruppierung
-groupdav	common	de	CalDAV / CardDAV Sync
+groupdav	common	de	CalDAV / CardDAV-Sync
 groups	common	de	Gruppen
 groups with permission for %1	common	de	Gruppen mit Berechtigung für %1
 groups without permission for %1	common	de	Gruppen ohne Berechtigung für %1
@@ -669,7 +662,7 @@ height	common	de	Höhe
 height of row (in % or pixel)	common	de	Höhe der Zeile (in % oder Pixel)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	de	Höhe der Zeile (in % oder Pixel), Zeile ausschalten: [! = nicht]<wert>=[<prüfung>]: eg. '!@data' schaltet Zeile aus, wenn Inhalt von data leer ist
 height of the table in % or pixels for the table-tag and (optional) div	common	de	Höhe der Tabelle in % oder Punkten
-height, disabled	common	de	Höhe, Deaktiviert
+height, disabled	common	de	Höhe, deaktiviert
 help	common	de	Hilfe
 high	common	de	Hoch
 highest	common	de	Höchste
@@ -678,7 +671,7 @@ history log	common	de	Versions-Historie
 hold [%1] key to select text eg. to copy it	common	de	Zum Kopieren [%1]-Taste beim Auswählen halten
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
-home email	common	de	private E-Mail
+home email	common	de	Private E-Mail
 home screen	common	de	Startseite
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
@@ -697,8 +690,7 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	de	UNGARN
 iceland	common	de	ISLAND
 id	common	de	ID
-iespell not detected. click ok to go to download page.	common	de	ieSpell nicht gefunden. OK klicken um zur Download Seite zu gehen.
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	de	Wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 if the clock is enabled would you like it to update it every second or every minute?	common	de	Möchten Sie bei aktivierter Uhr, dass diese sekündlich aktualisiert wird?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	de	Wenn der Fehler weiterhin auftritt, bitten Sie Ihren Administrator um Hilfe und das Fehler-Protokoll (error-log) des Webservers anzuschauen.
 if there are some images in the background folder you can choose the one you would like to see.	common	de	Wenn mehrere Bilder im Hintergrund Ordner sind können Sie wählen, welches Sie sehen möchten.
@@ -707,12 +699,11 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you use "2-factor-authentication", please enter the code here.	common	de	Wenn Sie "2-Faktor-Authentifizierung" verwenden, geben Sie bitte hier den Code ein.
 image	common	de	Grafik
 image directory relative to document root (use / !), example:	common	de	Bildverzeichnis entsprechend zur Dokumentroot (benutze / !), Beispiel:
-image url	common	de	Bild URL
+image url	common	de	Bild-URL
 import	common	de	Import
-import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML Datei
+import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML-Datei
 import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
-import xml	common	de	XML Import
-in order to copy to clipboard, you need to allow flash player by clicking on gray box.\nyou can permanently allow flash player for egroupware in your browser settings.	common	de	Um in die Zwischenablage zu kopieren, müssen Sie Flash Player durch klicken auf die graue Box erlauben.\nSie können Flash Player für EGroupware in den Einstellungen Ihres Browsers auch permanent erlauben.
+import xml	common	de	XML-Import
 include access to any linked files (links tab)	common	de	Beinhaltet Zugriff auf jegliche verknüpfte Dateien (Reiter Verknüpfungen)
 increment version to not overwrite the existing template	common	de	Version erhöhen um das existierende Template nicht zu überschreiben
 indent	common	de	Einzug vergrößern
@@ -724,12 +715,12 @@ indonesia	common	de	INDONESIEN
 infolog types to sync	common	de	InfoLog-Typen zum synchronisieren
 initial	common	de	Anfangsbuchstabe
 input required	common	de	Eingabe erforderlich
-insert a column before	common	de	eine Spalte davor einfügen
-insert a column behind	common	de	eine Spalte dahinter einfügen
-insert a row above	common	de	eine Zeile darüber einfügen
-insert a row below	common	de	eine Zeile darunter einfügen
-insert a widget before	common	de	ein Widget davor einfügen
-insert a widget behind	common	de	ein Widget dahinter einfügen
+insert a column before	common	de	Eine Spalte davor einfügen
+insert a column behind	common	de	Eine Spalte dahinter einfügen
+insert a row above	common	de	Eine Zeile darüber einfügen
+insert a row below	common	de	Eine Zeile darunter einfügen
+insert a widget before	common	de	Ein Widget davor einfügen
+insert a widget behind	common	de	Ein Widget dahinter einfügen
 insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der %2 Kontakte in %3 einfügen
 insert column after	common	de	Spalte danach einfügen
 insert column before	common	de	Spalte davor einfügen
@@ -815,32 +806,32 @@ light mode	common	de	Heller Modus
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV enthalten ##last-check-run## der Tabelle %3 ==> ignoriert</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	de	Zeile %1: '%2'<br /><b>CSV haben andere Spaltenanzahl als Tabelle %3 ==> ignoriert</b>
 link	common	de	Verknüpfung
-link is appended to mail allowing recipients to download currently attached version of files	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den jetzigen Inhalt der angehangenen Dateien herunter zu laden
-link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien zu bearbeiten (nur EPL)
-link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der angehangenen Dateien herunter zu laden
+link is appended to mail allowing recipients to download currently attached version of files	common	de	Link wird an die E-Mail angefügt und erlaubt Adressaten den jetzigen Inhalt der an gehangenen Dateien herunter zu laden
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	de	Link wird an die E-Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der an gehangenen Dateien zu bearbeiten (nur EPL)
+link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die E-Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der an gehangenen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
 link title of current record	common	de	Link-Titel des aktuellen Datensatzes
-linkapps	common	de	VerknüpfungAnwendungen
+linkapps	common	de	Verknüpfung Anwendungen
 linked	common	de	Verknüpft
-linkentry	common	de	VerknüpfungEintrag
-linklist	common	de	VerknüpfungListe
+linkentry	common	de	Verknüpfung Eintrag
+linklist	common	de	Verknüpfung Liste
 links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
 links to specified application.  example: {{links/addressbook}}	common	de	Verknüpfungen zu der entsprechenden Anwendung. Beispiel der Verknüpfungen zum Adressbuch: {{links/addressbook}}
-linkstring	common	de	VerknüpfungZeichenkette
-linkto	common	de	VerknüpfungZu
+linkstring	common	de	Verknüpfung Zeichenkette
+linkto	common	de	Verknüpfung Zu
 list	common	de	Liste
 list members	common	de	Mitglieder anzeigen
 list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
 lithuania	common	de	LITAUEN
 load	common	de	Daten werden geladen
-load this template into the editor	common	de	lädt diese Template zum Bearbeiten
-loading	common	de	lade
-local	common	de	lokal
+load this template into the editor	common	de	Lädt diese Template zum Bearbeiten
+loading	common	de	Lade
+local	common	de	Lokal
 location calendars	groupdav	de	Kalender von Räumen
 locations	common	de	Räume
 logging / debuging	groupdav	de	Logging / Fehlersuche
 login	common	de	Anmelden
-login rejected by epl firewall, please contact your administrator	common	de	Anmeldung von der EPL-Firewall abgelehnt, bitte wenden Sie sich an Ihren EHroupware-Administrator.
+login rejected by epl firewall, please contact your administrator	common	de	Anmeldung von der EPL-Firewall abgelehnt, bitte wenden Sie sich an Ihren EGroupware-Administrator.
 loginid	common	de	Benutzerkennung
 logout	common	de	Abmelden
 lost login id	common	de	Anmeldenamen vergessen
@@ -853,9 +844,9 @@ luxembourg	common	de	LUXEMBURG
 macau	common	de	MACAU
 macedonia, the former yugoslav republic of	common	de	MAZEDONIEN, FRÜHERE JUGOSLAVISCHE REPUBLIK
 madagascar	common	de	MADAGASCAR
-mail domain, eg. "%1"	common	de	Mail Domain, z.B. "%1"
-mailvelope addon installation failed! please try again.	common	de	Installation des Mailvelope Add-on gescheitert! Bitte versuchen Sie es erneut.
-mailvelope addon installation succeded. now you may configure the options.	common	de	Installation der Mailvelope Erweiterung erfolgreich. Sie können jetzt Optionen konfigurieren.
+mail domain, eg. "%1"	common	de	Mail-Domain, z.B. "%1"
+mailvelope addon installation failed! please try again.	common	de	Installation des Mailvelope-Erweiterung gescheitert! Bitte versuchen Sie es erneut.
+mailvelope addon installation succeded. now you may configure the options.	common	de	Installation der Mailvelope-Erweiterung erfolgreich. Sie können jetzt Optionen konfigurieren.
 main category	common	de	Hauptkategorie
 maintainer	common	de	Maintainer
 malawi	common	de	MALAWI
@@ -886,7 +877,7 @@ micronesia, federated states of	common	de	MICRONESIEN, VEREINIGTE STAATEN VON
 middle	common	de	Mittig
 minute	common	de	Minute
 minutes	common	de	Minuten
-missing: %1	common	de	nicht vorhanden: %1
+missing: %1	common	de	Nicht vorhanden: %1
 mo	common	de	Mo
 mode of required directory "%1" changed to %2.	admin	de	Zugriffsrechte für benötigten Ordner "%1" geändert zu %2.
 modifier	preferences	de	Geändert von
@@ -904,38 +895,38 @@ more than 1 match for '%1'	common	de	Mehr als 1 trifft für '%1' zu
 more then one active file %1 found, inactivating %2 older revisions!	admin	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
 move	common	de	Verschieben
-moved %1 children from directory fs_id=%2 to %3	admin	de	verschoben %1 Kinderelemente vom Ordner fs_id=%2 nach %3
-moved unconnected %1 %2 to %3.	admin	de	nicht verbundene Einträge verschoben  %1 %2 nach %3.
+moved %1 children from directory fs_id=%2 to %3	admin	de	Verschoben %1 Kinderelemente vom Ordner fs_id=%2 nach %3
+moved unconnected %1 %2 to %3.	admin	de	Nicht verbundene Einträge verschoben  %1 %2 nach %3.
 mozambique	common	de	MOZAMBIQUE
 multicolumn indices	common	de	Mehrspaltige Indices
-multiple	common	de	mehrere
+multiple	common	de	Mehrere
 myanmar	common	de	MYANMAR
 name	common	de	Name
 name of other table where column is a key from	common	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	de	Name des EGw-Layouts (z.B. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
 name of table to add	common	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	common	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 name of the user, eg. "%1"	common	de	Name des Benutzers, z.B. "%1"
 namespace	common	de	Namensraum
 namibia	common	de	NAMIBIA
 nauru	common	de	NAURU
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	de	Muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsamen Kürzel der Anwendung beginnen: z.b. 'et_'
 nepal	common	de	NEPAL
 netherlands	common	de	NIEDERLANDE
 netherlands antilles	common	de	NIEDERLÄNDISCHE ANTILLEN
 never	common	de	Niemals
 new	common	de	Neu
 new caledonia	common	de	NEU CALEDONIEN
-new egroupware release %1 available	common	de	Neues EGroupware Release %1 verfügbar
+new egroupware release %1 available	common	de	Neues EGroupware-Release %1 verfügbar
 new entry added sucessfully	common	de	Neuer Eintrag wurde erfolgreich hinzugefügt
 new favorite	common	de	Neuer Favorit
-new main category	common	de	neue Hauptkategorie
+new main category	common	de	Neue Hauptkategorie
 new password	common	de	Neues Passwort
 new search	common	de	Neue Suche
 new table created	common	de	Neue Tabelle erzeugt
 new value	common	de	Neuer Wert
 new zealand	common	de	NEUSEELAND
-newer version '%1' exists !!!	common	de	Neuere Version '%1' existiert !!!
+newer version '%1' exists !!!	common	de	Neuere Version '%1' existiert!
 next	common	de	Nächste
 next page	common	de	Nächste Seite
 nextmatch	common	de	Nextmatch
@@ -950,11 +941,11 @@ nigeria	common	de	NIGERIA
 niue	common	de	NIUE
 no	common	de	Nein
 no - cancel	common	de	Nicht Löschen - Abbruch
-no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen !!!
+no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen!
 no default set	common	de	Keine Vorgabe gesetzt
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
-no file	common	de	keine Datei
-no filename given or selected via browse...	common	de	kein Dateiname angegeben oder mit [Browse...] ausgewählt
+no file	common	de	Keine Datei
+no filename given or selected via browse...	common	de	Kein Dateiname angegeben oder mit [Browse...] ausgewählt
 no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
@@ -962,7 +953,7 @@ no matches found	common	de	Keine Treffer gefunden
 no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind vermutlich NICHT gespeichert
 no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
-no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen !!!
+no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen!
 no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
 no subject	common	de	Kein Betreff
 no suggestions	common	de	Keine Vorschläge
@@ -975,16 +966,16 @@ northern mariana islands	common	de	NORTHERN MARIANA ISLANDS
 norway	common	de	NORWEGEN
 not	common	de	nicht
 not a user yet? register now	common	de	Noch kein Benutzer? Registrieren Sie sich jetzt
-not assigned	common	de	nicht zugewiesen
+not assigned	common	de	Nicht zugewiesen
 not null	common	de	NOT NULL
 not readable %1 entry of user %2	common	de	Nicht lesbarer %1 Eintrag des Benutzers %2
 not supported by current application!	common	de	Für diese Anwendung nicht möglich!
 note	common	de	Notiz
 notes	common	de	Notizen
-nothing	common	de	nichts
-nothing found - try again !!!	common	de	Nichts gefunden - nochmal versuchen !!!
-nothing in clipboard to paste !!!	common	de	Zwischenablage leer - nichts zum einfügen !!!
-nothing matched search criteria !!!	common	de	Nicht gefunden bei diesem Suchkriterium !!!
+nothing	common	de	Nichts
+nothing found - try again !!!	common	de	Nichts gefunden - nochmal versuchen!
+nothing in clipboard to paste !!!	common	de	Zwischenablage leer - nichts zum einfügen!
+nothing matched search criteria !!!	common	de	Nicht gefunden bei diesem Suchkriterium!
 nothing to save.	common	de	Nichts zu speichern.
 notifications	common	de	Benachrichtigungen
 notify window	common	de	Benachrichtigungsfenster
@@ -1005,21 +996,22 @@ on *nix systems please type: %1	common	de	Auf *nix Systemen bitte %1 eingeben
 on mouse over	common	de	On Maus Over
 onchange	common	de	onChange
 onclick	common	de	onClick
-only an other version found !!!	common	de	nur eine andere Version gefunden !!!
-only private	common	de	nur private
+only an other version found !!!	common	de	Nur eine andere Version gefunden!
+only private	common	de	Nur private
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	de	Wird nur von einigen vollständigen Clients (z.B. von Apple) unterstützt. Wenn Sie eine URL eingeben müssen, wird es vermutlich nicht unterstützt!
-only yours	common	de	nur eigene
+only yours	common	de	Nur eigene
 oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
 open	common	de	Öffnen
+open existing contact	common	de	Vorhandenen Kontakt öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Pop-up Fenster öffnen
 open sidebox	common	de	Seitenmenü öffnen
-open the online help.	common	de	Öffnet die online Hilfe.
+open the online help.	common	de	Öffnet die Online-Hilfe.
 operator	common	de	Operator
-optional note about the link	common	de	optionale Notiz zur Verknüpfung
+optional note about the link	common	de	Optionale Notiz zur Verknüpfung
 options	common	de	Optionen
 or	common	de	ODER
-order to navigating by tab key through the form	common	de	Reihenfolge bei der Navigation mit der Tabulator Taste durch das Formular
+order to navigating by tab key through the form	common	de	Reihenfolge bei der Navigation mit der Tab-Taste durch das Formular
 ordered list	common	de	Nummerierung
 original	common	de	Original
 other	common	de	Andere
@@ -1039,7 +1031,7 @@ papua new guinea	common	de	PAPUA NEU GUINEA
 paraguay	common	de	PARAGUAY
 parcel	common	de	Paket
 parent category	common	de	Übergeordnete Kategorie
-parent is a '%1' !!!	common	de	Elternelement is ein '%1' !!!
+parent is a '%1' !!!	common	de	Elternelement is ein '%1'!
 password	common	de	Passwort
 password contains only %1 of required %2 character classes: no %3	common	de	Passwort enthält nur %1 von erforderlichen %2 Zeichengruppen: Kein %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	de	Passwort enthält mit "%1" einen Teil ihres Benutzer- oder vollen Namens (3 oder mehr Zeichen)
@@ -1055,31 +1047,31 @@ path	common	de	Pfad
 path to user and group files has to be outside of the webservers document-root!!!	common	de	Der Pfad für Benutzer oder Gruppen Ordner muss ausserhalb des Webserver Root Verzeichnisses liegen (Webserver Root = /var/www/html; Pfad für Benutzer/Gruppen Ordner /var/www
 permission denied!	common	de	Zugriff verweigert!
 permission denied! this is an administration only feature.	common	de	Zugriff verweigert! Dies ist eine reine Verwaltungsfunktion für Administratoren.
-permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien / Benutzerordner
+permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien/Benutzerordner
 permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	Persönlich
 peru	common	de	PERU
 pg down	common	de	Seite runter
 pg up	common	de	Seite hoch
-pgp encryption	common	de	PGP Verschlüsselung
-pgp encryption installation	common	de	Installation der PGP Verschlüsselung
+pgp encryption	common	de	PGP-Verschlüsselung
+pgp encryption installation	common	de	Installation der PGP-Verschlüsselung
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 pitcairn	common	de	PITCAIRN
 placeholders	common	de	Platzhalter
 play/pause	common	de	Wiedergabe/Pause
 please %1 by hand	common	de	Bitte %1 per Hand
-please enter a name	common	de	Bitte geben Sie einen Namen ein !
-please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware Oberfläche neu (F5 / Cmd+r).
+please enter a name	common	de	Bitte geben Sie einen Namen ein!
+please enter table-name first !!!	common	de	Bitte geben Sie zuerst einen Tabellennamen an!
+please reload the egroupware desktop (f5 / cmd+r).	common	de	Bitte laden Sie die EGroupware-Oberfläche neu (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	de	Bitte daran denken ab sofort '%1' als Benutzernamen für lokale Anmeldungen zu benutzen!
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
-please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
-please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung !
+please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen!
+please set your preferences for this application	common	de	Bitte editieren Sie Ihre Einstellungen für diese Anwendung!
 please type %1 more characters	common	de	Bitte %1 weitere(s) Zeichen eingeben
 please type 1 more character	common	de	Bitte 1 weiteres Zeichen eingeben
-please wait...	common	de	bitte warten ...
+please wait...	common	de	Bitte warten ...
 please, check back with us shortly.	common	de	Bitte schauen Sie bald wieder vorbei.
 pm	common	de	Nachmittag
 poland	common	de	POLEN
@@ -1119,9 +1111,9 @@ read a list of entries.	common	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner ID und Feldliste.
 read etemplate from database (for the keys above)	common	de	Ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 read this list of methods.	common	de	Diese Liste der Methoden lesen.
-reading	common	de	lesen
-readonly	common	de	nur lesen
-readonly filemanager directory	common	de	Lesende Freigabe Dateimanager Ordner
+reading	common	de	Lesen
+readonly	common	de	Nur lesen
+readonly filemanager directory	common	de	Lesende Freigabe Dateimanager-Ordner
 readonly share	common	de	Nur lesende Freigabe
 redo	common	de	Wiederholen
 refresh	common	de	Aktualisierung
@@ -1131,17 +1123,17 @@ reject	common	de	Zurückweisen
 remember me	common	de	An mich erinnern
 remember me for %1	common	de	An mich erinnern für %1
 remove	api	de	Entfernen
-remove row (can not be undone!!!)	common	de	löscht eine Zeile (NICHT rückgängig zu machen)
+remove row (can not be undone!!!)	common	de	Löscht eine Zeile (NICHT rückgängig zu machen)
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
-remove this link (not the entry itself)	common	de	entfernt diese Verknüpfung (nicht den Eintrag selbst)
+remove this link (not the entry itself)	common	de	Entfernt diese Verknüpfung (nicht den Eintrag selbst)
 removed (now) empty directory fs_id=%1	admin	de	Leerer Ordner fs_id=%1 wurde jetzt gelöscht
 removeformat	common	de	Formatierung entfernen
 rename	common	de	Umbenennen
 repeat password	common	de	Passwort wiederholen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
-request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Cmd R drücken)!
+request could not be processed, please reload your window (press f5 or cmd r)!	common	de	Anfrage konnte nicht verarbeitet werden, bitte laden Sie Ihr Fenster neu (F5 oder Strg(CMD)-R drücken)!
 requested resource '%1' does not exist or has expired	common	de	Die angeforderte Ressource '%1' existiert nicht oder ist bereits abgelaufen.
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in den Dateiordner
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
@@ -1164,13 +1156,13 @@ retry	common	de	Wiederholen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert eine Aufstellung mit ToDo Einträgen
 returns savely, without deleting	common	de	Abbruch, OHNE zu löschen
-returns struct of users application access	common	de	Liefert eine Struktur mit Benutzerzugriffsrechten auf Anwendungen
+returns struct of users application access	common	de	Liefert eine Struktur mit Benutzer-Zugriffsrechten auf Anwendungen
 reunion	common	de	REUNION
 right	common	de	Rechts
 romania	common	de	RUMÄNIEN
 rotate left	common	de	Links drehen
 rotate right	common	de	Rechts drehen
-row...	common	de	Zeile...
+row...	common	de	Zeile ...
 rtl	common	de	Von rechts nach links
 russian	common	de	Russisch
 russian federation	common	de	RUSSISCHE FÖDERATION
@@ -1196,7 +1188,7 @@ save the changes made and close the window	common	de	Speichert die Änderungen u
 save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
 saved column sizes to preferences.	common	de	Spaltengrößen in den Voreinstellungen gespeichert
 saves changes to tables_current.inc.php	common	de	Speichert die Änderungen in tables_current.inc.php
-saves the template with given version number and closes the window	common	de	speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
+saves the template with given version number and closes the window	common	de	Speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster
 scale	common	de	Scale
 scale for float	common	de	Nachkommastellen für Gleitkommawerte
 scheduling inbox	common	de	Posteingang Terminplanung
@@ -1207,7 +1199,7 @@ search accounts	common	de	Benutzer suchen
 search for '%1'	common	de	Suche nach '%1'
 search letter	common	de	Suche nach Buchstaben
 search or select accounts	common	de	Suchen und auswählen von Benutzern
-search...	common	de	Suchen...
+search...	common	de	Suchen ...
 searchreplace	common	de	Suchen und ersetzen
 second	common	de	Sekunden
 section	common	de	Sektion
@@ -1224,7 +1216,7 @@ select action	common	de	Befehl auswählen
 select all	common	de	Alle auswählen
 select all %1 %2 for %3	common	de	Alle auswählen %1 %2 von %3
 select all entries	common	de	Alle Datensätze auswählen
-select an app first !!!	common	de	Bitte wählen Sie zuerst ein Anwendung aus !!!
+select an app first !!!	common	de	Bitte wählen Sie zuerst ein Anwendung aus!
 select an app to search in	common	de	Anwendung zum Durchsuchen auswählen
 select an application	common	de	Anwendung auswählen
 select an application, (*) = uninstalled	common	de	Anwendung auswählen, (*) = nicht installiert
@@ -1244,12 +1236,12 @@ select entry	common	de	Eintrag auswählen
 select file(s) from vfs	common	de	Dateien aus dem EGroupware-Dateimanager auswählen
 select files from filemanager ...	common	de	Dateien aus Dateimanager auswählen ...
 select group	common	de	Gruppe auswählen
-select home email address	common	de	private E-Mail-Adresse auswählen
+select home email address	common	de	Private E-Mail-Adresse auswählen
 select hour	common	de	Stunde auswählen
-select if content of field should not be translated (label gets always translated)	common	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
+select if content of field should not be translated (label gets always translated)	common	de	Abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
 select language	common	de	Sprache auswählen
 select month	common	de	Monat auswählen
-select multiple accounts	common	de	mehrere Benutzer auswählen
+select multiple accounts	common	de	Mehrere Benutzer auswählen
 select number	common	de	Zahl auswählen
 select one	common	de	Eine(n) auswählen
 select one ...	common	de	Eine auswählen ...
@@ -1261,12 +1253,12 @@ select the columns to display in the list	common	de	Wählen Sie die Spalten aus,
 select the default height for the application windows	common	de	Vorgabewert für die Höhe des Anwendungsfensters auswählen
 select the default width for the application windows	common	de	Vorgabewert für die Breite des Anwendungsfensters auswählen
 select the indexed columns in their desired order	common	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen
-select this etemplate to delete it	common	de	dieses eTemplate zum Löschen auswählen
+select this etemplate to delete it	common	de	Dieses eTemplate zum Löschen auswählen
 select user	common	de	Benutzer auswählen
 select user or group	common	de	Benutzer oder Gruppe auswählen
 select which accounts to show	common	de	Benutzer zum Anzeigen auswählen
-select which values to show	common	de	auswählen welche Werte angezeigt werden
-select work email address	common	de	geschäftl. E-Mail-Adresse auswählen
+select which values to show	common	de	Auswählen welche Werte angezeigt werden
+select work email address	common	de	Geschäftl. E-Mail-Adresse auswählen
 select year	common	de	Jahr auswählen
 selectbox	common	de	Auswahlbox
 selection	common	de	Auswahl
@@ -1276,26 +1268,26 @@ senegal	common	de	SENEGAL
 september	common	de	September
 serbia	common	de	SERBIEN
 server %1 has been added	common	de	Server %1 wurde zugefügt
-server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort...
-server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort...
+server answered. processing response...	common	de	Server antwortet. Bearbeite Antwort ...
+server contacted. waiting for response...	common	de	Server kontaktiert. Warte auf Antwort ...
 server error	common	de	Serverfehler
 server is unwilling to perform.	common	de	Server ist zur Ausführung nicht bereit.
 server name	common	de	Server Name
 session has been killed	common	de	Session wurde beendet
 set as default	common	de	Als Vorgabe setzen
 set these columns as the default	common	de	Spaltenauswahl als Vorgabe setzen
-set user as only responsible user, but keeping groups	groupdav	de	setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
-set user as only responsible, removing all existing responsibles	groupdav	de	setze Benutzer als alleinigen Verantwortlichen, entferne alle bestehenden Verantwortlichen
-sets today as date	common	de	setzt heutiges Datum
+set user as only responsible user, but keeping groups	groupdav	de	Setze Benutzer als einzigen verantwortlichen Benutzer, Gruppen werden nicht geändert
+set user as only responsible, removing all existing responsibles	groupdav	de	Setze Benutzer als alleinigen Verantwortlichen, entferne alle bestehenden Verantwortlichen
+sets today as date	common	de	Setzt heutiges Datum
 settings saved.	common	de	Einstellungen gespeichert.
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
 share	common	de	Teilen
 share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	de	Freigabe als schreibgeschützt, aber Uploads erlauben. Uploads sind verborgen und nur für Personen mit einem Konto zugänglich.
-share filemanager directory	common	de	Dateimanager Ordner
+share filemanager directory	common	de	Dateimanager-Ordner
 share files	common	de	Dateien teilen
-share just the associated filemanager directory, not the %1	common	de	Teile nur den verbundenen Dateimanager Ordner, nicht %1
+share just the associated filemanager directory, not the %1	common	de	Teile nur den verbundenen Dateimanager-Ordner, nicht %1
 share link	common	de	Link teilen
 share this %1 via url	common	de	Teile diesen %1 über einen Link
 shift	common	de	Shift
@@ -1303,12 +1295,12 @@ shift ⇧	common	de	Umschalten ⇧
 should the form be submitted or any custom javascript be executed	common	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
 show	common	de	Anzeigen
 show (no save)	common	de	Anzeigen (nicht speichern)
-show all	common	de	alle anzeigen
+show all	common	de	Alle anzeigen
 show all / cancel filter	common	de	Alle anzeigen / Filter aufheben
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
 show clock?	common	de	Uhr anzeigen?
-show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations-Balken?
+show home and logout button in main application bar?	common	de	Zeige Start und Abmelde-Symbol im Hauptnavigations-Balken?
 show in sidebox	common	de	In Seitenmenü anzeigen
 show log of following device	groupdav	de	Zeige Log des folgenden Geräts
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
@@ -1321,13 +1313,13 @@ show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
 show password	common	de	Zeige Passwort
 show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf dem Desktop.
 show values	common	de	Werte anzeigen
-show/hide	common	de	anzeigen/ausblenden Seitenleiste
+show/hide	common	de	Anzeigen/ausblenden Seitenleiste
 show_more_apps	common	de	Mehr Applikationen anzeigen
 showing	common	de	zeigt
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
-shows / allows you to enter values into the etemplate for testing	common	de	zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
-shows/displays etemplate for testing, does not save it before	common	de	zeigt eTemplate zum Testen an, speichert es NICHT davor
+shows / allows you to enter values into the etemplate for testing	common	de	Zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
+shows/displays etemplate for testing, does not save it before	common	de	Zeigt eTemplate zum Testen an, speichert es NICHT davor
 sierra leone	common	de	SIERRA LEONE
 sign up	common	de	Registrieren
 simple	common	de	Einfach
@@ -1339,7 +1331,7 @@ slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
 somalia	common	de	SOMALIA
-sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
+sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen!
 south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 space	common	de	Space
@@ -1353,13 +1345,13 @@ stack	common	de	Stapel
 start a new search, cancel this link	common	de	Neue Suche starten, diese Verknüpfung abbrechen
 start date	common	de	Startdatum
 start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	de	Startordner für Bildsuche des Editors für formatierten Text im EGroupware-Dateimanager
-start new search for the above pattern	common	de	neue Suche für das obige Muster starten
+start new search for the above pattern	common	de	Neue Suche für das obige Muster starten
 start time	common	de	Startzeit
-start with	common	de	beginnt mit
-starting up...	common	de	Starte...
+start with	common	de	Beginnt mit
+starting up...	common	de	Starte ...
 status	common	de	Status
 store your public key in addressbook?	common	de	Öffentlichen Schlüssel im Adressbuch speichern?
-stretched	common	de	ausgedehnt
+stretched	common	de	Gedehnt
 strikethrough	common	de	Durchgestrichen
 su	common	de	So
 subject	common	de	Betreff
@@ -1374,14 +1366,14 @@ sunday	common	de	Sonntag
 sure	common	de	Sicher
 suriname	common	de	SURINAME
 svalbard and jan mayen	common	de	SVALBARD AND JAN MAYEN
-swap	common	de	tauschen
-swap widget with next one	common	de	tauscht das Widget mit dem nächsten
-swap with next column	common	de	tauscht Spalte mit der nächsten
-swap with next row	common	de	tauscht Zeile mit der nächsten
+swap	common	de	Tauschen
+swap widget with next one	common	de	Tauscht das Widget mit dem nächsten
+swap with next column	common	de	Tauscht Spalte mit der nächsten
+swap with next row	common	de	Tauscht Zeile mit der nächsten
 swaziland	common	de	SWAZILAND
 sweden	common	de	SCHWEDEN
-switch to a parent widget	common	de	wechselt zum Elternelement
-switch to an other widgets of that container	common	de	wechselt zu einem anderen Element dieses Containers
+switch to a parent widget	common	de	Wechselt zum Elternelement
+switch to an other widgets of that container	common	de	Wechselt zu einem anderen Element dieses Containers
 switzerland	common	de	SCHWEIZ
 sync all selected into one	groupdav	de	Alle ausgewählten in eines synchronisieren
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
@@ -1389,7 +1381,7 @@ tab	common	de	Tab
 tabindex	common	de	Tab-Reihenfolge
 table %1 is excluded from backup and restore. data will not be restored.	common	de	Tabelle %1 ist ausgeschlossen von der Datensicherung und der Wiederherstellung. Die Daten werden nicht wiederhergestellt.
 table properties	common	de	Tabelleneigenschaften
-table unchanged, no write necessary !!!	common	de	Tabelle nicht geändert, kein schreiben notwendig !!!
+table unchanged, no write necessary !!!	common	de	Tabelle nicht geändert, kein schreiben notwendig!
 tablename	common	de	Tabellenname
 tabs	common	de	Karteikarten
 taiwan	common	de	TAIWAN/TAIPEI
@@ -1403,8 +1395,8 @@ text color:	common	de	Textfarbe:
 textarea	common	de	Mehrzeiliges Textfeld
 th	common	de	Do
 thailand	common	de	THAILAND
-the backup key has been deleted.	common	de	Der Backup Schlüssel wurde gelöscht.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	de	Ihr Browser hat das Öffnen eines Pop-up-Dialogs blockiert.Pop-up-Dialogs.<br>Bitte klicken Sie OK, um das Pop-up angezeigt zu bekommen. Wenn Sie die Meldung nicht nochmals erhalten wollen, erlauben Sie bitte in den Einstellungen vom Browser für %1 das Öffnen von Pop-ups.
+the backup key has been deleted.	common	de	Der Backup-Schlüssel wurde gelöscht.
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	de	Ihr Browser hat das Öffnen eines Pop-up-Dialogs blockiert. Pop-up-Dialogs.<br>Bitte klicken Sie OK, um das Pop-up angezeigt zu bekommen. Wenn Sie die Meldung nicht nochmals erhalten wollen, erlauben Sie bitte in den Einstellungen vom Browser für %1 das Öffnen von Pop-ups.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
@@ -1413,11 +1405,11 @@ there already is a system-user with this name. user's should not have the same n
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeordner des Benutzers (%1 Attribute).
 this feature is only available in epl version.	common	de	Diese Funktion ist in der EPL-Version verfügbar.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	de	Dies ist Ihre eigene Freigabe. Verwenden Sie zum Testen ein anonymes / Inkognito-Fenster.<br/>%1
-this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
-this text gets displayed if the input-field is empty and has no focus (blur)	common	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
+this name has been used already	common	de	Dieser Name ist bereits in Benutzung!
+this text gets displayed if the input-field is empty and has no focus (blur)	common	de	Dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	de	Hiermit werden die Toolbar-Einstellungen für alle Benutzer zurückgesetzt und auf die konfigurierten Standardeinstellungen gesetzt.
 thursday	common	de	Donnerstag
-tiled	common	de	gekachelt
+tiled	common	de	Gekachelt
 time	common	de	Uhrzeit
 time zone	common	de	Zeitzone
 time zone offset	common	de	Zeitzonendifferenz
@@ -1425,11 +1417,11 @@ title	common	de	Titel
 titles of any entries linked to the current record, excluding attached files	preferences	de	Titel der Verknüpften zu dem aktuellem Eintrag ohne Dateien.
 to	common	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	de	zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	de	Zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	de	Um inaktive Dateien zu begutachten, sollten die Sie Versionierung von Dateien aktivieren.
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 to start the db-tools	common	de	Startet die DB-Tools
-to start the etemplate editor	common	de	startet den eTemplate Editor
+to start the etemplate editor	common	de	Startet den eTemplate Editor
 to start the search	common	de	Startet die Suche
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
@@ -1477,7 +1469,7 @@ update the clock per minute or per second	common	de	Uhr pro Minute oder pro Seku
 updating your account with new data from your identity provider failed!	common	de	Aktualisieren Ihres Kontos mit neuen Daten von Ihrem Identitätsprovider fehlgeschlagen!
 upload	common	de	Hochladen
 upload directory does not exist, or is not writeable by webserver	common	de	Der Ordner zum Hochladen existiert nicht oder der Webserver hat dort keine Schreibrechte.
-upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager hochladen..
+upload file(s) from filemanager...	common	de	Dateien aus dem Dateimanager hochladen ...
 upload new photo	common	de	Neues Foto hochladen
 upload requires the directory to be writable by the webserver!	common	de	Der Upload verlangt, dass der Webserver Schreibrechte auf diesem Verzeichnis hat!
 uppercase letters	common	de	Grossbuchstaben
@@ -1485,10 +1477,10 @@ url	common	de	Webseite
 url of current record	common	de	URL des aktuellen Datensatzes
 urls of any entries linked to the current record, excluding attached files	common	de	URLs aller mit dem aktuellen Datensatz verknüpften Einträge, ausgenommen angehängte Dateien
 uruguay	common	de	URUGUAY
-use button to search for	common	de	benutze Knopf zum suchen nach
-use button to search for address	common	de	benutze Knopf zum Suchen nach Adressen
-use button to search for calendarevent	common	de	benutze Knopf zum Suchen nach Terminen
-use button to search for project	common	de	benutze Knopf zum Suchen nach Projekten
+use button to search for	common	de	Benutze Knopf zum suchen nach
+use button to search for address	common	de	Benutze Knopf zum Suchen nach Adressen
+use button to search for calendarevent	common	de	Benutze Knopf zum Suchen nach Terminen
+use button to search for project	common	de	Benutze Knopf zum Suchen nach Projekten
 user	common	de	Benutzer
 user accounts	common	de	Benutzerkonten
 user groups	common	de	Benutzergruppen
@@ -1499,25 +1491,25 @@ users choice	common	de	Benutzerauswahl
 uzbekistan	common	de	UZBEKISTAN
 valign	common	de	vAlign
 value	common	de	Wert
-value has to be at least '%1' !!!	common	de	Der Wert muss mindestens '%1' betragen !!!
-value has to be at maximum '%1' !!!	common	de	Der Wert darf höchstens '%1' betragen !!!
+value has to be at least '%1' !!!	common	de	Der Wert muss mindestens '%1' betragen!
+value has to be at maximum '%1' !!!	common	de	Der Wert darf höchstens '%1' betragen!
 vanuatu	common	de	VANUATU
 vbox	common	de	VBox
 venezuela	common	de	VENEZUELA
 version	common	de	Version
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
-vertical alignment of row	common	de	vertikale Ausrichtung der Zeile
-vfs upload directory	common	de	Dateimanager Upload Ordner
+vertical alignment of row	common	de	Vertikale Ausrichtung der Zeile
+vfs upload directory	common	de	Dateimanager Upload-Ordner
 video tutorials	common	de	Video-Tutorials
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view linked %1 entries	common	de	Verknüpfte %1 anzeigen
-view this etemplate	common	de	dieses eTemplate anzeigen
+view this etemplate	common	de	Dieses eTemplate anzeigen
 view this linked entry in its application	common	de	Zeige diesen Eintrag in seiner Anwendung an
 virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	de	WALLIS AND FUTUNA
-was not able to delete the backup key because %1	common	de	Konnte den Backup Schlüssel nicht löschen weil %1
+was not able to delete the backup key because %1	common	de	Konnte den Backup-Schlüssel nicht löschen weil %1
 we	common	de	Mi
 we would like to introduce you to egroupware by showing a short introduction video.	common	de	Wir möchten Ihnen EGroupware mit einem kurzen Einführungsvideo vorstellen.
 wednesday	common	de	Mittwoch
@@ -1526,11 +1518,11 @@ welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
 what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	Was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 what style would you like the image to have?	common	de	Welchen Stil soll das Bild haben?
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware-Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
 which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog-Typen sollen synchronisiert werden, Vorgabe nur Aufgaben.
 whole query	common	de	Gesamte Abfrage
@@ -1539,29 +1531,29 @@ width	common	de	Breite
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
 width of column (in % or pixel)	common	de	Breite der Spalte (in % oder Punkten)
 width of the table in % or pixels for the table-tag and (optional) div	common	de	Breite der Tabelle in % oder Punkten
-width, disabled	common	de	Breite, Deaktiviert
+width, disabled	common	de	Breite, deaktiviert
 wk	common	de	KW
-work email	common	de	geschäftliche E-Mail
+work email	common	de	Geschäftliche E-Mail
 working days	common	de	Werktage
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	de	Arbeitet zuverlässig für eine Gesamtgröße von 1-2 MB, kann auch für 5-10 MB funktionieren, wird wahrscheinlich für >10MB fehlschlagen
 would you like to display the page generation time at the bottom of every window?	common	de	Möchten Sie die Zeit zur Erstellung der Seite am Ende jedes Fensters anzeigen?
 writable	common	de	Beschreibbar
-writable filemanager directory	common	de	Beschreibbare Freigabe Dateimanager Ordner
+writable filemanager directory	common	de	Beschreibbare Freigabe Dateimanager-Ordner
 writable share	common	de	Beschreibbare Freigabe
-write <app>/setup/tables_current.inc.php	common	de	schreibt <app>/setup/tables_current.inc.php
+write <app>/setup/tables_current.inc.php	common	de	Schreibt <app>/setup/tables_current.inc.php
 write langfile	common	de	Sprachdatei
 write tables	common	de	Tabelle Schreiben
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das Setup Verzeichnis der Anwendung
-writing	common	de	schreiben
-written by:	common	de	geschrieben von:
-xml-file to import	common	de	XML Datei zum Importieren
-xslt template	common	de	XSLT Template
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	de	Schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das Setup-Verzeichnis der Anwendung
+writing	common	de	Schreiben
+written by:	common	de	Geschrieben von:
+xml-file to import	common	de	XML-Datei zum Importieren
+xslt template	common	de	XSLT-Vorlage
 year	common	de	Jahr
 yemen	common	de	JEMEN
 yes	common	de	Ja
 yes - delete	common	de	Einträge löschen
-yes - delete including sub-entries	common	de	Einträge inklusive Untereinträge
-yes and allow non-admin users to do that too (recommended)	common	de	Ja und erlaube nicht administrativen Benutzern das auch (empfohlen)
+yes - delete including sub-entries	common	de	Ja, lösche Einträge inklusive Untereinträge
+yes and allow non-admin users to do that too (recommended)	common	de	Ja, und erlaube nicht administrativen Benutzern das auch (empfohlen)
 you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wie viele Icons und Toolbars der Editor anzeigt.
@@ -1572,23 +1564,23 @@ you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
 you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
 you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben
-you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt !
-you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt !
+you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt!
+you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt!
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 you may drag files out to your desktop	common	de	Sie können die Dateien auch auf Ihren Desktop ziehen
-you need to %1set your timezone preference%2.	common	de	Sie müssen %1Ihre Zeitzone in den Einstellungen setzen%2
+you need to %1set your timezone preference%2.	common	de	Sie müssen %1 Ihre Zeitzone in den Einstellungen setzen%2
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
-you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware Administrator sein, um auf diese Funktion zuzugreifen!
-you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	de	Bitte installieren Sie das Mailvelope Plugin, erhältlich für Firefox und Chrome, von www.mailvelope.com oder klicken Sie auf den Button "Installieren".
+you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware-Administrator sein, um auf diese Funktion zuzugreifen!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	de	Bitte installieren Sie das Mailvelope-Plugin, erhältlich für Firefox und Chrome, von www.mailvelope.com oder klicken Sie auf den Button "Installieren".
 you need to select a file first!	common	de	Sie müssen zuerst eine Datei auswählen!
 you need to select some entries first!	common	de	Sie müssen zuerst einige Datensätze auswählen!
-you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
-you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer Flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
-you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail sender oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
+you need to set enable logging to "%1" to create/update a log.	groupdav	de	Sie müssen Logging einschalten auf "%1" setzen damit ein Log angelegt/aktualisiert wird.
+you tried to automatically size a flex column, which always takes the rest of the space	common	de	Sie versuchen die Breite einer flexiblen Spalte zu ändern, diese nimmt immer den Rest des verfügbaren Platzes ein.
+you will not be able to send or receive encrypted mails before completing that step!	common	de	Sie werden KEINE verschlüsselten Mail senden oder empfangen können, bevor Sie nicht diesen Schritt beendet haben!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	de	Sie haben versucht auf die EGroupware-Anwendung %1 zuzugreifen, auf die Sie keine Rechte haben.
 your account has been updated with new data from your identity provider.	common	de	Ihr Konto wurde mit neuen Daten Ihres Identitätsproviders aktualisiert.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	de	Ihr Browser ist nicht auf dem neuesten Stand (JavaScript ES6 kompatibel), einige der Funktionen werden nicht funktionieren.
-your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!!!
+your code is incorrect !!!	common	de	Ihr Code ist nicht richtig!
 your key has been restored successfully.	common	de	Ihr Schlüssel wurde erfolgreich wiederhergestellt.
 your message could <b>not</b> be sent!<br>	common	de	Ihre Nachricht konnte <b>nicht</b> gesendet werden!<br>
 your message has been sent	common	de	Ihre Nachricht wurde versendet.

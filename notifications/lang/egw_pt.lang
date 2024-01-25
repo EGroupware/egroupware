@@ -1,12 +1,79 @@
+(update in sec. %s)	notifications	pt	(Atualização em seg. %s)
+account:	notifications	pt	Conta:
+all possible notification backends	notifications	pt	Todos os backends de notificação possíveis
+are you sure you want to delete all notifications?	notifications	pt	Tem a certeza de que pretende eliminar todas as notificações?
+browser	notifications	pt	Navegador
+browser is starting.	notifications	pt	O navegador está a iniciar.
+cancal settings?	notifications	pt	Cancelar definições?
+cancal?	notifications	pt	Cancelar?
+certification-information:	notifications	pt	Informações de certificação:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	pt	Verificar ambos. Primeiro, tente uma conta ativa definida pelo utilizador; se não existir, utilize o perfil eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt	Escolha uma cadeia de notificação. Será notificado através dos back ends incluídos na cadeia.<br>Nota: Se uma cadeia de notificação estiver marcada como "desactivada", o seu administrador não permite um ou mais dos back ends incluídos na cadeia, as notificações voltam a "E-mail" enquanto o notificam.
+connection error.	notifications	pt	Erro de ligação.
+connection error. please check connection to server.	notifications	pt	Erro de ligação. Verificar a ligação ao servidor.
+continue to connect?	notifications	pt	Continuar a ligar?
+cookies are required to login to this site.	notifications	pt	São necessários cookies para iniciar sessão neste sítio.
+delete all messages	notifications	pt	Eliminar todas as mensagens
+delete notifications	notifications	pt	Eliminar notificações
+delete this message	notifications	pt	Eliminar esta mensagem
+domain not found, please check serveraddress.	notifications	pt	Domínio não encontrado, por favor verifique o endereço do servidor.
+egroupware login is starting, please wait.	notifications	pt	O login do EGroupware está a começar, por favor aguarde.
+egroupware logindomain:	notifications	pt	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	pt	EGroupware Logindomains encontrados, por favor seleccione.
+egroupware not found by url or connection lost to server.	notifications	pt	O EGroupware não foi encontrado pelo URL ou a ligação ao servidor perdeu-se.
+egroupware not found by url.	notifications	pt	O EGroupware não foi encontrado pelo URL.
+email notifications only, if user is not logged in	notifications	pt	Notificações por e-mail apenas, se o utilizador não tiver iniciado sessão
+error browser can`t start.	notifications	pt	Erro O navegador não pode ser iniciado.
+error on loading tray icon	notifications	pt	Erro ao carregar o ícone do Tabuleiro
+error ssl	notifications	pt	Erro SSL
+exit	notifications	pt	Sair
 folder	notifications	pt	Pasta
 from	notifications	pt	De
+host:	notifications	pt	Servidor:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pt	Quão detalhado deve ser o comportamento do EGroupware-Popup se for enviada uma notificação ao utilizador:<br>baixo: mostrar apenas a campainha de notificação no menu superior - o menu superior tem de estar ativado!<br>médio: colocar a janela de notificação à frente<br>alto: colocar a janela de notificação à frente e deixar o browser fazer algo para se anunciar
+info on load config file: create config file.	notifications	pt	Informações sobre o carregamento do ficheiro de configuração: criar ficheiro de configuração.
+issuer dn:	notifications	pt	DN do emissor:
+java desktop notification app	preferences	pt	Aplicação de notificação do ambiente de trabalho Java
+last month	notifications	pt	Mês passado
+login aborted, application exit?	notifications	pt	A sessão foi abortada, a aplicação foi encerrada?
+login in egroupware:	notifications	pt	Iniciar sessão no EGroupware:
+mail account to use for notifications	admin	pt	Conta de correio eletrónico a utilizar para as notificações
+mark all as read	notifications	pt	Marcar tudo como lido
+mark as read	notifications	pt	Marcar como lido
 message from	notifications	pt	Mensagem de
 minutes	notifications	pt	Minutos
+more info	notifications	pt	Mais informações
+notifier	notifications	pt	Notificador
+open notified entry	notifications	pt	Abrir a entrada notificada
+page not found, please check serveraddress.	notifications	pt	Página não encontrada, por favor verifique o endereço do servidor.
+password:	notifications	pt	Palavra-passe:
 permission	notifications	pt	Permissão
+permission denied for notifications application.	notifications	pt	Permissão negada para a aplicação de notificações.
+placeholders with user/ prefix	admin	pt	marcadores de posição com utilizador/prefixo
+please contact your egroupware admin.	notifications	pt	Contacte o administrador do EGroupware.
+please enter the url of your egroupware.	notifications	pt	Introduza o URL do seu EGroupware.
+please enter your egroupware username.	notifications	pt	Introduza o seu nome de utilizador do EGroupware.
+please enter your password	notifications	pt	Introduza a sua palavra-passe
 refresh notifications	notifications	pt	Actualizar Notificações
+repeat login?	notifications	pt	Repetir o início de sessão?
+run application	notifications	pt	Executar aplicação
+save password	notifications	pt	Guardar palavra-passe
+setting	notifications	pt	Configuração
+setting aborted, application exit	notifications	pt	Configuração abortada, sair da aplicação
 settings	notifications	pt	Configurações
 signature	admin	pt	Assinatura
+signature added to every change notification	admin	pt	Assinatura adicionada a cada notificação de alteração
+sorry, your login has expired	notifications	pt	Desculpe, a sua sessão expirou
 step	notifications	pt	Passo
+subject dn:	notifications	pt	Assunto DN:
+the server certificate is not a valid trust center certificate!	notifications	pt	O certificado do servidor não é um certificado válido do centro de confiança!
+this egroupware notification has been sent to you by mail because your	notifications	pt	Esta notificação do EGroupware foi-lhe enviada por correio eletrónico porque o seu
+this month	notifications	pt	Este mês
+user:	notifications	pt	Utilizador:
 warning	notifications	pt	Aviso
+yesterday	notifications	pt	Ontem
+you can also use	admin	pt	Também pode utilizar
+you have %1 unread notifications	notifications	pt	Tem %1 notificações não lidas
+you have been successfully logged out	notifications	pt	A sua sessão foi terminada com sucesso
 you've got new mail	notifications	pt	Você tem novas mensagens
 your session could not be verified.	notifications	pt	A sua sessão expirou

@@ -1,10 +1,79 @@
-folder	notifications	hu	mappa
+(update in sec. %s)	notifications	hu	(Frissítés másodpercben %s)
+account:	notifications	hu	Számla:
+all possible notification backends	notifications	hu	Minden lehetséges értesítési hátteret
+are you sure you want to delete all notifications?	notifications	hu	Biztos, hogy törölni szeretné az összes értesítést?
+browser	notifications	hu	Böngésző
+browser is starting.	notifications	hu	A böngésző elindult.
+cancal settings?	notifications	hu	Törölje a beállításokat?
+cancal?	notifications	hu	Törlés?
+certification-information:	notifications	hu	Tanúsítási információk:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	hu	Mindkettőt ellenőrizze. Először próbálja meg az aktív felhasználói fiókot, ha nincs, használja az eMailAdmin profilt.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	hu	Válasszon ki egy értesítési láncot. A láncolatba bevont háttértárakon keresztül kap értesítést.<br>Megjegyzés: Ha egy értesítési lánc "letiltva" jelöléssel van ellátva, a rendszergazda nem engedélyezi a láncban szereplő egy vagy több back endet, az értesítések visszaesnek az "E-mail" szintre, miközben értesítik Önt.
+connection error.	notifications	hu	Csatlakozási hiba.
+connection error. please check connection to server.	notifications	hu	Kapcsolati hiba. Kérjük, ellenőrizze a szerverrel való kapcsolatot.
+continue to connect?	notifications	hu	Folytatódik a csatlakozás?
+cookies are required to login to this site.	notifications	hu	Az oldalra való bejelentkezéshez sütikre van szükség.
+delete all messages	notifications	hu	Minden üzenet törlése
+delete notifications	notifications	hu	Értesítések törlése
+delete this message	notifications	hu	Üzenet törlése
+domain not found, please check serveraddress.	notifications	hu	Nem található tartomány, kérjük ellenőrizze a szerver címét.
+egroupware login is starting, please wait.	notifications	hu	Az EGroupware bejelentkezés elindul, kérjük várjon.
+egroupware logindomain:	notifications	hu	EGroupware bejelentkezési domain:
+egroupware logindomains founds, please select.	notifications	hu	EGroupware Logindomain található, kérjük válasszon.
+egroupware not found by url or connection lost to server.	notifications	hu	EGroupware nem található az URL szerint, vagy megszakadt a kapcsolat a szerverrel.
+egroupware not found by url.	notifications	hu	Az EGroupware nem található az URL szerint.
+email notifications only, if user is not logged in	notifications	hu	Csak e-mail értesítések, ha a felhasználó nincs bejelentkezve
+error browser can`t start.	notifications	hu	Hiba A böngésző nem tud elindulni.
+error on loading tray icon	notifications	hu	Hiba a tálca ikon betöltésekor
+error ssl	notifications	hu	Hiba SSL
+exit	notifications	hu	Kilépés
+folder	notifications	hu	Mappa
 from	notifications	hu	Tól:
+host:	notifications	hu	Kiszolgáló:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	hu	Milyen részletességgel viselkedjen az EGroupware-Popup, ha értesítést küld a felhasználónak:<br>Alacsony: Csak az értesítési csengő megjelenítése a felső menüben - a felső menüt engedélyezni kell!<br>közepes: az értesítési ablakot hozza előre<br>magas: az értesítési ablakot hozza előre, és hagyja, hogy a böngésző tegyen valamit a bejelentésért.
+info on load config file: create config file.	notifications	hu	Infó a konfigurációs fájl betöltéséről: Konfigurációs fájl létrehozása.
+issuer dn:	notifications	hu	Kibocsátó DN:
+java desktop notification app	preferences	hu	Java asztali értesítési alkalmazás
+last month	notifications	hu	Múlt hónapban
+login aborted, application exit?	notifications	hu	Bejelentkezés megszakadt, alkalmazás kilép?
+login in egroupware:	notifications	hu	Bejelentkezés az EGroupware-ben:
+mail account to use for notifications	admin	hu	Az értesítésekhez használandó e-mail fiók
+mark all as read	notifications	hu	Mindent olvasottnak jelölni
+mark as read	notifications	hu	Olvasottként megjelölni
 message from	notifications	hu	Üzenet innen:
-minutes	notifications	hu	perc
+minutes	notifications	hu	Percek
+more info	notifications	hu	További információ
+notifier	notifications	hu	Értesítő
+open notified entry	notifications	hu	Értesített bejegyzés megnyitása
+page not found, please check serveraddress.	notifications	hu	Az oldal nem található, kérjük ellenőrizze a szerver címét.
+password:	notifications	hu	Jelszó:
 permission	notifications	hu	Engedélyek
+permission denied for notifications application.	notifications	hu	A bejelentési kérelemre vonatkozó engedély megtagadva.
+placeholders with user/ prefix	admin	hu	helyőrző felhasználók/előtaggal
+please contact your egroupware admin.	notifications	hu	Kérjük, forduljon az EGroupware adminisztrátorához.
+please enter the url of your egroupware.	notifications	hu	Kérjük, adja meg az EGroupware URL-címét.
+please enter your egroupware username.	notifications	hu	Kérjük, adja meg az EGroupware felhasználónevét.
+please enter your password	notifications	hu	Kérjük, adja meg jelszavát
 refresh notifications	notifications	hu	Értesítések frissítése
+repeat login?	notifications	hu	Ismételt bejelentkezés?
+run application	notifications	hu	Alkalmazás futtatása
+save password	notifications	hu	Jelszó mentése
+setting	notifications	hu	A  beállítása
+setting aborted, application exit	notifications	hu	A beállítás megszakadt, az alkalmazás kilép
+settings	notifications	hu	Beállítások
 signature	admin	hu	Aláírás
+signature added to every change notification	admin	hu	Aláírás hozzáadva minden módosítási értesítéshez
+sorry, your login has expired	notifications	hu	Sajnálom, a bejelentkezése lejárt
 step	notifications	hu	Lépés
+subject dn:	notifications	hu	Tárgy DN:
+the server certificate is not a valid trust center certificate!	notifications	hu	A kiszolgáló tanúsítványa nem érvényes bizalmi központ tanúsítvány!
+this egroupware notification has been sent to you by mail because your	notifications	hu	Ezt az EGroupware értesítést azért küldték Önnek e-mailben, mert az Ön
+this month	notifications	hu	Ebben a hónapban
+user:	notifications	hu	Felhasználó:
 warning	notifications	hu	Figyelmeztetés
+yesterday	notifications	hu	Tegnap
+you can also use	admin	hu	Használhatja a
+you have %1 unread notifications	notifications	hu	Önnek %1 olvasatlan értesítése van
+you have been successfully logged out	notifications	hu	Sikeresen kijelentkezett
+you've got new mail	notifications	hu	Új levelet kapott
 your session could not be verified.	notifications	hu	Az ön munkamenete nem ellenőrizhető.

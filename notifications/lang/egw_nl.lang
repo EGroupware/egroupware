@@ -1,28 +1,94 @@
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	nl	Kies een notificatie-lijst. U wordt geinformeerd over de backends die in de lijst voorkomen.<br />Let op: Indien een notificatie-lijst is gemarkeerd als "uitgeschakeld", dan heeft uw beheerder ingesteld dat een of meer van de backends niet in de lijst mogen voorkomen. Notificatie valt dan terug op "E-mail" tijdens het aanmaken van de melding naar u.
+(update in sec. %s)	notifications	nl	(Bijwerken in sec. %s)
+account:	notifications	nl	Account:
+all possible notification backends	notifications	nl	Alle mogelijke backends voor meldingen
+are you sure you want to delete all notifications?	notifications	nl	Weet je zeker dat je alle meldingen wilt verwijderen?
+browser	notifications	nl	Browser
+browser is starting.	notifications	nl	Browser wordt gestart.
+cancal settings?	notifications	nl	Instellingen annuleren?
+cancal?	notifications	nl	Annuleren?
+certification-information:	notifications	nl	Certificeringsinformatie:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	nl	Controleer beide. Probeer eerst een door de gebruiker gedefinieerd account, als dat niet bestaat, gebruik dan het eMailAdmin-profiel.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	nl	Kies een notificatie-lijst. U wordt geinformeerd over de backends die in de lijst voorkomen.<br>Let op: Indien een notificatie-lijst is gemarkeerd als "uitgeschakeld", dan heeft uw beheerder ingesteld dat een of meer van de backends niet in de lijst mogen voorkomen. Notificatie valt dan terug op "E-mail" tijdens het aanmaken van de melding naar u.
 common chains	notifications	nl	Gebruikelijke lijsten
+connection error.	notifications	nl	Fout in verbinding.
+connection error. please check connection to server.	notifications	nl	Fout in de verbinding. Controleer de verbinding met de server.
+continue to connect?	notifications	nl	Doorgaan met verbinden?
+cookies are required to login to this site.	notifications	nl	Cookies zijn vereist om in te loggen op deze site.
+delete all messages	notifications	nl	Alle berichten verwijderen
+delete notifications	notifications	nl	Meldingen verwijderen
+delete this message	notifications	nl	Dit bericht verwijderen
 disabled chains	notifications	nl	Uitgeschakelde lijsten
+domain not found, please check serveraddress.	notifications	nl	Domein niet gevonden, controleer serveradres.
 egroupware has notifications for you	notifications	nl	EGroupware heeft meldingen voor u.
+egroupware login is starting, please wait.	notifications	nl	EGroupware login start, gelieve te wachten.
+egroupware logindomain:	notifications	nl	EGroupware Logindomein:
+egroupware logindomains founds, please select.	notifications	nl	EGroupware Logindomains gevonden, selecteer aub.
+egroupware not found by url or connection lost to server.	notifications	nl	EGroupware niet gevonden door URL of verbinding verloren met server.
+egroupware not found by url.	notifications	nl	EGroupware niet gevonden via URL.
 egroupware-popup backend	admin	nl	EGroupware popup backend
 egroupware-popup verbosity	notifications	nl	EGroupware popup zichtbaarheid
+email notifications only, if user is not logged in	notifications	nl	Alleen meldingen per e-mail als gebruiker niet is ingelogd
 enable egroupware-popup backend	admin	nl	EGroupware popup backend inschakelen
 enable windows-popup backend	admin	nl	Windows popup backend inschakelen
 enabled chains	notifications	nl	Ingeschakelde lijsten
-folder	notifications	nl	folder
+error browser can`t start.	notifications	nl	Fout Browser kan niet starten.
+error on loading tray icon	notifications	nl	Fout bij laden Tray-pictogram
+error ssl	notifications	nl	Fout SSL
+exit	notifications	nl	Sluit  af
+folder	notifications	nl	Folder
 from	notifications	nl	Van
+host:	notifications	nl	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	nl	Hoe uitgebreid moet de EGroupware-Popup zijn als er een melding naar de gebruiker wordt gestuurd:<br>laag: alleen de notificatiebel in het bovenste menu weergeven - bovenste menu moet ingeschakeld zijn!<br>gemiddeld: meldingsvenster naar voren brengen<br>hoog: meldingsvenster naar voren halen en de browser iets laten doen om zichzelf aan te kondigen
 if set, embedded links get rendered special for external clients	notifications	nl	Indien ingesteld, embedded links worden op een speciale manier samengesteld voor externe clients
+info on load config file: create config file.	notifications	nl	Info over laden config bestand: maak config bestand.
+issuer dn:	notifications	nl	Verstrekker DN:
+java desktop notification app	preferences	nl	Java desktop notificatie app
+last month	notifications	nl	Vorige maand
 linked entries:	common	nl	Gekoppelde items:
+login aborted, application exit?	notifications	nl	Inloggen afgebroken, toepassing afgesloten?
+login in egroupware:	notifications	nl	Inloggen in EGroupware:
+mail account to use for notifications	admin	nl	Mail account te gebruiken voor meldingen
+mark all as read	notifications	nl	Alles markeren als gelezen
+mark as read	notifications	nl	Als gelezen markeren
 message from	notifications	nl	Bericht van
-minutes	notifications	nl	minuten
+minutes	notifications	nl	Minuten
+more info	notifications	nl	Meer info
 notification	common	nl	Melding
+notifier	notifications	nl	Kennisgever
 notify me by	notifications	nl	Meld mij via
+open notified entry	notifications	nl	Melding openen
 optimize e-mails for external mail client	notifications	nl	Optimaliseer E-mails voor externe mail client
-permission	notifications	nl	toestemming
+page not found, please check serveraddress.	notifications	nl	Pagina niet gevonden, controleer serveradres.
+password:	notifications	nl	Wachtwoord:
+permission	notifications	nl	Toestemming
+permission denied for notifications application.	notifications	nl	Toestemming geweigerd voor aanmeldingstoepassing.
+placeholders with user/ prefix	admin	nl	placeholders met gebruiker/voorvoegsel
+please contact your egroupware admin.	notifications	nl	Neem contact op met uw EGroupware admin.
+please enter the url of your egroupware.	notifications	nl	Voer de URL van uw EGroupware in.
+please enter your egroupware username.	notifications	nl	Vul uw EGroupware gebruikersnaam in.
+please enter your password	notifications	nl	Voer uw wachtwoord in
 preferences for notification	notifications	nl	Voorkeuren voor meldingen
 refresh notifications	notifications	nl	Kennisgevingen verversen
+repeat login?	notifications	nl	Herhaal login?
+run application	notifications	nl	Toepassing uitvoeren
+save password	notifications	nl	Wachtwoord opslaan
+setting	notifications	nl	Instelling
+setting aborted, application exit	notifications	nl	Instelling afgebroken, toepassing verlaten
 settings	notifications	nl	Instellingen
 signature	admin	nl	Ondertekening
+signature added to every change notification	admin	nl	Handtekening toegevoegd aan elke wijzigingsmelding
+sorry, your login has expired	notifications	nl	Sorry, uw aanmelding is verlopen
 step	notifications	nl	Stap
+subject dn:	notifications	nl	Onderwerp DN:
+the server certificate is not a valid trust center certificate!	notifications	nl	Het servercertificaat is geen geldig trust center-certificaat!
+this egroupware notification has been sent to you by mail because your	notifications	nl	Deze EGroupware-melding is per e-mail naar u verzonden omdat uw
+this month	notifications	nl	Deze maand
+user:	notifications	nl	Gebruiker:
 warning	notifications	nl	Waarschuwing
 windows-popup backend	admin	nl	Windows-Popup backend
+yesterday	notifications	nl	Gisteren
+you can also use	admin	nl	Je kunt ook
+you have %1 unread notifications	notifications	nl	U hebt %1 ongelezen meldingen
+you have been successfully logged out	notifications	nl	U bent succesvol uitgelogd
 you've got new mail	notifications	nl	Er is een nieuw bericht
 your session could not be verified.	notifications	nl	Uw sessie kon niet geverifieerd worden

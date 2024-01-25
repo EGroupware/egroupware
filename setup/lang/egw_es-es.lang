@@ -1,22 +1,28 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	es-es	¡%1 '%2' NO existe, no tiene permiso de lectura para el servidor web o no contiene ninguna instalación de EGroupware!
+%1 accounts to copy found.	setup	es-es	%1 cuentas a copiar encontradas.
 %1 already exists in %2.	setup	es-es	%1 ya existe en %2.
 %1 created in %2.	setup	es-es	%1 creado en %2.
 %1 database %2 on %3 already contains the following tables:	setup	es-es	La base de datos %1 %2 en %3 ya contiene las siguientes tablas:
-%1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
+%1 does not exist !!!	setup	es-es	¡%1 no existe!
+%1 does not exist in %2.	setup	es-es	%1 NO existe en %2.
+%1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	es-es	%1 NO tiene contraseña (atributo userPassword) ¡o no se nos permite leerlo!
 %1 entries modified.	setup	es-es	Se han modificado %1 entradas.
 %1 entries would have been modified.	setup	es-es	Se habrían modificado %1 entradas.
-%1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
+%1 is %2%3 !!!	setup	es-es	¡%1 %2 es %3!
 %1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	es-es	¡%1 está establecido a %2, NO podrá subir o adjuntar ficheros mayores de ese valor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	es-es	%1 está establecido en %2. ¡Esto NO se recomienda para un sistema en producción, ya que los mensajes de error pueden contener contraseñas o alguna otra información sensible!
+%1 not allowed to create in univention.	setup	es-es	%1 no se puede crear en Univention.
+%1 password set in %2.	setup	es-es	%1 contraseña establecida en %2.
+%1 passwords updated, %3 errors	setup	es-es	%1 contraseñas actualizadas, %3 errores
 %1 the configuration file.	setup	es-es	%1 el fichero de configuración.
 %1 users and %2 groups created, %3 errors	setup	es-es	Se han creado %1 usuarios y %2 grupos, %3 errores
 '%1' is no valid domain name!	setup	es-es	'%1' no es un nombre válido de dominio
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡'%1' no está permitido como %2. argumentos de la opción %3!
 '%1' must be integer	setup	es-es	%1 debe ser un valor entero
 (searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que EGw funcione completamente ***
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡(se pierden los datos)!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que EGw funcione completamente!
 00 (disable)	setup	es-es	00 (desactivar / recomendado)
 13 (ntp)	setup	es-es	13 (ntp)
 80 (http)	setup	es-es	80 (http)
@@ -33,31 +39,38 @@ add auto-created users to this group ('default' will be attempted if this is emp
 add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	es-es	añadir o editar un dominio: [nombre dominio (default)], [nombre base de datos (egroupware)], [usuario de la base de datos (egroupware)], contraseña de la base de datos,[tipo de base de datos [mysql)], [servidor de la base de datos (localhost)],[puerto de la base de datos (específico de la base de datos)], [usuario de configuración (como encabezado)], [contraseña de configuración (como encabezado)]
 adding, editing or deleting an egroupware domain / database instance:	setup	es-es	Añadir, editar o borrar un dominio o instancia de EGroupware
+additional group filter (optional)	setup	es-es	Filtro de grupo adicional (opcional)
 additional options and there defaults (in brackets)	setup	es-es	Opciones adicionales y predeterminadas (entre corchetes)
 additional settings	setup	es-es	Configuración adicional
+additional user filter (optional)	setup	es-es	Filtro de usuario adicional (opcional)
 admin account successful created.	setup	es-es	La cuenta de administrador se ha creado correctamente
 admin email address	setup	es-es	Dirección de correo electrónico del  administrador
 admin first name	setup	es-es	Nombre del administrador
 admin last name	setup	es-es	Apellido del administrador
 admin password	setup	es-es	Contraseña del administrador
 admin password to header manager	setup	es-es	Contraseña del administrador para el admnistrador de encabazados
+admin user	setup	es-es	Usuario administrador
 admin user for header manager	setup	es-es	Usuario de administración para el administrador de encabezados
 admin username	setup	es-es	Nombre de usuario administrador
 admins	setup	es-es	Admnistradores
+ads dn "%1" not found!	setup	es-es	ADS DN "%1" ¡NO encontrado!
 after backing up your tables first.	setup	es-es	Después de haber hecho copia de seguridad de las tablas.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	es-es	Después de recuperar el fichero, póngalo en su lugar como header.inc.php. Después, pulse "continuar".
 all applications	setup	es-es	Todas las aplicaciones
 all core tables and the admin and preferences applications	setup	es-es	Todas las tablas principales y las aplicaciones de preferencias y administración
-all exit codes of the command line interface	setup	es-es	todos los códigos de salida de la interfa de línea de comandos
-all languages (incl. not listed ones)	setup	es-es	todos los idiomas (incluyendo los no listados)
+all exit codes of the command line interface	setup	es-es	Todos los códigos de salida de la interfa de línea de comandos
+all hooks registered	setup	es-es	Todos los ganchos registrados
+all languages (incl. not listed ones)	setup	es-es	Todos los idiomas (incluyendo los no listados)
 all users	setup	es-es	Todos los usuarios
 allow authentication via cookie	setup	es-es	Permitir identificación por cookies
 allow password migration	setup	es-es	Permitir migración de la contraseña
+allow saml logins to join existing accounts	setup	es-es	Permitir que los inicios de sesión SAML se unan a cuentas existentes
 allow usernames identical to system users?	setup	es-es	¿Permitir que los nombres de usuario sean idénticos a los usuarios de sistema?
 allowed migration types (comma-separated)	setup	es-es	Permitir tipos de migración (separados por comas)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	es-es	Alternativamente, se puede acceder a los dominios iniciando la sesión como <i>usuario@dominio</i>.
+alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	es-es	Alternativamente, puede utilizar %1Composer%2 para instalar todos los requisitos a la vez. Descárguelo y ejecútelo:
 and is up to date	setup	es-es	y está actualizada
-and reload your webserver, so the above changes take effect !!!	setup	es-es	Y reiniciar el servidor web, para que los cambios de arriba tengan efecto
+and reload your webserver, so the above changes take effect !!!	setup	es-es	¡Y reiniciar el servidor web, para que los cambios de arriba tengan efecto!
 app details	setup	es-es	Detalles de la aplicación
 app install/remove/upgrade	setup	es-es	Instalación/Eliminación/Actualización de la Aplicación
 app process	setup	es-es	Proceso de la aplicación
@@ -78,8 +91,10 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	es-es	A petición suya, este script ejecutará la "malvada" acción de eliminar sus tablas actuales y volverlas a crear en el nuevo formato
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	es-es	A petición suya, este script ejecutará la "malvada" acción de desinstalar todas sus aplicaciones, lo que eliminará todas sus tablas y datos actuales
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	es-es	Intentar usar el tipo MIME correcto para FTP en lugar del predeterminado 'application/octet-stream'
+attributes for new users	setup	es-es	Atributos para nuevos usuarios
 authentication / accounts	setup	es-es	Identificación / Cuentas
 authentication type for application	setup	es-es	Tipo de identificación para la aplicación
+authentication type for http host	setup	es-es	Tipo de autenticación para host HTTP
 authentification mode:	setup	es-es	Modo de identificación:
 auto create account records for authenticated users	setup	es-es	Crear automáticamente registros para los usuarios identificados
 auto login anonymous user	setup	es-es	Inicio de sesión automático para el usuario anónimo
@@ -88,14 +103,14 @@ available version	setup	es-es	Versión disponible
 back to the previous screen	setup	es-es	Volver al menú anterior
 back to user login	setup	es-es	Volver al inicio de sesión de usuario
 back's up your db now, this might take a few minutes	setup	es-es	realiza una copia de seguridad de la base de datos. Puede tardar unos minutos
-backup '%1' deleted	setup	es-es	se ha borrado la copia de seguridad '%1'
-backup '%1' renamed to '%2'	setup	es-es	la copia de seguridad '%1' se ha renombrado a '%2'
-backup '%1' restored	setup	es-es	se ha restaurado la copia de seguridad '%1'
-backup and restore	setup	es-es	copiar y restaurar
+backup '%1' deleted	setup	es-es	Se ha borrado la copia de seguridad '%1'
+backup '%1' renamed to '%2'	setup	es-es	La copia de seguridad '%1' se ha renombrado a '%2'
+backup '%1' restored	setup	es-es	Se ha restaurado la copia de seguridad '%1'
+backup and restore	setup	es-es	Copiar y restaurar
 backup directory %1 mounted as %2	setup	es-es	El directorio de copias de seguridad %1 está montado como %2
 backup failed	setup	es-es	Falló la copia de seguridad
 backup files (needs ziparchive)	setup	es-es	Hacer copia de seguridad de los ficheros (necesita ZipArchive)
-backup finished	setup	es-es	finalizó la copia de seguridad
+backup finished	setup	es-es	Finalizó la copia de seguridad
 backup housekeeping	setup	es-es	Las copias de seguridad con un nombre estándar se pueden limpiar automáticamente. Renombre los ficheros de la copia de seguridad que desee para excluirlos de la limieza
 backup min count	setup	es-es	Número mínimo de copias de seguridad.
 backup now	setup	es-es	hacer copia de seguridad ahora
@@ -106,49 +121,61 @@ base dn "%1" not found!	setup	es-es	¡NO se ha encontrado el DN base "%1"!
 because an application it depends upon was upgraded	setup	es-es	porque se actualizó una aplicación de la que depende
 because it depends upon	setup	es-es	porque depende de
 because it is not a user application, or access is controlled via acl	setup	es-es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	es-es	porque requiere de instalación manual de las tablas,<br /> o la definición de la tabla fue incorrecta
+because it requires manual table installation, <br />or the table definition was incorrect	setup	es-es	porque requiere de instalación manual de las tablas,<br> o la definición de la tabla fue incorrecta
 because it was manually disabled	setup	es-es	porque se desactivó manualmente
 because its sources are missing	setup	es-es	porque falta su código fuente
 because of a failed upgrade or install	setup	es-es	porque ocurrió un fallo al actualizar o instalar
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	es-es	porque falló la actualización, o la base de datos es más reciente que la versión instalada de esta aplicación
 because the enable flag for this app is set to 0, or is undefined	setup	es-es	porque el indicador de "habilitada" de esta aplicación está a 0, o no está definido
-bottom	setup	es-es	parte inferior
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	es-es	pero le <u>recomendamos encarecidamente que haga copia de seguridad</u> de sus tablas en caso de que el script cause daños a su información.<br /><strong>Estos scripts automáticos pueden destruir su información fácilmente.</strong>
+bottom	setup	es-es	Parte inferior
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	es-es	Pero le <u>recomendamos encarecidamente que haga copia de seguridad</u> de sus tablas en caso de que el script cause daños a su información.<br><b>Estos scripts automáticos pueden destruir su información fácilmente.</b>
+by redirecting to https	setup	es-es	Redirigiendo a https
+by rewriting links to https (allows eg. sitemgr to run on http)	setup	es-es	Reescribiendo enlaces a https (permite, por ejemplo, que SiteMgr funcione en http)
 ca certificate	setup	es-es	Certificado CA
+cached cleared	setup	es-es	Caché borrada
+callback url	setup	es-es	URL de devolución de llamada
 can not connect to %1 database %2 on host %3 using user %4!	setup	es-es	¡No se puede conectar a la base de datos %1 %2 en el servidor %3 usando el usuario %4!
 can not connect to ldap server on host %1 using dn %2!	setup	es-es	¡No se puede conectar con LDAP en el servidor %1 usando el DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	es-es	¡No se puede crear la base de datos %1 %2 en %3 para el usuario %4!
 can not create dn %1!	setup	es-es	¡No se puede crear el DN %1!
 can not instancate accounts object for %1	setup	es-es	NO se pueden instanciar objetos de cuentas para %1
+can only be change via setup!	setup	es-es	¡Sólo se puede cambiar a través de Setup!
 cancel	setup	es-es	Cancelar
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	es-es	No se puede crear el fichero header.inc.php por problemas de permisos.<br />En su lugar, puede %1 o %2 el fichero.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	es-es	Nombre del servidor de CAs:<br />ejemplo: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	es-es	Puerto del servidor de CAs:<br />Ejemplo: 443
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	es-es	No se puede crear el fichero header.inc.php por problemas de permisos.<br>En su lugar, puede %1 o %2 el fichero.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	es-es	Nombre del servidor de CAs:<br>ejemplo: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	es-es	Puerto del servidor de CAs:<br>Ejemplo: 443
 cas server uri:	setup	es-es	URI del servidor de CAs:
 certificate (pem or ca):	setup	es-es	Certificado (PEM o CA):
+certificate metadata is signed with	setup	es-es	Los metadatos del certificado se firman con
 change system-charset	setup	es-es	Cambiar el juego de caracteres del sistema
-charset	setup	es-es	charset
+charset	setup	es-es	conjunto de caracteres
 charset to convert to	setup	es-es	Juego de caracteres al que convertir
 charsets used by the different languages	setup	es-es	Juegos de caracteres usados por los distintos idiomas
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	es-es	Sólo se puede realizar a través de un servidor web, mientras no sea conocido el id de usuario o nombre del servidor web.
 check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	es-es	marcar para hacer copia de seguridad y restaurar el directorio de ficheros (puede usar mucho espacio, asegúrese de configurar adecuadamente el housekeeping).
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	es-es	Marcar para hacer copia de seguridad y restaurar el directorio de ficheros (puede usar mucho espacio, asegúrese de configurar adecuadamente el housekeeping).
+checking dependencies: %1 packages are installed in the required version.	setup	es-es	Comprobando dependencias: %1 paquetes están instalados en la versión requerida.
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
 checking file-permissions of %1 for %2 %3: %4	setup	es-es	Comprobando si %1 %2 tiene permiso de %3: %4
 checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking for jpgraph in %1	setup	es-es	Comprobando JPGraph en %1
+checking for tnef application	setup	es-es	Comprobación de la aplicación tnef
 checking function %1 exists	setup	es-es	Comprobando si existe la función %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	es-es	Comprobando si el valor de php.ini session.save_path='%1' tiene permiso de escritura para el servidor web
+checking package %1 is installed	setup	es-es	Comprobando que el paquete %1 está instalado
 checking php.ini	setup	es-es	Comprobando php.ini
 checking required php version %1 (recommended %2)	setup	es-es	Comprobando la versión necesaria de PHP: %1 (recomendada: %2)
 checking the egroupware installation	setup	es-es	Comprobando la instalación de EGroupware
-checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	es-es	comprueba si eGrouWare está instalado, sus versiones y las actualizaciones necesarias (para los valores de retorno, ver --exit-codes)
+checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	es-es	Comprueba si eGrouWare está instalado, sus versiones y las actualizaciones necesarias (para los valores de retorno, ver --exit-codes)
 clear cache and register hooks	setup	es-es	Limpiar la caché y registrar los hooks
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
+client id	setup	es-es	ID de cliente
+client secret	setup	es-es	Secreto del cliente
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	es-es	direcciones ip o nombres de servidor separados por comas. El valor predeterminado es acceder desde cualquier sitio.
+comma-separated provider names or json	setup	es-es	Comma-separated provider names or JSON
 commercial support	setup	es-es	Soporte comercial
 community forum	setup	es-es	Foro comunal
 complete path to aspell program	setup	es-es	Ruta completa al programa aspell
@@ -163,7 +190,8 @@ configuration password	setup	es-es	Contraseña de configuración
 configuration user	setup	es-es	Usuario de configuración
 configure now	setup	es-es	Configurar ahora
 confirm to delete this backup?	setup	es-es	¿Confirmar borrar esta copia de seguridad?
-contain	setup	es-es	contiene
+contain	setup	es-es	Contiene
+context to create users	setup	es-es	Contexto para crear usuarios
 continue	setup	es-es	Continuar
 continue to the header admin	setup	es-es	Pasar a administrar encabezados
 convert	setup	es-es	Convertir
@@ -189,18 +217,20 @@ current configuration:	setup	es-es	Configuración actual:
 current system-charset	setup	es-es	Juego de caracteres actual del sistema
 current system-charset is %1.	setup	es-es	El juego de caracteres actual del sistema es %1.
 current version	setup	es-es	Versión actual
-currently installed languages: %1 <br />	setup	es-es	Idiomas instalados actualmente: %1 <br />
+currently installed languages: %1 <br />	setup	es-es	Idiomas instalados actualmente: %1 <br>
 custom handler: %1	setup	es-es	Manejador personalizado: %1
+custom oid	setup	es-es	OID personalizado
 custom set via %1	setup	es-es	Conjunto personalizado via %1
 cyrus imap: admin user,password	setup	es-es	Cyrus IMAP: Usuario administrador, contraseña
+daily	setup	es-es	Diario
 database	setup	es-es	Base de datos
 database instance (egw domain)	setup	es-es	Instancia de la base de datos (dominio EGw)
 database is version %1 and up to date.	setup	es-es	La versión de la base de datos es %1 y está actualizada.
 database successfully converted from '%1' to '%2'	setup	es-es	La base de datos se convirtió correctamente de '%1' a '%2'
 datebase %1 droped.	setup	es-es	Se ha borrado la base de datos %1.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	es-es	Puerto de hora.<br />Si usa el puerto 13, por favor, configure las reglas del cortafuegos adecuadamente antes de enviar esta página.<br />(Puerto: 13 / Servidor: 129.6.15.28)
-day	setup	es-es	día
-day of week<br />(0-6, 0=sunday)	setup	es-es	día de la semana<br />(0-6, 0=domingo)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	es-es	Puerto de hora.<br>Si usa el puerto 13, por favor, configure las reglas del cortafuegos adecuadamente antes de enviar esta página.<br>(Puerto: 13 / Servidor: 129.6.15.28)
+day	setup	es-es	Día
+day of week<br />(0-6, 0=sunday)	setup	es-es	Día de la semana<br>(0-6, 0=domingo)
 db backup and restore	setup	es-es	Copiar y restaurar la base de datos
 db host	setup	es-es	Servidor de la base de datos
 db name	setup	es-es	Nombre de la base de datos
@@ -210,40 +240,47 @@ db root password	setup	es-es	Contraseña del administrador de la base de datos
 db root username	setup	es-es	Usuario administrador de la base de datos
 db type	setup	es-es	Tipo de base de datos
 db user	setup	es-es	Usuario de la base de datos
+deactivate user	setup	es-es	Desactivar usuario
 default	setup	es-es	valor predeterminado recomendado
 default file system space per user/group ?	setup	es-es	¿Espacio predeterminado en el sistema por usuario o grupo?
 delete	setup	es-es	Borrar
+delete all existing accounts from sql database	setup	es-es	Borrar todas las cuentas existentes de la base de datos SQL
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	es-es	¿Borrar todas las cuentas SQL existentes, ACLs y preferencias? (normalmente no es necesario)
 delete all my tables and data	setup	es-es	Elimine todas mis tablas y datos
 delete all old languages and install new ones	setup	es-es	Eliminar todos los idiomas antiguos e instalar los nuevos
+delete user and his data	setup	es-es	Borrar usuario Y sus datos
 deleting tables	setup	es-es	Eliminando tablas
 demo server setup	setup	es-es	Configuración de Servidor de demostración
 deny access	setup	es-es	Denegar acceso
 deny all users access to grant other users access to their entries ?	setup	es-es	¿Denegar el acceso a que todos los usuarios puedan conceder acceso a sus propias entradas?
 dependency failure	setup	es-es	Fallo en las dependencias
-deregistered	setup	es-es	eliminada del registro
+deregistered	setup	es-es	Eliminada del registro
 details for admin account	setup	es-es	Detalles para la cuenta de Administrador
 developers' table schema toy	setup	es-es	Juguete para el esquema de tablas de desarrollo
 did not find any valid db support!	setup	es-es	¡No se encontró ningún soporte válido para la base de datos!
+do not check for deleted user	setup	es-es	NO comprobar el usuario eliminado
 do you want persistent connections (higher performance, but consumes more resources)	setup	es-es	¿Conexiones persistentes? (mayor rendimiento, pero consume más recursos)
 do you want to manage homedirectory and loginshell attributes?	setup	es-es	¿Administrar el directorio personal y atributos de inicio de sesión?
 documentation	setup	es-es	Documentación
 does not exist	setup	es-es	no existe
 domain	setup	es-es	Dominio
-domain '%1' does not exist !!!	setup	es-es	¡¡El dominio '%1' NO existe!!
+domain '%1' does not exist !!!	setup	es-es	¡El dominio '%1' NO existe!
 domain name	setup	es-es	Nombre del dominio
 domain select box on login	setup	es-es	Cuadro de selección de dominio en el inicio de sesión
 domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	es-es	dominio (todos), [usuario de configuración (admin)], contraseña, [nombre de fichero (predeterminado: directorio_backup/db_backup-AAAAMMDDHHii)]
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	es-es	dominio (predeterminado), [usuario de configuración (admin)], contraseña, [copia de seguridad a instalar], [juego de caracteres (el predeterminado depende del idioma)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	es-es	dominio (predeterminado), [usuario de configuración (admin)], contraseña, [nombre=valor,...] establece valores de configuración junto a:
-domain-name	setup	es-es	nombre del dominio
+domain-name	setup	es-es	Nombre del dominio
 don't change, if you already stored files! you will loose them!	setup	es-es	¡No modificar si ya hay ficheros almacenados! ¡Los perderá!
 dont touch my data	setup	es-es	No tocar mis datos
 download	setup	es-es	Descargar
+dry-run (only show what would happen)	setup	es-es	Ejecución en seco (sólo muestra lo que ocurriría)
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	es-es	La forma más fácil en win2008r2 es añadir el rol "Active Directory Certificate Services" y reiniciar.
 edit current configuration	setup	es-es	Editar configuración actual
 edit your existing header.inc.php	setup	es-es	Editar el fichero header.inc.php existente
 edit your header.inc.php	setup	es-es	Editar el fichero header.inc.php
-eg. /egroupware or http://domain.com/egroupware, default: %1	setup	es-es	p. ej. /egroupware o http://domain.com/egroupware, predeterminado: %1
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	es-es	Ej. "CN=Usuarios,DC=dominio,DC=com" para el dominio ADS "dominio.com"
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	es-es	p. ej. /egroupware o https://domain.com/egroupware, predeterminado: %1
 egroupware administration manual	setup	es-es	Manual de Administración de EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	es-es	¡La API de eGrupWare necesita una actualización del esquema de la base de datos de la versión %1 a %2!
 egroupware api version %1 found.	setup	es-es	Se ha encontrado la versión %1 d la API de EGroupware
@@ -252,20 +289,26 @@ egroupware configuration file (header.inc.php) version %1 exists%2	setup	es-es	E
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	es-es	El fichero de configuración de EGroupware (header.inc.php) ya existe. ¡Necesita usar --edit-header o borrarlo primero!
 egroupware domain/instance %1(%2):	setup	es-es	Instancia o dominio de EGroupware %1(%2):
 egroupware is already installed!	setup	es-es	¡EGroupware ya está instalado!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	es-es	El código fuente de EGroupware en '%1' no está completo: ¡¡falta el fichero '%2'!!
-email (standard maildomain should be set)	setup	es-es	correo (debe indicarse el dominio de correo estándar)
+egroupware requires several dependencies installed via: %1	setup	es-es	EGroupware requiere varias dependencias instaladas a través de: %1
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	es-es	El código fuente de EGroupware en '%1' no está completo: ¡falta el fichero '%2'!
+egroupware's callback url is the one of the login page	setup	es-es	La URL de callback de EGroupware es la de la página de login
+email (standard maildomain should be set)	setup	es-es	Correo (debe indicarse el dominio de correo estándar)
+email-address	setup	es-es	Dirección de correo electrónico
+emailadmin mail account saved:	setup	es-es	Cuenta de correo EMailAdmin guardada:
 emailadmin profile updated:	setup	es-es	Se ha actualizado el perfil de administración de correo:
-enable for extra debug-messages	setup	es-es	activar los mensajes de depuración extra
+enable for extra debug-messages	setup	es-es	Activar los mensajes de depuración extra
+enable logging of authentication to files-directory	setup	es-es	Habilitar el registro de autenticación a archivos-directorio
 enable mcrypt	setup	es-es	Activar MCrypt
+enforce ssl (allows to specify just a path above)	setup	es-es	Enforce SSL (permite especificar sólo una ruta arriba)
 enter some random text for app session encryption	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación<br />cifrado (necesita mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br />Ejemplo: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br />Ejemplo: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br />Ejemplo: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br />Ejemplo: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	es-es	Introduzca la ruta completa al directorio de la copia de seguridad.<br />Si está vacio: directorio de los ficheros
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación<br>cifrado (necesita mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br>Ejemplo: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br>Ejemplo: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br>Ejemplo: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br>Ejemplo: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	es-es	Introduzca la ruta completa al directorio de la copia de seguridad.<br>Si está vacio: directorio de los ficheros
 enter the hostname of the machine on which this server is running	setup	es-es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-es	Introduzca la URL de EGroupware.<br />Ejemplo: http://www.dominio.com/egroupware o   /egroupware<br /><b>Sin barra invertida al final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-es	Introduzca la URL de EGroupware.<br>Ejemplo: https://egw.dominio.com/egroupware o   /egroupware<br><b>Sin barra invertida al final</b>
 enter the site password for peer servers	setup	es-es	Introduzca la contraseña del sitio para los servidores peer
 enter the site username for peer servers	setup	es-es	Introduzca el nombre de usuario del sitio para servidores peer
 enter the title for your site	setup	es-es	Introduzca el título para su sitio
@@ -280,12 +323,16 @@ error in admin-creation !!!	setup	es-es	¡Error al crear administrador!
 error in group-creation !!!	setup	es-es	¡Error al crear grupo!
 error listing "dn=%1"!	setup	es-es	¡Error al listar "DN=%1"!
 error modifying dn=%1: %2='%3'!	setup	es-es	¡Error al modificar DN=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	es-es	¡Error al buscar "DN=%1" para "%2"!
+every	setup	es-es	Cada
 export has been completed!	setup	es-es	¡La exportación se ha completado!
 failed to mount backup directory!	setup	es-es	Fallo el montar el directorio de backup
+failed updating user "%1" dn="%2"!	setup	es-es	¡Error al actualizar el usuario "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	es-es	Fallo al escribir el fichero de configuración header.inc.php. ¡Compruebe los permisos!
+fallback authentication	setup	es-es	Autenticación Fallback
 false	setup	es-es	Falso
 file	setup	es-es	FICHERO
-file type, size, version, etc.	setup	es-es	tipo de fichero, tamaño, versión, etc
+file type, size, version, etc.	setup	es-es	Tipo de fichero, tamaño, versión, etc
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	es-es	La subida de ficheros al servidor está desactivada: ¡NO puede usar ningún gestor de ficheros ni adjuntar ficheros en varias aplicaciones!
 filename	setup	es-es	Nombre del fichero
 filesystem	setup	es-es	Sistema de archivos
@@ -310,9 +357,9 @@ historylog removed	setup	es-es	Se borró el registro del historial
 hooks deregistered	setup	es-es	Se borraron los "hooks" del registro
 hooks registered	setup	es-es	Se han registrado los "hooks"
 host information	setup	es-es	Información del servidor
-host,[smtp port],[smtp user],[smtp password]	setup	es-es	servidor, [puerto smtp], [usuario smtp], [contraseña smtp]
-host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	servidor,{imap | imaps },[dominio],[{standard(default)|vmailmgr = añadir dominio para la sesión del servidor de correro}]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	servidor, {imap | pop3 | pop3s}, [dominio],[{standard(predeterminado)|vmailmgr = añadir dominio para la sesión con el servidor de correo}]
+host,[smtp port],[smtp user],[smtp password]	setup	es-es	Servidor, [puerto smtp], [usuario smtp], [contraseña smtp]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	Servidor,{imap | imaps },[dominio],[{standard(default)|vmailmgr = añadir dominio para la sesión del servidor de correro}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	es-es	Servidor, {imap | pop3 | pop3s}, [dominio],[{standard(predeterminado)|vmailmgr = añadir dominio para la sesión con el servidor de correo}]
 host/ip domain controler	setup	es-es	Servidor/IP del controlador de dominio
 hostname/ip of database server	setup	es-es	Nombre del servidor o dirección IP del servidor de la base de datos
 hour (0-24)	setup	es-es	hora (0-24)
@@ -330,11 +377,13 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	es-es	Si sólo puede acceder al directorio raíz elija <b>Base de datos</b> para dónde almacenar el contenido del fichero Y usar la misma ruta para los ficheros temporales.
 if you did not receive any errors, your applications have been	setup	es-es	Si no ha recibido ningún error, sus aplicaciones han sido
 if you did not receive any errors, your tables have been	setup	es-es	Si no ha recibido ningún error, sus tablas han sido
-if you running this the first time, don't forget to manualy %1 !!!	setup	es-es	¡¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	es-es	Si solamente usa idiomas del mismo juego de caracteres (por ejemplo, los occidentales), entonces no necesita un juego de caracteres para el sistema
+if you running this the first time, don't forget to manualy %1 !!!	setup	es-es	¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	es-es	¡Si solamente usa idiomas del mismo juego de caracteres (por ejemplo, los occidentales), entonces no necesita un juego de caracteres para el sistema!
 image type selection order	setup	es-es	Orden de selección del tipo de imagen
 import has been completed!	setup	es-es	Se ha completado la importación
 include_path need to contain "." - the current directory	setup	es-es	include_path necesita contener ".", el directorio actual
+incremental import	setup	es-es	Importación incremental
+initial import	setup	es-es	Importación inicial
 install	setup	es-es	Instalar
 install all	setup	es-es	Instalar todo
 install applications	setup	es-es	Instalar aplicaciones
@@ -343,7 +392,7 @@ install language	setup	es-es	Instalar idiomas
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	es-es	Instalar o actualizar traducciones: doinio (todos), [usuario de configuración (admin)], contraseña, [[+]idioma1[, idioma2,...]] + añadidos, ningún idioma actualiza los existentes
 installation finished	setup	es-es	La instalación ha finalizado
 installation started, this might take a few minutes ...	setup	es-es	La instalación ha empezado. Esto puede tardar unos minutos...
-installed	setup	es-es	instaladas
+installed	setup	es-es	Instaladas
 instructions for creating the database in %1:	setup	es-es	Instrucciones para crear la base de datos en %1:
 invalid argument '%1' !!!	setup	es-es	¡El argumento '%1' no es válido!
 invalid ip address	setup	es-es	La dirección IP no es válida
@@ -370,6 +419,7 @@ ldap root password	setup	es-es	Contraseña del administrador LDAP
 ldap rootdn	setup	es-es	Root DN LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=EGw-domain
 leave empty to keep current.	setup	es-es	Dejar en blanco para mantener el actual
+leave empty to use default	setup	es-es	Dejar vacío para utilizar el valor por defecto
 limit access	setup	es-es	Limitar aceso
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dyndns.org)
 list availible values	setup	es-es	Listar valores disponibles
@@ -386,7 +436,7 @@ manage applications	setup	es-es	Administrar aplicaciones
 manage languages	setup	es-es	Administrar idiomas
 manual / help	setup	es-es	Manual / Ayuda
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	es-es	max_execution_time está puesto a menos de 30 (segundos): EGroupware a veces necesita un valor mayor para execution_time, así que puede haber fallos ocasionales.
-maximum account id (e.g. 65535 or 1000000)	setup	es-es	Id máximo de cuenta (p. ej. 65535 o 1000000)
+maximum account id (e.g. 65535 or 1000000)	setup	es-es	ID máximo de cuenta (p. ej. 65535 o 1000000)
 may be broken	setup	es-es	puede estar roto
 mcrypt algorithm (default tripledes)	setup	es-es	Algoritmo mcrypt (predeterminado TRIPLEDES)
 mcrypt initialization vector	setup	es-es	Vector de inicialización MCrypt
@@ -395,49 +445,49 @@ mcrypt settings (requires mcrypt php extension)	setup	es-es	Configuración de MC
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de EGroupware necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
 migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de EGroupware
 min backup count	setup	es-es	Número máximo de copias de seguridad conservadas (cero: todas)
-minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta (p. ej. 500 ó 100, etc)
-minute	setup	es-es	minuto
+minimum account id (e.g. 500 or 100, etc.)	setup	es-es	ID mínimo para la cuenta (p. ej. 500 ó 100, etc)
+minute	setup	es-es	Minuto
 missing or uncomplete mailserver configuration	setup	es-es	La configuración del servidor de correo falta o está incompleta
 modifications have been completed!	setup	es-es	¡Se han completado las modificaciones!
 modified	setup	es-es	Modificado
 modify	setup	es-es	Modificar
-month	setup	es-es	mes
+month	setup	es-es	Mes
 mount backup directory to %1	setup	es-es	Montar el directorio de la copia de seguridad en %1
 multi-language support setup	setup	es-es	Configuración del soporte multi-Idioma
 name of database	setup	es-es	Nombre de la base de datos
 name of db user egroupware uses to connect	setup	es-es	Nombre del usuario de la base de datos que usa EGroupware para conectar
-never	setup	es-es	nunca
+never	setup	es-es	Nunca
 new	setup	es-es	Nueva
-next run	setup	es-es	siguiente ejecución
+next run	setup	es-es	Siguiente ejecución
 no	setup	es-es	No
 no %1 support found. disabling	setup	es-es	No se encontró soporte para %1. Deshabilitando
 no accounts existing	setup	es-es	No existen cuentas
-no algorithms available	setup	es-es	no hay algoritmos disponibles
+no algorithms available	setup	es-es	No hay algoritmos disponibles
 no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	es-es	¡No existe ningún dominio ni instancia de EGroupware! Use --edit-header --domain para añadir uno (--usage da más opciones).
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	es-es	¡No se ha indicado ninguna contraseña para el administrador de encabezados! Use --edit-header <contraseña>[,<usuario>] para poner una (--usage da más opciones).
 no modes available	setup	es-es	No hay modos disponibles
 no update necessary, domain %1(%2) is up to date.	setup	es-es	No hace falta actualizar. El dominio %1(%2) está actualizado.
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	es-es	¡No se ha indicado una zona horaria válida! ("%1" NO es suficiente, tiene que usar un identificador de zona horaria como "%2". Vea la %3lista completa de identificadores válidos%4)
 no xml support found. disabling	setup	es-es	No se encontró soporte para XML. Desactivando.
-not	setup	es-es	no
+not	setup	es-es	No
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con EGroupware. Si tiene problemas, intente desactivarlo.
-not complete	setup	es-es	sin completar
+not complete	setup	es-es	Sin completar
 not completed	setup	es-es	Sin completar
 not ready for this stage yet	setup	es-es	No está listo para esta fase todavía
-not set	setup	es-es	sin configurar
+not set	setup	es-es	Sin configurar
 note: you will be able to customize this later	setup	es-es	Nota: tendrá que personalizar esto después
 nothing to change.	setup	es-es	No hay nada que cambiar.
 now guessing better values for defaults...	setup	es-es	Buscando valores óptimos predeterminados...
 odbc / maxdb: dsn (data source name) to use	setup	es-es	ODBC / MaxDB: DSN (data source name) a usar
 ok	setup	es-es	Aceptar
 once the database is setup correctly	setup	es-es	Una vez que la base de datos esté configurada correctamente
-one month	setup	es-es	un mes
-one week	setup	es-es	una semana
+one month	setup	es-es	Un mes
+one week	setup	es-es	Una semana
 only add languages that are not in the database already	setup	es-es	Sólo añade los nuevos idiomas que no están ya en la base de datos
 only add new phrases	setup	es-es	Sólo añade las nuevas frases
 or	setup	es-es	o
 or %1continue to the header admin%2	setup	es-es	o %1Continuar para administrar los encabezados%2
-or http://webdav.domain.com (webdav)	setup	es-es	o http://webdav.dominio.com (WebDAV)
+or http://webdav.domain.com (webdav)	setup	es-es	o https://webdav.dominio.com (WebDAV)
 or we can attempt to create the database for you:	setup	es-es	O podemos intentar crear la base de datos automáticamente
 or you can install a previous backup.	setup	es-es	O puede instalar una copia de seguridad anterior.
 password for smtp-authentication	setup	es-es	Contraseña para identificacion SMTP
@@ -447,8 +497,8 @@ passwords did not match, please re-enter	setup	es-es	Las contraseñas no coincid
 path (not url!) to your egroupware installation.	setup	es-es	Ruta (¡no URL!) a la instalación de EGroupware.
 path information	setup	es-es	Información de la ruta
 path of egroupware install directory (default auto-detected)	setup	es-es	Ruta al directorio de instalación de EGroupware (por defecto se detecta automáticamente)
-path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
-path to various directories: have to exist and be writeable by the webserver	setup	es-es	ruta a varios directorios: tienen que existir y tener permiso de escritura para el servidor web
+path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!
+path to various directories: have to exist and be writeable by the webserver	setup	es-es	Ruta a varios directorios: tienen que existir y tener permiso de escritura para el servidor web
 pem certificate	setup	es-es	Certificado PEM
 persistent connections	setup	es-es	Conexiones persistentes
 php client	setup	es-es	Cliente PHP
@@ -466,11 +516,12 @@ please login to egroupware and run the admin application for additional site con
 please make the following change in your php.ini	setup	es-es	Por favor, haga el siguiente cambio en su php.ini
 please wait...	setup	es-es	Por favor, espere...
 pop/imap mail server hostname or ip address	setup	es-es	Nombre o dirección IP del servidor de correo POP/IMAP
+port	setup	es-es	Puerto
 possible reasons	setup	es-es	Posibles razones
 possible solutions	setup	es-es	Posibles soluciones
 post-install dependency failure	setup	es-es	Fallo de dependencias en el proceso de post-instalación
 postfix with ldap: [yes(user edit forwarding)]	setup	es-es	Postfix con LDAP: [sí (user edit forwarding)]
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	es-es	Postgres: dejar en blanco para usar sockets unix (preferido) en vez de una conexión tcp/ip
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	es-es	PostgreSQL: dejar en blanco para usar sockets unix (preferido) en vez de una conexión TCP/IP
 potential problem	setup	es-es	Problema potencial
 preferences	setup	es-es	Preferencias
 problem resolution	setup	es-es	Resolución del problema
@@ -479,7 +530,7 @@ re-check my database	setup	es-es	Volver a comprobar mi base de datos
 re-check my installation	setup	es-es	Comprobar mi instalación
 re-enter password	setup	es-es	Confirme la contraseña
 read translations from	setup	es-es	Leer traducciones de
-readable by the webserver	setup	es-es	lectura para el servidor web
+readable by the webserver	setup	es-es	Lectura para el servidor web
 really uninstall all applications	setup	es-es	REALMENTE quiere desinstalar todas las aplicaciones
 refusing to delete dn "%1"!	setup	es-es	¡Se ha rechazado borrar DN "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	es-es	register_globals está activado, y EGroupware NO lo necesita, así que es más seguro tenerlo en Off (desactivado).
@@ -497,20 +548,25 @@ requires reinstall or manual repair	setup	es-es	Requiere reinstalación o repara
 requires saml optional on login page and user to specify username and password	setup	es-es	Requiere SAML opcional en la página de inicio de sesión y que el usuario especifique el nombre de usuario y la contraseña
 requires upgrade	setup	es-es	Requiere actualización
 resolve	setup	es-es	Resolver
-restore	setup	es-es	restaurar
+restore	setup	es-es	Restaurar
 restore failed	setup	es-es	Se ha producido un falla al restaurar
 restore finished	setup	es-es	Se terminó de restaurar
 restore started, this might take a few minutes ...	setup	es-es	Se comenzó a restaurar. Esto puede tardar unos minutos...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	es-es	Restaurar una copia de seguridad borrará/sustituirá todo el contenido de la base de datos. ¿Está seguro?
+result data to add or remove extra membership	setup	es-es	Datos de resultados para añadir o eliminar miembros adicionales
+result data to use as username	setup	es-es	Datos del resultado a utilizar como nombre de usuario
+result values (comma-separated) and group-name to add or remove	setup	es-es	Valores resultantes (separados por comas) y nombre del grupo a añadir o eliminar
 return to setup	setup	es-es	Volver a la instalación
-run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	es-es	ejecutar una actualización del esquema de la base de datos (si es necesario): dominio (todos,[usuario de configuración (admin)], contraseña
+root dn	setup	es-es	Root DN
+run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	es-es	Ejecutar una actualización del esquema de la base de datos (si es necesario): dominio (todos,[usuario de configuración (admin)], contraseña
 run installation tests	setup	es-es	Ejecutar pruebas de instalación
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	es-es	safe_mode está activado, lo cual suele ser bueno y hace que su instalación sea más segura.
 save	setup	es-es	Guardar
 save this text as contents of your header.inc.php	setup	es-es	Guardar este texto como contenido de su header.inc.php
-schedule	setup	es-es	planificar
-scheduled backups	setup	es-es	copias de seguridad planificadas
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	es-es	Seleccione una aplicación, introduzca una versión de destino y después pulse "Enviar" para procesar hasta esa versión.<br />Si no selecciona una versión, sólo se instalarán la tablas de la versión base de la aplicación.<br /><blink>¡ESTO ELIMINARÁ ANTES TODAS LAS TABLAS DE LAS APLICACIONES!</blink>
+schedule	setup	es-es	Planificar
+scheduled backups	setup	es-es	Copias de seguridad planificadas
+securest	setup	es-es	Más seguro
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	es-es	Seleccione una aplicación, introduzca una versión de destino y después pulse "Enviar" para procesar hasta esa versión.<br>Si no selecciona una versión, sólo se instalarán la tablas de la versión base de la aplicación.<br><b>¡ESTO ELIMINARÁ ANTES TODAS LAS TABLAS DE LAS APLICACIONES!</b>
 select one...	setup	es-es	seleccionar uno...
 select the default applications to which your users will have access	setup	es-es	Seleccione las aplicaciones predeterminadas a las que tendrán acceso los usuarios
 select the desired action(s) from the available choices	setup	es-es	Seleccione las accion(es) deseadas de la lista de opciones disponibles
@@ -530,29 +586,34 @@ select which user(s) will have admin privileges	setup	es-es	Seleccione qué usua
 select your old version	setup	es-es	Seleccione su versión anterior
 selectbox	setup	es-es	Cuadro de selección
 server root	setup	es-es	Raíz del servidor
+session expired	setup	es-es	Sesión expirada
 session handler class used.	setup	es-es	Clase utilizada para el manejador de sesiones
 sessions handler	setup	es-es	Manejador de sesiones
-set	setup	es-es	establecer
-set and not	setup	es-es	establecido y no
+set	setup	es-es	Establecer
+set and not	setup	es-es	Eestablecido y no
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	es-es	Poner el juego de caracteres del sistema en UTF-8 (unicode) permite coexistir datos de juegos de caracteres distintos.
 settings	setup	es-es	Configuración
 setup	setup	es-es	Instalación
 setup main menu	setup	es-es	Menú principal de la instalación
 setup the database	setup	es-es	Instalar la base de datos
 setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
-show 'powered by' logo on	setup	es-es	Mostrar el logo en
+show 'powered by' logo on	setup	es-es	Mostrar el logotipo "Powered by" en
 sieve: host[,port(4190)]	setup	es-es	Sieve: servidor[,puerto(4190)]
-size	setup	es-es	tamaño
+size	setup	es-es	Tamaño
 skip the installation tests (not recommended)	setup	es-es	Omitir las pruebas de instalación (no se recomienda)
 smtp server hostname or ip address	setup	es-es	Nombre del servidor SMTP o dirección IP
 smtp server port	setup	es-es	Puerto del servidor SMTP
+smtp-authentication required	setup	es-es	Autenticación SMTP requerida
+some information for the own service provider metadata	setup	es-es	Información sobre los metadatos del propio proveedor de servicios
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
+source (must be configured above)	setup	es-es	Fuente (debe configurarse arriba)
 sources deleted/missing	setup	es-es	El código fuente falta o ha sido borrado
-sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
+sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas
 ssl validation:	setup	es-es	Validación SSL:
-standard (login-name identical to egroupware user-name)	setup	es-es	estándar (el usuario es idéntico al de EGroupware)
+standard (login-name identical to egroupware user-name)	setup	es-es	Estándar (el usuario es idéntico al de EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	es-es	Configuración del servidor de correo estándar (también se usa para identificación de correo)
 standard, as defined above	setup	es-es	Estándar, como se ha definido arriba
+start installing application %1 ...	setup	es-es	Comienza la instalación de la aplicación %1 ...
 start the postmaster	setup	es-es	Iniciar el postmaster
 start updating languages %1 ...	setup	es-es	Inicio de la actualización de los idioomas %1 ...
 start updating the database ...	setup	es-es	Inicio de la actualización de la base de datos ...
@@ -562,8 +623,8 @@ step %1 - advanced application management	setup	es-es	Paso %1 - Administración 
 step %1 - configuration	setup	es-es	Paso %1 - Configuración
 step %1 - db backup and restore	setup	es-es	Paso %1 - Copia de seguridad y restauración de la base de datos
 step %1 - language management	setup	es-es	Paso %1 - Administración de idiomas
-step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
-succesfully uploaded file %1	setup	es-es	se subió correctamente el fichero %1
+step %1 - simple application management	setup	es-es	Paso %1 - Administración de aplicaciones
+succesfully uploaded file %1	setup	es-es	Se subió correctamente el fichero %1
 successful connected to %1 database %2 on %3 using user %4.	setup	es-es	Se ha conectado correctamente a la base de datos %1 %2 en %3 usando el usuario %4.
 successful connected to %1 on %3 and created database %2 for user %4.	setup	es-es	Se ha conectado correctamente a %1 en %3 y creado la base de datos %2 para el usuario %4.
 successful connected to ldap server on %1 and created/checked required structur %2.	setup	es-es	Se ha conectado correctamente al servicio LDAP en el servidor %1 y creado/comprobado la estructura requerida %2.
@@ -575,12 +636,13 @@ tables installed, unless there are errors printed above	setup	es-es	Las tablas h
 tables upgraded	setup	es-es	Las tablas han sido actualizadas
 target version	setup	es-es	Versión destino
 tcp port number of database server	setup	es-es	Número del puerto TCP del servidor de la base de datos
+technical contact	setup	es-es	Contacto técnico
 text entry	setup	es-es	Entrada de texto
 the %1 extension is needed from: %2.	setup	es-es	La extensión %1 se necesita para: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	es-es	La extensión %1 es necesaria si tiene previsto usar una base de datos %2.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	es-es	La extensión ctype es necesaria para que HTMLpurifier compruebe el contenido de FCKeditor contra Cross Site Scripting.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	es-es	El tipo de base de datos en predeterminados (%1) no está soportado en este servidor. Usando el primer tipo soportado
-the file	setup	es-es	el fichero
+the file	setup	es-es	El fichero
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar EGroupware es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
 the following applications are not installed:	setup	es-es	Las siguients aplicaciones NO están instaladas:
 the following applications are required, but not installed:	setup	es-es	Se requieren las siguientes aplicaciones, pero NO están instaladas:
@@ -592,63 +654,69 @@ the ldap extension is needed, if you use ldap as account or contact storage, aut
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (UTF-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (UTF-8) u otros juegos de caracteres multibyte.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	es-es	La extensión mcrypt se usa para el formulario de estado de eTemplate en el cliente, que es el lugar preferido para almacenarlo.
+the oidc idp must support autoconfiguration under the below given url	setup	es-es	El IdP de OIDC debe admitir la autoconfiguración en la siguiente URL
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	es-es	La extensión PDO junto a un controlador específico de base de datos es necesario para el VFS (sistema de ficheros virtual)
 the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (las sesiones db funcionan sin ella).
 the session extension is required!	setup	es-es	¡La extensión de sesión es necesaria!
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
 the tables	setup	es-es	las tablas
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
-there was a problem trying to connect to your ldap server. <br />	setup	es-es	Hubo un problema intentando conectar al servidor LDAP.<br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	es-es	Hubo un problema intentando conecar al servidor LDAP.<br />Por favor, compruebe la configuración del servidor LDAP
+there was a problem trying to connect to your ldap server. <br />	setup	es-es	Hubo un problema intentando conectar al servidor LDAP.<br>
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	es-es	Hubo un problema intentando conecar al servidor LDAP.<br>Por favor, compruebe la configuración del servidor LDAP
 this has to be outside the webservers document-root!!!	setup	es-es	¡Tiene que estar fuera de la raíz de documentos del servidor web!
 this might take a while, please wait ...	setup	es-es	Esto puede tardar un poco. Por favor, espere...
 this program lets you backup your database, schedule a backup or restore it.	setup	es-es	Este programa permite hacer copia de seguridad de la base de datos, planificar una copia o restaurarla.
 this program will convert your database to a new system-charset.	setup	es-es	Este programa convertirá la base de datos a un nuevo juego de caracteres del sistema.
 this program will help you upgrade or install different languages for egroupware	setup	es-es	Este programa le ayudará a actualizar o instalar los distintos idiomas para EGroupware
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	es-es	Debe ser una cadena de unos 30 caracteres.<br />Nota: la predeterminada se ha generado aleatoriamente.
-this stage is completed<br />	setup	es-es	Esta fase está completada<br />
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	es-es	Debe ser una cadena de unos 30 caracteres.<br>Nota: la predeterminada se ha generado aleatoriamente.
+this stage is completed<br />	setup	es-es	Esta fase está completada<br>
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	es-es	Esto creará un primer usuario en EGroupware o restablecerá la contraseña y derechos de administrador de un usuario existente
-to a version it does not know about	setup	es-es	a una versión que no conoce
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	es-es	para permitir identificación por contraseña, añadir la línea siguiente al fichero pg_hba.conf (encima de las otras) Y reiniciar postgres:
+to a version it does not know about	setup	es-es	A una versión que no conoce
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	es-es	Para permitir identificación por contraseña, añadir la línea siguiente al fichero pg_hba.conf (encima de las otras) Y reiniciar PostgreSQL:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	es-es	Para cambiar el juego de caracteres: haga una copia de seguridad de la base de datos, desinstale todas las aplicaciones y reinstale la copia de seguridad marcando la opción "convertir la copia de seguridad al juego de caracteres seleccionado".
 to setup 1 admin account and 3 demo accounts.	setup	es-es	Para configurar una cuenta de administrador y 3 de invitado
-top	setup	es-es	parte superior
+top	setup	es-es	Parte superior
 translations added	setup	es-es	Traducciones añadidas
 translations removed	setup	es-es	Traducciones eliminadas
 translations upgraded	setup	es-es	Traducciones actualizadas
 true	setup	es-es	Verdadero
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-es	Intente configurar php para soportar uno de los mencionados SGBD, o instale EGroupware a mano.
-two weeks	setup	es-es	dos semanas
-uninstall	setup	es-es	desinstalar
+two weeks	setup	es-es	Dos semanas
+uninstall	setup	es-es	Desinstalar
 uninstall all applications	setup	es-es	Desinstalar todas las aplicaciones
-uninstalled	setup	es-es	desinstalado
+uninstalled	setup	es-es	Desinstalado
 unknown option '%1' !!!	setup	es-es	Opción desconocida: %1
 update finished.	setup	es-es	La actualización ha finalizado.
+update of %1 in %2 failed !!!	setup	es-es	¡Error en la actualización de %1 en %2!
 upgrade	setup	es-es	Actualizar
 upgrade all	setup	es-es	Actualizar todo
 upgraded	setup	es-es	actualizado
 upgrading tables	setup	es-es	Actualizando tablas
-upload backup	setup	es-es	subir copia de seguridad
-uploads a backup and installs it on your db	setup	es-es	sube una copia de seguridad y la instala en la base de datos
-uploads a backup to the backup-dir, from where you can restore it	setup	es-es	sube una copia de seguridad al directorio de copias, desde donde se puede restaurar
+upload backup	setup	es-es	Subir copia de seguridad
+uploads a backup and installs it on your db	setup	es-es	Sube una copia de seguridad y la instala en la base de datos
+uploads a backup to the backup-dir, from where you can restore it	setup	es-es	Sube una copia de seguridad al directorio de copias, desde donde se puede restaurar
+url of the idp (without path)	setup	es-es	URL del IdP (sin ruta)
 usage: %1 command [additional options]	setup	es-es	Uso: %1 comando [opciones adicionales]
 use --create-header to create the configuration file (--usage gives more options).	setup	es-es	Use --create-header para crear el fichero de configuración (--usage da más opciones).
 use --install to install egroupware.	setup	es-es	Use --install para instalar eGroupWae.
 use --update to do so.	setup	es-es	Use --update para hacerlo.
+use account description to store saml username	setup	es-es	Utilizar la descripción de la cuenta para almacenar el nombre de usuario SAML
 use cookies to pass sessionid	setup	es-es	Usar cookies para pasar el id de sesión
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	es-es	use mcrypt para cifrar los datos de la sesión: {off(predeterminado) | on], [vector de inicio de mcrypt (por defecto se genera aleatoriamente)], [versión de mcrypt]
-use persistent db connections: {on(default) | off}	setup	es-es	usar conexiónes persistentes a la base de datos: {on (predeterminado) | off}
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	es-es	Use mcrypt para cifrar los datos de la sesión: {off(predeterminado) | on], [vector de inicio de mcrypt (por defecto se genera aleatoriamente)], [versión de mcrypt]
+use persistent db connections: {on(default) | off}	setup	es-es	Usar conexiónes persistentes a la base de datos: {on (predeterminado) | off}
 use pure html compliant code (not fully working yet)	setup	es-es	Usar código compatible HTML puro (no funciona completamente todavía)
-user	setup	es-es	usuario
+user	setup	es-es	Usuario
 user account prefix	setup	es-es	Prefijo de cuentas de usuario
 user for smtp-authentication (leave it empty if no auth required)	setup	es-es	Usuario para identificación SMTP (dejar en blanco si no se necesita)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	es-es	Nombres de usuarios (separados por comas) que pueden obtener acceso root por VFS (además del usuario de instalación)
 usernames are casesensitive	setup	es-es	Los nombres de usuario distinguen mayúsculas
 users choice	setup	es-es	A elegir por el usuario
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	es-es	Normalmente es mas molesto. <br />Los administradores pueden usar Administración -> Cuentas de usuario o grupo para dar acceso a más aplicaciones.
+users, groups and memberships	setup	es-es	Usuarios, grupos y afiliaciones
+users, groups and memberships, keep local groups	setup	es-es	Usuarios, grupos y membresías, mantener grupos locales
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	es-es	Normalmente es mas molesto. <br>Los administradores pueden usar Administración -> Cuentas de usuario o grupo para dar acceso a más aplicaciones.
 utf-8 (unicode)	setup	es-es	UTF-8 (Unicode)
 validation errors	setup	es-es	Errores de validación
-version	setup	es-es	versión
+version	setup	es-es	Versión
 version mismatch	setup	es-es	Las versiones no coinciden
 view	setup	es-es	Ver
 virtual filesystem	setup	es-es	Sistema de archivos virtual
@@ -661,25 +729,26 @@ we will now run a series of tests, which may take a few minutes.  click the link
 welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de EGroupware
 where should egroupware store file content	setup	es-es	Dónde debe EGroupware almacenar el contenido de los ficheros
 which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con EGroupware?
-world readable	setup	es-es	lectura para todo el mundo
-world writable	setup	es-es	escritura para todo el mundo
+world readable	setup	es-es	Lectura para todo el mundo
+world writable	setup	es-es	Escritura para todo el mundo
 would you like egroupware to cache the phpgw info array ?	setup	es-es	Desea que EGroupware guarde en caché el array de phpgw info?
-would you like egroupware to check for a new version<br />when admins login ?	setup	es-es	¿Desea que EGroupware compruebe si existe una versión nueva<br />cuando un administrador inicie la sesión?
+would you like egroupware to check for a new version<br />when admins login ?	setup	es-es	¿Desea que EGroupware compruebe si existe una versión nueva<br>cuando un administrador inicie la sesión?
 would you like to show each application's upgrade status ?	setup	es-es	¿Desea mostrar el estado de la actualización de cada aplicación?
-writable by the webserver	setup	es-es	escritura para el servidor web
+writable by the webserver	setup	es-es	Escritura para el servidor web
 write	setup	es-es	Escribir
 wrong credentials to access the header.inc.php file!	setup	es-es	¡Las credencias para acceder al fichero header.inc.php son incorrectas!
-year	setup	es-es	año
+year	setup	es-es	Año
 yes	setup	es-es	Sí
 yes, with lowercase usernames	setup	es-es	Sí, con los nombres de usuario en minúsculas
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de EGroupware.<br />Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br />Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br />y luego actualizar desde ahí a la versión actual.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br />Se recomienda que actualice a una nueva versión.<br />Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en EGroupware.<br /><br />Por favor, actualice al menos a la versión %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	es-es	Parece que está ejecutando una versión pre-beta de EGroupware.<br>Estas versiones ya no están soportadas, y no hay ruta de actualización para ellas en la instalación.<br>Puede que desee actualizar primero a la 0.9.10 (la última versión con soporte de actualizaciones pre-beta)<br>y luego actualizar desde ahí a la versión actual.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br>Se recomienda que actualice a una nueva versión.<br>Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en EGroupware.<br><br>Por favor, actualice al menos a la versión %1
 you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de EGroupware
 you appear to have %1 support.	setup	es-es	Parece que tiene soporte para %1.
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
-you are ready for this stage, but this stage is not yet written.<br />	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br>
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	es-es	Está usando la versión %1 de PHP. EGroupware tiene como requisito %2 o superior, siendo la recomendada PHP %3.
 you can install it by running:	setup	es-es	Puede instalarlo ejecutando:
+you can specify multiple idp on separate lines.	setup	es-es	Puede especificar varios IdP en líneas separadas.
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	es-es	También puede usar el usuario y contraseña del encabezado para cada dominio. Si la contraseña no se indica en la línea de comando, se lee desde la variable de entorno EGW_CLI_PASSWORD, o se le pregunta al usuario.
 you didn't enter a config password for domain %1	setup	es-es	No ha introducido una contraseña de configuración para el dominio %1
 you didn't enter a config username for domain %1	setup	es-es	No ha introducido un usuario de configuración para el dominio %1
@@ -687,9 +756,11 @@ you didn't enter a header admin password	setup	es-es	No ha introducido una contr
 you didn't enter a header admin username	setup	es-es	No ha introducido un nombre de usuario para administrar los encabezados
 you do not have any languages installed. please install one now <br />	setup	es-es	No tiene ningún idioma instalado. Por favor, instale uno ahora
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	es-es	¡No tiene la versión %1 de JPGraph o superior instalada! Se necesita desde el Administador de proyectos para gráficas Gantt.
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-es	¡No ha creado todavía el fichero header.inc.php!<br />Puede crearlo ahora.
+you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	es-es	No tiene instalado tnef o ytnef. Es necesario para decodificar los archivos adjuntos winmail.dat en el correo electrónico.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-es	¡No ha creado todavía el fichero header.inc.php!<br>Puede crearlo ahora.
 you have successfully logged out	setup	es-es	Ha cerrado la sesión correctamente
 you must enter a username for the admin	setup	es-es	Debe introducir un nombre de usuario para el administrador
+you must save and run an inital import, before the periodic import will start	setup	es-es	Debe guardar Y ejecutar una importación inicial antes de que comience la importación periódica.
 you need to add at least one egroupware domain / database instance.	setup	es-es	Necesita añadir al menos una instancia o dominio de la base de datos de EGroupware.
 you need to configure egroupware:	setup	es-es	Necesita configurar EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	es-es	¡Necesita corregir los errores de arriba, antes de que se pueda escribir el fichero de configuración header.inc.php!
@@ -698,7 +769,7 @@ you need to specify a password!	setup	es-es	¡Necesita especificar una contrase�
 you should %1log out%2 and in again, to update your current session!	setup	es-es	¡Debe %1cerrar sesión%2 e iniciarla de nuevo, para actualizar su sesión actual!
 you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	es-es	Usted puede desinstalarla y volverla a instalar, o puede intentar una reparación manual
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en EGroupware usando sesiones PHP: "la sesión no se pudo verificar"!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡NO podrá iniciar sesión en EGroupware usando sesiones PHP: "la sesión no se pudo verificar"!
 you're using an old configuration file format...	setup	es-es	Está usando un fichero de configuración con formato antiguo
 your applications are current	setup	es-es	Sus aplicaciones están actualizadas
 your backup directory '%1' %2	setup	es-es	Su directorio de copias '%1' %2
@@ -709,7 +780,7 @@ your egroupware api is current	setup	es-es	La API de EGroupware está actualizad
 your files directory '%1' %2	setup	es-es	Su directorio de ficheros '%1' %2
 your header admin password is not set. please set it now!	setup	es-es	La contraseña de administrador de cabeceras no está configurada. Por favor, ponga una ahora.
 your header.inc.php needs upgrading.	setup	es-es	Su header.inc.php necesita actualización
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	es-es	Su header.inc.php necesita actualización.<br /><blink><b class="msg">¡ATENCION!</b></blink><br /><b>¡HAGA COPIAS DE SEGURIDAD!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	es-es	Su header.inc.php necesita actualización.<br><b><b class="msg">¡ATENCION!</b></b><br><b>¡HAGA COPIAS DE SEGURIDAD!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	es-es	La versión instalada de %1 es %2. Se requiere al menos %2, por lo que por favor, ejecute:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	es-es	Su instalación de PHP no tiene el soporte apropiado de GD. Necesita la versión 1.8 de la librería gd o superior para ver diagramas de Gantt en los proyectos.
 your tables are current	setup	es-es	Sus tablas están actualizadas

@@ -9,6 +9,7 @@ adding %1 to blacklisted email addresses failed because of %2	mail	ro	Adăugarea
 adding %1 to whiltelisted email addresses failed because of %2	mail	ro	Adăugarea lui %1 la adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 after reply, visible during compose	mail	ro	După răspuns, vizibil în timpul compunerii
 aliases+forwards	mail	ro	Aliasuri+Întoarcere
+always respond / auto-responder	mail	ro	Răspundeți întotdeauna / răspuns automat
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
 attach files	mail	ro	Atașați fișiere
@@ -20,7 +21,10 @@ be aware that all attachments will be sent as %1!	mail	ro	Rețineți că toate a
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să
 caching of flags	mail	ro	Memorarea în cache a steagurilor
 can not resolve the winmail.dat attachment!	mail	ro	Nu se poate rezolva atașamentul winmail.dat!
+certificate details	mail	ro	Detalii certificat
+certificate in text	mail	ro	Certificat în text
 certificate info for email %1	mail	ro	Informații despre certificat pentru e-mail %1
+certificate issued by	mail	ro	Certificat eliberat de
 changing subject failed because of %1	mail	ro	Schimbarea subiectului a eșuat din cauza lui %1
 changing subject failed folder %1 does not exist	mail	ro	Schimbarea subiectului a eșuat folderul %1 nu există
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
@@ -35,11 +39,14 @@ disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețel
 do you really want to toggle flag %1 for all messages in the current view?	mail	ro	Chiar doriți să activați indicatorul %1 pentru TOATE mesajele din vizualizarea curentă?
 do you really want to toggle label %1 for all messages in the current view?	mail	ro	Chiar doriți să comutați eticheta %1 pentru TOATE mesajele din vizualizarea curentă?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ro	Doriți să vi se ceară confirmarea înainte de a atașa mesajele selectate la un nou e-mail?
+email address	mail	ro	Adresa de e-mail
+emailaddress	admin	ro	Adresa de e-mail
 emailadmin: profilemanagement	mail	ro	eMailAdmin: Managementul profilurilor
 emails in whitelisted domains are not marked as spam	mail	ro	Emailurile din domeniile de pe lista albă nu sunt marcate ca spam
 enable	mail	ro	Activați
 enabled	mail	ro	Activat
 encrypt your message with smime certificate	mail	ro	Criptați mesajul cu certificat S/MIME
+every %1. day	mail	ro	La fiecare %1. zi
 everyone	mail	ro	Toată lumea
 examine namespace to retrieve folders in others and shared	mail	ro	Examinați spațiul de nume pentru a prelua folderele din altele și partajate
 failed to delete %1	mail	ro	Nu s-a reușit ștergerea lui %1
@@ -114,6 +121,7 @@ new subject	mail	ro	Subiect nou
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ro	Nu este furnizată nicio destinație de dosar și nu este furnizat niciun dosar pentru salvarea mesajului sau altă măsură de stocare a corespondenței (salvare în InfoLog/Ticketsystem), dar este necesară.
 no sneak preview in list	mail	ro	Nu există previzualizare a mesajelor
 non	mail	ro	Non
+once per day	mail	ro	O dată pe zi
 only email	mail	ro	Doar e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ro	Are sens doar, dacă transportați parola printr-un canal diferit / în afara acestui mail către destinatari!
 only name	mail	ro	Doar numele
@@ -154,6 +162,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	ro	Raportează acest conținut de e-mail ca Spam - soluții de spam precum spamTitan va învăța
 required pear class mail/mimedecode.php not found.	mail	ro	Clasa necesară PEAR Mail/mimeDecode.php nu a fost găsită.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ro	Necesar de dezactivat dacă folosiți Dovecot cu steaguri private văzute pe folderul partajat sau de utilizator!
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	ro	Criptarea S/MIME a eșuat deoarece nu a fost găsit niciun certificat pentru adresa expeditorului: %1
 save all attachments to filemanager	mail	ro	Salvați toate atașamentele în filemanager
 save as infolog on send	mail	ro	Bifați butonul pentru a crea ca InfoLog după trimitere
 save as tracker on send	mail	ro	Bifați butonul pentru a crea un bilet după expediere
@@ -181,9 +190,11 @@ show vertical	mail	ro	Afișați pe verticală
 show vertical with all columns	mail	ro	Afișare verticală cu toate coloanele
 show/hide preview pane in mail list view	mail	ro	Afișați/ Ascundeți panoul de previzualizare în vizualizarea listei de mailuri
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ro	Afișează o notificare vizibilă temporar, inclusiv de la adresa, subiectul și un fragment din e-mail
+sign your message with smime certificate	mail	ro	Semnați mesajul dvs. cu certificat S/MIME
 signature	mail	ro	Semnătură
 signature at top	mail	ro	semnătură în partea de sus
 signature position and visibility	mail	ro	Poziția și vizibilitatea semnăturii
+signed by	mail	ro	Semnat de
 smime encrypted message	mail	ro	Mesaj criptat S/MIME
 smime signed message	mail	ro	Mesaj semnat S/MIME
 smtp	mail	ro	SMTP
@@ -210,4 +221,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	ro	Trebuie să salvați mai întâi mesajul ca proiect înainte de a-l putea salva în VFS.
 you will loose current message body, unless you save it to your clipboard!	mail	ro	Veți pierde corpul actual al mesajului, dacă nu îl salvați în clipboard!
 you've got new mail	mail	ro	Ați primit un mesaj nou
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ro	Cota rămasă de %1 este prea mică, este posibil să nu mai puteți trimite/recepționa alte e-mailuri.\n Deși curățarea e-mailurilor din coșul de gunoi sau din dosarul nedorit vă poate ajuta să recuperați spațiu liber.\n Dacă nu v-a ajutat, vă rugăm să cereți administratorului dvs. mai multă cotă.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ro	Cota rămasă de %1 este prea mică, este posibil să nu mai puteți trimite/recepționa alte e-mailuri.<br>Deși curățarea e-mailurilor din coșul de gunoi sau din dosarul nedorit vă poate ajuta să recuperați spațiu liber.<br>Dacă nu v-a ajutat, vă rugăm să cereți administratorului dvs. mai multă cotă.

@@ -46,10 +46,11 @@ allow external images	mail	sl	Dovoli zunanje fotografije
 allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz domen s seznama
 allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML
 allow images from listed domains in html emails	mail	sl	omogočite slike iz zunanjih virov v html e-poštnih sporočilih
-allow users to create further identities	mail	sl	uporabnikom omogočajo ustvarjanje nadaljnjih identitet
+allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
 allways a new window	mail	sl	Vedno novo okno
 always	mail	sl	Vedno
-always allow external sources from %1	mail	sl	vedno prikaži html e-pošto
+always allow external sources from %1	mail	sl	Vedno prikaži html e-pošto
+always respond / auto-responder	mail	sl	Vedno odgovori / samodejni odzivnik
 always show html emails	mail	sl	Vedno prikaži HTML sporočila
 always show notifiction	mail	sl	Vedno prikaži obvestilo
 an error happend while trying to remove acl rights from the account %1!	mail	sl	Pri poskusu odstranitve pravic ACL iz računa %1 je prišlo do napake.
@@ -85,8 +86,11 @@ caching of flags	mail	sl	Predpomnjenje zastavic
 can not open imap connection	mail	sl	Povezave IMAP ni mogoče odpreti
 can not resolve the winmail.dat attachment!	mail	sl	V priponki winmail.dat ni mogoče rešiti!
 canceled deletion due to user interaction	mail	sl	preklican izbris zaradi interakcije uporabnika
+certificate details	mail	sl	Podrobnosti o certifikatu
+certificate in text	mail	sl	Potrdilo v besedilu
 certificate info for email %1	mail	sl	Podatki o certifikatu za e-poštni naslov %1
-change editor type	mail	sl	preklopite urejevalnik v način HTML
+certificate issued by	mail	sl	Potrdilo je izdal
+change editor type	mail	sl	Preklopite urejevalnik v način HTML
 changed profile	mail	sl	spremenjen profil
 changing subject failed because of %1	mail	sl	Spreminjanje teme ni uspelo zaradi %1
 changing subject failed folder %1 does not exist	mail	sl	Spreminjanje teme ni uspelo mapa %1 ne obstaja
@@ -190,6 +194,7 @@ edit folder acl	mail	sl	Urejanje mape ACL
 edit folder acl ...	mail	sl	Urejanje mape ACL ...
 edit vacation settings	mail	sl	Uredi nastavitve odsotnosti
 effective only if server supports acl at all	admin	sl	deluje samo, če strežnik sploh podpira ACL
+email address	mail	sl	Poštni naslov
 email notification successfully updated!	mail	sl	obvestilo o e-pošti uspešno posodobljeno!
 email notification update failed	mail	sl	Posodobitev obvestila elektronske pošte ni uspelo
 email notification update failed! you need to set an email address!	mail	sl	posodobitev e-poštnega obvestila ni uspela! Morate nastaviti e-poštni naslov!
@@ -218,6 +223,7 @@ error: could not send message.	mail	sl	Napaka: sporočila ni bilo mogoče poslat
 error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporočila.
 esync will fail without a working email configuration!	mail	sl	eSync bo napačen brez delovne e-poštne konfiguracije!
 event details follow	mail	sl	Sledijo podrobnosti dogodka
+every %1. day	mail	sl	Vsak %1. dan
 everyone	mail	sl	Vse
 examine namespace to retrieve folders in others and shared	mail	sl	Preuči imenski prostor, da pridobiš mape v drugih in v skupni rabi
 extended	mail	sl	Razširjen
@@ -399,15 +405,16 @@ no subject given!	mail	sl	Ni zadeve!
 no subject supplied	mail	sl	ni nobene zadeve
 no text body supplied, check attachments for message text	mail	sl	brez priloženega besedilnega telesa, preverite priloge za besedilo sporočila
 no vacation notice text provided. please enter a message.	mail	sl	Brez besedila o dopustu. Vnesite sporočilo.
-no valid %1 folder configured!	mail	sl	Ni veljavne mape %1 !
+no valid %1 folder configured!	mail	sl	Ni veljavne mape %1!
 non	mail	sl	Ne
 none, create all	mail	sl	Prazno, ustvari vse
 nothing to change.	mail	sl	Brez sprememb.
 notify about new mail in this folders	mail	sl	V teh mapah obvestite o novi pošti
 notify when new mails arrive in these folders	mail	sl	obvestite, kdaj v te mape pride nova pošta
 on	mail	sl	Vključeno
-on behalf of	mail	sl	v imenu
+on behalf of	mail	sl	V imenu
 on vacation	mail	sl	Na dopustu
+once per day	mail	sl	Enkrat na dan
 one address is not valid	mail	sl	En naslov ni veljaven
 only email	mail	sl	Samo e-pošta
 only if currently in an other app	mail	sl	Samo če ste trenutno v drugi aplikaciji
@@ -590,6 +597,7 @@ sign your message with smime certificate	mail	sl	Podpišite sporočilo s potrdil
 signature	mail	sl	Podpis
 signature at top	mail	sl	podpis na vrhu
 signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
+signed by	mail	sl	Podpisal
 size(...->0)	mail	sl	Velikost (... -> 0)
 size(0->...)	mail	sl	Velikost (0 -> ...)
 small view	mail	sl	Skrčen pogled
@@ -689,7 +697,7 @@ which folders (additional to the sent folder) should be displayed using the sent
 which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
 which method to use when forwarding a message	mail	sl	Katero metodo uporabite pri posredovanju sporočila
 whitelisted mails are not marked as spam	mail	sl	Sporočila z belim seznamom niso označena kot vsiljena pošta
-whole message	mail	sl	celotno sporočilo
+whole message	mail	sl	Celotno sporočilo
 with message:	mail	sl	S sporočilom:
 wizard	mail	sl	Čarovnik
 writable sharing requires epl version!	mail	sl	Za souporabo, ki omogoča pisanje, je potrebna različica EPL!
@@ -710,4 +718,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	sl	Najprej morate shraniti sporočilo kot osnutek, da ga lahko shranite v VFS
 you will loose current message body, unless you save it to your clipboard!	mail	sl	Izgubili boste trenutno telo sporočila, razen če ga shranite v odložišče!
 you've got new mail	mail	sl	Imate novo pošto
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.\N Čeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.\N Če to ni pomagalo , vprašajte svojega skrbnika za več kvot.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.<br>Čeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.<br>Če to ni pomagalo , vprašajte svojega skrbnika za več kvot.

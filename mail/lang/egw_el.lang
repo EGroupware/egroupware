@@ -48,6 +48,7 @@ allow users to create further identities	mail	el	να επιτρέπεται σ�
 allways a new window	mail	el	πάντα νέο παράθυρο
 always	mail	el	Πάντα
 always allow external sources from %1	mail	el	Να επιτρέπονται πάντα εξωτερικές πηγές από %1
+always respond / auto-responder	mail	el	Πάντα να απαντάτε / αυτόματος αναμεταδότης
 always show html emails	mail	el	να εμφανίζονται πάντοτε τα μυνήματα τύπου HTML
 always show notifiction	mail	el	Να εμφανίζει πάντα ειδοποίηση
 an error happend while trying to remove acl rights from the account %1!	mail	el	Συνέβη κάποιο σφάλμα κατά την προσπάθεια αφαίρεσης δικαιωμάτων ACL από τον λογαριασμό %1!
@@ -83,12 +84,16 @@ caching of flags	mail	el	Προσωρινή αποθήκευση σημαιών
 can not open imap connection	mail	el	Δεν είναι δυνατή η σύνδεση με τον εξυπηρετητή IMAP
 can not resolve the winmail.dat attachment!	mail	el	Αδυναμία λήψης του συνημμένου τύπου winmail.dat!
 canceled deletion due to user interaction	mail	el	Ακυρώθηκε η διαγραφή λόγω παρέμβασης του χρήστη
+certificate details	mail	el	Λεπτομέρειες πιστοποιητικού
+certificate in text	mail	el	Πιστοποιητικό σε κείμενο
 certificate info for email %1	mail	el	Πληροφορίες πιστοποιητικού για το μήνυμα %1
+certificate issued by	mail	el	Πιστοποιητικό που εκδόθηκε από
 change editor type	mail	el	Ενεργοποίηση λειτουργίας HTML του επεξεργαστή κειμένου
 changed profile	mail	el	το προφίλ άλλαξε
 changing subject failed because of %1	mail	el	Η αλλαγή του θέματος απέτυχε λόγω 1%
 changing subject failed folder %1 does not exist	mail	el	Η αλλαγή του θέματος απέτυχε γιατί ο φάκελος %1 δεν υπάρχει
 check message against next rule also	mail	el	Το μήνυμα να ελέγχεται και ως προς τον επόμενο κανόνα
+check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	el	Έλεγχος για να λαμβάνετε ειδοποίηση όταν το μήνυμα διαβάζεται (σημείωση: δεν το υποστηρίζουν όλοι οι πελάτες ή/και ο παραλήπτης ενδέχεται να μην εγκρίνει την ειδοποίηση)
 check to save as calendar event on send	mail	el	Επιλέξτε για να αποθηκευτεί ως καταχώρηση ημερολογίου κατά την αποστολή
 check to save as infolog on send	mail	el	Επιλέξτε για να αποθηκευτεί ως Infolog κατά την αποστολή
 check to save as tracker entry on send	mail	el	Επιλέξτε για να αποθηκευτεί ως Tracker κατά την αποστολή
@@ -108,6 +113,9 @@ connection status	mail	el	Κατάσταση σύνδεσης
 contact label	mail	el	Ετικέτα επικοινωνίας
 contains	mail	el	περιέχει
 contains(*)	mail	el	Περιέχει(*)
+convert mail to item and attach its attachments to this item (standard)	mail	el	Μετατροπή του μηνύματος ηλεκτρονικού ταχυδρομείου σε στοιχείο και επισύναψη των συνημμένων του σε αυτό το στοιχείο (στάνταρ)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	el	Μετατροπή email σε στοιχείο, επισύναψη των συνημμένων του και προσθήκη ακατέργαστου μηνύματος (.eml) ως συνημμένο
+convert only mail to item (ignore possible attachments)	mail	el	Μετατροπή μόνο του email σε στοιχείο (αγνοήστε τα πιθανά συνημμένα)
 copied %1 message(s) from %2 to %3	mail	el	έγινε αντιγραφή %1 μηνυμάτων από %2 στο %3
 copy to	mail	el	Αντιγραφή στο
 could not append message:	mail	el	Δεν μπόρεσα να προσθέσω το μήνυμα:
@@ -179,13 +187,16 @@ edit account ...	mail	el	Επεξεργασία λογαριασμού ...
 edit folder acl	mail	el	Επεξεργασία δικαιωμάτων φακέλου
 edit folder acl ...	mail	el	Επεξεργασία δικαιωμάτων φακέλου ...
 edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
+email address	mail	el	Διεύθυνση e-mail
 email notification successfully updated!	mail	el	Επιτυχείς η ανανέωση των ειδοποιήσεων μέσω email
 email notification update failed	mail	el	Απέτυχε η ανανέωση των ειδοποιήσεων μέσω email
 email notification update failed! you need to set an email address!	mail	el	Απέτυχε η ανανέωση των ειδοποιήσεων μέσω email! Πρέπει να ορίσετε μία διεύθυνση ηλεκτρονικού ταχυδρομείου!
 emailaddress	admin	el	Διεύθυνση e-mail
 emailadmin: profilemanagement	mail	el	eMailAdmin: Διαχείριση προφίλ
 emails in whitelisted domains are not marked as spam	mail	el	Τα μηνύματα ηλεκτρονικού ταχυδρομείου σε τομείς με λευκή λίστα δεν χαρακτηρίζονται ως spam
+empty junk	mail	el	Άδειασμα του φακέλου ανεπιθύμητης αλληλογραφίας
 empty trash	mail	el	Άδειασμα κάδου αχρήστων
+empty trash and junk	mail	el	Αδειάστε τα σκουπίδια και τα άχρηστα
 enable	mail	el	ενεργοποίηση
 enabled	mail	el	Ενεργοποιημένο
 enabled!	mail	el	ενεργοποιημένο!
@@ -203,6 +214,7 @@ error: could not save rule	mail	el	Σφάλμα: Ο κανόνας δεν απο
 error: could not send message.	mail	el	Σφάλμα: Το μήνυμα δεν στάλθηκε.
 error: message could not be displayed.	mail	el	ΣΦΑΛΜΑ: Το μήνυμα δεν εμφανίστηκε.
 event details follow	mail	el	Ακολουθούν λεπτομέρειες γεγονότων
+every %1. day	mail	el	Κάθε %1. ημέρα
 everyone	mail	el	όλοι
 examine namespace to retrieve folders in others and shared	mail	el	Μετακίνηση σε:
 extended	mail	el	Εκτεταμένος
@@ -370,6 +382,7 @@ none, create all	mail	el	κανένα, δημιουργία όλων
 notify about new mail in this folders	mail	el	Να ενημερώνομαι για νέα μηνύματα σε αυτούς τους φακέλους
 on	mail	el	πάνω
 on behalf of	mail	el	Για λογαριασμό του/της
+once per day	mail	el	Μια φορά την ημέρα
 one address is not valid	mail	el	Κάποια διεύθυνση είναι άκυρη
 only email	mail	el	Μόνο email
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	el	Έχει νόημα μόνο αν μεταφέρετε τον κωδικό πρόσβασης μέσω διαφορετικού καναλιού / εκτός αυτού του μηνύματος στους παραλήπτες!
@@ -449,6 +462,7 @@ row order style	mail	el	Στυλ ταξινόμησης σειράς
 rule priority position	mail	el	Κανόνας προτεραιότητα θέση
 rule with priority	mail	el	κανόνας με προτεραιότητα
 rules	mail	el	κανόνες
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	el	Η κρυπτογράφηση S/MIME απέτυχε επειδή δεν βρέθηκε πιστοποιητικό για τη διεύθυνση αποστολέα: %1
 save all	mail	el	Αποθήκευση όλων
 save all attachments to filemanager	mail	el	Αποθήκευση όλων των συνημμένων στον διαχειριστή αρχείων
 save as calendar	mail	el	Αποθήκευση ως καταχώρηση ημερολογίου
@@ -523,6 +537,7 @@ sign your message with smime certificate	mail	el	Εφαρμόστε ένα πι�
 signature	mail	el	Υπογραφή
 signature at top	mail	el	υπογραφή στο πάνω μέρος
 signature position and visibility	mail	el	Θέση υπογραφής και κατάσταση εμφάνισης
+signed by	mail	el	Υπογραφή από
 size(...->0)	mail	el	Μέγεθος (...->0)
 size(0->...)	mail	el	Μέγεθος (0->...)
 small view	mail	el	μικρή προβολή
@@ -609,4 +624,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	el	Πρέπει πρώτα να αποθηκεύσετε το μήνυμα ως προσχέδιο πριν μπορέσετε να το αποθηκεύσετε στο VFS.
 you will loose current message body, unless you save it to your clipboard!	mail	el	Θα χάσετε το τρέχον σώμα του μηνύματος, εκτός αν το αποθηκεύσετε στο πρόχειρο!
 you've got new mail	mail	el	Έχετε νέο μήνυμα
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	el	Η εναπομείνασα ποσόστωση %1 είναι πολύ χαμηλή, ενδέχεται να μην μπορείτε να στείλετε/λήψετε περαιτέρω μηνύματα ηλεκτρονικού ταχυδρομείου.\n Αν και ο καθαρισμός των μηνυμάτων ηλεκτρονικού ταχυδρομείου στα σκουπίδια ή στο φάκελο ανεπιθύμητης αλληλογραφίας μπορεί να σας βοηθήσει να αποκτήσετε ξανά ελεύθερο χώρο.\n Αν αυτό δεν βοήθησε, ζητήστε από το διαχειριστή σας περισσότερη ποσόστωση.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	el	Η εναπομείνασα ποσόστωση %1 είναι πολύ χαμηλή, ενδέχεται να μην μπορείτε να στείλετε/λήψετε περαιτέρω μηνύματα ηλεκτρονικού ταχυδρομείου.<br>Αν και ο καθαρισμός των μηνυμάτων ηλεκτρονικού ταχυδρομείου στα σκουπίδια ή στο φάκελο ανεπιθύμητης αλληλογραφίας μπορεί να σας βοηθήσει να αποκτήσετε ξανά ελεύθερο χώρο.<br>Αν αυτό δεν βοήθησε, ζητήστε από το διαχειριστή σας περισσότερη ποσόστωση.

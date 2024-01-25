@@ -1,26 +1,93 @@
+(update in sec. %s)	notifications	zh	(更新时间： %s）
+account:	notifications	zh	账户：
+all possible notification backends	notifications	zh	所有可能的通知后台
+are you sure you want to delete all notifications?	notifications	zh	您确定要删除所有通知吗？
+browser	notifications	zh	浏览器
+browser is starting.	notifications	zh	浏览器正在启动。
+cancal settings?	notifications	zh	取消设置？
+cancal?	notifications	zh	取消？
+certification-information:	notifications	zh	认证信息：
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	zh	选择通知链。您将收到通知链中包含的后端。<br>注意：如果一个通知链被标记为 "禁用"，您的管理员不允许一个或多个包含在链中的后端，通知会在通知您时退回到 "电子邮件"。
+connection error.	notifications	zh	连接错误。
+connection error. please check connection to server.	notifications	zh	连接错误。请检查服务器连接。
+continue to connect?	notifications	zh	继续连接？
+cookies are required to login to this site.	notifications	zh	登录本网站需要 Cookie。
+delete all messages	notifications	zh	删除所有信息
+delete notifications	notifications	zh	删除通知
+delete this message	notifications	zh	删除此消息
 do not notify me at all	notifications	zh	什么都不要通知我
+domain not found, please check serveraddress.	notifications	zh	域名未找到，请检查服务器地址。
 e-mail only	notifications	zh	仅邮件
-egroupware has notifications for you	notifications	zh	系统已通知您
-egroupware-popup and e-mail	notifications	zh	系统弹出窗口与邮件
+egroupware has notifications for you	notifications	zh	EGroupware 有您的通知
+egroupware login is starting, please wait.	notifications	zh	EGroupware 登录正在开始，请稍候。
+egroupware logindomain:	notifications	zh	EGroupware Logindomain：
+egroupware logindomains founds, please select.	notifications	zh	EGroupware Logindomains 已找到，请选择。
+egroupware not found by url or connection lost to server.	notifications	zh	通过 URL 未找到 EGroupware 或与服务器失去连接。
+egroupware not found by url.	notifications	zh	通过 URL 未找到 EGroupware。
+egroupware-popup and e-mail	notifications	zh	EGroupware 弹出窗口和电子邮件
 egroupware-popup first, if that fails notify me by e-mail	notifications	zh	首先是系统弹出窗口，如果失败则以邮件通知我
 egroupware-popup only	notifications	zh	只用系统弹出窗口
 egroupware-popup verbosity	notifications	zh	系统弹出窗口冗长
+email notifications only, if user is not logged in	notifications	zh	如果用户未登录，则仅有电子邮件通知
+error browser can`t start.	notifications	zh	错误 浏览器无法启动。
+error on loading tray icon	notifications	zh	加载托盘图标时出错
+error ssl	notifications	zh	SSL 出错
+exit	notifications	zh	退出
 folder	notifications	zh	邮件夹
 from	notifications	zh	从
+host:	notifications	zh	服务器：
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	zh	如果向用户发送通知，EGroupware-Popup 应表现得多冗长：<br>低： 仅在顶部菜单中显示通知铃声 - 必须启用顶部菜单！<br>中：显示通知窗口<br>高：将通知窗口放在前面，并让浏览器做一些事情来通知自己
 if set, embedded links get rendered special for external clients	notifications	zh	如果设置，指定的外部客户能购获得嵌入链接
+info on load config file: create config file.	notifications	zh	加载配置文件时的信息：创建配置文件。
+issuer dn:	notifications	zh	发行者 DN：
+java desktop notification app	preferences	zh	Java 桌面通知应用程序
+last month	notifications	zh	上个月
 linked entries:	common	zh	链接的条目：
+login aborted, application exit?	notifications	zh	登录失败，应用程序退出？
+login in egroupware:	notifications	zh	登录 EGroupware：
+mail account to use for notifications	admin	zh	用于通知的邮件账户
+mark all as read	notifications	zh	将全部标记为已读
+mark as read	notifications	zh	标记为已读
 message from	notifications	zh	发件人
 minutes	notifications	zh	分钟
+more info	notifications	zh	更多信息
 notification	common	zh	通知管理
+notifier	notifications	zh	通知
 notify me by	notifications	zh	通知我
+open notified entry	notifications	zh	打开通知条目
 optimize e-mails for external mail client	notifications	zh	为外在邮件客户优化电子邮件
+page not found, please check serveraddress.	notifications	zh	未找到页面，请检查服务器地址。
+password:	notifications	zh	密码
 permission	notifications	zh	权限
+permission denied for notifications application.	notifications	zh	拒绝通知应用程序的权限。
+placeholders with user/ prefix	admin	zh	用户/前缀占位符
+please contact your egroupware admin.	notifications	zh	请联系您的 EGroupware 管理员。
+please enter the url of your egroupware.	notifications	zh	请输入 EGroupware 的 URL。
+please enter your egroupware username.	notifications	zh	请输入您的 EGroupware 用户名。
+please enter your password	notifications	zh	请输入您的密码
 preferences for notification	notifications	zh	通知管理参数选择
+repeat login?	notifications	zh	重复登录？
+run application	notifications	zh	运行应用程序
+save password	notifications	zh	保存密码
+setting	notifications	zh	设置
+setting aborted, application exit	notifications	zh	终止设置，退出应用程序
 settings	notifications	zh	设置
 signature	admin	zh	签名
+signature added to every change notification	admin	zh	在每次更改通知中添加签名
+sorry, your login has expired	notifications	zh	抱歉，您的登录已过期
 step	notifications	zh	步骤
+subject dn:	notifications	zh	主题 DN：
+the server certificate is not a valid trust center certificate!	notifications	zh	服务器证书不是有效的信任中心证书！
+this egroupware notification has been sent to you by mail because your	notifications	zh	此 EGroupware 通知已通过电子邮件发送给您，因为您的
+this month	notifications	zh	本月
+user:	notifications	zh	用户：
 warning	notifications	zh	警告
 windows-popup and e-mail	notifications	zh	Windows 弹出窗和邮件
 windows-popup first, if that fails notify me by e-mail	notifications	zh	首先是系统弹出窗口，如果失败则以邮件通知我
 windows-popup only	notifications	zh	仅 Windows 弹出窗
+yesterday	notifications	zh	昨天
+you can also use	admin	zh	您也可以使用
+you have %1 unread notifications	notifications	zh	您有 %1 个未读通知
+you have been successfully logged out	notifications	zh	您已成功登出
+you've got new mail	notifications	zh	您有新邮件
 your session could not be verified.	notifications	zh	本次会话无法校验。

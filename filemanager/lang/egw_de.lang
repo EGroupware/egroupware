@@ -13,9 +13,9 @@
 %1 files copied.	filemanager	de	%1 Dateien kopiert
 %1 files deleted.	filemanager	de	%1 Dateien gelöscht
 %1 files moved.	filemanager	de	%1 Dateien verschoben
-%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateinen oder Ordner in %2 Sekunden gelöscht
+%1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateien oder Ordner in %2 Sekunden gelöscht.
 %1 files unlocked.	filemanager	de	%1 Dateien entsperrt
-%1 shares deleted.	filemanager	de	%1 Freigaben gelöscht
+%1 shares deleted.	filemanager	de	%1 Freigabe(n) gelöscht
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful unmounted.	filemanager	de	%1 erfolgreich unmounted
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen
@@ -75,8 +75,8 @@ create a link	filemanager	de	Verknüpfung anlegen
 create directory	filemanager	de	Ordner anlegen
 create file	filemanager	de	Datei erstellen
 create folder	filemanager	de	Ordner erstellen
-created	filemanager	de	erstellt
-created %1,%2	filemanager	de	erstellt %1, %2
+created	filemanager	de	Erstellt
+created %1,%2	filemanager	de	Erstellt %1, %2
 created directory %1	filemanager	de	Ordner %1 erstellt
 current directory	filemanager	de	Aktueller Ordner
 custom fields	filemanager	de	Benutzerdefinierte Felder
@@ -86,7 +86,7 @@ default action on double-click	filemanager	de	Aktion beim Doppelklick einer Date
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Ordner navigieren, Sie können aber den Ordner als Startordner oder als Ordnerverweis konfigurieren.
 default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen MIME-Typen werden vom Browser selbst behandelt.
-defines how to open a merge print document	filemanager	de	Was soll mit Dokumenten nach dem Füllen passieren?<br>Mit verfügbarem Collabora Online können diese Dokumente direkt im Browser mit Collabora Online geöffnet (und weiter verarbeitet) werden.<br><br> <b>Ohne Collabora Online</b> wird ein gefülltes Dokument zum Herunterladen angeboten.  Siehe auch:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
+defines how to open a merge print document	filemanager	de	Was soll mit Dokumenten nach dem Füllen passieren?<br><br><b>Mit verfügbarem Collabora Online</b> können diese Dokumente direkt im Browser mit Collabora Online geöffnet (und weiter verarbeitet) werden.<br><br> <b>Ohne Collabora Online</b> wird ein gefülltes Dokument zum Herunterladen angeboten.<br><br>Mehr Informationen zu Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelöschte Dateien älter als %s Tage
 delete these files or directories?	filemanager	de	Diese Dateien oder Ordner löschen?
 delete these shares?	filemanager	de	Diese Freigaben löschen?
@@ -122,10 +122,10 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS-Pfad zu Ihrem gewünschten Anfangsordner ein
 enter your file name	filemanager	de	Dateiname
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
-error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1!
+error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Verknüpfung zu %1 !
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
-error mounting %1 on %2!	filemanager	de	Fehler beim mounten von %1 nach %2!
-error unmounting %1!	filemanager	de	Fehler beim unmounten von %1!
+error mounting %1 on %2!	filemanager	de	Fehler beim mounten von %1 nach %2 !
+error unmounting %1!	filemanager	de	Fehler beim unmounten von %1 !
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error while creating directory.	filemanager	de	Fehler beim Anlegen des Ordners
 everyone	filemanager	de	Jeder
@@ -137,7 +137,7 @@ excludes selected mime types	filemanager	de	Schließt ausgewählte MIME-Typen au
 excludes selected mime types from being opened by editor	filemanager	de	Schließt ausgewählte MIME-Typen vom Öffnen durch Collabora Online aus.<br>Diese Dokument-Typen werden entweder im Browser geöffnet oder heruntergeladen.
 executable	filemanager	de	Ausführbar
 expires	filemanager	de	Läuft ab
-export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
+export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch-Export
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
@@ -147,8 +147,8 @@ file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu groß. Kontaktieren Sie Ihren Systemadministrator für weitere Informationen.
-file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einem EPL-Vertrag verfügbar.
-file deleted.	filemanager	de	Datei gelöscht
+file a file is only available with an epl subscription.	filemanager	de	Datei ablegen ist nur mit einer EPL-Subscription verfügbar.
+file deleted.	filemanager	de	Datei gelöscht.
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
 file or directory not found!	filemanager	de	Datei oder Ordner nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen
@@ -164,12 +164,12 @@ filesystem	filemanager	de	Dateisystem
 filesystem check reported no problems.	filemanager	de	Die Überprüfung des des Dateisystems ergab keine Probleme.
 filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	de	Dateisystem: Mounted Verzeichnisse (innerhalb von /var/lib/egroupware) vom Dateisystem des Hosts
 finally delete	filemanager	de	Endgültig löschen
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen.\n\nDas kann NICHT rückgängig gemacht werden!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	de	Ältere Versionen und gelöschte Dateien unter dem angegebenen Ordner endgültig löschen.<br>Das kann NICHT rückgängig gemacht werden!
 finally delete this version	filemanager	de	Diese Version endgültig löschen
 fix reported problems	filemanager	de	Gefundene Probleme beheben
 folder up	filemanager	de	Übergeordneter Ordner
-for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
-for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	de	Nutzen Sie dieses Symbol für Serienbriefe. Stellen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Symbole
 general	filemanager	de	Allgemein
 general fields:	filemanager	de	Allgemeine Platzhalter
@@ -189,7 +189,7 @@ if you specify an export definition, it will be used when you export*	filemanage
 inherited	filemanager	de	Geerbt
 last accessed	filemanager	de	Letzter Zugriff
 link	filemanager	de	verknüpfen
-link %1: %2	filemanager	de	%1. Verknüpfung: %2
+link %1: %2	filemanager	de	%1 Verknüpfung: %2
 link into folder	filemanager	de	Verknüpfung in ein Ordner
 link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
@@ -198,21 +198,21 @@ location	filemanager	de	Ort
 lock	filemanager	de	Gesperrt
 log out as superuser	filemanager	de	Superuser abmelden
 mail files	filemanager	de	Dateien per E-Mail versenden
-mail paste	filemanager	de	per E-Mail versenden
-max folderlinks	admin	de	maximale Anzahl von Links zu Ordner
+mail paste	filemanager	de	Per E-Mail versenden
+max folderlinks	admin	de	Maximale Anzahl von Links zu Ordner
 merge print open handler	filemanager	de	Handler für das Einfügen in Dokument
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
 modified between	filemanager	de	Verändert zwischen
 modify all subdirectories and their content	filemanager	de	Änderungen auf alle Unterordner und ihre Inhalte anwenden
 mount	filemanager	de	Mount
-mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplate anpassen zu können
+mount /etemplates to allow customizing of etemplates	filemanager	de	/etemplates mounten um eTemplates anpassen zu können
 mountpoints	filemanager	de	Mountpunkte
 move	filemanager	de	Verschieben
 move into folder	filemanager	de	Verschieben in Ordner
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
-name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder können Sie hier auch verwenden.
+name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt-Felder können Sie hier auch verwenden.
 new directory	common	de	Neuer Ordner
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Ordner
@@ -224,7 +224,7 @@ older versions or deleted files	filemanager	de	Ältere Versionen oder gelöschte
 only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
 open	filemanager	de	Öffnen
 open documents with collabora, if permissions are given	filemanager	de	Dokument mit Collabora Online öffnen, falls Rechte vorhanden sind
-open odt documents with collabeditor	filemanager	de	odt Dokumente mit CollabEditor öffnen
+open odt documents with collabeditor	filemanager	de	odt-Dokumente mit Collabora Online öffnen
 operation	filemanager	de	Vorgang
 password for webdav and smb, use $pass for password of logged in user	filemanager	de	Passwort für WebDAV und SMB, benutzer $pass für das Passwort des angemeldeten Benutzers
 paste link	filemanager	de	Als Verknüpfung einfügen
@@ -259,7 +259,7 @@ renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt
 replaced %1	filemanager	de	%1 ersetzt
 replacements for inserting entries into documents	filemanager	de	Platzhalter zum Einfügen in ein Dokument
 rights	filemanager	de	Rechte
-root	filemanager	de	root
+root	filemanager	de	Superuser
 root access granted.	filemanager	de	Superuser Zugriff gewährt
 root access stopped.	filemanager	de	Superuser Zugriff gestoppt
 save %1	filemanager	de	%1 speichern
@@ -269,7 +269,7 @@ save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
 saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
 saving setting for document merge failed!	filemanager	de	Speichern der Einstellungen für Seriendokumente fehlgeschlagen
-search for '%1'	filemanager	de	nach %1 suchen
+search for '%1'	filemanager	de	Nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
 select file to upload in current directory	filemanager	de	Datei(en) zum Hochladen in den aktuellen Ordner auswählen
@@ -289,10 +289,10 @@ show link "your home directory" in side box menu?	filemanager	de	Möchten Sie de
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Persönlicher Ordner" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisordner (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
-smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAVs und VFS benötigen einen Benutzernamen!
+smb, webdavs and vfs require a username!	filemanager	de	SMB, WebDAV und VFS benötigen einen Benutzernamen!
 smb: mount samba or windows fileserver shares	filemanager	de	SMB: Mounten von Freigaben eines Samba- oder Windows-Dateiserver
 some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	de	Einige Funktionalitäten benötigen Superuser-Rechte. Bitte loggen sie sich hier als Dateimanager Superuser ein (Zulässige Benutzer werden im Setup festgelegt).
-sqlfs statistics	filemanager	de	VFS Statistik
+sqlfs statistics	filemanager	de	VFS-Statistik
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner
 successful mounted %1 on %2.	filemanager	de	%1 erfolgreich nach %2 gemounted.
@@ -312,7 +312,7 @@ to overwrite the existing file store again.	filemanager	de	Zum Überschreiben de
 total files	filemanager	de	Gesamtanzahl Dateien
 ui mode	filemanager	de	Benutzeroberfläche
 under directory	filemanager	de	unter dem Ordner
-unlock	filemanager	de	entsperren
+unlock	filemanager	de	Entsperren
 unmount	filemanager	de	Unmount
 unused space	filemanager	de	Nicht benutzter Platz
 up	filemanager	de	Nach oben
@@ -330,7 +330,7 @@ versioning requires egroupware epl	filemanager	de	Versionierung benötigt EGroup
 vfs mounts and versioning	common	de	VFS einhängen und versionieren
 view link	filemanager	de	Zeige Link
 webdav link copied into clipboard	filemanager	de	WebDAV-Link in die Zwischenablage kopiert
-webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAVs: Mounten von EGroupware oder anderen *Cloud-Freigaben
+webdavs: mount egroupware or *cloud shares	filemanager	de	WebDAV: Mounten von EGroupware oder anderen *Cloud-Freigaben
 who should be allowed to finally delete deleted files or old versions of a file:	filemanager	de	Wer soll gelöschte Dateien oder ältere Versionen endgültig löschen dürfen:
 writable share link	filemanager	de	Beschreibbare Freigabe-Link
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
@@ -338,12 +338,12 @@ you are not allowed to finally delete older versions and deleted files!	filemana
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
 you can either delete some files or get in touch with your administrator to get more space	filemanager	de	Sie können entweder einige Dateien löschen oder sich mit Ihrem Administrator in Verbindung setzen, um mehr Speicherplatz zu erhalten
 you can only grant additional rights, you can not take rights away!	filemanager	de	Sie können nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
-you can use regular upload [+] button to upload files.	filemanager	de	Sie können Dateien über den regulären [+] Button hochladen.
+you can use regular upload [+] button to upload files.	filemanager	de	Sie können Dateien über den regulären [+]-Button hochladen.
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
 you need to become root, to enable or disable versioning on a directory!	filemanager	de	Sie müssen Superuser sein, um die Versionierung für ein Ordner ein- oder auszuschalten!
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!
 you will be redirected to your home directory.	filemanager	de	Sie werden zu Ihrem persönlichen Ordner geleitet
-you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Startordner geleitet
+you will be redirected to your start folder.	filemanager	de	Sie werden zu Ihrem Anfangs- / Start-Ordner geleitet
 your home dir did not exist, egroupware created a new one.	filemanager	de	Ihr persönlicher Ordner hat nicht existiert. EGroupware hat ein neues für Sie angelegt.
 your home directory	filemanager	de	Ihr persönlicher Ordner

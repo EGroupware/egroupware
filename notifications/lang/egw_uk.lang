@@ -1,4 +1,66 @@
+(update in sec. %s)	notifications	uk	(Оновлення за сек. %s)
+account:	notifications	uk	Обліковий запис:
+all possible notification backends	notifications	uk	Всі можливі бекенди сповіщень
+are you sure you want to delete all notifications?	notifications	uk	Ви впевнені, що хочете видалити всі сповіщення?
+browser	notifications	uk	Браузер
+browser is starting.	notifications	uk	Запускається браузер.
+cancal settings?	notifications	uk	Скасувати налаштування?
+cancal?	notifications	uk	Скасувати?
+certification-information:	notifications	uk	Інформація про сертифікацію:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	uk	Перевірте обидва. Спочатку спробуйте активний обліковий запис користувача, якщо такого немає, скористайтеся профілем eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	uk	Виберіть ланцюжок сповіщень. Ви отримаєте сповіщення на зворотні адреси, включені в ланцюжок.<br>Примітка: Якщо ланцюжок сповіщень позначено як "вимкнений", тобто ваш адміністратор не дозволяє один або декілька бек-конекторів, включених до ланцюжка, сповіщення повертаються до "Email", а ви отримуєте сповіщення на "Email".
+connection error.	notifications	uk	Помилка з'єднання.
+connection error. please check connection to server.	notifications	uk	Помилка з'єднання. Будь ласка, перевірте з'єднання з сервером.
+continue to connect?	notifications	uk	Продовжити підключення?
+cookies are required to login to this site.	notifications	uk	Для входу на цей сайт необхідні файли cookie.
+delete all messages	notifications	uk	Видалити всі повідомлення
+delete notifications	notifications	uk	Видалити повідомлення
+delete this message	notifications	uk	Видалити це повідомлення
+domain not found, please check serveraddress.	notifications	uk	Домен не знайдено, перевірте адресу сервера.
+egroupware login is starting, please wait.	notifications	uk	Починається вхід в EGroupware, будь ласка, зачекайте.
+egroupware logindomain:	notifications	uk	Домен для входу в EGroupware:
+egroupware logindomains founds, please select.	notifications	uk	EGroupware Логіндомени знайдено, будь ласка, виберіть.
+egroupware not found by url or connection lost to server.	notifications	uk	EGroupware не знайдено за URL-адресою або втрачено з'єднання з сервером.
+egroupware not found by url.	notifications	uk	EGroupware не знайдено за URL-адресою.
+email notifications only, if user is not logged in	notifications	uk	Тільки сповіщення на електронну пошту, якщо користувач не ввійшов в систему
+error browser can`t start.	notifications	uk	Помилка Браузер не запускається.
+error on loading tray icon	notifications	uk	Помилка при завантаженні іконки в треї
+error ssl	notifications	uk	Помилка SSL
+exit	notifications	uk	Вихід
 from	notifications	uk	Від
-minutes	notifications	uk	хвилини
+host:	notifications	uk	Сервер:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	uk	Наскільки багатослівним має бути спливаюче вікно EGroupware-Popup, коли користувачеві надсилається сповіщення:<br>низька: просто відображати дзвіночок сповіщення у верхньому меню - верхнє меню повинно бути увімкнено!<br>середній: виводити вікно сповіщення на передній план<br>високий: вивести вікно сповіщення на передній план і дозволити браузеру зробити щось, щоб повідомити про себе
+info on load config file: create config file.	notifications	uk	Інформація про завантаження конфігураційного файлу: створити конфігураційний файл.
+issuer dn:	notifications	uk	DN емітента:
+java desktop notification app	preferences	uk	Java додаток для сповіщень на робочому столі
+last month	notifications	uk	Минулого місяця
+mail account to use for notifications	admin	uk	Поштовий акаунт для сповіщень
+minutes	notifications	uk	Протоколи
+open notified entry	notifications	uk	Відкрити сповіщений запис
+permission	notifications	uk	Дозвіл
+permission denied for notifications application.	notifications	uk	Відмовлено в дозволі на застосування сповіщень.
+placeholders with user/ prefix	admin	uk	Заповнювачі з користувачем/префіксом
+please contact your egroupware admin.	notifications	uk	Зверніться до адміністратора вашог
+please enter the url of your egroupware.	notifications	uk	Будь ласка, введіть URL-адресу вашого EGroupware.
+please enter your egroupware username.	notifications	uk	Будь ласка, введіть ваше ім'я користувача EGroupware.
+please enter your password	notifications	uk	Будь ласка, введіть ваш пароль
+repeat login?	notifications	uk	Повторити вхід?
+run application	notifications	uk	Запустити програму
+save password	notifications	uk	Зберегти пароль
+setting	notifications	uk	Налаштування
+setting aborted, application exit	notifications	uk	Налаштування перервано, вихід з програми
+settings	notifications	uk	Налаштування
+signature added to every change notification	admin	uk	Підпис додається до кожного повідомлення про зміни
+sorry, your login has expired	notifications	uk	Вибачте, термін дії вашого входу закінчився
 step	notifications	uk	Крок
+subject dn:	notifications	uk	Subject DN:
+the server certificate is not a valid trust center certificate!	notifications	uk	Сертифікат сервера не є дійсним сертифікатом центру довіри!
+this egroupware notification has been sent to you by mail because your	notifications	uk	Це сповіщення EGroupware було надіслано вам електронною поштою, оскільки ваш
+this month	notifications	uk	Цього місяця
+user:	notifications	uk	Користувач:
+yesterday	notifications	uk	Вчора
+you can also use	admin	uk	Ви також можете використовувати
+you have %1 unread notifications	notifications	uk	У вас є %1 непрочитаних сповіщень
+you have been successfully logged out	notifications	uk	Ви успішно вийшли з системи
+you've got new mail	notifications	uk	Ви отримали новий лист
 your session could not be verified.	notifications	uk	Неможливо перевірити Ваш вхід

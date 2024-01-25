@@ -50,6 +50,7 @@ allow users to create further identities	mail	sk	Povoliť používateľom vytvá
 allways a new window	mail	sk	Vždy nové okno
 always	mail	sk	Vždy
 always allow external sources from %1	mail	sk	Vždy povoliť externé zdroje od %1
+always respond / auto-responder	mail	sk	Vždy odpovedať / automatický odpovedník
 always show html emails	mail	sk	Vždy zobraziť HTML správy
 always show notifiction	mail	sk	Vždy zobraziť oznámenie
 an error happend while trying to remove acl rights from the account %1!	mail	sk	Nastala nejaká chyba pri pokuse odstrániť ACL práva z účtu %1!
@@ -85,7 +86,10 @@ caching of flags	mail	sk	Ukladanie príznakov do medzipamäte
 can not open imap connection	mail	sk	Nedá sa otvoriť spojenie IMAP
 can not resolve the winmail.dat attachment!	mail	sk	Neviem spracovať prílohu winmail.dat!
 canceled deletion due to user interaction	mail	sk	odstraňovanie zrušené kvôli aktivite používateľa
+certificate details	mail	sk	Podrobnosti o certifikáte
+certificate in text	mail	sk	Certifikát v texte
 certificate info for email %1	mail	sk	Informácia o certifikáte pre správu %1
+certificate issued by	mail	sk	Certifikát vydáva
 change editor type	mail	sk	prepnúť editor do režimu HTML
 changed profile	mail	sk	zmenený profil
 changing subject failed because of %1	mail	sk	Zmena predmetu sa nepodarila. Príčina: %1
@@ -190,6 +194,7 @@ edit folder acl	mail	sk	Upraviť ACL priečinku
 edit folder acl ...	mail	sk	Upraviť ACL priečinku...
 edit vacation settings	mail	sk	Upraviť nastavenia neprítomnosti
 effective only if server supports acl at all	admin	sk	Uplatní sa iba ak server podporuje ACL
+email address	mail	sk	E-mailová adresa
 email notification successfully updated!	mail	sk	Potvrdenia e-mailu boli úspešne aktualizované!
 email notification update failed	mail	sk	Aktualizácia potvrdenia e-mailu zlyhala
 email notification update failed! you need to set an email address!	mail	sk	Aktualizácia potvrdenia e-mailu zlyhala! Musíte zadať e-mailovú adresu!
@@ -218,6 +223,7 @@ error: could not send message.	mail	sk	Chyba: Nepodarilo sa odoslať správu.
 error: message could not be displayed.	mail	sk	CHYBA: Správa sa nedá zobraziť.
 esync will fail without a working email configuration!	mail	sk	eSync NEBUDE fungovať bez funkčnej konfigurácie E-mailu!
 event details follow	mail	sk	Podrobnosti o udalosti:
+every %1. day	mail	sk	Každý %1. deň
 everyone	mail	sk	Všetkých
 examine namespace to retrieve folders in others and shared	mail	sk	Preskúmanie menného priestoru na získanie priečinkov v iných a zdieľaných
 extended	mail	sk	Rozšírené
@@ -408,6 +414,7 @@ notify when new mails arrive in these folders	mail	sk	Upozorniť keď sa nové s
 on	mail	sk	ohľadom
 on behalf of	mail	sk	V mene
 on vacation	mail	sk	Na dovolenke
+once per day	mail	sk	Raz za deň
 one address is not valid	mail	sk	Jedna adresa je neplatná
 only email	mail	sk	Iba e-mail
 only if currently in an other app	mail	sk	Iba ak sa práve nachádza v inej aplikácii
@@ -590,6 +597,7 @@ sign your message with smime certificate	mail	sk	Podpísať správu pomocou S/MI
 signature	mail	sk	Podpis
 signature at top	mail	sk	Podpis navrchu
 signature position and visibility	mail	sk	Umiestnenie a viditeľnosť podpisu
+signed by	mail	sk	Podpísaný
 size(...->0)	mail	sk	Veľkosť (...->0)
 size(0->...)	mail	sk	Veľkosť (0->...)
 small view	mail	sk	Zmenšený pohľad
@@ -710,4 +718,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	sk	Najpr musíte správu uložiť ako návrh, až potom ju môžete uložiť do VFS
 you will loose current message body, unless you save it to your clipboard!	mail	sk	Stratíte celé telo správy, ledaže by ste si ho uložili do schránky!
 you've got new mail	mail	sk	Máte novú správu
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sk	Váš zostávajúci priestor v rámci kvóty %1 je príliš malý, nemusí sa Vám podariť odoslať alebo prijať ďalšie správy.\n Skúste použiť funkciu Vyprázdniť odpadkový kôš a Vyprázdniť priečinok Spam, možno získate nejaký priestor.\n Ak to nepomôže, skúste požiadať správcu o pridelenie väčšej kvóty.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sk	Váš zostávajúci priestor v rámci kvóty %1 je príliš malý, nemusí sa Vám podariť odoslať alebo prijať ďalšie správy.<br>Skúste použiť funkciu Vyprázdniť odpadkový kôš a Vyprázdniť priečinok Spam, možno získate nejaký priestor.<br>Ak to nepomôže, skúste požiadať správcu o pridelenie väčšej kvóty.

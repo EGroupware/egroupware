@@ -1,6 +1,75 @@
+(update in sec. %s)	notifications	el	(Ενημέρωση σε δευτερόλεπτα %s)
+account:	notifications	el	Λογαριασμός:
+all possible notification backends	notifications	el	Αλλαγή λογαριασμού: Όλα τα πιθανά backends ειδοποιήσεων: Όλα τα πιθανά backends ειδοποιήσεων
+are you sure you want to delete all notifications?	notifications	el	Σίγουρα θέλετε να διαγράψετε όλες τις ειδοποιήσεις;
+browser	notifications	el	Πρόγραμμα περιήγησης
+browser is starting.	notifications	el	Το πρόγραμμα περιήγησης ξεκινάει.
+cancal settings?	notifications	el	Ακύρωση ρυθμίσεων;
+cancal?	notifications	el	Ακύρωση;
+certification-information:	notifications	el	Πληροφορίες πιστοποίησης:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	el	Ελέγξτε και τα δύο. Δοκιμάστε πρώτα ενεργό λογαριασμό καθορισμένο από τον χρήστη, αν δεν υπάρχει, χρησιμοποιήστε το προφίλ eMailAdmin.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	el	Επιλέξτε μια αλυσίδα ειδοποιήσεων. Θα ειδοποιηθείτε μέσω των back ends που περιλαμβάνονται στην αλυσίδα.<br>Σημείωση: Εάν μια αλυσίδα ειδοποιήσεων επισημαίνεται ως "απενεργοποιημένη", ο διαχειριστής σας δεν επιτρέπει ένα ή περισσότερα από τα back ends που περιλαμβάνονται στην αλυσίδα, οι ειδοποιήσεις επιστρέφουν στο "Email" ενώ σας ειδοποιούν.
+connection error.	notifications	el	Σφάλμα σύνδεσης.
+connection error. please check connection to server.	notifications	el	Σφάλμα σύνδεσης. Ελέγξτε τη σύνδεση με το διακομιστή.
+continue to connect?	notifications	el	Συνεχίζετε τη σύνδεση;
+cookies are required to login to this site.	notifications	el	Για τη σύνδεση σε αυτόν τον ιστότοπο απαιτούνται cookies.
+delete all messages	notifications	el	Διαγραφή όλων των μηνυμάτων
+delete notifications	notifications	el	Διαγραφή ειδοποιήσεων
+delete this message	notifications	el	Διαγραφή αυτού του μηνύματος
+domain not found, please check serveraddress.	notifications	el	Ο τομέας δεν βρέθηκε, παρακαλούμε ελέγξτε τη διεύθυνση του διακομιστή.
+egroupware login is starting, please wait.	notifications	el	Η σύνδεση EGroupware ξεκινάει, παρακαλώ περιμένετε.
+egroupware logindomain:	notifications	el	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	el	EGroupware Logindomains βρέθηκαν, παρακαλώ επιλέξτε.
+egroupware not found by url or connection lost to server.	notifications	el	EGroupware δεν βρέθηκε από τη διεύθυνση URL ή η σύνδεση χάθηκε με το διακομιστή.
+egroupware not found by url.	notifications	el	Το EGroupware δεν βρέθηκε από τη διεύθυνση URL.
+email notifications only, if user is not logged in	notifications	el	Ειδοποιήσεις μέσω email μόνο, εάν ο χρήστης δεν είναι συνδεδεμένος
+error browser can`t start.	notifications	el	Σφάλμα Το πρόγραμμα περιήγησης δεν μπορεί να ξεκινήσει.
+error on loading tray icon	notifications	el	Σφάλμα κατά τη φόρτωση του εικονιδίου Tray
+error ssl	notifications	el	Σφάλμα SSL
+exit	notifications	el	Έξοδος
 folder	notifications	el	Φάκελος
 from	notifications	el	Από
+host:	notifications	el	Διακομιστής:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	el	Πόσο αναλυτικά θα πρέπει να συμπεριφέρεται το EGroupware-Popup εάν αποστέλλεται μια ειδοποίηση στον χρήστη:<br>low: Απλά εμφανίζει το κουδούνι ειδοποίησης στο επάνω μενού - το επάνω μενού πρέπει να είναι ενεργοποιημένο!<br>Μέτρια: φέρνει το παράθυρο ειδοποίησης στο μπροστινό μέρος<br>υψηλή: φέρτε το παράθυρο ειδοποίησης στο προσκήνιο και αφήστε το πρόγραμμα περιήγησης να κάνει κάτι για να αναγγείλει τον εαυτό του
+info on load config file: create config file.	notifications	el	Δημιουργία αρχείου ρυθμίσεων: Δημιουργία αρχείου ρυθμίσεων.
+issuer dn:	notifications	el	DN εκδότη:
+java desktop notification app	preferences	el	Java desktop notification app
+last month	notifications	el	Τον περασμένο μήνα
+login aborted, application exit?	notifications	el	Αποτυχία σύνδεσης, έξοδος από την εφαρμογή;
+login in egroupware:	notifications	el	Σύνδεση στο EGroupware:
+mail account to use for notifications	admin	el	Λογαριασμός αλληλογραφίας που θα χρησιμοποιείται για τις ειδοποιήσεις
+mark all as read	notifications	el	Χαρακτηρίστε όλα ως αναγνωσμένα
+mark as read	notifications	el	Χαρακτηρίστε ως αναγνωσμένο
 minutes	notifications	el	Λεπτά
+more info	notifications	el	Περισσότερες πληροφορίες
+notifier	notifications	el	Ειδοποιητής
+open notified entry	notifications	el	Άνοιγμα ειδοποιημένης καταχώρησης
+page not found, please check serveraddress.	notifications	el	Η σελίδα δεν βρέθηκε, παρακαλούμε ελέγξτε τη διεύθυνση του διακομιστή.
+password:	notifications	el	Κωδικός πρόσβασης:
+permission	notifications	el	Άδεια
+permission denied for notifications application.	notifications	el	Απαγορεύεται η άδεια για την εφαρμογή κοινοποιήσεων.
+placeholders with user/ prefix	admin	el	placeholders με χρήστη/πρόθεμα
+please contact your egroupware admin.	notifications	el	Επικοινωνήστε με τον διαχειριστή του EGroupware.
+please enter the url of your egroupware.	notifications	el	Παρακαλούμε εισάγετε τη διεύθυνση URL του EGroupware σας.
+please enter your egroupware username.	notifications	el	Παρακαλώ εισάγετε το όνομα χρήστη του EGroupware σας.
+please enter your password	notifications	el	Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας
 refresh notifications	notifications	el	Ανανέωση ειδοποιήσεων
+repeat login?	notifications	el	Επανάληψη σύνδεσης;
+run application	notifications	el	Εκτέλεση της εφαρμογής
+save password	notifications	el	Αποθήκευση κωδικού πρόσβασης
+setting	notifications	el	Ρύθμιση
+setting aborted, application exit	notifications	el	Η ρύθμιση διακόπηκε, έξοδος από την εφαρμογή
 signature	admin	el	Υπογραφή
+signature added to every change notification	admin	el	Προσθήκη υπογραφής σε κάθε ειδοποίηση αλλαγής
+sorry, your login has expired	notifications	el	Συγγνώμη, η σύνδεσή σας έχει λήξει
+subject dn:	notifications	el	Θέμα DN:
+the server certificate is not a valid trust center certificate!	notifications	el	Το πιστοποιητικό διακομιστή δεν είναι έγκυρο πιστοποιητικό κέντρου εμπιστοσύνης!
+this egroupware notification has been sent to you by mail because your	notifications	el	Αυτή η ειδοποίηση της EGroupware σας εστάλη μέσω ηλεκτρονικού ταχυδρομείου επειδή το
+this month	notifications	el	Αυτός ο μήνας
+user:	notifications	el	χρήστης:
+yesterday	notifications	el	Χθες
+you can also use	admin	el	Μπορείτε επίσης να χρησιμοποιήσετε
+you have %1 unread notifications	notifications	el	Έχετε %1 μη αναγνωσμένες ειδοποιήσεις
+you have been successfully logged out	notifications	el	Έχετε αποσυνδεθεί επιτυχώς
+you've got new mail	notifications	el	Έχετε ένα νέο μήνυμα ηλεκτρονικού ταχυδρομείου
 your session could not be verified.	notifications	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί

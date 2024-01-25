@@ -1,8 +1,8 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 email(s) added into %2	common	el	%1 email(s) που προστέθηκαν στο %2
-%1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
+%1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver!
 %1 more %2 selected ...	common	el	%1 περισσότερα %2 επιλεγμένα...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br>ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 '%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
 '%1' is not a valid json file!	common	el	Το '%1' δεν είναι έγκυρο αρχείο JSON
@@ -152,12 +152,12 @@ central african republic	common	el	ΔΗΜΟΚΡΑΤΙΑ ΚΕΝΤΡΙΚΗΣ ΑΦ�
 chad	common	el	ΤΣΑΝΤ
 change	common	el	Αλλαγή
 changed	common	el	Έγινε αλλαγή
-charset	common	el	utf-8
+charset	common	el	Σετ χαρακτήρων
 check all	common	el	Έλεγχος όλων
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	el	Έλεγχος για κενές τιμές σε δηλώσεις IF. Παράδειγμα {{IF url~EMPTY~~Website:}} - Εάν το url δεν είναι κενό, γράφει "Ιστοσελίδα:"
 check installation	common	el	Ελεγχος εγκατάστασης
 check now	common	el	Έλεγχος τώρα
-checkbox	common	el	Checkbox
+checkbox	common	el	Κουτάκι ελέγχου
 chile	common	el	ΧΙΛΗ
 china	common	el	ΚΙΝΑ
 choose a background color	common	el	Επιλέξτε ένα χρώμα φόντου
@@ -169,6 +169,8 @@ choose the category	common	el	Επιλέξτε κατηγορία
 choose the default filename for merged documents.	preferences	el	Επιλέξτε το προεπιλεγμένο όνομα αρχείου για τα συγχωνευμένα έγγραφα.
 choose the parent category	common	el	Επιλέξτε γονική κατηγορία
 christmas island	common	el	ΝΗΣΟΙ ΧΡΙΣΤΟΥΓΕΝΝΩΝ
+class	common	el	Class
+class, valign	common	el	Vlass, Valign
 clear	common	el	Εκκαθάριση
 clear form	common	el	Εκκαθάριση Φόρμας
 click	common	el	Κάντε κλικ
@@ -179,6 +181,7 @@ click or mouse over to show menus?	common	el	Κλικ ή mouse over για εμ�
 close	common	el	Κλείσιμο
 close sidebox	common	el	Κλείσιμο μενού
 cocos (keeling) islands	common	el	ΝΗΣΟΙ ΚΟΚΟΣ (ΚΙΛΙΓΚ)
+code	common	el	Code
 colombia	common	el	ΚΟΛΟΜΒΙΑ
 colour	common	el	Χρώμα
 comment	common	el	Σχόλιο
@@ -189,9 +192,11 @@ confirm	common	el	Επιβεβαίωση
 congo	common	el	ΚΟΝΓΚΟ
 congo, the democratic republic of the	common	el	ΚΟΝΓΚΟ, ΟΜΟΣΠΟΝΔΙΑΚΗ ΔΗΜΟΚΡΑΤΙΑ
 contact	common	el	Επαφή
+contact fields	common	el	Πεδία επικοινωνίας
 contacting server...	common	el	Επικοινωνία με τον Server
-contains	common	el	περιέχει
+contains	common	el	Περιέχει
 cook islands	common	el	ΝΗΣΟΙ ΚΟΥΚ
+cookies are required to login to this site	login	el	Για τη σύνδεση σε αυτόν τον ιστότοπο απαιτούνται cookies
 copy	common	el	Αντιγραφή
 copy "%1"	common	el	Αντιγραφή "%1"
 copy of:	common	el	Αντίγραφο του:
@@ -201,12 +206,15 @@ costa rica	common	el	ΚΟΣΤΑ ΡΙΚΑ
 cote d ivoire	common	el	ΑΚΤΗ ΕΛΕΦΑΝΤΟΣΤΟΥ
 could not contact server. operation timed out!	common	el	Δεν κατέστει δυνατή η επικοινωνία με τον Server.
 create	common	el	Δημιουργία
+create a new table for the application	common	el	Δημιουργία νέου πίνακα για την εφαρμογή
 create directory	common	el	Δημιουργία φακέλου
 create link	common	el	Δημιουργία συνδέσμου
 created	common	el	Δημιουργήθηκε το
 created by	common	el	Δημιουργία από
 created by %1	common	el	Δημιουργήθηκε από %1
 croatia	common	el	ΚΡΟΑΤΙΑ
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	el	CSS class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	el	CSS class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 cuba	common	el	ΚΟΥΒΑ
 currency	common	el	Νόμισμα
 current	common	el	Τρέχων
@@ -216,6 +224,8 @@ custom fields	common	el	Προσαρμοσμένα πεδία
 cyprus	common	el	ΚΥΠΡΟΣ
 czech republic	common	el	ΤΣΕΧΙΑ
 dark mode	common	el	Σκοτεινή λειτουργία
+database error	common	el	Σφάλμα βάσης δεδομένων
+database error!	common	el	Σφάλμα βάσης δεδομένων!
 date	common	el	Ημερομηνία
 date + time	common	el	Ημερομηνία + Ώρα
 date due	common	el	Ημερομηνία ολοκλήρωσης
@@ -230,7 +240,7 @@ default document to insert entries	preferences	el	Προεπιλεγμένο έ�
 default height for the windows	common	el	Προεπιλεγμένο ύψος για τα παράθυρα
 default width for the windows	common	el	Προεπιλεγμένο πλάτος για τα παράθυρα
 delete	common	el	Διαγραφή
-delete a single entry by passing the id.	common	el	Διαγραφή μιας καταχώρησης με εισαγωγή του id.
+delete a single entry by passing the id.	common	el	Διαγραφή μιας καταχώρησης με εισαγωγή του ID.
 delete category	common	el	Διαγραφή κατηγορίας
 delete row	common	el	Διαγραφή σειράς
 delete this entry	common	el	δαγραφή αυτής της καταχώρησης
@@ -271,15 +281,15 @@ edit avatar	common	el	Επεξεργασία avatar
 edit categories	common	el	Επεξεργασία Κατηγοριών
 edit category	common	el	Επεξεργασία Κατηγορίας
 egroupware version	common	el	Έκδοση EGroupware
-egroupware: login blocked for user '%1', ip %2	common	el	EGroupware: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
+egroupware: login blocked for user '%1', ip %2	common	el	EGroupware: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με IP %2
 egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
 email	common	el	Ε-Μail
-email-address of the user, eg. "%1"	common	el	e-mail του χρήστη π.χ. "%1"
+email-address of the user, eg. "%1"	common	el	E-mail του χρήστη π.χ. "%1"
 enabled	common	el	Ενεργοποιημένο
 end date	common	el	Ημερομηνία παράδοσης
 end time	common	el	Ώρα παράδοσης
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.<br>Παράδειγμα: http://www.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε τη θέση του EGroupware URL.<br>Παράδειγμα: https://egw.domain.com/egroupware   or  /egroupware<br><b>Χωρίς δεξιά παύλα στο τέλος</b>
 entry has been deleted sucessfully	common	el	Η καταχώρηση διαγράφηκε επιτυχώς
 entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκε επιτυχώς
 equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
@@ -299,12 +309,14 @@ faroe islands	common	el	ΝΗΣΟΙ ΦΕΡΟΕ
 fax number	common	el	Αριθμός Fax
 features of the editor?	common	el	Χαρακτηριστικά του συντάκτη
 february	common	el	Φεβρουάριος
-field must not be empty !!!	common	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
+field must not be empty !!!	common	el	Το πεδίο δεν πρέπει να μείνει κενό!
 fields	common	el	Πεδία
 fiji	common	el	ΦΙΤΖΙ
 file	common	el	Αρχείο
 file a file	common	el	Αποθήκευση αρχείου
+file too large.  maximum %1	common	el	Πολύ μεγάλο αρχείο. Μέγιστο %1
 files	common	el	Αρχεία
+files without content in physical filesystem will be removed.	admin	el	Αρχεία χωρίς περιεχόμενο στο φυσικό σύστημα αρχείων θα αφαιρεθούν.
 fileupload	common	el	Ανέβασμα αρχείου
 filter	common	el	Φίλτρο
 finland	common	el	ΦΙΛΑΝΔΙΑ
@@ -314,6 +326,7 @@ first page	common	el	Αρχική σελίδα
 firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
+for more than one contact in a document use the tag pagerepeat!	preferences	el	Χρησιμοποιήστε την ετικέτα επανάληψη σελίδας για περισσότερες από μία επαφές σε ένα έγγραφο!
 force selectbox	common	el	Εξανάγκασε Επιλογή κουτιού
 formatted business address	common	el	Διαμορφωμένη επαγγελματική διεύθυνση
 formatted private address	common	el	Διαμορφωμένη ιδιωτική διεύθυνση
@@ -349,6 +362,7 @@ group has been deleted	common	el	Η ομάδα διαγράφηκε
 group has been updated	common	el	Η ομάδα ανανεώθηκε
 group name	common	el	όνομα ομάδας
 group public	common	el	Δημόσια Ομάδα
+groupdav	common	el	Συγχρονισμός CalDAV / CardDAV
 groups	common	el	Ομάδες
 groups with permission for %1	common	el	Ομάδες με άδεια για %1
 groups without permission for %1	common	el	Ομάδες χωρίς άδεια για %1
@@ -359,6 +373,7 @@ guinea	common	el	ΓΟΥΪΝΕΑ
 guinea-bissau	common	el	ΓΟΥΪΝΕΑ-ΜΠΙΣΩ
 guyana	common	el	ΓΟΥΪΑΝΑ
 haiti	common	el	ΑΪΤΗ
+hbox	common	el	HBox
 heard island and mcdonald islands	common	el	ΝΗΣΟΙ ΧΕΡΝΤ & ΜΑΚΝΤΟΝΑΛΝΤ
 height	common	el	Ύψος
 help	common	el	Βοήθεια
@@ -375,10 +390,12 @@ hong kong	common	el	ΧΟΝΓΚ ΚΟΝΓΚ
 hours	common	el	Ωρες
 how many days to sync in the future (default %1)	groupdav	el	Πόσες ημέρες θα συγχρονιστούν στο μέλλον (προεπιλογή %1)
 how many days to sync in the past (default %1)	groupdav	el	Πόσες ημέρες για συγχρονισμό στο παρελθόν (προεπιλογή %1)
+how many entries should the list show	common	el	Πόσες εγγραφές πρέπει να εμφανίζει ο κατάλογος
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	el	Πόσες εικόνες θα εμφανίζονται στη μπάρα πλοήγησης (κορυφή της σελίδας). Οι επιπλέον εικόνες μπαίνουν σ' ένα είδος pulldown menu, και ανακτώνται από το εικονίδιο στην τέρμα δεξιά πλευρά του μενού πλοήγησης.
 how many rows to print	common	el	Πόσες γραμμές θα εκτυπωθούν
 how to show the general egroupware menu ?	common	el	Πώς να εμφανίζεται το γενικό μενού EGroupware
 html	common	el	HTML
+html link to the current record	common	el	Σύνδεσμος HTML με την τρέχουσα εγγραφή
 html links to any entries linked to the current record, excluding attached files	common	el	Σύνδεσμοι HTML για όλες τις καταχωρήσεις που συνδέονται με την τρέχουσα εγγραφή, εκτός από τα συνημμένα αρχεία
 hungary	common	el	ΟΥΓΓΑΡΙΑ
 iceland	common	el	ΙΣΛΑΝΔΙΑ
@@ -390,6 +407,7 @@ if you use "2-factor-authentication", please enter the code here.	common	el	Εά
 image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
 image url	common	el	Εικόνα URL
 import	common	el	Εισαγωγή
+import xml	common	el	Εισαγωγή XML
 include access to any linked files (links tab)	common	el	Συμπεριλάβετε την πρόσβαση σε όλα τα συνδεδεμένα αρχεία (καρτέλα Σύνδεσμοι)
 india	common	el	ΙΝΔΙΑ
 indonesia	common	el	ΙΝΔΟΝΗΣΙΑ
@@ -440,6 +458,7 @@ korea, republic of	common	el	ΚΟΡΕΑ, ΝΟΤΙΑ
 kuwait	common	el	ΚΟΥΒΕΪΤ
 kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
 label	common	el	Ετικέττα
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	el	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 language	common	el	Γλώσσα
 language_direction_rtl	common	el	γλώσσα_κατεύθυνση_rtl
 lao peoples democratic republic	common	el	ΛΑΟΣ
@@ -453,6 +472,7 @@ latvia	common	el	ΛΕΤΟΝΙΑ
 ldap-mgr	common	el	LDAP-Διαχειριστής
 lebanon	common	el	ΛΙΒΑΝΟΣ
 left	common	el	Αριστερά
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	el	Length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 lesotho	common	el	ΛΕΣΟΤΟ
 liberia	common	el	ΛΙΒΕΡΙΑ
 libyan arab jamahiriya	common	el	ΛΙΒΥΚΑ ΑΡΑΒΙΚΑ ΕΜΙΡΑΤΑ
@@ -461,6 +481,9 @@ liechtenstein	common	el	ΛΙΧΤΕΝΣΤΑΪΝ
 light mode	common	el	Φωτεινή λειτουργία
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	el	Γραμμή 1: '%2'<br>csv δεδομένα δεν αντιστοιχούν με τη στήλη-αρίθμηση τραπεζιού %3 ==>αγνοήθηκε</b>
 link	common	el	Σύνδεσμος
+link is appended to mail allowing recipients to download currently attached version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία επιτρέποντας στους παραλήπτες να κατεβάσουν την τρέχουσα επισυναπτόμενη έκδοση των αρχείων
+link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν ή να τροποποιούν την ενημερωμένη έκδοση των αρχείων (μόνο EPL)
+link is appended to mail allowing recipients to download up to date version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν την ενημερωμένη έκδοση των αρχείων
 list	common	el	Λίστα
 list members	common	el	Μέλη λίστας
 lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
@@ -567,17 +590,24 @@ oman	common	el	ΟΜΑΝ
 on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκτρολογίστε: %1
 on mouse over	common	el	Με mouse over
 only private	common	el	μόνο ιδιωτικά
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	el	Υποστηρίζεται μόνο από λίγους πλήρως συμμορφούμενους πελάτες (π.χ. από την Apple). Εάν πρέπει να εισαγάγετε μια διεύθυνση URL, το πιθανότερο είναι ότι δεν θα υποστηρίζεται!
 only yours	common	el	μόνο δικά σας
-open	common	el	ανοικτά
+open	common	el	Άνοιγμα
+open existing contact	common	el	Άνοιγμα υπάρχουσας επαφής
 open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
 open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
 open sidebox	common	el	Άνοιγμα μενού
+open the online help.	common	el	Άνοιγμα της ηλεκτρονικής βοήθειας
+operator	common	el	Χειριστής
+optional note about the link	common	el	Προαιρετική σημείωση για σύνδεσμο
 options	common	el	Επιλογές
 or	common	el	ή
+order to navigating by tab key through the form	common	el	Τάξη για πλοήγηση με το πλήκτρο καρτέλας μέσα στη φόρμα
 original	common	el	Αρχικός
 other	common	el	Αλλο
 overview	common	el	Επισκόπηση
 owner	common	el	Ιδιοκτήτης
+ownership	common	el	Ιδιοκτησία
 page	common	el	Σελίδα
 page was generated in %1 seconds	common	el	Η σελίδα δημιουργήθηκε σε %1 δευτερόλεπτα
 pakistan	common	el	ΠΑΚΙΣΤΑΝ
@@ -594,7 +624,7 @@ password has been updated	common	el	Ο κωδικός ενημερώθηκε
 password must contain at least %1 numbers	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 αριθμούς
 password must contain at least %1 special characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 ειδικούς χαρακτήρες
 password must have at least %1 characters	common	el	Ο κωδικός πρέπει να περιέχει τουλάχιστον %1 χαρακτήρες
-path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	el	Η διαδρομή του χρήστη και των αρχείων ομάδας ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ του webserver document-root!
 permission denied!	common	el	Άδεια απορρίπτεται!
 permission denied! this is an administration only feature.	common	el	Άδεια απορρίπτεται! Αυτή είναι μια λειτουργία μόνο για διαχειριστές.
 permissions to the files/users directory	common	el	δικαιώματα για τον κατάλογο αρχείων/χρηστών
@@ -612,7 +642,8 @@ placeholders	common	el	Καταχωρητής
 play/pause	common	el	Възпроизвеждане/пауза
 please %1 by hand	common	el	Παρακαλώ %1 με το χέρι
 please enter a name	common	el	Παρακαλώ εισάγετε όνομα
-please reload the egroupware desktop (f5 / cmd+r).	common	el	Επαναφορτώστε την επιφάνεια εργασίας του EGroupware (F5 / Cmd+r).
+please enter table-name first !!!	common	el	Εισάγετε πρώτα το όνομα του τραπεζιού!
+please reload the egroupware desktop (f5 / cmd+r).	common	el	Επαναφορτώστε την επιφάνεια εργασίας του EGroupware (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	el	Παρακαλούμε θυμηθείτε να χρησιμοποιείτε το '%1' ως όνομα χρήστη για τοπικές συνδέσεις από εδώ και στο εξής!
 please run setup to become current	common	el	Παρακαλώ τρέξτε το setup για να γίνετε έγκυρος
 please select	common	el	Παρακαλώ επιλέξτε
@@ -621,11 +652,14 @@ please set your preferences for this application	common	el	Παρακαλώ ορ
 please type %1 more characters	common	el	Παρακαλώ πληκτρολογήστε %1 επιπλέον χαρακτήρα(-ους)
 please type 1 more character	common	el	Παρακαλώ πληκτρολογήστε 1 επιπλέον χαρακτήρα
 please wait...	common	el	Παρακαλώ περιμένετε
+please, check back with us shortly.	common	el	Παρακαλώ, επισκεφθείτε μας ξανά σύντομα.
 poland	common	el	ΠΟΛΩΝΙΑ
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
 postal	common	el	Ταχυδρομικός
 preference	common	el	Предпочитания
 preferences	common	el	Επιλογές
+preferences for the %1 template set	preferences	el	Προτιμήσεις για το σύνολο προτύπων %1
+preview with entry	common	el	Προεπισκόπηση με καταχώρηση
 previous page	common	el	Προηγούμενη σελίδα
 primary group	common	el	Κυρίως ομάδα
 primary style-sheet:	common	el	Αρχικός τύπος φύλλου
@@ -634,17 +668,23 @@ priority	common	el	Προτεραιότητα
 private	common	el	Προσωπικό
 programs	common	el	Προγράμματα
 project	common	el	Προβολή
+properties	common	el	Ιδιότητες
+protocol is required	common	el	Απαιτείται πρωτόκολλο
 public	common	el	κοινόχρηστο
 puerto rico	common	el	ΠΟΥΕΡΤΟ ΡΙΚΟ
 qatar	common	el	ΚΑΤΑΡ
+quick add	common	el	Γρήγορη προσθήκη
+radiobutton	common	el	Ραδιόφωνο
 read	common	el	Ανάγνωση
 read a list of entries.	common	el	Ανάγνωση λίστας καταχωρήσεων
-read a single entry by passing the id and fieldlist.	common	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή id και λίστας πεδίων
+read a single entry by passing the id and fieldlist.	common	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή ID και λίστας πεδίων
 read this list of methods.	common	el	Ανάγνωση λίστας μεθόδων
 reading	common	el	ανάγνωση
 readonly	common	el	μόνο ανάγνωση
 regular	common	el	Κανονικό
 reject	common	el	Απόρριψη
+remember me	common	el	Να με θυμάστε
+remember me for %1	common	el	Να με θυμάστε για το %1
 remove selected accounts	common	el	Αφαίρεση επιλεγμένων λογαριασμών
 remove shortcut	common	el	Αφαίρεση Συντόμευσης
 remove this link (not the entry itself)	common	el	Αφαιρέστε το σύνδεσμο (όχι την ίδια την καταχώρηση)
@@ -652,6 +692,9 @@ rename	common	el	Μετονομασία
 repeat password	common	el	Επανάληψη κωδικού πρόσβασης
 replace	common	el	Αντικατάσταση
 replace with	common	el	Αντικατάσταση με
+request could not be processed, please reload your window (press f5 or cmd r)!	common	el	Το αίτημα δεν μπόρεσε να επεξεργαστεί, παρακαλούμε επαναφορτώστε το παράθυρό σας (πατήστε F5 ή Cmd+R)!
+requested resource '%1' does not exist or has expired	common	el	Ο ζητούμενος πόρος '%1' δεν υπάρχει ή έχει λήξει
+required directory "%1" not found!	admin	el	Δεν βρέθηκε ο απαιτούμενος φάκελος "%1"!
 reset	common	el	Επανακαθορισμός
 resources	common	el	Πόροι
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Επιστρέφει πλήρη λίστα λογαριασμών στο σύστημα. Προειδοποίηση: η λίστα μπορεί να είναι αρκετά μεγάλη
@@ -672,9 +715,11 @@ san marino	common	el	ΣΑΝ ΜΑΡΙΝΟ
 sao tome and principe	common	el	ΣΑΟ ΤΟΜΕ & ΠΡΙΝΣΙΠΕ
 saturday	common	el	Σάββατο
 saudi arabia	common	el	ΣΑΟΥΔΙΚΗ ΑΡΑΒΙΑ
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα. <br/>Αυτή η έκδοση:%1 <br/>Έκδοση Savant:%2
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	el	Savant2 έκδοση διαφέρει από Savant2 περιτύλιγμα. <br>Αυτή η έκδοση:%1 <br>Έκδοση Savant:%2
 save	common	el	Αποθήκευση
 save all	common	el	Αποθήκευση όλων
+save as	common	el	Αποθήκευση ως
+save as zip	common	el	Αποθήκευση ως ZIP
 saved column sizes to preferences.	common	el	Αποθηκευμένα μεγέθη στηλών στις προτιμήσεις.
 search	common	el	Αναζήτηση
 search %1 '%2'	common	el	Αναζήτηση %1 '%2'
@@ -714,6 +759,7 @@ seychelles	common	el	ΣΕΫΧΕΛΛΕΣ
 share	common	el	Μοιραστείτε το
 share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	el	Κοινή χρήση ως μόνο για ανάγνωση, αλλά επιτρέψτε τις μεταφορτώσεις. Οι μεταφορτώσεις είναι κρυφές και προσβάσιμες μόνο από όσους έχουν λογαριασμό
 share filemanager directory	common	el	Φάκελος διαχείρισης αρχείων
+share files	common	el	Κοινή χρήση αρχείων
 share just the associated filemanager directory, not the %1	common	el	Κοινή χρήση μόνο του σχετικού φακέλου filemanager, όχι του %1
 share this %1 via url	common	el	Κοινή χρήση αυτού του %1 μέσω URL
 show	common	el	Εμφάνιση
@@ -753,17 +799,20 @@ start time	common	el	Ωρα έναρξης
 start with	common	el	έναρξη με
 starting up...	common	el	Εκκίνηση...
 status	common	el	Κατάσταση
+store your public key in addressbook?	common	el	Αποθηκεύετε το δημόσιο κλειδί σας στο βιβλίο διευθύνσεων;
 stretched	common	el	εκτεταμένο
 subject	common	el	Θέμα
 submit	common	el	Υποβολή
 substitutions and their meanings:	common	el	Αντικαταστάσεις και οι έννοιές τους:
 sudan	common	el	ΣΟΥΔΑΝ
+suggest password	common	el	Πρόταση κωδικού πρόσβασης
 sunday	common	el	Κυριακή
 suriname	common	el	ΣΟΥΡΙΝΑΜ
 svalbard and jan mayen	common	el	ΣΒΑΛΜΠΑΡΝΤ & ΓΙΑΝ ΜΕΪΓΕΝ
 swaziland	common	el	ΖΟΥΑΖΙΛΑΝΔΗ
 sweden	common	el	ΣΟΥΗΔΙΑ
 switzerland	common	el	ΕΛΒΕΤΙΑ
+sync all selected into one	groupdav	el	Συγχρονισμός όλων των επιλεγμένων σε ένα
 syrian arab republic	common	el	ΣΥΡΙΑ
 table properties	common	el	Ιδιότητες πίνακα
 taiwan	common	el	ΤΑΪΒΑΝ/ΤΑΪΠΕΪ
@@ -774,6 +823,7 @@ text color:	common	el	Χρώμα κειμένου:
 thailand	common	el	ΤΑΪΛΑΝΔΗ
 the following applications require upgrades	common	el	Οι παρακάτω εφαρμογές χρειάζονται αναβάθμιση
 the mail server returned	common	el	Ο διακομιστής email επέστρεψε
+this feature is only available in epl version.	common	el	Αυτή η λειτουργία είναι διαθέσιμη μόνο στην έκδοση EPL.
 this name has been used already	common	el	Το όνομα ήδη χρησιμοποιείται
 thursday	common	el	Πέμπτη
 time	common	el	Ωρα
@@ -782,16 +832,26 @@ time zone offset	common	el	Μετακίνηση χρονικής ζώνης
 title	common	el	Τίτλος
 to	common	el	Προς:
 to correct this error for the future you will need to properly set the	common	el	Για να διορθωθεί αυτό το λάθος πρέπει να ορίσετε το
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	el	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	el	Για να εξετάσετε ή να επαναφέρετε ανενεργά αρχεία, ίσως χρειαστεί να ενεργοποιήσετε την έκδοση.
 to go back to the msg list, click <a href= %1 >here</a>	common	el	Για να επιστρέψετε στη λίστα μηνυμάτων, κάντε κλικ <a href="%1">εδώ</a>
+to start the db-tools	common	el	Για να ξεκινήσετε τα εργαλεία DB
+to start the etemplate editor	common	el	Εκκίνηση του επεξεργαστή eTemplate
+to start the search	common	el	Για να ξεκινήσετε την αναζήτηση
 today	common	el	Σήμερα
 todays date, eg. "%1"	common	el	σημερινή ημερομηνία, π.χ. "%1"
 togo	common	el	ΤΟΓΚΟ
 tokelau	common	el	ΤΟΚΕΛΑΟΥ
 tonga	common	el	ΤΟΝΓΚΑ
+too many rows selected.<br />select all, or less than %1 rows	common	el	Επιλέχθηκαν πάρα πολλές γραμμές.<br>Επιλέξτε όλες ή λιγότερες από %1 γραμμές
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	el	Πολλές αποτυχημένες προσπάθειες για είσοδο: %1 από το χρήστη '%2', %3 με ΙΡ %4
 top	common	el	Κορυφή
 total	common	el	Σύνολο
+total: %1 successful: %2 failed: %3 skipped: %4	common	el	Σύνολο: %1 Επιτυχής: %2 Αποτυχημένη: %3 Παραλείπεται: %4
+transparant bg for the icons?	common	el	Διαφανές bg για τα εικονίδια
+tree	common	el	Δέντρο
 trinidad and tobago	common	el	ΤΡΙΝΙΤΑΝΤ & ΤΟΜΠΑΚΟ
+tu	common	el	Tu
 tuesday	common	el	Τρίτη
 tunisia	common	el	ΤΥΝΗΣΙΑ
 turkey	common	el	ΤΟΥΡΚΙΑ
@@ -810,6 +870,7 @@ unknown	common	el	Αγνωστο
 unlink	common	el	Αποσύνδεση
 update	common	el	Ανανέωση
 update a single entry by passing the fields.	common	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία
+update from version '%s' to	common	el	Ενημέρωση από την έκδοση '%s' σε
 update the clock per minute or per second	common	el	Ενημέρωση του ρολογιού ανά λεπτό ή ανά δευτερόλεπτο
 upload	common	el	Φόρτωμα
 upload directory does not exist, or is not writeable by webserver	common	el	Ο κατάλογος φόρτωσης δεν υπάρχει, ή δεν είναι εγγράψιμος από τον webserver
@@ -846,7 +907,7 @@ which groups	common	el	Ποιές ομάδες
 whole query	common	el	ολόκληρη απορία
 width	common	el	Πλάτος
 wk	common	el	Εβδ
-work email	common	el	email εργασίας
+work email	common	el	Email εργασίας
 would you like to display the page generation time at the bottom of every window?	common	el	Θα θέλατε βα εμφανίζεται η σελίδα δημιουργίας της ώρας στο κάτω μέρος κάθε παραθύρου;
 writing	common	el	εγγραφή
 written by:	common	el	Γραμμένο από:

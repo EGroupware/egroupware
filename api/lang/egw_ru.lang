@@ -1,22 +1,24 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	ru	%1 (%2 новых) сообщений записано для приложения '%3' и языков '%4'
 %1 active file(s) with same name as directory inactivated!	admin	ru	%1 активных файлов с именем, аналогичным имени каталога, удалены
+%1 copied - the copy can now be edited	common	ru	%1 скопировано - теперь копию можно редактировать
 %1 directories %2 found!	admin	ru	%1 каталогов %2 найдено
 %1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1
 %1 email(s) added into %2	common	ru	%1 письмо(я) добавлено в %2
-%1 entries found, select one ...	common	ru	Найдено %1 вхождений, выберите одно...
+%1 entries found, select one ...	common	ru	Найдено %1 вхождений, выберите одно ...
 %1 etemplates deleted	common	ru	%1 e-Шаблонов  удалено
 %1 etemplates for application '%2' dumped to '%3'	common	ru	%1 е-Шаблонов приложения '%2' сброшено в '%3'
 %1 etemplates found	common	ru	%1 e-Шаблонов найдено
 %1 file	common	ru	%1 файл
 %1 is not executable by the webserver !!!	common	ru	%1 не может быть исполнен Веб-сервером!
 %1 matches on search criteria	common	ru	%1 совпадений с условием поиска
-%1 more %2 selected ...	common	ru	выбрано еще %1 %2...
+%1 more %2 selected ...	common	ru	выбрано еще %1 %2 ...
 %1 more...	common	ru	еще %1 ...
 %1 new etemplates imported for application '%2'	common	ru	%1 новых е-Шаблонов импортировано для приложения '%2'
 %1 not implemented for %2!	common	ru	%1 неприменимо для %2!
 %1 proxy of %2	common	ru	%1 прокси из %2
 %1 to sync	groupdav	ru	%1 синхронизировать
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
+%1, duplicate id	common	ru	%1, дублирующий идентификатор
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br>или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1EGroupware%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 %s disabled	common	ru	%s отключен
 %s needed	common	ru	нужен %s
@@ -50,6 +52,7 @@
 5 seconds	common	ru	5 секунд
 80 (http)	admin	ru	80 (http)
 a pattern to be searched for	common	ru	Шаблон для поиска
+abcdefghijklmnopqrstuvwxyz	common	ru	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	ru	Прервать
 about	common	ru	О программе
 about %1	common	ru	О %1
@@ -139,8 +142,8 @@ applies the changes to the given version of the template	common	ru	Примен�
 apply	common	ru	Применить
 apply the action on the whole query, not only the shown entries	common	ru	Применить действие на весь запрос, а не только на отображаемые записи
 april	common	ru	Апрель
-are you sure you want to delete these entries ?	common	ru	Вы уверены, что хотите удалить эти записи ?
-are you sure you want to delete this entry ?	common	ru	Вы уверены, что хотите удалить эту запись ?
+are you sure you want to delete these entries ?	common	ru	Вы уверены, что хотите удалить эти записи?
+are you sure you want to delete this entry ?	common	ru	Вы уверены, что хотите удалить эту запись?
 argentina	common	ru	Аргентина
 armenia	common	ru	Армения
 aruba	common	ru	Аруба
@@ -153,10 +156,8 @@ australia	common	ru	Австралия
 austria	common	ru	Австрия
 authenticate	common	ru	Аутентифицировать
 author	common	ru	Автор
-autohide sidebox menu's	common	ru	Автоматически скрывать боковые подменю(menu's)
+autohide sidebox menu's	common	ru	Автоматически скрывать боковые подменю
 autohide sidebox menus	common	ru	Автоматически скрывать боковые меню
-automatically hide the sidebox menu's?	common	ru	Автоматически скрывать боковые подменю(menu's)?
-automatically hide the sidebox menus?	common	ru	Автоматически скрывать боковые меню ?
 autosave default category	common	ru	Автоматически сохранять категорию по умолчанию
 avatar	common	ru	Аватар
 azerbaijan	common	ru	Азербайджан
@@ -188,7 +189,7 @@ botswana	common	ru	Ботсвана
 bottom	common	ru	Низ
 bouvet island	common	ru	О-в Бувет
 box	common	ru	Рамка
-box...	common	ru	Рамка...
+box...	common	ru	Рамка ...
 brazil	common	ru	Бразилия
 british indian ocean territory	common	ru	Британские территории бассейна Индийского океана
 broken link	common	ru	Битая ссылка
@@ -207,8 +208,8 @@ can't create directory %1 to connect found unconnected nodes to it!	admin	ru	Н�
 canada	common	ru	Канада
 cancel	common	ru	Прервать
 cannot replace %1 because it is a directory	common	ru	Не могу заменить %1, потому что это папка
-cannot set a category as parent, which is part of this categorys subtree!	common	ru	Не могу установить категорию как родительскую,которая является частью поддерева этой категории!(?)
-cannot set this cat as its own parent!	common	ru	Не могу установить эту категорию как собственного родителя!(?)
+cannot set a category as parent, which is part of this categorys subtree!	common	ru	Не могу установить категорию как родительскую,которая является частью поддерева этой категории!
+cannot set this cat as its own parent!	common	ru	Не могу установить эту категорию как собственного родителя!
 cant delete a single widget from a grid !!!	common	ru	Нелзя удалить отдельный виджет с сетки!
 cant delete the only column of a grid !!!	common	ru	Нельзя удалять одну лишь колонку сетки!
 cant delete the only row in a grid !!!	common	ru	Нельзя удалять одну лишь строку в сетке!
@@ -234,7 +235,7 @@ chad	common	ru	Чад
 change	common	ru	Изменить
 change owner	common	ru	Сменить владельца
 changed	common	ru	Изменилось
-charset	common	ru	utf-8
+charset	common	ru	Charset
 check all	common	ru	Проверить  все
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ru	Проверка пустых значений в операторах IF. Пример {{IF url~EMPTY~~Website:}} - Если url не пуст, то пишется "Веб-сайт:".
 check if content should only be displayed but not altered (the content is not send back then!)	common	ru	убедитесь, что содержимое должно только отображаться, но не меняться (содержание не будет отослано назад!)
@@ -279,7 +280,7 @@ collection empty.	common	ru	коллекция пуста.
 collection listing	common	ru	список коллекций
 colombia	common	ru	Колумбия
 colour	common	ru	Цвет
-column...	common	ru	Столбец...
+column...	common	ru	Столбец ...
 columnname	common	ru	ИмяСтолбца
 comment	common	ru	Комментарий
 common preferences	common	ru	Общие настройки
@@ -293,7 +294,7 @@ congo, the democratic republic of the	common	ru	Демократическая �
 contact	common	ru	Контакт
 contact field to show	common	ru	Поле Контакт для показа
 contact fields	common	ru	Поля Контакта
-contacting server...	common	ru	Соединение с Сервером...
+contacting server...	common	ru	Соединение с Сервером ...
 contains	common	ru	содержит
 content type	common	ru	Тип содержимого
 cook islands	common	ru	О-ва Кука
@@ -327,7 +328,7 @@ current	common	ru	Текущий
 current users	common	ru	Текущие пользователи
 custom	common	ru	пользовательский
 custom fields	common	ru	пользовательские поля
-custom javascript for onchange	common	ru	пользовательский JavaScript по onChange
+custom javascript for onchange	common	ru	пользовательский JavaScript по onchange
 cut	common	ru	Вырезать
 cyprus	common	ru	Кипр
 czech republic	common	ru	Чехия
@@ -377,14 +378,9 @@ denmark	common	ru	Дания
 description	common	ru	Описание
 detail	common	ru	Подробность
 details	common	ru	Подробности
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
 direction left to right	common	ru	Направление слева направо
 directory	common	ru	Каталог
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ru	Каталог не существует, не читаем веб-сервером или указан не относительно корня документов!
-disable internet explorer png-image-bugfix	common	ru	Отключить обработку ошибок изображений png для Internet Explorer
-disable slider effects	common	ru	Отключить эффекты скольжения
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ru	Отключить эффекты анимации выпадающих меню на странице? Пользователи Opera и Konqueror возможно захотят это сделать.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
 disabled	common	ru	Отключено
 discard changes	common	ru	Отменить изменения
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	ru	показывается впереди вводимого или когда вводимое вставлено для '%s' в метке (метка кнопки Применить или Изображение-имяфайла)
@@ -443,7 +439,7 @@ email	common	ru	Эл.почта
 email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, напр. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	ru	встроенные стили css, yапр. '.red { background: red; }' (отметьте знак '.' gеред именем класса) или '@import url(...)' (имя класса глобально для всей страницы!)
 empty file	common	ru	Пустой файл
-enable javascript onchange submit	common	ru	разрешить подчинение JavaScript onChange
+enable javascript onchange submit	common	ru	разрешить подчинение JavaScript onchange
 enable logging	groupdav	ru	Включить ведение журнала
 enabled	common	ru	Включено
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	ru	Включить ведение журнала траффика CalDAV/CardDAV для диагностики проблем с устройствами.
@@ -452,7 +448,7 @@ end time	common	ru	Время окончания
 enter '' for an empty default, nothing mean no default	common	ru	ввести '' для пустого значения по-умолчанию, ничего обозначает без значения по-умолчанию
 enter a search pattern	common	ru	Введите шаблон поиска
 enter filename to upload and attach, use [browse...] to search for it	common	ru	Введите имя файла для загрузки и прикрепления, используйте [Обзор] чтобы его найти
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера EGroupware.<br>Например: http://www.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Введите адрес Вашего сервера EGroupware.<br>Например: https://egw.domain.com/egroupware   или   /egroupware<br><b>Без слэша на конце</b>
 enter the new version number here (> old_version), empty for no update-file	common	ru	введите здесь новый номер версии (больше прежнего номера), не заполнять если не изменять файл
 enter the new version number here (has to be > old_version)	common	ru	введите здесь новый номер версии (должен быть больше прежнего номера)
 entry has been deleted sucessfully	common	ru	Запись успешно удалена
@@ -469,9 +465,9 @@ error deleting %1 %2 directory	common	ru	Ошибка удаления папк�
 error deleting %1!	common	ru	Ошибка удаления %1!
 error renaming %1 %2 directory	common	ru	Ошибка переименования папки %1 %2
 error uploading file!	filemanager	ru	Ошибка загрузки файла!
-error: template not found !!!	common	ru	Ошибка: Шаблон не найден !!!
+error: template not found !!!	common	ru	Ошибка: Шаблон не найден!
 error: webserver is not allowed to write into '%1' !!!	common	ru	Ошибка: веб-сервер не может записывать в '%1'!
-error: while saving !!!	common	ru	Ошибка: во время сохранения!!!
+error: while saving !!!	common	ru	Ошибка: во время сохранения!
 error: writing file (no write-permission for the webserver) !!!	common	ru	Ошибка: запись файла (нет разрешения на запись для веб-сервера)!
 estonia	common	ru	Эстония
 etag	common	ru	ETag
@@ -491,7 +487,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ru	Пример {{NELF role}} - если поле Роль не пусто, устанавливает LF без всякого значения поля
 exchange this row with the one above	common	ru	поменять местами это строку со строкой выше
 exchange this two columns	common	ru	пеменять местами эти две колонки
-export the loaded etemplate into a xml-file	common	ru	экспорт загруженного е-Шаблона в файл xml
+export the loaded etemplate into a xml-file	common	ru	экспорт загруженного е-Шаблона в файл XML
 export xml	common	ru	Экспорт XML
 extensions loaded:	common	ru	Загруженные расширения:
 failed to change password.	common	ru	Ошибка при смене пароля
@@ -503,7 +499,7 @@ fax number	common	ru	номер факса
 features of the editor?	common	ru	Особенности редактора
 february	common	ru	Февраль
 field	common	ru	Поле
-field must not be empty !!!	common	ru	Поле должно быть заполнено !!!
+field must not be empty !!!	common	ru	Поле должно быть заполнено!
 fields	common	ru	Поля
 fiji	common	ru	Фиджи
 file	common	ru	Файл
@@ -512,7 +508,7 @@ file %1 has no content in physical filesystem %2 --> file removed!	admin	ru	Фа
 file %1 has no content in physical filesystem %2!	admin	ru	Файл %1 не имеет контента в физической файловой системе %2
 file '%1' not found!	common	ru	Файл '%!' не найден!
 file a file	common	ru	Сохранить файл
-file contains more than one etemplate, last one is shown !!!	common	ru	Файл содержит больше одного е-Шаблона, показан только последний !!!
+file contains more than one etemplate, last one is shown !!!	common	ru	Файл содержит больше одного е-Шаблона, показан только последний!
 file is of wrong type (%1 != %2)!	common	ru	Файл неправильного типа (%1 !=%2)!
 file writen	common	ru	Файл записан
 files	common	ru	Файлы
@@ -576,7 +572,7 @@ group has been updated	common	ru	Группа обновлена
 group name	common	ru	имя группы
 group public	common	ru	Общая Группа
 groupbox	common	ru	Рамка группы
-groupdav	common	ru	CalDAV, CardCAV и GroupDAV сервер
+groupdav	common	ru	CalDAV, CardDAV и GroupDAV сервер
 groups	common	ru	Группы
 groups with permission for %1	common	ru	Группы с разрешением для %1
 groups without permission for %1	common	ru	Группы без разрешения для %1
@@ -615,13 +611,12 @@ how many entries should the list show	common	ru	Сколко записей на
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ru	Сколько иконок будет показываться на верхней панели. Дополнительные иконки будут объединены в выпадающее меню, вызываемое пиктограммой в правом углу панели навигации.
 how many rows to print	common	ru	Сколько строк печатать
 how to show the general egroupware menu ?	common	ru	Как показывать главное меню EGroupware?
-html	common	ru	Html
+html	common	ru	HTML
 html link to the current record	common	ru	HTML-ссылка на запись
 html links to any entries linked to the current record, excluding attached files	common	ru	HTML-ссылки на все записи, связанные с текущей записью, за исключением вложенных файлов
 hungary	common	ru	Венгрия
 iceland	common	ru	Исландия
 id	common	ru	Идентификатор
-iespell not detected. click ok to go to download page.	common	ru	Словарь ieSpell не найден. Нажмите ОК для перехода на страницу загрузки.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	ru	если поле запрещено - показывается пустая клетка таблицы, для (временного) удаления поля/ячейки
 if the clock is enabled would you like it to update it every second or every minute?	common	ru	Если выбраны часы, обновлять их показания ежесекундно или ежеминутно?
 if there are some images in the background folder you can choose the one you would like to see.	common	ru	Если в папке имеются изображения, Вы можете выбрать нужное для просмотра.
@@ -838,7 +833,7 @@ new search	common	ru	Новый поиск
 new table created	common	ru	Новая таблица создана
 new value	common	ru	Новое значение
 new zealand	common	ru	Новая Зеландия
-newer version '%1' exists !!!	common	ru	существует более новая версия '%1' !!!
+newer version '%1' exists !!!	common	ru	существует более новая версия '%1'!
 next	common	ru	Следующий
 next page	common	ru	Следующая страница
 nextmatch	common	ru	Следующее совпадение
@@ -853,7 +848,7 @@ nigeria	common	ru	Нигерия
 niue	common	ru	Ниуэ
 no	common	ru	Нет
 no - cancel	common	ru	Нет - Отменить
-no column to swap with !!!	common	ru	нет колонки для обмена !!!
+no column to swap with !!!	common	ru	нет колонки для обмена!
 no entries found, try again ...	common	ru	записей не найдено, попробуйте еще ...
 no file	common	ru	нет файла
 no filename given or selected via browse...	common	ru	файл через "Открыть" не получен либо не выбран ...
@@ -861,7 +856,7 @@ no filters	common	ru	Без фильтров
 no history for this record	common	ru	Нет истории для этой записи
 no matches found	common	ru	Не найдено совпадений
 no rights to export more than %1 entries!	common	ru	Недостаточно прав для экспорта более, чем %1 записей!
-no row to swap with !!!	common	ru	нет строки для обмена !!!
+no row to swap with !!!	common	ru	нет строки для обмена!
 no savant2 template directories were found in:	common	ru	Каталог с шаблонами Savant2 не найден в:
 no subject	common	ru	Нет темы
 none	common	ru	Ничего
@@ -878,7 +873,7 @@ not readable %1 entry of user %2	common	ru	Запись %1 не может бы�
 note	common	ru	Заметка
 notes	common	ru	Заметки
 nothing	common	ru	ничего
-nothing found - try again !!!	common	ru	Ничего не найдено - попробуйте еще раз !!!
+nothing found - try again !!!	common	ru	Ничего не найдено - попробуйте еще раз!
 nothing in clipboard to paste !!!	common	ru	в буфере нет ничего для вставки
 nothing matched search criteria !!!	common	ru	Нет совпадений с критерием поиска
 nothing to save.	common	ru	Нет ничего для сохранения.
@@ -899,12 +894,13 @@ on *nix systems please type: %1	common	ru	В *NIX-системах пожалу�
 on mouse over	common	ru	При наведенном курсоре
 onchange	common	ru	приИзменении
 onclick	common	ru	приЩелчке
-only an other version found !!!	common	ru	найдена только другая Версия !!!
+only an other version found !!!	common	ru	найдена только другая Версия!
 only private	common	ru	только личные
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	ru	полностью поддерживается только несколько совместимых клиентов(например от Apple).если вы введёте адрес,то скорей всего не поддерживается!
 only yours	common	ru	только Ваши
 oops! you caught us in the middle of system maintainance.	common	ru	Опс! Вы застукали нас прямо во время обслуживания системы.
 open	common	ru	Открыть
+open existing contact	common	ru	Открыть существующий контакт
 open notify window	common	ru	Открыть окно извещения
 open popup window	common	ru	Открыть всплывающее окно
 open sidebox	common	ru	Открыть боковое меню
@@ -920,6 +916,7 @@ other	common	ru	Другие
 overflow	common	ru	Переполнение
 overview	common	ru	Просмотр
 owner	common	ru	Владелец
+ownership	common	ru	Владение
 padding	common	ru	Набивка
 page	common	ru	Страница
 page was generated in %1 seconds	common	ru	Страница создана за %1 сек.
@@ -931,7 +928,7 @@ papua new guinea	common	ru	Папуа и Новая Гвинея
 paraguay	common	ru	Парагвай
 parcel	common	ru	Партия (пакет?)
 parent category	common	ru	Родительская категория
-parent is a '%1' !!!	common	ru	родитель - '%1' !!!
+parent is a '%1' !!!	common	ru	родитель - '%1'!
 password	common	ru	Пароль
 password could not be changed	common	ru	Пароль нельзя изменить
 password has been updated	common	ru	Пароль обновлен
@@ -942,7 +939,7 @@ password must contain at least %1 uppercase letters	common	ru	Пароль до�
 password must have at least %1 characters	common	ru	Пароль должен содержать не менее %1 символов
 paste	common	ru	Вставить
 path	common	ru	Путь
-path to user and group files has to be outside of the webservers document-root!!!	common	ru	Путь к файлам пользователя и группы ДОЛЖЕН НАХОДИТЬСЯ ВНЕ главного каталога Веб-сервера (document-root)!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	ru	Путь к файлам пользователя и группы ДОЛЖЕН НАХОДИТЬСЯ ВНЕ главного каталога Веб-сервера (document-root)!
 permission denied!	common	ru	Доступ запрещен!
 permission denied! this is an administration only feature.	common	ru	В разрешении отказано! Эта функция доступна только для администраторов.
 permissions to the files/users directory	common	ru	разрешения для папки файлов/пользователей
@@ -960,16 +957,16 @@ placeholders	common	ru	Место для размещения
 play/pause	common	ru	Воспроизведение/Пауза
 please %1 by hand	common	ru	Пожалуйста %1 вручную
 please enter a name	common	ru	введите имя !
-please enter table-name first !!!	common	ru	Пожалйста, сначала введите имя таблицы !!!
-please reload the egroupware desktop (f5 / cmd+r).	common	ru	Пожалуйста, перезагрузите рабочий стол EGroupware (F5 / Cmd+r).
+please enter table-name first !!!	common	ru	Пожалйста, сначала введите имя таблицы!
+please reload the egroupware desktop (f5 / cmd+r).	common	ru	Пожалуйста, перезагрузите рабочий стол EGroupware (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	ru	Пожалуйста, не забывайте впредь использовать '%1' в качестве имени пользователя для локального входа в систему!
 please run setup to become current	common	ru	Пожалуйста, запустите обновление.
 please select	common	ru	Пожалуйста Выберите
 please set your global preferences	common	ru	Пожалуйста, установите Ваши общие настройки!
-please set your preferences for this application	common	ru	Пожалуйста установите Ваши настройки для этого приложения !
+please set your preferences for this application	common	ru	Пожалуйста установите Ваши настройки для этого приложения!
 please type %1 more characters	common	ru	Пожалуйста, введите еще %1 символ(ов)
 please type 1 more character	common	ru	Пожалуйста, введите еще 1 символ
-please wait...	common	ru	Пожалуйста подождите...
+please wait...	common	ru	Пожалуйста подождите ...
 please, check back with us shortly.	common	ru	Пожалуйста, заходите еще поскорее.
 pm	common	ru	вечер
 poland	common	ru	Польша
@@ -1009,7 +1006,7 @@ register	common	ru	Зарегистрировать
 regular	common	ru	Периодический
 reject	common	ru	Отклонить
 remember me	common	ru	Запомнить меня
-remove row (can not be undone!!!)	common	ru	убрать Строку (НЕ может быть отменено!!!)
+remove row (can not be undone!!!)	common	ru	убрать Строку (НЕ может быть отменено!)
 remove selected accounts	common	ru	Удалить выбранные учетные записи
 remove shortcut	common	ru	Удалить ярлычок
 remove this link (not the entry itself)	common	ru	Убрать эту ссылку (не запись по ней)
@@ -1019,7 +1016,7 @@ repeat password	common	ru	Повторить пароль
 replace	common	ru	Замена
 replace with	common	ru	Заменить на
 requests and full responses to files directory	common	ru	Запросы и полные ответы на файловые каталоги
-requests and truncated responses to apache error-log	groupdav	ru	Запросы и короткие ответы  к логу ошибок apache
+requests and truncated responses to apache error-log	groupdav	ru	Запросы и короткие ответы  к логу ошибок Apache
 required	common	ru	Необходимо
 reset	common	ru	Сброс
 resource calendars	groupdav	ru	Календари ресурса
@@ -1035,7 +1032,7 @@ returns struct of users application access	common	ru	показать струк
 reunion	common	ru	О-в Реюньон
 right	common	ru	Вправо
 romania	common	ru	Румыния
-row...	common	ru	Строка...
+row...	common	ru	Строка ...
 russian	common	ru	русский
 russian federation	common	ru	Российская Федерация
 rwanda	common	ru	Руанда
@@ -1068,7 +1065,7 @@ search %1 '%2'	common	ru	Поиск %1 '%2'
 search accounts	common	ru	Поиск учетных записей
 search for '%1'	common	ru	Искать '%1'
 search or select accounts	common	ru	поиск или выбор учетных записей
-search...	common	ru	Поиск...
+search...	common	ru	Поиск ...
 second	common	ru	второй
 section	common	ru	Секция
 securest	common	ru	Более безопасно
@@ -1082,8 +1079,8 @@ select account	common	ru	Выбор учетной записи
 select action	common	ru	Выберите действие
 select all	common	ru	Выбрать все
 select all %1 %2 for %3	common	ru	Выберите все %1 %2 для %3
-select an app first !!!	common	ru	Сначала выберите приложение!!!
-select an app to search in	common	ru	Выбор Прил. для поиска в (?)
+select an app first !!!	common	ru	Сначала выберите приложение!
+select an app to search in	common	ru	Выбор Прил. для поиска в
 select an application	common	ru	Выбор приложения
 select an application, (*) = uninstalled	common	ru	Выбор приложения, (*) = уделены
 select an entry to link with	common	ru	Выбор записи для формирования связи с ней
@@ -1106,7 +1103,7 @@ select month	common	ru	Выбор Месяца
 select multiple accounts	common	ru	выберите множество учетных записей
 select number	common	ru	Выбор Номара
 select one	common	ru	Выберите один
-select one ...	common	ru	Выберите один (?)...
+select one ...	common	ru	Выберите один ...
 select percentage	common	ru	Выбрать процент
 select priority	common	ru	Выбрать Приоритет
 select state	common	ru	Выбрать Состояние
@@ -1127,8 +1124,8 @@ senegal	common	ru	Сенегал
 september	common	ru	Сентябрь
 serbia	common	ru	Сербия
 server %1 has been added	common	ru	Добавлен сервер %1
-server answered. processing response...	common	ru	Получен ответ сервера.  Обработка ответа...
-server contacted. waiting for response...	common	ru	Контакт с сервером. Ожидание ответа...
+server answered. processing response...	common	ru	Получен ответ сервера.  Обработка ответа ...
+server contacted. waiting for response...	common	ru	Контакт с сервером. Ожидание ответа ...
 server name	common	ru	Имя сервера
 session has been killed	common	ru	Сессия прекращена
 set as default	common	ru	Установить по умолчанию
@@ -1191,7 +1188,7 @@ start directory for image browser of rich text editor in egroupware vfs (fileman
 start new search for the above pattern	common	ru	Запуск нового поиска  указанного выше примера
 start time	common	ru	Время начала
 start with	common	ru	запуск с помощью
-starting up...	common	ru	Запуск...
+starting up...	common	ru	Запуск ...
 status	common	ru	Статус
 stretched	common	ru	растянутый
 subject	common	ru	Тема
@@ -1213,13 +1210,13 @@ sweden	common	ru	Швеция
 switch to a parent widget	common	ru	переключиться на родительский виджет
 switch to an other widgets of that container	common	ru	переключиться на другой виджет в контейнере
 switzerland	common	ru	Швейцария
-sync all selected into one	groupdav	ru	Синхронизация всего выбранного .
+sync all selected into one	groupdav	ru	Синхронизация всего выбранного
 syrian arab republic	common	ru	Сирия
 tab	common	ru	Табуляция (Tab)
 tabindex	common	ru	Индекс табуляции
 table %1 is excluded from backup and restore. data will not be restored.	common	ru	Таблица %1 исключена из резервного копирования. Данные восстановлены не будут
 table properties	common	ru	Свойства таблицы
-table unchanged, no write necessary !!!	common	ru	Таблица не изменена, нет необходимости в записи !!!
+table unchanged, no write necessary !!!	common	ru	Таблица не изменена, нет необходимости в записи!
 tablename	common	ru	ИмяТаблицы
 tabs	common	ru	Закладки
 taiwan	common	ru	Тайвань
@@ -1232,13 +1229,13 @@ text	common	ru	Текст
 text color:	common	ru	Цвет текста:
 textarea	common	ru	область текста
 thailand	common	ru	Таиланд
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	ru	Документ может содержать местоположение типа {{%3}} для замены данными. %1 полный список местоположений%2.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	ru	Документ может содержать местоположение типа {{%3}} для замены данными. %1полный список местоположений%2.
 the following applications require upgrades	common	ru	Следующие приложения требуют обновления
 the following document-types are supported:	preferences	ru	Поддерживаются следующие типы документов:
 the mail server returned	common	ru	Почтовый сервер вернул
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	ru	Пользователь с таким именем уже существует. Пожалуйста выберите другое имя.
 they will be sub-folders in users home (%1 attribute).	common	ru	Они будут подпапкамив домашнем каталоге пользователя (%1 атрибут).
-this name has been used already	common	ru	Это имя уже используется !
+this name has been used already	common	ru	Это имя уже используется!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	ru	этот текст появляется, если поле ввода пусто и не в фокусе (смазано)
 thursday	common	ru	Четверг
 tiled	common	ru	мозаика
@@ -1286,7 +1283,7 @@ united kingdom	common	ru	Англия
 united states	common	ru	США
 united states minor outlying islands	common	ru	Удаленные острова под юрисдикцией США
 unknown	common	ru	Неизвестный
-unlink	common	ru	Разорвать связь (убрать ссылку?)
+unlink	common	ru	Разъединить
 update	common	ru	Обновить
 update a single entry by passing the fields.	common	ru	Изменение отдельной записи передачей полей.
 update from version '%s' to	common	ru	Изменение с Версии '%s' на
@@ -1309,8 +1306,8 @@ users choice	common	ru	Выбор Пользователя
 uzbekistan	common	ru	Узбекистан
 valign	common	ru	вВыравнивание
 value	common	ru	Значение
-value has to be at least '%1' !!!	common	ru	Значение должно быть минимум '%1' !!!
-value has to be at maximum '%1' !!!	common	ru	Значение должно быть максимум '%1' !!!
+value has to be at least '%1' !!!	common	ru	Значение должно быть минимум '%1'!
+value has to be at maximum '%1' !!!	common	ru	Значение должно быть максимум '%1'!
 vanuatu	common	ru	Вануату
 vbox	common	ru	ВРамка
 venezuela	common	ru	Венесуэлла
@@ -1332,7 +1329,6 @@ western european	common	ru	западноевропейский
 western sahara	common	ru	Западная Сахара
 what color should all the blank space on the desktop have	common	ru	Какого цвета должно быть свободное место рабочего стола
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ru	что происходит при переполнении содержимого: видимо (по-умолчанию), скрыто, прокрутка, авто (решается браузером)
-what style would you like the image to have?	common	ru	Выберите стиль отображения
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как EGroupware будет показывать такие ссылки как Настройки, О Нас и Выход.
 which groups	common	ru	Какие группы
@@ -1353,7 +1349,7 @@ write tables	common	ru	Запись Таблиц
 writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	ru	pfписывает файл 'etemplates.inc.php' (для приложения по Имени) в каталог setup приложения
 writing	common	ru	запись
 written by:	common	ru	Записано:
-xml-file to import	common	ru	файл xml для импорта
+xml-file to import	common	ru	файл XML для импорта
 xslt template	common	ru	Шаблон XLST
 year	common	ru	Год
 yemen	common	ru	Йемен
@@ -1369,10 +1365,10 @@ you have not entered a title	common	ru	Вы не ввели заголовок
 you have not entered a valid date	common	ru	Вы не ввели правильную дату
 you have not entered a valid time of day	common	ru	Вы не ввели правильное время
 you have not entered participants	common	ru	Вы не ввели участников
-you have selected an invalid date	common	ru	Вы выбрали неправильную дату !
-you have selected an invalid main category	common	ru	Вы выбрали неправильную основную категорию !
+you have selected an invalid date	common	ru	Вы выбрали неправильную дату!
+you have selected an invalid main category	common	ru	Вы выбрали неправильную основную категорию!
 you have successfully logged out	common	ru	Вы успешно вышли
-you need to %1set your timezone preference%2.	common	ru	вы должны %1 выбрать настройки часового пояса%2.
+you need to %1set your timezone preference%2.	common	ru	вы должны %1выбрать настройки часового пояса%2.
 you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
 you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором EGroupware!
 you need to select a file first!	common	ru	Сначала выберите файл!

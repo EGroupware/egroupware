@@ -1,6 +1,33 @@
+%1 %2 rights for %3 on %4 to %5	admin	ko	%4에서 %5까지 %3에 대한 %1 %2 권한
 %1 - %2 of %3 user accounts	admin	ko	%1 - %3 의 %2 사용자 계정
 %1 - %2 of %3 user groups	admin	ko	%1 - %3 의 %2 유저 그룹
+%1 access to other data	admin	ko	다른 데이터에 대한 %1 액세스 권한
+%1 accounts being activated	admin	ko	활성화 중인 %1 계정
+%1 acl entries deleted.	admin	ko	%1 ACL 항목이 삭제되었습니다.
+%1 acl records of not (longer) existing accounts deleted.	admin	ko	더 이상 존재하지 않는 계정의 %1 ACL 레코드가 삭제되었습니다.
+%1 categories of not (longer) existing accounts deleted.	admin	ko	(더 이상) 기존 계정이 아닌 %1 범주가 삭제되었습니다.
+%1 category '%2' %3	admin	ko	%1 범주 '%2' %3
+%1 category(s) %2	admin	ko	%1 범주 %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ko	권한이 부족하여 %1 범주(들) %2, %3에 실패했습니다!
+%1 class not instanciated	admin	ko	%1 클래스가 인스턴스화되지 않았습니다.
+%1 entries deleted	admin	ko	%1 항목 삭제됨
+%1 entries deleted.	admin	ko	%1 항목 삭제됨.
+%1 group %2	admin	ko	%1 그룹 %2
+%1 is no command!	admin	ko	%1은(는) 명령이 아닙니다!
+%1 log entries deleted.	admin	ko	%1 로그 항목이 삭제되었습니다.
+%1 mail credentials deleted	admin	ko	%1 메일 자격 증명이 삭제되었습니다.
 %1 not found or not executable !!!	admin	ko	%1 , 찾거나 실행할수 없습니다!!
+%1 phrases saved.	admin	ko	%1 문구를 저장했습니다.
+%1 rights for %2 and applications %3	admin	ko	%2 및 응용 프로그램 %3에 대한 %1 권한.
+%1 run rights for applications	admin	ko	응용 프로그램에 대한 %1 실행 권한
+%1 sessions killed	admin	ko	%1 세션이 종료되었습니다.
+%1 successful	admin	ko	%1 성공
+%1 token %2.	admin	ko	%1 토큰 %2.
+%1 user %2	admin	ko	%1 사용자 %2
+(de)activate mail accounts	admin	ko	메일 계정 (비)활성화
+(default no, leave it off if you dont use it)	admin	ko	기본값 = 아니요, 사용하지 않을 경우 그대로 둡니다.
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ko	(imap클래스가 해당 구성 값을 쿼리하여 이 기능을 지원해야 하며 이를 IMAP 서버에 기본 할당량으로 전달해야 합니다.)
+(no subject)	admin	ko	(제목 없음)
 (stored password will not be shown here)	admin	ko	(저장된 패스워드는 여기에 보이지 않습니다)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ko	새 응용프로그램을 설치하기 위해서 <br><a href="setup/" target="setup">설정</a>[응용프로그램 관리]!!!)
 access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
@@ -28,7 +55,7 @@ add account	admin	ko	계정 추가
 add application	admin	ko	응용프로그램 추가
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	ko	이 그룹에 자동-생성 사용자를 추가 (이 란이 비어있으면 '기본'이 시도됨)
 add global category	admin	ko	전역 카테고리 추가
-add global category for %1	admin	ko	%1의 전역 카테고리 추가 (Add global category for %1)
+add global category for %1	admin	ko	%1에 대한 전역 범주 추가
 add group	admin	ko	그룹 추가
 add new account	admin	ko	새 계정 추가
 add new application	admin	ko	새 응용프로그램 추가
@@ -71,7 +98,7 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	ko	인증 / 계정
 auto create account records for authenticated users	admin	ko	인증된 사용자용 자동 생성 계정 레코드
 back to the list	admin	ko	목록으로 돌아감
-bi-dir passthrough	admin	ko	** 양방향 통과 (bi-dir passthrough)
+bi-dir passthrough	admin	ko	양방향 통과 (bi-dir passthrough)
 bi-directional	admin	ko	양방향( bi-directional )
 bottom	admin	ko	하단
 calculate next run	admin	ko	다음 실행을 계산
@@ -80,6 +107,7 @@ cancel testjob!	admin	ko	테스트작업(TestJob) 취소
 categories list	admin	ko	카테고리 목록
 category %1 has been saved !	admin	ko	%1 카테고리가 저장되었습니다!
 category list	admin	ko	카테고리 목록
+change account_id	admin	ko	계정 ID 변경
 change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
 change login screen message	admin	ko	주 화면 메세지 변경
@@ -165,7 +193,7 @@ enter the background color for the site title	admin	ko	사이트 제목의 배�
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ko	임시 파일의 완전경로 입력<br>예:/tmp,C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ko	사용자와 그룹 파일의 완전경로 입력<br>예:/files ,E:\FILES
 enter the hostname of the machine on which this server is running	admin	ko	이 서버의 호스트이름 입력
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL의 위치를 입력.<br>예: http://www.domain.com/egroupware   이나   /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ko	EGroupware의 URL의 위치를 입력.<br>예: https://egw.domain.com/egroupware   이나   /egroupware<br><b>마지막에는 /(슬래쉬)</b>를 붙히지 말것
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ko	검색할 문자열을 입력. 모든 항목을 보기위해선, 이 필드를 비우고 보내기(Submit) 버튼을 다시 누르세요
 enter the site password for peer servers	admin	ko	피어서버의 사이트 암호 입력
 enter the site username for peer servers	admin	ko	피어서버의 사이트 사용자이름 입력
@@ -178,9 +206,9 @@ enter your http proxy server	admin	ko	HTTP 프록시 서버주소 입력
 enter your http proxy server port	admin	ko	HTTP 프록시 서버 포트 입력
 enter your smtp server hostname or ip address	admin	ko	SMTP서버 호스트 이름이나 IP주소 입력
 enter your smtp server port	admin	ko	SMTP 서버 포트 입력
-error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 오류발생,  설정안되어 있을수도 있습니다!!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!!!
-error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!!!
+error canceling timer, maybe there's none set !!!	admin	ko	타이머를 취소하는데 오류발생,  설정안되어 있을수도 있습니다!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	ko	타이머를 설정오류 발생, 문법이 틀렸거나 이미 작동중일 수 있습니다!
+error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!
 event details follow	admin	ko	다음은 이벤트-설명
 expires	admin	ko	만료
 failed to change password.	admin	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
@@ -267,7 +295,7 @@ new name	admin	ko	새 이름
 new password [ leave blank for no change ]	admin	ko	새 패스워드[ 바꾸지 않으려면 빈칸으로 남겨두세요 ]
 next run	admin	ko	다음 실행
 no algorithms available	admin	ko	어떠한 알고리즘도 가능하지 않습니다.
-no jobs in the database !!!	admin	ko	데이터베이스에 어떠한 작업도 없습니다 !!!
+no jobs in the database !!!	admin	ko	데이터베이스에 어떠한 작업도 없습니다 !
 no login history exists for this user	admin	ko	이 사용자의 접속 기록은 없습니다
 no matches found	admin	ko	일치하는 것을 찾을수 없습니다
 no modes available	admin	ko	가능한 모드(mode)가 없습니다
@@ -328,7 +356,7 @@ server url	admin	ko	서버 URL
 server username	admin	ko	서버 사용자이름
 set preference values.	admin	ko	환경설정 값을 결정
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
-show 'powered by' logo on	admin	ko	'powered by' 로고를 보임
+show 'powered by' logo on	admin	ko	'Powered by' 로고를 보임
 show access log	admin	ko	접근 기록을 보임
 show current action	admin	ko	현재 액션을 보임
 show error log	admin	ko	에러 기록을 보임
@@ -378,7 +406,7 @@ trust relationship	admin	ko	신용관계
 two weeks	admin	ko	보름
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ko	윈도우에서는 비동기 서비스를 설치하기위해 %1수동으로%2 하셔야 하거나 fallback 모드여야 합니다. fallback은 작업이 각 페이지-뷰를 마친후 체크되는 의미입니다!!!
 updated	admin	ko	갱신됨
-use cookies to pass sessionid	admin	ko	sessionid 를 전달하기 위해 쿠키 사용
+use cookies to pass sessionid	admin	ko	session ID 를 전달하기 위해 쿠키 사용
 use default	admin	ko	기본 사용
 use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
 use theme	admin	ko	테마 사용
@@ -386,6 +414,7 @@ user accounts	admin	ko	사용자 계정
 user data	common	ko	사용자 데이터
 user for smtp-authentication (leave it empty if no auth required)	admin	ko	사용자 SMTP-인증 (인증이 필요없을경우 비워둡니다)
 user groups	admin	ko	사용자 그룹
+user-agent	admin	ko	User-Agent
 userdata	admin	ko	사용자데이터
 users choice	admin	ko	사용자 선택
 view access log	admin	ko	접속 기록 보기

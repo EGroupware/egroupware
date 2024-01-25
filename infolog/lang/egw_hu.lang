@@ -2,7 +2,7 @@
 %1 deleted	infolog	hu	%1 törölve
 %1 deleted by %2 at %3	infolog	hu	%1 törölve %2 által, ekkor: %3
 %1 entries %2	infolog	hu	%1 bejegyzések %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	hu	%1 bejegyzések %2, %3 sikertelenek nem megfelelő jogok miatt !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	hu	%1 bejegyzések %2, %3 sikertelenek nem megfelelő jogok miatt!
 %1 entries %2, %3 failed.	infolog	hu	%1 bejegyzés %2, %3 sikertelen.
 %1 modified	infolog	hu	%1 módosítva
 %1 modified by %2 at %3	infolog	hu	%1 módosítva %2 által, ekkor: %3
@@ -34,6 +34,7 @@ action	infolog	hu	Művelet
 actions...	infolog	hu	Műveletek...
 actual date and time	infolog	hu	Aktuális dátum és idő
 add	infolog	hu	Hozzáad
+add / remove link	infolog	hu	Link hozzáadása / eltávolítása
 add a file	infolog	hu	Állomány hozzáadása
 add a new entry	infolog	hu	Új bejegyzés hozzáadása
 add a new note	infolog	hu	Új megjegyzés hozzáadása
@@ -41,6 +42,7 @@ add a new phonecall	infolog	hu	Új telefonhívás hozzáadása
 add a new sub-task, -note, -call to this entry	infolog	hu	Új alfeladat, -jegyzet, -hívás hozzáadása a bejegyzéshez
 add a new todo	infolog	hu	Új tennivaló hozzáadása
 add file	infolog	hu	Állomány hozzáadása
+add or delete links	infolog	hu	Linkek hozzáadása vagy törlése
 add sub	infolog	hu	Albejegyzés hozzáadása
 add timesheet entry	infolog	hu	Regiszter bejegyzés hozzáadása
 add:	infolog	hu	Hozzáadás:
@@ -55,6 +57,7 @@ allows to set the status of an entry, eg. set a todo to done if it's finished (v
 alternatives	infolog	hu	Alternatívák
 always show them	infolog	hu	Mindig megjeleníti őket
 application mail expected but got: %1	infolog	hu	Alkalmazási e-mail várt, de megkapta: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	hu	Alkalmazza a műveletet a teljes lekérdezésre, NEM csak a megjelenített bejegyzésekre!
 apply the changes	infolog	hu	Változások végrehajtása
 archive	infolog	hu	Archív
 are you shure you want to close this entry ?	infolog	hu	Valóban le akarod zárni ezt a bejegyzést?
@@ -78,6 +81,7 @@ change	infolog	hu	Változás
 change history	infolog	hu	Történet módosítása
 change responsible	infolog	hu	Változás felelős
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
+changed category to %1	infolog	hu	A kategória %1-re változott
 check to set startday	infolog	hu	Kezdőnap beállításhoz ikszelje be
 check to specify custom contact	infolog	hu	Kapcsolja be az egyéni kapcsolat megadásához
 choose owner of imported data	infolog	hu	Válassza ki az importált adatok tulajdonosát
@@ -115,6 +119,7 @@ custom from	infolog	hu	Egyedi innen
 custom regarding	infolog	hu	Egyedi vonatkozás
 custom status for typ	infolog	hu	Típus egyedi státusza
 customfields	infolog	hu	Egyedi mezők
+data exchange settings	infolog	hu	Adatcsere beállítások
 date completed	infolog	hu	Teljesítés dátuma
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	hu	Teljesítés dátuma (ha üresen hagyja, akkor készrejelentés vagy számlázás esetén az a dátum kerül beállításra)
 datecreated	infolog	hu	Létrehozás dátuma
@@ -122,7 +127,7 @@ dates, status, access	infolog	hu	Dátumok, Státusz, Elérés
 days	infolog	hu	Napok
 default category for new infolog entries	infolog	hu	Alapértelmezett kategória új Infolog bejegyzéshez
 default document to insert entries	infolog	hu	Alapértelmezett dokumentum a bejegyzések beillesztéséhez
-default filter for infolog	infolog	hu	Infolog alapértelmezett szűrője
+default filter for infolog	infolog	hu	InfoLog alapértelmezett szűrője
 default status for a new log entry	infolog	hu	Alapértelmezett státusz egy új napló bejegyzésnek
 delegated	infolog	hu	Delegált
 delegated open	infolog	hu	Delegált nyitott
@@ -151,9 +156,9 @@ do you want a notification, if items you created get updated?	infolog	hu	Kér é
 do you want a notification, if items you delegated are about to start?	infolog	hu	Kér értesítést, ha egy megbízásos feladatot rövidesen el kell kezdenie?
 do you want a notification, if items you delegated are due?	infolog	hu	Kér értesítést, ha egy megbízásos feladatának határideje rövidesen elérkezik?
 do you want to receive notifications as html-mails or plain text?	infolog	hu	Az értesítést html vagy normál szöveges formában kéri?
-don't show infolog	infolog	hu	Infolog bejegyzés elrejtése
+don't show infolog	infolog	hu	InfoLog bejegyzés elrejtése
 done	infolog	hu	Kész
-download	infolog	hu	Letölt
+download	infolog	hu	Fájl mentése
 download url for links	infolog	hu	Linkek letöltési URL címe
 due %1	infolog	hu	Esedékes %1
 due date	infolog	hu	Esedékes dátum
@@ -192,7 +197,7 @@ exports in ical format.	infolog	hu	iCal formátumban történő exportálás.
 exports infolog entries into a csv file.	infolog	hu	Az InfoLog bejegyzéseket CSV fájlba exportálja.
 favorites	infolog	hu	Kedvencek
 fax	infolog	hu	Fax
-field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!!!
+field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!
 fields to exclude when copying an infolog:	infolog	hu	Az InfoLog másolásakor kizárandó mezők:
 fields to exclude when creating a sub-entry:	infolog	hu	Albejegyzés létrehozásakor kizárandó mezők:
 fieldseparator	infolog	hu	Mező elválasztó
@@ -238,6 +243,7 @@ infolog csv import	infolog	hu	InfoLog CSV import
 infolog encryption requires epl subscription	infolog	hu	Az InfoLog titkosításához EPL előfizetés szükséges
 infolog entry deleted	infolog	hu	InfoLog bejegyzés törölve
 infolog entry saved	infolog	hu	InfoLog bejegyzés elmentve
+infolog fields:	infolog	hu	InfoLog mezők:
 infolog filter for the home screen	infolog	hu	InfoLog szűrő a fő képernyőn
 infolog ical export	infolog	hu	InfoLog iCal exportálása
 infolog ical import	infolog	hu	InfoLog iCal importálás
@@ -270,10 +276,11 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	hu	Hely
 longer textual description	infolog	hu	Hosszabb szöveges leírás
 low	infolog	hu	Alacsony
+manage mapping	infolog	hu	Mapping kezelése
 max length of the input [, length of the inputfield (optional)]	infolog	hu	Beviteli mező maximális mérete (opcionális)
 modifier	infolog	hu	Módosította
 modifierer	infolog	hu	Módosította
-name must not be empty !!!	infolog	hu	Név nem lehet üres!!!
+name must not be empty !!!	infolog	hu	Név nem lehet üres!
 name of current user, all other contact fields are valid too	infolog	hu	Az aktuális felhasználó neve, az összes többi kapcsolattartási mező is érvényes.
 name of new type to create	infolog	hu	A létrehozandó új típus neve
 never hide search and filters	infolog	hu	Soha ne rejtse el a keresést és szűrést
@@ -310,16 +317,19 @@ only show them if there is a filter	infolog	hu	Csak akkor jeleníti meg őket, h
 only show them while searching	infolog	hu	Csak keresés közben jeleníti meg őket
 only the attachments	infolog	hu	Csupán a mellékletek
 only the links	infolog	hu	Csupán a hivatkozások
+open and upcoming	infolog	hu	Megnyitás és közelgő
 open(status)	infolog	hu	Nyitott
 optional note to the link	infolog	hu	Tetszőleges megjegyzés a hivatkozáshoz
 order	infolog	hu	Rendezés
 organization	infolog	hu	Szervezet
 other configurations	infolog	hu	Egyéb beállítások
-overdue	infolog	hu	lejárt
+overdue	infolog	hu	Lejárt
 own	infolog	hu	Saját
-own open	infolog	hu	saját nyitott
+own open	infolog	hu	Saját nyitott
+own open and upcoming	infolog	hu	Saját nyitott és közelgő
 own overdue	infolog	hu	Saját lejárt
 own upcoming	infolog	hu	Saját közelgő
+owner does not have edit rights	infolog	hu	A tulajdonos nem rendelkezik szerkesztési jogokkal
 owner, responsible	infolog	hu	Tulajdonos, felelős
 parent	infolog	hu	Szülő
 parent infolog	infolog	hu	Szülő Infolog bejegyzés
@@ -479,6 +489,7 @@ unlinked from %1	infolog	hu	Nem kapcsolódik %1-hez
 upcoming	infolog	hu	Közelgő
 urgency	infolog	hu	Sürgősség
 urgent	infolog	hu	Sürgős
+use all	infolog	hu	Használja az összeset
 use custom notification message	infolog	hu	Egyéni értesítési üzenet használata
 used time	infolog	hu	Felhasznált idő
 values for selectbox	infolog	hu	Éktékek a kiválasztódoboznak
@@ -506,7 +517,7 @@ yes, only admins can purge deleted items	infolog	hu	Igen, csak az adminisztráto
 yes, with larger fontsize	infolog	hu	Igen, nagyobb karaktermérettel
 yes, with purging of deleted items possible	infolog	hu	Igen, az összes törölt elem eltávolítható
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	hu	Választhatsz alapértelmezett kategóriát új InfoLog bejegyzések létrehozásához.
-you can't delete one of the stock types !!!	infolog	hu	Gyári típust nem lehet törölni !!!
+you can't delete one of the stock types !!!	infolog	hu	Gyári típust nem lehet törölni!
 you have entered an invalid ending date	infolog	hu	Helytelen befejezési dátum
 you have entered an invalid starting date	infolog	hu	Helytelen kezdési dátum
 you have to enter a name, to create a new type!	infolog	hu	Új típus létrehozásához nevet kell megadni!

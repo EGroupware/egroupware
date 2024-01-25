@@ -1,3 +1,8 @@
+%1 days in advance	infolog	lv	%1 dienas iepriekš
+%1 deleted	infolog	lv	%1 dzēsts.
+%1 deleted by %2 at %3	infolog	lv	%1 dzēsts %2 pie %3
+%1 entries %2	infolog	lv	%1 entries %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	lv	%1 ieraksti %2, %3 neizdevās nepietiekamu tiesību dēļ!
 %1 entries %2, %3 failed.	infolog	lv	%1 ieraksti %2, %3 neizdevās.
 %1 records imported	infolog	lv	%1 ieraksti importēti
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	lv	%1 ieraksti izlasīti (vēl nav importēti, tu vari iet %2atpakaļ%3 un noņnemt atzīmi Test Import)
@@ -6,6 +11,7 @@
 - subprojects from	infolog	lv	Apakšprojekti no
 0%	infolog	lv	0%
 10%	infolog	lv	10%
+100%	infolog	lv	100%
 20%	infolog	lv	20%
 30%	infolog	lv	30%
 40%	infolog	lv	40%
@@ -101,6 +107,7 @@ delegated overdue	infolog	lv	Deleģēts kavēts
 delegated upcomming	infolog	lv	Deleģēts gaidāmais
 delegation	infolog	lv	Deliģēšana
 delete	infolog	lv	Dzēst
+delete one record by passing its id.	infolog	lv	Dzēst vienu ierakstu, nododot tā ID.
 delete selected entries?	infolog	lv	Dzēst atlasītos ierakstus?
 delete this entry and all listed sub-entries	infolog	lv	Dzēst šo ierakstu un visus uzskaitītos apakšierakstus
 deleted	infolog	lv	Izdzēsts
@@ -122,7 +129,7 @@ do you want a notification, if items you delegated are due?	infolog	lv	Saņemiet
 do you want to receive notifications as html-mails or plain text?	infolog	lv	Saņemiet paziņojumus kā HTML e-pasta ziņojumus vai vienkāršu tekstu.
 don't show infolog	infolog	lv	NEPIEDĀVĀT InfoLog
 done	infolog	lv	Izdarīts
-download	infolog	lv	Lejupielādēt
+download	infolog	lv	Saglabāt failu
 download url for links	infolog	lv	Lejupielādējiet URL saites
 due %1	infolog	lv	Pienākums %1
 due date	infolog	lv	Termiņš
@@ -130,16 +137,18 @@ duration	infolog	lv	Izpildes laiks
 e-mail:	infolog	lv	E-pasts:
 each value is a line like <id>[=<label>]	infolog	lv	Katra vēr'tiba ir līniija kā <id>[=<iezīme>]
 edit	infolog	lv	Rediģēt
-edit or create categories for ingolog	infolog	lv	Rediģēt vai izveidot kategorijas <i>IngoLog</i>
+edit or create categories for ingolog	infolog	lv	Rediģēt vai izveidot kategorijas InfoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	lv	Rediģēšanas tiesības. Pilnīgas rediģēšanas tiesības, t. sk. uzdot kādam citam uzņemties atbildību!
 edit status	infolog	lv	Rediģēt statusu
 edit the entry	infolog	lv	Rediģēt ierakstu
 edit this entry	infolog	lv	Rediģēt šo ierakstu
 empty for all	infolog	lv	Iztukšot visu
+encrypt description	infolog	lv	Šifrēt aprakstu
 enddate	infolog	lv	Beigu datums
 enddate can not be before startdate	infolog	lv	Beigu datums nevar būt pirms sākuma datuma
-enter a custom contact, leave empty if linked entry should be used	infolog	lv	ievadi klienta kontaktu, atstāj tukšu, ja saistīto ierakstu vajadzētu lietot
-enter a custom phone/email, leave empty if linked entry should be used	infolog	lv	ievadi klienta telefonu/e-pastu, atstāj tukšu, ja saistīto ierakstu vajadzētu lietot
-enter a textual description of the log-entry	infolog	lv	ievadi teksta aprakstu pieteikuma ierakstam
+enter a custom contact, leave empty if linked entry should be used	infolog	lv	Ievadi klienta kontaktu, atstāj tukšu, ja saistīto ierakstu vajadzētu lietot
+enter a custom phone/email, leave empty if linked entry should be used	infolog	lv	Ievadi klienta telefonu/e-pastu, atstāj tukšu, ja saistīto ierakstu vajadzētu lietot
+enter a textual description of the log-entry	infolog	lv	Ievadi teksta aprakstu pieteikuma ierakstam
 enter the query pattern	infolog	lv	Ievadi pieprasījuma paraugu
 entry and all files	infolog	lv	Ieraksti un visas datnes
 error: no mail (mailbox / uid) given!	infolog	lv	Kļūda: nav norādīts e-pasts (Pastkastīte / UID)!
@@ -166,6 +175,8 @@ for infolog type %1, %2 is required	infolog	lv	InfoLog tipam %1 ir nepieciešams
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	lv	Sērijas burtam izmantojiet šo birku. Saturu, ko vēlaties atkārtot, ievietojiet starp divām tagiem.
 for which types should this field be used	infolog	lv	Kuriem tipiem lauks būtu jālieto
 from	infolog	lv	No
+full list of placeholder names	infolog	lv	Pilns vietvārdu saraksts
+general fields:	infolog	lv	Vispārīgie lauki:
 general settings	infolog	lv	Vispārīgie iestatījumi
 global categories	infolog	lv	Globālās kategorijas
 group owner for	infolog	lv	Grupas īpašnieks
@@ -239,6 +250,7 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	lv	Novietojums
 longer textual description	infolog	lv	Garāksts teksta apraksts
 low	infolog	lv	Zems
+manage mapping	infolog	lv	Pārvaldīt kartēšanu
 max length of the input [, length of the inputfield (optional)]	infolog	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
 modifier	infolog	lv	Modifikators
 modifierer	infolog	lv	Modifikators
@@ -256,9 +268,10 @@ none	infolog	lv	Neviens
 normal	infolog	lv	Normāls
 not	infolog	lv	Ne
 not assigned	infolog	lv	Nav noteikts
+not-started	infolog	lv	Nav uzsākta
 note	infolog	lv	Piezīme
 notification settings	infolog	lv	Paziņojumu iestatījumi
-number of records to read (%1)	infolog	lv	Lasāmo ierakstu skaits(%1)
+number of records to read (%1)	infolog	lv	Lasāmo ierakstu skaits (%1)
 offer	infolog	lv	Piedāvā
 old fixed definition	infolog	lv	Vecā fiksētā definīcija
 one day after	infolog	lv	Viena diena pēc
@@ -268,6 +281,7 @@ only show them if there is a filter	infolog	lv	Rādīt tos tikai tad, ja ir filt
 only show them while searching	infolog	lv	Rādīt tos tikai meklēšanas laikā
 only the attachments	infolog	lv	Tikai pielikumi
 only the links	infolog	lv	Tikai saites
+open and upcoming	infolog	lv	Atvērt un gaidāms
 open(status)	infolog	lv	Atvērt
 optional note to the link	infolog	lv	Izvēles piezīme saitei
 order	infolog	lv	Kārtība
@@ -297,6 +311,7 @@ re-planned	infolog	lv	Pārplānots
 re-planned time	infolog	lv	Pārplānotais laiks
 re:	infolog	lv	Re:
 receive notifications about items of type owned by groups you are part of	infolog	lv	Saņemt paziņojumus par tipa vienībām, kas pieder grupām, kurās esat daļa no grupas
+receive notifications as html-mails	infolog	lv	Paziņojumu saņemšana HTML e-pasta vēstuļu veidā.
 regular expression	infolog	lv	Regulārā izteiksme
 remark	infolog	lv	Piezīme
 remove this link (not the entry itself)	infolog	lv	Pārvieto šo saiti(pašu ierakstu nē)
@@ -306,8 +321,10 @@ replacement	infolog	lv	Aizstāšana
 replacements for inserting entries into documents	infolog	lv	Aizstājēji ierakstu ievietošanai dokumentos
 respect timesheet run and read permissions for time totals	infolog	lv	Ievērot darba laika uzskaites izpildes un lasīšanas atļaujas attiecībā uz laika kopsummām
 responsible	infolog	lv	Atbildīgs
+responsible open	infolog	lv	Atbildīgs atvērts
 responsible open and upcoming	infolog	lv	Atbildīgs atvērts un gaidāms
 responsible overdue	infolog	lv	Atbildīgs par nokavēto
+responsible upcoming	infolog	lv	Atbildīgs gaidāmais
 returns a list / search for records.	infolog	lv	Atgriež sarakstu/ meklē ierakstus
 rows	infolog	lv	Rindas
 same day	infolog	lv	Tā pati diena
@@ -390,7 +407,7 @@ upcoming	infolog	lv	Lenākošs
 urgency	infolog	lv	Nepieciešamība
 urgent	infolog	lv	Nepieciešams
 use custom notification message	infolog	lv	Izmantot pielāgotu paziņojuma ziņojumu
-values for selectbox	infolog	lv	Vērtības<i>selectboxam</i>
+values for selectbox	infolog	lv	Izvēles lodziņa vērtības
 view all subs of this entry	infolog	lv	Rādīt apakškategoriju šim ierakstam
 view other subs	infolog	lv	Rādīt citas apakškategorijas
 view parent	infolog	lv	Rādīt vecākus

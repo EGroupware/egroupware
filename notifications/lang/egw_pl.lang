@@ -1,45 +1,109 @@
-all possible notification backends	notifications	pl	wszystkie możliwe backendy powiadomień
+(update in sec. %s)	notifications	pl	(Aktualizacja w sek. %s)
+account:	notifications	pl	Konto:
+all possible notification backends	notifications	pl	Wszystkie możliwe backendy powiadomień
+are you sure you want to delete all notifications?	notifications	pl	Czy na pewno chcesz usunąć wszystkie powiadomienia?
+browser	notifications	pl	Przeglądarka
+browser is starting.	notifications	pl	Przeglądarka się uruchamia.
+cancal settings?	notifications	pl	Anulować ustawienia?
+cancal?	notifications	pl	Anulować?
+certification-information:	notifications	pl	Informacje o certyfikacie:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	pl	Sprawdź oba (najpierw spróbuj wykorzystać dane z konta użytkownika, jeśli nie ma użyj profilu Administratora Poczty)
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pl	Wybierz łańcuch modyfikacji. Będziesz powiadomiony przez backendy zawarte w łancuchu.<br />Uwaga: Jeśli łańcuch jest oznaczony jako "wyłączony" twój administrator nie zezwala na użycie jednego lub większej ilości backendów w łancuchu i domyślnie korzysta z poczty email do wysyłania powiadomień.
-choose from mailsettings used for notification	admin	pl	wybierz ustawienia poczty dla powiadomień
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pl	Wybierz łańcuch modyfikacji. Będziesz powiadomiony przez backendy zawarte w łancuchu.<br>Uwaga: Jeśli łańcuch jest oznaczony jako "wyłączony" twój administrator nie zezwala na użycie jednego lub większej ilości backendów w łancuchu i domyślnie korzysta z poczty email do wysyłania powiadomień.
+choose from mailsettings used for notification	admin	pl	Wybierz ustawienia poczty dla powiadomień
 common chains	notifications	pl	Typowe łańcuchy
+connection error.	notifications	pl	Błąd połączenia.
+connection error. please check connection to server.	notifications	pl	Błąd połączenia. Sprawdź połączenie z serwerem.
+continue to connect?	notifications	pl	Kontynuować połączenie?
+cookies are required to login to this site.	notifications	pl	Pliki cookie są wymagane do zalogowania się na tej stronie.
+delete all messages	notifications	pl	Usuń wszystkie wiadomości
+delete notifications	notifications	pl	Usuń powiadomienia
+delete this message	notifications	pl	Usuń tę wiadomość
 disabled chains	notifications	pl	Wyłączone łańcuchy
-do not notify me at all	notifications	pl	nie powiadamiaj wcale
+do not notify me at all	notifications	pl	Nie powiadamiaj wcale
+domain not found, please check serveraddress.	notifications	pl	Nie znaleziono domeny, sprawdź adres serwera.
 e-mail only	notifications	pl	Tylko E-Mail
 egroupware has notifications for you	notifications	pl	EGroupware ma dla ciebie powiadomienia
+egroupware login is starting, please wait.	notifications	pl	Rozpoczyna się logowanie do EGroupware, poczekaj.
+egroupware logindomain:	notifications	pl	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	pl	Znaleziono logindomeny EGroupware, wybierz.
+egroupware not found by url or connection lost to server.	notifications	pl	EGroupware nie zostało znalezione przez URL lub połączenie z serwerem zostało utracone.
+egroupware not found by url.	notifications	pl	Nie znaleziono oprogramowania EGroupware pod adresem URL.
 egroupware-popup and e-mail	notifications	pl	Popup EGroupware i e-mail
 egroupware-popup and windows-popup	notifications	pl	Popop EGroupware i windows
-egroupware-popup backend	admin	pl	backend EGroupware-popup
+egroupware-popup backend	admin	pl	Backend EGroupware-popup
 egroupware-popup first, if that fails notify me by e-mail	notifications	pl	Najpierw popup EGroupware, jeśli to zawiedzie powiadom przez email
 egroupware-popup only	notifications	pl	Popup EGroupware
-egroupware-popup verbosity	notifications	pl	ilość informacji w EGroupware-popup
+egroupware-popup verbosity	notifications	pl	Ilość informacji w EGroupware-popup
+email notifications only, if user is not logged in	notifications	pl	Powiadomienia e-mail tylko, jeśli użytkownik nie jest zalogowany
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	pl	Tylko profil Administratora Poczty (nie używaj profilów użytkowników do powiadomień)
 enable egroupware-popup backend	admin	pl	Włącz backend EGroupware-popup
 enable windows-popup backend	admin	pl	Włącz backend Windows-popup
 enabled chains	notifications	pl	Włączone łańcuchy
+error browser can`t start.	notifications	pl	Błąd Przeglądarka nie może się uruchomić.
+error on loading tray icon	notifications	pl	Błąd podczas ładowania ikony zasobnika
+error ssl	notifications	pl	Błąd SSL
+exit	notifications	pl	Wyjście
 folder	notifications	pl	Katalog
 from	notifications	pl	Z
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pl	Jak szczegółowy powinien być popup egroupware:<br/>low - wyświetl sygnał powiadomienia w menu górnym (górne menu musi być włączone)<br/>medium - wyświetl powiadomienie na wierzchu<br/>high - wyświetl powiadomienie na wierzchu i zezwól przeglądarce na zwrócenie uwagi użytkownika
+host:	notifications	pl	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pl	Jak szczegółowy powinien być popup egroupware:<brlow - wyświetl sygnał powiadomienia w menu górnym (górne menu musi być włączone)<br>medium - wyświetl powiadomienie na wierzchu<br>high - wyświetl powiadomienie na wierzchu i zezwól przeglądarce na zwrócenie uwagi użytkownika
 if set, embedded links get rendered special for external clients	notifications	pl	Jeśli opcja zostanie skonfigurowana, załączone linki będą renderowane specjalnie dla klientów zewnętrznych
+info on load config file: create config file.	notifications	pl	Informacje o ładowaniu pliku konfiguracyjnego: tworzenie pliku konfiguracyjnego.
+issuer dn:	notifications	pl	Emitent DN:
+java desktop notification app	preferences	pl	Aplikacja powiadomień pulpitu Java
+last month	notifications	pl	Ostatni miesiąc
 linked entries:	common	pl	Powiązane wpisy:
+login aborted, application exit?	notifications	pl	Logowanie przerwane, wyjście z aplikacji?
+login in egroupware:	notifications	pl	Logowanie w EGroupware:
+mail account to use for notifications	admin	pl	Konto pocztowe używane do powiadomień
 mail backend	admin	pl	Backend Pocztowy
+mark all as read	notifications	pl	Oznacz wszystkie jako przeczytane
+mark as read	notifications	pl	Oznacz jako przeczytane
 message from	notifications	pl	Wiadomość od
-minutes	notifications	pl	minuty
+minutes	notifications	pl	Minuty
+more info	notifications	pl	Więcej informacji
 notification	common	pl	Powiadomienie
+notifier	notifications	pl	Powiadomienie
 notify me by	notifications	pl	Powiadom mnie przez
+open notified entry	notifications	pl	Otwórz powiadomiony wpis
 optimize e-mails for external mail client	notifications	pl	Optymalizuj emaile dla zewnętrznego klienta poczty
-poll interval	notifications	pl	okres odpytywania
+page not found, please check serveraddress.	notifications	pl	Nie znaleziono strony, sprawdź adres serwera.
+password:	notifications	pl	Hasło:
+permission	notifications	pl	Zezwolenie
+permission denied for notifications application.	notifications	pl	Odmowa uprawnień dla aplikacji powiadomień.
+placeholders with user/ prefix	admin	pl	symbole zastępcze z użytkownikiem/prefiksem
+please contact your egroupware admin.	notifications	pl	Skontaktuj się z administratorem EGroupware.
+please enter the url of your egroupware.	notifications	pl	Wprowadź adres URL swojego oprogramowania EGroupware.
+please enter your egroupware username.	notifications	pl	Wprowadź swoją nazwę użytkownika EGroupware.
+please enter your password	notifications	pl	Wprowadź hasło
+poll interval	notifications	pl	Okres odpytywania
 preferences for notification	notifications	pl	Preferencje dla powiadomienia
-received	notifications	pl	odebrano
+received	notifications	pl	Odebrano
 refresh notifications	notifications	pl	Odśwież powiadomienia
+repeat login?	notifications	pl	Powtórzyć logowanie?
+run application	notifications	pl	Uruchom aplikację
+save password	notifications	pl	Zapisz hasło
+setting	notifications	pl	Ustawienie
+setting aborted, application exit	notifications	pl	Ustawienia przerwane, wyjście z aplikacji
 settings	notifications	pl	Ustawienia
 signature	admin	pl	Sygnaturka
+signature added to every change notification	admin	pl	Podpis dodawany do każdego powiadomienia o zmianie
+sorry, your login has expired	notifications	pl	Przepraszamy, Twój login wygasł
 step	notifications	pl	Krok
+subject dn:	notifications	pl	Subject DN:
+the server certificate is not a valid trust center certificate!	notifications	pl	Certyfikat serwera nie jest ważnym certyfikatem centrum zaufania!
+this egroupware notification has been sent to you by mail because your	notifications	pl	To powiadomienie EGroupware zostało wysłane do Ciebie e-mailem, ponieważ Twój
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	pl	To powiadomienie zostało wysłane do ciebie przez email ponieważ twój wybrany łańcuch powiadomień został zablokowany przez administratora. Proszę wybrać inny łańcuch w opcjach.
+this month	notifications	pl	Bieżący miesiąc
+user:	notifications	pl	Użytkownik:
 warning	notifications	pl	Ostrzeżenie
 windows-popup and e-mail	notifications	pl	Popup windows i email
 windows-popup backend	admin	pl	Backend Windows-popup
 windows-popup first, if that fails notify me by e-mail	notifications	pl	Najpierw popup Windows, jeśli to zawiedzie powiadom przez email
 windows-popup only	notifications	pl	Popup Windows
+yesterday	notifications	pl	Wczoraj
+you can also use	admin	pl	Możesz również użyć
+you have %1 unread notifications	notifications	pl	Masz %1 nieprzeczytanych powiadomień
+you have been successfully logged out	notifications	pl	Zostałeś pomyślnie wylogowany
 you've got new mail	notifications	pl	Masz nową pocztę
 your session could not be verified.	notifications	pl	Nie można zweryfikować sesji.

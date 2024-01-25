@@ -52,7 +52,7 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	timesheet	en	Existing links
 exists	timesheet	en	Exists
 export definition to use for nextmatch export	timesheet	en	Export definition to use for nextmatch export
-export to openoffice spreadsheet	timesheet	en	Export to OpenOffice Spreadsheet
+export to openoffice spreadsheet	timesheet	en	Export to Office Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	en	Exports entries from Time Sheet into a CSV file
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	en	Exports entries from Time Sheet into a CSV file. CSV means 'Comma Separated Values'. In the options Tab you can also choose other separators.
 favorites	timesheet	en	Favorites
@@ -66,12 +66,12 @@ history	timesheet	en	History
 history logging	admin	en	History logging
 html link to the current record	timesheet	en	HTML link to the current record
 id	timesheet	en	ID
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	en	If you specify a directory (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	en	If you specify a document (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 ignore	timesheet	en	Ignore
 import options	timesheet	en	Import options
-imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into the Time Sheet from a CSV file
+imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into Time Sheet from a CSV file
 insert	timesheet	en	Insert
 invalid field: %1 = %2, it needs to be a number.	timesheet	en	Invalid field: %1 = %2, it needs to be a number.
 invalid input	common	en	Invalid input
@@ -128,8 +128,8 @@ select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	Select a status of the timesheet
 select infolog	timesheet	en	Select InfoLog
 select multiple timeshhets for a further action	timesheet	en	Select multiple timesheets for a further action
-select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, when creating a new entry
-select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new entry
+select the predefined status, whan creating a new timesheet	preferences	en	Select the predefined status, when creating a new entry.
+select the predefined status, when creating a new timesheet	preferences	en	Select the predefined status, when creating a new entry.
 set to	timesheet	en	Set to
 show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum e.g. to sum up negative overtime
 skip record	timesheet	en	Skip record
@@ -159,16 +159,16 @@ ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2
 timer	common	en	Timer
 timer already running or paused	common	en	Timer already running or paused
 timesheet	common	en	Time Sheet
-timesheet csv export	timesheet	en	TimeSheet CSV export
-timesheet csv import	timesheet	en	TimeSheet CSV import
-timesheet fields:	timesheet	en	TimeSheet fields:
-timesheet id	timesheet	en	TimeSheet ID
-timesheet list	timesheet	en	Time Sheet list
-timesheet modified by %1 at %2	timesheet	en	TimeSheet modified by %1 at %2
-timesheet openoffice export	timesheet	en	TimeSheet OpenOffice export
-timesheet status-%1 '%2' added.	timesheet	en	TimeSheet status-%1 '%2' added.
-timesheet-%1 '%2' updated.	timesheet	en	TimeSheet-%1 '%2' updated.
-timesheet-%1 deleted.	timesheet	en	TimeSheet-%1 deleted.
+timesheet csv export	timesheet	en	Timesheet CSV export
+timesheet csv import	timesheet	en	Timesheet CSV import
+timesheet fields:	timesheet	en	Time Sheet fields:
+timesheet id	timesheet	en	Timesheet ID
+timesheet list	timesheet	en	Timesheet list
+timesheet modified by %1 at %2	timesheet	en	Timesheet modified by %1 at %2
+timesheet openoffice export	timesheet	en	Timesheet Office export
+timesheet status-%1 '%2' added.	timesheet	en	Timesheet status-%1 '%2' added.
+timesheet-%1 '%2' updated.	timesheet	en	Timesheet-%1 '%2' updated.
+timesheet-%1 deleted.	timesheet	en	Timesheet-%1 deleted.
 titles of any entries linked to the current record, excluding attached files	timesheet	en	Titles of any entries linked to the current record, excluding attached files
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	en	Unable to convert "%1" to account ID. Using plugin setting (%2) for %3.
 undelete	timesheet	en	Undelete
@@ -185,7 +185,7 @@ working time	common	en	Working time
 working time and timer	timesheet	en	Working time and timer
 working time from %1	timesheet	en	Working time from %1
 working time of %1 hours stored	timesheet	en	Working time of %1 hours stored
-would you like to be asked, to start and stop working time, when login in or off	timesheet	en	Would you like to be asked, to start and stop working time, when login in or off
+would you like to be asked, to start and stop working time, when login in or off	timesheet	en	Would you like to be asked, to start and stop working time, when login in or off.
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
 yesterday	timesheet	en	Yesterday

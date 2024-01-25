@@ -50,6 +50,7 @@ allow users to create further identities	mail	ja	追加名称の生成を許可
 allways a new window	mail	ja	常に新規ウィンドウを用いる
 always	mail	ja	常に
 always allow external sources from %1	mail	ja	%1からの外部ソースを常に許可
+always respond / auto-responder	mail	ja	常に応答/自動応答
 always show html emails	mail	ja	HTLMメールを常に表示
 always show notifiction	mail	ja	常に通知を表示する
 an error happend while trying to remove acl rights from the account %1!	mail	ja	アカウント %1 の ACL 権限削除中にエラーが発生!
@@ -85,7 +86,10 @@ caching of flags	mail	ja	フラグのキャッシュ
 can not open imap connection	mail	ja	IMAP接続をオープンできませんでした
 can not resolve the winmail.dat attachment!	mail	ja	添付の winmail.dat を解決できません!
 canceled deletion due to user interaction	mail	ja	ユーザ割り込みのため削除を中止
+certificate details	mail	ja	証書詳細
+certificate in text	mail	ja	証明書本文
 certificate info for email %1	mail	ja	メール %1 の証明書情報
+certificate issued by	mail	ja	発行者
 change editor type	mail	ja	エディタを HTML モードに切替える
 changed profile	mail	ja	プロフィール変更
 changing subject failed because of %1	mail	ja	件名の変更に失敗しました。
@@ -190,6 +194,7 @@ edit folder acl	mail	ja	フォルダ ACL を編集
 edit folder acl ...	mail	ja	フォルダ ACL を編集 ...
 edit vacation settings	mail	ja	不在案内設定を編集
 effective only if server supports acl at all	admin	ja	サーバーで ACL を利用可能である場合に限り有効
+email address	mail	ja	メール・アドレス
 email notification successfully updated!	mail	ja	メール通知を更新しました!
 email notification update failed	mail	ja	メール通知の更新に失敗しました
 email notification update failed! you need to set an email address!	mail	ja	メール通知の更新に失敗しました!メール・アドレスを指定してください!
@@ -218,6 +223,7 @@ error: could not send message.	mail	ja	エラー: メッセージを送信でき
 error: message could not be displayed.	mail	ja	エラー: メッセージを表示できませんでした。
 esync will fail without a working email configuration!	mail	ja	有効なメール構成が無い場合 eSync は正常に動作しません!
 event details follow	mail	ja	イベント詳細:
+every %1. day	mail	ja	毎日 %1.
 everyone	mail	ja	みんな
 examine namespace to retrieve folders in others and shared	mail	ja	名前空間を調べて、他人と共有のフォルダを取り出す
 extended	mail	ja	拡張
@@ -408,6 +414,7 @@ notify when new mails arrive in these folders	mail	ja	これらのフォルダ�
 on	mail	ja	オン
 on behalf of	mail	ja	を代表して
 on vacation	mail	ja	休暇中
+once per day	mail	ja	1日1回
 one address is not valid	mail	ja	メール・アドレスが不正です
 only email	mail	ja	メールのみ
 only if currently in an other app	mail	ja	他のアプリを使用中の場合のみ
@@ -590,6 +597,7 @@ sign your message with smime certificate	mail	ja	S/MIME証明書でメッセー�
 signature	mail	ja	署名
 signature at top	mail	ja	署名を上部に表示
 signature position and visibility	mail	ja	署名の表示位置
+signed by	mail	ja	署名者
 size(...->0)	mail	ja	サイズ(降順)
 size(0->...)	mail	ja	サイズ(昇順)
 small view	mail	ja	スモール・ビュー
@@ -710,4 +718,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	ja	VFSに保存するには、前もってメッセージを下書きとして保存する必要があります。
 you will loose current message body, unless you save it to your clipboard!	mail	ja	クリップボードに保存しないと現在のメッセージが失われます!
 you've got new mail	mail	ja	メールが届きました!
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ja	クォータ残量(%1）が不足しているため、今後メールの送受信が行なえません。\nゴミ箱、ジャンク・フォルダを整理すると残量を増やすことができます。\nそれでもなお不足する場合は管理者にお問い合わせください。
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ja	クォータ残量(%1）が不足しているため、今後メールの送受信が行なえません。<br>ゴミ箱、ジャンク・フォルダを整理すると残量を増やすことができます。<br>それでもなお不足する場合は管理者にお問い合わせください。

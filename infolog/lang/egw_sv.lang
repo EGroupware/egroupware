@@ -2,7 +2,7 @@
 %1 deleted	infolog	sv	%1 borttagen.
 %1 deleted by %2 at %3	infolog	sv	%1 raderad av %2 vid %3
 %1 entries %2	infolog	sv	%1 poster %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	sv	%1-posterna %2, %3 misslyckades på grund av otillräckliga rättigheter !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	sv	%1-posterna %2, %3 misslyckades på grund av otillräckliga rättigheter!
 %1 entries %2, %3 failed.	infolog	sv	%1 poster %2, %3 misslyckades.
 %1 modified	infolog	sv	%1 ändrad
 %1 modified by %2 at %3	infolog	sv	%1 ändrad av %2 kl %3
@@ -34,6 +34,7 @@ action	infolog	sv	Åtgärd
 actions...	infolog	sv	Åtgärder
 actual date and time	infolog	sv	Faktiskt datum och tid
 add	infolog	sv	Lägg till
+add / remove link	infolog	sv	Lägg till / ta bort länk
 add a file	infolog	sv	Lägg till fil
 add a new entry	infolog	sv	Lägg till Post
 add a new note	infolog	sv	Lägg till Anteckning
@@ -41,6 +42,7 @@ add a new phonecall	infolog	sv	Lägg till Samtal
 add a new sub-task, -note, -call to this entry	infolog	sv	Lägg till ny Under- Uppgift, Anteckning eller Samtal till post
 add a new todo	infolog	sv	Lägg till Uppgift
 add file	infolog	sv	Lägg till fil
+add or delete links	infolog	sv	Lägg till eller ta bort länkar
 add sub	infolog	sv	Lägg till under
 add timesheet entry	infolog	sv	Lägg till tidredovisnings post
 add:	infolog	sv	Lägg till:
@@ -49,21 +51,27 @@ addressbook placeholders available	infolog	sv	Platshållare i adressboken finns 
 all	infolog	sv	Alla
 all links and attachments	infolog	sv	Alla länkar och bilagor
 all other %1 fields are valid	infolog	sv	Alla andra %1-fält är giltiga
+all projects	infolog	sv	Alla projekt
 allow to save entries with due date in the past	infolog	sv	Tillåt att spara poster med förfallodatum i det förflutna
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sv	Tillåter statusändring på post, ex. Sätt uppgift till färdig när klar.
+alternatives	infolog	sv	Alternativ
 always show them	infolog	sv	Visa dem alltid
 application mail expected but got: %1	infolog	sv	Ansökningsmail förväntat men fick: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	sv	Tillämpa åtgärden på hela sökningen, INTE bara de poster som visas!
 apply the changes	infolog	sv	Spara ändringar
 archive	infolog	sv	Arkivera
+are you shure you want to close this entry ?	infolog	sv	Är du säker på att du vill stänga den här posten?
 are you shure you want to delete this entry ?	infolog	sv	Vill du verkligen radera posten?
 attach a file	infolog	sv	Bifoga fil
 attach file	infolog	sv	Bifoga fil
 attachments	infolog	sv	Bilagor
+attention: no contact with address %1 found.	infolog	sv	Uppmärksamhet: Ingen kontakt med adress %1 hittades.
 automatically check 'do not notify' for these types	infolog	sv	Kontrollera automatiskt "Meddela inte" för dessa typer
 back to main list	infolog	sv	Tillbaks till huvudlistan
 billed	infolog	sv	Fakturerad
 both	infolog	sv	Båda
 call	infolog	sv	Samtal
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	sv	Kan användas för att visa ytterligare InfoLog-typer i kalendern eller begränsa den till att t.ex. bara visa uppgifter.
 can not return an exact number of rows and therefore hides the count.	admin	sv	Kan inte returnera ett exakt antal rader och döljer därför antalet.
 cancel	infolog	sv	Avbryt
 cancelled	infolog	sv	Avbruten
@@ -75,10 +83,12 @@ change responsible	infolog	sv	Ändra ansvarig
 change the status of an entry, eg. close it	infolog	sv	Ändra status på post, t.ex. stäng den
 check to set startday	infolog	sv	Markera för att sätta startdag
 check to specify custom contact	infolog	sv	Markera för att ange annan kontakt
+choose owner of imported data	infolog	sv	Välj ägare av importerade data
 click here to create the link	infolog	sv	Klicka för att skapa länk
 click here to start the search	infolog	sv	Klicka för att starta sökning
 close	infolog	sv	Stäng
 close all	infolog	sv	Stäng alla
+close this entry and all listed sub-entries	infolog	sv	Stäng denna post och alla listade underposter
 closed	infolog	sv	Stängt
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	sv	Kolon (:) -separerad lista över fältnamn som ska användas om värdet är tomt eller för att summera
 comment	infolog	sv	Kommentar
@@ -88,6 +98,7 @@ confirm	infolog	sv	Bekräfta
 contact	infolog	sv	Kontakt
 contact cf	infolog	sv	Kontakta CF
 contact fields	infolog	sv	Kontakt fält
+contactfield	infolog	sv	Kontaktfält
 convert to a ticket	infolog	sv	Konvertera till ett ärende
 copy of:	infolog	sv	Kopia av:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	sv	Kopiera dina ändringar till urklipp, %1 ladda om posten och migrera.
@@ -149,7 +160,7 @@ do you want a notification, if items you delegated are due?	infolog	sv	Få ett m
 do you want to receive notifications as html-mails or plain text?	infolog	sv	Ta emot aviseringar som HTML-e-postmeddelanden eller vanlig text.
 don't show infolog	infolog	sv	Visa INTE InfoLog
 done	infolog	sv	Färdig
-download	infolog	sv	Ladda ner
+download	infolog	sv	Spara fil
 download url for links	infolog	sv	Ladda ner URL för länkar
 due %1	infolog	sv	Förfallodatum %1
 due date	infolog	sv	Förfallodatum
@@ -229,12 +240,16 @@ infolog - import csv-file	infolog	sv	InfoLog - importera CSV fil
 infolog - new	infolog	sv	InfoLog - Ny
 infolog - new subproject	infolog	sv	InfoLog - Nytt underprojekt
 infolog - subprojects from	infolog	sv	InfoLog - Underprojekt till
+infolog csv export	infolog	sv	InfoLog CSV-export
+infolog csv import	infolog	sv	InfoLog CSV-import
 infolog encryption requires epl subscription	infolog	sv	Kryptering av InfoLog kräver EPL-prenumeration
 infolog entry deleted	infolog	sv	InfoLog post raderad
 infolog entry saved	infolog	sv	InfoLog post sparad
+infolog fields:	infolog	sv	InfoLog-fält:
 infolog filter for the home screen	infolog	sv	InfoLog filter för Hemsidan
 infolog ical export	infolog	sv	InfoLog iCal export
 infolog ical import	infolog	sv	InfoLog iCal import
+infolog id	infolog	sv	InfoLog ID
 infolog list	infolog	sv	InfoLog lista
 infolog preferences	common	sv	InfoLog alternativ
 infolog-fieldname	infolog	sv	InfoLog fältnamn
@@ -261,6 +276,7 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	sv	Placering
 longer textual description	infolog	sv	Längre beskrivning
 low	infolog	sv	Låg
+manage mapping	infolog	sv	Hantera mappning
 max length of the input [, length of the inputfield (optional)]	infolog	sv	Max längd på indatafältet
 modifier	infolog	sv	Modifierare
 modifierer	infolog	sv	Modifierare
@@ -277,6 +293,7 @@ no details	infolog	sv	Inga detaljer
 no entries found, try again ...	infolog	sv	Inga poster hittade, försök igen
 no filter	infolog	sv	Inga filter
 no links or attachments	infolog	sv	Inga länkar eller bilagor
+no project	infolog	sv	Inget projekt
 nonactive	infolog	sv	Inaktiv
 none	infolog	sv	Ingen
 normal	infolog	sv	Normal
@@ -293,10 +310,12 @@ one day after	infolog	sv	En dag efter
 one day in advance	infolog	sv	En dag i förväg
 ongoing	infolog	sv	Pågående
 only for details	infolog	sv	Endast detaljer
+only if i get assigned or removed	infolog	sv	Endast om jag blir tilldelad eller borttagen
 only show them if there is a filter	infolog	sv	Visa dem endast om det finns ett filter
 only show them while searching	infolog	sv	Visa dem endast under sökning
 only the attachments	infolog	sv	Endast bilagor
 only the links	infolog	sv	Endast länkar
+open and upcoming	infolog	sv	Öppna och kommande
 open(status)	infolog	sv	Öppen
 optional note to the link	infolog	sv	Frivillig anteckning till länken
 order	infolog	sv	Sortering
@@ -305,6 +324,7 @@ other configurations	infolog	sv	Andra konfigurationer
 overdue	infolog	sv	Förfallen
 own	infolog	sv	Mina
 own open	infolog	sv	Mina öppna
+own open and upcoming	infolog	sv	Egna öppna och kommande
 own overdue	infolog	sv	Mina förfallna
 own upcoming	infolog	sv	Mina kommande
 owner, responsible	infolog	sv	Ägare, Ansvarig
@@ -325,6 +345,7 @@ planned time	infolog	sv	Planerad tid
 prefix for sub-entries (default: re:)	infolog	sv	Prefix för underposter (standard: Re:)
 price	infolog	sv	Pris
 pricelist	infolog	sv	Prislista
+primary link	infolog	sv	Primär länk
 print this infolog	infolog	sv	Skriv ut denna InfoLog
 printing...	infolog	sv	Utskrift...
 priority	infolog	sv	Prioritet
@@ -430,8 +451,8 @@ template	infolog	sv	Mall
 test import (show importable records <u>only</u> in browser)	infolog	sv	Testimport (visa importerara poster <u>bara</u> i browser)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	sv	Dokumentet kan innehålla platshållare som {{%1}}, som ersätts med data.
 the following document-types are supported:	infolog	sv	Följande dokumenttyper stöds:
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 10 tecken), ändring gör existerande data otillgängligt
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sv	internt namn (<= 20 tecken), ändring gör existerande data otillgängligt
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sv	Internt namn (<= 10 tecken), ändring gör existerande data otillgängligt
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sv	Internt namn (<= 20 tecken), ändring gör existerande data otillgängligt
 the text displayed to the user	infolog	sv	Texten som visas för användare
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sv	Detta filter använder InfoLog när du öppnar applikationen. Filtren kan visa bara avslutade, öppna eller framtida objekt som tillhör dig eller alla.
 til when should the todo or phonecall be finished	infolog	sv	Tills när ska Uppgift och Samtal vara utförda
@@ -443,7 +464,7 @@ today	infolog	sv	Idag
 todays date	infolog	sv	Dagens datum
 todo	infolog	sv	Uppgift
 typ	infolog	sv	Typ
-typ '%1' already exists !!!	infolog	sv	Typ '%1' finns redan
+typ '%1' already exists !!!	infolog	sv	Typ '%1' finns redan!
 type	infolog	sv	Typ
 type ...	infolog	sv	Typ ...
 type of customfield	infolog	sv	Typ av anpassat fält
@@ -486,6 +507,7 @@ you can choose a categorie to be preselected, when you create a new infolog entr
 you can't delete one of the stock types !!!	infolog	sv	Du kan inte radera inbyggda typer
 you have entered an invalid ending date	infolog	sv	Ogiltigt Slutdatum
 you have entered an invalid starting date	infolog	sv	Ogiltigt Startdatum
+you have to enter a name, to create a new type!	infolog	sv	Du måste ange ett namn för att skapa en ny typ!
 you must enter a subject or a description	infolog	sv	Ange ämne eller beskrivning
 you need to select an entry for linking.	infolog	sv	Du måste välja en post för länkning.
 you need to select some entries first	infolog	sv	Du måste först välja några poster.

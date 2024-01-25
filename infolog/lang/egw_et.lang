@@ -2,7 +2,7 @@
 %1 deleted	infolog	et	%1 kustutatud
 %1 deleted by %2 at %3	infolog	et	%1 kustutatud %2 poolt %3
 %1 entries %2	infolog	et	%1 kirjed %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	et	%1 kirjed %2, %3 ebaõnnestusid ebapiisavate õiguste tõttu !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	et	%1 kirjed %2, %3 ebaõnnestusid ebapiisavate õiguste tõttu!
 %1 entries %2, %3 failed.	infolog	et	%1 kirjed %2, %3 ebaõnnestusid.
 %1 modified	infolog	et	%1 muudetud
 %1 modified by %2 at %3	infolog	et	%1 modifitseeritud %2 poolt %3
@@ -34,11 +34,15 @@ action	infolog	et	Tegevus
 actions...	infolog	et	Tegevused...
 actual date and time	infolog	et	Käesolev kuupäev ja kellaaeg
 add	infolog	et	Lisa
+add / remove link	infolog	et	Lisa / eemalda link
+add a file	infolog	et	Faili lisamine
 add a new entry	infolog	et	Lisa uus Kirje
 add a new note	infolog	et	Lisa uus Märkus
 add a new phonecall	infolog	et	Lisa uus Telefonikõne
+add a new sub-task, -note, -call to this entry	infolog	et	Lisa uus alamkanne sellele kirjele
 add a new todo	infolog	et	Lisa uus ToDo
 add file	infolog	et	Lisa fail
+add or delete links	infolog	et	Linkide lisamine või kustutamine
 add sub	infolog	et	Lisa alam
 add timesheet entry	infolog	et	Lisa Timesheet kirje
 add:	infolog	et	Lisa:
@@ -51,7 +55,8 @@ allow to save entries with due date in the past	infolog	et	Luba salvestada kirje
 always show them	infolog	et	Näita neid alati
 application mail expected but got: %1	infolog	et	Taotluse e-kiri oodatud, kuid sai: %1
 apply the changes	infolog	et	Rakenda muudatused
-are you shure you want to delete this entry ?	infolog	et	Kas soovid tõesti seda kirjet kustutada ?
+are you shure you want to close this entry ?	infolog	et	Kas olete kindel, et soovite selle kirje sulgeda?
+are you shure you want to delete this entry ?	infolog	et	Kas soovid tõesti seda kirjet kustutada?
 attach a file	infolog	et	Kaasa fail
 attach file	infolog	et	Kaasa fail
 automatically check 'do not notify' for these types	infolog	et	Kontrollida automaatselt "Ära teavita" nende tüüpide puhul
@@ -124,7 +129,7 @@ do you want a notification, if items you delegated are due?	infolog	et	Saate tea
 do you want to receive notifications as html-mails or plain text?	infolog	et	Saate teateid HTML-e-kirjana või tavalise tekstina.
 don't show infolog	infolog	et	ÄRA näita InfoLog
 done	infolog	et	Valmis
-download	infolog	et	Laadige alla
+download	infolog	et	Salvesta faili
 download url for links	infolog	et	EI näita InfoLogi
 due %1	infolog	et	Kohustuslik %1
 due date	infolog	et	Tähtaeg
@@ -218,6 +223,7 @@ invalid status for entry type %1.	infolog	et	Kande tüübi %1 jaoks vale staatus
 label<br>helptext	infolog	et	Silt<br>Abitekst
 last changed	infolog	et	Viimati vahetatud
 last modified	infolog	et	Viimati muudetud
+leave blank to get the used time calculated by timesheet entries	infolog	et	Jäta tühjaks, et saada kasutatud aeg arvutatud ajalehe kirjete järgi
 leave it empty	infolog	et	Jäta see tühjaks
 leave it empty for a full week	infolog	et	Jäta tühjaks terve nädala jaoks
 leave without saveing the entry	infolog	et	Jäta kanne salvestamata
@@ -240,7 +246,7 @@ location	infolog	et	Asukoht
 low	infolog	et	Madal
 modifier	infolog	et	Modifikaator
 modifierer	infolog	et	Modifikaator
-name must not be empty !!!	infolog	et	Nimi eo tohi olla tühi !!!
+name must not be empty !!!	infolog	et	Nimi eo tohi olla tühi!
 new %1	infolog	et	Uus %1
 new name	infolog	et	Uus nimi
 new search	infolog	et	Uus otsing
@@ -342,7 +348,7 @@ tag to mark positions for address labels	infolog	et	Silt aadressimärkide posits
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	et	Dokument võib sisaldada paigutussätteid nagu {{%1}}, mis asendatakse andmetega.
 today	infolog	et	Täna
 typ	infolog	et	Tüüp
-typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba !!!
+typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba!
 type	infolog	et	Tüüp
 type ...	infolog	et	Tüüp ...
 type of field	infolog	et	Põllu tüüp

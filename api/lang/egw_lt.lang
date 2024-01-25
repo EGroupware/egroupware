@@ -1,3 +1,7 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	lt	%1 (%2 nauji) pranešimai, parašyti programai "%3" ir kalboms "%4
+%1 active file(s) with same name as directory inactivated!	admin	lt	%1 aktyvus (-i) failas (-ai), kurio (-ių) pavadinimas toks pat kaip aplanko, neaktyvuotas (-i)!
+%1 copied - the copy can now be edited	common	lt	%1 nukopijuota - dabar kopiją galima redaguoti
+%1 directories %2 found!	admin	lt	Rastas %1 katalogas %2!
 %1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1
 %1 email(s) added into %2	common	lt	%1 el. laiškas (-ai) įtrauktas (-i) į %2
 '%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
@@ -78,7 +82,7 @@ canada	common	lt	KANADA
 category	common	lt	Kategorija
 cc	common	lt	Cc
 chad	common	lt	ČADAS
-charset	common	lt	utf-8
+charset	common	lt	Žodžių rinkinys
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	lt	Patikrinkite, ar IF teiginiuose nėra tuščių reikšmių. Pavyzdys {{IF url~EMPTY~~~Website:}} - Jei url nėra tuščias, rašoma "Svetainė:".
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
@@ -123,7 +127,7 @@ edit category	common	lt	Redaguoti kategoriją
 egypt	common	lt	EGIPTAS
 el salvador	common	lt	SALVADORAS
 email	common	lt	El. paštas
-email-address of the user, eg. "%1"	common	lt	naudotojo el. pašto adresas, pvz., "%1"
+email-address of the user, eg. "%1"	common	lt	Naudotojo el. pašto adresas, pvz., "%1"
 error	common	lt	Klaida
 estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
@@ -132,7 +136,7 @@ example {{letterprefix}} - gives a letter prefix without double spaces, if the t
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	lt	Pavyzdys {{{LETTERPREFIX}} - Suteikia raidės priešdėlį be dvigubų tarpų, jei pavadinimas tuščias, pvz.
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	lt	Pavyzdys {{NELF role}} - jei laukas role nėra tuščias, gausite naują eilutę su lauko role reikšme
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	lt	Pavyzdys {{nenvlf role}} - jei lauko vaidmuo nėra tuščias, nustatomas LF be jokios lauko reikšmės
-fax number	common	lt	fakso numeris
+fax number	common	lt	Fakso numeris
 february	common	lt	Vasaris
 file a file	common	lt	Failo išsaugojimas
 files	common	lt	Failai
@@ -207,7 +211,7 @@ lost login id	common	lt	Pamestas prisijungimo ID
 lost password	common	lt	Pamestas slaptažodis
 luxembourg	common	lt	LIUKSEMBURGAS
 madagascar	common	lt	MADAGASKARAS
-mailvelope addon installation failed! please try again.	common	lt	Nepavyko įdiegti "Mailvelope" priedo! Bandykite dar kartą.
+mailvelope addon installation failed! please try again.	common	lt	Nepavyko įdiegti Mailvelope priedo! Bandykite dar kartą.
 mailvelope addon installation succeded. now you may configure the options.	common	lt	Mailvelope addon diegimas pavyko. Dabar galite konfigūruoti parinktis.
 main category	common	lt	Pagrindinė kategorija
 malaysia	common	lt	MALAIZIJA
@@ -238,7 +242,10 @@ november	common	lt	Lapkritis
 october	common	lt	Spalis
 oman	common	lt	OMANAS
 on *nix systems please type: %1	common	lt	*nix sistemose prašome rašyti: %1
-only private	common	lt	tik privačius
+only private	common	lt	Tik privačius
+open	common	lt	Atviras
+open existing contact	common	lt	Atidaryti esamą kontaktą
+ownership	common	lt	Nuosavybė
 pakistan	common	lt	PAKISTANAS
 panama	common	lt	PANAMA
 paraguay	common	lt	PARAGVAJUS
@@ -268,7 +275,7 @@ qatar	common	lt	KATARAS
 repeat password	common	lt	Pakartoti slaptažodį
 saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
 show password	common	lt	Rodyti slaptažodį
-show/hide	common	lt	rodyti/paslėpti šoninę juostą
+show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija
 yemen	common	lt	JEMENAS

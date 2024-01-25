@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	uk	Додано %1 імейл адрес
 %1 email(s) added into %2	common	uk	%1 імейл(и) додано до %2
-%1 more %2 selected ...	common	uk	Вибрано ще %1 %2...
+%1 more %2 selected ...	common	uk	Вибрано ще %1 %2 ...
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 '%1' copied to clipboard	common	uk	'%1' скопійовано в буфер обміну
 '%1' is not a valid json file!	common	uk	'%1' не є коректним JSON-файлом
@@ -106,12 +106,12 @@ cancel	common	uk	Скасувати
 categories	common	uk	Категорії
 categories for	common	uk	Категорії для
 category	common	uk	Категорія
-category %1 has been added !	common	uk	Категорія (%1) добавлена !
-category %1 has been updated !	common	uk	Категорія (%1) змінена !
+category %1 has been added !	common	uk	Категорія (%1) добавлена!
+category %1 has been updated !	common	uk	Категорія (%1) змінена!
 cc	common	uk	Cc
 chad	common	uk	ЧАД
 change	common	uk	Змінити
-charset	common	uk	utf-8
+charset	common	uk	Кодування
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	uk	Перевірте порожні значення в операторах IF. Приклад {{IF url~EMPTY~~Website:}} - Якщо url не порожній, пише "Веб-сайт:"
 check installation	common	uk	Перевірити інсталяцію
 chile	common	uk	Чілі
@@ -165,16 +165,13 @@ december	common	uk	Грудень
 default	common	uk	По замовченню
 default category	common	uk	Категорія по замовчуванню
 delete	common	uk	Видалити
-delete a single entry by passing the id.	common	uk	Видалити один запис по id.
+delete a single entry by passing the id.	common	uk	Видалити один запис по ID.
 delete category	common	uk	Видалити категорію
 delete this entry	common	uk	видалити цей запис
 denmark	common	uk	ДАНІЯ
 description	common	uk	Опис
 detail	common	uk	Деталі
 details	common	uk	Деталі
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	uk	Відмінити виконання скрипту виправлення помилки для Internet Explorer >= 5.5 для показу прозоросты в PNG-картинках?
-disable internet explorer png-image-bugfix	common	uk	Відмінити виправлення помилки PNG в Internet Explorer
-disable slider effects	common	uk	Відмінити анімаційні ефекти
 disabled	common	uk	Вимкнено
 do you also want to delete all subcategories ?	common	uk	Чи хочете ви також видалити вся підкатегорії?
 domain	common	uk	Domain
@@ -198,7 +195,7 @@ email-address of the user, eg. "%1"	common	uk	email адреса користу�
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: http://www.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: https://egw.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно
 error	common	uk	Помилка
@@ -381,7 +378,7 @@ niger	common	uk	НІГЕР
 nigeria	common	uk	НІГЕРІЯ
 no	common	uk	Ні
 no - cancel	common	uk	Ні - Відмовитись
-no entries found, try again ...	common	uk	Записів не знайдено, спробуйте ще...
+no entries found, try again ...	common	uk	Записів не знайдено, спробуйте ще ...
 no file	common	uk	файлу немає
 no filters	common	uk	Немає фільтрів
 no history for this record	common	uk	Немає історії для цього запису
@@ -404,12 +401,14 @@ on mouse over	common	uk	При наведенні мишки
 only private	common	uk	тільки особисте
 only yours	common	uk	тільки Ваше
 open	common	uk	відкрито
+open existing contact	common	uk	Відкрити існуючий контакт
 open notify window	common	uk	Відкрити вікно повідомлень
 open popup window	common	uk	Відкрити вспливаюче вікно
 original	common	uk	Оригінальне
 other	common	uk	Інше
 overview	common	uk	Перегляд
 owner	common	uk	Власник
+ownership	common	uk	Право власності
 page was generated in %1 seconds	common	uk	Сторінка згенерована за %1 секунд
 pakistan	common	uk	ПАКИСТАН
 panama	common	uk	ПАНАМА
@@ -419,7 +418,7 @@ parent category	common	uk	Вищестояча Категорія
 password	common	uk	Пароль
 password could not be changed	common	uk	Пароль не може бути змінено
 password has been updated	common	uk	Пароль змінено
-path to user and group files has to be outside of the webservers document-root!!!	common	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗОВНІШНІМ відносно корню документів веб-сервера!!!
+path to user and group files has to be outside of the webservers document-root!!!	common	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗОВНІШНІМ відносно корню документів веб-сервера!
 permission denied!	common	uk	У дозволі відмовлено!
 permission denied! this is an administration only feature.	common	uk	У доступі відмовлено! Ця функція доступна лише для адміністрації.
 permissions to the files/users directory	common	uk	дозволи до файлів/каталогів користувачів
@@ -436,15 +435,15 @@ placeholders	common	uk	Заповнювачі
 play/pause	common	uk	Відтворення/Пауза
 please %1 by hand	common	uk	Будь ласка, введіть %1 від руки
 please enter a name	common	uk	Будь ласка введіть ім'я
-please reload the egroupware desktop (f5 / cmd+r).	common	uk	Будь ласка, перезавантажте робочий стіл EGroupware (F5 / Cmd+r).
+please reload the egroupware desktop (f5 / cmd+r).	common	uk	Будь ласка, перезавантажте робочий стіл EGroupware (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	uk	Будь ласка, не забувайте використовувати '%1' як ім'я користувача для локального входу!
 please run setup to become current	common	uk	Будь ласка запустіть setup для оновлення версії
 please select	common	uk	Будь ласка виберіть
-please set your global preferences	common	uk	Будь ласка встановіть глобальні параметри !
-please set your preferences for this application	common	uk	Будь ласка встановіть параметри приложення !
+please set your global preferences	common	uk	Будь ласка встановіть глобальні параметри!
+please set your preferences for this application	common	uk	Будь ласка встановіть параметри приложення!
 please type %1 more characters	common	uk	Будь ласка, введіть %1 більше символів
 please type 1 more character	common	uk	Будь ласка, введіть ще 1 символ
-please wait...	common	uk	Будь ласка, зачекайте...
+please wait...	common	uk	Будь ласка, зачекайте ...
 poland	common	uk	ПОЛЬЩА
 popup with search	common	uk	Вспливаюче вікно з пошуком
 portugal	common	uk	ПОРТУГАЛІЯ
@@ -541,7 +540,7 @@ text	common	uk	Текст
 thailand	common	uk	ТАЇЛАНД
 the following applications require upgrades	common	uk	Наступні приложення потребують поновлення
 the mail server returned	common	uk	Поштовий сервер повернув
-this name has been used already	common	uk	Таке ім'я вже використовується !
+this name has been used already	common	uk	Таке ім'я вже використовується!
 thursday	common	uk	Четвер
 time	common	uk	Час
 time zone	common	uk	Часовий пояс
@@ -602,8 +601,8 @@ you have not entered a title	common	uk	Ви не ввели назву
 you have not entered a valid date	common	uk	Ви не ввели вірну дату
 you have not entered a valid time of day	common	uk	Ви не ввели вірний час дня
 you have not entered participants	common	uk	Ви не ввели учасників
-you have selected an invalid date	common	uk	Ви вибрали невірну дату !
-you have selected an invalid main category	common	uk	Ви вибрали невірну основну категорію !
+you have selected an invalid date	common	uk	Ви вибрали невірну дату!
+you have selected an invalid main category	common	uk	Ви вибрали невірну основну категорію!
 you have successfully logged out	common	uk	Ви успішно вийшли
 your account has been updated with new data from your identity provider.	common	uk	Ваш обліковий запис було оновлено новими даними від вашого постачальника ідентифікаційних даних.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	uk	Ваш браузер застарілий (не сумісний з JavaScript ES6), деякі функції можуть не працювати.

@@ -1,7 +1,29 @@
+%1 days in advance	infolog	ro	%1 zile în avans
+%1 deleted	infolog	ro	%1 șters.
+%1 deleted by %2 at %3	infolog	ro	%1 șters de %2 la %3
 %1 entries %2	infolog	ro	%1 intrări %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	ro	%1 intrări %2, %3 au eșuat din cauza drepturilor insuficiente !!!
 %1 entries %2, %3 failed.	infolog	ro	%1 intrări %1 %2, %3 au eșuat.
+%1 modified	infolog	ro	%1 modificat
+%1 modified by %2 at %3	infolog	ro	%1 modificat de %2 la %3
+%1 records imported	infolog	ro	%1 înregistrări importate.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ro	%1 înregistrări citite. Nu a fost încă importat, puteți merge %2înapoi%3 și debifați Test import.
+%1 you are responsible for is due at %2	infolog	ro	%1 de care sunteți responsabil este scadent la %2
+%1 you are responsible for is starting at %2	infolog	ro	%1 de care sunteți responsabil începe la %2
+%1 you delegated is due at %2	infolog	ro	%1 pe care l-ați delegat este scadent la %2
+%1 you delegated is starting at %2	infolog	ro	%1 pe care l-ați delegat este scadent la %2
 (and children) deleted	infolog	ro	(și copii) șterse.
+0%	infolog	ro	0%
+10%	infolog	ro	10%
+100%	infolog	ro	100%
+20%	infolog	ro	20%
+30%	infolog	ro	30%
+40%	infolog	ro	40%
+50%	infolog	ro	50%
+60%	infolog	ro	60%
+70%	infolog	ro	70%
+80%	infolog	ro	80%
+90%	infolog	ro	90%
 addressbook placeholders available	infolog	ro	Carnet de adrese disponibile
 all other %1 fields are valid	infolog	ro	Toate celelalte câmpuri %1 sunt valide
 allow to save entries with due date in the past	infolog	ro	Permiteți salvarea intrărilor cu data scadentă în trecut
@@ -12,7 +34,7 @@ can not return an exact number of rows and therefore hides the count.	admin	ro	N
 change	infolog	ro	Modificare
 change responsible	infolog	ro	Schimbare responsabilă
 check to set startday	infolog	ro	Verificați pentru a seta ziua de început
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	ro	listă de nume de câmpuri separate prin două puncte (:) care trebuie utilizate dacă valoarea este goală sau pentru a însuma
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	ro	Listă de nume de câmpuri separate prin două puncte (:) care trebuie utilizate dacă valoarea este goală sau pentru a însuma
 contact cf	infolog	ro	Contact CF
 convert to a ticket	infolog	ro	Conversia într-un bilet
 created	infolog	ro	Creat
@@ -42,7 +64,7 @@ do you want a notification, if items you delegated are about to start?	infolog	r
 do you want a notification, if items you delegated are due?	infolog	ro	Primiți notificări dacă intrările pe care le-ați delegat sunt scadente.
 do you want to receive notifications as html-mails or plain text?	infolog	ro	Primiți notificări sub formă de e-mailuri HTML sau text simplu.
 don't show infolog	infolog	ro	NU afișați InfoLog
-download	infolog	ro	Descărcați
+download	infolog	ro	Salvați fișierul
 download url for links	infolog	ro	URL de descărcare pentru linkuri
 due %1	infolog	ro	Due %1
 due date	infolog	ro	Data scadentă
@@ -56,6 +78,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	ro	Exemplu {{NELF rol}} - dacă câmpul role nu este gol, se va obține o nouă linie cu valoarea câmpului role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	ro	Exemplu {{nenvlf role}} - dacă câmpul rol nu este gol, se va seta un LF fără nicio valoare a câmpului
 execute a further action for this entry	infolog	ro	Executați o acțiune suplimentară pentru această intrare
+existing links	infolog	ro	Legături existente
 exists	infolog	ro	Există
 export definition to use for nextmatch export	infolog	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
 exports in ical format.	infolog	ro	Exportă în format iCal.

@@ -8,7 +8,7 @@
 %1 categories of not (longer) existing accounts deleted.	admin	en	%1 categories of not (longer) existing accounts deleted.
 %1 category '%2' %3	admin	en	%1 category '%2' %3
 %1 category(s) %2	admin	en	%1 category(s) %2
-%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights !!!
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights!
 %1 class not instanciated	admin	en	%1 class not instanciated
 %1 entries deleted	admin	en	%1 entries deleted
 %1 entries deleted.	admin	en	%1 entries deleted.
@@ -24,9 +24,9 @@
 %1 successful	admin	en	%1 successful
 %1 token %2.	admin	en	%1 token %2.
 %1 user %2	admin	en	%1 user %2
-(de)activate mail accounts	admin	en	(de)activate mail accounts
+(de)activate mail accounts	admin	en	(de)Activate mail accounts
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the IMAP server)
 (no subject)	admin	en	(no subject)
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
@@ -99,7 +99,7 @@ add sub-category	admin	en	Add sub category
 add user	admin	en	Add user
 add user or group	admin	en	Add user or group
 added	admin	en	added
-admin dn	admin	en	Admin dn
+admin dn	admin	en	Admin DN
 admin email	admin	en	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	en	Admin email addresses, comma-separated, to be notified about the blocked user accounts and IP. Empty = no notification.
 admin name	admin	en	Admin name
@@ -163,8 +163,8 @@ are you sure you want to delete this server?	admin	en	Are you sure you want to d
 are you sure you want to kill this session ?	admin	en	Are you sure you want to kill this session?
 async services last executed	admin	en	Async services last executed
 asynchronous timed services	admin	en	Asynchronous timed services
-asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1) !
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct mime type for FTP instead of default 'application/octet-stream'.
+asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1)!
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct MIME type for FTP instead of default 'application/octet-stream'.
 attribute accountstatus explained	admin	en	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
 attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the EGw internal email field.
 attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
@@ -197,7 +197,7 @@ can be used by user	admin	en	Can be used by user
 can change password	admin	en	Can change password
 can not change users into groups, same sign required!	admin	en	Can NOT change users into groups, same sign required!
 cancel changes	admin	en	Cancel changes
-cancel testjob!	admin	en	Cancel TestJob!
+cancel testjob!	admin	en	Cancel test job!
 cancel this scheduled command	admin	en	Cancel this scheduled command
 categories list	admin	en	Categories list
 category %1 has been saved !	admin	en	Category %1 has been saved!
@@ -224,13 +224,14 @@ check acl for entries of not (longer) existing accounts	admin	en	Check ACL for e
 check categories for not (longer) existing accounts	admin	en	Check categories for not (longer) existing accounts
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
+checking push (green for success or red for failure)	admin	en	Checking PUSH (green for success or red for failure)
 children	admin	en	Children
 clear cache and register hooks	admin	en	Clear cache and register hooks
 clear credentials	admin	en	Clear credentials
 clear mail credentials	admin	en	Clear mail credentials
 clear security tokens	admin	en	Clear security tokens
-click to select a color	admin	en	Click to select a color
-color	admin	en	Color
+click to select a color	admin	en	Click to select a colour
+color	admin	en	Colour
 comma-separated ip addresses white-listed from above blocking (:optional number of attempts)	admin	en	Comma-separated IP addresses white-listed from above blocking (:optional number of attempts)
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 command was run %1 on %2	admin	en	Command was run %1 on %2
@@ -255,7 +256,7 @@ create group	admin	en	Create group
 create new account	admin	en	Create new account
 create new identity	admin	en	Create new identity
 created	admin	en	Created
-created with id #%1	admin	en	Created with id #%1
+created with id #%1	admin	en	Created with ID #%1
 creates / updates user accounts from csv file	admin	en	Creates / updates user accounts from CSV file
 creates / updates user groups from csv file	admin	en	Creates / updates user groups from CSV file
 creates a new field	admin	en	Creates a new field
@@ -338,7 +339,7 @@ direct login without password or second factor	admin	en	direct login without pas
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disable all	admin	en	Disable all
-disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
+disable minifying of javascript and css files	admin	en	Disable minifying of JavaScript and CSS files
 disable pgp encryption (mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled	admin	en	Disabled
@@ -346,10 +347,10 @@ disabled (not recomended)	admin	en	Disabled (not recommended)
 disabled, do not show on login page	admin	en	disabled, do not show on login page
 display	admin	en	Display
 displayed length of input field (set rows=1 to limit length)	admin	en	displayed length of input field (set rows=1 to limit length)
-displaying html messages is disabled	admin	en	displaying html messages is disabled
-displaying plain messages is disabled	admin	en	displaying plain messages is disabled
+displaying html messages is disabled	admin	en	displaying HTML messages is disabled
+displaying plain messages is disabled	admin	en	displaying text messages is disabled
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
-do not generate email addresses	admin	en	Do not generate EMail addresses
+do not generate email addresses	admin	en	Do not generate email addresses
 do not offer introduction video	admin	en	Do not offer introduction video
 do not send cookie	admin	en	do not send cookie
 do not set attribute	admin	en	Do not set attribute
@@ -388,17 +389,17 @@ either install id and config password needed or the remote hash!	admin	en	Either
 email account active	admin	en	Email account active
 email address	admin	en	Email address
 email settings	common	en	Email settings
-emailadmin	admin	en	eMailAdmin
-emailadmin: group assigned profile	common	en	eMailAdmin: Group assigned profile
-emailadmin: user assigned profile	common	en	eMailAdmin: User assigned profile
+emailadmin	admin	en	EmailAdmin
+emailadmin: group assigned profile	common	en	EmailAdmin: Group assigned profile
+emailadmin: user assigned profile	common	en	EmailAdmin: User assigned profile
 empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
 enable cyrus imap server administration	admin	en	Enable Cyrus IMAP server administration
 enable debug-messages	admin	en	Enable debug messages.
 enable sieve	admin	en	Enable Sieve
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
-enable the soap service	admin	en	Enable the soap service.
-enable the xmlrpc service	admin	en	Enable the xmlrpc service.
+enable the soap service	admin	en	Enable the SOAP service.
+enable the xmlrpc service	admin	en	Enable the XML-RPC service.
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
@@ -408,14 +409,14 @@ encryption settings	admin	en	Encryption settings
 enter a description for the category	admin	en	Enter a description for the category
 enter a passphrase if you would like to protect your private key by password.	admin	en	Enter a passphrase if you would like to protect your private key by password.
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption, requires mcrypt
-enter the background color for the login page	admin	en	Enter the background color for the login page
-enter the background color for the site title	admin	en	Enter the background color for the site title
+enter the background color for the login page	admin	en	Enter the background colour for the login page
+enter the background color for the site title	admin	en	Enter the background colour for the site title
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the host name of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
 enter the site password for peer servers	admin	en	Enter the site password for peer servers
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
@@ -434,7 +435,7 @@ entries	admin	en	Entries
 entries owned by the user:	admin	en	Entries owned by the user:
 entry saved	admin	en	Entry saved
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
-error changing the password for %1 !!!	admin	en	Error changing the password for %1 !
+error changing the password for %1 !!!	admin	en	Error changing the password for %1!
 error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	en	Error connecting to IMAP server: [%s] %s.
 error deleting entry!	admin	en	Error deleting entry!
@@ -444,7 +445,7 @@ error saving	admin	en	Error saving!
 error saving account!	admin	en	Error saving account!
 error saving the command!	admin	en	Error saving the command!
 error saving the entry!!!	admin	en	Error saving the entry!
-error saving to db:	admin	en	Error saving to db:
+error saving to db:	admin	en	Error saving to DB:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running!
 error storing token!	admin	en	Error storing token!
 error! no appname found	admin	en	Error: No app name found!
@@ -455,7 +456,7 @@ exists	admin	en	Exists
 expired	admin	en	Expired
 expires	admin	en	Expires
 explanation of ldapman	admin	en	This module has been tested so far for POSTFIX, LDAP, Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this system can be found in README.ldapman in the doc folder of ADMIN.
-export certificate as p12	admin	en	export certificate as p12
+export certificate as p12	admin	en	Export certificate as p12
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports permission settings into a csv file.	admin	en	Exports permission settings into a CSV File.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
@@ -476,7 +477,7 @@ filesystem quota	admin	en	Filesystem quota
 filtered by account	admin	en	Filtered by account
 filtered by group	admin	en	Filtered by group
 folder acl	admin	en	Folder ACL
-for the times above	admin	en	For the times above
+for the times above	admin	en	for the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
 forbid users to create identities	admin	en	Forbid users to create identities
 force selectbox	admin	en	Force select box
@@ -520,19 +521,19 @@ home screen message	admin	en	Home screen message
 host information	admin	en	Host information
 hostname or ip	admin	en	Hostname or IP
 hour<br>(0-23)	admin	en	Hour<br>(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	Maximum pixel size of thumbnails for linked images.
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	en	Maximum pixel size of thumbnails for linked images
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	en	How many days should entries remain in the access log before they get deleted. Default = 90
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	en	How many entries should non-admins be able to export. Empty = no limit, no = no export
 how many minutes should an account or ip be blocked (default 1) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
 how should email addresses for new users be constructed?	admin	en	Select default email address format for new user accounts
 how username get constructed	admin	en	How username get constructed
-html/plaintext	admin	en	html/plaintext
+html/plaintext	admin	en	HTML/text
 icon	admin	en	Icon
 identity	admin	en	Identity
 identity deleted	admin	en	Identity deleted
 identity saved.	admin	en	Identity saved.
-idle	admin	en	idle
-if different from email address	admin	en	if different from EMail address
+idle	admin	en	Idle
+if different from email address	admin	en	if different from email address
 if disabled existing tokens immediatly stop working.	admin	en	If disabled existing tokens immediatly stop working.
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage home directory and loginshell attributes?
@@ -566,7 +567,7 @@ installed crontab	admin	en	Installed crontab
 instance	admin	en	Instance
 interface	admin	en	Interface
 international use	admin	en	International use
-invalid argument '%1' !!!	admin	en	Invalid argument '%1' !!!
+invalid argument '%1' !!!	admin	en	Invalid argument '%1'!
 invalid email	admin	en	Invalid email
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote ID or name "%1"!
@@ -591,14 +592,14 @@ last submission:	admin	en	Last submission:
 last time read	admin	en	Last time read
 last updated	admin	en	Last updated
 ldap accounts context	admin	en	LDAP accounts context
-ldap basedn	admin	en	LDAP basedn
+ldap basedn	admin	en	LDAP base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	en	LDAP default home directory prefix (e.g. /home for /home/username)
 ldap default shell (e.g. /bin/bash)	admin	en	LDAP default shell (e.g. /bin/bash)
 ldap encryption type	admin	en	LDAP encryption type
 ldap groups context	admin	en	LDAP groups context
 ldap host	admin	en	LDAP host
 ldap root password	admin	en	LDAP root password
-ldap rootdn	admin	en	LDAP rootdn
+ldap rootdn	admin	en	LDAP root DN
 ldap server	admin	en	LDAP server
 ldap server accounts dn	admin	en	LDAP server accounts DN
 ldap server admin dn	admin	en	LDAP server admin DN
@@ -628,12 +629,12 @@ login message	admin	en	Login message
 login screen	admin	en	Login screen
 login shell	admin	en	Login shell
 login time	admin	en	Login time
-login-id	admin	en	Login-ID
+login-id	admin	en	Login ID
 login-status	admin	en	Login status
 loginid	admin	en	Login ID
 logintime	admin	en	Login time
 logoutime	admin	en	Logout time
-lowercase email addresses	admin	en	Lowercase EMail addresses
+lowercase email addresses	admin	en	Lowercase email addresses
 mail account	admin	en	Mail account
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
@@ -642,13 +643,13 @@ manage mapping	admin	en	Manage mapping
 manage stationery templates	admin	en	Manage stationery templates
 manager	admin	en	Manager
 manual entry	admin	en	Manual entry
-maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account id, e.g. 65535 or 1000000
+maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account ID, e.g. 65535 or 1000000
 maximum entries in click path history	admin	en	Maximum entries in click path history
 mb used	admin	en	MB used
 members	admin	en	Members
 message has been updated	admin	en	Message has been updated
 method	admin	en	Method
-minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id, e.g. 500 or 100
+minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account ID, e.g. 500 or 100
 minute	admin	en	Minute
 mode	admin	en	Mode
 modified	admin	en	Modified
@@ -663,7 +664,7 @@ name of the egroupware instance, eg. default	admin	en	Name of the EGroupware ins
 new group name	admin	en	New group name
 new name	admin	en	New name
 new password	admin	en	New password
-new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
+new password [ leave blank for no change ]	admin	en	New password (Leave blank for no change)
 next run	admin	en	Next run
 no algorithms available	admin	en	No algorithms available!
 no alternate email address	admin	en	No alternate email address
@@ -685,7 +686,7 @@ no sieve support detected, either fix configuration manually or leave it switche
 no supported imap authentication method could be found.	admin	en	No supported IMAP authentication method could be found.
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
 not enabled	admin	en	Not enabled
-note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support.
+note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with Curl support.
 notification mail	admin	en	Notification mail
 notify user by email	admin	en	Notify user by email
 notifying account "%1" %2 failed!	admin	en	Notifying account "%1" %2 failed!
@@ -713,7 +714,7 @@ own categories	admin	en	Own categories
 own install id	admin	en	Own install ID
 own install id:	admin	en	Own install ID:
 owner "%1" removed, please select group-owner	admin	en	Owner "%1" removed, please select group owner
-passphrase	admin	en	passphrase
+passphrase	admin	en	Passphrase
 passthrough	admin	en	Passthrough
 password for smtp-authentication	admin	en	Password for SMTP authentication
 password to unlock encrypted p12	admin	en	Password to unlock encrypted p12
@@ -730,7 +731,7 @@ percent this user has logged out	admin	en	Percent this user has logged out
 periodic	admin	en	Periodic
 permission denied	admin	en	Permission denied
 permission denied !!!	admin	en	Permission denied!
-permission denied!!!	admin	en	Permission denied!!!
+permission denied!!!	admin	en	Permission denied!
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 personal: eg. within a family	admin	en	Personal: eg. within a family
@@ -787,16 +788,16 @@ requires 'openid / oauth2 server' app.	admin	en	Requires 'OpenID / OAuth2 Server
 reset filter	admin	en	Reset filter
 revoke	admin	en	Revoke
 revoke this token	admin	en	Revoke this token
-revoked	admin	en	revoked
+revoked	admin	en	Revoked
 rights	admin	en	Rights
 route all mails to	admin	en	Route all Mails to
 rows	admin	en	Rows
-rpm or debian package	admin	en	RPM or Debian package
+rpm or debian package	admin	en	RPM or deb package
 run	admin	en	run
-run asynchronous services	admin	en	Run Asynchronous services
-run rights for applications	admin	en	run rights for applications
+run asynchronous services	admin	en	Run asynchronous services
+run rights for applications	admin	en	Run rights for applications
 samesite cookie attribute (send cookie if browser addressbar show a different domain)	admin	en	SameSite cookie attribute (send cookie if browser addressbar show a different domain)
-save as default	admin	en	save as default
+save as default	admin	en	Save as default
 save changes	admin	en	Save changes
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	en	Save of message %1 failed. Could not save message to folder %2 due to: %3
 save the category	admin	en	Save the category.
@@ -844,10 +845,10 @@ set preference values.	admin	en	Set preference values.
 settings	admin	en	Settings
 should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace, including function arguments.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page?
-show 'powered by' logo on	admin	en	Show 'powered by' logo on
+show 'powered by' logo on	admin	en	Show 'Powered by' logo on
 show access log	admin	en	Show access log
-show as optional, but required once user has it setup	admin	en	show as optional, but required once user has it setup
-show as required, but only once user has it setup	admin	en	show as required, but only once user has it setup
+show as optional, but required once user has it setup	admin	en	Show as optional, but required once user has it setup
+show as required, but only once user has it setup	admin	en	Show as required, but only once user has it setup
 show current action	admin	en	Show current action
 show error log	admin	en	Show error log
 show members	admin	en	Show members
@@ -879,10 +880,10 @@ standard imap server	admin	en	Standard IMAP server
 standard pop3 server	admin	en	Standard POP3 server
 standard smtp-server	admin	en	Standard SMTP server
 start	admin	en	Start
-start testjob!	admin	en	Start TestJob!
+start testjob!	admin	en	Start test job!
 starts with	admin	en	Starts with
 stationery	admin	en	Stationery
-strictly required, user can not login without	admin	en	strictly required, user can not login without
+strictly required, user can not login without	admin	en	Strictly required, user can not login without
 submit changes	admin	en	Submit changes
 submit displayed information?	admin	en	Submit displayed information
 submit statistic information	admin	en	Submit statistic information
@@ -913,10 +914,10 @@ the install id of an instance can be found under admin &gt; site configuration	a
 the install id of an instance can be found under admin > site configuration	admin	en	The install ID of an instance can be found under Admin > Site configuration
 the login and password can not be the same	admin	en	The login and password can not be the same.
 the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters.
-the mimeparser can not parse this message.	admin	en	The mimeparser can not parse this message.
-the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	en	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
+the mimeparser can not parse this message.	admin	en	The MIME parser can not parse this message.
+the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internaly (<= 20 chars), changeing it makes existing data unavailible
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	en	The name used internally, <= 20 chars, changing it makes existing data unavailable.
-the testjob sends you a mail everytime it is called.	admin	en	The TestJob sends you a mail every time it is called.
+the testjob sends you a mail everytime it is called.	admin	en	The test job sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
 the two passwords are not the same	admin	en	Passwords are not the same
 the users bellow are still members of group %1	admin	en	The users below are still members of group %1
@@ -929,7 +930,7 @@ this controls exports and merging.	admin	en	This controls exports and merge prin
 this is a mail account for all users!	admin	en	This is a mail account for ALL users!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!<br>Account will be deleted for ALL users!<br>Are you really sure you want to do that?
 this key used in the html code your site serves to users.	admin	en	This key used in the HTML code your site serves to users.
-this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!!
+this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!
 this secret key used for communication between your site and google. be sure to keep it a secret.	admin	en	This secret key used for communication between your site and Google. Be sure to keep it a secret.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds. Default 14400 = 4 hours
@@ -942,7 +943,7 @@ token revoked.	admin	en	Token revoked.
 token saved.	admin	en	Token saved.
 top	admin	en	Top
 total of %1 accounts deleted.	admin	en	Total of %1 accounts deleted.
-total of %1 id's changed.	admin	en	Total of %1 id's changed.
+total of %1 id's changed.	admin	en	Total of %1 ID's changed.
 total records	admin	en	Total records
 translation	admin	en	Translation
 true	admin	en	True
@@ -959,11 +960,11 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unexpected response from server to authenticate command.	admin	en	Unexpected response from server to AUTHENTICATE command.
 unexpected response from server to digest-md5 response.	admin	en	Unexpected response from server to Digest-MD5 response.
 unexpected response from server to login command.	admin	en	Unexpected response from server to LOGIN command.
-unknown account: %1 !!!	admin	en	Unknown account: %1 !
+unknown account: %1 !!!	admin	en	Unknown account: %1!
 unknown command %1!	admin	en	Unknown command %1!
 unknown imap response from the server. server responded: %s	admin	en	Unknown IMAP response from the server. %s
-unknown option %1	admin	en	Unknown option %1 !
-unsupported action '%1' !!!	admin	en	Unsupported action '%1' !
+unknown option %1	admin	en	Unknown option %1!
+unsupported action '%1' !!!	admin	en	Unsupported action '%1'!
 unwilling to save category with current settings. check for inconsistency:	admin	en	Unable to save category with current settings. Check for inconsistency:
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
@@ -974,7 +975,7 @@ upload your favicon or enter the url	admin	en	Upload your favicon or enter the U
 upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	en	Upload your header logo or enter the URL (leave it empty if it is the same as login logo)
 upload your logo or enter the url	admin	en	Upload your logo or enter the URL
 uppercase, lowercase, number, special char	admin	en	Uppercase, lowercase, number, special char
-url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
+url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. https://egw.domain.com/egroupware
 usage	admin	en	Usage
 use admin credentials to connect without a session-password, e.g. for sso	admin	en	Use admin credentials to connect without a session-password, e.g. for SSO
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
@@ -983,7 +984,7 @@ use ldap defaults	admin	en	Use LDAP defaults
 use predefined username and password defined below	admin	en	Use predefined username and password defined below
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code
 use save or apply to store the received oauth token!	admin	en	Use save or apply to store the received OAuth token!
-use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
+use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via HTTPS)
 use smtp auth	admin	en	Use SMTP authentication
 use theme	admin	en	Use theme
 use tls authentication	admin	en	Use TLS authentication
@@ -1010,7 +1011,9 @@ users can define their own signatures	admin	en	Users can define their own signat
 users can utilize these stationery templates	admin	en	Users can utilize these stationery templates
 users choice	admin	en	Users choice
 using data from mozilla ispdb for provider %1	admin	en	Using data from Mozilla ISPDB for provider %1
+using fallback via regular json requests	admin	en	Using fallback via regular JSON requests
 using imap:%1, smtp:%2, oauth:%3:	admin	en	Using IMAP:%1, SMTP:%2, OAUTH:%3:
+using native swoole push	admin	en	Using native Swoole Push
 vacation messages with start- and end-date require an admin account to be set	admin	en	Vacation messages with start and end date require an admin account to be set!
 vacation notice	admin	en	Vacation notice
 valid for	admin	en	Valid for
@@ -1034,7 +1037,7 @@ would you like egroupware to check for a new version<br>when admins login ?	admi
 would you like egroupware to check for new application versions when admins login ?	admin	en	Check for application updates when admins login.
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Load automatically new language files at login.
 would you like to show each application's upgrade status ?	admin	en	Show each application's upgrade status.
-wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !
+wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2!
 wrong admin-account or -password !!!	admin	en	Wrong admin account or password!
 wrong credentials to access the header.inc.php file!	admin	en	Wrong credentials to access the header.inc.php file!
 xml-rpc	admin	en	XML-RPC

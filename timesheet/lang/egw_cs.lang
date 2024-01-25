@@ -1,40 +1,40 @@
 %1 timesheets(s) %2	timesheet	cs	%1 pracovní výkaz(y) %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	cs	%1 pracovní výkaz(y) %2, %3 selhalo z důvodu nedostatečných oprávnění !!!
---> enter new name	timesheet	cs	--> zadejte nový název
+--> enter new name	admin	cs	--> zadejte nový název
 2 month ago	timesheet	cs	Před 2 měsíci
 2 years ago	timesheet	cs	Před 2 roky
 3 years ago	timesheet	cs	Před 3 roky
 all projects	timesheet	cs	Všechny projekty
-and its members	timesheet	cs	a jeho členy
-applies the changes	timesheet	cs	použije změny
+and its members	timesheet	cs	A jeho členy
+applies the changes	timesheet	cs	Použije změny
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	cs	Aplikovat akci na celý dotaz, ne jen na zobrazené pracovní výkazy!!!
 both: allow to use projectmanager and free project-names	admin	cs	Obojí: povolit použití Správce projektů i libovolných názvů projektů
 by	timesheet	cs	od
-changed status	timesheet	cs	změněný stav
+changed status	timesheet	cs	Změněný stav
 check all	timesheet	cs	Označit vše
 comment by %1 at %2:	timesheet	cs	Komentář od %1 v %2:
 create new links	timesheet	cs	Vytvořit nové odkazy
 creates a new field	timesheet	cs	vytvoří novou položku
 creating new entry	timesheet	cs	vytvářím nový záznam
 custom fields	timesheet	cs	Uživatelsky definované položky
-delete this status	timesheet	cs	Smazat tento stav
-deleted	timesheet	cs	smazané
-deletes this field	timesheet	cs	smaže tuto položku
-determines the order the fields are displayed	timesheet	cs	určuje pořadí, v jakém jsou položky zobrazeny
-each value is a line like <id>[=<label>]	timesheet	cs	každá hodnota je řádek ve tvaru <id>[=<popis>]
-edit status	timesheet	cs	Editovat stav
+delete this status	admin	cs	Smazat tento stav
+deleted	timesheet	cs	Smazané
+deletes this field	timesheet	cs	Smaže tuto položku
+determines the order the fields are displayed	timesheet	cs	Určuje pořadí, v jakém jsou položky zobrazeny
+each value is a line like <id>[=<label>]	timesheet	cs	Každá hodnota je řádek ve tvaru <id>[=<popis>]
+edit status	common	cs	Editovat stav
 edit this entry	timesheet	cs	Editovat tento záznam
-empty if identical to duration	timesheet	cs	prázdné pokud se shoduje s délkou trvání
+empty if identical to duration	timesheet	cs	Prázdné pokud se shoduje s délkou trvání
 end	timesheet	cs	Konec
 entry deleted	timesheet	cs	Záznam smazán
 entry saved	timesheet	cs	Záznam uložen
-error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!!!
-error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!!!
+error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!
+error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!
 existing links	timesheet	cs	Stávající odkazy
-export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky OpenOffice
+export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky Office
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 favorites	timesheet	cs	Oblíbené
-field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná !!!
+field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
 general fields:	timesheet	cs	Obecné položky:
@@ -51,7 +51,7 @@ leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celý týden
 leaves without saveing	timesheet	cs	ukoční bez uložení
 length<br>rows	timesheet	cs	Délka<br>Řádky
 links	timesheet	cs	Odkazy
-max length of the input [, length of the inputfield (optional)]	timesheet	cs	maximální délka vstupu [, délka vstupního pole (volitelná)]
+max length of the input [, length of the inputfield (optional)]	timesheet	cs	Maximální délka vstupu [, délka vstupního pole (volitelná)]
 modified	timesheet	cs	Změměno
 name of current user, all other contact fields are valid too	timesheet	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 new ticket submitted by %1 at %2	timesheet	cs	Nové ohlášení podal(a) %1 v %2
@@ -61,36 +61,36 @@ no project	timesheet	cs	Žádný projekt
 no status	timesheet	cs	Žádný stav
 none: use only free project-names	admin	cs	Žádný: používat jen libovolné názvy projektů
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	cs	počet řádek u víceřádkového vstupního pole nebo rozbalovací nabídky
-only admin	timesheet	cs	Jen administrátor
-only admin can edit this status	timesheet	cs	tento stav smí editovat jen administrátor
+only admin	admin	cs	Jen administrátor
+only admin can edit this status	admin	cs	Tento stav smí editovat jen administrátor
 or endtime	timesheet	cs	nebo Koncový čas
 order	timesheet	cs	Pořadí
-parent	timesheet	cs	Nadřazený
-permission denied!!!	timesheet	cs	Přístup zamítnut!!!
+parent	admin	cs	Nadřazený
+permission denied!!!	timesheet	cs	Přístup zamítnut!
 price	timesheet	cs	Cena
 projectmanager integration	admin	cs	Integrace se Správcem projektů
 quantity	timesheet	cs	Množství
 save & new	timesheet	cs	Uložit a Nový
 saves the changes made	timesheet	cs	Uloží provedené změny
-saves the changes made and leaves	timesheet	cs	před ukončením uloží provedené změny
+saves the changes made and leaves	timesheet	cs	Před ukončením uloží provedené změny
 saves this entry and add a new one	timesheet	cs	Uloží aktuální záznam a přidá nový
 select a price	timesheet	cs	Vybrat cenu
 select a project	timesheet	cs	Vybrat projekt
-select a status of the timesheet	timesheet	cs	vybrat stav pracovního výkazu
-select infolog	timesheet	cs	vybrat Infolog
+select a status of the timesheet	timesheet	cs	Vybrat stav pracovního výkazu
+select infolog	timesheet	cs	Vybrat Infolog
 select multiple timeshhets for a further action	timesheet	cs	Vybrat více pracovních výkazů pro další akci
 select the predefined status, whan creating a new timesheet	preferences	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
 show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit součet množství (např. pro sečtení záporného přesčasu)
 start	timesheet	cs	Začátek
 starttime	timesheet	cs	Počáteční čas
-starttime has to be before endtime !!!	timesheet	cs	Počáteční čas musí předcházet času ukončení !!!
+starttime has to be before endtime !!!	timesheet	cs	Počáteční čas musí předcházet času ukončení!
 status deleted.	timesheet	cs	Stav byl smazán
 status of created timesheets	timesheet	cs	Stav vytvářených pracovních výkazů
 status updated.	timesheet	cs	Stav byl aktualizován.
 sum %1:	timesheet	cs	Součet %1:
 tag to mark positions for address labels	timesheet	cs	Značka pro vyznačení pozic v adresních štítcích
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	cs	interně používaný název (<= 20 znaků), jeho změna vede k nedostupnosti stávajících dat
-the text displayed to the user	timesheet	cs	text zobrazený uživateli
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	cs	Interně používaný název (<= 20 znaků), jeho změna vede k nedostupnosti stávajících dat
+the text displayed to the user	timesheet	cs	Text zobrazený uživateli
 this month	timesheet	cs	Tento měsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
@@ -98,7 +98,7 @@ ticket modified by %1 at %2	timesheet	cs	Ohlášení změnil(a) %1 v %2
 timesheet	common	cs	Pracovní výkaz
 timesheet csv export	timesheet	cs	Export pracovního výkazu do CSV
 timesheet modified by %1 at %2	timesheet	cs	Pracovní výkaz změnil(a) %1 v %2
-timesheet openoffice export	timesheet	cs	Export pracovního výkazu do OpenOffice
+timesheet openoffice export	timesheet	cs	Export pracovního výkazu do Office
 timesheet status-%1 '%2' added.	timesheet	cs	Pracovní výkaz stav-%1 '%2' byl přidán.
 timesheet-%1 '%2' updated.	timesheet	cs	Pracovní výkaz-%1 '%2' byl zaktualizován.
 timesheet-%1 deleted.	timesheet	cs	Pracovní výkaz-%1 byl smazán.

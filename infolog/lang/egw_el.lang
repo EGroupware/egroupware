@@ -2,7 +2,7 @@
 %1 deleted	infolog	el	%1 διαγράφηκαν
 %1 deleted by %2 at %3	infolog	el	%1 διαγράφηκαν από %2 στις %3
 %1 entries %2	infolog	el	%1 καταχωρήσεις %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	el	%1 καταχωρήσεις %2, %3 απέτυχαν λόγω ανεπαρκών δικαιωμάτων !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	el	%1 καταχωρήσεις %2, %3 απέτυχαν λόγω ανεπαρκών δικαιωμάτων!
 %1 entries %2, %3 failed.	infolog	el	%1 καταχωρήσεις %2, %3 απέτυχαν.
 %1 modified	infolog	el	%1 επεξεργάστηκαν
 %1 modified by %2 at %3	infolog	el	%1 επεξεργάστηκαν από %2 στις %3
@@ -34,6 +34,7 @@ action	infolog	el	Ενέργεια
 actions...	infolog	el	Ενέργειες...
 actual date and time	infolog	el	πραγματική ημερομηνία και ώρα
 add	infolog	el	Προσθήκη
+add / remove link	infolog	el	Προσθήκη/αφαίρεση συνδέσμου
 add a file	infolog	el	Προσθήκη αρχείου
 add a new entry	infolog	el	Προσθήκη νέας καταχώρησης
 add a new note	infolog	el	Προσθήκη νέας σημείωσης
@@ -41,17 +42,22 @@ add a new phonecall	infolog	el	Προσθήκη νέας τηλεφωνικής 
 add a new sub-task, -note, -call to this entry	infolog	el	Προσθήκη νεόυ υπο-καθήκοντος,-σημείωσης,-κλήσης σε αυτή την καταχώρηση
 add a new todo	infolog	el	Προσθήκη νέας εκκρεμότητας
 add file	infolog	el	Προσθήκη αρχείου
+add or delete links	infolog	el	Προσθήκη ή διαγραφή συνδέσμων
 add sub	infolog	el	προσθήκη υπό
+add timesheet entry	infolog	el	Προσθήκη καταχώρησης φύλλου εργασίας
 add:	infolog	el	Προσθήκη:
 added	infolog	el	Προστέθηκε
 addressbook placeholders available	infolog	el	Διαθέσιμα εικονίδια στο βιβλίο διευθύνσεων
 all	infolog	el	Όλα
 all links and attachments	infolog	el	όλοι οι σύνδεσμοι και οι επισυνάψεις
 all other %1 fields are valid	infolog	el	Όλα τα άλλα πεδία %1 είναι έγκυρα
+all projects	infolog	el	Όλα τα έργα
 allow to save entries with due date in the past	infolog	el	Επιτρέψτε την αποθήκευση καταχωρήσεων με ημερομηνία λήξης στο παρελθόν
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	el	επιτρέπει τον καθορισμό της κατάστασης μιας καταχώρησης,π.χ. καθορισμός μιας εκκρεμότητας σε ολοκληρωμένη εάν τελείωσε (αξίες εξαρτώνται από τον τύπο της καταχώρησης)
+alternatives	infolog	el	Εναλλακτικές λύσεις
 always show them	infolog	el	Να τις εμφανίζει πάντα
 application mail expected but got: %1	infolog	el	Αναμενόμενο μήνυμα ηλεκτρονικού ταχυδρομείου της αίτησης, το οποίο όμως έλαβε: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	el	Εφαρμόστε την ενέργεια σε ολόκληρο το ερώτημα, ΟΧΙ μόνο στις εμφανιζόμενες καταχωρήσεις!
 apply the changes	infolog	el	Εφαρμογή των αλλαγών
 are you shure you want to delete this entry ?	infolog	el	Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την καταχώρηση;
 attach a file	infolog	el	Επισύναψη αρχείου
@@ -122,7 +128,7 @@ delegated overdue	infolog	el	εξουσιοδοτημένα καθυστερημ
 delegated upcomming	infolog	el	εξουσιοδοτημένα επερχόμενα
 delegation	infolog	el	Εξουσιοδότηση
 delete	infolog	el	Διαγραφή
-delete one record by passing its id.	infolog	el	Διαγραφή μιας εγγραφής διαβαίνοντας απο το id της.
+delete one record by passing its id.	infolog	el	Διαγραφή μιας εγγραφής διαβαίνοντας απο το ID της.
 delete selected entries?	infolog	el	Διαγραφή επιλεγμένων καταχωρήσεων;
 delete this entry and all listed sub-entries	infolog	el	Διαγραφή αυτής της καταχώρησης και όλων των υπο-καταχωρήσεων στη λίστα
 deleted	infolog	el	διαγράφηκαν
@@ -144,7 +150,7 @@ do you want a notification, if items you delegated are due?	infolog	el	Επιθ�
 do you want to receive notifications as html-mails or plain text?	infolog	el	Επιθυμείτε να λαμβάνετε ειδοποιήσεις ως html-mails ή απλό κείμενο;
 don't show infolog	infolog	el	ΜΗΝ εμφανίζετε το InfoLog
 done	infolog	el	ολοκληρώθηκε
-download	infolog	el	Λήψη
+download	infolog	el	Αποθήκευση αρχείου
 download url for links	infolog	el	Λήψη URL για συνδέσμους
 due %1	infolog	el	Λόγω %1
 due date	infolog	el	Ημερομηνία λήξης
@@ -183,7 +189,7 @@ exports in ical format.	infolog	el	Εξαγωγές σε μορφή iCal.
 exports infolog entries into a csv file.	infolog	el	Εξάγει τις καταχωρήσεις του InfoLog σε αρχείο CSV.
 favorites	infolog	el	Αγαπημένα
 fax	infolog	el	Fax
-field must not be empty !!!	infolog	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
+field must not be empty !!!	infolog	el	Το πεδίο δεν πρέπει να μείνει κενό!
 fields to exclude when copying an infolog:	infolog	el	Πεδία που πρέπει να εξαιρεθούν κατά την αντιγραφή ενός InfoLog:
 fields to exclude when creating a sub-entry:	infolog	el	Πεδία που πρέπει να αποκλείονται κατά τη δημιουργία μιας υποεγγραφής:
 fieldseparator	infolog	el	Διαχωριστής πεδίων
@@ -236,6 +242,8 @@ insert	infolog	el	Εισαγωγή
 insert in document	infolog	el	Εισαγωγή στο έγγραφο
 insert timestamp into description field	infolog	el	Εισαγωγή χρονοσφραγίδας στο πεδίο περιγραφής
 invalid filename	infolog	el	Άκυρο όνομα αρχείου
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	el	Μη έγκυρο αναγνωριστικό ιδιοκτήτη: %1. Χρησιμοποιήθηκε %2.
+invalid status for entry type %1.	infolog	el	Μη έγκυρη κατάσταση για τον τύπο καταχώρησης %1.
 label<br>helptext	infolog	el	Ετικέτα<br>Κείμενο βοήθειας
 last changed	infolog	el	Τελευταία αλλαγή
 last modified	infolog	el	Τελευταία προσαρμογή
@@ -261,10 +269,12 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	el	Τοποθεσία
 longer textual description	infolog	el	εκτενέστερη περιγραφή κειμένου
 low	infolog	el	χαμηλή
+manage mapping	infolog	el	Διαχείριση αντιστοίχισης
 max length of the input [, length of the inputfield (optional)]	infolog	el	μέγιστο μήκος εισροής [μήκος πεδίου εισροών (κατ'επιλογή)]
 modifier	infolog	el	Τροποποιητής
 modifierer	infolog	el	Τροποποιητής
 name must not be empty !!!	infolog	el	Το όνομα δεν πρέπει να μένει κενό
+name of current user, all other contact fields are valid too	infolog	el	Όνομα του τρέχοντος χρήστη, όλα τα άλλα πεδία επαφής είναι επίσης έγκυρα
 name of new type to create	infolog	el	όνομα νέου τύπου προς δημιουργία
 never hide search and filters	infolog	el	Να μην αποκρύπτεται ποτέ η αναζήτηση και τα φίλτρα
 new %1	infolog	el	Νέο %1
@@ -299,6 +309,7 @@ only show them if there is a filter	infolog	el	Να τις εμφανίζει μ
 only show them while searching	infolog	el	Να εμφανίζονται μόνο κατά την αναζήτηση
 only the attachments	infolog	el	μόνο οι επισυνάψεις
 only the links	infolog	el	μόνο οι σύνδεσμοι
+open and upcoming	infolog	el	Ανοιχτό και επερχόμενο
 open(status)	infolog	el	ανοικτά
 optional note to the link	infolog	el	προαιρετική σημείωση στο σύνδεσμο
 order	infolog	el	Παραγγελία
@@ -312,12 +323,13 @@ own upcoming	infolog	el	δικά μου επερχόμενα
 owner, responsible	infolog	el	Ιδιοκτήτης, υπεύθυνος
 parent	infolog	el	Μητρική
 participants for scheduling an appointment	infolog	el	Συμμετέχοντες για τον προγραμματισμό ενός ραντεβού
-path to user and group files has to be outside of the webservers document-root!!!	infolog	el	Το μονοπάτι προς τα αρχεία του χρήστη και των ομάδων ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ της πορείας των εγγράφων των webservers!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	el	Το μονοπάτι προς τα αρχεία του χρήστη και των ομάδων ΠΡΕΠΕΙ ΝΑ ΕΙΝΑΙ ΕΚΤΟΣ της πορείας των εγγράφων των webservers!
 pattern for search in addressbook	infolog	el	Μοτίβο για αναζήτηση στο βιβλίο διευθύνσεων
 pattern for search in projects	infolog	el	Μοτίβο για αναζήτηση σε έργα
 percent completed	infolog	el	ποσοστό που έχει ολοκληρωθεί
 performance optimization for huge infolog tables	admin	el	Βελτιστοποίηση επιδόσεων για τεράστιους πίνακες InfoLog
 permission denied	infolog	el	Άδεια απορρίπτεται
+permissions error - %1 could not %2	infolog	el	Σφάλμα δικαιωμάτων - %1 δεν μπόρεσε να %2
 phone	infolog	el	Κλήση τηλεφώνου
 phone/email	infolog	el	Τηλέφωνο/Email
 phonecall	infolog	el	Κλήση τηλεφώνου
@@ -401,7 +413,7 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζει τους συνδέσμους με άλλες εφαρμογές και/ή τις προσκολλήσεις αρχείου στην InfoLog λίστα (κανονική εμφάνιση όταν εισέρχεστε στο InfoLog).
 should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	el	Θα έπρεπε το InfoLog να εμφανίζεται στη βασική οθόνη και με ποιο φίλτρο.Λειτουργεί μόνο αν δεν επιλέξατε μία εφαρμογή για την βασική οθόνη (στις προτιμήσεις σας).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	el	Θα έπρεπε το InfoLog να χρησιμοποιεί ολόκληρα ονόματα (επώνυμα και οικογενειακά ονόματα) ή μόνο τα ονόματα εισόδου.
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει ένα μοναδικό νούμερο Id, το οποίο να μπορεί να χρησιμοποιείται π.χ. ως Id εισιτηρίου.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει ένα μοναδικό νούμερο Id, το οποίο να μπορεί να χρησιμοποιείται π.χ. ως ID εισιτηρίου.
 should the infolog list show the column "last modified".	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει τη στήλη "τελευταία τροποποίηση".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	el	Θα έπρεπε η InfoLog λίστα να εμφανίζει το ποσοστό ολοκλήρωσης μόνο για την κατάσταση τρέχων ή δύο ξεχωριστά εικονίδια.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	el	θέλετε αυτή η καταχώρηση να είναι ορατή σε εσάς και στα άτομα που δίνεται προσωπική άδεια μέσω του ACL
@@ -438,6 +450,7 @@ tasks of	infolog	el	Εργασίες της
 template	infolog	el	Πρότυπο
 test import (show importable records <u>only</u> in browser)	infolog	el	Έλεγχος Εισαγωγής (εμφάνιση εισαγώγιμων εγγραφών <u>only</> στο browser)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	el	Το έγγραφο μπορεί να περιέχει τίτλο θέσης όπως {{%1}}, ο οποίος θα αντικατασταθεί με τα δεδομένα.
+the following document-types are supported:	infolog	el	Υποστηρίζονται οι ακόλουθοι τύποι εγγράφων:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	infolog	el	το κείμενο εμφανίζεται στο χρήστη
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	el	Αυτές είναι οι χρήσεις του InfoLog φίλτρου όταν εισέρχεστε στην εφαρμογή.Τα φίλτρα περιορίζουν τις καταχωρήσεις να εμφανίζονται στην πραγματική παρουσίαση.Υπάρχουν φίλτρα που παρουσιάζουν μόνο τα ολοκληρωμένα, τα τρέχοντα ή τις δικές σας μελλοντικές καταχωρήσεις ή και όλων των χρηστών.
@@ -489,7 +502,7 @@ yes, only admins can purge deleted items	infolog	el	Ναι, μόνο ο διαχ
 yes, with larger fontsize	infolog	el	Ναι,  με μεγαλύτερο μέγεθος φόντου
 yes, with purging of deleted items possible	infolog	el	Ναι, με τον καθαρισμό των διαγραμένων αντικειμένων να είναι δυνατός
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	el	Μπορείτε να επιλέξετε μια κατηγορία που θα προεπιλέγεται, όταν δημιουργείτε μια νέα καταχώρηση InfoLog.
-you can't delete one of the stock types !!!	infolog	el	Δεν μπορείτε να διαγράψετε έναν από τους προκαθορισμένους τύπους !!!
+you can't delete one of the stock types !!!	infolog	el	Δεν μπορείτε να διαγράψετε έναν από τους προκαθορισμένους τύπους!
 you have entered an invalid ending date	infolog	el	Έχετε πληκτρολογήσει μια άκυρη ημερομηνία οφειλής
 you have entered an invalid starting date	infolog	el	Έχετε πληκτρολογήσει μια άκυρη ημερομηνία έναρξης
 you have to enter a name, to create a new type!	infolog	el	Πρέπει να εισαγάγετε ένα όνομα, για να δημιουργήσετε έναν νέο τύπο!

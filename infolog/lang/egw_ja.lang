@@ -2,7 +2,7 @@
 %1 deleted	infolog	ja	%1 を削除しました。
 %1 deleted by %2 at %3	infolog	ja	%2 は %1 を %3 に削除しました。
 %1 entries %2	infolog	ja	%1 個の項目を %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ja	%1 個の項目を %2, %3 個は権限不足のため失敗。!!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ja	%1 個の項目を %2, %3 個は権限不足のため失敗。!
 %1 entries %2, %3 failed.	infolog	ja	%1 個の項目を %2, %3 個は失敗。
 %1 modified	infolog	ja	%1 を変更しました。
 %1 modified by %2 at %3	infolog	ja	%1 は %3 で %2 によって変更されました。
@@ -57,7 +57,7 @@ allows to set the status of an entry, eg. set a todo to done if it's finished (v
 alternatives	infolog	ja	代替
 always show them	infolog	ja	常に表示
 application mail expected but got: %1	infolog	ja	不正な %1 を受信しました。アプリケーション・メールが必要です。
-apply the action on the whole query, not only the shown entries!!!	infolog	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）!!!
+apply the action on the whole query, not only the shown entries!!!	infolog	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）!
 apply the changes	infolog	ja	変更を適用
 archive	infolog	ja	アーカイブ
 are you shure you want to close this entry ?	infolog	ja	この項目を閉じてよろしいですか？
@@ -169,7 +169,7 @@ do you want a notification, if items you delegated are due?	infolog	ja	あなた
 do you want to receive notifications as html-mails or plain text?	infolog	ja	通知を HTML メールで受信するかプレーン・テキストで受信しますか？
 don't show infolog	infolog	ja	インフォログを表示しない
 done	infolog	ja	完了
-download	infolog	ja	ダウンロード
+download	infolog	ja	ファイルの保存
 download url for links	infolog	ja	ダウンロード URL
 due %1	infolog	ja	期限 %1
 due date	infolog	ja	期限
@@ -209,8 +209,8 @@ exports infolog entries into a csv file.	infolog	ja	CSV ファイルにインフ
 favorites	infolog	ja	お気に入り
 fax	infolog	ja	FAX
 field must not be empty !!!	infolog	ja	項目を空欄にする個とはできません!
-fields to exclude when copying an infolog:	infolog	ja	Fields to exclude when copying an infolog:
-fields to exclude when creating a sub-entry:	infolog	ja	Fields to exclude when creating a sub-entry:
+fields to exclude when copying an infolog:	infolog	ja	インフォログをコピーする際に除外するフィールド：
+fields to exclude when creating a sub-entry:	infolog	ja	サブエントリーを作成する際に除外するフィールド：
 fieldseparator	infolog	ja	項目の区切り
 finish	infolog	ja	終了
 first argument for preg_replace	infolog	ja	preg_replace の第1パラメータ
@@ -324,7 +324,7 @@ notification settings	infolog	ja	通知設定
 number of records to read (%1)	infolog	ja	読み込むレコード数 (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	ja	複数行項目の行数、または複数セレクトボックスの行数
 offer	infolog	ja	委託の提示
-old fixed definition	infolog	ja	Old fixed definition
+old fixed definition	infolog	ja	古い固定定義
 one day after	infolog	ja	1日後
 one day in advance	infolog	ja	1日前
 ongoing	infolog	ja	進行中
@@ -474,7 +474,7 @@ sub-entry	infolog	ja	サブ項目
 subject	infolog	ja	件名
 sum	infolog	ja	合計
 tag to mark positions for address labels	infolog	ja	アドレスラベルで、位置を記録するためのタグ
-task	infolog	ja	ToDo
+task	infolog	ja	やること
 tasks of	infolog	ja	タスク:
 template	infolog	ja	テンプレート
 test import (show importable records <u>only</u> in browser)	infolog	ja	インポートの予行演習。インポート可能なレコードをブラウザに<u>表示するだけ</u>。
@@ -484,7 +484,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ja	内部識別名（20文字以下）。これを変更すると既存データが利用できなくなります。
 the text displayed to the user	infolog	ja	ユーザに表示されるテキスト
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	ja	アプリケーション起動時の既定のフィルター。フィルターによって、表示する項目数を制限できます。
-til when should the todo or phonecall be finished	infolog	ja	ToDo、または電話発呼が終了すべき日時
+til when should the todo or phonecall be finished	infolog	ja	InfoLogをいつ終了するか
 times	infolog	ja	時間
 titles of any entries linked to the current record, excluding attached files	infolog	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
 to many might exceed your execution-time-limit	infolog	ja	数量が多過ぎるため、実行時間の制限値を越える恐れがあります。

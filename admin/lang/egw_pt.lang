@@ -1,11 +1,35 @@
+%1 %2 rights for %3 on %4 to %5	admin	pt	%1 %2 direitos para %3 em %4 a %5
 %1 - %2 of %3 user accounts	admin	pt	%1 - %2 de %3 contas de utilizadores
 %1 - %2 of %3 user groups	admin	pt	%1 - %2 de %3 grupos de utilizadores
+%1 access to other data	admin	pt	%1 acesso a outros dados
+%1 accounts being activated	admin	pt	%1 contas a serem activadas
+%1 acl entries deleted.	admin	pt	%1 entradas ACL eliminadas.
 %1 acl records of not (longer) existing accounts deleted.	admin	pt	Os %1 registos ACL de contas (já) não existentes foram eliminados.
-%1 not found or not executable !!!	admin	pt	%1 não foi encontrado ou não é executável !!!
-(default no, leave it off if you dont use it)	admin	pt	(por omissão: Não, mantenha-o assim se não o utilizar)
+%1 categories of not (longer) existing accounts deleted.	admin	pt	%1 categorias de contas não (mais) existentes eliminadas.
+%1 category '%2' %3	admin	pt	%1 categoria "%2" %3
+%1 category(s) %2	admin	pt	%1 categoria(s) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	pt	%1 categoria(s) %2, %3 falhou devido a direitos insuficientes!
+%1 class not instanciated	admin	pt	%1 classe não instanciada
+%1 entries deleted	admin	pt	%1 entradas eliminadas
+%1 entries deleted.	admin	pt	%1 entradas eliminadas.
+%1 group %2	admin	pt	%1 grupo %2
+%1 is no command!	admin	pt	%1 não é um comando!
+%1 log entries deleted.	admin	pt	%1 entradas de registo eliminadas.
+%1 mail credentials deleted	admin	pt	%1 credenciais de correio eliminadas
+%1 not found or not executable !!!	admin	pt	%1 não foi encontrado ou não é executável!
+%1 phrases saved.	admin	pt	%1 frases guardadas.
+%1 rights for %2 and applications %3	admin	pt	%1 direitos para %2 e aplicação(ões) %3 .
+%1 run rights for applications	admin	pt	%1 direitos de execução para aplicações
+%1 sessions killed	admin	pt	%1 sessões eliminadas.
+%1 successful	admin	pt	%1 com êxito
+%1 token %2.	admin	pt	%1 token %2.
+%1 user %2	admin	pt	%1 utilizador %2
+(de)activate mail accounts	admin	pt	(des)Ativar contas de correio
+(default no, leave it off if you dont use it)	admin	pt	Por omissão: Não, mantenha-o assim se não o utilizar
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt	(a classe imap tem de suportar esta funcionalidade consultando o valor de configuração correspondente e passando-o como quota predefinida para o servidor IMAP)
 (no subject)	admin	pt	(sem assunto)
 (stored password will not be shown here)	admin	pt	(Senha guardada não será exibida aqui)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	(Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão] !!!)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão]!
 -  type	admin	pt	- tipo
 1 year	admin	pt	1 ano
 2 month	admin	pt	2 meses
@@ -87,15 +111,15 @@ are you sure you want to delete this server?	admin	pt	Tem certeza de que deseja 
 are you sure you want to kill this session ?	admin	pt	Você tem certeza de que deseja terminar esta sessão ?
 async services last executed	admin	pt	Últimos serviços assíncronos executados
 asynchronous timed services	admin	pt	Serviços assíncronos agendados
-asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assíncronos por instalar ou outro erro (%1) !!!
+asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assíncronos por instalar ou outro erro (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt	Tentativa de utilizar o mimetype correcto para FTP em vez da 'aplicação/octet-stream' por omissão
 attribute accountstatus explained	admin	pt	Isto gere o atributo <b><i>-accountStatus-</i></b> a partir do QMAIL schema.
 attribute mail explained	admin	pt	Isto gere o atributo <b><i>-mail-</i></b> a partir do QMAIL schema e nunca deve estar vazio. É também o campo do correio electrónico interno do EGroupware
 attribute mailalternateaddress explained	admin	pt	Isto gere o atrabitu <b><i>-mailAlternateAddress-</i></b> a partir do QMAIL schema e pode ser gerido como um mapa virtual ou aliases.
 attribute mailforwardingaddress explained	admin	pt	Isto gere o atributo <b><i>-mailForwardingAddress-</i></b> a partir do QMAIL schema e não pode estar vazio se subscrito.
-authentication / accounts	admin	pt	Autenticação / Contas
+authentication / accounts	admin	pt	Autenticação/Contas
 auto create account records for authenticated users	admin	pt	Criar automaticamente registos da conta para utilizadores autenticados
-back to the list	admin	pt	voltar à lista
+back to the list	admin	pt	Voltar à lista
 bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
 bottom	admin	pt	Fundo
@@ -105,7 +129,7 @@ can be used by group	admin	pt	Pode ser utilizado pelo grupo
 can change password	admin	pt	Não é possível alterar a senha
 cancel testjob!	admin	pt	Cancelar trabalho de teste
 categories list	admin	pt	Lista de categorias
-category %1 has been saved !	admin	pt	A categoria %1 foi guardada !
+category %1 has been saved !	admin	pt	A categoria %1 foi guardada!
 category list	admin	pt	Lista de categorias
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
@@ -119,9 +143,9 @@ could not append message:	admin	pt	Não foi possível anexar Mensagem:
 country	admin	pt	País
 country selection	admin	pt	Selecção de País
 create group	admin	pt	Criar Grupo
-create new account	admin	pt	criar nova conta
+create new account	admin	pt	Criar nova conta
 created	admin	pt	Criado
-creates a new field	admin	pt	cria um novo campo
+creates a new field	admin	pt	Cria um novo campo
 crontab only (recomended)	admin	pt	Apenas crontab (recomendado)
 custom 1	admin	pt	Personalizado 1
 custom 2	admin	pt	Personalizado 2
@@ -135,7 +159,7 @@ day of week<br>(0-6, 0=sun)	admin	pt	Dia da semana<br>(0-6, 0=Dom)
 db backup and restore	admin	pt	Cópia de segurança e reposição da base de dados
 default	admin	pt	Por omissão
 default file system space per user	admin	pt	Espaço em disco por utilizador (por omissão)
-default file system space per user/group ?	admin	pt	Espaço em disco por utilizador/grupo por omissão ?
+default file system space per user/group ?	admin	pt	Espaço em disco por utilizador/grupo por omissão?
 deinstall crontab	admin	pt	Desinstalar crontab
 delete account	admin	pt	Eliminar conta
 delete all records	admin	pt	Eliminar todos os registos
@@ -143,13 +167,13 @@ delete application	admin	pt	Eliminar aplicações
 delete category	admin	pt	Eliminar categorias
 delete group	admin	pt	Eliminar grupos
 delete peer server	admin	pt	Eliminar servidor remoto
-delete the category	admin	pt	eliminar a categoria
-delete the group	admin	pt	eliminar o grupo
-delete this category	admin	pt	eliminar esta categoria
-delete this group	admin	pt	elimnar este grupo
-delete this user	admin	pt	eliminar este utilizador
-deleted	admin	pt	eliminado/a
-deletes this field	admin	pt	eliminar este campo
+delete the category	admin	pt	Eliminar a categoria
+delete the group	admin	pt	Eliminar o grupo
+delete this category	admin	pt	Eliminar esta categoria
+delete this group	admin	pt	Elimnar este grupo
+delete this user	admin	pt	Eliminar este utilizador
+deleted	admin	pt	Eliminado/a
+deletes this field	admin	pt	Eliminar este campo
 deliver extern	admin	pt	Entrega externa
 deny access	admin	pt	Negar acesso
 deny access to access log	admin	pt	Negar acesso ao registo de acessos
@@ -166,9 +190,9 @@ deny access to peer servers	admin	pt	Negar acesso aos servidores remotos
 deny access to phpinfo	admin	pt	Negar acesso à informação php
 deny access to site configuration	admin	pt	Negar acesso à configuração do sítio
 deny access to user accounts	admin	pt	Negar acesso às contas de utilizadores
-deny all users access to grant other users access to their entries ?	admin	pt	Negar a todos os utilizadores a possibilidade de conceder o acesso de outros utilizadores aos seus registos ?
-description can not exceed 255 characters in length !	admin	pt	A descrição não pode exceder os 255 caracteres !
-determines the order the fields are displayed	admin	pt	determina a ordem de apresentação dos campos
+deny all users access to grant other users access to their entries ?	admin	pt	Negar a todos os utilizadores a possibilidade de conceder o acesso de outros utilizadores aos seus registos?
+description can not exceed 255 characters in length !	admin	pt	A descrição não pode exceder os 255 caracteres!
+determines the order the fields are displayed	admin	pt	Determina a ordem de apresentação dos campos
 disable	admin	pt	Desactivar
 disable "auto completion" of the login form	admin	pt	Desactivar a funcionalidade de "informação de formulários guardada" no formulário de acesso
 disable wysiwyg-editor	admin	pt	Desactivar o editor do WYSIWYG
@@ -179,8 +203,8 @@ displaying plain messages is disabled	admin	pt	exibição de mensagens simples �
 do not delete the category and return back to the list	admin	pt	NÃO eliminar a categoria e voltar para a lista
 do you also want to delete all global subcategories ?	admin	pt	Deseja eliminar também todas subcategorias gerais ?
 do you really want to delete this profile	admin	pt	Deseja relamente eliminar este perfil
-do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas as subcategorias gerais ?
-do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo ?
+do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas as subcategorias gerais?
+do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo?
 domainname	admin	pt	Nome de domínio
 down	admin	pt	baixo
 edit account	admin	pt	Editar conta
@@ -192,10 +216,10 @@ edit group	admin	pt	Editar grupos
 edit group acl's	admin	pt	Editar ACLs do grupo
 edit peer server	admin	pt	Editar servidor remoto
 edit table format	admin	pt	Editar formato de tabela
-edit this category	admin	pt	editar esta categoria
-edit this group	admin	pt	editar este grupo
-edit this user	admin	pt	editar este utilizador
-edit user	admin	pt	editar utilizador
+edit this category	admin	pt	Editar esta categoria
+edit this group	admin	pt	Editar este grupo
+edit this user	admin	pt	Editar este utilizador
+edit user	admin	pt	Editar utilizador
 edit user account	admin	pt	Editar conta de utilizador
 email account active	admin	pt	Conta de correio electrónico activa
 email address	admin	pt	Endereço de correio electrónico
@@ -203,19 +227,19 @@ enable	admin	pt	Activar
 enable cyrus imap server administration	admin	pt	Activar administração do servidor IMAP Cyrus
 enable debug-messages	admin	pt	Activar mensagens de debug
 enable sieve	admin	pt	Activar Sieve
-enable the soap service	admin	pt	Activar o serviço soap
-enable the xmlrpc service	admin	pt	Activar o serviço xmlrpc
+enable the soap service	admin	pt	Activar o serviço SOAP
+enable the xmlrpc service	admin	pt	Activar o serviço XML-RPC
 enabled - hidden from navbar	admin	pt	Activo - Escondido da barra de navegação
 enabled - popup window	admin	pt	Activo - Janela Popup
 encryption settings	admin	pt	Definições de cifragem
-enter a description for the category	admin	pt	insira uma descrição para a categoria
+enter a description for the category	admin	pt	Insira uma descrição para a categoria
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt	Insira algum texto aleatório para a encriptação <br>da sessão da aplicação (requer mcrypt)
 enter the background color for the login page	admin	pt	Escolha uma cor de fundo para a página de acesso
 enter the background color for the site title	admin	pt	Escolha uma cor de fundo para o título do sítio
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt	Insira o caminho completo para ficheiros temporários.<br>Exemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt	Insira o caminho completo para ficheiros de utilizadores e grupos.<br>Exemplos: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pt	Insira o nome da máquina em que este servidor está a ser executado
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a URL do EGroupware.<br>Exemplo: http://www.domain.com/egroupware ou   /egroupware<br><b>Sem a barra final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt	Insira a URL do EGroupware.<br>Exemplo: https://egw.domain.com/egroupware ou   /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt	Inserir o termo de pesquisa. Para exibir todos os registos, limpe este campo e clique novamente no botão Enviar.
 enter the site password for peer servers	admin	pt	Insira a senha do sítio para servidores remotos
 enter the site username for peer servers	admin	pt	Insira o nome de utilizador do sítio para servidores remotos
@@ -226,15 +250,15 @@ enter your default ftp server	admin	pt	Insira o seu servidor FTP por omissão
 enter your default mail domain ( from: user@domain )	admin	pt	Insira o seu domínio de correio electrónico por omissão ( De: utilizador@domínio )
 enter your default mail domain (from: user@domain)	admin	pt	Insira o seu domínio de correio electrónico por omissão (de: utilizador@domínio)
 enter your http proxy server	admin	pt	Insira o endereço do seu servidor proxy HTTP
-enter your http proxy server port	admin	pt	Insira a porta do seu servidor proxy
+enter your http proxy server port	admin	pt	Insira a porta do seu servidor proxy HTTP
 enter your smtp server hostname or ip address	admin	pt	Insira o endereço do seu servidor SMTP ou endereço IP
 enter your smtp server port	admin	pt	Insira a porta do seu servidor SMTP
 entry saved	admin	pt	Registo guardado
-error canceling timer, maybe there's none set !!!	admin	pt	Erro ao cancelar cronómetro. Talvez nenhum esteja activo !!!
-error saving the entry!!!	admin	pt	Erro ao guardar o registo!!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt	Erro ao activar cronómetro: sintaxe incorrecta ou já existe um em execução !!!
+error canceling timer, maybe there's none set !!!	admin	pt	Erro ao cancelar cronómetro. Talvez nenhum esteja activo!
+error saving the entry!!!	admin	pt	Erro ao guardar o registo!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt	Erro ao activar cronómetro: sintaxe incorrecta ou já existe um em execução!
 error! no appname found	admin	pt	Erro! Nenhum nome de aplicação encontrado
-error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outro erro !!!
+error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outro erro!
 event details follow	admin	pt	Seguem detalhes do evento
 exists	admin	pt	Existe
 expires	admin	pt	Expira
@@ -242,22 +266,22 @@ explanation of ldapman	admin	pt	Até ao momento, este módulo foi testado para P
 failed to change password.	admin	pt	Não foi possível alterar a senha.
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
 false	admin	pt	Falso
-field '%1' already exists !!!	admin	pt	O campo '%1' já existe !!!
+field '%1' already exists !!!	admin	pt	O campo '%1' já existe!
 file rejected, no %2. is:%1	admin	pt	Arquivo rejeitado, sem% 2. É: 1%
 file space	admin	pt	Espaço do ficheiro
 file space must be an integer	admin	pt	O espaço do ficheiro tem de ser íntegro
 for the times above	admin	pt	para as ocasiões anteriores
-for the times below (empty values count as '*', all empty = every minute)	admin	pt	para as ocasiões seguintes (valores vazios contam como '*', tudo vazio = todos os minutos)
+for the times below (empty values count as '*', all empty = every minute)	admin	pt	Para as ocasiões seguintes (valores vazios contam como '*', tudo vazio = todos os minutos)
 force selectbox	admin	pt	Forçar caixa de selecção
 forward also to	admin	pt	Reencaminhar também para
 forward email's to	admin	pt	Reencaminhar mensagens para
-forward emails to	admin	pt	reencaminhar mensagens para
+forward emails to	admin	pt	Reencaminhar mensagens para
 forward only	admin	pt	Reencaminhar apenas
 full name	admin	pt	Nome completo
 general	admin	pt	Geral
 global categories	common	pt	Categorias gerais
 global options	admin	pt	Opções gerais
-group ?	admin	pt	grupo ?
+group ?	admin	pt	Grupo?
 group has been added	common	pt	O grupo foi  adicionado
 group has been deleted	common	pt	O grupo foi eliminado
 group has been updated	common	pt	O grupo foi actualizado
@@ -298,19 +322,19 @@ kill	admin	pt	Terminar
 kill session	admin	pt	Terminar sessão
 last %1 logins	admin	pt	Últimos %1 acessos
 last %1 logins for %2	admin	pt	Últimos %1 acessos a %2
-last login	admin	pt	último acesso
-last login from	admin	pt	último acesso de
+last login	admin	pt	Último início de sessão
+last login from	admin	pt	Último início de sessão de
 last time read	admin	pt	Última vez lido
 last updated	admin	pt	Última atualização
-ldap accounts context	admin	pt	contexto de contas LDAP
+ldap accounts context	admin	pt	Contexto de contas LDAP
 ldap basedn	admin	pt	Base DN LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt	prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pt	Prefixo de diretório home padrão LDAP (Exemplo: /home para /home/username)
 ldap default shell (e.g. /bin/bash)	admin	pt	shell por omissão LDAP (Exemplo: /bin/bash)
-ldap encryption type	admin	pt	tipo de encriptação LDAP
-ldap groups context	admin	pt	contexto de grupos LDAP
-ldap host	admin	pt	servidor LDAP
-ldap root password	admin	pt	senha do super utilizador LDAP
-ldap rootdn	admin	pt	super utilizador LDAP
+ldap encryption type	admin	pt	Tipo de encriptação LDAP
+ldap groups context	admin	pt	Contexto de grupos LDAP
+ldap host	admin	pt	Servidor LDAP
+ldap root password	admin	pt	Senha do super utilizador LDAP
+ldap rootdn	admin	pt	Super utilizador LDAP
 ldap server	admin	pt	Servidor LDAP
 ldap server accounts dn	admin	pt	DN das contas de servidor LDAP
 ldap server admin dn	admin	pt	DN do administrador de servidor LDAP
@@ -342,36 +366,36 @@ maximum entries in click path history	admin	pt	Número máximo de registos ao cl
 members	admin	pt	Membros
 message has been updated	admin	pt	Mensagem foi atualizada
 method	admin	pt	Método
-minimum account id (e.g. 500 or 100, etc.)	admin	pt	id mínimo para contas (Exemplo: 500 ou 100, etc.)
+minimum account id (e.g. 500 or 100, etc.)	admin	pt	ID mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt	Minuto
 mode	admin	pt	Modo
 modified	admin	pt	Modificado
 month	admin	pt	Mês
-name must not be empty !!!	admin	pt	O campo do nome não pode ficar vazio !!!
+name must not be empty !!!	admin	pt	O campo do nome não pode ficar vazio!
 name of organisation	admin	pt	Nome da empresa
 new group name	admin	pt	Nome do novo Grupo
-new name	admin	pt	novo nome
-new password [ leave blank for no change ]	admin	pt	Nova senha [ Deixe em branco para não alterar ]
+new name	admin	pt	Novo nome
+new password [ leave blank for no change ]	admin	pt	Nova senha (Deixe em branco para não alterar)
 next run	admin	pt	Execução seguinte
-no algorithms available	admin	pt	nenhum algoritmo disponível
+no algorithms available	admin	pt	Nenhum algoritmo disponível
 no alternate email address	admin	pt	Sem endereço de correio electrónico alternativo
 no forwarding email address	admin	pt	Sem endereço de correio electrónico para reencaminhamento
-no jobs in the database !!!	admin	pt	Nenhum trabalho na base de dados !!!
+no jobs in the database !!!	admin	pt	Nenhum trabalho na base de dados!
 no login history exists for this user	admin	pt	Não existe histórico de acessos para este utilizador
 no matches found	admin	pt	Nenhuma ocorrência encontrada
-no modes available	admin	pt	nenhum modo disponível
-no permission to add groups	admin	pt	sem permissão para adicionar grupos
-no permission to add users	admin	pt	sem permissão para adicionar utilizadores
-no permission to create groups	admin	pt	sem permissão para criar grupos
-no plain text part found	admin	pt	nenhuma parte de texto simples encontrado
-note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte curl.
+no modes available	admin	pt	Nenhum modo disponível
+no permission to add groups	admin	pt	Sem permissão para adicionar grupos
+no permission to add users	admin	pt	Sem permissão para adicionar utilizadores
+no permission to create groups	admin	pt	Sem permissão para criar grupos
+no plain text part found	admin	pt	Nenhuma parte de texto simples encontrado
+note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte Curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 oauth authentiction	admin	pt	Autenticação OAuth
 offer to installing egroupware as mail-handler	admin	pt	Oferta de instalação de EGroupware como correio
 one day	admin	pt	Um dia
 one hour	admin	pt	Uma hora
-one month	admin	pt	um mês
-one week	admin	pt	uma semana
+one month	admin	pt	Um mês
+one week	admin	pt	Uma semana
 order	admin	pt	Ordem
 organisation	admin	pt	Empresa
 other security configuration	admin	pt	Outra configuração de segurança
@@ -387,13 +411,13 @@ peer servers	admin	pt	Servidores remotos
 percent of users that logged out	admin	pt	Percentagem de utilizadores que saíram
 percent this user has logged out	admin	pt	Percentagem das saídas deste utilizador
 permission denied	admin	pt	Permissão negada
-permission denied !!!	admin	pt	Permissão negada !!!
-permission denied!!!	admin	pt	Permissão negada!!!
+permission denied !!!	admin	pt	Permissão negada!
+permission denied!!!	admin	pt	Permissão negada!
 permissions	admin	pt	Permissões
 permissions this group has	admin	pt	Permissões do grupo
 phpinfo	admin	pt	Informações do PHP
 please enter a name	admin	pt	Por favor, insira um nome
-please enter a name for that server !	admin	pt	Por favor, insira um nome para esse servidor !
+please enter a name for that server !	admin	pt	Por favor, insira um nome para esse servidor!
 please run setup to become current	admin	pt	Por favor, execute a configuração para actualizar o sistema
 please select	admin	pt	Por favor, seleccione
 pop3 server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor POP3
@@ -406,20 +430,20 @@ profile list	admin	pt	Lista de perfis
 profile name	admin	pt	Nome do perfil
 qmaildotmode	admin	pt	Quota do correio electrónico no modo Idot
 quota settings	admin	pt	Configurações da quota
-quota size in mbyte	admin	pt	tamanho da quota em MBytes
+quota size in mbyte	admin	pt	Tamanho da quota em MBytes
 re-enter password	admin	pt	Re-insira a senha
 read this list of methods.	admin	pt	Ler esta lista de métodos
 register application hooks	admin	pt	Registar pontos de entrada de aplicações
 remove	admin	pt	Remover
 remove all users from this group	admin	pt	Remover todos os utilizadores deste grupo
-remove all users from this group ?	admin	pt	Deseja remover todos os utilizadores deste grupo ?
-required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
+remove all users from this group ?	admin	pt	Deseja remover todos os utilizadores deste grupo?
+required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
 route all mails to	admin	pt	Encaminhar todas as mensagens para
 rows	admin	pt	Linhas
 run asynchronous services	admin	pt	Executar serviços assíncronos
-save the category	admin	pt	guardar a categoria
-save the category and return back to the list	admin	pt	guardar a categoria e voltar à lista
-saves the changes made and leaves	admin	pt	guarda as alterações e deixa
+save the category	admin	pt	Guardar a categoria
+save the category and return back to the list	admin	pt	Guardar a categoria e voltar à lista
+saves the changes made and leaves	admin	pt	Guarda as alterações e deixa
 saves this entry	admin	pt	Guarda este registo
 search accounts	admin	pt	Pesquisar contas
 search categories	admin	pt	Pesquisar categorias
@@ -444,7 +468,7 @@ server type(mode)	admin	pt	Tipo de servidor (modo)
 server url	admin	pt	URL do servidor
 server username	admin	pt	Utilizador do servidor
 set preference values.	admin	pt	Definir preferências.
-should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração) ?
+should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração)?
 show 'powered by' logo on	admin	pt	Área para exibição da logomarca do EGroupware
 show access log	admin	pt	Exibir registo de acesso
 show current action	admin	pt	Exibir acção actual
@@ -483,16 +507,16 @@ that application name already exists.	admin	pt	Este nome de aplicação já exis
 that application order must be a number.	admin	pt	O campo ordem da aplicação tem d ser um número.
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
 that name has been used already	admin	pt	Esse nome já existe
-that server name has been used already !	admin	pt	Esse nome de servidor já existe !
+that server name has been used already !	admin	pt	Esse nome de servidor já existe!
 the api is current	admin	pt	A base (API) do EGroupware está actualizada
 the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada
 the groups must include the primary group	admin	pt	Os grupos têm de incluir o grupo primário
 the login and password can not be the same	admin	pt	O nome de utilizador e a senha não podem ser iguais
 the loginid can not be more then 8 characters	admin	pt	O nome de utilizador não pode ter mais de 8 caracteres
 the mimeparser can not parse this message.	admin	pt	O mimeparser não pode analisar estas mensagem.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt	o nome utilizado internamente (<= 20 caracteres), alterá-lo torna os dados existentes indisponíveis
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pt	O nome utilizado internamente (<= 20 caracteres), alterá-lo torna os dados existentes indisponíveis
 the testjob sends you a mail everytime it is called.	admin	pt	O "trabalho de teste" envia-lhe uma mensagem sempre que for chamado.
-the text displayed to the user	admin	pt	o texto apresentado ao utilizador
+the text displayed to the user	admin	pt	O texto apresentado ao utilizador
 the two passwords are not the same	admin	pt	As senhas não coincidem
 the users bellow are still members of group %1	admin	pt	Os seguintes utilizadores ainda são membros do grupo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	pt	Já existe um grupo com este nome. O ID do utilizador não pode ter o mesmo nome que o ID de um grupo
@@ -511,12 +535,12 @@ true	admin	pt	Verdadeiro
 trust level	admin	pt	Nível de confiança
 trust relationship	admin	pt	Relação de confiança
 two weeks	admin	pt	Duas semanas
-type '%1' already exists !!!	admin	pt	O tipo '%1' já existe !!!
+type '%1' already exists !!!	admin	pt	O tipo '%1' já existe!
 type of customfield	admin	pt	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt	No windowz é necessário instalar o asyncservice %1manualmente%2 ou utilizar o modo Fallback. Este modo significa que as tarefas só serão verificadas depois de cada visualização de página.
-up	admin	pt	para cima
+up	admin	pt	Para cima
 updated	admin	pt	Actualizado
-use cookies to pass sessionid	admin	pt	Utilizar cookies para transmitir id de sessão
+use cookies to pass sessionid	admin	pt	Utilizar cookies para transmitir ID de sessão
 use default	admin	pt	Utilizar definições por omissão
 use ldap defaults	admin	pt	Utilizar definições por omissão do LDAP
 use pure html compliant code (not fully working yet)	admin	pt	Usar puro código HTML (não funciona totalmente ainda)
@@ -529,6 +553,7 @@ user can edit forwarding address	admin	pt	O utilizador pode editar endereços re
 user data	common	pt	Dados de utilizadores
 user for smtp-authentication (leave it empty if no auth required)	admin	pt	Utilizador para autenticação SMTP (deixar vazio se a autenticação não for necessária)
 user groups	admin	pt	Grupos de utilizadores
+user-agent	admin	pt	User-Agent
 userdata	admin	pt	Dados de utilizadores
 username (standard)	admin	pt	Nome de utilizador (por omissão)
 username@domainname (virtual mail manager)	admin	pt	utilizador@dominio (Gestor virtual de correio electrónico)
@@ -539,7 +564,7 @@ view account	admin	pt	Ver conta
 view category	admin	pt	Ver categorias
 view error log	admin	pt	Ver registo de erros
 view sessions	admin	pt	Ver sessões
-view this user	admin	pt	ver este utilizador
+view this user	admin	pt	Ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
 virtual mail manager	admin	pt	Gestor virtual de correio electrónico
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
@@ -550,7 +575,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	pt	Des
 would you like to show each application's upgrade status ?	admin	pt	Deseja exibir o estado da actualização de cada aplicação ?
 xml-rpc	admin	pt	XML-RPC
 you have entered an invalid expiration date	admin	pt	Inseriu uma data de expiração inválida
-you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!!!
+you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!
 you have to enter a name, to create a new type!	admin	pt	É necessário inserir um nome para criar um novo tipo!
 you must add at least 1 permission or group to this account	admin	pt	É necessário adicionar pelo menos uma permissão ou grupo a esta conta
 you must enter a group name.	admin	pt	É necessário atribuir um nome ao grupo

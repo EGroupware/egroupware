@@ -1,7 +1,72 @@
-folder	notifications	bg	папка
+(update in sec. %s)	notifications	bg	(Обновяване за секунди %s)
+account:	notifications	bg	Сметка:
+all possible notification backends	notifications	bg	Всички възможни обратни връзки за уведомяване
+are you sure you want to delete all notifications?	notifications	bg	Сигурни ли сте, че искате да изтриете всички известия?
+browser	notifications	bg	Браузър
+browser is starting.	notifications	bg	Браузърът се стартира.
+cancal settings?	notifications	bg	Отменяте ли настройките?
+cancal?	notifications	bg	Отмяна?
+certification-information:	notifications	bg	Сертифициране на информация:
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	bg	Изберете верига за уведомяване. Ще бъдете уведомявани по задните краища, включени във веригата.<br>Забележка: Ако дадена верига за уведомяване е маркирана като "disabled" (изключена), вашият администратор не разрешава един или повече от задните краища, включени във веригата, уведомленията падат обратно на "Email" (електронна поща), докато ви уведомяват.
+connection error.	notifications	bg	Грешка при свързване.
+connection error. please check connection to server.	notifications	bg	Грешка при свързване. Моля, проверете връзката със сървъра.
+continue to connect?	notifications	bg	Продължавате ли да се свързвате?
+cookies are required to login to this site.	notifications	bg	Необходими са бисквитки, за да влезете в този сайт.
+delete all messages	notifications	bg	Изтриване на всички съобщения
+delete notifications	notifications	bg	Изтриване на известия
+delete this message	notifications	bg	Изтриване на това съобщение
+domain not found, please check serveraddress.	notifications	bg	Домейнът не е намерен, моля, проверете адреса на сървъра.
+egroupware login is starting, please wait.	notifications	bg	Започва влизането в EGroupware, моля изчакайте.
+egroupware logindomain:	notifications	bg	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	bg	EGroupware Logindomains founds, please select.
+egroupware not found by url or connection lost to server.	notifications	bg	EGroupware not found by URL (EGroupware не е намерен по URL адрес) или е загубена връзката със сървъра.
+egroupware not found by url.	notifications	bg	EGroupware не е намерен от URL адреса.
+email notifications only, if user is not logged in	notifications	bg	Известия само по имейл, ако потребителят не е влязъл в системата
+error browser can`t start.	notifications	bg	Error Browser can`t start.
+error on loading tray icon	notifications	bg	Грешка при зареждане на икона Tray
+error ssl	notifications	bg	Грешка при SSL
+exit	notifications	bg	Излизане от
+folder	notifications	bg	Папка
 from	notifications	bg	От
+host:	notifications	bg	Сървър:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	bg	Колко многословен трябва да бъде поведението на EGroupware-Popup, ако до потребителя се изпрати известие:<br>ниско: просто показва звънеца за известие в горното меню - горното меню трябва да е разрешено!<br>средна: изведете прозореца за уведомяване на преден план<br>висока: изведете прозореца за уведомяване на преден план и оставете браузъра да направи нещо, за да се обяви
+last month	notifications	bg	Миналия месец
+login aborted, application exit?	notifications	bg	Влизането в системата е прекъснато, приложението е излязло?
+login in egroupware:	notifications	bg	Влизане в EGroupware:
+mail account to use for notifications	admin	bg	Пощенски акаунт, който да се използва за известия
+mark all as read	notifications	bg	Маркирайте всички като прочетени
+mark as read	notifications	bg	Маркирайте като прочетени
 message from	notifications	bg	Съобщение от
 minutes	notifications	bg	минути
+more info	notifications	bg	Повече информация
+notifier	notifications	bg	Уведомител
+open notified entry	notifications	bg	Отваряне на запис с известие
+page not found, please check serveraddress.	notifications	bg	Страницата не е намерена, моля, проверете адреса на сървъра.
+password:	notifications	bg	Парола:
+permission	notifications	bg	Разрешение
+permission denied for notifications application.	notifications	bg	Разрешението е отказано за приложението за нотификации.
+placeholders with user/ prefix	admin	bg	заместващи символи с user/prefix
+please contact your egroupware admin.	notifications	bg	Моля, свържете се с вашия администратор на EGroupware.
+please enter the url of your egroupware.	notifications	bg	Моля, въведете URL адреса на вашия EGroupware.
+please enter your egroupware username.	notifications	bg	Моля, въведете потребителското име на вашия EGroupware.
+please enter your password	notifications	bg	Моля, въведете вашата парола
 refresh notifications	notifications	bg	Обновяване на известията
+repeat login?	notifications	bg	Повтаряте влизането в системата?
+run application	notifications	bg	Стартирайте приложението
+save password	notifications	bg	Запазете паролата
+setting	notifications	bg	Настройка на
+setting aborted, application exit	notifications	bg	Настройката е прекъсната, изход от приложението
 signature	admin	bg	Подпис
+signature added to every change notification	admin	bg	Добавяне на подпис към всяко уведомление за промяна
+sorry, your login has expired	notifications	bg	Съжаляваме, срокът на вашето потребителско име е изтекъл
+subject dn:	notifications	bg	Тема DN:
+this egroupware notification has been sent to you by mail because your	notifications	bg	Това известие от EGroupware ви е изпратено по имейл, защото вашият
+this month	notifications	bg	Този месец
+user:	notifications	bg	Потребител:
 warning	notifications	bg	Внимание
+yesterday	notifications	bg	Вчера
+you can also use	admin	bg	Можете също така да използвате
+you have %1 unread notifications	notifications	bg	Имате %1 непрочетени известия
+you have been successfully logged out	notifications	bg	Успешно сте излезли от системата
+you've got new mail	notifications	bg	Получили сте нова поща
+your session could not be verified.	notifications	bg	Сесията ви не може да бъде проверена.

@@ -1,8 +1,8 @@
 %1 email addresses inserted	common	et	%1 email aadress sisestatud
 %1 email(s) added into %2	common	et	%1 email(id) lisatud %2-sse
-%1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
+%1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav!
 %1 more %2 selected ...	common	et	%1 rohkem %2 valitud...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br>või tee %3 veebiserverijaoks kirjutatavaks
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 '%1' copied to clipboard	common	et	'%1' kopeeritud lõikelauale
 '%1' is not a valid json file!	common	et	'%1' ei ole kehtiv JSON-fail.
@@ -62,7 +62,7 @@ algeria	common	et	ALŽEERIA
 all	common	et	Kõik
 all addressbooks	groupdav	et	Kõik aadressiraamatud
 all categories	common	et	Kõik kategooriad
-all fields	common	et	kõik väljad
+all fields	common	et	Kõik väljad
 all in one	groupdav	et	Kõik ühes
 all users	common	et	Kõik kasutajad
 allow editing the %1	common	et	Lubage muuta %1
@@ -80,8 +80,8 @@ application	common	et	Rakendus
 applications	common	et	Rakendused
 apply	common	et	Uuenda
 april	common	et	Aprill
-are you sure you want to delete these entries ?	common	et	Oled kindel, et soovid neid kirjeid kustutada ?
-are you sure you want to delete this entry ?	common	et	Oled kindel, et soovid seda kirjet kustutada ?
+are you sure you want to delete these entries ?	common	et	Oled kindel, et soovid neid kirjeid kustutada?
+are you sure you want to delete this entry ?	common	et	Oled kindel, et soovid seda kirjet kustutada?
 argentina	common	et	ARGENTIINA
 armenia	common	et	ARMEENIA
 aruba	common	et	ARUBA
@@ -136,15 +136,15 @@ caption	common	et	Pealdis
 categories	common	et	Kategooriad
 categories for	common	et	kategooriad
 category	common	et	Kategooria
-category %1 has been added !	common	et	Kategooria %1 on lisatud !
-category %1 has been updated !	common	et	Category %1 on uuendatud !
+category %1 has been added !	common	et	Kategooria %1 on lisatud!
+category %1 has been updated !	common	et	Category %1 on uuendatud!
 cayman islands	common	et	KAIMANI SAARED
 cc	common	et	Cc
-centered	common	et	keskjoondatud
+centered	common	et	Keskjoondatud
 central african republic	common	et	KESK-AAFRIKA VABARIIK
 chad	common	et	TŠAAD
 change	common	et	Muuda
-charset	common	et	utf-8
+charset	common	et	Kirjatüüp
 check all	common	et	Kontrolli kõik
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	et	Kontrollige tühje väärtusi IF-avaldustes. Näide {{IF url~EMPTY~~Website:}}} - Kui url ei ole tühi, kirjutab "Website:"
 check installation	common	et	Kontrolli installeeritust
@@ -163,8 +163,8 @@ christmas island	common	et	Jõulusaar
 clear	common	et	Puhasta
 clear form	common	et	Puhasta vorm
 click	common	et	Vajuta
-click here to create the link	common	et	vajuta siia tegemaks Link
-click here to start the search	common	et	vajuta siia alustamaks otsingut
+click here to create the link	common	et	Vajuta siia tegemaks Link
+click here to start the search	common	et	Vajuta siia alustamaks otsingut
 close	common	et	Sule
 colombia	common	et	KOLUMBIA
 colour	common	et	Värv
@@ -172,12 +172,12 @@ comment	common	et	Kommentaar
 common preferences	common	et	Üldised eelistused
 comoros	common	et	KOMOORID
 company	common	et	Firma
-confirm	common	et	kinnita
+confirm	common	et	Kinnita
 congo	common	et	Kongo
 congo, the democratic republic of the	common	et	KONGO DEMOKRAATLIK VABARIIK
 contact	common	et	Kontakt
 contacting server...	common	et	Ühendan Serveriga...
-contains	common	et	sisaldab
+contains	common	et	Sisaldab
 cook islands	common	et	COOKI SAARED
 copy	common	et	Kopeeri
 copy "%1"	common	et	Kopeeri "%1"
@@ -216,11 +216,11 @@ default width for the windows	common	et	Vaikimisi akna laius
 delete	common	et	Kustuta
 delete category	common	et	Kustuta kategooria
 delete row	common	et	Kustuta rida
-delete this column	common	et	kustuta see tulp
-delete this entry	common	et	kustuta see kirje
+delete this column	common	et	Kustuta see tulp
+delete this entry	common	et	Kustuta see kirje
 delete this file	common	et	Kustuta see fail
 delete this row	common	et	Kustuta see rida
-delete whole column (can not be undone!!!)	common	et	kustuta terve tulp (EI SAA tagasi võtta!!!)
+delete whole column (can not be undone!!!)	common	et	kustuta terve tulp
 deletes this column	common	et	Kustutab selle tulba
 denmark	common	et	TAANI
 description	common	et	Kirjeldus
@@ -228,19 +228,19 @@ detail	common	et	Detail
 details	common	et	Detailselt
 direction left to right	common	et	Suund vasakult paremale
 disabled	common	et	Väljalülitatud
-discard changes	common	et	unusta muudatused
-do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid ?
+discard changes	common	et	Unusta muudatused
+do you also want to delete all subcategories ?	common	et	Tahad kustutada samuti kõik alamkataloogid?
 do you want to save the changes you made in table %s?	common	et	Kas soovid salvestada muudatused mida tegid tabelis %s?
 document properties	common	et	Dokumendi omadused
 document title:	common	et	Dokumendi pealkiri:
 documentation	common	et	Dokumentatsioon
-doesn't matter	common	et	pole tähtis
+doesn't matter	common	et	Pole tähtis
 domain	common	et	Doomeninimi
-domain name for mail-address, eg. "%1"	common	et	doomeninimi mail-aadressijaoks, nagu "%1"
+domain name for mail-address, eg. "%1"	common	et	Doomeninimi mail-aadressijaoks, nagu "%1"
 domestic	common	et	Kodumaine
 dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
-don't ask again!	common	et	Don't ask again!
+don't ask again!	common	et	Ärge küsige uuesti!
 done	common	et	Valmis
 download	common	et	Lae alla
 duration	common	et	Kestvus
@@ -258,7 +258,7 @@ egroupware: login blocked for user '%1', ip %2	common	et	EGroupware: logimine bl
 egypt	common	et	EGIPTUS
 el salvador	common	et	EL SALVADOR
 email	common	et	E-Mail
-email-address of the user, eg. "%1"	common	et	kasutaja email-aadress, nagu "%1"
+email-address of the user, eg. "%1"	common	et	Kasutaja email-aadress, nagu "%1"
 enabled	common	et	Lubatud
 end date	common	et	Lõpu kuupäev
 end time	common	et	Lõpu aeg
@@ -274,18 +274,18 @@ error renaming %1 %2 directory	common	et	Viga kausta %1 %2 ümber nimetamisel
 estonia	common	et	EESTI
 ethiopia	common	et	ETIOOPIA
 everything	common	et	Kõik
-exact	common	et	täpne
+exact	common	et	Täpne
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	et	Näide {{LETTERPREFIX}} - Annab kirja eesliite ilma topelt tühikuta, kui pealkiri on tühi näiteks
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	et	Näide {{LETTERPREFIX}} - Annab kirja eesliite ilma topelt tühikuta, kui pealkiri on tühi näiteks
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, siis saate uue rea koos väljal role oleva väärtusega
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 export xml	common	et	Expordi XML
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	et	Ühendus serveriga ebaõnnestus või vigane serveri vastus. Proovi uuesti sisse logida. Kui ebaõnnestub kontakteeru Administraatoriga.
-fax number	common	et	faksi number
-features of the editor?	common	et	fax number
+fax number	common	et	Faksi number
+features of the editor?	common	et	Redaktori funktsioonid
 february	common	et	Veebruar
 field	common	et	Väli
-field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks !!!
+field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks!
 fields	common	et	Väljad
 file	common	et	Pail
 file a file	common	et	Faili salvestamine
@@ -296,11 +296,11 @@ filter	common	et	Filter
 finland	common	et	Soome
 first	common	et	Esimene
 first name	common	et	Eesnimi
-first name of the user, eg. "%1"	common	et	kasutaja eesnimi, nagu "%1"
+first name of the user, eg. "%1"	common	et	Kasutaja eesnimi, nagu "%1"
 first page	common	et	Esimene leht
 firstname	common	et	Eesnimi
 fixme!	common	et	PARANDA MIND!
-folder already exists.	common	et	Kaust juba eksisteerib.
+folder already exists.	common	et	Kaust on juba olemas!
 forever	common	et	Igavesti
 formatted business address	common	et	Vormindatud äriaadress
 formatted private address	common	et	Vormindatud eraisiku aadress
@@ -330,7 +330,7 @@ group access	common	et	Grupi Ligipääs
 group has been added	common	et	Grupp on lisatud
 group has been deleted	common	et	Grupp on kustutatud
 group has been updated	common	et	Grupp on uuendatud
-group name	common	et	grupi nimi
+group name	common	et	Grupi nimi
 groups	common	et	Grupid
 haiti	common	et	HAITI
 height	common	et	Kõrgus
@@ -340,7 +340,7 @@ highest	common	et	Kõrgeim
 history	common	et	Ajalugu
 history log	common	et	Versiooni ajalugu
 home	common	et	Kodu
-home email	common	et	kodu email
+home email	common	et	Kodu email
 honduras	common	et	HONDURAS
 hong kong	common	et	HONG KONG
 hour	common	et	Tund
@@ -371,7 +371,7 @@ insert row before	common	et	Sisesta rida peale
 insert timestamp into description field	common	et	Lisage ajatempel kirjeldusväljale
 install	common	et	Paigaldage
 install egroupware as mail-handler?	common	et	Installige EGroupware posti käsitlejana?
-international	common	et	rahvusvaheline
+international	common	et	Rahvusvaheline
 invalid 2-factor authentication code	common	et	2-faktoorse autentimise kood on kehtetu
 invalid email	common	et	Invaliidne e-kiri
 invalid filename	common	et	Vigane failinimi
@@ -390,7 +390,7 @@ keywords	common	et	Märksõnad
 language	common	et	Keel
 last	common	et	Viimane
 last modified	common	et	Viimati muudetud
-last name	common	et	perekonnanimi
+last name	common	et	Perekonnanimi
 last page	common	et	Viimane leht
 latvia	common	et	LÄTI
 left	common	et	Vasak
@@ -403,9 +403,9 @@ lithuania	common	et	LEEDU
 load	common	et	Lae
 local	common	et	Lokaalne
 login rejected by epl firewall, please contact your administrator	common	et	EGroupware tulemüür lükkab sisselogimise tagasi, palun võtke ühendust oma administraatoriga.
-loginid	common	et	SisselogimiseID
+loginid	common	et	Sisselogimise ID
 logout	common	et	Logi välja
-lost login id	common	et	Kaotasid logimise id
+lost login id	common	et	Kaotasid logimise ID
 lost password	common	et	Kaotasid parooli
 low	common	et	Madal
 lowest	common	et	Madalaim
@@ -426,7 +426,7 @@ mongolia	common	et	MONGOOLIA
 month	common	et	Kuu
 more	common	et	Rohkem
 move	common	et	Liigutage
-multiple	common	et	mitmik
+multiple	common	et	Mitmik
 name	common	et	Nimi
 never	common	et	Mittekunagi
 new	common	et	Uus
@@ -434,7 +434,7 @@ new password	common	et	Uus parool
 new search	common	et	Uus otsing
 new value	common	et	Uus Väärtus
 new zealand	common	et	UUS MEREMAA
-newer version '%1' exists !!!	common	et	uuem versioon '%1' eksisteerib !!!
+newer version '%1' exists !!!	common	et	Uuem versioon '%1' eksisteerib!
 next	common	et	Järgmine
 next page	common	et	Järgmine leht
 nicaragua	common	et	NICARAGUA
@@ -443,18 +443,18 @@ nigeria	common	et	NIGEERIA
 niue	common	et	NIUE
 no	common	et	Ei
 no - cancel	common	et	Ei -Tühista
-no entries found, try again ...	common	et	kirjeid ei leitud, proovi uuesti
-no file	common	et	pole faili
+no entries found, try again ...	common	et	Kirjeid ei leitud, proovi uuesti
+no file	common	et	Pole faili
 no filters	common	et	Filtrid puuduvad
-no matches found	common	et	sobivaid ei leitud
+no matches found	common	et	Sobivaid ei leitud
 none	common	et	Pole
 normal	common	et	Normaalne
 norway	common	et	NORRA
 not	common	et	ei
-not a user yet? register now	common	et	Pole vee kasutaja? Registreeru nüüd
+not a user yet? register now	common	et	Pole vee kasutaja? Registreeru nüüd.
 note	common	et	Teavitus
 notes	common	et	Teavitused
-nothing found - try again !!!	common	et	Midagi ei leitud - proovi uuesti !!!
+nothing found - try again !!!	common	et	Midagi ei leitud - proovi uuesti!
 notify window	common	et	Teavituse aken
 november	common	et	November
 now	common	et	Nüüd
@@ -462,15 +462,22 @@ october	common	et	Oktoober
 ok	common	et	OK
 old value	common	et	Vana Väärtus
 oman	common	et	OMAAN
-only private	common	et	ainult privaatne
-only yours	common	et	ainult sinu
-open	common	et	avatud
+only private	common	et	Ainult privaatne
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	et	Toetavad ainult vähesed täielikult nõuetele vastavad kliendid (nt Apple). Kui peate sisestama URL-i, siis seda tõenäoliselt ei toetata!
+only yours	common	et	Ainult sinu
+open	common	et	Avatud
+open existing contact	common	et	Avage olemasolev kontakt
 open popup window	common	et	Ava hüpikaken
+open the online help.	common	et	Avage veebipõhine abi
+operator	common	et	Operaator
+optional note about the link	common	et	Valikuline märkus lingi jaoks
 options	common	et	Omadused
 or	common	et	või
+order to navigating by tab key through the form	common	et	Tellige navigeerimine tabulaatoriga läbi vormi
 original	common	et	Originaal
 overview	common	et	Ülevaade
 owner	common	et	Omanik
+ownership	common	et	Omanikuks olemine
 page	common	et	Leht
 page was generated in %1 seconds	common	et	Leht genereeriti %1 sekundit
 password	common	et	Parool
@@ -479,41 +486,47 @@ path	common	et	Teekond
 permission denied!	common	et	Luba keelatud!
 permission denied! this is an administration only feature.	common	et	Luba keelatud! See on ainult administratsiooni funktsioon.
 permisson denied!	common	et	Luba keelatud!
-personal	common	et	Isiklik
+personal	common	et	Lsiklik
 pg down	common	et	Lehekülg alla
 pg up	common	et	Lehekülg üles
 pgp encryption	common	et	PGP krüpteerimine
 pgp encryption installation	common	et	PGP krüpteerimise paigaldamine
-phone number	common	et	telefoni number
+phone number	common	et	Telefoni number
 placeholders	common	et	Paigaldajad
-play/pause	common	et	Esitus/peatus
-please enter a name	common	et	Palun sisesta nimi !
-please reload the egroupware desktop (f5 / cmd+r).	common	et	Palun laadige EGroupware'i töölaud uuesti (F5 / Cmd+r).
+play/pause	common	et	Esitus/Peatus
+please enter a name	common	et	Palun sisesta nimi!
+please enter table-name first !!!	common	et	Sisestage kõigepealt tabeli nimi!
+please reload the egroupware desktop (f5 / cmd+r).	common	et	Palun laadige EGroupware'i töölaud uuesti (F5 / Cmd+R).
 please remember to use '%1' as username for local login's from now on!	common	et	Palun ärge unustage edaspidi kasutada kohalikul sisselogimisel kasutajanime '%1'!
 please select	common	et	Palun Vali
-please set your global preferences	common	et	Palun sisesta oma globaalsed eelistused !
+please set your global preferences	common	et	Palun sisesta oma globaalsed eelistused!
 please type %1 more characters	common	et	Palun sisestage veel %1 tähemärk(id)
 please type 1 more character	common	et	Palun sisestage veel 1 tähemärk
-please wait...	common	et	Palun Oota...
+please wait...	common	et	Palun oodake ...
+please, check back with us shortly.	common	et	Palun vaadake meid varsti uuesti.
 poland	common	et	POOLA
 portugal	common	et	PORTUGAL
 preference	common	et	Eelistused
 preferences	common	et	Eelistused
+preferences for the %1 template set	preferences	et	Eelistused malli %1 jaoks, mis on määratud
+preview with entry	common	et	Eelvaade koos sissekandega
 previous page	common	et	Eelmine leht
-primary group	common	et	primaarne Grupp
+primary group	common	et	Primaarne Grupp
 primary style-sheet:	common	et	Primaarne siilileht:
 print	common	et	Prindi
 priority	common	et	Prioriteet
 private	common	et	Privaatne
 programs	common	et	Programmid
 project	common	et	Projekt
+properties	common	et	Omadused
+protocol is required	common	et	Protokoll on nõutav
 read	common	et	Loe
-reading	common	et	loen
-readonly	common	et	loeainult
-register	common	et	registreeru
+reading	common	et	Loen
+readonly	common	et	Loeainult
+register	common	et	Registreeru
 regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
-remove selected accounts	common	et	eemalda märgitud kontod
+remove selected accounts	common	et	Eemalda märgitud kontod
 rename	common	et	Nimeta ümber
 repeat password	common	et	Parooli kordamine
 replace	common	et	Asenda
@@ -545,7 +558,7 @@ select columns	common	et	Vali tulbad
 select country	common	et	Vali Riik
 select date	common	et	Vali kuupäev
 select day	common	et	Vali päev
-select day of week	common	et	vali päev nädalast
+select day of week	common	et	Vali päev nädalast
 select group	common	et	Vali grupp
 select home email address	common	et	Vali kodune email aadress
 select hour	common	et	Vali tund
@@ -559,7 +572,7 @@ select priority	common	et	Vali Prioriteet
 select the default height for the application windows	common	et	Vali vaikimisi rakenduse akna kõrgus
 select the default width for the application windows	common	et	Vali vaikimisi rakenduse akna laius
 select user	common	et	Vali kasutaja
-select which values to show	common	et	vali mis väärtusi näidata
+select which values to show	common	et	Vali mis väärtusi näidata
 select work email address	common	et	Vali töö email aadress
 select year	common	et	Vali Aasta
 selection	common	et	Valik
@@ -572,23 +585,23 @@ server name	common	et	Serveri Nimi
 session has been killed	common	et	Sessioon tapeti
 show	common	et	Näita
 show (no save)	common	et	Näita (ära salvesta)
-show all	common	et	näita kõik
+show all	common	et	Näita kõik
 show all categorys	common	et	Näita kõik kategooriad
 show clock?	common	et	Näita kella?
-show menu	common	et	näita menüüd
+show menu	common	et	Näita menüüd
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega?
 show password	common	et	Näita parooli
 show values	common	et	Näita Väärtusi
-show/hide	common	et	näita/peida külgriba
+show/hide	common	et	Näita/peida külgriba
 show_more_apps	common	et	Näita rohkem programme
-showing	common	et	näitan
-showing %1	common	et	näitan %1
+showing	common	et	Näitan
+showing %1	common	et	Näitan %1
 sign up	common	et	Registreerimine
 simple	common	et	Lihtne
 singapore	common	et	SINGAPUR
 site configuration	common	et	Konfiguratsioon
-size	common	et	suurus
+size	common	et	Suurus
 slovakia	common	et	SLOVAKIA
 slovenia	common	et	SLOVEENIA
 somalia	common	et	SOMAALIA
@@ -608,9 +621,9 @@ text color:	common	et	Teksti värv:
 textarea	common	et	Tekstiväli
 thailand	common	et	TAI
 the following applications require upgrades	common	et	Järgmised rakendused vajavad uuendusi
-this name has been used already	common	et	See nimi on juba kasutusel !
+this name has been used already	common	et	See nimi on juba kasutusel!
 thursday	common	et	Neljapäev
-tiled	common	et	paanidena
+tiled	common	et	Paanidena
 time	common	et	Aeg
 time zone	common	et	Ajavöönd
 time zone offset	common	et	Ajavööndi nihe
@@ -637,10 +650,10 @@ update	common	et	Uuenda
 upload	common	et	Lae üles
 uruguay	common	et	URUGUAI
 user	common	et	Kasutaja
-user accounts	common	et	kasutaja kontod
-user groups	common	et	kasutaja grupid
+user accounts	common	et	Kasutaja kontod
+user groups	common	et	Kasutaja grupid
 username	common	et	Kasutajanimi
-users	common	et	kasutajad
+users	common	et	Kasutajad
 users choice	common	et	Kasutajate Valik
 uzbekistan	common	et	USBEKISTAN
 vanuatu	common	et	VANUATU
@@ -654,10 +667,10 @@ western sahara	common	et	LÄÄNE SAHARA
 which groups	common	et	Millised grupid
 width	common	et	Laius
 wk	common	et	Nd
-work email	common	et	töö email
+work email	common	et	Töö email
 write langfile	common	et	Kirjuta Keel
 write tables	common	et	Kirjuta Tabelid
-writing	common	et	kirjutan
+writing	common	et	Kirjutan
 written by:	common	et	Kirjutatud:
 year	common	et	Aasta
 yemen	common	et	JEEMEN
@@ -666,14 +679,14 @@ yes - delete	common	et	Jah - Kustuta
 yes - delete including sub-entries	common	et	Jah - Kustuta koos alam-kirjetega
 you are required to change your password during your first login	common	et	Sa pead muutma oma parooli esmasel sisselogimisel
 you can respond by visiting:	common	et	Sa saad vastata külastates:
-you have been successfully logged out	login	et	Oled täielikult välja loginud
-you have not entered a title	common	et	Sa ei sisestanud pealkirja
-you have not entered a valid date	common	et	Sa ei sisestanud kehtivat kuupäeva
-you have not entered a valid time of day	common	et	Sa ei
-you have not entered participants	common	et	Sa ei sisestanud osalejaid
-you have selected an invalid date	common	et	Sisestasid vigase kuupäeva !
-you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria !
-you have successfully logged out	common	et	Oled õnnelikult välja loginud
+you have been successfully logged out	login	et	Oled täielikult välja loginud.
+you have not entered a title	common	et	Sa ei sisestanud pealkirja.
+you have not entered a valid date	common	et	Sa ei sisestanud kehtivat kuupäeva.
+you have not entered a valid time of day	common	et	Sa ei ole sisestanud kehtivat kellaaega.
+you have not entered participants	common	et	Sa ei sisestanud osalejaid.
+you have selected an invalid date	common	et	Sisestasid vigase kuupäeva!
+you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria!
+you have successfully logged out	common	et	Oled õnnelikult välja loginud.
 your account has been updated with new data from your identity provider.	common	et	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	et	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.
 your key has been restored successfully.	common	et	Teie võti on edukalt taastatud.

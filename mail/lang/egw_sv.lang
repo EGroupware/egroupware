@@ -29,7 +29,10 @@ by date	mail	sv	Enligt datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
 caching of flags	mail	sv	Cachelagring av flaggor
 can not resolve the winmail.dat attachment!	mail	sv	Kan inte lösa winmail.dat-bilagan!
+certificate details	mail	sv	Detaljer om certifikat
+certificate in text	mail	sv	Intyg i textform
 certificate info for email %1	mail	sv	Certifikatinformation för e-post %1
+certificate issued by	mail	sv	Certifikat utfärdat av
 changing subject failed because of %1	mail	sv	Byte av ämne misslyckades på grund av %1
 changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
@@ -74,6 +77,7 @@ drafts	mail	sv	Utkast
 drafts folder	mail	sv	Utkast katalog
 edit account	mail	sv	Ändra konto
 edit vacation settings	mail	sv	Ändra frånvaro alternativ
+email address	mail	sv	E-post adress
 emailaddress	admin	sv	E-post adress
 emailadmin: profilemanagement	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
 emails in whitelisted domains are not marked as spam	mail	sv	E-postmeddelanden i vitlistade domäner markeras inte som skräppost
@@ -82,6 +86,7 @@ enable	mail	sv	Aktivera
 enabled	mail	sv	Aktiverad
 encrypt your message with smime certificate	mail	sv	Kryptera ditt meddelande med S/MIME-certifikat
 event details follow	mail	sv	Händelse detaljer följer
+every %1. day	mail	sv	Varje %1. dag
 everyone	mail	sv	Alla
 examine namespace to retrieve folders in others and shared	mail	sv	Undersök namnrymden för att hämta mappar i andra och delade
 extended	mail	sv	Utökad
@@ -180,6 +185,7 @@ no plain text part found	mail	sv	Hittade inget textfält
 no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
 non	mail	sv	Nej
 on	mail	sv	På
+once per day	mail	sv	En gång per dag
 one address is not valid	mail	sv	En adress är ogiltig
 only email	mail	sv	Endast e-post
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	sv	Endast meningsfullt om du transporterar lösenord via en annan kanal / utanför denna e-post till mottagarna!
@@ -285,6 +291,8 @@ sneak preview in list	mail	sv	Förhandsgranskning av meddelande
 subject(a->z)	mail	sv	Ämne (A->Ö)
 subject(z->a)	mail	sv	Ämne (Ö->A)
 text	mail	sv	Text
+text mode	mail	sv	Textläge
+text/plain	mail	sv	Text
 the imap server need to meet certain requirements and be configured for it:	mail	sv	IMAP-servern måste uppfylla vissa krav OCH vara konfigurerad för detta:
 the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet
 the rule with priority %1 successfully saved!	mail	sv	Regeln med prioritet %1 sparades framgångsrikt!
@@ -316,4 +324,4 @@ you need to install mailvelope plugin available for chrome and firefox from %1.	
 you need to save the message as draft first before to be able to save it into vfs	mail	sv	Du måste spara meddelandet som utkast först innan du kan spara det i VFS
 you will loose current message body, unless you save it to your clipboard!	mail	sv	Du kommer att förlora den aktuella meddelandetexten om du inte sparar den i Urklipp!
 you've got new mail	mail	sv	Du har fått ny e-post
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sv	Din återstående kvot %1 är för låg, du kanske inte kan skicka/ta emot fler e-postmeddelanden.\n Även om du rensar bort e-postmeddelanden i papperskorgen kan det hjälpa dig att få tillbaka lite ledigt utrymme.\n Om det inte hjälpte kan du be din administratör om mer kvot.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sv	Din återstående kvot %1 är för låg, du kanske inte kan skicka/ta emot fler e-postmeddelanden.<br>Även om du rensar bort e-postmeddelanden i papperskorgen kan det hjälpa dig att få tillbaka lite ledigt utrymme.<br>Om det inte hjälpte kan du be din administratör om mer kvot.

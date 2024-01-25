@@ -1,46 +1,109 @@
-all possible notification backends	notifications	es-es	todos los posibles backends de notificación
+(update in sec. %s)	notifications	es-es	(Aggiornamento in %s)
+account:	notifications	es-es	Conto:
+all possible notification backends	notifications	es-es	Todos los posibles backends de notificación
+are you sure you want to delete all notifications?	notifications	es-es	Sei sicuro di voler eliminare tutte le notifiche?
+browser	notifications	es-es	Browser
+browser is starting.	notifications	es-es	Il browser si sta avviando.
+cancal settings?	notifications	es-es	Annullare le impostazioni?
+cancal?	notifications	es-es	Annullare?
+certification-information:	notifications	es-es	Informazioni sulla certificazione:
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	es-es	Comprobar ambos (probar primero con la cuenta activa definida para el usuario, y si no hay ninguna, usar el perfil de emailadmin)
-choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	es-es	Elija una cadena de notificación. Se le notiificará por los métodos incluidos en la cadena.<br />Nota: Si una cadena de notificación está marcada como "desactivada", su Administrador no permite una o más de los métodos incluidos en la cadena y la notificación falla volviendo a "Correo electrónico" mientras le notifica.
-choose from mailsettings used for notification	admin	es-es	elegir de la configuración utilizada para notificaciones de correo
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	es-es	Elija una cadena de notificación. Se le notiificará por los métodos incluidos en la cadena.<br>Nota: Si una cadena de notificación está marcada como "desactivada", su Administrador no permite una o más de los métodos incluidos en la cadena y la notificación falla volviendo a "Correo electrónico" mientras le notifica.
+choose from mailsettings used for notification	admin	es-es	Elegir de la configuración utilizada para notificaciones de correo
 common chains	notifications	es-es	Cadenas comunes
+connection error.	notifications	es-es	Error de conexión.
+connection error. please check connection to server.	notifications	es-es	Error de conexión. Por favor, compruebe la conexión con el servidor.
+continue to connect?	notifications	es-es	¿Continúa la conexión?
+cookies are required to login to this site.	notifications	es-es	Se necesitan cookies para iniciar sesión en este sitio.
+delete all messages	notifications	es-es	Borrar todos los mensajes
+delete notifications	notifications	es-es	Eliminar notificaciones
+delete this message	notifications	es-es	Eliminar este mensaje
 disabled chains	notifications	es-es	Cadenas desactivadas
-do not notify me at all	notifications	es-es	no notificarme en ningún caso
+do not notify me at all	notifications	es-es	No notificarme en ningún caso
+domain not found, please check serveraddress.	notifications	es-es	Dominio no encontrado, por favor compruebe la dirección del servidor.
 e-mail only	notifications	es-es	Sólo correo electrónico
 egroupware has notifications for you	notifications	es-es	EGroupware tiene notificaciones para usted
+egroupware login is starting, please wait.	notifications	es-es	El inicio de sesión en EGroupware está comenzando, por favor espere.
+egroupware logindomain:	notifications	es-es	Inicio de sesión de EGroupware:
+egroupware logindomains founds, please select.	notifications	es-es	EGroupware Logindomains encontrado, por favor seleccione.
+egroupware not found by url or connection lost to server.	notifications	es-es	EGroupware no encontrado por URL o conexión perdida con el servidor.
+egroupware not found by url.	notifications	es-es	EGroupware no encontrado por URL.
 egroupware-popup and e-mail	notifications	es-es	Ventana emergente de EGroupware y correo electrónico
 egroupware-popup and windows-popup	notifications	es-es	Ventanas emergentes de EGroupware y Windows
 egroupware-popup backend	admin	es-es	Método ventana emergente de EGroupware
 egroupware-popup first, if that fails notify me by e-mail	notifications	es-es	Primero, ventana emergente de EGroupware, y si falla, notificarme por correo electrónico
 egroupware-popup only	notifications	es-es	Sólo ventana emergente de EGroupware
 egroupware-popup verbosity	notifications	es-es	Verbosidad de la ventana emergente de EGroupware
+email notifications only, if user is not logged in	notifications	es-es	Sólo notificaciones por correo electrónico, si el usuario no ha iniciado sesión
 emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	es-es	Sólo el perfil de emailadmin (no usar perfiles activos definidos para el usuario para la notificación)
 enable egroupware-popup backend	admin	es-es	Activar el método de ventanas emergentes de EGroupware
 enable windows-popup backend	admin	es-es	Activar el método ventanas emergentes de Windows
 enabled chains	notifications	es-es	Cadenas activadas
+error browser can`t start.	notifications	es-es	Error Browser can`t start.
+error on loading tray icon	notifications	es-es	Error al cargar el icono de la bandeja
+error ssl	notifications	es-es	Error SSL
+exit	notifications	es-es	Salir de
 folder	notifications	es-es	Carpeta
 from	notifications	es-es	De
-how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	es-es	Cuánta cantidad de información debe enviar la ventana emergente de EGroupware al usuario:<br />baja: sólo mostrar la campana de notificación en el menú superior (para lo cual hay que activar el menú superior)<br />media: traer la ventana de notificación al frente<br />alta: traer la ventana de notificación al frente y permitir al navegador hacer algo para anunciarse.
+host:	notifications	es-es	Servidor:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	es-es	Cuánta cantidad de información debe enviar la ventana emergente de EGroupware al usuario:<br>baja: sólo mostrar la campana de notificación en el menú superior (para lo cual hay que activar el menú superior)<br>media: traer la ventana de notificación al frente<br>alta: traer la ventana de notificación al frente y permitir al navegador hacer algo para anunciarse.
 if set, embedded links get rendered special for external clients	notifications	es-es	Si está activado, los enlaces embebidos se visualizan de una forma especial para los clientes externos
+info on load config file: create config file.	notifications	es-es	Info on load config file: crear archivo de configuración.
+issuer dn:	notifications	es-es	DN de emisor:
+java desktop notification app	preferences	es-es	Java desktop notification app
+last month	notifications	es-es	El mes pasado
 linked entries:	common	es-es	Entradas vinculadas:
+login aborted, application exit?	notifications	es-es	Inicio de sesión abortado, ¿salida de la aplicación?
+login in egroupware:	notifications	es-es	Inicio de sesión en EGroupware:
+mail account to use for notifications	admin	es-es	Cuenta de correo a utilizar para las notificaciones
 mail backend	admin	es-es	Gestor de correo
+mark all as read	notifications	es-es	Marcar todo como leído
+mark as read	notifications	es-es	Marcar como leído
 message from	notifications	es-es	Mensaje desde
-minutes	notifications	es-es	minutos
+minutes	notifications	es-es	Minutos
+more info	notifications	es-es	Más Información
 notification	common	es-es	Notificaciones
+notifier	notifications	es-es	Notificador
 notify me by	notifications	es-es	Notificar por mí
+open notified entry	notifications	es-es	Abrir entrada notificada
 optimize e-mails for external mail client	notifications	es-es	Optimizar correos electrónicos para cliente de correos externo
-permission	notifications	es-es	permiso
+page not found, please check serveraddress.	notifications	es-es	Página no encontrada, por favor compruebe la dirección del servidor.
+password:	notifications	es-es	Contraseña:
+permission	notifications	es-es	Permiso
+permission denied for notifications application.	notifications	es-es	Permiso denegado para la solicitud de notificaciones.
+placeholders with user/ prefix	admin	es-es	marcadores de posición con usuario/prefijo
+please contact your egroupware admin.	notifications	es-es	Póngase en contacto con su administrador de EGroupware.
+please enter the url of your egroupware.	notifications	es-es	Por favor, introduzca la URL de su EGroupware.
+please enter your egroupware username.	notifications	es-es	Introduzca su nombre de usuario de EGroupware.
+please enter your password	notifications	es-es	Por favor, introduzca su contraseña
 poll interval	notifications	es-es	Intervalo de muestreo
 preferences for notification	notifications	es-es	Preferencias para la notificación
 received	notifications	es-es	Recibido
 refresh notifications	notifications	es-es	Actualizar notificaciones
+repeat login?	notifications	es-es	¿Iniciar sesión de nuevo?
+run application	notifications	es-es	Ejecutar aplicación
+save password	notifications	es-es	Guardar contraseña
+setting	notifications	es-es	Configurar
+setting aborted, application exit	notifications	es-es	Ajuste abortado, salida de la aplicación
 settings	notifications	es-es	Configuración
 signature	admin	es-es	Firma
+signature added to every change notification	admin	es-es	Firma añadida a cada notificación de cambio
+sorry, your login has expired	notifications	es-es	Lo sentimos, su nombre de usuario ha caducado
 step	notifications	es-es	Paso
+subject dn:	notifications	es-es	Asunto DN:
+the server certificate is not a valid trust center certificate!	notifications	es-es	El certificado del servidor no es un certificado válido del centro de confianza.
+this egroupware notification has been sent to you by mail because your	notifications	es-es	Esta notificación de EGroupware le ha sido enviada por correo porque su
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	es-es	Esta notificación de EGroupware le ha sido enviada por correo electrónico porque su cadena de notificaciones elegida ha sido desactivada por el administrador. ¡Por favor, elija otra cadena de notificación en sus preferencias!
+this month	notifications	es-es	Este mes
+user:	notifications	es-es	Usuario:
 warning	notifications	es-es	Aviso
 windows-popup and e-mail	notifications	es-es	Ventana emergente de Windows y correo electrónico
 windows-popup backend	admin	es-es	Método ventana emergente de Windows
 windows-popup first, if that fails notify me by e-mail	notifications	es-es	Primero, ventana emergente de Windows, y si falla, notificarme por correo electrónico.
 windows-popup only	notifications	es-es	Sólo ventana emergente de Windows
+yesterday	notifications	es-es	Ayer
+you can also use	admin	es-es	También puede utilizar
+you have %1 unread notifications	notifications	es-es	Tienes %1 notificaciones sin leer
+you have been successfully logged out	notifications	es-es	Ha cerrado sesión correctamente
 you've got new mail	notifications	es-es	Tiene correo nuevo
 your session could not be verified.	notifications	es-es	Su sesión no pudo ser verificada.

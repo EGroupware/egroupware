@@ -802,6 +802,7 @@ only private	common	zh	仅私有
 only yours	common	zh	只有您
 oops! you caught us in the middle of system maintainance.	common	zh	Oops! 您在系统维护中间捉住了我们。
 open	common	zh	待决事项
+open existing contact	common	zh	打开现有联系人
 open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口·
 open sidebox	common	zh	打开侧边栏
@@ -817,6 +818,7 @@ other	common	zh	其它
 overflow	common	zh	超过
 overview	common	zh	概览
 owner	common	zh	所有者
+ownership	common	zh	所有权
 padding	common	zh	文框距离
 page	common	zh	页
 page was generated in %1 seconds	common	zh	本页面生成耗时：%1秒
@@ -876,6 +878,8 @@ powered by	common	zh	Powered by
 precision	common	zh	精度
 preference	common	zh	首选项
 preferences	common	zh	参数选择
+preferences for the %1 template set	preferences	zh	%1 模板集的首选项
+preview with entry	common	zh	带条目预览
 previous page	common	zh	前一页
 primary group	common	zh	主要群组
 primary key	common	zh	主键
@@ -886,9 +890,12 @@ priority	common	zh	优先级
 private	common	zh	私有条目
 programs	common	zh	程序
 project	common	zh	项目
+properties	common	zh	属性
+protocol is required	common	zh	需要协议
 public	common	zh	所有已授权者皆可访问
 puerto rico	common	zh	波多黎各
 qatar	common	zh	卡塔尔
+quick add	common	zh	快速添加
 radiobutton	common	zh	单选按钮
 read	common	zh	读取
 read a list of entries.	common	zh	读取条目列表。

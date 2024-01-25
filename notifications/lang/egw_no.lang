@@ -1,10 +1,78 @@
+(update in sec. %s)	notifications	no	(Oppdatering i sek. %s)
+account:	notifications	no	Konto:
+all possible notification backends	notifications	no	Alle mulige varslingsbackends
+are you sure you want to delete all notifications?	notifications	no	Er du sikker på at du vil slette alle varsler?
+browser	notifications	no	Nettleser
+browser is starting.	notifications	no	Nettleseren starter.
+cancal settings?	notifications	no	Avbryt innstillinger?
+cancal?	notifications	no	Avbryt?
+certification-information:	notifications	no	Sertifiseringsinformasjon:
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	no	Sjekk begge deler. Prøv først aktiv brukerdefinert konto, hvis ingen, bruk eMailAdmin-profilen.
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	no	Velg en varslingskjede. Du vil bli varslet over backends som er inkludert i kjeden.<br>Merk: Hvis en varslingskjede er merket som "deaktivert", tillater ikke administratoren en eller flere av bakendene som er inkludert i kjeden, og varslene faller tilbake til "E-post" mens du varsles.
+connection error.	notifications	no	Tilkoblingsfeil.
+connection error. please check connection to server.	notifications	no	Tilkoblingsfeil. Vennligst sjekk tilkoblingen til serveren.
+continue to connect?	notifications	no	Kan du fortsette å koble til?
+cookies are required to login to this site.	notifications	no	Det kreves informasjonskapsler for å logge inn på dette nettstedet.
+delete all messages	notifications	no	Slett alle meldinger
+delete notifications	notifications	no	Slett varsler
+delete this message	notifications	no	Slett denne meldingen
+domain not found, please check serveraddress.	notifications	no	Domene ikke funnet, vennligst sjekk serveradressen.
+egroupware login is starting, please wait.	notifications	no	EGroupware-pålogging starter, vennligst vent.
+egroupware logindomain:	notifications	no	EGroupware Logindomain:
+egroupware logindomains founds, please select.	notifications	no	EGroupware Logindomains funnet, vennligst velg.
+egroupware not found by url or connection lost to server.	notifications	no	EGroupware ikke funnet via URL eller forbindelsen til serveren er brutt.
+egroupware not found by url.	notifications	no	EGroupware ikke funnet via URL.
+email notifications only, if user is not logged in	notifications	no	Kun e-postvarsler, hvis brukeren ikke er logget inn
+error browser can`t start.	notifications	no	Feil Nettleser kan ikke starte.
+error on loading tray icon	notifications	no	Feil ved lasting av Tray-ikonet
+error ssl	notifications	no	Feil SSL
+exit	notifications	no	Avslutt
 folder	notifications	no	Mappe
 from	notifications	no	Fra
+host:	notifications	no	Host:
+how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	no	Hvor detaljert skal EGroupware-popupen være hvis et varsel sendes til brukeren:<br>lav: bare vise varslingsklokken i toppmenyen - toppmenyen må være aktivert!<br>medium: vis varslingsvinduet i forgrunnen<br>høy: vis varslingsvinduet og la nettleseren gjøre noe for å annonsere seg selv
+info on load config file: create config file.	notifications	no	Info om innlasting av konfigurasjonsfil: Opprett konfigurasjonsfil.
+issuer dn:	notifications	no	DN for utsteder:
+java desktop notification app	preferences	no	Java-skrivebordsvarslingsapp
+last month	notifications	no	Forrige måned
+login aborted, application exit?	notifications	no	Innlogging avbrutt, applikasjonen avsluttes?
+login in egroupware:	notifications	no	Logg inn i EGroupware:
+mail account to use for notifications	admin	no	E-postkonto som skal brukes til varslinger
+mark all as read	notifications	no	Merk alle som lest
+mark as read	notifications	no	Merk som lest
 message from	notifications	no	Melding fra
-minutes	notifications	no	minutter
-permission	notifications	no	tillatelser
+minutes	notifications	no	Minutter
+more info	notifications	no	Mer informasjon
+notifier	notifications	no	Varsler
+open notified entry	notifications	no	Åpne varslet oppføring
+page not found, please check serveraddress.	notifications	no	Siden ble ikke funnet, vennligst sjekk serveradressen.
+password:	notifications	no	Passord:
+permission	notifications	no	Tillatelser
+permission denied for notifications application.	notifications	no	Tillatelse avslått for notifikasjonsapplikasjon.
+placeholders with user/ prefix	admin	no	plassholdere med bruker/prefiks
+please contact your egroupware admin.	notifications	no	Ta kontakt med din EGroupware-administrator.
+please enter the url of your egroupware.	notifications	no	Vennligst skriv inn URL-adressen til EGroupware.
+please enter your egroupware username.	notifications	no	Vennligst skriv inn ditt EGroupware-brukernavn.
+please enter your password	notifications	no	Vennligst skriv inn passordet ditt
+repeat login?	notifications	no	Gjenta pålogging?
+run application	notifications	no	Kjør applikasjon
+save password	notifications	no	Lagre passord
+setting	notifications	no	Innstilling
+setting aborted, application exit	notifications	no	Innstilling avbrutt, programmet avsluttes
 settings	notifications	no	Innstillinger
 signature	admin	no	Signatur
+signature added to every change notification	admin	no	Signatur lagt til i alle endringsvarsler
+sorry, your login has expired	notifications	no	Beklager, påloggingen din har utløpt
 step	notifications	no	Steg
+subject dn:	notifications	no	Emne DN:
+the server certificate is not a valid trust center certificate!	notifications	no	Serversertifikatet er ikke et gyldig tillitssenter-sertifikat!
+this egroupware notification has been sent to you by mail because your	notifications	no	Dette EGroupware-varselet har blitt sendt til deg via e-post fordi din
+this month	notifications	no	Denne måneden
+user:	notifications	no	Bruker:
 warning	notifications	no	Advarsel
+yesterday	notifications	no	I går
+you can also use	admin	no	Du kan også bruke
+you have %1 unread notifications	notifications	no	Du har %1 uleste varsler
+you have been successfully logged out	notifications	no	Du har blitt logget ut
+you've got new mail	notifications	no	Du har fått en ny e-post
 your session could not be verified.	notifications	no	Din sesjon kunne ikke bekreftes

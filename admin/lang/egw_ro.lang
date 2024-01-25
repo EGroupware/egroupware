@@ -1,3 +1,32 @@
+%1 %2 rights for %3 on %4 to %5	admin	ro	%1 %2 drepturi pentru %3 pe %4 până la %5
+%1 - %2 of %3 user accounts	admin	ro	%1 - %2 din %3 conturi de utilizator
+%1 - %2 of %3 user groups	admin	ro	%1 - %2 din grupurile de utilizatori %3
+%1 access to other data	admin	ro	%1 acces la alte date
+%1 accounts being activated	admin	ro	%1 conturi în curs de activare
+%1 acl entries deleted.	admin	ro	%1 intrări ACL șterse.
+%1 acl records of not (longer) existing accounts deleted.	admin	ro	%1 înregistrări ACL ale conturilor care nu mai există șterse.
+%1 categories of not (longer) existing accounts deleted.	admin	ro	%1 categorii de conturi care nu (mai) există șterse.
+%1 category '%2' %3	admin	ro	%1 categoria "%2" %3
+%1 category(s) %2	admin	ro	%1 categorie(e) %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ro	%1 category(s) %2, %3 a eșuat din cauza drepturilor insuficiente!
+%1 class not instanciated	admin	ro	%1 class not instanciated
+%1 entries deleted	admin	ro	%1 intrări șterse
+%1 entries deleted.	admin	ro	%1 intrări șterse
+%1 group %2	admin	ro	%1 grup %2
+%1 is no command!	admin	ro	%1 nu este o comandă!
+%1 log entries deleted.	admin	ro	%1 intrări de jurnal șterse.
+%1 mail credentials deleted	admin	ro	%1 credențiale de corespondență șterse
+%1 not found or not executable !!!	admin	ro	%1 nu a fost găsit sau nu este executabil!
+%1 phrases saved.	admin	ro	%1 fraze salvate.
+%1 rights for %2 and applications %3	admin	ro	%1 drepturi pentru %2 și aplicația (aplicațiile) %3 .
+%1 run rights for applications	admin	ro	%1 drepturi de execuție pentru aplicații
+%1 sessions killed	admin	ro	%1 sesiuni ucise.
+%1 successful	admin	ro	%1 reușită
+%1 token %2.	admin	ro	%1 token %2.
+%1 user %2	admin	ro	%1 utilizator %2
+(de)activate mail accounts	admin	ro	(de)Activarea conturilor de poștă electronică
+(default no, leave it off if you dont use it)	admin	ro	Implicit = Nu, lăsați-o dezactivată dacă nu o utilizați
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ro	(imapclass trebuie să susțină această funcție prin interogarea valorii de configurare corespunzătoare și să o transmită ca și cota implicită către serverul IMAP)
 1 year	admin	ro	1 an
 2 month	admin	ro	2 luni
 2 weeks	admin	ro	2 săptămâni
@@ -29,4 +58,5 @@ own install id:	admin	ro	Propria instalare ID:
 soap	admin	ro	SOAP
 ssl	admin	ro	SSL
 total records	admin	ro	Total înregistrări
+user-agent	admin	ro	User-Agent
 xml-rpc	admin	ro	XML-RPC

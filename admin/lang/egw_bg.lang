@@ -26,6 +26,7 @@
 %1 user %2	admin	bg	% 1 потребител % 2
 (de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
 (default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, остави го изключен, ако не се ползва
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	bg	(imapclass трябва да поддържа тази функция чрез запитване за съответната стойност на конфигурацията и да я предаде като квота по подразбиране на IMAP сървъра)
 (no subject)	admin	bg	(без тема)
 (stored password will not be shown here)	admin	bg	Съхранената парола няма да бъде показана тук!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	bg	За инсталиране на нови приложения използвайте <br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
@@ -105,6 +106,7 @@ advanced options	admin	bg	Разширени опции
 aliases	admin	bg	Псевдоними
 all categories	admin	bg	Всички категории
 apply the changes	admin	bg	Прилагане на промените
+checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
 country	admin	bg	Държава
 created	admin	bg	Създаден
 custom 1	admin	bg	Потребителски 1
@@ -138,3 +140,6 @@ start	admin	bg	Старт
 translation	admin	bg	Превод
 two weeks	admin	bg	две седмици
 updated	admin	bg	Актуализиран
+user-agent	admin	bg	User-Agent
+using fallback via regular json requests	admin	bg	Използване на резервен вариант чрез обикновени JSON заявки
+using native swoole push	admin	bg	Използване на native Swoole Push
