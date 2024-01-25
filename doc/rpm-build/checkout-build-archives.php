@@ -657,11 +657,12 @@ function do_editchangelog()
 	}
 	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
 
-	update_api_setup($api_setup=$config['checkoutdir'].'/api/setup/setup.inc.php');
+	$api_setup = update_api_setup($config['checkoutdir']);
+    $package_json = update_package_json($config['checkoutdir']);
 
 	if (file_exists($config['checkoutdir'].'/.git'))
 	{
-		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog.' '.$api_setup;
+		$cmd = $config['git']." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog.' '.$api_setup.' '.$package_json;
 	}
 	else
 	{
@@ -942,13 +943,14 @@ function update_changelog($content)
 /**
  * Update content of api/setup/setup.inc.php file with new maintenance version
  *
- * @param string $path full path to "api/setup/setup.inc.php"
+ * @param string $egw_dir full path to EGroupware directory
+ * @return string full patch to file
  */
-function update_api_setup($path)
+function update_api_setup(string $egw_dir)
 {
 	global $config;
 
-	if (!($content = file_get_contents($path)))
+	if (!($content = file_get_contents($path=$egw_dir.'/api/setup/setup.inc.php')))
 	{
 		throw new Exception("Could not read file '$path' to update maintenance-version!");
 	}
@@ -961,6 +963,33 @@ function update_api_setup($path)
 	{
 		throw new Exception("Could not update file '$path' with maintenance-version!");
 	}
+	return $path;
+}
+
+/**
+ * Update content of package.json file with new maintenance version
+ *
+ * @param string $egw_dir full path to EGroupware directory
+ * @return string full patch to file
+ */
+function update_package_json(string $egw_dir)
+{
+	global $config;
+
+	if (!($content = file_get_contents($path=$egw_dir.'/package.json')))
+	{
+		throw new Exception("Could not read file '$path' to update maintenance-version!");
+	}
+
+	$content = preg_replace('/"version":\s+"[^"]+",/',
+		'"version": "'.$config['version'].'.'.$config['packaging'].'",',
+		$content);
+
+	if (!file_put_contents($path, $content))
+	{
+		throw new Exception("Could not update file '$path' with maintenance-version!");
+	}
+    return $path;
 }
 
 /**
