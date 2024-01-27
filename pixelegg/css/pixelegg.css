@@ -7116,6 +7116,12 @@ table.egwGridView_grid img.et2_appicon {
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_acl {
   background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
 }
+#egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_useraccount {
+  background-image: url(../../api/templates/default/images/accounts.svg);
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position-x: -2px;
+}
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items ul a#topmenu_calls {
   background-image: url(../../api/templates/default/images/phone.svg);
   background-repeat: no-repeat;
