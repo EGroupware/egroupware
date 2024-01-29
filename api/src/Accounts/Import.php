@@ -937,7 +937,9 @@ class Import
 	const LOG_FILE = 'setup/account-import.log';
 
 	/**
-	 * Run incremental import via async job
+	 * Run import via async job
+	 *
+	 * First daily run is a full import, if deleting or deactivating accounts is configured, all others are incremental imports
 	 *
 	 * @return void
 	 */
@@ -946,7 +948,8 @@ class Import
 		try {
 			$import = new self();
 			$import->logger(date('Y-m-d H:i:s O').' LDAP account import started', 'info');
-			$import->run(false);
+			$import->run(in_array($GLOBALS['egw_info']['server']['account_import_delete'] ?? 'no', ['yes', 'deactivate']) &&
+				self::firstRunToday());
 			$import->logger(date('Y-m-d H:i:s O').' LDAP account import finished', 'info');
 		}
 		catch (\InvalidArgumentException $e) {
@@ -959,6 +962,21 @@ class Import
 			_egw_log_exception($e);
 			$import->logger('Error: '.$e->getMessage(), 'fatal');
 		}
+	}
+
+	/**
+	 * Check if current time / run is the first one for today
+	 *
+	 * @return bool
+	 */
+	public static function firstRunToday()
+	{
+		if (empty($frequency=$GLOBALS['egw_info']['server']['account_import_frequency']))
+		{
+			return false;
+		}
+		// check current time <= time of first run today (frequency is in hours)
+		return time() <= mktime(ceil($frequency), round((60*$frequency)%60), 60);   // 60 seconds grace time
 	}
 
 	/**
