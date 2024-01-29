@@ -480,8 +480,9 @@ class Import
 								++$errors;
 								continue;
 							}
+							$hide_binary = !empty($contact['jpegphoto']) ? ['jpegphoto' => bytes($contact['jpegphoto']).' bytes binary data'] : [];
 							$this->logger("Successful updated contact data of '$account[account_lid]' (#$account_id): ".
-								json_encode($diff, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'detail');
+								json_encode($hide_binary+$diff, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'detail');
 							if (!$new) $new = false;
 						}
 						else
