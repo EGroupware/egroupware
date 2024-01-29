@@ -900,6 +900,7 @@ moved unconnected %1 %2 to %3.	admin	de	Nicht verbundene Einträge verschoben  %
 mozambique	common	de	MOZAMBIQUE
 multicolumn indices	common	de	Mehrspaltige Indices
 multiple	common	de	Mehrere
+my account	common	de	Mein Benutzer
 myanmar	common	de	MYANMAR
 name	common	de	Name
 name of other table where column is a key from	common	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
@@ -1519,7 +1520,6 @@ western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
 what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	Was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
-what style would you like the image to have?	common	de	Welchen Stil soll das Bild haben?
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware-Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
