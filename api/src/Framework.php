@@ -1307,10 +1307,10 @@ abstract class Framework extends Framework\Extra
 				'title' => 'Access',
 				'hook'  => 'acl_rights',
 			),
-            'useraccount' => array(
-                'title' => 'My Account',
-                'hook'  => 'user_account',
-            ),
+			'useraccount' => array(
+				'title' => 'My Account',
+				'hook'  => 'user_account',
+			),
 			'cats' => array(
 				'title' => 'Categories',
 				'hook' => 'categories',
@@ -1367,18 +1367,18 @@ abstract class Framework extends Framework\Extra
 					));
 				}
 				break;
-            case 'useraccount':
-                $config = Config::read('phpgwapi');
-                if ($config['own_account_acl'] && is_array($config['own_account_acl']) && count($config['own_account_acl'])>0){
-                    $this->_add_topmenu_item(array(
-                        'id' => $type,
-                        'name' => 'useraccount',
-                        'title' => lang($types[$type]['title']),
-                        'url'   => "javascript:egw.open_link('".
-                            self::link('/index.php?menuaction=addressbook.addressbook_ui.edit&account_id='.$GLOBALS['egw_info']['user']['account_id'])."','_blank','850x580')",
-                    ));
-                }
-                break;
+			case 'useraccount':
+				$config = Config::read('phpgwapi');
+				if (!empty($config['own_account_acl']) && is_array($config['own_account_acl']) && count($config['own_account_acl'])>0)
+				{
+					$this->_add_topmenu_item(array(
+						'id' => $type,
+						'name' => 'useraccount',
+						'title' => lang($types[$type]['title']),
+						'url'   => "javascript:egw.open_link('".self::link('/index.php?menuaction=addressbook.addressbook_ui.edit&account_id='.$GLOBALS['egw_info']['user']['account_id'])."','_blank','850x580')",
+					));
+				}
+				break;
 			default:
 				$this->_add_topmenu_item(array(
 					'id' => $type,
