@@ -22,14 +22,14 @@ use EGroupware\Api\Exception\AssertionFailed;
 /**
  * API - accounts
  *
- * This class uses a backend class (at them moment SQL or LDAP) and implements some
- * caching on to top of the backend functions:
+ * This class uses a backend class and implements some caching on to top of the backend functions:
  *
  * a) instance-wide account-data cache queried by account_id including also members(hips)
  *    implemented by self::cache_read($account_id) and self::cache_invalidate($account_ids)
  *
  * b) session based cache for search, split_accounts and name2id
  *    implemented by self::setup_cache() and self::cache_invalidate()
+ *    SQL backend does NOT use the session, but just a static variable so caching on request base.
  *
  * The backend only implements the read, save, delete, name2id and the {set_}members{hips} methods.
  * The account class implements all other (eg. name2id, id2name) functions on top of these.
@@ -39,7 +39,7 @@ use EGroupware\Api\Exception\AssertionFailed;
 class Accounts
 {
 	/**
-	 * Enables the session-cache, currently switched on independent of the backend
+	 * Enables the session-cache, currently __construct switches it off for SQL backend
 	 *
 	 * @var boolean
 	 */
@@ -168,6 +168,9 @@ class Accounts
 			$backend = $this->config['account_repository'];
 		}
 		$backend_class = 'EGroupware\\Api\\Accounts\\'.ucfirst($backend);
+
+		// switch session cache off for SQL
+		self::$use_session_cache = $backend !== 'sql';
 
 		if ($backend_object && !is_a($backend_object, $backend_class))
 		{
