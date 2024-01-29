@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {FileInfo} from "./Et2VfsSelect";
+import {FileInfo} from "./Et2VfsSelectDialog";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";

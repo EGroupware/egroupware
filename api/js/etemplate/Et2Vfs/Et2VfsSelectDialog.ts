@@ -23,6 +23,7 @@ import {HasSlotController} from "../Et2Widget/slot";
 import {IegwAppLocal} from "../../jsapi/egw_global";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2VfsSelectRow} from "./Et2VfsSelectRow";
+import {Et2VfsPath} from "./Et2VfsPath";
 
 /**
  * @summary Select files (including directories) from the VFS
@@ -32,7 +33,7 @@ import {Et2VfsSelectRow} from "./Et2VfsSelectRow";
  * @dependency et2-select
  * @dependency et2-vfs-select-row
  *
- * @slot title - Optional additions to title.  Works best with `et2-button-icon`.
+ * @slot title - Optional additions to title.
  * @slot toolbar - Toolbar containing controls for search & navigation
  * @slot prefix - Before the toolbar
  * @slot suffix - Like prefix, but after
@@ -48,7 +49,7 @@ import {Et2VfsSelectRow} from "./Et2VfsSelectRow";
  *
  */
 
-export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMixinInterface
+export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements SearchMixinInterface
 {
 	static get styles()
 	{
@@ -145,7 +146,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 
 	get _searchNode() : HTMLInputElement { return this.shadowRoot.querySelector("#search");}
 
-	get _pathNode() : HTMLElement { return this.shadowRoot.querySelector("#path");}
+	get _pathNode() : Et2VfsPath { return this.shadowRoot.querySelector("#path");}
 
 	get _listNode() : HTMLElement { return this.shadowRoot.querySelector("#listbox");}
 
@@ -194,7 +195,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 			mime: this.mime || null,
 			name: this.title
 		};
-		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(Et2VfsSelect.SERVER_URL))),
+		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(Et2VfsSelectDialog.SERVER_URL))),
 			[content, attrs]).then((results) =>
 		{
 			debugger;
@@ -579,7 +580,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 		// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
 		if(this._searchNode.value.length - 1 > 0)
 		{
-			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2VfsSelect.SEARCH_TIMEOUT);
+			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2VfsSelectDialog.SEARCH_TIMEOUT);
 		}
 	}
 
@@ -605,7 +606,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
                             @click=${() => this.setPath("/apps/favorites")}
                 ></et2-button>
                 <et2-select id="app" emptyLabel="Applications" noLang="1"
-                            .select_options=${this.appList}
+                            .select_options=${this._appList}
                             @change=${(e) => this.setPath("/apps/" + e.target.value)}
                 >
                 </et2-select>
@@ -733,10 +734,10 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
                 <div
                         part="path"
                 >
-                    <input id="path"
-                           value=${this.path}
-                           @onchange=${this.startSearch}
-                    />
+                    <et2-vfs-path id="path"
+                                  .value=${this.path}
+                                  @change=${() => {this.setPath(this._pathNode.value)}}
+                    ></et2-vfs-path>
                 </div>
                 <div
                         id="listbox"
@@ -784,7 +785,7 @@ export class Et2VfsSelect extends Et2InputWidget(LitElement) implements SearchMi
 	}
 }
 
-customElements.define("et2-vfs-select", Et2VfsSelect);
+customElements.define("et2-vfs-select-dialog", Et2VfsSelectDialog);
 
 export interface FileInfo
 {

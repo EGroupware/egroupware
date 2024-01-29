@@ -15,7 +15,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
-import {FileInfo} from "./Et2VfsSelect";
+import {FileInfo} from "./Et2VfsSelectDialog";
 import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
 
