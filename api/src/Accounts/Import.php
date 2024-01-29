@@ -444,7 +444,7 @@ class Import
 						}));
 						// files need to be or'ed with the sql value, as otherwise e.g. picture would disappear
 						$to_update['files'] |= $sql_contact['files'];
-						unset($to_update['account_id']);    // no need to update, specially as account_id might be different!
+						unset($to_update['account_id'], $to_update['dn']);    // no need to update, specially as account_id might be different!
 						$to_update['id'] = $sql_contact['id'];
 						if (($diff = array_diff_assoc($to_update, $sql_contact)))
 						{
@@ -624,7 +624,8 @@ class Import
 			}
 			$this->logger($result, 'info');
 
-			if (!$dry_run && $initial_import && self::installAsyncJob())
+			if (!$dry_run && $initial_import && self::installAsyncJob((float)$GLOBALS['egw_info']['server']['account_import_frequency'] ?? 0.0,
+					$GLOBALS['egw_info']['server']['account_import_time'] ?? null))
 			{
 				$this->logger('Async job for periodic import installed', 'info');
 			}
