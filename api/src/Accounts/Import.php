@@ -976,7 +976,7 @@ class Import
 			return false;
 		}
 		// check current time <= time of first run today (frequency is in hours)
-		return time() <= mktime(ceil($frequency), round((60*$frequency)%60), 60);   // 60 seconds grace time
+		return time() <= mktime(floor($frequency), round((60*$frequency)%60), 60);   // 60 seconds grace time
 	}
 
 	/**
