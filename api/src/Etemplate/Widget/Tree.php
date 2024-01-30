@@ -18,8 +18,6 @@ use EGroupware\Api;
 /**
  * eTemplate tree widget
  *
- * @see http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:syntax_templates Tree syntax
- *
  * Example initialisation of tree via $sel_options array:
  *
  *  use Api\Etemplate\Widget\Tree as tree;
@@ -131,7 +129,7 @@ class Tree extends Etemplate\Widget
 	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
-	 * Reimplemented to parse our differnt attributes
+	 * Reimplemented to parse our different attributes
 	 *
 	 * @param string|\XMLReader $xml
 	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
@@ -142,17 +140,24 @@ class Tree extends Etemplate\Widget
 		$this->attrs['type'] = $xml->localName;
 		parent::set_attrs($xml, $cloned);
 
-		// set attrs[multiple] from attrs[options]
-		if (isset($this->attrs['options']) && (int)$this->attrs['options'] > 1)
+		// adaption for <et2-tree(-cat)(-multiple) --> <tree(-cat) multiple="..."
+		$parts = explode('-', $this->type);
+		if (($key = array_search('multiple', $parts)))
 		{
-			self::setElementAttribute($this->id, 'multiple', true);
+			$this->attrs['multiple'] = true;
+			unset($parts[$key]);
 		}
+		if ($parts[0] === 'et2')
+		{
+			array_shift($parts);
+		}
+		$this->type = implode('-', $parts);
 	}
 
 	/**
 	 * Send data as json back to tree
 	 *
-	 * Basicly sends a Content-Type and echos json encoded $data and exit.
+	 * Basically sends a Content-Type and echos json encoded $data and exit.
 	 *
 	 * As text parameter accepts html in tree, we htmlencode it here!
 	 *
@@ -447,6 +452,8 @@ class Tree extends Etemplate\Widget
 		$options = array();
 		switch ($widget_type)
 		{
+			case 'et2-tree-cat':
+			case 'et2-tree-cat-multiple':
 			case 'tree-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				if ($readonly)  // for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
@@ -516,7 +523,7 @@ class Tree extends Etemplate\Widget
 						$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
 						self::$request->preserv[$unavailable_name] = $unavailable;
 					}
-					$value = $rows ? $pathes : $pathes[0];
+					$value = $rows || substr($widget_type, -9) === '-multiple' ? $pathes : $pathes[0];
 				}
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				$no_lang = True;
