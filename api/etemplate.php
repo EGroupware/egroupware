@@ -429,7 +429,7 @@ function send_template()
 			}
 			// fix renamed attrs, thought regular under_score to camelCase happens later
 			if (!empty($attrs['parent_node'])) $attrs['parentId'] = $attrs['parent_node'];
-			unset($attrs['multiple'], $attrs['options'], $attrs['parent_node']);
+			unset($attrs['multiple'], $attrs['parent_node']);
 			return "<$tag" . stringAttrs($attrs) . "></$tag>";
 		}, $str);
 
