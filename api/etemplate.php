@@ -422,7 +422,8 @@ function send_template()
 		{
 			$tag = 'et2-tree'.($matches[1] ?? '');
 			$attrs = parseAttrs($matches[2]);
-			if (!empty($attrs['multiple']) && $attrs['multiple'] !== 'false')
+			if (!empty($attrs['multiple']) && $attrs['multiple'] !== 'false' ||
+			   !empty($attrs['options']) && (int)$attrs['options'] > 1)
 			{
 				$tag .= '-multiple';
 			}
