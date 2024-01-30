@@ -423,6 +423,7 @@ class Import
 						// photo and public keys are not stored in SQL but in filesystem, fetch it to compare
 						$contact['files'] = 0;
 						if ($contact['jpegphoto'] === false) $contact['jpegphoto'] = null;
+						Api\Vfs::$is_root = true;
 						foreach($this->files2attrs as $file => [$attr, $mask, $regexp])
 						{
 							if (isset($contact[$attr]))
@@ -439,6 +440,7 @@ class Import
 							}
 							$last_attr = $attr;
 						}
+						Api\Vfs::$is_root = false;
 						$to_update = array_merge($sql_contact, array_filter($contact, static function ($attr) {
 							return $attr !== null && $attr !== '';
 						}));
@@ -471,16 +473,17 @@ class Import
 							}
 							Api\Vfs::$is_root = false;
 */
-							// photo_unchanged=true must be set, to no delete the photo, if it's not in LDAP
-							$this->contacts_sql->data['photo_unchanged'] = !isset($diff['files']) ||
-								($to_update['files']&Api\Contacts::FILES_BIT_PHOTO) === ($sql_contact['files']&Api\Contacts::FILES_BIT_PHOTO);
+							// photo_unchanged=true must be set, to not delete the photo, if it's not in LDAP
+							$diff['photo_unchanged'] = $this->contacts_sql->data['photo_unchanged'] =
+								!isset($diff['jpegphoto']) && (!isset($diff['files']) ||
+									($to_update['files']&Api\Contacts::FILES_BIT_PHOTO) === ($sql_contact['files']&Api\Contacts::FILES_BIT_PHOTO));
 							if ($need_update && $this->contacts_sql->save($to_update))
 							{
 								$this->logger("Error updating contact data of '$account[account_lid]' (#$account_id)", 'error');
 								++$errors;
 								continue;
 							}
-							$hide_binary = !empty($contact['jpegphoto']) ? ['jpegphoto' => bytes($contact['jpegphoto']).' bytes binary data'] : [];
+							$hide_binary = !empty($diff['jpegphoto']) ? ['jpegphoto' => bytes($diff['jpegphoto']).' bytes binary data'] : [];
 							$this->logger("Successful updated contact data of '$account[account_lid]' (#$account_id): ".
 								json_encode($hide_binary+$diff, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'detail');
 							if (!$new) $new = false;
