@@ -417,6 +417,21 @@ function send_template()
 			return "<et2-date$matches[1] $matches[2]></et2-date$matches[1]>";
 		}, $str);
 
+		// replace <tree(-cat)? multiple="..." with <et2-tree(-cat)(-multiple) and fix attributes
+		$str = preg_replace_callback('#<tree(-cat)?\s(.*?)\s*/>#s', static function (array $matches)
+		{
+			$tag = 'et2-tree'.($matches[1] ?? '');
+			$attrs = parseAttrs($matches[2]);
+			if (!empty($attrs['multiple']) && $attrs['multiple'] !== 'false')
+			{
+				$tag .= '-multiple';
+			}
+			// fix renamed attrs, thought regular under_score to camelCase happens later
+			if (!empty($attrs['parent_node'])) $attrs['parentId'] = $attrs['parent_node'];
+			unset($attrs['multiple'], $attrs['options'], $attrs['parent_node']);
+			return "<$tag" . stringAttrs($attrs) . "></$tag>";
+		}, $str);
+
 		if ($template === 'mobile')
 		{
 		}
