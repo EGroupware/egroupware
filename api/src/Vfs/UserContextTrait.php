@@ -133,14 +133,43 @@ trait UserContextTrait
 		// if it's not an EGroupware one, we can NOT use uid, gid and mode!
 		if (($scheme = Vfs::parse_url($stat['url'] ?? null, PHP_URL_SCHEME)) && !(class_exists(Vfs::scheme2class($scheme))))
 		{
-			switch($check)
+			// if we have mode set in the url and optional uid, user, gid or group, use that instead of the webserver stuff PHP returns
+			if (is_readable($stat['url']) &&
+				($query = Vfs::parse_url($stat['url'] ?? null, PHP_URL_QUERY)) &&
+				preg_match('/(^|&)mode=[^&]+/', $query))
 			{
-				case Vfs::READABLE:
-					return is_readable($stat['url']);
-				case Vfs::WRITABLE:
-					return is_writable($stat['url']);
-				case Vfs::EXECUTABLE:
-					return is_executable($stat['url']);
+				parse_str($query, $get_params);
+				// set optional user, group, ...
+				$stat['mode'] = Vfs::mode2int($get_params['mode']);
+				if (isset($get_params['user']))
+				{
+					$stat['uid'] = Api\Accounts::getInstance()->name2id($get_params['user'], 'account_lid', 'u');
+				}
+				if (isset($get_params['uid']))
+				{
+					$stat['uid'] = (int)$get_params['uid'];
+				}
+				if (isset($get_params['group']))
+				{
+					$stat['gid'] = abs(Api\Accounts::getInstance()->name2id($get_params['group'], 'account_lid', 'g'));
+				}
+				if (isset($get_params['gid']))
+				{
+					$stat['gid'] = abs($get_params['gid']);
+				}
+				// continue with mode check based on url mount-parameters
+			}
+			else
+			{
+				switch($check)
+				{
+					case Vfs::READABLE:
+						return is_readable($stat['url']);
+					case Vfs::WRITABLE:
+						return is_writable($stat['url']);
+					case Vfs::EXECUTABLE:
+						return is_executable($stat['url']);
+				}
 			}
 		}
 
@@ -233,6 +262,11 @@ trait UserContextTrait
 	 */
 	public static function userContext($url, array $extra=[])
 	{
+		// ftp stream wrapper needs overwrite set in context to allow overwriting existing files
+		if (preg_match('#^ftps?://#', $url) && !self::url_is_readonly($url))
+		{
+			$extra['ftp']['overwrite'] = true;
+		}
 		if (($user = Vfs::parse_url($url, PHP_URL_USER)) &&
 			($account_id = Api\Accounts::getInstance()->name2id($user)) &&
 			($account_id != Vfs::$user) || $extra)	// never set extra options on default context!
