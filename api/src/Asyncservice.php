@@ -446,7 +446,7 @@ class Asyncservice
 
 					if (($GLOBALS['egw']->session->account_id = $job['account_id']))
 					{
-						$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($job['account_id']);
+						$GLOBALS['egw']->session->account_lid = Accounts::id2name($job['account_id']);
 						$GLOBALS['egw']->session->account_domain = $domain;
 						$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->read_repositories();
 
