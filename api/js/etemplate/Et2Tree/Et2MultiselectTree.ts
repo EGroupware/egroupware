@@ -26,6 +26,18 @@ import {Et2Tree, TreeItemData} from "./Et2Tree";
  */
 export class Et2MultiselectTree extends Et2Tree {
 
+
+    @property()
+    onselect // description: "Javascript executed when user selects a node"
+
+    //This is never used as far as I can tell mailapp.folgerMgmt_onCheck should select all sub folders --> Sl-Tree offers this functionality on default
+    @property()
+    oncheck // description: "Javascript executed when user checks a node"
+
+    //only used in calendar_sidebox.xet
+    @property({type: Function})
+    onchange;// 	description: "JS code which gets executed when selection changes"
+
     @state()
     selectedNodes: SlTreeItem[]
     @state()
@@ -34,6 +46,25 @@ export class Et2MultiselectTree extends Et2Tree {
     constructor() {
         super();
         this.multiple = true;
+    }
+
+    public set_onchange(_handler: any)
+    {
+        this.onchange = _handler
+    }
+
+    /**
+     * getValue, retrieves the Ids of the selected Items
+     * @return string or object or null
+     */
+    getValue()
+    {
+        let res:string[] = []
+        for (const selectedItem of this.selectedItems)
+        {
+            res.push(selectedItem.id)
+        }
+        return res
     }
 
     _optionTemplate(selectOption: TreeItemData): TemplateResult<1> {
@@ -78,6 +109,8 @@ export class Et2MultiselectTree extends Et2Tree {
                                     this.selectedItems.push(this.getItem(slTreeItem.id));
                                 }
                                 this.selectedNodes = event.detail.selection;
+                                //TODO look at what signature is expected here
+                                this.onchange(event,this)
 
 
                             }
@@ -102,7 +135,9 @@ export class Et2MultiselectTree extends Et2Tree {
     }
 
 }
-
-customElements.define("et2-multiple-tree", Et2MultiselectTree);
+// @ts-ignore TypeScript says there's something wrong with types
+customElements.define("et2-tree-multiple", Et2MultiselectTree);
+// @ts-ignore TypeScript says there's something wrong with types
+customElements.define("et2-tree-cat-multiple", class extends Et2MultiselectTree{});
 
 

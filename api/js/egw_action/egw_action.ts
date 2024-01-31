@@ -105,7 +105,7 @@ export function egw_getObjectManager(_id, _create = true, _search_depth = Number
  * @param {string} _appName //appName might not always be the current app, e.g. running app content under admin tab
  * @return {EgwActionObjectManager}
  */
-export function egw_getAppObjectManager(_create, _appName = "") {
+export function egw_getAppObjectManager(_create = true, _appName = "") {
     return egw_getObjectManager(_appName ? _appName : window.egw(window).app_name(), _create, 1);
 }
 

@@ -48,7 +48,7 @@ import {egwActionObjectInterface} from "./egw_action";
  *    defaults to 0
  */
 export class EgwActionObject {
-    readonly id: string
+    id: string
     readonly parent: EgwActionObject
     public readonly children: EgwActionObject[] = []
     private actionLinks: EgwActionLink[] = []

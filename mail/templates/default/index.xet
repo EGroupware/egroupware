@@ -30,28 +30,24 @@
                                 <et2-vbox class="addresses">
                                     <et2-hbox>
                                         <et2-description  value="From" class="firstColumnTitle"></et2-description>
-                                        <et2-select-email  id="additionalfromaddress" readonly="true"
-                                                           fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail" multiple="true"
-                                                           onclick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-email id="additionalfromaddress" readonly="true"
+                                                   onclick="app.mail.onclickCompose"></et2-email>
                                         <et2-date-time align="right" id="date" readonly="true"></et2-date-time>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@toaddress" width="100%">
                                         <et2-description value="To" class="firstColumnTitle"></et2-description>
-                                        <et2-select-email id="additionaltoaddress" readonly="true" multiple="true"
-                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
-                                                          onTagClick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-email id="additionaltoaddress" readonly="true" rows="1"
+                                                   onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@ccaddress" width="100%">
                                         <et2-description value="Cc" class="firstColumnTitle"></et2-description>
-                                        <et2-select-email id="ccaddress" readonly="true" multiple="true"
-                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
-                                                          onTagClick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-email id="ccaddress" readonly="true" rows="1"
+                                                   onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
                                     <et2-hbox disabled="!@bccaddress" width="100%">
                                         <et2-description value="Bcc" class="firstColumnTitle"></et2-description>
-                                        <et2-select-email id="bccaddress" readonly="true" multiple="true"
-                                                          rows="1" fullEmail="@emailTag=fullemail" onlyEmail="@emailTag=onlyemail"
-                                                          onTagClick="app.mail.onclickCompose"></et2-select-email>
+                                        <et2-email id="bccaddress" readonly="true" rows="1"
+                                                   onTagClick="app.mail.onclickCompose"></et2-email>
                                     </et2-hbox>
                                     <et2-hbox width="100%" disabled="!@attachmentsBlock">
                                         <et2-description value="Attachments" class="firstColumnTitle"></et2-description>
@@ -114,7 +110,7 @@
         </et2-box>
     </template>
     <template id="mail.index.splitter" height="100%" template="" lang="" group="0" version="1.9.001">
-        <et2-split  id="mailSplitter" style="--min: 30%;--max:70%;" vertical="false" primary="start" >
+        <et2-split id="mailSplitter" style="--min: 30%;--max:min(70%,calc(100% - 30em));" vertical="false" primary="start">
             <nextmatch id="nm" onselect="app.mail.mail_preview" class="" template="mail.index.rows.vertical" header_left="mail.index.add" header_right="mail.index.header_right" disable_selection_advance="true"/>
             <template id="mail.index.preview"/>
         </et2-split>
@@ -141,10 +137,9 @@
         </et2-hbox>
     </template>
     <template id="mail.index" template="" lang="" group="0" version="1.9.001">
-        <et2-mail-tree autoLoading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onClick="app.mail.mail_changeFolder"
-              parent_node="mail-tree_target" onOpenStart="app.mail.subscription_autoloadingStart"
-              onOpenEnd="app.mail.subscription_autoloadingEnd" highlighting="true"/>
-
+        <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder"
+                  onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"
+                  highlighting="true" parentId="mail-tree_target"/>
         <template id="splitter" height="100%" template="mail.index.splitter"/>
         <iframe frameborder="1" id="extra_iframe" scrolling="auto" disabled="true"/>
     </template>

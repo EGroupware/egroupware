@@ -232,20 +232,9 @@ app.classes.mail = AppJS.extend(
                     const tree_wdg = this.et2.getWidgetById(this.nm_index + '[foldertree]');
                     if (tree_wdg) {
                         //TODO
-                        tree_wdg.addEventListener("sl-expand", (event) => {
-                            this.openstart_tree(event.detail.id, tree_wdg, 0)
-                        })
-                        tree_wdg.addEventListener("sl-after-expand", (event) => {
-                            this.openend_tree(event.detail.id, tree_wdg, 0)
-                        })
-                        tree_wdg.addEventListener("sl-selection-change", (event) => {
-                            let x = event
-                            let y = tree_wdg
-                            this.mail_changeFolder(event.detail.selection[0].id, tree_wdg, event.detail.previous)
 
-                        })
-                        //tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
-                        //   tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+                        tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
+                        tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
                     }
                     // Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
                     var alreadyrefreshed = this.mail_searchtype_change();

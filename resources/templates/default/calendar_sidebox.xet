@@ -3,7 +3,7 @@
 <overlay>
 	<template id="resources.calendar_sidebox" template="" lang="" group="0" version="16.1">
 		<et2-vbox  parentId="calendar-resources-et2_target">
-			<et2-multiple-tree id="owner" autoloading="resources_ui::ajax_tree" multiple="true" onchange="app.resources.sidebox_change"/>
+			<et2-tree-multiple id="owner" autoloading="resources_ui::ajax_tree" multiple="true" onchange="app.resources.sidebox_change"/>
 		</et2-vbox>
 		<styles>
 			#resources-calendar_sidebox {

@@ -21,6 +21,7 @@
  */
 export interface EgwActionObjectInterface {
     //properties
+    id?:string
     _state: number;
     stateChangeCallback: Function;
     stateChangeContext: any;

@@ -14,7 +14,7 @@
 					<et2-image  src="folder"></et2-image>
 					<et2-description  value="Categories"></et2-description>
 					<et2-select-cat  id="cat_id" rows="013" multiple="1" globalCategories="width:99%"></et2-select-cat>
-					<tree-cat id="cat_id" options="13,,width:99%"/>
+					<et2-tree-cat-multiple id="cat_id" options="13,,width:99%"/>
 				</row>
 				<row>
 					<et2-hbox  span="all">
