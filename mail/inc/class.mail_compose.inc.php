@@ -1025,7 +1025,7 @@ class mail_compose
 						{
 							if ($_REQUEST['preset']['mimeType'] === 'plain')
 							{
-								$_REQUEST['preset']['body'] = '<p>'.nl2br($_REQUEST['preset']['body'])."</p>\n";
+								$_REQUEST['preset']['body'] = Mail\Html::convertTextToHtml($_REQUEST['preset']['body']);
 							}
 							else
 							{
