@@ -254,6 +254,17 @@ abstract class Handler
 		{
 			$entry = $this->read($entry);
 		}
+		return static::etag($entry);
+	}
+
+	/**
+	 * Get the etag for an entry-array, can be reimplemented for other algorithm or field names
+	 *
+	 * @param array $entry
+	 * @return false|string
+	 */
+	public static function etag(array $entry)
+	{
 		if (!is_array($entry) || !isset($entry['id']) || !(isset($entry['modified']) || isset($entry['etag'])))
 		{
 		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");

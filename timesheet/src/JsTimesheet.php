@@ -62,6 +62,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			'pricelist' => (int)$timesheet['pl_id'] ?: null,
 			'status' => $bo->status_labels[$timesheet['status']] ?? null,
 			'egroupware.org:customfields' => self::customfields($timesheet),
+			'etag' => ApiHandler::etag($timesheet)
 		]);
 
 		if ($encode)
