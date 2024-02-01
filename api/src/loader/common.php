@@ -291,37 +291,37 @@ if (file_exists(EGW_SERVER_ROOT.'/phpgwapi'))
  * @author skeeter
  * This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
  * $account_id = get_account_id($accountid);
- * @param int/string $account_id either a name or an id
- * @param int/string $default_id either a name or an id
+ * @param int|string $account_id either a name or an id
+ * @param int|string $default_id either a name or an id
  * @return int account_id
  */
 function get_account_id($account_id = '',$default_id = '')
 {
-	if (gettype($account_id) == 'integer')
+	if (is_int($account_id))
 	{
 		return $account_id;
 	}
-	elseif ($account_id == '')
+	if ($account_id == '')
 	{
 		if ($default_id == '')
 		{
-			return (isset($GLOBALS['egw_info']['user']['account_id'])?$GLOBALS['egw_info']['user']['account_id']:0);
+			return $GLOBALS['egw_info']['user']['account_id'] ?? 0;
 		}
 		elseif (is_string($default_id))
 		{
-			return $GLOBALS['egw']->accounts->name2id($default_id);
+			return Api\Accounts::getInstance()->name2id($default_id);
 		}
 		return (int)$default_id;
 	}
 	elseif (is_string($account_id))
 	{
-		if((int)$account_id && $GLOBALS['egw']->accounts->exists((int)$account_id) == True)
+		if((int)$account_id && Api\Accounts::getInstance()->exists((int)$account_id))
 		{
 			return (int)$account_id;
 		}
 		else
 		{
-			return $GLOBALS['egw']->accounts->name2id($account_id);
+			return Api\Accounts::getInstance()->name2id($account_id);
 		}
 	}
 }
