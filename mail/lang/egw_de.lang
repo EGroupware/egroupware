@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Whitelist entfernt
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie
 %1 mails selected	mail	de	%1 E-Mail(s)  ausgewählt
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	de	%1 benötigt die Sieve Erweiterung %2, versuchen Sie statt dessen %3 oder eine höhere Anzahl von Tagen.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*)  Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den manchen Mail-Servern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
 (leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
 (no subject)	mail	de	(Kein Betreff)

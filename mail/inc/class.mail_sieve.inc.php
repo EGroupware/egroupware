@@ -563,7 +563,7 @@ class mail_sieve
 			}
 			else
 			{
-				if ($icServer->acc_imap_administration || (!empty($icServer->getExtensions()) && in_array('DATE', $icServer->getExtensions())))
+				if (!empty($icServer->getExtensions()) && in_array('DATE', $icServer->getExtensions()))
 				{
 					$ByDate = array('by_date' => lang('By date'));
 				}
@@ -656,7 +656,12 @@ class mail_sieve
 
 									if (!$resSetvac)
 									{
-										$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->account->imapServer()->error;
+										$msg = lang('Vacation notice update failed') . ":\n" . $this->account->imapServer()->error;
+										if (!$content['days'])
+										{
+											$msg .= "\n\n".lang('%1 requires Sieve extension %2, maybe try %1 or higher number of days.',
+												lang('Always respond / auto-responder'), 'VACATION-SECONDS', lang('Once per day'));
+										}
 										break;
 									}
 									// schedule job to switch message on/off, if request and not already in past
@@ -710,7 +715,7 @@ class mail_sieve
 					),
 					'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 				);
-				if ($icServer->acc_imap_administration || in_array('VACATION-SECONDS', $icServer->getExtensions()))
+				if (in_array('VACATION-SECONDS', $icServer->getExtensions()))
 				{
 					$sel_options['days']['0'] = lang('Always respond / auto-responder');
 				}
