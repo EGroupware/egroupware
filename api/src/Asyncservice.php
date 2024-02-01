@@ -433,7 +433,7 @@ class Asyncservice
 				//
 				//if ($GLOBALS['egw_info']['user']['account_id'] != $job['account_id'])
 				{
-					// run notifications, before changing account_id of enviroment
+					// run notifications, before changing account_id of environment
 					Link::run_notifies();
 					// unset all objects in $GLOBALS, which are created and used by ExecMethod, as they can contain user-data
 					foreach($GLOBALS as $name => $value)
@@ -443,6 +443,12 @@ class Asyncservice
 					$domain = $GLOBALS['egw_info']['user']['domain'];
 					$lang   = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 					unset($GLOBALS['egw_info']['user']);
+
+					// trying to fix errors in async service: Call to a member function xxxxx() on null
+					if (!isset($GLOBALS['egw']->accounts))
+					{
+						$GLOBALS['egw']->accounts = Accounts::getInstance();
+					}
 
 					if (($GLOBALS['egw']->session->account_id = $job['account_id']))
 					{
