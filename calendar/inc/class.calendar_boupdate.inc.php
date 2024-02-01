@@ -767,9 +767,9 @@ class calendar_boupdate extends calendar_bo
 				$msg_type = MSG_DELETED;
 				break;
 		}
-		static $calendar_bo=null;
-		if (!isset($calendar_bo)) $calendar_bo = new calendar_bo();
-		$ret = $calendar_bo->update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
+		static $calendar_boupdate=null;
+		if (!isset($calendar_boupdate)) $calendar_boupdate = new calendar_boupdate();
+		$ret = $calendar_boupdate->update_requested($account_id, $prefs, $msg_type, array(), array(), $role);
 		//error_log(__METHOD__."('$user_or_email', '$ical_method', '$role') account_id=$account_id --> updated_requested returned ".array2string($ret));
 		return $ret;
 	}
