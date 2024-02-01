@@ -1257,13 +1257,12 @@ class Base
 	 */
 	public function search2criteria($_pattern,&$wildcard='',&$op='AND',$extra_col=null, $search_cols=[],$search_cfs=null)
 	{
-		$pattern = trim($_pattern);
 		// This function can get called multiple times.  Make sure it doesn't re-process.
-		if (empty($pattern) || is_array($pattern)) return $pattern;
-		if(strpos($pattern, 'CAST(COALESCE(') !== false)
+		if (empty($_pattern) || is_array($_pattern) || strpos($_pattern, 'CAST(COALESCE(') !== false)
 		{
-			return $pattern;
+			return $_pattern;
 		}
+		$pattern = trim($_pattern);
 
 		$criteria = array();
 		$filter = array();

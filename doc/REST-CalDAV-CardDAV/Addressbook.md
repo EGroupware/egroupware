@@ -3,7 +3,7 @@
 Authentication is via Basic Auth with username and a password, or a token valid for:
 - either just the given user or all users
 - CalDAV/CardDAV Sync (REST API)
-- Calendar application
+- Addressbook application
 
 Following RFCs / drafts used/planned for JSON encoding of resources
 * [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
