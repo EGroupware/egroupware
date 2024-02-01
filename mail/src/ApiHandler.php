@@ -109,9 +109,19 @@ class ApiHandler extends Api\CalDAV\Handler
 					}
 				}
 
+				// determine to use html or plain-text based on user preference and what's supplied in REST API call
+				$type = $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] === 'html' ||
+					!empty($data['bodyHtml']) ? 'html' : 'plain';
+				$body = $data['bodyHtml'] ?? null ?: $data['body'] ?? '';
+				// if user wants html, but REST API caller supplied plain --> convert to html
+				if (!empty($body) && empty($data['bodyHtml']))
+				{
+					$body = Api\Mail\Html::convertTextToHtml($body);
+				}
+
 				$preset = array_filter(array_intersect_key($data, array_flip(['to', 'cc', 'bcc', 'replyto', 'subject', 'priority', 'reply_id']))+[
-					'body' => $data['bodyHtml'] ?? null ?: $data['body'] ?? '',
-					'mimeType' => !empty($data['bodyHtml']) ? 'html' : 'plain',
+					'body' => $body,
+					'mimeType' => $type,
 					'identity' => $ident_id,
 				]+self::prepareAttachments($data['attachments'] ?? [], $data['attachmentType'] ?? 'attach',
 					$data['shareExpiration'], $data['sharePassword'], $do_compose));
