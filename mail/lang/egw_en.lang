@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	en	%1 has been removed from whiltelisted email addresses
 %1 is not writable by you!	mail	en	%1 is NOT writable by you!
 %1 mails selected	mail	en	%1 emails selected
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	en	(*) Please consider, forward to multiple addresses will not work if number of addresses exceeds the Limit. For most mail servers the limit is 4 by default, please contact your mail server administrator for further info.
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
