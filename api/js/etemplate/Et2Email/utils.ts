@@ -98,10 +98,11 @@ export function splitEmail(email_string) : { name : string, email : string }
 	if(email_string && email_string.indexOf('<') !== -1)
 	{
 		const parts = email_string.split('<');
-		if(parts[0])
+		if(parts.length > 1)
 		{
-			split.email = parts[1].substring(0, parts[1].length - 1).trim();
-			split.name = parts[0].trim();
+			split.email = parts.pop();
+			split.email = split.email.substring(0, split.email.length - 1).trim();
+			split.name = parts.join("<").trim();
 			// remove quotes
 			while(split.name.length > 1 && (split.name[0] === '"' || split.name[0] === "'") && split.name[0] === split.name.substring(split.name.length - 1))
 			{
