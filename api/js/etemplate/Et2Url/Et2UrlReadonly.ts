@@ -31,6 +31,9 @@ export class Et2UrlReadonly extends Et2Description
 		];
 	}
 
+	// Don't try to translate URLs (or sub-classes)
+	noLang = true;
+
 	transformAttributes(attrs)
 	{
 		if (typeof attrs.onclick === 'undefined')
