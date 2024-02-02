@@ -1199,12 +1199,20 @@ class CalDAV extends HTTP_WebDAV_Server
 		{
 			return $ret;	// no collection
 		}
+		// nicer JSON formatting for application/pretty+json only
+		$tab = $nl = $sp = '';
+		if (strpos($_SERVER['HTTP_ACCEPT'], 'application/pretty+json') !== false)
+		{
+			$tab = "\t";
+			$nl = "\n";
+			$sp = ' ';
+		}
 		// set start as prefix, to no have it in front of exceptions
-		$prefix = "{\n\t\"responses\": {\n";
+		$prefix = '{'.$nl.$tab.'"responses":'.$sp.'{'.$nl;
 		foreach($files['files'] as $resource)
 		{
 			$path = $resource['path'];
-			echo $prefix.json_encode($path, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).': ';
+			echo $prefix.json_encode($path, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE).':'.$sp;
 			if (!isset($resource['props']))
 			{
 				echo 'null';    // deleted in sync-report
@@ -1224,22 +1232,22 @@ class CalDAV extends HTTP_WebDAV_Server
 				}
 				echo self::json_encode($props, $pretty);
 			}
-			$prefix = ",\n";
+			$prefix = ",$nl";
 		}
 		// happens with an empty response
-		if ($prefix !== ",\n")
+		if ($prefix !== ",$nl")
 		{
 			echo $prefix;
-			$prefix = ",\n";
+			$prefix = ",$nl";
 		}
-		echo "\n\t}";
+		echo "$nl$tab}";
 		// add sync-token and more-results to response
 		if (isset($files['sync-token']))
 		{
-			echo $prefix."\t".'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
+			echo $prefix.$tab.'"sync-token": '.json_encode(!is_callable($files['sync-token']) ? $files['sync-token'] :
 				call_user_func_array($files['sync-token'], (array)$files['sync-token-params']), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
 		}
-		echo "\n}";
+		echo "$nl}";
 
 		// exit now, so WebDAV::GET does NOT add Content-Type: application/octet-stream
 		exit;
