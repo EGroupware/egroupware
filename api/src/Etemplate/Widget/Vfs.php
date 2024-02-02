@@ -644,12 +644,14 @@ class Vfs extends File
 			$path = $path['path'] ?? $path;
 			$is_dir = $path['isDir'] ?? Api\Vfs::is_dir($path);
 			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
+			$download = $path['download_url'] ?? Api\Vfs::download_url($path);
 
 			$response['files'][] = array(
 				'name'  => $name,
 				'path'  => $path,
 				'mime'  => $mime,
-				'isDir' => $is_dir
+				'isDir'       => $is_dir,
+				'downloadUrl' => $download
 			);
 		}
 		Json\Response::get()->data($response);

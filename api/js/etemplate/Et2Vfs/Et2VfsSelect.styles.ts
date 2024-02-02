@@ -14,7 +14,7 @@ export default css`
 	}
 
 	.vfs_select__listbox {
-		flex: 1 1 auto;
+		flex: 2 1 auto;
 		min-height: 15em;
 		overflow-y: auto;
 	}
@@ -48,5 +48,9 @@ export default css`
 
 	.vfs_select__mimefilter {
 		flex: 0 0;
+	}
+
+	:host::part(form-control-help-text) {
+		flex-basis: min-content !important;
 	}
 `;

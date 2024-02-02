@@ -11,7 +11,8 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {html, LitElement, nothing} from "lit";
 import {HasSlotController} from "../Et2Widget/slot";
 import {property} from "lit/decorators/property.js";
-import {FileInfo} from "./Et2VfsSelectDialog";
+import {Et2VfsSelectDialog, FileInfo} from "./Et2VfsSelectDialog";
+import {waitForEvent} from "../Et2Widget/event";
 
 /**
  * @summary Button to open a file selection dialog, and return the selected path(s) as a value
@@ -75,44 +76,90 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	 */
 	@property() method : string = "";
 	/** ID passed to method */
-	@property() method_id : string;
+	@property({type: String, reflect: true}) methodId : string;
 
 	protected readonly hasSlotController = new HasSlotController(this, '');
+	protected processingPromise : Promise<FileActionResult> = null;
 
-	//private _dialog : Et2VfsSelectDialog = this.shadowRoot.querySelector("et2-vfs-select-dialog") ?? null;
+	get _dialog() : Et2VfsSelectDialog {return this.shadowRoot.querySelector("et2-vfs-select-dialog") ?? null};
 
 	constructor()
 	{
 		super();
 		this.handleClick = this.handleClick.bind(this);
-		this.handleDialogClose = this.handleDialogClose.bind(this);
 	}
 
 	protected handleClick(event)
 	{
-		const dialog : any = this.shadowRoot.querySelector("et2-vfs-select-dialog");
-		if(dialog && typeof dialog.show == "function")
+		if(this._dialog && typeof this._dialog.show == "function")
 		{
-			dialog.show();
+			this._dialog.show();
+			// Avoids dialog showing old value if reused
+			this._dialog.requestUpdate("value");
+
+			// This is were we bind to get informed when user closes the dialog
+			waitForEvent(this._dialog, "sl-after-show").then(async() =>
+			{
+				this.processDialogComplete(await this._dialog.getComplete());
+			});
 		}
 	}
 
-	protected handleDialogClose(event)
+	protected processDialogComplete([button, paths])
 	{
-		debugger;
-		this.value = dialog.value ?? [];
+		// Cancel or close do nothing
+		if(!button)
+		{
+			return;
+		}
+
+		const oldValue = this.value;
+		this.value = paths ?? [];
+		this.requestUpdate("value", oldValue);
 
 		if(this.method && this.method == "download")
 		{
 			// download
+			this.value.forEach(path =>
+			{
+				this.egw().open_link(this._dialog.fileInfo(path)?.downloadUrl, "blank", "view", 'download');
+			});
 		}
 		else if(this.method)
 		{
 			this.sendFiles();
 		}
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+
+			// Reset value after processing
+			if(this.method)
+			{
+				this.value = [];
+				this.requestUpdate("value");
+			}
+		})
 	}
 
 	protected sendFiles()
+	{
+		this.processingPromise = this.egw().request(
+			this.method,
+			[this.methodId, this.value/*, submit_button_id, savemode*/]
+		).then((data) =>
+			{
+				this.processingPromise = null;
+
+				// UI update now that we're done
+				this.requestUpdate();
+				return {success: true};
+			}
+		);
+
+		// UI update, we're busy
+		this.requestUpdate();
+	}
 
 	protected dialogTemplate()
 	{
@@ -126,9 +173,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
                     .filename=${this.filename ?? nothing}
                     .mime=${this.mime ?? nothing}
                     .buttonLabel=${this.buttonLabel ?? nothing}
-                    @close=${this.handleDialogClose}
             >
-
             </et2-vfs-select-dialog>
 		`;
 	}
@@ -137,14 +182,18 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	render()
 	{
 		const hasUserDialog = this.hasSlotController.test("[default]");
+		const processing = this.processingPromise !== null;
+		const image = processing ? "" : (this.image || "filemanager/navbar");
 
 		return html`
-            <et2-button image=${this.image || "filemanager/navbar"}
+            <et2-button image=${image}
                         ?disabled=${this.disabled}
-                        ?readonly=${this.readonly}
+                        ?readonly=${this.readonly || processing}
                         .noSubmit=${true}
                         @click=${this.handleClick}
             >
+                ${processing ? html`
+                    <sl-spinner></sl-spinner>` : nothing}
             </et2-button>
             <slot>${hasUserDialog ? nothing : this.dialogTemplate()}</slot>
 		`;
@@ -152,3 +201,9 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 }
 
 customElements.define("et2-vfs-select", Et2VfsSelectButton);
+
+export interface FileActionResult
+{
+	success : boolean,
+	message? : string
+}

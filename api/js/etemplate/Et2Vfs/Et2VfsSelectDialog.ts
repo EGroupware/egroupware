@@ -177,7 +177,6 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		// Use filemanager translations
 		this.egw().langRequireApp(this.egw().window, "filemanager", () => {this.requestUpdate()});
 
-		this.handleButtonClick = this.handleButtonClick.bind(this);
 		this.handleCreateDirectory = this.handleCreateDirectory.bind(this);
 		this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
 	}
@@ -267,6 +266,17 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 	}
 
 	/**
+	 * Get file information of currently displayed paths
+	 *
+	 * Returns null if the path is not currently displayed
+	 * @param _path
+	 */
+	public fileInfo(_path)
+	{
+		return this._fileList.find(f => f.path == _path);
+	}
+
+	/**
 	 * Shows the dialog.
 	 */
 	public show()
@@ -292,11 +302,13 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		return this._dialog.hide();
 	}
 
-	getComplete() : Promise<string[]>
+	getComplete() : Promise<[number, Object]>
 	{
-		return this._dialog.getComplete().then(() =>
+		return this._dialog.getComplete().then((value) =>
 		{
-			return this.value;
+			// Overwrite dialog's value with what we say
+			value[1] = this.value;
+			return value
 		});
 	}
 
@@ -457,12 +469,6 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		{
 			this.value = [this.selectedFiles[0]?.value.path] ?? [];
 		}
-	}
-
-	protected handleButtonClick(event : MouseEvent)
-	{
-		this.open = false;
-		this.requestUpdate("open", true);
 	}
 
 	/**
@@ -680,8 +686,8 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		}
 
 		const buttons = [
-			{id: "ok", label: this.buttonLabel, image: image},
-			{id: "cancel", label: "cancel", image: "cancel"}
+			{id: "ok", label: this.buttonLabel, image: image, button_id: Et2Dialog.OK_BUTTON},
+			{id: "cancel", label: "cancel", image: "cancel", button_id: Et2Dialog.CANCEL_BUTTON}
 		];
 
 		return html`
@@ -689,13 +695,13 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		{
 			return html`
                     <et2-button id=${button.id}
+                                button_id=${button.button_id}
                                 class="et2_button et2_vfs__button"
                                 label=${button.label}
                                 variant=${index == 0 ? "primary" : "default"}
                                 slot="footer"
                                 .image=${ifDefined(button.image)}
                                 .noSubmit=${true}
-                                @click=${this.handleButtonClick}
                     >${button.label}
                     </et2-button>
                 `
@@ -794,5 +800,7 @@ export interface FileInfo
 	isDir : boolean,
 	path? : string,
 	// We want to show it, but not act with it.  File is disabled for the UI
-	disabled? : boolean
+	disabled? : boolean,
+	// Direct download link
+	downloadUrl? : string
 }
