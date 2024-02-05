@@ -547,7 +547,7 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		{
 			// are we called by etemplate2.getValues() (has a closure result)
 			// not always setting it, as getValue() is called a lot, e.g. to test input is dirty
-			if (this.options.applyDefaultFont && typeof result !== 'undefined')
+			if (this.options.applyDefaultFont && this.getInstanceManager().get_values)
 			{
 				this.applyDefaultFont();
 			}

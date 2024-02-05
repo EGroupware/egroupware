@@ -1217,14 +1217,22 @@ export class etemplate2
 	}
 
 	/**
+	 * Flag that getValues() is running
+	 */
+	get_values = false;
+
+	/**
 	 * Fetches all input element values and returns them in an associative
 	 * array. Widgets which introduce namespacing can use the internal _target
 	 * parameter to add another layer.
 	 *
 	 * @param {et2_widget} _root widget to start iterating
+	 * @param {boolean} skip_reset_dirty true: do NOT reset dirty status
 	 */
-	getValues(_root : et2_widget)
+	getValues(_root : et2_widget, skip_reset_dirty : boolean)
 	{
+		this.get_values = true;
+
 		const result = {};
 
 		// Iterate over the widget tree
@@ -1320,9 +1328,14 @@ export class etemplate2
 				}
 				delete _target[path[path.length - 1]];
 			}
-			_widget.resetDirty();
+			if (!skip_reset_dirty)
+			{
+				_widget.resetDirty();
+			}
 
 		}, this, et2_IInput);
+
+		this.get_values = false;
 
 		egw().debug("info", "Value", result);
 		return result;

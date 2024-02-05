@@ -4059,17 +4059,7 @@ app.classes.mail = AppJS.extend(
 				action = _egw_action.id;
 			}
 
-			var widgets = ['from','to','cc','bcc','subject','folder','replyto','mailaccount',
-				'mail_htmltext', 'mail_plaintext', 'lastDrafted', 'filemode', 'expiration', 'password'];
-			var widget = {};
-			for (var index in widgets)
-			{
-				widget = self.et2.getWidgetById(widgets[index]);
-				if (widget)
-				{
-					content[widgets[index]] = widget.get_value();
-				}
-			}
+			Object.assign(content, self.et2.getInstanceManager().getValues(self.et2, true));
 
 			if (content)
 			{
