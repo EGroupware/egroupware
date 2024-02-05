@@ -100,6 +100,12 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			'type': 'string',
 			'default': 'floating',
 			'description': 'It allows to extend the toolbar to accommodate the overflowing toolbar buttons. {floating, sliding, scrolling, wrap}'
+		},
+		applyDefaultFont: {
+			name: 'apply default font and size',
+			type: 'boolean',
+			default: false,
+			description: 'Add default font and size as style attribute to the markup. Also ensures all non-block elements are wrapped in p.'
 		}
 	};
 
@@ -516,7 +522,10 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 			this.editor.setContent(_value);
 
 			// need to defer a little, so TinyMCE does its modifications we want to counter
-			window.setTimeout(() => this.wrapTextNodes(), 1);
+			if (this.options.applyDefaultFont)
+			{
+				window.setTimeout(() => this.wrapTextNodes(), 10);
+			}
 		}
 		else
 		{
@@ -532,22 +541,16 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		this.value = _value;
 	}
 
-	/**
-	 * Overwrite isValid to first "fix" the TinyMCE content, see wrapTextNodes
-	 *
-	 * @param _values
-	 */
-	isValid(_messages)
-	{
-		this.wrapTextNodes();
-
-		return super.isValid(_messages);
-	}
-
 	getValue()
 	{
 		if (this.editor)
 		{
+			// are we called by etemplate2.getValues() (has a closure result)
+			// not always setting it, as getValue() is called a lot, e.g. to test input is dirty
+			if (this.options.applyDefaultFont && typeof result !== 'undefined')
+			{
+				this.applyDefaultFont();
+			}
 			return this.editor.getContent();
 		}
 		return this.options.readonly ? this.value : this.htmlNode.val();
