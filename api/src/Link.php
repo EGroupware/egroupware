@@ -668,7 +668,7 @@ class Link extends Link\Storage
 	 * @param string $app2 ='' app of second endpoint
 	 * @param string $id2 ='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
-	 * @return the number of links deleted
+	 * @return int the number of links deleted
 	 */
 	static function unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
@@ -685,7 +685,7 @@ class Link extends Link\Storage
 	 * @param string $app2 ='' app of second endpoint, or !file (other !app are not yet supported!)
 	 * @param string $id2 ='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
-	 * @return the number of links deleted
+	 * @return int|boolean the number of links deleted
 	 */
 	static function unlink2($link_id,$app,&$id,$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
@@ -1142,7 +1142,7 @@ class Link extends Link\Storage
 	 * @param string $app app-name
 	 * @param string $name name / key in the registry, eg. 'view'
 	 * @param boolean|array|string|int $url_id format entries like "add", "edit", "view" for actions "url" incl. an ID
-	 *  array to add arbitray parameter eg. ['some_id' => '$id']
+	 *  array to add arbitrary parameter eg. ['some_id' => '$id']
 	 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
 	 */
 	static function get_registry($app, $name, $url_id=false)

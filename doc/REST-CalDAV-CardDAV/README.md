@@ -49,6 +49,10 @@ from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree w
   * view and reply to eml files and 
   * vacation handling
 - [Timesheet](Timesheet.md)
+- [Links and attachments](Links-and-attachments.md)
+  * linking application entries to other application entries
+  * attaching files to application entries
+  * listing, creating and deleting links and attachments
 
 > For the REST API you always have to send an "Accept: application/json" header and for POST & PUT requests additionally 
 > a "Content-Type: application/json" header, otherwise you talk to the CalDAV/CardDAV server and don't get the response you expect!

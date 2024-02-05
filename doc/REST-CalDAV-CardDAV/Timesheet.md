@@ -13,6 +13,7 @@ Following schema is used for JSON encoding of timesheets
 * start: UTCDateTime e.g. `2020-02-03T14:35:37Z`
 * duration: integer in minutes
 * quantity: double
+* project: string
 * unitprice: double
 * category: category object with a single(!) category-name e.g. `{"category name": true}`
 * owner: string with either email or username or integer ID

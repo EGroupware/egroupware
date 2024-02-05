@@ -711,6 +711,6 @@ class ApiHandler extends Api\CalDAV\Handler
 	 */
 	function check_access($acl, $entry)
 	{
-		return $this->bo->check_acl($acl, is_array($entry) ? $entry+['ts_onwer' => $entry['owner']] : $entry);
+		return $this->bo->check_acl($acl, is_array($entry) ? $entry+['ts_owner' => $entry['owner']] : $entry);
 	}
 }

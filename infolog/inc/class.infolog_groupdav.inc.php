@@ -934,4 +934,29 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		);
 		return $settings;
 	}
+
+	/**
+	 * Setting the link relation to make an application link InfoLogs primary link
+	 *
+	 * @param string|int $id
+	 * @param int $link_id
+	 * @param array $data values for keys "app", "id", "rel", "remark"
+	 * @throws Api\Exception\NotFound if $id is not found or readable
+	 * @throws Api\Exception on other errors like storing
+	 */
+	protected function setLinkRelation(string $id, int $link_id, array $data)
+	{
+		if (!($info = $this->read($id)) ||)
+		{
+			throw new Api\Exception\NotFound();
+		}
+		$info['info_link_id'] = $link_id;
+		$info['info_from'] = Link::titel($data['app'], $data['id']);
+		$info['info_custom_from'] = false;
+
+		if (!$this->bo->write($info))
+		{
+			throw new Api\Exception("Error storing InfoLog");
+		}
+	}
 }

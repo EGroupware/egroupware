@@ -776,4 +776,132 @@ abstract class Handler
 		}
 		return $this->base_uri().$path.$token;
 	}
+
+	/**
+	 * Create a link to another app's entry or add an attachment
+	 *
+	 * @param array $options
+	 * @param string $app
+	 * @param $id
+	 * @param int|null $user
+	 * @return string with http status
+	 * @throws \InvalidArgumentException
+	 */
+	public function createLink(array $options, string $id)
+	{
+		header('Content-Type: application/json');
+		if (!Api\Link::get_registry($this->app, 'title'))
+		{
+			return '501 Not implemented';
+		}
+		// check edit-access
+		if (!is_array($status = $this->_common_get_put_delete('PUT', $options, $id)))
+		{
+			return $status;
+		}
+		// are we linking with another app's entry
+		if (substr($options['path'], -1) === '/' && $options['content_type'] === 'application/json')
+		{
+			$json = $options['content'] ?? stream_get_contents($options['stream']);
+			$data = json_decode($json, true, 2, JSON_THROW_ON_ERROR);
+			if (empty($data['app']) || empty($data['id']) || !($link = Api\Link::link($this->app, $id, $data['app'], $data['id'], $data['remark'] ?? null)))
+			{
+				return '422 Unprocessable Content';
+			}
+			// if a special relation is given, set it
+			if (!empty($data['rel']))
+			{
+				$this->setLinkRelation($id, $link, $data);
+			}
+		}
+		else
+		{
+			if (!is_resource($options['stream']) && isset($options['content']) &&
+				($options['stream'] = fopen('php://temp', 'r+')))
+			{
+				fwrite($options['stream'], $options['content']);
+				fseek($options['stream'], 0);
+			}
+			if (!is_resource($options['stream']) || !($link = Api\Link::attach_file($this->app, $id, [
+					'tmp_name' => $options['stream'],
+					'type' => $options['content_type'],
+					'name' => explode('/links/', $options['path'], 2)[1] ?? throw new \InvalidArgumentException('Missing filename'),
+				])))
+			{
+				return '422 Unprocessable Content';
+			}
+		}
+		header('Location: '.Api\Framework::getUrl(Api\Framework::link('/groupdav.php/'.
+				$GLOBALS['egw_info']['user']['account_lid'].'/'.$this->app.'/'.$id.'/links/'.$link)));
+		return '201 Created';
+	}
+
+	/**
+	 * Setting the link relation
+	 *
+	 * Does nothing in general, but can be overwritten by apps e.g. InfoLog for "egroupware.org-primary"
+	 *
+	 * @param string|int $id
+	 * @param int $link_id
+	 * @param array $data values for keys "app", "id", "rel", "remark"
+	 * @throws Api\Exception\NotFound if $id is not found or readable
+	 * @throws Api\Exception on other errors like storing
+	 */
+	protected function setLinkRelation(string $id, int $link_id, array $data)
+	{
+
+	}
+
+	/**
+	 * Get Links to and from an app-entry
+	 *
+	 * @param array $options
+	 * @param string $id
+	 * @return string with http status
+	 */
+	public function getLinks(array $options, string $id)
+	{
+		header('Content-Type: application/json');
+		if (!Api\Link::get_registry($this->app, 'title') || !($type = Api\CalDAV::isJSON()))
+		{
+			return '501 Not implemented';
+		}
+		// check read-access
+		if (!is_array($status = $this->_common_get_put_delete('GET', $options, $id)))
+		{
+			return $status;
+		}
+		echo Api\CalDAV::json_encode(['responses' => Api\CalDAV\JsBase::getLinks($options['path'], $this->app, $id)], $type === 'pretty');
+		return '200 Ok';
+	}
+
+	/**
+	 * Delete one link or attachment from an entry
+	 *
+	 * @param array $options
+	 * @param string $id
+	 * @param int $link_id
+	 * @return string with http status
+	 */
+	public function deleteLink(array $options, string $id, int $link_id)
+	{
+		header('Content-Type: application/json');
+		if (!Api\Link::get_registry($this->app, 'title'))
+		{
+			return '501 Not implemented';
+		}
+		// check edit-access, we use PUT, as we are NOT deleting the entry itself, but a link to it or attachment
+		if (!is_array($status = $this->_common_get_put_delete('PUT', $options, $id)))
+		{
+			return $status;
+		}
+		if (!($link = Api\Link::get_link($link_id)) ||
+			!($link_id < 0 && $this->app === $link['app2'] && $id == $link['id2'] ||
+				$link_id > 0 && ($this->app === $link['link_app1'] && $id == $link['link_id1'] ||
+					$this->app === $link['link_app2'] && $id == $link['link_id2'])))
+		{
+			return '404 Not Found';
+		}
+		return Api\Link::unlink($link_id) ? '204 No Content' : '400 Something went wrong';
+	}
 }

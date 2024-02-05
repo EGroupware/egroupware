@@ -293,6 +293,47 @@ class JsBase
 	}
 
 	/**
+	 * Get links / link-objects
+	 *
+	 * @param string $prefix
+	 * @param string $app
+	 * @param string $id
+	 * @return array
+	 */
+	public static function getLinks(string $prefix, string $app, string $id)
+	{
+		$links = [];
+		foreach(Api\Link::get_links($app, $id, '', 'link_lastmod DESC', true) as $link_id => $data)
+		{
+			$path = rtrim($prefix, '/').'/'.$link_id;
+			if ($data['app'] === 'file')
+			{
+				$links[$path] = array_filter([
+					self::AT_TYPE => 'Link',
+					'href' => Api\Framework::getUrl(Api\Framework::link('/webdav.php/apps/'.$app.'/'.$id.'/'.$data['id'])),
+					'contentType' => $data['type'],
+					'size' => $data['size'],
+					'title' => Api\Link::title($data['app'], $data['id']),
+					'egroupware.org-remark' => $data['remark'],
+				]);
+			}
+			else
+			{
+				$links[$path] = array_filter([
+					self::AT_TYPE => 'Link',
+					'href' => Api\Framework::getUrl(Api\Framework::link('/groupdav.php/'.$GLOBALS['egw_info']['user']['account_lid'].'/'.$data['app'].'/'.$data['id'])),
+					'contentType' => 'application/json',
+					'title' => Api\Link::title($data['app'], $data['id']),
+					'egroupware.org-app' => $data['app'],
+					'egroupware.org-id'  => $data['id'],
+					'egroupware.org-remark' => $data['remark'],
+				]);
+			}
+		}
+		return $links;
+	}
+
+	/**
 	 * Patch JsCard
 	 *
 	 * @param array $patches JSON path
