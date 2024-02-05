@@ -52,6 +52,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			'description' => $timesheet['description'],
 			'start' => self::UTCDateTime($timesheet['start'], true),
 			'duration' => (int)$timesheet['duration'],
+			'project' => $timesheet['project'],
 			'quantity' => (double)$timesheet['quantity'],
 			'unitprice' => (double)$timesheet['unitprice'],
 			'category' => self::categories($timesheet['cat_id']),
@@ -113,6 +114,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 				{
 					case 'title':
 					case 'description':
+					case 'project':
 						$timesheet['ts_'.$name] = $value;
 						break;
 
