@@ -126,7 +126,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
 			  }
 
-			  :host([rows='1']) ::part(tags) {
+				:host([readonly][rows='1']) ::part(tags) {
 				overflow: hidden;
 			  }
 
@@ -725,7 +725,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	 */
 	protected _handleMouseEnter(e : MouseEvent)
 	{
-		if(this.rows == "1" && this.multiple == true && this.value.length > 1)
+		if(this.readonly && this.rows == "1" && this.multiple == true && this.value.length > 1)
 		{
 			e.stopPropagation();
 
