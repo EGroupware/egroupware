@@ -1104,6 +1104,11 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if (($handler = $this->app_handler($app)))
 		{
+			// handle links for all apps supporting links
+			if (preg_match('#/'.$app.'/'.$id.'/links/?$#', $options['path']) && self::isJSON())
+			{
+				return $handler->getLinks($options, $id);
+			}
 			return $handler->get($options,$id,$user);
 		}
 		error_log(__METHOD__."(".array2string($options).") 501 Not Implemented");
@@ -1536,6 +1541,12 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		if (($handler = $this->app_handler($app)))
 		{
+			// handle links for all apps supporting links
+			if (preg_match('#/'.$app.'/'.$id.'/links/#', $options['path']))
+			{
+				return $handler->createLink($options, $id);
+			}
+
 			// managed attachments
 			if (isset($_GET['action']) && substr($_GET['action'], 0, 11) === 'attachment-')
 			{
@@ -2079,6 +2090,11 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if (($handler = $this->app_handler($app)))
 		{
+			// handle links for all apps supporting links
+			if (preg_match('#/'.$app.'/'.$id.'/links/(-?\d+)$#', $options['path'], $matches))
+			{
+				return $handler->deleteLink($options, $id, $matches[1]);
+			}
 			$status = $handler->delete($options,$id,$user);
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
@@ -2317,7 +2333,7 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 
 		// Api\WebDAV\Server encodes %, # and ? again, which leads to storing e.g. '%' as '%25'
-		$id = strtr(array_pop($parts), array(
+		$id = strtr(array_shift($parts), array(
 			'%25' => '%',
 			'%23' => '#',
 			'%3F' => '?',
@@ -2373,13 +2389,15 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * Check if request is a possibly large, binary file upload:
 	 * - CalDAV managed attachments or
 	 * - Mail REST API attachment upload
+	 * - REST API attachment upload to /$app/$id/links/
 	 *
 	 * @return bool
 	 */
 	protected static function isFileUpload()
 	{
 		return (isset($_GET['action']) && in_array($_GET['action'], array('attachment-add', 'attachment-update'))) ||
-			strpos($_SERVER['REQUEST_URI'], '/mail/attachments/');
+			strpos($_SERVER['REQUEST_URI'], '/mail/attachments/') ||
+			strpos($_SERVER['REQUEST_URI'], '/links/') && $_SERVER['REQUEST_METHOD'] === 'POST' && $_SERVER['CONTENT_TYPE'] !== 'application/json';
 	}
 
 	/**
