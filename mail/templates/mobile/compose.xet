@@ -84,7 +84,8 @@
 		</et2-vbox>
 		<et2-vbox  class="mailComposeBodySection" width="99%">
 			<et2-hbox  disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" mode="simple" imageUpload="link_to"  height="478px" width="100%" resize_ratio="0"/>
+				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" mode="simple"
+					imageUpload="link_to"  height="478px" width="100%" resize_ratio="0" applyDefaultFont="true"/>
 			</et2-hbox>
 			<et2-hbox  disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
 				<et2-textarea  rows="40" cols="120" width="100%" span="all" height="100%" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>

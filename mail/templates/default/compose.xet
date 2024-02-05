@@ -139,7 +139,8 @@
                 </et2-hbox>
             </et2-vbox>
             <et2-hbox disabled="@is_plain" class="mailComposeBody mailComposeHtmlContainer">
-                <htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar" imageUpload="link_to" expand_toolbar="true" width="100%" resize_ratio="0"/>
+                <htmlarea name="mail_htmltext" id="mail_htmltext" statusbar="false" menubar="false" toolbar="@html_toolbar"
+					imageUpload="link_to" expand_toolbar="true" width="100%" resize_ratio="0" applyDefaultFont="true"/>
             </et2-hbox>
             <et2-hbox disabled="@is_html" class="mailComposeBody mailComposeTextContainer">
                 <et2-textarea span="all" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
