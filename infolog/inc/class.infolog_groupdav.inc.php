@@ -76,8 +76,13 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$this->bo = new infolog_bo();
 		$this->vCalendar = new Horde_Icalendar;
 
+		if (Api\CalDAV::isJSON())
+		{
+			self::$path_attr = 'info_id';
+			self::$path_extension = '';
+		}
 		// since 1.9.002 we allow clients to specify the URL when creating a new event, as specified by CalDAV
-		if (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.002', '>='))
+		elseif (version_compare($GLOBALS['egw_info']['apps']['calendar']['version'], '1.9.002', '>='))
 		{
 			self::$path_attr = 'caldav_name';
 			self::$path_extension = '';
@@ -951,10 +956,13 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			throw new Api\Exception\NotFound();
 		}
 		$info['info_link_id'] = $link_id;
-		$info['info_from'] = Link::titel($data['app'], $data['id']);
+		$info['info_from'] = Api\Link::title($data['app'], $data['id']);
 		$info['info_custom_from'] = false;
 
-		if (!$this->bo->write($info))
+		// this is somehow required to update info_link_id, otherwise info_link_id get reset again to old value
+		$info['info_contact'] = array_intersect_key($data, array_flip(['app', 'id']));
+
+		if (!$this->bo->write($info, false, true, false))
 		{
 			throw new Api\Exception("Error storing InfoLog");
 		}

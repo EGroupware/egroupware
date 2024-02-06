@@ -80,7 +80,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/link
 
 ```
 curl -i 'https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
-{"application":"<2nd-app>","id":<2nd-app-id>,"remark":"This is a test ;)"}
+{"app":"<2nd-app>","id":<2nd-app-id>,"remark":"This is a test ;)"}
 EOF
 
 HTTP/1.1 204 Created
@@ -93,13 +93,16 @@ Location: https://example.org/egroupware/groupdav.php/<username>/<app>/<id>/link
 
 ```
 curl -i 'https://example.org/egroupware/groupdav.php/<username>/infolog/<id>/links/' -H "Content-Type: application/json" --data-binary @- --user <username> <<<EOF
-{"application":"<2nd-app>","id":<2nd-app-id>,"rel":"egroupware.org-primary"}
+{"app":"<2nd-app>","id":<2nd-app-id>,"rel":"egroupware.org-primary"}
 EOF
 
 HTTP/1.1 204 Created
 Location: https://example.org/egroupware/groupdav.php/<username>/infolog/<id>/links/<link-id>
 ```
 </details>
+
+> `<id>` is the numerical ID of the entry of application `<app>`, NOT the UUID some applications have!
+> `<2nd-app-id>` is also the numerical ID of `<2nd-app>`, not the UUID
 
 * **DELETE** request to remove a link or attachment
 

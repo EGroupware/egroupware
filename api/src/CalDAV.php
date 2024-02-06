@@ -2055,6 +2055,12 @@ class CalDAV extends HTTP_WebDAV_Server
 		}
 		if (($handler = $this->app_handler($app)))
 		{
+			// handle links for all apps supporting links
+			if ($method === 'POST' && preg_match('#/'.$app.'/'.$id.'/links/#', $options['path']))
+			{
+				return $handler->createLink($options, $id);
+			}
+
 			$status = $handler->put($options, $id, $user, $prefix, $method, $_SERVER['HTTP_CONTENT_TYPE']);
 
 			// set default stati: true --> 204 No Content, false --> should be already handled
