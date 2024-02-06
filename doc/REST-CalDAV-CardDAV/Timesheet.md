@@ -44,10 +44,10 @@ curl https://example.org/egroupware/groupdav.php/<username>/timesheet/ -H "Accep
         "quantity": 2.5,
         "unitprice": 50,
         "category": { "other": true },
-        "owner": "ralf@boulder.egroupware.org",
+        "owner": "ralf@example.org",
         "created": "2005-12-16T23:00:00Z",
         "modified": "2011-06-08T10:51:20Z",
-        "modifier": "ralf@boulder.egroupware.org",
+        "modifier": "ralf@example.org",
         "status": "genehmigt",
         "etag": "1:1307537480"
     },
@@ -58,10 +58,10 @@ curl https://example.org/egroupware/groupdav.php/<username>/timesheet/ -H "Accep
         "start": "2016-08-22T12:12:00Z",
         "duration": 60,
         "quantity": 1,
-        "owner": "ralf@boulder.egroupware.org",
+        "owner": "ralf@example.org",
         "created": "2016-08-22T12:12:00Z",
         "modified": "2016-08-22T13:13:22Z",
-        "modifier": "ralf@boulder.egroupware.org",
+        "modifier": "ralf@example.org",
         "egroupware.org:customfields": {
             "auswahl": {
                 "value": [
@@ -187,10 +187,13 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/140' -H "Accept: app
     "start": "2016-08-22T12:12:00Z",
     "duration": 60,
     "quantity": 1,
-    "owner": "ralf@boulder.egroupware.org",
+    "project": "2024-0001: Test Project",
+    "unitprice": 100.0,
+    "pricelist": 123,
+    "owner": "ralf@example.org",
     "created": "2016-08-22T12:12:00Z",
     "modified": "2016-08-22T13:13:22Z",
-    "modifier": "ralf@boulder.egroupware.org",
+    "modifier": "ralf@example.org",
     "egroupware.org:customfields": {
         "auswahl": {
             "value": [
@@ -216,14 +219,33 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/140' -H "Accept: app
    <summary>Example: POST request to create a new resource</summary>
    
 ```
-cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/timesheet/' -X POST -d @- -H "Content-Type: application/json" --user <username>
+cat <<EOF | curl -i -X POST 'https://example.org/egroupware/groupdav.php/<username>/timesheet/' -d @- -H "Content-Type: application/json" -H 'Accept: application/pretty+json' -H 'Prefer: return=representation' --user <username>
 {
-  TODO
+    "@type": "timesheet",
+    "title": "5. Test Ralf",
+    "start": "2024-02-06T10:00:00Z",
+    "duration": 60
 }
 EOF
 
 HTTP/1.1 201 Created
-Location: https://example.org/egroupware/groupdav.php/<username>/timesheet/1234
+Content-Type: application/json
+Location: /egroupware/groupdav.php/ralf/timesheet/204
+ETag: "204:1707233040"
+
+{
+    "@type": "timesheet",
+    "id": 204,
+    "title": "5. Test Ralf",
+    "start": "2024-02-06T10:00:00Z",
+    "duration": 60,
+    "quantity": 1,
+    "owner": "ralf@example.org",
+    "created": "2024-02-06T14:24:05Z",
+    "modified": "2024-02-06T14:24:00Z",
+    "modifier": "ralf@example.org",
+    "etag": "204:1707233040"
+}
 ```
 </details>
 
@@ -233,9 +255,17 @@ Location: https://example.org/egroupware/groupdav.php/<username>/timesheet/1234
    <summary>Example: PUT request to update a resource</summary>
 
 ```
-cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/timesheet/1234' -X PUT -d @- -H "Content-Type: application/json" --user <username>
+cat <<EOF | curl -i -X PUT 'https://example.org/egroupware/groupdav.php/<username>/timesheet/1234' -d @- -H "Content-Type: application/json" --user <username>
 {
-  TODO
+    "@type": "timesheet",
+    "title": "6. Test Ralf",
+    "start": "2024-02-06T10:00:00Z",
+    "duration": 60,
+    "quantity": 1,
+    "owner": "ralf@example.org",
+    "created": "2024-02-06T14:24:05Z",
+    "modified": "2024-02-06T14:24:00Z",
+    "modifier": "ralf@example.org",
 }
 EOF
 
@@ -248,12 +278,12 @@ HTTP/1.1 204 No Content
 * **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
 
 <details>
-   <summary>Example: PATCH request to modify a contact with partial data</summary>
+   <summary>Example: PATCH request to modify a timesheet with partial data</summary>
 
 ```
-cat <<EOF | curl -i 'https://example.org/egroupware/groupdav.php/<username>/timesheet/1234' -X PATCH -d @- -H "Content-Type: application/json" --user <username>
+cat <<EOF | curl -i -X PATCH 'https://example.org/egroupware/groupdav.php/<username>/timesheet/1234' -d @- -H "Content-Type: application/json" --user <username>
 {
-  TODO
+  "status": "invoiced"
 }
 EOF
 
@@ -262,5 +292,15 @@ HTTP/1.1 204 No content
 </details>
 
 * **DELETE** requests delete single resources
+
+<details>
+   <summary>Example: DELETE request to delete a timesheet</summary>
+
+```
+curl -i -X DELETE 'https://example.org/egroupware/groupdav.php/<username>/timesheet/1234' -H "Accept: application/json" --user <username>
+
+HTTP/1.1 204 No content
+```
+</details>
 
 > one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API

@@ -1043,7 +1043,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	function PATCH(array &$options)
 	{
-		if (!preg_match('#^application/([^; +]+\+)?json#', $_SERVER['HTTP_CONTENT_TYPE']))
+		if (!self::isJSON())
 		{
 			return '501 Not implemented';
 		}
@@ -1529,8 +1529,8 @@ class CalDAV extends HTTP_WebDAV_Server
 		// for some reason OS X Addressbook (CFNetwork user-agent) uses now (DAV:add-member given with collection URL+"?add-member")
 		// POST to the collection URL plus a UID like name component (like for regular PUT) to create new entrys
 		if (isset($_GET['add-member']) || Handler::get_agent() == 'cfnetwork' ||
-			// addressbook has not implemented a POST handler, therefore we have to call the PUT handler
-			preg_match('#^(/[^/]+)?/(addressbook|calendar)(-[^/]+)?/$#', $options['path']) && self::isJSON())
+			// REST API: all but mail have no POST handler, therefore we have to call the PUT handler
+			!preg_match('#^(/[^/]+)?/mail/$#', $options['path']) && self::isJSON())
 		{
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options, 'POST');
@@ -2049,7 +2049,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			return '404 Not Found';
 		}
 		// REST API & PATCH only implemented for addressbook and calendar currently
-		if (!in_array($app, ['addressbook', 'calendar']) && $method === 'PATCH')
+		if (!self::isJSON() && $method === 'PATCH')
 		{
 			return '501 Not implemented';
 		}

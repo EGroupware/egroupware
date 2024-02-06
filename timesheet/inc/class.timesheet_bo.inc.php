@@ -377,6 +377,10 @@ class timesheet_bo extends Api\Storage
 		{
 			$data =& $this->data;
 		}
+		if (!$data)
+		{
+			return null;    // entry not found
+		}
 		if (!is_array($data))
 		{
 			$save_data = $this->data;

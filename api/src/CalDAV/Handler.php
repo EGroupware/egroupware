@@ -61,6 +61,7 @@ abstract class Handler
 		'GET' => Api\Acl::READ,
 		'PUT' => Api\Acl::EDIT,
 		'PATCH' => Api\Acl::EDIT,
+		'POST' => Api\Acl::ADD,
 		'DELETE' => Api\Acl::DELETE,
 	);
 	/**

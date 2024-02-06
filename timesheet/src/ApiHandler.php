@@ -542,8 +542,8 @@ class ApiHandler extends Api\CalDAV\Handler
 
 		try
 		{
-			// jsContact or vCard
-			if (($type=Api\CalDAV::isJSON()))
+			// only JsTimesheet, no *DAV
+			if (($type=Api\CalDAV::isJSON($_SERVER['HTTP_ACCEPT'])) || ($type=Api\CalDAV::isJSON()))
 			{
 				$options['data'] = JsTimesheet::JsTimesheet($timesheet, $type);
 				$options['mimetype'] = 'application/json';
@@ -646,19 +646,20 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		if ($this->http_if_match) $timesheet['etag'] = self::etag2value($this->http_if_match);
 
-		if (!($save_ok = $this->bo->save($timesheet)))
+		if (($err = $this->bo->save($timesheet)))
 		{
-			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($timesheet).") failed, Ok=$save_ok");
-			if ($save_ok === 0)
+			if ($this->debug) error_log(__METHOD__."(,$id) save(".array2string($timesheet).") failed, error=$err");
+			if ($err !== true)
 			{
 				// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
 				$this->check_return_representation($options, $id, $user);
 				return '412 Precondition Failed';
 			}
-			return '403 Forbidden';	// happens when writing new entries in AB's without ADD rights
+			return '403 Forbidden';
 		}
+		$timesheet = Api\Db::strip_array_keys($this->bo->data, 'ts_');
 
-		// send evtl. necessary response headers: Location, etag, ...
+		// send necessary response headers: Location, etag, ...
 		$this->put_response_headers($timesheet, $options['path'], $retval);
 
 		if ($this->debug > 1) error_log(__METHOD__."(,'$id', $user, '$prefix') returning ".array2string($retval));
