@@ -33,7 +33,7 @@ export declare class Et2InputWidgetInterface
 
 	public get_value() : any;
 
-	public getValue() : any;
+	public getValue(submit_value? : boolean) : any;
 
 	public set_readonly(boolean) : void;
 
@@ -358,18 +358,29 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.requestUpdate("readonly");
 		}
 
-		public get readonly() { return this.__readonly};
+		public get readonly()
+		{
+			return this.__readonly;
+		}
 
-		set readOnly(new_value) {this.readonly = new_value;}
+		set readOnly(new_value)
+		{
+			this.readonly = new_value;
+		}
 
 		/**
 		 *  Lion mapping
 		 * @deprecated
 		 */
 		get readOnly()
-		{ return this.readonly};
+		{
+			return this.readonly;
+		}
 
-		getValue()
+		/**
+		 * @param boolean submit_value true: call by etemplate2.(getValues|submit|postSubmit)()
+		 */
+		getValue(submit_value? : boolean)
 		{
 			return this.readonly || this.disabled ? null : (
 				// Give a clone of objects or receiver might use the reference

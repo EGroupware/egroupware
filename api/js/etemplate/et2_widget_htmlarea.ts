@@ -541,13 +541,15 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		this.value = _value;
 	}
 
-	getValue()
+	/**
+	 * @param boolean submit_value true: call by etemplate2.(getValues|submit|postSubmit)()
+	 */
+	getValue(submit_value? : boolean)
 	{
 		if (this.editor)
 		{
-			// are we called by etemplate2.getValues() (has a closure result)
-			// not always setting it, as getValue() is called a lot, e.g. to test input is dirty
-			if (this.options.applyDefaultFont && this.getInstanceManager().get_values)
+			// not always applying defaut font, as getValue() is called a lot, e.g. to test input is dirty
+			if (this.options.applyDefaultFont && submit_value)
 			{
 				this.applyDefaultFont();
 			}
