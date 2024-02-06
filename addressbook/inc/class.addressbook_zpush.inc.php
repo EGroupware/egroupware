@@ -129,7 +129,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 		if (!isset($abs) || !$return_all_in_one)
 		{
-			if ($return_all_in_one && ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] ?? null))
+			if ($return_all_in_one && !empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']))
 			{
 				$abs = array(
 					$GLOBALS['egw_info']['user']['account_id'] => lang('All'),
@@ -289,7 +289,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		$filter = array('owner' => $user);
 
 		// handle all-in-one addressbook
-		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']) &&
 			$user == $GLOBALS['egw_info']['user']['account_id'])
 		{
 			$filter['owner'] = array_keys($this->get_addressbooks(null,false));	// false = return all selected abs
@@ -397,7 +397,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 						$message->categories[] = Api\Categories::id2name($cat_id);
 					}
 					// for all addressbooks in one, add addressbook name itself as category
-					if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+					if (!empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']))
 					{
 						$message->categories[] = $this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true);
 					}
@@ -557,7 +557,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 
 					case 'cat_id':
 						// for existing entries in all-in-one addressbook, remove addressbook name as category
-						if ($contact && $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] && is_array($message->$key) &&
+						if ($contact && !empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']) && is_array($message->$key) &&
 							($k=array_search($this->get_addressbooks($contact['owner'].($contact['private']?'p':''), false, true),$message->$key)))
 						{
 							unset($message->categories[$k]);
@@ -604,13 +604,13 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			// for all-in-one addressbook, account is meaningless and wrong!
 			// Api\Contacts::save() keeps the owner or sets an appropriate one if none given
 			if (!isset($contact['private'])) $contact['private'] = (int)$is_private;
-			if (!$GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+			if (empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']))
 			{
 				$contact['owner'] = $account;
 				$contact['private'] = (int)$is_private;
 			}
 			// if default addressbook for new contacts is NOT synced --> use personal addressbook
-			elseif($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'] &&
+			elseif(!empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default']) &&
 				!in_array($GLOBALS['egw_info']['user']['preferences']['addressbook']['add_default'],
 					array_keys($this->get_addressbooks(null,false))))
 			{
@@ -645,7 +645,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 	public function MoveMessage($folderid, $id, $newfolderid, $contentParameters)
 	{
 		unset($contentParameters);	// not used, but required by function signature
-		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'])
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']))
 		{
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, $newfolderid) NOT allowed for an all-in-one addressbook --> returning false");
 			return false;
@@ -737,7 +737,7 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 		if (!isset($this->addressbook)) $this->addressbook = new Api\Contacts();
 
 		// handle all-in-one addressbook
-		if ($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one'] &&
+		if (!empty($GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-all-in-one']) &&
 			$owner == $GLOBALS['egw_info']['user']['account_id'])
 		{
 			$prefs_abs = $GLOBALS['egw_info']['user']['preferences']['activesync']['addressbook-abs'];

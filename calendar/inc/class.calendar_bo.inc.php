@@ -1292,7 +1292,7 @@ class calendar_bo
 				if ($info)
 				{
 					$info['type'] = $uid[0];
-					if (!$info['email'] && $info['responsible'])
+					if (empty($info['email']) && $info['responsible'])
 					{
 						$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'],'account_email');
 					}
@@ -1382,7 +1382,7 @@ class calendar_bo
 						$grant |= self::ACL_FREEBUSY | Acl::READ | Acl::PRIVAT;
 						break;
 					}
-					elseif ($grants[$uid] & Acl::READ)
+					elseif (isset($grants[$uid]) && ($grants[$uid] & Acl::READ))
 					{
 						// if we have a READ grant from a participant, we dont give an implicit privat grant too
 						$grant |= self::ACL_FREEBUSY | Acl::READ;
@@ -1406,7 +1406,7 @@ class calendar_bo
 		else
 		{
 			$access = $user == $owner || $grant & $needed
-				&& ($needed == self::ACL_FREEBUSY || !$private || $grant & Acl::PRIVAT);
+				&& ($needed == self::ACL_FREEBUSY || empty($private) || $grant & Acl::PRIVAT);
 		}
 		// do NOT allow users to purge deleted events, if we dont have 'userpurge' enabled
 		if ($access && $needed == Acl::DELETE && $event['deleted'] &&

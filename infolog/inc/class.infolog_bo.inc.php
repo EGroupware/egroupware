@@ -223,7 +223,7 @@ class infolog_bo
 		);
 		if (($config_data = Api\Config::read('infolog')))
 		{
-			$this->allow_past_due_date = $config_data['allow_past_due_date'] === null ? 1 : $config_data['allow_past_due_date'];
+			$this->allow_past_due_date = !isset($config_data['allow_past_due_date']) ? 1 : $config_data['allow_past_due_date'];
 			if (isset($config_data['status']) && is_array($config_data['status']))
 			{
 				foreach(array_keys($config_data['status']) as $key)
@@ -242,7 +242,7 @@ class infolog_bo
 				$this->enums['type'] += $config_data['types'];
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
-			if ($config_data['group_owners']) $this->group_owners = $config_data['group_owners'];
+			if (!empty($config_data['group_owners'])) $this->group_owners = $config_data['group_owners'];
 
 			$this->customfields = Api\Storage\Customfields::get('infolog');
 			if ($this->customfields)
@@ -280,7 +280,7 @@ class infolog_bo
 			{
 				$this->sub_excludefields = array_merge($this->sub_excludefields,$this->default_sub_excludefields);
 			}
-			if ($config_data['implicit_rights'] == 'edit')
+			if (isset($config_data['implicit_rights']) && $config_data['implicit_rights'] === 'edit')
 			{
 				$this->implicit_rights = 'edit';
 			}
@@ -460,7 +460,7 @@ class infolog_bo
 				return False;
 			}
 			// if link is a project and no other project selected, also add as project
-			if ($app == 'projectmanager' && $id && !$info['pm_id'])
+			if ($app == 'projectmanager' && $id && empty($info['pm_id']))
 			{
 				$info['old_pm_id'] = $info['pm_id'] = $id;
 			}
