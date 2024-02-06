@@ -173,11 +173,20 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 			const dirs = Array.from(event.target.parentElement.querySelectorAll('sl-breadcrumb-item')) ?? [];
 			let stopIndex = dirs.indexOf(event.target) + 1;
-			let newPath = dirs.slice(0, stopIndex).map(d => d.textContent);
+			let newPath = dirs.slice(0, stopIndex)
+				// Strip out any extra space
+				.map(d => d.textContent.trim().replace(/\/*$/, '').trim() + "/")
+				.filter(p => p);
+			if(newPath[0] !== '/')
+			{
+				// Make sure we start at /, breadcrumb parsing above might lose it
+				newPath.unshift('/');
+			}
 			if(!(this.disabled || this.readonly))
 			{
 				const oldValue = this.value;
-				this.value = newPath.join("");
+				// No trailing slash in the value
+				this.value = newPath.join("").replace(/\/*$/, '');
 				if(oldValue != this.value)
 				{
 					this.updateComplete.then(() =>
@@ -204,7 +213,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const pathParts = this.value === "/" ? [""] : this.value.split('/');
+		// No trailing slash in the path
+		const pathParts = this.value === "/" ? [""] : this.value
+			// Remove trailing /
+			.replace(/\/*$/, '')
+			.split('/');
 		const isEditable = !(this.disabled || this.readonly);
 		const editing = this.editing && isEditable;
 
@@ -254,7 +267,9 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                             ${repeat(pathParts, (path) =>
                             {
                                 return html`
-                                    <sl-breadcrumb-item class="vfs-path__directory">${path}</sl-breadcrumb-item>`;
+                                    <sl-breadcrumb-item class="vfs-path__directory">${path.trim()}
+                                        <span slot="separator">/</span>
+                                    </sl-breadcrumb-item>`;
                             })}
                         </sl-breadcrumb>
                         ${!isEditable ? nothing : html`
