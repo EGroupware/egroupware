@@ -1217,11 +1217,6 @@ export class etemplate2
 	}
 
 	/**
-	 * Flag that getValues() is running
-	 */
-	get_values = false;
-
-	/**
 	 * Fetches all input element values and returns them in an associative
 	 * array. Widgets which introduce namespacing can use the internal _target
 	 * parameter to add another layer.
@@ -1231,8 +1226,6 @@ export class etemplate2
 	 */
 	getValues(_root : et2_widget, skip_reset_dirty : boolean)
 	{
-		this.get_values = true;
-
 		const result = {};
 
 		// Iterate over the widget tree
@@ -1292,7 +1285,7 @@ export class etemplate2
 				id = typeof _target == "undefined" ? 0 : Object.keys(_target).length;
 			}
 
-			const value = _widget.getValue();
+			const value = _widget.getValue(true);	// true: let widget know getValue() / submit is calling it
 
 			// Check whether the entry is really undefined
 			if(typeof _target[id] != "undefined" && (typeof _target[id] != 'object' || typeof value != 'object'))
@@ -1334,8 +1327,6 @@ export class etemplate2
 			}
 
 		}, this, et2_IInput);
-
-		this.get_values = false;
 
 		egw().debug("info", "Value", result);
 		return result;

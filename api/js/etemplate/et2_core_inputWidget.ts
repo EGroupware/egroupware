@@ -312,7 +312,10 @@ export class et2_inputWidget extends et2_valueWidget implements et2_IInput, et2_
 		return this.getValue();
 	}
 
-	getValue()
+	/**
+	 * @param boolean submit_value true: call by etemplate2.(getValues|submit|postSubmit)()
+	 */
+	getValue(submit_value? : boolean)
 	{
 		var node = this.getInputNode();
 		if (node)
