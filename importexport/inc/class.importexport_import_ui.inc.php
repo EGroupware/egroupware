@@ -411,7 +411,9 @@ use EGroupware\Api\Etemplate;
 		public static function sendUpdate($complete, $label = '', $log = '')
 		{
 			// No real push, no updates
-			if(EGroupware\Api\Json\Push::onlyFallback() || !\EGroupware\Api\Json\Request::isJSONRequest())
+			if (EGroupware\Api\Json\Push::onlyFallback() || !\EGroupware\Api\Json\Request::isJSONRequest() ||
+				// async service has no session(-id) and push will throw an AssertionFailed exception
+				empty($GLOBALS['egw']->session->sessionid))
 			{
 				error_log($complete . "% $label\t" . $log);
 				return;
