@@ -755,7 +755,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 
 		// jsEvent or iCal
-		if (($type=Api\CalDAV::isJSON()))
+		if (($type=Api\CalDAV::isJSON($_SERVER['HTTP_ACCEPT'])) || ($type=Api\CalDAV::isJSON()))
 		{
 			$options['data'] = $this->iCal($event, $user, strpos($options['path'], '/inbox/') !== false ? 'REQUEST' : null, false, null, $type);
 			$options['mimetype'] = Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT.';charset=utf-8';

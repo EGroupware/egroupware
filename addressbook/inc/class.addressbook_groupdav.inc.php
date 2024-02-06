@@ -652,7 +652,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			return $contact;
 		}
 		// jsContact or vCard
-		if (($type=Api\CalDAV::isJSON()))
+		if (($type=Api\CalDAV::isJSON($_SERVER['HTTP_ACCEPT'])) || ($type=Api\CalDAV::isJSON()))
 		{
 			$options['data'] = $contact['list_id'] ? JsContact::getJsCardGroup($contact, $type) :
 				JsContact::getJsCard($contact, $type);

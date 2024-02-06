@@ -92,16 +92,16 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			if ($method === 'PATCH')
 			{
 				// apply patch on JsCard of contact
-				$data = self::patch($data, $old ? self::getJsCalendar($old, false) : [], !$old);
+				$data = self::patch($data, $old ? self::JsTimesheet($old, false) : [], !$old);
 			}
 
-			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
+			//if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
 
 			// check required fields
 			if (!$old || !$method === 'PATCH')
 			{
 				static $required = ['title', 'start', 'duration'];
-				if (($missing = array_diff_key(array_filter(array_intersect_key($data), array_flip($required)), array_flip($required))))
+				if (($missing = array_diff_key(array_filter(array_intersect_key($data, array_flip($required))), array_flip($required))))
 				{
 					throw new Api\CalDAV\JsParseException("Required field(s) ".implode(', ', $missing)." missing");
 				}
@@ -124,6 +124,15 @@ class JsTimesheet extends Api\CalDAV\JsBase
 
 					case 'duration':
 						$timesheet['ts_duration'] = self::parseInt($value);
+						// set default quantity, if none explicitly given
+						if (!isset($timesheet['ts_quantity']))
+						{
+							$timesheet['ts_quantity'] = $timesheet['ts_duration'] / 60.0;
+						}
+						break;
+
+					case 'pricelist':
+						$timesheet['pl_id'] = self::parseInt($value);
 						break;
 
 					case 'quantity':
@@ -151,6 +160,8 @@ class JsTimesheet extends Api\CalDAV\JsBase
 					case 'created':
 					case 'modified':
 					case 'modifier':
+					case self::AT_TYPE:
+					case 'id':
 						break;
 
 					default:
