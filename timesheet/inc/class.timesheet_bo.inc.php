@@ -454,14 +454,15 @@ class timesheet_bo extends Api\Storage
 		{
 			$extra_cols[] = $total_sql.' AS ts_total';
 		}
-		if (!isset($filter['ts_owner']) || !count((array)$filter['ts_owner']))
-		{
-			$filter['ts_owner'] = array_keys($this->grants);
-		}
 		// $filter['ts_owner'] === false --> no ACL checks
-		elseif ($filter['ts_owner'] === false)
+		if (isset($filter['ts_owner']) && $filter['ts_owner'] === false)
 		{
 			$filter['ts_owner'] = '';
+		}
+		// empty --> all the user has access too
+		elseif (empty($filter['ts_owner']))
+		{
+			$filter['ts_owner'] = array_keys($this->grants);
 		}
 		else
 		{

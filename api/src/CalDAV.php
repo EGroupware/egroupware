@@ -1165,6 +1165,7 @@ class CalDAV extends HTTP_WebDAV_Server
 				'data' => self::mkprop(self::CALDAV, 'data', '')
 			]),
 			'other' => [],
+			'root' => ['name' => null],
 		);
 
 		// sync-collection report via GET parameter sync-token

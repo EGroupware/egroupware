@@ -349,7 +349,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		// in case of JSON/REST API pass filters to report
 		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
 		{
-			$filters += $this->filter2col_filter($options['filters']);    // using += to not allow overwriting existing filters
+			$filters = $this->filter2col_filter($options['filters']) + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
 		}
 		elseif (!empty($options['filters']))
 		{
