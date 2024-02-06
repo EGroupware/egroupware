@@ -47,6 +47,10 @@ export class Et2Details extends Et2Widget(SlDetails)
             	order: 1;
             }
 
+				.details__body {
+					height: calc(100% - 3rem) !important;
+				}
+
               .details.hoist {
                 position: relative;
               }
