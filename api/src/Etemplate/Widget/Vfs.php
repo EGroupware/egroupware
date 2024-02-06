@@ -616,7 +616,7 @@ class Vfs extends File
 		$content['path'] = $content['path'] ?? '~';
 		if($content['path'] == '~')
 		{
-			$content['path'] = Api\Vfs::get_home_dir();
+			$content['path'] = $response['path'] = Api\Vfs::get_home_dir();
 		}
 
 		// Filemanager favorites as directories

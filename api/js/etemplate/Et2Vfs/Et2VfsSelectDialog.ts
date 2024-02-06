@@ -248,6 +248,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		const oldValue = this.path;
 		this._pathNode.value = this.path = path;
 		this.requestUpdate("path", oldValue);
+		this.currentFile = null;
 
 		return this._searchPromise;
 	}
@@ -290,7 +291,14 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 			this.updateComplete,
 			this._searchPromise,
 			this._dialog.show()
-		]);
+		]).then(() =>
+		{
+			// Set current file to first value
+			if(this.value && this.value[0])
+			{
+				this.setCurrentFile(this._fileNodes.find(node => node.value.path == this.value[0]));
+			}
+		});
 	}
 
 	/**
@@ -352,6 +360,11 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 
 	processRemoteResults(results) : FileInfo[]
 	{
+		if(typeof results.path === "string")
+		{
+			// Something like a redirect or link followed - server is sending us a "corrected" path
+			this._pathNode.value = results.path;
+		}
 		this.helpText = results?.message ?? "";
 		this._fileList = results?.files ?? [];
 
@@ -417,6 +430,31 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 
 		// Update selection, value, and display label
 		this.selectionChanged();
+	}
+
+	/**
+	 * Sets the current file, which is the option the user is currently interacting with (e.g. via keyboard).
+	 * Only one file may be "current" at a time.  This is unrelated to the value.
+	 */
+	private setCurrentFile(file : Et2VfsSelectRow | null)
+	{
+		// Clear selection
+		this._fileNodes.forEach(el =>
+		{
+			el.current = false;
+			el.tabIndex = -1;
+			el.requestUpdate("current");
+		});
+
+		// Select the target option
+		if(file)
+		{
+			this.currentFile = file;
+			file.current = true;
+			file.tabIndex = 0;
+			file.focus();
+			file.requestUpdate("current");
+		}
 	}
 
 	/**
@@ -504,6 +542,8 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 
 		if(file && !file.disabled)
 		{
+			this.currentFile = file;
+
 			// Can't select a directory normally
 			if(file.value.isDir && this.mode != "select-dir")
 			{
@@ -555,6 +595,72 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 			}
 		}
 	}
+
+	handleKeyDown(event)
+	{
+		// Ignore selects
+		if(event.target.tagName.startsWith('ET2-SELECT'))
+		{
+			return;
+		}
+
+		// Grab any keypresses, avoid EgwAction reacting on them too
+		event.stopPropagation()
+
+		// Navigate options
+		if(["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key))
+		{
+			const files = this._fileNodes;
+			const currentIndex = files.indexOf(this.currentFile);
+			let newIndex = Math.max(0, currentIndex);
+
+			// Prevent scrolling
+			event.preventDefault();
+
+			if(event.key === "ArrowDown")
+			{
+				newIndex = currentIndex + 1;
+				if(newIndex > files.length - 1)
+				{
+					return this._mimeNode.focus();
+				}
+			}
+			else if(event.key === "ArrowUp")
+			{
+				newIndex = currentIndex - 1;
+				if(newIndex < 0)
+				{
+					return this._pathNode.focus();
+				}
+			}
+			else if(event.key === "Home")
+			{
+				newIndex = 0;
+			}
+			else if(event.key === "End")
+			{
+				newIndex = files.length - 1;
+			}
+
+			this.setCurrentFile(files[newIndex]);
+		}
+		else if([" "].includes(event.key) && this.currentFile)
+		{
+			// Prevent scrolling
+			event.preventDefault();
+
+			return this.handleFileClick(event);
+		}
+		else if(["Enter"].includes(event.key) && this.currentFile && !this.currentFile.disabled)
+		{
+			return this.handleFileDoubleClick(event);
+		}
+		else if(["Escape"].includes(event.key))
+		{
+			this.open = false;
+		}
+	}
+
 	handleSearchKeyDown(event)
 	{
 		clearTimeout(this._searchTimeout);
@@ -646,6 +752,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 					return html`
                         <et2-vfs-select-row
                                 ?disabled=${file.disabled || this.mode == "select-dir" && !file.isDir}
+                                .selected=${this.value.includes(file.path)}
                                 .value=${file}
                                 @mouseup=${this.handleFileClick}
                                 @dblclick=${this.handleFileDoubleClick}
@@ -726,6 +833,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                     .destroyOnClose=${false}
                     .title=${this.title}
                     .open=${this.open}
+                    @keydown=${this.handleKeyDown}
             >
                 ${hasFilename ? html`<input id="filename"/>` : nothing}
                 <div
