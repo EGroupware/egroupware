@@ -946,7 +946,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 */
 	protected function setLinkRelation(string $id, int $link_id, array $data)
 	{
-		if (!($info = $this->read($id)) ||)
+		if (!($info = $this->read($id)))
 		{
 			throw new Api\Exception\NotFound();
 		}
