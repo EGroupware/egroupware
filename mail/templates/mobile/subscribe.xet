@@ -24,7 +24,7 @@
 				</row>
 				<row>
 					<et2-box  scrolling="auto">
-						<tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
+						<et2-tree id="foldertree" multiple="true" autoloading="mail_ui::ajax_tree_autoloading" onopenstart="app.mail.subscription_autoloadingStart" onopenend="app.mail.subscription_autoloadingEnd"/>
 					</et2-box>
 				</row>
 			</rows>
