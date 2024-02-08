@@ -23,7 +23,6 @@ import {
 	egw_keycode_makeValid,
 	egw_keyHandler
 } from "../../api/js/egw_action/egw_keymanager";
-import {initMailTree} from "../../api/js/etemplate/Et2TreeWidget/MailTree";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -249,9 +248,10 @@ app.classes.mail = AppJS.extend(
 						}
 					});
 				}
-				var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-				if (tree_wdg)
-				{
+                    const tree_wdg = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+                    if (tree_wdg) {
+                        //TODO check if there are changes necessary
+
 					tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 				}
@@ -694,8 +694,7 @@ app.classes.mail = AppJS.extend(
 						// ToDo: tree.refreshItem() and openItem() should return a promise
 						// need to wait tree is refreshed: current and new id are there AND current folder is selected again
 						const interval = window.setInterval(() => {
-							if (tree.getNode(_id) && tree.getNode(current_id))
-							{
+                                if (tree.getItem(_id) && tree.getItem(current_id)) {
 								if (!tree.getSelectedNode())
 								{
 									tree.reSelectItem(current_id);
@@ -707,7 +706,7 @@ app.classes.mail = AppJS.extend(
 									tree.openItem(_id, true);
 									// need to wait new folders are loaded AND current folder is selected again
 									const open_interval = window.setInterval(() => {
-										if (tree.getNode(_id + '::INBOX')) {
+                                            if (tree.getItem(_id + '::INBOX')) {
 											if (!tree.getSelectedNode()) {
 												tree.reSelectItem(current_id);
 											} else {
@@ -942,7 +941,14 @@ app.classes.mail = AppJS.extend(
 						for(var j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
-					return egw.openWithinWindow("mail", "setCompose", {data:{emails:{ids:settings.id, processedmail_id:settings.id}}}, settings, /mail.mail_compose.compose/);
+					return egw.openWithinWindow("mail", "setCompose", {
+						data:{
+							emails:{
+								ids:settings.id,
+								processedmail_id: settings.id
+							}
+						}
+						}, settings, /mail.mail_compose.compose/);
 				}
 				else
 				{
@@ -1002,7 +1008,9 @@ app.classes.mail = AppJS.extend(
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
-						var filemode_label = filemode.select_options.filter(_item=>{return _item.value == content[field]['files']['filemode']})[0]['label'];
+                            var filemode_label = filemode.options.select_options.filter(_item => {
+                                return _item.value == content[field]['files']['filemode']
+                            })[0]['label'];
 						Et2Dialog.show_dialog(function (_button)
 							{
 								if (_button == Et2Dialog.YES_BUTTON)
@@ -1541,8 +1549,8 @@ app.classes.mail = AppJS.extend(
 			{
 				this.mail_refreshQuotaDisplay();
 			}
-			//the two lines below are not working yet.
-			//var no =tree_wdg.getSelectedNode();
+			// TODO the two lines below are not working yet.
+                //var no =tree_wdg.getSelectedItem();
 			//tree_wdg.focusItem(no.id);
 		} catch(e) { } // ignore the error; maybe the template is not loaded yet
 	},
@@ -1836,7 +1844,7 @@ app.classes.mail = AppJS.extend(
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (ftree)
 		{
-			node = ftree.getNode(_senders[0].id);
+                node = ftree.getItem(_senders[0].id);
 		}
 
 		if (node && node.im0.indexOf('NoSelect') !== -1)
@@ -1861,7 +1869,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+            var node = ftree ? ftree.getItem(acc_id) : null;
 
 		return node && node.data && node.data.spamfolder;
 	},
@@ -1880,7 +1888,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[2]; // this is operating on mails
-		var node = ftree ? ftree.getNode(acc_id) : null;
+            var node = ftree ? ftree.getItem(acc_id) : null;
 
 		return node && node.data && node.data.archivefolder;
 	},
@@ -1898,7 +1906,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+            var node = ftree ? ftree.getItem(acc_id) : null;
 
 		return node && node.data && node.data.sieve;
 	},
@@ -1917,7 +1925,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
-		var node = ftree ? ftree.getNode(inbox) : null;
+		var node = ftree ? ftree.getItem(inbox) : null;
 
 		return node && node.data && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
 	},
@@ -1946,7 +1954,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_setLeaf: function(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var selectedNode = ftree.getSelectedNode();
+            var selectedNode = ftree.getSelectedItem();
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
@@ -2151,15 +2159,15 @@ app.classes.mail = AppJS.extend(
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var _foldernode = ftree.getSelectedNode();
-		var counter = _foldernode.label.match(this._unseen_regexp);
+            var counter = _foldernode.text.match(this._unseen_regexp);
 		var icounter = 0;
 		if ( counter ) icounter = parseInt(counter[0].replace(' (','').replace(')',''));
 		if (icounter>0)
 		{
 			var newcounter = icounter-1;
-			if (newcounter>0) _foldernode.label = _foldernode.label.replace(' ('+String(icounter)+')',' ('+String(newcounter)+')');
-			if (newcounter==0) _foldernode.label = _foldernode.label.replace(' ('+String(icounter)+')','');
-			ftree.setLabel(_foldernode.id,_foldernode.label);
+                if (newcounter > 0) _foldernode.text = _foldernode.text.replace(' (' + String(icounter) + ')', ' (' + String(newcounter) + ')');
+                if (newcounter == 0) _foldernode.text = _foldernode.text.replace(' (' + String(icounter) + ')', '');
+                ftree.setLabel(_foldernode.id, _foldernode.text);
 		}
 	},
 
@@ -2199,12 +2207,10 @@ app.classes.mail = AppJS.extend(
 		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (ftree)
 		{
-			_foldernode = ftree.getSelectedNode();
+                _foldernode = ftree.getSelectedItem();
 
-			displayname = _foldernode.label.replace(this._unseen_regexp, '');
-		}
-		else
-		{
+                displayname = _foldernode.text.replace(this._unseen_regexp, '');
+            } else {
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
@@ -2375,17 +2381,21 @@ app.classes.mail = AppJS.extend(
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')), 'success');
 
 		//Open unloaded tree to get loaded
-		_widget.openItem(folder, true);
+            _widget.getSelectedNode().expanded = true;
 
 		this.lock_tree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
-			_widget.reSelectItem(inbox);
-			this.mail_changeFolder(inbox,_widget,'');
+                //_widget.reSelectItem(inbox);
+
 			this.unlock_tree();
 		},this))
 			.sendRequest(true);
+            _widget.updateComplete.then (() => {
+                this.mail_changeFolder(folder+"::INBOX", _widget, '');
+                _widget.reSelectItem(folder+"::INBOX")
+            });
 
 		return true;
 	},
@@ -2393,7 +2403,7 @@ app.classes.mail = AppJS.extend(
 	/**
 	 * mail_changeFolder
 	 * @param {string} _folder the ID of the selected Node
-	 * @param {widget object} _widget handle to the tree widget
+         * @param {Et2Tree} _widget handle to the tree widget
 	 * @param {string} _previous - Previously selected node ID
 	 */
 	mail_changeFolder: function(_folder,_widget, _previous) {
@@ -2407,7 +2417,7 @@ app.classes.mail = AppJS.extend(
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
-		var img = _widget.getSelectedNode().images[0];
+		const img = _widget.getSelectedItem()?.im0 ?? "";
 		if (img.indexOf('NoSelect') !== -1)
 		{
 			_widget.reSelectItem(_previous);
@@ -4140,7 +4150,7 @@ app.classes.mail = AppJS.extend(
 			var lastDrafted = this.et2.getWidgetById('lastDrafted');
 			var folderTree = typeof opener.etemplate2.getByApplication('mail')[0] !='undefined'?
 								opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]'): null;
-			var activeFolder = folderTree?folderTree.getSelectedNode():null;
+                const activeFolder = folderTree ? folderTree.getSelectedNode() : null;
 			if (content)
 			{
 				var prevDraftedId = content.data.lastDrafted;
