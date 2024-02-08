@@ -73,7 +73,13 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 			/**
 			 * Displayed in the search / select when no value is selected
 			 */
-			placeholder: {type: String}
+			placeholder: {type: String},
+
+			/**
+			 * Additional search parameters that are passed to the server
+			 * when we query searchUrl
+			 */
+			searchOptions: {type: Object}
 		}
 	}
 
@@ -217,6 +223,19 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	get app()
 	{
 		return this._appNode?.value || "";
+	}
+
+	set searchOptions(options)
+	{
+		this.updateComplete.then(() =>
+		{
+			this._searchNode.searchOptions = options;
+		});
+	}
+
+	get searchOptions()
+	{
+		return this._searchNode.searchOptions;
 	}
 
 	get _appNode() : Et2LinkAppSelect

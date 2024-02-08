@@ -377,6 +377,13 @@ class admin_customfields
 						{
 							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
 						}
+						elseif (isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+						{
+							if (!empty($content['cf_values']) && ($content['cf_values'][0] !== '{' || ($values=json_decode($content['cf_values'])) === null))
+							{
+								Api\Etemplate::set_validation_error('cf_values', lang('Invalid JSON object!'));
+							}
+						}
 						else
 						{
 							foreach(explode("\n",trim($content['cf_values'])) as $idx => $line)
@@ -459,7 +466,10 @@ class admin_customfields
 			{
 				$readonlys['cf_name'] = true;
 			}
-			$content['cf_values'] = json_decode($content['cf_values'], true);
+			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+			{
+				$content['cf_values'] = json_decode($content['cf_values'], true);
+			}
 		}
 		else
 		{

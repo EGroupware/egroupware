@@ -284,7 +284,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 				const type = attrs.type ? attrs.type : field.type;
 				// Set any additional attributes set in options, but not for widgets that pass actual options
-				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 && !jQuery.isEmptyObject(field.values))
+				if(['select','radio','radiogroup','checkbox','button'].indexOf(field.type) == -1 &&
+					setup_function !== '_setup_link_entry' && !jQuery.isEmptyObject(field.values))
 				{
 					const w = et2_registry[type];
 					const wc = window.customElements.get('et2-' + type);
@@ -769,6 +770,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 		attrs.type = "link-entry";
 		attrs[attrs.readonly ? "app" : "only_app"] = typeof field.only_app == "undefined" ? field.type : field.only_app;
+		attrs.searchOptions = {filter: field.values || {}};
 		return true;
 	}
 
