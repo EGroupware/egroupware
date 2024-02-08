@@ -559,7 +559,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 		list($id,$recur_date) = explode(':', $_id)+[null,null];
 
-		if ($type != 'calendar' || $id && !($old_event = $this->calendar->read($id, $recur_date, false, 'server')))
+		if ($type != 'calendar' || $id && !($old_event = $this->calendar->read($id, $recur_date)))
 		{
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid',$id,...) Folder wrong or event does not existing");
 			return false;
@@ -588,9 +588,6 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		{
 			$skip_notification = true; // to avoid double notification from client AND Server
 		}
-
-		// event is read in server-time, as is AS message, therefore we need to convert to user-time, which is expected by calendar_boupdate
-		$this->calendar->server2usertime($event);
 
 		$messages = null;
 		if (!($id = $this->calendar->update($event, true, true, false, true, $messages, $skip_notification)))
@@ -650,10 +647,12 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	/**
 	 * Parse AS message into EGw event array
 	 *
+	 * The returned event is in user-timezone, ready to be saved by BO class operating in user-timezone.
+	 *
 	 * @param SyncAppointment $message
 	 * @param int $account
 	 * @param array $event =array()
-	 * @return array
+	 * @return array event in user-timezone
 	 */
 	private function message2event(SyncAppointment $message, $account, $event=array())
 	{
