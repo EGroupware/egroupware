@@ -168,7 +168,7 @@ class DateTime extends \DateTime
 					$time['day']   = (int)substr($time['full'],6,2);
 				}
 				if (isset($time['year'])) $this->setDate((int)$time['year'],(int)$time['month'],isset($time['day']) ? (int)$time['day'] : (int)$time['mday']);
-				$this->setTime((int)$time['hour'],(int)$time['minute'],(int)$time['second']);
+				$this->setTime((int)($time['hour'] ?? 0),(int)($time['minute'] ?? 0),(int)($time['second'] ?? 0));
 				break;
 
 			case 'object':

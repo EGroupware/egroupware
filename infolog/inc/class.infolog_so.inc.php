@@ -306,7 +306,7 @@ class infolog_so
 	{
 		$vars = null;
 		preg_match('/(done|open|offer|deleted|\+deleted)/',$_filter,$vars);
-		$filter = $vars[1];
+		$filter = $vars[1]??null;
 
 		switch ($filter)
 		{
@@ -335,7 +335,7 @@ class infolog_so
 	{
 		$vars = null;
 		preg_match('/(open-upcoming|upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$_filter,$vars);
-		$filter = $vars[1];
+		$filter = $vars[1]??null;
 
 		if (isset($vars[2]) && !empty($vars[2]) && ($date = preg_split('/[-\\/.]/',$vars[2])))
 		{
@@ -866,7 +866,7 @@ class infolog_so
 					continue;
 				}
 				if ($col[0] != '#' && substr($col,0,5) != 'info_' && isset($table_def['fd']['info_'.$col])) $col = 'info_'.$col;
-				if ((string)$data !== '' && preg_match('/^[a-z_0-9]+$/i',$col))
+				if ((!empty($data) || (string)$data !== '') && preg_match('/^[a-z_0-9]+$/i',$col))
 				{
 					switch ($col)
 					{
@@ -1034,12 +1034,12 @@ class infolog_so
 			if (is_null($index_load_cfs) && !empty($query['col_filter']['info_type']))
 			{
 				$config_data = Api\Config::read('infolog');
-				$index_load_cfs = $config_data['index_load_cfs'];
+				$index_load_cfs = $config_data['index_load_cfs'] ?? [];
 				if (!is_array($index_load_cfs)) $index_load_cfs = explode(',', $index_load_cfs);
 			}
 			// if no specific custom field is selected, show/query all custom fields
-			if ($ids && ($query['custom_fields'] || $query['csv_export'] ||
-				$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
+			if ($ids && (!empty($query['custom_fields']) || !empty($query['csv_export']) ||
+				$index_load_cfs && !empty($query['col_filter']['info_type']) && in_array($query['col_filter']['info_type'],$index_load_cfs)))
 			{
 				$where = array('info_id' => array_keys($ids));
 				if (!($query['csv_export'] || strchr(is_array($query['selectcols']) ? implode(',',$query['selectcols']):$query['selectcols'],'#') === false ||

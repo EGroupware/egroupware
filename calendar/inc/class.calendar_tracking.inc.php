@@ -125,7 +125,7 @@ class calendar_tracking extends Api\Storage\Tracking
 	{
 		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
-		if($data['recur_type'])
+		if(!empty($data['recur_type']))
 		{
 			unset($data['start']); unset($data['end']);
 			unset($old['start']); unset($old['end']);

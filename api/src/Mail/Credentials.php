@@ -178,7 +178,7 @@ class Credentials
 		if (is_null($type)) $type = self::ALL;
 		if (is_null($account_id))
 		{
-			$account_id = array(0, $GLOBALS['egw_info']['user']['account_id']);
+			$account_id = array(0, $GLOBALS['egw_info']['user']['account_id'] ?? null);
 		}
 
 		// check cache, if nothing found, query database
@@ -312,7 +312,7 @@ class Credentials
 	public static function from_session(array $data, $set_identity=true)
 	{
 		// if the username contains non-ascii chars, try email address, as Dovecot does NOT deal with non-ascii usernames
-		if (is_a($data['acc_imap_type'], Api\Mail\Imap\Dovecot::class, true) &&
+		if (isset($data['acc_imap_type']) && is_a($data['acc_imap_type'], Api\Mail\Imap\Dovecot::class, true) &&
 			in_array($data['acc_imap_logintype'], ['standard', 'vmailmgr']) &&
 			preg_match('/[^\x20-\x7e]/', $GLOBALS['egw_info']['user']['account_lid']))
 		{

@@ -600,7 +600,7 @@ class Auth
 		foreach(self::$crypt_params as $type => $params)
 		{
 			list(,$prefix, $random, $postfix) = $params;
-			list(,$d) = explode('$', $prefix);
+			list(,$d) = explode('$', $prefix)+[null,null];
 			if ($dollar === $d || !$dollar && ($first[0] === $prefix[0] || $first[0] !== '_' && !$prefix))
 			{
 				$len = !$postfix ? strlen($prefix)+$random : strlen($prefix.$salt.$postfix);

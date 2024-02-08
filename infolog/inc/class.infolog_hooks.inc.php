@@ -61,7 +61,7 @@ class infolog_hooks
 			 ),
 			'add' => array(
 				'menuaction' => 'infolog.infolog_ui.edit',
-				'type'   => $GLOBALS['egw_info']['user']['preferences']['preferred_type']
+				'type'   => $GLOBALS['egw_info']['user']['preferences']['preferred_type'] ?? '',
 			),
 			'add_app'    => 'action',
 			'add_id'     => 'action_id',

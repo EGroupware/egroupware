@@ -56,7 +56,7 @@ class Notifications
 	{
 		if (is_null($account_id))
 		{
-			$account_id = array(0, $GLOBALS['egw_info']['user']['account_id']);
+			$account_id = array(0, $GLOBALS['egw_info']['user']['account_id'] ?? null);
 		}
 
 		// check cache, if nothing found, query database

@@ -187,7 +187,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
 
-		if (!$cutoffdate) $cutoffdate = $this->bo->now - 100*24*3600;	// default three month back -30 breaks all sync recurrences
+		if (!$cutoffdate) $cutoffdate = time() - 100*24*3600;	// default three month back -30 breaks all sync recurrences
 
 		$filter = array(
 			'users' => $user,
@@ -783,7 +783,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		// preserve all resource types not account, contact or email (eg. resources) for existing events
 		// $account is also preserved, as AS does not add him as participant!
-		foreach((array)$event['participant_types'] as $type => $parts)
+		foreach($event['participant_types'] ?? [] as $type => $parts)
 		{
 			if (in_array($type,array('c','e'))) continue;	// they are correctly representable in AS
 
@@ -800,10 +800,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			}
 		}
 		// add calendar owner as participant, as otherwise event will NOT be in his calendar, in which it was posted
-		if (!$event['id'] || !$participants || !isset($participants[$account]))
+		if (empty($event['id']) || !$participants || !isset($participants[$account]))
 		{
 			$participants[$account] = calendar_so::combine_status($account == $GLOBALS['egw_info']['user']['account_id'] ?
-				'A' : 'U',1,!$chair_set ? 'CHAIR' : 'REQ-PARTICIPANT');
+				'A' : 'U',1,empty($chair_set) ? 'CHAIR' : 'REQ-PARTICIPANT');
 		}
 		$event['participants'] = $participants;
 
@@ -1138,12 +1138,12 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 				if (!$info) continue;
 
-				if (!$info['email'] && $info['responsible'])
+				if (empty($info['email']) && !empty($info['responsible']))
 				{
 					$info['email'] = $GLOBALS['egw']->accounts->id2name($info['responsible'], 'account_email', true);
 				}
 				$attendee->name = empty($info['cn']) ? $info['name'] : $info['cn'];
-				$attendee->email = $info['email'];
+				$attendee->email = $info['email'] ?? null;
 
 				// external organizer: make him AS organizer, to get correct notifications
 				if ($role == 'CHAIR' && $uid[0] == 'e' && !empty($attendee->email))

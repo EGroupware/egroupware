@@ -159,7 +159,7 @@ class calendar_so
 	 */
 	protected function cal_range_view($start, $end, array $_where=null, $deleted=false)
 	{
-		if ($GLOBALS['egw_info']['server']['no_timerange_views'] || !$start)	// using view without start-date is slower!
+		if (!empty($GLOBALS['egw_info']['server']['no_timerange_views']) || !$start)	// using view without start-date is slower!
 		{
 			return $this->cal_table;	// no need / use for a view
 		}
@@ -424,7 +424,7 @@ class calendar_so
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
 			}
-			if (!(int)$recur_date && $event['recur_type'] != MCAL_RECUR_NONE)
+			if (!(int)$recur_date && !empty($event['recur_type']))
 			{
 				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
 					'cal_id' => $ids,
@@ -436,7 +436,7 @@ class calendar_so
 				break;	// as above select read all exceptions (and I dont think too short uid problem still exists)
 			}
 			// make sure we fetch only real exceptions (deleted occurrences of a series should not show up)
-			if (($recur_date &&	$event['recur_type'] != MCAL_RECUR_NONE))
+			if (($recur_date &&	!empty($event['recur_type'])))
 			{
 				//_debug_array(__METHOD__.__LINE__.' recur_date:'.$recur_date.' check cal_start:'.$event['start']);
 				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
@@ -468,7 +468,7 @@ class calendar_so
 		}
 
 		// check if we have a real recurance, if not set $recur_date=0
-		if (is_array($ids) || $events[(int)$ids]['recur_type'] == MCAL_RECUR_NONE)
+		if (is_array($ids) || empty($events[(int)$ids]['recur_type']))
 		{
 			$recur_date = 0;
 		}
@@ -955,7 +955,7 @@ class calendar_so
 
 		$u_join = "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id ".
 			"LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id ".
-			$rejected_by_user_join;
+			($rejected_by_user_join??'');
 		// dates table join only needed to enum recuring events, we use a time-range limited view here too
 		if ($params['enum_recuring'])
 		{
@@ -1217,7 +1217,7 @@ class calendar_so
 			{
 				foreach($alarms as $id => $alarm)
 				{
-					$event_start = $alarm['time'] + $alarm['offset'];
+					$event_start = $alarm['time'] + ($alarm['offset']??0);
 
 					if (isset($events[$cal_id]))	// none recuring event
 					{
@@ -1453,9 +1453,9 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$cal_id = (int)($event['id'] ?? 0);
 		unset($event['id']);
-		$set_recurrences = $set_recurrences || !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
+		$set_recurrences = $set_recurrences || !$cal_id && !empty($event['recur_type']);
 
-		if ($event['recur_type'] != MCAL_RECUR_NONE &&
+		if (!empty($event['recur_type']) &&
 			!(int)$event['recur_interval'])
 		{
 			$event['recur_interval'] = 1;
@@ -1474,7 +1474,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (isset($event['cal_start'])) $event['range_start'] = $event['cal_start'];
 		if (isset($event['cal_end']))
 		{
-			$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] :
+			$event['range_end'] = empty($event['recur_type']) ? $event['cal_end'] :
 				($event['recur_enddate'] ? $event['recur_enddate'] : null);
 		}
 		// ensure that we find matching entries later on
@@ -1492,12 +1492,12 @@ ORDER BY cal_user_type, cal_usre_id
 		$event['cal_category'] = implode(',',$categories);
 
 		// make sure recurring events never reference to an other recurrent event
-		if ($event['recur_type'] != MCAL_RECUR_NONE) $event['cal_reference'] = 0;
+		if (!empty($event['recur_type'])) $event['cal_reference'] = 0;
 
 		if ($cal_id)
 		{
 			// query old recurrance information, before updating main table, where recur_endate is now stored
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			if (!empty($event['recur_type']))
 			{
 				$old_repeats = $this->db->select($this->repeats_table, "$this->repeats_table.*,range_end AS recur_enddate",
 					"$this->repeats_table.cal_id=".(int)$cal_id, __LINE__, __FILE__,
@@ -1505,7 +1505,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 			$where = array('cal_id' => $cal_id);
 			// read only timezone id, to check if it is changed
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			if (!empty($event['recur_type']))
 			{
 				$old_tz_id = $this->db->select($this->cal_table,'tz_id',$where,__LINE__,__FILE__,'calendar')->fetchColumn();
 			}
@@ -1552,7 +1552,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->db->update($this->cal_table, $update, array('cal_id' => $cal_id),__LINE__,__FILE__,'calendar');
 		}
 
-		if ($event['recur_type'] == MCAL_RECUR_NONE)
+		if (empty($event['recur_type']))
 		{
 			$this->db->delete($this->dates_table,array(
 				'cal_id' => $cal_id),
@@ -1764,7 +1764,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 		}
 		// updating or saving the alarms; new alarms have a temporary numeric id!
-		if (is_array($event['alarm']))
+		if (!empty($event['alarm']) && is_array($event['alarm']))
 		{
 			foreach ($event['alarm'] as $id => $alarm)
 			{
@@ -1812,7 +1812,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	public static function shift_alarm(array $_event, array &$alarm, $timestamp=null)
 	{
-		if ($_event['recur_type'] == MCAL_RECUR_NONE)
+		if (empty($_event['recur_type']))
 		{
 			return false;
 		}
@@ -2747,7 +2747,7 @@ ORDER BY cal_user_type, cal_usre_id
 		$cal_id = (int) $event['id'];
 		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 		//		"($cal_id, $tz_id, $filter): " . $event['tzid']);
-		if (!$cal_id || $event['recur_type'] == MCAL_RECUR_NONE) return false;
+		if (!$cal_id || empty($event['recur_type'])) return false;
 
 		$days = array();
 

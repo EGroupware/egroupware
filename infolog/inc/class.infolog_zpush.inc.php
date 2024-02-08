@@ -242,7 +242,7 @@ class infolog_zpush implements activesync_plugin_write
 		$mimesupport = $contentparameters->GetMimeSupport();
 		$bodypreference = $contentparameters->GetBodyPreference(); /* fmbiete's contribution r1528, ZP-320 */
 
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=$bodypreference, mimesupport=$mimesupport)");
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=".json_encode($bodypreference).", mimesupport=$mimesupport)");
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
 		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'server')))

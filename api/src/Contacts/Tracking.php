@@ -113,7 +113,7 @@ class Tracking extends Api\Storage\Tracking
 		switch($name)
 		{
 			case 'copy':
-				if ($data['is_contactform'])
+				if (!empty($data['is_contactform']))
 				{
 					$copy = preg_split('/, ?/',$data['email_contactform']);
 					if  ($data['email_copytoreceiver']) $copy[] = $data['email'];
@@ -122,7 +122,7 @@ class Tracking extends Api\Storage\Tracking
 				break;
 
 			case 'sender':
-				if ($data['is_contactform'])
+				if (!empty($data['is_contactform']))
 				{
 					return $data['email'] ? $data['n_given'].' '.$data['n_family'].' <'.$data['email'].'>' : null;
 				}

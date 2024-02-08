@@ -29,7 +29,7 @@ if (!function_exists('get_magic_quotes_gpc'))
 }
 
 /**
-* applies stripslashes recursivly on each element of an array
+* applies stripslashes recursively on each element of an array
 *
 * @param array &$var
 * @return array
@@ -116,7 +116,7 @@ if (!function_exists('imap_rfc822_parse_adrlist'))
 		foreach(explode(',', $address) as $part)
 		{
 			$trimmed = trim(($pending ? $pending.',' : '').$part);
-			if (($trimmed[0] == '"' && substr($trimmed, -1) != '>')||strpos($part, '@')===false)
+			if ((($trimmed[0]??null) == '"' && substr($trimmed, -1) != '>')||strpos($part, '@')===false)
 			{
 				$pending .= ($pending ? $pending.',' : '').$part;
 				continue;
@@ -366,7 +366,7 @@ function function_backtrace($remove=0)
 			{
 				$ret[] = (isset($level['class'])?$level['class'].$level['type']:'').$level['function'].
 					($n > 0 && isset($backtrace[$n-1]['line']) ? ':'.$backtrace[$n-1]['line'] : '').	// add line number of call
-					(!$level['class'] && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
+					(empty($level['class']) && !is_object($level['args'][0]) && $level['function'] != 'unserialize' ?
 					'('.substr(str_replace(EGW_SERVER_ROOT,'',(string)$level['args'][0]),0,64).')' : '');
 			}
 		}

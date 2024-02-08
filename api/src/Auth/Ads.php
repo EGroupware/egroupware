@@ -91,7 +91,7 @@ class Ads implements Backend
 
 		if ($allValues && $allValues['count'] > 0)
 		{
-			if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
+			if(!empty($GLOBALS['egw_info']['server']['case_sensitive_username']))
 			{
 				if($allValues[0]['samaccountname'][0] != $username)
 				{

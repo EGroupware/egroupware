@@ -450,7 +450,7 @@ class Contacts extends Contacts\Storage
 	 */
 	function fileas($contact,$type=null, $isUpdate=false)
 	{
-		if (is_null($type)) $type = $contact['fileas_type'];
+		if (is_null($type)) $type = $contact['fileas_type'] ?? null;
 		if (!$type) $type = $this->prefs['fileas_default'] ? $this->prefs['fileas_default'] : $this->fileas_types[0];
 
 		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
@@ -909,7 +909,7 @@ class Contacts extends Contacts\Storage
 		if (!array_key_exists('photo_unchanged',$contact)) $contact['photo_unchanged'] = true;
 
 		// remember if we add or update a entry
-		if (($isUpdate = $contact['id']))
+		if (($isUpdate = $contact['id'] ?? null))
 		{
 			if (!isset($contact['owner']) || !isset($contact['private']))	// owner/private not set on update, eg. SyncML
 			{
@@ -942,10 +942,10 @@ class Contacts extends Contacts\Storage
 				$contact['owner'] = $this->default_addressbook ? $this->default_addressbook : $this->user;
 			}
 			// allow admins to import contacts with creator / created date set
-			if (!$contact['creator'] || !$ignore_acl && !$this->is_admin($contact)) $contact['creator'] = $this->user;
-			if (!$contact['created'] || !$ignore_acl && !$this->is_admin($contact)) $contact['created'] = $this->now_su;
+			if (empty($contact['creator']) || !$ignore_acl && !$this->is_admin($contact)) $contact['creator'] = $this->user;
+			if (empty($contact['created']) || !$ignore_acl && !$this->is_admin($contact)) $contact['created'] = $this->now_su;
 
-			if (!$contact['tid']) $contact['tid'] = 'n';
+			if (empty($contact['tid'])) $contact['tid'] = 'n';
 			$update_type = "add";
 		}
 		// ensure accounts and group addressbooks are never private!
@@ -964,9 +964,9 @@ class Contacts extends Contacts\Storage
 			$contact['jpegphoto'] = $this->resize_photo($contact['jpegphoto']);
 		}
 		// convert categories
-		if (is_array($contact['cat_id']))
+		if (isset($contact['cat_id']) && is_array($contact['cat_id']))
 		{
-			$contact['cat_id'] = implode(',',$contact['cat_id']);
+			$contact['cat_id'] = implode(',',$contact['cat_id']) ?: null;
 		}
 
 		// Update country codes
@@ -983,7 +983,7 @@ class Contacts extends Contacts\Storage
 					$contact[$c_prefix.'countrycode'] = null;
 				}
 			}
-			if($contact[$c_prefix.'countrycode'] != null)
+			if(isset($contact[$c_prefix.'countrycode']))
 			{
 				$contact[$c_prefix.'countryname'] = null;
 			}
@@ -1030,7 +1030,7 @@ class Contacts extends Contacts\Storage
 
 		// IF THE OLD ENTRY IS A ACCOUNT, dont allow to change the owner/location
 		// maybe we need that for id and account_id as well.
-		if (is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
+		if (isset($old) && is_array($old) && (!isset($old['owner']) || empty($old['owner'])))
 		{
 			if (isset($to_write['owner']) && !empty($to_write['owner']))
 			{
@@ -1057,7 +1057,7 @@ class Contacts extends Contacts\Storage
 			}
 
 			// if contact is an account and account-relevant data got updated, handle it like account got updated
-			if ($contact['account_id'] && $isUpdate &&
+			if (!empty($contact['account_id']) && $isUpdate &&
 				($old['email'] != $contact['email'] || $old['n_family'] != $contact['n_family'] || $old['n_given'] != $contact['n_given']))
 			{
 				// invalidate the cache of the accounts class
@@ -1076,17 +1076,17 @@ class Contacts extends Contacts\Storage
 			}
 
 			// Check for restore of deleted contact, restore held links
-			if($old && $old['tid'] == self::DELETED_TYPE && $contact['tid'] != self::DELETED_TYPE)
+			if(isset($old) && $old['tid'] == self::DELETED_TYPE && $contact['tid'] != self::DELETED_TYPE)
 			{
 				Link::restore('addressbook', $contact['id']);
 			}
 
 			// Record change history for sql - doesn't work for LDAP accounts
-			$deleted = ($old['tid'] == self::DELETED_TYPE || $contact['tid'] == self::DELETED_TYPE);
-			if(!$contact['account_id'] || $contact['account_id'] && $this->account_repository == 'sql')
+			$deleted = (isset($old) && $old['tid'] == self::DELETED_TYPE || $contact['tid'] == self::DELETED_TYPE);
+			if(empty($contact['account_id']) || $contact['account_id'] && $this->account_repository == 'sql')
 			{
 				if (!isset($this->tracking)) $this->tracking = new Contacts\Tracking($this);
-				$this->tracking->track($to_write, $old ? $old : null, null, $deleted);
+				$this->tracking->track($to_write, $old ?? null, null, $deleted);
 			}
 
 			// Notify linked apps about changes in the contact data
@@ -1264,7 +1264,7 @@ class Contacts extends Contacts\Storage
 		{
 			$access = !!array_intersect($memberships,$GLOBALS['egw']->accounts->memberships($contact['account_id'],true));
 		}
-		else if ($contact['id'] && $GLOBALS['egw']->acl->check('A'.$contact['id'], $needed, 'addressbook'))
+		elseif (!empty($contact['id']) && $GLOBALS['egw']->acl->check('A'.$contact['id'], $needed, 'addressbook'))
 		{
 			$access = true;
 		}
@@ -2908,7 +2908,7 @@ class Contacts extends Contacts\Storage
 			$phoneNumberUtil->format($number, \libphonenumber\PhoneNumberFormat::INTERNATIONAL), 3);
 		$rest_without_space = preg_replace('/[^0-9]/', '', $rest);
 		/** @var Contacts\Sql */
-		$backend = $this->get_backend(null, $filter['owner']);
+		$backend = $this->get_backend(null, $filter['owner'] ?? null);
 		// SQL Backend supporting regexp_replace (MySQL 8.0+ or MariaDB 10.0+ or PostgreSQL)
 		if (is_a($backend, Contacts\Sql::class) && $this->db->regexp_replace('test', '', '') !== 'test')
 		{
