@@ -362,17 +362,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return this._currentSlTreeItem
 	}
 
-	getNode(_id): SlTreeItem
+	getDomNode(_id): SlTreeItem
 	{
 		return this.shadowRoot.querySelector("sl-tree-item[id='" + _id + "'");
 	}
 
 
 	/**
-	 * return the Item with given _id, was called getNode(_id) in dhtmlxTree
+	 * return the Item with given _id, was called getDomNode(_id) in dhtmlxTree
 	 * @param _id
 	 */
-	public getItem(_id: string): TreeItemData
+	public getNode(_id: string): TreeItemData
 	{
 
 		return this._search(_id, this._selectOptions)
@@ -386,8 +386,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	setLabel(_id, _label, _tooltip?)
 	{
-		let tooltip = _tooltip || (this.getItem(_id) && this.getItem(_id).tooltip ? this.getItem(_id).tooltip : "");
-		let i = this.getItem(_id)
+		let tooltip = _tooltip || (this.getNode(_id) && this.getNode(_id).tooltip ? this.getNode(_id).tooltip : "");
+		let i = this.getNode(_id)
 		i.tooltip = tooltip
 		i.text = _label
 	}
@@ -399,7 +399,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	getLabel(_id)
 	{
-		return this.getItem(_id)?.text;
+		return this.getNode(_id)?.text;
 	}
 
 	/**
@@ -451,7 +451,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			this.refreshItem(_id, null)
 		} else
 		{
-			let item = this.getItem(_id)
+			let item = this.getNode(_id)
 			this.handleLazyLoading(item).then((result) => {
 				item.item = [...result.item]
 				this.requestUpdate("_selectOptions")
@@ -489,7 +489,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	public renameItem(_id, _newItemId, _label)
 	{
-		this.getItem(_id).id = _newItemId
+		this.getNode(_id).id = _newItemId
 
 		// Update action
 		// since the action ID has to = this.id, getObjectById() won't work
@@ -509,7 +509,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	public focusItem(_id)
 	{
-		let item = this.getItem(_id)
+		let item = this.getNode(_id)
 		item.focused = true
 	}
 
@@ -521,7 +521,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	hasChildren(_id)
 	{
-		return this.getItem(_id).item?.length;
+		return this.getNode(_id).item?.length;
 	}
 
 	/**
@@ -531,8 +531,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	reSelectItem(_id)
 	{
 		this._previousOption = this._currentOption
-		this._currentOption = this.getItem(_id);
-		const node: SlTreeItem = this.getNode(_id)
+		this._currentOption = this.getNode(_id);
+		const node: SlTreeItem = this.getDomNode(_id)
 		if (node)
 		{
 			this._currentSlTreeItem = node;
@@ -542,7 +542,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	getUserData(_nodeId, _name)
 	{
-		return this.getItem(_nodeId)?.userdata?.find(elem => {
+		return this.getNode(_nodeId)?.userdata?.find(elem => {
 			elem.name === _name
 		})?.content
 	}
@@ -573,7 +573,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     ?focused=${selectOption.focused || nothing}
                     @sl-lazy-load=${(event) => {
                         this.handleLazyLoading(selectOption).then((result) => {
-                            this.getItem(selectOption.id).item = [...result.item]
+                            this.getNode(selectOption.id).item = [...result.item]
                             this.requestUpdate("_selectOptions")
                         })
 
@@ -594,7 +594,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     @sl-selection-change=${
                             (event: any) => {
                                 this._previousOption = this._currentOption
-                                this._currentOption = this.getItem(event.detail.selection[0].id);
+                                this._currentOption = this.getNode(event.detail.selection[0].id);
                                 event.detail.previous = this._previousOption.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
 

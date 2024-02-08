@@ -16,7 +16,7 @@ import {egwBitIsSet} from "./egw_action_common";
 
 function dhtmlxTree_getNode(_tree: Et2Tree, _itemId: string)
 {
-    const node = _tree.getNode(_itemId);
+    const node = _tree.getDomNode(_itemId);
     if (node != null)
     {
         return node
@@ -26,7 +26,7 @@ export class EgwDragDropShoelaceTree {
     constructor(_tree:Et2Tree, _itemId) {
 
         const aoi = new egwActionObjectInterface();
-        aoi.node = _tree.getNode(_itemId);
+        aoi.node = _tree.getDomNode(_itemId);
         aoi.id = _itemId
         aoi.doGetDOMNode = function () {
             return aoi.node;

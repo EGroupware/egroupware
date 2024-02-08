@@ -84,7 +84,7 @@ export class Et2MultiselectTree extends Et2Tree {
 
                     @sl-lazy-load=${(event) => {
                         this.handleLazyLoading(selectOption).then((result) => {
-                            this.getItem(selectOption.id).item = [...result.item]
+                            this.getNode(selectOption.id).item = [...result.item]
                             this.requestUpdate("_selectOptions")
                         })
 
@@ -106,7 +106,7 @@ export class Et2MultiselectTree extends Et2Tree {
                                 //TODO inefficient
                                 this.selectedItems = []
                                 for (const slTreeItem of <SlTreeItem[]>event.detail.selection) {
-                                    this.selectedItems.push(this.getItem(slTreeItem.id));
+                                    this.selectedItems.push(this.getNode(slTreeItem.id));
                                 }
                                 this.selectedNodes = event.detail.selection;
                                 //TODO look at what signature is expected here
