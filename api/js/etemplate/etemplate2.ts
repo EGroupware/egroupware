@@ -104,7 +104,9 @@ import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
-import "./Et2TreeWidget/Et2Tree";
+import "./Et2Tree/Et2Tree";
+import "./Et2Tree/Et2MultiselectTree"
+
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
