@@ -844,7 +844,7 @@ class calendar_rrule implements Iterator
 			$end = is_a($event['end'],'DateTime') ? clone $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
 			$end->setTimezone($enddate->getTimezone());
 			$enddate->setTime($end->format('H'),$end->format('i'),0);
-			if($event['whole_day'])
+			if(!empty($event['whole_day']))
 			{
 				$enddate->setTime(23,59,59);
 			}
@@ -856,7 +856,7 @@ class calendar_rrule implements Iterator
 				$exceptions[] = is_a($exception,'DateTime') ? $exception : new Api\DateTime($exception,$timestamp_tz);
 			}
 		}
-		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate,$event['recur_data'],$exceptions);
+		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate??null,$event['recur_data'],$exceptions??null);
 	}
 
 	/**

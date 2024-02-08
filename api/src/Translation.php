@@ -188,7 +188,7 @@ class Translation
 
 		if ($load_translations)
 		{
-			if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+			if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['lang']))
 			{
 				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 			}
@@ -953,7 +953,7 @@ class Translation
 			return utf8_decode($data);
 		}
 		try {
-			if (self::$mbstring && !$prefer_iconv && ($data = @mb_convert_encoding($data, $to, $from)) != '')
+			if (self::$mbstring && empty($prefer_iconv) && ($data = @mb_convert_encoding($data, $to, $from)) != '')
 			{
 				return $data;
 			}

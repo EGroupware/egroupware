@@ -1215,7 +1215,7 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		static $max_subquery_depth=null;
 		if (is_null($max_subquery_depth))
 		{
-			$max_subquery_depth = $GLOBALS['egw_info']['server']['max_subquery_depth'];
+			$max_subquery_depth = $GLOBALS['egw_info']['server']['max_subquery_depth'] ?? null;
 			if (!$max_subquery_depth) $max_subquery_depth = 7;	// setting current default of 7, if nothing set
 		}
 		if (self::LOG_LEVEL > 1) error_log(__METHOD__."('$url',$flags)");

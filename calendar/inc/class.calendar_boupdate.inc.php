@@ -698,8 +698,8 @@ class calendar_boupdate extends calendar_bo
 				default:
 					if (is_array($new_event) && is_array($old_event))
 					{
-						$diff = max(abs(self::date2ts($old_event['start'])-self::date2ts($new_event['start'])),
-							abs(self::date2ts($old_event['end'])-self::date2ts($new_event['end'])));
+						$diff = max(abs(self::date2ts($old_event['start']??null)-self::date2ts($new_event['start']??null)),
+							abs(self::date2ts($old_event['end']??null)-self::date2ts($new_event['end']??null)));
 						$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
 						if ($msg_type == MSG_MODIFIED && $diff > $check)
 						{
@@ -707,7 +707,7 @@ class calendar_boupdate extends calendar_bo
 						}
 					}
 				case 'add_cancel':
-					if ($msg_is_response && is_array($old_event) && ($old_event['owner'] == $userid || $role == 'CHAIR') ||
+					if ($msg_is_response && is_array($old_event) && (isset($old_event['owner']) && $old_event['owner'] == $userid || $role == 'CHAIR') ||
 						$msg_type == MSG_DELETED || $msg_type == MSG_ADDED || $msg_type == MSG_DISINVITE)
 					{
 						++$want_update;
@@ -1354,7 +1354,7 @@ class calendar_boupdate extends calendar_bo
 		$ret = $this->_send_update(MSG_ALARM, $to_notify, $event, False, $alarm['owner'], $alarm);
 
 		// create a new alarm for recuring events for the next event, if one exists
-		if ($event['recur_type'] != MCAL_RECUR_NONE && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
+		if (!empty($event['recur_type']) && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
 		{
 			$alarm['time'] = $this->date2ts($event['start']) - $alarm['offset'];
 			unset($alarm['times']);
@@ -1404,7 +1404,7 @@ class calendar_boupdate extends calendar_bo
 		$this->check_reset_statuses($event, $old_event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'])
+		if (!empty($event['recur_type']) && $event['recur_enddate'] && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
@@ -1576,7 +1576,7 @@ class calendar_boupdate extends calendar_bo
 		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 ||
 			count($old_event['recur_exception'] ?? []) != count($event['recur_exception'] ?? []) : false;
 		$set_recurrences_start = 0;
-		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && $event['recur_type'] != MCAL_RECUR_NONE)
+		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && !empty($event['recur_type']))
 		{
 			$save_event['id'] = $cal_id;
 			// unset participants to enforce the default stati for all added recurrences
@@ -1585,7 +1585,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// create links for new participants from addressbook, if configured
-		if($cal_id && $GLOBALS['egw_info']['server']['link_contacts'] && !empty($save_event['participants']))
+		if($cal_id && !empty($GLOBALS['egw_info']['server']['link_contacts']) && !empty($save_event['participants']))
 		{
 			foreach($save_event['participants'] as $uid => $status)
 			{
@@ -1941,7 +1941,7 @@ class calendar_boupdate extends calendar_bo
 			$this->send_update(MSG_DELETED, $to_notify, $event);
 		}
 
-		if (!$recur_date || $event['recur_type'] == MCAL_RECUR_NONE)
+		if (!$recur_date || empty($event['recur_type']))
 		{
 			$config = Api\Config::read('phpgwapi');
 			if ($event['deleted'])
@@ -1969,7 +1969,7 @@ class calendar_boupdate extends calendar_bo
 			}
 
 			// delete or keep (with new uid) exceptions of a recurring event
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			if (!empty($event['recur_type']))
 			{
 				$exceptions_kept = 0;
 				foreach ($this->so->get_related($event['uid']) as $id)
@@ -2190,7 +2190,7 @@ class calendar_boupdate extends calendar_bo
 		// Repeated Events
 		$var['recur_type'] = Array(
 			'field'	=> lang('Repetition'),
-			'data'	=> ($event['recur_type'] != MCAL_RECUR_NONE) ? $this->recure2string($event) : '',
+			'data'	=> (!empty($event['recur_type'])) ? $this->recure2string($event) : '',
 		);
 		return $var;
 	}
@@ -2259,7 +2259,7 @@ class calendar_boupdate extends calendar_bo
 
 		foreach($event['alarm'] as &$alarm)
 		{
-			if($event['recur_type'] != MCAL_RECUR_NONE && $instance_date)
+			if(!empty($event['recur_type']) && $instance_date)
 			{
 				calendar_so::shift_alarm($event, $alarm, $instance_date);
 			}
@@ -2425,7 +2425,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		elseif ($filter == 'exact')
 		{
-			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			if (!empty($event['recur_type']))
 			{
 				$query[] = 'recur_type='.$event['recur_type'];
 			}
@@ -2450,7 +2450,7 @@ class calendar_boupdate extends calendar_bo
 					error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 						'()[FOUND]:' . array2string($egwEvent)."\n",3,$this->logfile);
 				}
-				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
+				if (!empty($egwEvent['recur_type']) &&
 					(empty($event['uid']) || $event['uid'] == $egwEvent['uid']))
 				{
 					if ($filter == 'master')
@@ -2461,7 +2461,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						$matchingEvents[] = $egwEvent['id']; // we found the event
 					}
-					elseif ($event['recur_type'] == MCAL_RECUR_NONE &&
+					elseif (empty($event['recur_type']) &&
 								$event['recurrence'] != 0)
 					{
 						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
@@ -2658,14 +2658,14 @@ class calendar_boupdate extends calendar_bo
 						$egwstart->setTimezone(self::$tz_cache[$egwEvent['tzid']]);
 						$dtstart = new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
 						$dtstart->setTimezone(self::$tz_cache[$event['tzid']]);
-						if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
-							$event['recur_type'] == MCAL_RECUR_NONE ||
-								$egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-									$event['recur_type'] != MCAL_RECUR_NONE)
+						if (empty($egwEvent['recur_type']) &&
+							empty($event['recur_type']) ||
+								!empty($egwEvent['recur_type']) &&
+									!empty($event['recur_type']))
 						{
-							if ($egwEvent['recur_type'] == MCAL_RECUR_NONE &&
+							if (empty(egwEvent['recur_type']) &&
 								$egwstart->format('Ymd') == $dtstart->format('Ymd') ||
-									$egwEvent['recur_type'] != MCAL_RECUR_NONE)
+									!empty($egwEvent['recur_type']))
 							{
 								// We found an exact match
 								$matchingEvents = array($egwEvent['id']);
@@ -2684,8 +2684,8 @@ class calendar_boupdate extends calendar_bo
 						$matchingEvents = array($egwEvent['id']);
 						break;
 					}
-					if ($egwEvent['recur_type'] != MCAL_RECUR_NONE &&
-						$event['recur_type'] == MCAL_RECUR_NONE &&
+					if (!empty($egwEvent['recur_type']) &&
+						empty($event['recur_type']) &&
 							!$egwEvent['recurrence'] && $event['recurrence'])
 					{
 						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
@@ -2825,9 +2825,9 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 
-			if ($event['recur_type'] == MCAL_RECUR_NONE)
+			if (empty($event['recur_type']))
 			{
-				if ($egwEvent['recur_type'] != MCAL_RECUR_NONE)
+				if (!empty($egwEvent['recur_type']))
 				{
 					// We found a pseudo Exception
 					$pseudos[] = $egwEvent['id'] . ':' . $event['start'];
@@ -2964,7 +2964,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
 
-		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		if (!empty($event['recur_type']))
 		{
 			$type = 'SERIES-MASTER';
 		}

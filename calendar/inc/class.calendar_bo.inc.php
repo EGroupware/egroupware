@@ -643,7 +643,7 @@ class calendar_bo
 		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
-		$users_in = (array)$params_in['users'];
+		$users_in = (array)($params_in['users']??[]);
 		$remove_rejected_by_user = !in_array($filter,array('all','rejected','everything')) &&
 			count($users_in) == 1 && $users_in[0] > 0 ? $users_in[0] : null;
 		//error_log(__METHOD__.'('.array2string($params_in).", $sql_filter) params[users]=".array2string($params['users']).' --> remove_rejected_by_user='.array2string($remove_rejected_by_user));
@@ -655,7 +655,7 @@ class calendar_bo
 		}
 		// date2ts(,true) converts to server time, db2data converts again to user-time
 		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$offset,(int)$params['num_rows'],$params,$remove_rejected_by_user);
+			$users,$cat_id,$filter,$offset,(int)($params['num_rows']??0),$params,$remove_rejected_by_user);
 
 		if (isset($params['cols']))
 		{
@@ -1091,7 +1091,7 @@ class calendar_bo
 		{
 			if (is_array($ids) || !isset(self::$cached_event['id']) || self::$cached_event['id'] != $ids ||
 				self::$cached_event_date_format != $date_format || $read_recurrence ||
-				self::$cached_event['recur_type'] != MCAL_RECUR_NONE && self::$cached_event_date != $date)
+				!empty(self::$cached_event['recur_type']) && self::$cached_event_date != $date)
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0, $read_recurrence);
 
@@ -1362,7 +1362,7 @@ class calendar_bo
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$grant = $grants[$owner];
+		$grant = $grants[$owner] ?? null;
 
 		// now any ACL rights (but invite rights!) implicate FREEBUSY rights (at least READ has to include FREEBUSY)
 		if ($grant & ~self::ACL_INVITE) $grant |= self::ACL_FREEBUSY;

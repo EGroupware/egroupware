@@ -181,7 +181,7 @@ class Html
 				if ($addbracesforendtag === false )
 				{
 					if (stripos($_body,'<'.$tag)!==false)  $ct = preg_match_all('#<'.$tag.'(?:\s.*)?>(.+)'.$endtag.'#isU', $_body, $found);
-					if ($ct>0)
+					if (isset($ct) && $ct > 0)
 					{
 						//error_log(__METHOD__.__LINE__.array2string($found[0]));
 						// only replace what we have found

@@ -564,7 +564,7 @@ class Sql extends Api\Storage
 					$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 						" OR $shared_sql".
 						" OR contact_private=0 AND $this->table_name.contact_owner IN (".
-						implode(',',array_keys($this->grants)).") $groupmember_sql OR $this->table_name.contact_owner IS NULL)";
+						implode(',',array_keys($this->grants)).") ".($groupmember_sql ?? '')." OR $this->table_name.contact_owner IS NULL)";
 				}
 				else
 				{
@@ -1193,7 +1193,7 @@ class Sql extends Api\Storage
 
 		if (is_array($keys) && count($keys)) $this->data_merge($keys);
 
-		$new_entry = !$this->data['id'];
+		$new_entry = empty($this->data['id']);
 
 		if (isset($this->data['etag']))		// do we have an etag in the data to write
 		{

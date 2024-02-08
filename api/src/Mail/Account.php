@@ -270,7 +270,7 @@ class Account implements \ArrayAccess
 				$params += Notifications::read($params['acc_id'], $called_for ? array(0, $called_for) : $called_for);
 			}
 			if (!empty($params['acc_imap_logintype']) && empty($params['acc_imap_username']) &&
-				$GLOBALS['egw_info']['user']['account_id'] &&
+				!empty($GLOBALS['egw_info']['user']['account_id']) &&
 				(!isset($called_for) || $called_for == $GLOBALS['egw_info']['user']['account_id']))
 			{
 				// get username/password from current user, let it overwrite credentials for all/no session
@@ -291,7 +291,7 @@ class Account implements \ArrayAccess
 		unset($this->smtpServer);
 		unset($this->smtpTransport);
 
-		$this->user = $called_for ? $called_for : $GLOBALS['egw_info']['user']['account_id'];
+		$this->user = $called_for ?: $GLOBALS['egw_info']['user']['account_id'] ?? null;
 	}
 
 	public static function ssl2secure($ssl)
@@ -1491,7 +1491,7 @@ class Account implements \ArrayAccess
 		$where = array();
 		if ($only_current_user !== false)
 		{
-			$account_id = $only_current_user === true ? $GLOBALS['egw_info']['user']['account_id'] : $only_current_user;
+			$account_id = $only_current_user === true ? ($GLOBALS['egw_info']['user']['account_id']??null) : $only_current_user;
 			// no account_id happens eg. for notifications during login
 			if ($account_id && !is_numeric($account_id))
 			{
@@ -1774,7 +1774,7 @@ class Account implements \ArrayAccess
 	 */
 	protected static function memberships($user=null)
 	{
-		if (!$user) $user = $GLOBALS['egw_info']['user']['account_id'];
+		if (!$user) $user = $GLOBALS['egw_info']['user']['account_id'] ?? null;
 
 		$memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 		$memberships[] = $user;

@@ -1595,13 +1595,13 @@ class Mail
 				} /*else $sent_not = "";*/
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerObject));
 				$headerObject['DATE'] = $headerForPrio['DATE'];
-				$headerObject['SUBJECT'] = (is_array($headerForPrio['SUBJECT'])?$headerForPrio['SUBJECT'][0]:$headerForPrio['SUBJECT']);
-				$headerObject['FROM'] = (array)($headerForPrio['FROM']?$headerForPrio['FROM']:($headerForPrio['REPLY-TO']?$headerForPrio['REPLY-TO']:$headerForPrio['RETURN-PATH']));
-				$headerObject['TO'] = (array)$headerForPrio['TO'];
+				$headerObject['SUBJECT'] = is_array($headerForPrio['SUBJECT'] ?? null) ? $headerForPrio['SUBJECT'][0] : ($headerForPrio['SUBJECT']??null);
+				$headerObject['FROM'] = (array)($headerForPrio['FROM']?:($headerForPrio['REPLY-TO']?:$headerForPrio['RETURN-PATH']));
+				$headerObject['TO'] = (array)($headerForPrio['TO'] ?? []);
 				$headerObject['CC'] = isset($headerForPrio['CC'])?(array)$headerForPrio['CC']:array();
 				$headerObject['BCC'] = isset($headerForPrio['BCC'])?(array)$headerForPrio['BCC']:array();
 				$headerObject['REPLY-TO'] = isset($headerForPrio['REPLY-TO'])?(array)$headerForPrio['REPLY-TO']:array();
-				$headerObject['PRIORITY'] = isset($headerForPrio['X-PRIORITY'])?$headerForPrio['X-PRIORITY']:null;
+				$headerObject['PRIORITY'] = $headerForPrio['X-PRIORITY']??null;
 				foreach (array('FROM','TO','CC','BCC','REPLY-TO') as $key)
 				{
 					$address = array();

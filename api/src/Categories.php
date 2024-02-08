@@ -923,7 +923,7 @@ class Categories
 		{
 			return !empty($cat['data']) ? json_php_unserialize($cat['data'], true) : array();
 		}
-		elseif ($cat[$item])
+		elseif (!empty($cat[$item]))
 		{
 			return $cat[$item];
 		}

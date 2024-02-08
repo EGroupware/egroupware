@@ -424,9 +424,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		{
 			$disableRuler = true;
 		}
-		$beforePlain = $beforeHtml = "";
-		$beforeHtml = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">');
-		$beforePlain = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
+
+		$beforeHtml = !empty($disableRuler) ? '&nbsp;<br>' : '&nbsp;<br><hr style="border:dotted 1px silver; width:90%; border:dotted 1px silver;">';
+		$beforePlain = !empty($disableRuler) ?"\r\n\r\n" : "\r\n\r\n-- \r\n";
 		$sigText = Mail::merge($signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 		if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Signature to use:'.$sigText);
 		$sigTextHtml = $beforeHtml.$sigText;
@@ -553,9 +553,9 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' &&
 					calendar_boupdate::email_update_requested($emailAddress, isset($cSMRMethod) ? $cSMRMethod : 'REQUEST',
-						$organizer && !strcasecmp($emailAddress, $organizer) ? 'CHAIR' : ''))
+						!empty($organizer) && !strcasecmp($emailAddress, $organizer) ? 'CHAIR' : ''))
 				{
-					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") skiping mail to organizer '$organizer', as it will be send by calendar app");
+					ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."(".__LINE__.") skiping mail to organizer ".json_encode($organizer??null).", as it will be send by calendar app");
 					continue;
 				}
 				$mailObject->AddAddress($emailAddress, $addressObject->personal);
@@ -563,7 +563,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 		}
 		$ccCount = 0;
-		foreach((array)$ccMailAddr as $address) {
+		foreach($ccMailAddr ?? [] as $address) {
 			foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
@@ -572,7 +572,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			}
 		}
 		$bccCount = 0;
-		foreach((array)$bccMailAddr as $address) {
+		foreach($bccMailAddr ?? [] as $address) {
 			foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 				$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 				if ($ClientSideMeetingRequest === true && $allowSendingInvitations == 'sendifnocalnotif' && calendar_boupdate::email_update_requested($emailAddress)) continue;
@@ -583,7 +583,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		// typical organizer reply will end here with nothing send --> return true, because we suppressed the send above
 		if ($toCount+$ccCount+$bccCount == 0)
 		{
-			return $ClientSideMeetingRequest && $allowSendingInvitations === 'sendifnocalnotif' && $organizer ? true : 0; // noone to send mail to
+			return $ClientSideMeetingRequest && $allowSendingInvitations === 'sendifnocalnotif' && !empty($organizer) ? true : 0; // noone to send mail to
 		}
 		if ($ClientSideMeetingRequest === true && $allowSendingInvitations===false) return true;
 		// as we use our mailer (horde mailer) it is detecting / setting the mimetype by itself while creating the mail
@@ -797,7 +797,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				$asf = true;
 			}
 			if (count($folderArray) > 0) {
-				foreach((array)$bccMailAddr as $address) {
+				foreach($bccMailAddr ?? [] as $address) {
 					foreach(Mail::parseAddressList((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()?stripslashes($address):$address)) as $addressObject) {
 						$emailAddress = $addressObject->mailbox. ($addressObject->host ? '@'.$addressObject->host : '');
 						$mailAddr[] = array($emailAddress, $addressObject->personal);
@@ -1086,7 +1086,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			$output->importance = $headers['priority'] > 3 ? 0 :
 				($headers['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['date'], 'ts', false);  // false = servertime
-			$output->to = $headers['to_address'];
+			$output->to = $headers['to_address'] ?? null;
 			if (!empty($headers['to'])) $output->displayto = $headers['to_address']; //$headers['FETCHED_HEADER']['to_name']
 			$output->from = $headers['sender_address'];
 			if (!empty($headers['cc_addresses'])) $output->cc = $headers['cc_addresses'];

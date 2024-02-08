@@ -542,9 +542,9 @@ class Storage
 	function save(&$contact)
 	{
 		// save mainfields
-		if ($contact['id'] && $this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
+		if (!empty($contact['id']) && $this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
 			($this->contact_repository == 'sql' && !is_numeric($contact['id']) ||
-			 $this->contact_repository == 'ldap' && is_numeric($contact['id'])))
+			    $this->contact_repository == 'ldap' && is_numeric($contact['id'])))
 		{
 			$this->so_accounts->data = $this->data2db($contact);
 			$error_nr = $this->so_accounts->save();
@@ -566,7 +566,7 @@ class Storage
 				$contact['id'] = $this->somain->data['id'];
 				$contact['uid'] = $this->somain->data['uid'];
 				$contact['etag'] = $this->somain->data['etag'];
-				$contact['files'] = $this->somain->data['files'];
+				$contact['files'] = $this->somain->data['files'] ?? null;
 
 				if ($this->contact_repository == 'sql-ldap')
 				{

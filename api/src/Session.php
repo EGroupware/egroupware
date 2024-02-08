@@ -1324,8 +1324,8 @@ class Session
 		$session =& $_SESSION[self::EGW_SESSION_VAR];
 
 		// we need to restore the limits and if authenticated via token
-		$this->limits = $session['session_limits'];
-		$this->token_auth = $session['session_token_auth'];
+		$this->limits = $session['session_limits'] ?? null;
+		$this->token_auth = $session['session_token_auth'] ?? null;
 
 		if ($session['session_dla'] <= time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
 		{
@@ -1910,7 +1910,7 @@ class Session
 			if ($egw_path[0] != '/') $egw_path = parse_url($egw_path,PHP_URL_PATH);
 			if ($action == '/Microsoft-Server-ActiveSync')
 			{
-				$action .= '?Cmd='.$_GET['Cmd'].'&DeviceId='.$_GET['DeviceId'];
+				$action .= '?Cmd='.($_GET['Cmd']??null).'&DeviceId='.($_GET['DeviceId']??null);
 			}
 			elseif ($egw_path)
 			{

@@ -811,16 +811,16 @@ class addressbook_zpush implements activesync_plugin_write, activesync_plugin_se
 			foreach($contacts as $contact)
 			{
 				//$item[SYNC_GAL_ALIAS] = $contact['contact_id'];
-			  	$item[SYNC_GAL_LASTNAME] = $contact['n_family']?$contact['n_family']:$contact['org_name'];
+			  	$item[SYNC_GAL_LASTNAME] = $contact['n_family'] ?? $contact['org_name'];
 			  	$item[SYNC_GAL_FIRSTNAME] = $contact['n_given'];
 				$item[SYNC_GAL_DISPLAYNAME] = $contact['n_fn'];
-				if (!trim($item[SYNC_GAL_DISPLAYNAME])) $item[SYNC_GAL_DISPLAYNAME] = $contact['n_family']?$contact['n_family']:$contact['org_name'];
-				$item[SYNC_GAL_EMAILADDRESS] = $contact['email'] ? $contact['email'] : (string)$contact['email_private'] ;
+				if (!trim($item[SYNC_GAL_DISPLAYNAME])) $item[SYNC_GAL_DISPLAYNAME] = $contact['n_family'] ?: $contact['org_name'];
+				$item[SYNC_GAL_EMAILADDRESS] = $contact['email'] ?? $contact['email_private'] ?? '';
 				//$item['nameid'] = $searchquery;
-				$item[SYNC_GAL_PHONE] = (string)$contact['tel_work'];
-				$item[SYNC_GAL_HOMEPHONE] = (string)$contact['tel_home'];
-				$item[SYNC_GAL_MOBILEPHONE] = (string)$contact['tel_cell'];
-				$item[SYNC_GAL_COMPANY] = (string)$contact['org_name'];
+				$item[SYNC_GAL_PHONE] = $contact['tel_work'] ?? '';
+				$item[SYNC_GAL_HOMEPHONE] = $contact['tel_home'] ?? '';
+				$item[SYNC_GAL_MOBILEPHONE] = $contact['tel_cell'] ?? '';
+				$item[SYNC_GAL_COMPANY] = $contact['org_name'] ?? '';
 				$item[SYNC_GAL_OFFICE] = $contact['room'];
 				$item[SYNC_GAL_TITLE ] = $contact['title'];
 

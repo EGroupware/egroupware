@@ -78,7 +78,7 @@ class Sql implements Backend
 				$type != $this->type && in_array($type, explode(',',strtolower($GLOBALS['egw_info']['server']['pwd_migration_types']))))
 			{
 				// do we have to migrate an old password ?
-				if($GLOBALS['egw_info']['server']['pwd_migration_allowed'] && !empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
+				if (!empty($GLOBALS['egw_info']['server']['pwd_migration_allowed']) && !empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
 				{
 					if (!$match)
 					{
