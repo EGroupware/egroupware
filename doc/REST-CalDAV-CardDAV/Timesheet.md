@@ -14,6 +14,7 @@ Following schema is used for JSON encoding of timesheets
 * duration: integer in minutes
 * quantity: double
 * project: string
+* pm_id: integer ID of ProjectManager app (readonly currently!)
 * unitprice: double
 * category: category object with a single(!) category-name e.g. `{"category name": true}`
 * owner: string with either email or username or integer ID
@@ -188,6 +189,7 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/140' -H "Accept: app
     "duration": 60,
     "quantity": 1,
     "project": "2024-0001: Test Project",
+    "pm_id": 123,
     "unitprice": 100.0,
     "pricelist": 123,
     "owner": "ralf@example.org",
