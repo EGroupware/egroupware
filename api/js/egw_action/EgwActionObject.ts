@@ -48,7 +48,7 @@ import {egwActionObjectInterface} from "./egw_action";
  *    defaults to 0
  */
 export class EgwActionObject {
-    readonly id: string
+    id: string
     readonly parent: EgwActionObject
     public readonly children: EgwActionObject[] = []
     private actionLinks: EgwActionLink[] = []
@@ -111,12 +111,9 @@ export class EgwActionObject {
      //     * @return {egwActionObject} description
      //     * @todo Add search function to egw_action_commons.js
      //     */
-    getObjectById(_id, _search_depth) {
+    getObjectById(_id, _search_depth=Number.MAX_VALUE):EgwActionObject {
         if (this.id == _id) {
             return this;
-        }
-        if (typeof _search_depth == "undefined") {
-            _search_depth = Number.MAX_VALUE;
         }
 
         for (let i = 0; i < this.children.length && _search_depth > 0; i++) {
@@ -163,7 +160,7 @@ export class EgwActionObject {
      * @returns object the generated object
      */
 
-    insertObject(_index: number | boolean, _id: string | EgwActionObject, _iface: EgwActionObjectInterface, _flags: number) {
+    insertObject(_index: number | boolean, _id: string | EgwActionObject, _iface?: EgwActionObjectInterface, _flags?: number) {
         if (_index === false) _index = this.children.length;
 
         let obj = null;
