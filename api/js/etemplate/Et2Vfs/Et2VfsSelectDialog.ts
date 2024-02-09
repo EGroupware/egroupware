@@ -112,6 +112,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 	@state() open : boolean = false;
 	@state() currentFile : Et2VfsSelectRow;
 	@state() selectedFiles : Et2VfsSelectRow[] = [];
+	@state() _pathWritable : boolean = false;
 
 
 	// SearchMixinInterface //
@@ -364,7 +365,12 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		if(typeof results.path === "string")
 		{
 			// Something like a redirect or link followed - server is sending us a "corrected" path
-			this._pathNode.value = results.path;
+			this.path = results.path;
+		}
+		if(typeof results.writable !== "undefined")
+		{
+			this._pathWritable = results.writable;
+			this.requestUpdate("_pathWritable");
 		}
 		this.helpText = results?.message ?? "";
 		this._fileList = results?.files ?? [];
@@ -725,13 +731,16 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                 </et2-select>
                 <et2-button statustext="Create directory" id="createdir" class="createDir"
                             arial-label=${this.egw().lang("Create directory")}
+                            ?disabled=${!this._pathWritable}
                             noSubmit="true"
                             image="filemanager/button_createdir"
                             roImage="filemanager/createdir_disabled"
                             @click=${this.handleCreateDirectory}
                 ></et2-button>
                 <file id="upload_file" statustext="upload file" progress_dropdownlist="true" multiple="true"
-                      onFinish="app.vfsSelectUI.storeFile"></file>
+                      ?disabled=${!this._pathWritable}
+                      onFinish="app.vfsSelectUI.storeFile"
+                ></file>
                 <et2-searchbox id="search"
                                @keydown=${this.handleSearchKeyDown}
                                @sl-clear=${this.startSearch}

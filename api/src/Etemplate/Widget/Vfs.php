@@ -605,6 +605,8 @@ class Vfs extends File
 	/**
 	 * Get a list of files that match the given parameters
 	 *
+	 * Can also give a new path (like a link, not redirect), and a writable flag
+	 *
 	 * @param $search
 	 * @param $content
 	 * @return void
@@ -618,6 +620,7 @@ class Vfs extends File
 		{
 			$content['path'] = $response['path'] = Api\Vfs::get_home_dir();
 		}
+		$response['writable'] = Api\Vfs::is_writable($content['path']);
 
 		// Filemanager favorites as directories
 		if(substr($content['path'], 0, strlen('/apps/favorites')) == '/apps/favorites')
