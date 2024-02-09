@@ -42,10 +42,11 @@ import {Et2VfsPath} from "./Et2VfsPath";
  *
  * @event change - Emitted when the control's value changes.
  *
- * @csspart form-control-input - The textbox's wrapper.
+ * @csspart toolbar - controls at the top
+ * @csspart path
+ * @csspart listbox - The list of files
+ * @csspart mimefilter - Mime filter select
  * @csspart form-control-help-text - The help text's wrapper.
- * @csspart prefix - The container that wraps the prefix slot.
- * @csspart suffix - The container that wraps the suffix slot.
  *
  */
 
@@ -798,12 +799,16 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		];
 
 		return html`
+            <slot name="footer" slot="footer"></slot>
             ${repeat(buttons, (button : DialogButton) => button.id, (button, index) =>
 		{
+            // style=order is to allow slotted buttons an opportunity to choose where they go.  
+            // Default is they'll go before our primary button
 			return html`
                     <et2-button id=${button.id}
                                 button_id=${button.button_id}
                                 class="et2_button et2_vfs__button"
+                                style="order: ${(index + 1) * 2}"
                                 label=${button.label}
                                 variant=${index == 0 ? "primary" : "default"}
                                 slot="footer"
@@ -893,7 +898,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                 >
                     <slot name="help-text">${this.helpText}</slot>
                 </div>
-                ${hasFooterSlot ? nothing : this.footerTemplate()}
+                ${this.footerTemplate()}
             </et2-dialog>
 		`;
 	}

@@ -21,16 +21,12 @@ import {waitForEvent} from "../Et2Widget/event";
  * @dependency et2-vfs-select-dialog
  * @dependency et2-button
  *
- * @slot prefix - Before the toolbar
- * @slot suffix - Like prefix, but after
+ * @slot footer - Buttons are added to the dialog footer.  Control their position with CSS `order` property.
  *
  * @event change - Emitted when the control's value changes.
  *
- * @csspart form-control-input - The textbox's wrapper.
- * @csspart form-control-help-text - The help text's wrapper.
- * @csspart prefix - The container that wraps the prefix slot.
- * @csspart suffix - The container that wraps the suffix slot.
- *
+ * @csspart button - The button control
+ * @csspart dialog - The et2-vfs-select-dialog
  */
 
 export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
@@ -76,7 +72,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	 */
 	@property() method : string = "";
 	/** ID passed to method */
-	@property({type: String, reflect: true}) methodId : string;
+	@property({type: String, reflect: true, attribute: "method-id"}) methodId : string;
 
 	protected readonly hasSlotController = new HasSlotController(this, '');
 	protected processingPromise : Promise<FileActionResult> = null;
@@ -87,6 +83,12 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	{
 		super();
 		this.handleClick = this.handleClick.bind(this);
+	}
+
+	/** Programmatically trigger the dialog */
+	public click()
+	{
+		this.handleClick(new Event("click"));
 	}
 
 	protected handleClick(event)
@@ -105,10 +107,17 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 		}
 	}
 
-	protected processDialogComplete([button, paths])
+	/**
+	 * The select dialog has been closed, now deal with the provided paths
+	 *
+	 * @param {string | number} button
+	 * @param {string[]} paths
+	 * @protected
+	 */
+	protected processDialogComplete([button, paths] : [string | number, string[]])
 	{
 		// Cancel or close do nothing
-		if(!button)
+		if(typeof button !== "undefined" && !button)
 		{
 			return;
 		}
@@ -127,7 +136,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 		}
 		else if(this.method)
 		{
-			this.sendFiles();
+			this.sendFiles(button);
 		}
 		this.updateComplete.then(() =>
 		{
@@ -142,11 +151,11 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 		})
 	}
 
-	protected sendFiles()
+	protected sendFiles(button? : string | number)
 	{
 		this.processingPromise = this.egw().request(
 			this.method,
-			[this.methodId, this.value/*, submit_button_id, savemode*/]
+			[this.methodId, this.value, button/*, savemode*/]
 		).then((data) =>
 			{
 				this.processingPromise = null;
@@ -165,6 +174,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	{
 		return html`
             <et2-vfs-select-dialog
+                    part="dialog"
                     .title=${this.title ?? nothing}
                     .value=${this.value ?? nothing}
                     .mode=${this.mode ?? nothing}
@@ -174,6 +184,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
                     .mime=${this.mime ?? nothing}
                     .buttonLabel=${this.buttonLabel ?? nothing}
             >
+                <slot name="footer" slot="footer"></slot>
             </et2-vfs-select-dialog>
 		`;
 	}
@@ -186,7 +197,8 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 		const image = processing ? "" : (this.image || "filemanager/navbar");
 
 		return html`
-            <et2-button image=${image}
+            <et2-button part="button"
+                        image=${image}
                         ?disabled=${this.disabled}
                         ?readonly=${this.readonly || processing}
                         .noSubmit=${true}
@@ -195,7 +207,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
                 ${processing ? html`
                     <sl-spinner></sl-spinner>` : nothing}
             </et2-button>
-            <slot>${hasUserDialog ? nothing : this.dialogTemplate()}</slot>
+            ${hasUserDialog ? nothing : this.dialogTemplate()}
 		`;
 	}
 }
