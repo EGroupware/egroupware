@@ -12,18 +12,18 @@
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, nothing} from "lit";
 import {ScopedElementsMixin} from "@lion/core";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
-import {et2_vfsSelect} from "../et2_widget_vfs";
 import {LinkInfo} from "./Et2Link";
 import type {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
+import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -95,7 +95,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			// @ts-ignore
 			...super.scopedElements,
 			'et2-button': Et2Button,
-			'et2-link-entry': Et2LinkEntry
+			'et2-link-entry': Et2LinkEntry,
+			'et2-vfs-select': Et2VfsSelectButton
 		};
 	}
 
@@ -108,6 +109,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
 		this.handleEntryCleared = this.handleEntryCleared.bind(this);
 		this.handleLinkButtonClick = this.handleLinkButtonClick.bind(this);
+		this.handleVfsSelected = this.handleVfsSelected.bind(this);
 
 		this.handleLinkDeleted = this.handleLinkDeleted.bind(this);
 	}
@@ -129,6 +131,35 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	{
 		super.disconnectedCallback();
 		this.getInstanceManager().DOMContainer.removeEventListener("et2-delete", this.handleLinkDeleted);
+	}
+
+	_inputGroupBeforeTemplate()
+	{
+		// only set server-side callback, if we have a real application-id (not null or array)
+		// otherwise it only gives an error on server-side
+		let method = null;
+		let method_id = null;
+		if(this.value && this.value.to_id && typeof this.value.to_id != 'object')
+		{
+			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
+			method_id = this.value.to_app + ':' + this.value.to_id;
+		}
+		return html`
+            <slot name="before"></slot>
+            <et2-vfs-select
+                    ?readonly=${this.readonly}
+                    method=${method || nothing}
+                    method-id=${method_id || nothing}
+                    multiple
+                    title=${this.egw().lang("link")}
+                    .buttonLabel=${this.egw().lang('Link')}
+                    .onchange=${this.handleVfsSelected}
+            >
+                <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
+                            label=${this.egw().lang("copy")}></et2-button>
+                <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
+                            label=${this.egw().lang("move")}></et2-button>
+            </et2-vfs-select>`;
 	}
 
 	/**
@@ -197,55 +228,6 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		this.file_upload.getDOMNode().slot = "before";
 
 		this.append(this.file_upload.getDOMNode());
-
-		// Filemanager select
-		var select_attrs : any = {
-			button_label: egw.lang('Link'),
-			button_caption: '',
-			button_icon: 'link',
-			readonly: this.readonly,
-			dialog_title: egw.lang('Link'),
-			extra_buttons: [{text: egw.lang("copy"), id: "copy", image: "copy"},
-				{text: egw.lang("move"), id: "move", image: "move"}],
-			onchange: function()
-			{
-				var values = true;
-				// If entry not yet saved, store for linking on server
-				if(!self.value.to_id || typeof self.value.to_id == 'object')
-				{
-					values = self.value.to_id || {};
-					var files = this.getValue();
-					if(typeof files !== 'undefined')
-					{
-						for(var i = 0; i < files.length; i++)
-						{
-							values['link:' + files[i]] = {
-								app: 'link',
-								id: files[i],
-								type: 'unknown',
-								icon: 'link',
-								remark: '',
-								title: files[i]
-							};
-						}
-					}
-				}
-				self._link_result(values);
-			}
-		};
-		// only set server-side callback, if we have a real application-id (not null or array)
-		// otherwise it only gives an error on server-side
-		if(self.value && self.value.to_id && typeof self.value.to_id != 'object')
-		{
-			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
-			select_attrs.method_id = self.value.to_app + ':' + self.value.to_id;
-		}
-		this.vfs_select = <et2_vfsSelect>et2_createWidget("vfs-select", select_attrs, this);
-		this.vfs_select.set_readonly(this.readonly);
-		this.vfs_select.onchange = select_attrs.onchange;
-		this.vfs_select.getDOMNode().slot = "before";
-
-		this.append(this.vfs_select.getDOMNode())
 	}
 
 	/**
@@ -451,6 +433,32 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		{
 			delete this.value.to_id[e.detail.link_id || ""]
 		}
+	}
+
+	handleVfsSelected(event, select : Et2VfsSelectButton)
+	{
+		let values = true;
+		// If entry not yet saved, store for linking on server
+		if(!this.value.to_id || typeof this.value.to_id == 'object')
+		{
+			values = this.value.to_id || {};
+			const files = select.value;
+			if(typeof files !== 'undefined')
+			{
+				for(var i = 0; i < files.length; i++)
+				{
+					values['link:' + files[i]] = {
+						app: 'link',
+						id: files[i],
+						type: 'unknown',
+						icon: 'link',
+						remark: '',
+						title: files[i]
+					};
+				}
+			}
+		}
+		this._link_result(values);
 	}
 
 	get link_button() : Et2Button
