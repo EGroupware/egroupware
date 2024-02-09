@@ -235,7 +235,7 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 
 	get searchOptions()
 	{
-		return this._searchNode.searchOptions;
+		return this._searchNode?.searchOptions;
 	}
 
 	get _appNode() : Et2LinkAppSelect
