@@ -479,7 +479,7 @@ class mail_tree
 	{
 		$roots = array(Tree::ID => 0, Tree::CHILDREN => array());
 
-		foreach(Mail\Account::search(true, 'params') as $acc_id => $params)
+		foreach(Mail\Account::search(true, 'params', null, false, 0, true, true) as $acc_id => $params)
 		{
 			try {
 				$accObj = new Mail\Account($params);
