@@ -1108,9 +1108,10 @@ class Vfs extends Vfs\Base
 	 * Human readable size values in k, M or G
 	 *
 	 * @param int $size
+	 * @param int? $digits default: 2
 	 * @return string
 	 */
-	static function hsize($size)
+	static function hsize($size, int $digits=2)
 	{
 		if($size < 1024)
 		{
@@ -1118,13 +1119,13 @@ class Vfs extends Vfs\Base
 		}
 		if($size < 1024 * 1024)
 		{
-			return sprintf('%3.2fk', (float)$size / 1024);
+			return sprintf("%0.{$digits}fk", (float)$size / 1024);
 		}
 		if($size < 1024 * 1024 * 1024)
 		{
-			return sprintf('%3.4fM', (float)$size / (1024 * 1024));
+			return sprintf("%0.{$digits}fM", (float)$size / (1024 * 1024));
 		}
-		return sprintf('%3.4fG', (float)$size / (1024 * 1024 * 1024));
+		return sprintf("%0.{$digits}fG", (float)$size / (1024 * 1024 * 1024));
 	}
 
 	/**
