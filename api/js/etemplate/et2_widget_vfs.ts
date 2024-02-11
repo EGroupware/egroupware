@@ -510,7 +510,7 @@ export class et2_vfsSize extends et2_description
 {
 	static readonly _attributes : any = {
 		"value": {
-			"type": "integer"
+			"type": "any"	// not using "integer", as we use parseInt on everything not a number, but want to show empty of "" or undefined, not 0B
 		}
 	};
 	/**
@@ -531,9 +531,15 @@ export class et2_vfsSize extends et2_description
 		{
 			size = parseInt(size);
 		}
-		if(!size)
+		if(Number.isNaN(size))
 		{
-			size = 0;
+			return '';
+		}
+		let sign = '';
+		if (size < 0)
+		{
+			sign = '-';
+			size = -size;
 		}
 		const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 		let i = 0;
@@ -542,7 +548,7 @@ export class et2_vfsSize extends et2_description
 			size /= 1024;
 			++i;
 		}
-		return size.toFixed(i == 0 ? 0 : 1) + ' ' + units[i];
+		return sign+size.toFixed(i == 0 ? 0 : 1) + ' ' + units[i];
 	}
 
 	set_value(_value)
