@@ -195,12 +195,13 @@ class Mail
 	 * @param int $_profileID = 0
 	 * @param boolean $_validate = true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
-	 * @param mixed boolean/object $_icServerObject - if object, return instance with object set as icServer
+	 * @param boolean|Mail\Imap $_icServerObject - if object, return instance with object set as icServer
 	 *												  immediately, if boolean === true use oldImapServer in constructor
 	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
+	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 * @return Mail
 	 */
-	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false, $_reuseCache=null)
+	public static function getInstance($_restoreSession=true, &$_profileID=0, $_validate=true, $_oldImapServerObject=false, $_reuseCache=null, int $called_for=null)
 	{
 		//$_restoreSession=false;
 		if (!isset($_reuseCache)) $_reuseCache = $_restoreSession;
@@ -245,7 +246,7 @@ class Mail
 		}
 		if ($_profileID != 0 && $_validate)
 		{
-			$profileID = self::validateProfileID($_profileID);
+			$profileID = self::validateProfileID($_profileID, $called_for);
 			if ($profileID != $_profileID)
 			{
 				if (self::$debug)
@@ -263,7 +264,7 @@ class Mail
 		//error_log(__METHOD__.' ('.__LINE__.') '.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID && (!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
-			self::$instances[$_profileID] = new Mail('utf-8',$_restoreSession,$_profileID,false,$_reuseCache);
+			self::$instances[$_profileID] = new Mail('utf-8', $_restoreSession, $_profileID,false, $_reuseCache, $called_for);
 		}
 		else
 		{
@@ -361,14 +362,15 @@ class Mail
 	 * - non-empty imap-username
 	 *
 	 * @param int $_acc_id = 0
+	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 * @return int validated acc_id -> either acc_id given, or first valid one
 	 */
-	public static function validateProfileID($_acc_id=0)
+	public static function validateProfileID($_acc_id=0, int $called_for=null)
 	{
 		if ($_acc_id)
 		{
 			try {
-				$account = Mail\Account::read($_acc_id);
+				$account = Mail\Account::read($_acc_id, $called_for);
 				if ($account->is_imap())
 				{
 					return $_acc_id;
@@ -400,15 +402,16 @@ class Mail
 	 *
 	 * @param string $_displayCharset = 'utf-8'
 	 * @param boolean $_restoreSession = true
-	 * @param int $_profileID = 0 if not nummeric, we assume we only want an empty class object
-	 * @param boolean $_oldImapServerObject = false
+	 * @param int $_profileID = 0 if not numeric, we assume we only want an empty class object
+	 * @param boolean|Mail\Imap $_oldImapServerObject = false
 	 * @param boolean $_reuseCache = null if null it is set to the value of $_restoreSession
+	 * @param int|null $called_for =null can be set to a different account_id, to instanciate an acc_id not belonging to the current user
 	 */
-	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false, $_reuseCache=null)
+	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_oldImapServerObject=false, $_reuseCache=null, int $called_for=null)
 	{
 		if (!isset($_reuseCache)) $_reuseCache = $_restoreSession;
 		if (!empty($_displayCharset)) self::$displayCharset = $_displayCharset;
-		// not nummeric, we assume we only want an empty class object
+		// not numeric, we assume we only want an empty class object
 		if (!is_numeric($_profileID)) return;
 		if ($_restoreSession)
 		{
@@ -423,11 +426,11 @@ class Mail
 		if (!$_reuseCache) $this->forcePrefReload($_profileID,!$_reuseCache);
 		try
 		{
-			$this->profileID = self::validateProfileID($_profileID);
+			$this->profileID = self::validateProfileID($_profileID, $called_for);
 			$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
 			//error_log(__METHOD__.' ('.__LINE__.') '." ProfileID ".$this->profileID.' called from:'.function_backtrace());
-			$acc = Mail\Account::read($this->profileID);
+			$acc = Mail\Account::read($this->profileID, $called_for);
 		}
 		catch (\Exception $e)
 		{
