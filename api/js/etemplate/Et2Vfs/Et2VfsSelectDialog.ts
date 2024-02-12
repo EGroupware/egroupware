@@ -20,7 +20,7 @@ import {SearchMixinInterface} from "../Et2Select/SearchMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import {DialogButton, Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {HasSlotController} from "../Et2Widget/slot";
-import {IegwAppLocal} from "../../jsapi/egw_global";
+import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import {Et2Select} from "../Et2Select/Et2Select";
 import {Et2VfsSelectRow} from "./Et2VfsSelectRow";
 import {Et2VfsPath} from "./Et2VfsPath";
@@ -131,7 +131,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 
 	// Still need some server-side info
 	protected _serverContent : Promise<any> = Promise.resolve({});
-	private static SERVER_URL = "EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelectContent";
+	private static SERVER_URL = "EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelect_content";
 
 	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'toolbar', 'footer');
 
@@ -179,6 +179,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		// Use filemanager translations
 		this.egw().langRequireApp(this.egw().window, "filemanager", () => {this.requestUpdate()});
 
+		this.handleClose = this.handleClose.bind(this);
 		this.handleCreateDirectory = this.handleCreateDirectory.bind(this);
 		this.handleSearchKeyDown = this.handleSearchKeyDown.bind(this);
 	}
@@ -312,14 +313,12 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		return this._dialog.hide();
 	}
 
-	getComplete() : Promise<[number, Object]>
+	async getComplete() : Promise<[number, Object]>
 	{
-		return this._dialog.getComplete().then((value) =>
-		{
-			// Overwrite dialog's value with what we say
-			value[1] = this.value;
-			return value
-		});
+		const value = await this._dialog.getComplete();
+		await this.handleClose();
+		value[1] = this.value;
+		return value;
 	}
 
 	startSearch() : Promise<void>
@@ -407,6 +406,85 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 			this.__egw = egw(_egw_or_appname);
 			this.egw().langRequireApp(this.egw().window, _egw_or_appname);
 		}
+	}
+
+	private async handleClose()
+	{
+		// Should already be complete, we want the button
+		let dialogValue = await this._dialog.getComplete();
+		switch(this.mode)
+		{
+			case "select-dir":
+				// If they didn't pick a specific directory and didn't cancel, use the current directory
+				this.value = this.value.length ? this.value : [this.path];
+				break;
+			case "saveas":
+				// Saveas wants a full path, including filename
+				this.value = [this.path + "/" + this.filename];
+
+				// Check for existing file, ask what to do
+				if(this.fileInfo(this.value[0]))
+				{
+					let result = await this.overwritePrompt(this.filename);
+					if(result == null)
+					{
+						return;
+					}
+					this.value = [this.path + "/" + result];
+				}
+				break;
+		}
+		this.dispatchEvent(new Event("change", {bubbles: true}));
+	}
+
+	/**
+	 * User tried to saveas when we can see that file already exists.  Prompt to overwrite or rename.
+	 *
+	 * We offer a suggested new name by appending "(#)", and give back either the original filename, their
+	 * modified filename, or null if they cancel.
+	 *
+	 * @param filename
+	 * @returns {Promise<[number|string, Object]|null>} [Button,filename] or null if they cancel
+	 * @private
+	 */
+	private overwritePrompt(filename) : Promise<[number | string, object] | null>
+	{
+		// Make a filename suggestion
+		const parts = filename.split(".");
+		const extension = parts.pop();
+		const newName = parts.join(".");
+		let counter = 0;
+		let suggestion;
+		do
+		{
+			counter++;
+			suggestion = `${newName} (${counter}).${extension}`;
+		}
+		while(this.fileInfo(suggestion))
+
+		// Ask about it
+		const saveModeDialogButtons = [
+			{
+				label: self.egw().lang("Yes"),
+				id: "overwrite",
+				class: "ui-priority-primary",
+				"default": true,
+				image: 'check'
+			},
+			{label: self.egw().lang("Rename"), id: "rename", image: 'edit'},
+			{label: self.egw().lang("Cancel"), id: "cancel"}
+		];
+		return Et2Dialog.show_prompt(null,
+			self.egw().lang('Do you want to overwrite existing file %1 in directory %2?', filename, this.path),
+			self.egw().lang('File %1 already exists', filename),
+			suggestion, saveModeDialogButtons, null).getComplete().then(([button, value]) =>
+		{
+			if(button == "cancel")
+			{
+				return null;
+			}
+			return button == "rename" ? value.value : filename;
+		});
 	}
 
 	/**
@@ -551,8 +629,8 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		{
 			this.currentFile = file;
 
-			// Can't select a directory normally
-			if(file.value.isDir && this.mode != "select-dir")
+			// Can't select a directory normally, can't select anything in "saveas"
+			if(file.value.isDir && this.mode != "select-dir" || this.mode == "saveas")
 			{
 				return;
 			}
@@ -567,15 +645,6 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 
 			// Set focus after updating so the value is announced by screen readers
 			//this.updateComplete.then(() => this.displayInput.focus({ preventScroll: true }));
-
-			if(this.value !== oldValue)
-			{
-				// Emit after updating
-				this.updateComplete.then(() =>
-				{
-					this.dispatchEvent(new Event('change', {bubbles: true}));
-				});
-			}
 		}
 	}
 
@@ -838,8 +907,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		const hasToolbar = !!hasToolbarSlot;
 
 		const hasFilename = this.mode == "saveas";
-		const mime = this.mimeList.length == 1 ? this.mimeList[0].value :
-					 (typeof this.mime == "string" ? this.mime : "");
+		const mime = typeof this.mime == "string" ? this.mime : (this.mimeList.length == 1 ? this.mimeList[0].value : "");
 
 		return html`
             <et2-dialog
@@ -848,8 +916,14 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                     .title=${this.title}
                     .open=${this.open}
                     @keydown=${this.handleKeyDown}
+                    @close=${this.handleClose}
             >
-                ${hasFilename ? html`<input id="filename"/>` : nothing}
+                ${hasFilename ? html`
+                    <et2-textbox id="filename"
+                                 .value=${this.filename}
+                                 @change=${(e) => {this.filename = e.target.value;}}
+                    >
+                    </et2-textbox>` : nothing}
                 <div
                         part="toolbar"
                         id="toolbar"

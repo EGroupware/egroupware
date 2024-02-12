@@ -954,11 +954,7 @@ and (orientation : landscape) {
 }
 #mail-compose_mimeType{margin-left:1em;}
 /*Make file uploads in compose dialog invisible*/
-.mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_selectFromVFSForCompose, .mail-compose_toolbar_assist {
-	display:none;
-}
-/*Make file uploads in compose dialog invisible*/
-.mail-compose_toolbar_assist div.mail-compose_fileselector, #mail-compose_selectFromVFSForCompose, .mail-compose_toolbar_assist {
+.mail-compose_toolbar_assist div.mail-compose_fileselector, .mail-compose_toolbar_assist {
 	display:none;
 }
 

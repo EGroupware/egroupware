@@ -23,6 +23,8 @@ import {
 	egw_keycode_makeValid,
 	egw_keyHandler
 } from "../../api/js/egw_action/egw_keymanager";
+import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
+import {Et2VfsSelectButton} from "../../api/js/etemplate/Et2Vfs/Et2VfsSelectButton";
 /* required dependency, commented out because no module, but egw:uses is no longer parsed
 */
 
@@ -3266,15 +3268,19 @@ app.classes.mail = AppJS.extend(
 						ids.push(mail_id+'::'+attachments[i].partID+'::'+attachments[i].winmailFlag+'::'+attachments[i].filename);
 					}
 				}
-				var vfs_select = et2_createWidget('vfs-select', {
+				let vfs_select = loadWebComponent('et2-vfs-select', {
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
 					method: 'mail.mail_ui.ajax_vfsSave',
-					button_label: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
-					dialog_title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
-					method_id: ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
-					name: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
-				});
-				vfs_select.click();
+					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
+					title: this.egw.lang(action === 'saveOneToVfs' ? 'Save attachment' : 'Save attachments'),
+					filename: action === 'saveOneToVfs' ? attachments[0]['filename'] : null
+				}, this.et2);
+				// Serious violation of type - methodId is a string
+				// Set it to an array here bypassing normal checking
+				vfs_select.methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
+					vfs_select.updateComplete.then(() => vfs_select.click());
+				// Single use only, remove when done
+				vfs_select.addEventListener("change", () => vfs_select.remove());
 				break;
 			case 'collabora':
 				attachment = attachments[row_id];
@@ -3388,16 +3394,20 @@ app.classes.mail = AppJS.extend(
 			ids.push(_id);
 			names.push(filename+'.eml');
 		}
-		var vfs_select = et2_createWidget('vfs-select', {
+		let vfs_select = loadWebComponent('et2-vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
 			method: 'mail.mail_ui.ajax_vfsSave',
-			button_label: _elems.length>1 ? egw.lang('Save all') : egw.lang('save'),
-			dialog_title: this.egw.lang("Save email"),
-			method_id: _elems.length > 1 ? {ids:ids, action:'message'}: {ids: ids[0], action: 'message'},
-			name: _elems.length > 1 ? names : names[0],
-		});
-		vfs_select.click();
+			buttonLabel: _elems.length > 1 ? egw.lang('Save all') : egw.lang('save'),
+			title: this.egw.lang("Save email"),
+			filename: _elems.length > 1 ? names : names[0],
+		}, this.et2);
+		// Serious violation of type - methodId is a string
+		// Set it to an array here bypassing normal checking
+		vfs_select.methodId = _elems.length > 1 ? {ids: ids, action: 'message'} : {ids: ids[0], action: 'message'};
+		vfs_select.updateComplete.then(() => vfs_select.click());
+		// Single use only, remove when done
+		vfs_select.addEventListener("change", () => vfs_select.remove());
 	},
 
 	/**
@@ -5512,6 +5522,9 @@ app.classes.mail = AppJS.extend(
 			{
 				case 'uploadForCompose':
 					document.getElementById('mail-compose_uploadForCompose').click();
+					break;
+				case 'selectFromVFSForCompose':
+					widget.show();
 					break;
 				default:
 					widget.click();

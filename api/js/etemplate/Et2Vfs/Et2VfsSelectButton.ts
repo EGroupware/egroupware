@@ -153,9 +153,18 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 
 	protected sendFiles(button? : string | number)
 	{
+		// Some destinations expect only a single value when multiple=false
+		let value : string[] | FileInfo[] | string = this.value;
+		if(!this.multiple && this.value.length > 0)
+		{
+			// @ts-ignore This is the typecheck, no need to warn about it
+			value = (typeof this.value[0].path != "undefined") ? this.value[0].path : this.value[0];
+		}
+
+		// Send to server
 		this.processingPromise = this.egw().request(
 			this.method,
-			[this.methodId, this.value, button/*, savemode*/]
+			[this.methodId, value, button/*, savemode*/]
 		).then((data) =>
 			{
 				this.processingPromise = null;

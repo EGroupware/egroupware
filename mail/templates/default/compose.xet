@@ -4,9 +4,9 @@
 	<template id="mail.compose" template="" lang="" group="0" version="23.1">
 		<et2-vbox  class="mailCompose mailComposeHeaderSection" width="100%">
 			<toolbar id="composeToolbar" width="et2_fullWidth" view_range="7" flat_list="false" list_header="short"/>
+            <et2-vfs-select-dialog class="$cont[vfsNotAvailable] compose_egw_icons" title="Attach files" buttonLabel="attach" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 			<et2-hbox  class="mail-compose_toolbar_assist" width="100%">
-				<vfs-select class="$cont[vfsNotAvailable] compose_egw_icons" dialog_title="Attach files" button_label="attach" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose" button_caption=""/>
-				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+                <file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.uploadForCompose" onStart="app.mail.composeUploadStart" id="uploadForCompose" drop_target="mail-compose"/>
 				<et2-checkbox  statustext="check to save as infolog on send" id="to_infolog" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as tracker entry on send" id="to_tracker" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as calendar event on send" id="to_calendar" selectedValue="on" unselectedValue="off" ></et2-checkbox>

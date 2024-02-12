@@ -1396,4 +1396,4 @@ export class et2_vfsSelect extends et2_inputWidget
 		return this.value;
 	}
 };
-et2_register_widget(et2_vfsSelect, ["vfs-select"]);
+et2_register_widget(et2_vfsSelect, ["vfs-select", "old-vfs-select"]);
