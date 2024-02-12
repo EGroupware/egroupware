@@ -1,5 +1,4 @@
 import {SlTreeItem} from "@shoelace-style/shoelace";
-import {et2_no_init} from "../et2_core_common";
 import {egw} from "../../jsapi/egw_global";
 import {find_select_options} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
@@ -8,7 +7,7 @@ import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
-import {egw_getActionManager, egw_getAppObjectManager, egwActionObject} from "../../egw_action/egw_action";
+import {egw_getActionManager, egw_getAppObjectManager} from "../../egw_action/egw_action";
 import {et2_action_object_impl} from "../et2_core_DOMWidget";
 import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {object} from "prop-types";
@@ -97,6 +96,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	constructor()
 	{
 		super();
+		this._selectOptions = [];
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -294,10 +294,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	public loadFromXML()
 	{
-		//if(this.id)
-		this._selectOptions = <TreeItemData[]><unknown>find_select_options(this)[1];
-		this._currentOption = this._selectOptions[0];
+		let new_options = [];
 
+		if(this.id)
+		{
+			new_options = <TreeItemData[]><unknown>find_select_options(this)[1];
+		}
+		if(new_options.length)
+		{
+			this._selectOptions = new_options;
+		}
 	}
 
 	/**
@@ -560,7 +566,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	//this.selectOptions = find_select_options(this)[1];
 	_optionTemplate(selectOption: TreeItemData): TemplateResult<1>
 	{
-		this._currentOption = selectOption
 		/*
 		if collapsed .. opended? leaf?
 		 */
@@ -573,12 +578,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		}
 
-
 		return html`
             <sl-tree-item
                     id=${selectOption.id}
                     ?expanded=${(this.calculateExpandState(selectOption))}
-                    ?lazy=${this._currentOption.item?.length === 0 && this._currentOption.child}
+                    ?lazy=${selectOption.item?.length === 0 && selectOption.child}
                     ?focused=${selectOption.focused || nothing}
                     @sl-lazy-load=${(event) => {
                         this.handleLazyLoading(selectOption).then((result) => {
@@ -590,8 +594,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
             >
                 <sl-icon src="${img ?? nothing}"></sl-icon>
 
-                ${this._currentOption.text}
-                ${this._currentOption.item ? repeat(this._currentOption.item, this._optionTemplate.bind(this)) : ""}
+                ${selectOption.text}
+                ${selectOption.item ? repeat(selectOption.item, this._optionTemplate.bind(this)) : ""}
             </sl-tree-item>`
 	}
 
