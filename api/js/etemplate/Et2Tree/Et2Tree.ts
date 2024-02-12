@@ -59,14 +59,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	onclick;// 	description: "JS code which gets executed when clicks on text of a node"
 
 
-    //onselect and oncheck only appear in multiselectTree
-    // @property()
-    // onselect // description: "Javascript executed when user selects a node"
-    // @property()
-    // oncheck // description: "Javascript executed when user checks a node"
+	//onselect and oncheck only appear in multiselectTree
+	// @property()
+	// onselect // description: "Javascript executed when user selects a node"
+	// @property()
+	// oncheck // description: "Javascript executed when user checks a node"
 
-    @property({type: Boolean})
-    highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
+	@property({type: Boolean})
+	highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
 	@property({type: String})
 	autoloading: String = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
 	@property()
@@ -77,21 +77,21 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	imagePath: String = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 	@property()
-	value ={}
+	value = {}
 
 	protected autoloading_url: any;
 	// private selectOptions: TreeItemData[] = [];
 	@state()
 	protected _selectOptions: TreeItemData[]
 	@state()
-    protected _currentOption: TreeItemData
+	protected _currentOption: TreeItemData
 	@state()
 	protected _previousOption: TreeItemData
 	@state()
 	protected _currentSlTreeItem: SlTreeItem;
 
-    private input: any = null;
-    private _actionManager: EgwAction;
+	private input: any = null;
+	private _actionManager: EgwAction;
 
 
 	constructor()
@@ -99,9 +99,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		super();
 	}
 
-    //Sl-Trees handle their own onClick events
-    _handleClick(_ev) {
-    }
+	//Sl-Trees handle their own onClick events
+	_handleClick(_ev)
+	{
+	}
 
 	static get styles()
 	{
@@ -118,12 +119,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                 ::part(expand-button) {
                     padding: 0;
                 }
-            `,
-                css`
-					::part(label):hover{
-						text-decoration: underline;
-				}
-                `
+			`,
+			css`
+                ::part(label):hover {
+                    text-decoration: underline;
+                }
+			`
 		]
 	}
 
@@ -148,72 +149,72 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			// 	type: "js",
 			// 	description: "JS code which gets executed when clicks on text of a node"
 			// },
-            // onSelect: {
-            //     name: "onSelect",
-            //     type: "js",
-            //     default: et2_no_init,
-            //     description: "Javascript executed when user selects a node"
-            //},
-            // onCheck: {
-            //     name: "onCheck",
-            //     type: "js",
-            //     default: et2_no_init,
-            //     description: "Javascript executed when user checks a node"
-            // },
-            // onOpenStart: {
-            //     name: "onOpenStart",
-            //     type: "js",
-            //     default: et2_no_init,
-            //     description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
-            // },
-            // onOpenEnd: {
-            //     name: "onOpenEnd",
-            //     type: "js",
-            //     default: et2_no_init,
-            //     description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
-            // },
-            // imagePath: {
-            //     name: "Image directory",
-            //     type: String,
-            //     default: egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",//TODO we will need a different path here! maybe just rename the path?
-            //     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
-            // },
-            // value: {
-            //     type: "any",
-            //     default: {}
-            // },
+			// onSelect: {
+			//     name: "onSelect",
+			//     type: "js",
+			//     default: et2_no_init,
+			//     description: "Javascript executed when user selects a node"
+			//},
+			// onCheck: {
+			//     name: "onCheck",
+			//     type: "js",
+			//     default: et2_no_init,
+			//     description: "Javascript executed when user checks a node"
+			// },
+			// onOpenStart: {
+			//     name: "onOpenStart",
+			//     type: "js",
+			//     default: et2_no_init,
+			//     description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
+			// },
+			// onOpenEnd: {
+			//     name: "onOpenEnd",
+			//     type: "js",
+			//     default: et2_no_init,
+			//     description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
+			// },
+			// imagePath: {
+			//     name: "Image directory",
+			//     type: String,
+			//     default: egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",//TODO we will need a different path here! maybe just rename the path?
+			//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
+			// },
+			// value: {
+			//     type: "any",
+			//     default: {}
+			// },
 			// actions: {
 			// 	name: "Actions array",
 			// 	type: "any",
 			// 	default: et2_no_init,
 			// 	description: "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
 			// },
-            // autoloading: {
-            //     name: "Auto loading",
-            //     type: String,
-            //     default: "",
-            //     description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
-            // },
-            //only used once ever as "bullet" in admin/.../index.xet
+			// autoloading: {
+			//     name: "Auto loading",
+			//     type: String,
+			//     default: "",
+			//     description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
+			// },
+			//only used once ever as "bullet" in admin/.../index.xet
 			stdImages: {
 				name: "Standard images",
 				type: String,
 				default: "",
 				description: "comma-separated names of icons for a leaf, closed and opened folder (default: leaf.png,folderClosed.png,folderOpen.png), images with extension get loaded from imagePath, just 'image' or 'appname/image' are allowed too"
 			},
-            //what is this used for only used as "strict in mail subscribe.xet and folder_management.xet
+			//what is this used for only used as "strict in mail subscribe.xet and folder_management.xet
 			multiMarking: {
 				name: "multi marking",
 				type: "any",
 				default: false,
 				description: "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strict to only same level marking"
 			},
-            // highlighting: {
-            //     name: "highlighting",
-            //     type: Boolean,
-            //     default: false,
-            //     description: "Add highlighting class on hovered over item, highlighting is disabled by default"
-            // },
+			// highlighting: {
+			//     name: "highlighting",
+			//     type: Boolean,
+			//     default: false,
+			//     description: "Add highlighting class on hovered over item, highlighting is disabled by default"
+			// },
 		}
 	};
 
@@ -289,7 +290,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		// easily get back to widget context from the action handler
 		this._actionManager.data = {widget: this};
 
-    }
+	}
 
 	public loadFromXML()
 	{
@@ -308,6 +309,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this.onopenstart = _handler
 		this.installHandler("onopenstart", _handler)
 	}
+
 	/**
 	 * @deprecated assign to onopenend
 	 * @param _handler
@@ -338,7 +340,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 
-
 	public getSelectedItem(): TreeItemData
 	{
 		return this._currentOption
@@ -348,9 +349,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 * getValue, retrieves the Id of the selected Item
 	 * @return string or object or null
 	 */
-	getValue():string|string[]
+	getValue(): string | string[]
 	{
-		return this._currentOption?this._currentOption.id:null
+		return this._currentOption ? this._currentOption.id : null
 	}
 
 	/**
@@ -461,13 +462,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	/**
 	 * Does nothing
-	 * @deprecated setting styles on individual items is no longer supported
 	 * @param _id
 	 * @param _style
 	 */
 	setStyle(_id, _style)
 	{
-		//setting a style on an iduvidual item is not planned to be used with sl_tree
+		var temp = this.getDomNode(_id);
+		if (!temp) return 0;
+		if (!temp.style.cssText)
+			temp.setAttribute("style", _style);
+		else
+			temp.style.cssText = temp.style.cssText + ";" + _style;
 	}
 
 	/**
@@ -493,11 +498,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		// Update action
 		// since the action ID has to = this.id, getObjectById() won't work
-		let treeObj:EgwActionObject = egw_getAppObjectManager(false).getObjectById(this.id);
-		for (const actionObject of treeObj.children) {
-			if(actionObject.id == _id){
+		let treeObj: EgwActionObject = egw_getAppObjectManager(false).getObjectById(this.id);
+		for (const actionObject of treeObj.children)
+		{
+			if (actionObject.id == _id)
+			{
 				actionObject.id = _newItemId;
-				if (actionObject.iface){actionObject.iface.id = _newItemId}
+				if (actionObject.iface)
+				{
+					actionObject.iface.id = _newItemId
+				}
 				break
 			}
 
@@ -564,7 +574,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		}
 
 
-
 		return html`
             <sl-tree-item
                     id=${selectOption.id}
@@ -598,14 +607,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                                 event.detail.previous = this._previousOption.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
 
-								this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+                                this.onclick(event.detail.selection[0].id, this, event.detail.previous)
                             }
                     }
                     @sl-expand=${
                             (event) => {
                                 event.detail.id = event.target.id
                                 event.detail.item = event.target
-								this.onopenstart(event.detail.id, this, 1)
+                                this.onopenstart(event.detail.id, this, 1)
                             }
                     }
                     @sl-after-expand=${
@@ -613,7 +622,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                                 event.detail.id = event.target.id
                                 event.detail.item = event.target
 
-								this.onopenend(event.detail.id, this, -1)
+                                this.onopenend(event.detail.id, this, -1)
 
                             }
                     }
@@ -721,40 +730,52 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return action_links;
 	}
 
-    protected updated(_changedProperties: PropertyValues) {
+	protected updated(_changedProperties: PropertyValues)
+	{
 		this._link_actions(this.actions)
-        super.updated(_changedProperties);
-    }
+		super.updated(_changedProperties);
+	}
 
-    private _search(_id: string, data: TreeItemData[]): TreeItemData {
-        let res: TreeItemData = null
-        for (const value of data) {
-            if (value.id === _id) {
-                res = value
-                return res
-            } else if (_id.startsWith(value.id)) {
-                res = this._search(_id, value.item)
-            }
-        }
-        return res
-    }
+	private _search(_id: string, data: TreeItemData[]): TreeItemData
+	{
+		let res: TreeItemData = null
+		for (const value of data)
+		{
+			if (value.id === _id)
+			{
+				res = value
+				return res
+			} else if (_id.startsWith(value.id))
+			{
+				res = this._search(_id, value.item)
+			}
+		}
+		return res
+	}
 
-    private calculateExpandState = (selectOption: TreeItemData) => {
-        if (selectOption.id.includes("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")) {
-            return true
-        }
-        if (selectOption.open) {
-            return true
-        }
-        if ((this._selectOptions.find((selectOption) => {
-            return selectOption.open
-        }) == undefined) && this._selectOptions[0] == selectOption) {
-            return true
-        }
+	private calculateExpandState = (selectOption: TreeItemData) => {
+		if (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail"))
+		{
+			return true
+		}
+		if (selectOption.open)
+		{
+			return true
+		}
+		if (
+			 this._selectOptions[0] == selectOption &&
+			(this._selectOptions.find((selectOption) => {
+					return selectOption.open
+				}) == undefined
+			)
+			)
+		{
+			return true //open the first item, if no item is opened
+		}
 
-        return false
-            ;
-    }
+		return false
+			;
+	}
 
 	private _deleteItem(_id, list)
 	{
@@ -816,7 +837,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 }
 
 customElements.define("et2-tree", Et2Tree);
-customElements.define("et2-tree-cat", class extends Et2Tree {
+customElements.define("et2-tree-cat", class extends Et2Tree
+{
 });
 
 
