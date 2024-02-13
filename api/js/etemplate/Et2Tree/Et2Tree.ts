@@ -622,8 +622,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                                 this._currentOption = this.getNode(event.detail.selection[0].id);
                                 event.detail.previous = this._previousOption.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
-
-                                this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+                                if(typeof this.onclick == "function")
+                                {
+                                    this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+                                }
                             }
                     }
                     @sl-expand=${
