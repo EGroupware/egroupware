@@ -2663,7 +2663,7 @@ class calendar_boupdate extends calendar_bo
 								!empty($egwEvent['recur_type']) &&
 									!empty($event['recur_type']))
 						{
-							if (empty(egwEvent['recur_type']) &&
+							if (empty($egwEvent['recur_type']) &&
 								$egwstart->format('Ymd') == $dtstart->format('Ymd') ||
 									!empty($egwEvent['recur_type']))
 							{
