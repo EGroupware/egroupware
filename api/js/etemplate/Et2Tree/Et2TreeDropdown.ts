@@ -243,6 +243,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
+		this.show();
 
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
@@ -325,8 +326,13 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	handleTreeChange(event)
 	{
 		const oldValue = this.value;
-		this.value = this._tree.value;
+		this.value = this._tree.getValue();
 		this.requestUpdate("value", oldValue);
+
+		if(!this.multiple)
+		{
+			this.hide();
+		}
 	}
 
 	handleTriggerClick()
@@ -341,6 +347,11 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			this._popup.active = true;
 		}
 		this.open = this._popup.active;
+		this.requestUpdate("open");
+		this.updateComplete.then(() =>
+		{
+			this._tree.focus();
+		})
 	}
 
 	/**
@@ -477,17 +488,16 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                             <slot part="prefix" name="prefix" class="tree-dropdown__prefix"></slot>
                             <div part="tags" class="tree-dropdown__tags">
                                 ${this.tagsTemplate()}
+                                ${this.inputTemplate()}
                             </div>
-                            ${this.inputTemplate()}
                             ${this.searching ? html`
                                 <sl-spinner class="tree-dropdown"></sl-spinner>` : nothing
                             }
                             <slot part="suffix" name="suffix" class="tree-dropdown__suffix"></slot>
-                            <et2-button caret class="tree-dropdown__trigger"
-                                        @click=${this.handleTriggerClick}
-                                        .noSubmit=${true}
-                            >
-                            </et2-button>
+                            <slot name="expand-icon" part="expand-icon" class="tree-dropdown__expand-icon"
+                                  @click=${this.handleTriggerClick}>
+                                <sl-icon library="system" name="chevron-down" aria-hidden="true"></sl-icon>
+                            </slot>
                         </div>
                         <et2-tree
                                 class="tree-dropdown__tree"
@@ -497,7 +507,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 .value=${this.value}
                                 ._selectOptions=${this.select_options}
 
-                                @change=${this.handleTreeChange}
+                                @sl-selection-change=${this.handleTreeChange}
                         >
                         </et2-tree>
                     </sl-popup>

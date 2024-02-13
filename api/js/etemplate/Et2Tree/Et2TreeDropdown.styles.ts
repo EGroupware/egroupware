@@ -41,8 +41,9 @@ export default css`
 		flex: 1;
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: center;
+		flex-wrap: nowrap;
+		align-items: flex-start;
+		justify-content: space-between;
 		gap: 0.1rem 0.5rem;
 
 		background-color: var(--sl-input-background-color);
@@ -53,6 +54,7 @@ export default css`
 		min-height: var(--sl-input-height-medium);
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 		overflow-y: auto;
+		overflow-x: hidden;
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
 		padding-top: 0.1rem;
@@ -80,18 +82,18 @@ export default css`
 
 	/* Trigger */
 
-	.tree-dropdown__trigger {
-		max-width: initial;
-		min-width: initial;
-		flex: 0 0 1em;
-		order: 21;
-		margin-left: auto;
-	}
-
-	.tree-dropdown__trigger::part(base) {
-		border: none;
+	.tree-dropdown__expand-icon {
+		height: var(--sl-input-height-medium);
+		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
+		transition: var(--sl-transition-medium) rotate ease;
+		rotate: 0;
+		margin-inline-start: var(--sl-spacing-small);
+	}
+
+	.tree-dropdown--open .tree-dropdown__expand-icon {
+		rotate: -180deg;
 	}
 
 	/* End trigger */
@@ -100,6 +102,15 @@ export default css`
 		order: 1;
 	}
 
+	/* Tags */
+
+	.tree-dropdown__tags {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	/* End tags */
+
 	/* Search box */
 
 	:host([readonly]) .tree-dropdown__search {
@@ -107,7 +118,7 @@ export default css`
 	}
 
 	.tree-dropdown__search {
-		flex: 1 1 auto;
+		flex: 1 1 7em;
 		order: 10;
 		min-width: 7em;
 		border: none;
