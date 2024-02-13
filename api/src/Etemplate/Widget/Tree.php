@@ -486,6 +486,7 @@ class Tree extends Etemplate\Widget
 						ID on the form (addressbook edit):
 						if tree overwrites selectbox options, selectbox will still work
 						*/
+						'value' => $cat['id'],
 						'label'	=>	$s,
 						'title'	=>	$cat['description']
 					);
