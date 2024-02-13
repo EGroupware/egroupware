@@ -4,15 +4,14 @@ import {find_select_options} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
+import {query} from "lit/decorators/query.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {egw_getActionManager, egw_getAppObjectManager} from "../../egw_action/egw_action";
 import {et2_action_object_impl} from "../et2_core_DOMWidget";
 import {EgwActionObject} from "../../egw_action/EgwActionObject";
-import {object} from "prop-types";
 import {EgwAction} from "../../egw_action/EgwAction";
-import {query} from "@lion/core";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 
 export type TreeItemData = {
@@ -91,6 +90,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	private input: any = null;
 	private _actionManager: EgwAction;
+
+	private get _tree() { return this.shadowRoot.querySelector('sl-tree') ?? null};
 
 
 	constructor()
@@ -306,6 +307,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		}
 	}
 
+	/** Sets focus on the control. */
+	focus(options? : FocusOptions)
+	{
+		this._tree.focus();
+	}
+
+	/** Removes focus from the control. */
+	blur()
+	{
+		this._tree.blur();
+	}
 	/**
 	 * @deprecated assign to onopenstart
 	 * @param _handler

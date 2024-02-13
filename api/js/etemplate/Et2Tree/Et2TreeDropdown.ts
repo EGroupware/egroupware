@@ -3,13 +3,14 @@ import {Et2Tree, TreeItemData} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
+import {state} from "lit/decorators/state.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import {keyed} from "lit/directives/keyed.js";
 import {map} from "lit/directives/map.js";
-import {SlDropdown, SlRemoveEvent} from "@shoelace-style/shoelace";
+import {SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2TreeDropdown.styles";
-import {literal, StaticValue} from "lit/static-html.js";
+import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
 
 /**
  * @summary A tree that is hidden in a dropdown
@@ -56,13 +57,22 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	@property({type: Boolean, reflect: true}) open = false;
 
+	@state() searching = false;
+	@state() hasFocus = false;
+	@state() currentTag : Et2Tag;
 
-	private get _popup() : SlDropdown { return this.shadowRoot.querySelector("sl-popup")}
-
+	private get _popup() : SlPopup { return this.shadowRoot.querySelector("sl-popup")}
 	private get _tree() : Et2Tree { return this.shadowRoot.querySelector("et2-tree")}
+
+	private get _search() : HTMLInputElement { return this.shadowRoot.querySelector("#search")}
+
+	private get _tags() : Et2Tag[] { return Array.from(this.shadowRoot.querySelectorAll("et2-tag"));}
 
 	protected readonly hasSlotController = new HasSlotController(this, "help-text", "label");
 	private __value : string[];
+
+	protected _searchTimeout : number;
+	protected _searchPromise : Promise<TreeItemData[]> = Promise.resolve([]);
 
 	constructor()
 	{
@@ -91,11 +101,223 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		);
 	}
 
+	/** Sets focus on the control. */
+	focus(options? : FocusOptions)
+	{
+		this.hasFocus = true;
+		// Should not be needed, but not firing the update
+		this.requestUpdate("hasFocus");
+
+		if(this._search)
+		{
+			this._search.focus(options);
+		}
+	}
+
+	/** Removes focus from the control. */
+	blur()
+	{
+		this.open = false;
+		this.hasFocus = false;
+		this._popup.active = false;
+		// Should not be needed, but not firing the update
+		this.requestUpdate("open");
+		this.requestUpdate("hasFocus");
+		this._search.blur();
+
+		clearTimeout(this._searchTimeout);
+	}
+
+
+	/** Shows the tree. */
+	async show()
+	{
+		if(this.open || this.disabled)
+		{
+			this.open = false;
+			this.requestUpdate("open", true);
+			return undefined;
+		}
+
+		this.open = true;
+		this.requestUpdate("open", false)
+		return this.updateComplete
+	}
+
+	/** Hides the tree. */
+	async hide()
+	{
+		if(!this.open || this.disabled)
+		{
+			return undefined;
+		}
+
+		this.open = false;
+		this._popup.active = false;
+		this.requestUpdate("open");
+		return this.updateComplete
+	}
+
+	private setCurrentTag(tag : Et2Tag)
+	{
+		this._tags.forEach(t =>
+		{
+			t.tabIndex = -1;
+			if(t.current)
+			{
+				t.current = false;
+				t.requestUpdate();
+			}
+		});
+		this.currentTag = tag;
+		if(tag)
+		{
+			this.currentTag.tabIndex = 0;
+			this.currentTag.current = true;
+			this.currentTag.requestUpdate();
+			this.currentTag.focus();
+		}
+	}
+
+	/**
+	 * Keyboard events that the search input did not grab
+	 * (tags, otion navigation)
+	 *
+	 * @param {KeyboardEvent} event
+	 */
+	handleComboboxKeyDown(event : KeyboardEvent)
+	{
+		// Navigate between tags
+		if(this.currentTag && (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)))
+		{
+			let nextTagIndex = this._tags.indexOf(this.currentTag);
+			const tagCount = this._tags.length
+			switch(event.key)
+			{
+				case 'ArrowLeft':
+					nextTagIndex--;
+					break;
+				case 'ArrowRight':
+					nextTagIndex++;
+					break;
+				case 'Home':
+					nextTagIndex = 0;
+					break;
+				case 'End':
+					nextTagIndex = this._tags.length - 1;
+					break;
+			}
+			nextTagIndex = Math.max(0, nextTagIndex);
+			if(nextTagIndex < tagCount && this._tags[nextTagIndex])
+			{
+				this.setCurrentTag(this._tags[nextTagIndex]);
+			}
+			else
+			{
+				// Arrow back to search, or got lost
+				this._search.focus();
+			}
+			event.stopPropagation();
+			return false;
+		}
+		// Remove tag
+		if(event.target instanceof Et2Tag && ["Delete", "Backspace"].includes(event.key))
+		{
+			const tags = this._tags;
+			let index = tags.indexOf(event.target);
+			event.target.dispatchEvent(new CustomEvent('sl-remove', {bubbles: true}));
+			index += event.key == "Delete" ? 1 : -1;
+			if(index >= 0 && index < tags.length)
+			{
+				this.setCurrentTag(this._tags[index]);
+			}
+			else
+			{
+				this._search.focus();
+			}
+		}
+	}
+
+	private handleSearchFocus()
+	{
+		this.hasFocus = true;
+		// Should not be needed, but not firing the update
+		this.requestUpdate("hasFocus");
+
+		// Reset tags to not take focus
+		this.setCurrentTag(null);
+
+		this._search.setSelectionRange(this._search.value.length, this._search.value.length);
+	}
+
+	handleSearchKeyDown(event)
+	{
+		clearTimeout(this._searchTimeout);
+
+		// Left at beginning goes to tags
+		if(this._search.selectionStart == 0 && event.key == "ArrowLeft")
+		{
+			this.hide();
+			this._tags.forEach(t => t.tabIndex = 0);
+			if(this._tags.length > 0)
+			{
+				this.setCurrentTag(this._tags[this._tags.length - 1]);
+			}
+			event.stopPropagation();
+			return;
+		}
+		// Tab on empty leaves
+		if(this._search.value == "" && event.key == "Tab")
+		{
+			// Propagate, browser will do its thing
+			return;
+		}
+		// Up / Down navigates options
+		if(['ArrowDown', 'ArrowUp'].includes(event.key) && this._tree)
+		{
+			if(!this.open)
+			{
+				this.show();
+			}
+			event.stopPropagation();
+			this._tree.focus();
+			return;
+		}
+
+		// Start search immediately
+		else if(event.key == "Enter")
+		{
+			event.preventDefault();
+			this.startSearch();
+			return;
+		}
+		else if(event.key == "Escape")
+		{
+			this.hide();
+			event.stopPropagation();
+			return;
+		}
+
+		// Start the search automatically if they have enough letters
+		// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
+		if(this._search.value.length - 1 > 0)
+		{
+			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, 500);
+		}
+	}
+
+	protected handleLabelClick()
+	{
+		this._search.focus();
+	}
+
 	handleTagRemove(event : SlRemoveEvent, value : string)
 	{
 		// Find the tag value and remove it from current value
-		const index = this.value.indexOf(value);
-		this.value.splice(index, 1);
+		let valueArray = this.getValueAsArray();
+		const index = valueArray.indexOf(value);
+		valueArray.splice(index, 1);
+		this.value = valueArray;
 		this.requestUpdate("value");
 		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
@@ -109,6 +331,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 
 	handleTriggerClick()
 	{
+		this.hasFocus = true;
 		if(this.open)
 		{
 			this._popup.active = false;
@@ -118,17 +341,6 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			this._popup.active = true;
 		}
 		this.open = this._popup.active;
-	}
-
-	/**
-	 * Tag used for rendering tags when multiple=true
-	 * Used for creating, finding & filtering options.
-	 * @see createTagNode()
-	 * @returns {string}
-	 */
-	public get tagTag() : StaticValue
-	{
-		return literal`et2-tag`;
 	}
 
 	/**
@@ -161,7 +373,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                    placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
                    tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
-                   @blur=${this.handleSearchBlur}
+                   @blur=${() => {this.hasFocus = false;}}
                    @focus=${this.handleSearchFocus}
                    @paste=${this.handlePaste}
             />
@@ -178,7 +390,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
 		const isEditable = false && !readonly;
-		const image = this.iconTemplate(option.option ?? option);
+		const image = this.iconTemplate(option?.option ?? option);
 		return html`
             <et2-tag
                     part="tag"
@@ -263,7 +475,9 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 @keydown=${this.handleComboboxKeyDown}
                         >
                             <slot part="prefix" name="prefix" class="tree-dropdown__prefix"></slot>
-                            ${this.tagsTemplate()}
+                            <div part="tags" class="tree-dropdown__tags">
+                                ${this.tagsTemplate()}
+                            </div>
                             ${this.inputTemplate()}
                             ${this.searching ? html`
                                 <sl-spinner class="tree-dropdown"></sl-spinner>` : nothing

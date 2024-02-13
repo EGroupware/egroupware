@@ -71,8 +71,8 @@ export default css`
 		outline: none;
 	}
 
-	:not(.tree-dropdown--disabled).tree-dropdown--open,
-	:not(.tree-dropdown--disabled).tree-dropdown--focused {
+	:not(.tree-dropdown--disabled).tree-dropdown--open .tree-dropdown__combobox,
+	:not(.tree-dropdown--disabled).tree-dropdown--focused .tree-dropdown__combobox {
 		background-color: var(--sl-input-background-color-focus);
 		border-color: var(--sl-input-border-color-focus);
 		box-shadow: 0 0 0 var(--sl-focus-ring-width) var(--sl-input-focus-ring-color);
