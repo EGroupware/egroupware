@@ -1,22 +1,8 @@
-import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {SlTree, SlTreeItem} from "@shoelace-style/shoelace";
-import {Et2Link} from "../Et2Link/Et2Link";
-import {et2_no_init} from "../et2_core_common";
-import {egw, framework} from "../../jsapi/egw_global";
-import {SelectOption, find_select_options, cleanSelectOptions} from "../Et2Select/FindSelectOptions";
-import {egwIsMobile} from "../../egw_action/egw_action_common";
-import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
-import {LitElement, css, TemplateResult, html, PropertyDeclaration, nothing} from "lit";
+import {SlTreeItem} from "@shoelace-style/shoelace";
+import {html, nothing, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
-import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
-import {egw_getActionManager, egw_getAppObjectManager, egwActionObject} from "../../egw_action/egw_action";
-import {et2_action_object_impl} from "../et2_core_DOMWidget";
-import {EgwActionObject} from "../../egw_action/EgwActionObject";
-import {object} from "prop-types";
-import {EgwAction} from "../../egw_action/EgwAction";
-import {query} from "@lion/core";
 import {Et2Tree, TreeItemData} from "./Et2Tree";
 
 
@@ -46,6 +32,9 @@ export class Et2MultiselectTree extends Et2Tree {
     constructor() {
         super();
         this.multiple = true;
+
+		this.selectedNodes = [];
+		this.selectedItems = [];
     }
 
     public set_onchange(_handler: any)
@@ -60,6 +49,7 @@ export class Et2MultiselectTree extends Et2Tree {
     getValue()
     {
         let res:string[] = []
+		if(this.selectedItems?.length)
         for (const selectedItem of this.selectedItems)
         {
             res.push(selectedItem.id)
@@ -135,9 +125,7 @@ export class Et2MultiselectTree extends Et2Tree {
     }
 
 }
-// @ts-ignore TypeScript says there's something wrong with types
 customElements.define("et2-tree-multiple", Et2MultiselectTree);
-// @ts-ignore TypeScript says there's something wrong with types
 customElements.define("et2-tree-cat-multiple", class extends Et2MultiselectTree{});
 
 
