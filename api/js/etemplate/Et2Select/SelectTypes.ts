@@ -2,6 +2,7 @@
  * Import all our sub-types
  */
 
+import './Select/Et2SelectAccess';
 import './Select/Et2SelectAccount';
 import './Select/Et2SelectApp';
 import './Select/Et2SelectBitwise';

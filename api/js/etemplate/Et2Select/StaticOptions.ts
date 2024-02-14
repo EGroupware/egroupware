@@ -379,6 +379,15 @@ export const StaticOptions = new class StaticOptionsType
 		return this.cached_server_side(widget, 'select-app', options, true);
 	}
 
+	access(widget : Et2SelectWidgets) : SelectOption[]
+	{
+		return [
+			{value: "private", label: "Private"},
+			{value: "public", label: "Global public"},
+			{value: "group", label: "Group public"}
+		];
+	}
+
 	cat(widget : Et2SelectWidgets) : Promise<SelectOption[]>
 	{
 		var options = [widget.globalCategories, /*?*/, widget.application, widget.parentCat];
