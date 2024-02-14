@@ -90,7 +90,8 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			new_value = new_value.split(",")
 		}
 		const oldValue = this.__value;
-		this.__value = <string[]>new_value;
+		// Filter to make sure there are no trailing commas
+		this.__value = <string[]>new_value.filter(v => v);
 		this.requestUpdate("value", oldValue);
 	}
 
@@ -316,19 +317,41 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		// Find the tag value and remove it from current value
 		let valueArray = this.getValueAsArray();
+		const oldValue = valueArray.slice(0);
 		const index = valueArray.indexOf(value);
 		valueArray.splice(index, 1);
 		this.value = valueArray;
-		this.requestUpdate("value");
-		this.dispatchEvent(new Event("change", {bubbles: true}));
+		this.requestUpdate("value", oldValue);
+		// TODO: Clean up this scope violation
+		// sl-tree-item is not getting its selected attribute updated
+		Array.from(this._tree._tree.querySelectorAll('sl-tree-item')).forEach(e =>
+		{
+			if(this.value.includes(e.id))
+			{
+				e.setAttribute("selected", "");
+			}
+			else
+			{
+				e.removeAttribute("selected");
+			}
+		});
+		this._tree.requestUpdate();
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
 	}
 
 	handleTreeChange(event)
 	{
 		const oldValue = this.value;
-		this.value = this._tree.getValue();
+		this.value = event?.detail?.selection?.map(i => i.id) ?? [];
 		this.requestUpdate("value", oldValue);
 
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
 		if(!this.multiple)
 		{
 			this.hide();
@@ -394,14 +417,21 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	tagsTemplate()
 	{
 		const value = this.getValueAsArray();
-		return html`${keyed(this._valueUID, map(value, (value, index) => this.tagTemplate(this.optionSearch(value, this.select_options))))}`;
+		return html`${keyed(this._valueUID, map(value, (value, index) =>
+		{
+			// Deal with value that is not in options
+			const option = this.optionSearch(value, this.select_options);
+			return option ? this.tagTemplate(option) : nothing;
+		}))}`;
 	}
 
 	tagTemplate(option : TreeItemData)
 	{
 		const readonly = (this.readonly || option && typeof (option.disabled) != "undefined" && option.disabled);
 		const isEditable = false && !readonly;
-		const image = this.iconTemplate(option?.option ?? option);
+		const image = option ? this.iconTemplate(option?.option ?? option) : null;
+		const isValid = true;
+
 		return html`
             <et2-tag
                     part="tag"
@@ -414,7 +444,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                     "
                     class=${"tree_tag " + option.class ?? ""}
                     tabindex="-1"
-                    ?pill=${this.pill}
+                    variant=${isValid ? nothing : "danger"}
                     size=${this.size || "medium"}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
@@ -468,7 +498,6 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 'tree-dropdown--focused': this.hasFocus,
                                 'tree-dropdown--placeholder-visible': isPlaceholderVisible,
                             })}
-                            strategy="fixed"
                             flip
                             shift
                             sync="width"
@@ -504,7 +533,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 multiple=${this.multiple}
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
-                                .value=${this.value}
+                                value=${this.value}
                                 ._selectOptions=${this.select_options}
 
                                 @sl-selection-change=${this.handleTreeChange}
@@ -517,3 +546,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 }
 
 customElements.define("et2-tree-dropdown", Et2TreeDropdown);
+
+customElements.define("et2-tree-cat", class extends Et2TreeDropdown
+{
+});

@@ -148,7 +148,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
+                    <et2-tree-cat id="cat_id_tree" multiple="true" placeholder="Category"/>
 					<et2-select-cat  id="cat_id" width="100%" height="195" multiple="true" placeholder="Category"></et2-select-cat>
 					<et2-description></et2-description>
 					<grid width="100%">

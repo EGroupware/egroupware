@@ -16,12 +16,14 @@ import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree"
 
 export type TreeItemData = {
 	focused?: boolean;
+	// Has children, but they may not be provided in item
 	child: Boolean | 1,
 	data?: Object,//{sieve:true,...} or {acl:true} or other
 	id: string,
 	im0: String,
 	im1: String,
 	im2: String,
+	// Child items
 	item: TreeItemData[],
 	checked?: Boolean,
 	nocheckbox: number | Boolean,
@@ -98,6 +100,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		super();
 		this._selectOptions = [];
+
+		this._optionTemplate = this._optionTemplate.bind(this);
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -592,7 +596,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		return html`
             <sl-tree-item
+                    part="item"
+                    exportparts="checkbox"
                     id=${selectOption.id}
+                    title=${selectOption.tooltip || nothing}
+                    ?selected=${this.value.includes(selectOption.id)}
                     ?expanded=${(this.calculateExpandState(selectOption))}
                     ?lazy=${selectOption.item?.length === 0 && selectOption.child}
                     ?focused=${selectOption.focused || nothing}
@@ -607,7 +615,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                 <sl-icon src="${img ?? nothing}"></sl-icon>
 
                 ${selectOption.text}
-                ${selectOption.item ? repeat(selectOption.item, this._optionTemplate.bind(this)) : ""}
+                ${selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing}
             </sl-tree-item>`
 	}
 
@@ -616,6 +624,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		return html`
             <sl-tree
+                    .selection=${this.multiple ? "multiple" : "single"}
                     @sl-selection-change=${
                             (event: any) => {
                                 this._previousOption = this._currentOption
@@ -646,7 +655,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     }
 
             >
-                ${repeat(this._selectOptions, this._optionTemplate.bind(this))}
+                ${repeat(this._selectOptions, this._optionTemplate)}
             </sl-tree>
 		`;
 	}
@@ -750,7 +759,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	protected updated(_changedProperties: PropertyValues)
 	{
-		this._link_actions(this.actions)
+		//	this._link_actions(this.actions)
 		super.updated(_changedProperties);
 	}
 
@@ -772,15 +781,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 	private calculateExpandState = (selectOption: TreeItemData) => {
-		if (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail"))
-		{
-			return true
-		}
+
 		if (selectOption.open)
 		{
 			return true
 		}
-		if (
+		if(this._selectOptions.length > 1 &&
 			 this._selectOptions[0] == selectOption &&
 			(this._selectOptions.find((selectOption) => {
 					return selectOption.open
@@ -790,7 +796,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			return true //open the first item, if no item is opened
 		}
-
+		if(selectOption.id && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
+		{
+			return true
+		}
 		return false
 			;
 	}
@@ -855,8 +864,5 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 }
 
 customElements.define("et2-tree", Et2Tree);
-customElements.define("et2-tree-cat", class extends Et2Tree
-{
-});
 
 

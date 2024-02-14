@@ -58,7 +58,6 @@ export class Et2MultiselectTree extends Et2Tree {
     }
 
     _optionTemplate(selectOption: TreeItemData): TemplateResult<1> {
-        this._currentOption = selectOption
         let img: String = selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
         if (img) {
             //sl-icon images need to be svgs if there is a png try to find the corresponding svg
@@ -70,7 +69,8 @@ export class Et2MultiselectTree extends Et2Tree {
             <sl-tree-item
                
                     id=${selectOption.id}
-                    ?lazy=${this._currentOption.item?.length === 0 && this._currentOption.child}
+                    ?selected=${this.value.includes(selectOption.id)}
+                    ?lazy=${selectOption.item?.length === 0 && selectOption.child}
 
                     @sl-lazy-load=${(event) => {
                         this.handleLazyLoading(selectOption).then((result) => {
@@ -82,8 +82,8 @@ export class Et2MultiselectTree extends Et2Tree {
             >
                 <sl-icon src="${img ?? nothing}"></sl-icon>
 
-                ${this._currentOption.text}
-                ${repeat(this._currentOption.item, this._optionTemplate.bind(this))}
+                ${selectOption.text}
+                ${(selectOption.item) ? html`${repeat(selectOption.item, this._optionTemplate.bind(this))}` : nothing}
             </sl-tree-item>`
     }
 
@@ -100,8 +100,10 @@ export class Et2MultiselectTree extends Et2Tree {
                                 }
                                 this.selectedNodes = event.detail.selection;
                                 //TODO look at what signature is expected here
-                                this.onchange(event,this)
-
+                                if(typeof this.onclick == "function")
+                                {
+                                    this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+                                }
 
                             }
                     }

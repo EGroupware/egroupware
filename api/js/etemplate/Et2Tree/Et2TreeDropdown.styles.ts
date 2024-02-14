@@ -44,15 +44,12 @@ export default css`
 		flex-wrap: nowrap;
 		align-items: flex-start;
 		justify-content: space-between;
-		gap: 0.1rem 0.5rem;
 
 		background-color: var(--sl-input-background-color);
 		border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 
 		border-radius: var(--sl-input-border-radius-medium);
 		font-size: var(--sl-input-font-size-medium);
-		min-height: var(--sl-input-height-medium);
-		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-block: 0;
@@ -107,6 +104,9 @@ export default css`
 	.tree-dropdown__tags {
 		display: flex;
 		flex-wrap: wrap;
+		gap: 0.1rem 0.5rem;
+		min-height: var(--sl-input-height-medium);
+		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 	}
 
 	/* End tags */
@@ -157,14 +157,17 @@ export default css`
 		border-radius: var(--sl-border-radius-medium);
 		padding-block: var(--sl-spacing-x-small);
 		padding-inline: 0;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 		overscroll-behavior: none;
 		z-index: var(--sl-z-index-dropdown);
 
 		/* Make sure it adheres to the popup's auto size */
+		height: auto;
 		max-width: var(--auto-size-available-width);
-		
-		/* This doesn't work for some reason, it's overwritten somewhere */
-		--size: 1.8em;
+	}
+
+	et2-tree::part(checkbox) {
+		display: none;
 	}
 `;

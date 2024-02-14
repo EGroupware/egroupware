@@ -473,34 +473,8 @@ class Tree extends Etemplate\Widget
 					$categories = new Api\Categories('',$type3);
 				}
 				$cat2path=array();
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,0,true) as $cat)
-				{
-					$s = stripslashes($cat['name']);
 
-					if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
-					{
-						$s .= ' &#9830;';
-					}
-					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
-
-					// 1D array
-					$options[] = $cat + array(
-						'text'	=>	$s,
-						'path'	=>	$path,
-
-						/*
-						These ones to play nice when a user puts a tree & a selectbox with the same
-						ID on the form (addressbook edit):
-						if tree overwrites selectbox options, selectbox will still work
-						*/
-						'value' => $cat['id'],
-						'label'	=>	$s,
-						'title'	=>	$cat['description']
-					);
-
-					// Tree in array
-					//$options[$cat['parent']][] = $cat;
-				}
+			static::processCategory(0, $options, $categories, !$type);
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
 				{
@@ -532,5 +506,40 @@ class Tree extends Etemplate\Widget
 
 		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
+	}
+
+	protected static function processCategory($cat_id, &$options, &$categories, $globals)
+	{
+		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', '', $globals, $cat_id) as $cat)
+		{
+
+			$s = stripslashes($cat['name']);
+
+			if($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
+			{
+				$s .= ' &#9830;';
+			}
+
+			// 1D array
+			$category = $cat + array(
+					'text'  => $s,
+
+					/*
+					These ones to play nice when a user puts a tree & a selectbox with the same
+					ID on the form (addressbook edit):
+					if tree overwrites selectbox options, selectbox will still work
+					*/
+					'value' => $cat['id'],
+					'label' => $s,
+					'title' => $cat['description']
+				);
+			if(!empty($cat['children']))
+			{
+				$category['item'] = [];
+				unset($cat['children']);
+				static::processCategory($cat['id'], $category['item'], $categories, $globals);
+			}
+			$options[] = $category;
+		}
 	}
 }
