@@ -574,9 +574,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	getUserData(_nodeId, _name)
 	{
-		return this.getNode(_nodeId)?.userdata?.find(elem => {
-			elem.name === _name
-		})?.content
+		return this.getNode(_nodeId)?.userdata?.find(elem => elem.name === _name)?.content
 	}
 
 	//this.selectOptions = find_select_options(this)[1];
