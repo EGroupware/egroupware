@@ -401,11 +401,6 @@ class preferences_settings
 			{
 				Egw::invalidate_session_cache();
 			}
-			// update $GLOBALS['egw_info']['user']['preferences'] as some hooks called use that can return or set old values (e.g. calendar default-alarm(-wholeday))
-			if ($type === 'user' && $GLOBALS['egw']->preferences->get_account_id() == $GLOBALS['egw_info']['user']['account_id'])
-			{
-				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->data;
-			}
 		}
 
 		return null;
