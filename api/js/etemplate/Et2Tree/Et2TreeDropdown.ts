@@ -353,7 +353,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		else
 		{
 			const id = event?.detail?.selection?.map(i => i.id).pop();
-			if(id)
+			if(id && !this.value.includes(id))
 			{
 				// Copy so LitElement knows it changed
 				this.value = [...this.value, id];
@@ -468,7 +468,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                     @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
             >
                 ${image ?? nothing}
-                ${option.text.trim()}
+                ${(option.label ?? option.text).trim()}
             </et2-tag>
 		`;
 	}
