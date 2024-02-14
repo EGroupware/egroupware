@@ -627,7 +627,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     .selection=${this.multiple ? "multiple" : "single"}
                     @sl-selection-change=${
                             (event: any) => {
-                                this._previousOption = this._currentOption
+                                this._previousOption = this._currentOption || this.getNode(this.value);
                                 this._currentOption = this.getNode(event.detail.selection[0].id);
                                 event.detail.previous = this._previousOption.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
@@ -864,5 +864,3 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 }
 
 customElements.define("et2-tree", Et2Tree);
-
-
