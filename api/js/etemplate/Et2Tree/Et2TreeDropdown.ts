@@ -5,7 +5,6 @@ import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
 import {HasSlotController} from "../Et2Widget/slot";
-import {keyed} from "lit/directives/keyed.js";
 import {map} from "lit/directives/map.js";
 import {SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
@@ -344,9 +343,22 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 
 	handleTreeChange(event)
 	{
-		const oldValue = this.value;
-		this.value = event?.detail?.selection?.map(i => i.id) ?? [];
-		this.requestUpdate("value", oldValue);
+		const oldValue = this.value.slice(0);
+
+		// For single value, we can just grab selected from the tree.  For multiple, we need to manage it.
+		if(!this.multiple)
+		{
+			this.value = event?.detail?.selection?.map(i => i.id) ?? []
+		}
+		else
+		{
+			const id = event?.detail?.selection?.map(i => i.id).pop();
+			if(id)
+			{
+				// Copy so LitElement knows it changed
+				this.value = [...this.value, id];
+			}
+		}
 
 		this.updateComplete.then(() =>
 		{
@@ -417,12 +429,12 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	tagsTemplate()
 	{
 		const value = this.getValueAsArray();
-		return html`${keyed(this._valueUID, map(value, (value, index) =>
+		return html`${map(value, (value, index) =>
 		{
 			// Deal with value that is not in options
-			const option = this.optionSearch(value, this.select_options);
+			const option = this.optionSearch(value, this.select_options, 'item');
 			return option ? this.tagTemplate(option) : nothing;
-		}))}`;
+		})}`;
 	}
 
 	tagTemplate(option : TreeItemData)
@@ -530,10 +542,9 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                         </div>
                         <et2-tree
                                 class="tree-dropdown__tree"
-                                multiple=${this.multiple}
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
-                                value=${this.value}
+                                value=${this.multiple ? nothing : this.value}
                                 ._selectOptions=${this.select_options}
 
                                 @sl-selection-change=${this.handleTreeChange}

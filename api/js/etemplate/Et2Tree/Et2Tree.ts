@@ -77,7 +77,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	imagePath: String = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 	@property()
-	value = {}
+	value = []
 
 	protected autoloading_url: any;
 	// private selectOptions: TreeItemData[] = [];

@@ -225,7 +225,9 @@ class Tree extends Etemplate\Widget
 	{
 		return (boolean)array_filter($cats, function($cat) use($id)
 		{
-			return $cat['id'] == $id;
+			return $cat['id'] == $id || (
+					!empty($cat['item']) && is_array($cat['item']) && static::in_cats($id, $cat['item'])
+				);
 		});
 	}
 
@@ -246,6 +248,8 @@ class Tree extends Etemplate\Widget
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
 		{
+			$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;
+			$unavailable_values = (array)self::$request->preserv[$unavailable_name];
 			$value = $value_in = self::get_array($content, $form_name);
 
 			// we can not validate if autoloading is enabled
@@ -255,12 +259,16 @@ class Tree extends Etemplate\Widget
 				$allowed += self::selOptions($form_name);
 				foreach((array) $value as $val)
 				{
+					if(in_array($val, $unavailable_values))
+					{
+						continue;
+					}
 					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !self::in_cats($val, $allowed) ||
 						$this->type == 'tree' && !self::in_tree($val, $allowed))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
 							$this->type == 'tree-cat' ? " ('".implode("','",array_keys($allowed)).')' : ''), '');
-						$value = '';
+						$val = '';
 						break;
 					}
 				}
@@ -269,7 +277,6 @@ class Tree extends Etemplate\Widget
 			if (is_array($value) && $this->type == 'tree-cat')
 			{
 				// unavailable cats need to be merged in again
-				$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
 				if (isset(self::$request->preserv[$unavailable_name]))
 				{
 					if ($this->attrs['multiple'])
@@ -474,16 +481,16 @@ class Tree extends Etemplate\Widget
 				}
 				$cat2path=array();
 
-			static::processCategory(0, $options, $categories, !$type);
+			static::processCategory(0, $options, $categories, !$type, $cat2path);
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
 				{
 					$pathes = $unavailable = array();
 					foreach(is_array($value) ? $value : explode(',',$value) as $cat)
 					{
-						if (isset($cat2path[$cat]))
+						if(in_array($cat, $cat2path))
 						{
-							$pathes[] = $cat2path[$cat];
+							$pathes[] = $cat;
 						}
 						else
 						{
@@ -508,7 +515,7 @@ class Tree extends Etemplate\Widget
 		return $options;
 	}
 
-	protected static function processCategory($cat_id, &$options, &$categories, $globals)
+	protected static function processCategory($cat_id, &$options, &$categories, $globals, &$cat_id_list)
 	{
 		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', '', $globals, $cat_id) as $cat)
 		{
@@ -533,11 +540,12 @@ class Tree extends Etemplate\Widget
 					'label' => $s,
 					'title' => $cat['description']
 				);
+			$cat_id_list[] = $cat['id'];
 			if(!empty($cat['children']))
 			{
 				$category['item'] = [];
 				unset($cat['children']);
-				static::processCategory($cat['id'], $category['item'], $categories, $globals);
+				static::processCategory($cat['id'], $category['item'], $categories, $globals, $cat_id_list);
 			}
 			$options[] = $category;
 		}
