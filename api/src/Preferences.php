@@ -891,7 +891,7 @@ class Preferences
 			foreach($prefs as $app => $value)
 			{
 				// check if app preferences have changed, if not no need to save them
-				if ($old_prefs && !array_diff_assoc($old_prefs[$app], $value)) continue;
+				if ($old_prefs && !array_diff_assoc($old_prefs[$app] ?? [], $value)) continue;
 
 				if (!$changed++) $this->db->transaction_begin();
 
