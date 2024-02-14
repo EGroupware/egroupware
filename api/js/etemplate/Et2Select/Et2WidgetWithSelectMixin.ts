@@ -172,20 +172,26 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 *
 		 * @return SelectOption | null
 		 */
-		public optionSearch(value : string, options : SelectOption[] = null) : SelectOption | null
+		public optionSearch(value : string, options : SelectOption[] = null, childKey : string = "value") : SelectOption | null
 		{
+			let result = null;
 			let search = function(options, value)
 			{
 				return options.find((option) =>
 				{
-					if(Array.isArray(option.value))
+					if(!Array.isArray(option.value) && option.value == value)
 					{
-						return search(option.value, value);
+						result = option;
+					}
+					if(Array.isArray(option[childKey]))
+					{
+						return search(option[childKey], value);
 					}
 					return option.value == value;
 				});
 			}
-			return search(options ?? this.select_options, value);
+			search(options ?? this.select_options, value);
+			return result;
 		}
 
 		/**
