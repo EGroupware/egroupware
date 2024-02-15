@@ -757,7 +757,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	protected updated(_changedProperties: PropertyValues)
 	{
-		//	this._link_actions(this.actions)
+		this._link_actions(this.actions)
 		super.updated(_changedProperties);
 	}
 
