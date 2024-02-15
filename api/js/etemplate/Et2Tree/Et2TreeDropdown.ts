@@ -470,6 +470,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                     tabindex="-1"
                     variant=${isValid ? nothing : "danger"}
                     size=${this.size || "medium"}
+                    title=${option.path ?? option.title}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}

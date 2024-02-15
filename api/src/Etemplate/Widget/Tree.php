@@ -530,6 +530,7 @@ class Tree extends Etemplate\Widget
 			// 1D array
 			$category = $cat + array(
 					'text'  => $s,
+					'path' => $categories->id2name($cat['id'], 'path'),
 
 					/*
 					These ones to play nice when a user puts a tree & a selectbox with the same
