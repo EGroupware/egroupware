@@ -104,6 +104,23 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this._optionTemplate = this._optionTemplate.bind(this);
 	}
 
+	firstUpdated()
+	{
+		// This is somehow required to set the autoload URL properly?
+		// TODO: Make this not needed, either this.autoload_url should be properly set or go away in favour of using this.autoload
+		this.createTree();
+
+		// Check if top level should be autoloaded
+		if(this.autoloading && !this._selectOptions?.length)
+		{
+			this.handleLazyLoading({item: this._selectOptions}).then((results) =>
+			{
+				this._selectOptions = results?.item ?? [];
+				this.requestUpdate("_selectOptions");
+			})
+		}
+	}
+
 	//Sl-Trees handle their own onClick events
 	_handleClick(_ev)
 	{
@@ -305,7 +322,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			new_options = <TreeItemData[]><unknown>find_select_options(this)[1];
 		}
-		if(new_options.length)
+		if(new_options?.length)
 		{
 			this._selectOptions = new_options;
 		}
@@ -593,6 +610,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		}
 
+		// Check to see if node is marked as open with no children.  If autoloadable, load the children
+		const expandState = (this.calculateExpandState(selectOption));
+		const lazy = selectOption.item?.length === 0 && selectOption.child
+		if(expandState && this.autoloading && lazy)
+		{
+			this.updateComplete.then(() =>
+			{
+				this.getDomNode(selectOption.id)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
+			})
+		}
+
 		return html`
             <sl-tree-item
                     part="item"
@@ -600,8 +628,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     id=${selectOption.id}
                     title=${selectOption.tooltip || nothing}
                     ?selected=${typeof this.value == "string" && this.value == selectOption.id || typeof this.value?.includes == "function" && this.value.includes(selectOption.id)}
-                    ?expanded=${(this.calculateExpandState(selectOption))}
-                    ?lazy=${selectOption.item?.length === 0 && selectOption.child}
+                    ?expanded=${expandState}
+                    ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
                     @sl-lazy-load=${(event) => {
                         // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
@@ -765,10 +793,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	protected updated(_changedProperties: PropertyValues)
 	{
-		// This is somehow required to set the autoload URL properly?
-		// TODO: Make this not needed, either this.autoload_url should be properly set or go away in favour of using this.autoload
-		this.createTree();
-
 		this._link_actions(this.actions)
 		super.updated(_changedProperties);
 	}
