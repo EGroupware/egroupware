@@ -539,6 +539,7 @@ class Tree extends Etemplate\Widget
 					*/
 					'value' => $cat['id'],
 					'label' => $s,
+					'icon' => $cat['data']['icon'] ?: '',
 					'title' => $cat['description']
 				);
 			$cat_id_list[] = $cat['id'];

@@ -398,14 +398,14 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	protected iconTemplate(option)
 	{
-		if(!option.icon)
+		if(!option.icon && !option.im0)
 		{
 			return html``;
 		}
 
 		return html`
             <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon}"></et2-image>`
+                       src="${option.icon ?? option.im0}"></et2-image>`
 	}
 
 	inputTemplate()
