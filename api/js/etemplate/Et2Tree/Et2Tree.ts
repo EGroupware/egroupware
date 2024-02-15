@@ -594,8 +594,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     ?lazy=${selectOption.item?.length === 0 && selectOption.child}
                     ?focused=${selectOption.focused || nothing}
                     @sl-lazy-load=${(event) => {
+                        // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
+                        event.stopPropagation();
+
                         this.handleLazyLoading(selectOption).then((result) => {
-                            this.getNode(selectOption.id).item = [...result.item]
+                            // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
+                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'item');
+                            parentNode.item = [...result.item]
                             this.requestUpdate("_selectOptions")
                         })
 
