@@ -536,6 +536,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		item.focused = true
 	}
 
+	public openItem(_id)
+	{
+		let item = this.getNode(_id);
+		if(item)
+		{
+			item.open = true;
+		}
+		this.requestUpdate();
+	}
+
 	/**
 	 * hasChildren
 	 *

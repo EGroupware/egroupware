@@ -559,7 +559,7 @@ class admin_ui
 					{
 						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
 						$matches = null;
-						if (preg_match_all('/(menuaction|load)=([^&]+)/', $data['link'], $matches))
+						if(preg_match_all('/(menuaction|load)=([^&\',]+)/', $data['link'], $matches))
 						{
 							$data[Tree::ID] .= $matches[2][(int)array_search('load', $matches[1])];
 						}
