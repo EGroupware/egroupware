@@ -1,4 +1,5 @@
-import {html, LitElement, nothing} from "lit";
+import {LitElement, nothing} from "lit";
+import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2Tree, TreeItemData} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {property} from "lit/decorators/property.js";
@@ -426,6 +427,17 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		`;
 	}
 
+	/**
+	 * Tag used for rendering tags when multiple=true
+	 * Used for creating, finding & filtering options.
+	 * @see createTagNode()
+	 * @returns {string}
+	 */
+	public get tagTag() : StaticValue
+	{
+		return literal`et2-tag`;
+	}
+
 	tagsTemplate()
 	{
 		const value = this.getValueAsArray();
@@ -443,9 +455,9 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		const isEditable = false && !readonly;
 		const image = option ? this.iconTemplate(option?.option ?? option) : null;
 		const isValid = true;
-
+		const tagName = this.tagTag;
 		return html`
-            <et2-tag
+            <${tagName}
                     part="tag"
                     exportparts="
                       base:tag__base,
@@ -469,7 +481,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
             >
                 ${image ?? nothing}
                 ${(option.label ?? option.text).trim()}
-            </et2-tag>
+            </${tagName}>
 		`;
 	}
 
@@ -557,7 +569,3 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 }
 
 customElements.define("et2-tree-dropdown", Et2TreeDropdown);
-
-customElements.define("et2-tree-cat", class extends Et2TreeDropdown
-{
-});
