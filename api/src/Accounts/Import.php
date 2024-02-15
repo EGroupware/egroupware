@@ -373,8 +373,10 @@ class Import
 										if (($GLOBALS['egw_info']['server']['account_repository'] ?? 'sql') === 'sql')
 										{
 											Api\Hooks::process($to_update + array(
-													'location' => 'editaccount'
-												), False, True);    // called for every app now, not only enabled ones)
+												// if there was no email set before, call add account hook, to activate mail-account
+												'location' => empty($sql_account['account_email']) && !empty($to_update['account_email']) ?
+													'addaccount' : 'editaccount',
+											), False, True);    // called for every app now, not only enabled ones)
 										}
 										$this->logger("Successful updated user '$account[account_lid]' (#$account_id): " .
 											json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'detail');
