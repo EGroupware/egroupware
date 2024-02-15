@@ -36,6 +36,8 @@ export class EgwDragDropShoelaceTree {
             if (_event == EGW_AI_DRAG_OVER)
             {
                 this.node.classList.add("draggedOver");
+                this.node.expanded = true
+
             }
             if (_event == EGW_AI_DRAG_OUT)
             {
