@@ -368,15 +368,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 	/**
-	 * getValue, retrieves the Id of the selected Item
-	 * @return string or object or null
-	 */
-	getValue(): string | string[]
-	{
-		return this._currentOption ? this._currentOption.id : null
-	}
-
-	/**
 	 * getSelectedNode, retrieves the full node of the selected Item
 	 * @return {SlTreeItem} full SlTreeItem
 	 */
@@ -598,7 +589,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     exportparts="checkbox"
                     id=${selectOption.id}
                     title=${selectOption.tooltip || nothing}
-                    ?selected=${this.value.includes(selectOption.id)}
+                    ?selected=${typeof this.value == "string" && this.value == selectOption.id || typeof this.value?.includes == "function" && this.value.includes(selectOption.id)}
                     ?expanded=${(this.calculateExpandState(selectOption))}
                     ?lazy=${selectOption.item?.length === 0 && selectOption.child}
                     ?focused=${selectOption.focused || nothing}
@@ -627,6 +618,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                             (event: any) => {
                                 this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value) : null);
                                 this._currentOption = this.getNode(event.detail.selection[0].id);
+                                const ids = event.detail.selection.map(i => i.id);
+                                this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
                                 event.detail.previous = this._previousOption?.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
                                 if(typeof this.onclick == "function")
@@ -757,6 +750,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	protected updated(_changedProperties: PropertyValues)
 	{
+		// This is somehow required to set the autoload URL properly?
+		// TODO: Make this not needed, either this.autoload_url should be properly set or go away in favour of using this.autoload
+		this.createTree();
+
 		this._link_actions(this.actions)
 		super.updated(_changedProperties);
 	}
