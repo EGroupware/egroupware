@@ -578,7 +578,7 @@ class admin_ui
 					}
 					else
 					{
-						//	$data[Tree::IMAGE_LEAF] = Api\Image::find('api', 'bullet');
+						$data[Tree::IMAGE_LEAF] = Api\Image::find('api', 'bullet');
 					}
 					unset($data['icon']);
 					$parent =& $tree[Tree::CHILDREN];
