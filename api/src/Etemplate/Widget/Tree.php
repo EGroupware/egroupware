@@ -481,7 +481,7 @@ class Tree extends Etemplate\Widget
 				}
 				$cat2path=array();
 
-			static::processCategory(0, $options, $categories, !$type, $cat2path);
+				static::processCategory(0, $options, $categories, !$type, $cat2path);
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
 				{
@@ -519,12 +519,11 @@ class Tree extends Etemplate\Widget
 	{
 		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', '', $globals, $cat_id) as $cat)
 		{
-
 			$s = stripslashes($cat['name']);
 
 			if($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 			{
-				$s .= ' &#9830;';
+				$s .= ' ♦';
 			}
 
 			// 1D array
