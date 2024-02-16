@@ -141,11 +141,26 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                 ::part(expand-button) {
                     padding: 0;
                 }
-			`,
-			css`
-                ::part(label):hover {
+
+				/* Stop icon from shrinking if there's not enough space */
+
+				sl-tree-item sl-icon {
+					flex: 0 0 1em;
+				}
+
+				::part(label) {
+					overflow: hidden;
+				}
+
+				::part(label):hover {
                     text-decoration: underline;
                 }
+
+				.tree-item__label {
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
 			`
 		]
 	}
@@ -622,7 +637,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return html`
             <sl-tree-item
                     part="item"
-                    exportparts="checkbox"
+                    exportparts="checkbox, label"
                     id=${selectOption.id}
                     title=${selectOption.tooltip || nothing}
                     ?selected=${typeof this.value == "string" && this.value == selectOption.id || typeof this.value?.includes == "function" && this.value.includes(selectOption.id)}
@@ -644,7 +659,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
             >
                 <sl-icon src="${img ?? nothing}"></sl-icon>
 
-                ${selectOption.text}
+                <span class="tree-item__label">${selectOption.text}</span>
                 ${selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing}
             </sl-tree-item>`
 	}
