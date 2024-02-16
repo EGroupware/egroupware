@@ -566,7 +566,7 @@ class admin_ui
 					}
 					if (!empty($data['icon']))
 					{
-						$icon = Etemplate\Widget\Tree::imagePath($data['icon']);
+						$icon = $data['icon'];
 						if (!empty($data['child']) || !empty($data[Tree::CHILDREN]))
 						{
 							$data[Tree::IMAGE_FOLDER_OPEN] = $data[Tree::IMAGE_FOLDER_CLOSED] = $icon;
@@ -575,6 +575,10 @@ class admin_ui
 						{
 							$data[Tree::IMAGE_LEAF] = $icon;
 						}
+					}
+					else
+					{
+						//	$data[Tree::IMAGE_LEAF] = Api\Image::find('api', 'bullet');
 					}
 					unset($data['icon']);
 					$parent =& $tree[Tree::CHILDREN];
@@ -587,8 +591,12 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('api', 'home') :
-								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav')));
+							$icon = $part == 'apps' ? Api\Image::find('api', 'home') :
+								(($i = Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav'));
+							if(!str_ends_with($icon, '.svg'))
+							{
+								$icon = Api\Image::find('api', 'navbar');
+							}
 							$parent[$path] = array(
 								Tree::ID => $path,
 								Tree::LABEL => $part == 'apps' ? lang('Applications') : lang($part),

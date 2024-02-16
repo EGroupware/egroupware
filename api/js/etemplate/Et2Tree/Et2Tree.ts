@@ -606,8 +606,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
 			img = img.endsWith(".png") ? img.replace(".png", ".svg") : img;
-			img = "api/templates/default/images/dhtmlxtree/" + img
-
 		}
 
 		// Check to see if node is marked as open with no children.  If autoloadable, load the children
