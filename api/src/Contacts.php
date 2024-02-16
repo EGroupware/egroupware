@@ -230,7 +230,7 @@ class Contacts extends Contacts\Storage
 			'bday'                 => lang('birthday'),
 			'org_name'             => lang('Organisation'),
 			'org_unit'             => lang('Department'),
-			'title'                => lang('title'),
+			'title'                => lang('Position'),
 			'role'                 => lang('role'),
 			'assistent'            => lang('Assistent'),
 			'room'                 => lang('Room'),
