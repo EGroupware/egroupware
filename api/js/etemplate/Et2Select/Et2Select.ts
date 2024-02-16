@@ -31,9 +31,12 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 		return [...this.querySelectorAll<Et2Option>('sl-option')];
 	}
 };
-
 /**
- * Select widget
+ * @summary Select one or more options from a given list
+ * @since 23.1
+ *
+ * @dependency sl-select
+ * @dependency sl-option
  *
  * At its most basic, you can select one option from a list provided.  The list can be passed from the server in
  * the sel_options array or options can be added as children in the template.  Some extending classes provide specific
@@ -62,6 +65,32 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
  * 	2.  Make sure it's loaded (add to etemplate2.ts)
  * 	3.  In your extending Et2Select, override get tagTag() to return the custom tag name
  *
+ * @slot - Reflected into listbox options. Must be <sl-option> elements. You can use <sl-divider> to group items visually.  Normally you set the options by parameter.
+ * @slot prefix - Used to prepend a presentational icon or similar element to the combobox.
+ * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
+ *
+ * @event change - Emitted when the control's value changes.
+ * @event sl-clear - Emitted when the control’s value is cleared.
+ * @event sl-input - Emitted when the control receives input.
+ * @event sl-focus - Emitted when the control gains focus.
+ * @event sl-blur - Emitted when the control loses focus.
+ * @event sl-show - Emitted when the suggestion menu opens.
+ * @event sl-after-show - Emitted after the suggestion menu opens and all animations are complete.
+ * @event sl-hide - Emitted when the suggestion menu closes.
+ * @event sl-after-hide - Emitted after the suggestion menu closes and all animations are complete.
+ *
+ * @csspart prefix - The container that wraps the prefix slot.
+ * @csspart tags - The container that houses option tags when multiselect is used.
+ * @csspart display-input - The element that displays the selected option’s label, an <input> element.
+ * @csspart expand-icon - The container that wraps the expand icon.
+ * @csspart combobox - The container the wraps the prefix, combobox, clear icon, and expand button.
+ * @csspart listbox - The listbox container where options are slotted.
+ * @csspart option - The options in the listbox container
+ * @csspart icon - Icon in the option
+ * @csspart emptyLabel - Wrapper around the label shown when there is no option selected
+ * @csspart tag__prefix - The container that wraps the option prefix
+ * @csspart tag__suffix - The container that wraps the option suffix
+ * @csspart tag__limit - Element that is shown when the number of selected options exceeds maxOptionsVisible
  */
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
@@ -1005,7 +1034,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             ${this._styleTemplate()}
             <sl-select
-                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option, image"
+                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
                     ?multiple=${this.multiple}
@@ -1033,6 +1062,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${this._optionsTemplate()}
                 ${this._tagLimitTemplate()}
                 ${this._extraTemplate()}
+                <slot name="prefix" slot="prefix"></slot>
                 <slot></slot>
                 <div slot="help-text">
                     <slot name="feedback"></slot>
