@@ -405,8 +405,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	public getNode(_id: string): TreeItemData
 	{
-
-		return this._search(_id, this._selectOptions)
+		// TODO: Look into this._search(), find out why it doesn't always succeed
+		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'id', 'item')
 	}
 
 	/**
@@ -637,7 +637,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
                         this.handleLazyLoading(selectOption).then((result) => {
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
-                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'item');
+                            const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
                             parentNode.item = [...result.item]
                             this.requestUpdate("_selectOptions")
                         })
@@ -660,7 +660,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     @sl-selection-change=${
                             (event: any) => {
                                 this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value) : null);
-                                this._currentOption = this.getNode(event.detail.selection[0].id);
+                                this._currentOption = this.getNode(event.detail.selection[0].id) ?? this.optionSearch(event.detail.selection[0].id, this._selectOptions, 'id', 'item');
                                 const ids = event.detail.selection.map(i => i.id);
                                 this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
                                 event.detail.previous = this._previousOption?.id;
@@ -806,7 +806,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			{
 				res = value
 				return res
-			} else if (_id.startsWith(value.id))
+			}
+			else if(_id.startsWith(value.id) && typeof value.item !== "undefined")
 			{
 				res = this._search(_id, value.item)
 			}
