@@ -444,7 +444,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		return html`${map(value, (value, index) =>
 		{
 			// Deal with value that is not in options
-			const option = this.optionSearch(value, this.select_options, 'item');
+			const option = this.optionSearch(value, this.select_options, 'value', 'item');
 			return option ? this.tagTemplate(option) : nothing;
 		})}`;
 	}
