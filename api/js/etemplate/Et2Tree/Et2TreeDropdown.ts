@@ -20,6 +20,9 @@ import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
  * @dependency et2-tag
  *
  * @slot label - The input's label. Alternatively, you can use the `label` attribute.
+ * @slot prefix - Used to prepend a presentational icon or similar element to the combobox.
+ * @slot suffix - Used to append a presentational icon or similar element to the input.
+ * @slot expand-icon - The icon to show when the control is expanded and collapsed. Rotates on open and close.
  * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
  *
  * @event change - Emitted when the control's value changes.
