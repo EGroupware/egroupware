@@ -348,6 +348,21 @@ class Ads
 		{
 			return $this->frontend->config[self::ADS_CONTEXT];
 		}
+		// find shared base of both contexts and use it
+		if (!empty($this->frontend->config[self::ADS_GROUP_CONTEXT]) && !empty($this->frontend->config[self::ADS_CONTEXT]))
+		{
+			$user_parts = explode(',', $this->frontend->config[self::ADS_CONTEXT]);
+			$group_parts = explode(',', $this->frontend->config[self::ADS_GROUP_CONTEXT]);
+			$shared_parts = [];
+			while($user_parts && $group_parts && !strcasecmp($part=array_pop($user_parts), array_pop($group_parts)))
+			{
+				array_unshift($shared_parts, $part);
+			}
+			if ($shared_parts)
+			{
+				return implode(',', $shared_parts);
+			}
+		}
 		// otherwise use base DN
 		return $this->adldap->getBaseDn();
 	}
