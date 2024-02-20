@@ -800,7 +800,7 @@ class mail_compose
 				if ($styles)
 				{
 					//error_log($styles);
-					$content['body'] = $styles.$content['body'];
+					$content['body'] = $styles."\n".$content['body'];
 				}
 			}
 		}
@@ -2330,7 +2330,7 @@ class mail_compose
 		if($bodyParts['0']['mimeType'] == 'text/html')
 		{
 			$this->sessionData['mimeType'] 	= 'html';
-			if (!empty($styles)) $this->sessionData['body'] .= $styles;
+			if (!empty($styles)) $this->sessionData['body'] .= "\n".$styles."\n";
 			$this->sessionData['body']	.= '<blockquote type="cite">';
 
 			foreach($bodyParts as $i => &$bodyPart)
@@ -2968,6 +2968,12 @@ class mail_compose
 		$mail_bo	= $this->mail_bo;
 		$mail 		= new Api\Mailer($_acc_id ?: $mail_bo->profileID);
 		$messageIsDraft	=  false;
+
+		// it seems there are mail client ignoring / not displaying text behind the closing style-tag --> add a linebreak there
+		if (strpos($_formData['body'], '</style><') !== false)
+		{
+			$_formData['body'] = str_replace('</style><', "</style>\n<", $_formData['body']);
+		}
 
 		$this->sessionData['mailaccount']	= $_formData['mailaccount'];
 		$this->sessionData['to']	= self::resolveEmailAddressList($_formData['to']);
