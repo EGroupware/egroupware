@@ -15,7 +15,7 @@ import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelec
 import {SearchMixinInterface} from "./SearchMixin";
 
 /**
- * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
+ * @summary Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
  * selectboxes, also for common handling of properties for more special selectboxes.
  *
  * As with most other widgets that extend Shoelace components, do not override render() without good reason.
@@ -53,6 +53,12 @@ type Constructor<T = {}> = new (...args : any[]) => T;
 
 export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
+	/**
+	 * @summary Mixin for widgets where you can select from a pre-defined list of options
+	 *
+	 * Sample text
+	 *
+	 */
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
 		/**
@@ -117,7 +123,6 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			return result;
 		}
 
-		/** @param {import('@lion/core').PropertyValues } changedProperties */
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);

@@ -6,6 +6,9 @@
 {% set component = getComponent(component.tagName) %}
 
 {% block content %}
+  {# Avoid breaking if the component is not correct #}
+  {% if component and component.tagName %}
+
   {# Determine the badge variant #}
   {% if component.status == 'stable' %}
     {% set badgeVariant = 'primary' %}
@@ -324,4 +327,7 @@
       {% endfor %}
     </ul>
   {% endif %}
+      {% else %}
+        This component is not correctly documented
+      {% endif %}
 {% endblock %}

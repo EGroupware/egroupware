@@ -47,7 +47,7 @@ import {Et2VfsPath} from "./Et2VfsPath";
  * @event change - Emitted when the control's value changes.
  *
  * @csspart toolbar - controls at the top
- * @csspart path
+ * @csspart path - Et2VfsPath control
  * @csspart listbox - The list of files
  * @csspart mimefilter - Mime filter select
  * @csspart form-control-help-text - The help text's wrapper.
