@@ -29,7 +29,11 @@ import {Et2VfsPath} from "./Et2VfsPath";
  * @summary Select files (including directories) from the VFS
  * @since 23.1
  *
+ * @dependency et2-box
+ * @dependency et2-button
  * @dependency et2-dialog
+ * @dependency et2-image
+ * @dependency et2-searchbox
  * @dependency et2-select
  * @dependency et2-vfs-select-row
  *
