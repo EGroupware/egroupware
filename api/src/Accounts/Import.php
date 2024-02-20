@@ -569,6 +569,8 @@ class Import
 				}
 			}
 
+			// ignore / never delete anonymous user, which is required for EGroupware to function properly
+			$sql_users = array_diff($sql_users, ['anonymous']);
 			// do we need to delete (or deactivate) no longer existing users
 			if ($delete !== 'no' && $sql_users)
 			{
