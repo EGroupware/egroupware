@@ -200,7 +200,7 @@ class JsBase
 
 		foreach($definitions as $name => $definition)
 		{
-			$data = $cfs[$name];
+			$data = $cfs[$name] ?? null;
 			if (isset($data))
 			{
 				if (is_scalar($data) || is_array($data) && !isset($data['value']))
@@ -358,7 +358,15 @@ class JsBase
 			}
 			if (isset($value))
 			{
-				$target = $value;
+				// objects need to be merged, to not unset all not given attributes
+				if (is_array($value) && !array_key_exists(0, $value))
+				{
+					$target = array_merge($target, $value);
+				}
+				else
+				{
+					$target = $value;
+				}
 			}
 			else
 			{

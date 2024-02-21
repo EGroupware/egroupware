@@ -188,7 +188,7 @@ class JsContact extends Api\CalDAV\JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$contact += self::parseCustomfields($value);
+						$contact = array_merge($contact, self::parseCustomfields($value));
 						break;
 
 					case 'egroupware.org:assistant':

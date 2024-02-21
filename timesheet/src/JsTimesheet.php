@@ -154,7 +154,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$timesheet += self::parseCustomfields($value);
+						$timesheet = array_merge($timesheet, self::parseCustomfields($value));
 						break;
 
 					case 'prodId':
@@ -163,6 +163,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 					case 'modifier':
 					case self::AT_TYPE:
 					case 'id':
+					case 'etag':
 						break;
 
 					default:
