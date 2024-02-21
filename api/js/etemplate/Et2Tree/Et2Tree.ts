@@ -90,6 +90,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	@state()
 	protected _currentSlTreeItem: SlTreeItem;
 
+	@state()
+	selectedNodes: SlTreeItem[]
+
 	private input: any = null;
 	private _actionManager: EgwAction;
 
@@ -102,6 +105,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this._selectOptions = [];
 
 		this._optionTemplate = this._optionTemplate.bind(this);
+
+		this.selectedNodes = [];
 	}
 
 	firstUpdated()
@@ -415,6 +420,21 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 	/**
+	 * getValue, retrieves the Ids of the selected Items
+	 * @return string or object or null
+	 */
+	getValue()
+	{
+		let res:string[] = []
+		if(this.selectedNodes?.length)
+			for (const selectedNode of this.selectedNodes)
+			{
+				res.push(selectedNode.id)
+			}
+		return res
+	}
+
+	/**
 	 * getSelectedNode, retrieves the full node of the selected Item
 	 * @return {SlTreeItem} full SlTreeItem
 	 */
@@ -694,6 +714,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                                 this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
                                 event.detail.previous = this._previousOption?.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
+								if(this.multiple)
+								{
+									this.selectedNodes = event.detail.selection
+								}
                                 if(typeof this.onclick == "function")
                                 {
                                     this.onclick(event.detail.selection[0].id, this, event.detail.previous)
