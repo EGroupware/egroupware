@@ -175,7 +175,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 // don't trigger dragleave if we are leaving the drag element
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
-                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == self.currentDropEl) return;
+                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this)) return;
 
                 const data = {
                     event: event,

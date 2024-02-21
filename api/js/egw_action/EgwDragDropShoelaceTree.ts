@@ -23,7 +23,7 @@ function dhtmlxTree_getNode(_tree: Et2Tree, _itemId: string)
     }
 }
 
-export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 2000
+export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 1000
 
 export class EgwDragDropShoelaceTree {
     constructor(_tree:Et2Tree, _itemId) {

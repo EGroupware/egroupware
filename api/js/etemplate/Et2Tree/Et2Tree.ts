@@ -161,7 +161,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}
+				sl-tree-item{
+					background-color: white;
+				}
+				sl-tree-item.drop-hover{
+					background-color: #0a5ca5;
+				}
+				sl-tree-item.drop-hover sl-tree-item{
+					background-color: white ;
+				}
+
 			`
+			//todo bg color on drop-hover should take precedence over selected color change
+
 		]
 	}
 
