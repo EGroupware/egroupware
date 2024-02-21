@@ -133,6 +133,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 	protected _searchTimeout : number;
 	protected _searchPromise : Promise<FileInfo[]> = Promise.resolve([]);
 	private static SEARCH_TIMEOUT : number = 500;
+	private _total_result_count : number = 0;
 
 	// Still need some server-side info
 	protected _serverContent : Promise<any> = Promise.resolve({});
@@ -331,6 +332,7 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		// Stop timeout timer
 		clearTimeout(this._searchTimeout);
 
+		this._total_result_count = 0;
 		this.searching = true;
 		this.requestUpdate("searching");
 
@@ -375,6 +377,10 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 		{
 			this._pathWritable = results.writable;
 			this.requestUpdate("_pathWritable");
+		}
+		if(typeof results.total !== "undefined")
+		{
+			this._total_result_count = results.total;
 		}
 		this.helpText = results?.message ?? "";
 		this._fileList = results?.files ?? [];
@@ -841,7 +847,9 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                                 @dblclick=${this.handleFileDoubleClick}
                         ></et2-vfs-select-row>`;
 				}
-			)}`
+                )}
+                ${until(this.moreResultsTemplate(), nothing)}
+                `
 			}`;
 		});
 		return html`
@@ -858,6 +866,23 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
                 <et2-image src="filemanager"></et2-image>
                 ${this.egw().lang("no files in this directory.")}
             </div>`;
+	}
+
+	protected async moreResultsTemplate()
+	{
+		if(this._total_result_count <= 0 || !this._searchPromise || !this._listNode)
+		{
+			return nothing;
+		}
+		return this._searchPromise.then(() =>
+		{
+			const moreCount = this._total_result_count - this._fileList.length;
+			const more = this.egw().lang("%1 more...", moreCount);
+
+			return html`${moreCount > 0 ?
+						  html`
+                              <div class="more">${more}</div>` : nothing}`;
+		});
 	}
 
 	protected mimeOptionsTemplate()

@@ -46,6 +46,10 @@ export default css`
 		margin-top: auto;
 	}
 
+	.vfs_select__listbox .more {
+		text-align: center;
+	}
+
 	.vfs_select__mimefilter {
 		flex: 0 0;
 	}

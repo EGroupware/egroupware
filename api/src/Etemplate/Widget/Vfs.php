@@ -636,11 +636,13 @@ class Vfs extends File
 				$files = [];
 			}
 		}
+		$response['total'] = $content['total'] ?? count($response['files']);
 		foreach($files as $path)
 		{
 			if(is_string($path) && $path == $content['path'] || is_array($path) && $path['path'] == $content['path'])
 			{
 				// remove directory itself
+				$response['total']--;
 				continue;
 			}
 			$name = $path['name'] ?? Api\Vfs::basename($path);
@@ -660,7 +662,7 @@ class Vfs extends File
 		Json\Response::get()->data($response);
 	}
 
-	private static function filesFromVfs($search, $params)
+	private static function filesFromVfs($search, &$params)
 	{
 		$vfs_options = array(
 			'dirsontop' => true,
@@ -688,6 +690,7 @@ class Vfs extends File
 			$vfs_options['limit'] = (int)$params['num_rows'];
 		}
 		$files = Api\Vfs::find($params['path'], $vfs_options);
+		$params['total'] = Api\Vfs::$find_total;
 		return array_merge($dirs, $files);
 	}
 
