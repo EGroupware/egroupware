@@ -769,9 +769,8 @@ export class Et2VfsSelectDialog extends Et2InputWidget(LitElement) implements Se
 			return;
 		}
 
-		// Start the search automatically if they have enough letters
-		// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
-		if(this._searchNode.value.length - 1 > 0)
+		// Start the search automatically if they have something typed
+		if(this._searchNode.value.length > 0)
 		{
 			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2VfsSelectDialog.SEARCH_TIMEOUT);
 		}
