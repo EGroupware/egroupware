@@ -394,9 +394,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 
+	/**
+	 * @return currently selected Item or First Item, if no selection was made yet
+	 */
 	public getSelectedItem(): TreeItemData
 	{
-		return this._currentOption
+		return this._currentOption || this._selectOptions[0]
 	}
 
 	/**
@@ -420,6 +423,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	public getNode(_id: string): TreeItemData
 	{
+		if(_id == undefined){debugger;}
 		// TODO: Look into this._search(), find out why it doesn't always succeed
 		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'id', 'item')
 	}
@@ -810,9 +814,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		super.updated(_changedProperties);
 	}
 
+	/**
+	 *
+	 * @param _id to search for
+	 * @param data{TreeItemData[]} structure to search in
+	 * @return {TreeItemData} node with the given _id or null
+	 * @private
+	 */
 	private _search(_id: string, data: TreeItemData[]): TreeItemData
 	{
 		let res: TreeItemData = null
+		if (_id == undefined)
+		{
+			return null
+		}
 		for (const value of data)
 		{
 			if (value.id === _id)
