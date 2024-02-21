@@ -23,11 +23,14 @@ import {HasSlotController} from "../Et2Widget/slot";
  * @summary Display an editable path from the VFS
  * @since
  *
+ * @slot label - The input’s label. Alternatively, you can use the label attribute.
  * @slot prefix - Before the path
  * @slot suffix - Like prefix, but after
+ * @slot edit-icon - The icon that switches to editing the path as text.
  * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
  *
  * @event change - Emitted when the control's value changes.
+ * @event {CustomEvent} click - Emitted when the user clicks on part of the path.  `event.detail` contains the path.
  *
  * @csspart form-control-input - The textbox's wrapper.
  * @csspart form-control-help-text - The help text's wrapper.

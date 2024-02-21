@@ -15,7 +15,8 @@ import {Et2VfsSelectDialog, FileInfo} from "./Et2VfsSelectDialog";
 import {waitForEvent} from "../Et2Widget/event";
 
 /**
- * @summary Button to open a file selection dialog, and return the selected path(s) as a value
+ * @summary Button to open a file selection dialog, and either return the selected path(s) as a value or take immediate
+ * action with them using the `method` property.
  * @since 23.1
  *
  * @dependency et2-vfs-select-dialog

@@ -28,7 +28,7 @@ import {Et2VfsPath} from "./Et2VfsPath";
 /**
  * @summary Select files (including directories) from the VFS.
  *
- * The dialog does not do anything with the files, just handles the UI to select file.
+ * The dialog does not do anything with the files, just handles the UI to select them.
  *
  * @dependency et2-box
  * @dependency et2-button

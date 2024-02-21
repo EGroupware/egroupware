@@ -7,6 +7,15 @@ import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsSelectRow.styles";
 
+/**
+ * @summary Shows one file in the Et2VfsSelectDialog list
+ *
+ * @slot prefix - Used to prepend an icon or similar element between the checked icon and the mime icon
+ * @slot suffix - Used to append an icon or similar element after the file name
+ *
+ * @csspart base - The component’s base wrapper.
+ * @csspart checked-icon - The checked icon, an <sl-icon> element.
+ */
 export class Et2VfsSelectRow extends Et2Widget(LitElement)
 {
 	static get styles()
