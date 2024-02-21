@@ -179,7 +179,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$event += self::parseCustomfields($value, $strict);
+						$event = array_merge($event, self::parseCustomfields($value, $strict));
 						break;
 
 					case 'prodId':
