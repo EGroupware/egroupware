@@ -528,6 +528,15 @@ class importexport_schedule_ui
 			{
 				if (($resource = @fopen( $target, $data['type'] == 'import' ? 'rb' : 'wb' )))
 				{
+					// if steam is NOT seekable (e.g. http), copy it into temp stream, which is
+					if ($data['type'] == 'import' && ($metadata=stream_get_meta_data($resource)) &&
+						!$metadata['seekable'] && ($tmp = fopen('php://temp', 'r+')))
+					{
+						stream_copy_to_stream($resource, $tmp);
+						fclose($resource);
+						fseek($tmp, 0);
+						$resource = $tmp;
+					}
 					$result = $po->$type( $resource, $definition );
 
 					fclose($resource);
