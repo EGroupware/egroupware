@@ -22,6 +22,9 @@ function dhtmlxTree_getNode(_tree: Et2Tree, _itemId: string)
         return node
     }
 }
+
+export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 2000
+
 export class EgwDragDropShoelaceTree {
     constructor(_tree:Et2Tree, _itemId) {
 
@@ -36,8 +39,12 @@ export class EgwDragDropShoelaceTree {
             if (_event == EGW_AI_DRAG_OVER)
             {
                 this.node.classList.add("draggedOver");
-                this.node.expanded = true
-
+                setTimeout(() => {
+                    if (this.node.classList.contains("draggedOver"))
+                    {
+                        this.node.expanded = true
+                    }
+                }, EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT)
             }
             if (_event == EGW_AI_DRAG_OUT)
             {
