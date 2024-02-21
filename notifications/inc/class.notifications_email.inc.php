@@ -81,7 +81,7 @@ class notifications_email implements notifications_iface {
 		$ident = null;
 		if($this->config->async_identity)
 		{
-			$ident = Api\Mail\Account::read($this->config->async_identity);
+			$ident = Api\Mail\Account::read($this->config->async_identity, $_sender->account_id ?? null);
 		}
 		$this->mail = new Api\Mailer($ident);
 	}

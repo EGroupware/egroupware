@@ -1073,7 +1073,7 @@ class Account implements \ArrayAccess
 	{
 		//error_log(__METHOD__."($acc_id, ".array2string($called_for).")");
 		// some caching, but only for regular usage/users
-		if (!isset($called_for))
+		if (!isset($called_for) && (!isset(self::$instances[$acc_id]) || self::$instances[$acc_id]->user == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// act as singleton: if we already have an instance, return it
 			if (isset(self::$instances[$acc_id]))
