@@ -12,7 +12,8 @@ import {html, LitElement, PropertyValues, render, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
-import {SearchMixinInterface} from "./SearchMixin";
+
+import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
 
 /**
  * @summary Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
@@ -400,5 +401,5 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		}
 	}
 
-	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & T;
+	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & LitElement & T;
 }

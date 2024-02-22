@@ -23,10 +23,10 @@ import {Et2EmailTag} from "../Et2Select/Tag/Et2EmailTag";
 import {waitForEvent} from "../Et2Widget/event";
 import styles from "./Et2Email.styles";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
-import {SearchMixinInterface} from "../Et2Select/SearchMixin";
 import {IsEmail} from "../Validators/IsEmail";
 import {Validator} from "@lion/form-core";
 import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
 
 /**
  * @summary Enter email addresses, offering suggestions from contacts
