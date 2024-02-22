@@ -132,7 +132,7 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  *
  * ## Override:
  * These methods must be overridden:
- * selectionChanged() - Called when the user has selected a search result. You need to call super.selectionChanged(), then
+ * searchResultSelected() - Called when the user has selected a search result. You need to call super.selectionChanged(), then
  * update your value from `this.selectedResults`.
  *
  * ```ts
@@ -239,8 +239,8 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 
 			// Start the searches
 			this._searchPromise = Promise.all([
-				this.localSearch(this._searchNode.value, this.searchOptions),
-				this.remoteSearch(this._searchNode.value, this.searchOptions)
+				this.localSearch(this._searchNode?.value ?? "", this.searchOptions),
+				this.remoteSearch(this._searchNode?.value ?? "", this.searchOptions)
 			]).then(async() =>
 			{
 				this.searching = false;
@@ -382,6 +382,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			{
 				el.current = false;
 				el.tabIndex = -1;
+				el.requestUpdate("current");
 			});
 
 			// Select the target option
@@ -391,6 +392,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				result.current = true;
 				result.tabIndex = 0;
 				result.focus();
+				result.requestUpdate("current");
 			}
 		}
 
@@ -684,7 +686,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			}
 			return this._searchPromise.then(() =>
 			{
-				const moreCount = this._totalResults - this._resultNodes.length;
+				const moreCount = this._totalResults - this._searchResults.length;
 				const more = this.egw().lang("%1 more...", moreCount);
 
 				return html`${moreCount > 0 ?
@@ -694,5 +696,5 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		}
 
 	};
-	return SearchMixinClass as unknown as Constructor<SearchMixinInterface<DataType, Results>> & T & LitElement;
+	return SearchMixinClass as unknown as Constructor<SearchMixinInterface<DataType, Results>> & LitElement & T;
 }

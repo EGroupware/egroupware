@@ -614,7 +614,7 @@ class Vfs extends File
 	 */
 	public static function ajax_vfsSelectFiles($search, $content)
 	{
-		$response = [];
+		$response = ['results' => []];
 		$content['path'] = $content['path'] ?? '~';
 		if($content['path'] == '~')
 		{
@@ -651,7 +651,7 @@ class Vfs extends File
 			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
 			$download = $path['download_url'] ?? Api\Vfs::download_url($path);
 
-			$response['files'][] = array(
+			$response['results'][] = array(
 				'name'  => $name,
 				'path'  => $path,
 				'mime'  => $mime,

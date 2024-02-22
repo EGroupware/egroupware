@@ -13,13 +13,13 @@ export default css`
 		flex-direction: column;
 	}
 
-	.vfs_select__listbox {
+	.search__results {
 		flex: 2 1 auto;
 		min-height: 15em;
 		overflow-y: auto;
 	}
 
-	.vfs_select__listbox .vfs_select__empty {
+	.search__results .search__empty {
 		height: 50%;
 		min-height: 5em;
 		min-width: 20em;
@@ -30,23 +30,24 @@ export default css`
 		user-select: none;
 	}
 
+	.search__results .search__empty et2-image {
+		margin-top: auto;
+	}
+
 	.vfs_select__file_row {
 		display: table-row;
 	}
 
-	.vfs_select__listbox .vfs_select__loading {
+	.search__results .search__loading {
 		text-align: center;
 		line-height: 15em; // 3 * listbox min height
 	}
 
-	.vfs_select__listbox sl-spinner {
+	.search__results sl-spinner {
 		font-size: 4rem;
 	}
-	.vfs_select__listbox .vfs_select__empty et2-image {
-		margin-top: auto;
-	}
 
-	.vfs_select__listbox .more {
+	.search__results .search__more {
 		text-align: center;
 	}
 
