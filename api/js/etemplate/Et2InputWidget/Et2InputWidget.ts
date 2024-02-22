@@ -25,6 +25,7 @@ window.customElements.define('lion-validation-feedback', LionValidationFeedback)
 export declare class Et2InputWidgetInterface
 {
 	readonly : boolean;
+	disabled : boolean;
 	protected value : string | number | Object;
 
 	public required : boolean;
@@ -710,6 +711,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		}
 	}
 
-	return Et2InputWidgetClass;
+	return Et2InputWidgetClass as Constructor & T;
 }
 export const Et2InputWidget = dedupeMixin(Et2InputWidgetMixin);
