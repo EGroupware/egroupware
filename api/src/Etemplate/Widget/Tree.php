@@ -517,7 +517,7 @@ class Tree extends Etemplate\Widget
 
 	protected static function processCategory($cat_id, &$options, &$categories, $globals, &$cat_id_list)
 	{
-		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', '', $globals, $cat_id) as $cat)
+		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', 'name', $globals, $cat_id) as $cat)
 		{
 			$s = stripslashes($cat['name']);
 
@@ -550,5 +550,10 @@ class Tree extends Etemplate\Widget
 			}
 			$options[] = $category;
 		}
+	}
+
+	public static function ajaxSearch($search, $options)
+	{
+
 	}
 }
