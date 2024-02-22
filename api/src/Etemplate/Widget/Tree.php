@@ -519,28 +519,7 @@ class Tree extends Etemplate\Widget
 	{
 		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', 'name', $globals, $cat_id) as $cat)
 		{
-			$s = stripslashes($cat['name']);
-
-			if($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
-			{
-				$s .= ' ♦';
-			}
-
-			// 1D array
-			$category = $cat + array(
-					'text'  => $s,
-					'path' => $categories->id2name($cat['id'], 'path'),
-
-					/*
-					These ones to play nice when a user puts a tree & a selectbox with the same
-					ID on the form (addressbook edit):
-					if tree overwrites selectbox options, selectbox will still work
-					*/
-					'value' => $cat['id'],
-					'label' => $s,
-					'icon' => $cat['data']['icon'] ?? '',
-					'title' => $cat['description']
-				);
+			$category = static::formatCategory($cat, $categories);
 			$cat_id_list[] = $cat['id'];
 			if(!empty($cat['children']))
 			{
@@ -552,8 +531,32 @@ class Tree extends Etemplate\Widget
 		}
 	}
 
-	public static function ajaxSearch($search, $options)
-	{
 
+	public static function formatCategory($cat, &$categories_object)
+	{
+		$s = stripslashes($cat['name']);
+
+		if($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
+		{
+			$s .= ' ♦';
+		}
+
+		// 1D array
+		$category = $cat + array(
+				// Legacy
+				'text'  => $s,
+				'path'  => $categories_object->id2name($cat['id'], 'path'),
+
+				//Client side search interface
+				'value' => $cat['id'],
+				'label' => $s,
+				'icon'  => $cat['data']['icon'] ?? '',
+				'title' => $cat['description']
+			);
+		if(!empty($cat['children']))
+		{
+			$category['hasChildren'] = true;
+		}
+		return $category;
 	}
 }

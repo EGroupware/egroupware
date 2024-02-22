@@ -146,6 +146,14 @@ export default css`
 		order: 20;
 	}
 
+	.search__results {
+		display: none;
+	}
+
+	.tree-dropdown--searching .search__results {
+		display: initial;;
+	}
+
 	/* Tree */
 
 	sl-popup::part(popup) {
@@ -168,6 +176,10 @@ export default css`
 	}
 
 	et2-tree::part(checkbox) {
+		display: none;
+	}
+
+	.tree-dropdown--searching et2-tree {
 		display: none;
 	}
 `;

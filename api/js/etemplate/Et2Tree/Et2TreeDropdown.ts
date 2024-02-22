@@ -11,6 +11,15 @@ import {SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2TreeDropdown.styles";
 import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
+import {SearchMixin, SearchResult, SearchResultsInterface} from "../Et2Widget/SearchMixin";
+import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
+
+
+interface TreeSearchResult extends SearchResultsInterface<SearchResult>
+{
+}
+
+type Constructor<T = {}> = new (...args : any[]) => T;
 
 /**
  * @summary A tree that is hidden in a dropdown
@@ -34,14 +43,14 @@ import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
  * @csspart form-control - The form control that wraps the label, input, and help text.
  */
 
-export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
+export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, SearchResult, TreeSearchResult>(Et2WidgetWithSelectMixin(LitElement))
 {
 
 	static get styles()
 	{
 		return [
 			shoelace,
-			...super.styles,
+			super.styles,
 			styles
 		];
 	}
@@ -60,22 +69,18 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	@property({type: Boolean, reflect: true}) open = false;
 
-	@state() searching = false;
-	@state() hasFocus = false;
 	@state() currentTag : Et2Tag;
+
+	// We show search results in the same dropdown
+	@state() treeOrSearch : "tree" | "search" = "tree";
 
 	private get _popup() : SlPopup { return this.shadowRoot.querySelector("sl-popup")}
 	private get _tree() : Et2Tree { return this.shadowRoot.querySelector("et2-tree")}
 
-	private get _search() : HTMLInputElement { return this.shadowRoot.querySelector("#search")}
-
 	private get _tags() : Et2Tag[] { return Array.from(this.shadowRoot.querySelectorAll("et2-tag"));}
 
-	protected readonly hasSlotController = new HasSlotController(this, "help-text", "label");
+	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this, "help-text", "label");
 	private __value : string[];
-
-	protected _searchTimeout : number;
-	protected _searchPromise : Promise<TreeItemData[]> = Promise.resolve([]);
 
 	constructor()
 	{
@@ -93,8 +98,8 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			new_value = new_value.split(",")
 		}
 		const oldValue = this.__value;
-		// Filter to make sure there are no trailing commas
-		this.__value = <string[]>new_value.filter(v => v);
+		// Filter to make sure there are no trailing commas or duplicates
+		this.__value = Array.from(new Set(<string[]>new_value.filter(v => v)));
 		this.requestUpdate("value", oldValue);
 	}
 
@@ -112,9 +117,9 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
 
-		if(this._search)
+		if(this._searchNode)
 		{
-			this._search.focus(options);
+			this._searchNode.focus(options);
 		}
 	}
 
@@ -122,12 +127,13 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	blur()
 	{
 		this.open = false;
+		this.treeOrSearch = "tree";
 		this.hasFocus = false;
 		this._popup.active = false;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("open");
 		this.requestUpdate("hasFocus");
-		this._search.blur();
+		this._searchNode.blur();
 
 		clearTimeout(this._searchTimeout);
 	}
@@ -158,6 +164,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 
 		this.open = false;
 		this._popup.active = false;
+		this._searchNode.value = "";
 		this.requestUpdate("open");
 		return this.updateComplete
 	}
@@ -181,6 +188,37 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			this.currentTag.requestUpdate();
 			this.currentTag.focus();
 		}
+	}
+
+
+	startSearch()
+	{
+		super.startSearch();
+
+		// Show the dropdown, that's where the results will go
+		this.show();
+
+		// Hide the tree
+		this.treeOrSearch = "search";
+	}
+
+	protected searchResultSelected()
+	{
+		super.searchResultSelected();
+
+		if(this.multiple && typeof this.value !== "undefined")
+		{
+			// Add in the new result(s)
+			(<string[]>this.value).splice(this.value.length, 0, ...this.selectedResults.map(el => el.value));
+		}
+		else if(typeof this.value !== "undefined")
+		{
+			// Just replace our value with whatever they chose
+			this.value = this.selectedResults[0]?.value ?? "";
+		}
+
+		// Done with search, show the tree
+		this.treeOrSearch = "tree";
 	}
 
 	/**
@@ -219,7 +257,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			else
 			{
 				// Arrow back to search, or got lost
-				this._search.focus();
+				this._searchNode.focus();
 			}
 			event.stopPropagation();
 			return false;
@@ -237,7 +275,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			}
 			else
 			{
-				this._search.focus();
+				this._searchNode.focus();
 			}
 		}
 	}
@@ -247,20 +285,20 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
-		this.show();
+		this.hide();
 
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
 
-		this._search.setSelectionRange(this._search.value.length, this._search.value.length);
+		this._searchNode.setSelectionRange(this._searchNode.value.length, this._searchNode.value.length);
 	}
 
 	handleSearchKeyDown(event)
 	{
-		clearTimeout(this._searchTimeout);
+		super.handleSearchKeyDown(event);
 
 		// Left at beginning goes to tags
-		if(this._search.selectionStart == 0 && event.key == "ArrowLeft")
+		if(this._searchNode.selectionStart == 0 && event.key == "ArrowLeft")
 		{
 			this.hide();
 			this._tags.forEach(t => t.tabIndex = 0);
@@ -271,49 +309,12 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 			event.stopPropagation();
 			return;
 		}
-		// Tab on empty leaves
-		if(this._search.value == "" && event.key == "Tab")
-		{
-			// Propagate, browser will do its thing
-			return;
-		}
-		// Up / Down navigates options
-		if(['ArrowDown', 'ArrowUp'].includes(event.key) && this._tree)
-		{
-			if(!this.open)
-			{
-				this.show();
-			}
-			event.stopPropagation();
-			this._tree.focus();
-			return;
-		}
 
-		// Start search immediately
-		else if(event.key == "Enter")
-		{
-			event.preventDefault();
-			this.startSearch();
-			return;
-		}
-		else if(event.key == "Escape")
-		{
-			this.hide();
-			event.stopPropagation();
-			return;
-		}
-
-		// Start the search automatically if they have enough letters
-		// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
-		if(this._search.value.length - 1 > 0)
-		{
-			this._searchTimeout = window.setTimeout(() => {this.startSearch()}, 500);
-		}
 	}
 
 	protected handleLabelClick()
 	{
-		this._search.focus();
+		this._searchNode.focus();
 	}
 
 	handleTagRemove(event : SlRemoveEvent, value : string)
@@ -380,12 +381,14 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		if(this.open)
 		{
 			this._popup.active = false;
+			this._searchNode.value = "";
 		}
 		else
 		{
 			this._popup.active = true;
 		}
 		this.open = this._popup.active;
+		this.treeOrSearch = "tree";
 		this.requestUpdate("open");
 		this.updateComplete.then(() =>
 		{
@@ -407,16 +410,14 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 		}
 
 		return html`
-            <et2-image slot="prefix" part="icon" style="width: var(--icon-width)"
-                       src="${option.icon ?? option.im0}"></et2-image>`
+            <et2-image slot="prefix" part="icon" src="${option.icon ?? option.im0}"></et2-image>`
 	}
 
 	inputTemplate()
 	{
 		return html`
             <input id="search" type="text" part="input"
-                   class="tree-dropdown__search"
-                   exportparts="base:search__base"
+                   class="tree-dropdown__search search__input"
                    autocomplete="off"
                    ?disabled=${this.disabled}
                    ?readonly=${this.readonly}
@@ -473,7 +474,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                     tabindex="-1"
                     variant=${isValid ? nothing : "danger"}
                     size=${this.size || "medium"}
-                    title=${option.path ?? option.title}
+                    title=${option.title}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
@@ -525,6 +526,7 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 'tree-dropdown--readonly': this.readonly,
                                 'tree-dropdown--focused': this.hasFocus,
                                 'tree-dropdown--placeholder-visible': isPlaceholderVisible,
+                                'tree-dropdown--searching': this.treeOrSearch == "search"
                             })}
                             flip
                             shift
@@ -547,15 +549,13 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
                                 ${this.tagsTemplate()}
                                 ${this.inputTemplate()}
                             </div>
-                            ${this.searching ? html`
-                                <sl-spinner class="tree-dropdown"></sl-spinner>` : nothing
-                            }
                             <slot part="suffix" name="suffix" class="tree-dropdown__suffix"></slot>
                             <slot name="expand-icon" part="expand-icon" class="tree-dropdown__expand-icon"
                                   @click=${this.handleTriggerClick}>
                                 <sl-icon library="system" name="chevron-down" aria-hidden="true"></sl-icon>
                             </slot>
                         </div>
+                        ${this.searchResultsTemplate()}
                         <et2-tree
                                 class="tree-dropdown__tree"
                                 ?readonly=${this.readonly}
@@ -572,4 +572,5 @@ export class Et2TreeDropdown extends Et2WidgetWithSelectMixin(LitElement)
 	}
 }
 
+// @ts-ignore Type problems because of Et2WidgetWithSelectMixin
 customElements.define("et2-tree-dropdown", Et2TreeDropdown);
