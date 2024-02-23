@@ -2227,9 +2227,6 @@ export abstract class EgwApp
 	{
 		return EgwApp._instances[Symbol.iterator]();
 	}
-
-	//TODO check if this makes any sense
-	confirm:(param: EgwAction, _senders:any, _target:any)=>any=undefined
 }
 
 // EgwApp need to be global on window, as it's used to iterate through all EgwApp instances
