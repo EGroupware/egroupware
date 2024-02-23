@@ -103,6 +103,7 @@ export default css`
 
 	.tree-dropdown__tags {
 		display: flex;
+		flex: 2 1 auto;
 		flex-wrap: wrap;
 		gap: 0.1rem 0.5rem;
 		min-height: var(--sl-input-height-medium);
