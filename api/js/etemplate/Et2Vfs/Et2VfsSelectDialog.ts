@@ -223,6 +223,15 @@ export class Et2VfsSelectDialog
 		return result;
 	}
 
+	firstUpdated()
+	{
+		this._dialog.updateComplete.then(() =>
+		{
+			this._dialog.panel.style.width = "60em";
+			this._dialog.panel.style.height = "40em";
+		});
+	}
+
 	protected willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
@@ -678,7 +687,7 @@ export class Et2VfsSelectDialog
 	protected toolbarTemplate() : TemplateResult
 	{
 		return html`
-            <et2-box class="et2_toolbar">
+            <div class="et2_toolbar">
                 <et2-button statustext="Go to your home directory" id="home"
                             image="filemanager/gohome"
                             aria-label=${this.egw().lang("Go to your home folder")}
@@ -716,7 +725,7 @@ export class Et2VfsSelectDialog
                                @keydown=${this.handleSearchKeyDown}
                                @sl-clear=${this.startSearch}
                 ></et2-searchbox>
-            </et2-box>
+            </div>
 		`;
 	}
 

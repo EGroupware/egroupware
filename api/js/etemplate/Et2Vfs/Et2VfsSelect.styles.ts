@@ -5,12 +5,22 @@ export default css`
 		flex: 0 0;
 	}
 
-	et2-dialog::part(panel) {
-		height: 40em;
-	}
 	et2-dialog::part(body) {
 		display: flex;
 		flex-direction: column;
+	}
+
+	.et2_toolbar {
+		display: flex;
+		gap: 1ex;
+	}
+
+	.et2_toolbar::slotted(*) {
+		flex: 1 1 auto;
+	}
+
+	.et2_toolbar::slotted(et2-button) {
+		flex-grow: 0;
 	}
 
 	.search__results {
