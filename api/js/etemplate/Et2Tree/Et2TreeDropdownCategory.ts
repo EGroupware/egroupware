@@ -24,13 +24,6 @@ export class Et2TreeDropdownCategory extends Et2TreeDropdown
 
 	private keep_import : Et2CategoryTag
 
-	constructor()
-	{
-		super();
-
-		this.searchUrl = "EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_category_search";
-	}
-
 	connectedCallback()
 	{
 		super.connectedCallback();
