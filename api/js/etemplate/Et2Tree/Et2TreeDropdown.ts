@@ -1,6 +1,6 @@
 import {LitElement, nothing} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
-import {Et2Tree, TreeItemData} from "./Et2Tree";
+import {Et2Tree, TreeItemData, TreeSearchResult} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
@@ -15,7 +15,7 @@ import {SearchMixin, SearchResult, SearchResultsInterface} from "../Et2Widget/Se
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 
 
-interface TreeSearchResult extends SearchResultsInterface<SearchResult>
+interface TreeSearchResults extends SearchResultsInterface<TreeSearchResult>
 {
 }
 
@@ -43,7 +43,7 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @csspart form-control - The form control that wraps the label, input, and help text.
  */
 
-export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, SearchResult, TreeSearchResult>(Et2WidgetWithSelectMixin(LitElement))
+export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeSearchResult, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
 {
 
 	static get styles()
@@ -89,6 +89,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.__value = [];
 	}
 
+	updated()
+	{
+		// @ts-ignore Popup sometimes loses the anchor which breaks the sizing
+		this._popup.handleAnchorChange();
+	}
 	/** Selected tree leaves */
 	@property()
 	set value(new_value : string | string[])
@@ -202,6 +207,22 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.treeOrSearch = "search";
 	}
 
+
+	/**
+	 * If you have a local list of options, you can search through them on the client and include them in the results.
+	 *
+	 * This is done independently from the server-side search, and the results are merged.
+	 *
+	 * @param {string} search
+	 * @param {object} options
+	 * @returns {Promise<any[]>}
+	 * @protected
+	 */
+	protected localSearch<DataType extends SearchResult>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
+	{
+		return super.localSearch(search, searchOptions, this.select_options);
+	}
+
 	protected searchResultSelected()
 	{
 		super.searchResultSelected();
@@ -219,6 +240,9 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 		// Done with search, show the tree
 		this.treeOrSearch = "tree";
+		// Close the dropdown
+		this.hide();
+		this.requestUpdate("value");
 	}
 
 	/**
@@ -448,7 +472,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		return html`${map(value, (value, index) =>
 		{
 			// Deal with value that is not in options
-			const option = this.optionSearch(value, this.select_options, 'value', 'item');
+			const option = this.optionSearch(value, this.select_options, 'value', 'children');
 			return option ? this.tagTemplate(option) : nothing;
 		})}`;
 	}

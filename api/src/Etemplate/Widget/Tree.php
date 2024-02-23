@@ -523,9 +523,8 @@ class Tree extends Etemplate\Widget
 			$cat_id_list[] = $cat['id'];
 			if(!empty($cat['children']))
 			{
-				$category['item'] = [];
-				unset($cat['children']);
-				static::processCategory($cat['id'], $category['item'], $categories, $globals, $cat_id_list);
+				unset($category['children']);
+				static::processCategory($cat['id'], $category['children'], $categories, $globals, $cat_id_list);
 			}
 			$options[] = $category;
 		}

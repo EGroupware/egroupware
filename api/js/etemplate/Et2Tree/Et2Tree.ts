@@ -1,6 +1,6 @@
 import {SlTreeItem} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
-import {find_select_options} from "../Et2Select/FindSelectOptions";
+import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
@@ -14,7 +14,7 @@ import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 
-export type TreeItemData = {
+export type TreeItemData = SelectOption & {
 	focused?: boolean;
 	// Has children, but they may not be provided in item
 	child: Boolean | 1,
@@ -652,7 +652,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		/*
 		if collapsed .. opended? leaf?
 		 */
-		let img: String = selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
+		let img : String = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
 		if (img)
 		{
 			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
@@ -696,8 +696,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
             >
                 <sl-icon src="${img ?? nothing}"></sl-icon>
 
-                <span class="tree-item__label">${selectOption.text}</span>
-                ${selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing}
+                <span class="tree-item__label">${selectOption.label ?? selectOption.text}</span>
+                ${selectOption.children ? repeat(selectOption.children, this._optionTemplate) : (selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing)}
             </sl-tree-item>`
 	}
 

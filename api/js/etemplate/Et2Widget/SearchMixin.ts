@@ -27,6 +27,11 @@ export type SearchResult = {
 	// If a search is in progress, does this option match.
 	// Automatically changed.
 	isMatch? : boolean;
+
+	// The item has children (option group)
+	hasChildren? : boolean,
+	// The item's children
+	children? : SearchResult[]
 }
 
 /**
@@ -191,7 +196,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		// The component has the focus
 		@state() hasFocus = false;
 		// For keyboard navigation of search results
-		@state() currentResult : HTMLElement & SearchResultElement = null;
+		@state() currentResult : LitElement & SearchResultElement = null;
 		// Search result nodes marked as "selected"
 		@state() selectedResults : (HTMLElement & SearchResultElement)[] = [];
 
@@ -209,7 +214,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		// Element where we render the search results
 		protected get _listNode() : HTMLElement { return this.shadowRoot.querySelector("#listbox");}
 
-		protected get _resultNodes() : (HTMLElement & SearchResultElement)[] { return this._listNode ? Array.from(this._listNode.querySelectorAll("*:not(div)")) : [];}
+		protected get _resultNodes() : (LitElement & SearchResultElement)[] { return this._listNode ? Array.from(this._listNode.querySelectorAll("*:not(div)")) : [];}
 
 		constructor(...args : any[])
 		{
@@ -278,17 +283,38 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 * This is done independently from the server-side search, and the results are merged.
 		 *
 		 * @param {string} search
-		 * @param {object} options
+		 * @param {object} searchOptions
 		 * @returns {Promise<any[]>}
 		 * @protected
 		 */
-		protected localSearch<DataType>(search : string, options : object) : Promise<DataType[]>
+		protected localSearch<DataType extends SearchResult>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
 		{
-			const nullResults : Results = <Results><unknown>{
+			const local : Results = <Results><unknown>{
 				results: <DataType[]>[],
 				total: 0
 			}
-			return Promise.resolve(this.processLocalResults(nullResults));
+			let doSearch = function <DataType extends SearchResult>(options : DataType[], value : string)
+			{
+				options.forEach((option) =>
+				{
+					if(typeof option !== "object")
+					{
+						return;
+					}
+					if(option.label?.includes(value) || option.value?.includes(value))
+					{
+						local.results.push(option);
+						local.total++;
+					}
+					if(typeof option.children != "undefined" && Array.isArray(option.children))
+					{
+						return doSearch(option.children, value);
+					}
+				});
+			}
+			doSearch(localOptions, search);
+
+			return Promise.resolve(this.processLocalResults(local));
 		}
 
 		protected remoteSearch<DataType>(search : string, options : object) : Promise<DataType[]>
@@ -375,7 +401,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 * Sets the current search result, which is the one the user is currently interacting with (e.g. via keyboard).
 		 * Only one result may be "current" at a time.
 		 */
-		private setCurrentResult(result : HTMLElement & SearchResultElement | null)
+		private setCurrentResult(result : LitElement & SearchResultElement | null)
 		{
 			// Clear selection
 			this._resultNodes.forEach((el) =>
