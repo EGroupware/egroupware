@@ -661,7 +661,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		// Check to see if node is marked as open with no children.  If autoloadable, load the children
 		const expandState = (this.calculateExpandState(selectOption));
-		const lazy = selectOption.item?.length === 0 && selectOption.child
+		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
+		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
 		if(expandState && this.autoloading && lazy)
 		{
 			this.updateComplete.then(() =>
