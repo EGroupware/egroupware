@@ -620,6 +620,13 @@ class Vfs extends File
 		{
 			$content['path'] = $response['path'] = Api\Vfs::get_home_dir();
 		}
+		if(!Api\Vfs::is_readable($content['path']))
+		{
+			if($content['path'] && str_contains($content['path'], ':') && $path = static::get_vfs_path($content['path']))
+			{
+				$content['path'] = $response['path'] = $path;
+			}
+		}
 		$response['writable'] = Api\Vfs::is_writable($content['path']);
 
 		// Filemanager favorites as directories

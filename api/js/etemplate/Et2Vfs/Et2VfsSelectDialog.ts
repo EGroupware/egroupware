@@ -304,7 +304,7 @@ export class Et2VfsSelectDialog
 			// Set current file to first value
 			if(this.value && this.value[0])
 			{
-				this.setCurrentFile(this._fileNodes.find(node => node.value.path == this.value[0]));
+				this.setCurrentResult(this._fileNodes.find(node => node.value.path == this.value[0]));
 			}
 		});
 	}
@@ -487,7 +487,7 @@ export class Et2VfsSelectDialog
 		}
 
 		// Update selection, value, and display label
-		this.selectionChanged();
+		this.searchResultSelected();
 	}
 
 	/**

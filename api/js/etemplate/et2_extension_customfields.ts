@@ -26,6 +26,7 @@ import {et2_cloneObject, et2_no_init} from "./et2_core_common";
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {LitElement} from "lit";
+import {Et2VfsSelectButton} from "./Et2Vfs/Et2VfsSelectButton";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -808,19 +809,19 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				attrs,
 				// Filemanager select
 				{
-					label: '',
+					path: '~',
 					mode: widget.options.multiple ? 'open-multiple' : 'open',
 					method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
-					method_id: attrs.path,
-					button_label: egw.lang('Link')
-				}, {type: 'vfs-select'});
+					methodId: attrs.path,
+					buttonLabel: this.egw().lang('Link')
+				}, {type: 'et2-vfs-select'});
 			select_attrs.id = attrs.id + '_vfs_select';
 
 			// This controls where the button is placed in the DOM
 			this.rows[select_attrs.id] = cf[0];
 
 			// Do not store in the widgets list, one name for multiple widgets would cause problems
-			widget = <et2_DOMWidget>et2_createWidget(select_attrs.type, select_attrs, this);
+			widget = <Et2VfsSelectButton>loadWebComponent(select_attrs.type, select_attrs, this);
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;
