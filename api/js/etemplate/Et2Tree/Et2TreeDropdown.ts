@@ -85,8 +85,22 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	constructor()
 	{
 		super();
-		this.multiple = false;
 		this.__value = [];
+
+		this.handleDocumentClick = this.handleDocumentClick.bind(this);
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		document.addEventListener("click", this.handleDocumentClick);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		document.removeEventListener("click", this.handleDocumentClick);
 	}
 
 	updated()
@@ -304,6 +318,24 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		}
 	}
 
+	protected handleDocumentClick(event)
+	{
+		if(event.target == this || event.composedPath().includes(this))
+		{
+			return
+		}
+		if(this.open)
+		{
+			event.preventDefault();
+			this.hide()
+		}
+		else
+		{
+			this.blur();
+		}
+
+	}
+
 	private handleSearchFocus()
 	{
 		this.hasFocus = true;
@@ -519,6 +551,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		const hasLabelSlot = this.hasSlotController.test('label');
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
+		const hasValue = this.value && this.value.length > 0;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
 		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
 
@@ -550,7 +583,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 'tree-dropdown--readonly': this.readonly,
                                 'tree-dropdown--focused': this.hasFocus,
                                 'tree-dropdown--placeholder-visible': isPlaceholderVisible,
-                                'tree-dropdown--searching': this.treeOrSearch == "search"
+                                'tree-dropdown--searching': this.treeOrSearch == "search",
+                                'tree-dropdown--has-value': hasValue
                             })}
                             flip
                             shift

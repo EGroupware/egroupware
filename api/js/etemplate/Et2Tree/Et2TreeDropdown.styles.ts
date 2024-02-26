@@ -105,6 +105,7 @@ export default css`
 		display: flex;
 		flex: 2 1 auto;
 		flex-wrap: wrap;
+		align-content: center;
 		gap: 0.1rem 0.5rem;
 		min-height: var(--sl-input-height-medium);
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
@@ -141,6 +142,18 @@ export default css`
 
 	.tree-dropdown--readonly .tree-dropdown__search {
 		cursor: default;
+	}
+
+	/* tag takes full width when widget is not multiple and has value and does not have focus */
+
+	:host(:not([multiple])) .tree-dropdown--has-value .tree-dropdown__search {
+		display: none;
+	}
+
+	:host(:not([multiple])) .tree-dropdown--focused .tree-dropdown__search,
+	:host(:not([multiple])) .tree-dropdown--open .tree-dropdown__search {
+		display: initial;
+		flex-grow: 0;
 	}
 
 	.tree-dropdown__suffix {
