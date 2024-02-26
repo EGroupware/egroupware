@@ -74,6 +74,15 @@ export declare class SearchMixinInterface<DataType extends SearchResult, Results
 	startSearch() : Promise<void>
 
 	/**
+	 * Check to see if a local search result matches the search string
+	 *
+	 * @param {string} search
+	 * @param {DataType} result
+	 * @returns {boolean}
+	 */
+	searchMatch<DataType>(search : string, result : DataType) : boolean
+
+	/**
 	 * Search local options
 	 */
 	protected localSearch<DataType>(search : string, options : object) : Promise<DataType[]>
@@ -214,7 +223,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		// Element where we render the search results
 		protected get _listNode() : HTMLElement { return this.shadowRoot.querySelector("#listbox");}
 
-		protected get _resultNodes() : (LitElement & SearchResultElement)[] { return this._listNode ? Array.from(this._listNode.querySelectorAll("*:not(div)")) : [];}
+		protected get _resultNodes() : (LitElement & SearchResultElement)[] { return this._listNode ? Array.from(this._listNode.querySelectorAll(":scope > :not(div)")) : [];}
 
 		constructor(...args : any[])
 		{
@@ -278,6 +287,35 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		}
 
 		/**
+		 * Check if one of our [local] items matches the search
+		 *
+		 * @param search
+		 * @param item
+		 * @returns {boolean}
+		 * @protected
+		 */
+		public searchMatch<DataType extends SearchResult>(search : string, option : DataType) : boolean
+		{
+			if(!option || !option.value)
+			{
+				return false;
+			}
+			// Search all string fields
+			let searchString = search.toLowerCase();
+			const searchFields = ["label", "value", "title"]
+			for(let i = 0; i < searchFields.length; i++)
+			{
+				let field = searchFields[i];
+				if(option[field]?.toLowerCase().includes(searchString))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/**
 		 * If you have a local list of options, you can search through them on the client and include them in the results.
 		 *
 		 * This is done independently from the server-side search, and the results are merged.
@@ -293,7 +331,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				results: <DataType[]>[],
 				total: 0
 			}
-			let doSearch = function <DataType extends SearchResult>(options : DataType[], value : string)
+			let doSearch = <DataType extends SearchResult>(options : DataType[], value : string) =>
 			{
 				options.forEach((option) =>
 				{
@@ -301,7 +339,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 					{
 						return;
 					}
-					if(option.label?.includes(value) || option.value?.includes(value))
+					if(this.searchMatch<DataType>(value, option))
 					{
 						local.results.push(option);
 						local.total++;
@@ -311,7 +349,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 						return doSearch(option.children, value);
 					}
 				});
-			}
+			};
 			doSearch(localOptions, search);
 
 			return Promise.resolve(this.processLocalResults(local));
@@ -519,6 +557,12 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			{
 				this.resultsOpen = false;
 				this._searchNode.focus();
+			}
+			else if([" ", "Enter"].includes(event.key) && this.currentResult)
+			{
+				event.preventDefault();
+				this.currentResult.selected = true;
+				this.searchResultSelected();
 			}
 		}
 
