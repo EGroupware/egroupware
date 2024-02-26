@@ -14,6 +14,7 @@ use EGroupware\Api;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 use EGroupware\Stylite\Vfs\Versioning;
+use EGroupware\Stylite\Vfs\S3;
 use EGroupware\Api\Vfs;
 
 /**
@@ -225,38 +226,10 @@ class filemanager_admin extends filemanager_ui
 						{
 							@set_time_limit(0);
 							$starttime = microtime(true);
-							$deleted = $errors = 0;
-
-							// shortcut to efficently delete every old version and deleted file
-							if ($content['versionedpath'] == '/')
-							{
-								$deleted = Versioning\StreamWrapper::purge_all_versioning($content['mtime']);
-							}
-							else
-							{
-								Vfs::find($content['versionedpath'], array(
-										'show-deleted' => true,
-										'hidden' => true,
-										'depth' => true,
-										'path_preg' => '#/\.(attic|versions)/#',
-									) + (!(int)$content['mtime'] ? array() : array(
-										'mtime' => ($content['mtime'] < 0 ? '-' : '+') . (int)$content['mtime'],
-									)), function ($path) use (&$deleted, &$errors) {
-									if (($is_dir = Vfs::is_dir($path)) && Vfs::rmdir($path) ||
-										!$is_dir && Vfs::unlink($path))
-									{
-										++$deleted;
-									}
-									else
-									{
-										++$errors;
-									}
-								});
-							}
+							$deleted = S3\StreamWrapper::purgeAllInactive($content['mtime'], $content['versionedpath']);
 							$time = number_format(microtime(true) - $starttime, 1);
-							$msg = ($errors ? lang('%1 errors deleting!', $errors) . "\n\n" : '') .
-								lang('%1 files or directories deleted in %2 seconds.', $deleted, $time);
-							$msg_type = $errors ? 'error' : 'info';
+							$msg = lang('%1 files or directories deleted in %2 seconds.', $deleted, $time);
+							$msg_type = 'info';
 						}
 						Vfs::$is_root = false;
 					}
