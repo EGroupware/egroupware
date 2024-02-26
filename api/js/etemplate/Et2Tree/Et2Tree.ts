@@ -670,6 +670,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				this.getDomNode(selectOption.id)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
 			})
 		}
+		const value = selectOption.value ?? selectOption.id;
 
 		return html`
             <sl-tree-item
@@ -677,7 +678,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     exportparts="checkbox, label"
                     id=${selectOption.id}
                     title=${selectOption.tooltip || nothing}
-                    ?selected=${typeof this.value == "string" && this.value == selectOption.id || typeof this.value?.includes == "function" && this.value.includes(selectOption.id)}
+                    ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
                     ?expanded=${expandState}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
