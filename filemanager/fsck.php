@@ -24,15 +24,13 @@ $GLOBALS['egw_info'] = [
 ];
 require(dirname(__DIR__).'/header.inc.php');
 
-$msgs = Sqlfs\Utils::fsck([
-	'check_only' => $check_only = ($_SERVER['argv'][1] ?? '') !== '--yes',
-]);
+$msgs = Sqlfs\Utils::fsck($check_only = ($_SERVER['argv'][1] ?? '') !== '--yes');
 echo implode("\n", $msgs)."\n";
 if (!$msgs)
 {
-    error_log("fsck found NO problems :)");
+    echo "fsck found NO problems :)\n";
 }
 elseif ($check_only)
 {
-	error_log('Use --yes to fix problems found');
+	echo "\nUse --yes to fix problems found\n";
 }
