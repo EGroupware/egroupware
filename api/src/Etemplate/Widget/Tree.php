@@ -225,8 +225,8 @@ class Tree extends Etemplate\Widget
 	{
 		return (boolean)array_filter($cats, function($cat) use($id)
 		{
-			return $cat['id'] == $id || (
-					!empty($cat['item']) && is_array($cat['item']) && static::in_cats($id, $cat['item'])
+			return $cat['value'] == $id || (
+					!empty($cat['children']) && is_array($cat['children']) && static::in_cats($id, $cat['children'])
 				);
 		});
 	}
@@ -267,7 +267,9 @@ class Tree extends Etemplate\Widget
 						$this->type == 'tree' && !self::in_tree($val, $allowed))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
-							$this->type == 'tree-cat' ? " ('".implode("','",array_keys($allowed)).')' : ''), '');
+																   $this->type == 'tree-cat' ? " ('" . implode("','", array_column($allowed, 'value')) . ')' : ''
+						),                         ''
+						);
 						$val = '';
 						break;
 					}
