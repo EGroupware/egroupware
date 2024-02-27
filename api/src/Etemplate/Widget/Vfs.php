@@ -643,7 +643,7 @@ class Vfs extends File
 				$files = [];
 			}
 		}
-		$response['total'] = $content['total'] ?? count($response['files']);
+		$response['total'] = $content['total'] ?? count($files);
 		foreach($files as $path)
 		{
 			if(is_string($path) && $path == $content['path'] || is_array($path) && $path['path'] == $content['path'])
