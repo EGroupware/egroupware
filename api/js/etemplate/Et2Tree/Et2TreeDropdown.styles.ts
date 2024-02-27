@@ -153,7 +153,6 @@ export default css`
 	:host(:not([multiple])) .tree-dropdown--focused .tree-dropdown__search,
 	:host(:not([multiple])) .tree-dropdown--open .tree-dropdown__search {
 		display: initial;
-		flex-grow: 0;
 	}
 
 	.tree-dropdown__suffix {
