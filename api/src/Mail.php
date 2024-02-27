@@ -4966,6 +4966,14 @@ class Mail
 			//_debug_array($_structure->getMimeId()); exit;
 		}
 
+		// if message is just a pdf, return it to browser to display
+		if ($_structure->getType() === 'application/pdf')
+		{
+			header('Content-Type: application/pdf');
+			echo $this->getAttachment($_uid, $_partID ?? '1', 0, true, $_folder)->getContents();
+			exit();
+		}
+
 		switch($_structure->getPrimaryType())
 		{
 			case 'application':
@@ -6197,7 +6205,9 @@ class Mail
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
 			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
-			array('encoding' => (!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
+			// some mailer e.g. "SAP NetWeaver 750" set not transfer-encoding for pdf --> use base64 when fetching as binary
+			array('encoding' => $fetchAsBinary && $part->getType() === 'application/pdf' ? 'base64' :
+				(!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
 
 		return $part;
 	}
