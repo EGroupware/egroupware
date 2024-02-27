@@ -344,6 +344,7 @@ class filemanager_admin extends filemanager_ui
 								   '', '/index.php', array('menuaction' => 'filemanager.filemanager_admin.fsck')
 		);
 
+		Api\Framework::bodyClass('scrollVertical');
 		$GLOBALS['egw']->framework->render($content, lang('Admin') . ' - ' . lang('Check virtual filesystem'), true);
 	}
 
