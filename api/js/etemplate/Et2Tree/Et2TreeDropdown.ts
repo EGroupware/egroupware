@@ -69,6 +69,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	 */
 	@property({type: Boolean, reflect: true}) open = false;
 
+	/**
+	 * Actions (passed to the tree)
+	 * @type {{}}
+	 */
+	@property({type: Object}) actions = {};
+
 	@state() currentTag : Et2Tag;
 
 	// We show search results in the same dropdown
@@ -615,6 +621,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                         </div>
                         ${this.searchResultsTemplate()}
                         <et2-tree
+                                .id=${this.id + "_tree"}
+                                ._parent=${this}
                                 class="tree-dropdown__tree"
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
@@ -626,6 +634,14 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                         >
                         </et2-tree>
                     </sl-popup>
+                </div>
+                <div
+                        part="form-control-help-text"
+                        id="help-text"
+                        class="form-control__help-text"
+                        aria-hidden=${hasHelpText ? 'false' : 'true'}
+                >
+                    <slot name="help-text">${this.helpText}</slot>
                 </div>
 		`
 	}

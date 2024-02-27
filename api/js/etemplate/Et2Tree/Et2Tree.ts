@@ -124,6 +124,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				this.requestUpdate("_selectOptions");
 			})
 		}
+
+		// Actions can't be initialized without being connected to InstanceManager
+		this._initActions();
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -182,96 +185,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		]
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			// multiple: {
-			//     name: "",
-			//     type: Boolean,
-			//     default: false,
-			//     description: "Allow selecting multiple options"
-			// },
-			// selectOptions: {
-			//     type: "any",
-			//     name: "Select options",
-			//     default: {},
-			//     description: "Used to set the tree options."
-			// },
-			// onclick: {
-			// 	name: "onclick",
-			// 	type: "js",
-			// 	description: "JS code which gets executed when clicks on text of a node"
-			// },
-			// onSelect: {
-			//     name: "onSelect",
-			//     type: "js",
-			//     default: et2_no_init,
-			//     description: "Javascript executed when user selects a node"
-			//},
-			// onCheck: {
-			//     name: "onCheck",
-			//     type: "js",
-			//     default: et2_no_init,
-			//     description: "Javascript executed when user checks a node"
-			// },
-			// onOpenStart: {
-			//     name: "onOpenStart",
-			//     type: "js",
-			//     default: et2_no_init,
-			//     description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
-			// },
-			// onOpenEnd: {
-			//     name: "onOpenEnd",
-			//     type: "js",
-			//     default: et2_no_init,
-			//     description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
-			// },
-			// imagePath: {
-			//     name: "Image directory",
-			//     type: String,
-			//     default: egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/",//TODO we will need a different path here! maybe just rename the path?
-			//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
-			// },
-			// value: {
-			//     type: "any",
-			//     default: {}
-			// },
-			// actions: {
-			// 	name: "Actions array",
-			// 	type: "any",
-			// 	default: et2_no_init,
-			// 	description: "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
-			// },
-			// autoloading: {
-			//     name: "Auto loading",
-			//     type: String,
-			//     default: "",
-			//     description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
-			// },
-			//only used once ever as "bullet" in admin/.../index.xet
-			stdImages: {
-				name: "Standard images",
-				type: String,
-				default: "",
-				description: "comma-separated names of icons for a leaf, closed and opened folder (default: leaf.png,folderClosed.png,folderOpen.png), images with extension get loaded from imagePath, just 'image' or 'appname/image' are allowed too"
-			},
-			//what is this used for only used as "strict in mail subscribe.xet and folder_management.xet
-			multiMarking: {
-				name: "multi marking",
-				type: "any",
-				default: false,
-				description: "Allow marking multiple nodes, default is false which means disabled multiselection, true or 'strict' activates it and 'strict' makes it strict to only same level marking"
-			},
-			// highlighting: {
-			//     name: "highlighting",
-			//     type: Boolean,
-			//     default: false,
-			//     description: "Add highlighting class on hovered over item, highlighting is disabled by default"
-			// },
-		}
-	};
-
 	private _actions: object
 
 	get actions()
@@ -311,39 +224,18 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this._actions = actions
 		if (this.id == "" || typeof this.id == "undefined")
 		{
-			window.egw().debug("warn", "Widget should have an ID if you want actions", this);
+			if(this.isConnected)
+			{
+				window.egw().debug("warn", "Widget should have an ID if you want actions", this);
+			}
+			// No id because we're not done yet, try again later
 			return;
 		}
 
-		// Initialize the action manager and add some actions to it
-		// Only look 1 level deep
-		// @ts-ignore exists from Et2Widget
-		var gam = egw_getActionManager(this.egw().appName, true, 1);
-		if (typeof this._actionManager != "object")
+		if(this.isConnected)
 		{
-			// @ts-ignore exists from Et2Widget
-			if (gam.getActionById(this.getInstanceManager().uniqueId, 1) !== null)
-			{
-				// @ts-ignore exists from Et2Widget
-				gam = gam.getActionById(this.getInstanceManager().uniqueId, 1);
-			}
-			if (gam.getActionById(this.id, 1) != null)
-			{
-				this._actionManager = gam.getActionById(this.id, 1);
-			} else
-			{
-				this._actionManager = gam.addAction("actionManager", this.id);
-			}
+			this._initActions();
 		}
-		// @ts-ignore egw() exists on this
-		this._actionManager.updateActions(actions, this.egw().appName);
-		// @ts-ignore
-		if (this.options.default_execute) this._actionManager.setDefaultExecute(this.options.default_execute);
-
-		// Put a reference to the widget into the action stuff, so we can
-		// easily get back to widget context from the action handler
-		this._actionManager.data = {widget: this};
-
 	}
 
 	public loadFromXML()
@@ -358,6 +250,45 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			this._selectOptions = new_options;
 		}
+	}
+
+	/**
+	 * Initialize the action manager and add some actions to it
+	 * @private
+	 */
+	private _initActions()
+	{
+		// Only look 1 level deep
+		// @ts-ignore exists from Et2Widget
+		var gam = egw_getActionManager(this.egw().appName, true, 1);
+		if(typeof this._actionManager != "object")
+		{
+			// @ts-ignore exists from Et2Widget
+			if(this.getInstanceManager() && gam.getActionById(this.getInstanceManager().uniqueId, 1) !== null)
+			{
+				// @ts-ignore exists from Et2Widget
+				gam = gam.getActionById(this.getInstanceManager().uniqueId, 1);
+			}
+			if(gam.getActionById(this.id, 1) != null)
+			{
+				this._actionManager = gam.getActionById(this.id, 1);
+			}
+			else
+			{
+				this._actionManager = gam.addAction("actionManager", this.id);
+			}
+		}
+		// @ts-ignore egw() exists on this
+		this._actionManager.updateActions(this.actions, this.egw().appName);
+		// @ts-ignore
+		if(this.options.default_execute)
+		{
+			this._actionManager.setDefaultExecute(this.options.default_execute);
+		}
+
+		// Put a reference to the widget into the action stuff, so we can
+		// easily get back to widget context from the action handler
+		this._actionManager.data = {widget: this};
 	}
 
 	/** Sets focus on the control. */
@@ -457,7 +388,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		if(_id == undefined){debugger;}
 		// TODO: Look into this._search(), find out why it doesn't always succeed
-		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'id', 'item')
+		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'value', 'children')
 	}
 
 	/**
@@ -772,6 +703,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	_link_actions(actions)
 	{
+		if(this.actions && !this._actionManager)
+		{
+			// ActionManager creation was missed
+			this.actions = this._actions;
+		}
 		// Get the top level element for the tree
 		let objectManager = egw_getAppObjectManager(true);
 		let widget_object = objectManager.getObjectById(this.id);
@@ -804,16 +740,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			// Iterate over the options (leaves) and add action to each one
 			let apply_actions = function (treeObj: EgwActionObject, option: TreeItemData) {
 				// Add a new action object to the object manager
+				let id = option.value ?? (typeof option.value == 'number' ? String(option.id) : option.id);
 				// @ts-ignore
-				let obj: EgwActionObject = treeObj.addObject((typeof option.id == 'number' ? String(option.id) : option.id), new EgwDragDropShoelaceTree(self, option.id));
+				let obj : EgwActionObject = treeObj.addObject(id, new EgwDragDropShoelaceTree(self, id));
 				obj.updateActionLinks(action_links);
 
-				if (option.item && option.item.length > 0)
+				const children = option.children ?? option.item ?? [];
+				for(let i = 0; i < children.length; i++)
 				{
-					for (let i = 0; i < option.item.length; i++)
-					{
-						apply_actions.call(this, treeObj, option.item[i]);
-					}
+					apply_actions.call(this, treeObj, children[i]);
 				}
 			};
 			for (const selectOption of this._selectOptions)
