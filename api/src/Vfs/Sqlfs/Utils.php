@@ -130,7 +130,14 @@ class Utils extends StreamWrapper
 				'check_only' => $check_only)
 		) as $app_msgs)
 		{
-			if ($app_msgs) $msgs = array_merge($msgs, $app_msgs);
+			if ($app_msgs && is_array($app_msgs[0]))
+			{
+				$msgs = array_merge($msgs, ...$app_msgs);
+			}
+			elseif ($app_msgs)
+			{
+				$msgs = array_merge($msgs, $app_msgs);
+			}
 		}
 
 		// also run quota recalc as fsck might have (re-)moved files
@@ -258,7 +265,7 @@ class Utils extends StreamWrapper
 		$msgs = array();
 		$limit = 500;
 		$offset = 0;
-		$select_stmt = self::$pdo->prepare('SELECT fs_id FROM '.self::TABLE.
+		$select_stmt = self::$pdo->prepare('SELECT fs_id,fs_size FROM '.self::TABLE.
 			" WHERE fs_mime!='httpd/unix-directory' AND fs_content IS NULL AND fs_link IS NULL AND (fs_s3_flags&7)=0".
 			" LIMIT $limit OFFSET :offset");
 		$select_stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -298,13 +305,44 @@ class Utils extends StreamWrapper
 						}
 					}
 				}
+				// file is empty and NOT in /templates/ or /etemplates/ which use 0-byte files as delete marker
+				elseif (!$row['fs_size'] && !filesize($phy_path) && !preg_match('#^/e?templates/#', $path))
+				{
+					if ($check_only)
+					{
+						++$offset;
+						$msgs[] = lang('File %1 is empty %2!',
+							$path.' (#'.$row['fs_id'].')',$phy_path);
+					}
+					else
+					{
+						if (!isset($stmt))
+						{
+							$stmt = self::$pdo->prepare('DELETE FROM '.self::TABLE.' WHERE fs_id=:fs_id');
+							$stmt_props = self::$pdo->prepare('DELETE FROM '.self::PROPS_TABLE.' WHERE fs_id=:fs_id');
+						}
+						if ($stmt->execute(array('fs_id' => $row['fs_id'])) &&
+							$stmt_props->execute(array('fs_id' => $row['fs_id'])))
+						{
+							$msgs[] = lang('File %1 is empty %2 --> file removed!',$path,$phy_path);
+							unlink($phy_path);
+						}
+						else
+						{
+							++$offset;
+							$msgs[] = lang('File %1 is empty %2 --> failed to remove file!',
+								$path.' (#'.$row['fs_id'].')',$phy_path);
+						}
+					}
+
+				}
 			}
 		}
 		while ($num >= $limit);
 
 		if ($check_only && $msgs)
 		{
-			$msgs[] = lang('Files without content in physical filesystem will be removed.');
+			$msgs[] = lang('Files without content in physical filesystem or empty files will be removed.');
 		}
 		return $msgs;
 	}
