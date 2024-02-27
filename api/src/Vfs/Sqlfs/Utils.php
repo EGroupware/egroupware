@@ -355,12 +355,12 @@ class Utils extends StreamWrapper
 	const LOST_N_FOUND_GRP = 'Admins';
 
 	/**
-	 * Check and optionally fix unconnected nodes - parent directory does not (longer) exists:
+	 * Check and optionally fix unconnected nodes - parent directory does no (longer) exists or connected to itself:
 	 *
 	 * SELECT fs.*
 	 * FROM egw_sqlfs fs
 	 * LEFT JOIN egw_sqlfs dir ON dir.fs_id=fs.fs_dir
-	 * WHERE fs.fs_id > 1 && dir.fs_id IS NULL
+	 * WHERE fs.fs_id > 1 AND (dir.fs_id IS NULL OR fs.fs_id=fs.fs_dir)
 	 *
 	 * @param boolean $check_only =true
 	 * @return array with messages / found problems
@@ -374,7 +374,7 @@ class Utils extends StreamWrapper
 		$offset = 0;
 		$stmt = self::$pdo->prepare('SELECT fs.* FROM ' . self::TABLE . ' fs' .
 			' LEFT JOIN ' . self::TABLE . ' dir ON dir.fs_id=fs.fs_dir' .
-			" WHERE fs.fs_id > 1 AND dir.fs_id IS NULL LIMIT $limit OFFSET :offset");
+			" WHERE fs.fs_id > 1 AND (dir.fs_id IS NULL OR fs.fs_id=fs.fs_dir) LIMIT $limit OFFSET :offset");
 		$stmt->setFetchMode(PDO::FETCH_ASSOC);
 		do
 		{
