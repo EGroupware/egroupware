@@ -620,6 +620,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 ?disabled=${this.disabled}
                                 value=${this.multiple ? nothing : this.value}
                                 ._selectOptions=${this.select_options}
+                                .actions=${this.actions}
 
                                 @sl-selection-change=${this.handleTreeChange}
                         >
