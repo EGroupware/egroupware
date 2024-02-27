@@ -339,7 +339,7 @@ class filemanager_admin extends filemanager_ui
 		$content = '<p>' . implode("</p>\n<p>", (array)$msgs) . "</p>\n";
 
 		$content .= Api\Html::form('<p>' . ($check_only && is_array($msgs) ?
-									   Api\Html::submit_button('fix', lang('Fix reported problems')) : '') .
+									   Api\Html::submit_button('edit', lang('Fix reported problems')) : '') .
 								   Api\Html::submit_button('cancel', lang('Cancel')) . '</p>',
 								   '', '/index.php', array('menuaction' => 'filemanager.filemanager_admin.fsck')
 		);
