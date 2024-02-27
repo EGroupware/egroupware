@@ -177,7 +177,14 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 // and the multiple dragDropTypes (ai.ddTypes)
                 _callback.call(_context, false, ai);
 
-                if (action && egw.app_name() == 'filemanager') {
+				// Stop parent elements from also starting to drag if we're nested
+				if(ai.selected.length)
+				{
+					event.stopPropagation();
+				}
+
+				if(action && egw.app_name() == 'filemanager')
+				{
                     if (_context.isSelection(event)) return;
 
                     // Get all selected
@@ -247,7 +254,6 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 					Promise.all(wait).then(() =>
 					{
 						event.dataTransfer.setDragImage(ai.helper, 12, 12);
-						debugger;
 					});
 				});
 
@@ -261,7 +267,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 if (draggable) draggable.classList.remove('drag--moving');
                 // cleanup drop hover class from all other DOMs if there's still anything left
                 Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
-            };
+				// Clean up selected
+				ai.selected = [];
+			};
 
             // Drag Event listeners
             node.addEventListener('dragstart', dragstart, false);
