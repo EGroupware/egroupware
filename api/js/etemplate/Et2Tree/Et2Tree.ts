@@ -577,6 +577,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return this.getNode(_nodeId)?.userdata?.find(elem => elem.name === _name)?.content
 	}
 
+	/**
+	 * Overridable, add style
+	 * @returns {TemplateResult<1>}
+	 */
+	styleTemplate()
+	{
+		return html``;
+	}
+
 	//this.selectOptions = find_select_options(this)[1];
 	_optionTemplate(selectOption: TreeItemData): TemplateResult<1>
 	{
@@ -606,9 +615,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return html`
             <sl-tree-item
                     part="item"
-                    exportparts="checkbox, label"
+                    exportparts="checkbox, label, item:item-item"
                     id=${selectOption.id}
                     title=${selectOption.tooltip || nothing}
+                    class=${selectOption.class || nothing}
                     ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
                     ?expanded=${expandState}
                     ?lazy=${lazy}
@@ -637,7 +647,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	public render(): unknown
 	{
 		return html`
+            ${this.styleTemplate()}
             <sl-tree
+                    part="tree"
                     .selection=${this.multiple ? "multiple" : "single"}
                     @sl-selection-change=${
                             (event: any) => {

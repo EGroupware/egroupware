@@ -3,15 +3,31 @@
  *
  * @returns {string}
  */
-import {literal, StaticValue} from "lit/static-html.js";
+import {html, literal, StaticValue} from "lit/static-html.js";
 import {property} from "lit/decorators/property.js";
-import {PropertyValues} from "lit";
+import {css, PropertyValues, unsafeCSS} from "lit";
 import {Et2TreeDropdown} from "./Et2TreeDropdown";
 import {Et2CategoryTag} from "../Et2Select/Tag/Et2CategoryTag";
 
 export class Et2TreeDropdownCategory extends Et2TreeDropdown
 {
 
+	static get styles()
+	{
+		return [
+			super.styles,
+			css`
+				:host {
+					--category-color: transparent;
+				}
+
+				::part(item-item) {
+					border-inline-start: 4px solid transparent;
+					border-inline-start-color: var(--category-color, transparent);
+				}
+			`
+		];
+	}
 	/**
 	 * Application to get categories from
 	 */
@@ -56,6 +72,28 @@ export class Et2TreeDropdownCategory extends Et2TreeDropdown
 	public get tagTag() : StaticValue
 	{
 		return literal`et2-category-tag`;
+	}
+
+	/**
+	 * Set CSS category colors
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected styleTemplate()
+	{
+		let css = "";
+		const catColor = (option) =>
+		{
+			css += ".cat_" + option.value + " {--category-color: " + (option.data?.color || "transparent") + ";}\n";
+
+			option.children?.forEach((option) => catColor(option))
+		}
+		this.select_options.forEach((option => catColor(option)));
+		// @formatter:off
+		return html`
+            <style>${unsafeCSS(css)}</style>
+		`;
+		// @formatter:on
 	}
 }
 

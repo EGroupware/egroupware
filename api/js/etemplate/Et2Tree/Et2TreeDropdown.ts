@@ -1,4 +1,4 @@
-import {LitElement, nothing} from "lit";
+import {LitElement, nothing, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2Tree, TreeItemData, TreeSearchResult} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
@@ -493,6 +493,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		`;
 	}
 
+	styleTemplate() : TemplateResult
+	{
+		return html``;
+	}
+
 	/**
 	 * Tag used for rendering tags when multiple=true
 	 * Used for creating, finding & filtering options.
@@ -624,11 +629,13 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 .id=${this.id + "_tree"}
                                 ._parent=${this}
                                 class="tree-dropdown__tree"
+                                exportparts=""
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
                                 value=${this.multiple ? nothing : this.value}
                                 ._selectOptions=${this.select_options}
                                 .actions=${this.actions}
+                                .styleTemplate=${() => this.styleTemplate()}
 
                                 @sl-selection-change=${this.handleTreeChange}
                         >
