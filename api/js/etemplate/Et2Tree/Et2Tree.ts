@@ -822,22 +822,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			return true
 		}
-		if(this._selectOptions.length > 1 &&
-			 this._selectOptions[0] == selectOption &&
-			(this._selectOptions.find((selectOption) => {
-					return selectOption.open
-				}) == undefined
-			)
-			)
-		{
-			return true //open the first item, if no item is opened
-		}
+		// TODO: Move this mail-specific stuff into mail
 		if(selectOption.id && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
 		{
 			return true
 		}
-		return false
-			;
+		return false;
 	}
 
 	private _deleteItem(_id, list)
