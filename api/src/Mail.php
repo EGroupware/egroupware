@@ -6205,8 +6205,9 @@ class Mail
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
 			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
-			// some mailer e.g. "SAP NetWeaver 750" set not transfer-encoding for pdf --> use base64 when fetching as binary
-			array('encoding' => $fetchAsBinary && $part->getType() === 'application/pdf' ? 'base64' :
+			// some mailers e.g. "SAP NetWeaver 750" send just the PDF, with no body or multipart
+			// AND therefore NO transfer-encoding --> use base64 when fetching as binary
+			array('encoding' => !isset($part->parent) && $fetchAsBinary && $part->getType() === 'application/pdf' ? 'base64' :
 				(!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
 
 		return $part;
