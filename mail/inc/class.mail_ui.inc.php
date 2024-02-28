@@ -4083,7 +4083,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($icServerID);
 		}
 
-		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase']);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;
 
