@@ -288,6 +288,40 @@ class Import
 						$last_modified = $contact['modified'];
 					}
 					$account = $this->accounts->read($contact['account_id']);
+					// if we sync groups, change (numeric) account_id's in primary group and memberships, in case they are different
+					if (in_array('groups', explode('+', $type)))
+					{
+						static $primary_groups=[];
+						if (!isset($primary_groups[$account['account_primary_group']]) &&
+							($group = $this->accounts->read($account['account_primary_group'])))
+						{
+							$primary_groups[$account['account_primary_group']] = $group['account_lid'];
+						}
+						if (($primary_grp_name=$primary_groups[$account['account_primary_group']] ?? null) &&
+							($grp_id=$this->accounts_sql->name2id($primary_grp_name, 'account_lid', 'g')))
+						{
+							$account['account_primary_group'] = $grp_id;
+						}
+						// LDAP backend does not query it automatic
+						if (!isset($account['memberships']))
+						{
+							$account['memberships'] = $this->accounts->memberships($account['account_id']) ?: [];
+						}
+						// primary group might not be set in memberships, but EGroupware requires it to be taken into account
+						if ($primary_grp_name && !in_array($primary_grp_name, $account['memberships']) &&
+							($sql_grp_id = array_search(self::strtolower($primary_grp_name), $groups)))
+						{
+							$account['memberships'][$sql_grp_id] = $primary_grp_name;
+						}
+						foreach ($account['memberships'] as $grp_id => $grp_name)
+						{
+							if (($sql_grp_id = array_search(self::strtolower($grp_name), $groups)) && $sql_grp_id != $grp_id)
+							{
+								unset($account['memberships'][$grp_id]);
+								$account['memberships'][$sql_grp_id] = $grp_name;
+							}
+						}
+					}
 					// do NOT log binary content of image
 					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
 					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
@@ -498,11 +532,6 @@ class Import
 					// if requested, also set memberships
 					if (in_array('groups', explode('+', $type)) && !$dry_run)
 					{
-						// LDAP backend does not query it automatic
-						if (!isset($account['memberships']))
-						{
-							$account['memberships'] = $this->accounts->memberships($account['account_id']);
-						}
 						// preserve memberships of local groups, if they are allowed
 						$local_memberships = [];
 						if (in_array('local', explode('+', $type)))
