@@ -825,8 +825,12 @@ class Import
 			$groups[$sql_id] = self::strtolower($group['account_lid']);
 
 			// we need to record and return the id's to update members, AFTER users are created/updated
-			// only for incremental run, initial run set's memberships with the user anyway (more efficient for LDAP!)
-			if (!empty($modified))
+			if (is_a($this->accounts, Ads::class))
+			{
+				// ADS::members() calls the frontend, have to use ADS::getMembers() instead
+				$set_members[$sql_id] = $this->accounts->getMembers($group);
+			}
+			else
 			{
 				$set_members[$sql_id] = $this->accounts->members($group['account_id']);
 			}

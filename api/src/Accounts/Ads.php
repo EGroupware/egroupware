@@ -597,16 +597,33 @@ class Ads
 	{
 		if (!($data = $this->filter(array('objectsid' => $this->get_sid($account_id)), 'g', self::$group_attributes)))
 		{
-			return false;	// group not found
+			return false;    // group not found
 		}
 		$group = $this->_ldap2group(array_shift($data));
 
-		// for memberships we have to query primaryGroupId and memberOf of users
-		$group['members'] = $this->filter(array('memberOf' => $group['account_dn']), 'u');
-		// primary group is not stored in memberOf attribute, need to add them too
-		$group['members'] = $this->filter(array('primaryGroupId' => abs($account_id)), 'u', null, $group['members']);
+		$group['members'] = $this->getMembers($group);
 
 		return $group;
+	}
+
+	/**
+	 * Query members of group
+	 *
+	 * @param array $group with values for keys account_id and account_dn
+	 * @return array
+	 */
+	public function getMembers(array $group)
+	{
+		if (empty($group['account_dn']) || empty($group['account_id']))
+		{
+			throw new \InvalidArgumentException(__METHOD__.'('.json_encode($group).') missing account_id and/or account_dn attribute');
+		}
+		// for memberships, we have to query primaryGroupId and memberOf of users
+		$members = $this->filter(array('memberOf' => $group['account_dn']), 'u');
+		// primary group is not stored in memberOf attribute, need to add them too
+		$members = $this->filter(array('primaryGroupId' => abs($group['account_id'])), 'u', null, $members);
+
+		return $members;
 	}
 
 	/**
