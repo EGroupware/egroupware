@@ -70,8 +70,7 @@ export class Et2VfsSelectRow extends Et2Widget(LitElement)
                     @mouseenter=${this.handleMouseEnter}
                     @mouseleave=${this.handleMouseLeave}
             >
-                <sl-icon part="checked-icon" class="file__check" name="check" library="system"
-                         aria-hidden="true"></sl-icon>
+                <sl-icon part="checked-icon" class="file__check" name="check-lg" aria-hidden="true"></sl-icon>
                 <slot part="prefix" name="prefix" class="file__prefix"></slot>
                 <et2-vfs-mime .value=${this.value}></et2-vfs-mime>
                 ${this.value.name}
