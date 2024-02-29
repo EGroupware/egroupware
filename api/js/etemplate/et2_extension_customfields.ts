@@ -798,23 +798,28 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				.appendTo(row);
 
 			// Create upload widget
-			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, attrs, this);
+			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, {...attrs}, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
 
 			// Add a link to existing VFS file
-			const select_attrs = jQuery.extend({},
-				attrs,
+			const required = attrs.needed ?? attrs.required;
+			delete attrs.needed;
+			const select_attrs = {
+				...attrs,
 				// Filemanager select
-				{
+				...{
 					path: '~',
 					mode: widget.options.multiple ? 'open-multiple' : 'open',
 					method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
 					methodId: attrs.path,
 					buttonLabel: this.egw().lang('Link')
-				}, {type: 'et2-vfs-select'});
+				},
+				type: 'et2-vfs-select',
+				required: required
+			}
 			select_attrs.id = attrs.id + '_vfs_select';
 
 			// This controls where the button is placed in the DOM
