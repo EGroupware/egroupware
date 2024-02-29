@@ -77,13 +77,13 @@ class notifications_email implements notifications_iface {
 			unset($this->mail);
 		}
 
-		// Use configured mail ac
+		// Use configured mail account
 		$ident = null;
 		if($this->config->async_identity)
 		{
 			$ident = Api\Mail\Account::read($this->config->async_identity, $_sender->account_id ?? null);
 		}
-		$this->mail = new Api\Mailer($ident);
+		$this->mail = new Api\Mailer($ident, $_sender->account_id ?? null);
 	}
 
 	/**
