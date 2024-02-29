@@ -85,7 +85,7 @@
     "@lion/core": "^0.21.1",
     "@lion/form-core": "^0.16.0",
     "@rollup/plugin-commonjs": "^24.0.1",
-    "@shoelace-style/shoelace": "2.8.0",
+    "@shoelace-style/shoelace": "2.12.0",
     "blueimp-gallery": "^3.4.0",
     "colortranslator": "^1.9.2",
     "core-js": "^3.29.1",

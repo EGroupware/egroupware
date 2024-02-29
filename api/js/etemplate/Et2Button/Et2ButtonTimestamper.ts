@@ -44,12 +44,6 @@ export class Et2ButtonTimestamper extends Et2Button
 			 */
 			timezone: {
 				type: String
-			},
-			/**
-			 * Icon to use, default "timestamp"
-			 */
-			image: {
-				type: String
 			}
 		}
 	}
