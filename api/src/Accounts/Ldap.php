@@ -607,7 +607,7 @@ class Ldap
 	}
 
 	/**
-	 * Merges the group releavant account data from $data into $to_write
+	 * Merges the group relevant account data from $data into $to_write
 	 *
 	 * @internal
 	 * @param array $to_write data to write to ldap incl. objectclass ($data is NOT yet merged)
@@ -621,7 +621,7 @@ class Ldap
 		// do not overwrite existing description, if non is given
 		if (isset($data['account_description']) &&
 			// make sure NOT to unset description for new groups, give a "Protocol error"
-			(!empty($data['account_id']) || !empty($data['account_description'])))
+			($old || !empty($data['account_description'])))
 		{
 			$to_write['description'] = !empty($data['account_description']) ? $data['account_description'] : array();
 		}
