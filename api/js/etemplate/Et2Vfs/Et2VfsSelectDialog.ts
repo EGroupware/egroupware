@@ -534,6 +534,11 @@ export class Et2VfsSelectDialog
 		}
 	}
 
+	/**
+	 * SearchMixin handles the actual selection, we just reject directories here.
+	 *
+	 * @param {MouseEvent} event
+	 */
 	handleFileClick(event : MouseEvent)
 	{
 		const target = event.target as HTMLElement;
@@ -542,22 +547,13 @@ export class Et2VfsSelectDialog
 
 		if(file && !file.disabled)
 		{
-			this.currentResult = file;
-
 			// Can't select a directory normally, can't select anything in "saveas"
 			if(file.value.isDir && this.mode != "select-dir" || this.mode == "saveas")
 			{
+				event.preventDefault();
+				event.stopPropagation();
 				return;
 			}
-			if(this.multiple)
-			{
-				this.toggleResultSelection(file);
-			}
-			else
-			{
-				this.setSelectedFiles(file);
-			}
-
 			// Set focus after updating so the value is announced by screen readers
 			//this.updateComplete.then(() => this.displayInput.focus({ preventScroll: true }));
 		}
