@@ -159,7 +159,7 @@ export class Et2Number extends Et2Textbox
 
 	get valueAsNumber() : number
 	{
-		let val = this.__value;
+		let val = this.value;
 
 		if("" + val !== "")
 		{
