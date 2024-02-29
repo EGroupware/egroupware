@@ -2013,7 +2013,7 @@ abstract class Merge
 		}
 		if(strpos($param[0], '$$NENVLF') === 0)
 		{    //sets a Pagebreak without any value, only if the field has a value
-			if($this->replacements['$$' . $param[1] . '$$'] != '')
+			if(!empty($this->replacements['$$' . $param[1] . '$$']))
 			{
 				$replace = $LF;
 			}
