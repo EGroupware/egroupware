@@ -45,23 +45,14 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 		}
 		if(new_image && !this.src)
 		{
-			this.__name = new_image;
+			// For some reason setting it directly does not show the image
+			this.updateComplete.then(() => this.name = new_image);
 		}
 	}
 
 	get image()
 	{
 		return this.src || this.name;
-	}
-
-	set name(name)
-	{
-		// No - use image to avoid conflicts between our icons & SlIconButton's image/url loading
-	}
-
-	get name()
-	{
-		return super.name;
 	}
 }
 
