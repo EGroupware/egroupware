@@ -393,12 +393,12 @@ export class Et2VfsSelectDialog
 				break;
 			case "saveas":
 				// Saveas wants a full path, including filename
-				this.value = [this.path + "/" + this.filename];
+				this.value = [this.path + "/" + this._filenameNode.value ?? this.filename];
 
 				// Check for existing file, ask what to do
 				if(this.fileInfo(this.value[0]))
 				{
-					let result = await this.overwritePrompt(this.filename);
+					let result = await this.overwritePrompt(this._filenameNode ?? this.filename);
 					if(result == null)
 					{
 						return;
