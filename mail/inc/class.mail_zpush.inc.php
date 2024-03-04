@@ -715,6 +715,8 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						$x = $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
+					// if we have attachment(s), we need to use multipart/mixed
+					$mailObject->addHeader('Content-Type', 'multipart/mixed');
 				}
 			}
 		} // end forward
