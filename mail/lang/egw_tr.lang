@@ -16,7 +16,7 @@ attach files	mail	tr	Dosya ekleme
 attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
 attachments, ...	mail	tr	ekler, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın. \n \n Devam etmek ister misiniz?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın.<br>Devam etmek ister misiniz?
 be aware that all attachments will be sent as %1!	mail	tr	Tüm eklerin %1 olarak gönderileceğini unutmayın!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	tr	Varsayılan olarak 'http://' sadece 'https://' ile değiştirilir. 'https://proxy.egroupware.org/' adresini yalnızca http üzerinden kullanılabilen resimleri de yükleyecek şekilde yapılandırmaktan çekinmeyin.
 caching of flags	mail	tr	Bayrakların önbelleğe alınması
@@ -77,6 +77,7 @@ ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
 identity label	mail	tr	Kimlik etiketi
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
 if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	tr	Tek bir işlemde birden fazla klasör seçmek isterseniz, ctrl tuşunu basılı tutup başlangıç aralığı olarak bir klasör ve bitiş aralığı olarak aynı seviyedeki başka bir klasör seçebilirsiniz, aradaki tüm klasörler mevcut durumlarına göre seçilecek veya seçilmeyecektir.
+imap	mail	tr	IMAP
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Nedeniyle mesaj %2 klasörüne kaydedilemedi: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	tr	%1 iletisinin içe aktarımı başarısız oldu. Hedef Klasör %2 mevcut değil.
 import of message %1 failed. destination folder not set.	mail	tr	%1 iletisinin içe aktarımı başarısız oldu. Hedef Klasör ayarlanmamış.
@@ -85,6 +86,7 @@ importance	mail	tr	ÖNEM
 important	mail	tr	Önemli
 in mailbox: %1, with id: %2, and partid: %3	mail	tr	Posta Kutusunda: %1, Kimlik: %2 ve PartID: %3 ile
 in order to protect your privacy all external sources within this email are blocked.	mail	tr	Gizliliğinizi korumak için bu e-postadaki tüm harici kaynaklar engellenmiştir.
+information to show on email tag	mail	tr	E-posta etiketinde gösterilecek bilgiler
 initialization of mail failed. please use the wizard to cope with the problem.	mail	tr	Posta modülünün başlatılması başarısız oldu. Yapılandırmayı düzeltmek için lütfen yapılandırma sihirbazını kullanın.
 inline	mail	tr	İleri
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	tr	Oluştur iletişim kutusunu açarken imzayı yeni (veya yanıt) mesajın en üstüne ekleyin (imzaları değiştiremeyebilirsiniz)
@@ -110,14 +112,27 @@ mailaccount	mail	tr	Posta hesabı
 mailinglist	mail	tr	Posta listesi
 mails	common	tr	Postalar
 mails can be copied to that folder via context menu, if folder is configured.	mail	tr	Klasör yapılandırılmışsa, postalar içerik menüsü aracılığıyla bu klasöre kopyalanabilir.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	tr	Posta sunucusu rapor etti:\n%1 \nSeçili mesajları hemen silerek devam etmek istiyor musunuz (tamam'a tıklayın)? \nEğer istemiyorsanız, lütfen devam etmeden önce çöp klasörünüzü boşaltmayı deneyin. (iptal'e tıklayın)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	tr	Posta sunucusu rapor etti:<br><br>%1<br><br>Seçili mesajları hemen silerek devam etmek istiyor musunuz (tamam'a tıklayın)?<br>Eğer istemiyorsanız, lütfen devam etmeden önce çöp klasörünüzü boşaltmayı deneyin. (iptal'e tıklayın)
 mark all as read	mail	tr	Hepsini okundu olarak işaretle
 mark all messages in folder as read	mail	tr	Klasördeki tüm iletileri okundu olarak işaretle
 mark as deleted	mail	tr	Silindi olarak işaretle
 message learned as spam and moved to spam folder	mail	tr	Mesaj spam olarak öğrenildi ve spam klasörüne taşındı
 modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
+move selected to	mail	tr	Seçileni şuraya taşı
+move to	mail	tr	Şuraya git
+name and domain	mail	tr	İsim ve alan adı
+name of account	mail	tr	Hesap adı
+name of imap servers (space separated host or host:port)	mail	tr	IMAP sunucularının adı (boşluk bırakılarak ayrılmış ana bilgisayar veya ana bilgisayar:bağlantı noktası)
+never show	mail	tr	Asla gösterme
+never show notification	mail	tr	Asla bildirim gösterme
+new mail from %1	mail	tr	%1'den yeni e-posta
+new mail notification	mail	tr	Yeni e-posta bildirimi
+new message type	mail	tr	Yeni mesaj türü
 new subject	mail	tr	Yeni konu
+no access	mail	tr	Erişim yok
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	tr	TO/CC/BCC adresi verilmedi ve mesajın kaydedileceği bir klasör belirtilmedi.
+no adress, to send this mail to, supplied	mail	tr	Bu e-postanın gönderileceği bir adres belirtilmedi
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	tr	Klasör hedefi sağlanmadı ve mesajı kaydetmek için bir klasör veya postayı saklamak için başka bir önlem (InfoLog/Ticketsystem'e kaydet) sağlanmadı, ancak gerekli.
 no sneak preview in list	mail	tr	Mesaj önizlemesi yok
 non	mail	tr	Olmayan
@@ -128,15 +143,19 @@ open in html mode	mail	tr	HTML modunda açın
 open in text mode	mail	tr	Metin modunda aç
 open with collabora office	mail	tr	Collabora Online ile Açın
 organisation	admin	tr	Organizasyon
+organization	mail	tr	Organizasyon
 organization | real name email	mail	tr	Organizasyon | Gerçek ad [E-posta]
 original message	mail	tr	Orijinal mesaj
 outbox	mail	tr	Giden Kutusu
 permission denied	mail	tr	İzin verilmedi
+please configure access to an existing individual imap account.	mail	tr	Lütfen mevcut bir bireysel IMAP hesabına erişimi yapılandırın.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	tr	Lütfen S/MIME sertifikanızı Hesabı Düzenle iletişim kutusunda bulunan Şifreleme sekmesinde yapılandırın.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı filtre kurallarını destekleyip desteklemediğini ve bunları ID:%2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı tatil mesajlarını destekleyip desteklemediğini ve bunları ID:%2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı filtre kurallarını destekleyip desteklemediğini ve bunları ID: %2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı tatil mesajlarını destekleyip desteklemediğini ve bunları ID: %2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
 please enter password	mail	tr	Lütfen şifreyi girin
 please select a address	mail	tr	Lütfen bir adres seçin
+please select the number of days to wait between responses	mail	tr	Lütfen yanıtlar arasında beklenecek gün sayısını seçin
+please supply the message to send with auto-responses	mail	tr	Lütfen otomatik yanıtlarla gönderilecek mesajı sağlayın
 post	mail	tr	gönder
 predefined addresses for compose	mail	tr	Compose için önceden tanımlanmış adresler
 preview pane	mail	tr	Pencere düzeni
@@ -146,6 +165,7 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	tr	Anlık bildirimler
 quicksearch	mail	tr	Hızlı Arama
 quicksearch (with cc)	mail	tr	Hızlı Arama (+Kopya)
+quota limit warning in megabyte (recommended value is 30 mb).	mail	tr	Megabayt cinsinden kota sınırı uyarısı (önerilen değer 30 MB'dir).
 read / unread	mail	tr	Okundu / Okunmadı
 real name	mail	tr	Gerçek isim
 real name email	mail	tr	Gerçek isim [E-posta]
@@ -154,7 +174,10 @@ remember the password for	mail	tr	için şifreyi hatırlayın
 remove all	mail	tr	Tümünü kaldırın
 removing %1 from blacklisted email addresses failed because of %2	mail	tr	Kara listedeki e-posta adreslerinden %1'in kaldırılması %2 nedeniyle başarısız oldu
 removing %1 from whiltelisted email addresses failed because of %2	mail	tr	Listelenen e-posta adreslerinden %1'in kaldırılması %2 nedeniyle başarısız oldu
+rename folder	mail	tr	Klasörü yeniden adlandır
 replace 'http://' in image urls with (trailing / required!)	mail	tr	Resim URL'lerinde 'http://' yerine (sondaki / gerekli!)
+reply	mail	tr	Yanıtla
+reply all	mail	tr	Hepsini yanıtla
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	tr	Bu mesajın içeriği şifrelenmiş göründüğü ve şifresi düzgün bir şekilde çözülemediği için bu mesajı yanıtlamak başarısız oldu. Bu şifreli mesajın içeriğini hala eklemek istiyorsanız, bunun yerine ek olarak ilet seçeneğini kullanmayı deneyebilirsiniz.
 report as ham	mail	tr	Ham olarak bildir
 report as spam	mail	tr	Spam olarak bildir
@@ -162,17 +185,21 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	tr	Bu e-posta içeriğini Spam olarak bildir - spamTitan gibi spam çözümleri öğrenecek
 required pear class mail/mimedecode.php not found.	mail	tr	Gerekli PEAR sınıfı Mail/mimeDecode.php bulunamadı.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	tr	Paylaşılan veya kullanıcı klasöründe özel görülen bayraklarla Dovecot kullanıyorsanız devre dışı bırakmanız gerekir!
+resend after how many days?	mail	tr	Kaç gün sonra tekrar gönderin?
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	tr	Gönderen adresi için sertifika bulunamadığından S/MIME Şifreleme başarısız oldu: %1
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
+save as draft	mail	tr	Taslak olarak kaydet
+save as infolog	mail	tr	InfoLog olarak kaydet
 save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak oluşturmak için düğmeyi işaretleyin
 save as ticket	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
 save the drafted message as eml file into vfs	mail	tr	Taslak mesajı eml dosyası olarak Dosya Yöneticisi'ne kaydedin
+save to disk	mail	tr	Diske kaydet
 saving of message %1 failed. destination folder %2 does not exist.	mail	tr	%1 iletisinin kaydedilmesi başarısız oldu. Hedef klasör %2 mevcut değil.
-saving of message %1 succeeded. check folder %2.	mail	tr	%1 mesajının kaydedilmesi başarılı oldu. 2 klasörünü kontrol edin.
+saving of message %1 succeeded. check folder %2.	mail	tr	%1 mesajının kaydedilmesi başarılı oldu. %2 klasörünü kontrol edin.
 saving the rule failed:	mail	tr	Kuralın kaydedilmesi başarısız oldu:
 security	mail	tr	Güvenlik
 see attachments for content of the orignial mail	mail	tr	İlk e-postanın içeriği için eklere bakınız
-select all	mail	tr	Tamam?n? seç
+select all	mail	tr	Tümünü seçin
 select an existing entry in order to append mail content to it	mail	tr	Posta içeriğini eklemek için mevcut bir girişi seçin
 select an item to read	mail	tr	Okumak için bir öğe seçin
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
@@ -183,6 +210,7 @@ server supports special-use folders	mail	tr	Sunucu özel kullanım klasörlerini
 set predefined values for compose...	mail	tr	Oluşturma için önceden tanımlanmış değerleri ayarlayın ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	tr	İmza, bir yanıttan veya iletiden sonra (standart) veya önce eklenmeli mi ve imza oluşturma sırasında görünür ve değiştirilebilir olmalı mı?
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	tr	Ana ekran klasör bölmesinde tüm klasörleri (abone olunan VE abone olunmayan) gösterme
+show horizontal	mail	tr	Yatay göster
 show notification for new arriving mails	mail	tr	Yeni gelen postalar için bildirim göster
 show test connection section and control the level of info displayed?	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi düzeyini kontrol edin?
 show test connection section and control the level of info displayed??	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi seviyesini kontrol edin?
@@ -200,7 +228,13 @@ smime encrypted message	mail	tr	S/MIME şifreli mesaj
 smime signed message	mail	tr	S/MIME imzalı mesaj
 smtp	mail	tr	SMTP
 sneak preview in list	mail	tr	Mesaj önizlemesi
+step 1: imap - incoming mail	mail	tr	Adım 1: IMAP - gelen e-posta
+step 2: folder	mail	tr	Adım 2: Klasör
+step 3: sieve - server side mail filtering	mail	tr	Adım 3: Sieve - sunucu tarafı e-posta filtreleme
+step 4: smtp - outgoing mail	mail	tr	Adım 4: SMTP - giden e-posta
 text	mail	tr	Metin
+text mode	mail	tr	Metin modu
+text/plain	mail	tr	Metin
 the imap server need to meet certain requirements and be configured for it:	mail	tr	IMAP sunucusunun belirli gereksinimleri karşılaması VE bunun için yapılandırılmış olması gerekir:
 the rule with priority %1 successfully saved!	mail	tr	Öncelik %1 olan kural başarıyla kaydedildi!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	tr	Sieve komut dosyasını depolamak için yer kalmadı, lütfen mailserver'ınızın yapılandırmasındaki sieve_maxscriptsize seçeneğini kontrol edin.
@@ -212,6 +246,7 @@ toggle all folders view for %1	mail	tr	%1 için tüm Klasörler görünümünü 
 toggled on actions	mail	tr	Eylemler üzerinde geçiş yapıldı
 trash	mail	tr	Çöp
 trash folder	mail	tr	Çöp klasörü
+unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 write	mail	tr	Yaz
 yes, only trigger connection reset	mail	tr	evet, sadece bağlantı sıfırlamayı tetikleyin
 yes, show all debug information available for the user	mail	tr	evet, kullanıcı için mevcut tüm hata ayıklama bilgilerini göster

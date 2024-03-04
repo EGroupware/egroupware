@@ -1,31 +1,41 @@
 %1 %2 in %3	calendar	id	%1 %2 dalam %3
+%1 days	calendar	id	%1 hari
 %1 event(s) %2	calendar	id	%1 kegiatan %2
-%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan !!!
+%1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	id	%1 kegiatan %2, %3 gagal karena kurang kewenangan!
+%1 events in ical file, only first one imported and displayed!	calendar	id	%1 acara dalam file iCal, hanya yang pertama diimpor dan ditampilkan!
 %1 hours	calendar	id	%1 jam
+%1 minutes	calendar	id	%1 menit
 %1 participants removed because of missing invite grants	calendar	id	%1 peserta dibuang karena tiada hak mengundang
 %1 records imported	calendar	id	%1 rekaman diimpor
 %1 weeks	calendar	id	%1 minggu
 (%1 events in %2 seconds)	calendar	id	(%1 kegiatan dalam %2 detik)
 (empty = use global limit, no = no export at all)	admin	id	(empty = gunakan pembatasan global, no = tidak ada ekspor sama sekali)
-a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking</em> tidak akan konflik dengan kegiatan lainnya
-accept	calendar	id	diterima
+a non blocking event will not conflict with other events	calendar	id	Kegiatan yang <em>non blocking tidak akan konflik dengan kegiatan lainnya
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	id	Perusak pesta pada seseorang yang TIDAK diundang ke rapat namun entah bagaimana mendapatkan undangan tersebut.
+accept	calendar	id	Diterima
 accept or reject an invitation	calendar	id	Terima atau tolak undangan
 accepted	calendar	id	Diterima
-access denied to the calendar of %1 !!!	calendar	id	Akses ditolak untuk kalender dari %1 !!!
+access denied to the calendar of %1 !!!	calendar	id	Akses ditolak untuk kalender dari %1!
+access to calendar of %1 denied!	calendar	id	Akses ke kalender %1 ditolak!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	id	Tindakan yang mengakibatkan notifikasi: Penambahan, Pembatalan, Penerimaan, Penolakan, ...
 actions	calendar	id	Tindakan
-actions...	calendar	id	Tindakan...
+actions...	calendar	id	Tindakan ...
 add alarm	calendar	id	Tambah alarm
 add appointments via shortened dialog or complete edit window	calendar	id	Menambahkan janji temu melalui dialog yang dipersingkat atau jendela edit lengkap
+add current view as favorite	calendar	id	Tambahkan tampilan saat ini sebagai favorit
+add new alarm	calendar	id	Tambahkan alarm baru
 add new event	calendar	id	Tambahkan janji temu baru
+add new participants or resource	calendar	id	Menambahkan peserta atau sumber daya baru
 add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
 added by synchronization	calendar	id	Ditambahkan dengan sinkronisasi
-after	calendar	id	after
+after	calendar	id	Setelah
 after %1	calendar	id	Setelah %1
 after current date	calendar	id	Setelah tanggal sekarang
+age:	calendar	id	Usia:
 alarm	calendar	id	Alarm
 alarm added	calendar	id	Alarm ditambahkan
+alarm added automatic to new events before event start-time	calendar	id	Alarm ditambahkan otomatis ke acara baru sebelum waktu mulai acara
 alarm deleted	calendar	id	Alarm dibuang
 alarm for %1 at %2 in %3	calendar	id	Alarm untuk %1 pada %2 dalam %3
 alarm management	calendar	id	Pengelolaan alarm
@@ -33,25 +43,31 @@ alarms	calendar	id	Alarm
 all categories	calendar	id	Semua kategori
 all day	calendar	id	Seharian
 all events	calendar	id	Semua kegiatan
+all exceptions are converted into single events.	calendar	id	Semua pengecualian diubah menjadi acara tunggal.
 all future	calendar	id	Mendatang
 all incl. rejected	calendar	id	Semua termasuk yang ditolak
 all participants	calendar	id	Semua peserta
 allow booking requests from any user when creating events?	calendar	id	Izinkan permintaan pemesanan dari pengguna mana pun saat membuat acara?
-always	calendar	id	selalu
+allow party crashers with email that match the following regular expression	calendar	id	Izinkan perusak pesta dengan email yang cocok dengan ekspresi reguler berikut
+allow users to prevent change notifications ('do not notify')	calendar	id	Izinkan pengguna untuk mencegah pemberitahuan perubahan 'Jangan beri tahu'
+always	calendar	id	Selalu
 always use full edit dialog	calendar	id	Selalu gunakan dialog edit lengkap
 always use the full edit dialog, not this little dialog	calendar	id	Selalu gunakan dialog edit lengkap, bukan dialog kecil ini
 apply the changes	calendar	id	Terapkan perubahan
 attention	calendar	id	Perhatian
-back half a month	calendar	id	mundur setengah bulan
-back one month	calendar	id	mundur sebulan
-back one year	calendar	id	mundur setahun
+back half a month	calendar	id	Mundur setengah bulan
+back one month	calendar	id	Mundur sebulan
+back one year	calendar	id	Mundur setahun
 before %1	calendar	id	Sebelum %1
 before current date	calendar	id	Sebelum tanggal sekarang
 before the event	calendar	id	Sebelum kegiatan
-birthday	calendar	id	HUT
-birthdays	admin	id	HUT
-busy	calendar	id	sibuk
+birthday	calendar	id	Ulang tahun
+birthdays	admin	id	Ulang tahun
+birthdays only	calendar	id	Hanya ulang tahun
+both, holidays and birthdays	calendar	id	Keduanya, hari libur dan ulang tahun
+busy	calendar	id	Sibuk
 by	calendar	id	oleh
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	id	Secara default (tidak ada yang diatur di sini) EGroupware hanya mengizinkan penyelenggara/pemilik untuk menambahkannya.
 calendar - list	calendar	id	Kalender - Daftar
 calendar - multi-weekly	calendar	id	Kalender - Beberapa Minggu
 calendar - planner	calendar	id	Kalender - Planner
@@ -69,7 +85,7 @@ category report	calendar	id	Laporan Kategori
 chair	calendar	id	Pimpinan
 change history	calendar	id	Riwayat pengubahan
 changed event-data applied	calendar	id	Perubahan data acara yang diterapkan
-charset of file	calendar	id	Charset of file
+charset of file	calendar	id	Karakter file
 check all	calendar	id	Contreng semua
 choose a category	calendar	id	Pilih kategori
 close the window	calendar	id	Tutup jendela
@@ -90,11 +106,12 @@ custom	calendar	id	Custom
 custom fields	common	id	Custom fields
 custom_2	common	id	Senggang/Sibuk
 daily	calendar	id	Harian
+data exchange settings	calendar	id	Pengaturan pertukaran data
 date range	calendar	id	Rentang tanggal
-day	calendar	id	hari
-days	calendar	id	hari
+day	calendar	id	Hari
+days	calendar	id	Hari
 days of the week for a weekly repeated event	calendar	id	Hari-hari untuk kegiatan yang berulang setiap minggu
-days repeated	calendar	id	hari-hari pengulangan
+days repeated	calendar	id	Hari-hari pengulangan
 dayview	calendar	id	Tampilan Harian
 delegated	calendar	id	Didelegasikan
 delete selected events	calendar	id	Hapus kegiatan terpilih
@@ -109,6 +126,7 @@ download	calendar	id	Unduh
 download this event as ical	calendar	id	Unduh kegiatan ini sebagai iCal
 duration	calendar	id	Durasi
 duration of the meeting	calendar	id	Durasi pertemuan/rapat
+edit event in calendar	calendar	id	Mengedit acara di kalender
 edit exception	calendar	id	Edit pengecualian
 edit series	calendar	id	Edit runtun
 edit status or alarms for this particular day	calendar	id	Edit status atau alarm untuk hari tersebut
@@ -116,17 +134,18 @@ edit this event	calendar	id	Edit kegiatan ini
 edit this series of recurring events	calendar	id	Edit runtun kegiatan yang berulang ini
 email address migration	calendar	id	Migrasi alamat email
 empty for all	calendar	id	Kosongkan semua
+empty target calendar before importing	calendar	id	Kosongkan kalender target sebelum mengimpor
 end	calendar	id	Akhir
 end date/time	calendar	id	Tanggal/Jam berakhir
 enddate	calendar	id	Tanggal berakhir
 enddate of the export	calendar	id	Tanggal akhir untuk ekspor
-ends	calendar	id	selesai
+ends	calendar	id	Selesai
 error notifying %1	calendar	id	Kesalahan memberitahukan %1
 event deleted	calendar	id	Kegiatan dihapus
 event details follow	calendar	id	Berikut adalah detil Kegiatan
 event saved	calendar	id	Kegiatan disimpan
 event will occupy the whole day	calendar	id	Kegiatan akan berlangsung sehari penuh
-events	common	id	events
+events	common	id	Events
 exception	calendar	id	Pengecualian
 exceptions	calendar	id	Pengecualian
 exclude weekend	calendar	id	Kecualikan Akhir Pekan
@@ -138,9 +157,9 @@ filemanager	calendar	id	Manajer berkas
 filename	calendar	id	Nama berkas
 filename of the download	calendar	id	Nama berkas untuk unduhan
 for	calendar	id	untuk
-forward half a month	calendar	id	maju setengah bulan
-forward one month	calendar	id	maju sebulan
-forward one year	calendar	id	maju setahun
+forward half a month	calendar	id	Maju setengah bulan
+forward one month	calendar	id	Maju sebulan
+forward one year	calendar	id	Maju setahun
 four days view	calendar	id	Tampilan empat-harian
 freebusy	common	id	Senggang/Sibuk
 freetime search	calendar	id	Mencari waktu Senggang
@@ -158,6 +177,7 @@ history	calendar	id	Riwayat
 history logging	admin	id	Catatan riwayat
 holiday	calendar	id	Hari Raya
 holidays	calendar	id	Hari Raya
+holidays only	calendar	id	Hanya hari libur
 hours	calendar	id	jam
 how many days to be removed in the future (default 365)	calendar	id	Berapa hari yang akan dihapus di masa depan (default 365)
 how many days to be removed in the past (default 100)	calendar	id	Berapa hari yang akan dihapus di masa lalu (default 100)
@@ -165,9 +185,10 @@ how many days to sync in the future (default %1)	calendar	id	Berapa hari yang ak
 how many days to sync in the past (default %1)	calendar	id	Berapa hari yang akan disinkronkan di masa lalu (default %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	id	Berapa banyak baris deskripsi yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui bilah gulir.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	id	Berapa banyak baris peristiwa sepanjang hari yang harus terlihat secara langsung. Baris lebih lanjut tersedia melalui mouseover.
+how many minutes should each interval last?	calendar	id	Berapa menit setiap interval harus berlangsung?
 how many separate calendars to show before merging them together	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan kalender gabungan, jika pengguna yang dipilih lebih sedikit, kalender akan ditampilkan secara terpisah untuk tampilan minggu atau hari.
 ical	calendar	id	iCal
-ical / rfc2445	calendar	id	iCal / rfc2445
+ical / rfc2445	calendar	id	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	id	iCal tidak dapat mengubah pemilik acara yang sudah ada. Ini hanya berlaku untuk acara baru.
 ical export	calendar	id	Ekspor iCal
 ical file	calendar	id	Berkas iCal
@@ -178,7 +199,7 @@ import	calendar	id	Impor
 import csv-file	common	id	Impor berkas-CSV
 insert in document	calendar	id	Sisipkan dalam dokumen
 interval	calendar	id	Interval
-invalid email-address "%1" for user %2	calendar	id	alamat email "%1" untuk pengguna %2 keliru
+invalid email-address "%1" for user %2	calendar	id	Alamat email "%1" untuk pengguna %2 keliru
 invitations	calendar	id	Undangan
 invite	common	id	Undang
 last	calendar	id	Akhir
@@ -197,6 +218,7 @@ minimum number of users for showing day view as consolidated.	calendar	id	Jumlah
 minimum number of users for showing week view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan minggu sebagai konsolidasi.
 minutes	calendar	id	Menit
 modified	calendar	id	Diubah
+modifier	calendar	id	Pengubah
 mon	calendar	id	Sen
 month	calendar	id	Bulan
 monthly	calendar	id	Bulanan
@@ -205,6 +227,7 @@ monthly (by day)	calendar	id	Bulanan (urut hari)
 monthview	calendar	id	Tampilan Bulanan
 move to	calendar	id	Pindah ke
 multiple participants	calendar	id	Beberapa peserta
+multiple week view	calendar	id	Tampilan beberapa minggu
 needs action	calendar	id	Perlu tindakan
 never notify externals (non-users) about events i create	calendar	id	Jangan pernah memberi tahu pihak luar (bukan pengguna) tentang acara yang saya buat
 new	calendar	id	Baru
@@ -213,8 +236,8 @@ no filter	calendar	id	Tiada saringan
 no matches found	calendar	id	Tiada yang cocok
 no recurrence	calendar	id	Tiada perulangan
 no response	calendar	id	Tiada tanggapan
-non blocking	calendar	id	non blocking
-not	calendar	id	not
+non blocking	calendar	id	Non blocking
+not	calendar	id	Not
 not rejected	calendar	id	Tidak ditolak
 notify	calendar	id	Memberitahukan
 notify all externals (non-users) about this event	calendar	id	Memberitahukan semua pihak luar (bukan pengguna) tentang peristiwa ini
@@ -224,9 +247,9 @@ observance rule	calendar	id	Aturan Observance
 occurence	calendar	id	Occurence
 old startdate	calendar	id	Tanggal memulai yang lama
 on %1 %2 %3 your meeting request for %4	calendar	id	Permintaan rapat anda untuk %4 %3 %2 pada %1
-one month	calendar	id	sebulan
-one week	calendar	id	seminggu
-one year	calendar	id	setahun
+one month	calendar	id	Satu bulan
+one week	calendar	id	Satu minggu
+one year	calendar	id	Satu tahun
 only group-events	calendar	id	Hanya kegiatan-kelompok
 open todo's:	calendar	id	Buka ToDo:
 optional	calendar	id	Opsional
@@ -240,7 +263,7 @@ people holiday	calendar	id	People holiday
 permission denied	calendar	id	Ijin Ditolak
 planner by category	calendar	id	Planner menurut kategori
 planner by user	calendar	id	Planner menurut pengguna
-previous	calendar	id	sebelumnya
+previous	calendar	id	Sebelumnya
 private event	calendar	id	Acara pribadi
 private only	calendar	id	Hanya Privat
 quantity	calendar	id	Quantity
@@ -294,7 +317,7 @@ status	calendar	id	Status
 status changed	calendar	id	Status berubah
 sun	calendar	id	Min
 tentative	calendar	id	Tentative
-test import (show importable records <u>only</u> in browser)	calendar	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser)
+test import (show importable records <u>only</u> in browser)	calendar	id	Tes Impor (tampilkan rekaman yang dapat diimpor </u>hanya</u> dalam browser)
 the apple ical apps use this color to display events from this calendar.	calendar	id	Aplikasi Apple iCal menggunakan warna ini untuk menampilkan acara dari kalender ini.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	id	Dokumen dapat berisi placeholder seperti {{%1}}, untuk diganti dengan data.
 the extern organizer changed the event!	calendar	id	Penyelenggara eksternal mengubah acara!

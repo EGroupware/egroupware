@@ -23,6 +23,14 @@ enter the title for your site	setup	da	Indtast titlen for dit site
 enter your default ftp server	setup	da	Indtast din standard FTP server
 enter your http proxy server	setup	da	Indtast din HTTP proxy server
 enter your http proxy server port	setup	da	Indtast din HTTP proxy server port
+error searching "dn=%1" for "%2"!	setup	da	Fejl ved søgning i "DN=%1" efter "%2"!
+error uploading your backup!	setup	da	Fejl ved upload af din backup!
+every	setup	da	Hver eneste
+export has been completed!	setup	da	Eksporten er afsluttet!
+failed to mount backup directory!	setup	da	Kunne ikke montere backup-biblioteket!
+failed updating user "%1" dn="%2"!	setup	da	Opdatering af bruger "%1" DN="%2" mislykkedes!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	da	Kunne ikke skrive konfigurationsfilen header.inc.php, tjek tilladelserne!
+fallback authentication	setup	da	Fallback-godkendelse
 file	setup	da	Fil
 filename	setup	da	Filnavn
 go to	setup	da	Gå til
@@ -51,7 +59,14 @@ not	setup	da	Ikke
 not set	setup	da	Ikke set
 one month	setup	da	En måned
 one week	setup	da	En uge
+optional, if only authentication and anonymous search is enabled	setup	da	valgfri, hvis kun autentificering OG anonym søgning er aktiveret
 or	setup	da	eller
+or leave empty and select openidconnect as authentication type above for single sign on	setup	da	eller lad den være tom, og vælg OpenID Connect som godkendelsestype ovenfor for single sign on
+or leave empty and select saml as authentication type above for single sign on	setup	da	eller lad den være tom, og vælg SAML som godkendelsestype ovenfor for single sign on
+password	setup	da	Adgangskode
+password for smtp-authentication	setup	da	Adgangskode til SMTP-godkendelse
+password needed for domain configuration.	setup	da	Adgangskode nødvendig for domænekonfiguration.
+passwords --> sql	setup	da	Adgangskoder --> SQL
 re-enter password	setup	da	Genindtast adgangskode
 refusing to delete dn "%1"!	setup	da	Nægter at slette dn "%1"!
 regular expression to filter by dn	setup	da	Regulært udtryk til at filtrere efter DN

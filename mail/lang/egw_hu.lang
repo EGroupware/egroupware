@@ -71,9 +71,9 @@ do you really want to toggle flag %1 for all messages in the current view?	mail	
 do you really want to toggle label %1 for all messages in the current view?	mail	hu	Tényleg az aktuális nézetben MINDEN üzenetre vonatkozóan szeretné a %1 címkét átkapcsolni?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	hu	Szeretné, hogy megerősítést kérjen, mielőtt a kiválasztott üzeneteket új e-mailhez csatolná?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	hu	Szeretnél megerősítést a kijelölt üzenetek áthelyezése előtt?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett Sieve esetén is)
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett Sieve esetén is)
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét? (engedélyezett Sieve esetén is)
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását (engedélyezett Sieve esetén is)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén (engedélyezett Sieve esetén is)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét (engedélyezett Sieve esetén is)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	hu	Meg szeretnéd akadályozni a mappák létrehozásának és módosításának lehetőségét? (létrehozás, hozzáférés korlátozás, feliratkozás)
 does not contain	mail	hu	nem tartalmazza
 does not exist on imap server.	mail	hu	nincs létrehozva az IMAP szerveren
@@ -85,7 +85,7 @@ don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
 don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
 download attachments	mail	hu	Letöltés mellékletek
 draft	mail	hu	Vázlat
-draft folder	mail	hu	vázlat mappa
+draft folder	mail	hu	Vázlat mappa
 drafts	mail	hu	Piszkozatok
 edit account	mail	hu	Azonosító szerkesztése
 edit vacation settings	mail	hu	Szabadság beállítások szerkesztése
@@ -132,7 +132,7 @@ from(a->z)	mail	hu	Feladó (A->Z)
 from(z->a)	mail	hu	Feladó (Z->A)
 general	admin	hu	Általános
 get acl rights failed from imap server!	mail	hu	Az ACL-jogok lekérdezése sikertelen az IMAP-kiszolgálóról!
-greater than	mail	hu	nagyobb mint
+greater than	mail	hu	Nagyobb mint
 ham folder	mail	hu	Ham mappa
 handling of external http images / mixed content in mails	mail	hu	Külső http képek / vegyes tartalom kezelése e-mailekben
 header lines	mail	hu	Email fejléce
@@ -141,7 +141,7 @@ html	mail	hu	HTML
 ident name	mail	hu	Azonosító neve
 ident name email	mail	hu	Azonosító neve [Email]
 ident name organization email	mail	hu	Azonosító neve Szervezet [Email]
-identity	mail	hu	azonosító
+identity	mail	hu	Azonosító
 identity label	mail	hu	Azonosító címke
 if	mail	hu	HA
 if mail header	mail	hu	ha a levél fejléce
@@ -183,7 +183,7 @@ mailaccount	mail	hu	Mail fiók
 mailinglist	mail	hu	Levelezési lista
 mails	common	hu	Mailek
 mails can be copied to that folder via context menu, if folder is configured.	mail	hu	A levelek a kontextusmenüben másolhatók ebbe a mappába, ha a mappa be van állítva.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	hu	Mailserver jelentette:\n%1 \nKívánja folytatni a kiválasztott üzenetek azonnali törlését (kattintson az ok gombra)?<br>Ha nem, kérjük, próbálja meg kiüríteni a szemétmappát, mielőtt folytatja. (kattintson a törlés gombra)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	hu	Mailserver jelentette:<br><br>%1<br><br>Kívánja folytatni a kiválasztott üzenetek azonnali törlését (kattintson az ok gombra)?<br>Ha nem, kérjük, próbálja meg kiüríteni a szemétmappát, mielőtt folytatja. (kattintson a törlés gombra)
 mark all as read	mail	hu	Mindent olvasottnak jelölni
 mark all messages in folder as read	mail	hu	A mappa összes üzenetének olvasottként való megjelölése
 mark as deleted	mail	hu	Törlésre megjelöl
@@ -195,11 +195,20 @@ modify subject of this message	mail	hu	Az üzenet tárgyának módosítása
 move selected to	mail	hu	Kijelöltek mozgatása
 move to	mail	hu	Kijelöltek mozgatása
 move to trash	mail	hu	Szemetesbe mozgatás
+name and domain	mail	hu	Név és domain
 name and email	mail	hu	Név és e-mail cím
+name of account	mail	hu	A számla neve
+name of imap servers (space separated host or host:port)	mail	hu	Az IMAP-kiszolgálók neve (szóközzel elválasztva host vagy host:port)
 never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emaileket
+never show	mail	hu	Soha nem jelenik meg
+never show notification	mail	hu	Soha ne jelenítsen meg értesítést
+new mail from %1	mail	hu	Új e-mail %1-től
+new mail notification	mail	hu	Új e-mail értesítés
+new message type	mail	hu	Új üzenet típusa
 new subject	mail	hu	Új tárgy
 no access	mail	hu	Nincs hozzáférés
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	hu	Nincs címzett és mappa az üzenet mentéséhez beállítva.
+no adress, to send this mail to, supplied	mail	hu	nem adták meg azt a címet, ahová ezt az e-mailt elküldhetnék.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	hu	Nincs megadott mappa célállomás, és nincs mappa az üzenet mentésére vagy más intézkedés a levelek tárolására (mentés az InfoLog/Ticketystembe), de szükséges.
 no folders	mail	hu	nincs mappa
 no plain text part found	mail	hu	Nem található egyszerű szöveges tartalom
@@ -263,8 +272,8 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	hu	Válasz
 report as ham	mail	hu	Jelentés Ham-ként
 report as spam	mail	hu	Spamként jelenteni
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmát Ham-ként (nem spamként) - a spam megoldások, mint a spamTitan, megtanulják
-report this email content as spam - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmat Spamként - a spam megoldások, mint a spamTitan megtanulják.
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmát Ham-ként (nem spamként) - a spam megoldások, mint a SpamTitan, megtanulják
+report this email content as spam - spam solutions like spamtitan will learn	mail	hu	Jelentse ezt az e-mail tartalmat Spamként - a spam megoldások, mint a SpamTitan megtanulják.
 required pear class mail/mimedecode.php not found.	mail	hu	A szükséges PEAR osztály Mail/mimeDecode.php nem található.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	hu	Kötelező letiltani, ha a Dovecot-ot privát látott zászlókkal használja a megosztott vagy felhasználói mappán!
 row order style	mail	hu	sorok rendezése

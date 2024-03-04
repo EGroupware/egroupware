@@ -378,6 +378,7 @@ move to archive	mail	ja	アーカイブに移動
 move to trash	mail	ja	ゴミ箱に移動
 moved %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージを %2 から %3 に移動しました
 moving folders from one mailaccount to another is not supported	mail	ja	別のメール・アカウントのフォルダへの移動はできません
+name and domain	mail	ja	名前とドメイン
 name and email	mail	ja	名前とメール
 name of account	mail	ja	アカウント名
 name of imap servers (space separated host or host:port)	mail	ja	IMAPサーバー名（スペース区切りのホストまたはホスト：ポート）

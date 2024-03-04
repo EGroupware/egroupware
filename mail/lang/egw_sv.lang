@@ -23,7 +23,7 @@ attach users vcard at compose to every new mail	mail	sv	Bifoga användarens vCar
 attachment has been saved successfully.	mail	sv	Bilagan har sparats framgångsrikt.
 attachments	mail	sv	Bilagor
 attachments, ...	mail	sv	bilagor, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge. \n \n Vill du fortsätta?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	sv	Tänk på att om du lägger till alla valda filer i %1-läge kommer även alla befintliga bilagor i listan att ändras till %2-läge.<br>Vill du fortsätta?
 be aware that all attachments will be sent as %1!	mail	sv	Tänk på att alla bilagor kommer att skickas som %1!
 by date	mail	sv	Enligt datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	sv	Som standard ersätts 'http://' bara med 'https://'. Konfigurera gärna 'https://proxy.egroupware.org/' så att även bilder som endast är tillgängliga via http laddas.
@@ -38,7 +38,7 @@ changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslycka
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
 compose	mail	sv	Skriv
 compress folder	mail	sv	Komprimera katalog
-condition	mail	sv	vilkor
+condition	mail	sv	Vilkor
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sv	De konfigurerade värdena kommer att ställas in automatiskt i dialogrutan för det respekterade fältet när du skriver ett nytt e-postmeddelande.
 contact label	mail	sv	Etikett för kontakt
 contains	mail	sv	Innehåller
@@ -165,7 +165,7 @@ mailaccount	mail	sv	E-postkonto
 mailinglist	mail	sv	Utskickslista
 mails	common	sv	E-post
 mails can be copied to that folder via context menu, if folder is configured.	mail	sv	E-postmeddelanden kan kopieras till den mappen via snabbmenyn, om mappen är konfigurerad.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sv	Mailservern rapporterade:\n%1 \nVill du fortsätta med att radera de valda meddelandena omedelbart (klicka ok)?\nOm inte, försök att tömma din skräppostmapp innan du fortsätter. (klicka på Avbryt)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	sv	Mailservern rapporterade:<br><br>%1<br><br>Vill du fortsätta med att radera de valda meddelandena omedelbart (klicka ok)?<br>Om inte, försök att tömma din skräppostmapp innan du fortsätter. (klicka på Avbryt)
 mark all as read	mail	sv	Markera alla som lästa
 mark all messages in folder as read	mail	sv	Markera alla meddelanden i mappen som lästa
 mark as deleted	mail	sv	Markera som raderad
@@ -175,11 +175,22 @@ message learned as spam and moved to spam folder	mail	sv	Meddelandet har identif
 modify subject	mail	sv	Ändra ämne
 modify subject of this message	mail	sv	Ändra ämnet för detta meddelande
 move selected to	mail	sv	Flytta valda till
-move to	mail	sv	Flytta valda till
+move to	mail	sv	Flytta till
 move to trash	mail	sv	Flytta till Borttaget
+name and domain	mail	sv	Namn och domän
 name and email	mail	sv	Namn och e-post
+name of account	mail	sv	Namn på konto
+name of imap servers (space separated host or host:port)	mail	sv	Namn på IMAP-servrar (värd eller värd:port med mellanslag)
 never display html emails	mail	sv	Visa inte HTML meddelanden
+never show	mail	sv	Visa aldrig
+never show notification	mail	sv	Visa aldrig avisering
+new mail from %1	mail	sv	Nytt e-postmeddelande från %1
+new mail notification	mail	sv	Meddelande om nytt e-postmeddelande
+new message type	mail	sv	Typ av nytt meddelande
 new subject	mail	sv	Nytt ämne
+no access	mail	sv	Ingen åtkomst
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sv	Ingen adress TO/CC/BCC angiven, och ingen mapp att spara meddelandet till angiven.
+no adress, to send this mail to, supplied	mail	sv	ingen adress angavs till vem detta e-postmeddelande skulle skickas
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	sv	Ingen mappdestination angiven, och ingen mapp för att spara meddelandet eller annan åtgärd för att lagra posten (spara till InfoLog/Ticketsystem) angiven, men krävs.
 no plain text part found	mail	sv	Hittade inget textfält
 no sneak preview in list	mail	sv	Ingen förhandsgranskning av meddelanden
@@ -202,8 +213,8 @@ original message	mail	sv	Ursprungligt meddelande
 outbox	mail	sv	Utkorg
 permission denied	mail	sv	Åtkomst nekad
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sv	Konfigurera ditt S/MIME-certifikat på fliken Kryptering i dialogrutan Redigera konto.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder filterregler på serversidan och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder semestermeddelanden på servern och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder filterregler på serversidan och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder semestermeddelanden på servern och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
 please enter password	mail	sv	Ange lösenord
 please select a address	mail	sv	Välj adress
 please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
@@ -245,7 +256,7 @@ row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
 save all attachments to filemanager	mail	sv	Spara alla bilagor i filhanteraren
 save as draft	mail	sv	Spara som utkast
-save as infolog	mail	sv	Spara som InfoLogg
+save as infolog	mail	sv	Spara som InfoLog
 save as infolog on send	mail	sv	Kontrollera knappen för att skapa som InfoLog efter att ha skickat
 save as tracker on send	mail	sv	Markera knappen för att skapa ett ärende efter sändning
 save message to disk	mail	sv	Spara meddelanden till disk

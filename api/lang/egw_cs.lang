@@ -4,27 +4,27 @@
 %1 directories %2 found!	admin	cs	%1 složek %2 nenalezeno!
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo
 %1 email(s) added into %2	common	cs	%1 e-mail(y) přidán(y) do %2
-%1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden...
+%1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
 %1 etemplates deleted	common	cs	%1 eTemplates smazáno
 %1 etemplates for application '%2' dumped to '%3'	common	cs	%1 eTemplates pro aplikaci '%2' vytvořilo výpis do '%3'
 %1 etemplates found	common	cs	%1 eTemplates nalezeno
 %1 file	common	cs	%1 soubor
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server
 %1 matches on search criteria	common	cs	%1 shod s kritériem vyhledávání
-%1 more %2 selected ...	common	cs	%1 více %2 vybráno...
-%1 more...	common	cs	%1 více...
+%1 more %2 selected ...	common	cs	%1 více %2 vybráno ...
+%1 more...	common	cs	%1 více ...
 %1 new etemplates imported for application '%2'	common	cs	%1 nových eTemplates importováno pro aplikaci '%2'
 %1 not implemented for %2!	common	cs	%1 není implementováno pro %2!
 %1 proxy of %2	common	cs	%1 zástupce %2
 %1 setting "%2" = %3 disallows access via http!	admin	cs	%1 nastavení "%2" = %3 nedovoluje přístup přes http protokol!
 %1 to sync	groupdav	cs	%1 k synchronizaci
 %1, duplicate id	common	cs	%1, duplikace ID
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br />nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	cs	%1Zvolte jiný adresář%2<br>nebo nastavte práva na %3 tak, aby do něj mohl zapisovat webový server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	cs	%1EGroupware%2 je víceuživatelský groupware postavený na webových technologiích napsaný v jazyce %3PHP%4.
 %s disabled	common	cs	%s zablokováno
 %s needed	common	cs	%s zapotřebí
 %s notranslation	common	cs	%s bez překladu
-%s onchange	common	cs	%s onChange (při změně)
+%s onchange	common	cs	%s onchange (při změně)
 %s readonly	common	cs	%s jen ke čtení
 '%1' copied to clipboard	common	cs	'%1' zkopírováno do schránky
 '%1' has an invalid format	common	cs	'%1' má nesprávný formát!
@@ -75,7 +75,7 @@ acl	common	cs	Oprávnění ACL
 action	common	cs	Akce
 action when category is an email address	groupdav	cs	Akce, pokud je kategorie e-maolivá adresa
 actions	common	cs	Akce
-actions...	common	cs	Akce...
+actions...	common	cs	Akce ...
 active	common	cs	Aktivní
 active directory requires ssl or tls to change passwords!	common	cs	Pro změnu hesla v rámci Active Directory je vyžadováno SSL nebo TLS spojení!
 add	common	cs	Přidat
@@ -170,8 +170,6 @@ author	common	cs	Autor
 autohide sidebox menu's	common	cs	Automaticky skrývat menu postranního panelu
 autohide sidebox menus	common	cs	Automaticky skrývat menu postranního panelu
 automatic update check failed, you need to check manually!	common	cs	Automatická kontrola aktualizací selhala, zkontrolujte aktualizace ručně!
-automatically hide the sidebox menu's?	common	cs	Automaticky skrývat menu postranního panelu?
-automatically hide the sidebox menus?	common	cs	Automaticky skrývat menu postranního panelu?
 automatically refresh list	common	cs	Automatické obnova seznamu
 autosave default category	common	cs	Automatické ukládání výchozí kategorie
 avatar	common	cs	Avatar
@@ -181,7 +179,7 @@ back to user login	common	cs	Zpět na přihlášení uživatele
 background color:	common	cs	Barva na pozadí:
 backup key	common	cs	Záloha klíče
 backup/restore	common	cs	Záloha/obnova
-backup/restore ...	common	cs	Zálohování/obnova...
+backup/restore ...	common	cs	Zálohování/obnova ...
 backupdir '%1' is not writeable by the webserver	common	cs	Webový server nemá oprávnění pro zápis do adresáře pro zálohy '%1'
 bad login or password	common	cs	Chybné uživatelské jméno nebo heslo
 bahamas	common	cs	BAHAMY
@@ -209,7 +207,7 @@ botswana	common	cs	BOTSWANA
 bottom	common	cs	Dolní okraj
 bouvet island	common	cs	BOUVETŮV OSTROV
 box	common	cs	Rámeček
-box...	common	cs	Rámeček...
+box...	common	cs	Rámeček ...
 brazil	common	cs	BRAZÍLIE
 british indian ocean territory	common	cs	BRITSKÉ INDICKOOCEÁNSKÉ ÚZEMÍ
 broken link	common	cs	Propojení je poškozené
@@ -227,13 +225,13 @@ can not have special sql-value null	common	cs	Nemůže mít speciální SQL hodn
 can't create directory %1 to connect found unconnected nodes to it!	admin	cs	Není možné vytvořit složku %1 pro připojení nalezených rozpojených uzlů!
 canada	common	cs	KANADA
 cancel	common	cs	Zrušit
-cannot replace %1 because it is a directory	common	cs	Nemohu přepsat %1 protože je to adresář
+cannot replace %1 because it is a directory	common	cs	Nemohu přepsat %1 protože je to adresář.
 cannot set a category as parent, which is part of this categorys subtree!	common	cs	Není možné nastavit kategorii jako nadřízenou, protože je součástí podstromu kategorií!
 cannot set this cat as its own parent!	common	cs	Není možné nastavit kategorii jako vlastní nadřízenou!
 cant delete a single widget from a grid !!!	common	cs	Nemohu smazat jednotlivý widget z mřížky!
 cant delete the only column of a grid !!!	common	cs	Nemohu smazat jediný sloupec ve mřížce!
 cant delete the only row in a grid !!!	common	cs	Nemohu smazat jediný řádek ve mřížce!
-cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, vyžaduje knihovnu ZIP archive
+cant open %1, needs ziparchive	common	cs	Nemohu otevřít %1, vyžaduje knihovnu Ziparchive
 cant open '%1' for %2	common	cs	Nemohu otevřít '%1' pro %2
 cape verde	common	cs	KAPVERDSKÉ OSTROVY
 caption	common	cs	Záhlaví
@@ -258,8 +256,8 @@ change owner	common	cs	Změna vlastníka
 changed	common	cs	Změněno
 charset	common	cs	Heslová sada
 check all	common	cs	Označit všechny
-check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	cs	Kontrola prázdných hodnot v příkazech IF. Příklad {{IF url~EMPTY~~Webové stránky:}} - Pokud url není prázdná, napíše "Webové stránky:".
-check if content should only be displayed but not altered (the content is not send back then!)	common	cs	Zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	cs	Kontrola prázdných hodnot v příkazech IF. Příklad {{IF url~EMPTY~~Webové stránky:}} - Pokud url není prázdná, napíše "Webové stránky:"
+check if content should only be displayed but not altered (the content is not send back then!)	common	cs	Zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!).
 check if field has to be filled by user	common	cs	Zaškrtněte, pokud musí uživatel položku vyplnit
 check installation	common	cs	Kontrola instalace
 check now	common	cs	Zkontroluj
@@ -271,7 +269,7 @@ choose a background color for the icons	common	cs	Vyberte barvu pozadí pro ikon
 choose a background image.	common	cs	Vyberte obrázek na pozadí
 choose a background style.	common	cs	Vyberte styl pozadí
 choose a text color for the icons	common	cs	Vyberte barvu textu pro ikony
-choose file...	common	cs	Vyberte soubory...
+choose file...	common	cs	Vyberte soubory ...
 choose the category	common	cs	Vyberte kategorii
 choose the default filename for merged documents.	preferences	cs	Vyberte výchozí název souboru pro sloučené dokumenty.
 choose the parent category	common	cs	Vyberte nadřazenou kategorii
@@ -305,7 +303,7 @@ collection empty.	common	cs	Prázdná kolekce.
 collection listing	common	cs	Výpis kolekce
 colombia	common	cs	KOLUMBIE
 colour	common	cs	Barva
-column...	common	cs	Sloupec...
+column...	common	cs	Sloupec ...
 columnname	common	cs	Jméno sloupce
 columns to print	common	cs	Tisknuté sloupce
 command ⌘	common	cs	Příkaz ⌘
@@ -322,7 +320,7 @@ congo, the democratic republic of the	common	cs	DEMOKRATICKÁ REPUBLIKA KONGO
 contact	common	cs	Kontakt
 contact field to show	common	cs	Zobrazit položku kontaktu
 contact fields	common	cs	Kontaktní položky
-contacting server...	common	cs	Kontaktuji server...
+contacting server...	common	cs	Kontaktuji server ...
 contains	common	cs	Obsahuje
 content type	common	cs	Typ obsahu
 cook islands	common	cs	COOKOVY OSTROVY
@@ -357,7 +355,7 @@ current	common	cs	Aktuální
 current users	common	cs	Aktuální uživatelé
 custom	common	cs	Uživatelsky definované
 custom fields	common	cs	Uživatelsky definované položky
-custom javascript for onchange	common	cs	Uživatelsky definovaný JavaScript pro onChange (při změně)
+custom javascript for onchange	common	cs	Uživatelsky definovaný JavaScript pro onchange (při změně)
 cut	common	cs	Vyjmout
 cyprus	common	cs	KYPR
 czech republic	common	cs	ČESKÁ REPUBLIKA
@@ -374,7 +372,7 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 day	common	cs	Den
 days	common	cs	Dny
 db ensures that every row has a unique value in that column	common	cs	Databáze zajišťuje, že každý řádek má v tomto sloupci unikátní hodnotu
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	cs	Volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	cs	Volby indexu (oddělené čárkou) specifické pro databázi, např. mysql(FULLTEXT) nebo mysql(100) pro indexovanou délku sloupce.
 db-tools	common	cs	Databázové nástroje
 december	common	cs	Prosinec
 deck	common	cs	Paluba (interní)
@@ -386,7 +384,7 @@ default visible actions	common	cs	Výchozí viditelné akce
 default width for the windows	common	cs	Výchozí šířka oken
 del	common	cs	Del
 delete	common	cs	Smazat
-delete a single entry by passing the id.	common	cs	Vymazat záznam vložením ID.
+delete a single entry by passing the id.	common	cs	Vymazat záznam vložením ID
 delete all selected etemplates, without further inquiry	common	cs	Smazat VŠECHNY vybrané eTemplates BEZ dalšího dotazu
 delete and cut save the template!	common	cs	Smazat a šablonu vyjmout a uložit!
 delete backup	common	cs	Smazat zálohu
@@ -407,30 +405,25 @@ delete this etemplate	common	cs	Smazat tuto eTemplate
 delete this file	common	cs	Smazat tento soubor
 delete this photo?	common	cs	Smazat tuto fotku?
 delete this row	common	cs	Smazat tento řádek
-delete whole column (can not be undone!!!)	common	cs	Smazat celý sloupec (nelze vrátit zpět!)
-deletes the above spez. etemplate from the database, can not be undone	common	cs	Vymaže výše uvedenou eŠablonu z databáze, nelze vrátit zpět
+delete whole column (can not be undone!!!)	common	cs	Smazat celý sloupec
+deletes the above spez. etemplate from the database, can not be undone	common	cs	Vymaže výše uvedenou eTemplate z databáze, nelze vrátit zpět
 deletes the etemplate spez. above	common	cs	Smaže výše uvedenou eTemplate
 deletes this column	common	cs	Smaže tento sloupec
-deletes this index	common	cs	Smaže tento index
+deletes this index	common	cs	Smaže tento index.
 denmark	common	cs	DÁNSKO
 description	common	cs	Popis
 detail	common	cs	Detail
 details	common	cs	Podrobnosti
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zablokovat spouštění skriptu pro opravu chyby v Internet Exploreru 5.5 a vyšších, který umožňuje zobrazit průhlednost v obrázcích formátu .PNG?
 direction left to right	common	cs	Směr zleva doprava
 directory	common	cs	Adresář
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	cs	Adresář neexistuje, web server pro něj nemá práva ke čtení nebo není relativní ke kořenovému adresáři dokumentů.
 directory for storing merged documents	preferences	cs	Složka pro ukládání sloučených dokumentů
 directory with documents to insert entries	preferences	cs	Složka s dokumenty pro vkládání záznamů
-disable internet explorer png-image-bugfix	common	cs	Zablokovat zranitelnost Internet Exploreru pro .png obrázky
-disable slider effects	common	cs	Zakázat efekty posuvníku
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	cs	Zakázat animované efekty posuvníku při zobrazení nebo skrývání menu na stránce? Uživatelé Opery a Konqueroru patrně budou muset nastavit.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zablokovat spouštění skriptu pro opravu chyby v Internet Exploreru 5.5 a vyšších, který umožňuje zobrazit průhlednost v obrázcích formátu .PNG?
 disabled	common	cs	Zakázano
 discard changes	common	cs	Zahodit změny
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	cs	Zobrazeno před vstupem nebo je vstup vložen za '%s' v označení (tlačítka pro odeslání nebo názvu souboru s obrázkem)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	cs	Zobrazeno před vstupem nebo je vstup vložen za '%s' v označení (tlačítka pro odeslání nebo názvu souboru s obrázkem).
 displayed in statusline of browser if input-field gets focus	common	cs	Zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
-displayed in the top line of the groupbox (legend)	common	cs	Zobrazeno v horní řádce rámečku skupiny (v legendě)
+displayed in the top line of the groupbox (legend)	common	cs	Zobrazeno v horní řádce rámečku skupiny (v legendě).
 distribution lists as groups	groupdav	cs	Distribuční seznam jako skupina
 djibouti	common	cs	DŽIBUTSKO
 do not notify	common	cs	Neupozorňovat
@@ -456,7 +449,6 @@ done	common	cs	Hotovo
 dos international	common	cs	DOS International
 download	common	cs	Stáhnout
 download link	common	cs	Odkaz na stažení
-drag markers to pick a color	common	cs	Přetažením značek vyberte barvu
 drop a table - this can not be undone	common	cs	Smazat tabulku - nelze vrátit zpět
 drop table	common	cs	Smazat Tabulku
 dump4setup	common	cs	Vypsat pro setup
@@ -525,7 +517,7 @@ error enabling push	common	cs	Chyba při povolování push
 error renaming %1 %2 directory	common	cs	Chyba při přejmenování adresáře %1 %2
 error uploading file!	filemanager	cs	Chyba při uploadu souboru!
 error: template not found !!!	common	cs	Chyba: Šablona nebyla nalezena!
-error: webserver is not allowed to write into '%1' !!!	common	cs	Chyba: webový server nemá oprávnění k zápisu do '%1' !
+error: webserver is not allowed to write into '%1' !!!	common	cs	Chyba: webový server nemá oprávnění k zápisu do '%1'!
 error: while saving !!!	common	cs	Chyba při ukládání!
 error: writing file (no write-permission for the webserver) !!!	common	cs	Chyba při ukládání souboru (webový server nemá oprávnění k zápisu)!
 estonia	common	cs	ESTONSKO
@@ -555,13 +547,13 @@ failed to change mode of required directory "%1" to %2!	admin	cs	Nepodařilo se 
 failed to change password.	common	cs	Nepodařilo se změnit heslo.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	cs	Nepodařilo se zkontaktovat server nebo jeho odpověď byla chybná. Zkuste se přihlásit znovu a v případě chyby kontaktujte administrátora.
 failed to create required directory "%1"!	admin	cs	Nepodařilo se vytvořit požadovanou složku "%1"!
-failed to move unconnected %1 %2 to %3!	admin	cs	Nepodařilo se přesunout rozpojené %1 %2 na %3 !
+failed to move unconnected %1 %2 to %3!	admin	cs	Nepodařilo se přesunout rozpojené %1 %2 na %3!
 falkland islands (malvinas)	common	cs	FALKLANDSKÉ OSTROVY
 faroe islands	common	cs	FAERSKÉ OSTROVY
 favorite queries	common	cs	Oblíbené dotazy
 favorites	common	cs	Oblíbené
 fax number	common	cs	Číslo faxu
-features of the editor?	common	cs	Vlastnosti editoru?
+features of the editor?	common	cs	Vlastnosti editoru
 february	common	cs	Únor
 field	common	cs	Položka
 field must not be empty !!!	common	cs	Položka nesmí být prázdná!
@@ -570,7 +562,7 @@ fiji	common	cs	FIDŽI
 file	common	cs	Soubor
 file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2 --> smazání souboru nebylo úspěšné!
 file %1 has no content in physical filesystem %2 --> file removed!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2 --> soubor byl smazán!
-file %1 has no content in physical filesystem %2!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2
+file %1 has no content in physical filesystem %2!	admin	cs	Soubor %1 nemá žádný obsah ve fyzickém souborovém systému %2!
 file '%1' not found!	common	cs	Soubor '%1' nebyl nalezen!
 file a file	common	cs	Uložení souboru
 file contains more than one etemplate, last one is shown !!!	common	cs	Soubor obsahuje více jak jednu eTemplate, zobrazena je poslední!
@@ -590,7 +582,7 @@ first page	common	cs	První strana
 firstname	common	cs	Křestní jméno
 fixme!	common	cs	OPRAV MĚ!
 floating point	common	cs	Plovoucí desetinná čárka
-folder already exists.	common	cs	Složka již existuje
+folder already exists.	common	cs	Složka již existuje!
 for more than one contact in a document use the tag pagerepeat!	preferences	cs	Pro více kontaktů v dokumentu opakujte použití zástupce!
 force	common	cs	Vynutit
 force selectbox	common	cs	Vynutit rozbalovací nabídku
@@ -688,7 +680,6 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	cs	MAĎARSKO
 iceland	common	cs	ISLAND
 id	common	cs	ID
-iespell not detected. click ok to go to download page.	common	cs	ieSpell nebyl nalezen. Klikněte na OK pro přesun na stránku ke stažení.
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	cs	Pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
 if the clock is enabled would you like it to update it every second or every minute?	common	cs	Pokud budou hodiny povoleny, chcete je aktualizovat každou vteřinu nebo každou minutu?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	cs	Pokud se chyba opakuje, kontaktujte svého správce pro pomoc a požádejte ho o prozkoumání chybových hlášení na webovém serveru.
@@ -864,7 +855,7 @@ medium	common	cs	Střední
 menu	common	cs	Menu
 merged document filename	preferences	cs	Název souboru sloučeného dokumentu
 message	common	cs	Zpráva
-message ...	common	cs	Zpráva...
+message ...	common	cs	Zpráva ...
 message prepared for sending.	common	cs	Zpráva je připravena k odeslání
 message(s) send failed!	common	cs	Odeslání zpráv(y) se nepodařilo!
 message(s) send ok.	common	cs	Zpráva(y) byla(y) úspěšně odeslána(y)
@@ -922,7 +913,7 @@ new search	common	cs	Nové hledání
 new table created	common	cs	Nová tabulka vytvořena
 new value	common	cs	Nová hodnota
 new zealand	common	cs	NOVÝ ZÉLAND
-newer version '%1' exists !!!	common	cs	Existuje novější verze '%1'  !
+newer version '%1' exists !!!	common	cs	Existuje novější verze '%1' !
 next	common	cs	Další
 next page	common	cs	Další strana
 nextmatch	common	cs	Nextmatch (Další shoda)
@@ -939,7 +930,7 @@ no	common	cs	Ne
 no - cancel	common	cs	Ne - Zrušit
 no column to swap with !!!	common	cs	Není sloupec, za který se dá prohodit!
 no default set	common	cs	Přednastavená hodnota není nastavena
-no entries found, try again ...	common	cs	Nebyly nalezeny žádné záznamy, zkuste to znovu...
+no entries found, try again ...	common	cs	Nebyly nalezeny žádné záznamy, zkuste to znovu ...
 no file	common	cs	Žádný soubor
 no filename given or selected via browse...	common	cs	Nebyl zadán název souboru ani vybrán přes Procházet
 no filters	common	cs	Odebrat filtr
@@ -948,7 +939,7 @@ no key for recipient:	common	cs	Nenalezen klíč pro příjemce:
 no matches found	common	cs	Nenalezeny žádné záznamy
 no response from server: your data is probably not saved	common	cs	Žádná odezva ze serveru: vaše data pravděpodobně NEJSOU uložena
 no results match	common	cs	Žádné výsledky neodpovídají
-no rights to export more than %1 entries!	common	cs	Nemáte oprávnění pro export více než %1 záznamů
+no rights to export more than %1 entries!	common	cs	Nemáte oprávnění pro export více než %1 záznamů!
 no row to swap with !!!	common	cs	Není řádek, za který se dá prohodit!
 no savant2 template directories were found in:	common	cs	Nebyly nalezeny šablony adresářů Savant2 v:
 no subject	common	cs	Žádný subjekt
@@ -989,8 +980,8 @@ old value	common	cs	Stará hodnota
 oman	common	cs	OMÁN
 on *nix systems please type: %1	common	cs	Na systémech typu *nix zadejte prosím: %1
 on mouse over	common	cs	Při pohybu myši přes
-onchange	common	cs	onChange (při změně)
-onclick	common	cs	onClick (při kliknutí)
+onchange	common	cs	onchange (při změně)
+onclick	common	cs	onclick (při kliknutí)
 only an other version found !!!	common	cs	Našla se jen jiná verze!
 only private	common	cs	Jen soukromé
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	cs	Je podporováno pouze několika klienty (např. od Apple). Pokud zadáte URL, je vysoce pravděpodobné, že nebude podporována!
@@ -1029,13 +1020,13 @@ parent is a '%1' !!!	common	cs	Nadřazený je '%1'!
 password	common	cs	Heslo
 password contains only %1 of required %2 character classes: no %3	common	cs	Heslo obsahuje pouze %1 z %2 požadovaných druhů znaků: neobsahuje %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	common	cs	Heslo spolu s "%1" obsahuje část uživatelského nebo skutečného jména uživatele (3 nebo více znaků)
-password could not be changed	common	cs	Heslo nemohlo být změněno
-password has been updated	common	cs	Heslo bylo zaktualizováno
-password must contain at least %1 lowercase letters	common	cs	Heslo musí obsahovat nejméně %1 malých písmen
+password could not be changed	common	cs	Heslo nemohlo být změněno!
+password has been updated	common	cs	Heslo bylo zaktualizováno.
+password must contain at least %1 lowercase letters	common	cs	Heslo musí obsahovat nejméně %1 malých písmen.
 password must contain at least %1 numbers	common	cs	Heslo musí obsahovat nejméně %1 číslic
-password must contain at least %1 special characters	common	cs	Heslo musí obsahovat nejméně %1 speciálních znaků
-password must contain at least %1 uppercase letters	common	cs	Heslo musí obsahovat nejméně %1 velkých písmen
-password must have at least %1 characters	common	cs	Heslo musí mít nejméně %1 znaků
+password must contain at least %1 special characters	common	cs	Heslo musí obsahovat nejméně %1 speciálních znaků.
+password must contain at least %1 uppercase letters	common	cs	Heslo musí obsahovat nejméně %1 velkých písmen.
+password must have at least %1 characters	common	cs	Heslo musí mít nejméně %1 znaků.
 paste	common	cs	Vložit
 path	common	cs	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!
@@ -1065,7 +1056,7 @@ please set your global preferences	common	cs	Upravte prosím své všeobecné p�
 please set your preferences for this application	common	cs	Upravte prosím své předvolby pro tuto aplikaci!
 please type %1 more characters	common	cs	Zadejte prosím %1 další znak(y)
 please type 1 more character	common	cs	Zadejte prosím 1 další znak
-please wait...	common	cs	Počkejte prosím...
+please wait...	common	cs	Počkejte prosím ...
 please, check back with us shortly.	common	cs	Prosíme, navštivte nás až za chvíli.
 pm	common	cs	odpol.
 poland	common	cs	POLSKO
@@ -1151,7 +1142,7 @@ returns struct of users application access	common	cs	Vrací strukturu uživatels
 reunion	common	cs	RÉUNION
 right	common	cs	Pravý
 romania	common	cs	RUMUNSKO
-row...	common	cs	Řádek...
+row...	common	cs	Řádek ...
 russian	common	cs	Ruština
 russian federation	common	cs	RUSKO
 rwanda	common	cs	RWANDA
@@ -1187,7 +1178,7 @@ search accounts	common	cs	Hledat v účtech
 search for '%1'	common	cs	Hledat '%1'
 search letter	common	cs	Hledat písmeno
 search or select accounts	common	cs	Vyhledat nebo vybrat účty
-search...	common	cs	Vyhledávání...
+search...	common	cs	Vyhledávání ...
 second	common	cs	sekunda
 section	common	cs	Sekce
 securest	common	cs	Zabezpečení
@@ -1221,7 +1212,7 @@ select day	common	cs	Vybrat den
 select day of week	common	cs	Vybrat den v týdnu
 select entry	common	cs	Vybrat záznam
 select file(s) from vfs	common	cs	Vyberte soubory z Správce souborů
-select files from filemanager ...	common	cs	Vyberte soubory ze správce souborů...
+select files from filemanager ...	common	cs	Vyberte soubory ze správce souborů ...
 select group	common	cs	Vybrat skupinu
 select home email address	common	cs	Vybrat domácí e-mailovou adresu
 select hour	common	cs	Vybrat hodinu
@@ -1231,7 +1222,7 @@ select month	common	cs	Vybrat měsíc
 select multiple accounts	common	cs	Vybrat více účtů
 select number	common	cs	Vybrat číslo
 select one	common	cs	Vybrat jeden
-select one ...	common	cs	Vybrat jeden...
+select one ...	common	cs	Vybrat jeden ...
 select percentage	common	cs	Vybrat procento
 select priority	common	cs	Vybrat prioritu
 select some options	common	cs	Vyberte nějakou možnost
@@ -1255,8 +1246,8 @@ senegal	common	cs	SENEGAL
 september	common	cs	Září
 serbia	common	cs	SRBSKO
 server %1 has been added	common	cs	Server %1 byl přidán
-server answered. processing response...	common	cs	Server odpověděl. Zpracovávám odpověď...
-server contacted. waiting for response...	common	cs	Server zkontaktován. Čekám na odpověď...
+server answered. processing response...	common	cs	Server odpověděl. Zpracovávám odpověď ...
+server contacted. waiting for response...	common	cs	Server zkontaktován. Čekám na odpověď ...
 server error	common	cs	Chyba serveru
 server is unwilling to perform.	common	cs	Server si nepřeje provést
 server name	common	cs	Název serveru
@@ -1305,8 +1296,8 @@ show_more_apps	common	cs	Zobrazit_více_aplikací
 showing	common	cs	Zobrazuji
 showing %1	common	cs	Zobrazeno %1
 showing %1 - %2 of %3	common	cs	Zobrazeno %1 - %2 z %3
-shows / allows you to enter values into the etemplate for testing	common	cs	Zobrazí / umožní Vám zadat hodnoty do eŠablony pro testování
-shows/displays etemplate for testing, does not save it before	common	cs	Zobrazí eŠablonu pro testování, předtím jí NEukládá
+shows / allows you to enter values into the etemplate for testing	common	cs	Zobrazí / umožní Vám zadat hodnoty do eTemplate pro testování
+shows/displays etemplate for testing, does not save it before	common	cs	Zobrazí eTemplate pro testování, předtím jí NEukládá
 sierra leone	common	cs	SIERRA LEONE
 sign up	common	cs	Zaregistrovat se
 simple	common	cs	Jednoduchý
@@ -1335,7 +1326,7 @@ start directory for image browser of rich text editor in egroupware vfs (fileman
 start new search for the above pattern	common	cs	Začít nové hledání pro výše uvedený výraz
 start time	common	cs	Počáteční čas
 start with	common	cs	Začíná s
-starting up...	common	cs	Startuji...
+starting up...	common	cs	Startuji ...
 status	common	cs	Stav
 store your public key in addressbook?	common	cs	Uložit veřejný klíč v adresáři?
 stretched	common	cs	Roztažený
@@ -1382,15 +1373,15 @@ textarea	common	cs	Textová oblast
 th	common	cs	Čt
 thailand	common	cs	THAJSKO
 the backup key has been deleted.	common	cs	Záloha klíče byla smazána.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	cs	Váš prohlížeč blokuje vyskakovací okna. Klikněte prosím na tlačítko pro zobrazení vyskakovacího okna.\n\nPokud příště nechcete, aby se zobrazilo toto upozornění, nastavte v prohlížeči, aby neblokoval vyskakovací okna z %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	cs	Váš prohlížeč blokuje vyskakovací okna. Klikněte prosím na tlačítko pro zobrazení vyskakovacího okna.<br>Pokud příště nechcete, aby se zobrazilo toto upozornění, nastavte v prohlížeči, aby neblokoval vyskakovací okna z %1
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	cs	Dokument může obsahovat zástupce jako např. {{%3}}, které budou při zpracování nahrazeny skutečnými odpovídajícími hodnotami. %1 Úplný seznam zástupců %2.
 the following applications require upgrades	common	cs	Následující aplikace vyžadují aktualizaci
 the following document-types are supported:	preferences	cs	Jsou podporovány následující typy souborů:
 the mail server returned	common	cs	Poštovní server odpověděl
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	cs	Systémový uživatel tohoto jména již existuje. Uživatelé by neměli mít stejná jména jako systémoví uživatelé.
-they will be sub-folders in users home (%1 attribute).	common	cs	Budou to podsložky v domovských složkách (atribut %1)
+they will be sub-folders in users home (%1 attribute).	common	cs	Budou to podsložky v domovských složkách (atribut %1).
 this feature is only available in epl version.	common	cs	Tato funkce je k dispozici pouze ve verzi EPL.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	cs	This is your own share. To test it, use an anonymous / incognito window.<br/>%1
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	cs	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	cs	Takové jméno již bylo použito!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	cs	Tento text se zobrazí, pokud je vstupní pole prázdné a nemá fokus
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	cs	Tím se obnoví předvolby panelu nástrojů pro všechny uživatele a nastaví se na nakonfigurované výchozí předvolby.
@@ -1414,12 +1405,12 @@ todays date, eg. "%1"	common	cs	Dnešní datum, např. "%1"
 togo	common	cs	TOGO
 tokelau	common	cs	TOKELAU
 tonga	common	cs	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	cs	Příliš mnoho vybraných řádků.<br />Vyberte všechny nebo méně než %1 řádků.
+too many rows selected.<br />select all, or less than %1 rows	common	cs	Příliš mnoho vybraných řádků.<br>Vyberte všechny nebo méně než %1 řádků.
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Příliš mnoho neúspěšných pokusů o přihlášení: %1 pro uživatele '%2', %3 pro IP %4
 top	common	cs	Horní okraj
 total	common	cs	Celkem
 total: %1 successful: %2 failed: %3 skipped: %4	common	cs	Celkem: %1 Úspěšně: %2 Neúspěšně: %3 Přeskočeno: %4
-transparant bg for the icons?	common	cs	Transparentní pozadí pro ikony?
+transparant bg for the icons?	common	cs	Transparentní pozadí pro ikony
 tree	common	cs	Strom
 trinidad and tobago	common	cs	TRINIDAD A TOBAGO
 tu	common	cs	Út
@@ -1448,13 +1439,13 @@ united states minor outlying islands	common	cs	MENŠÍ ODLEHLÉ OSTROVY USA
 unknown	common	cs	Neznámý
 unlink	common	cs	Zrušit odkaz
 update	common	cs	Aktualizovat
-update a single entry by passing the fields.	common	cs	Aktualizovat záznam vyplněním položek.
+update a single entry by passing the fields.	common	cs	Aktualizovat záznam vyplněním položek
 update from version '%s' to	common	cs	Aktualizovat z verze '%s' na
 update the clock per minute or per second	common	cs	Aktualizovat čas každou minutu nebo sekundu
 updating your account with new data from your identity provider failed!	common	cs	Aktualizace účtu novými údaji od poskytovatele identit se nezdařila!
 upload	common	cs	Uploadovat
 upload directory does not exist, or is not writeable by webserver	common	cs	Adresář pro upload neexistuje nebo do něj webový server nemá právo zápisu.
-upload file(s) from filemanager...	common	cs	Nahrát soubor(y) ze správce souborů...
+upload file(s) from filemanager...	common	cs	Nahrát soubor(y) ze správce souborů ...
 upload new photo	common	cs	Nahrát novou fotografii
 upload requires the directory to be writable by the webserver!	common	cs	Upload vyžaduje adresář, na který má web server právo k zápisu!
 uppercase letters	common	cs	velká písmena
@@ -1504,7 +1495,6 @@ western european	common	cs	Západoevropské
 western sahara	common	cs	ZÁPADNÍ SAHARA
 what color should all the blank space on the desktop have	common	cs	Jakou barvu by měla mít všechna prázdná místa na pracovní ploše?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	Co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
-what style would you like the image to have?	common	cs	Jaký styl mají mít obrázky?
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	cs	Když sloučíte záznamy do dokumentů, budou uloženy zde. Pokud není zadána žádná složka, budou uloženy ve vašem domovském adresáři (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	cs	Kde a jak budou zobrazeny v EGroupware odkazy jako předvolby, o aplikaci nebo odhlášení.
@@ -1555,7 +1545,7 @@ you have successfully logged out	common	cs	Úspěšně jste se odhlásil(a)
 you may drag files out to your desktop	common	cs	Soubory můžete přetáhnout na pracovní plochu
 you need to %1set your timezone preference%2.	common	cs	Musíte %1nastavit časovou zónu%1.
 you need to add the webserver user '%1' to the group '%2'.	common	cs	Musíte přidat uživatele webového serveru '%1' do skupiny '%2'.
-you need to be an egroupware administrator to access this functionality!	common	cs	Musíte být administrátorem EGroupware, abyste měl(a) přístup k této funkci.
+you need to be an egroupware administrator to access this functionality!	common	cs	Musíte být administrátorem EGroupware, abyste měl(a) přístup k této funkci!
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	cs	Je nutné nainstalovat zásuvný modul Mailvelope pro Chrome a Firefox ze stránek www.mailvelope.com, nebo kliknutím na tlačítko pro instalaci.
 you need to select a file first!	common	cs	Nejprve musíte vybrat soubor!
 you need to select some entries first!	common	cs	Nejprve musíte vybrat nějaký záznam!

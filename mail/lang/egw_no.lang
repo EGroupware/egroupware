@@ -16,7 +16,7 @@ attach users vcard at compose to every new mail	mail	no	Legg ved brukerens vCard
 attachment has been saved successfully.	mail	no	Vedlegg har blitt lagret.
 attachments	mail	no	Vedlegg
 attachments, ...	mail	no	vedlegg, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus. \n \n Vil du fortsette?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	no	Vær oppmerksom på at hvis du legger til alle valgte filer i %1-modus, endres også alle eksisterende vedlegg i listen til %2-modus.<br>Vil du fortsette?
 be aware that all attachments will be sent as %1!	mail	no	Vær oppmerksom på at alle vedlegg vil bli sendt som %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	no	Som standard erstattes 'http://' bare med 'https://'. Konfigurer gjerne 'https://proxy.egroupware.org/' til også å laste inn bilder som bare er tilgjengelige via http.
 caching of flags	mail	no	Bufring av flagg
@@ -132,10 +132,20 @@ matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
 message learned as spam and moved to spam folder	mail	no	Melding oppdaget som søppelpost og flyttet til søppelpostmappen
 move selected to	mail	no	Flytt valgt til
-move to	mail	no	Flytt valgt til
+move to	mail	no	Flytt til
 move to trash	mail	no	Flytt til søppelkurv
+name and domain	mail	no	Navn og domene
 name and email	mail	no	Navn og e-post
+name of account	mail	no	Navn på konto
+name of imap servers (space separated host or host:port)	mail	no	Navn på IMAP-servere (host eller host:port med mellomrom)
 never display html emails	mail	no	Vis aldri HTML e-post
+never show	mail	no	Vis aldri
+never show notification	mail	no	Vis aldri varsel
+new mail from %1	mail	no	Ny e-post fra %1
+new mail notification	mail	no	Varsel om ny e-post
+new message type	mail	no	Ny meldingstype
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	no	Ingen adresse TO/CC/BCC oppgitt, og ingen mappe å lagre meldingen i er oppgitt.
+no adress, to send this mail to, supplied	mail	no	Det ble ikke oppgitt noen adresse som denne e-posten skal sendes til.
 on	mail	no	på
 once per day	mail	no	En gang per dag
 one address is not valid	mail	no	En av adressene er ikke gyldig

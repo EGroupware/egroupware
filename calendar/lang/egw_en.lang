@@ -21,11 +21,11 @@ a party crasher in someone who is not invited to the meeting but somehow got the
 accept	calendar	en	Accept
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
-access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !
+access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1!
 access to calendar of %1 denied!	calendar	en	Access to calendar of %1 denied!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
-actions...	calendar	en	Actions...
+actions...	calendar	en	Actions ...
 add alarm	calendar	en	Add alarm
 add appointments via shortened dialog or complete edit window	calendar	en	Add appointments via shortened dialog or complete edit window
 add current view as favorite	calendar	en	Add current view as favorite
@@ -97,7 +97,7 @@ calendar preferences	calendar	en	Calendar preferences
 calendar settings	admin	en	Calendar settings
 calendar-fieldname	calendar	en	Calendar field name
 can not send any notifications because notifications app is not installed!	calendar	en	Can not send any notifications because notifications app is not installed!
-can't add alarms in the past !!!	calendar	en	Can't add alarms in the past !!!
+can't add alarms in the past !!!	calendar	en	Can't add alarms in the past!
 can't aquire lock!	calendar	en	Can't aquire lock!
 canceled	calendar	en	Canceled
 category %1 removed because of missing rights	calendar	en	Category %1 removed because of missing rights
@@ -115,7 +115,7 @@ check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 choose owner of imported data	calendar	en	Choose owner of imported data
 close the window	calendar	en	Close the window
-compose a mail to all participants after the event is saved	calendar	en	Compose a mail to all participants after the event is saved.
+compose a mail to all participants after the event is saved	calendar	en	Compose a email to all participants after the event is saved.
 configuration settings	calendar	en	Configuration settings
 conflict	calendar	en	Conflict
 copy this event	calendar	en	Copy this event
@@ -154,7 +154,7 @@ dayview	calendar	en	Day view
 default alarm added for yourself or all participants	calendar	en	The alarm is automatically inserted for new appointments.<br>For yourself or for all participants.
 default alarm for	calendar	en	Default alarm for
 default alarm for regular events	calendar	en	Default alarm for regular events
-default alarm for whole-day events	calendar	en	Default alarm for whole-day events
+default alarm for whole-day events	calendar	en	Default alarm for whole day events
 default appointment length (in minutes)	calendar	en	Default appointment length in minutes
 default calendar filter	calendar	en	Default calendar filter
 default calendar view	calendar	en	Default calendar view
@@ -213,7 +213,7 @@ empty target calendar before importing	calendar	en	Empty target calendar before 
 end	calendar	en	End
 end date/time	calendar	en	End Date/Time
 enddate	calendar	en	End date
-enddate / -time of the meeting, eg. for more then one day	calendar	en	End date / time of the meeting, e.g. for more than one day
+enddate / -time of the meeting, eg. for more then one day	calendar	en	End date/time of the meeting, e.g. for more than one day
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
@@ -225,7 +225,7 @@ error: importing the ical	calendar	en	Error: importing the iCal!
 error: no participants selected !!!	calendar	en	Error: no participants selected!
 error: resources reservation in private events is not allowed!!!	calendar	en	Error: Resources reservation in private events is not allowed!
 error: saving the event !!!	calendar	en	Error saving the event!
-error: starttime has to be before the endtime !!!	calendar	en	Error: Start time has to be before the end time !!!
+error: starttime has to be before the endtime !!!	calendar	en	Error: Start time has to be before the end time!
 error: the entry has been updated since you opened it for editing!	calendar	en	Error: The entry has been updated since you opened it for editing!
 error: you can't shift a series from the past!	calendar	en	Error: You can't shift a series from the past!
 event	common	en	Event
@@ -248,8 +248,8 @@ execute a further action for this entry	calendar	en	Execute a further action for
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
 export definition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
-exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
-exports events from your calendar into a csv file.	calendar	en	Exports events from your Calendar into a CSV File.
+exports events from your calendar in ical format.	calendar	en	Exports events from your calendar in iCal format.
+exports events from your calendar into a csv file.	calendar	en	Exports events from your calendar into a CSV file.
 extended	calendar	en	Extended.
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	en	Extended updates always include the complete event-details. iCal's can be imported by certain other calendar-applications.
 favorites	calendar	en	Favorites
@@ -314,7 +314,7 @@ how many weeks should the multiple week view show?	calendar	en	How many weeks sh
 how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
-ical / rfc2445	calendar	en	iCal / rfc2445
+ical / rfc2445	calendar	en	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	en	iCal cannot change the owner of an existing event.  This applies to new events only.
 ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
@@ -323,23 +323,23 @@ ical successful imported	calendar	en	iCal successful imported.
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	en	If you specify a folder (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	en	If you specify a folder (full VFS path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	en	If you specify a document (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
 import csv-file	common	en	Import CSV file
-imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your calendar from a CSV file. However in the options tab you can also choose other separators.
 imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar.
 initially year aligned	calendar	en	Initially year aligned
 insert	calendar	en	Insert
 insert in document	calendar	en	Insert in document
 interval	calendar	en	Interval
 invalid email-address "%1" for user %2	calendar	en	Invalid email address "%1" for user %2 .
-invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1.  Might be a bad field translation. Used %2 instead.
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	en	Invalid owner ID: %1. Might be a bad field translation. Used %2 instead.
 invitations	calendar	en	Invitations
 invite	common	en	Invite
-it can not read timezones from sqlite database %1!	calendar	en	It can NOT read timezones from sqlite database %1!
+it can not read timezones from sqlite database %1!	calendar	en	It can NOT read timezones from SQLite database %1!
 just me	calendar	en	Just me
 keep exceptions	calendar	en	Keep exceptions
 keep the series unchanged.	calendar	en	Keep the series unchanged.
@@ -355,7 +355,7 @@ link title for events to show	calendar	en	Link title for events to show
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
 links and attached files	calendar	en	Links and attached files
-links to specified application.  example: {{links/infolog}}	calendar	en	Links to specified application.  Example: {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	calendar	en	Links to specified application. Example: {{links/infolog}}
 links, attachments	calendar	en	Links, Attachments
 list of files linked to the current record	calendar	en	List of files linked to the current record
 listview	calendar	en	List view
@@ -370,7 +370,7 @@ maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantit
 meeting canceled	calendar	en	Meeting canceled
 meeting request	calendar	en	Meeting request
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
-merge document...	calendar	en	Merge document...
+merge document...	calendar	en	Merge document ...
 midnight	calendar	en	Midnight
 min days	calendar	en	Min days
 minimum number of users for showing day view as consolidated.	calendar	en	Minimum number of users for showing day view as consolidated.
@@ -433,7 +433,7 @@ olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
 on all modification, but responses	calendar	en	On all modification, but responses
 on any time change too	calendar	en	On any time change too
-on invitation / cancellation only	calendar	en	On invitation / cancellation only
+on invitation / cancellation only	calendar	en	On invitation/cancellation only
 on participant responses too	calendar	en	On participant responses too
 on time change of more than 4 hours too	calendar	en	On time change of more than 4 hours too
 one month	calendar	en	One month
@@ -524,7 +524,7 @@ select a %1	calendar	en	Select a %1
 select a color for this calendar	calendar	en	Select a color for calendar
 select a time	calendar	en	Select a time
 select an action	calendar	en	Select an action
-select an action...	calendar	en	Select an action...
+select an action...	calendar	en	Select an action ...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on. For externals we always reset participant status to unknown.
@@ -537,14 +537,14 @@ send notifications to users right now	calendar	en	Send notifications to particip
 series deleted	calendar	en	Series deleted
 set new events to private	calendar	en	Set new events to private
 setting lock time calender	admin	en	Setting data lock time for Calendar (default 1 sec.)
-shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from calendar module?
+shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from Calendar module?
 should new events created as private by default ?	calendar	en	Should new events be created as private by default?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
 should the planner display an empty row for users or categories without any appointment.	calendar	en	Should the planner display an empty row for users or categories without any appointment.
-should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	en	Should the status of the event participants (accept, reject, ...) be shown in brackets after each participant's name ?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	en	Should the status of the event participants (accept, reject, ...) be shown in brackets after each participant's name?
 show %1 from %2	calendar	en	Show %1 from %2
 show a calendar title	calendar	en	Show a calendar title
 show all events, as if they were private	calendar	en	Show all events, as if they were private
@@ -573,10 +573,10 @@ single participant	calendar	en	Single participant
 sort by	calendar	en	Sort by
 specify where url of the day links to	calendar	en	Specify where URL of the day links to
 start	calendar	en	Start
-start date/time	calendar	en	Start date / time
+start date/time	calendar	en	Start date/time
 start of series event changed	calendar	en	Start of series event changed.
 startdate	calendar	en	Start date
-startdate / -time	calendar	en	Start date / time
+startdate / -time	calendar	en	Start date/time
 startdate and -time of the search	calendar	en	Start date and time of the search
 startdate of the export	calendar	en	Start date of the export
 startrecord	calendar	en	Start record

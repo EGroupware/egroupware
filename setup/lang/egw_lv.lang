@@ -1,15 +1,15 @@
-%1 does not exist !!!	setup	lv	%1 neeksistē!!!
-%1 is %2%3 !!!	setup	lv	%1 ir %2%3 !!!
+%1 does not exist !!!	setup	lv	%1 neeksistē!
+%1 is %2%3 !!!	setup	lv	%1 ir %2%3!
 (searching accounts and changing passwords)	setup	lv	(meklē kontus un maina paroles)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	lv	***Iestatīšana neatjaunina tavu datubāzi, atjaunināšana var būt pārtraukta maksimālā_izpildāmā_laika dēļ, kas atstāj tavu DB neatgūstamajā stāvoklī(tavi dati pazaudēti)!!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	lv	***Lai EGroupware strādatu pilnīgi, tev jāveic izmaiņas ar roku php.ini(parasti iekšā/piem., uz linux)
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	lv	*** Iestatīšana neatjaunina tavu datubāzi, atjaunināšana var būt pārtraukta maksimālā_izpildāmā_laika dēļ, kas atstāj tavu DB neatgūstamajā stāvoklī(tavi dati pazaudēti)!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	lv	*** Lai EGroupware strādatu pilnīgi, tev jāveic izmaiņas ar roku php.ini(parasti iekšā/piem., uz linux)
 00 (disable)	setup	lv	00 (nav atļauts/ rekomendēts)
 13 (ntp)	setup	lv	13 (ntp)
 80 (http)	setup	lv	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	lv	<b>lietojamā rakstzīmju kopu</b>(izmanto UTF-8, ja plāno izmantot valodas ar dažādām rakstzīmju kopām)
 accounts existing	setup	lv	Konti eksistē
 actions	setup	lv	Darbības
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	lv	Pievieno automātiski izveidotos lietotājus šai grupai (Tiks pielietots "Noklusējums", ja atstās tukšu )
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	lv	Pievieno automātiski izveidotos lietotājus šai grupai (Tiks pielietots "Noklusējums", ja atstās tukšu)
 additional settings	setup	lv	Papildus iestatījumi
 admin first name	setup	lv	Aministratora vārds
 admin last name	setup	lv	Aministratora uzvārds
@@ -24,7 +24,7 @@ all users	setup	lv	Visi lietotāji
 allow authentication via cookie	setup	lv	Atļauj autentifikāciju caur sīkdatni
 allow password migration	setup	lv	Atļauj paroles migrāciju
 allowed migration types (comma-separated)	setup	lv	Atļautie migrācijas tipi (atdalīti ar komatu)
-and reload your webserver, so the above changes take effect !!!	setup	lv	UN pārstartējiet savu webserveri, lai izmaiņas stātos spēkā!!!
+and reload your webserver, so the above changes take effect !!!	setup	lv	UN pārstartējiet savu webserveri, lai izmaiņas stātos spēkā!
 app details	setup	lv	Aplikācijas info
 app install/remove/upgrade	setup	lv	Aplikāciju instalēšana/dzēšana/uzlabošana
 app process	setup	lv	Aplikācijas process
@@ -58,7 +58,7 @@ backup and restore	setup	lv	Dublēt un atjaunot
 backup failed	setup	lv	Dublēšana neizdevās
 backup finished	setup	lv	Dublēšana pabeigta
 backup now	setup	lv	Dublēt tagad
-backup started, this might take a few minutes ...	setup	lv	Dublēšana sākusies, tas var aizņemt dažas minūtes...
+backup started, this might take a few minutes ...	setup	lv	Dublēšana sākusies, tas var aizņemt dažas minūtes ...
 because it depends upon	setup	lv	Tāpēc tas atgarīgs no
 because it was manually disabled	setup	lv	Tāpēc tas tika manuāli aizliegts
 because of a failed upgrade or install	setup	lv	Tāpec, ka bija neveiksmīga atjaunināšana vai instalēšana
@@ -71,8 +71,8 @@ charset to convert to	setup	lv	Rakstīmju kopa pārveidota uz
 check installation	setup	lv	Pārbaudīt installāciju
 check ip address of all sessions	setup	lv	pārbaudīt IP adresi visām sesijām
 checking extension %1 is loaded or loadable	setup	lv	Pārbauda attiecināšanu %1 ir ielādēta vai ielādējama
-checking file-permissions of %1 for %2 %3: %4	setup	lv	Pārbauda faila atļaujas no %1 priekš %2%3:%4
-checking for gd support...	setup	lv	Pārbauda GD atbalstu...
+checking file-permissions of %1 for %2 %3: %4	setup	lv	Pārbauda faila atļaujas no %1 priekš %2 %3: %4
+checking for gd support...	setup	lv	Pārbauda GD atbalstu ...
 checking php.ini	setup	lv	Pārbauda php.ini
 checking the egroupware installation	setup	lv	Parbauda EGroupware instalāciju
 click <a href="index.php">here</a> to return to setup.	setup	lv	Noklikšķini <a href="index.php">šeit</a> lai atgrieztos uz iestatīšanu
@@ -107,10 +107,10 @@ created header.inc.php!	setup	lv	Izveidots header.inc.php!
 creating tables	setup	lv	Veido tabulas
 current system-charset	setup	lv	Patreizēja sistēmas rakstzīmju kopa
 current version	setup	lv	Patreizējā versija
-currently installed languages: %1 <br />	setup	lv	Pašlaikt iestatītās valodas: %1<br/>
+currently installed languages: %1 <br />	setup	lv	Pašlaikt iestatītās valodas: %1<br>
 database successfully converted from '%1' to '%2'	setup	lv	Datubāze veiksmīgi konvertēta no "%1" uz "%2"
 day	setup	lv	Diena
-day of week<br />(0-6, 0=sunday)	setup	lv	Nedēļas diena<br/>(0-6,0=svētdiena)
+day of week<br />(0-6, 0=sunday)	setup	lv	Nedēļas diena<br>(0-6,0=svētdiena)
 db backup and restore	setup	lv	DB dublējums un atjaunināšana
 db host	setup	lv	DB hosts
 db name	setup	lv	DB nosaukums
@@ -149,9 +149,9 @@ egroupware administration manual	setup	lv	EGroupware administrēšanas rokasgrā
 enable for extra debug-messages	setup	lv	Atļauts ekstra atkļūdošanas ziņojumiem
 enable mcrypt	setup	lv	Atļaut MCrypt
 enter some random text for app session encryption	setup	lv	Ievadi brīvi izvēlētu tekstu aplikāciju sesijas šifrēšanai
-enter the full path to the backup directory.<br />if empty: files directory	setup	lv	Ievadi pilno ceļu uz dublējuma direktoriju.<br/>ja tukšs: failu direktoriju
+enter the full path to the backup directory.<br />if empty: files directory	setup	lv	Ievadi pilno ceļu uz dublējuma direktoriju.<br>ja tukšs: failu direktoriju
 enter the hostname of the machine on which this server is running	setup	lv	Ievadi servera hostdatora vārdu
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	lv	Ievadi EGroupware URL atrašanos.<br/>Piemērams:http://www.domain.com/egroupware   vai   /egroupware<br /><b>Bez slīpsvītras</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	lv	Ievadi EGroupware URL atrašanos.<br>Piemērams: https://www.domain.com/egroupware   vai   /egroupware<br><b>Bez slīpsvītras</b>
 enter the site password for peer servers	setup	lv	Ievadi vietnes paroli vienādranga serveriem
 enter the site username for peer servers	setup	lv	Ievadi vietnes lietotājvārdu vienādranga serveriem
 enter the title for your site	setup	lv	Ievadi savas vietnes nosaukumu
@@ -160,8 +160,16 @@ enter your http proxy server	setup	lv	Ievadi savu HTTP proxy serveri
 enter your http proxy server password	setup	lv	Ievadi sava HTTP proxy servera paroli
 enter your http proxy server port	setup	lv	Ievadi savu HTTP proxy servera portu
 enter your http proxy server username	setup	lv	Ievadi sava HTTP proxy servera lietotājvārdu
-error in admin-creation !!!	setup	lv	Kļūda veidojot administratoru!!!
-error in group-creation !!!	setup	lv	Kļūda veidojot grupu!!!
+error in admin-creation !!!	setup	lv	Kļūda veidojot administratoru!
+error in group-creation !!!	setup	lv	Kļūda veidojot grupu!
+error searching "dn=%1" for "%2"!	setup	lv	Kļūda, meklējot "DN=%1" pēc "%2"!
+error uploading your backup!	setup	lv	Kļūda augšupielādējot dublējumu!
+every	setup	lv	Katrs
+export has been completed!	setup	lv	Eksports ir pabeigts!
+failed to mount backup directory!	setup	lv	Neizdevās pievienot dublējuma direktoriju!
+failed updating user "%1" dn="%2"!	setup	lv	Neizdevās atjaunināt lietotāju "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	lv	Neizdevās ierakstīt konfigurācijas failu header.inc.php, pārbaudiet atļaujas!
+fallback authentication	setup	lv	Rezerves autentifikācija
 false	setup	lv	Nepatiess
 file	setup	lv	Datne
 file type, size, version, etc.	setup	lv	Datnes tips, izmērs, versija utt.
@@ -187,10 +195,10 @@ if using ldap	setup	lv	Ja lieto LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	lv	Ja lieto LDAP, vai vēlies pārvaldīt mājasdirektoriju un pieteikuma ailes atribūtus?
 if you did not receive any errors, your applications have been	setup	lv	Ja nesaņēmi kļūdu paziņojumus, tava aplikācija ir
 if you did not receive any errors, your tables have been	setup	lv	Ja nesaņēmi kļūdu paziņojumus,tavas tabulas ir
-if you running this the first time, don't forget to manualy %1 !!!	setup	lv	Ja lieto pirmo reizi, neaizmirsti manuāli %1!!!
+if you running this the first time, don't forget to manualy %1 !!!	setup	lv	Ja lieto pirmo reizi, neaizmirsti manuāli %1!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	lv	Ja lieto valodu no tādas pašas rakstzīmju kopas(piem.,rietumu eiropas), tev nav jāuzstāda sistēmas rakstzīmju kopa
 image type selection order	setup	lv	Attēlu tipu izvēles kartība
-import has been completed!	setup	lv	Importēšana pabeigta
+import has been completed!	setup	lv	Importēšana pabeigta!
 install	setup	lv	Instalēt
 install all	setup	lv	Instalēt visu
 install applications	setup	lv	Instalēt programmatūru
@@ -260,13 +268,19 @@ one month	setup	lv	Viens mēnesis
 one week	setup	lv	Viena nedēļa
 only add languages that are not in the database already	setup	lv	Pievieno tikai tās valodas, kuras nav datubāzē
 only add new phrases	setup	lv	Pievieno tikai jaunas frāzes
+optional, if only authentication and anonymous search is enabled	setup	lv	nav obligāti, ja ir iespējota tikai autentifikācija UN anonīmā meklēšana.
 or	setup	lv	vai
 or %1continue to the header admin%2	setup	lv	vai %1Turpināt ar Galvenes administratoru
-or http://webdav.domain.com (webdav)	setup	lv	vai http://webdav.domain.com (WebDAV)
+or http://webdav.domain.com (webdav)	setup	lv	vai https://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	lv	vai atstājiet tukšu un iepriekš izvēlieties OpenID Connect kā autentifikācijas veidu vienreizējai pierakstīšanai.
+or leave empty and select saml as authentication type above for single sign on	setup	lv	vai atstāt tukšu un vienreizējai pierakstīšanai iepriekš kā autentifikācijas veidu izvēlēties SAML.
 or we can attempt to create the database for you:	setup	lv	Vai arī mēs varam mēģināt izveidot tev datubāzi:
 or you can install a previous backup.	setup	lv	Vai arī tu vari iestatīt iepriekšējo dublējumu
+password	setup	lv	Parole
 password for smtp-authentication	setup	lv	Parole SMTP autentifikācijai
+password needed for domain configuration.	setup	lv	Parole, kas nepieciešama domēna konfigurācijai.
 password of db user	setup	lv	DB lietotāja parole
+passwords --> sql	setup	lv	Paroles --> SQL
 passwords did not match, please re-enter	setup	lv	Paroles nesakrīt, lūdzu ievadi vēlreiz
 path information	setup	lv	Ceļa informācija
 persistent connections	setup	lv	Pastāvīgs pieslēgums
@@ -279,8 +293,8 @@ please install	setup	lv	Lūdzu instalē
 please login	setup	lv	Lūdzu piesakies
 please login to egroupware and run the admin application for additional site configuration	setup	lv	Lūdzu piesakies EGroupware un palaid administratora programmatūru papildus vietnes konfigurēšanai
 please make the following change in your php.ini	setup	lv	Lūdzu izdari sekojošas izmaiņas savā php.ini
-please wait...	setup	lv	Lūdzu uzgaidi...
-pop/imap mail server hostname or ip address	setup	lv	POP/IMAP pasta servera hosta vārds vai IP adrese
+please wait...	setup	lv	Lūdzu uzgaidi ...
+pop/imap mail server hostname or ip address	setup	lv	POP3/IMAP pasta servera hosta vārds vai IP adrese
 possible reasons	setup	lv	Lespējamie iemesli
 possible solutions	setup	lv	Lespējamie iemesli
 potential problem	setup	lv	Potenciālās problēmas
@@ -291,7 +305,7 @@ re-check my database	setup	lv	Pārbaudu vēlreiz manu datubāzi
 re-check my installation	setup	lv	Pārbaudi vēlreiz manas instalācijas
 re-enter password	setup	lv	Levadi vēlreiz paroli
 read translations from	setup	lv	Lasīt tulkojumu no
-readable by the webserver	setup	lv	tīmekļa serveris vai izlasīt
+readable by the webserver	setup	lv	Tīmekļa serveris vai izlasīt
 really uninstall all applications	setup	lv	TIEŠĀM atinstalēt visas aplikācijas
 registered	setup	lv	Reģistrēts
 regular expression to filter by dn	setup	lv	Regulārā izteiksme, lai filtrētu pēc DN
@@ -307,9 +321,9 @@ requires reinstall or manual repair	setup	lv	Pieprasa atinstalēt vai manuāli s
 requires saml optional on login page and user to specify username and password	setup	lv	Nepieciešams SAML izvēles pieteikšanās lapā un lietotājam jānorāda lietotājvārds un parole.
 requires upgrade	setup	lv	Pieprasa jauninajumus
 resolve	setup	lv	Atrisināt
-restore	setup	lv	atjaunot
+restore	setup	lv	Atjaunot
 restore failed	setup	lv	Atjaunošana neizdevās
-restore finished	setup	lv	atjaunošana pabeigta
+restore finished	setup	lv	Atjaunošana pabeigta
 return to setup	setup	lv	Atgriezties uz iestatīšanu
 run installation tests	setup	lv	Palaist instalēšanas testus
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	lv	drošais režīms ir ieslēgts, kas padara tavu instalēšanu vairāk drošu
@@ -340,10 +354,10 @@ setup	setup	lv	Lestatīšana
 setup main menu	setup	lv	Lestatīšanas galvenā izvēlne
 setup the database	setup	lv	Lestatīt datubāzi
 setup/config admin login	setup	lv	Lestatīt/konfigurēt administratora pieteikšanos
-show 'powered by' logo on	setup	lv	Rādīt " powered by" logu
+show 'powered by' logo on	setup	lv	Rādīt "Powered by" logu
 size	setup	lv	Izmērs
 some or all of its tables are missing	setup	lv	Trūkst dažas vai visas tabulas
-sql encryption type	setup	lv	SQL šifrēšanas tips parolei (noklusētais-md5)
+sql encryption type	setup	lv	SQL šifrēšanas tips parolei
 start the postmaster	setup	lv	Sākt pasta pārzini
 status	setup	lv	Stāvoklis
 step %1 - admin account	setup	lv	Solis%1- administratora konts
@@ -355,21 +369,21 @@ step %1 - simple application management	setup	lv	Solis%1- Vienkāršu aplikācij
 succesfully uploaded file %1	setup	lv	Veiksmīgi ielādēja failu %1
 table change messages	setup	lv	Tabulas maiņas ziņojumi
 tables dropped	setup	lv	Tabulas pārtrauktas
-tables installed, unless there are errors printed above	setup	lv	tabulas uzinstalētas, kaut arī ir norādītās kļūdas
+tables installed, unless there are errors printed above	setup	lv	Tabulas uzinstalētas, kaut arī ir norādītās kļūdas
 tables upgraded	setup	lv	Tabulas atjauninātas
 target version	setup	lv	Mērķa versija
 tcp port number of database server	setup	lv	Datubāzes servera TCP porta numurs
 text entry	setup	lv	Teksta ievadīšana
-the %1 extension is needed, if you plan to use a %2 database.	setup	lv	Ja domā lietot %2 datubāzi, nepieciešami paplašinajumi%1
+the %1 extension is needed, if you plan to use a %2 database.	setup	lv	Ja domā lietot %2 datubāzi, nepieciešami paplašinajumi %1
 the file	setup	lv	datne
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	lv	Pirmais solis, instalējot EGroupware, ir pārliecināties, ka tavai videi ir neppieciešamie uzstādījumi, lai programmatūra darbotos pareizi
 the following applications need to be upgraded:	setup	lv	Nepieciešams atjaunināt sekojošas aplikācijas:
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	lv	mbstring.func_overload = 7 nepieciešams pilnīgs unikoda (UTF-8) vai citas daudzbaitu rakstzīmju kopas atbalsts
 the table definition was correct, and the tables were installed	setup	lv	Tabulas nosacījumi bija pareizi, un tabulas tika uzinstalētas
 the tables	setup	lv	tabulas
-there was a problem trying to connect to your ldap server. <br />	setup	lv	Problēma pieslēdzoties tavam LDAP serverim. <br/>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	lv	Problēma pieslēdzoties tavam LDAP serverim.<br/>lūdzu pārbaudi LDAP servera konfigurāciju
-this has to be outside the webservers document-root!!!	setup	lv	Tam jābūt ārpus tīmekļa servera saknes dokumenta!!!
+there was a problem trying to connect to your ldap server. <br />	setup	lv	Problēma pieslēdzoties tavam LDAP serverim. <br>
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	lv	Problēma pieslēdzoties tavam LDAP serverim.<br>lūdzu pārbaudi LDAP servera konfigurāciju
+this has to be outside the webservers document-root!!!	setup	lv	Tam jābūt ārpus tīmekļa servera saknes dokumenta!
 this might take a while, please wait ...	setup	lv	Tas var aizņemt kādu brīdi, lūdzu uzgaidīt
 this program lets you backup your database, schedule a backup or restore it.	setup	lv	Šī programma ļauj tev dublēt tavu datubāzi, sastādīt dublējuma sarakstu vai atjaunot to.
 this program will convert your database to a new system-charset.	setup	lv	Programma konvertēs tavu datubāzi jaunajā sistēmas rakstzīmju kopā
@@ -387,12 +401,12 @@ uninstall all applications	setup	lv	Atinstalēt programmatūru
 uninstalled	setup	lv	Atinstalēts
 upgrade	setup	lv	Atjaunināt
 upgrade all	setup	lv	Atjaunināt visu
-upgraded	setup	lv	atjauninats
+upgraded	setup	lv	Atjauninats
 upgrading tables	setup	lv	Atjaunināmas tabulas
 upload backup	setup	lv	Augšupielādē dublējumu
 uploads a backup and installs it on your db	setup	lv	Augšupielādē dublējumu un iestata to tavā DB
 use cookies to pass sessionid	setup	lv	Lieto sīkdatnes lai pārietu sesijasid
-use pure html compliant code (not fully working yet)	setup	lv	Lieto HTML pieļāvīgu kodu(kurš vēl pilnībā nestrādā)
+use pure html compliant code (not fully working yet)	setup	lv	Lieto HTML pieļāvīgu kodu
 user account prefix	setup	lv	Lietotāja konta prefikss
 user for smtp-authentication (leave it empty if no auth required)	setup	lv	Lietotājs SMTP- autentifikācijai (atstāt tukšu, ja nepieprasa autentifikāciju)
 usernames are casesensitive	setup	lv	Lietotājvardi ir reģistrjūtīgi
@@ -411,7 +425,7 @@ which database type do you want to use with egroupware?	setup	lv	Kadu datubāzes
 world readable	setup	lv	Pasaulē lasāms
 world writable	setup	lv	Pasaulē rakstāms
 would you like egroupware to cache the phpgw info array ?	setup	lv	Vai vēlies, lai EGroupware saglaba kešatmiņā phpgw informācijas masīvu?
-would you like egroupware to check for a new version<br />when admins login ?	setup	lv	Vai vēlies, lai EGroupware pārbauda jauno versiju<br/> kad administrators piesakās?
+would you like egroupware to check for a new version<br />when admins login ?	setup	lv	Vai vēlies, lai EGroupware pārbauda jauno versiju<br> kad administrators piesakās?
 would you like to show each application's upgrade status ?	setup	lv	Vai vēlies, lai tiktu parādīts katras aplikācijas atjaunināsanās stāvoklis?
 writable by the webserver	setup	lv	Rakstāms tīmekļa serverī
 write	setup	lv	Rakstīt
@@ -425,13 +439,13 @@ you didn't enter a config password for domain %1	setup	lv	Tu neesi ievadījis ko
 you didn't enter a config username for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas lietotājvārdu domēnam%1
 you didn't enter a header admin password	setup	lv	Tu neesi ievadījis galvenes administratora paroli
 you didn't enter a header admin username	setup	lv	Tu neesi ievadījis galvenes administratora lietotājvārdu
-you do not have any languages installed. please install one now <br />	setup	lv	Tev nav iestatītas valodas. Lūdzu iestati tagad vismaz vienu<br/>
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	lv	Tev vēl nav izveidots header.inc.php <br/> Tu vari to izveidot tagad
+you do not have any languages installed. please install one now <br />	setup	lv	Tev nav iestatītas valodas. Lūdzu iestati tagad vismaz vienu<br>
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	lv	Tev vēl nav izveidots header.inc.php <br> Tu vari to izveidot tagad
 you have successfully logged out	setup	lv	Jūs veiksmīgi beidzāt darbu
 you must enter a username for the admin	setup	lv	Tev jāievada lietotajvārds administratoram
 you need to select your current charset!	setup	lv	Tev jāatzīmē pašreizējā rakstzīmju kopa!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	lv	Tev tas vai nu jaatinstale, vai jāpārinstalē, vai arī manuāli jāsalabo
-you're using an old configuration file format...	setup	lv	Tu lieto veco konfigurēšanas datnes formātu...
+you're using an old configuration file format...	setup	lv	Tu lieto veco konfigurēšanas datnes formātu ...
 your applications are current	setup	lv	Tavas patreizējās aplikacijas
 your backup directory '%1' %2	setup	lv	Tavs dublējuma direktorijs "%1" %2
 your database does not exist	setup	lv	Tava datubāze neeksistē

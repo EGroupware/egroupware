@@ -1,8 +1,8 @@
-%1 does not exist !!!	setup	pt	%1 não existe !!!
-%1 is %2%3 !!!	setup	pt	%1 é %2%3 !!!
+%1 does not exist !!!	setup	pt	%1 não existe!
+%1 is %2%3 !!!	setup	pt	%1 é %2%3!
 (searching accounts and changing passwords)	setup	pt	(a pesquisar contas e alterar senhas)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt	*** NÃO actualize a sua base de dados através da configuração, uma vez que a actualização pode ser interrompida pelo tempo máximo de execução (max_execution_time), o que deixará a sua base de dados num estado irrecuperável (os seus dados serão perdidos) !!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt	*** Tem de fazer as alterações manualmente no seu php.ini (normalmente em /ect em linux) para que o EGroupware funcione correctamente !!!
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt	*** NÃO actualize a sua base de dados através da configuração, uma vez que a actualização pode ser interrompida pelo tempo máximo de execução (max_execution_time), o que deixará a sua base de dados num estado irrecuperável (os seus dados serão perdidos)!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	pt	*** Tem de fazer as alterações manualmente no seu php.ini (normalmente em /ect em linux) para que o EGroupware funcione correctamente!
 00 (disable)	setup	pt	00 (desactivar / recomendado)
 13 (ntp)	setup	pt	13 (ntp)
 80 (http)	setup	pt	80 (http)
@@ -28,7 +28,7 @@ all users	setup	pt	Todos os utilizadores
 allow authentication via cookie	setup	pt	Permitir a autentiação por cookies
 allow password migration	setup	pt	Permitir a migração de senhas
 allowed migration types (comma-separated)	setup	pt	Permitir tipos de migação (separados por vírgulas)
-and reload your webserver, so the above changes take effect !!!	setup	pt	E recarregue o seu servidor Web, para que as alterações anteriores tenham efeito !!!
+and reload your webserver, so the above changes take effect !!!	setup	pt	E recarregue o seu servidor Web, para que as alterações anteriores tenham efeito!
 app details	setup	pt	Detalhes da aplicação
 app install/remove/upgrade	setup	pt	Instalação/remoção/actualização de aplicações
 app process	setup	pt	Processo das aplicações
@@ -48,7 +48,7 @@ at your request, this script is going to attempt to upgrade your old application
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	pt	A seu pedido, este script irá tentar actualizar as tabelas para o novo formato
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	pt	A seu pedido, este script irá eliminar as tabelas existentes e recriá-las no novo formato
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	pt	A seu pedido, este script irá desinstalar todas as suas aplicações, eliminando as suas tabelas e dados
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pt	Tentativa de usar o mimetype correcto para FTP em vez do 'application/octet-stream' por omissão
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	pt	Tentativa de usar o MIME type correcto para FTP em vez do 'application/octet-stream' por omissão
 authentication / accounts	setup	pt	Autenticação / Contas
 auto create account records for authenticated users	setup	pt	Criar contas de utilizadores automaticamente para utilizadores autenticados
 auto login anonymous user	setup	pt	Acesso automático do utilizador anónimo
@@ -65,17 +65,17 @@ backup failed	setup	pt	Cópia de segurança falhou
 backup finished	setup	pt	Cópia de segurança concluída
 backup now	setup	pt	Fazer cópia de segurança agora
 backup sets	setup	pt	Definições da cópia de segurança
-backup started, this might take a few minutes ...	setup	pt	A cópia de segurança começou. Pode demorar alguns minutos...
+backup started, this might take a few minutes ...	setup	pt	A cópia de segurança começou. Pode demorar alguns minutos ...
 because an application it depends upon was upgraded	setup	pt	porque uma aplicação de que depende foi actualizada
 because it depends upon	setup	pt	Porque depende de
 because it is not a user application, or access is controlled via acl	setup	pt	Porque não é uma aplicação de utilizador ou o acesso é controlado através das regras de acesso
-because it requires manual table installation, <br />or the table definition was incorrect	setup	pt	Porque requer instalação das tabelas  manualmente, <br />ou a definição da tabela está incorrecta
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pt	Porque requer instalação das tabelas  manualmente, <br>ou a definição da tabela está incorrecta
 because it was manually disabled	setup	pt	Porque foi desactivado manualmente
 because of a failed upgrade or install	setup	pt	Devido a uma falha na actualização ou instalação
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	pt	Devido a uma falha na actualização, ou a base de dados é mais recente do que a versão instalada desta aplicação
 because the enable flag for this app is set to 0, or is undefined	setup	pt	Pois o campo de habilitação (flag) desta aplicação está definido como 0, ou está indefinido
 bottom	setup	pt	Inferior
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pt	é <u>altamente recomendável</u> fazer uma cópia de segurança das tabelas caso o script danifique os seus dados. <br /><strong>Estes scripts automáticos podem destruir os seus dados facilmente</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pt	é <u>altamente recomendável</u> fazer uma cópia de segurança das tabelas caso o script danifique os seus dados.<br><b>Estes scripts automáticos podem destruir os seus dados facilmente</b>
 cancel	setup	pt	Cancelar
 change system-charset	setup	pt	Alterar charset do sistema
 charset	setup	pt	Conjunto de carateres
@@ -85,7 +85,7 @@ check installation	setup	pt	Verificar instalação
 check ip address of all sessions	setup	pt	Verificar endereço IP de todas sessões
 checking extension %1 is loaded or loadable	setup	pt	A verificar se a extensão %1 está carregada ou se é carregável
 checking file-permissions of %1 for %2 %3: %4	setup	pt	A verificar ficheiro de permissões de %1 para %2 %3: %4
-checking for gd support...	setup	pt	A verificar a existência de suporte de GD...
+checking for gd support...	setup	pt	A verificar a existência de suporte de GD ...
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt	A verificar se configuração session.save_path='%1' do php.ini é editável pelo servidor Web
 checking php.ini	setup	pt	A verificar php.ini
 checking required php version %1 (recommended %2)	setup	pt	A verificar a versão %1 do PHP necessária (%2 recomendada)
@@ -124,12 +124,12 @@ creating tables	setup	pt	A criar tabelas
 current system-charset	setup	pt	Charset de sistema actual
 current system-charset is %1.	setup	pt	O charset de sistema actual é %1.
 current version	setup	pt	Versão actual
-currently installed languages: %1 <br />	setup	pt	Idiomas instalados actualmente: %1 <br />
+currently installed languages: %1 <br />	setup	pt	Idiomas instalados actualmente: %1<br>
 database instance (egw domain)	setup	pt	Instância da base de dados (domínio do EGroupware)
 database successfully converted from '%1' to '%2'	setup	pt	A base de dados foi convertida de'%1' para '%2' com sucesso
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.<br>(Porto: 13 / Servidor: 129.6.15.28)
 day	setup	pt	Dia
-day of week<br />(0-6, 0=sunday)	setup	pt	Dia da semana<br />(0-6, 0=domingo)
+day of week<br />(0-6, 0=sunday)	setup	pt	Dia da semana<br>(0-6, 0=domingo)
 db backup and restore	setup	pt	Cópia de segurança e reposição da base de dados
 db host	setup	pt	Servidor da base de dados
 db name	setup	pt	Nome da base de dados
@@ -140,7 +140,7 @@ db root username	setup	pt	Nome de utilizador da raiz da base de dados
 db type	setup	pt	Tipo de base de dados
 db user	setup	pt	Utilizador da base de dados
 default	setup	pt	Definição por omissão recomendada
-default file system space per user/group ?	setup	pt	Espaço em disco por utilizador/grupo (por omissão) ?
+default file system space per user/group ?	setup	pt	Espaço em disco por utilizador/grupo (por omissão)?
 delete	setup	pt	Eliminar
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pt	Eliminar todas as contas de SQL, grupos, ACLs e preferências existentes (não é necessário normalmente)?
 delete all my tables and data	setup	pt	Eliminar todas as minhas tabelas e dados
@@ -148,7 +148,7 @@ delete all old languages and install new ones	setup	pt	Eliminar todos os idiomas
 deleting tables	setup	pt	A eliminar tabelas
 demo server setup	setup	pt	Configuração de demonstração do servidor
 deny access	setup	pt	Negar acesso
-deny all users access to grant other users access to their entries ?	setup	pt	Não permitir aos utilizadores a possibilidade de conceder, a outros utilizadores, o acesso aos seus registos ?
+deny all users access to grant other users access to their entries ?	setup	pt	Não permitir aos utilizadores a possibilidade de conceder, a outros utilizadores, o acesso aos seus registos?
 dependency failure	setup	pt	Falha de dependência
 deregistered	setup	pt	Não registado
 details for admin account	setup	pt	Detalhes da conta do administrador
@@ -167,14 +167,14 @@ edit your existing header.inc.php	setup	pt	Editar o seu header.inc.php existente
 edit your header.inc.php	setup	pt	Editar o seu header.inc.php
 egroupware administration manual	setup	pt	Manual da administração do EGroupware
 enable for extra debug-messages	setup	pt	Activar para mensagens extra de debug
-enable mcrypt	setup	pt	Activar MCrypt
+enable mcrypt	setup	pt	Activar Mcrypt
 enter some random text for app session encryption	setup	pt	Insira algum texto aleatório para encriptação de sessão da aplicação
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt	Insira algum texto aleatório para a encriptação de sessão  da aplicação (requer mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt	Insira o caminho completo para ficheiros temporários.<br />Exemplos: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt	Insira o caminho completo para ficheiros de utilizadores e grupos.<br />Exemplos: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	pt	Insira o caminho completo para a directoria de cópias de segurança.<br />se estiver vazia: directoria de ficheiros
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt	Insira o caminho completo para ficheiros temporários.<br>Exemplos: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt	Insira o caminho completo para ficheiros de utilizadores e grupos.<br>Exemplos: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	pt	Insira o caminho completo para a directoria de cópias de segurança.<br>se estiver vazia: directoria de ficheiros
 enter the hostname of the machine on which this server is running	setup	pt	Insira o nome da máquina em que este sistema está a ser executado
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt	Insira a URL do EGroupware.<br />Exemplo: http://www.dominio.com.br/egroupware ou   /egroupware<br /><b>Sem a barra final</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt	Insira a URL do EGroupware.<br>Exemplo: https://www.dominio.com.br/egroupware ou   /egroupware<br><b>Sem a barra final</b>
 enter the site password for peer servers	setup	pt	Insira a senha do sítio para servidores remotos
 enter the site username for peer servers	setup	pt	Insira o nome de utilizador do sítio para servidores remotos
 enter the title for your site	setup	pt	Insira o título para o seu sítio
@@ -183,8 +183,16 @@ enter your http proxy server	setup	pt	Insira o endereço do seu servidor proxy H
 enter your http proxy server password	setup	pt	Insira a senha do seu servidor proxy HTTP
 enter your http proxy server port	setup	pt	Insira a porta do seu servidor proxy
 enter your http proxy server username	setup	pt	Insira o nome de utilizador do seu servidor proxy
-error in admin-creation !!!	setup	pt	Erro ao criar administrador !!!
-error in group-creation !!!	setup	pt	Erro ao criar grupo !!!
+error in admin-creation !!!	setup	pt	Erro ao criar administrador!
+error in group-creation !!!	setup	pt	Erro ao criar grupo!
+error searching "dn=%1" for "%2"!	setup	pt	Erro ao procurar "DN=%1" para "%2"!
+error uploading your backup!	setup	pt	Erro ao carregar a sua cópia de segurança!
+every	setup	pt	Todos os
+export has been completed!	setup	pt	A exportação foi concluída!
+failed to mount backup directory!	setup	pt	Falha ao montar o diretório de cópia de segurança!
+failed updating user "%1" dn="%2"!	setup	pt	Falha ao atualizar o utilizador "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	pt	Falha ao escrever o ficheiro de configuração header.inc.php, verifique as permissões!
+fallback authentication	setup	pt	Autenticação de recurso
 false	setup	pt	Falso
 file	setup	pt	Ficheiro
 file type, size, version, etc.	setup	pt	ficheiro: tipo, tamanho, versão, etc.
@@ -211,12 +219,12 @@ however, the application may still work	setup	pt	No entanto, a aplicação pode 
 if no acl records for user or any group the user is a member of	setup	pt	Se não existirem registos ACL do utilizador ou grupo, o utilizador é um membro de
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt	Se o modo de segurança estiver activo, o EGroupware não pode alterar determinadas configurações em execução, nem pode carregar módulos não carregados.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt	Se a aplicação não tiver tabelas definidas, actualizar deve resolver o problema
-if using ads (active directory)	setup	pt	Se estiver a utilizar a autenticação ADS (Directoria Activa)
+if using ads (active directory)	setup	pt	Se estiver a utilizar a autenticação ADS (Active Directory)
 if using ldap	setup	pt	Se estiver a utilizar LDAP
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt	Se estiver a utilizar LDAP, deseja definir atributos da directoria principal e atributos da Shell de acesso ?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt	Se estiver a utilizar LDAP, deseja definir atributos da directoria principal e atributos da Shell de acesso?
 if you did not receive any errors, your applications have been	setup	pt	Se não foi exibido nenhum erro, as suas aplicações foram
 if you did not receive any errors, your tables have been	setup	pt	Se não foi exibido nenhum erro, as suas tabelas foram
-if you running this the first time, don't forget to manualy %1 !!!	setup	pt	Se estiver a executar esta acção pela primeira vez, não se esqueça de %1 manualmente !!!
+if you running this the first time, don't forget to manualy %1 !!!	setup	pt	Se estiver a executar esta acção pela primeira vez, não se esqueça de %1 manualmente!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt	Se apenas utilizar idiomas do mesmo charset (ex: da Europa Ocidental), não é necessário configurar um charset de sistema
 image type selection order	setup	pt	Ordem da selecção de tipo de imagen
 import has been completed!	setup	pt	A importação foi concluída!
@@ -262,7 +270,7 @@ max_execution_time is set to less than 30 (seconds): egroupware sometimes needs 
 maximum account id (e.g. 65535 or 1000000)	setup	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
 may be broken	setup	pt	pode estar partida
 mcrypt algorithm (default tripledes)	setup	pt	Algoritmo Mcrypt (por omissão TRIPLEDES)
-mcrypt initialization vector	setup	pt	Vector de inicialização MCrypt
+mcrypt initialization vector	setup	pt	Vector de inicialização Mcrypt
 mcrypt mode (default cbc)	setup	pt	Modo Mcrypt (por omissão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt	Configurações para Mcrypt (requer extensão mcrypt do PHP)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt	O limite de memória (memory_limit) está configurado para menos de %1: algumas aplicações do EGroupware necessitam de mais de 8M. Espere falhas ocasionais.
@@ -281,11 +289,11 @@ never	setup	pt	Nunca
 new	setup	pt	Novo/a
 next run	setup	pt	Execução seguinte
 no	setup	pt	Não
-no %1 support found. disabling	setup	pt	Nenhum suporte de %1 foi encontrado. A desactivar...
+no %1 support found. disabling	setup	pt	Nenhum suporte de %1 foi encontrado. A desactivar ...
 no accounts existing	setup	pt	Nenhuma conta existente
 no algorithms available	setup	pt	Nenhum algoritmo disponível
 no modes available	setup	pt	Nenhum modo disponível
-no xml support found. disabling	setup	pt	Nenhum suporte XML foi encontrado. A desactivar...
+no xml support found. disabling	setup	pt	Nenhum suporte XML foi encontrado. A desactivar ...
 not	setup	pt	Não
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pt	Nem todos os algoritmos e modos mcrypt trabalham com o EGroupware. Se tiver problemas, tente desligá-los.
 not complete	setup	pt	Incompleto
@@ -301,28 +309,34 @@ one month	setup	pt	Um mês
 one week	setup	pt	Uma semana
 only add languages that are not in the database already	setup	pt	Somente adicionar idiomas que ainda não estão na base de dados
 only add new phrases	setup	pt	Somente adicionar novas frases
+optional, if only authentication and anonymous search is enabled	setup	pt	opcional, se apenas a autenticação E a pesquisa anónima estiverem activadas
 or	setup	pt	ou
 or %1continue to the header admin%2	setup	pt	ou %1Continuar para a administração de cabeçalhos%2
-or http://webdav.domain.com (webdav)	setup	pt	ou http://webdav.domain.com (WebDAV)
+or http://webdav.domain.com (webdav)	setup	pt	ou https://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	pt	ou deixar em branco e selecionar OpenID Connect como tipo de autenticação acima para início de sessão único
+or leave empty and select saml as authentication type above for single sign on	setup	pt	ou deixar em branco e selecionar SAML como tipo de autenticação acima para início de sessão único
 or we can attempt to create the database for you:	setup	pt	Ou podemos tentar criar a base de dados por si:
 or you can install a previous backup.	setup	pt	Ou pode instalar uma cópia de segurança anterior.
+password	setup	pt	Palavra-passe
 password for smtp-authentication	setup	pt	Senha para a autenticação SMTP
+password needed for domain configuration.	setup	pt	Palavra-passe necessária para a configuração do domínio.
 password of db user	setup	pt	Senha do utilizador da base de dados
+passwords --> sql	setup	pt	Palavras-passe --> SQL
 passwords did not match, please re-enter	setup	pt	Senhas não coincidem. Por favor, re-insira-as.
 path information	setup	pt	Informação de Path
 path to user and group files has to be outside of the webservers document-root!!!	setup	pt	O caminho para os ficheiros do utilizador ou grupo tem de ser externo ao root de documentos de servidores Web.
 persistent connections	setup	pt	Ligações persistentes
-please check for sql scripts within the application's directory	setup	pt	Por favor, procure por scripts sql dentro da directoria da aplicação
+please check for sql scripts within the application's directory	setup	pt	Por favor, procure por scripts SQL dentro da directoria da aplicação
 please check read/write permissions on directories, or back up and use another option.	setup	pt	Por favor verifique as permissões de leitura/escrita em directorias, ou volte atrás e escolha outra opção
 please configure egroupware for your environment	setup	pt	Por favor, configure o EGroupware para o seu ambiente
 please consult the %1.	setup	pt	Por favor, consulte o %1.
 please fix the above errors (%1) and warnings(%2)	setup	pt	Por favor, corrija os erros (%1) e avisos (%2) apresentados
 please install	setup	pt	Por favor, instale
 please login	setup	pt	Por favor, entre
-please login to egroupware and run the admin application for additional site configuration	setup	pt	Por favor, entre no egroupware e execute a aplicação de administração para outras configurações do servidor
+please login to egroupware and run the admin application for additional site configuration	setup	pt	Por favor, entre no EGroupware e execute a aplicação de administração para outras configurações do servidor
 please make the following change in your php.ini	setup	pt	Por favor, proceda às seguintes alterações no seu php.ini
-please wait...	setup	pt	Por favor, aguarde...
-pop/imap mail server hostname or ip address	setup	pt	Nome do servidor POP/IMAP de correio electrónico ou endereço IP
+please wait...	setup	pt	Por favor, aguarde ...
+pop/imap mail server hostname or ip address	setup	pt	Nome do servidor POP3/IMAP de correio electrónico ou endereço IP
 possible reasons	setup	pt	Possíveis causas
 possible solutions	setup	pt	Possíveis soluções
 post-install dependency failure	setup	pt	Falha de dependência pós-instalação
@@ -349,7 +363,7 @@ resolve	setup	pt	Resolver
 restore	setup	pt	Repor
 restore failed	setup	pt	Reposição falhou
 restore finished	setup	pt	Reposição concluída
-restore started, this might take a few minutes ...	setup	pt	A reposição começou. Esta acção pode demorar alguns minutos...
+restore started, this might take a few minutes ...	setup	pt	A reposição começou. Esta acção pode demorar alguns minutos ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	pt	Repor uma cópia de segurança irá eliminar/substituir todo o conteúdo da sua base de dados. Tem a certeza?
 return to setup	setup	pt	Voltar à configurarção
 run installation tests	setup	pt	Executar testes de instalação
@@ -358,8 +372,8 @@ save	setup	pt	Guardar
 save this text as contents of your header.inc.php	setup	pt	Guardar este texto como conteúdo do seu header.inc.php
 schedule	setup	pt	Agendar
 scheduled backups	setup	pt	Cópias de segurança agendadas
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pt	Seleccione uma aplicação, escolha a versão de destino e clique em Enviar para processar esta versão.<br />Se você não definir uma versão, apenas as tabelas base serão instaladas para a aplicação.<br /><blink>Isto irá limpar todas aplicações da tabela primeiro!</blink>
-select one...	setup	pt	seleccione um(a)...
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pt	Seleccione uma aplicação, escolha a versão de destino e clique em Enviar para processar esta versão.<br>Se você não definir uma versão, apenas as tabelas base serão instaladas para a aplicação.<br><b>Isto irá limpar todas aplicações da tabela primeiro!</b>
+select one...	setup	pt	seleccione um(a) ...
 select the default applications to which your users will have access	setup	pt	Seleccione a aplicação à qual os utilizadores terão acesso por omissão
 select the desired action(s) from the available choices	setup	pt	Seleccione a(s) acção (ou acções) desejada(s) a partir das opções
 select to download file	setup	pt	Seleccione para transferir ficheiro
@@ -378,19 +392,19 @@ select your old version	setup	pt	Seleccione a  sua versão antiga
 selectbox	setup	pt	Caixa de selecção
 server root	setup	pt	Servidor de raiz
 set	setup	pt	Definir
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt	Configurar o charset de sistema como UTF-8 (unicode) permite a coexistência de dados de idiomas de charsets diferentes.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt	Configurar o charset de sistema como UTF-8 (Unicode) permite a coexistência de dados de idiomas de charsets diferentes.
 settings	setup	pt	Configurações
 setup	setup	pt	Configuração
 setup main menu	setup	pt	Configurar menu principal
 setup the database	setup	pt	Configurar a base de dados
 setup/config admin login	setup	pt	Definir/configurar o acesso administrativo
-show 'powered by' logo on	setup	pt	Área para exibição da logomarca do EGroupware
+show 'powered by' logo on	setup	pt	Mostrar o logótipo "Powered by" em
 size	setup	pt	Tamanho
 skip the installation tests (not recommended)	setup	pt	Saltar os testes de instalação (não recomendado)
 smtp server hostname or ip address	setup	pt	Nome do servidor SMTP ou endereço IP
 smtp server port	setup	pt	Porto do servidor SMTP
 some or all of its tables are missing	setup	pt	Algumas ou todas tabelas estão faltando
-sql encryption type	setup	pt	Tipo de cifra SQL para senhas (por omissão - md5)
+sql encryption type	setup	pt	Tipo de cifra SQL para senhas
 standard (login-name identical to egroupware user-name)	setup	pt	Por omissão (nome de acesso igual ao nome de utilizador do EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	pt	Configurações do servidor de correio electrónico por omissão (utilizado também para a autenticação de correio electrónico)
 start the postmaster	setup	pt	Iniciar o servidor de correio electrónico
@@ -404,7 +418,7 @@ step %1 - simple application management	setup	pt	Passo %1 - Configuração inici
 succesfully uploaded file %1	setup	pt	O ficheiro %1 foi enviado com sucesso
 table change messages	setup	pt	Mensagens de alterações nas tabelas
 tables dropped	setup	pt	Tabelas limpas
-tables installed, unless there are errors printed above	setup	pt	tabelas instaladas, a não ser que sejam exibidos erros abaixo
+tables installed, unless there are errors printed above	setup	pt	Tabelas instaladas, a não ser que sejam exibidos erros abaixo
 tables upgraded	setup	pt	Tabelas actualizadas
 target version	setup	pt	Versão de destino
 tcp port number of database server	setup	pt	Número do porto TCP do servidor de base de dados
@@ -414,20 +428,20 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	pt	O ficheiro
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt	O primeiro passo de instalação do EGroupware é assegurar que o seu ambiente tem as configurações necessárias para correr a aplicação correctamente.
 the following applications need to be upgraded:	setup	pt	As aplicações seguintes necessitam de actualização:
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessária a extensão mbstring para suportar o unicodo (UTF-8) ou outros charsets multi-byte inteiramente
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessário que o mbstring.func_overload = 7 para que o unicode (UTF-8) ou outros charsets multi-byte sejam suportados inteiramente.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessária a extensão mbstring para suportar o Unicode (UTF-8) ou outros charsets multi-byte inteiramente
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt	É necessário que o mbstring.func_overload = 7 para que o Unicode (UTF-8) ou outros charsets multi-byte sejam suportados inteiramente.
 the session extension is needed to use php sessions (db-sessions work without).	setup	pt	É necessária a extensão da sessão para utilizar a sessão PHP (sessões de base de dados funcionam sem esta extensão).
 the table definition was correct, and the tables were installed	setup	pt	As definições de tabelas estão correctas e as tabelas foram instaladas
 the tables	setup	pt	as tabelas
-there was a problem trying to connect to your ldap server. <br />	setup	pt	Ocorreu um problema ao aceder ao seu servidor LDAP.<br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pt	Ocorreu um problema ao tentar aceder ao seu servidor LDAP. <br />Por favor, verifique a configuração do seu servidor LDAP.
-this has to be outside the webservers document-root!!!	setup	pt	Tem de ser externo à root de documentos dos servidores Web!!!
-this might take a while, please wait ...	setup	pt	Esta acção pode demorar, por favor, aguarde...
+there was a problem trying to connect to your ldap server. <br />	setup	pt	Ocorreu um problema ao aceder ao seu servidor LDAP.<br>
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pt	Ocorreu um problema ao tentar aceder ao seu servidor LDAP.<br>Por favor, verifique a configuração do seu servidor LDAP.
+this has to be outside the webservers document-root!!!	setup	pt	Tem de ser externo à root de documentos dos servidores Web!
+this might take a while, please wait ...	setup	pt	Esta acção pode demorar, por favor, aguarde ...
 this program lets you backup your database, schedule a backup or restore it.	setup	pt	Este programa possibilita fazer uma cópia de segurança da sua base de dados, agendar uma cópia de segurança ou repô-la.
 this program will convert your database to a new system-charset.	setup	pt	Este programa irá converter a sua base de dados num novo charset de sistema.
 this program will help you upgrade or install different languages for egroupware	setup	pt	Este programa irá ajudá-lo a actualizar ou instalar diferentes idiomas para o EGroupware
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt	Deve ter cerca de 30 bytes de comprimentos.<br />Nota: Os valores por omissão foram gerados ao acaso.
-this stage is completed<br />	setup	pt	Este passo está completo<br />
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pt	Deve ter cerca de 30 bytes de comprimentos.<br>Nota: Os valores por omissão foram gerados ao acaso.
+this stage is completed<br />	setup	pt	Este passo está completo<br>
 to a version it does not know about	setup	pt	Para uma versão sobre a qual nada sabe
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pt	Para permitir a autenticação de senhas, adicione a linha seguinte ao seu ficheiro pg_hba.conf (por cima de todos os outros) e reinicie o PostgreSQL:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	pt	Para alterar o charset: faça uma cópia de segurança da sua base de dados; desinstale todas as aplicações; e reinstale a cópia de segurança com a opção "Converter a cópia de segurança para o charset seleccionado" marcada.
@@ -454,23 +468,23 @@ use pure html compliant code (not fully working yet)	setup	pt	Usar puro código 
 user account prefix	setup	pt	Prefixo da conta de utilizador
 user for smtp-authentication (leave it empty if no auth required)	setup	pt	Utilizador para a autenticação SMTP (deixe-o vazio se a autenticação não for necessária)
 usernames are casesensitive	setup	pt	Os nomes de utilizador são sensíveis à capitalização.
-users choice	setup	pt	Personalizar...
+users choice	setup	pt	Personalizar ...
 utf-8 (unicode)	setup	pt	UTF-8 (Unicode)
 version	setup	pt	Versão
 version mismatch	setup	pt	Erro de versão
 view	setup	pt	Visualizar
 virtual mail manager (login-name includes domain)	setup	pt	Gestor virtual de correio electrónico (nome de acesso inclui domínio)
 warning!	setup	pt	Aviso!
-we can proceed	setup	pt	Podemos continuar...
+we can proceed	setup	pt	Podemos continuar ...
 we will automatically update your tables/records to %1	setup	pt	As tabelas/registos serão automaticamente actualizados para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt	Iremos executar um conjunto de testes, que pode demorar alguns minutos. Clique na ligação para continuar.
 welcome to the egroupware installation	setup	pt	Bem-vindo à instalação do EGroupware
 which database type do you want to use with egroupware?	setup	pt	Que tipo de base de dados deseja utilizar com o EGroupware?
 world readable	setup	pt	Legível por todos
 world writable	setup	pt	Editável por todos
-would you like egroupware to cache the phpgw info array ?	setup	pt	Deseja que o EGroupware faça cache do vector de informações phpgw ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	pt	Deseja que o EGroupware verifique a existência de uma nova versão<br />quando administradores estiverem liados ?
-would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está actualizada ?
+would you like egroupware to cache the phpgw info array ?	setup	pt	Deseja que o EGroupware faça cache do vector de informações phpgw?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pt	Deseja que o EGroupware verifique a existência de uma nova versão<br>quando administradores estiverem liados?
+would you like to show each application's upgrade status ?	setup	pt	Deseja exibir se cada aplicação está actualizada?
 writable by the webserver	setup	pt	Editável pelo servidor Web
 write	setup	pt	Gravar
 year	setup	pt	Ano
@@ -481,22 +495,22 @@ you appear to be running an old version of php <br />it its recommend that you u
 you appear to be running version %1 of egroupware	setup	pt	Aparentemente esta versão do EGroupware é a %1
 you appear to have %1 support.	setup	pt	Aparentemente tem o suporte %1.
 you appear to have xml support enabled	setup	pt	Aparentemente tem o suporte XML activado
-you are ready for this stage, but this stage is not yet written.<br />	setup	pt	Está preparado para este passo, mas esta fase ainda não foi escrita.<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	pt	Está preparado para este passo, mas esta fase ainda não foi escrita.<br>
 you can install it by running:	setup	pt	Pode instalá-lo/a ao executar:
 you didn't enter a config password for domain %1	setup	pt	Não inseriu uma senha de configuração para o domínio %1
 you didn't enter a config username for domain %1	setup	pt	Não inseriu um nome de utilizador de configuração para o domínio %1
 you didn't enter a header admin password	setup	pt	Não inseriu uma senha ao administrador de cabeçalhos
 you didn't enter a header admin username	setup	pt	Não inseriu um nome de utilizador ao administrador de cabeçalhos
-you do not have any languages installed. please install one now <br />	setup	pt	Não há nenhum idioma instalado. Por favor, instale algum agora <br />
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt	Ainda não criou o seu header.inc.php!<br />Pode criá-lo agora.
+you do not have any languages installed. please install one now <br />	setup	pt	Não há nenhum idioma instalado. Por favor, instale algum agora<br>
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt	Ainda não criou o seu header.inc.php!<br>Pode criá-lo agora.
 you have successfully logged out	setup	pt	Saiu com sucesso
 you must enter a username for the admin	setup	pt	É necessário atribuir um nome de utilizador ao administrador
 you need to select your current charset!	setup	pt	É necessário seleccionar o seu charset actual!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt	Deve desinstalar e reinstalar, ou tentar reparar manualmente
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt	Não será capaz de aceder ao EGroupware utilizando sessões PHP: "sessão não pôde ser verificada" !!!
-you're using an old configuration file format...	setup	pt	Está a utilizar um formato antigo de ficheiro de configuração...
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt	Não será capaz de aceder ao EGroupware utilizando sessões PHP: "sessão não pôde ser verificada"!
+you're using an old configuration file format...	setup	pt	Está a utilizar um formato antigo de ficheiro de configuração ...
 your applications are current	setup	pt	As suas aplicações estão actualizadas
-your backup directory '%1' %2	setup	pt	A sua directoria de cópia de segurança'%1' %2
+your backup directory '%1' %2	setup	pt	A sua directoria de cópia de segurança '%1' %2
 your database does not exist	setup	pt	A sua base de dados não existe
 your database is not working!	setup	pt	A sua base de dados não está a funcionar!
 your database is working, but you dont have any applications installed	setup	pt	A sua base de dados está a funcionar, mas não tem nenhuma aplicação instalada
@@ -504,7 +518,7 @@ your egroupware api is current	setup	pt	O seu API EGroupware está actualizado
 your files directory '%1' %2	setup	pt	A sua directoria de ficheiros '%1' %2
 your header admin password is not set. please set it now!	setup	pt	A sua senha de administração de cabeçalhos NÃO está definida. Por favor, defina-a agora!
 your header.inc.php needs upgrading.	setup	pt	É necessário actualizar o seu header.inc.php.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt	É necessário actualizar o seu header.inc.php.<br /><blink><b class="msg">Aviso!</b></blink><br /><b>Faça cópias de segurança!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt	É necessário actualizar o seu header.inc.php.<br><b class="msg">Aviso!</b><br><b>Faça cópias de segurança!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pt	A sua instalação PHP não tem o suporte GD apropriado. É necessário ter uma versão 1.8 ou superior da biblioteca GD, para ver as tabelas Gantt nos projectos.
 your tables are current	setup	pt	As suas tabelas estão actualizadas
 your tables will be dropped and you will lose data	setup	pt	As suas tabelas serão limpas e os dados serão perdidos !!

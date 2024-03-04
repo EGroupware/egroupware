@@ -88,7 +88,20 @@ mail settings	mail	ko	메일 설정
 mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ko	메일 서버가 보고했습니다:\n%1 \n선택한 메시지를 즉시 삭제하여 계속 진행하시겠습니까(확인 클릭)\n그렇지 않은 경우 계속하기 전에 휴지통 폴더를 비우십시오. (취소 클릭)
 message learned as spam and moved to spam folder	mail	ko	메시지가 스팸으로 인식되어 스팸 폴더로 이동되었습니다.
+move selected to	mail	ko	선택한 위치로 이동
+move to	mail	ko	다음으로 이동
+name and domain	mail	ko	이름 및 도메인
 name and email	mail	ko	이름 및 이메일
+name of account	mail	ko	계정 이름
+name of imap servers (space separated host or host:port)	mail	ko	IMAP 서버 이름(공백으로 구분된 호스트 또는 호스트:포트)
+never show	mail	ko	표시 안 함
+never show notification	mail	ko	알림 표시 안 함
+new mail from %1	mail	ko	%1에서 받은 새 이메일
+new mail notification	mail	ko	새 이메일 알림
+new message type	mail	ko	새 메시지 유형
+no access	mail	ko	액세스 권한 없음
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ko	TO/CC/BCC 주소가 제공되지 않았으며 메시지를 저장할 폴더가 제공되지 않았습니다.
+no adress, to send this mail to, supplied	mail	ko	이 이메일을 보낼 주소가 제공되지 않았습니다.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ko	폴더 대상은 제공되지 않았으며 메시지를 저장할 폴더 또는 메일을 저장할 다른 방법(InfoLog/Ticketsystem에 저장)은 제공되지 않았지만 필수입니다.
 non	mail	ko	비
 only email	mail	ko	이메일만

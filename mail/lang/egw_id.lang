@@ -159,10 +159,21 @@ matches regexp	mail	id	cocok regexp
 message learned as spam and moved to spam folder	mail	id	Pesan diketahui sebagai spam dan dipindahkan ke folder spam
 modify subject	mail	id	Ubah subjek
 modify subject of this message	mail	id	Ubah subjek pesan ini
+move selected to	mail	id	Pindahkan yang dipilih ke
 move to	mail	id	Pindahkan ke
+name and domain	mail	id	Nama dan domain
 name and email	mail	id	Nama dan email
+name of account	mail	id	Nama akun
+name of imap servers (space separated host or host:port)	mail	id	Nama server IMAP (host yang dipisahkan spasi atau host:port)
+never show	mail	id	Jangan tampilkan
+never show notification	mail	id	Jangan pernah tampilkan pemberitahuan
+new mail from %1	mail	id	Email baru dari %1
+new mail notification	mail	id	Pemberitahuan email baru
+new message type	mail	id	Jenis pesan baru
 new subject	mail	id	Subjek baru
-no access	mail	id	No access
+no access	mail	id	Tidak ada akses
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	id	Tidak ada alamat yang diberikan untuk TO/CC/BCC, dan tidak ada folder untuk menyimpan pesan yang diberikan.
+no adress, to send this mail to, supplied	mail	id	tidak ada alamat yang diberikan untuk mengirim email ini
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	id	Tidak ada tujuan folder yang disediakan, dan tidak ada folder untuk menyimpan pesan atau tindakan lain untuk menyimpan email (simpan ke InfoLog/Ticketsystem) yang disediakan, tetapi diperlukan.
 no folders	mail	id	tiada folder
 no signature	mail	id	tiada tandatangan

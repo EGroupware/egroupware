@@ -5,21 +5,31 @@
 %1 records imported	calendar	ko	%1개의 레코드를 가져왔습니다.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1개 항목을 읽음 ( 아직 가져오기를 수행하지 않음, 뒤로돌아가기를 선택해서 가져오기테스트를 체크해제 할 수 있습니다)
 (%1 events in %2 seconds)	calendar	ko	(%2초 동안 %1개 이벤트)
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	ko	미팅에 초대받지 않았지만 어떻게든 초대를 받은 사람의 파티 크래셔입니다.
 accept	calendar	ko	수락
 accept or reject an invitation	calendar	ko	초대에 대해 승락 혹은 거절
 accepted	calendar	ko	승락됨
 access denied to the calendar of %1 !!!	calendar	ko	%1 일정의 접근이 금지되었습니다 !!
+access to calendar of %1 denied!	calendar	ko	%1 의 캘린더에 대한 액세스가 거부되었습니다!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	알림 메세지를 발생하는 행동: 추가됨,취소됨,승락됨,거부됨, ...
 actions	calendar	ko	액션
+actions...	calendar	ko	작업 ...
 add alarm	calendar	ko	알람 추가
 add appointments via shortened dialog or complete edit window	calendar	ko	단축 대화 상자 또는 전체 편집 창을 통해 약속을 추가합니다.
+add current view as favorite	calendar	ko	현재 보기를 즐겨찾기로 추가
+add new alarm	calendar	ko	새 알람 추가
 add new event	calendar	ko	새 예약 추가
+add new participants or resource	calendar	ko	새 참가자 또는 리소스 추가
 add timesheet entry	calendar	ko	타임시트 엔트리에 추가
 added	calendar	ko	추가됨
 added by synchronization	calendar	ko	동기화에 의해 추가됨
+after	calendar	ko	이후
+after %1	calendar	ko	이후 %1
 after current date	calendar	ko	오늘이후
+age:	calendar	ko	나이:
 alarm	calendar	ko	알람
 alarm added	calendar	ko	알람 추가됨
+alarm added automatic to new events before event start-time	calendar	ko	이벤트 시작 시간 전에 새 이벤트에 알람이 자동으로 추가됨
 alarm deleted	calendar	ko	알람 삭제됨
 alarm for %1 at %2 in %3	calendar	ko	** %3, %1에 %2 알람
 alarm management	calendar	ko	알람관리
@@ -27,8 +37,12 @@ alarms	calendar	ko	알람
 all categories	calendar	ko	모든 카테고리
 all day	calendar	ko	하루종일
 all events	calendar	ko	모든 이벤트
+all exceptions are converted into single events.	calendar	ko	모든 예외는 단일 이벤트로 변환됩니다.
+all future	calendar	ko	모든 향후
+all incl. rejected	calendar	ko	모두 거부됨
 all participants	calendar	ko	모든 참석자
 allow booking requests from any user when creating events?	calendar	ko	이벤트를 만들 때 모든 사용자의 예약 요청을 허용하시겠습니까?
+allow party crashers with email that match the following regular expression	calendar	ko	다음 정규식과 일치하는 이메일을 가진 파티 크래셔를 허용합니다.
 allows to edit the event again	calendar	ko	이벤트 재수정 허용
 always	calendar	ko	언제나
 always use full edit dialog	calendar	ko	항상 전체 편집 대화 상자 사용
@@ -39,6 +53,7 @@ before current date	calendar	ko	오늘 이전에
 before the event	calendar	ko	이벤트 전에
 birthday	calendar	ko	생일
 birthdays	admin	ko	생일
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	ko	기본적으로(여기에 설정된 것은 없음) EGroupware는 주최자/소유자만 추가할 수 있도록 허용합니다.
 calendar event	calendar	ko	일정 이벤트
 calendar menu	calendar	ko	일정 메뉴
 calendar preferences	calendar	ko	일정 환경설정
@@ -134,7 +149,7 @@ history	calendar	ko	내역
 holiday	calendar	ko	공휴일
 holidays	calendar	ko	공휴일
 hours	calendar	ko	시간
-ical / rfc2445	calendar	ko	iCal / rfc2445
+ical / rfc2445	calendar	ko	iCal / RFC2445
 ical successful imported	calendar	ko	iCal 불러오기 성공
 ignore conflict	calendar	ko	겹치는 일정 무시하기
 import	calendar	ko	가져오기
@@ -304,8 +319,8 @@ yearview	calendar	ko	한해 보기
 you can either set a year or a occurrence, not both !!!	calendar	ko	년도나 일정 무엇이든 설정하되 동시에 두개는 설정하면 안됩니다.
 you can only set a year or a occurrence !!!	calendar	ko	년도나 일정을 설정할수 있습니다!!
 you do not have permission to read this record!	calendar	ko	이 레코드를 읽을 권한이 없습니다!
-you have a meeting scheduled for %1	calendar	ko	** %1의 미팅 일정이 있습니다
-you have been uninvited from the meeting at %1	calendar	ko	** %1의 미팅으로 부터 제외되었습니다.
+you have a meeting scheduled for %1	calendar	ko	%1의 미팅 일정이 있습니다
+you have been uninvited from the meeting at %1	calendar	ko	%1의 미팅으로 부터 제외되었습니다.
 you need to set either a day or a occurrence !!!	calendar	ko	** 하루나 일정을 설정해야 합니다
 your meeting scheduled for %1 has been canceled	calendar	ko	%1 미팅 일정이 취소되었습니다.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	ko	%1으로 일정이 정해졌던 미팅이 %2로 조정되었습니다.

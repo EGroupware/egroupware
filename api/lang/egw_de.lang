@@ -361,7 +361,7 @@ current	common	de	Derzeit
 current users	common	de	Aktive Benutzersitzungen
 custom	common	de	Benutzerdefiniert
 custom fields	common	de	Benutzerdefinierte Felder
-custom javascript for onchange	common	de	Benutzerdefiniertes JavaScript für onChange
+custom javascript for onchange	common	de	Benutzerdefiniertes JavaScript für onchange
 cut	common	de	Ausschneiden
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
@@ -1425,11 +1425,11 @@ to start the db-tools	common	de	Startet die DB-Tools
 to start the etemplate editor	common	de	Startet den eTemplate Editor
 to start the search	common	de	Startet die Suche
 today	common	de	Heute
-todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
+todays date, eg. "%1"	common	de	Heutiges Datum, z.B. "%1"
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
 tonga	common	de	TONGA
-too many rows selected.<br />select all, or less than %1 rows	common	de	Zu viele Zeilen ausgewählt.<br />Wählen Sie alle, oder weniger als %1 Zeilen
+too many rows selected.<br />select all, or less than %1 rows	common	de	Zu viele Zeilen ausgewählt.<br>Wählen Sie alle, oder weniger als %1 Zeilen
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	de	Zu viele ungültige Anmeldeversuche: %1 für den Benutzer '%2', %3 für die IP %4
 top	common	de	Oben
 total	common	de	Gesamt
@@ -1562,13 +1562,13 @@ you can respond by visiting:	common	de	Sie können unter dem folgenden Verweis a
 you have been successfully logged out	login	de	Abmelden erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
-you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben
-you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben
+you have not entered a valid time of day	common	de	Sie haben keine gültige Uhrzeit eingegeben.
+you have not entered participants	common	de	Sie haben keine Teilnehmer eingegeben.
 you have selected an invalid date	common	de	Sie haben ein ungültiges Datum gewählt!
 you have selected an invalid main category	common	de	Sie haben eine ungültige Hauptkategorie gewählt!
 you have successfully logged out	common	de	Sie haben sich erfolgreich abgemeldet
 you may drag files out to your desktop	common	de	Sie können die Dateien auch auf Ihren Desktop ziehen
-you need to %1set your timezone preference%2.	common	de	Sie müssen %1 Ihre Zeitzone in den Einstellungen setzen%2
+you need to %1set your timezone preference%2.	common	de	Sie müssen %1 Ihre Zeitzone in den Einstellungen setzen%2.
 you need to add the webserver user '%1' to the group '%2'.	common	de	Sie müssen den Webserver-User '%1' zur Gruppe '%2' hinzufügen.
 you need to be an egroupware administrator to access this functionality!	common	de	Sie müssen ein EGroupware-Administrator sein, um auf diese Funktion zuzugreifen!
 you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	de	Bitte installieren Sie das Mailvelope-Plugin, erhältlich für Firefox und Chrome, von www.mailvelope.com oder klicken Sie auf den Button "Installieren".

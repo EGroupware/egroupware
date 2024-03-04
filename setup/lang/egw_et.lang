@@ -1,6 +1,6 @@
 %1 already exists in %2.	setup	et	%1 juba eksisteerib %2.
 %1 created in %2.	setup	et	%1 loodud %2.
-%1 does not exist !!!	setup	et	%1 ei eksisteeri !!!
+%1 does not exist !!!	setup	et	%1 ei eksisteeri!
 13 (ntp)	setup	et	13 (ntp)
 80 (http)	setup	et	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	et	<b>millist charset kasutame</b> (kasuta UTF-8 kui plaanid kasutada keeli millel on erinevad charset-id):
@@ -35,8 +35,8 @@ backup failed	setup	et	Tagavarakoopia ebaõnnestus
 backup finished	setup	et	Tagavarakoopia tehtud
 backup now	setup	et	Tee tagavarakoopia nüüd
 backup started, this might take a few minutes ...	setup	et	Tagavarakoopia tegemine alustatud. see võib võtta mõne minuti ...
-because it is not a user application, or access is controlled via acl	setup	et	Sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud acl abil
-because it requires manual table installation, <br />or the table definition was incorrect	setup	et	Sellepärast, et see nõuab käsitsi tabeli installeerimist, <br />või tabeli definitsioon pole korrektne
+because it is not a user application, or access is controlled via acl	setup	et	Sellepärast, et see pole kasutaja rakendus, või ligipääs on kontrollitud ACL abil
+because it requires manual table installation, <br />or the table definition was incorrect	setup	et	Sellepärast, et see nõuab käsitsi tabeli installeerimist,<br>või tabeli definitsioon pole korrektne
 because it was manually disabled	setup	et	Sellepärast, et see oli käsitsi välja lülitatud
 cancel	setup	et	Tühista
 change system-charset	setup	et	Muuda süsteemi charset
@@ -69,8 +69,8 @@ creating tables	setup	et	Loon Tabeleid
 current configuration:	setup	et	Käesolev konfiguratsioon
 current system-charset is %1.	setup	et	Käesolev süsteemi süsteemi charset on %1.
 current version	setup	et	Käesolev Versioon
-currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud keeled:  %1 <br />
-cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja,Parool
+currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud keeled:  %1<br>
+cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja, Parool
 database	setup	et	Andmebaas
 day	setup	et	Päev
 db backup and restore	setup	et	DB tagavara ja taastamine
@@ -86,19 +86,24 @@ edit your header.inc.php	setup	et	Muuda oma header.inc.php
 egroupware administration manual	setup	et	EGroupware Administreerimise Manual
 emailadmin profile updated:	setup	et	EMailAdmin profiil uuendatud:
 enable mcrypt	setup	et	Luba MCrypt
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	et	Sisesta täis teekond ajutiste failidejaoks.<br />Näiteks: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	et	Sisesta täis teekond kasutajate ja gruppide failidejaoks.<br />Näiteks: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	et	Sisesta täis teekond tagavarakoopjate jaoks.<br />kui tühi: failide kaust
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	et	Sisesta täis teekond ajutiste failidejaoks.<br>Näiteks: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	et	Sisesta täis teekond kasutajate ja gruppide failidejaoks.<br>Näiteks: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	et	Sisesta täis teekond tagavarakoopjate jaoks.<br>kui tühi: failide kaust
 enter the hostname of the machine on which this server is running	setup	et	Sisesta hostinimi kus see server töötab
 enter your default ftp server	setup	et	Sisesta oma vaikimisi FTP server
 enter your http proxy server	setup	et	Sisesta oma HTTP proksi server
 enter your http proxy server password	setup	et	Sisesta oma HTTP proksi serveri parool
 enter your http proxy server port	setup	et	Sisesta oma HTTP proksi serveri port
 enter your http proxy server username	setup	et	Sisesta oma HTTP proksi serveri kasutajanimi
-error in admin-creation !!!	setup	et	Viga admin-tegemisel !!!
-error in group-creation !!!	setup	et	Viga grupi-tegemisel !!!
-export has been completed!	setup	et	Eksportimine on lõpetatud !!!
-failed writing configuration file header.inc.php, check the permissions !!!	setup	et	Ebaõnnestus konfig faili header.inc.php kirjutamine, kontrolli õigusi !!!
+error in admin-creation !!!	setup	et	Viga admin-tegemisel!
+error in group-creation !!!	setup	et	Viga grupi-tegemisel!
+error searching "dn=%1" for "%2"!	setup	et	Viga otsingus "DN=%1" jaoks "%2"!
+error uploading your backup!	setup	et	Viga varukoopia üleslaadimisel!
+every	setup	et	Iga
+export has been completed!	setup	et	Eksportimine on lõpetatud!
+failed to mount backup directory!	setup	et	Varukoopia kataloogi ühendamine ebaõnnestus!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	et	Ebaõnnestus konfig faili header.inc.php kirjutamine, kontrolli õigusi!
+fallback authentication	setup	et	Tagasitõendamine
 file	setup	et	FAIL
 file type, size, version, etc.	setup	et	Faili tüüp, suurus, versijoon, jne.
 filename	setup	et	Failinimi
@@ -157,14 +162,20 @@ one month	setup	et	Üks kuu
 one week	setup	et	Üks nädal
 only add languages that are not in the database already	setup	et	Lisa ainult keeled mis pole veel andmebaasis
 only add new phrases	setup	et	Lsa ainult uued fraasid
+optional, if only authentication and anonymous search is enabled	setup	et	vabatahtlik, kui on lubatud ainult autentimine JA anonüümne otsing
 or	setup	et	või
+or leave empty and select openidconnect as authentication type above for single sign on	setup	et	või jäta tühjaks ja vali ühekordse sisselogimise puhul eespool autentimise tüübiks OpenID Connect.
+or leave empty and select saml as authentication type above for single sign on	setup	et	või jäta tühjaks ja vali ühekordse sisselogimise jaoks ülalpool SAML autentimise tüübiks.
+password	setup	et	Parool
 password for smtp-authentication	setup	et	Parool SMTP-audentimiseks
+password needed for domain configuration.	setup	et	Domeeni seadistamiseks vajalik parool.
+passwords --> sql	setup	et	Paroolid --> SQL
 path information	setup	et	Teekonna informatsioon
 please install	setup	et	Palun Installeeri
 please login to egroupware and run the admin application for additional site configuration	setup	et	Palun logi sisse EGroupware ja kasuta admin rakendust täiendavaks konfigureerimiseks
 please make the following change in your php.ini	setup	et	Palun tee järgmised muudatused oma php.ini failis
-please wait...	setup	et	Palun Oota...
-pop/imap mail server hostname or ip address	setup	et	POP/IMAP mail serveri hostinimi või IP aadress
+please wait...	setup	et	Palun Oota ...
+pop/imap mail server hostname or ip address	setup	et	POP3/IMAP mail serveri hostinimi või IP aadress
 possible reasons	setup	et	Võimalikud Põhjused
 possible solutions	setup	et	Võimalikud Lahendused
 potential problem	setup	et	Potensiaalne Probleem
@@ -196,7 +207,7 @@ run installation tests	setup	et	Jooksuta installeerimise teste
 save	setup	et	Salvesta
 schedule	setup	et	Ajastatud
 scheduled backups	setup	et	Ajastatud tagavarad
-select one...	setup	et	Vali üks...
+select one...	setup	et	Vali üks ...
 select where you want to store/retrieve user accounts	setup	et	Vali kuhu sa tahad salvestada kasutaja kontosid
 select which group(s) will be exported	setup	et	Vali milli(ne)(sed) grupp(id) eksporditakse
 select which languages you would like to use	setup	et	Vali milliseid keeli soovid kasutada
@@ -214,7 +225,7 @@ skip the installation tests (not recommended)	setup	et	Jäta vahele installeerim
 smtp server hostname or ip address	setup	et	SMTP serveri hostinimi või IP aadress
 smtp server port	setup	et	SMTP serveri port
 some or all of its tables are missing	setup	et	Mõni või kõik tabelid puuduvad
-sql encryption type	setup	et	SQL krüpteeringu tüüp paroolidejaoks (vaikimisi - md5)
+sql encryption type	setup	et	SQL krüpteeringu tüüp paroolidejaoks
 standard (login-name identical to egroupware user-name)	setup	et	Standartne (sisselogimise nimi identne EGroupware kasutaja nimega)
 standard mailserver settings (used for mail authentication too)	setup	et	Standard mailserver seadistused (kautatakse samuti Mail audentimiseks)
 status	setup	et	Staatus
@@ -226,7 +237,7 @@ target version	setup	et	Siht Versioon
 tcp port number of database server	setup	et	Andmebaasi serveri TCP pordi number
 text entry	setup	et	Järgmine Kirje
 the following applications need to be upgraded:	setup	et	Järgnevad rakendused vajavad uuendamis:
-this has to be outside the webservers document-root!!!	setup	et	See peab olema väljaspool weebiserverite document-root!!!
+this has to be outside the webservers document-root!!!	setup	et	See peab olema väljaspool weebiserverite document-root!
 this might take a while, please wait ...	setup	et	See võib võtta aega, palun oota ...
 this program lets you backup your database, schedule a backup or restore it.	setup	et	See programm võimaldab teha andmebaasi tagavara, ajastatud tagavara või taastada seda.
 translations added	setup	et	Tõlked Lisatud
@@ -242,7 +253,7 @@ year	setup	et	Aasta
 yes	setup	et	Jah
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
 you have successfully logged out	setup	et	Oled täielikult välja loginud
-you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati...
+you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati ...
 your applications are current	setup	et	Sinu rakendused on kaasaegsed
 your database does not exist	setup	et	Sinu andmebaasi ei eksisteeri
 your database is not working!	setup	et	Sinu andmebaas ei tööta!

@@ -2,7 +2,7 @@
 %1 deleted	infolog	de	%1 gelöscht
 %1 deleted by %2 at %3	infolog	de	%1 wurde von %2 am %3 gelöscht
 %1 entries %2	infolog	de	%1 Einträge %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	de	%1 Einträge %2, %3 wegen fehlender Rechte!!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	de	%1 Einträge %2, %3 wegen fehlender Rechte!
 %1 entries %2, %3 failed.	infolog	de	%1 Einträge %2, %3 fehlgeschlagen
 %1 modified	infolog	de	%1 geändert
 %1 modified by %2 at %3	infolog	de	%1 wurde von %2 am %3 geändert

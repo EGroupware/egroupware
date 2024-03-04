@@ -1232,6 +1232,7 @@ titles of any entries linked to the current record, excluding attached files	pre
 to	common	pl	Do
 to correct this error for the future you will need to properly set the	common	pl	Aby usunąć ten błąd na przyszłość, będziesz musiał ustawić poprawnie
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pl	Aby wyłączyć: [! = nie]<wartość>[=<test>], np. '!@data' - wyłącz kolumnę jeśli pole 'data' jest puste
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	pl	Aby sprawdzić lub przywrócić nieaktywne pliki, może być konieczne włączenie wersjonowania.
 to go back to the msg list, click <a href= %1 >here</a>	common	pl	Aby wrócić do listy wiadomości, kliknij <a href="%1">tutaj</a>
 to start the db-tools	common	pl	Aby uruchomić narzędzie bazodanowe
 to start the etemplate editor	common	pl	Aby uruchomić edytor eTemplate
@@ -1241,9 +1242,11 @@ todays date, eg. "%1"	common	pl	Dzisiajsza data, np. "%1"
 togo	common	pl	TOGO
 tokelau	common	pl	TOKELAU
 tonga	common	pl	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	pl	Wybrano zbyt wiele wierszy.<br>Wybierz wszystkie lub mniej niż %1 wierszy
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pl	Zbyt dużo prób nieudanego logowania (%1) dla użytkownika '%2', %3 z adresu IP %4
 top	common	pl	Do góry
 total	common	pl	Ogółem
+total: %1 successful: %2 failed: %3 skipped: %4	common	pl	Total: %1 Successful: %2 Failed: %3 Skipped: %4
 transparant bg for the icons?	common	pl	Przezroczyste tło dla ikon?
 tree	common	pl	Drzewo
 trinidad and tobago	common	pl	TRINIDAD I TOBAGO
@@ -1259,7 +1262,12 @@ type of the field (select label if field should be empty)	common	pl	Typ pola (wy
 uganda	common	pl	UGANDA
 ukraine	common	pl	UKRAINA
 un-delete	common	pl	Przywróć
+uncheck all	common	pl	Odznacz wszystkie
+unconnected nodes will be moved to %1.	admin	pl	Niepołączone węzły zostaną przeniesione do %1.
+undefined	common	pl	niezdefiniowany
 underline	common	pl	Podkreślenie
+undo	common	pl	Cofnij
+unicode	common	pl	Unicode
 unique	common	pl	Unikalna
 united arab emirates	common	pl	ZJEDNOCZONE EMIRATY ARABSKIE
 united kingdom	common	pl	WIELKA BRYTANIA
@@ -1271,10 +1279,15 @@ update	common	pl	Aktualizuj
 update a single entry by passing the fields.	common	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
 update from version '%s' to	common	pl	Uaktualnij z wersji '%s' do
 update the clock per minute or per second	common	pl	Uaktualniać zegar co minutę czy co sekundę?
+updating your account with new data from your identity provider failed!	common	pl	Aktualizacja konta nowymi danymi od dostawcy tożsamości nie powiodła się!
 upload	common	pl	Załaduj
 upload directory does not exist, or is not writeable by webserver	common	pl	Katalog ładowania plików nie istnieje lub serwer WWW nie ma do niego praw zapisu.
+upload file(s) from filemanager...	common	pl	Prześlij plik(i) z Menedżera plików ...
+upload new photo	common	pl	Prześlij nowe zdjęcie
 upload requires the directory to be writable by the webserver!	common	pl	Ładowanie plików wymaga, aby katalog mógł być zapisywany przez serwer WWW
 url	common	pl	Adres URL
+url of current record	common	pl	Adres URL bieżącego rekordu
+urls of any entries linked to the current record, excluding attached files	common	pl	Adresy URL wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
 uruguay	common	pl	URUGWAJ
 use button to search for	common	pl	Użyj przycisku aby szukać
 use button to search for address	common	pl	Użyj przycisku aby szukać adresu

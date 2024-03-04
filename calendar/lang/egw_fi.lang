@@ -1,28 +1,36 @@
 %1 %2 in %3	calendar	fi	%1 %2 %3:ssa
+%1 days	calendar	fi	%1 päivää
 %1 event(s) %2	calendar	fi	%1 tapahtuma(a) %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	fi	%1 tapahtuma(a) %2, %3 epäonnistui riittämättömien käyttöoikeuksien takia.
+%1 events in ical file, only first one imported and displayed!	calendar	fi	%1 tapahtumaa iCal-tiedostossa, vain ensimmäinen tuodaan ja näytetään!
 %1 hours	calendar	fi	%1 tunti(a)
+%1 minutes	calendar	fi	%1 minuuttia
 %1 participants removed because of missing invite grants	calendar	fi	%1 osallistuja(a) poistettu puuttuvien kutsuoikeuksien takia.
 %1 records imported	calendar	fi	%1 tapahtumaa tuotu
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fi	%1 tapahtumaa luettu (ei vielä tuotu, voit palata ja poistaa valinnan Testi Tuonti)
 %1 weeks	calendar	fi	%1 viikkoa
+%s the event	calendar	fi	%s tapahtuma
 (%1 events in %2 seconds)	calendar	fi	(%1 tapahtumaa %2:ssa sekunnissa)
 (empty = use global limit, no = no export at all)	admin	fi	(tyhjä = käytä yleistä rajoitusta, ei = ei vientiä)
 , exceptions preserved	calendar	fi	, poikeukset säilytetty
 , stati of participants reset	calendar	fi	, osallistujien Tila tyhjennetty
+a list of email addresses of all participants who have not declined	calendar	fi	Luettelo kaikkien niiden osallistujien sähköpostiosoitteista, jotka eivät ole kieltäytyneet.
 a non blocking event will not conflict with other events	calendar	fi	Joustava tapahtuma ei aiheita päällekkäisyyttä muiden tapahtumien kanssa
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	fi	Juhlien häirikkö on henkilö, jota EI ole kutsuttu kokoukseen, mutta joka on jotenkin saanut kutsun.
 accept	calendar	fi	Hyväksy
 accept or reject an invitation	calendar	fi	Hyväksy tai kieltäydy kutsusta
 accepted	calendar	fi	Hyväksytyt
-access denied to the calendar of %1 !!!	calendar	fi	Pääsy kalenteriin '%1' estetty !!!
-access to calendar of %1 denied!	calendar	fi	Pääsy kalenteriin '%1' estetty !!!
+access denied to the calendar of %1 !!!	calendar	fi	Pääsy kalenteriin '%1' estetty!
+access to calendar of %1 denied!	calendar	fi	Pääsy kalenteriin '%1' estetty!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fi	Toimenpide, joka aiheutti huomautuksen: Lisätty, Keskeytetty, Hyväksytty, Hylätty ...
 actions	calendar	fi	Toiminnot
 actions...	calendar	fi	Toiminnot
 add alarm	calendar	fi	Lisää hälytys
 add appointments via shortened dialog or complete edit window	calendar	fi	Lisää tapaamisia lyhennetyn valintaikkunan tai koko muokkausikkunan kautta.
 add current view as favorite	calendar	fi	Lisää näkymä suosikkeihin
+add new alarm	calendar	fi	Lisää uusi hälytys
 add new event	calendar	fi	Lisää uusi tapaaminen
+add new participants or resource	calendar	fi	Lisää uusia osallistujia tai resursseja
 add timesheet entry	calendar	fi	Lisää ajanhallinnan merkintä
 added	calendar	fi	Lisätty
 added by synchronization	calendar	fi	Lisätty synkronoinnin avulla
@@ -32,6 +40,7 @@ after current date	calendar	fi	Nykyisen päivän jälkeen
 age:	calendar	fi	Ikä:
 alarm	calendar	fi	Hälytys
 alarm added	calendar	fi	Hälytys lisätty
+alarm added automatic to new events before event start-time	calendar	fi	Hälytys lisätään automaattisesti uusiin tapahtumiin ennen tapahtuman alkamisaikaa
 alarm deleted	calendar	fi	Hälytys poistettu
 alarm for %1 at %2 in %3	calendar	fi	Hälytys tapahtumalle %1, aika %2, paikka %3
 alarm management	calendar	fi	Hälytysten hallinta
@@ -44,6 +53,7 @@ all future	calendar	fi	Kaikki tulevat
 all incl. rejected	calendar	fi	Kaikki, myös torjutut
 all participants	calendar	fi	Kaikki osallistujat
 allow booking requests from any user when creating events?	calendar	fi	Salli varauspyynnöt miltä tahansa käyttäjältä tapahtumia luotaessa?
+allow party crashers with email that match the following regular expression	calendar	fi	Salli juhlien häiritsijät, joiden sähköpostiosoite vastaa seuraavaa säännöllistä lauseketta.
 allow users to prevent change notifications ('do not notify')	calendar	fi	Salli käyttäjien käyttää "Älä lähetä huomautusviestiä" -toimintoa
 allows to edit the event again	calendar	fi	Salli tapahtuman muokkaaminen uudelleen
 always	calendar	fi	Aina
@@ -51,6 +61,7 @@ always use full edit dialog	calendar	fi	Käytä aina täydellistä muokkausikkun
 always use the full edit dialog, not this little dialog	calendar	fi	Käytä aina koko muokkausikkunaa, älä tätä pientä ikkunaa.
 apply the action on the whole query, not only the shown events	calendar	fi	Suorita toiminto koko kyselylle, ei vain niille jotka näkyvät listalla.
 apply the changes	calendar	fi	Lisää muutokset
+appointment settings	calendar	fi	Nimitysasetukset
 attention	calendar	fi	Huomio
 automatically purge old events after	admin	fi	Poista vanhat tapahtumat automaattisesti
 back half a month	calendar	fi	Puoli kuukautta taaksepäin
@@ -66,6 +77,7 @@ birthdays only	calendar	fi	Ainoastaan syntymäpäivät
 both, holidays and birthdays	calendar	fi	Molemmat, lomat ja syntymäpäivät
 busy	calendar	fi	Varattu
 by	calendar	fi	Henkilö:
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	fi	Oletusarvoisesti (tässä ei ole asetettu mitään) EGroupware sallii vain järjestäjän/omistajan lisätä heidät.
 calendar - list	calendar	fi	Kalenteri - Listanäkymä
 calendar - multi-weekly	calendar	fi	Kalenteri - Usean viikon näkymä
 calendar - planner	calendar	fi	Kalenteri - Suunnittelunäkymä
@@ -80,21 +92,26 @@ calendar menu	calendar	fi	Kalenterin valikko
 calendar preferences	calendar	fi	Kalenterin asetukset
 calendar settings	admin	fi	Kalenterin asetukset
 calendar-fieldname	calendar	fi	Kalenteri - kentän nimi
-can't add alarms in the past !!!	calendar	fi	Hälytyksiä ei voi lisätä menneeseen !!!
+can not send any notifications because notifications app is not installed!	calendar	fi	Ei voi lähettää ilmoituksia, koska ilmoitussovellusta ei ole asennettu!
+can't add alarms in the past !!!	calendar	fi	Hälytyksiä ei voi lisätä menneeseen!
 canceled	calendar	fi	Peruutettu
 category %1 removed because of missing rights	calendar	fi	Kategoria %1 poistettu puuttuvien ACL-oikeuksien takia!
 category acl	common	fi	Kategorioiden ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fi	Kategorioiden ACL-oikeuksilla voidaan rajoittaa kategorioiden lisäämistä tapahtumaan tai osallistujan tilan  muuttamista. Tämä ei rajoita tapahtuman näkyvyyttä kalenterissa.
+category automatically added to new events	calendar	fi	Luokka lisätään automaattisesti uusiin tapahtumiin
 category report	calendar	fi	Kategoria Raportti
 chair	calendar	fi	Kutsuja
+change domain of participants in caldav requests	calendar	fi	Vaihda osallistujien verkkotunnusta CalDAV-pyynnöissä
 change history	calendar	fi	Muuta historiaa
 change your status	calendar	fi	Muuta tila
 changed event-data applied	calendar	fi	Muuttuneet tapahtumatiedot sovellettu
 charset of file	calendar	fi	Tiedoston merkistö
 check all	calendar	fi	Merkitse kaikki
 choose a category	calendar	fi	Valitse kategoria
+choose owner of imported data	calendar	fi	Valitse tuotujen tietojen omistaja
 close the window	calendar	fi	Sulje ikkuna
 compose a mail to all participants after the event is saved	calendar	fi	Lähetä huomautus kaikille osallistujille kun tapahtuma on tallennettu.
+configuration settings	calendar	fi	Määritysasetukset
 conflict	calendar	fi	Konflikti
 copy this event	calendar	fi	Kopioi tämä tapahtuma
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	fi	Kopioi muutokset leikepöydälle, %1päivitä merkintä%2 ja sulauta ne.
@@ -102,7 +119,9 @@ countries	calendar	fi	Maat
 country	calendar	fi	Maa
 create a new series	calendar	fi	Luo uusi toistuva tapahtuma
 create an exception for the given date	calendar	fi	Luo poikkeava tapahtuma annetulle päivälle
+create an infolog from this event	calendar	fi	Luo tästä tapahtumasta InfoLog
 create exception	calendar	fi	Luo poikkeus
+create links for participants from addressbook	calendar	fi	Luo linkkejä osallistujille osoitekirjasta
 create new links	calendar	fi	Luo uusia linkkejä
 created	calendar	fi	Luotu
 creator	calendar	fi	Luoja
@@ -114,8 +133,9 @@ custom fields	common	fi	Lisäkentät
 custom_2	common	fi	Vapaa/Kiireinen
 daily	calendar	fi	Päivittäin
 date range	calendar	fi	Päivämääräalue
-day	calendar	fi	päivä
-days	calendar	fi	päivää
+day	calendar	fi	Päivä
+day of week tables	calendar	fi	Viikonpäivätaulukot
+days	calendar	fi	Päivää
 days of the week for a weekly repeated event	calendar	fi	Viikonpäivät viikottain toistettavalle tapahtumalle
 days repeated	calendar	fi	Toistettavat päivät
 dayview	calendar	fi	Päivänäkymä
@@ -134,6 +154,8 @@ delete series	calendar	fi	Poista sarjat
 delete this alarm	calendar	fi	Poista tämä hälytys
 delete this event	calendar	fi	Poista tämä tapahtuma
 delete this exception	calendar	fi	Poista tämä poikkeus
+delete this meeting for all participants	calendar	fi	Poista tämä kokous kaikkien osallistujien osalta
+delete this recurrence	calendar	fi	Poista tämä toistuvuus
 delete this series of recurring events	calendar	fi	Poista tämä toistuvien tapahtumien sarja
 deleted	calendar	fi	Poistetut
 deny resources reservation for private events	calendar	fi	Estä resurssien varaaminen henkilökohtaisiin tapahtumiin
@@ -143,6 +165,8 @@ display in header	calendar	fi	Esitä aiheena
 display status of events	calendar	fi	Näytä tapahtumien tila
 displayed view	calendar	fi	Valittu näkymä
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	fi	Näytä kalenteri Etusivulla
+distribution list	calendar	fi	Jakelulista
+do not import conflicting events	calendar	fi	Älä tuo ristiriitaisia tapahtumia
 do not include events of group members	calendar	fi	Ei ryhmänjäsenten tapahtumia
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	fi	Haluatko varmasti muuttaa tapahtuman aloitusajankohtaa? Jos muutat, alkuperäinen tapahtumasarja päättyy %1 päivään ja luodaan uusi sarja muutoksineen.
 do you want a weekview with or without weekend?	calendar	fi	Haluatko viikkonäkymän viikonlopun kanssa vai ilman?
@@ -157,17 +181,20 @@ download	calendar	fi	Lataa
 download this event as ical	calendar	fi	Lataa tämä tapahtuma iCal-tiedostona
 duration	calendar	fi	Kesto
 duration of the meeting	calendar	fi	Tapaamisen kesto
+edit event in calendar	calendar	fi	Muokkaa tapahtumaa kalenterissa
 edit exception	calendar	fi	Muokkaa poikkeusta
 edit series	calendar	fi	Muokkaa sarjaa
 edit status or alarms for this particular day	calendar	fi	Muokkaa kyseisen päivän tilaa tai hälytystä
 edit this event	calendar	fi	Muokkaa tätä tapahtumaa
 edit this series of recurring events	calendar	fi	Muokkaa tätä toistuvien tapahtumien sarjaa
 email address migration	calendar	fi	Sähköpostiosoitteen muuttaminen
+empty = no alarm	calendar	fi	tyhjä = ei hälytystä
 empty for all	calendar	fi	Tyhjä kaikille
+empty target calendar before importing	calendar	fi	Tyhjennä kohdekalenteri ennen tuontia
 end	calendar	fi	Päättyy
-end date/time	calendar	fi	Päättymispäivä / -aika
+end date/time	calendar	fi	Päättymispäivä/-aika
 enddate	calendar	fi	Päättymispäivä
-enddate / -time of the meeting, eg. for more then one day	calendar	fi	Tapahtuman päättymispäivä / -aika, esim. useammalle kuin yhdelle päivälle
+enddate / -time of the meeting, eg. for more then one day	calendar	fi	Tapahtuman päättymispäivä/-aika, esim. useammalle kuin yhdelle päivälle
 enddate of the export	calendar	fi	Viennin päättymispäivä
 ends	calendar	fi	Päättyy
 error adding the alarm	calendar	fi	Virhe hälytystä lisättäessä
@@ -175,14 +202,16 @@ error notifying %1	calendar	fi	Virheilmoitus %1
 error: can't delete original series!	calendar	fi	Virhe: Alkuperäistä tapahtumasarjaa ei voitu poistaa!
 error: duration of event longer then recurrence interval!	calendar	fi	Virhe: Tapahtuman kesto on suurempi kuin intervalli!
 error: importing the ical	calendar	fi	Virhe tuotaessa iCal-tiedostoa
-error: no participants selected !!!	calendar	fi	Virhe: osallistujia ei valittuna !!!
+error: no participants selected !!!	calendar	fi	Virhe: osallistujia ei valittuna!
 error: resources reservation in private events is not allowed!!!	calendar	fi	Virhe: Resurssien varaaminen henkilökohtaisiin tapahtumiin ei ole sallittua!
-error: saving the event !!!	calendar	fi	Virhe tapahtumaa tallennettaessa !!!
-error: starttime has to be before the endtime !!!	calendar	fi	Virhe: Alkamisajan pitää olla ennen päättymisaikaa !!!
+error: saving the event !!!	calendar	fi	Virhe tapahtumaa tallennettaessa!
+error: starttime has to be before the endtime !!!	calendar	fi	Virhe: Alkamisajan pitää olla ennen päättymisaikaa!
 error: the entry has been updated since you opened it for editing!	calendar	fi	Virhe: Tapahtumaa on jo päivitetty sen jälkeen kun avasit sen muokkaamista varten.
 error: you can't shift a series from the past!	calendar	fi	Virhe: Sarjatapahtumaa ei voi muuttaa
+event	common	fi	Tapahtuma
 event deleted	calendar	fi	Tapahtuma poistettu
 event details follow	calendar	fi	Tapahtuman yksityiskohdat alla
+event has been deleted by organizer!	calendar	fi	Järjestäjä on poistanut tapahtuman!
 event saved	calendar	fi	Tapahtuma tallennettu
 event will occupy the whole day	calendar	fi	Tapahtuma varaa koko päivän
 events	common	fi	Tapahtumat
@@ -212,6 +241,7 @@ find free timeslots where the selected participants are available for the given 
 firstname of person to notify	calendar	fi	Huomautettavan henkilön etunimi
 for	calendar	fi	for
 for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
+for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	fi	Mille näkymille kalenterin tulisi olla vain luettelo tapahtumista eikä erillisiä rivejä, joilla on kiinteä aikaväli.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	fi	Missä kalenterinäkymissä aikavälin taustavärin tulisi olla erilainen?
 format of event updates	calendar	fi	Tapahtumien päivitysmuoto
 forward half a month	calendar	fi	Puoli kuukautta eteenpäin
@@ -224,8 +254,10 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime search	calendar	fi	Vapaan ajan haku
 fri	calendar	fi	Pe
 full description	calendar	fi	Koko kuvaus
+full edit dialog	calendar	fi	Täydellinen muokkausikkuna
 fullname of person to notify	calendar	fi	Huomautettavan henkilön koko nimi
 general fields:	calendar	fi	Yleiset kentät
+general settings	calendar	fi	Yleiset asetukset
 global categories	calendar	fi	Yleiset kategoriat
 global public and group public	calendar	fi	Yleiset julkiset ja ryhmän julkiset
 global public only	calendar	fi	Vain yleiset julkiset
@@ -260,21 +292,21 @@ how many separate calendars to show before merging them together	calendar	fi	Kä
 how many weeks should the multiple week view show?	calendar	fi	Kuinka monta viikkoa usean viikon näkymän tulisi näyttää?
 how much entries to skip	calendar	fi	Kuinka monta tapahtumaa ohitetaan
 ical	calendar	fi	iCal
-ical / rfc2445	calendar	fi	iCal / rfc2445
+ical / rfc2445	calendar	fi	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	fi	iCal ei voi muuttaa olemassa olevan tapahtuman omistajaa. Tämä koskee vain uusia tapahtumia.
 ical export	calendar	fi	iCal -Vienti
 ical file	calendar	fi	iCal -Tiedosto
 ical import	calendar	fi	iCal -Tuonti
 ical successful imported	calendar	fi	iCal -Tuonti onnistui!
 if start day differs	calendar	fi	Jos aloituspäivä eroaa
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fi	Jos et aseta tänne salasanaa, tieto on saatavilla kaikille jotka tietävät osoitteen (URL)!!!
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fi	Jos et aseta tänne salasanaa, tieto on saatavilla kaikille jotka tietävät osoitteen (URL)!
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	fi	Määrittele kansio (koko VFS polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	fi	Määrittele tiedosto (koko VFS polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot.
 if you specify an export definition, it will be used when you export	calendar	fi	Valitse viennin oletusasetus
 ignore conflict	calendar	fi	Ohita päällekkäisyys
 import	calendar	fi	Tuonti
 import csv-file	common	fi	Tuo CSV-tiedosto
-imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	fi	Tuo tapahtumia kalenteriin CSV tiedostosta. CSV tarkoittaa 'Comma Separated Values' pilkulla erotettuja arvoja. Voit valita myös muita erottimia.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	fi	Tuo tapahtumia kalenteriin CSV tiedostosta. Voit valita myös muita erottimia.
 imports events into your calendar from an ical file.	calendar	fi	Tuo tapahtumia iCal tiedostosta kalenteriin
 insert	calendar	fi	Syötä
 insert in document	calendar	fi	Syötä asiakirjaan
@@ -283,6 +315,8 @@ invalid email-address "%1" for user %2	calendar	fi	Virheellinen sähköpostiosoi
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	fi	Virheellinen omistaja ID: %1. Käytetty sen sijaan %2
 invitations	calendar	fi	Kutsut
 invite	common	fi	Kutsu
+it can not read timezones from sqlite database %1!	calendar	fi	Se EI pysty lukemaan aikavyöhykkeitä SQLite-tietokannasta %1!
+just me	calendar	fi	Vain minä
 keep exceptions	calendar	fi	Säilytä poikkeukset
 keep the series unchanged.	calendar	fi	Älä muuta tapahtumasarjaa
 last	calendar	fi	Viimeinen
@@ -308,7 +342,7 @@ merge document...	calendar	fi	Syötä asiakirjaan
 min days	calendar	fi	Min päivät
 minimum number of users for showing day view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä päiväkohtaisen näkymän näyttämiseksi konsolidoituna.
 minimum number of users for showing week view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä, jotta viikkonäkymä voidaan näyttää konsolidoituna.
-minutes	calendar	fi	minuuttia
+minutes	calendar	fi	Minuuttia
 modified	calendar	fi	Muokattu
 modifier	calendar	fi	Muokkaaja
 mon	calendar	fi	Ma
@@ -333,8 +367,8 @@ no owner selected	calendar	fi	Ei omistajaa valittu
 no recurrence	calendar	fi	Ei toistoa
 no response	calendar	fi	Ei vastausta
 no rights to export more than %1 entries!	calendar	fi	Sallittu vientimäärä: %1 merkintää!
-non blocking	calendar	fi	joustava
-not	calendar	fi	ei
+non blocking	calendar	fi	Joustava
+not	calendar	fi	Ei
 not rejected	calendar	fi	Muut, paitsi torjutut
 nothing to update, version is already %1.	calendar	fi	Ei vaadi päivitystä, versio on jo %1
 notification messages for added events	calendar	fi	Uusien tapahtumien huomautusviestit
@@ -343,8 +377,10 @@ notification messages for modified events	calendar	fi	Muokattujen tapahtumien hu
 notification messages for uninvited participants	calendar	fi	Huomautusviestit osallistujille, joiden kutsu peruttu
 notification messages for your alarms	calendar	fi	Hälytystesi huomautusviestit
 notification messages for your responses	calendar	fi	Vastaustesi huomautusviestit
+notification settings	calendar	fi	Ilmoitusasetukset
 notify	calendar	fi	Ilmoita
 notify all externals (non-users) about this event	calendar	fi	Ilmoita kaikille ulkopuolisille (muille kuin käyttäjille) tästä tapahtumasta.
+notify externals	calendar	fi	Ilmoita ulkopuolisille
 notify non-egroupware users about event updates	calendar	fi	Huomauta ulkopuolisia käyttäjiä merkintöjen muutoksista
 number of records to read (%1)	calendar	fi	Luettavien tietueiden määrä (%1)
 number of resources to be booked	calendar	fi	Varattavien resurssien määrä
@@ -357,7 +393,7 @@ olddate	calendar	fi	Alkuperäinen päiväys
 on %1 %2 %3 your meeting request for %4	calendar	fi	%1 %2 %3 tapaamispyyntö henkilölle %4
 on all modification, but responses	calendar	fi	Kaikissa muutoksissa, paitsi vastauksissa
 on any time change too	calendar	fi	Myös missä tahansa ajanmuutoksessa
-on invitation / cancellation only	calendar	fi	Ainoastaan kutsuttaessa / peruttaessa
+on invitation / cancellation only	calendar	fi	Ainoastaan kutsuttaessa/peruttaessa
 on participant responses too	calendar	fi	Myös osallistumisvastauksissa
 on time change of more than 4 hours too	calendar	fi	Myös yli 4:n tunnin aikataulumuutoksissa
 one month	calendar	fi	Yksi kuukausi
@@ -367,6 +403,7 @@ only group-events	calendar	fi	Vain ryhmätapahtumat
 only the initial date of that recurring event is checked!	calendar	fi	Vain ensimmäinen aloituspäivä toistuvasta tapahtumasta valittu!
 open todo's:	calendar	fi	Avoimet tehtävät:
 optional	calendar	fi	Valinnainen
+organizer	calendar	fi	Järjestäjä
 output unit	calendar	fi	Tulostusyksikkö
 overlap holiday	calendar	fi	Päällekkäinen loma
 owner too	calendar	fi	Myös omistajana tai osallistujana
@@ -378,6 +415,7 @@ people holiday	calendar	fi	Yleinen lomapäivä
 permission denied	calendar	fi	Ei käyttöoikeutta
 planner by category	calendar	fi	Suunnittelunäkymä kategorian mukaan
 planner by user	calendar	fi	Suunnittelunäkymä käyttäjien mukaan
+please first select participants on the left and then use plus button to add them	calendar	fi	Valitse ensin osallistujat vasemmalla ja lisää heidät sitten plus-painikkeella.
 please note: you can configure the field assignments after you uploaded the file.	calendar	fi	Huom: kentän merkinnät konfiguroidaan sen JÄLKEEN kun olet ladannut tiedoston.
 preselected group for entering the planner	calendar	fi	Suunnittelunäkymän oletusryhmä
 prevent deleting of entries	admin	fi	Estä tapahtumien poisto
@@ -387,13 +425,14 @@ private and group public	calendar	fi	Yksityinen ja ryhmän julkinen
 private event	calendar	fi	Yksityinen tapahtuma
 private only	calendar	fi	Vain yksityinen
 quantity	calendar	fi	Määrä
+quick add	calendar	fi	Nopea lisäys
 re-edit event	calendar	fi	Muokkaa tapahtumaa uudelleen
 receive email updates	calendar	fi	Vastaanota päivityksiä sähköpostilla
 receive notifications about events you created/modified/deleted	calendar	fi	Vastaanota huomautuksia tapahtumista jotka itse luot, muokkaat tai poistat.
 receive summary of appointments	calendar	fi	Vastaanota tapaamisten yhteenveto
 recordings	calendar	fi	Tallenteet
 recover	calendar	fi	Palauta
-recovered	calendar	fi	palautettu
+recovered	calendar	fi	Palautettu
 recurrence	calendar	fi	Toistuvuus
 recurring event	calendar	fi	Toistuva tapahtuma
 reject	calendar	fi	Hylkää
@@ -407,6 +446,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	fi	Toiston tiheys
 repetition	calendar	fi	Toisto
 repetitiondetails (or empty)	calendar	fi	Toiston yksityiskohdat (tai tyhjä)
 replacements for inserting events into documents	calendar	fi	Sijaismerkinnät asiakirjoihin
+reply to meeting request	calendar	fi	Vastaa kokouspyyntöön
 replying "%1" is not a participant of the event! only continue if you want to add as new participant.	calendar	fi	Vastaaja "%1" EI ole tapahtuman osallistuja! Jatka vain, jos haluat lisätä uuden osallistujan.
 report	calendar	fi	Raportti
 requested	calendar	fi	Vaaditut
@@ -432,7 +472,7 @@ select a %1	calendar	fi	Valitse %1
 select a color for this calendar	calendar	fi	Valitse kalenterin väri
 select a time	calendar	fi	Valitse aika
 select an action	calendar	fi	Valitse toiminto
-select an action...	calendar	fi	Valitse toiminto
+select an action...	calendar	fi	Valitse toiminto ...
 select multiple contacts for a further action	calendar	fi	Valitse useampi yhteystieto jatkaaksesi
 select resources	calendar	fi	Valitse resurssit
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fi	Asetetaanko osallistujien Tilaksi "Ei vastausta", jos tapahtumaa siirretään?
@@ -456,8 +496,10 @@ show a calendar title	calendar	fi	Näytä kalenterin otsikko
 show all events, as if they were private	calendar	fi	Näytä kaikki tapahtumat yksityisinä
 show all status incl. rejected events	calendar	fi	Näytä kaikki tilat, myös torjututtujen tapahtumien
 show all status, but rejected	calendar	fi	Näytä kaikki tilat, paitsi torjuttujen
+show all status, but unknown	calendar	fi	Näytä kaikki tilat, mutta tuntematon
 show also events just owned by selected user	calendar	fi	Näytä vain valitun käyttäjän tapahtumat
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	fi	Näytä koko päivän ei-blokkaavina tapahtumina sekä päivämäärän hiiren avulla.
+show birthdays as events	calendar	fi	Näytä tapahtumina
 show birthdays from addressbook	admin	fi	Näytä syntymäpäivät osoitekirjasta
 show empty rows in planner	calendar	fi	Näytä tyhjät rivit suunnitelunäkymässä
 show events that have been deleted	calendar	fi	Näytä poistetut tapahtumat
@@ -471,6 +513,7 @@ show only tentative accepted events	calendar	fi	Näytä ainoastaan alustavasti h
 show only the date, not the year	admin	fi	Näytä ainoastaan päiväys, ei vuotta
 show this month	calendar	fi	Näytä tämä kuukausi
 show this week	calendar	fi	Näytä tämä viikko
+show year and age	calendar	fi	Näytä vuosi ja ikä
 single event	calendar	fi	Yksittäinen tapahtuma
 single participant	calendar	fi	Yksittäinen osallistuja
 sort by	calendar	fi	Lajittelu
@@ -484,6 +527,7 @@ startdate and -time of the search	calendar	fi	Haun aloituspäivä ja -aika
 startdate of the export	calendar	fi	Viennin alkamispäivä
 startrecord	calendar	fi	Aloitustietue
 status	calendar	fi	Tila
+status already applied	calendar	fi	Tila on jo käytössä
 status changed	calendar	fi	Tila muuttunut
 status for all future scheduled days changed	calendar	fi	Kaikkien tulevien (scheduled) päivien tapahtumien tila on muuttunut!
 status for this particular day changed	calendar	fi	Valitun päivän tila muuttettu
@@ -500,25 +544,28 @@ the exceptions are deleted together with the series.	calendar	fi	Poikkeukset on 
 the extern organizer changed the event!	calendar	fi	Ulkopuolinen järjestäjä muutti tapahtumaa!
 the following document-types are supported:	calendar	fi	Seuraavat tiedostotyypit ovat tuettuja:
 the original series will be terminated today and a new series be created.	calendar	fi	Alkuperäinen tapahtumasarja päättyy tähän päivään ja uusi sarja luodaan.
-the resource you selected is already overbooked:	calendar	fi	Valitsemasi resurssi on jo varattu
+the resource you selected is already overbooked:	calendar	fi	Valitsemasi resurssi on jo varattu:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	fi	Lähettäjä "%1" EI ole ulkoinen järjestäjä "%2", toimi varoen!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	fi	Lähettäjä "%1" EI ole osallistuja, joka vastaa "%2", ole varovainen!
-this day is shown as first day in the week or month view.	calendar	fi	Valitsemasi päivä näytetään viikon tai kuukausinäkymän ensimmäisenä päivänä
+this day is shown as first day in the week or month view.	calendar	fi	Valitsemasi päivä näytetään viikon tai kuukausinäkymän ensimmäisenä päivänä.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	fi	Määrittele päivänäkymän päättymisaika. Tämän ajan jälkeiset tapahtumat näytetään päivänäkymän alaosassa.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	fi	Määrittelee päivänäkymän aloitusaika. Tapahtumat ennen tätä aikaa näytetään päivänäkymän yläosassa.<br>Määrittelemääsi aloitusaikaa käytetään myös uusien tapahtumien oletusaloitusaikana.
 this entry is currently opened by %1!	calendar	fi	Tämä tapahtuma on tällä hetkellä muokattavana (avoimena) henkilöllä %1!
 this entry is opened by user:	calendar	fi	Käyttäjä, joka avasi tietueen asetetun aikajakson sisällä:
-this event is part of a series	calendar	fi	Tämä tapahtuma on osa tapahtumasarjaa.
+this event is part of a series	calendar	fi	Tämä tapahtuma on osa tapahtumasarjaa
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fi	Tämä ryhmä on oletuksena kun teet suunnitelmaa. Voit vaihtaa sen koska tahansa suunnittelunäkymässä.
+this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	fi	Tämä on toistuva tapahtuma. Haluatko poistaa vain tämän toistuvan tapahtuman vai koko sarjan?
+this mail cancels a meeting	calendar	fi	Tämä sähköposti peruuttaa kokouksen
 this mail contains a meeting request	calendar	fi	Tämä sähköposti sisältää kutsun
+this mail contains a reply to a meeting request	calendar	fi	Tämä sähköposti sisältää vastauksen kokouspyyntöön
 this message is sent for canceled or deleted events.	calendar	fi	Tämä viesti lähetetään peruututtujen ja/tai poistettujen tapahtumien osanottajille.
 this message is sent for modified or moved events.	calendar	fi	Tämä viesti lähetetään muokattujen tai siirrettyjen tapahtumien osanottajille.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	fi	Tämä viesti lähetetään kaikille osanottajille, jotka ovat pyytäneet ilmoituksen uusista tapahtumista.<br>Voit käyttää tiettyjä muuttujia, jotka korvataan tapahtuman tiedoilla. Ensimmäinen rivi on sähköpostin otsikko.
 this message is sent to uninvited participants.	calendar	fi	Tämä viesti lähetetään osanottajille, joiden kutsu on peruttu.
 this message is sent when you accept, tentative accept or reject an event.	calendar	fi	Tämä viesti lähetetään kun hyväksyt, alustavasti hyväksyt tai hylkäät tapahtuman.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	fi	Tämä viesti lähetetään kun asetat hälytyksen tietylle tapahtumalle. Sisällytä kaikki tieto jota mahdollisesti tarvitset.
-this module displays a planner calendar.	calendar	fi	Tämä sovellus näyttää kalenterin suunnittelunäkymän
-this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	fi	Tämä sovellus näyttää käyttäjän kalenterin usean viikon näkymänä. Älä myönnä käyttöoikeuksia anonyymeille käyttäjille.
+this module displays a planner calendar.	calendar	fi	Tämä sovellus näyttää kalenterin suunnittelunäkymän.
+this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	fi	Tämä sovellus näyttää käyttäjän kalenterin usean viikon näkymänä. Älä myönnä käyttöoikeuksia anonyymeille käyttäjille!
 this module displays calendar events as a list.	calendar	fi	Tämä sovellus näyttää kalenterin listanäkymänä.
 this module displays the current month	calendar	fi	Sovellus näyttää tämänhetkisen kuukauden
 three month	calendar	fi	Kolme kuukautta
@@ -531,6 +578,7 @@ timezone	calendar	fi	Aikavyöhyke
 timezone in which recurrences have identical time	calendar	fi	Aikavyöhyke, missä toistuvilla tapahtumilla on sama aika
 timezone of event exports	calendar	fi	Tuotujen tapahtumien aikavyöhyke
 timezone of event ical file import/export	calendar	fi	Tuotujen/Vietyjen iCal tiedostojen aikavyöhyke
+timezones aliases updated to version %1 (%2 records updated).	calendar	fi	Aikavyöhykkeiden aliakset päivitetty versioon %1 (%2 tietuetta päivitetty).
 timezones updated to version %1 (%2 records updated).	calendar	fi	Aikavyöhykkeet päivitetty versioon %1 (%2 tietuetta päivitetty)
 title of the event	calendar	fi	Tapahtuman otsikko
 titles of any entries linked to the current record, excluding attached files	calendar	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot.
@@ -546,6 +594,7 @@ two weeks	calendar	fi	Kaksi viikkoa
 type of planner	calendar	fi	Suunnittelunäkymän tyyppi
 unable to save	calendar	fi	Ei voitu tallentaa.
 uninvited	calendar	fi	Kutsu peruttu
+update calendar view immediately when navigation calendar in sidebox is changed	calendar	fi	Päivitä kalenterinäkymä välittömästi, kun sivupalkin navigointikalenteria muutetaan
 update timezones	common	fi	Päivitä aikavyöhykkeet
 updated	calendar	fi	Päivittetty
 use end date	calendar	fi	Käytä loppumispäivää
@@ -588,15 +637,15 @@ yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäj
 yes, users can purge their deleted items	admin	fi	Kyllä, kaikki käyttäjät voivat lopullisesti poistaa merkintöjä
 you are not allowed to book the resource selected:	calendar	fi	Sinulla ei ole oikeuksia valitsemasi resurssin varaamiseen:
 you are not invited to that event!	calendar	fi	Sinua ei ole kutsuttu!
-you can either set a year or a occurrence, not both !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan, et molempia!!!
-you can only set a year or a occurrence !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan !!!
+you can either set a year or a occurrence, not both !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan, et molempia!
+you can only set a year or a occurrence !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan!
 you do not have permission to read this record!	calendar	fi	Sinulla ei ole lukuoikeutta tähän tietueeseen!
 you have a meeting scheduled for %1	calendar	fi	Sinulla on tapaaminen %1
 you have been uninvited from the meeting at %1	calendar	fi	Kutsusi tapaamisesta henkilön %1 kanssa on peruttu.
 you need to select an account, contact or resource first!	calendar	fi	Käyttäjä, yhteystieto tai resurssi on valittava ensin!
 you need to select an ical file first	calendar	fi	iCal tiedosto on valittava ensin!
 you need to select some events first	calendar	fi	Valitse ensin tapahtuma(t)
-you need to set either a day or a occurrence !!!	calendar	fi	Anna päivä tai tapahtuma-aika !!!
+you need to set either a day or a occurrence !!!	calendar	fi	Anna päivä tai tapahtuma-aika!
 you requested more than available for the selected resource:	calendar	fi	Valitsemaasi resurssia ei ole vapaana haluamaasi määrää:
 your meeting scheduled for %1 has been canceled	calendar	fi	Ajalle %1 suunniteltu tapaaminen on peruttu
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	fi	Ajalle %1 suunniteltu tapaaminen on siirretty aikaan %2

@@ -152,15 +152,21 @@ message verified successfully but the signer’s certificate could not be verifi
 message verified successfully.	mail	da	Besked bekræftet med succes.
 modify subject	mail	da	Ændre emne
 modify subject of this message	mail	da	Ændre emnet for denne meddelelse
-move selected to	mail	da	flyt valgte til
-move to	mail	da	flyt valgte til
+move selected to	mail	da	Flyt valgte til
+move to	mail	da	Flyt til
 move to trash	mail	da	Flyt til skraldespanden
+name and domain	mail	da	Navn og domæne
 name and email	mail	da	Navn og e-mail
+name of account	mail	da	Navn på konto
 name of imap servers (space separated host or host:port)	mail	da	Navn på IMAP-servere (mellemrumssepareret host eller host:port)
 never display html emails	mail	da	Vis aldrig HTML emails
+never show	mail	da	Vis aldrig
 never show notification	mail	da	Vis aldrig meddelelse
 new mail from %1	mail	da	Ny mail fra %1
+new mail notification	mail	da	Meddelelse om ny e-mail
+new message type	mail	da	Ny meddelelsestype
 new subject	mail	da	Nyt emne
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	da	Ingen adresse TO/CC/BCC angivet, og ingen mappe til at gemme beskeden i angivet.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	da	Ingen mappedestination angivet, og ingen mappe til at gemme beskeden eller anden foranstaltning til at gemme mailen (gem til InfoLog/Ticketsystem) angivet, men påkrævet.
 no sneak preview in list	mail	da	Ingen visning af meddelelser
 non	mail	da	Nej

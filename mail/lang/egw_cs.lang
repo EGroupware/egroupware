@@ -131,9 +131,9 @@ delete folder	mail	cs	Smazat složku
 delete folder %1 ?	mail	cs	Smazat složku %1 ?
 delete this acl	mail	cs	Smazat tyto ACL
 deleted	mail	cs	smazáno
-deleted %1 messages in %2	mail	cs	Bylo smazáno %1 zpráv v %2
+deleted %1 messages in %2	mail	cs	Bylo smazáno %1 zpráv v %2.
 deleted!	mail	cs	Smazáno!
-deleting %1 folders in progress ...	mail	cs	Probíhá mazání složky %1...
+deleting %1 folders in progress ...	mail	cs	Probíhá mazání složky %1 ...
 deleting folders	mail	cs	Smazání složek
 deny certain groups access to following features	mail	cs	Zakázání přístupu konkrétním skupinám k následujícím funkcím
 directories have to be shared.	mail	cs	Adersáře musí být sdílené
@@ -369,6 +369,7 @@ move to archive	mail	cs	Přesunout do archivu
 move to trash	mail	cs	Přesunout do koše
 moved %1 message(s) from %2 to %3	mail	cs	%1 zpráv bylo přesunuto z %2 do %3
 moving folders from one mailaccount to another is not supported	mail	cs	Přesouvání složek z jednoho e-mailového účtu do jiného není podporováno
+name and domain	mail	cs	Jméno a doména
 name and email	mail	cs	Jméno a e-mail
 name of account	mail	cs	Název účtu
 name of imap servers (space separated host or host:port)	mail	cs	Název serverů IMAP (hostitel nebo hostitel:port oddělený mezerou)

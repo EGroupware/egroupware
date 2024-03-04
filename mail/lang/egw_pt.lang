@@ -96,12 +96,18 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	pt	Define o que mostrar como etiqueta de identidade no cabeçalho da pasta de correio
 delete folder	mail	pt	Excluir pasta
 delete folder %1 ?	mail	pt	Apagar pasta %1?
+delete this acl	mail	pt	Eliminar esta ACL
 deleted	mail	pt	eliminado/a
-deleted %1 messages in %2	mail	pt	apagado %1 mensagens em 2%
+deleted %1 messages in %2	mail	pt	Apagado %1 mensagens em 2%.
 deleted!	mail	pt	apagado!
+deleting %1 folders in progress ...	mail	pt	Eliminação de %1 pastas em curso ...
+deleting folders	mail	pt	Eliminar pastas
 deny certain groups access to following features	mail	pt	Negar o acesso a certos grupos as seguintes características
+directories have to be shared.	mail	pt	As pastas têm de ser partilhadas.
 disable	mail	pt	Incapacitar
 disable caching of flags	mail	pt	Desactivar o caching de bandeiras
+disable horizontal rule for separation of mail body from signature	mail	pt	Desativar a regra horizontal para separar o corpo do e-mail da assinatura
+disable use of flowed lines in plain text mails (rfc3676)	mail	pt	Desativar a utilização de linhas fluidas em mensagens de correio eletrónico de texto (RFC3676)
 disabled!	mail	pt	disabled!
 discard	mail	pt	descartar
 discard message	mail	pt	Descarte mensagem
@@ -290,15 +296,21 @@ move selected to	mail	pt	Mover mensagens seleccionadas para
 move to	mail	pt	Mover-se para
 move to trash	mail	pt	Mover para o lixo
 moved %1 message(s) from %2 to %3	mail	pt	movida %1 mensagem (s) de %2 a 3%
+name and domain	mail	pt	Nome e domínio
 name and email	mail	pt	Nome e correio eletrónico
 name of account	mail	pt	Nome da conta
+name of imap servers (space separated host or host:port)	mail	pt	Nome dos servidores IMAP (anfitrião separado por espaços ou anfitrião:porta)
 never display html emails	mail	pt	Nunca apresentar mensagens HTML
+never show	mail	pt	Nunca mostrar
+never show notification	mail	pt	Nunca mostrar notificação
+new mail from %1	mail	pt	Nova mensagem de correio eletrónico de %1
 new mail notification	mail	pt	Notificação de correio Nova
 new message type	mail	pt	Novo tipo de mensagem
 new subject	mail	pt	Novo tema
 no (valid) send folder set in preferences	mail	pt	Não (válido) Enviar pasta definido nas preferências
 no access	mail	pt	sem acesso
 no action defined!	mail	pt	Nenhuma ação definida!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt	Não foi fornecido nenhum endereço TO/CC/BCC e não foi fornecida nenhuma pasta para guardar a mensagem.
 no adress, to send this mail to, supplied	mail	pt	sem endereço, para enviar este e-mail para, fornecido
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pt	Não foi fornecido nenhum destino de pasta e não foi fornecida nenhuma pasta para guardar a mensagem ou outra medida para armazenar o correio (guardar no InfoLog/Ticketsystem), mas é necessário.
 no folders	mail	pt	Não há pastas

@@ -119,7 +119,6 @@ austria	common	lv	AUSTRIJA
 authenticate	common	lv	Autentificēt
 author	common	lv	Autors
 autohide sidebox menus	common	lv	Slēpt izvēlnes automātiski
-automatically hide the sidebox menus?	common	lv	Slēpt izvēlnes automātiski?
 autosave default category	common	lv	Automātiski saglabāt  Noklusēto Kategoriju
 avatar	common	lv	Avatar
 azerbaijan	common	lv	AZERBAIDŽĀNA
@@ -271,7 +270,6 @@ description	common	lv	Izklāsts
 detail	common	lv	Detaļa
 details	common	lv	Detaļas
 directory	common	lv	Direktorija
-disable internet explorer png-image-bugfix	common	lv	Izslēgt Internet Explorer png-image-bugfix
 disabled	common	lv	Izslēgts
 discard changes	common	lv	Atcelt izmaiņas
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	lv	Parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds)
@@ -924,6 +922,7 @@ time zone offset	common	lv	Laika zonas nobīde
 title	common	lv	Nosaukums
 to	common	lv	Kam
 to correct this error for the future you will need to properly set the	common	lv	Lai izlabotu šo kļudu, Jums ir nepieciešms pareizi uzstādit
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lv	Lai atspējotu: [Piemēram: '!@data' atslēdz, ja datu saturs ir tukšs.
 to examine or reinstate inactived files, you might need to turn versioning on.	admin	lv	Lai pārbaudītu vai atjaunotu neaktīvos failus, var būt nepieciešams ieslēgt versiju iestatīšanu.
 to go back to the msg list, click <a href= %1 >here</a>	common	lv	Lai atgrieztos pie msg saraksta, klikšķini <a href="%1">šeit</a>
 to start the db-tools	common	lv	Sākt DB rīkus
@@ -934,9 +933,12 @@ todays date, eg. "%1"	common	lv	Šodienas datums, piemēram, "%1"
 togo	common	lv	TOGO
 tokelau	common	lv	TOKELAU
 tonga	common	lv	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	lv	Izvēlēts pārāk daudz rindu.<br>Izvēlieties visas vai mazāk par %1 rindu.
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lv	Pārāk dzudz nevieksmīgi pieslēgšanās mēģinājumi: %1 lietotājam '%2', %3 ar IP %4
 top	common	lv	Augšā
 total	common	lv	Kopā
+total: %1 successful: %2 failed: %3 skipped: %4	common	lv	Kopā: %1 Sekmīgi: %2 Neveiksmīgi: %3 Izlaisti: %4
+transparant bg for the icons?	common	lv	Ikonu caurspīdīgs bg
 tree	common	lv	Koks
 trinidad and tobago	common	lv	TRINIDĀDA UN TOBAGO
 tuesday	common	lv	Otrdiena

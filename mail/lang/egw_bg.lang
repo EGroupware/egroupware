@@ -361,8 +361,16 @@ modify subject of this message	mail	bg	Az üzenet tárgyának módosítása
 move selected to	mail	bg	премести избраните в
 move to	mail	bg	премести избраните в
 move to trash	mail	bg	Премести в Кошчето
+name and domain	mail	bg	Име и домейн
 name and email	mail	bg	Име и имейл
+name of account	mail	bg	Име на акаунта
+name of imap servers (space separated host or host:port)	mail	bg	Име на IMAP сървърите (хост или хост:порт, разделени с интервал)
 never display html emails	mail	bg	Не показва HTML съобщения
+never show	mail	bg	Никога не показвайте
+never show notification	mail	bg	Никога не показвайте известие
+new mail from %1	mail	bg	Нов имейл от %1
+new mail notification	mail	bg	Уведомление за нов имейл
+new message type	mail	bg	Нов тип съобщение
 new subject	mail	bg	Új tárgy
 no access	mail	bg	Няма достъп
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	bg	Не е посочен адрес ДО/Копие/Скрито копие и не е зададена папка за запазване на съобщението.

@@ -12,7 +12,7 @@
 %1 the configuration file.	setup	pl	%1 plik konfiguracyjny
 %1 users and %2 groups created, %3 errors	setup	pl	Utworzono %1 użytkowników i %2 grup, %3 błędy
 '%1' is no valid domain name!	setup	pl	%1 nie jest poprawnyą nazwą domeny
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	pl	'%1' nie jest dozwolony jako %2. Argumenty opcji %3!!!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	pl	'%1' nie jest dozwolony jako %2. Argumenty opcji %3!
 '%1' must be integer	setup	pl	%1 musi mieć wartość INTEGER
 (searching accounts and changing passwords)	setup	pl	(wyszukuję konta i zmieniam hasła)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pl	*** Nie aktualizuj bazy danych przez aplikację ustawień. ponieważ aktualizacja może być przerwana przez parametr maksymalnego czasu wykonania, co spowoduje uszkodzenie bazy danych - dane zostaną utracone!
@@ -20,7 +20,7 @@
 00 (disable)	setup	pl	00 (wyłączony / opcja zalecana)
 13 (ntp)	setup	pl	13 (ntp)
 80 (http)	setup	pl	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do użycia</b> (wybierz UTF8 jeżeli planujesz używać różnych języków z różnymi zestawami znaków)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do użycia</b> (wybierz UTF-8 jeżeli planujesz używać różnych języków z różnymi zestawami znaków)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	pl	===> inna grupa '%1' pod numerem <i>gidNumber</i> , nie ustawiono przynależności.
 [header-password],[header-user],[new-password],[new-user]	setup	pl	[hasło-administracyjne (header)],[użytkownik-administracyjny (header)],[nowe-hasło],[nowy-użytkownik]
 access denied: wrong username or password for manage-header !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do zarządzania domenami EGw!
@@ -100,42 +100,42 @@ backup min count	setup	pl	Minimalna liczba kopi bezpieczeństwa
 backup now	setup	pl	Wykonaj teraz
 backup sets	setup	pl	Zbiory kopii zapasowych
 backup skipped!	setup	pl	Kopia zapasowa została pominięta!
-backup started, this might take a few minutes ...	setup	pl	Kopia zapasowa w toku... to może zająć trochę czasu
+backup started, this might take a few minutes ...	setup	pl	Kopia zapasowa w toku ... to może zająć trochę czasu
 base dn "%1" not found!	setup	pl	Bazowa DN %1 NIE znaleziono!
-because an application it depends upon was upgraded	setup	pl	ze względu na wykonaną aktualizację aplikacji, od której jest to zależne
+because an application it depends upon was upgraded	setup	pl	Ze względu na wykonaną aktualizację aplikacji, od której jest to zależne
 because it depends upon	setup	pl	Ponieważ jest to zależne
 because it is not a user application, or access is controlled via acl	setup	pl	Ponieważ nie jest to aplikacja użytkownika lub dostęp kontrolowany jest przez mechanizm ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	pl	Ponieważ wymagana jest ręczna instalacja tabel bazy danych, <br />lub definicje tabel nie były poprawne
+because it requires manual table installation, <br />or the table definition was incorrect	setup	pl	Ponieważ wymagana jest ręczna instalacja tabel bazy danych, <br>lub definicje tabel nie były poprawne
 because it was manually disabled	setup	pl	Ponieważ zostało to ręcznie wyłączone
 because its sources are missing	setup	pl	Ponieważ brakuje plików z kodem źródłowym
 because of a failed upgrade or install	setup	pl	Ze względu na niepoprawną aktualizację lub instalację
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	pl	Ze względu na niepoprawną aktualizacje lub ponieważ baza danych jest nowsza niż zainstalowana wersja aplikacji
 because the enable flag for this app is set to 0, or is undefined	setup	pl	Ponieważ flaga aktywacji dla tej aplikacji została ustawiona na 0 (zero) lub nie została zdefiniowana
 bottom	setup	pl	U dołu
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pl	Jednakże <u>gorąco zachęcamy do wykonania kopii zapasowej</u> tabel bazy danych na wypadek gdyby skrypt spowodował uszkodzenie danych. <br /><strong>Automatyczne skrypty mogą łatwo doprowadzić do uszkodzenia bazy danych.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pl	Jednakże <u>gorąco zachęcamy do wykonania kopii zapasowej</u> tabel bazy danych na wypadek gdyby skrypt spowodował uszkodzenie danych. <br /><b>Automatyczne skrypty mogą łatwo doprowadzić do uszkodzenia bazy danych.</b>
 ca certificate	setup	pl	Certyfikat CA
 can not connect to %1 database %2 on host %3 using user %4!	setup	pl	Nie można się połączyć z %1 baza danych %2 na kliencie %3 z użyciem użytkownika %4!
-can not connect to ldap server on host %1 using dn %2!	setup	pl	Nie można połączyć do serwera LDAP na hoście %1 używając DN %2 !
+can not connect to ldap server on host %1 using dn %2!	setup	pl	Nie można połączyć do serwera LDAP na hoście %1 używając DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	pl	Nie można utworzyć %1 bazy danych %2 na %3 dla użytkownika %4 !
-can not create dn %1!	setup	pl	Nie można utworzyć DN %1 !
+can not create dn %1!	setup	pl	Nie można utworzyć DN %1!
 can not instancate accounts object for %1	setup	pl	Nie można określić obiektu konta dla %1
 cancel	setup	pl	Anuluj
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	pl	Nie można utworzyć header.inc.php z powodu braku uprawnień dostępu do pliku. <br /> Alternatywnie można %1 lub %2 dla pliku.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	pl	Nazwa hosta CAS dla serwera: <br />przykład: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	pl	Port serwera CAS: <br/> Przykład: 443
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	pl	Nie można utworzyć header.inc.php z powodu braku uprawnień dostępu do pliku. <br> Alternatywnie można %1 lub %2 dla pliku.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	pl	Nazwa hosta CAS dla serwera: <br>przykład: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	pl	Port serwera CAS: <br> Przykład: 443
 cas server uri:	setup	pl	URI serwera CAS:
 certificate (pem or ca):	setup	pl	Certyfikat (PEM lub CA):
 change system-charset	setup	pl	Zmień systemowy zestaw znaków
 charset	setup	pl	Charset
 charset to convert to	setup	pl	Wykonaj kowersję na zestaw znaków
 charsets used by the different languages	setup	pl	Zestaw znaków używany przez różne języki
-check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pl	Test sprawdzający może być jedynie wykonany po wywołaniu z serwera WEB, ponieważ user-id/-nazwa dla serwera WEB nie jest znana .
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pl	Test sprawdzający może być jedynie wykonany po wywołaniu z serwera WEB, ponieważ user-ID/-nazwa dla serwera WEB nie jest znana .
 check installation	setup	pl	Sprawdź instalację
 check ip address of all sessions	setup	pl	Sprawdzać IP dla wszystkich sesji
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	pl	Sprawdź kopię bezpieczeństwa i odtwórz katalog plików (może zająć dużo przestrzeni dyskowej, upewnij się, że masz skonfigurowane opcje utrzymania porządku.)
 checking extension %1 is loaded or loadable	setup	pl	Sprawdzam, czy rozszerzenie %1 jest załadowane lub możliwe do załadowania
 checking file-permissions of %1 for %2 %3: %4	setup	pl	Sprawdzam prawa dostępu obiektu %1 dla %2 %3: %4
-checking for gd support...	setup	pl	Sprawdzam wsparcie dla modułu GD...
+checking for gd support...	setup	pl	Sprawdzam wsparcie dla modułu GD ...
 checking for jpgraph in %1	setup	pl	Sprawdzam JPGraph w %1
 checking function %1 exists	setup	pl	Sprawdzam, czy funkcja '%1' istnieje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pl	Sprawdzam czy ustawienia w php.ini  session.save_path='%1' - czy web serwer jest uprawniony do zapisu dla tego pliku.
@@ -146,7 +146,7 @@ checks egroupware's installed, it's versions and necessary upgrads (return value
 click <a href="index.php">here</a> to return to setup.	setup	pl	wybierz <a href="index.php">here</a> by wrócić do menu setup.
 click here	setup	pl	Kliknij tutaj
 click here to re-run the installation tests	setup	pl	Kliknij, aby ponowić testy instalacyjne
-comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pl	oddzielone przecinkiem adresy IP lub nazwy domenowy, domyślnie dostęp jest otwarty dla wszystkich
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pl	Oddzielone przecinkiem adresy IP lub nazwy domenowy, domyślnie dostęp jest otwarty dla wszystkich
 complete path to aspell program	setup	pl	Pełna ścieżka do programu ASPELL
 completed	setup	pl	Zakończono
 config password	setup	pl	Hasło (dla domeny)
@@ -180,12 +180,12 @@ created	setup	pl	Utworzono
 created header.inc.php!	setup	pl	Utworzono 'header.inc.php'
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	pl	utwórz użytkownika admin: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	pl	Tworzenie tabel
-creation of %1 in %2 failed !!!	setup	pl	Tworzenie %1 w polu %2 !!!
+creation of %1 in %2 failed !!!	setup	pl	Tworzenie %1 w polu %2!
 current configuration:	setup	pl	Bieżąca konfiguracja:
 current system-charset	setup	pl	Bieżący systemowy zestaw znaków
 current system-charset is %1.	setup	pl	Bieżący systemowy zestaw znaków to %1.
 current version	setup	pl	Aktualna wersja
-currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje językowe: %1 <br />
+currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje językowe: %1 <br>
 custom handler: %1	setup	pl	Niestandardowa obsługa: %1
 custom set via %1	setup	pl	Niestandardowe ustawienie przez %1
 cyrus imap: admin user,password	setup	pl	Cyrus IMAP: użytkownik Admin, Hasło
@@ -194,9 +194,9 @@ database instance (egw domain)	setup	pl	Instancja bazy danych domena (EGroupware
 database is version %1 and up to date.	setup	pl	Wersja bazy danych to %1 i jest to najnowsza dostępna wersja
 database successfully converted from '%1' to '%2'	setup	pl	Baza danych poprawnie skonwertowana z '%1' do '%2'
 datebase %1 droped.	setup	pl	Baza danych %1 usunięta.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pl	Port czasowy <br />Jeśli używany port 13, ustaw reguły Firewall przed zatwierdzeniem zmian.<br />(Port: 13 / Host: 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pl	Port czasowy <br>Jeśli używany port 13, ustaw reguły Firewall przed zatwierdzeniem zmian.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	pl	Dzień
-day of week<br />(0-6, 0=sunday)	setup	pl	Dzień tygodnia <br />(0-6, 0=niedziela)
+day of week<br />(0-6, 0=sunday)	setup	pl	Dzień tygodnia <br>(0-6, 0=niedziela)
 db backup and restore	setup	pl	Kopie zapasowe bazy danych
 db host	setup	pl	Host DB
 db name	setup	pl	Nazwa DB
@@ -207,8 +207,8 @@ db root username	setup	pl	nazwa użytkownika root bazy danych
 db type	setup	pl	Typ DB
 db user	setup	pl	Użytkownik DB
 default	setup	pl	Domyślne
-default file system space per user/group ?	setup	pl	Domyślny rozmiar plików na użytkownika/grupę ?
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pl	Usuń wszystkie konta SQL, grupy, prawa i preferencje (standardowo nie wymagane) ?
+default file system space per user/group ?	setup	pl	Domyślny rozmiar plików na użytkownika/grupę?
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pl	Usuń wszystkie konta SQL, grupy, prawa i preferencje (standardowo nie wymagane)?
 delete all my tables and data	setup	pl	Uswanie wszystkich moich tabel i danych
 delete all old languages and install new ones	setup	pl	Usuń wszystkie języki i zainstaluj je na nowo
 deleting tables	setup	pl	Usuwanie tabel
@@ -221,10 +221,10 @@ details for admin account	setup	pl	Dane konta administratora
 developers' table schema toy	setup	pl	Narzędzie tworzenia schematów dla developerów
 did not find any valid db support!	setup	pl	Nie znaleziono żadnego wsparcia dla znanych baz danych!
 do you want persistent connections (higher performance, but consumes more resources)	setup	pl	Czy zachować połączenie stałe? (Większa wydajność, przy konsumpcji większej liczby zasobów)
-do you want to manage homedirectory and loginshell attributes?	setup	pl	Czy chcesz zarządzać katalogami domowymi i atrybutami loginów powłoki shell ?
+do you want to manage homedirectory and loginshell attributes?	setup	pl	Czy chcesz zarządzać katalogami domowymi i atrybutami loginów powłoki shell?
 does not exist	setup	pl	Nie istnieje
 domain	setup	pl	Ustawienia domeny
-domain '%1' does not exist !!!	setup	pl	Domena %1 NIE istnieje!!!
+domain '%1' does not exist !!!	setup	pl	Domena %1 NIE istnieje!
 domain name	setup	pl	Nazwa domenowa
 domain select box on login	setup	pl	Wybór domeny do logowania
 domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	pl	domain(all),[config user(admin)],password,[file-name(domyślnie: backup-dir/db_backup-YYYYMMDDHHii)]
@@ -246,20 +246,20 @@ egroupware configuration file (header.inc.php) version %1 exists%2	setup	pl	Plik
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	pl	Plik konfiguracyjny EGroupware (header.inc.php ) istnieje, użyj --edit-header lub usuń go najpierw!
 egroupware domain/instance %1(%2):	setup	pl	Domena/instancja EGroupware  %1(%2)  :
 egroupware is already installed!	setup	pl	EGroupware poprwnie zainstalowany!
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pl	Źródło EGroupware w '%1' nie jest kompletne, brak pliku '%2' !!!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	pl	Źródło EGroupware w '%1' nie jest kompletne, brak pliku '%2'!
 email (standard maildomain should be set)	setup	pl	E-mail (ustaw standardową domenę mailową)
 emailadmin profile updated:	setup	pl	Aktualizacja profilu EMailAdmin:
 enable for extra debug-messages	setup	pl	Uaktywnij dla dodatkowych informacji debug
-enable mcrypt	setup	pl	Uaktywnij MCrypt
+enable mcrypt	setup	pl	Uaktywnij Mcrypt
 enter some random text for app session encryption	setup	pl	Wprowadź losowy tekst  dla zaszyfrowania sesji aplikacji
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	Wprowadź losowy tekst  dla zaszyfrowania <br />sesji aplikacji (wymaga mcrypt)
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	Wprowadź losowy tekst  dla zaszyfrowania <br>sesji aplikacji (wymaga mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br />Na przykład: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br />Na przykład: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br />Na przykład: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br />Na przykład: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	pl	Wprowadź pełną ścieżkę do katalogu kopii bezpieczeństwa. <br/> jeśli pusta: katalog plików
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br>Na przykład: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br>Na przykład: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br>Na przykład: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	pl	Wprowadź pełną ścieżkę do katalogu kopii bezpieczeństwa. <br> jeśli pusta: katalog plików
 enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwę komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala EGroupware's URL.<br />Na przykład: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez kończącego ciacha (,,/'')</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala EGroupware's URL.<br>Na przykład: https://www.domain.com/egroupware   or   /egroupware<br><b>Bez kończącego ciacha (,,/'')</b>
 enter the site password for peer servers	setup	pl	Wprowadź hasło serwisu dla serwerów równorzędnych (peer servers)
 enter the site username for peer servers	setup	pl	Wprowadź nazwę użytkownika serwisu dla serwerów równorzędnych (peer servers)
 enter the title for your site	setup	pl	Podaj nazwę swojego portala (serwisu)
@@ -270,16 +270,22 @@ enter your http proxy server port	setup	pl	Podaj port serwera proxy HTTP
 enter your http proxy server username	setup	pl	Podaj login serwera proxy HTTP
 error deleting "dn=%1"!	setup	pl	Błąd przy usuwaniu "DN=%1"!
 error dropping user!	setup	pl	Błąd przy usuwaniu Użytkownika!
-error in admin-creation !!!	setup	pl	Błąd przy tworzeniu użytkownika Admin!!!
-error in group-creation !!!	setup	pl	Błąd przy tworzeniu grupy !!!
+error in admin-creation !!!	setup	pl	Błąd przy tworzeniu użytkownika Admin!
+error in group-creation !!!	setup	pl	Błąd przy tworzeniu grupy!
 error listing "dn=%1"!	setup	pl	Błąd przy wyświetlaniu "DN=%1"!
-error modifying dn=%1: %2='%3'!	setup	pl	Błąd przy modyfikowaniu "DN=%1: %2='%3' " !
+error modifying dn=%1: %2='%3'!	setup	pl	Błąd przy modyfikowaniu "DN=%1: %2='%3' "!
+error searching "dn=%1" for "%2"!	setup	pl	Błąd wyszukiwania "DN=%1" dla "%2"!
+error uploading your backup!	setup	pl	Błąd przesyłania kopii zapasowej!
+every	setup	pl	Każdy
 export has been completed!	setup	pl	Eksport został zakończony!
-failed writing configuration file header.inc.php, check the permissions !!!	setup	pl	Błąd podczas zapisu do pliku header.inc.php, sprawdź prawa dostępu do pliku !!!
+failed to mount backup directory!	setup	pl	Nie udało się zamontować katalogu kopii zapasowej!
+failed updating user "%1" dn="%2"!	setup	pl	Nie udało się zaktualizować użytkownika "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	pl	Błąd podczas zapisu do pliku header.inc.php, sprawdź prawa dostępu do pliku!
+fallback authentication	setup	pl	Uwierzytelnianie awaryjne
 false	setup	pl	Błąd
 file	setup	pl	Plik
 file type, size, version, etc.	setup	pl	Typ pliku, rozmiar, wersja, itd.
-file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pl	Ładowanie plików zostało wyłączone: Nie możesz korzystać z manadzerów plików ani dodawać plików w różnych aplikacjach !
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pl	Ładowanie plików zostało wyłączone: Nie możesz korzystać z manadzerów plików ani dodawać plików w różnych aplikacjach!
 filename	setup	pl	Nazwa pliku
 filesystem	setup	pl	System plików
 filesystem (default)	setup	pl	System plików ( domyślnie)
@@ -289,7 +295,7 @@ gives further options	setup	pl	Daje więcej możliwości
 go back	setup	pl	Powrót
 go to	setup	pl	Idź do
 grant access	setup	pl	Przydziel dostęp
-group memberships will be migrated too.	setup	pl	Zawartość grupy będzie również zmigrowana .
+group memberships will be migrated too.	setup	pl	Zawartość grupy będzie również zmigrowana.
 has a version mismatch	setup	pl	Ma niezgodną wersję
 header admin login	setup	pl	Logowanie do administrowania domenami EGw
 header password	setup	pl	Hasło do zarządzania domenami
@@ -303,13 +309,13 @@ host information	setup	pl	Informacja o stacji roboczej
 host,[smtp port],[smtp user],[smtp password]	setup	pl	host,[port smtp],[użytkownik smtp],[hasło smtp]
 host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	pl	host,{imap | imaps },[domena],[{standard(default)|vmailmgr = dodaj domenę dla loginu na serwerze mailowym}]
 host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	pl	host,{imap | pop3 | imaps | pop3s},[domena],[{standard(default)|vmailmgr = dodaj domenę dla loginu na serwerze mailowym|email = użyj adresu e-mail lub użytkownika (Standardowa domena mailowa Maildomain powinna być ustawiona)}]
-host/ip domain controler	setup	pl	Kontroler domeny IP / hosta
+host/ip domain controler	setup	pl	Kontroler domeny IP/hosta
 hostname/ip of database server	setup	pl	Nazwa hosta/IP serwera bazy danych
 hour (0-24)	setup	pl	Godzina (0-24)
 however the tables are still in the database	setup	pl	Mimo to tabele są ciągle w bazie danych
 however, the application is otherwise installed	setup	pl	Mimo to aplikacja jest zainstalowana
 however, the application may still work	setup	pl	Mimo to aplikacja może ciągle pracować
-http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pl	typy autoryzacji HTTP (oddzielone przecinkami) do używania bez strony logowania, np. "NTLM"
+http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pl	Typy autoryzacji HTTP (oddzielone przecinkami) do używania bez strony logowania, np. "NTLM"
 if no acl records for user or any group the user is a member of	setup	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pl	Jeśli tryb bezpieczny (safe_mode) jest aktywny, EGw nie może zmieniać różnych ustawień poprzez runtime ani nie można załadować do tej pory niezaładowanych modułów.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pl	Jeśli aplikacja nie ma zdefiniowanych tabel, wybór aktualizacji rozwiąże problem.
@@ -320,7 +326,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	pl	Jeśli masz tylko dostęp do docroot, wybierz <b>Bazę danych</b> gdzie przechowujesz zawartość plików i użyj tej samej ścieżki do folderu plików tymczasowych.
 if you did not receive any errors, your applications have been	setup	pl	Jeśli nie dostałeś żadnego błędu, aplikacja istnieje
 if you did not receive any errors, your tables have been	setup	pl	Jeśli nie dostałeś żadnego błędu, tabele istnieją
-if you running this the first time, don't forget to manualy %1 !!!	setup	pl	Jeśli uruchamiany pierwszy raz, nie zapomnij ręcznie %1 !!!
+if you running this the first time, don't forget to manualy %1 !!!	setup	pl	Jeśli uruchamiany pierwszy raz, nie zapomnij ręcznie %1!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pl	Jeśli używasz tylko języków tego samego kodowania (np. western european) nie ma konieczności ustawiania znaków ręcznie w systemie.
 image type selection order	setup	pl	Kolejność wyboru typu obrazu
 import has been completed!	setup	pl	Import został zakończony!
@@ -335,8 +341,8 @@ installation finished	setup	pl	Instalacja ukończona
 installation started, this might take a few minutes ...	setup	pl	Instalacja rozpoczęta, może to zająć kilka minut...
 installed	setup	pl	Zainstalowano
 instructions for creating the database in %1:	setup	pl	Polecenia dla utworzenia bazy danych w %1:
-invalid argument '%1' !!!	setup	pl	Błędny argument '%1' !
-invalid mcrypt algorithm/mode combination	setup	pl	Błędny algorytm kombinacji MCrypt
+invalid argument '%1' !!!	setup	pl	Błędny argument '%1'!
+invalid mcrypt algorithm/mode combination	setup	pl	Błędny algorytm kombinacji Mcrypt
 is broken	setup	pl	jest uszkodzony
 is disabled	setup	pl	jest zablokowane
 is in the webservers docroot	setup	pl	obecny w docroot serwera WEB
@@ -365,7 +371,7 @@ login as user postgres, eg. by using su as root	setup	pl	Zaloguj jako użytkowni
 login to mysql -	setup	pl	Logowanie do mysql -
 loginname needed for domain configuration	setup	pl	Login konieczny dla konfiguracji domeny
 logout	setup	pl	Wyloguj
-mail domain (for virtual mail manager)	setup	pl	Domena mailowa (dla wirtualnego mail manadżera )
+mail domain (for virtual mail manager)	setup	pl	Domena mailowa (dla wirtualnego mail manadżera)
 mail server login type	setup	pl	Typ logowania do serwera poczty
 mail server protocol	setup	pl	Protokół serwera Mail
 make sure that your database is created and the account permissions are set	setup	pl	Upewnij się, że baza danych została utworzona i uprawnienia kont są ustawione
@@ -376,7 +382,7 @@ max_execution_time is set to less than 30 (seconds): egroupware sometimes needs 
 maximum account id (e.g. 65535 or 1000000)	setup	pl	Maksymalny ID konta (np. 65535 lub 1000000)
 may be broken	setup	pl	Być może uszkodzony
 mcrypt algorithm (default tripledes)	setup	pl	Mcrypt algorithm (default TRIPLEDES)
-mcrypt initialization vector	setup	pl	Wektor inicjalizujący MCrypt
+mcrypt initialization vector	setup	pl	Wektor inicjalizujący Mcrypt
 mcrypt mode (default cbc)	setup	pl	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pl	Ustawienia Mcrypt (wymaga rozszerzenia PHP: mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pl	memory_limit jest ustawiony na mniej niż 5!: niektóre aplikacje EGw wymagają więcej niż zalecane 8M - mogą powstać błędy.
@@ -405,7 +411,7 @@ no update necessary, domain %1(%2) is up to date.	setup	pl	Aktualizacja niewymag
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	pl	Brak aktywnej strefy czasowej! ("%1" nie jest wystarczający, użyj identyfikatora strefy czasowej jak "%2", zobacz %3 pełną listę dostępnych identyfikatorów %4).
 no xml support found. disabling	setup	pl	Brak wsparcia dla XML. Deaktywowane
 not	setup	pl	Nie
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pl	Nie wszystkie algorytmy MCrypt i tryby pracują z EGw. Jeśli pojawiają się problemy wyłącz opcję.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	pl	Nie wszystkie algorytmy Mcrypt i tryby pracują z EGw. Jeśli pojawiają się problemy wyłącz opcję.
 not complete	setup	pl	Nie gotowe
 not completed	setup	pl	Nie zakończone
 not ready for this stage yet	setup	pl	Jeszcze nie gotowe na tym etapie
@@ -420,14 +426,19 @@ one month	setup	pl	Jeden miesiąc
 one week	setup	pl	Jeden tydzień
 only add languages that are not in the database already	setup	pl	Dodaj tylko te języki, których nie ma jeszcze w bazie danych
 only add new phrases	setup	pl	Dodaj tylko nowe zdania
+optional, if only authentication and anonymous search is enabled	setup	pl	opcjonalnie, jeśli włączone jest tylko uwierzytelnianie ORAZ wyszukiwanie anonimowe
 or	setup	pl	lub
 or %1continue to the header admin%2	setup	pl	lub %1 kontunuj w Header Admin %2
 or http://webdav.domain.com (webdav)	setup	pl	lub http://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	pl	lub pozostaw puste i wybierz OpenID Connect jako typ uwierzytelniania powyżej dla logowania jednokrotnego
+or leave empty and select saml as authentication type above for single sign on	setup	pl	lub pozostaw puste i wybierz SAML jako typ uwierzytelniania powyżej dla logowania jednokrotnego
 or we can attempt to create the database for you:	setup	pl	Lub baza danych może zostać stworzona dla Ciebie:
 or you can install a previous backup.	setup	pl	Lub możesz zainstalować wcześniejsza kopię bezpieczeństwa
+password	setup	pl	Hasło
 password for smtp-authentication	setup	pl	Hasło do autentyfikacji SMTP
 password needed for domain configuration.	setup	pl	Wymagane hasło konfiguracji domeny.
 password of db user	setup	pl	Hasło użytkownika bazy danych
+passwords --> sql	setup	pl	Hasła --> SQL
 passwords did not match, please re-enter	setup	pl	Hasła nie są identyczne, proszę wpisać je jeszcze raz
 path (not url!) to your egroupware installation.	setup	pl	Ścieżka (nie URL!) do instalacji EGroupware.
 path information	setup	pl	Ścieżki
@@ -568,7 +579,7 @@ the following applications need to be upgraded:	setup	pl	Następujące aplikacje
 the function %1 is needed from: %2.	setup	pl	Funkcja %1 jest wymagana z: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pl	Funkcja imagecreatefromjpep jest dostarczana przez rozszerzenie GD (zgodnie ze wsparciem jpeg). Wymagane dla załączania fotografii do kontaktów.
 the json extension is required by egroupware for ajax.	setup	pl	Rozszerzenie JSON jest wymagane przez EGw dla AJAX.
-the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	pl	Rozszerzenie ldap jest wymagane jeśli LDAP używane do przechowywania kont i kontaktów lub autoryzacja z ldap do Active Directory. Nie wymagane do standardowej instalacji z bazą SQL.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	pl	Rozszerzenie ldap jest wymagane jeśli LDAP używane do przechowywania kont i kontaktów lub autoryzacja z LDAP do Active Directory. Nie wymagane do standardowej instalacji z bazą SQL.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pl	Rozszerzenie mbstring jest wymagane do pełnego wsparcia dla systemu kodowania (UTF-8) lub wielobajtowego kodowania systemu znaków.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pl	mbstring.func_overload = 7 jest wymagane do pełnego wsparcia dla systemu kodowania znaków (UTF-8) lub wielobajtowego kodowania systemu znaków.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	pl	Rozszerzenie mcrypt używane jest do przechowywania szablonów (eTemplate) na kliencie, jest to preferowane zachowanie do przechowywania szablonów.
@@ -578,15 +589,15 @@ the session extension is required!	setup	pl	Rozszerzenie sesji jest wymagane!
 the table definition was correct, and the tables were installed	setup	pl	Definicja tabel jest poprawna i tabele zostały zainstalowane
 the tables	setup	pl	Tabele
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	pl	Użytkownicy/hasła: demo/guest, demo2/guest and demo3/guest.
-there was a problem trying to connect to your ldap server. <br />	setup	pl	Wystąpił problem przy próbie połączenia do serwera LDAP. <br/>
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pl	Wystąpił problem podczas próby podłączenia do serwera LDAP <br/> sprawdź konfigurację serwera LDAP
+there was a problem trying to connect to your ldap server. <br />	setup	pl	Wystąpił problem przy próbie połączenia do serwera LDAP. <br>
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	pl	Wystąpił problem podczas próby podłączenia do serwera LDAP <br> sprawdź konfigurację serwera LDAP
 this has to be outside the webservers document-root!!!	setup	pl	Wybierz lokalizację poza katalogiem root dla dokumentów na serwerze WEB
-this might take a while, please wait ...	setup	pl	To może zająć chwilę, proszę czekać...
+this might take a while, please wait ...	setup	pl	To może zająć chwilę, proszę czekać ...
 this program lets you backup your database, schedule a backup or restore it.	setup	pl	Program ten pozwala na wykonanie kopii bezpieczeństwa bazy danych, planowanie wykonania kopii oraz ich przywracanie.
 this program will convert your database to a new system-charset.	setup	pl	Program ten skonwertuje bazę danych do nowego systemu kodowania znaków.
 this program will help you upgrade or install different languages for egroupware	setup	pl	Ten program pomoże Ci zainstalować lub uaktualnić wersje językowe EGroupware
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pl	Wymagana długość ok 30bajtów długości. <br/>Uwaga: przykład został wygenerowany losowo.
-this stage is completed<br />	setup	pl	Etap zakończony<br />
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	pl	Wymagana długość ok 30bajtów długości.<br>Uwaga: przykład został wygenerowany losowo.
+this stage is completed<br />	setup	pl	Etap zakończony<br>
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	pl	Zostanie utworzony pierwszy użytkownik EGw lub hasło nadpisane ustawienia obecnego użytkownika admin.
 to a version it does not know about	setup	pl	Do wersji o której nie ma informacji
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	pl	Dodaj następującą linie do pg_hba.conf by zapewnić autoryzację haseł (dla wszystkich powyższych). Zrestartuj PostgreSQL:
@@ -602,7 +613,7 @@ two weeks	setup	pl	Dwa tygodnie
 uninstall	setup	pl	Udinstaluj
 uninstall all applications	setup	pl	Odinstaluj wszystkie aplikacje
 uninstalled	setup	pl	Odinstalowano
-unknown option '%1' !!!	setup	pl	Nieznana opcja '%1' !!!
+unknown option '%1' !!!	setup	pl	Nieznana opcja '%1'!
 update finished.	setup	pl	Aktualizacja ukończona
 upgrade	setup	pl	Aktualizacja
 upgrade all	setup	pl	Aktualizuj wszystko
@@ -616,7 +627,7 @@ use --create-header to create the configuration file (--usage gives more options
 use --install to install egroupware.	setup	pl	Użyj --install by zainstalować EGw
 use --update to do so.	setup	pl	Użyj --update by zaktualizować EGw
 use cookies to pass sessionid	setup	pl	Używać cookie do przechowywania session ID
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pl	Użyj mcrypt do kodowania danych sesji: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pl	Użyj Mcrypt do kodowania danych sesji: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	pl	użyj stałego połączenia do bazy danych: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	pl	Użyj czystego kodu zgodnego z HTML
 user account prefix	setup	pl	Prefiks konta użytkownika
@@ -624,7 +635,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	pl	Użyt
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	pl	Nazwy użytkowników (oddzielone przecinkami) którzy mogą mieć dostęp do VFS (poza tym skonfiguruj użytkowników)
 usernames are casesensitive	setup	pl	Nazwa użytkownika jest czuła na wielkość liter
 users choice	setup	pl	Wybór użytkownika
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	pl	Zwykle bardziej denerwujące. <br/> Administratorzy mogą używać Admin >> Zarządzania kontami lub grupami by zapewnić dostęp do wcześnie kolejnych aplikacji.
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	pl	Zwykle bardziej denerwujące. <br> Administratorzy mogą używać Admin >> Zarządzania kontami lub grupami by zapewnić dostęp do wcześnie kolejnych aplikacji.
 utf-8 (unicode)	setup	pl	UTF-8 (Unicode)
 validation errors	setup	pl	Błąd walidacji
 version mismatch	setup	pl	Niezgodne wersje
@@ -640,20 +651,20 @@ where should egroupware store file content	setup	pl	Gdzie EGw powinien przechowy
 which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z EGroupware
 world readable	setup	pl	Do odczytu
 world writable	setup	pl	Do zapisu
-would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like EGroupware to cache the phpgw info array ?
-would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzać czy jest nowa wersja EGroupware<br />gdy loguje się administrator?
+would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like EGroupware to cache the phpgw info array?
+would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzać czy jest nowa wersja EGroupware<br>gdy loguje się administrator?
 would you like to show each application's upgrade status ?	setup	pl	Czy chcesz wyświetlić status aktualizacji każdej aplikacji?
 writable by the webserver	setup	pl	Do zapisu przez serwer WEB
 write	setup	pl	Zapisz
 wrong credentials to access the header.inc.php file!	setup	pl	Błędne uprawnienia dostępu do pliku header.inc.php!
 yes	setup	pl	Tak
 yes, with lowercase usernames	setup	pl	Tak, nazwa użytkownika pisana małymi literami
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of EGroupware.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br/> Zalecana jest aktualizacja do nowej wersji. <br/> EGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br/><br/> Wykonaj aktualizację przynajmniej do wersji %1.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of EGroupware.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br> Zalecana jest aktualizacja do nowej wersji. <br> EGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br><br> Wykonaj aktualizację przynajmniej do wersji %1.
 you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of EGroupware
 you appear to have %1 support.	setup	pl	Wygląda na to że masz wsparcie dla %1
 you appear to have xml support enabled	setup	pl	Wygląda na to, że jest dostępne wsparcie dla XML.
-you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br>
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pl	Używana wersja PHP %1. EGroupware wymaga teraz wersji %2 lub wcześniejszej, polecana wersja PHP - %3.
 you can install it by running:	setup	pl	Można zainstalować to wydając polecenie:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pl	Możesz teraz używać użytkownika i hasła z HEADER do wszystkich domen. Jeśli to hasło nie jest ustawione przez linię poleceń, to jest pobierane ze zmiennych systemowych EGW_CLI_PASSWORD lub oczekuje podania przez użytkownika.
@@ -661,9 +672,9 @@ you didn't enter a config password for domain %1	setup	pl	Nie podano hasła admi
 you didn't enter a config username for domain %1	setup	pl	Nie podano nazwy administratora dla domeny '%1'.
 you didn't enter a header admin password	setup	pl	Nie podano hasła do administracji domenami EGw
 you didn't enter a header admin username	setup	pl	Nie podano nazwy użytkownika do administracji domenami EGw
-you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
+you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now<br>
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	pl	JPGraph wersja %1 lub wyższa nie zainstalowana! Wymagane do działania Menadźera projektów - wykresów Ganta
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotąd pliku konfiguracyjnego 'header.inc.php'!<br />Możesz zrobić to teraz.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotąd pliku konfiguracyjnego 'header.inc.php'!<br>Możesz zrobić to teraz.
 you have successfully logged out	setup	pl	Pomyślnie wylogowano z EGroupware
 you must enter a username for the admin	setup	pl	Musisz podać nazwę administratora
 you need to add at least one egroupware domain / database instance.	setup	pl	Należy dodać przynajmniej jedną domenę EGroupware (instancję bazy danych) w pliku 'header.inc.php'
@@ -674,7 +685,7 @@ you need to specify a password!	setup	pl	Musisz podać hasło!
 you should %1log out%2 and in again, to update your current session!	setup	pl	Powinieneś %1 wylogować się %2 i ponownie zalogować, by odświeżyć obecną sesję!
 you should either install the sources or uninstall it, to get rid of the tables	setup	pl	Zainstaluj najpierw źródło lub odinstaluj by pozbyć się tabel
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	Możesz odinstalować ją i zainstalować ponownie lub podjąć próbę ręcznej naprawy.
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pl	Nie można zalogować się do EGroupware używając sesji PHP: "sesja nie może być zweryfikowana" !!!
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pl	Nie można zalogować się do EGroupware używając sesji PHP: "sesja nie może być zweryfikowana"!
 you're using an old configuration file format...	setup	pl	Używasz starego formatu pliku konfiguracyjnego
 your applications are current	setup	pl	Aplikacje są w najnowszych wersjach
 your backup directory '%1' %2	setup	pl	Katalog kopii zapasowych '%1' %2
@@ -685,7 +696,7 @@ your egroupware api is current	setup	pl	EGroupware API jest w najnowszej wersji
 your files directory '%1' %2	setup	pl	Katalog plików '%1' %2
 your header admin password is not set. please set it now!	setup	pl	Brak hasła administratora domen EGw. Proszę ustawić hasło teraz!
 your header.inc.php needs upgrading.	setup	pl	Plik 'header.inc.php' wymaga aktualizacji
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pl	Plik 'header.inc.php' wymaga aktualizacji.<br /><blink><b class="msg">UWAGA!</b></blink><br /><b>WYKONAJ KOPIĘ ZAPASOWĄ!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pl	Plik 'header.inc.php' wymaga aktualizacji.<br><b class="msg">UWAGA!</b><br><b>WYKONAJ KOPIĘ ZAPASOWĄ!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	pl	Zainstalowaną wersją komponentu '%1' jest '%2', podczas gdy wymagana jest przynajmniej %3, proszę wykonaj:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pl	PHP nie posiada odpowiedniej wersji biblioteki GD. Potrzebna jest wersja 1.8 lub nowsza aby oglądać wykresy Gantta w Menadżerze Projektów
 your tables are current	setup	pl	Twoje tabele są aktualne

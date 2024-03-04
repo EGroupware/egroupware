@@ -8,14 +8,14 @@ add as new	mail	pl	Dodaj jako nowy
 add files as %1	mail	pl	Dodaj pliki jako %1
 add raw message, ignore mail attachments	mail	pl	Konwersja poczty do elementu, dodanie surowej wiadomości (ignorowanie załączników do poczty)
 add this certificate into contact	mail	pl	Dodaj ten certyfikat do kontaktu
-add to addressbook	mail	pl	dodaj do książki adresowej
+add to addressbook	mail	pl	Dodaj do książki adresowej
 adding %1 to blacklisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail na czarnej liście nie powiodło się z powodu %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %1 do adresów e-mail z białej listy nie powiodło się z powodu %2
 after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komponowania
 aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
-allways a new window	mail	pl	zawsze w nowym oknie
+allways a new window	mail	pl	Zawsze w nowym oknie
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
@@ -27,7 +27,7 @@ attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki 
 attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
 attachments	mail	pl	Załączniki
 attachments, ...	mail	pl	załączniki, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2. \Czy chcesz kontynuować?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pl	Należy pamiętać, że dodanie wszystkich wybranych plików w trybie %1 spowoduje również zmianę wszystkich istniejących załączników na liście w tryb %2.<br>Czy chcesz kontynuować?
 be aware that all attachments will be sent as %1!	mail	pl	Pamiętaj, że wszystkie załączniki zostaną wysłane w trybie %1!
 by date	mail	pl	Według daty
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pl	Domyślnie "http://" jest po prostu zastępowane przez "https://". Możesz skonfigurować 'https://proxy.egroupware.org/', aby ładować również obrazy dostępne tylko przez http.
@@ -93,7 +93,7 @@ email notification update failed	mail	pl	Aktualizacja powiadomień e-mail nie po
 emailaddress	admin	pl	Adres e-mail
 emailadmin: profilemanagement	mail	pl	eMailAdmin: Zarządzanie profilami
 emails in whitelisted domains are not marked as spam	mail	pl	Wiadomości e-mail w domenach z białej listy nie są oznaczane jako spam
-empty trash	mail	pl	opróżnij kosz
+empty trash	mail	pl	Opróżnij kosz
 enable	mail	pl	Włącz
 enabled	mail	pl	Włączone
 encrypt your message with smime certificate	mail	pl	Szyfrowanie wiadomości za pomocą certyfikatu S/MIME
@@ -132,11 +132,11 @@ from(a->z)	mail	pl	Od (A->Z)
 from(z->a)	mail	pl	Od (Z->A)
 general	admin	pl	Główne
 get acl rights failed from imap server!	mail	pl	Pobieranie uprawnień ACL z serwera IMAP nie powiodło się!
-greater than	mail	pl	większe niż
+greater than	mail	pl	Większe niż
 ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header lines	mail	pl	Linie nagłówka
-how to forward messages	mail	pl	sposób przekazywania wiadomości
+how to forward messages	mail	pl	Sposób przekazywania wiadomości
 html	mail	pl	HTML
 ident name	mail	pl	Nazwa identyfikatora
 ident name email	mail	pl	Nazwa identyfikatora [Email]
@@ -150,7 +150,7 @@ if you want to see a preview of a mail by single clicking onto the subject, enab
 if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pl	Jeśli chcesz wybrać wiele folderów w jednej akcji, możesz przytrzymać klawisz Ctrl, a następnie wybrać folder jako zakres początkowy i inny folder na tym samym poziomie jako zakres końcowy, wszystkie foldery pomiędzy nimi zostaną wybrane lub odznaczone na podstawie ich bieżącego stanu.
 imap	mail	pl	IMAP
 imap server	mail	pl	Serwer IMAP
-import message	mail	pl	importuj wiadomość
+import message	mail	pl	Importuj wiadomość
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pl	Import wiadomości %1 nie powiódł się. Nie można zapisać wiadomości w folderze %2 z powodu: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	pl	Import wiadomości %1 nie powiódł się. Folder docelowy %2 nie istnieje.
 import of message %1 failed. destination folder not set.	mail	pl	Import wiadomości %1 nie powiódł się. Folder docelowy nie został ustawiony.
@@ -167,7 +167,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	pl	Służbowy
 junk	mail	pl	Śmieci
 junk folder	mail	pl	Folder śmieci
-keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
+keep a copy of the message in your inbox	mail	pl	Zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
 learning as ham (not spam) failed because of %1	mail	pl	Uczenie się jako szynka (nie spam) nie powiodło się z powodu %1
@@ -186,23 +186,32 @@ mailaccount	mail	pl	Konto pocztowe
 mailinglist	mail	pl	Lista mailingowa
 mails	common	pl	Poczta
 mails can be copied to that folder via context menu, if folder is configured.	mail	pl	Wiadomości można kopiować do tego folderu za pomocą menu kontekstowego, jeśli folder jest skonfigurowany.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pl	Serwer pocztowy zgłosił:\n%1 \nCzy chcesz kontynuować, usuwając wybrane wiadomości natychmiast (kliknij ok)? \nJeśli nie, spróbuj opróżnić folder śmieci przed kontynuowaniem. (kliknij anuluj)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pl	Serwer pocztowy zgłosił:<br><br>%1<br><br>Czy chcesz kontynuować, usuwając wybrane wiadomości natychmiast (kliknij ok)?<br>Jeśli nie, spróbuj opróżnić folder śmieci przed kontynuowaniem. (kliknij anuluj)
 mark all as read	mail	pl	Zaznacz wszystko jako przeczytane
 mark all messages in folder as read	mail	pl	Zaznacz wszystkie wiadomości w folderze jako przeczytane
 mark as deleted	mail	pl	Zaznacz jako usunietą
 matches	mail	pl	pasuje do
 matches regexp	mail	pl	pasuje do wyrażenia regularnego
-message body	mail	pl	wiadomość
+message body	mail	pl	Wiadomość
 message learned as spam and moved to spam folder	mail	pl	Wiadomość została rozpoznana jako spam i przeniesiona do folderu spamu
 modify subject	mail	pl	Zmień temat
 modify subject of this message	mail	pl	Zmień temat tej wiadomości
 move selected to	mail	pl	Przenieś wiadomości do
-move to	mail	pl	Przenieś wiadomości do
+move to	mail	pl	Przenieś do
 move to trash	mail	pl	Przenieś do kosza
+name and domain	mail	pl	Nazwa i domena
 name and email	mail	pl	Imię i adres e-mail
+name of account	mail	pl	Nazwa konta
+name of imap servers (space separated host or host:port)	mail	pl	Nazwa serwerów IMAP (host oddzielony spacją lub host:port)
 never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
+never show	mail	pl	Nigdy nie pokazuj
+never show notification	mail	pl	Nigdy nie pokazuj powiadomienia
+new mail from %1	mail	pl	Nowa wiadomość e-mail od %1
+new mail notification	mail	pl	Powiadomienie o nowej wiadomości e-mail
+new message type	mail	pl	Nowy typ wiadomości
 no access	mail	pl	Brak dostępu
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
+no adress, to send this mail to, supplied	mail	pl	Nie podano adresu, na który można wysłać tę wiadomość e-mail.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	pl	Nie podano miejsca docelowego folderu ani folderu do zapisania wiadomości lub innego środka do przechowywania poczty (zapisz w InfoLog/Ticketsystem), ale jest to wymagane.
 no folders	mail	pl	brak folderów
 no plain text part found	mail	pl	Brak części 'czystym' tekstem
@@ -225,15 +234,15 @@ open in html mode	mail	pl	Otwórz w trybie HTML
 open in text mode	mail	pl	Otwórz w trybie tekstowym
 open with collabora office	mail	pl	Otwórz za pomocą Collabora Online
 organisation	admin	pl	Organizacja
-organization	mail	pl	instytucja
+organization	mail	pl	Instytucja
 organization | real name email	mail	pl	Organizacja | Prawdziwa nazwa [Email]
 original message	mail	pl	Oryginalna wiadomość
 outbox	mail	pl	Skrzynka nadawcza
 permission denied	mail	pl	Dostęp zabroniony
-please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
+please configure access to an existing individual imap account.	mail	pl	Proszę skonfigurować dostęp do istniejącego konta IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pl	Skonfiguruj certyfikat S/MIME w zakładce Szyfrowanie znajdującej się w oknie dialogowym Edytuj konto.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje reguły filtrowania po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje wiadomości urlopowe po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje reguły filtrowania po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje wiadomości urlopowe po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID: %2.
 please enter password	mail	pl	Wprowadź hasło
 please select a address	mail	pl	Proszę wybrać adres
 please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
@@ -242,12 +251,12 @@ post	mail	pl	wysłać
 predefined addresses for compose	mail	pl	Predefiniowane adresy dla kompozycji
 preview pane	mail	pl	Układ okna
 printing	mail	pl	Drukowanie
-printview	mail	pl	wydrukuj widok
+printview	mail	pl	Wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pl	Podaj domyślny tekst urlopu (używany w nowych wiadomościach urlopowych, gdy nie było wcześniej skonfigurowanej wiadomości).
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
-quicksearch (with cc)	mail	pl	szybkie wyszukiwanie (+Kopia)
+quicksearch (with cc)	mail	pl	Szybkie wyszukiwanie (+Kopia)
 real name	mail	pl	Prawdziwe imię i nazwisko
 real name email	mail	pl	Prawdziwe imię i nazwisko [Email]
 real name organization email	mail	pl	Prawdziwa nazwa Organizacja [Email]
@@ -277,7 +286,7 @@ s/mime encryption failed because no certificate has been found for sender addres
 save all	mail	pl	Zapisz wszystko
 save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
 save as draft	mail	pl	Zapisz jako szkic
-save as infolog	mail	pl	Zapisz jako zadanie Dziennika CRM
+save as infolog	mail	pl	Zapisz jako zadanie Dziennika InfoLog
 save as infolog on send	mail	pl	Sprawdź przycisk, aby utworzyć jako InfoLog po wysłaniu
 save as tracker on send	mail	pl	Zaznacz przycisk, aby utworzyć jako bilet po wysłaniu
 save message to disk	mail	pl	Zachowaj wiadomość na dysku
@@ -291,7 +300,7 @@ select all	mail	pl	Zaznacz wszystkie
 select an existing entry in order to append mail content to it	mail	pl	Wybierz istniejący wpis, aby dołączyć do niego treść wiadomości e-mail
 select an item to read	mail	pl	Wybierz element do przeczytania
 select or insert email address	mail	pl	Wybierz lub wstaw adres e-mail
-selected date range (with quicksearch)	mail	pl	Zakres dat ( z szybkim wyszukiwaniem)
+selected date range (with quicksearch)	mail	pl	Zakres dat (z szybkim wyszukiwaniem)
 send message and move to send folder (if configured)	mail	pl	Wyślij wiadomość i przenieś do folderu wysyłania (jeśli skonfigurowano)
 send message pgp encrypted: requires keys from all recipients!	mail	pl	Wysyłanie wiadomości zaszyfrowanych PGP: wymaga kluczy od wszystkich odbiorców!
 sender	mail	pl	nadawca
@@ -301,7 +310,7 @@ server supports special-use folders	mail	pl	Serwer obsługuje foldery specjalneg
 set flags	mail	pl	Oznacz e-mail jako
 set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pl	Czy podpis powinien być wstawiany po (standardowo) lub przed odpowiedzią lub przesłaniem dalej oraz czy podpis powinien być widoczny i możliwy do zmiany podczas tworzenia.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	Pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym
 show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
 show test connection section and control the level of info displayed?	mail	pl	Pokazywać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
 show test connection section and control the level of info displayed??	mail	pl	Pokazać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
@@ -331,7 +340,7 @@ subject(z->a)	mail	pl	Temat (Z->A)
 template folder	mail	pl	Katalog szablnów
 templates	mail	pl	Szablony
 text	mail	pl	Tekst
-text/plain	mail	pl	zwykły tekst
+text/plain	mail	pl	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	pl	Serwer IMAP musi spełniać określone wymagania ORAZ być odpowiednio skonfigurowany:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
@@ -356,10 +365,10 @@ view header lines	mail	pl	Pokaż linie nagłówka
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
-whole message	mail	pl	cała wiadomość
+whole message	mail	pl	Cała wiadomość
 write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
-yes, offer copy option	mail	pl	tak, oferuj opcję kopii
+yes, offer copy option	mail	pl	Tak, oferuj opcję kopii
 yes, only trigger connection reset	mail	pl	tak, wyzwalać tylko reset połączenia
 yes, show all debug information available for the user	mail	pl	tak, wyświetla wszystkie informacje debugowania dostępne dla użytkownika
 you can either choose to save as infolog or tracker, not both.	mail	pl	Możesz wybrać zapisywanie jako InfoLog LUB tracker, nie oba.

@@ -1,31 +1,55 @@
 %1 %2 in %3	calendar	tr	%3 içindeki %1 %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	tr	%1 etkinlik(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 events in ical file, only first one imported and displayed!	calendar	tr	iCal dosyasında %1 etkinlik, yalnızca ilki içe aktarıldı ve görüntülendi!
-%1 records imported	calendar	tr	%1 kayıt ithal edildi
+%1 records imported	calendar	tr	%1 kayıt ithal edildi.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	tr	%1 kayıt okundu (henüz ithal edilmedi, geri dönüp 'İthal Etmeyi Test Et' seçeneğindeki seçimi kaldırabilirsiniz.)
 (%1 events in %2 seconds)	calendar	tr	(%2 saniye içinde %1 etkinlik)
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	tr	Toplantıya davetli OLMAYAN ancak bir şekilde daveti alan kişi parti bozandır.
 accept	calendar	tr	Kabul Et
 accepted	calendar	tr	Kabul Edildi
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi,...
+access to calendar of %1 denied!	calendar	tr	%1'in takvimine erişim reddedildi!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi, ...
 actions	calendar	tr	Eylemler
+actions...	calendar	tr	Eylemler ...
 add alarm	calendar	tr	Alarm Ekle
 add appointments via shortened dialog or complete edit window	calendar	tr	Kısaltılmış iletişim kutusu veya tam düzenleme penceresi aracılığıyla randevu ekleyin
+add current view as favorite	calendar	tr	Geçerli görünümü favori olarak ekle
+add new alarm	calendar	tr	Yeni alarm ekle
 add new event	calendar	tr	Yeni randevu ekle
+add new participants or resource	calendar	tr	Yeni katılımcı veya kaynak ekleme
+add timesheet entry	calendar	tr	Zaman çizelgesi girişi ekleme
 added	calendar	tr	Eklendi
 added by synchronization	calendar	tr	Senkronizasyon tarafından eklendi
+after	calendar	tr	Sonra
+after %1	calendar	tr	%1'den sonra
+after current date	calendar	tr	Geçerli tarihten sonra
+age:	calendar	tr	Yaş:
 alarm	calendar	tr	Alarm
-alarm for %1 at %2 in %3	calendar	tr	%1 (%2'de %3 içinde) için Alarm
+alarm added	calendar	tr	Alarm eklendi.
+alarm added automatic to new events before event start-time	calendar	tr	Etkinlik başlangıç saatinden önce yeni etkinliklere otomatik olarak eklenen alarm
+alarm deleted	calendar	tr	Alarm silindi.
+alarm for %1 at %2 in %3	calendar	tr	%3'te %2'de %1 için alarm
 alarm management	calendar	tr	Alarm Yönetimi
 alarms	calendar	tr	Alarmlar
+all categories	calendar	tr	Tüm kategoriler
 all day	calendar	tr	Tüm Gün
+all events	calendar	tr	Tüm etkinlikler
+all exceptions are converted into single events.	calendar	tr	Tüm istisnalar tek olaylara dönüştürülür.
+all future	calendar	tr	Tüm gelecek
+all incl. rejected	calendar	tr	Hepsi dahil reddedildi
+all participants	calendar	tr	Tüm katılımcılar
 allow booking requests from any user when creating events?	calendar	tr	Etkinlik oluştururken herhangi bir kullanıcıdan gelen rezervasyon taleplerine izin verin?
+allow party crashers with email that match the following regular expression	calendar	tr	Aşağıdaki düzenli ifadeyle eşleşen e-posta ile parti davetsiz misafirlerine izin verin
+allow users to prevent change notifications ('do not notify')	calendar	tr	Kullanıcıların değişiklik bildirimlerini engellemesine izin ver 'Bildirme'
+allows to edit the event again	calendar	tr	Etkinliği tekrar düzenlemeye izin verir
 always	calendar	tr	Her zaman
 always use full edit dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın
 always use the full edit dialog, not this little dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın, bu küçük iletişim kutusunu değil
 attention	calendar	tr	Dikkat
-before the event	calendar	tr	etkinlikten önce
-birthday	calendar	tr	Do?um Tarihi
-birthdays	admin	tr	Do?um Tarihleri
+before the event	calendar	tr	Etkinlikten önce
+birthday	calendar	tr	Doğum Günü
+birthdays	admin	tr	Doğum Günleri
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	tr	Varsayılan olarak (burada hiçbir şey ayarlanmamıştır) EGroupware yalnızca düzenleyicinin/sahibinin bunları eklemesine izin verir.
 calendar event	calendar	tr	Takvim Etkinliği
 calendar preferences	calendar	tr	Takvim Seçenekleri
 calendar settings	admin	tr	Takvim Ayarları
@@ -33,7 +57,7 @@ calendar-fieldname	calendar	tr	Takvim-Alan Adı
 canceled	calendar	tr	İptal Edildi
 category report	calendar	tr	Kategori Raporu
 changed event-data applied	calendar	tr	Değiştirilen olay verileri uygulandı
-charset of file	calendar	tr	Dosya Karakter Kümesi (char-set)
+charset of file	calendar	tr	Dosyanın karakter seti
 countries	calendar	tr	Ülkeler
 country	calendar	tr	Ülke
 csv-fieldname	calendar	tr	CSV-Alan adı
@@ -43,10 +67,10 @@ custom fields	common	tr	Özel Alanlar
 daily	calendar	tr	Günlük
 date range	calendar	tr	Tarih aralığı
 day	calendar	tr	Gün
-days	calendar	tr	gün
-days repeated	calendar	tr	tekrar eden gün
+days	calendar	tr	Gün
+days repeated	calendar	tr	Tekrar eden gün
 dayview	calendar	tr	Günlük Görünüm
-default appointment length (in minutes)	calendar	tr	varsayılan toplantı uzunluğu (dakika olarak)
+default appointment length (in minutes)	calendar	tr	Varsayılan toplantı uzunluğu (dakika olarak)
 default calendar filter	calendar	tr	Varsayılan takvim süzgeci
 default calendar view	calendar	tr	Varsayılan takvim görünümü
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	tr	Yeni oluşturulmuş etkinlikler için varsayılan uzunluk. uzunluk dakika cinsindendir, ör. 1 saat için 60 giriniz.
@@ -58,10 +82,10 @@ download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
 email address migration	calendar	tr	E-posta adresi taşıma
-empty for all	calendar	tr	tamamı için boş
-end date/time	calendar	tr	Bitiş Tarih/Zaman
-enddate	calendar	tr	BitişTarih
-ends	calendar	tr	bitiyor
+empty for all	calendar	tr	Tamamı için boş
+end date/time	calendar	tr	Bitiş tarih/Zaman
+enddate	calendar	tr	Bitiş tarihi
+ends	calendar	tr	Bitiyor
 error notifying %1	calendar	tr	%1 bildirilirken hata oluştu
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
 exceptions	calendar	tr	İstisnalar
@@ -80,7 +104,7 @@ global public only	calendar	tr	Genel Umumi(Public) Sadece
 group planner	calendar	tr	Grup Plan Sorumlusu
 group public only	calendar	tr	Sadece Grup Umumi(Public)
 here is your requested alarm.	calendar	tr	İstediğiniz alarm buradadır.
-high priority	calendar	tr	yüksek öncelik
+high priority	calendar	tr	Yüksek öncelik
 holiday	calendar	tr	Tatil
 holidays	calendar	tr	Tatiller
 hours	calendar	tr	saat
@@ -91,13 +115,13 @@ how many days to sync in the past (default %1)	calendar	tr	Geçmişte kaç gün 
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	tr	Kaç açıklama satırının doğrudan görünür olması gerektiği. Diğer satırlar bir kaydırma çubuğu aracılığıyla kullanılabilir.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	tr	Tüm gün etkinliklerinin kaç satırı doğrudan görünür olmalıdır. Diğer satırlar fareyle üzerine gelindiğinde kullanılabilir.
 how many separate calendars to show before merging them together	calendar	tr	Birleştirilmiş takvim görünümünü göstermek için minimum kullanıcı sayısı, daha az kullanıcı seçilirse takvim hafta veya gün görünümü için ayrı ayrı görüntülenir.
-ical / rfc2445	calendar	tr	iCal / rfc2445
+ical / rfc2445	calendar	tr	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	tr	iCal mevcut bir etkinliğin sahibini değiştiremez. Bu yalnızca yeni etkinlikler için geçerlidir.
-ignore conflict	calendar	tr	çakışma Yoksay
-import	calendar	tr	?thal Et
-import csv-file	common	tr	CSV Dosyası İthal Et
+ignore conflict	calendar	tr	Çatışmayı görmezden gelin
+import	calendar	tr	İthalat
+import csv-file	common	tr	CSV dosyasını içe aktar
 interval	calendar	tr	Ara
-last	calendar	tr	son
+last	calendar	tr	Son
 lastname of person to notify	calendar	tr	Uyarılacak kişinin soyadı
 link to view the event	calendar	tr	Etkinliği görüntülemek için link
 location	calendar	tr	Konum
@@ -105,7 +129,7 @@ maximum available quantity of %1 exceeded!	calendar	tr	1% maksimum kullanılabil
 min days	calendar	tr	Min gün
 minimum number of users for showing day view as consolidated.	calendar	tr	Gün görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minimum number of users for showing week view as consolidated.	calendar	tr	Hafta görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
-minutes	calendar	tr	dakika
+minutes	calendar	tr	Dakika
 modified	calendar	tr	Değiştirilmiş
 mon	calendar	tr	Ay
 month	calendar	tr	Ay
@@ -128,21 +152,22 @@ notify	calendar	tr	Bildir
 notify all externals (non-users) about this event	calendar	tr	Tüm harici kişileri (kullanıcı olmayanlar) bu olay hakkında bilgilendirin
 number of records to read (%1)	calendar	tr	Okunacak kayıt sayısı (%1)
 number of resources to be booked	calendar	tr	Rezervasyon yapılacak kaynak sayısı
+number of weeks to show	calendar	tr	Gösterilecek hafta sayısı
 observance rule	calendar	tr	Yerine Getirme Kuralı
 occurence	calendar	tr	Oluş
 old startdate	calendar	tr	Eski Başlama Tarihi
 olddate	calendar	tr	Eski tarih
 on %1 %2 %3 your meeting request for %4	calendar	tr	%4 için %1 %2 %3'deki toplantı talepleriniz
-on all modification, but responses	calendar	tr	bütün değişikliklerde ama yanıtlarda değil
-on any time change too	calendar	tr	herhangi zaman değişiminde de
-on participant responses too	calendar	tr	katılımcı cavaplarında da
+on all modification, but responses	calendar	tr	Bütün değişikliklerde ama yanıtlarda değil
+on any time change too	calendar	tr	Herhangi zaman değişiminde de
+on participant responses too	calendar	tr	Katılımcı cavaplarında da
 on time change of more than 4 hours too	calendar	tr	4 saatten fazla zaman değişikliklerinde de
 open todo's:	calendar	tr	Yapılacak İşleri Aç:
 output unit	calendar	tr	Çıkış birimi
-overlap holiday	calendar	tr	çakışan tatil
+overlap holiday	calendar	tr	Çakışan tatil
 participants	calendar	tr	Katılımcılar
 password for not loged in users to your freebusy information?	calendar	tr	Giriş yapmamış kullanıcılar için sizin uygun/meşgul bilgisi şifreniz?
-people holiday	calendar	tr	tatildeki insanlar
+people holiday	calendar	tr	Tatildeki insanlar
 permission denied	calendar	tr	İzin verilmedi
 planner by category	calendar	tr	Kategoriye göre planlama
 planner by user	calendar	tr	Kullanıcıya göre planlama
@@ -201,18 +226,21 @@ this message is sent when you accept, tentative accept or reject an event.	calen
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	tr	Bu mesaj belli bir etkinlik için alarm tanımladığınızda gönderilir. İhtiyacınız olabilecek bütün bilgileri içerir.
 thu	calendar	tr	Per
 title of the event	calendar	tr	Etkinlik başlığı
-to many might exceed your execution-time-limit	calendar	tr	çok fazla, çalıştırma zaman limitinizi aşabilir
+to many might exceed your execution-time-limit	calendar	tr	Çok fazla, çalıştırma zaman limitinizi aşabilir
 to-firstname	calendar	tr	Alıcı-İsim
 to-fullname	calendar	tr	Alıcı-İsim ve Soyad
 to-lastname	calendar	tr	Alıcı-Soyad
 toggle weekend	calendar	tr	Hafta sonunu değiştir
+tomorrow	calendar	tr	Yarın
 translation	calendar	tr	Tercüme
 tue	calendar	tr	Sal
+two weeks	calendar	tr	İki hafta
 updated	calendar	tr	Güncelle
 use end date	calendar	tr	Bitiş tarihi kullan
 utilities	calendar	tr	Yardımcı Programlar
 wed	calendar	tr	Çar
 week	calendar	tr	Hafta
+weekday	calendar	tr	Hafta içi
 weekday starts on	calendar	tr	Mesai günleri başlangıcı
 weekly	calendar	tr	Haftalık
 weekview	calendar	tr	Haftalık Görünüm
@@ -220,7 +248,7 @@ work day ends on	calendar	tr	Mesai günleri bitişi
 work day starts on	calendar	tr	Mesai günleri başlangıcı
 yearly	calendar	tr	Yıllık
 yearview	calendar	tr	Yıllık Görünüm
-you do not have permission to read this record!	calendar	tr	Bu kaydı okumak için yeterli izniniz yok !
+you do not have permission to read this record!	calendar	tr	Bu kaydı okumak için yeterli izniniz yok!
 you have a meeting scheduled for %1	calendar	tr	%1 için zamanlanmış bir toplantınız var
 your meeting scheduled for %1 has been canceled	calendar	tr	%1 için ayarlanmış toplantınız iptal edilmiştir
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	tr	%1 için zayarlanmış toplantınız %2 için yeniden ayarlanmıştır.
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	tr	%1 için zayarlanmış toplantınız %2 için yeniden ayarlanmıştır

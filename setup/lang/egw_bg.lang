@@ -48,6 +48,14 @@ delete	setup	bg	Изтриване
 deleting tables	setup	bg	Изтриване на таблици
 details for admin account	setup	bg	Подробности за администраторския акаунт
 download	setup	bg	Изтегляне
+error searching "dn=%1" for "%2"!	setup	bg	Грешка при търсенето на "DN=%1" за "%2"!
+error uploading your backup!	setup	bg	Грешка при качване на резервно копие!
+every	setup	bg	Всеки
+export has been completed!	setup	bg	Експортът е завършен!
+failed to mount backup directory!	setup	bg	Неуспешно монтиране на директорията за резервно копие!
+failed updating user "%1" dn="%2"!	setup	bg	Неуспешно актуализиране на потребител "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	bg	Неуспешно записване на конфигурационния файл header.inc.php, проверете разрешенията!
+fallback authentication	setup	bg	Резервна автентификация
 file	setup	bg	Файл
 filename	setup	bg	Име на файл
 go back	setup	bg	Назад
@@ -77,6 +85,11 @@ not set	setup	bg	не е зададено
 one month	setup	bg	един месец
 one week	setup	bg	една седмица
 or	setup	bg	или
+or leave empty and select openidconnect as authentication type above for single sign on	setup	bg	или оставете празно място и изберете OpenID Connect като тип удостоверяване по-горе за единично влизане
+or leave empty and select saml as authentication type above for single sign on	setup	bg	или оставете празно място и изберете SAML като тип удостоверяване по-горе за единично влизане
+password	setup	bg	Парола
+password needed for domain configuration.	setup	bg	Парола, необходима за конфигуриране на домейна.
+passwords --> sql	setup	bg	Пароли --> SQL
 please wait...	setup	bg	Моля изчакайте...
 possible reasons	setup	bg	Възможни причини
 possible solutions	setup	bg	Възможни решения

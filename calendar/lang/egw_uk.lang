@@ -4,21 +4,38 @@
 %1 records imported	calendar	uk	%1 записів імпортовано
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	uk	%1 записів прочитано (ще не імпортовано, Ви повинні повернутися та зняти відмітку Тестувати Імпорт)
 (%1 events in %2 seconds)	calendar	uk	(%1 подій за %2 секунди)
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	uk	Непроханий гість - це той, хто НЕ запрошений на зустріч, але якимось чином отримав запрошення.
 accept	calendar	uk	Прийняти
 accepted	calendar	uk	Прийнято
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено...
+access to calendar of %1 denied!	calendar	uk	У доступі до календаря %1 відмовлено!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено, ...
 actions	calendar	uk	Дії
+actions...	calendar	uk	Дії ...
 add alarm	calendar	uk	Добавити попередження
 add appointments via shortened dialog or complete edit window	calendar	uk	Додавання зустрічей через скорочений діалог або повне вікно редагування
+add current view as favorite	calendar	uk	Додати поточний перегляд до обраного
+add new alarm	calendar	uk	Додати новий будильник
 add new event	calendar	uk	Додати нову зустріч
+add new participants or resource	calendar	uk	Додайте нових учасників або ресурс
+add timesheet entry	calendar	uk	Додати запис до табеля обліку робочого часу
 added	calendar	uk	Добавлено
 added by synchronization	calendar	uk	Додано шляхом синхронізації
+after	calendar	uk	Після
+after %1	calendar	uk	Після %1
+age:	calendar	uk	Вік:
 alarm	calendar	uk	Попередження
+alarm added automatic to new events before event start-time	calendar	uk	Сигнал додається автоматично до нових подій перед початком події
 alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
 alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
+all categories	calendar	uk	Всі категорії
 all day	calendar	uk	На повний день
+all exceptions are converted into single events.	calendar	uk	Всі винятки перетворюються на окремі події.
+all future	calendar	uk	Всі майбутні
+all incl. rejected	calendar	uk	Усі, включно з відхиленими
 allow booking requests from any user when creating events?	calendar	uk	Дозволити запити на бронювання від будь-якого користувача при створенні подій?
+allow party crashers with email that match the following regular expression	calendar	uk	Дозволити "прогульників" з електронною поштою, яка відповідає наступному регулярному виразу
+allow users to prevent change notifications ('do not notify')	calendar	uk	Дозволити користувачам запобігати сповіщенням про зміни "Не сповіщати
 always	calendar	uk	Завжди
 always use full edit dialog	calendar	uk	Завжди використовувати повне вікно редагування
 always use the full edit dialog, not this little dialog	calendar	uk	Завжди використовувати повне діалогове вікно редагування, а не це маленьке діалогове вікно
@@ -26,6 +43,7 @@ attention	calendar	uk	До уваги
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження
 birthdays	admin	uk	Дні народження
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	uk	За замовчуванням (тут нічого не налаштовано) EGroupware дозволяє додавати їх лише організатору/власнику.
 calendar event	calendar	uk	Календарна подія
 calendar preferences	calendar	uk	Параметри Календарю
 calendar settings	admin	uk	Установки Календарю
@@ -37,8 +55,8 @@ charset of file	calendar	uk	Кодування файлу
 countries	calendar	uk	Країни
 country	calendar	uk	Країна
 create new links	calendar	uk	Створити нові посилання
-csv-fieldname	calendar	uk	CSV-Fieldname
-csv-filename	calendar	uk	CSV-Filename
+csv-fieldname	calendar	uk	Назва поля CSV
+csv-filename	calendar	uk	Ім'я CSV-файлу
 custom	calendar	uk	Власне
 custom fields	common	uk	Власні поля
 daily	calendar	uk	Поденно
@@ -94,7 +112,7 @@ how many days to sync in the past (default %1)	calendar	uk	Скільки дні
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	uk	Скільки рядків опису має бути безпосередньо видимим. Інші рядки доступні через смугу прокрутки.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	uk	Скільки рядків усіх подій за день має бути безпосередньо видимим. Додаткові рядки доступні при наведенні миші.
 how many separate calendars to show before merging them together	calendar	uk	Мінімальна кількість користувачів для відображення консолідованого календаря, якщо вибрано менше користувачів, календар відображається окремо для перегляду тижня або дня.
-ical / rfc2445	calendar	uk	iCal / rfc2445
+ical / rfc2445	calendar	uk	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	uk	iCal не може змінити власника існуючої події. Це стосується лише нових подій.
 ignore conflict	calendar	uk	Ігнорувати конфлікт
 import	calendar	uk	Імпорт
@@ -202,13 +220,13 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	uk	Ця група вибрана наперед при вході в Планування. Ви можете змінити її в Плануванні будь коли.
 this message is sent for canceled or deleted events.	calendar	uk	Це повідомлення відсилається для відмінених чи видалених подій.
 this message is sent for modified or moved events.	calendar	uk	Це повідомлення відсилається для змінених чи зміщених подій.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	uk	Це повідомлення відсилається кожному учаснику подій, власником яких є Ви, якщо учасники встановили нагадування щодо нових подій. <br> Ви можете скористатись деякими змінним, котрі заміщаються інформацією події. Перший рядок є темою листа.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	uk	Це повідомлення відсилається кожному учаснику подій, власником яких є Ви, якщо учасники встановили нагадування щодо нових подій.<br>Ви можете скористатись деякими змінним, котрі заміщаються інформацією події. Перший рядок є темою листа.
 this message is sent when you accept, tentative accept or reject an event.	calendar	uk	Це повідомлення відсилається у випадках, коли ви прийняли, попередньо прийняли або відхилили запрошення.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	uk	Це повідомлення відсилається, якщо Ви встановили Нагадування щодо певної події. Включає всю інформацію, яка Вам потрібна.
 thu	calendar	uk	Чт
 title of the event	calendar	uk	Назва події
 to many might exceed your execution-time-limit	calendar	uk	Надто багато може перевершити Ваш ліміт часу
-to-firstname	calendar	uk	--To-Firstname--
+to-firstname	calendar	uk	На ім'я
 toggle weekend	calendar	uk	Переключити вихідні
 translation	calendar	uk	Переклад
 tue	calendar	uk	Вт
@@ -225,9 +243,9 @@ work day starts on	calendar	uk	Робочий день починається
 yearly	calendar	uk	Річний
 yearview	calendar	uk	Вигляд року
 you can either set a year or a occurrence, not both !!!	calendar	uk	Ви можете встановити або Рік або Поширення, не обидва!!!
-you can only set a year or a occurrence !!!	calendar	uk	Ви можете встановити або Рік або Поширення!!!
+you can only set a year or a occurrence !!!	calendar	uk	Ви можете встановити або Рік або Поширення!
 you do not have permission to read this record!	calendar	uk	Ви не маєте права на перегляд цьго запису!
 you have a meeting scheduled for %1	calendar	uk	Ви маєте зустріч, призначену на %1
-you need to set either a day or a occurrence !!!	calendar	uk	Необхідно встановити День або Поширення !!!
+you need to set either a day or a occurrence !!!	calendar	uk	Необхідно встановити День або Поширення!
 your meeting scheduled for %1 has been canceled	calendar	uk	Зустріч, призначена на %1 була відмінена
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	uk	Зустріч, призначена на %1 була перенесена на %2

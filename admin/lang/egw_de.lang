@@ -186,7 +186,7 @@ bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 blocking after wrong password	admin	de	Blockierung nach falschem Passwort
 bottom	admin	de	Unten
-bulk password reset	admin	de	Rücksetzen mehrerer Passwörter
+bulk password reset	admin	de	Rücksetzen Passwörter
 by	admin	de	Von
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!<br>Sind Sie wirklich sicher, dass Sie das wollen?
 calculate next run	admin	de	Nächste Ausführung berechnen

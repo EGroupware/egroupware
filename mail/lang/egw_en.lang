@@ -45,8 +45,8 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	en	Allow
 allow external images	mail	en	Allow external images
 allow external images from listed domains	mail	en	Allow external images from listed domains
-allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails
-allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails
+allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails.
+allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails.
 allow users to create further identities	mail	en	Allow users to create further identities
 allways a new window	mail	en	Allways a new window
 always	mail	en	Always
@@ -68,7 +68,7 @@ are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you w
 arrival	mail	en	Received
 ask for permission	mail	en	Ask for permission
 attach files	mail	en	Attach files
-attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email
+attach users vcard at compose to every new mail	mail	en	Attach users vCard at compose to every new email.
 attach vcard	mail	en	Attach vCard
 attachment	mail	en	Attachment
 attachment has been saved successfully.	mail	en	Attachment has been saved successfully.
@@ -101,7 +101,7 @@ check to save as calendar event on send	mail	en	Check button to create as event 
 check to save as infolog on send	mail	en	Check button to create as InfoLog after sending
 check to save as tracker entry on send	mail	en	Check button to create as ticket after sending
 choose file	mail	en	Choose file
-common acl	mail	en	Common ACL
+common acl	mail	en	Common access rights
 compose	mail	en	Compose
 compose as new	mail	en	Compose as new
 compress folder	mail	en	Compress folder
@@ -115,7 +115,7 @@ connect to profile %1	mail	en	Connect to Profile %1
 connection status	mail	en	Connection Status
 contact label	mail	en	Contact label
 contains	mail	en	contains
-contains(*)	mail	en	Contains(*)
+contains(*)	mail	en	contains(*)
 convert mail to item and attach its attachments to this item (standard)	mail	en	Convert email to item and attach its attachments to this item (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
@@ -141,7 +141,7 @@ delete folder	mail	en	Delete folder
 delete folder %1 ?	mail	en	DELETE folder %1?
 delete this acl	mail	en	Delete this ACL
 deleted	mail	en	deleted
-deleted %1 messages in %2	mail	en	Deleted %1 messages in %2
+deleted %1 messages in %2	mail	en	Deleted %1 messages in %2.
 deleted!	mail	en	deleted!
 deleting %1 folders in progress ...	mail	en	Deleting %1 folders in progress ...
 deleting folders	mail	en	Deleting folders
@@ -160,7 +160,7 @@ display of identities	admin	en	display identities
 display only when no plain text is available	mail	en	Display only when no plain text is available
 displaying html messages is disabled	mail	en	displaying HTML messages is disabled
 displaying plain messages is disabled	mail	en	displaying plain text messages is disabled
-do not auto create folders	mail	en	do not auto create folders
+do not auto create folders	mail	en	Do not auto create folders
 do not forward	mail	en	Do not forward
 do you really want to apply %1 to all messages in the current view?	mail	en	Do you really want to apply %1 to ALL messages in the current view?
 do you really want to delete folder %1 ?	mail	en	Do you really want to DELETE folder %1?
@@ -191,10 +191,10 @@ drafts	mail	en	Drafts
 drafts folder	mail	en	Drafts Folder
 edit account	mail	en	Edit Account
 edit account ...	mail	en	Edit account ...
-edit folder acl	mail	en	Edit folder ACL
-edit folder acl ...	mail	en	Edit folder ACL ...
+edit folder acl	mail	en	Email access rights
+edit folder acl ...	mail	en	Email access rights ...
 edit vacation settings	mail	en	Edit vacation notice
-effective only if server supports acl at all	admin	en	effective only if server supports ACL at all
+effective only if server supports acl at all	admin	en	Effective only if server supports email access rights at all
 email address	mail	en	Email address
 email notification successfully updated!	mail	en	Email notification successfully updated!
 email notification update failed	mail	en	Email notification update failed
@@ -338,9 +338,9 @@ learning as ham (not spam) failed because of %1	mail	en	Learning as ham (not spa
 learning as spam failed because of %1	mail	en	Learning as spam failed because of %1
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
 mail	common	en	Mail
-mail acl	mail	en	Mail ACL
+mail acl	mail	en	Email access rights
 mail filter	mail	en	Filter
 mail filter rule	mail	en	Mail filter rule
 mail settings	mail	en	Mail settings
@@ -446,7 +446,7 @@ please select the number of days to wait between responses	mail	en	Please select
 please supply the message to send with auto-responses	mail	en	Please supply the message to send with auto-responses
 please wait while sending your mail	mail	en	Please wait while sending your email
 post	mail	en	post
-predefined addresses for compose	mail	en	Predefined addresses for compose
+predefined addresses for compose	mail	en	Predefined values for compose
 prevent managing filters	mail	en	Prevent managing filters
 prevent managing folders	mail	en	Prevent managing folders
 prevent managing notifications	mail	en	Prevent managing notifications
@@ -502,13 +502,13 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	en	replyto
 report as ham	mail	en	Report as Ham
 report as spam	mail	en	Report as Spam
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	en	Report this email content as Ham (not spam) - spam solutions like spamTitan will learn
-report this email content as spam - spam solutions like spamtitan will learn	mail	en	Report this email content as Spam - spam solutions like spamTitan will learn
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	en	Report this email content as Ham (not spam) - spam solutions like SpamTitan will learn
+report this email content as spam - spam solutions like spamtitan will learn	mail	en	Report this email content as Spam - spam solutions like SpamTitan will learn
 required pear class mail/mimedecode.php not found.	mail	en	Required PEAR class Mail/mimeDecode.php not found.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	en	Required to disable if you use Dovecot with private seen flags on shared or user folder!
 resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to email sent to:
-restrict acl management	admin	en	restrict ACL management
+restrict acl management	admin	en	Restrict access rights management
 rights	mail	en	Rights
 row order style	mail	en	row order style
 rule priority position	mail	en	Rule priority position
@@ -587,8 +587,8 @@ show test connection section and control the level of info displayed??	mail	en	S
 show them this time only	mail	en	Show them this time only
 show vertical	mail	en	Show vertical (3-column view)
 show vertical with all columns	mail	en	Show vertical with all columns
-show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in email list view
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the email
+show/hide preview pane in mail list view	mail	en	Show/Hide preview pane in email list view.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	en	Shows a temporary visible notification including from address, subject and a snippet of the email.
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
@@ -659,7 +659,7 @@ toggled on actions	mail	en	Toggled on actions
 trash	mail	en	Trash
 trash folder	mail	en	Trash folder
 trust servers seen / unseen info	mail	en	Trust servers SEEN / UNSEEN info
-trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves.
 trying to recover from session data	mail	en	Trying to recover from session data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.<br>If you use templates, this option is only applied to the text part of the message.
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
@@ -668,8 +668,8 @@ unflagged	mail	en	Unflagged
 unread	mail	en	unread
 unsubscribe folder	mail	en	Unsubscribe folder
 unsubscribe from folder %1	mail	en	Unsubscribe from folder %1
-upload files...	mail	en	Upload files...
-use default timeout (20 seconds)	mail	en	use default timeout (20 seconds)
+upload files...	mail	en	Upload files ...
+use default timeout (20 seconds)	mail	en	Use default timeout (20 seconds)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	en	Use regular expressions (see https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	en	Use source as displayed, if applicable
 use username+password from current user	mail	en	Use username+password from current user
@@ -689,11 +689,11 @@ view full mail source	mail	en	View full email source
 view header lines	mail	en	View header lines
 what do do with html email	mail	en	What do do with HTML email
 what order the list columns are in	mail	en	What order the list columns are in
-what to do when you delete a message	mail	en	What to do when you delete a message
-what to do when you send a message	mail	en	What to do when you send a message
+what to do when you delete a message	mail	en	What to do when you delete a message.
+what to do when you send a message	mail	en	What to do when you send a message.
 when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
-when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app
+when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
 when sending messages	mail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing

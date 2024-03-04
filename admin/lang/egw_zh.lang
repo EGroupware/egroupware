@@ -5,13 +5,15 @@
 %1 class not instanciated	admin	zh	%1 类没有实例化
 %1 group %2	admin	zh	%1 群组%2
 %1 is no command!	admin	zh	%1 没有命令！
+%1 log entries deleted.	admin	zh	已删除 %1 个日志条目。
 %1 mail credentials deleted	admin	zh	删除了 %1 个邮件凭证
 %1 not found or not executable !!!	admin	zh	%1 找不到或无法执行！
 %1 rights for %2 and applications %3	admin	zh	%2 的权限%1和应用程序%3
+%1 run rights for applications	admin	zh	%1 应用程序的运行权限
 %1 sessions killed	admin	zh	%1 会话已删除。
 %1 successful	admin	zh	%1 成功
 %1 token %2.	admin	zh	%1 标记 %2.
-%1 user %2	admin	zh	%1用户%2
+%1 user %2	admin	zh	%1 用户 %2
 (default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
 (no subject)	admin	zh	(无主题)
 (stored password will not be shown here)	admin	zh	(已储存密码将不在这里显示)
@@ -23,6 +25,7 @@
 2-factor-authentication for interactive login	admin	zh	交互式登录的双因素认证
 3 month	admin	zh	3个月
 6 month	admin	zh	6个月
+access to %1 data by others	admin	zh	他人访问 %1 数据
 access token revoked.	admin	zh	访问令牌已撤销。
 accesslog and bruteforce defense	admin	zh	存取纪录与恶意攻击防御
 account	admin	zh	账户
@@ -71,7 +74,7 @@ admin username	admin	zh	管理帐户
 administration	admin	zh	系统管理
 admins	admin	zh	管理员
 advanced options	admin	zh	高级选项
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	几次登录失败后，将封禁 IP 地址 (默认 3)？
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	尝试登录失败多少次后，IP 将被阻止。默认 = 15
 aliases	admin	zh	别名
 all applications	admin	zh	所有应用程序
 all categories	admin	zh	所有类别
@@ -107,7 +110,7 @@ are you sure you want to kill this session ?	admin	zh	确定要中止该会话�
 async services last executed	admin	zh	异步服务最近已执行过
 asynchronous timed services	admin	zh	异步定时服务
 asyncservices not yet installed or other error (%1) !!!	admin	zh	异步服务尚未安装或其他错误(%1)！
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	在FTP中尝试使用正确的mimetype来替代默认的'application/otect-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	在FTP中尝试使用正确的MIME type来替代默认的'application/otect-stream'
 attribute accountstatus explained	admin	zh	该 <b><i>-accountStatus-</i></b> 句柄属性来自 QMAIL schema。
 attribute mail explained	admin	zh	该 <b><i>-mail-</i></b> 句柄属性来自 QMAIL schema 并不得为空。它同样也是 eGW 内部电子邮件域。
 attribute mailalternateaddress explained	admin	zh	该 <b><i>-accountStatus-</i></b> 句柄属性来自 QMAIL schema，并能迅速处理为虚拟地图或别名。
@@ -182,6 +185,7 @@ delete the category	admin	zh	删除该类别
 delete the group	admin	zh	删除该组
 delete this category	admin	zh	删除此类别
 delete this group	admin	zh	删除该群组
+delete this log entry	admin	zh	删除此日志条目
 delete this user	admin	zh	删除该用户
 deleted	admin	zh	已删除
 deletes this field	admin	zh	删除此字段域
@@ -258,7 +262,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh	请�
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	zh	请输入服务器所在主机的名称
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入EGroupware的网址。<br>例如：http://www.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入EGroupware的网址。<br>例如：https://egw.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	请输入要查找的字符串。要显示所有条目，此处留空并点击提交按钮
 enter the site password for peer servers	admin	zh	请输入对等服务器的站点密码
 enter the site username for peer servers	admin	zh	请输入对等服务器的站点用户名
@@ -318,7 +322,7 @@ home directory	admin	zh	首页目录
 home screen message	admin	zh	主窗口信息
 host information	admin	zh	主机信息
 hour<br>(0-23)	admin	zh	时(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	zh	用以链接图像的缩略图的尺寸应为多大 (最大像素) ？
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	zh	链接图像缩略图的最大像素尺寸
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh	访问日志中的条目在它们得以删除之前的保留天数 (缺省90)？
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	zh	非管理员应该能导出多少条目 (留空 = 无限制，no = 不导出)
 how many minutes should an account or ip be blocked (default 1) ?	admin	zh	多少分钟后账户或 IP 地址将被锁定 (默认值30分钟)？
@@ -330,7 +334,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
 imap admin password	admin	zh	IMAP 管理者密码
 imap admin user	admin	zh	IMAP 管理者帐户
-imap c-client version < 2001	admin	zh	IMAP C-Clien 版本小 < 2001
+imap c-client version < 2001	admin	zh	IMAP C-Client 版本小 < 2001
 imap server	admin	zh	IMAP 服务器
 imap server closed the connection.	admin	zh	IMAP 服务器关闭连接。
 imap server closed the connection. server responded: %s	admin	zh	IMAP 服务器关闭连接。服务器回应：%s
@@ -340,9 +344,10 @@ imap server name	admin	zh	IMAP 服务器名
 imap server port	admin	zh	IMAP 服务器端口号
 imap/pop3 server name	admin	zh	IMAP / POP3 服务器名
 in mbyte	admin	zh	以 MB 表示
+inactive	admin	zh	不活动
 inbound	admin	zh	入站 (inbound)
 initial	admin	zh	初始的
-install crontab	admin	zh	安装 Crontab
+install crontab	admin	zh	安装 crontab
 install id	admin	zh	安装ID
 installed applications	common	zh	已安装的应用程序
 installed crontab	admin	zh	已安装的 crontab
@@ -362,14 +367,14 @@ last login from	admin	zh	最近登录来自
 last time read	admin	zh	最近读取时间
 last updated	admin	zh	最后更新
 ldap accounts context	admin	zh	LDAP 账户上下文
-ldap basedn	admin	zh	LDAP basedn
+ldap basedn	admin	zh	LDAP base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	zh	LDAP 默认主目录的前缀 (例如：/home/username 的前缀是：/home)
 ldap default shell (e.g. /bin/bash)	admin	zh	LDAP 默认 Shell (例如：/bin/bash)
 ldap encryption type	admin	zh	LDAP 加密类型
 ldap groups context	admin	zh	LDAP 群组上下文
 ldap host	admin	zh	LDAP 主机名
 ldap root password	admin	zh	LDAP root 密码
-ldap rootdn	admin	zh	LDAP rootdn(目录树根)
+ldap rootdn	admin	zh	LDAP root DN(目录树根)
 ldap server	admin	zh	LDAP 服务器
 ldap server accounts dn	admin	zh	LDAP 服务器帐户 DN
 ldap server admin dn	admin	zh	LDAP 服务器管理员 DN
@@ -411,6 +416,7 @@ name must not be empty !!!	admin	zh	名称不能为空！
 name of organisation	admin	zh	组织名称
 new group name	admin	zh	新建组名称
 new name	admin	zh	新名称
+new password	admin	zh	新密码
 new password [ leave blank for no change ]	admin	zh	新密码 [留空则仍使用旧密码]
 next run	admin	zh	下次运行
 no algorithms available	admin	zh	没有可用算法
@@ -455,6 +461,7 @@ permission denied !!!	admin	zh	没有权限！
 permission denied!!!	admin	zh	没有权限！
 permissions	admin	zh	权限
 permissions this group has	admin	zh	该组权限
+php version	admin	zh	PHP 版本
 phpinfo	admin	zh	系统环境信息
 please enter a name	admin	zh	请输入名称
 please enter a name for that server !	admin	zh	请输入那台服务器的名称！
@@ -505,7 +512,7 @@ select permissions this group will have	admin	zh	选择该组权限
 select the parent category. if this is a main category select no category	admin	zh	选择父类别。如果当前是一个主要类别，则选择<b>无类别</b>
 select type of imap server	admin	zh	选择 IMAP 服务器类型
 select type of imap/pop3 server	admin	zh	选择 IMAP / POP3 服务器类型
-select type of smtp server	admin	zh	选择 SMAP 服务器类型
+select type of smtp server	admin	zh	选择 SMTP 服务器类型
 select users for inclusion	admin	zh	选择要包括的用户
 select where you want to store/retrieve filesystem information	admin	zh	选择您想要存储或检索文件系统信息的位置
 select where you want to store/retrieve user accounts	admin	zh	选择您想要存储或检索用户帐户的位置
@@ -565,7 +572,7 @@ the groups must include the primary group	admin	zh	这个群组必须包含主�
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	zh	IMAP 服务器似乎不支持所选择的认证方法。请联系系统管理员。
 the login and password can not be the same	admin	zh	登录名不能与密码相同
 the loginid can not be more then 8 characters	admin	zh	Login-ID长度不能大于8个字符
-the mimeparser can not parse this message.	admin	zh	mime 解析器不能解析这个邮件。
+the mimeparser can not parse this message.	admin	zh	MIME 解析器不能解析这个邮件。
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
 the testjob sends you a mail everytime it is called.	admin	zh	测试任务将在每次启动时向您发送电子邮件.
 the text displayed to the user	admin	zh	向用户显示的文本
@@ -582,7 +589,7 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	zh	会话时限�
 times	admin	zh	次数
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	zh	未使用一个 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
 top	admin	zh	顶部
-total of %1 id's changed.	admin	zh	共计%1 id 被改变。
+total of %1 id's changed.	admin	zh	共计%1 ID 被改变。
 total records	admin	zh	记录总数
 translation	admin	zh	翻译
 true	admin	zh	真
@@ -603,7 +610,7 @@ unsupported action '%1' !!!	admin	zh	不支持 '%1'  的操作！
 up	admin	zh	向上
 update current email address:	admin	zh	更新当前邮件地址：
 updated	admin	zh	已更新
-use cookies to pass sessionid	admin	zh	使用 Cookie 保存会话标识
+use cookies to pass sessionid	admin	zh	使用 cookie 保存会话标识
 use default	admin	zh	使用默认值
 use ldap defaults	admin	zh	使用 LDAP 默认值
 use pure html compliant code (not fully working yet)	admin	zh	是否使用纯 HTML 兼容代码 (目前尚未完全可用)
@@ -632,7 +639,7 @@ view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
 virtual mail manager	admin	zh	虚拟邮箱管理
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
-would you like egroupware to cache the egw info array ?	admin	zh	需要 EGroupware 缓存 egw info 数组吗？
+would you like egroupware to cache the egw info array ?	admin	zh	需要 EGroupware 缓存 EGroupware info 数组吗？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh	您要不要 EGroupware 在管理员登录时自动检查新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh	当管理员登录时，您要不要 EGroupware 检查新应用程序版本？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh	您想要自动加载新的语言文件 (在登录时)？

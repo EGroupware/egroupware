@@ -30,7 +30,7 @@ current version	setup	hu	Aktuális verzió
 day	setup	hu	Nap
 db backup and restore	setup	hu	Adatbázis mentés és helyreállítás
 default	setup	hu	Alapértelmezett
-default file system space per user/group ?	setup	hu	Az alapértelmezett fájlrendszerméret felhasználónként ?
+default file system space per user/group ?	setup	hu	Az alapértelmezett fájlrendszerméret felhasználónként?
 delete	setup	hu	Törlés
 deny all users access to grant other users access to their entries ?	setup	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
 domain	setup	hu	Tartomány
@@ -42,6 +42,14 @@ enter the title for your site	setup	hu	A webhely megnevezése
 enter your default ftp server	setup	hu	Az alapértelmezett FTP-kiszolgáló
 enter your http proxy server	setup	hu	A HTTP-proxy kiszolgáló
 enter your http proxy server port	setup	hu	A HTTP-proxy kiszolgáló portszáma
+error searching "dn=%1" for "%2"!	setup	hu	Hiba a "DN=%1" keresése a "%2" keresőben!
+error uploading your backup!	setup	hu	Hiba a biztonsági mentés feltöltése!
+every	setup	hu	Minden
+export has been completed!	setup	hu	Exportálás befejeződött!
+failed to mount backup directory!	setup	hu	Sikerült a biztonsági mentés könyvtárát csatlakoztatni!
+failed updating user "%1" dn="%2"!	setup	hu	Sikertelen a "%1" DN="%2" felhasználó frissítése!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	hu	Sikertelenül íródott a header.inc.php konfigurációs fájl, ellenőrizze a jogosultságokat!
+fallback authentication	setup	hu	Visszaeső hitelesítés
 file	setup	hu	Állomány
 filename	setup	hu	Állománynév
 go back	setup	hu	Visszatérés
@@ -56,7 +64,7 @@ ldap encryption type	setup	hu	LDAP titkosítás típusa
 ldap groups context	setup	hu	LDAP csoport környezet
 ldap host	setup	hu	LDAP hoszt
 ldap root password	setup	hu	LDAP root jelszava
-ldap rootdn	setup	hu	LDAP rootdn
+ldap rootdn	setup	hu	LDAP root DN
 mail server login type	setup	hu	Mail szerver bejelentkezés típusa
 maximum account id (e.g. 65535 or 1000000)	setup	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 min backup count	setup	hu	A mentések maximális száma (nulla: minden)
@@ -65,13 +73,18 @@ modified	setup	hu	Módosított
 month	setup	hu	Hónap
 new	setup	hu	Új
 next run	setup	hu	Következő futtatás
-no algorithms available	setup	hu	nincsenek elérhető algoritmusok
+no algorithms available	setup	hu	Nincsenek elérhető algoritmusok
 no modes available	setup	hu	Nincs elérhetó mód
 not set	setup	hu	Nincs megadva
 one month	setup	hu	Egy hónap
 one week	setup	hu	Egy hét
+optional, if only authentication and anonymous search is enabled	setup	hu	opcionális, ha csak a hitelesítés ÉS az anonim keresés van engedélyezve
 or	setup	hu	vagy
+or leave empty and select openidconnect as authentication type above for single sign on	setup	hu	vagy hagyja üresen, és válassza az OpenID Connect hitelesítési típust a fenti egyszeri bejelentkezéshez.
+or leave empty and select saml as authentication type above for single sign on	setup	hu	vagy hagyja üresen, és válassza a SAML-t hitelesítési típusként a fenti egyszeri bejelentkezéshez.
+password	setup	hu	Jelszó
 password for smtp-authentication	setup	hu	Jelszó az SMTP-azonosításhoz
+passwords --> sql	setup	hu	Jelszavak --> SQL
 path information	setup	hu	Útvonal-információ
 re-enter password	setup	hu	Jelszó újra
 regular expression to filter by dn	setup	hu	Szabályos kifejezés a DN szerinti szűréshez

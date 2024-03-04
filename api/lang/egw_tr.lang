@@ -24,7 +24,7 @@ account has been updated	common	tr	Hesap güncellendi
 accounts	common	tr	Hesaplar
 action	common	tr	Eylem
 actions	common	tr	Eylemler
-add	common	tr	ekle
+add	common	tr	Ekle
 add a new contact	common	tr	Yeni bir kişi ekleyin
 add current	common	tr	Favori olarak mevcut görünüm
 add to clipboard	common	tr	Panoya ekle
@@ -84,7 +84,7 @@ done	common	tr	Tamam
 download	common	tr	İndir
 edit	common	tr	Düzenle
 enabled	common	tr	Etkin
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -164,7 +164,7 @@ please %1 by hand	common	tr	Lütfen el ile %1
 please enter a name	common	tr	Litfen bir isim giriniz
 please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Cmd + R).
 please remember to use '%1' as username for local login's from now on!	common	tr	Lütfen bundan sonra yerel girişler için kullanıcı adı olarak '%1' kullanmayı unutmayın!
-please run setup to become current	common	tr	Güncel olmak için kurulumu çalýþtýrýnýz
+please run setup to become current	common	tr	Güncel olmak için kurulumu çalıştırın
 please select	common	tr	Lütfen seçiniz
 please type %1 more characters	common	tr	Lütfen %1 karakter daha yazın
 please type 1 more character	common	tr	Lütfen 1 karakter daha yazın
@@ -186,6 +186,7 @@ title	common	tr	Baþlýk
 today	common	tr	Bugün
 top	common	tr	Maks
 update	common	tr	Güncelle
+url	common	tr	URL
 user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri

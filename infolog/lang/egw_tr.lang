@@ -1,10 +1,10 @@
 %1 entries %2	infolog	tr	%1 girişler %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	%1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 entries %2, %3 failed.	infolog	tr	%1 girişleri %2, %3 başarısız oldu.
-%1 records imported	infolog	tr	%1 kay?t ithal edildi.
+%1 records imported	infolog	tr	%1 kayıt içe aktarıldı.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	tr	%1 kayıt okundu. Henüz içe aktarılmadı, %2geri%3'e gidebilir ve İçe aktarmayı test et seçeneğinin işaretini kaldırabilirsiniz.
 (and children) deleted	infolog	tr	(ve çocuklar) silindi.
-accept	infolog	tr	Kabul Et
+accept	infolog	tr	Kabul et
 action	infolog	tr	Eylem
 add	infolog	tr	Ekle
 added	infolog	tr	Eklendi
@@ -63,6 +63,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	tr	Örnek {{NELF rolü}} - eğer rol alanı boş değilse, rol alanının değerini içeren yeni bir satır alırsınız
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
 execute a further action for this entry	infolog	tr	Bu giriş için başka bir eylem yürütme
+existing links	infolog	tr	Mevcut bağlantılar
 exists	infolog	tr	Mevcut
 export definition to use for nextmatch export	infolog	tr	Nextmatch dışa aktarımı için kullanılacak dışa aktarım tanımı
 exports in ical format.	infolog	tr	iCal formatında dışa aktarır.
@@ -145,7 +146,7 @@ permissions error - %1 could not %2	infolog	tr	İzin hatası - %1 %2 yapamadı
 prefix for sub-entries (default: re:)	infolog	tr	Alt girişler için önek (varsayılan: Re:)
 primary link	infolog	tr	Birincil bağlantı
 print this infolog	infolog	tr	Bu InfoLog'u yazdırın
-printing...	infolog	tr	Baskı...
+printing...	infolog	tr	Baskı ...
 project	infolog	tr	Proje
 project id	infolog	tr	Proje Kimliği
 project name	infolog	tr	Proje adı
@@ -169,7 +170,7 @@ second parameter for preg_replace	infolog	tr	preg_replace için ikinci parametre
 select a price	infolog	tr	Bir fiyat seçin
 select a project	infolog	tr	Bir proje seçin
 select an action	infolog	tr	Bir eylem seçin
-select an action...	infolog	tr	Bir eylem seçin...
+select an action...	infolog	tr	Bir eylem seçin ...
 select new category	infolog	tr	Yeni kategori seçin
 select users or groups	infolog	tr	Kullanıcıları veya grupları seçme
 selected calendars	infolog	tr	Seçilen takvimler
@@ -190,7 +191,7 @@ startdate	infolog	tr	Başlangıç tarihi
 startdate for new entries	infolog	tr	Yeni girişler için başlangıç tarihi
 startdate must be before enddate!!!	infolog	tr	Başlangıç tarihi son tarihten önce olmalıdır!
 starting %1	infolog	tr	Başlangıç %1
-startrecord	infolog	tr	Kaydetmeye ba?la
+startrecord	infolog	tr	Başlangıç kaydı
 status, percent and date completed are always allowed.	infolog	tr	Durum, yüzde ve tamamlanma tarihine her zaman izin verilir.
 sub	infolog	tr	Alt
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	tr	Alt girişler, üst giriş yoksa üst veya ana girişlerin altları olur
@@ -207,7 +208,7 @@ titles of any entries linked to the current record, excluding attached files	inf
 to many might exceed your execution-time-limit	infolog	tr	Çok fazla sayıda olması yürütme süresi sınırınızı aşabilir
 today	infolog	tr	Bugün
 type of field	infolog	tr	Alan türü
-unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	tr	"%1" özel alanı ile %3'e bağlantı kurulamıyor: "%4". 2 eşleşiyor.
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	tr	"%1" özel alanı ile %3'e bağlantı kurulamıyor: "%4". %2 eşleşiyor.
 unknown type: %1	infolog	tr	Bilinmeyen tür: %1
 unlinked from %1	infolog	tr	%1'den bağlantısı kaldırılmış
 use custom notification message	infolog	tr	Özel bildirim mesajı kullanma
@@ -219,6 +220,7 @@ which participants should be preselected when scheduling an appointment.	infolog
 which types should the calendar show	infolog	tr	Takvim hangi türleri göstermelidir
 which types should the calendar show like events?	infolog	tr	Takvim hangi tür etkinlikleri göstermelidir?
 will-call	infolog	tr	Arayacak
+write (add or update) a record by passing its fields.	infolog	tr	Alanlarını geçerek bir kayıt yazın, ekleyin veya güncelleyin.
 yes - close	infolog	tr	Evet - Kapat
 yes - close including sub-entries	infolog	tr	Evet - Alt girişler dahil kapat
 yes - delete	infolog	tr	Evet - Sil
@@ -229,7 +231,10 @@ yes, with larger fontsize	infolog	tr	Evet, daha büyük yazı tipi boyutuyla
 yes, with purging of deleted items possible	infolog	tr	Evet, silinen öğelerin temizlenmesi mümkün
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	tr	Yeni bir InfoLog girişi oluşturduğunuzda, önceden seçilecek bir kategori seçebilirsiniz.
 you can't delete one of the stock types !!!	infolog	tr	Stok tiplerinden birini silemezsiniz!
+you have entered an invalid ending date	infolog	tr	Geçersiz bir son tarih girdiniz!
+you have entered an invalid starting date	infolog	tr	Geçersiz bir başlangıç tarihi girdiniz!
 you have to enter a name, to create a new type!	infolog	tr	Yeni bir tür oluşturmak için bir isim girmeniz gerekir!
+you must enter a subject or a description	infolog	tr	Bir konu veya açıklama girmelisiniz.
 you need to select an entry for linking.	infolog	tr	Bağlantı için bir giriş seçmeniz gerekir.
 you need to select some entries first	infolog	tr	Önce bazı girişleri seçmeniz gerekir.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	tr	Veritabanınız güncel DEĞİL (%1 vs. %2), veritabanınızı güncellemek için lütfen %3setup%4'ü çalıştırın.

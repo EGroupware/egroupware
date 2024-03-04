@@ -76,6 +76,14 @@ domain name	setup	id	Domain name
 domain-name	setup	id	domain-name
 download	setup	id	Unduh
 enable mcrypt	setup	id	Enable MCrypt
+error searching "dn=%1" for "%2"!	setup	id	Kesalahan mencari "DN=%1" untuk "%2"!
+error uploading your backup!	setup	id	Kesalahan mengunggah cadangan Anda!
+every	setup	id	Setiap
+export has been completed!	setup	id	Ekspor telah selesai!
+failed to mount backup directory!	setup	id	Gagal memasang direktori Cadangan!
+failed updating user "%1" dn="%2"!	setup	id	Gagal memperbarui pengguna "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	id	Gagal menulis file konfigurasi header.inc.php, periksa izinnya!
+fallback authentication	setup	id	Autentikasi Mundur
 false	setup	id	False
 file	setup	id	FILE
 filename	setup	id	filename
@@ -134,8 +142,14 @@ not set	setup	id	not set
 ok	setup	id	OK
 one month	setup	id	satu bulan
 one week	setup	id	satu minggu
+optional, if only authentication and anonymous search is enabled	setup	id	opsional, jika hanya otentikasi DAN pencarian anonim yang diaktifkan
 or	setup	id	atau
+or leave empty and select openidconnect as authentication type above for single sign on	setup	id	atau biarkan kosong dan pilih OpenID Connect sebagai jenis autentikasi di atas untuk sistem masuk tunggal
+or leave empty and select saml as authentication type above for single sign on	setup	id	atau biarkan kosong dan pilih SAML sebagai jenis autentikasi di atas untuk sistem masuk tunggal
+password	setup	id	Kata sandi
 password for smtp-authentication	setup	id	Password for SMTP-authentication
+password needed for domain configuration.	setup	id	Kata sandi diperlukan untuk konfigurasi domain.
+passwords --> sql	setup	id	Kata sandi --> SQL
 path information	setup	id	Path information
 pem certificate	setup	id	PEM certificate
 persistent connections	setup	id	Persistent connections

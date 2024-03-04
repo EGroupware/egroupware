@@ -5,23 +5,31 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	zh	已读取%1个记录 (尚未导入, 您可以返回并取消导入测试)
 %1 weeks	calendar	zh	%1 星期
 a non blocking event will not conflict with other events	calendar	zh	一个未锁定事件将不会与其它事件冲突
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	zh	闯入者指的是没有被邀请参加会议，但却莫名其妙收到邀请的人。
 accept	calendar	zh	接受
 accept or reject an invitation	calendar	zh	接受或拒绝邀请
 accepted	calendar	zh	已接受
 access denied to the calendar of %1 !!!	calendar	zh	对 %1 的日历的访问被拒绝！
+access to calendar of %1 denied!	calendar	zh	拒绝访问 %1 的日历！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh	执行下列操作将发出通知：添加, 取消, 接受, 拒绝...
 actions	calendar	zh	操作
 actions...	calendar	zh	操作...
 add alarm	calendar	zh	添加闹铃
 add appointments via shortened dialog or complete edit window	calendar	zh	通过缩短的对话框或完整的编辑窗口添加约会
+add current view as favorite	calendar	zh	将当前视图添加为收藏夹
+add new alarm	calendar	zh	添加新警报
 add new event	calendar	zh	添加新预约
+add new participants or resource	calendar	zh	添加新与会者或资源
 add timesheet entry	calendar	zh	添加时间表条目
 added	calendar	zh	添加
 added by synchronization	calendar	zh	通过同步添加
+after	calendar	zh	之后
 after %1	calendar	zh	在%1以后
 after current date	calendar	zh	在当前日期之后
+age:	calendar	zh	年龄：
 alarm	calendar	zh	闹铃
 alarm added	calendar	zh	闹铃已增添
+alarm added automatic to new events before event start-time	calendar	zh	在活动开始时间之前自动为新活动添加警报
 alarm deleted	calendar	zh	闹铃以删除
 alarm for %1 at %2 in %3	calendar	zh	在%3的%1中%2闹铃
 alarm management	calendar	zh	闹铃管理
@@ -29,9 +37,12 @@ alarms	calendar	zh	闹铃
 all categories	calendar	zh	所有类别
 all day	calendar	zh	所有日期
 all events	calendar	zh	所有事件
+all exceptions are converted into single events.	calendar	zh	所有例外情况都会转换为单个事件。
 all future	calendar	zh	所有未来
+all incl. rejected	calendar	zh	包括被拒绝的所有事件
 all participants	calendar	zh	所有参与者
 allow booking requests from any user when creating events?	calendar	zh	创建活动时是否允许来自任何用户的预订请求？
+allow party crashers with email that match the following regular expression	calendar	zh	允许使用符合以下正则表达式的电子邮件的闯入者
 allows to edit the event again	calendar	zh	允许再次编辑事件
 always	calendar	zh	永远
 always use full edit dialog	calendar	zh	始终使用完整的编辑对话框
@@ -47,6 +58,7 @@ birthday	calendar	zh	生日
 birthdays	admin	zh	生日
 busy	calendar	zh	忙碌
 by	calendar	zh	于
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	zh	默认情况下（此处未作任何设置），EGroupware 只允许组织者/所有者添加他们。
 calendar csv export	calendar	zh	日历 CSV 导出
 calendar event	calendar	zh	日历事件
 calendar fields:	calendar	zh	日历字段：
@@ -177,7 +189,7 @@ how many minutes should each interval last?	calendar	zh	每个间隔时间应该
 how many separate calendars to show before merging them together	calendar	zh	显示综合日历视图的最小用户数，如果选择的用户较少，日历将分别显示为周或日视图。
 how many weeks should the multiple week view show?	calendar	zh	多重周视图将显示多少个星期？
 ical	calendar	zh	iCal
-ical / rfc2445	calendar	zh	iCal / rfc2445
+ical / rfc2445	calendar	zh	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	zh	iCal不能改变现有事件的所有者。这只适用于新事件。
 ical export	calendar	zh	iCal 导出
 ical file	calendar	zh	iCal 文件

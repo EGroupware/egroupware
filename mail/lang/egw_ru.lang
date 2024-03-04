@@ -36,7 +36,7 @@ attachment has been saved successfully.	mail	ru	Вложение успешно 
 attachments	mail	ru	Вложения
 attachments, ...	mail	ru	Вложения, ...
 available personal email-accounts/profiles	mail	ru	доступные личные адреса эл.почты/Профили
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ru	Имейте в виду, что если добавить все выбранные файлы в режиме %1, то все существующие вложения в списке также перейдут в режим %2. \n \n Вы хотите продолжить?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ru	Имейте в виду, что если добавить все выбранные файлы в режиме %1, то все существующие вложения в списке также перейдут в режим %2.<br>Вы хотите продолжить?
 be aware that all attachments will be sent as %1!	mail	ru	Имейте в виду, что все вложения будут отправлены в режиме %1!
 but check shared folders	mail	ru	Не проверены папки, к которым дан доступ
 by date	mail	ru	По дате
@@ -64,7 +64,7 @@ connection status	mail	ru	Статус соединения
 contact label	mail	ru	Метка контакта
 contains	mail	ru	Содержит
 convert mail to item and attach its attachments to this item (standard)	mail	ru	Конвертировать сообщение как отдельное сообщение и прикрепить к этой части (стандартное)
-convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить  raw message (message/rfc822 (.eml)) как вложение
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить  raw message (.eml) как вложение
 copy to	mail	ru	Копировать в
 could not append message:	mail	ru	Не могу добавить сообщение
 create new account	mail	ru	Создать учётную запись
@@ -153,7 +153,7 @@ folder	mail	ru	Папка
 folder %1 %2 failed because of %3!	mail	ru	Режим файла был переключен на: %1
 folder %1 has been created successfully, although the subscription failed because of %2	mail	ru	Папка %1 была создана успешно, хотя подписка не удалась из-за %2
 folder settings	mail	ru	Установки папки
-force html	mail	ru	Выводить как html
+force html	mail	ru	Выводить как HTML
 force plain text	mail	ru	Выводить как текст
 forward	mail	ru	Переслать
 forward as attachment	mail	ru	Переслать как вложение
@@ -224,7 +224,7 @@ mailaccount	mail	ru	Почтовый аккаунт
 mailinglist	mail	ru	Список рассылки
 mails	common	ru	Почта
 mails can be copied to that folder via context menu, if folder is configured.	mail	ru	Если папка настроена, письма могут быть скопированы в эту папку через контекстное меню.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ru	Mailserver сообщает:\n%1 \nХотите ли вы продолжить удаление выбранных сообщений немедленно (нажмите OK)?\nЕсли нет, попробуйте очистить папку для мусора, прежде чем продолжить. (нажмите кнопку отмена)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ru	Mailserver сообщает:<br><br>%1<br><br>Хотите ли вы продолжить удаление выбранных сообщений немедленно (нажмите OK)?<br>Если нет, попробуйте очистить папку для мусора, прежде чем продолжить. (нажмите кнопку отмена)
 mark all as read	mail	ru	Пометить всё как прочитанное
 mark all messages in folder as read	mail	ru	Пометить всю папку как прочитанное
 mark as deleted	mail	ru	Пометить как удалённое
@@ -239,8 +239,14 @@ modify subject of this message	mail	ru	Изменить тему этого со
 move selected to	mail	ru	Переместить выбранное в
 move to	mail	ru	Переместить в
 move to trash	mail	ru	Переместить в корзину
+name and domain	mail	ru	Имя и домен
 name and email	mail	ru	Имя и email
+name of account	mail	ru	Имя учетной записи
+name of imap servers (space separated host or host:port)	mail	ru	Имя IMAP-серверов (хост через пробел или хост:порт)
 never display html emails	mail	ru	Никогда не показывать эл. письма в формате HTML
+never show	mail	ru	Никогда не показывать
+never show notification	mail	ru	Никогда не показывать уведомление
+new mail from %1	mail	ru	Новое письмо от %1
 new mail notification	mail	ru	Новое оповещение о поступлении сообщений
 new message type	mail	ru	новый тип сообщения
 new subject	mail	ru	Новая тема
@@ -248,6 +254,7 @@ no (valid) send folder set in preferences	mail	ru	Не установлена п
 no access	mail	ru	Нет доступа
 no action defined!	mail	ru	Действие не определено!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ru	нет адреса в поле кому/копия/скрытая копия/ и нет папки для сохранения сообщения
+no adress, to send this mail to, supplied	mail	ru	Не указан адрес, на который следует отправить это письмо
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ru	не установлена папка назначения,нет папки для сохранения сообщений,не заданы  эти или другие обязательные действия для хранения почты(сохранить в инфолог/трекер)
 no folders	mail	ru	Нет папок
 no plain text part found	mail	ru	Не найдена текстовая часть
@@ -257,7 +264,7 @@ no signature	mail	ru	Без подписи!
 no sneak preview in list	mail	ru	Без предварительного просмотра в списке
 no subject given!	mail	ru	Тема не указана!
 no text body supplied, check attachments for message text	mail	ru	Отсутствует текст сообщения, проверьте вложения для текста сообщения.
-no valid %1 folder configured!	mail	ru	Не настроен правильный каталог %1 !
+no valid %1 folder configured!	mail	ru	Не настроен правильный каталог %1!
 non	mail	ru	Не
 none, create all	mail	ru	Нет, создать всё
 nothing to change.	mail	ru	Нечего менять.
@@ -282,8 +289,8 @@ outbox	mail	ru	Исходящие
 permission denied	mail	ru	Доступ запрещён
 please configure access to an existing individual imap account.	mail	ru	Настроить доступ к существующей учетной записи IMAP
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ru	Пожалуйста, настройте сертификат S/MIME на вкладке Шифрование в диалоге Редактирование учетной записи.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ru	Уточните у администратора, поддерживает ли ваш сервер правила фильтрации на стороне сервера, и как включить их в EGroupware для вашей активной учетной записи (%1) с ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ru	Обратитесь к администратору, чтобы уточнить, поддерживает ли ваш сервер отпускные сообщения, и как их включить в EGroupware для вашей активной учетной записи (%1) с ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ru	Уточните у администратора, поддерживает ли ваш сервер правила фильтрации на стороне сервера, и как включить их в EGroupware для вашей активной учетной записи (%1) с ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ru	Обратитесь к администратору, чтобы уточнить, поддерживает ли ваш сервер отпускные сообщения, и как их включить в EGroupware для вашей активной учетной записи (%1) с ID: %2.
 please enter password	mail	ru	Пожалуйста, введите пароль
 please select a address	mail	ru	Пожалуйста выберите адрес
 please select the number of days to wait between responses	mail	ru	Пожалуйста выберите количество дней ожидания между ответами
@@ -326,7 +333,7 @@ report as ham	mail	ru	Пометить как не-спам
 report as spam	mail	ru	Пометить как спам
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ru	Сообщите об этом содержимом электронной почты как о хаме (не спаме) - решения для борьбы со спамом, подобные spamTitan, будут изучены
 report this email content as spam - spam solutions like spamtitan will learn	mail	ru	Сообщить об этом сообщении как о спаме - решения для борьбы со спамом, такие как spamTitan, будут изучены
-required pear class mail/mimedecode.php not found.	mail	ru	Необходимый PEAR class Mail / mimeDecode.php не найден.
+required pear class mail/mimedecode.php not found.	mail	ru	Необходимый PEAR class Mail/mimeDecode.php не найден.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ru	Требуется отключить, если вы используете Dovecot с флагами private seen на общей или пользовательской папке!
 restrict acl management	admin	ru	Ограничение управления правами ACL
 row order style	mail	ru	Порядок сортировки строк
@@ -339,7 +346,7 @@ save as infolog	mail	ru	Сохранить в ИнфоЖурнале
 save as infolog on send	mail	ru	Сохранение в формате Infolog при отправке
 save as ticket	mail	ru	Сохранить как запись Трекера
 save message to disk	mail	ru	Сохранить сообщение на диск
-save of message %1 failed. could not save message to folder %2 due to: %3	mail	ru	Невозможно сохранить сообщение %1 . Не могу сохранить сообщение в папку %2 по причине: %3
+save of message %1 failed. could not save message to folder %2 due to: %3	mail	ru	Невозможно сохранить сообщение %1. Не могу сохранить сообщение в папку %2 по причине: %3
 save the drafted message as eml file into vfs	mail	ru	Сохранение подготовленного сообщения в виде eml-файла в файловом менеджере
 save to disk	mail	ru	Сохранить на диск
 save to filemanager	mail	ru	Сохранить с помощью файл-менеджера
@@ -393,7 +400,7 @@ sort order	mail	ru	Порядок сортировки
 source	mail	ru	Исходный код
 sources	mail	ru	Исходные коды
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или html?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или html), или использовать формат сообщения по умолчанию?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или HTML), или использовать формат сообщения по умолчанию?
 subject(a->z)	mail	ru	Тема (А->Я)
 subject(z->a)	mail	ru	Тема (Я->А)
 successfully connected	mail	ru	Соединено успешно

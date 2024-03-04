@@ -1,14 +1,20 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	cs	%1 '%2' neexistuje, není čitelné webovým serverem nebo neobsahuje žádnou instalaci EGroupware!
+%1 accounts to copy found.	setup	cs	Nalezeno %1 účtů ke zkopírování.
 %1 already exists in %2.	setup	cs	%1 již existuje v %2.
 %1 created in %2.	setup	cs	%1 vytvořen v %2.
 %1 database %2 on %3 already contains the following tables:	setup	cs	%1 databáze %2 na %3 již obsahuje následující tabulky:
 %1 does not exist !!!	setup	cs	%1 neexistuje!
+%1 does not exist in %2.	setup	cs	%1 NEEXISTUJE v %2.
+%1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	cs	%1 NEMÁ heslo (atribut userPassword) nebo jej nesmíme číst!
 %1 entries modified.	setup	cs	%1 záznamů bylo změněno.
 %1 entries would have been modified.	setup	cs	%1 záznamů by bylo změněno.
 %1 is %2%3 !!!	setup	cs	%1 je %2%3!
 %1 is needed by: %2.	setup	cs	%1 je zapotřebí pro: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	cs	%1 je nastaveno na %2, nebudete moci uploadovat nebo připojovat soubory větší než stanoví tento limit.
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	cs	%1 je nastaveno na %2. To se nedoporučuje pro produkční systém, jelikož zobrazená chybová hlášení mohou obsahovat hesla a jiné citlivé údaje.
+%1 not allowed to create in univention.	setup	cs	%1 není povoleno vytvořit v Univention UCS.
+%1 password set in %2.	setup	cs	%1 heslo nastavené v %2.
+%1 passwords updated, %3 errors	setup	cs	%1 hesla aktualizována, %3 chyby
 %1 the configuration file.	setup	cs	%1 konfigurační soubor.
 %1 users and %2 groups created, %3 errors	setup	cs	Bylo vytvořeno %1 uživatelů a %2 skupin, vyskytlo se %3 chyb
 '%1' is no valid domain name!	setup	cs	'%1' není platné doménové jméno!
@@ -33,8 +39,10 @@ add auto-created users to this group ('default' will be attempted if this is emp
 add new database instance (egw domain)	setup	cs	Přidat novou instanci databáze (EGw doménu)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	cs	přidat nebo editovat doménu:[název domény(default)],[název databáze(egroupware)],[uživatel databáze(egroupware)],heslo databáze,[typ databáze(mysql)],[databázový server(localhost)],[port databáze(db specific)],[administrátor konfigurace(jako admin. hlaviček)],[heslo administrátora konfigurace(jako admin. hlaviček)]
 adding, editing or deleting an egroupware domain / database instance:	setup	cs	Přidání, editace nebo mazání EGroupware domény / instance databáze
+additional group filter (optional)	setup	cs	Další skupinový filtr (volitelný)
 additional options and there defaults (in brackets)	setup	cs	Další volby a jejich výchozí hodnoty (v závorkách)
 additional settings	setup	cs	Další nastavení
+additional user filter (optional)	setup	cs	Další filtr uživatelů (volitelný)
 admin account successful created.	setup	cs	Účet administrátora byl úspěšně vytvořen.
 admin email address	setup	cs	E-mailová adresa administrátora
 admin first name	setup	cs	Křestní jméno administrátora
@@ -45,6 +53,7 @@ admin user	setup	cs	Administrátor
 admin user for header manager	setup	cs	Uživatelské jméno administrátora hlaviček
 admin username	setup	cs	Uživatelské jméno administrátora
 admins	setup	cs	Administrátoři
+ads dn "%1" not found!	setup	cs	ADS DN "%1" NENÍ nalezen!
 after backing up your tables first.	setup	cs	Poté, co nejprve zazálohujete Vaše databázové tabulky.
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	cs	Po získání souboru ho uložte na místo jako header.inc.php. Potom klikněte na "Pokračovat".
 all applications	setup	cs	Všechny aplikace
@@ -55,6 +64,7 @@ all languages (incl. not listed ones)	setup	cs	Všechny jazyky (včetně těch c
 all users	setup	cs	Všichni uživatelé
 allow authentication via cookie	setup	cs	Povolit autentikaci prostřednictvím cookies
 allow password migration	setup	cs	Povolit migraci hesel
+allow saml logins to join existing accounts	setup	cs	Povolit přihlášení pomocí SAML pro připojení k existujícím účtům
 allow usernames identical to system users?	setup	cs	Povolit uživatelská jména shodná se systémovými uživateli?
 allowed migration types (comma-separated)	setup	cs	Povolené typy migrace (oddělené čárkou)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	cs	Alternativně je možné k doménám přistupovat přes přihlášení ve tvaru <i>uživatel@doména</i>.
@@ -81,8 +91,10 @@ at your request, this script is going to attempt to upgrade your old tables to t
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	cs	Na Vaši žádost tento skript podnikne ďábelskou akci spočívající ve smazání stávajících tabulek a jejich opětovném vytvoření v novém formátu.
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	cs	Na Vaši žádost tento skript podnikne ďábelskou akci spočívající v odinstalaci všech Vašich aplikací, smazání stávajících tabulek a dat.
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	cs	Pokusit se použít korektní MIME typ pro FTP místo výchozího 'application/octet-stream'
+attributes for new users	setup	cs	Atributy pro nové uživatele
 authentication / accounts	setup	cs	Autentikace / Účty
 authentication type for application	setup	cs	Typ autentikace pro aplikaci
+authentication type for http host	setup	cs	Typ ověřování pro hostitele HTTP
 authentification mode:	setup	cs	Režim autentikace:
 auto create account records for authenticated users	setup	cs	Automaticky vytvořit záznamy pro autentikované uživatele
 auto login anonymous user	setup	cs	Automaticky přihlásit anonymního uživatele
@@ -106,20 +118,22 @@ backup sets	setup	cs	Záložní sady
 backup skipped!	setup	cs	Záloha přeskočena!
 backup started, this might take a few minutes ...	setup	cs	Zálohování začalo, může trvat několik miut ...
 base dn "%1" not found!	setup	cs	Base DN "%1" nebylo nalezeno!
-because an application it depends upon was upgraded	setup	cs	protože aplikace, na které závisí, byla zaktualizována
-because it depends upon	setup	cs	protože závisí na
-because it is not a user application, or access is controlled via acl	setup	cs	protože se nejedná o uživatelskou aplikaci nebo je přístup kontrolován prostřednictvím ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	cs	protože vyžaduje ruční instalaci tabulek,<br/>nebo je definice tabulek chybná
-because it was manually disabled	setup	cs	protože byla ručně zakázaná
-because its sources are missing	setup	cs	protože jeho/její zdrojové kódy chybí
-because of a failed upgrade or install	setup	cs	z důvodu chybé aktualizace nebo instalace
-because of a failed upgrade, or the database is newer than the installed version of this app	setup	cs	z důvodu chybné aktualizace nebo protože databáze je novější než instalovaná verze této aplikace
-because the enable flag for this app is set to 0, or is undefined	setup	cs	protože příznak pro povolení této aplikace (enable flag) je nastaven na 0, nebo není definován
+because an application it depends upon was upgraded	setup	cs	Protože aplikace, na které závisí, byla zaktualizována
+because it depends upon	setup	cs	Protože závisí na
+because it is not a user application, or access is controlled via acl	setup	cs	Protože se nejedná o uživatelskou aplikaci nebo je přístup kontrolován prostřednictvím ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	cs	Protože vyžaduje ruční instalaci tabulek,<br/>nebo je definice tabulek chybná
+because it was manually disabled	setup	cs	Protože byla ručně zakázaná
+because its sources are missing	setup	cs	Protože jeho/její zdrojové kódy chybí
+because of a failed upgrade or install	setup	cs	Z důvodu chybé aktualizace nebo instalace
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	cs	Z důvodu chybné aktualizace nebo protože databáze je novější než instalovaná verze této aplikace
+because the enable flag for this app is set to 0, or is undefined	setup	cs	Protože příznak pro povolení této aplikace (enable flag) je nastaven na 0, nebo není definován
 bottom	setup	cs	Dolní okraj
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	cs	ale <u>důrazně doporučujeme zazálohování</u> Vašich tabulek pro případ, že skript způsobí poškození Vašich dat.<br><b>Tyto automatizované skripty mohou snadno poškodit Vaše data.</b>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	cs	Ale <u>důrazně doporučujeme zazálohování</u> Vašich tabulek pro případ, že skript způsobí poškození Vašich dat.<br><b>Tyto automatizované skripty mohou snadno poškodit Vaše data.</b>
 by redirecting to https	setup	cs	Přesměrováním na https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	cs	Přepisem odkazů na https (dovoluje např. aby nastavení aplikace běželo na http)
 ca certificate	setup	cs	CA certifikát
+cached cleared	setup	cs	Vymazání mezipaměti
+callback url	setup	cs	URL zpětného volání
 can not connect to %1 database %2 on host %3 using user %4!	setup	cs	Nemohu se připojit k %1 databázi %2 na serveru %3 pod uživatelem %4!
 can not connect to ldap server on host %1 using dn %2!	setup	cs	Nemohu se připojit k LDAP serveru na počítači %1 jako DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	cs	Nemohu vytvořit %1 databázi %2 na %3 pro uživatele %4!
@@ -132,6 +146,7 @@ cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	cs	DNS jméno 
 cas server port:<br />example: 443	setup	cs	Port CAS serveru:<br>Příklad: 443
 cas server uri:	setup	cs	URI CAS serveru
 certificate (pem or ca):	setup	cs	Certifikát (PEM nebo CA):
+certificate metadata is signed with	setup	cs	Metadata certifikátu jsou podepsána pomocí
 change system-charset	setup	cs	Změnit znakovou sadu systému
 charset	setup	cs	Charset
 charset to convert to	setup	cs	Konvertovat do znakové sady
@@ -140,6 +155,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	cs	Zkontrolovat instalaci
 check ip address of all sessions	setup	cs	Kontrolovat IP adresy všech relací
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	cs	Zaškrtněte pro zálohování a obnovu adresáře souborů (může zabírat hodně místa, ujistěte se, že máte správně nastavenou údržbu)
+checking dependencies: %1 packages are installed in the required version.	setup	cs	Kontrola závislostí: %1 balíčků je nainstalováno v požadované verzi.
 checking extension %1 is loaded or loadable	setup	cs	Kontroluji, zda je rozšíření %1 načtené nebo ho lze načíst
 checking file-permissions of %1 for %2 %3: %4	setup	cs	Kontroluji souborová oprávnění %1 pro %2 %3: %4
 checking for gd support...	setup	cs	Kontroluji podporu GD...
@@ -147,6 +163,7 @@ checking for jpgraph in %1	setup	cs	Kontroluji přítomnost JPGraph v %1
 checking for tnef application	setup	cs	Kontroluji aplikaci tnef
 checking function %1 exists	setup	cs	Kontroluji existenci funkce %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	cs	Kontroluji zda do umístění nastaveného v php.ini parametrem session.save_path='%1' může zapisovat webový server
+checking package %1 is installed	setup	cs	Kontrola, zda je nainstalován balíček %1
 checking php.ini	setup	cs	Kontroluji php.ini
 checking required php version %1 (recommended %2)	setup	cs	Kontroluji požadovanou verzi PHP %1 (doporučeno %2)
 checking the egroupware installation	setup	cs	Kontroluji instalaci EGroupware
@@ -155,7 +172,12 @@ clear cache and register hooks	setup	cs	Smazat vyrovnávací paměť a zaregistr
 click <a href="index.php">here</a> to return to setup.	setup	cs	Klikněte <a href="index.php">sem</a> pro návrat do Instalátoru.
 click here	setup	cs	Klikněte sem
 click here to re-run the installation tests	setup	cs	Klikněte sem pro opakované spuštění instalačních testů
+client id	setup	cs	ID klienta
+client secret	setup	cs	Klientské tajemství
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	cs	IP adresy nebo DNS jména oddělené čárkou, výchozí je přístup k Instalátoru odkudkoli
+comma-separated provider names or json	setup	cs	Názvy poskytovatelů oddělené čárkou nebo JSON
+commercial support	setup	cs	Komerční podpora
+community forum	setup	cs	Fórum komunity
 complete path to aspell program	setup	cs	Celá cesta k programu aspell
 completed	setup	cs	Hotovo
 config password	setup	cs	Heslo administrátora konfigurace
@@ -197,8 +219,10 @@ current system-charset is %1.	setup	cs	Aktuální znaková sada systému je %1.
 current version	setup	cs	Aktuální verze
 currently installed languages: %1 <br />	setup	cs	Aktuálně instalované jazyky: %1 <br>
 custom handler: %1	setup	cs	Uživatelský správce: %1
+custom oid	setup	cs	vlastní OID
 custom set via %1	setup	cs	Uživatelské nastavení přes %1
 cyrus imap: admin user,password	setup	cs	Cyrus IMAP: Uživatelské jméno administrátora, heslo
+daily	setup	cs	denně
 database	setup	cs	Databáze
 database instance (egw domain)	setup	cs	Instance databáze (EGw doména)
 database is version %1 and up to date.	setup	cs	databáze je verze %1 a je aktuální.
@@ -216,12 +240,15 @@ db root password	setup	cs	Heslo administrátora databáze
 db root username	setup	cs	Uživatelské jméno administrátora databáze
 db type	setup	cs	Typ databáze
 db user	setup	cs	Uživatelské jméno k databázi
+deactivate user	setup	cs	Deaktivace uživatele
 default	setup	cs	Doporučená výchozí hodnota
 default file system space per user/group ?	setup	cs	Výchozí kapacita na souborovém systému na uživatele/skupinu?
 delete	setup	cs	Smazat
+delete all existing accounts from sql database	setup	cs	Odstranění všech existujících účtů z databáze SQL
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	cs	Smazat všechny stávající SQL účty, skupiny, ACL a předvolby (normálně není potřeba)?
 delete all my tables and data	setup	cs	Smazat všechny mé tabulky a data
 delete all old languages and install new ones	setup	cs	Smazat všechny staré jazyky a nainstalovat nové
+delete user and his data	setup	cs	Odstranění uživatele A jeho dat
 deleting tables	setup	cs	Mažu tabulky
 demo server setup	setup	cs	Nastavení Demo serveru
 deny access	setup	cs	Zakázat přístup
@@ -231,8 +258,11 @@ deregistered	setup	cs	Odregistrované
 details for admin account	setup	cs	Podrobnosti k účtu administrátora
 developers' table schema toy	setup	cs	Hračka pro vývojáře se schématy tabulek
 did not find any valid db support!	setup	cs	Nebyla nalezena žádná vhodná podpora pro databáze!
+distribution-lists too	setup	cs	Také distribuční seznamy
+do not check for deleted user	setup	cs	NEkontrolovat smazané uživatele
 do you want persistent connections (higher performance, but consumes more resources)	setup	cs	Chcete trvalá spojení (vyšší výkon, ale spotřebovávají více zdrojů)
 do you want to manage homedirectory and loginshell attributes?	setup	cs	Chcete spravovat atributy pro domovský adresář a loginshell?
+documentation	setup	cs	Dokumentace
 does not exist	setup	cs	Neexistuje
 domain	setup	cs	Doména
 domain '%1' does not exist !!!	setup	cs	Doména '%1' neexistuje!
@@ -245,6 +275,7 @@ domain-name	setup	cs	Název domény
 don't change, if you already stored files! you will loose them!	setup	cs	Neměňte pokud jste již ukládali soubory! Přijdete o ně!
 dont touch my data	setup	cs	Nedotýkej se mých dat
 download	setup	cs	Stáhnout
+dry-run (only show what would happen)	setup	cs	Zkušební provoz (pouze ukázka toho, co by se stalo)
 easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	cs	Nejjednodušší cesta pod Windows 2008 R2 je přidat roli "Active Directory Certificate Services" a rebootovat.
 edit current configuration	setup	cs	Editovat aktuální konfiguraci
 edit your existing header.inc.php	setup	cs	Editovat Váš stávající header.inc.php
@@ -256,20 +287,25 @@ egroupware api needs a database (schema) update from version %1 to %2!	setup	cs	
 egroupware api version %1 found.	setup	cs	Nalezeno EGroupware API verze %1.
 egroupware configuration file (header.inc.php) does not exist.	setup	cs	Konfigurační soubor eGroupWaru (header.inc.php) NEexistuje.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	cs	Konfigurační soubor eGroupWaru (header.inc.php) verze %1 existuje %2
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	cs	Konfigurační soubor eGroupWaru header.inc.php již existuje, musíte použít --edit-header nebo ho nejprve smazat!
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	cs	Konfigurační soubor EGroupware header.inc.php již existuje, musíte použít --edit-header nebo ho nejprve smazat!
 egroupware domain/instance %1(%2):	setup	cs	EGroupware doména/instance %1(%2):
 egroupware is already installed!	setup	cs	EGroupware jej již nainstalován!
+egroupware requires several dependencies installed via: %1	setup	cs	EGroupware vyžaduje několik závislostí nainstalovaných prostřednictvím: %1
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	cs	Zdrojové soubory eGroupWaru v '%1' nejsou kompletní, soubor '%2' chybí!
+egroupware's callback url is the one of the login page	setup	cs	URL zpětného volání EGroupware je URL přihlašovací stránky
 email (standard maildomain should be set)	setup	cs	E-mail (měla by být nastavena standardní poštovní doména)
+email-address	setup	cs	E-mailová adresa
+emailadmin mail account saved:	setup	cs	Uložen poštovní účet EMailAdmin:
 emailadmin profile updated:	setup	cs	Profil Administrátora pošty aktualizován:
 enable for extra debug-messages	setup	cs	Zaškrtněte pro více debugovacích zpráv
+enable logging of authentication to files-directory	setup	cs	Povolit protokolování ověřování do adresáře souborů
 enable mcrypt	setup	cs	Povolit MCrypt
 enforce ssl (allows to specify just a path above)	setup	cs	Vynutit SSL (dovoluje specifikovat cestu výše)
 enter some random text for app session encryption	setup	cs	Vložte nějaký náhodný text pro šifrování aplikační relace
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	cs	Vložte nějaký náhodný text pro šifrování <br>aplikační relace (vyžaduje mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory <br>Příklad:  /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory <br>Příklad:  /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	cs	Zadejte plnou cestu ke složce pro soubory uživatelů a skupin <br>Příklad:  /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory<br>Příklad:  /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory<br>Příklad:  /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	cs	Zadejte plnou cestu ke složce pro soubory uživatelů a skupin<br>Příklad:  /files, E:\FILES
 enter the full path for users and group files.<br />examples: /files, e:files	setup	cs	Zadejte celou cestu k adresáři se soubory uživatelů a skupin.<br>Například: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	cs	Zadejte celou cestu k adresáři se zálohami.<br>Ponecháte-li prázdné, bude jím adresář pro soubory
 enter the hostname of the machine on which this server is running	setup	cs	Zadejte DNS jméno stroje, na kterém tento server běží
@@ -288,9 +324,14 @@ error in admin-creation !!!	setup	cs	Chyba při vytváření administrátora !!!
 error in group-creation !!!	setup	cs	Chyba při vytváření skupiny !!!
 error listing "dn=%1"!	setup	cs	Chyba při výpisu "DN=%1"!
 error modifying dn=%1: %2='%3'!	setup	cs	Chyba při změně DN=%1: %2='%3'!
+error searching "dn=%1" for "%2"!	setup	cs	Chyba při hledání "DN=%1" pro "%2"!
+error uploading your backup!	setup	cs	Chyba při nahrávání zálohy!
+every	setup	cs	Každý
 export has been completed!	setup	cs	Export byl dokončen!
 failed to mount backup directory!	setup	cs	Připojení složky se zálohami selhalo!
+failed updating user "%1" dn="%2"!	setup	cs	Nepodařilo se aktualizovat uživatele "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	cs	Zápis konfiguračního souboru header.inc.php se nezdařil, zkontrolujte oprávnění!
+fallback authentication	setup	cs	Náhradní ověřování
 false	setup	cs	Ne
 file	setup	cs	Soubor
 file type, size, version, etc.	setup	cs	Typ, velikost, verze souboru, atd.
@@ -315,6 +356,7 @@ header password	setup	cs	Heslo administrátora hlaviček
 header username	setup	cs	Uživatelské jméno administrátora hlaviček
 header-password[,header-user(admin)]	setup	cs	heslo admin. hlaviček[,uživat. jméno admin. hlaviček(admin)]
 header.inc.php successful written.	setup	cs	header.inc.php úspěšně zapsán.
+help and support	setup	cs	Nápověda a podpora
 historylog removed	setup	cs	Protokol historie odstraněn
 hooks deregistered	setup	cs	Háčky (hooks) od-registrovány
 hooks registered	setup	cs	Háčky (hooks) zaregistrovány
@@ -325,11 +367,14 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	cs	DNS jméno nebo IP řadiče domény
 hostname/ip of database server	setup	cs	DNS jméno nebo IP databázového serveru
 hour (0-24)	setup	cs	Hodina (0-24)
+how frequent should the import run?	setup	cs	Jak často by se měl import provádět?
 however the tables are still in the database	setup	cs	Nicméně tabulky jsou stále v databázi
 however, the application is otherwise installed	setup	cs	Nicméně aplikace je jinak nainstalovaná
 however, the application may still work	setup	cs	Nicméně aplikace stále může fungovat
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	cs	Typy HTTP autentikace (oddělené čárkami), které mají být použity bez přihlašovací stránky, např. "NTLM"
+identity provider	setup	cs	Zprostředkovatel identit
 if no acl records for user or any group the user is a member of	setup	cs	Pokud nejsou ACL záznamy pro uživatele nebo libovolnou skupinu, které je členem
+if primary authentication is not successful fall back to passwords synced into account-storage	setup	cs	Pokud primární ověření NENÍ úspěšné, vraťte se k heslům synchronizovaným do úložiště účtů
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	cs	Pokud je zapnutý režim safe_mode, EGw nemůže za běhu měnit některá nastavení ani načítat dosud nenačtené moduly
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	cs	Pokud aplikace nemá definovány tabulky, aktualizace by měla problém napravit
 if using ads (active directory)	setup	cs	Při použití ADS (Active Directory) autentikace
@@ -337,6 +382,9 @@ if using cas (central authentication service):	setup	cs	Při použití CAS (Cent
 if using ldap	setup	cs	Při použití LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	cs	Chcete při použití LDAP spravovat atributy pro domovský adresář a loginshell?
 if using mail authentication	setup	cs	Při použití autentikace e-mailu
+if using multiple authentication providers:	setup	cs	Pokud používáte více poskytovatelů ověřování:
+if using openidconnect (authentication as client agains an other oidc idp)	setup	cs	Pokud používáte OpenID Connect (ověřování jako klient proti jinému OIDC IdP)
+if using saml 2.0 / shibboleth / simplesamlphp	setup	cs	Pokud používáte SAML 2.0 / Shibboleth / SimpleSAML
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	cs	Pokud máte přístup jen kořenovému adresáři dokumentů webového serveru, zvolte <b>databázi</b> jako místo pro ukládání obsahu souborů a použijte stejnou cestu jako pro dočasné soubory.
 if you did not receive any errors, your applications have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše aplikace byly
 if you did not receive any errors, your tables have been	setup	cs	Pokud jste neobdrželi žádná chybová hlášení, Vaše tabulky byly
@@ -345,6 +393,7 @@ if you use only languages of the same charset (eg. western european ones) you do
 image type selection order	setup	cs	Pořadí výběru typu obrázku
 import has been completed!	setup	cs	Import bylo dokočen!
 include_path need to contain "." - the current directory	setup	cs	include_path musí zahrnovat "." - aktuální adresář
+incremental import	setup	cs	Inkrementální import
 install	setup	cs	Instalovat
 install all	setup	cs	Instalovat vše
 install applications	setup	cs	Instalovat aplikace
@@ -365,6 +414,9 @@ is disabled	setup	cs	je zakázán
 is in the webservers docroot	setup	cs	je v kořenovém adresáři dokumentů webového serveru
 is not writeable by the webserver	setup	cs	není zapisovatelný pro webový server
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	cs	Vyžaduje aktualizaci na verzi %1! Použijte --update-header <heslo>[,<uživatel>] pro aktualizaci (--usage nabídne další volby).
+just now	setup	cs	právě teď
+just users	setup	cs	jen uživatelé
+label to display as option on login page	setup	cs	Štítek, který se má zobrazit jako možnost na přihlašovací stránce
 languages updated.	setup	cs	Jazyky zaktualizovány.
 ldap accounts configuration	setup	cs	Konfigurace LDAP účtů
 ldap accounts context	setup	cs	LDAP kontext účtů
@@ -385,11 +437,13 @@ limit access	setup	cs	Omezit přístup
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	cs	Omezit přístup k instalátoru na následující adresy, sítě nebo DNS jména (např. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	cs	Seznam dostupných hodnot
 list of availible translations	setup	cs	Seznam dostupných překladů
+local groups includes groups and their memberships deleted on the ad/ldap server!	setup	cs	Místní skupiny zahrnují skupiny a jejich členství smazané na serveru AD/LDAP!
 login as user postgres, eg. by using su as root	setup	cs	Přihlásit se jako uživatel postgres, např. použitím su jako root
 login to mysql -	setup	cs	Přihlásit do mysql -
 loginname needed for domain configuration	setup	cs	Přihlašovací jméno potřebné pro konfiguraci domény
 logout	setup	cs	Odhlásit
 mail account of %1 migraged	setup	cs	E-mailový účet %1 byl přenesen
+mail account of %1 migrated	setup	cs	Poštovní účet %1 migrován
 mail domain (for virtual mail manager)	setup	cs	Poštovní doména (pro Virtuálního správce pošty)
 mail server login type	setup	cs	Typ přihlášení na poštovní server
 mail server protocol	setup	cs	Protokol poštovního serveru
@@ -417,6 +471,7 @@ modify	setup	cs	Změnit
 month	setup	cs	Měsíc
 mount backup directory to %1	setup	cs	Složka zálohy byla připojena jako %1
 multi-language support setup	setup	cs	Nastavení podpory více jazyků
+name for service provider	setup	cs	Název pro poskytovatele služeb
 name of database	setup	cs	Název databáze
 name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se EGroupware připojuje
 needs extra configuration on dc and webserver!	setup	cs	Je nutná zvláštní konfigurace v DC a webovém serveru!
@@ -435,8 +490,10 @@ no valid timezone set! ("%1" is not sufficient, you have to use a timezone ident
 no xml support found. disabling	setup	cs	Nebyla nalezena podpora XML. Zakazuji
 not	setup	cs	Ne
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	cs	Ne všechny algoritmy a režimy mcryptu pracují s EGroupware. Pokud zaznamenáte problémy, zkuste ho vypnout.
+not automatic	setup	cs	není automatický
 not complete	setup	cs	Nedokončené
 not completed	setup	cs	Nedokončené
+not installed	setup	cs	není nainstalován
 not ready for this stage yet	setup	cs	Na tuto fázi ještě nejsme připraveni
 not set	setup	cs	Není nastaveno
 note: you will be able to customize this later	setup	cs	Poznámka: toto můžete později upravit
@@ -453,11 +510,15 @@ optional, if only authentication and anonymous search is enabled	setup	cs	volite
 or	setup	cs	nebo
 or %1continue to the header admin%2	setup	cs	nebo %1pokračovat k administraci hlaviček%2
 or http://webdav.domain.com (webdav)	setup	cs	nebo https://webdav.domena.cz (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	cs	nebo nechte prázdné a jako typ ověřování vyberte OpenID Connect výše pro jednotné přihlášení
+or leave empty and select saml as authentication type above for single sign on	setup	cs	nebo nechte prázdné a vyberte SAML jako typ ověřování výše pro jednotné přihlášení
 or we can attempt to create the database for you:	setup	cs	Nebo se můžeme pokusit pro Vás databázi vytvořit:
 or you can install a previous backup.	setup	cs	Nebo můžete nainstalovat předchozí zálohu.
+password	setup	cs	Heslo
 password for smtp-authentication	setup	cs	Heslo pro SMTP autentikaci
 password needed for domain configuration.	setup	cs	Heslo potřebné pro konfiguraci domény.
 password of db user	setup	cs	Heslo databázového uživatele
+passwords --> sql	setup	cs	Hesla --> SQL
 passwords did not match, please re-enter	setup	cs	Hesla nesouhlasí, zadejte je prosím znovu
 path (not url!) to your egroupware installation.	setup	cs	Cesta (ne URL!) k vaší instalaci EGroupware.
 path information	setup	cs	Informace o cestě
@@ -465,6 +526,7 @@ path of egroupware install directory (default auto-detected)	setup	cs	Cesta k in
 path to user and group files has to be outside of the webservers document-root!!!	setup	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenový adresář dokumentů webového serveru!
 path to various directories: have to exist and be writeable by the webserver	setup	cs	Cesta k nejrůznějším adresářům: musí existovat a webový server pro ně musí mít oprávnění k zápisu
 pem certificate	setup	cs	PEM certifikát
+periodic import from ads or ldap into egroupware database	setup	cs	Pravidelný import z ADS nebo LDAP do databáze EGroupware
 persistent connections	setup	cs	Trvalá spojení
 php client	setup	cs	PHP klient
 php proxy	setup	cs	PHP proxy
@@ -479,8 +541,9 @@ please install	setup	cs	Nainstalujte prosím
 please login	setup	cs	Přihlaště se prosím
 please login to egroupware and run the admin application for additional site configuration	setup	cs	Přihlašte se prosím do EGroupware a spusťte aplikaci Administrátor pro další konfiguraci webu
 please make the following change in your php.ini	setup	cs	Proveďte prosím následující změnu v svém php.ini
-please wait...	setup	cs	Prosím čekejte...
-pop/imap mail server hostname or ip address	setup	cs	DNS jméno nebo IP adresa poštovního serveru POP/IMAP
+please wait...	setup	cs	Prosím čekejte ...
+pop/imap mail server hostname or ip address	setup	cs	DNS jméno nebo IP adresa poštovního serveru POP3/IMAP
+port	setup	cs	Port
 possible reasons	setup	cs	Možné příčiny
 possible solutions	setup	cs	Možná řešení
 post-install dependency failure	setup	cs	Poinstalační chyba závislosti
@@ -517,6 +580,9 @@ restore failed	setup	cs	Obnovení se nezdařilo
 restore finished	setup	cs	Obnovení dokončeno
 restore started, this might take a few minutes ...	setup	cs	Obnovení započalo, akce může trvat několik minut
 restoring a backup will delete/replace all content in your database. are you sure?	setup	cs	Obnova zálohy smaže/nahradí veškerý obsah Vaší databáze. Určitě chcete pokračovat?
+result data to add or remove extra membership	setup	cs	Výsledná data pro přidání nebo odebrání dalšího členství
+result data to use as username	setup	cs	Výsledná data použít jako uživatelské jméno
+result values (comma-separated) and group-name to add or remove	setup	cs	Výsledné hodnoty (oddělené čárkou) a název skupiny pro přidání nebo odebrání
 return to setup	setup	cs	Návrat do Instalátoru
 root dn	setup	cs	Root DN
 root dn password	setup	cs	Heslo root DN
@@ -529,7 +595,7 @@ schedule	setup	cs	Naplánovat
 scheduled backups	setup	cs	Naplánované zálohy
 securest	setup	cs	Nejvyšší zabezpečení
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	cs	Vyberte aplikaci, zadejte cílovou verzi a potom potvrďte zpracování na tuto verzi.<br>Pokud nezadáte verzi, budou nainstalovány jen základní tabulky aplikace.<br><b>TÍMTO SMAŽETE VŠECHNY TABULKY APLIKACÍ!</b>
-select one...	setup	cs	Vybrat jeden...
+select one...	setup	cs	Vybrat jeden ...
 select the default applications to which your users will have access	setup	cs	Vyberte výchozí aplikace, do kterých budou mít uživatelé přístup
 select the desired action(s) from the available choices	setup	cs	Vyberte požadovanou akc(i/e) z dostupných voleb
 select to download file	setup	cs	Vyberte pro stažení souboru
@@ -548,6 +614,7 @@ select which user(s) will have admin privileges	setup	cs	Vyberte uživatele, kte
 select your old version	setup	cs	Vyberte Vaší starou verzi
 selectbox	setup	cs	Rozbalovací nabídka
 server root	setup	cs	Server Root
+session expired	setup	cs	Vypršení platnosti relace
 session handler class used.	setup	cs	Použitá třída správce relací.
 sessions handler	setup	cs	Správce relací
 set	setup	cs	Nastavit
@@ -565,9 +632,11 @@ skip the installation tests (not recommended)	setup	cs	Přeskočit instalační 
 smtp server hostname or ip address	setup	cs	DNS jméno nebo IP adresa SMTP serveru
 smtp server port	setup	cs	Port SMTP serveru
 smtp-authentication required	setup	cs	Vyžadované přihlášení na SMTP
+some information for the own service provider metadata	setup	cs	Některé informace pro vlastní metadata poskytovatele služeb
 some or all of its tables are missing	setup	cs	Některé nebo všechny jeho tabulky chybí
+source (must be configured above)	setup	cs	Zdroj (musí být nakonfigurován výše)
 sources deleted/missing	setup	cs	Zdrojové kódy jsou smazány (chybí)
-sql encryption type	setup	cs	Typ SQL šifrování pro hesla (výchozí md5)
+sql encryption type	setup	cs	Typ SQL šifrování pro hesla
 ssl validation:	setup	cs	SSL oveřování:
 standard (login-name identical to egroupware user-name)	setup	cs	Standardní (přihlašovací jméno se shoduje s uživatelským jménem v EGroupware)
 standard mailserver settings (used for mail authentication too)	setup	cs	Nastavení standardního poštovního serveru (používá se také pro poštovní autentikaci)
@@ -583,7 +652,7 @@ step %1 - configuration	setup	cs	Krok %1 - Konfigurace
 step %1 - db backup and restore	setup	cs	Krok %1 - Záloha a obnova databáze
 step %1 - language management	setup	cs	Krok %1 - Správa jazyků
 step %1 - simple application management	setup	cs	Krok %1 - Správa aplikací
-succesfully uploaded file %1	setup	cs	soubor %1 úspěšně uploadován
+succesfully uploaded file %1	setup	cs	Soubor %1 úspěšně uploadován
 successful connected to %1 database %2 on %3 using user %4.	setup	cs	Úspěšné připojení do %1 databáze %2 na %3 pod uživatelem %4.
 successful connected to %1 on %3 and created database %2 for user %4.	setup	cs	Úspěšné připojení k %1 na %3 a vytvoření databáze %2 pro uživatele %4.
 successful connected to ldap server on %1 and created/checked required structur %2.	setup	cs	Úspěšné připojení k LDAP serveru na %1 a vytvoření/kontrola požadovaných struktur %2.
@@ -595,6 +664,7 @@ tables installed, unless there are errors printed above	setup	cs	Pokud výše ne
 tables upgraded	setup	cs	Tabulky zaktualizovány
 target version	setup	cs	Cílová verze
 tcp port number of database server	setup	cs	Číslo TCP portu databázového serveru
+technical contact	setup	cs	Technický kontakt
 text entry	setup	cs	Textový záznam
 the %1 extension is needed from: %2.	setup	cs	Rozšíření %1 je vyžadováno (čím): %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	cs	Rozšíření %1 je zapotřebí, pokud plánujete použít databázi %2.
@@ -612,14 +682,17 @@ the ldap extension is needed, if you use ldap as account or contact storage, aut
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Rozšíření mbstring je zapotřebí pro plnou podporu unicode (UTF-8) a dalších vícebajtových znakových sad.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	cs	Parametr mbstring.func_overload = 7 musí být nastaven pro plnou podporu unicode (UTF-8) a dalších vícebajtových znakových sad.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	cs	Rozšíření mcrypt je používáno k ukládání stavu formulářů v eŠablonách na straně klienta, což je preferovaný způsob.
+the oidc idp must support autoconfiguration under the below given url	setup	cs	IdP OIDC musí podporovat automatickou konfiguraci pod níže uvedenou adresou URL
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	cs	Rozšíření PDO a databázový ovladač jsou zapotřebí pro VFS (virtuální souborový systém)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	cs	Rozšíření session je zapotřebí pro použití php relací (databázové relace fungují i bez něj).
 the session extension is required!	setup	cs	Je vyžadováno rozšíření session.
 the table definition was correct, and the tables were installed	setup	cs	Definice tabulek byla v pořádku, tabulky byly nainstalovány
 the tables	setup	cs	tabulky
-the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	cs	Pro tisk s doplněním je zapotřebí zásuvný modul tidy, aby došlo ke smazání html značek před vložením do dokumentů office.
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	cs	Pro tisk s doplněním je zapotřebí zásuvný modul tidy, aby došlo ke smazání HTML značek před vložením do dokumentů office.
+the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	cs	Použitý SimpleSAMLphp umožňuje mnohem více konfigurace / různých typů ověřování prostřednictvím svých konfiguračních souborů ve složce
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	cs	Uživatelská jména/hesla jsou: demo/guest, demo2/guest a demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	cs	Zásuvný modul xmlreader je nutný pro většinu aplikací EGroupware.
+the xsl extension is need in merge-print for processing html and office documents.	setup	cs	Rozšíření XSL je potřeba v merge-print pro zpracování HTML a kancelářských dokumentů.
 the zip extension is required for merge-print with office documents.	setup	cs	Pro tisk s doplněním do dokumentů office je nutný zásuvný modul zip.
 there was a problem trying to connect to your ldap server. <br />	setup	cs	Nastaly problémy při pokusu o připojení k Vašemu LDAP serveru.<br>
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	cs	Nastaly problémy při pokusu o připojení k Vašemu LDAP serveru. <br>Zkontrolujte prosím konfiguraci svého LDAP serveru
@@ -645,8 +718,10 @@ two weeks	setup	cs	Dva týdny
 uninstall	setup	cs	Odinstalovat
 uninstall all applications	setup	cs	Odinstalovat všechny aplikace
 uninstalled	setup	cs	Odinstalované
+university login	setup	cs	Přihlášení k univerzitě
 unknown option '%1' !!!	setup	cs	Neznámá volba '%1'!
 update finished.	setup	cs	Aktualizace byla dokončena.
+update necessary.	setup	cs	Potřebná aktualizace.
 upgrade	setup	cs	Aktualizovat
 upgrade all	setup	cs	Aktualizovat vše
 upgraded	setup	cs	Zaktualizované

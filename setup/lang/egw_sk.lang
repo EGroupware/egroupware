@@ -3,33 +3,33 @@
 %1 already exists in %2.	setup	sk	%1 už existuje v %2.
 %1 created in %2.	setup	sk	%1 bolo vytvorené v %2.
 %1 database %2 on %3 already contains the following tables:	setup	sk	%1 databáza %2 pre %3 už obsahuje nasledovné tabuľky:
-%1 does not exist !!!	setup	sk	%1 neexistuje !!!
+%1 does not exist !!!	setup	sk	%1 neexistuje!
 %1 does not exist in %2.	setup	sk	%1 NEexistuje v %2.
 %1 does not have a password (userpassword attribute) or we are not allowed to read it!	setup	sk	%1 NEMÁ heslo (atribút userPassword) alebo nemáme právo ho čítať!
 %1 entries modified.	setup	sk	%1 položiek bolo zmenených.
 %1 entries would have been modified.	setup	sk	%1 položiek by sa malo zmeniť.
-%1 is %2%3 !!!	setup	sk	%1 je %2%3 !!!
+%1 is %2%3 !!!	setup	sk	%1 je %2%3!
 %1 is needed by: %2.	setup	sk	%1 je vyžadované: %2
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	sk	%1 je nastavené na %2, NEBUDE sa dať odovzdať alebo priložiť väčší súbor!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	sk	%1 je nastavené na %2. Toto sa NEodporúča pre produkčný systém, nakoľko zobrazené chybové hlásenia môžu obsahovať heslá alebo iné citlivé údaje!
-%1 not allowed to create in univention.	setup	sk	Nie je dovolené vytvoriť %1 v Univention.
+%1 not allowed to create in univention.	setup	sk	Nie je dovolené vytvoriť %1 v Univention UCS.
 %1 password set in %2.	setup	sk	Heslo %1 nastavené v %2.
 %1 passwords updated, %3 errors	setup	sk	Aktualizovaných %1 hesiel, %3 chýb.
 %1 the configuration file.	setup	sk	%1 konfiguračný súbor.
 %1 users and %2 groups created, %3 errors	setup	sk	Bolo vytvorených %1 používateľov a %2 skupín, %3 chýb
 '%1' is no valid domain name!	setup	sk	'%1' nie je platný názov domény!
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	sk	'%1' nie je povolené ako %2. argumenty k voľbe %3 !!!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	sk	'%1' nie je povolené ako %2. argumenty k voľbe %3!
 '%1' must be integer	setup	sk	%1 musí byť celočíselná hodnota.
-(searching accounts and changing passwords)	setup	sk	(prehľadávanie účtov a zmena hesiel)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sk	NIKDY neaktualizujte vašu databázu pomocou Inštalátora, pretože aktualizácia by mohla byť prerušená na základe maximálneho času vykonávania, čo by zanechalo vašu databázu v dezolátnom stave (stratené všetky dáta)!!!
-*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sk	Zmeny musíte vykonať vo svojom php.ini (pod Linuxom zvyčajne v adresári /etc), až potom bude EGw plne funkčný!!!
+(searching accounts and changing passwords)	setup	sk	Vyhľadávanie účtov a zmena hesiel.
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	sk	NIKDY neaktualizujte ** vašu databázu pomocou Inštalátora, pretože aktualizácia by mohla byť prerušená na základe maximálneho času vykonávania, čo by zanechalo vašu databázu v dezolátnom stave (stratené všetky dáta)!
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	sk	*** Zmeny musíte vykonať vo svojom php.ini (pod Linuxom zvyčajne v adresári /etc), až potom bude EGw plne funkčný!
 00 (disable)	setup	sk	00 (zablokovať / odporúča sa)
 13 (ntp)	setup	sk	13 (ntp)
 80 (http)	setup	sk	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sk	<b>Akú znakovú sadu použiť</b> (ak plánujete používať jazyky s rozličnými znakovými sadami, zvoľte utf-8)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sk	<b>Akú znakovú sadu použiť</b> (ak plánujete používať jazyky s rozličnými znakovými sadami, zvoľte UTF-8)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	sk	==> odlišná skupina '%1' pod týmto číslom gidNumber %2, NEnastavujem členstvo!
-access denied: wrong username or password for manage-header !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre správu hlavičiek!!!
-access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre konfiguráciu domény '%1(%2)' !!!
+access denied: wrong username or password for manage-header !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre správu hlavičiek!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre konfiguráciu domény '%1(%2)'!
 accounts existing	setup	sk	Existujúce účty
 actions	setup	sk	Akcie
 activate safe password check	setup	sk	Aktivovať voľbu ukladania hesla
@@ -54,7 +54,7 @@ admins	setup	sk	Správcovia
 ads dn "%1" not found!	setup	sk	ADS DN "%1" sa NEnašlo!
 after backing up your tables first.	setup	sk	Až po zálohovaní Vašich tabuliek (databáz).
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sk	Po získaní súboru, uložte ho na miesto header.inc.php a kliknite na "pokračovať".
-all applications	setup	sk	všetky aplikácie
+all applications	setup	sk	Všetky aplikácie
 all core tables and the admin and preferences applications	setup	sk	všetky základné tabuľky a správcovské a nastavovacie aplikácie
 all exit codes of the command line interface	setup	sk	Všetky návratové kódy rozhrania príkazového riadku
 all hooks registered	setup	sk	Všetky háčiky boli zaregistrované
@@ -68,7 +68,7 @@ allowed migration types (comma-separated)	setup	sk	Povolené typy migrácie (odd
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	sk	Alternatívne, k doménam sa dá pristupovať aj prihlásením pomocou <i>používateľ@doména</i>
 alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	sk	Alternatívne, môžete použiť %1Composer%2 pre nainštalovanie všetkých požiadaviek naraz. Jeho stiahnutie a spustenie:
 and is up to date	setup	sk	a je aktuálne
-and reload your webserver, so the above changes take effect !!!	setup	sk	A reloadnite si webserver, aby sa vyššieuvedené zmeny naozaj uplatnili!!!
+and reload your webserver, so the above changes take effect !!!	setup	sk	A reloadnite si webserver, aby sa vyššieuvedené zmeny naozaj uplatnili!
 app details	setup	sk	Podrobnosti aplikácie
 app install/remove/upgrade	setup	sk	Aplikácia: Inštalácia/Odstránenie/Aktualizácia
 app process	setup	sk	Proces aplikácie
@@ -114,19 +114,19 @@ backup min count	setup	sk	Minimálny počet záloh
 backup now	setup	sk	Zálohuj teraz
 backup sets	setup	sk	Umiestnenie záloh
 backup skipped!	setup	sk	Záloha preskočená!
-backup started, this might take a few minutes ...	setup	sk	Záloha spustená, potrvá to zopár minút...
+backup started, this might take a few minutes ...	setup	sk	Záloha spustená, potrvá to zopár minút ...
 base dn "%1" not found!	setup	sk	Základné DN "%1" sa NEnašlo!
-because an application it depends upon was upgraded	setup	sk	pretože aplikácia, na ktorej závisí, bola aktualizovaná
+because an application it depends upon was upgraded	setup	sk	Pretože aplikácia, na ktorej závisí, bola aktualizovaná
 because it depends upon	setup	sk	Pretože závisí na
 because it is not a user application, or access is controlled via acl	setup	sk	Pretože nie je používateľskou aplikáciou, alebo je prístup kontrolovaný cez ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	sk	Pretože vyžaduje ručnú inštaláciu tabuliek, <br />alebo je tabuľka chybne definovaná
+because it requires manual table installation, <br />or the table definition was incorrect	setup	sk	Pretože vyžaduje ručnú inštaláciu tabuliek,<br>alebo je tabuľka chybne definovaná
 because it was manually disabled	setup	sk	Pretože bola manuálne vypnutá
 because its sources are missing	setup	sk	Pretože jej zdroje chýbajú
 because of a failed upgrade or install	setup	sk	Pretože aktualizácia alebo inštalácia zlyhala
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	sk	Pretože aktualizácia zlyhala, alebo je databáza novšia než nainštalovaná verzia aplikácie
 because the enable flag for this app is set to 0, or is undefined	setup	sk	Pretože príznak zapnutia pre túto aplikáciu je nastavený na 0 alebo nie je nastavený vôbec
 bottom	setup	sk	Spodok
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	sk	<u>Dôrazne odporúčame zálohovať</u> vašu databázu pre prípad, že skript poškodí vaše dáta.<br /><strong>Tieto automatické skripty môžu veľmi ľahko zničiť vaše dáta.</strong>
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	sk	<u>Dôrazne odporúčame zálohovať</u> vašu databázu pre prípad, že skript poškodí vaše dáta.<br><b>Tieto automatické skripty môžu veľmi ľahko zničiť vaše dáta.</b>
 by redirecting to https	setup	sk	Presmerovaním na https
 by rewriting links to https (allows eg. sitemgr to run on http)	setup	sk	Prepísaním liniek na https (umožňuje napr. SiteMgr beh na http)
 ca certificate	setup	sk	CA certifikát
@@ -136,14 +136,14 @@ can not create %1 database %2 on %3 for user %4!	setup	sk	Nepodarilo sa vytvori�
 can not create dn %1!	setup	sk	Nepodarilo sa vytvoriť DN %1!
 can only be change via setup!	setup	sk	Dá sa zmeniť iba cez Setup!
 cancel	setup	sk	Zrušiť
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	sk	Nedá sa vytvoriť header.inc.php kvôli obmedzeniam prístupových práv na súbore.<br /> Môžete namiesto toho %1 alebo %2 tento súbor.
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	sk	Hostiteľ pre CAS server:<br />príklad: sso-cas.univ-rennes1.fr
-cas server port:<br />example: 443	setup	sk	Port pre CAS server:<br />Príklad: 443
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	sk	Nedá sa vytvoriť header.inc.php kvôli obmedzeniam prístupových práv na súbore.<br> Môžete namiesto toho %1 alebo %2 tento súbor.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	sk	Hostiteľ pre CAS server:<br>príklad: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	sk	Port pre CAS server:<br>Príklad: 443
 cas server uri:	setup	sk	URI pre CAS server:
 certificate (pem or ca):	setup	sk	Certifikát (PEM alebo CA):
 certificate metadata is signed with	setup	sk	Metaúdaje certifikátu podpísal
 change system-charset	setup	sk	Zmeniť znakovú sadu systému
-charset	setup	sk	utf-8
+charset	setup	sk	Charset
 charset to convert to	setup	sk	Cieľová znaková sada
 charsets used by the different languages	setup	sk	Znakové sady používané rozličnými jazykmi
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	sk	Kontrola sa dá vykonať len tak, že sa spustí cez webserver, nakoľko používateľské-ID/-meno webservera nie je známe.
@@ -153,7 +153,7 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking dependencies: %1 packages are installed in the required version.	setup	sk	Kontrola závislostí: %1 balíkov je nainštalovaných v požadovanej verzii.
 checking extension %1 is loaded or loadable	setup	sk	Kontrola - rozšírenie %1 je nahraté alebo dostupné
 checking file-permissions of %1 for %2 %3: %4	setup	sk	Kontrolujem prístupové práva %1 pre %2 %3: %4
-checking for gd support...	setup	sk	Zisťujem podporu GD...
+checking for gd support...	setup	sk	Zisťujem podporu GD ...
 checking for jpgraph in %1	setup	sk	Zisťujem podporu JPGraph v %1
 checking for tnef application	setup	sk	Zisťujem aplikáciu tnef
 checking function %1 exists	setup	sk	Kontrolná funkcia %1 existuje
@@ -201,14 +201,14 @@ create the empty database and grant user permissions -	setup	sk	Vytvoriť prázd
 create your header.inc.php	setup	sk	Vytvoriť váš header.inc.php
 created	setup	sk	Vytvorené
 created header.inc.php!	setup	sk	Vytvoril som header.inc.php!
-creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	sk	vytvoriť správcovského používateľa: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	sk	Vytvoriť správcovského používateľa: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	sk	Vytváram tabuľky
-creation of %1 in %2 failed !!!	setup	sk	Nepodarilo sa vytvoriť %1 v %2 !!!
+creation of %1 in %2 failed !!!	setup	sk	Nepodarilo sa vytvoriť %1 v %2!
 current configuration:	setup	sk	Súčasná konfigurácia:
 current system-charset	setup	sk	Súčasná systémová znaková sada
 current system-charset is %1.	setup	sk	Súčasná systémová znaková sada je %1.
 current version	setup	sk	Súčasná verzia
-currently installed languages: %1 <br />	setup	sk	Momentálne nainštalované jazyky: %1 <br />
+currently installed languages: %1 <br />	setup	sk	Momentálne nainštalované jazyky: %1<br>
 custom handler: %1	setup	sk	Vlastná obsluha: %1
 custom set via %1	setup	sk	Vlastné nastavenie cez %1
 cyrus imap: admin user,password	setup	sk	Cyrus IMAP: Správcovo používateľské meno,heslo
@@ -218,9 +218,9 @@ database instance (egw domain)	setup	sk	Databázová inštancia (EGw domain)
 database is version %1 and up to date.	setup	sk	Databáza má verziu %1 a je aktuálna.
 database successfully converted from '%1' to '%2'	setup	sk	Databáza bola úspešne konvertovaná z '%1' na '%2'
 datebase %1 droped.	setup	sk	Databáza %1 zahodená
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sk	Port pre dátum/čas.<br />Ak používate port 13, prosím nastavte správne pravidlá na firewall-e, ešte pred odoslaním tejto stránky.<br />(Port: 13 / Host: 129.6.15.28)
+datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte správne pravidlá na firewall-e, ešte pred odoslaním tejto stránky.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	sk	Deň
-day of week<br />(0-6, 0=sunday)	setup	sk	Deň v týždni<br />(0-6, 0=nedeľa)
+day of week<br />(0-6, 0=sunday)	setup	sk	Deň v týždni<br>(0-6, 0=nedeľa)
 db backup and restore	setup	sk	Záloha a obnova databázy
 db host	setup	sk	DB stroj
 db name	setup	sk	DB názov
@@ -253,7 +253,7 @@ do you want to manage homedirectory and loginshell attributes?	setup	sk	Chcete s
 documentation	setup	sk	Dokumentácia
 does not exist	setup	sk	Neexistuje
 domain	setup	sk	Doména
-domain '%1' does not exist !!!	setup	sk	Doména '%1' NEexistuje !!!
+domain '%1' does not exist !!!	setup	sk	Doména '%1' NEexistuje!
 domain name	setup	sk	Názov domény
 domain select box on login	setup	sk	Výber domény na prihlasovacej stránke
 domain-name	setup	sk	Názov domény
@@ -266,17 +266,17 @@ edit current configuration	setup	sk	Upraviť súčasnú konfiguráciu
 edit your existing header.inc.php	setup	sk	Upraviť existujúci header.inc.php
 edit your header.inc.php	setup	sk	Upraviť header.inc.php
 eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	sk	napr. "CN=Users,DC=domain,DC=com" pre ADS doménu "domain.com"
-eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sk	napríklad /egroupware alebo http://domain.com/egroupware, predvolené: %1
+eg. /egroupware or http://domain.com/egroupware, default: %1	setup	sk	napríklad /egroupware alebo https://domain.com/egroupware, predvolené: %1
 egroupware administration manual	setup	sk	Správcovský manuál EGroupware
 egroupware api needs a database (schema) update from version %1 to %2!	setup	sk	EGroupware API potrebuje aktualizáciu databázy (schémy) z verzie %1 na %2!
 egroupware api version %1 found.	setup	sk	Našlo sa EGroupware API verzie %1.
 egroupware configuration file (header.inc.php) does not exist.	setup	sk	Konfiguračný súbor EGroupware (header.inc.php) NEexistuje.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	sk	Konfiguračný súbor EGroupware (header.inc.php) verzie %1 existuje%2.
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sk	konfiguračný súbor EGroupware (header.inc.php) už existuje, musíte použiť --edit-header alebo ho najskôr odstrániť!
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sk	Konfiguračný súbor EGroupware (header.inc.php) už existuje, musíte použiť --edit-header alebo ho najskôr odstrániť!
 egroupware domain/instance %1(%2):	setup	sk	EGroupware doména/inštancia %1(%2):
 egroupware is already installed!	setup	sk	EGroupware je už nainštalovaný!
 egroupware requires several dependencies installed via: %1	setup	sk	EGroupware vyžaduje, aby boli niektoré závislosti nainštalované cez: %1
-egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sk	Zdroje EGroupware v '%1' sú neúplné, súbor '%2' chýba !!!
+egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sk	Zdroje EGroupware v '%1' sú neúplné, súbor '%2' chýba!
 email (standard maildomain should be set)	setup	sk	Email (musí byť nastavená štandardná poštová doména)
 email-address	setup	sk	E-mailová adresa
 emailadmin mail account saved:	setup	sk	E-mailový účet pre EMailAdmin bol uložený:
@@ -285,14 +285,14 @@ enable for extra debug-messages	setup	sk	Zapnúť extra ladiace správy
 enable mcrypt	setup	sk	Zapnúť MCrypt
 enforce ssl (allows to specify just a path above)	setup	sk	Vyžadovať SSL (umožňuje zadať iba vyššieuvedenú cestu)
 enter some random text for app session encryption	setup	sk	Zadajte nejaký náhodný text pre potreby kódovania sedenia aplikácie
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby <br />kódovania sedenia aplikácie (vyžaduje mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br />Príklady: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br />Príklady: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br />Príklady: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br />Príklady: /files, E:\FILES
-enter the full path to the backup directory.<br />if empty: files directory	setup	sk	Zadajte plnú cestu k adresáru záloh.<br />ak ponecháte prázdne: adresár files
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby<br>kódovania sedenia aplikácie (vyžaduje mcrypt)
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br>Príklady: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br>Príklady: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br>Príklady: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br>Príklady: /files, E:\FILES
+enter the full path to the backup directory.<br />if empty: files directory	setup	sk	Zadajte plnú cestu k adresáru záloh.<br>ak ponecháte prázdne: adresár files
 enter the hostname of the machine on which this server is running	setup	sk	Zadajte názov (hostname) stroja na ktorom beží tento server
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sk	Zadajte umiestnenie URL EGroupware.<br />Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br /><b>Bez ukončovacieho lomítka</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sk	Zadajte umiestnenie URL EGroupware.<br>Príklad: https://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
 enter the site password for peer servers	setup	sk	Zadajte heslo stránky pre peer servre
 enter the site username for peer servers	setup	sk	Zadajte používateľské meno stránky pre peer servre
 enter the title for your site	setup	sk	Zadajte nadpis vašej stránky
@@ -303,16 +303,18 @@ enter your http proxy server port	setup	sk	Zadajte port vášho HTTP proxy serve
 enter your http proxy server username	setup	sk	Zadajte používateľské meno vášho HTTP proxy servera
 error deleting "dn=%1"!	setup	sk	Chyba pri odstraňovaní "DN=%1"!
 error dropping user!	setup	sk	Chyba pri odstraňovaní používateľa!
-error in admin-creation !!!	setup	sk	Chyba pri vytváraní správcu!!!
-error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!!!
+error in admin-creation !!!	setup	sk	Chyba pri vytváraní správcu!
+error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!
 error listing "dn=%1"!	setup	sk	Chyba pri listovaní "DN=%1"!
 error modifying dn=%1: %2='%3'!	setup	sk	Chyba pri menení v DN=%1: %2='%3'!
 error searching "dn=%1" for "%2"!	setup	sk	Chyba pri hľadaní "%2" v "DN=%1"!
+error uploading your backup!	setup	sk	Nepodarilo sa pripojiť adresár zálohy!
 every	setup	sk	Každý
 export has been completed!	setup	sk	Export bol dokončený!
 failed to mount backup directory!	setup	sk	Pripojenie zálohovacieho priečinka zlyhalo!
 failed updating user "%1" dn="%2"!	setup	sk	Nepodarilo sa aktualizovať používateľa  "%1" DN="%2"!
-failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva !!!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguračného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva!
+fallback authentication	setup	sk	Náhradné overovanie
 false	setup	sk	NIE
 file	setup	sk	Súbor
 file type, size, version, etc.	setup	sk	Typ súboru, veľkosť, verzia, atď.
@@ -330,7 +332,7 @@ go back	setup	sk	Naspäť
 go to	setup	sk	Choď na
 grant access	setup	sk	Povoľ prístup
 group	setup	sk	Skupina
-group %1 uses identical id %2 as user %3!	setup	sk	Skupina %1 používa rovnaké ID %2 ako používateľ %3 !
+group %1 uses identical id %2 as user %3!	setup	sk	Skupina %1 používa rovnaké ID %2 ako používateľ %3!
 group context	setup	sk	Kontext skupiny
 group memberships will be migrated too.	setup	sk	Členstvo v skupinách sa taktiež premigruje.
 has a version mismatch	setup	sk	Má zmätok vo verziách
@@ -355,8 +357,8 @@ identity provider	setup	sk	Poskytovateľ totožnosti
 if no acl records for user or any group the user is a member of	setup	sk	Ak pre používateľa neexistujú ACL záznamy, používateľom je členom
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sk	Ak je bezpečný režim zapnutý, EGw nedokáže zmeniť niektoré veci za behu, ani nahrať nejaký nenahratý modul.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sk	Ak aplikácia nemá tabuľky definícií, voľba "aktualizácia" by mala problém vyriešiť
-if using ads (active directory)	setup	sk	Ak používate ADS (ActiveDirectory) autentifikáciu
-if using cas (central authentication service):	setup	sk	Ak používate cas (Centrálnu Autentifikačnú Službu):
+if using ads (active directory)	setup	sk	Ak používate ADS (Active Directory) autentifikáciu
+if using cas (central authentication service):	setup	sk	Ak používate CAS (Centrálnu Autentifikačnú Službu):
 if using ldap	setup	sk	Ak používate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shell?
 if using mail authentication	setup	sk	Ak sa používa emailová autentifikácia
@@ -365,7 +367,7 @@ if using saml 2.0 / shibboleth / simplesamlphp	setup	sk	Ak používate SAML 2.0 
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	sk	Ak sa dostanete len na docroot, zvoľte <b>Databáza</b> ako miesto ukladania súborov A použite rovnakú cestu ako pre dočasné súbory.
 if you did not receive any errors, your applications have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše aplikácie boli
 if you did not receive any errors, your tables have been	setup	sk	Ak ste neobdržali žiadne chyby, vaše tabuľky boli
-if you running this the first time, don't forget to manualy %1 !!!	setup	sk	Ak ste tu prvýkrát, nezabudnite ručne %1 !!!
+if you running this the first time, don't forget to manualy %1 !!!	setup	sk	Ak ste tu prvýkrát, nezabudnite ručne %1!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	sk	Ak používate iba jazyky s totožnou znakovou sadou (napr. západoeurópske), nepotrebujete nastavovať systémovú znakovú sadu!
 image type selection order	setup	sk	Poradie výberu typu obrázku
 import has been completed!	setup	sk	Import bol dokončený!
@@ -379,7 +381,7 @@ install backup	setup	sk	inštalovať zálohu
 install language	setup	sk	Inštalovať jazyk
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	sk	Inštalovať alebo aktualizovať preklady: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + pridáva, bez jazykov aktualizuje existujúce jazyky
 installation finished	setup	sk	Inštalácia je ukončená.
-installation started, this might take a few minutes ...	setup	sk	Inštalácia sa začína, potrvá to niekoľko minút...
+installation started, this might take a few minutes ...	setup	sk	Inštalácia sa začína, potrvá to niekoľko minút ...
 installed	setup	sk	Nainštalované.
 instructions for creating the database in %1:	setup	sk	Inštrukcie pre vytvorenie databázy v %1:
 invalid argument '%1' !!!	setup	sk	Neplatý argument '%1' !
@@ -435,9 +437,9 @@ max_execution_time is set to less than 30 (seconds): egroupware sometimes needs 
 maximum account id (e.g. 65535 or 1000000)	setup	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
 may be broken	setup	sk	Môže byť pokazená
 mcrypt algorithm (default tripledes)	setup	sk	Mcrypt algoritmus (predvolený TRIPLEDES)
-mcrypt initialization vector	setup	sk	MCrypt inicializačný vektor
-mcrypt mode (default cbc)	setup	sk	MCrypt režim (predvolený CBC)
-mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia MCrypt (vyžaduje mcrypt PHP rozšírenie)
+mcrypt initialization vector	setup	sk	Mcrypt inicializačný vektor
+mcrypt mode (default cbc)	setup	sk	Mcrypt režim (predvolený CBC)
+mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia Mcrypt (vyžaduje mcrypt PHP rozšírenie)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sk	pamäťový limit je nastavený na menej než %1; niektoré aplikácie v EGroupware potrebujú viac než odporúčaných 8M, okrem výnimočných zlyhaní
 metadata	setup	sk	Metadáta
 metadata url	setup	sk	URL metadát
@@ -482,7 +484,7 @@ not ready for this stage yet	setup	sk	Na túto fázu nie sme pripravení
 not set	setup	sk	Nenastavené
 note: you will be able to customize this later	setup	sk	Upozornenie: neskôr to budete môcť zmeniť
 nothing to change.	setup	sk	Niet čo zmeniť.
-now guessing better values for defaults...	setup	sk	Teraz vymýšľam lepšie hodnoty pre predvolené...
+now guessing better values for defaults...	setup	sk	Teraz vymýšľam lepšie hodnoty pre predvolené ...
 odbc / maxdb: dsn (data source name) to use	setup	sk	ODBC/MaxDB: aké DSN (data source name) použiť
 ok	setup	sk	OK
 once the database is setup correctly	setup	sk	Akonáhle bude databáza korektne nastavená
@@ -493,7 +495,8 @@ only add new phrases	setup	sk	Iba pridať nové frázy
 optional, if only authentication and anonymous search is enabled	setup	sk	nepovinné, ak je zapnuté len overovanie a anonymné vyhľadávanie
 or	setup	sk	alebo
 or %1continue to the header admin%2	setup	sk	alebo %1Pokračovať k Správcovi hlavičiek%2
-or http://webdav.domain.com (webdav)	setup	sk	alebo http://webdav.domain.com (WebDAV)
+or http://webdav.domain.com (webdav)	setup	sk	alebo https://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	sk	alebo nechajte prázdne a vyberte OpenID Connect ako typ overovania vyššie pre jednotné prihlásenie
 or leave empty and select saml as authentication type above for single sign on	setup	sk	alebo ak chcete single sign on, ponechajte prázdne a vyššie vyberte SAML ako autentifikačný typ
 or we can attempt to create the database for you:	setup	sk	Alebo sa môžem pokúsiť vytvoriť vašu databázu:
 or you can install a previous backup.	setup	sk	Alebo môžete nainštalovať predchádzajúcu zálohu
@@ -514,7 +517,7 @@ persistent connections	setup	sk	Trvalé spojenia
 php client	setup	sk	PHP klient
 php proxy	setup	sk	PHP proxy
 php session handler enabled in php.ini	setup	sk	PHP obsluha relácií povolená v php.ini
-please check for sql scripts within the application's directory	setup	sk	Prosím porozhliadnite sa po sql skriptoch vnútri adresára aplikácie
+please check for sql scripts within the application's directory	setup	sk	Prosím porozhliadnite sa po SQL skriptoch vnútri adresára aplikácie
 please check read/write permissions on directories, or back up and use another option.	setup	sk	Prosím skontrolujte prístupové práva pre čítanie/zápis do adresárov, alebo sa vráťte a použite inú voľbu.
 please configure egroupware for your environment	setup	sk	Prosím nastavte si svoje prostredie v EGroupware
 please consult the %1.	setup	sk	Prosím konzultujte %1.
@@ -524,14 +527,14 @@ please install	setup	sk	Prosím nainštalujte
 please login	setup	sk	Prosím prihláste sa
 please login to egroupware and run the admin application for additional site configuration	setup	sk	Prosím prihláste sa do EGroupware a spustite správcovskú (admin) aplikáciu pre dodatočné nastavenie stránky
 please make the following change in your php.ini	setup	sk	Prosím vykonajte nasledujúcu zmenu v php.ini
-please wait...	setup	sk	Prosím čakajte...
-pop/imap mail server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa POP/IMAP servera
+please wait...	setup	sk	Prosím čakajte ...
+pop/imap mail server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa POP3/IMAP servera
 port	setup	sk	port
 possible reasons	setup	sk	Možné príčiny
 possible solutions	setup	sk	Možné riešenia
 post-install dependency failure	setup	sk	Poinštalačné zlyhanie závislostí
 postfix with ldap: [yes(user edit forwarding)]	setup	sk	Postfix s LDAP: [yes(user edit forwarding)]
-postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sk	Postgres: Ak ponecháte prázdne, použijú sa uprednostnené unix domain socket-y namiesto tcp/ip spojenia
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sk	PostgreSQL: Ak ponecháte prázdne, použijú sa uprednostnené unix domain socket-y namiesto TCP/IP spojenia
 potential problem	setup	sk	Možný problém
 preferences	setup	sk	Predvoľby
 problem resolution	setup	sk	Vysvetlenie problému
@@ -561,7 +564,7 @@ resolve	setup	sk	Vyriešiť
 restore	setup	sk	Obnoviť
 restore failed	setup	sk	Obnova sa nepodarila!
 restore finished	setup	sk	Obnova bola dokončená!
-restore started, this might take a few minutes ...	setup	sk	bnova sa začala, potrvá to zopár minút...
+restore started, this might take a few minutes ...	setup	sk	Bnova sa začala, potrvá to zopár minút ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	sk	Obnova zo zálohy odstráni/prepíše celý obsah databázy. Ste si istí?
 result data to add or remove extra membership	setup	sk	Výsledné údaje na pridanie alebo odstránenie extra členstva
 result data to use as username	setup	sk	Výsledné údaje na použitie ako používateľské meno
@@ -577,8 +580,8 @@ save this text as contents of your header.inc.php	setup	sk	Uložiť tento text a
 schedule	setup	sk	Naplánovať
 scheduled backups	setup	sk	Naplánované zálohy
 securest	setup	sk	Najbezpečnejšie
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	sk	Vyberte aplikáciu, zadajte cieľovú verziu, potom to odošlite procesu s tou verziou.<br />Ak nezadáte verziu, iba základné tabuľky sa nainštalujú pre danú aplikáciu.<br /><blink>TÝMTO SA ZAHODIA VŠETKY TABUĽKY APLIKÁCIE!</blink>
-select one...	setup	sk	Vyberte jednu...
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	sk	Vyberte aplikáciu, zadajte cieľovú verziu, potom to odošlite procesu s tou verziou.<br>Ak nezadáte verziu, iba základné tabuľky sa nainštalujú pre danú aplikáciu.<br><b>TÝMTO SA ZAHODIA VŠETKY TABUĽKY APLIKÁCIE!</b>
+select one...	setup	sk	Vyberte jednu ...
 select the default applications to which your users will have access	setup	sk	Vyberte predvolenú aplikáciu, ku ktorej budú mať používatelia prístup
 select the desired action(s) from the available choices	setup	sk	Vyberte požadovanú akciu(e) spomedzi dostupných možností
 select to download file	setup	sk	Zvoľte pre stiahnutie súboru
@@ -601,13 +604,13 @@ session expired	setup	sk	Platnosť relácie vypršala
 session handler class used.	setup	sk	Použitá trieda obsluhy relácií
 sessions handler	setup	sk	Obsluha relácií
 set	setup	sk	Nastav
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sk	Nastavenie znakovej sady na UTF-8 (unicode) umožňuje koexistenciu dát z rôznych jazykov, používajúcich rozličné znakové sady.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sk	Nastavenie znakovej sady na UTF-8 (Unicode) umožňuje koexistenciu dát z rôznych jazykov, používajúcich rozličné znakové sady.
 settings	setup	sk	Nastavenia
 setup	setup	sk	Inštalátor
 setup main menu	setup	sk	Hlavná ponuka Inštalátora
 setup the database	setup	sk	Inštalácia databázy
 setup/config admin login	setup	sk	Prihlásenie správcu Inštalátora/Konfigurácie
-show 'powered by' logo on	setup	sk	Kde zobrazovať logo "powered by"
+show 'powered by' logo on	setup	sk	Kde zobrazovať logo "Powered by"
 size	setup	sk	Veľkosť
 skip the installation tests (not recommended)	setup	sk	Preskočiť inštalačné testy (neodporúča sa)
 smtp server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa SMTP servera
@@ -617,9 +620,9 @@ some information for the own service provider metadata	setup	sk	Nejaké informá
 some or all of its tables are missing	setup	sk	Chýbajú niektoré alebo všetky jeho tabuľky
 source (must be configured above)	setup	sk	Zdroj (musí byť nastavené vyššie)
 sources deleted/missing	setup	sk	Chýbajúce alebo odstránené zdroje
-sql encryption type	setup	sk	Typ SQL kryptovania pre heslá (predvolené - md5)
+sql encryption type	setup	sk	Typ SQL kryptovania pre heslá
 ssl validation:	setup	sk	SSL validácia:
-standard (login-name identical to egroupware user-name)	setup	sk	štandardné (prihlasovacie meno totožné s používateľským menom Egroupware)
+standard (login-name identical to egroupware user-name)	setup	sk	Štandardné, prihlasovacie meno zhodné s používateľským menom EGroupware
 standard mailserver settings (used for mail authentication too)	setup	sk	Nastavenia predvoleného poštového servera (použité aj pre Mailové overovanie)
 standard, as defined above	setup	sk	Štandardne, ako je zadefinované vyššie
 start installing application %1 ...	setup	sk	Spustiť inštaláciu aplikácie %1 ...
@@ -633,7 +636,7 @@ step %1 - configuration	setup	sk	Krok %1 - Konfigurácia
 step %1 - db backup and restore	setup	sk	Krok %1 - Zálohovanie a obnova databázy
 step %1 - language management	setup	sk	Krok %1 - Správa jazykov
 step %1 - simple application management	setup	sk	Krok %1 - Jednoduchá správa aplikácií
-succesfully uploaded file %1	setup	sk	úspešne odovzdaný súbor %1
+succesfully uploaded file %1	setup	sk	Úspešne nahraný súbor %1
 successful connected to %1 database %2 on %3 using user %4.	setup	sk	Úspešne sme sa spojili s %1 databázou %2 na %3 pomocou používateľa %4.
 successful connected to %1 on %3 and created database %2 for user %4.	setup	sk	Úspešne sme sa spojili s %1 na %3 a vytvorili databázu %2 pre používateľa %4.
 successful connected to ldap server on %1 and created/checked required structur %2.	setup	sk	Úspešne sme sa spojili s LDAP serverom na %1 a vytvorili/skontolovali požadovanú štruktúru %2.
@@ -641,7 +644,7 @@ successful connected to ldap server on %1 using dn %2.	setup	sk	Úspešne sme sa
 supported node types:	setup	sk	Podporované typy uzlov:
 table change messages	setup	sk	Správy pri zmene tabuliek
 tables dropped	setup	sk	Tabuľky boli zahodené.
-tables installed, unless there are errors printed above	setup	sk	tabuľky nainštalované, ak len nevidno nejaké chybové hlásenia
+tables installed, unless there are errors printed above	setup	sk	Tabuľky nainštalované, ak len nevidno nejaké chybové hlásenia
 tables upgraded	setup	sk	Tabuľky boli aktualizované.
 target version	setup	sk	Cieľová verzia
 tcp port number of database server	setup	sk	Číslo TCP portu databázového servera
@@ -659,36 +662,36 @@ the following applications need to be upgraded:	setup	sk	Nasledovné aplikácie 
 the function %1 is needed from: %2.	setup	sk	Funkcia %1 je vyžadovaná od: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	sk	Funkcia imagecreatefromjpeg je zabezpečená rozšírením gd (kompilovaným s podporou jpeg!). Je potrebná pre odosielanie fotiek ku kontaktom.
 the json extension is required by egroupware for ajax.	setup	sk	EGroupware kvôli AJAX vyžaduje rozšírenie json .
-the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	sk	Je potrebné rozšírenie ldap, ak používate ldap ako zdroj účtov alebo kontaktov, overujete sa voči ldap alebo active directory. Nie je potrebné pre štandardnú SQL inštaláciu.
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Rozšírenie mbstring je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
-the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
-the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	sk	Používa sa rozšírenie mcrypt na uloženie stavu formulára eŠablóny na klientovi, čo je najvhodnejší spôsob jeho uloženia.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	sk	Je potrebné rozšírenie ldap, ak používate LDAP ako zdroj účtov alebo kontaktov, overujete sa voči LDAP alebo Active Directory. Nie je potrebné pre štandardnú SQL inštaláciu.
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Rozšírenie mbstring je potrebné pre plnú podporu Unicode (UTF-8) alebo iných viacbajtových znakových sád.
+the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu Unicode (UTF-8) alebo iných viacbajtových znakových sád.
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	sk	Používa sa rozšírenie mcrypt na uloženie stavu formulára eTemplate na klientovi, čo je najvhodnejší spôsob jeho uloženia.
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	sk	Rozšírenie PDO spolu s databázovo špecifickým ovládačom je potrebné pre VFS (virtuálny súborový systém)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	sk	Rozšírenie sedenia je potrebné pre použitie php sedení (db sedenia fungujú aj bez neho).
 the session extension is required!	setup	sk	Požaduje sa rozšírenie pre relácie!
 the table definition was correct, and the tables were installed	setup	sk	Definícia tabuľky bola korektná, tabuľky sa nainštalovali.
 the tables	setup	sk	tabuľky
-the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	sk	Rozšírenie tidy sa vyžaduje v hromadnej tlači. Slúži na vyčistenie html pred vkladaním do kancelárskych dokumentov.
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	sk	Rozšírenie tidy sa vyžaduje v hromadnej tlači. Slúži na vyčistenie HTML pred vkladaním do kancelárskych dokumentov.
 the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	sk	Použitý SimpleSAMLphp umožňuje omnoho podrobnejšie nastavenia / odlišné typy autentifikácie prostredníctvom jeho konfiguračných súborov v
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	Používateľské mená/heslá sú: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	sk	Rozšírenie xmlreader sa vyžaduje v niekoľkých aplikáciách EGroupware.
 the xsl extension is need in merge-print for processing html and office documents.	setup	sk	Rozšírenie XSL je potrebné pri zlúčení-tlači na spracovanie kancelárskych a HTML dokumentov
-the zip extension is required for merge-print with office documents.	setup	sk	Rozšírenie ZIP je potrebné pri zlúčení-tlači s kancelárskymi dokumentami
-there was a problem trying to connect to your ldap server. <br />	setup	sk	Problém pri pripájaní sa na LDAP server. <br />
-there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	sk	Nastav problém pri pripájaní sa na LDAP server. <br />prosím skontrolujte nastavenia LDAP servera
-this has to be outside the webservers document-root!!!	setup	sk	Musí byť MIMO document-root webservera!!!
-this might take a while, please wait ...	setup	sk	Chvíľu to potrvá, prosím čakajte...
+the zip extension is required for merge-print with office documents.	setup	sk	Rozšírenie zip je potrebné pri zlúčení-tlači s kancelárskymi dokumentami
+there was a problem trying to connect to your ldap server. <br />	setup	sk	Problém pri pripájaní sa na LDAP server.<br>
+there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	sk	Nastav problém pri pripájaní sa na LDAP server.<br>prosím skontrolujte nastavenia LDAP servera
+this has to be outside the webservers document-root!!!	setup	sk	Musí byť MIMO document-root webservera!
+this might take a while, please wait ...	setup	sk	Chvíľu to potrvá, prosím čakajte ...
 this program lets you backup your database, schedule a backup or restore it.	setup	sk	Tento program umožňuje zálohovať databázu, naplánovať zálohy, a obnoviť databázu zo zálohy.
 this program will convert your database to a new system-charset.	setup	sk	Tento program skonvertuje vašu databázu na novú systémovú znakovú sadu.
 this program will help you upgrade or install different languages for egroupware	setup	sk	Tento program vám pomôže s aktualizáciou alebo inštaláciou rozličných jazykov v EGroupware.
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sk	Dĺžka by mohla byť okolo 30 bajtov.<br />Upozornenie: Predvolená hodnota sa generovala náhodne.
-this stage is completed<br />	setup	sk	Táto fáza je dokončená<br />
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sk	Dĺžka by mohla byť okolo 30 bajtov.<br>Upozornenie: Predvolená hodnota sa generovala náhodne.
+this stage is completed<br />	setup	sk	Táto fáza je dokončená<br>
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sk	Týmto sa vytvorí prvý používateľ v EGroupware, alebo znovunastaví heslo a administrátorské práva existujúceho používateľa.
 to a version it does not know about	setup	sk	Na verziu ktorú nepozná
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sk	Ak chcete povoliť overovania hesiel, pridajte nasledujúci riadok do pg_hba.conf (nad všetkými ostatnými) A reštartujte postgres:
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sk	Ak chcete povoliť overovania hesiel, pridajte nasledujúci riadok do pg_hba.conf (nad všetkými ostatnými) A reštartujte PostgreSQL:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sk	Ak chcete zmeniť znakovú sadu: zazálohujte si databázu, odinštalujte všetky aplikácie, a preinštalujte zálohu so zapnutou voľbou "konvertovať zálohu na vybranú znakovú sadu".
-to setup 1 admin account and 3 demo accounts.	setup	sk	pre vytvorenie 1 správcovského a 3 testovacích (demo) účtov
-top	setup	sk	vrch
+to setup 1 admin account and 3 demo accounts.	setup	sk	Pre vytvorenie 1 správcovského a 3 testovacích (demo) účtov
+top	setup	sk	Vrch
 translations added	setup	sk	Preklady pridané
 translations removed	setup	sk	Preklady odstránené
 translations upgraded	setup	sk	Preklady aktualizované
@@ -699,10 +702,10 @@ uninstall	setup	sk	Odinštalovať
 uninstall all applications	setup	sk	Odinštalovať všetky aplikácie
 uninstalled	setup	sk	Odinštalované
 university login	setup	sk	Univerzitné prihlásenie
-unknown option '%1' !!!	setup	sk	Neznáma voľba '%1' !!!
+unknown option '%1' !!!	setup	sk	Neznáma voľba '%1'!
 update finished.	setup	sk	Aktualizácia ukončená.
 update necessary.	setup	sk	Aktualizácia nevyhnutná.
-update of %1 in %2 failed !!!	setup	sk	Aktualizácia  %1 v %2 zlyhala !!!
+update of %1 in %2 failed !!!	setup	sk	Aktualizácia  %1 v %2 zlyhala!
 upgrade	setup	sk	Aktualizovať
 upgrade all	setup	sk	Aktualizovať všetko
 upgraded	setup	sk	Aktualizované.
@@ -717,9 +720,9 @@ use --install to install egroupware.	setup	sk	Použite --install pre inštaláci
 use --update to do so.	setup	sk	Použite --update
 use account description to store saml username	setup	sk	Používať opis účtu na uloženie používateľského mena SAML
 use cookies to pass sessionid	setup	sk	Používať cookie na odovzdanie ID sedenia
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	sk	použiť mcrypt na šifrovanie dát sedenia: {vypnúť(predvolené) | zapnúť},[mcrypt-init-vector(predvolené je náhodné vygenerovanie)],[mcrypt-version]
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	sk	Použiť mcrypt na šifrovanie dát sedenia: {vypnúť(predvolené) | zapnúť},[mcrypt-init-vector(predvolené je náhodné vygenerovanie)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	sk	Použiť trvalé pripojenie k db: {zapnúť(predvolené) | vypnúť}
-use pure html compliant code (not fully working yet)	setup	sk	Používať čistý HTML kód (zatiaľ nie je plne funkčné)
+use pure html compliant code (not fully working yet)	setup	sk	Používať čistý HTML kód
 use space to separate multiple	setup	sk	na oddelenie položiek použiť medzerník
 use tls or ssl encryption	setup	sk	Použiť šifrovanie TLS alebo SSL
 user	setup	sk	Používateľ
@@ -732,7 +735,7 @@ usernames are casesensitive	setup	sk	Používateľské mená sú citlivé na ve�
 users choice	setup	sk	Používateľská voľba
 users, groups and memberships	setup	sk	používatelia, skupiny a členstvá
 users, groups and memberships, keep local groups	setup	sk	používatelia, skupiny a členstvá, zachovať miestne skupiny
-usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	sk	Zvyčajne otravnejšie.<br />Správcovia môžu použiť Admin >> Správa účtov alebo skupín pre pridelenie prístupu k ďalším aplikáciám.
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	sk	Zvyčajne otravnejšie.<br>Správcovia môžu použiť Admin >> Správa účtov alebo skupín pre pridelenie prístupu k ďalším aplikáciám.
 utf-8 (unicode)	setup	sk	UTF-8 (Unicode)
 validation errors	setup	sk	Chyby pri overovaní
 version	setup	sk	Verzia
@@ -757,7 +760,7 @@ with	setup	sk	s
 world readable	setup	sk	Čitateľné pre celý svet
 world writable	setup	sk	Zapisovateľné pre celý svet
 would you like egroupware to cache the phpgw info array ?	setup	sk	Chcete aby EGroupware kešoval info pole phpgw?
-would you like egroupware to check for a new version<br />when admins login ?	setup	sk	Chcete aby EGroupware zisťoval novšie verzie<br />po prihlásení správcu?
+would you like egroupware to check for a new version<br />when admins login ?	setup	sk	Chcete aby EGroupware zisťoval novšie verzie<br>po prihlásení správcu?
 would you like to show each application's upgrade status ?	setup	sk	Chcete zobraziť stav aktualizácie jednotlivých aplikácií?
 writable by the webserver	setup	sk	Zapisovateľné webserverom
 write	setup	sk	Zápis
@@ -765,12 +768,12 @@ wrong credentials to access the header.inc.php file!	setup	sk	Nesprávne meno/he
 year	setup	sk	Rok
 yes	setup	sk	Áno
 yes, with lowercase usernames	setup	sk	Áno, s používateľskými menami malými písmenami
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sk	Zdá sa, že používate pre-beta verziu EGroupware.<br />Tieto verzie už nie sú podporované, a neexistuje možnosť aktualizácie pomocou Inštalátora.<br />Mohli by ste napríklad najprv aktualizovať na 0.9.10 (posledná verzia s podporou pre-beta aktualizácií) <br />a až potom aktualizovať na súčasnú verziu.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sk	Zdá sa, že používate starú verziu PHP <br />Odporúčame vám aktualizovať na novšiu verziu.<br />Na starej verzii PHP nemusí EGroupware správne fungovať (ak vôbec).<br /><br />Prosím prejdite aspoň na verziu %1
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sk	Zdá sa, že používate pre-beta verziu EGroupware.<br>Tieto verzie už nie sú podporované, a neexistuje možnosť aktualizácie pomocou Inštalátora.<br>Mohli by ste napríklad najprv aktualizovať na 0.9.10 (posledná verzia s podporou pre-beta aktualizácií)<br>a až potom aktualizovať na súčasnú verziu.
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sk	Zdá sa, že používate starú verziu PHP <br>Odporúčame vám aktualizovať na novšiu verziu.<br>Na starej verzii PHP nemusí EGroupware správne fungovať (ak vôbec).<br><br>Prosím prejdite aspoň na verziu %1
 you appear to be running version %1 of egroupware	setup	sk	Zdá sa že používate EGroupware verziu %1.
 you appear to have %1 support.	setup	sk	Zdá sa, že máte podporu %1.
 you appear to have xml support enabled	setup	sk	Zdá sa, že máte zapnutú podporu XML
-you are ready for this stage, but this stage is not yet written.<br />	setup	sk	Ste pripravení na túto fázu, ale tá ešte nebola napísaná,<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	sk	Ste pripravení na túto fázu, ale tá ešte nebola napísaná,<br>
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sk	Používate PHP verzie %1. EGroupware vyžaduje %2 alebo novšiu, odporúča sa PHP %3.
 you can install it by running:	setup	sk	Môžete to nainštalovať spustením:
 you can specify multiple idp on separate lines.	setup	sk	Môžete zadať viacero IdP v samostatných riadkoch
@@ -779,23 +782,23 @@ you didn't enter a config password for domain %1	setup	sk	Nezadali ste konfigura
 you didn't enter a config username for domain %1	setup	sk	Nezadali ste konfiguračné používateľské meno pre doménu %1
 you didn't enter a header admin password	setup	sk	Nezadali ste heslo Správcu hlavičiek
 you didn't enter a header admin username	setup	sk	Nezadali ste používateľské meno Správcu hlavičiek
-you do not have any languages installed. please install one now <br />	setup	sk	Nemáte nainštalované žiadne jazyky. Prosím, nainštalujte si teraz aspoň jeden <br />
+you do not have any languages installed. please install one now <br />	setup	sk	Nemáte nainštalované žiadne jazyky. Prosím, nainštalujte si teraz aspoň jeden<br>
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	sk	Nemáte nainštalovaný JPGraph verzie %1 alebo vyššej! Je potrebný v aplikácii Projektovník pre zobrazovanie diagramov.
 you dont have tnef or ytnef installed! it is needed to decode winmail.dat attachments in felamimail.	setup	sk	Nemáte nainštalovaný tnef ani ynef! Je potrebný na dekódovanie príloh winmail.dat v e-mailoch.
-you have not created your header.inc.php yet!<br /> you can create it now.	setup	sk	Ešte ste si nevytvorili header.inc.php!<br />Môžete tak urobiť teraz.
+you have not created your header.inc.php yet!<br /> you can create it now.	setup	sk	Ešte ste si nevytvorili header.inc.php!<br>Môžete tak urobiť teraz.
 you have successfully logged out	setup	sk	Úspešne ste sa odhlásili
 you must enter a username for the admin	setup	sk	Musíte zadať používateľské meno pre Správcu
 you must save and run an inital import, before the periodic import will start	setup	sk	Musíte uložiť A SPUSTIŤ základný import, až potom môže začať pravidelný import
 you need to add at least one egroupware domain / database instance.	setup	sk	Musíte pridať aspoň jednu doménu / databázovú inštanciu EGroupware.
 you need to configure egroupware:	setup	sk	Musíte konfigurovať EGroupware:
-you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sk	Uvedené chyby musíte opraviť, až potom sa zapíše súbor header.inc.php !
+you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sk	Uvedené chyby musíte opraviť, až potom sa zapíše súbor header.inc.php!
 you need to select your current charset!	setup	sk	Treba zadať vašu súčasnú znakovú sadu!
 you need to specify a password!	setup	sk	Musíte zadať heslo!
 you should %1log out%2 and in again, to update your current session!	setup	sk	Mali by ste sa %1odhlásiť%2 a znovu prihlásiť kvôli aktualizácii vašej súčasnej relácie!
 you should either install the sources or uninstall it, to get rid of the tables	setup	sk	Musíte najprv nainštalovať zdroje alebo odinštalovať, aby ste sa zbavili tabuliek
-you should either uninstall and then reinstall it, or attempt manual repairs	setup	sk	mali by ste buď odinštalovať a potom znovu nainštalovať, alebo sa pokúsiť o ručné opravy
-you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sk	NEBUDETE schopní prihlásiť sa do EGroupware pomocou PHP sedení: "sedenie sa nedá overiť" !!!
-you're using an old configuration file format...	setup	sk	Používate starý formát konfiguračného súboru...
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	sk	Mali by ste buď odinštalovať a potom znovu nainštalovať, alebo sa pokúsiť o ručné opravy
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sk	NEBUDETE schopní prihlásiť sa do EGroupware pomocou PHP sedení: "sedenie sa nedá overiť"!
+you're using an old configuration file format...	setup	sk	Používate starý formát konfiguračného súboru ...
 your applications are current	setup	sk	Vaše aplikácie sú aktuálne
 your backup directory '%1' %2	setup	sk	Váš zálohový adresár '%1' %2
 your database does not exist	setup	sk	Vaša databáza neexistuje
@@ -805,7 +808,7 @@ your egroupware api is current	setup	sk	Vaše EGroupware API je aktuálne
 your files directory '%1' %2	setup	sk	Váš adresár pre súbory '%1' %2
 your header admin password is not set. please set it now!	setup	sk	Heslo Správcu hlavičiek NIE JE nastavené. Prosím nastavte ho teraz!
 your header.inc.php needs upgrading.	setup	sk	Váš header.inc.php potrebuje aktualizáciu.
-your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	sk	Váš header.inc.php potrebuje aktualizáciu.<br /><blink><b class="msg">POZOR!</b></blink><br /><b>NAJPRV UROBTE ZÁLOHY!</b>
+your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	sk	Váš header.inc.php potrebuje aktualizáciu.<br><b class="msg">POZOR!</b><br><b>NAJPRV UROBTE ZÁLOHY!</b>
 your installed version of %1 is %2, required is at least %3, please run:	setup	sk	Máte nainštalovanú verziu %2 programu %1, avšak potrebná je aspoň verzia %3. Prosím spustite:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	sk	Vaša inštalácia PHP nemá patričnú podporu pre GD. Potrebujete knižnicu gd verzie aspoň 1.8, aby ste mohli používať Gantt grafy v projektoch.
 your tables are current	setup	sk	Vaše tabuľky sú aktuálne

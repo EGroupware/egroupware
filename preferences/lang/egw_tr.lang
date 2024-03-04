@@ -1,16 +1,16 @@
-are you sure you want to delete this category ?	preferences	tr	Bu kategoriyi silmek istediğinize emin misiniz ?
+are you sure you want to delete this category ?	preferences	tr	Bu kategoriyi silmek istediğinize emin misiniz?
 click to select a color	preferences	tr	Renk seçmek için tıklayın
 color	preferences	tr	Renk
 country	preferences	tr	Ülke
 dark mode theme	preferences	tr	Karanlık mod teması
 default	preferences	tr	Varsayılan
-description can not exceed 255 characters in length !	preferences	tr	Açıklama en fazla 255 karakter olabilir !
+description can not exceed 255 characters in length !	preferences	tr	Açıklama en fazla 255 karakter olabilir!
 disable	preferences	tr	Engelle
-edit custom fields	preferences	tr	Özel alanlar? düzenle
+edit custom fields	preferences	tr	Özel alanları düzenleme
 enable	preferences	tr	Etkinleştir
 fast	preferences	tr	Hızlı
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	tr	Hızlı güncelleme, yeni girişleri her zaman listenin en üstüne ekler ve liste son değiştirilene göre sıralanmadığı sürece mevcut olanları yerinde günceller. Tam güncellemeler, liste son değiştirilene göre sıralanmamışsa tam bir yenileme yapar.
-hours	preferences	tr	saat
+hours	preferences	tr	Saat
 how to update lists	preferences	tr	Listeler nasıl güncellenir
 icon	preferences	tr	Simge
 it sets content size (text only) according to selected size.	preferences	tr	İçerik boyutunu (yalnızca metin) seçilen boyuta göre ayarlar.

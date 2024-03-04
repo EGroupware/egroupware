@@ -10,7 +10,7 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, Sie können zurück gehen und Test Import ausschalten)
 %1 weeks	calendar	de	%1 Wochen
 %s the event	calendar	de	%s dem Termin
-(%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
+(%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden)
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
 (without a custom url we use nation of user preference to load holidays from %s)	calendar	de	(Ohne eine eigene URL laden wir die Feiertage entsprechen des Landes in den Benutzereinstellung aus den %s)
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
@@ -25,7 +25,7 @@ access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 
 access to calendar of %1 denied!	calendar	de	Zugriff auf den Kalender von %1 verweigert!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion, welche die Benachrichtigung verursacht hat: hinzugefügt, storniert, zugesagt, abgelehnt
 actions	calendar	de	Befehle
-actions...	calendar	de	Aktionen...
+actions...	calendar	de	Aktionen ...
 add alarm	calendar	de	Alarm zufügen
 add appointments via shortened dialog or complete edit window	calendar	de	Termine hinzufügen über verkürzten Dialog oder komplettes Bearbeiten-Fenster
 add current view as favorite	calendar	de	Ansicht als Favorit zufügen
@@ -35,7 +35,7 @@ add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource a
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
 added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
-after	calendar	de	nach
+after	calendar	de	Nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
 age:	calendar	de	Alter:
@@ -60,7 +60,7 @@ allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeit
 always	calendar	de	Immer
 always use full edit dialog	calendar	de	Immer das komplette Bearbeiten-Fenster verwenden
 always use the full edit dialog, not this little dialog	calendar	de	Verwende immer das komplette Bearbeiten-Fenster, anstatt dem verkürzten Dialog.
-apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine
+apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine.
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	de	Als Alternative können Sie auch einen %1MySQL Dump herunterladen%2 und diesen von Hand in die Datenbank Tabelle egw_cal_timezones importieren.
@@ -71,10 +71,10 @@ available for the first entry inside each day of week or daily table inside the 
 back half a month	calendar	de	Einen halben Monat zurück
 back one month	calendar	de	Einen Monat zurück
 back one year	calendar	de	Ein Jahr zurück
-before	calendar	de	vor
+before	calendar	de	Vor
 before %1	calendar	de	Vor dem %1
 before current date	calendar	de	Vor dem aktuellen Datum
-before the event	calendar	de	vor dem Termin
+before the event	calendar	de	Vor dem Termin
 birthday	calendar	de	Geburtstag
 birthdays	admin	de	Geburtstage
 birthdays only	calendar	de	Nur Geburtstage
@@ -138,7 +138,7 @@ custom color for events without category color	calendar	de	Wählen Sie eine eige
 custom event color	calendar	de	Farbe für Termine ohne Kategorie
 custom fields	common	de	Benutzerdefinierte Felder
 custom url for ical with holidays for all users	calendar	de	Eigene URL für iCal-Datei mit Feiertagen für alle Benutzer
-custom_2	common	de	frei / besetzt
+custom_2	common	de	Frei / Besetzt
 daily	calendar	de	Täglich
 daily tables	calendar	de	Tabellen für tägliche Einträge
 data exchange settings	calendar	de	Einstellungen für den Datenaustausch
@@ -149,7 +149,7 @@ day	calendar	de	Tag
 day of week tables	calendar	de	Tabellen für die Wochenansicht
 days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
-days repeated	calendar	de	wiederholte Tage
+days repeated	calendar	de	Wiederholte Tage
 dayview	calendar	de	Tagesansicht
 default alarm added for yourself or all participants	calendar	de	Der Alarm wird automatisch bei neuen Terminen eingefügt.<br>Für Sie selbst oder für alle Teilnehmer.
 default alarm for	calendar	de	Standard-Alarm für
@@ -208,14 +208,14 @@ edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recurring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
 email address migration	calendar	de	Migration von E-Mail-Adressen
 empty = no alarm	calendar	de	leer = kein Alarm
-empty for all	calendar	de	leer für alle
+empty for all	calendar	de	Leer für alle
 empty target calendar before importing	calendar	de	Termine im Zielkalender vor dem Import im folgenden Zeitraum löschen
 end	calendar	de	Ende
 end date/time	calendar	de	Enddatum /-zeit
 enddate	calendar	de	Enddatum
 enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum und -zeit des Termins, z.B. für mehr als einen Tag
 enddate of the export	calendar	de	Enddatum des Exports
-ends	calendar	de	endet
+ends	calendar	de	Endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
 error notifying %1	calendar	de	Fehler beim Benachrichtigen von %1
 error saving the event!	calendar	de	Fehler beim Speichern des Termins!
@@ -246,7 +246,7 @@ exceptions	calendar	de	Ausnahmen
 exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
-exists	calendar	de	existiert
+exists	calendar	de	Existiert
 export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format
@@ -264,9 +264,9 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which views should calendar just a list of events instead of distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen, anstatt der Darstellung mit den Uhrzeiten?
 for which views should calendar show distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen.
 format of event updates	calendar	de	Format der Benachrichtigungen
-forward half a month	calendar	de	einen halben Monat weiter
-forward one month	calendar	de	einen Monat weiter
-forward one year	calendar	de	ein Jahr weiter
+forward half a month	calendar	de	Einen halben Monat weiter
+forward one month	calendar	de	Einen Monat weiter
+forward one year	calendar	de	Ein Jahr weiter
 four days view	calendar	de	Vier-Tagesansicht
 freebusy	common	de	frei / belegt
 freebusy: unknown user '%1', or not available for unauthenticated users!	calendar	de	Free/Busy: Unbekannter Benutzer '%1', oder Daten ohne Authentisierung nicht verfügbar!
@@ -281,7 +281,7 @@ general fields:	calendar	de	Allgemeine Felder:
 general settings	calendar	de	Allgemeine Einstellungen
 global categories	calendar	de	Globale Kategorien
 global public and group public	calendar	de	Global öffentlich und Gruppen öffentlich
-global public only	calendar	de	nur Global öffentlich
+global public only	calendar	de	Nur Global öffentlich
 group invitation	calendar	de	Gruppeneinladung
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-öffentlich
@@ -311,25 +311,25 @@ how many lines of all day events should be directly visible. further lines are a
 how many minutes should each interval last?	calendar	de	Wie viele Minuten soll jedes Intervall dauern?
 how many separate calendars to show before merging them together	calendar	de	Ab der eingestellten Anzahl Benutzer werden die Kalender nicht mehr getrennt, sondern zusammenfasst in einem Kalender angezeigt.<br>So können die Kalender eines kleinen Teams getrennt dargestellt werden. Aber auch viele Kalender können durch die Konsolidierung dargestellt werden.<br>In der getrennten Darstellung können Termine zwischen den Kalendern verschoben oder eine Einladung per DnD ausgelöst werden.
 how many weeks should the multiple week view show?	calendar	de	Wie viele Wochen soll die Mehrwochenansicht zeigen?
-how much entries to skip	calendar	de	Wie viele Einträge sollen übersprungen werden
+how much entries to skip	calendar	de	Wie viele Einträge sollen übersprungen werden?
 html link to the current record	calendar	de	HTML-Link zum aktuellen Datensatz
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	de	iCal kann den Eigentümer eines bestehenden Ereignisses nicht ändern. Dies ist nur für neue Ereignisse möglich.
-ical export	calendar	de	iCal Export
-ical file	calendar	de	iCal Datei
-ical import	calendar	de	iCal Import
+ical export	calendar	de	iCal-Export
+ical file	calendar	de	iCal-Datei
+ical import	calendar	de	iCal-Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	de	Wenn Sie hier ein Ordner (kompletter VFS-Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	de	Wenn Sie hier ein Dokument (kompletter VFS-Pfad) angeben, zeigt %1 ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
-if you specify an export definition, it will be used when you export	calendar	de	Wählen Sie eine Export-Definition für den Export.
+if you specify an export definition, it will be used when you export	calendar	de	Wählen Sie eine Export-Definition für den Export
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
-imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. CSV bedeutet: mit Komma getrennte Werte. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
+imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	de	Importieren von Terminen von einer CSV Datei. Sie können in den Optionen des Import ebenso einen anderen Separator (Tab) wählen.
 imports events into your calendar from an ical file.	calendar	de	Importiert Termin in Ihrem Kalender von einer iCal-Datei.
 initially year aligned	calendar	de	Anfangsjahr ausgerichtet
 insert	calendar	de	Einfügen
@@ -339,12 +339,12 @@ invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	de	Ungültige ID des Besitzer: %1. Evt. haben Sie eine falsche Feld Zuordnung erstellt. Es wird %2 verwendet.
 invitations	calendar	de	Einladungen
 invite	common	de	Einladen
-it can not read timezones from sqlite database %1!	calendar	de	Es ist NICHT möglich die Zeitzonen der sqlite Datenbank %1 zu lesen!
+it can not read timezones from sqlite database %1!	calendar	de	Es ist NICHT möglich die Zeitzonen der SQLite Datenbank %1 zu lesen!
 just me	calendar	de	Nur ich
 keep exceptions	calendar	de	Ausnahmen behalten
 keep the series unchanged.	calendar	de	Terminserie unverändert lassen
-last	calendar	de	letzte
-last changed	calendar	de	letzte Änderung
+last	calendar	de	Letzte
+last changed	calendar	de	Letzte Änderung
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervalls
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	de	Anzahl Zeilen der Beschreibung in der Listenansicht (voreingestellt 5, 0 für alle)
@@ -370,7 +370,7 @@ maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 er
 meeting canceled	calendar	de	Termin abgesagt
 meeting request	calendar	de	Terminanfrage
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
-merge document...	calendar	de	Dokument einfügen...
+merge document...	calendar	de	Dokument einfügen ...
 midnight	calendar	de	Mitternacht
 min days	calendar	de	Min Tage
 minimum number of users for showing day view as consolidated.	calendar	de	Mindestanzahl von Benutzern für die Anzeige der Tagesansicht als konsolidiert (keine einzelnen Kalender mehr)
@@ -408,7 +408,7 @@ no response	calendar	de	Keine Antwort
 no rights to export more than %1 entries!	calendar	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no, users will need to contact users with direct booking permission	calendar	de	Nein, Benutzer müssen sich mit Benutzern mit direkter Buchungsberechtigung in Verbindung setzen.
 non blocking	calendar	de	Nicht blockierend
-not	calendar	de	nicht
+not	calendar	de	Nicht
 not rejected	calendar	de	Nicht abgelehnt
 nothing to update, version is already %1.	calendar	de	Nichts aktualisiert, Version ist bereits %1
 notification messages for added events	calendar	de	Benachrichtigungstext für neue Termine
@@ -425,7 +425,7 @@ notify non-egroupware users about event updates	calendar	de	Teilnehmer außerhal
 number of records to read (%1)	calendar	de	Anzahl der zu lesenden Datensätze (%1)
 number of resources to be booked	calendar	de	Anzahl der zu buchenden Ressourcen
 number of weeks to show	calendar	de	Anzahl Wochen anzuzeigen
-observance rule	calendar	de	Observance Rule
+observance rule	calendar	de	Beobachtungsregel
 occurence	calendar	de	Wiederholung
 old fixed definition	calendar	de	Ältere Definition, deren Werte nicht angepasst werden können.
 old startdate	calendar	de	Altes Startdatum
@@ -436,26 +436,26 @@ on any time change too	calendar	de	Auch jede zeitliche Veränderung
 on invitation / cancellation only	calendar	de	Nur bei Einladungen/Absagen
 on participant responses too	calendar	de	Auch bei Antworten der Teilnehmer
 on time change of more than 4 hours too	calendar	de	Bei zeitlichen Änderungen größer als 4 Stunden
-one month	calendar	de	ein Monat
-one week	calendar	de	eine Woche
-one year	calendar	de	ein Jahr
+one month	calendar	de	Ein Monat
+one week	calendar	de	Eine Woche
+one year	calendar	de	Ein Jahr
 only group-events	calendar	de	Nur Gruppentermine
 only recurrences until %1 (excluding) have been checked!	calendar	de	Wiederholungen wurden nur bis %1 (ausschließlich) überprüft!
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	de	Nur von wenigen vollständig konformen Clients (z.B. von Apple) unterstützt. Wenn eine URL eingegeben werden muss, wird sie höchstwahrscheinlich nicht unterstützt!
 only the initial date of that recurring event is checked!	calendar	de	Nur das Startdatum diese wiederholenden Termins wird geprüft!
-only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige
-open todo's:	calendar	de	unerledigte Aufgaben:
+only used for first viewing of calendar, afterwards last selected view is used.	calendar	de	Wird nur bei der Erstanzeige des Kalenders benutzt, danach immer die zuletzt ausgewählte Anzeige.
+open todo's:	calendar	de	Unerledigte Aufgaben:
 optional	calendar	de	Optional
 organizer	calendar	de	Organisator
 output unit	calendar	de	Ausgabeeinheit
-overlap holiday	calendar	de	überlappender Feiertag
+overlap holiday	calendar	de	Überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
 participant names by type	calendar	de	Teilnehmernamen nach Typ
 participant table	calendar	de	Tabelle der Teilnehmer
 participants	calendar	de	Teilnehmer
 participants automatically added to new events	calendar	de	Teilnehmer, die automatisch zu neuen Terminen hinzugefügt werden.
 participants uninvited from an event	calendar	de	Ausgeladene Teilnehmer eines Termins
-participants, resources, ...	calendar	de	Teilnehmer, Ressourcen
+participants, resources, ...	calendar	de	Teilnehmer, Ressourcen, ...
 password for not loged in users to your freebusy information?	calendar	de	Ihr Passwort, um nicht angemeldeten Benutzern Zugang zu Ihrer Terminverfügbarkeit zu gewähren.
 people holiday	calendar	de	Feiertag
 permission denied	calendar	de	Zugriff verweigert
@@ -470,7 +470,7 @@ previous	calendar	de	Vorherige
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private event	calendar	de	Privater Termin
-private only	calendar	de	nur private
+private only	calendar	de	Nur private
 quantity	calendar	de	Anzahl
 quick add	calendar	de	Schnelles Hinzufügen
 range fields	calendar	de	Feldbereich
@@ -480,7 +480,7 @@ receive notifications about events you created/modified/deleted	calendar	de	Empf
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recordings	calendar	de	Aufnahmen
 recover	calendar	de	Wiederherstellen
-recovered	calendar	de	wieder hergestellt
+recovered	calendar	de	Wieder hergestellt.
 recurrence	calendar	de	Wiederholung
 recurrence enddate	calendar	de	Enddatum der Wiederholung
 recurrences and conflict check	calendar	de	Wiederholungen und Konfliktprüfung
@@ -490,7 +490,7 @@ reject	calendar	de	Ablehnen
 rejected	calendar	de	Abgelehnt
 removes the event from my calendar	calendar	de	Entfernt diesen Termin aus meinem Kalender
 repeat days	calendar	de	Wiederholungstage
-repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
+repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt).
 repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
 repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsintervall, z.B. 2 für jeder zweite Woche
@@ -522,10 +522,10 @@ scheduling conflict	calendar	de	Terminüberschneidung
 search string for the events	calendar	de	Suchtext für Termine
 select a %1	calendar	de	%1 auswählen
 select a color for this calendar	calendar	de	Wählen Sie eine Farbe für diesen Kalender
-select a time	calendar	de	eine Zeit auswählen
+select a time	calendar	de	Eine Zeit auswählen
 select an action	calendar	de	Befehl auswählen
-select an action...	calendar	de	Aktion auswählen...
-select multiple contacts for a further action	calendar	de	mehrere Adressen für weiteren Befehl auswählen
+select an action...	calendar	de	Aktion auswählen ...
+select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
@@ -544,9 +544,9 @@ should the grid be shown in the calendar	calendar	de	Soll das Gitternetz im Kale
 should the number of weeks be shown on top of the calendar	calendar	de	Soll die Wochenanzahl im Kalender oben angezeigt werden?
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	de	Soll die Kalenderwoche im oberen Teil des Kalenders angezeigt werden (Nur wenn Abstand=0)
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen
-should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	de	Soll der Status (zugesagt, abgelehnt ...) der Termin-Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	de	Soll der Status (zugesagt, abgelehnt, ...) der Termin-Teilnehmer in Klammern hinter jeden Teilnehmer angezeigt werden?
 show %1 from %2	calendar	de	Zeige %1 von %2
-show a calendar title	calendar	de	Soll der Kalender Titel angezeigt werden?
+show a calendar title	calendar	de	Soll der Kalender-Titel angezeigt werden?
 show all events, as if they were private	calendar	de	Zeige alle Termine, so als wären sie privat
 show all status incl. rejected events	calendar	de	Zeige alle Status einschl. abgelehnte Termine
 show all status, but rejected	calendar	de	Zeige alle Status außer abgelehnte Termine
@@ -592,7 +592,7 @@ sun	calendar	de	So
 tag to mark positions for address labels	calendar	de	Kennzeichnet die Position für Adress-Aufkleber
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
-the apple ical apps use this color to display events from this calendar.	calendar	de	Die Apple iCal Anwendung benutzt diese Farbe zur Anzeige von Terminen dieses Kalenders
+the apple ical apps use this color to display events from this calendar.	calendar	de	Die Apple iCal-Anwendung benutzt diese Farbe zur Anzeige von Terminen dieses Kalenders
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	de	Das Dokument kann Platzhalter wie {{%1}} enthalten, die durch die Daten ersetzt werden sollen.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2)
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht
@@ -603,8 +603,8 @@ the resource you selected is already overbooked:	calendar	de	Die Ressource, die 
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der externe Organisator "%2", seien Sie vorsichtig!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der antwortende Teilnehmer "%2", seien Sie vorsichtig!
 this day is shown as first day in the week or month view.	calendar	de	Dieser Tag wird als erster in der Wochen- oder Monatsansicht angezeigt
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht. Alle späteren Einträge werden darunter dargestellt
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht. Alle früheren Einträge werden darüber dargestellt
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	de	Diese Zeit definiert das Ende des Arbeitstags in der Tagesansicht.<br>Alle späteren Einträge werden darunter dargestellt.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	de	Diese Zeit definiert den Anfang des Arbeitstags in der Tagesansicht.<br>Alle früheren Einträge werden darüber dargestellt.
 this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment von %1 geöffnet!
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
@@ -613,17 +613,17 @@ this is a recurring event. do you want to delete just this recurrence or the who
 this mail cancels a meeting	calendar	de	Diese Nachricht sagt einen Termin ab
 this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Terminanfrage
 this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage
-this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet
+this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	de	Diese Nachricht wird an alle Teilnehmer der Termine versendet, die Sie anlegen. (Teilnehmer müssen die Benachrichtigung per E-Mail aktiviert haben!)<br>Sie können verschiedene Variablen verwenden, die die notwendigen Informationen der Termin-Mitteilung beinhalten. Die erste Zeile ist der Betreff der E-Mail
 this message is sent to uninvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet
-this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder ablehnen
+this message is sent when you accept, tentative accept or reject an event.	calendar	de	Diese Nachricht wird gesendet wenn Sie einen Termin zusagen, vorläufig zusagen oder ablehnen.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	de	Diese Alarm-Meldung wird Ihnen gesendet, wenn Sie einen Alarm für einen Termin aktivieren. Nehmen Sie alle Informationen darin auf, die Sie zum gewünschten Alarm-Zeitpunkt benötigen
-this module displays a planner calendar.	calendar	de	Dieses Modul zeigt einen Planerkalender
+this module displays a planner calendar.	calendar	de	Dieses Modul zeigt einen Planerkalender.
 this module displays a user's calendar as multiple weeks. don't give calendar application access to the anon user!	calendar	de	Dieses Modul zeigt den Benutzer-Kalender als Mehrwochenansicht. Geben Sie dem anonymen Benutzer keinen Zugriff auf das Kalender-Modul
 this module displays calendar events as a list.	calendar	de	Dieses Modul zeigt den Kalender als Listenansicht
 this module displays the current month	calendar	de	Dieses Modul zeigt den aktuellen Monat an
-three month	calendar	de	drei Monate
+three month	calendar	de	Drei Monate
 thu	calendar	de	Do
 til	calendar	de	bis
 timeframe	calendar	de	Zeitrahmen
@@ -646,7 +646,7 @@ tomorrow	calendar	de	Morgen
 translation	calendar	de	Übersetzung
 tue	calendar	de	Di
 two weeks	calendar	de	zwei Wochen
-type of planner	calendar	de	Planer Typ
+type of planner	calendar	de	Planer-Typ
 unable to save	calendar	de	Speichern nicht möglich
 uninvited	calendar	de	Ausgeladen
 update calendar view immediately when navigation calendar in sidebox is changed	calendar	de	Kalenderansicht sofort aktualisieren, wenn der Navigationskalender in der Seitenleiste geändert wird.
@@ -687,11 +687,11 @@ weekview	calendar	de	Wochenansicht
 weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 what should links to the calendar events display in other applications.	calendar	de	Was soll der Link-Titel zusätzlich enthalten bei der Anzeige von Verknüpfungen?
-when changing the month	calendar	de	Bei Monats- und Jahreswechsel.<br>Wenn Ja, wird der Haken zum übernehmen entfernt.
+when changing the month	calendar	de	Bei Monats- und Jahreswechsel.<br>Wenn Ja, wird der Haken zum Übernehmen entfernt.
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	de	Wenn ausgewählt werden Geburts- und/oder Feiertage als Ereignisse in Ihrem Kalender angezeigt. Bitte beachten Sie, dass diese Option nur die Erscheinung innerhalb von EGroupware verändert, nicht aber die Informationen, die via iCal oder über andere Kalender-Schnittstellen gesendet werden.
 which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Ab der hier eingestellten Anzahl von Benutzern wird die nach Benutzern aufgeteilte Tages- und Wochenansicht in einer Ansicht zusammengefasst
-whole day	calendar	de	ganztägig
+whole day	calendar	de	Ganztägig
 with credentials included	calendar	de	Mit Zugangsdaten im URL
 wk	calendar	de	KW
 work day ends on	calendar	de	Arbeitstag endet um

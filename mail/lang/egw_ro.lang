@@ -116,8 +116,21 @@ mark as deleted	mail	ro	Marcați ca fiind șterse
 message learned as spam and moved to spam folder	mail	ro	Mesaj identificat ca spam și mutat în dosarul spam
 modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
+move selected to	mail	ro	Mutați selectat la
+move to	mail	ro	Mutarea la
+name and domain	mail	ro	Nume și domeniu
 name and email	mail	ro	Nume și e-mail
+name of account	mail	ro	Numele contului
+name of imap servers (space separated host or host:port)	mail	ro	Numele serverelor IMAP (gazdă separată prin spații sau gazdă:port)
+never show	mail	ro	Nu se afișează niciodată
+never show notification	mail	ro	Nu afișați niciodată notificarea
+new mail from %1	mail	ro	E-mail nou de la %1
+new mail notification	mail	ro	Notificare de e-mail nou
+new message type	mail	ro	Tip nou de mesaj
 new subject	mail	ro	Subiect nou
+no access	mail	ro	Nu există acces
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	ro	Nu a fost furnizată nicio adresă TO/CC/BCC și nu a fost furnizat niciun folder în care să fie salvat mesajul.
+no adress, to send this mail to, supplied	mail	ro	nu a fost furnizată nicio adresă la care să se trimită acest e-mail
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ro	Nu este furnizată nicio destinație de dosar și nu este furnizat niciun dosar pentru salvarea mesajului sau altă măsură de stocare a corespondenței (salvare în InfoLog/Ticketsystem), dar este necesară.
 no sneak preview in list	mail	ro	Nu există previzualizare a mesajelor
 non	mail	ro	Non

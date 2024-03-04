@@ -15,8 +15,8 @@ current version	setup	el	Τρέχουσα έκδοση
 day	setup	el	Ημέρα
 db backup and restore	setup	el	DB backup και επαναφορά
 default	setup	el	προκαθορισμένο
-default file system space per user/group ?	setup	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
-deny all users access to grant other users access to their entries ?	setup	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους?
+default file system space per user/group ?	setup	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά;
+deny all users access to grant other users access to their entries ?	setup	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους;
 download	setup	el	Καταβίβαση
 enter the hostname of the machine on which this server is running	setup	el	Εισάγετε το όνομα κομβου του μηχανήματος στο οποίο τρέχει ο server
 enter the site password for peer servers	setup	el	Εισήγαγε το συνθηματικό της ιστιοσελίδας για ισότιμους server
@@ -25,13 +25,21 @@ enter the title for your site	setup	el	Εισήγαγε τον τίτλο για
 enter your default ftp server	setup	el	Εισήγαγε τον προκαθορισμένο FTP server
 enter your http proxy server	setup	el	Εισήγαγε τον HTTP proxy server
 enter your http proxy server port	setup	el	Εισήγαγε το port του HTTP proxy server
+error searching "dn=%1" for "%2"!	setup	el	Σφάλμα αναζήτησης "DN=%1" για "%2"!
+error uploading your backup!	setup	el	Σφάλμα μεταφόρτωσης του αντιγράφου ασφαλείας σας!
+every	setup	el	Κάθε
+export has been completed!	setup	el	Εξαγωγή έχει ολοκληρωθεί!
+failed to mount backup directory!	setup	el	Απέτυχε η προσάρτηση του καταλόγου αντιγράφων ασφαλείας!
+failed updating user "%1" dn="%2"!	setup	el	Απέτυχε η ενημέρωση του χρήστη "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	el	Απέτυχε η εγγραφή του αρχείου ρυθμίσεων header.inc.php, ελέγξτε τα δικαιώματα!
+fallback authentication	setup	el	Επαναληπτικός έλεγχος ταυτότητας
 file	setup	el	Αρχείο
 filename	setup	el	Όνομα αρχείου
 force selectbox	setup	el	Εξανάγκασε Επιλογή κουτιού
 go to	setup	el	Πηγαινε στο
 host information	setup	el	Πληροφορία
 if no acl records for user or any group the user is a member of	setup	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής;
 ldap accounts context	setup	el	LDAP περιβάλλον λογαριασμών
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	el	LDAP προκαθορισμένο πρόθεμα αρχικού διαμερίσματος (π.χ. /home για /home/username)
 ldap default shell (e.g. /bin/bash)	setup	el	LDAP Προκαθορισμένο κέλυφος (π.χ. /bin/bash)
@@ -54,8 +62,14 @@ not	setup	el	δεν
 not set	setup	el	δεν έχει οριστεί
 one month	setup	el	ένας μήνας
 one week	setup	el	μία εβδομάδα
+optional, if only authentication and anonymous search is enabled	setup	el	προαιρετικό, εάν είναι ενεργοποιημένη μόνο η αυθεντικοποίηση ΚΑΙ η ανώνυμη αναζήτηση
 or	setup	el	ή
+or leave empty and select openidconnect as authentication type above for single sign on	setup	el	ή αφήστε το κενό και επιλέξτε το OpenID Connect ως τύπο ελέγχου ταυτότητας παραπάνω για ενιαία σύνδεση
+or leave empty and select saml as authentication type above for single sign on	setup	el	ή αφήστε το κενό και επιλέξτε SAML ως τύπο ελέγχου ταυτότητας παραπάνω για ενιαία σύνδεση
+password	setup	el	Κωδικός πρόσβασης
 password for smtp-authentication	setup	el	Κωδικός για την SMTP-πιστοποίηση
+password needed for domain configuration.	setup	el	Κωδικός πρόσβασης που απαιτείται για τη διαμόρφωση του τομέα.
+passwords --> sql	setup	el	Κωδικοί πρόσβασης --> SQL
 path information	setup	el	Πλητοφορία path
 re-enter password	setup	el	Ξανα-εισάγετε το συνθηματικό
 refusing to delete dn "%1"!	setup	el	Άρνηση διαγραφής του dn "%1"!
@@ -79,5 +93,5 @@ two weeks	setup	el	δύο εβδομάδες
 use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την session ID
 use pure html compliant code (not fully working yet)	setup	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
 user for smtp-authentication (leave it empty if no auth required)	setup	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
-would you like to show each application's upgrade status ?	setup	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
+would you like to show each application's upgrade status ?	setup	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής;
 write	setup	el	Γραφή

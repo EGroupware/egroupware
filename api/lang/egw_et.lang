@@ -628,11 +628,18 @@ time	common	et	Aeg
 time zone	common	et	Ajavöönd
 time zone offset	common	et	Ajavööndi nihe
 title	common	et	Pealkiri
+to start the db-tools	common	et	DB tööriistade käivitamine
+to start the etemplate editor	common	et	eTemplate redaktori käivitamine
+to start the search	common	et	Otsingu käivitamine
 today	common	et	Täna
+todays date, eg. "%1"	common	et	Tänane kuupäev, nt "%1"
 togo	common	et	TOGO
 tokelau	common	et	TOKELAU
 tonga	common	et	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	et	Valitud on liiga palju ridu.<br>Valige kõik või vähem kui %1 rida.
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	et	Liiga palju ebaõnnestunud sisselogimiskatseid: %1 kasutaja "%2" jaoks, %3 IP %4 jaoks.
 total	common	et	Kokku
+total: %1 successful: %2 failed: %3 skipped: %4	common	et	Kokku: %1 Edukas: %2 Ebaõnnestunud: %3 Välja jäetud: %4
 tree	common	et	Puu
 trinidad and tobago	common	et	TRINIDAD JA TOBAGO
 tuesday	common	et	Teisipäev

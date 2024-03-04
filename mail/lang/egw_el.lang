@@ -73,7 +73,7 @@ attachments	mail	el	Συνημμένα
 attachments, ...	mail	el	συνημμένα, ...
 authentication	mail	el	Αυθεντικοποίηση
 available personal email-accounts/profiles	mail	el	διαθέσιμοι προσωπικοί λογαριασμοί ηλεκτρονικού ταχυδρομείου/προφίλ
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	el	Λάβετε υπόψη ότι με την προσθήκη όλων των επιλεγμένων αρχείων ως λειτουργία %1, θα αλλάξει και όλα τα υπάρχοντα συνημμένα στη λίστα σε λειτουργία %2. \n \n Θέλετε να συνεχίσετε;
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	el	Λάβετε υπόψη ότι με την προσθήκη όλων των επιλεγμένων αρχείων ως λειτουργία %1, θα αλλάξει και όλα τα υπάρχοντα συνημμένα στη λίστα σε λειτουργία %2.<br><br>Θέλετε να συνεχίσετε;
 be aware that all attachments will be sent as %1!	mail	el	Λάβετε υπόψη σας πως όλα τα συνημμένα θα σταλούν ως %1!
 before reply, visible during compose	mail	el	Πριν από την απάντηση. Θα εμφανίζεται κατά την διάρκεια της σύνταξης του μηνύματος
 blacklisted mails are marked as spam	mail	el	Μηνύματα που βρίσκονται στη μαύρη λίστα μαρκάρονται ως  ανεπίκλητα μηνύματα (spam)
@@ -138,7 +138,7 @@ delete folder	mail	el	Διαγραφή Φακέλου
 delete folder %1 ?	mail	el	ΔΙΑΓΡΑΦΗ φακέλου %1 ;
 delete this acl	mail	el	Διαγραφή αυτού του δικαιώματος
 deleted	mail	el	διεγράφη
-deleted %1 messages in %2	mail	el	διαγραφή %1 μηνυμάτων στο %2
+deleted %1 messages in %2	mail	el	Διαγράφηκαν %1 μηνύματα σε %2.
 deleted!	mail	el	διεγράφη!
 deleting %1 folders in progress ...	mail	el	Διαγραφή %1 φακέλων σε εξέλιξη ...
 deleting folders	mail	el	Διαδικασία διαγραφής φακέλων
@@ -333,7 +333,7 @@ mailaccount	mail	el	Λογαριασμός αλληλογραφίας
 mailinglist	mail	el	Λίστα αλληλογραφίας
 mails	common	el	Μηνύματα
 mails can be copied to that folder via context menu, if folder is configured.	mail	el	Τα μηνύματα μπορούν να αντιγραφούν σε αυτόν το φάκελο μέσω του μενού περιβάλλοντος, εάν έχει ρυθμιστεί ο φάκελος.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	el	Ο διακομιστής αλληλογραφίας ανέφερε:\n%1 \nΘέλετε να προχωρήσετε με την άμεση διαγραφή των επιλεγμένων μηνυμάτων (κάντε κλικ στο ok); \nΑν όχι, προσπαθήστε να αδειάσετε το φάκελο απορριμμάτων πριν συνεχίσετε. (κάντε κλικ στο cancel)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	el	Ο διακομιστής αλληλογραφίας ανέφερε:<br>%1<br>Θέλετε να προχωρήσετε με την άμεση διαγραφή των επιλεγμένων μηνυμάτων (κάντε κλικ στο ok);<br>Αν όχι, προσπαθήστε να αδειάσετε το φάκελο απορριμμάτων πριν συνεχίσετε. (κάντε κλικ στο Cancel)
 mark all as read	mail	el	Χαρακτηρισμός όλων ως αναγνωσμένων
 mark all messages in folder as read	mail	el	Χαρακτηρισμός όλων των μηνυμάτων στο φάκελο ως αναγνωσμένα
 mark as deleted	mail	el	Σημείωση ως διαγραμένο
@@ -357,16 +357,22 @@ move to archive	mail	el	Μετακίνηση στον φάκλεο αρχειο�
 move to trash	mail	el	μετακίνηση στον κάδο αχρήστων
 moved %1 message(s) from %2 to %3	mail	el	μετακινήθηκαν %1 μηνύματα από %2 στο 3%
 moving folders from one mailaccount to another is not supported	mail	el	Η μετακίνηση φακέλων από έναν λογαριασμού σε άλλο λογαριασμό δεν υποστηρίζεται
+name and domain	mail	el	Όνομα και τομέας
 name and email	mail	el	Όνομα και email
 name of account	mail	el	Όνομα λογαριασμού
+name of imap servers (space separated host or host:port)	mail	el	Όνομα διακομιστών IMAP (με διαχωρισμό κενών host ή host:port)
 never display html emails	mail	el	Να μην προβάλονται τα HTML emails
-never show	mail	el	να μην εμφανίζονται ποτέ
+never show	mail	el	Ποτέ μην εμφανίζετε
+never show notification	mail	el	Ποτέ μην εμφανίζετε ειδοποίηση
+new mail from %1	mail	el	Νέο μήνυμα ηλεκτρονικού ταχυδρομείου από %1
 new mail notification	mail	el	Ενημέρωση για νέα μηνύματα
 new message type	mail	el	Νέος τύπος μηνύματος
 new subject	mail	el	Νέο θέμα
 no (valid) send folder set in preferences	mail	el	Δεν έχει οριστεί (έγκυρος) φάκελος απεσταλμένων στις ρυθμίσεις
 no access	mail	el	χωρίς πρόσβαση
 no action defined!	mail	el	Δεν έχει οριστεί ενέργεια!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	el	Δεν παρέχεται διεύθυνση TO/CC/BCC και δεν παρέχεται φάκελος για την αποθήκευση του μηνύματος.
+no adress, to send this mail to, supplied	mail	el	Δεν δόθηκε διεύθυνση στην οποία να αποσταλεί αυτό το μήνυμα ηλεκτρονικού ταχυδρομείου
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	el	Δεν παρέχεται προορισμός φακέλου και δεν παρέχεται, αλλά απαιτείται, φάκελος για την αποθήκευση του μηνύματος ή άλλο μέτρο για την αποθήκευση της αλληλογραφίας (αποθήκευση στο InfoLog/Ticketsystem).
 no folders	mail	el	δεν υπάρχουν φάκελοι
 no message body supplied	mail	el	δεν δόθηκε κορμός μηνύματος
@@ -522,7 +528,7 @@ show horizontal, hide if none selected	mail	el	εμφάνιση οριζοντί
 show new messages on home page	mail	el	εμφάνιση νέων μηνυμάτων στην αρχική σελίδα
 show notification for new arriving mails	mail	el	Εμφάνιση ειδοποίησης για νέα εισερχόμενα μηνύματα
 show test connection section and control the level of info displayed?	mail	el	Εμφάνιση της ενότητας δοκιμαστικής σύνδεσης και έλεγχος του επιπέδου των εμφανιζόμενων πληροφοριών;
-show test connection section and control the level of info displayed??	mail	el	Εμφάνιση τμήματος δοκιμαστικής σύνδεσης και έλεγχος του επιπέδου των πληροφοριών που εμφανίζονται???
+show test connection section and control the level of info displayed??	mail	el	Εμφάνιση τμήματος δοκιμαστικής σύνδεσης και έλεγχος του επιπέδου των πληροφοριών που εμφανίζονται;
 show them this time only	mail	el	Εφάνισε τα μόνο αυτή τη φορά
 show vertical	mail	el	εμφάνιση κάθετα
 show vertical with all columns	mail	el	Εμφάνιση κάθετης με όλες τις στήλες

@@ -1,46 +1,62 @@
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	et	%1 sündmus(ed) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
-accept	calendar	et	kinnita
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	et	Peo rikkuja on keegi, keda EI ole koosolekule kutsutud, kuid kes on kuidagi kutse saanud.
+accept	calendar	et	Kinnita
 accepted	calendar	et	Kinnitatud
+access denied to the calendar of %1 !!!	calendar	et	Juurdepääs kalendrile %1 keelatud!
+access to calendar of %1 denied!	calendar	et	Juurdepääs kalendrile %1 keelatud!
 actions	calendar	et	Tegevused
-actions...	calendar	et	Tegevused...
+actions...	calendar	et	Tegevused ...
 add alarm	calendar	et	Lisa alarm
 add appointments via shortened dialog or complete edit window	calendar	et	Kohtumiste lisamine lühendatud dialoogiakna või täieliku redigeerimisakna kaudu
+add current view as favorite	calendar	et	Praeguse vaate lisamine lemmikuks
+add new alarm	calendar	et	Lisage uus häire
 add new event	calendar	et	Lisa uus kohtumine
+add new participants or resource	calendar	et	Uute osalejate või ressursi lisamine
 add timesheet entry	calendar	et	Lisa Timesheet kirje
 added	calendar	et	Lisatud
 added by synchronization	calendar	et	Lisatud sünkroniseerimise teel
+after	calendar	et	Pärast
 after %1	calendar	et	Pärast %1
 after current date	calendar	et	Pärast käesolevat kuupäeva
+age:	calendar	et	Vanus:
 alarm	calendar	et	Alarm
 alarm added	calendar	et	Alarm lisatud
+alarm added automatic to new events before event start-time	calendar	et	Alarm lisatakse automaatselt uutele üritustele enne ürituse algusaega
 alarm deleted	calendar	et	Alarm kustutatud
+alarm for %1 at %2 in %3	calendar	et	Häire %1 jaoks aadressil %2 aastal %3
 alarm management	calendar	et	Alarmide manageerimine
 alarms	calendar	et	Alarmid
 all categories	calendar	et	Kõik kategooriad
 all day	calendar	et	Terve päev
 all events	calendar	et	Kõik sündmused
+all exceptions are converted into single events.	calendar	et	Kõik erandid teisendatakse üksikuteks sündmusteks.
 all future	calendar	et	Kõik tulevikus
+all incl. rejected	calendar	et	Kõik, sh tagasi lükatud
 all participants	calendar	et	Kõik osalejad
 allow booking requests from any user when creating events?	calendar	et	Lubage sündmuste loomisel broneerimistaotlusi igalt kasutajalt?
+allow party crashers with email that match the following regular expression	calendar	et	Lubage peokokkupõrkijad, kelle e-posti aadress vastab järgmisele regulaaravaldisele
 allows to edit the event again	calendar	et	Luba muuta sündmust uuesti
 always	calendar	et	Alati
 always use full edit dialog	calendar	et	Kasutage alati täielikku redigeerimisdialoogi
 always use the full edit dialog, not this little dialog	calendar	et	Kasutage alati täielikku redigeerimisdialoogi, mitte seda väikest dialoogiakent
-apply the changes	calendar	et	rakenda uuendused
+apply the changes	calendar	et	Rakenda uuendused
 attention	calendar	et	Tähelepanu
-back half a month	calendar	et	pool kuud tagasi
-back one month	calendar	et	üks kuu tagasi
+back half a month	calendar	et	Pool kuud tagasi
+back one month	calendar	et	Üks kuu tagasi
 before %1	calendar	et	Enne %1
 before current date	calendar	et	Enne käesolevat kuupäeva
 before the event	calendar	et	Enne sündmust
 birthday	calendar	et	Sünnipäev
 birthdays	admin	et	Sünnipäevad
-busy	calendar	et	hõivatud
+busy	calendar	et	Hõivatud
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	et	Vaikimisi (siin ei ole midagi määratud) lubab EGroupware neid lisada ainult korraldaja/omanik.
 calendar event	calendar	et	Kalendri Sündmus
+calendar ical export	calendar	et	Kalendri iCal eksport
+calendar ical import	calendar	et	Kalendri iCal import
 calendar menu	calendar	et	Kalender menüü
 calendar preferences	calendar	et	Kalendri seadistus
 calendar settings	admin	et	Kalendri häälestus
-can't add alarms in the past !!!	calendar	et	Alarmi ei saa lisada minevikku !!!
+can't add alarms in the past !!!	calendar	et	Alarmi ei saa lisada minevikku!
 canceled	calendar	et	Tühistatud
 category report	calendar	et	Kategooria aruanne
 changed event-data applied	calendar	et	Muudetud sündmuse andmed rakendatud
@@ -50,6 +66,7 @@ close the window	calendar	et	Sule see aken
 copy this event	calendar	et	Kopeeri seda sündmust
 countries	calendar	et	Riigid
 country	calendar	et	Riik
+create a new series	calendar	et	Looge uus seeria
 create an exception for the given date	calendar	et	Tee erand antud kuupäevale
 create exception	calendar	et	Tee erand
 create new links	calendar	et	Tee uued lingid
@@ -61,19 +78,20 @@ date range	calendar	et	Kuupäevade vahemik
 day	calendar	et	Päev
 days	calendar	et	päeva
 days of the week for a weekly repeated event	calendar	et	Päevad nädalas haaratud nädala sündmuste repordis
-days repeated	calendar	et	päevi korratakse
+days repeated	calendar	et	Päevi korratakse
 dayview	calendar	et	Päevavaade
 default calendar filter	calendar	et	Vaikimisi kalendri filter
-default calendar view	calendar	et	vaikimisi kalendri vaade
-default week view	calendar	et	vaikimisi nädala vaade
-delegated	calendar	et	delegeeritud
+default calendar view	calendar	et	Vaikimisi kalendri vaade
+default week view	calendar	et	Vaikimisi nädala vaade
+delegated	calendar	et	Delegeeritud
 delete series	calendar	et	Kustuta seeria
 delete this alarm	calendar	et	Kustuta see alarm
 delete this event	calendar	et	Kustuta see sündmus
 delete this exception	calendar	et	Kustuta see erand
-deleted	calendar	et	kustutatud
+deleted	calendar	et	Kustutatud.
 display status of events	calendar	et	Näita sündmuste staatust
-displayed view	calendar	et	näita vaade
+displayed view	calendar	et	Näita vaade
+distribution list	calendar	et	Jaotusnimekiri
 do you want a weekview with or without weekend?	calendar	et	Soovid nädalavaadet koos või ilma nädalavahetuseta?
 download	calendar	et	Lae alla
 download this event as ical	calendar	et	Lae alla see sündmus kui iCal
@@ -82,14 +100,14 @@ edit exception	calendar	et	Muuda erandit
 edit series	calendar	et	Muuda seerijat
 edit this event	calendar	et	Muuda seda sündmust
 email address migration	calendar	et	E-posti aadressi migratsioon
-empty for all	calendar	et	tühi kõigijaoks
+empty for all	calendar	et	Tühi kõigijaoks
 end	calendar	et	Lõpp
-end date/time	calendar	et	Lõpu Kuupäev/ Aeg
+end date/time	calendar	et	Lõpu Kuupäev/Aeg
 enddate	calendar	et	Lõpukuupäev
-ends	calendar	et	lõppes
+ends	calendar	et	Lõppes
 error adding the alarm	calendar	et	Viga alarmi lisamisel
 error notifying %1	calendar	et	Viga, mis teavitab %1
-error: saving the event !!!	calendar	et	Viga: sündmuse salvestamisel !!!
+error: saving the event !!!	calendar	et	Viga: sündmuse salvestamisel!
 error: starttime has to be before the endtime !!!	calendar	et	Viga: Startimisaeg peab olema enne
 event deleted	calendar	et	Sündmus kustutatud
 event saved	calendar	et	Sündmus salvestatud
@@ -103,8 +121,8 @@ extended	calendar	et	Laiendatud
 fieldseparator	calendar	et	Väljaeraldaja
 filename	calendar	et	Failinimi
 firstname of person to notify	calendar	et	Eesnimi persoonist kedllele teatatakse
-forward half a month	calendar	et	lükka edasi pool kuud
-forward one month	calendar	et	lükka edasi üks kuu
+forward half a month	calendar	et	Lükka edasi pool kuud
+forward one month	calendar	et	Lükka edasi üks kuu
 four days view	calendar	et	Nelja päeva vaade
 freetime search	calendar	et	Vaba aja otsing
 fri	calendar	et	Ree
@@ -115,7 +133,7 @@ group planner	calendar	et	Grupi planeerija
 groupmember(s) %1 not included, because you have no access.	calendar	et	Grupiliige(med) %1 pole haaratud, sest sul pole ligipääsu.
 here is your requested alarm.	calendar	et	Siin on sinu küsitud alarm.
 hide private infos	calendar	et	Peida privaatne info
-high priority	calendar	et	kõrge prioteet
+high priority	calendar	et	Kõrge prioteet
 history	calendar	et	Ajalugu
 holiday	calendar	et	Püha
 holidays	calendar	et	Pühad
@@ -144,12 +162,12 @@ links	calendar	et	Lingid
 links, attachments	calendar	et	Lingid, Manused
 listview	calendar	et	Nimekirjavaade
 location	calendar	et	Asukoht
-mail all participants	calendar	et	saada mail kõigile osalejatele
+mail all participants	calendar	et	Saada mail kõigile osalejatele
 maximum available quantity of %1 exceeded!	calendar	et	Maksimaalne saadaolev kogus %1 on ületatud!
 min days	calendar	et	Min päevad
 minimum number of users for showing day view as consolidated.	calendar	et	Minimaalne kasutajate arv, et kuvada päevane vaade konsolideeritud kujul.
 minimum number of users for showing week view as consolidated.	calendar	et	Minimaalne kasutajate arv nädala vaate konsolideeritud näitamiseks.
-minutes	calendar	et	minutit
+minutes	calendar	et	Minutit
 modified	calendar	et	Muudetud
 mon	calendar	et	Esm
 month	calendar	et	Kuu
@@ -161,21 +179,21 @@ never notify externals (non-users) about events i create	calendar	et	Mitte kunag
 new	calendar	et	Uus
 no events found	calendar	et	Sündmust ei leitud
 no filter	calendar	et	Filtrita
-no matches found	calendar	et	sobivaid ei leitud
+no matches found	calendar	et	Sobivaid ei leitud
 no response	calendar	et	Pole vastust
-non blocking	calendar	et	mitte blokeerida
+non blocking	calendar	et	Mitte blokeerida
 notify	calendar	et	Teavita
 notify all externals (non-users) about this event	calendar	et	Teavitage kõiki väliseid (mittekasutajad) sellest sündmusest.
 number of resources to be booked	calendar	et	Broneeritavate ressursside arv
 old startdate	calendar	et	Vana Algusaeg
-one month	calendar	et	üks kuu
-one week	calendar	et	üks kuu
-one year	calendar	et	üks aasta
-open todo's:	calendar	et	ava ToDo's:
+one month	calendar	et	Üks kuu
+one week	calendar	et	Üks kuu
+one year	calendar	et	Üks aasta
+open todo's:	calendar	et	Ava ToDo's:
 output unit	calendar	et	Väljundi ühik
 participants	calendar	et	Osalejad
 permission denied	calendar	et	Ligipääs keelatud
-previous	calendar	et	eelmine
+previous	calendar	et	Eelmine
 private event	calendar	et	Privaatne sündmus
 private only	calendar	et	Privaatne Ainult
 quantity	calendar	et	Kogus
@@ -186,7 +204,7 @@ recurring event	calendar	et	Korduv sündmus
 rejected	calendar	et	Tagasilükatud
 removes the event from my calendar	calendar	et	Eemaldab sündmuse minu kalendrist
 repeat days	calendar	et	Korda päevadel
-repeat the event until which date (empty means unlimited)	calendar	et	korda sündmust kuni kuupäevani (tühi tähendab lõpmatuseni)
+repeat the event until which date (empty means unlimited)	calendar	et	Korda sündmust kuni kuupäevani (tühi tähendab lõpmatuseni)
 repeat type	calendar	et	Kordamise tüüp
 repeating event information	calendar	et	Kordan Sündmuse informatsiooni
 repetition	calendar	et	Kordus
@@ -198,26 +216,28 @@ resources	calendar	et	Resursid
 rule	calendar	et	Reegel
 sat	calendar	et	Lau
 saves the event ignoring the conflict	calendar	et	Salvestab sündmuse ignoreerib konflikti
-select a time	calendar	et	vali aeg
+select a time	calendar	et	Vali aeg
 select resources	calendar	et	Vali resursid
 select who should get the alarm	calendar	et	Vali keda alarmeeritakse
 selected range	calendar	et	Vali vahemik
 send notifications	calendar	et	Saatke teateid
 send notifications to users right now	calendar	et	Saatke osalejatele kohe teateid
-should new events created as private by default ?	calendar	et	Kas uued sündmused tehakse privaatsed vaikimisi ?
+series deleted	calendar	et	Seeria kustutatud
+set new events to private	calendar	et	Määrake uued sündmused privaatseks
+should new events created as private by default ?	calendar	et	Kas uued sündmused tehakse privaatsed vaikimisi?
 show %1 from %2	calendar	et	Näita %1 alates %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	et	Näita kogu päeva mitteblokeerivate sündmuste kujul, samuti kuupäeva hiirega üleval hoidmise kaudu.
 show empty rows in planner	calendar	et	Näita tühju ridu Planeerijas
-show list of upcoming events	calendar	et	näita nimekirja tulevastest sündmustest
+show list of upcoming events	calendar	et	Näita nimekirja tulevastest sündmustest
 show this month	calendar	et	Näita seda kuud
 show this week	calendar	et	Näita seda nädalat
 single event	calendar	et	Üksik sündmus
 single participant	calendar	et	Üksik osaleja
 sort by	calendar	et	Sorteerimine
 start	calendar	et	Start
-start date/time	calendar	et	Start Kuupäev/ Aeg
+start date/time	calendar	et	Start kuupäev/Aeg
 startdate	calendar	et	Algus kuupäev
-startdate / -time	calendar	et	Startkuupäev / -aeg
+startdate / -time	calendar	et	Start kuupäev/Aeg
 status	calendar	et	Staatus
 status changed	calendar	et	Staatus muudetud
 sun	calendar	et	Püh
@@ -227,18 +247,19 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the extern organizer changed the event!	calendar	et	Väline korraldaja muutis sündmust!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole väline korraldaja "%2", tegutsege ettevaatlikult!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole osaleja, kes vastab "%2", olge ettevaatlik!
-three month	calendar	et	kolm kuud
+three month	calendar	et	Kolm kuud
 thu	calendar	et	Nel
 timeframe	calendar	et	Ajavahemik
 timeframe to search	calendar	et	Ajavahemik otsingus
 title of the event	calendar	et	Sündmuse pealkiri
 toggle weekend	calendar	et	Vahetage nädalavahetus
+tomorrow	calendar	et	Homme
 translation	calendar	et	Tõlkimine
 tue	calendar	et	Tei
-two weeks	calendar	et	kaks nädalat
+two weeks	calendar	et	Kaks nädalat
 updated	calendar	et	Uuendatud
-use end date	calendar	et	vabalt valitav lõpuaeg
-use the selected time and close the popup	calendar	et	kasuta märgitud aega ja sule hüpikaken
+use end date	calendar	et	Vabalt valitav lõpuaeg
+use the selected time and close the popup	calendar	et	Kasuta märgitud aega ja sule hüpikaken
 user or group	calendar	et	Kasutaja või Grupp
 utilities	calendar	et	Kommunaalteenused
 view this event	calendar	et	Näita seda sündmust
@@ -252,11 +273,11 @@ weekly	calendar	et	Nädalati
 weekview	calendar	et	Nädalavaade
 weekview with weekend	calendar	et	Nädalavaade koos nädalavahetusega
 weekview without weekend	calendar	et	Nädalavaade ilma nädalavahetuseta
-whole day	calendar	et	terve päev
+whole day	calendar	et	Terve päev
 wk	calendar	et	Nd
-work day ends on	calendar	et	tööpäeva lõpp
-work day starts on	calendar	et	tööpäeva algus
+work day ends on	calendar	et	Tööpäeva lõpp
+work day starts on	calendar	et	Tööpäeva algus
 yearly	calendar	et	Aastati
-yearview	calendar	et	aastavaade
+yearview	calendar	et	Aastavaade
 you do not have permission to read this record!	calendar	et	Sul puuduvad õifused lugeda seda salvestust!
 you need to select an ical file first	calendar	et	Pead valima iCal faili esmalt

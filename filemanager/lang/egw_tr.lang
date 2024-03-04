@@ -43,13 +43,17 @@ file %1 may be too big. contact your systemadministrator for further info	filema
 file a file is only available with an epl subscription.	filemanager	tr	Bir dosya yalnızca EPL aboneliği ile kullanılabilir.
 file deleted.	filemanager	tr	Dosya silindi.
 file names cannot contain "%1"	filemanager	tr	Dosya adları "%1" içeremez
+file or directory not found!	filemanager	tr	Dosya veya klasör bulunamadı!
+file successful uploaded.	filemanager	tr	Dosya başarıyla yüklendi.
+files	common	tr	Dosyalar
 filesystem	filemanager	tr	Dosya Sistemi
 filesystem check reported no problems.	filemanager	tr	Dosya sistemi kontrolü herhangi bir sorun bildirmedi.
-filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	tr	Dosya sistemi: ana dosya sisteminden dizin bağlama (/var/lib/egroupware içinde !)
+filesystem: mount directory (inside /var/lib/egroupware!) from host filesystem	filemanager	tr	Dosya sistemi: ana dosya sisteminden dizin bağlama (/var/lib/egroupware içinde!)
 finally delete	filemanager	tr	Son olarak sil
-finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	tr	Son olarak verilen klasör altındaki tüm eski sürümleri ve silinmiş dosyaları silin.\n\nBu geri alınamaz!
+finally delete all older versions and deleted files under given directory.\n\nthis can not be undone!	filemanager	tr	Son olarak verilen klasör altındaki tüm eski sürümleri ve silinmiş dosyaları silin.<br>Bu geri alınamaz!
 finally delete this version	filemanager	tr	Son olarak bu sürümü silin
 fix reported problems	filemanager	tr	Bildirilen sorunları düzeltin
+folder up	filemanager	tr	Klasör yukarı
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	tr	Bir uygulama girişine bağlı dosyalar için (/apps/appname/id/ içinde) o uygulamaya ait yer tutucular da kullanılabilir. Kullanılabilir yer tutucuların listesi için ilgili uygulamaya bakın.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	tr	Bir uygulama girişine (/apps/appname/id/ içinde) bağlı dosyalar için o uygulamaya ait yer tutucular da kullanılabilir. Yer tutucuların listesi için ilgili uygulamaya bakın.
 go home	filemanager	tr	Evine git.
@@ -69,10 +73,13 @@ merge print open handler	filemanager	tr	Baskı açma işleyicisini birleştirme
 modified	filemanager	tr	Değiştirilmiş
 modified between	filemanager	tr	Değiştirilmiş değiştirildi
 mountpoints	filemanager	tr	Mountpoints
+new directory	common	tr	Yeni klasör
+no preview available	filemanager	tr	Önizleme mevcut değil.
 notebookbar	filemanager	tr	Sekmeli
 password for webdav and smb, use $pass for password of logged in user	filemanager	tr	WebDAV ve SMB için şifre, oturum açmış kullanıcının şifresi için $pass kullanın
 path and query-parameters, smb: share and optional path (with /)	filemanager	tr	Yol ve sorgu parametreleri, SMB: paylaşım ve isteğe bağlı yol (/ ile)
 permissions	filemanager	tr	Ayarlar
+properties saved.	filemanager	tr	Özellikler kaydedildi.
 protocol to use	filemanager	tr	Kullanılacak Protokol
 protocols	filemanager	tr	Protokoller
 quota	filemanager	tr	Kota
@@ -90,4 +97,5 @@ renamed %1 to %2	filemanager	tr	%1'in adı %2 olarak değiştirildi
 renamed %1 to %2.	filemanager	tr	%1'in adı %2 olarak değiştirildi
 replacements for inserting entries into documents	filemanager	tr	Belgelere giriş eklemek için değiştirmeler
 save as zip	filemanager	tr	ZIP olarak kaydet
+you do not have access to %1	filemanager	tr	%1'e erişiminiz yok
 you need to become root, to enable or disable versioning on a directory!	filemanager	tr	Bir klasörde sürümlemeyi etkinleştirmek veya devre dışı bırakmak için superuser olmanız gerekir!

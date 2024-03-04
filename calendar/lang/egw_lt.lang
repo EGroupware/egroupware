@@ -1,13 +1,29 @@
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	lt	%1 įvykis (-iai) %2, %3 nepavyko dėl nepakankamų teisių!
 %1 events in ical file, only first one imported and displayed!	calendar	lt	iCal faile yra %1 įvykis, importuotas ir rodomas tik pirmasis!
 (%1 events in %2 seconds)	calendar	lt	(%1 įvykis per %2 sekundes)
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	lt	Į vakarėlį įsibrovėlis - tai asmuo, kuris NĖRA kviečiamas į susitikimą, bet kažkokiu būdu gavo kvietimą.
+access to calendar of %1 denied!	calendar	lt	Prieiga prie %1 kalendoriaus atmesta!
+actions...	calendar	lt	Veiksmai ...
+add alarm	calendar	lt	Pridėti naują žadintuvą
 add appointments via shortened dialog or complete edit window	calendar	lt	Įtraukti susitikimus per sutrumpintą dialogo langą arba visą redagavimo langą
+add current view as favorite	calendar	lt	Pridėti dabartinį vaizdą kaip mėgstamiausią
 add new event	calendar	lt	Pridėti naują paskyrimą
+add new participants or resource	calendar	lt	Pridėti naujų dalyvių arba išteklių
+add timesheet entry	calendar	lt	Pridėti darbo laiko apskaitos žiniaraščio įrašą
 added by synchronization	calendar	lt	Pridėta sinchronizuojant
+after	calendar	lt	Po
+after %1	calendar	lt	Po %1
+age:	calendar	lt	Amžius:
+alarm added automatic to new events before event start-time	calendar	lt	Įspėjimas automatiškai pridedamas prie naujų įvykių prieš įvykio pradžios laiką
+all exceptions are converted into single events.	calendar	lt	Visos išimtys konvertuojamos į atskirus įvykius.
+all future	calendar	lt	Visi būsimi
+all incl. rejected	calendar	lt	Visi, įskaitant atmestus
 allow booking requests from any user when creating events?	calendar	lt	Kuriant įvykius leisti užsakymų užklausas iš bet kurio naudotojo?
+allow party crashers with email that match the following regular expression	calendar	lt	Leiskite į vakarėlį įsilaužusiems asmenims siųsti el. laiškus, atitinkančius šią reguliariąją išraišką
 always use full edit dialog	calendar	lt	Visada naudokite visą redagavimo dialogo langą
 always use the full edit dialog, not this little dialog	calendar	lt	Visada naudokite visą redagavimo langą, o ne šį mažą langą
 attention	calendar	lt	Dėmesio
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	lt	Pagal numatytuosius nustatymus (čia nieko nenustatyta) "EGroupware" leidžia juos pridėti tik organizatoriui / savininkui.
 category report	calendar	lt	Kategorija Ataskaita
 changed event-data applied	calendar	lt	Taikomi pakeisti įvykio duomenys
 date range	calendar	lt	Datų intervalas
@@ -21,6 +37,8 @@ how many days to sync in the past (default %1)	calendar	lt	Kiek dienų sinchroni
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	lt	Kiek aprašymo eilučių turi būti tiesiogiai matoma. Daugiau eilučių galima matyti per slinkties juostą.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	lt	Kiek visų dienų įvykių eilučių turėtų būti tiesiogiai matoma. Daugiau eilučių pasiekiama per pelės žymeklį.
 how many separate calendars to show before merging them together	calendar	lt	Mažiausias naudotojų skaičius, kad būtų rodomas konsoliduotas kalendoriaus vaizdas, jei pasirinkta mažiau naudotojų, kalendorius rodomas atskirai savaitės arba dienos vaizdui.
+ical	calendar	lt	iCal
+ical / rfc2445	calendar	lt	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	lt	iCal negali pakeisti esamo įvykio savininko. Tai taikoma tik naujiems įvykiams.
 maximum available quantity of %1 exceeded!	calendar	lt	Didžiausias galimas %1 kiekis viršytas!
 min days	calendar	lt	Minimalus dienų skaičius
