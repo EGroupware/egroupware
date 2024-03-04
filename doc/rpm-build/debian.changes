@@ -1,3 +1,30 @@
+egroupware-docker (23.1.20240304) hardy; urgency=low
+
+  * LDAP: fix error creating a new group without a description
+  * LDAP/ADS: fix periodic import was not converting numeric ID of primary group, in case it is different in SQL
+  * LDAP/ADS: periodic import calls addaccount hook for existing account when email was just set, to activate mail account
+  * Account Import: if deleting or deactivating of deleted accounts is configured, run first import as a non-incremental one to do so
+  * ActiveDirectory: fix import was not detecting members removed from groups
+  * Calendar/eSync: fix events created on the device are added to the server in a wrong timezone / shifted by some hours
+  * Mail: display messages containing just a PDF (and no body part)
+  * Notifications/Async service: fix caching in mail account always used sender from first notification
+  * ImportExport: fix not working scheduled import caused by failure to update (the not existing) UI
+  * ImportExport: fix not working import from http(s)
+  * REST API: fix PATCHing of custom-fields
+  * REST API: new links collection allowing to link application entries with each other or attach files
+  * REST API: also log requests with Content-Type 'application/json' not just 'text/*'
+  * REST API/Mail: respect user preference to compose in HTML and convert plain body from REST Api call to HTML (bodyHtml attribute forces HTML)
+  * REST API/Timesheet: new REST API to query, update and delete timesheets https://github.com/EGroupware/egroupware/blob/master/doc/REST-CalDAV-CardDAV/Timesheet.md
+  * API: show "My Account" in avatar menu on top right, if user has rights to change his contact data
+  * API: no more session based cache for account list or searches for SQL backend (only for LDAP or AD)
+  * Registration: Fix contact fields did not get copied to user account
+  * Admin: fix user timezone not taken into account when displaying admin queue
+  * EPL: add S3 check to FSCK to delete files not in egw_sqlfs table or empty files from S3 buckets
+  * EPL: fix finally deleting files from S3 gave an error leaving the files in S3, s3check.php script to check and fix that
+  * EPL: fix purging old versions also deletes them in S3, if used
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 04 Mar 2024 09:15:17 +0100
+
 egroupware-docker (23.1.20240125) hardy; urgency=low
 
   * Mail: New option "Name and domain" to show e.g. "John Smith (example.org)" set under "Information to show on email tag"
