@@ -20,7 +20,6 @@ import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
-import {EgwAction} from "../egw_action/EgwAction";
 
 /**
  * Type for push-message
@@ -940,7 +939,7 @@ export abstract class EgwApp
 	{
 		// Get current state
 		// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
-		state = jQuery.extend(true, {}, this.getState(), state || {});
+		state = {...this.getState(), ...(state || {})};
 
 		this._create_favorite_popup(state);
 
@@ -1007,8 +1006,9 @@ export abstract class EgwApp
 		let filter_list = [];
 		let add_to_popup = function(arr, inset = "")
 		{
-			jQuery.each(arr, function(index, filter)
+			Object.keys(arr).forEach((index) =>
 			{
+				let filter = arr[index];
 				filter_list.push({
 					label: inset + index.toString(),
 					value: (typeof filter != "object" ? "" + filter : "")
@@ -1022,7 +1022,7 @@ export abstract class EgwApp
 		add_to_popup(data.content.state);
 		data.content.current_filters = filter_list;
 
-		let save_callback = (button, value) =>
+		let save_callback = async(button, value) =>
 		{
 			if(button !== Et2Dialog.OK_BUTTON)
 			{
@@ -1034,6 +1034,16 @@ export abstract class EgwApp
 				// Add to the list
 				value.name = (<string>value.name).replace(/(<([^>]+)>)/ig, "");
 				let safe_name = (<string>value.name).replace(/[^A-Za-z0-9-_]/g, "_");
+				if(safe_name != value.name)
+				{
+					// Check if the label matches an existing preference, consider it an update
+					let existing = this.egw.preference(favorite_prefix + safe_name, this.appname);
+					if(existing && existing.name !== value.name)
+					{
+						// Name mis-match, this is a new favorite with the same safe name
+						safe_name += "_" + await this.egw.hashString(value.name);
+					}
+				}
 				let favorite = {
 					name: value.name,
 					group: value.group || false,
@@ -1066,7 +1076,7 @@ export abstract class EgwApp
 				if(this.sidebox)
 				{
 					// Remove any existing with that name
-					jQuery('[data-id="' + safe_name + '"]', this.sidebox).remove();
+					this.sidebox.get(0).querySelectorAll('[data-id="' + safe_name + '"]').forEach(e => e.remove());
 
 					// Create new item
 					var html = "<li data-id='" + safe_name + "' data-group='" + favorite.group + "' class='ui-menu-item' role='menuitem'>\n";
