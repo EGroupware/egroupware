@@ -30,7 +30,7 @@
     "@web/dev-server-rollup": "^0.3.9",
     "@web/test-runner": "^0.13.16",
     "@web/test-runner-playwright": "^0.8.8",
-    "browser-sync": "^2.29.3",
+    "browser-sync": "^3.0.2",
     "cem": "^1.0.4",
     "change-case": "^4.1.2",
     "custom-element-jet-brains-integration": "^1.2.1",
