@@ -1089,6 +1089,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 				($headers['priority'] < 3 ? 2 : 1) ;
 			$output->datereceived = $this->mail->_strtotime($headers['date'], 'ts', false);  // false = servertime
 			$output->to = $headers['to_address'] ?? null;
+			if (!empty($headers['additional_to_addresses']))
+			{
+				$output->to = array_merge((array)$output->to, $headers['additional_to_addresses']);
+			}
 			if (!empty($headers['to'])) $output->displayto = $headers['to_address']; //$headers['FETCHED_HEADER']['to_name']
 			$output->from = $headers['sender_address'];
 			if (!empty($headers['cc_addresses'])) $output->cc = $headers['cc_addresses'];
