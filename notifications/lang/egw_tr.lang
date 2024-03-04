@@ -42,8 +42,11 @@ mark as read	notifications	tr	Okundu olarak işaretle
 message from	notifications	tr	Mesaj sahibi:
 minutes	notifications	tr	Dakika
 more info	notifications	tr	Daha fazla bilgi
+notification	common	tr	Bildirim
 notifier	notifications	tr	Bildirici
+notify me by	notifications	tr	Bana haber ver
 open notified entry	notifications	tr	Açık bildirimli giriş
+optimize e-mails for external mail client	notifications	tr	E-postaları harici e-posta istemcisi için optimize edin
 page not found, please check serveraddress.	notifications	tr	Sayfa bulunamadı, lütfen sunucu adresini kontrol edin.
 password:	notifications	tr	Şifre
 permission	notifications	tr	İzin
@@ -68,9 +71,10 @@ this egroupware notification has been sent to you by mail because your	notificat
 this month	notifications	tr	Bu ay
 user:	notifications	tr	Kullanıcı:
 warning	notifications	tr	Uyarı
+windows-popup and e-mail	notifications	tr	Windows açılır penceresi ve e-posta
 yesterday	notifications	tr	Dün
 you can also use	admin	tr	Ayrıca şunları da kullanabilirsiniz
 you have %1 unread notifications	notifications	tr	%1 okunmamış bildiriminiz var
 you have been successfully logged out	notifications	tr	Başarıyla çıkış yaptınız
-you've got new mail	notifications	tr	Yeni bir postan var.
+you've got new mail	notifications	tr	Yeni bir e-posta aldınız
 your session could not be verified.	notifications	tr	Oturumunuz doğrulanamadı.

@@ -234,7 +234,13 @@ enter the title for your site	setup	it	Inserisci il titolo per il tuo sito
 enter your default ftp server	setup	it	Inserire il server FTP predefinito
 enter your http proxy server	setup	it	Inserire il proxy HTTP
 enter your http proxy server port	setup	it	Inserire la porta del proxy HTTP
+error uploading your backup!	setup	it	Errore nel caricamento del backup!
+every	setup	it	Tutti
+export has been completed!	setup	it	L'esportazione è stata completata!
 failed to mount backup directory!	setup	it	Non è stato possibile montare la cartella di backup!
+failed updating user "%1" dn="%2"!	setup	it	Aggiornamento fallito dell'utente "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	it	Errore nella scrittura del file di configurazione header.inc.php, controllare i permessi!
+fallback authentication	setup	it	Autenticazione di riserva
 false	setup	it	Falso
 file	setup	it	FILE
 file type, size, version, etc.	setup	it	Tipo file, dimensione, versione, ecc.
@@ -311,11 +317,17 @@ one month	setup	it	Un mese
 one week	setup	it	Una settimana
 only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono già presenti nel database
 only add new phrases	setup	it	Aggiungi solo le nuove frasi
+optional, if only authentication and anonymous search is enabled	setup	it	opzionale, se è abilitata solo l'autenticazione E la ricerca anonima
 or	setup	it	o
+or leave empty and select openidconnect as authentication type above for single sign on	setup	it	oppure lasciare vuoto e selezionare OpenID Connect come tipo di autenticazione sopra per il single sign on
+or leave empty and select saml as authentication type above for single sign on	setup	it	oppure lasciare vuoto e selezionare SAML come tipo di autenticazione per l'accesso singolo.
+password	setup	it	Password
 password for smtp-authentication	setup	it	Password per autenticazione SMTP
 password of db user	setup	it	Password dell'utente del DB
+passwords --> sql	setup	it	Password --> SQL
 passwords did not match, please re-enter	setup	it	Le password non corrispondono, per favore reinseriscile
 path information	setup	it	Informazioni sul Path
+periodic import from ads or ldap into egroupware database	setup	it	Importazione periodica da ADS o LDAP nel database di EGroupware
 persistent connections	setup	it	Connessioni persistenti
 please check for sql scripts within the application's directory	setup	it	Per favore controlla gli script SQL nella cartella dell'applicazione
 please configure egroupware for your environment	setup	it	Per favore configura EGroupware per il tuo Sistema

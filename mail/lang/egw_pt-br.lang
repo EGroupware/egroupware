@@ -254,8 +254,16 @@ modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
 move selected to	mail	pt-br	Mover selecionados para
 move to	mail	pt-br	Mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
+name and domain	mail	pt-br	Nome e domínio
 name and email	mail	pt-br	Nome e e-mail
+name of account	mail	pt-br	Nome da conta
+name of imap servers (space separated host or host:port)	mail	pt-br	Nome dos servidores IMAP (host separado por espaço ou host:porta)
 never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
+never show	mail	pt-br	Nunca mostrar
+never show notification	mail	pt-br	Nunca mostrar notificação
+new mail from %1	mail	pt-br	Novo e-mail de %1
+new mail notification	mail	pt-br	Notificação de novo e-mail
+new message type	mail	pt-br	Novo tipo de mensagem
 new subject	mail	pt-br	Novo tema
 no access	mail	pt-br	Sem acesso
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt-br	Nenhum endereço em PARA/CC/CCO informado e nenhuma pasta para salvar mensagens definida.

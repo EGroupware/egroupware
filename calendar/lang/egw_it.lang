@@ -17,6 +17,7 @@
 , stati of participants reset	calendar	it	, stato dei partecipanti reimpostato.
 a list of email addresses of all participants who have not declined	calendar	it	Un elenco di indirizzi email di tutti i partecipanti che non hanno declinato l'invito
 a non blocking event will not conflict with other events	calendar	it	Un evento non bloccante non sarà in conflitto con altri eventi
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	it	Un party crasher è una persona che NON è invitata alla riunione ma che in qualche modo ha ricevuto l'invito.
 accept	calendar	it	Accetta
 accept or reject an invitation	calendar	it	Accetta o o rifiuta un invito
 accepted	calendar	it	Accettato
@@ -53,6 +54,7 @@ all future	calendar	it	Tutti nel futuro
 all incl. rejected	calendar	it	Tutti, incusi i rigettati
 all participants	calendar	it	Tutti i partecipanti
 allow booking requests from any user when creating events?	calendar	it	Permettere richieste di prenotazione da qualsiasi utente quando si creano eventi?
+allow party crashers with email that match the following regular expression	calendar	it	Consentite gli imbucati con e-mail che corrispondono alla seguente espressione regolare
 allow users to prevent change notifications ('do not notify')	calendar	it	Permetti agli utenti di modificare le notifiche 'Non notificare'
 allows to edit the event again	calendar	it	Permette di modificare ancora l'evento
 always	calendar	it	Sempre
@@ -79,6 +81,7 @@ birthdays only	calendar	it	Solo compleanno
 both, holidays and birthdays	calendar	it	Sia compleanni che vacanze
 busy	calendar	it	occupato
 by	calendar	it	da
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	it	Per impostazione predefinita (non è stato impostato nulla qui), EGroupware consente solo all'organizzatore/proprietario di aggiungerli.
 calendar - list	calendar	it	Agenda - Elenco
 calendar - multi-weekly	calendar	it	Agenda - Settimanale
 calendar - planner	calendar	it	Agenda - Pianificatore
@@ -311,7 +314,7 @@ how many weeks should the multiple week view show?	calendar	it	Quante settimane 
 how much entries to skip	calendar	it	Quanti inserimenti saltare
 html link to the current record	calendar	it	Collegamento HTML al record attuale
 ical	calendar	it	iCal
-ical / rfc2445	calendar	it	iCal / rfc2445
+ical / rfc2445	calendar	it	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	it	iCal non può cambiare il proprietario di un evento esistente. Questo vale solo per i nuovi eventi.
 ical export	calendar	it	Esportazione iCal
 ical file	calendar	it	file iCal
@@ -336,7 +339,7 @@ invalid email-address "%1" for user %2	calendar	it	Indirizzo email "%1" non vali
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
 invitations	calendar	it	Inviti
 invite	common	it	Invita
-it can not read timezones from sqlite database %1!	calendar	it	Non può leggere le zone orarie dal database sqlite %1!
+it can not read timezones from sqlite database %1!	calendar	it	Non può leggere le zone orarie dal database SQLite %1!
 just me	calendar	it	Solo io
 keep exceptions	calendar	it	Mantieni le eccezioni
 keep the series unchanged.	calendar	it	Mantieni la serie
@@ -600,7 +603,7 @@ the resource you selected is already overbooked:	calendar	it	La risorsa selezion
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	it	Il mittente "%1" NON è l'organizzatore esterno "%2", procedere con cautela!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	it	Il mittente "%1" NON è il partecipante che risponde a "%2", procedere con cautela!
 this day is shown as first day in the week or month view.	calendar	it	Questo giorno è visualizzato come primo giorno nella vista settimanale o in quella mensile.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	it	Questo definisce la fine della tua vista giornaliera. Eventi dopo quest'ora sono mostrati dopo la vista giornaliera.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	it	Questo definisce la fine della tua vista giornaliera.<br>Eventi dopo quest'ora sono mostrati dopo la vista giornaliera.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	it	Questo definisce l'inizio della tua vista giornaliera. Eventi prima di quest'ora sono visualizzati prima della vista giornaliera.<br>Quest'ora è utilizzata anche come ora d'inizio dei nuovi eventi.
 this entry is currently opened by %1!	calendar	it	La scheda è attualmente aperta da %1
 this entry is opened by user:	calendar	it	Questa scheda è stata aperta nell'intervallo di tempo preconfigurato dall'utente:

@@ -12,7 +12,7 @@
 %1 is needed by: %2.	setup	en	%1 is needed by: %2.
 %1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	en	%1 is set to %2, you will NOT be able to upload or attach files bigger than that!
 %1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	en	%1 is set to %2. This is NOT recommended for a production system, as displayed error messages can contain passwords or other sensitive information!
-%1 not allowed to create in univention.	setup	en	%1 not allowed to create in Univention.
+%1 not allowed to create in univention.	setup	en	%1 not allowed to create on Univention UCS.
 %1 password set in %2.	setup	en	%1 password set in %2.
 %1 passwords updated, %3 errors	setup	en	%1 passwords updated, %3 errors
 %1 the configuration file.	setup	en	%1 the configuration file.
@@ -26,7 +26,7 @@
 00 (disable)	setup	en	00 (disable / recommended)
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>charset to use.</b> Use UTF-8 if you plan to use languages with different charsets:
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>Charset to use.</b> Use UTF-8 if you plan to use languages with different charsets:
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	en	==> different group '%1' under that gidNumber %2, NOT setting memberships!
 [header-password],[header-user],[new-password],[new-user]	setup	en	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	en	Access denied: wrong username or password for manage-header!
@@ -70,7 +70,7 @@ allowed migration types (comma-separated)	setup	en	Allowed migration types (comm
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	en	Alternatively domains can be accessed by logging in with <i>username@domain</i>.
 alternatively you can use %1composer%2 to install all requirements at once. downloading it and run:	setup	en	Alternatively you can use %1Composer%2 to install all requirements at once. Downloading it and run:
 and is up to date	setup	en	and is up to date
-and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your web server, so the above changes take effect !!!
+and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your web server, so the above changes take effect!
 app details	setup	en	App details
 app install/remove/upgrade	setup	en	App install/remove/upgrade
 app process	setup	en	App process
@@ -148,17 +148,17 @@ cas server uri:	setup	en	CAS server URI:
 certificate (pem or ca):	setup	en	Certificate (PEM or CA):
 certificate metadata is signed with	setup	en	Certificate Metadata is signed with
 change system-charset	setup	en	Change system-charset
-charset	setup	en	charset
+charset	setup	en	Charset
 charset to convert to	setup	en	Charset to convert to
 charsets used by the different languages	setup	en	Charsets used by the different languages
-check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	en	Check can only be performed, if called via a web server, as the user-id/-name of the web server is not known.
+check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	en	Check can only be performed, if called via a web server, as the user-ID/-name of the web server is not known.
 check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	Check IP address of all sessions
 check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	en	Check to backup and restore the files directory. May use a lot of space, make sure to configure housekeeping accordingly.
 checking dependencies: %1 packages are installed in the required version.	setup	en	Checking dependencies: %1 packages are installed in the required version.
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file permissions of %1 for %2 %3: %4
-checking for gd support...	setup	en	Checking for GD support...
+checking for gd support...	setup	en	Checking for GD support ...
 checking for jpgraph in %1	setup	en	Checking for JPGraph in %1
 checking for tnef application	setup	en	Checking for tnef application
 checking function %1 exists	setup	en	Checking function %1 exists
@@ -217,7 +217,7 @@ current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system charset
 current system-charset is %1.	setup	en	Current system charset is %1.
 current version	setup	en	Current version
-currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br>
+currently installed languages: %1 <br />	setup	en	Currently installed languages: %1<br>
 custom handler: %1	setup	en	Custom handler: %1
 custom oid	setup	en	custom OID
 custom set via %1	setup	en	Custom set via %1
@@ -294,15 +294,15 @@ egroupware requires several dependencies installed via: %1	setup	en	EGroupware r
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	en	EGroupware sources in '%1' are not complete, file '%2' missing!
 egroupware's callback url is the one of the login page	setup	en	EGroupware's callback URL is the one of the login page
 email (standard maildomain should be set)	setup	en	Email (Standard Maildomain should be set)
-email-address	setup	en	EMail-address
+email-address	setup	en	Email address
 emailadmin mail account saved:	setup	en	EMailAdmin mail account saved:
 emailadmin profile updated:	setup	en	eMailAdmin profile updated:
 enable for extra debug-messages	setup	en	Enable for extra debug messages
 enable logging of authentication to files-directory	setup	en	Enable logging of authentication to files-directory
-enable mcrypt	setup	en	Enable MCrypt
+enable mcrypt	setup	en	Enable Mcrypt
 enforce ssl (allows to specify just a path above)	setup	en	Enforce SSL (allows to specify just a path above)
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br>encryption (requires mcrypt)
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session<br>encryption (requires mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
@@ -412,7 +412,7 @@ installed	setup	en	Installed.
 instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
 invalid argument '%1' !!!	setup	en	Invalid argument '%1'!
 invalid ip address	setup	en	Invalid IP address!
-invalid mcrypt algorithm/mode combination	setup	en	Invalid Mcrypt Algorithm/Mode combination
+invalid mcrypt algorithm/mode combination	setup	en	Invalid Mcrypt algorithm/mode combination
 invalid password	setup	en	Invalid password!
 ip or url	setup	en	IP or URL
 is broken	setup	en	is broken
@@ -464,7 +464,7 @@ max_execution_time is set to less than 30 (seconds): egroupware sometimes needs 
 maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account ID (e.g. 65535 or 1000000)
 may be broken	setup	en	May be broken
 mcrypt algorithm (default tripledes)	setup	en	Mcrypt algorithm (default TRIPLEDES)
-mcrypt initialization vector	setup	en	MCrypt initialization vector
+mcrypt initialization vector	setup	en	Mcrypt initialization vector
 mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than %1: some applications of EGroupware need more than the recommend 8M, expect occasional failures
@@ -502,7 +502,7 @@ no update necessary, domain %1(%2) is up to date.	setup	en	No update necessary, 
 no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	en	No VALID timezone set! ("%1" is NOT sufficient, you have to use a timezone identifier like "%2", see %3full list of valid identifiers%4)
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not	setup	en	Not
-not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.
+not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all Mcrypt algorithms and modes work with EGroupware. If you experience problems try switching it off.
 not automatic	setup	en	not automatic
 not complete	setup	en	Not complete
 not completed	setup	en	Not completed
@@ -511,7 +511,7 @@ not ready for this stage yet	setup	en	Not ready for this stage yet.
 not set	setup	en	Not set
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 nothing to change.	setup	en	Nothing to change.
-now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
+now guessing better values for defaults...	setup	en	Now guessing better values for defaults ...
 odbc / maxdb: dsn (data source name) to use	setup	en	ODBC / MaxDB: DSN (data source name) to use
 ok	setup	en	OK
 once the database is setup correctly	setup	en	Once the database is setup correctly
@@ -522,15 +522,15 @@ only add new phrases	setup	en	Only add new phrases
 optional, if only authentication and anonymous search is enabled	setup	en	optional, if only authentication AND anonymous search is enabled
 or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
-or leave empty and select openidconnect as authentication type above for single sign on	setup	en	or leave empty and select OpenIDConnect as authentication type above for single sign on
 or http://webdav.domain.com (webdav)	setup	en	or https://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	en	or leave empty and select OpenID Connect as authentication type above for single sign on
 or leave empty and select saml as authentication type above for single sign on	setup	en	or leave empty and select SAML as authentication type above for single sign on
-or we can attempt to create the database for you:	setup	en	Or attempt to create the database:
-or you can install a previous backup.	setup	en	Or install a previous backup.
+or we can attempt to create the database for you:	setup	en	or attempt to create the database:
+or you can install a previous backup.	setup	en	or install a previous backup.
 password	setup	en	Password
 password for smtp-authentication	setup	en	Password for SMTP authentication
 password needed for domain configuration.	setup	en	Password needed for domain configuration.
-password of db user	setup	en	Password of db user
+password of db user	setup	en	Password of DB user
 passwords --> sql	setup	en	Passwords --> SQL
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
 path (not url!) to your egroupware installation.	setup	en	Path (not URL!) to your EGroupware installation.
@@ -554,8 +554,8 @@ please install	setup	en	Please install
 please login	setup	en	Please login
 please login to egroupware and run the admin application for additional site configuration	setup	en	Please login to EGroupware and run the admin application for additional site configuration
 please make the following change in your php.ini	setup	en	Please make the following change in your php.ini
-please wait...	setup	en	Please wait...
-pop/imap mail server hostname or ip address	setup	en	POP/IMAP mail server hostname or IP address
+please wait...	setup	en	Please wait ...
+pop/imap mail server hostname or ip address	setup	en	POP3/IMAP mail server hostname or IP address
 port	setup	en	port
 possible reasons	setup	en	Possible reasons
 possible solutions	setup	en	Possible solutions
@@ -608,7 +608,7 @@ schedule	setup	en	Schedule
 scheduled backups	setup	en	Scheduled backups
 securest	setup	en	Most secure
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	en	Select an app, enter a target version, then submit to process to that version.<br>If you do not enter a version, only the baseline tables will be installed for the app.<br><b>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</b>
-select one...	setup	en	Select one...
+select one...	setup	en	Select one ...
 select the default applications to which your users will have access	setup	en	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	en	Select the desired action(s) from the available choices
 select to download file	setup	en	Select to download file
@@ -691,7 +691,7 @@ the following applications need to be upgraded:	setup	en	The following applicati
 the function %1 is needed from: %2.	setup	en	The function %1 is needed from: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	en	The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.
 the json extension is required by egroupware for ajax.	setup	en	The json extension is required by EGroupware for AJAX.
-the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	en	The ldap extension is needed, if you use ldap as account or contact storage, authenticate against LDAP or Active Directory. It's not needed for a standard SQL installation.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	en	The ldap extension is needed, if you use LDAP as account or contact storage, authenticate against LDAP or Active Directory. It's not needed for a standard SQL installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support Unicode (UTF-8) or other multibyte-charsets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support Unicode (UTF-8) or other multibyte-charsets.
 the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	en	The mcrypt extension is used, to store eTemplate form state on the client, which is the prefered way to store it.
@@ -701,13 +701,13 @@ the session extension is needed to use php sessions (db-sessions work without).	
 the session extension is required!	setup	en	The session extension is required!
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
-the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up html before inserting it in office documents.
+the tidy extension is need in merge-print to clean up html before inserting it in office documents.	setup	en	The tidy extension is need in merge-print to clean up HTML before inserting it in office documents.
 the used simplesamlphp allows a lot more configuration / different authentication types via its config files in	setup	en	The used SimpleSAMLphp allows a lot more configuration / different authentication types via its config files in
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 the xmlreader extension is required by egroupware in several applications.	setup	en	The xmlreader extension is required by EGroupware in several applications.
-the xsl extension is need in merge-print for processing html and office documents.	setup	en	The xsl extension is need in merge-print for processing html and office documents.
+the xsl extension is need in merge-print for processing html and office documents.	setup	en	The XSL extension is need in merge-print for processing HTML and office documents.
 the zip extension is required for merge-print with office documents.	setup	en	The zip extension is required for merge-print with office documents.
-there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br>
+there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server.<br>
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br>please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the web servers document-root!
 this might take a while, please wait ...	setup	en	This might take a while, please wait ...
@@ -751,7 +751,7 @@ use --install to install egroupware.	setup	en	Use --install to install EGroupwar
 use --update to do so.	setup	en	Use --update to do so
 use account description to store saml username	setup	en	Use account description to store SAML username
 use cookies to pass sessionid	setup	en	Use cookies to pass session ID
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	en	Use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	en	Use Mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	en	Use persistent db connections: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code
 use space to separate multiple	setup	en	use space to separate multiple
@@ -770,7 +770,7 @@ usually more annoying.<br />admins can use admin >> manage accounts or groups to
 utf-8 (unicode)	setup	en	UTF-8 (Unicode)
 validation errors	setup	en	Validation errors
 version	setup	en	Version
-version mismatch	setup	en	Version mis-match
+version mismatch	setup	en	Version mismatch
 view	setup	en	View
 virtual filesystem	setup	en	Virtual file system
 virtual mail manager (login-name includes domain)	setup	en	Virtual mail manager (login name includes domain)
@@ -800,7 +800,7 @@ year	setup	en	Year
 yes	setup	en	Yes
 yes, with lowercase usernames	setup	en	Yes, with lower case user names
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of EGroupware.<br>These versions are no longer supported, and there is no upgrade path for them in setup.<br> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br>and then upgrade from there with the current version.
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP<br>It its recommend that you upgrade to a new version. <br>Older version of PHP might not run EGroupware correctly, if at all. <br><br>Please upgrade to at least version %1
+you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP<br>It its recommend that you upgrade to a new version.<br>Older version of PHP might not run EGroupware correctly, if at all.<br><br>Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	en	You appear to be running version %1 of EGroupware
 you appear to have %1 support.	setup	en	You appear to have %1 support
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
@@ -829,7 +829,7 @@ you should %1log out%2 and in again, to update your current session!	setup	en	Yo
 you should either install the sources or uninstall it, to get rid of the tables	setup	en	You should either install the sources or uninstall it, to get rid of the tables.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs.
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	en	You will NOT be able to log into EGroupware using PHP sessions: "session could not be verified"!
-you're using an old configuration file format...	setup	en	You're using an old configuration file format...
+you're using an old configuration file format...	setup	en	You're using an old configuration file format ...
 your applications are current	setup	en	Your applications are current
 your backup directory '%1' %2	setup	en	Your backup directory '%1' %2
 your database does not exist	setup	en	Your database does not exist!

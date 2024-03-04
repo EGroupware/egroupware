@@ -1,13 +1,41 @@
+%1 %2 in %3	calendar	ro	%1 %2 în %3
+%1 days	calendar	ro	%1 zile
+%1 event(s) %2	calendar	ro	%1 eveniment(e) %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	ro	%1 eveniment(e) %2, %3 a eșuat din cauza drepturilor insuficiente!
 %1 events in ical file, only first one imported and displayed!	calendar	ro	%1 evenimente în fișierul iCal, doar primul a fost importat și afișat!
+%1 hours	calendar	ro	%1 ore
+%1 minutes	calendar	ro	%1 minute
+%1 participants removed because of missing invite grants	calendar	ro	%1 participanți eliminați din cauza lipsei subvențiilor pentru invitații.
+%1 weeks	calendar	ro	%1 săptămâni
+%s the event	calendar	ro	%s the event
 (%1 events in %2 seconds)	calendar	ro	(%1 evenimente în %2 secunde)
+a non blocking event will not conflict with other events	calendar	ro	Un eveniment care nu se blochează nu va intra în conflict cu alte evenimente
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	ro	Un petrecăreț este o persoană care NU este invitată la întâlnire, dar care a primit cumva invitația.
+accept	calendar	ro	Acceptă
+accepted	calendar	ro	Acceptat
+access to calendar of %1 denied!	calendar	ro	Accesul la calendarul lui %1 refuzat!
+actions	calendar	ro	Acțiuni
+actions...	calendar	ro	Acțiuni ...
 add appointments via shortened dialog or complete edit window	calendar	ro	Adăugați programări prin intermediul unei ferestre de dialog scurtate sau al unei ferestre de editare completă
+add current view as favorite	calendar	ro	Adăugați vizualizarea curentă ca favorită
+add new alarm	calendar	ro	Adăugați o nouă alarmă
 add new event	calendar	ro	Adăugați o nouă programare
+add new participants or resource	calendar	ro	Adăugați noi participanți sau resurse
+add timesheet entry	calendar	ro	Adăugare intrare în foaia de pontaj
 added by synchronization	calendar	ro	Adăugat prin sincronizare
+after	calendar	ro	După
+after %1	calendar	ro	După %1
+age:	calendar	ro	Vârsta:
+alarm added automatic to new events before event start-time	calendar	ro	Alarmă adăugată automat la evenimentele noi înainte de ora de începere a evenimentului
+all exceptions are converted into single events.	calendar	ro	Toate excepțiile sunt convertite în evenimente unice.
+all future	calendar	ro	Toate evenimentele viitoare
+all incl. rejected	calendar	ro	Toate, inclusiv cele respinse
 allow booking requests from any user when creating events?	calendar	ro	Permiteți cererile de rezervare de la orice utilizator la crearea de evenimente?
+allow party crashers with email that match the following regular expression	calendar	ro	Permiteți petrecăreților care se prezintă cu e-mailuri care se potrivesc cu următoarea expresie regulată
 always use full edit dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă
 always use the full edit dialog, not this little dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă, nu această fereastră de dialog redusă
 attention	calendar	ro	În atenția
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	ro	În mod implicit (nu este setat nimic aici), EGroupware permite doar organizatorului/proprietarului să îi adauge.
 category report	calendar	ro	Raport de categorie
 changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de eveniment
 date range	calendar	ro	Intervalul de date
@@ -20,8 +48,17 @@ how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie 
 how many days to sync in the past (default %1)	calendar	ro	Câte zile trebuie sincronizate în trecut (implicit %1)
 how many description lines should be directly visible. further lines are available via a scrollbar.	calendar	ro	Câte linii de descriere trebuie să fie direct vizibile. Liniile suplimentare sunt disponibile prin intermediul unei bare de derulare.
 how many lines of all day events should be directly visible. further lines are available via a mouseover.	calendar	ro	Câte rânduri ale evenimentelor din toate zilele trebuie să fie direct vizibile. Linii suplimentare sunt disponibile prin intermediul unui mouseover.
+how many minutes should each interval last?	calendar	ro	Câte minute ar trebui să dureze fiecare interval?
 how many separate calendars to show before merging them together	calendar	ro	Numărul minim de utilizatori pentru a afișa o vizualizare consolidată a calendarului; dacă sunt selectați mai puțini utilizatori, calendarul este afișat separat pentru vizualizarea săptămânală sau zilnică.
+how much entries to skip	calendar	ro	Câte intrări să săriți?
+html link to the current record	calendar	ro	Legătură HTML către înregistrarea curentă
+ical	calendar	ro	iCal
+ical / rfc2445	calendar	ro	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ro	iCal nu poate schimba proprietarul unui eveniment existent. Acest lucru se aplică numai evenimentelor noi.
+ical export	calendar	ro	Export iCal
+ical file	calendar	ro	Fișier iCal
+ical import	calendar	ro	Import iCal
+ical successful imported	calendar	ro	iCal importat cu succes.
 maximum available quantity of %1 exceeded!	calendar	ro	Cantitatea maximă disponibilă de %1 a fost depășită!
 min days	calendar	ro	Zile minime
 minimum number of users for showing day view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru afișarea vizualizării zilei ca fiind consolidată.

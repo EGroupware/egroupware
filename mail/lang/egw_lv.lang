@@ -149,9 +149,20 @@ modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
 move selected to	mail	lv	Pārvietot atlasītās uz
 move to	mail	lv	Pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
+name and domain	mail	lv	Nosaukums un domēns
 name and email	mail	lv	Vārds un e-pasts
+name of account	mail	lv	Konta nosaukums
+name of imap servers (space separated host or host:port)	mail	lv	IMAP serveru nosaukums (ar atstarpi atdalīts hosts vai host:port)
 never display html emails	mail	lv	Nekas nerādīt HTML vēstules
+never show	mail	lv	Nekad nerādīt
+never show notification	mail	lv	Nekad nerādīt paziņojumu
+new mail from %1	mail	lv	Jauns e-pasts no %1
+new mail notification	mail	lv	Paziņojums par jaunu e-pastu
+new message type	mail	lv	Jauna ziņojuma tips
 new subject	mail	lv	Jauns temats
+no access	mail	lv	Nav piekļuves
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	lv	Nav norādītas adreses TO/CC/BCC un nav norādīta mape, kurā saglabāt ziņojumu.
+no adress, to send this mail to, supplied	mail	lv	nav norādīta adrese, uz kuru nosūtīt šo e-pasta vēstuli.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	lv	Nav sniegts mapes galamērķis, un nav sniegta mape ziņojuma saglabāšanai vai cits pasākums pasta saglabāšanai (saglabāt InfoLog/Ticketsystem), bet tas ir nepieciešams.
 no sneak preview in list	mail	lv	Nav ziņojuma priekšskatījuma
 non	mail	lv	Nav
@@ -266,7 +277,7 @@ toggled on actions	mail	lv	Pārslēgt uz darbībām
 trash	mail	lv	Izmest atkritumus
 trash folder	mail	lv	Atkritumu mape
 unread	mail	lv	Nelasīts
-vacation notice	mail	lv	norāde par atrašanos atvaļinājumā
+vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt
 wrote	mail	lv	rakstīja

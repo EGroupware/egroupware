@@ -522,11 +522,11 @@ only add new phrases	setup	de	Nur neue Begriffe hinzufügen
 optional, if only authentication and anonymous search is enabled	setup	de	optional, wenn nur Authentifizierung UND anonymes Suchen erlaubt ist
 or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
-or leave empty and select openidconnect as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oberhalb OpenIDConnect als Art der Authentifizierung auswählen
 or http://webdav.domain.com (webdav)	setup	de	oder https://webdav.domain.com (für WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oben OpenID Connect als Art der Authentifizierung auswählen
 or leave empty and select saml as authentication type above for single sign on	setup	de	oder leer lassen und für SingleSignOn oberhalb SAML als Art der Authentifizierung auswählen
-or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
-or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
+or we can attempt to create the database for you:	setup	de	oder wir können versuchen die Datenbank für Sie anzulegen:
+or you can install a previous backup.	setup	de	oder Sie können eine vorherige Datensicherung installieren.
 password	setup	de	Passwort
 password for smtp-authentication	setup	de	Passwort für SMTP Authentifizierung
 password needed for domain configuration.	setup	de	Passwort für die Konfiguration der Domain.

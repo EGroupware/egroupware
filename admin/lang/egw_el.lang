@@ -74,7 +74,7 @@ admin name	admin	el	Ονομα διαχειρηστή
 administration	admin	el	Διαχείρηση
 admins	admin	el	Διαχειριστές
 advanced options	admin	el	επιλογές για προχωρημένους
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3) ?
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3);
 aliases	admin	el	Ψευδώνυμα
 all categories	admin	el	Όλες οι κατηγορίες
 all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν !
@@ -93,14 +93,15 @@ applications	admin	el	Εφαρμογές
 applications list	admin	el	Λίστα εφαρμογών
 applies the changes	admin	el	εφαρμόζει τις αλλαγές
 apply the changes	admin	el	εφαρμόστε τις αλλαγές
-are you sure you want to delete the application %1 ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις την εφαρμογή %1 ?
-are you sure you want to delete this account ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το λογαριασμό
-are you sure you want to delete this application ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την εφαρμογή
-are you sure you want to delete this category ?	common	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την κατηγορία
-are you sure you want to delete this global category ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή τη γενική κατηγορία
-are you sure you want to delete this group ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το group ?
-are you sure you want to delete this server?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το server ?
-are you sure you want to kill this session ?	admin	el	Είσαι σίγουρος πως θέλεις να διακόψεις αυτή την περίοδο ?
+are you sure you want to %1 mail for selected accounts?	admin	el	Είστε σίγουροι ότι θέλετε να εμφανίζεται η αλληλογραφία %1 για επιλεγμένους λογαριασμούς;
+are you sure you want to delete the application %1 ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις την εφαρμογή %1;
+are you sure you want to delete this account ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το λογαριασμό;
+are you sure you want to delete this application ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την εφαρμογή;
+are you sure you want to delete this category ?	common	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την κατηγορία;
+are you sure you want to delete this global category ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή τη γενική κατηγορία;
+are you sure you want to delete this group ?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το group;
+are you sure you want to delete this server?	admin	el	Είσαι σίγουρος πως θέλεις να διαγράψεις αυτό το server;
+are you sure you want to kill this session ?	admin	el	Είσαι σίγουρος πως θέλεις να διακόψεις αυτή την περίοδο;
 async services last executed	admin	el	Ασύγχρονες υπηρεσίες θα εκτελεστούν τελευταίες
 asynchronous timed services	admin	el	Ασύγχρονες υπηρεσίες
 asyncservices not yet installed or other error (%1) !!!	admin	el	ασύγχρονες υπηρεσίες δεν έχουν εγκατεστηθεί ακόμα ή άλλο λάθος (%1) !
@@ -150,7 +151,7 @@ day of week<br>(0-6, 0=sun)	admin	el	Ημέρα της εβδομάδας <br>(0
 db backup and restore	admin	el	DB backup και επαναφορά
 default	admin	el	προκαθορισμένο
 default file system space per user	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη
-default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
+default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά;
 deinstall crontab	admin	el	Απεγκατάσταση crontab
 delete account	admin	el	Διαγραφή λογαριασμών
 delete all records	admin	el	Διαγραφή όλων των εγγραφών
@@ -180,7 +181,7 @@ deny access to peer servers	admin	el	Αρνηση πρόσβασης σε ισό
 deny access to phpinfo	admin	el	Αρνηση πρόσβασης στο phpinfo
 deny access to site configuration	admin	el	Αρνηση πρόσβασης στην διαμόρφωση της ιστιοσελίδας
 deny access to user accounts	admin	el	Αρνηση πρόσβασης στους λογαριασμούς του χρήστη
-deny all users access to grant other users access to their entries ?	admin	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους ?
+deny all users access to grant other users access to their entries ?	admin	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους;
 description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
 determines the order the fields are displayed	admin	el	καθορίζει τη σειρά εμφάνισης των πεδίων
 disable	admin	el	Απενεργοποίηση
@@ -191,9 +192,9 @@ display	admin	el	Εμφάνιση
 displaying html messages is disabled	admin	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
 do not delete the category and return back to the list	admin	el	μην διαγράψεις την κατηγορία και επέστρεψε στην λίστα
 do not validate certificate	admin	el	μην επικυρώνετε το πιστοποιητικό
-do you also want to delete all global subcategories ?	admin	el	Θέλεις επίσης να διαγραφούν και όλες οι γενικές υποκατηγορίες?
+do you also want to delete all global subcategories ?	admin	el	Θέλεις επίσης να διαγραφούν και όλες οι γενικές υποκατηγορίες;
 do you want to delete all global subcategories ?	admin	el	Θέλεις να διαγραφούν όλες οι γενικές υποκατηγορίες;
-do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω?
+do you want to move all global subcategories one level down ?	admin	el	Θέλεις να μετακινήσεις όλες τις γενικές υποκατηγορίες ένα επίπεδο κάτω;
 document root (default)	admin	el	Document root
 down	admin	el	κάτω
 edit account	admin	el	Επεξεργασία λογαριασμού
@@ -261,7 +262,7 @@ forward only	admin	el	μόνο προώθηση
 full name	admin	el	Πλήρες όνομα
 general	admin	el	Γενικά
 global categories	common	el	Γενικές κατηγορίες
-group ?	admin	el	ομαδα ?
+group ?	admin	el	ομαδα;
 group has been added	common	el	Ομάδα προστέθηκε
 group has been deleted	common	el	Ομάδα έχει σβηστεί
 group has been updated	common	el	Ομάδα έχει ενημερωθεί
@@ -273,13 +274,13 @@ home directory	admin	el	Αρχικος κατάλογος
 home screen message	admin	el	Μήνυμα κύριας οθόνης
 host information	admin	el	Πληροφορία
 hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90) ?
-how many minutes should an account or ip be blocked (default 1) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30) ?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90);
+how many minutes should an account or ip be blocked (default 1) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30);
 how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι διευθύνσεις Email για τους νεόυς χρήστες να κατασκευάζονται;
 icon	admin	el	Εικόνα
 idle	admin	el	αδρανής
 if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής;
 if using ssl or tls, you must have the php openssl extension loaded.	admin	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
 imap server	admin	el	IMAP Server
 imap server closed the connection.	admin	el	Ο IMAP Server έκλεισε τη σύνδεση
@@ -397,7 +398,7 @@ read this list of methods.	admin	el	Διαβάστε αυτή τη λίστα α
 register application hooks	admin	el	Καταχώρηση hook της εφαρμογής
 remove	admin	el	αφαίρεση
 remove all users from this group	admin	el	Διαγράψτε όλους τους χρήστες απο αυτη την ομάδα
-remove all users from this group ?	admin	el	Θα διαγράψετε όλους τους χρήστες απο αυτη την ομάδα?
+remove all users from this group ?	admin	el	Θα διαγράψετε όλους τους χρήστες απο αυτη την ομάδα;
 route all mails to	admin	el	Δρομολογήστε όλα τα Μηνύματα στο
 rows	admin	el	Γραμμές
 run asynchronous services	admin	el	Τρέξτε Ασύνχρονες υπηρεσίες
@@ -513,12 +514,12 @@ view error log	admin	el	Εμφάνιση καταγραφής λαθών
 view sessions	admin	el	Εμφάνιση περιόδων
 view this user	admin	el	εμφάνιση αυτού του χρήστη
 view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
-who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
-would you like egroupware to cache the egw info array ?	admin	el	Θέλετε η EGroupware να κρύβει τον πίνακα πληροφοριών της EGw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η EGroupware να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η EGroupware να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής) ?
-would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής ?
+who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε;
+would you like egroupware to cache the egw info array ?	admin	el	Θέλετε η EGroupware να κρύβει τον πίνακα πληροφοριών της EGw;
+would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η EGroupware να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή;
+would you like egroupware to check for new application versions when admins login ?	admin	el	Θέλετε η EGroupware να ελέγχει για νέες εκδώσεις της εφαρμογής όταν ο διαχειρηστής κάνει εισαγωγή;
+would you like to automaticaly load new langfiles (at login-time) ?	admin	el	Θέλετε αυτόματα να φορτώνονται νέα langfiles (κατα τη διάρκεια εισαγογής);
+would you like to show each application's upgrade status ?	admin	el	Θέλετε να εμφανίζεται καθε κατάσταση αναβάθμησης τηε εφαρμογής;
 xml-rpc	admin	el	XML-RPC
 you have entered an invalid expiration date	admin	el	Εχετε εισάγει μια λάθοςημερομηνία λήξης
 you have to enter a name, to create a new field!!!	admin	el	Πρέπει να πληκτρολογήσετε ένα όνομα, για τη δημιουργία νέου πεδίου !

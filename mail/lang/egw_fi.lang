@@ -190,11 +190,19 @@ matches regexp	mail	fi	Täsmäävät merkkijonoon
 message learned as spam and moved to spam folder	mail	fi	Viesti tunnistettiin roskapostiksi ja siirrettiin roskapostikansioon
 modify subject	mail	fi	Aiheen muuttaminen
 modify subject of this message	mail	fi	Muokkaa tämän viestin aihetta
-move selected to	mail	fi	Siirrä valitut
-move to	mail	fi	Siirrä valitut:
+move selected to	mail	fi	Siirrä valittu osoitteeseen
+move to	mail	fi	Siirrä osoitteeseen
 move to trash	mail	fi	Siirrä roskakoriin
+name and domain	mail	fi	Nimi ja verkkotunnus
 name and email	mail	fi	Nimi ja sähköpostiosoite
+name of account	mail	fi	Tilin nimi
+name of imap servers (space separated host or host:port)	mail	fi	IMAP-palvelimien nimet (välilyönnillä erotettu isäntä tai isäntä:portti).
 never display html emails	mail	fi	Älä näytä HTML -sähköposteja
+never show	mail	fi	Ei koskaan näytä
+never show notification	mail	fi	Ei koskaan näytä ilmoitusta
+new mail from %1	mail	fi	Uusi sähköposti %1:ltä
+new mail notification	mail	fi	Uuden sähköpostin ilmoitus
+new message type	mail	fi	Uuden viestin tyyppi
 new subject	mail	fi	Uusi aihe
 no access	mail	fi	Ei pääsyä
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	fi	Osoitetta ei ole annettu kohtaan Kenelle/Kopio/Piilokopio , eikä Kansiota, mihin viesti pitäisi tallentaa löydy.

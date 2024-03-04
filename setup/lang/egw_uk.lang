@@ -3,7 +3,7 @@ add auto-created users to this group ('default' will be attempted if this is emp
 admins	setup	uk	Адміністратори
 all users	setup	uk	Всі користувачі
 application title	setup	uk	Найменування приложення
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	uk	Спроба використати вірний mime-тип для FTP замість типового 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	uk	Спроба використати вірний MIME-тип для FTP замість типового 'application/octet-stream'
 authentication / accounts	setup	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	setup	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
 bottom	setup	uk	низ
@@ -13,7 +13,7 @@ country selection	setup	uk	Вибір країни
 day	setup	uk	День
 default	setup	uk	По замовченню
 default file system space per user/group ?	setup	uk	Обсяг файлової системи для користувача/групи по замовченню
-deny all users access to grant other users access to their entries ?	setup	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів ?
+deny all users access to grant other users access to their entries ?	setup	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів?
 download	setup	uk	Загрузити
 enter the hostname of the machine on which this server is running	setup	uk	Введіть hostname машини, на якій працює цей сервер.
 enter the site password for peer servers	setup	uk	Введіть пароль сайту для peer серверів
@@ -22,6 +22,14 @@ enter the title for your site	setup	uk	Введіть найменування �
 enter your default ftp server	setup	uk	Введіть Ваш типовий FTP сервер
 enter your http proxy server	setup	uk	Введіть Ваш HTTP проксі сервер
 enter your http proxy server port	setup	uk	Введіть порт Вашого HTTP проксі серверу
+error searching "dn=%1" for "%2"!	setup	uk	Помилка пошуку "DN=%1" для "%2"!
+error uploading your backup!	setup	uk	Помилка завантаження резервної копії!
+every	setup	uk	Кожен
+export has been completed!	setup	uk	Експорт завершено!
+failed to mount backup directory!	setup	uk	Не вдалося змонтувати каталог резервної копії!
+failed updating user "%1" dn="%2"!	setup	uk	Не вдалося оновити користувача "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	uk	Не вдалося записати файл конфігурації header.inc.php, перевірте права доступу!
+fallback authentication	setup	uk	Резервна автентифікація
 host information	setup	uk	Інформація хосту
 if no acl records for user or any group the user is a member of	setup	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?
@@ -32,7 +40,7 @@ ldap encryption type	setup	uk	Тип шифрування LDAP
 ldap groups context	setup	uk	Контекст LDAP груп
 ldap host	setup	uk	Хост LDAP
 ldap root password	setup	uk	root пароль LDAP
-ldap rootdn	setup	uk	LDAP rootdn
+ldap rootdn	setup	uk	LDAP root DN
 maximum account id (e.g. 65535 or 1000000)	setup	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minimum account id (e.g. 500 or 100, etc.)	setup	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minute	setup	uk	Хвилина
@@ -42,6 +50,11 @@ next run	setup	uk	Наступний запуск
 no algorithms available	setup	uk	Немає алгоритмів
 no modes available	setup	uk	Немає режимів
 not	setup	uk	не треба
+optional, if only authentication and anonymous search is enabled	setup	uk	необов'язково, якщо ввімкнено лише автентифікацію та анонімний пошук
+or leave empty and select openidconnect as authentication type above for single sign on	setup	uk	або залиште пустим і виберіть OpenID Connect як тип автентифікації вище для єдиного входу
+or leave empty and select saml as authentication type above for single sign on	setup	uk	або залиште поле порожнім і виберіть SAML як тип автентифікації для єдиного входу
+password	setup	uk	Пароль
+passwords --> sql	setup	uk	Паролі --> SQL
 path information	setup	uk	Інформація шляху
 re-enter password	setup	uk	Перевведіть пароль
 regular expression to filter by dn	setup	uk	Регулярний вираз для фільтрації за DN
@@ -55,10 +68,10 @@ required to change passwords	setup	uk	Потрібен для зміни пар�
 requires "reset password" privilege, to change passwords!	setup	uk	Для зміни пароля потрібен привілей "Скинути пароль"!
 select where you want to store/retrieve user accounts	setup	uk	Визначте де зберігати рахунки користувачів
 selectbox	setup	uk	Виберіть поле
-show 'powered by' logo on	setup	uk	Показувати логотип 'powered by'
+show 'powered by' logo on	setup	uk	Показувати логотип 'Powered by'
 text entry	setup	uk	Текстовий запис
 top	setup	uk	зверху
 use cookies to pass sessionid	setup	uk	Використовувати куки для передачі ідентифікатора сесії
 use pure html compliant code (not fully working yet)	setup	uk	Використовувати чистий HTML код (ще не повністю працює)
-would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення ?
+would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення?
 write	setup	uk	Записати

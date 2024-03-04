@@ -1143,6 +1143,7 @@ title	common	pt	Título
 to	common	pt	Para
 to correct this error for the future you will need to properly set the	common	pt	Para corrigir este erro futuramente, irá precisar de definir correctamente o
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt	Para desactivar: [! = não]<valor>[=<verificação>] ex: '!@data' desactiva se o conteúdo dos dados estiver vazio
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	pt	Para examinar ou restabelecer ficheiros inactivos, poderá ser necessário ativar o controlo de versões.
 to go back to the msg list, click <a href= %1 >here</a>	common	pt	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 to start the db-tools	common	pt	Para iniciar as ferramentas da base de dados
 to start the etemplate editor	common	pt	Para iniciar o editor de modelos Web
@@ -1152,9 +1153,11 @@ todays date, eg. "%1"	common	pt	Data de hoje, ex: "%1"
 togo	common	pt	Togo
 tokelau	common	pt	Toquelau
 tonga	common	pt	Tonga
+too many rows selected.<br />select all, or less than %1 rows	common	pt	Demasiadas linhas seleccionadas.<br>Selecionar todas ou menos de %1 linhas
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt	Demasiadas tentativas de acesso sem sucesso: %1 para o utilizador '%2', %3 para o IP %4
 top	common	pt	Topo
 total	common	pt	Total
+total: %1 successful: %2 failed: %3 skipped: %4	common	pt	Total: %1 Bem-sucedido: %2 Falha: %3 Ignorado: %4
 transparant bg for the icons?	common	pt	Fundo transparente para os ícones?
 tree	common	pt	Árvore
 trinidad and tobago	common	pt	Trindade e Tobago

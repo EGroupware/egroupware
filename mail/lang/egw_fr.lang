@@ -140,9 +140,9 @@ delete folder	mail	fr	Supprimer le dossier
 delete folder %1 ?	mail	fr	Supprimer le dossier %1
 delete this acl	mail	fr	Supprimer cet ACL
 deleted	mail	fr	supprimé
-deleted %1 messages in %2	mail	fr	Supprimer %1 messages dans %2
+deleted %1 messages in %2	mail	fr	Supprimer %1 messages dans %2.
 deleted!	mail	fr	supprimé !
-deleting %1 folders in progress ...	mail	fr	Suppression de %1 dossier(s) en cours...
+deleting %1 folders in progress ...	mail	fr	Suppression de %1 dossier(s) en cours ...
 deleting folders	mail	fr	Suppression de dossier
 deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
 directories have to be shared.	mail	fr	Les dossiers doivent être partagés.
@@ -378,6 +378,7 @@ move to archive	mail	fr	Déplacer vers le dossier archives
 move to trash	mail	fr	Déplacer vers la Corbeille
 moved %1 message(s) from %2 to %3	mail	fr	Déplacer %1 message(s) de %2 vers %3
 moving folders from one mailaccount to another is not supported	mail	fr	Déplacer des dossiers d'un compte à un autre n'est pas supporté
+name and domain	mail	fr	Nom et domaine
 name and email	mail	fr	Nom et email
 name of account	mail	fr	Nom du compte
 name of imap servers (space separated host or host:port)	mail	fr	Nom des serveurs IMAP (hôte séparé par des espaces ou hôte:port)
@@ -500,8 +501,8 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	fr	Répondre A
 report as ham	mail	fr	Marqué comme HAM
 report as spam	mail	fr	Marqué comme SPAM
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail comme Ham (pas spam) - les solutions anti-spam comme spamTitan apprendront.
-report this email content as spam - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail en tant que spam - les solutions anti-spam comme spamTitan vont apprendre
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail comme Ham (pas spam) - les solutions anti-spam comme SpamTitan apprendront.
+report this email content as spam - spam solutions like spamtitan will learn	mail	fr	Signaler le contenu de cet e-mail en tant que spam - les solutions anti-spam comme SpamTitan vont apprendre
 required pear class mail/mimedecode.php not found.	mail	fr	Classe PEAR class Mail/mimeDecode.php non trouvée.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fr	Doit être désactivée si vous utilisez Dovecot avec des drapeaux "private seen" sur des dossiers partagés ou des dossiers d'utilisateurs !
 resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?
@@ -611,7 +612,7 @@ source	mail	fr	Source
 sources	mail	fr	Sources
 spamtitan api url	mail	fr	SpamTitan API URL
 spamtitan integration requires epl version	mail	fr	L'intégration de SpamTitan nécessite la version EPL
-start new messages with mime type plain/text or html?	mail	fr	Créer les nouveaux messages au format plain/text ou HTML ?
+start new messages with mime type plain/text or html?	mail	fr	Créer les nouveaux messages au format text ou HTML ?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	fr	Répondre aux courriels et les transférer au format texte, au format HTML ou selon le format dans lequel le courriel a été initialement composé par l'expéditeur (par défaut).
 step 1: imap - incoming mail	mail	fr	Etape 1 : IMAP - mail entrant
 step 2: folder	mail	fr	Etape 2 : Dossier

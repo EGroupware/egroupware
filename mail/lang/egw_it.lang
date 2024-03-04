@@ -140,9 +140,9 @@ delete folder	mail	it	Elimina cartella
 delete folder %1 ?	mail	it	ELIMINARE la cartella %1 ?
 delete this acl	mail	it	Elimina questa ACL
 deleted	mail	it	eliminato
-deleted %1 messages in %2	mail	it	eliminato %1 messaggi in %2
+deleted %1 messages in %2	mail	it	Eliminato %1 messaggi in %2.
 deleted!	mail	it	eliminato!
-deleting %1 folders in progress ...	mail	it	Eliminazione di %1 cartelle in corso
+deleting %1 folders in progress ...	mail	it	Eliminazione di %1 cartelle in corso ...
 deleting folders	mail	it	Eliminazione cartelle
 deny certain groups access to following features	mail	it	Nega accesso alle seguenti funzioni ad alcuni gruppi
 directories have to be shared.	mail	it	Le cartelle devono essere condivise
@@ -378,6 +378,7 @@ move to archive	mail	it	Sposta in archivio
 move to trash	mail	it	Sposta nel cestino
 moved %1 message(s) from %2 to %3	mail	it	spostato %1 messaggi(o) da %2 a %3
 moving folders from one mailaccount to another is not supported	mail	it	Lo spostamento di cartelle fra account non è consentito.
+name and domain	mail	it	Nome e dominio
 name and email	mail	it	Nome e email
 name of account	mail	it	Nome account
 name of imap servers (space separated host or host:port)	mail	it	Nome dei server IMAP (host separati da spazi o host:porta)
@@ -500,8 +501,8 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	it	risposta a
 report as ham	mail	it	Segnala come Ham
 report as spam	mail	it	Segnala come Spam
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Ham (non Spam) - soluzioni antispam come spamTitan riescono ad apprendere
-report this email content as spam - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Spam - soluzioni antispam come spamTitan riescono ad apprendere
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Ham (non Spam) - soluzioni antispam come SpamTitan riescono ad apprendere
+report this email content as spam - spam solutions like spamtitan will learn	mail	it	Segnala questo contenuto della mail come Spam - soluzioni antispam come SpamTitan riescono ad apprendere
 required pear class mail/mimedecode.php not found.	mail	it	La classe PEAR Mail /mimeDecode.php necessaria, non è stata trovata
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	it	Da disabilitare se si usa Dovecot con flag di visualizzazione privata su cartelle condivise o utente!
 resend after how many days?	mail	it	Dopo quanti giorni tentare di reinviare?
@@ -609,8 +610,8 @@ some clients fail to detect correct charset, if flowed lines are enabled.	mail	i
 sort order	mail	it	Ordinamento
 source	mail	it	Sorgente
 sources	mail	it	Sorgenti
-spamtitan api url	mail	it	URL della API di spamTitan
-spamtitan integration requires epl version	mail	it	L'integrazione di spamTitan richiede la versione EPL
+spamtitan api url	mail	it	URL della API di SpamTitan
+spamtitan integration requires epl version	mail	it	L'integrazione di SpamTitan richiede la versione EPL
 start new messages with mime type plain/text or html?	mail	it	Iniziare nuovi messaggi con mime type testo o HTML
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	it	Iniziare i messaggi di risposta con mime type testo oppure provare a usare il formato mostrato (predefinito)?
 step 1: imap - incoming mail	mail	it	Primo passo: IMAP - posta in arrivo

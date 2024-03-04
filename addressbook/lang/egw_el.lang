@@ -31,7 +31,7 @@ add appointment	addressbook	el	Προσθήκη συνάντησης
 add business email of whole distribution list?	addressbook	el	Προσθήκη email εργασίας για ολόκληρη την λίστας διανομής;
 add custom field	addressbook	el	Προσθήκη προσαρμοσμένου πεδίου
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	el	Προσθήκη προσαρμοσμένου πεδίου στους συνδέσμους του βιβλίου διευθύνσεων το οποίο εμφανίζεται σε άλλες εφαρμογές. Η προεπιλογή είναι να μην υπάρχει προσαρμοσμένο πεδίο.
-add emails of whole distribution list?	addressbook	el	Να προστεθούν οι διευθύνσεις ηλεκτρονικού ταχυδρομείο ολόκληρης της λίστας διανομής
+add emails of whole distribution list?	addressbook	el	Να προστεθούν οι διευθύνσεις ηλεκτρονικού ταχυδρομείο ολόκληρης της λίστας διανομής;
 add or delete categories	addressbook	el	Προσθήκη ή διαγραφή κατηγοριών
 add to bcc	addressbook	el	Προσθήκη στο πεδίο κρυφή κοινοποίηση (BCc)
 add to cc	addressbook	el	Προσθήκη στο πεδίο κοινοποίηση (Cc)
@@ -283,6 +283,7 @@ geolocation integration	admin	el	Ενσωμάτωση συστήματος γε�
 global categories	addressbook	el	Παγκόσμιες κατηγορίες
 grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευθύνσεων
 group %1	addressbook	el	Ομάδα %1
+h	addressbook	el	h
 hide accounts from addressbook	addressbook	el	Απόκρυψη λογαριασμών
 hide all accounts	addressbook	el	Απόκρυψη όλων των λογαριασμών
 hide user groups as distribution lists	addressbook	el	Οι ομάδες χρηστών να μην εμφανίζονται στις λίστες διανομής
@@ -509,12 +510,13 @@ timezone	addressbook	el	Ζώνη ώρας
 title	addressbook	el	Επάγγελμα
 titles of any entries linked to the current record, excluding attached files	addressbook	el	Τίτλοι των συνδεδεμένων καταχωρήσεων τις τρέχουσας εγγραφής εκτός από τα συνημμένα αρχεία
 to many might exceed your execution-time-limit	addressbook	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσης
-today is %1's birthday!	common	el	Σήμερα είναι τα γενέθλια του/της %1 !
-tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια του/της %1 !
+today is %1's birthday!	common	el	Σήμερα είναι τα γενέθλια του/της %1!
+tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια του/της %1!
 translation	addressbook	el	Μετάφραση
 two of: %1	addressbook	el	Δύο από: %1
 type	addressbook	el	Τύπος
 un-delete	addressbook	el	Επαναφορά
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	el	Αδυναμία μετατροπής του "%1" σε αναγνωριστικό λογαριασμού. Χρήση της ρύθμισης του πρόσθετου (%2) για τον ιδιοκτήτη.
 unable to delete	addressbook	el	αδυναμία διαγραφής
 unable to import into %1, using %2	addressbook	el	Αδυναμία εισαγωγής στο 1% χρησιμοποιώντας το %2
 unique id (uid)	addressbook	el	Μοναδικό (Unique) ID (UID)
@@ -528,11 +530,13 @@ updated	addressbook	el	Ενημερώθηκε
 upload or delete the photo	addressbook	el	Φορτώστε ή διαγράψτε τη φωτογραφία
 url (business)	addressbook	el	url ιστότοπος (εργασίας)
 url (private)	addressbook	el	url ιστότοπος (προσωπικός)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	el	Διεύθυνση URL για τη σύνδεση αριθμών τηλεφώνου με. Χρησιμοποιήστε %1 = αριθμός προς κλήση, %u = όνομα λογαριασμού, %t = τηλέφωνο λογαριασμού.
 use a category tree?	addressbook	el	Χρήση δέντρου για την επιλογή κατηγοριών
 use addressbooks "own sorting" attribute	addressbook	el	να γίνεται χρήση του χαρακτηριστικού "προσωπική ταξινόμηση"
 use an extra tab for private custom fields?	admin	el	Χρήση πρόσθετου διαχωριστικού για την εμφάνιση προσαρμοσμένων προσωπικών πεδίων.
 use country list	addressbook	el	Χρήση καταλόγου χωρών
 use setup for a full account-migration	admin	el	χρήση της εγκατάστασης για πλήρη μετανάστευση λογαριασμού
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	el	Χρησιμοποιήστε αυτήν την ετικέτα για ετικέτες διευθύνσεων. Τοποθετήστε το περιεχόμενο που θέλετε να επαναλάβετε ανάμεσα σε δύο ετικέτες.
 used for links and for the own sorting of the list	addressbook	el	χρησιμοποιείται για συνδέσμους και προσωπικές ταξινομήσεις της λίστας
 user groups are automatically shown as distribution lists.	addressbook	el	Οι ομάδες χρηστών εμφανίζονται αυτόματα ως λίστες διανομής.
 user preference	addressbook	el	Επιλογή χρήστη
@@ -545,6 +549,9 @@ view linked infolog entries	addressbook	el	Εμφάνιση συνδεδεμέν
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	el	ΠΡΟΣΟΧΗ!! Το LDAP ισχύει μόνο εάν ΔΕΝ χρησιμοποιείτε τις επαφές για την αποθήκευση λογαριασμών!
 warning: all contacts found will be deleted!	addressbook	el	ΠΡΟΣΟΧΗ: Όλες οι επαφές που βρέθηκαν θα διαγραφούν!
 weekday	addressbook	el	Ημέρα της εβδομάδας
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	el	Σύνδεσμοι του βιβλίου διευθύνσεων που εμφανίζονται σε άλλες εφαρμογές. Οι κενές τιμές θα παραλείπονται. Πρέπει να συνδεθείτε ξανά, αν αλλάξετε αυτή τη ρύθμιση!
+when viewing a contact, show linked entries from the selected application	addressbook	el	Κατά την προβολή μιας επαφής, να εμφανίζονται οι συνδεδεμένες καταχωρήσεις από την επιλεγμένη εφαρμογή
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	el	Όταν συγχωνεύετε καταχωρήσεις σε έγγραφα, θα αποθηκεύονται εδώ. Εάν δεν έχει δοθεί κατάλογος, θα αποθηκεύονται στον αρχικό σας κατάλογο (/home/...)
 where to add the email address	addressbook	el	Θέση για  να προστεθεί η διεύθυνση ηλεκτρονικού ταχυδρομείου
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	el	Ποια μορφή διεύθυνσης θα έπρεπε το βιβλίο διευθύνσεων να χρησιμοποιεί για τις χώρες που δεν γνωρίζει τη μορφή διεύθυνσής τους. Αν η μορφή διεύθυνσης μιας χώρας είναι γνωστή, χρησιμοποιεί την ανεξάρτητη αυτής της διάταξης.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	el	Ποιο βιβλίο διευθύνσεων πρέπει να επιλέγεται όταν προσθέτετε επαφή χωρίς να έχετε δικαιώματα στο συγκεκριμένο βιβλίο διευθύνσεων.

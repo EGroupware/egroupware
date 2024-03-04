@@ -1,7 +1,7 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 email(s) added into %2	common	el	%1 email(s) που προστέθηκαν στο %2
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver!
-%1 more %2 selected ...	common	el	%1 περισσότερα %2 επιλεγμένα...
+%1 more %2 selected ...	common	el	%1 περισσότερα %2 επιλεγμένα ...
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br>ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1EGroupware%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 '%1' copied to clipboard	common	el	'%1' αντιγράφεται στο πρόχειρο
@@ -96,8 +96,6 @@ authenticate	common	el	Πιστοποίηση ταυτότητας
 author	common	el	Συγγραφέας
 autohide sidebox menu's	common	el	Αυτόματη απόκρυψη μενού
 autohide sidebox menus	common	el	Αυτόματη απόκρυψη μενού
-automatically hide the sidebox menu's?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
-automatically hide the sidebox menus?	common	el	Θέλετε αυτόματη απόκρυψη μενού;
 autosave default category	common	el	Αυτόματη αποθήκευση της προεπιλεγμένης κατηγορίας
 avatar	common	el	Avatar
 azerbaijan	common	el	ΑΖΕΡΜΠΑΪΤΖΑΝ
@@ -248,15 +246,11 @@ denmark	common	el	ΔΑΝΙΑ
 description	common	el	Περιγραφή
 detail	common	el	Λεπτομέρεια
 details	common	el	Λεπτομέρειες
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
 direction left to right	common	el	Κατεύθυνση από αριστερά προς τα δεξιά
 directory	common	el	Κατάλογος
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
 directory for storing merged documents	preferences	el	Κατάλογος για την αποθήκευση συγχωνευμένων εγγράφων
 directory with documents to insert entries	preferences	el	Κατάλογος με έγγραφα για την εισαγωγή καταχωρήσεων
-disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
-disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	el	Να απενεργοποιθούν τα εφέ της μπάρας κύλισης κατά την εμφάνιση ή απόκρυψη των μενού σ' αυτή τη σελίδα; Αυτό πιθανόν χρειάζεται για τους χρήστες των Opera και Konqueror.
 disabled	common	el	Απενεργοποιημένο
 djibouti	common	el	ΤΣΙΜΠΟΥΤΙ
 do you also want to delete all subcategories ?	common	el	Θέλετε να διαγράψετε και όλες τις υποκατηγορίες;
@@ -400,7 +394,6 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	el	ΟΥΓΓΑΡΙΑ
 iceland	common	el	ΙΣΛΑΝΔΙΑ
 id	common	el	Id
-iespell not detected. click ok to go to download page.	common	el	ieSpell δεν βρέθηκε.Κλικ στο ΟΚ για να πάτε στη download page
 if the clock is enabled would you like it to update it every second or every minute?	common	el	Αν το ρολόι είναι ενεργοποιημένο θα θέλατε να το ενημερώνετε κάθε δευτερόλεπτο ή κάθε λεπτό;
 if there are some images in the background folder you can choose the one you would like to see.	common	el	Εάν υπάρχουν μερικές εικόνες στο φάκελο φόντου μπορείτε να επιλέξετε αυτές που θέλετε να δείτε.
 if you use "2-factor-authentication", please enter the code here.	common	el	Εάν χρησιμοποιείτε "2-Factor-Authentication", παρακαλούμε εισάγετε τον κωδικό εδώ.
@@ -900,8 +893,7 @@ wallis and futuna	common	el	ΓΟΥΟΛΙΣ & ΦΟΥΤΟΥΝΑ
 wednesday	common	el	Τετάρτη
 welcome	common	el	Καλώς ήρθατε
 western sahara	common	el	ΔΥΤΙΚΗ ΣΑΧΑΡΑ
-what color should all the blank space on the desktop have	common	el	Τι χρώμα θα έπρεπε όλα τα κενά στην επιφάνεια εργασίας να έχουν
-what style would you like the image to have?	common	el	Τι στυλ θα θέλατε να έχει η εικόνα;
+what color should all the blank space on the desktop have	common	el	Τι χρώμα θα έπρεπε όλα τα κενά στην επιφάνεια εργασίας να έχουν;
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	Όταν λέτε ναι τα κουμπιά αρχικής σελίδας και εξόδου από το σύστημα εμφανίζονται ως εφαρμογές στην κύρια μπάρα εργασιών
 which groups	common	el	Ποιές ομάδες
 whole query	common	el	ολόκληρη απορία

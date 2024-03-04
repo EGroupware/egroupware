@@ -238,8 +238,14 @@ enter your http proxy server port	setup	zh	HTTP代理服务器的端口号
 enter your http proxy server username	setup	zh	HTTP代理服务器的用户名
 error in admin-creation !!!	setup	zh	组管理员创建时发生错误！
 error in group-creation !!!	setup	zh	组创建时发生错误！
+error searching "dn=%1" for "%2"!	setup	zh	搜索"%2 "的 "DN=%1 "时出错！
+error uploading your backup!	setup	zh	上传备份出错！
+every	setup	zh	每
 export has been completed!	setup	zh	输出已完成
+failed to mount backup directory!	setup	zh	挂载备份目录失败！
+failed updating user "%1" dn="%2"!	setup	zh	更新用户 "%1" DN="%2" 失败！
 failed writing configuration file header.inc.php, check the permissions !!!	setup	zh	写入配置文件 header.inc.php 错误，请检查权限！
+fallback authentication	setup	zh	回退验证
 false	setup	zh	错误
 file	setup	zh	文件
 file type, size, version, etc.	setup	zh	文件类型、大小、版本、等等。
@@ -377,14 +383,19 @@ one month	setup	zh	一个月
 one week	setup	zh	一周
 only add languages that are not in the database already	setup	zh	仅添加数据库中没有的语言
 only add new phrases	setup	zh	仅添加新的短语
+optional, if only authentication and anonymous search is enabled	setup	zh	可选，如果只启用身份验证和匿名搜索
 or	setup	zh	或
 or %1continue to the header admin%2	setup	zh	或是%1继续 Header 管理%2
 or http://webdav.domain.com (webdav)	setup	zh	或者 http://webdav.domain.com (WebDAV)
+or leave empty and select openidconnect as authentication type above for single sign on	setup	zh	或留空，并选择 OpenID Connect 作为上述单点登录的身份验证类型
+or leave empty and select saml as authentication type above for single sign on	setup	zh	或留空，并选择 SAML 作为上述单点登录的身份验证类型
 or we can attempt to create the database for you:	setup	zh	或者我们尝试为您创建数据库：
 or you can install a previous backup.	setup	zh	或者您可以安装上一个备份。
+password	setup	zh	密码
 password for smtp-authentication	setup	zh	SMTP 密码认证
 password needed for domain configuration.	setup	zh	用于更改域配置的密码。
 password of db user	setup	zh	数据库用户的密码
+passwords --> sql	setup	zh	密码 --> SQL
 passwords did not match, please re-enter	setup	zh	密码不符，请重新输入
 path (not url!) to your egroupware installation.	setup	zh	EGroupware 安装路径 (不是网址！)。
 path information	setup	zh	路径信息
@@ -402,7 +413,7 @@ please login	setup	zh	请登录
 please login to egroupware and run the admin application for additional site configuration	setup	zh	请登录 EGroupware，运行管理应用程序以进行站点的附加配置
 please make the following change in your php.ini	setup	zh	请将您的php.ini座以下修改
 please wait...	setup	zh	请稍候...
-pop/imap mail server hostname or ip address	setup	zh	POP/IMAP 邮件服务器主机名或IP地址
+pop/imap mail server hostname or ip address	setup	zh	POP3/IMAP 邮件服务器主机名或IP地址
 possible reasons	setup	zh	可能的原因
 possible solutions	setup	zh	可能的解决方法
 post-install dependency failure	setup	zh	Post-install Dependency Failure

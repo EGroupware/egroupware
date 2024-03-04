@@ -1308,6 +1308,7 @@ title	common	pt-br	Título
 to	common	pt-br	Para
 to correct this error for the future you will need to properly set the	common	pt-br	Para corrigir este erro no futuro você deve ajustar as propriedades
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pt-br	Para desabilitar: [! = não]<valor>[=<check>]. Exemplo: '!data' desabilita se o conteúdo de 'data' estiver vazio.
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	pt-br	To examine or reinstate inactived files, you might need to turn versioning on.
 to go back to the msg list, click <a href= %1 >here</a>	common	pt-br	Para voltar para a lista de mensagens, clique <a href="%1">aqui</a>
 to start the db-tools	common	pt-br	Iniciar as Ferramentas de DB
 to start the etemplate editor	common	pt-br	Iniciar o editor eTemplate
@@ -1370,6 +1371,7 @@ use button to search for project	common	pt-br	Utilize o botão para procurar por
 user	common	pt-br	Usuário
 user accounts	common	pt-br	Contas do usuário
 user groups	common	pt-br	Grupos do usuário
+user-agent & action	common	pt-br	Agente de usuário e ação
 username	common	pt-br	Nome do usuário
 users	common	pt-br	Usuários
 users choice	common	pt-br	À escolha dos usuários
@@ -1385,6 +1387,7 @@ version	common	pt-br	Versão
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pt-br	Número da versão, mostrar no formulário: maior.menor.revisão.número (ex.: 0.9.13.001 todos os números se auto-completam com zeros)
 vertical alignment of row	common	pt-br	Alinhamento vertical da linha
 vfs upload directory	common	pt-br	Letras maiúsculas
+video tutorials	common	pt-br	Tutoriais em vídeo
 viet nam	common	pt-br	VIETNÃ
 view	common	pt-br	Exibir
 view linked %1 entries	common	pt-br	Exibir entradas %1 vinculadas

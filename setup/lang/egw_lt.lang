@@ -1,4 +1,19 @@
+error searching "dn=%1" for "%2"!	setup	lt	Klaida ieškant "DN=%1" pagal "%2"!
+error uploading your backup!	setup	lt	Klaida įkeliant atsarginę kopiją!
+every	setup	lt	Kiekvienas
+export has been completed!	setup	lt	Eksportas buvo baigtas!
+failed to mount backup directory!	setup	lt	Nepavyko prijungti atsarginės kopijos katalogo!
+failed updating user "%1" dn="%2"!	setup	lt	Nepavyko atnaujinti naudotojo "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	lt	Nepavyko įrašyti konfigūracijos failo header.inc.php, patikrinkite teises!
+fallback authentication	setup	lt	Atsarginis autentiškumo nustatymas
 min backup count	setup	lt	Didžiausias saugomų atsarginių kopijų skaičius (nulis: visos)
+optional, if only authentication and anonymous search is enabled	setup	lt	neprivaloma, jei įjungta tik autentifikacija IR anoniminė paieška.
+or leave empty and select openidconnect as authentication type above for single sign on	setup	lt	arba palikite tuščią ir pirmiau pasirinkite "OpenID Connect" kaip autentifikavimo tipą, jei norite prisijungti vienu prisijungimu
+or leave empty and select saml as authentication type above for single sign on	setup	lt	arba palikite tuščią ir pirmiau pasirinkite SAML kaip autentifikavimo tipą vienkartiniam prisijungimui
+password	setup	lt	Slaptažodis
+password for smtp-authentication	setup	lt	SMTP autentifikavimo slaptažodis
+password needed for domain configuration.	setup	lt	Slaptažodis, reikalingas domeno konfigūracijai.
+passwords --> sql	setup	lt	Slaptažodžiai --> SQL
 regular expression to filter by dn	setup	lt	Reguliarioji išraiška filtruoti pagal DN
 rejected lines	setup	lt	Atmestos eilutės
 remove	setup	lt	Pašalinti

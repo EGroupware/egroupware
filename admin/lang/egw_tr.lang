@@ -27,6 +27,7 @@
 (de)activate mail accounts	admin	tr	Posta hesaplarını (de)Etkinleştir
 (default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	tr	(imapclass, ilgili yapılandırma değerini sorgulayarak bu özelliği desteklemeli ve IMAP sunucusuna defaultquota olarak aktarmalıdır)
+(no subject)	admin	tr	(konu yok)
 (stored password will not be shown here)	admin	tr	(Kayıtlı şifreler burada görüntülenmeyecektir.)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	tr	(Yeni uygulama yüklemek için <br><a href="setup/" target="setup">Kurulum</a>u kullanınız. !!!)
 1 year	admin	tr	1 yıl
@@ -35,16 +36,22 @@
 2-factor-authentication for interactive login	admin	tr	Etkileşimli oturum açma için 2 Faktörlü Kimlik Doğrulama
 3 month	admin	tr	3 ay
 6 month	admin	tr	6 ay
+access by	admin	tr	Tarafından erişim
+access control	admin	tr	Erişim kontrolü
+access to %1 data by others	admin	tr	Başkaları tarafından %1 verisine erişim
 access token revoked.	admin	tr	Erişim Belirteci iptal edildi.
 accesslog and bruteforce defense	admin	tr	Erişim kayıtları ve BruteForce Koruması
 account	admin	tr	Hesap
+account "%1" has no email address --> not notified!	admin	tr	"%1" hesabının e-posta adresi yok --> bildirilmedi!
 account active	admin	tr	Hesap aktif
+account deleted.	admin	tr	Hesap silindi.
 account has been created	common	tr	Hesap oluşturuldu
 account has been deleted	common	tr	Hesap silindi
 account has been updated	common	tr	Hesap güncellendi
 account list	admin	tr	Hesap listesi
 account permissions	admin	tr	Hesap hakları
 account preferences	admin	tr	Hesap ayarları
+acl added.	admin	tr	ACL eklendi.
 acl csv export	admin	tr	ACL CSV dışa aktarma
 acl manager	admin	tr	ACL Yöneticisi
 acl rights	common	tr	ACL Hakları
@@ -64,11 +71,14 @@ add global category for %1	admin	tr	%1 için genel kategori ekle
 add group	admin	tr	Grup ekle
 add new account	admin	tr	Yeni hesap ekle
 add new application	admin	tr	Yeni uygulama ekle
+add new email address:	admin	tr	Yeni e-posta adresi ekleyin:
 add peer server	admin	tr	Peer sunucusu ekle
+add profile	admin	tr	Profil ekle
 add sub-category	admin	tr	Alt-kategori ekle
 admin email	admin	tr	Yönetici e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	tr	Engelleme işlemi hakkında yönetici e-mail adresleri (virgülle ayrılmış) haberdar edilecektir.
 admin name	admin	tr	Yönetici İsmi
+admin password	admin	tr	Yönetici şifresi
 administration	admin	tr	Yönetim
 admins	admin	tr	Yöneticiler
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	tr	Kaç tane başarısız sistem girişinden sonra bir hesap engellenecektir (varsayılan 3) ?
@@ -76,7 +86,7 @@ all records and account information will be lost!	admin	tr	Bütün kayıtlar ve 
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
 anonymous user	admin	tr	Anonim kullanıcı
-anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı (oturum listesinde görüntülenmeyecektir.)
+anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez.
 appearance	admin	tr	Görünüm
 application	admin	tr	Uygulama
 application name	admin	tr	Uygulama Adı
@@ -84,9 +94,9 @@ application title	admin	tr	Uygulama Başlığı
 applications	admin	tr	Uygulamalar
 applications list	admin	tr	Uygulama Listesi
 are you sure you want to delete the application %1 ?	admin	tr	%1 isimli uygulamayı silmek istediğinize emin misiniz?
-are you sure you want to delete this account ?	admin	tr	Bu hesabı silmek istediğinize emin misiniz ?
-are you sure you want to delete this application ?	admin	tr	Bu uygulamayı silmek istediğinize emin misiniz ?
-are you sure you want to delete this category ?	common	tr	Bu kategoriyi silmek istediğinize emin misiniz ?
+are you sure you want to delete this account ?	admin	tr	Bu hesabı silmek istediğinize emin misiniz?
+are you sure you want to delete this application ?	admin	tr	Bu uygulamayı silmek istediğinize emin misiniz?
+are you sure you want to delete this category ?	common	tr	Bu kategoriyi silmek istediğinize emin misiniz?
 are you sure you want to delete this global category ?	admin	tr	Bu genel kategoriyi silmek istediğinize emin misiniz?
 are you sure you want to delete this group ?	admin	tr	Bu grubu silmek istediğinize emin misiniz?
 are you sure you want to delete this server?	admin	tr	Bu sunucuyu silmek istediğinize emin misiniz?
@@ -95,14 +105,17 @@ async services last executed	admin	tr	Son çalıştırılan asenkron servisler
 asynchronous timed services	admin	tr	Asenkron zamanlı servisler
 asyncservices not yet installed or other error (%1) !!!	admin	tr	Asenkron servisler kurulu değil ya da başka hata (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	tr	FTP için 'application/octet-stream' yerine doğru MIMEtype kullanınız.
+authentication	admin	tr	Kimlik Doğrulama
 authentication / accounts	admin	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	admin	tr	Giriş yapan kullanıcılar için kayıt tut.
+available placeholders	admin	tr	Mevcut yer tutucular
 back to the list	admin	tr	Listeye geri dön
 bi-dir passthrough	admin	tr	çift-yön içiçe
 bi-directional	admin	tr	çift yönlü
 bottom	admin	tr	Taban
 calculate next run	admin	tr	SIradaki çalıştırmayı hesapla
 can change password	admin	tr	Şifre değiştirebilir
+cancel changes	admin	tr	Değişiklikleri iptal et
 cancel testjob!	admin	tr	Test görevini iptal et!
 categories list	admin	tr	Kategori listesi
 category %1 has been saved !	admin	tr	Kategori %1 kaydedildi!
@@ -117,7 +130,7 @@ color	admin	tr	Renk
 country	admin	tr	Ülke
 country selection	admin	tr	Ülke seçimi
 create group	admin	tr	Grup oluştur
-crontab only (recomended)	admin	tr	crontab sadece (önerilir)
+crontab only (recomended)	admin	tr	Crontab sadece (önerilir)
 custom 1	admin	tr	Özel 1
 custom 2	admin	tr	Özel 2
 custom 3	admin	tr	Özel 3
@@ -127,7 +140,7 @@ day	admin	tr	Gün
 day of week<br>(0-6, 0=sun)	admin	tr	Haftanın günü<br>(0-6, 0=Pazar)
 default	admin	tr	Varsayılan
 default file system space per user	admin	tr	(Varsayılan) Kullanıcı disk alanı
-default file system space per user/group ?	admin	tr	(Varsayılan) Kullanıcı/Grup disk alanı
+default file system space per user/group ?	admin	tr	(Varsayılan) Kullanıcı/Grup disk alanı?
 deinstall crontab	admin	tr	Crontab'ı kaldır
 delete account	admin	tr	Hesabı sil
 delete all records	admin	tr	Tüm kayıtları sil
@@ -141,6 +154,7 @@ delete this category	admin	tr	Bu kategoriyi sil
 delete this group	admin	tr	Bu grubu sil
 delete this user	admin	tr	Bu kullanıcıyı kaldır
 deleted	admin	tr	Silindi
+deny access	admin	tr	Erişimi reddet
 deny access to access log	admin	tr	Erişim kayıtlarına erişmi engelle
 deny access to application registery	admin	tr	Uygulama Kütüğüne erişimi engelle
 deny access to applications	admin	tr	Uygulamalara erişimi engelle
@@ -154,7 +168,7 @@ deny access to peer servers	admin	tr	Peer sunucularına erişimi engelle
 deny access to phpinfo	admin	tr	phpinfo'ya erişimi engelle
 deny access to site configuration	admin	tr	Site ayarlarına erişimi engelle
 deny access to user accounts	admin	tr	Kullanıcı hesaplarına erişimi engelle
-deny all users access to grant other users access to their entries ?	admin	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle?
+deny all users access to grant other users access to their entries ?	admin	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle
 description can not exceed 255 characters in length !	admin	tr	Açıklama en fazla 255 karakter olabilir!
 disable	admin	tr	Engelle
 disable "auto completion" of the login form	admin	tr	Sistem girişi "Otomatik tamamla" özelliğini kullanma
@@ -186,22 +200,22 @@ enter a description for the category	admin	tr	Kategori için açıklama giriniz
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	tr	app_session için gerekli rastgele bir metin giriniz. (mcrypt için gerekli)
 enter the background color for the login page	admin	tr	Sistem giriş ekranı arkaplan rengi giriniz
 enter the background color for the site title	admin	tr	Site başlığı için arkaplan rengi giriniz
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	tr	Geçici dosyalar için tam yol giriniz. <br>Örnekler: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	tr	Geçici dosyalar için tam yol giriniz.<br>Örnekler: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	tr	Kullanıcı ve grup dosyaları için tam yol giriniz.<br>Örnekler: /files, E:\FILES
-enter the hostname of the machine on which this server is running	admin	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
+enter the hostname of the machine on which this server is running	admin	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü işareti kullanmayınız.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	tr	Aranacak ifadeyi giriniz. Bütün girdileri göstermek için, bu alanı boş bırakınız ve GÖNDER (Submit) butonuna basınız.
-enter the site password for peer servers	admin	tr	Peer sunucular için site şifresi giriniz.
-enter the site username for peer servers	admin	tr	Peer sunucular için site kullanıcı adı giriniz.
-enter the title for your site	admin	tr	Site başlığını giriniz.
-enter the title of your logo	admin	tr	Logonuzun başlığını giriniz.
-enter the url where your logo should link to	admin	tr	Logonuz için link giriniz.
+enter the site password for peer servers	admin	tr	Peer sunucular için site şifresi giriniz
+enter the site username for peer servers	admin	tr	Peer sunucular için site kullanıcı adı giriniz
+enter the title for your site	admin	tr	Site başlığını giriniz
+enter the title of your logo	admin	tr	Logonuzun başlığını giriniz
+enter the url where your logo should link to	admin	tr	Logonuz için link giriniz
 enter your default ftp server	admin	tr	Varsayılan FTP sunucusunu giriniz
 enter your default mail domain ( from: user@domain )	admin	tr	Varsayılan mail domain'ini giriniz ( From: kullanıcı@domain )
-enter your http proxy server	admin	tr	HTTP Proxy sunucunuzu giriniz.
-enter your http proxy server port	admin	tr	HTTP Proxy sunucu portunuzu giriniz.
-enter your smtp server hostname or ip address	admin	tr	SMTP sunucu hostname ve IP'nizi giriniz.
-enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz.
+enter your http proxy server	admin	tr	HTTP Proxy sunucunuzu giriniz
+enter your http proxy server port	admin	tr	HTTP Proxy sunucu portunuzu giriniz
+enter your smtp server hostname or ip address	admin	tr	SMTP sunucu hostname ve IP'nizi giriniz
+enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz
 error canceling timer, maybe there's none set !!!	admin	tr	Zamanlayıcıyı iptal ederken hata oluştu, hiç ayarlı olmayabilir!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	tr	Zamanlayıcı ayarlarken hata oluştu, yanlış sözdizimi ya da halihazırda çalışan bir tane olabilir!
 error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata!
@@ -223,12 +237,14 @@ group list	admin	tr	Grup listesi
 group manager	admin	tr	Grup Yöneticisi
 group name	admin	tr	Grup İsmi
 hide php information	admin	tr	PHP bilgisini sakla
+hide sidebox video tutorials	admin	tr	Yan kutu video eğitimlerini gizle
 home directory	admin	tr	Ev dizini
 home screen message	admin	tr	Ana ekran mesajı
 host information	admin	tr	Host bilgisi
 hostname or ip	admin	tr	Ana Bilgisayar Adı veya IP
 hour<br>(0-23)	admin	tr	Saat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	tr	Erişim kütüklerindeki kayıtlar en fazla kaç günlük oalcaktır (varsayılan 90) ?
+html/plaintext	admin	tr	HTML/metin
 icon	admin	tr	Simge
 idle	admin	tr	Boşta
 if no acl records for user or any group the user is a member of	admin	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
@@ -299,6 +315,7 @@ one hour	admin	tr	Bir saat
 one month	admin	tr	Bir ay
 one week	admin	tr	Bir hafta
 order	admin	tr	Sıralama
+organisation	admin	tr	Organizasyon
 other security configuration	admin	tr	Diğer güvenlik yapılandırması
 outbound	admin	tr	Giden
 own categories	admin	tr	Kendi kategorileriniz
@@ -338,19 +355,21 @@ security	admin	tr	Güvenlik
 select group managers	admin	tr	Grup yöneticilerini seç
 select permissions this group will have	admin	tr	Bu gurubun sahip olacağı izinleri seçiniz
 select the parent category. if this is a main category select no category	admin	tr	Ana kategoriyi seçiniz. Eğer bu kategori bir ana kategori ise 'Kategori Yok' (NO CATEGORY) seçiniz.
-select users for inclusion	admin	tr	Dahil edilecek kullanıcıları seçiniz.
-select where you want to store/retrieve filesystem information	admin	tr	Dosya sistemi bilgisini saklamak istediğiniz yeri seçiniz
-select where you want to store/retrieve user accounts	admin	tr	Kullanıcı hesaplarını saklamak istediğiniz yeri seçiniz
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	tr	Bu uygulamanın gezgin çubuğunda yeralacağı yeri seçiniz, en az'dan(sol) en yükseğe (sağ)
+select users for inclusion	admin	tr	Dahil edilecek kullanıcıları seçiniz
+select where you want to store/retrieve filesystem information	admin	tr	Dosya sistemi bilgisini saklamak istediğiniz yeri seçiniz.
+select where you want to store/retrieve user accounts	admin	tr	Kullanıcı hesaplarını saklamak istediğiniz yeri seçiniz.
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	tr	Bu uygulamanın gezgin çubuğunda yeralacağı yeri seçiniz, en az'dan(sol) en yükseğe (sağ).
 selectbox	admin	tr	Seçim kutusu
 server %1 has been updated	admin	tr	Sunucu %1 güncellendi
 server list	admin	tr	Sunucu listesi
 server password	admin	tr	Sunucu şifresi
+server settings	admin	tr	Sunucu ayarları
 server type(mode)	admin	tr	Sunucu tipi (mod)
 server url	admin	tr	Sunucu URL
 server username	admin	tr	Sunucu kullanıcı adı
+sessions last 30 days	admin	tr	Son 30 günlük oturumlar
 set preference values.	admin	tr	Ayar değerini giriniz
-should the login page include a language selectbox (useful for demo-sites) ?	admin	tr	Sistem giriş sayfası dil seçim kutusu içerecek mi? (demo siteler için yararlıdır)
+should the login page include a language selectbox (useful for demo-sites) ?	admin	tr	Sistem giriş sayfası dil seçim kutusu içerecek mi?
 show 'powered by' logo on	admin	tr	'Powered by' logosunun gösterileceği yer
 show access log	admin	tr	Erişim kütüğünü göster
 show current action	admin	tr	Şu anki eylemi göster

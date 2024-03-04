@@ -14,7 +14,7 @@ country selection	setup	tr	Ülke seçimi
 day	setup	tr	Gün
 default	setup	tr	Varsayılan
 default file system space per user/group ?	setup	tr	(Varsayılan) Kullanıcı/Grup disk alanı
-deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle ?
+deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle?
 download	setup	tr	İndir
 enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
 enter the site password for peer servers	setup	tr	Peer sunucular için site şifresi giriniz.
@@ -23,6 +23,14 @@ enter the title for your site	setup	tr	Site başlığını giriniz.
 enter your default ftp server	setup	tr	Varsayılan FTP sunucusunu giriniz
 enter your http proxy server	setup	tr	HTTP Proxy sunucunuzu giriniz.
 enter your http proxy server port	setup	tr	HTTP Proxy sunucu portunuzu giriniz.
+error searching "dn=%1" for "%2"!	setup	tr	"%2" için "DN=%1" ararken hata oluştu!
+error uploading your backup!	setup	tr	Yedeğiniz yüklenirken hata oluştu!
+every	setup	tr	Her
+export has been completed!	setup	tr	Dışa aktarma işlemi tamamlandı!
+failed to mount backup directory!	setup	tr	Yedekleme dizini bağlanamadı!
+failed updating user "%1" dn="%2"!	setup	tr	"%1" DN="%2" kullanıcısı güncellenemedi!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	tr	header.inc.php yapılandırma dosyası yazılamadı, izinleri kontrol edin!
+fallback authentication	setup	tr	Yedek Kimlik Doğrulama
 force selectbox	setup	tr	Seçimn kurusunu mecburi tut
 host information	setup	tr	Host bilgisi
 if no acl records for user or any group the user is a member of	setup	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
@@ -34,9 +42,9 @@ ldap encryption type	setup	tr	LDAP şifreleme tipi
 ldap groups context	setup	tr	LDAP grup içeriği
 ldap host	setup	tr	LDAP hostları
 ldap root password	setup	tr	LDAP yönetici şifresi
-ldap rootdn	setup	tr	LDAP rootdn
-maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
-minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap id'si (ör 500 ya da 100)
+ldap rootdn	setup	tr	LDAP root DN
+maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap ID'si (ör: 65535 ya da 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap ID'si (ör 500 ya da 100)
 minute	setup	tr	Dakika
 modified	setup	tr	Değiştirilmiş
 month	setup	tr	Ay
@@ -45,8 +53,13 @@ next run	setup	tr	Sıradaki çalıştırma
 no algorithms available	setup	tr	Mevcut hiç algoritma yok
 no modes available	setup	tr	Mevcut hiç mod yok
 ok	setup	tr	Tamam
+optional, if only authentication and anonymous search is enabled	setup	tr	yalnızca kimlik doğrulama VE anonim arama etkinleştirilmişse isteğe bağlı
 or	setup	tr	ya da
+or leave empty and select openidconnect as authentication type above for single sign on	setup	tr	veya boş bırakın ve çoklu oturum açma için yukarıda kimlik doğrulama türü olarak OpenID Connect'i seçin
+or leave empty and select saml as authentication type above for single sign on	setup	tr	veya boş bırakın ve çoklu oturum açma için yukarıda kimlik doğrulama türü olarak SAML'i seçin
+password	setup	tr	Şifre
 password for smtp-authentication	setup	tr	SMTP doğrulaması için şifre
+passwords --> sql	setup	tr	Şifreler --> SQL
 path information	setup	tr	Yol bilgisi
 preferences	setup	tr	Ayarlar
 re-enter password	setup	tr	Şifreyi yeniden giriniz

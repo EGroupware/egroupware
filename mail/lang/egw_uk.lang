@@ -114,15 +114,28 @@ mailaccount	mail	uk	Поштовий акаунт
 mailinglist	mail	uk	Список розсилки
 mails	common	uk	Листи
 mails can be copied to that folder via context menu, if folder is configured.	mail	uk	Листи можна копіювати до цієї теки за допомогою контекстного меню, якщо теку налаштовано.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	uk	Поштовий сервер повідомив:\n%1 \nЧи бажаєте вилучити вибрані повідомлення негайно (натисніть кнопку ОК)?\nЯкщо ні, спробуйте очистити папку "Смітник", перш ніж продовжити. (натисніть кнопку скасувати)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	uk	Поштовий сервер повідомив:<br><br>%1<br><br>Чи бажаєте вилучити вибрані повідомлення негайно (натисніть кнопку ОК)?<br>Якщо ні, спробуйте очистити папку "Смітник", перш ніж продовжити. (натисніть кнопку скасувати)
 mark all as read	mail	uk	Позначити всі як прочитані
 mark all messages in folder as read	mail	uk	Позначити всі повідомлення в папці як прочитані
 mark as deleted	mail	uk	Позначити як видалені
 message learned as spam and moved to spam folder	mail	uk	Повідомлення визначено як спам і переміщено до теки "Спам
 modify subject	mail	uk	Змінити тему
 modify subject of this message	mail	uk	Змінити тему цього повідомлення
+move selected to	mail	uk	Перемістити вибране до
+move to	mail	uk	Перемістити до
+name and domain	mail	uk	Ім'я та домен
 name and email	mail	uk	Ім'я та email
+name of account	mail	uk	Назва облікового запису
+name of imap servers (space separated host or host:port)	mail	uk	Назви серверів IMAP (через пробіл host або host:port)
+never show	mail	uk	Ніколи не показувати
+never show notification	mail	uk	Ніколи не показувати сповіщення
+new mail from %1	mail	uk	Новий лист від %1
+new mail notification	mail	uk	Сповіщення про новий лист
+new message type	mail	uk	Новий тип повідомлення
 new subject	mail	uk	Нова тема
+no access	mail	uk	Немає доступу
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	uk	Не вказано адресу кому/кому/копія/копія, а також не вказано папку для збереження повідомлення.
+no adress, to send this mail to, supplied	mail	uk	не вказано, кому надсилати цей імейл
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	uk	Папка призначення не надається, а також не надається папка для збереження повідомлень або інший спосіб зберігання пошти (збереження в InfoLog/Ticketsystem), але це необхідно.
 no sneak preview in list	mail	uk	Немає попереднього перегляду повідомлень
 non	mail	uk	Ні
@@ -165,8 +178,8 @@ replace 'http://' in image urls with (trailing / required!)	mail	uk	Заміні
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	uk	Не вдалося відповісти на це повідомлення, оскільки вміст цього повідомлення зашифровано і не може бути розшифрований належним чином. Якщо ви все ще бажаєте включити вміст цього зашифрованого повідомлення, спробуйте використати переслати як вкладення.
 report as ham	mail	uk	Повідомити як шинку
 report as spam	mail	uk	Повідомити як спам
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	uk	Повідомте про вміст цього листа як шинку (не спам) - рішення для боротьби зі спамом, такі як spamTitan, дізнаються про це
-report this email content as spam - spam solutions like spamtitan will learn	mail	uk	Повідомити про вміст цього листа як спам - рішення для боротьби зі спамом, такі як spamTitan, дізнаються про це
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	uk	Повідомте про вміст цього листа як шинку (не спам) - рішення для боротьби зі спамом, такі як SpamTitan, дізнаються про це
+report this email content as spam - spam solutions like spamtitan will learn	mail	uk	Повідомити про вміст цього листа як спам - рішення для боротьби зі спамом, такі як SpamTitan, дізнаються про це
 required pear class mail/mimedecode.php not found.	mail	uk	Необхідний клас PEAR Mail/mimeDecode.php не знайдено.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	uk	Необхідно вимкнути, якщо ви використовуєте Dovecot з прапорами приватного перегляду у спільній або користувацькій папці!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	uk	Шифрування S/MIME не вдалося, оскільки для адреси відправника не знайдено сертифіката: %1

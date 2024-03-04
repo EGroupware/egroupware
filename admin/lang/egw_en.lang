@@ -979,7 +979,7 @@ url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	UR
 usage	admin	en	Usage
 use admin credentials to connect without a session-password, e.g. for sso	admin	en	Use admin credentials to connect without a session-password, e.g. for SSO
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
-use default	admin	en	use default
+use default	admin	en	Use default
 use ldap defaults	admin	en	Use LDAP defaults
 use predefined username and password defined below	admin	en	Use predefined username and password defined below
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code

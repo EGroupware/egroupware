@@ -173,10 +173,19 @@ modify subject of this message	mail	zh	修改此信息的主题
 move selected to	mail	zh	将选定邮件移至
 move to	mail	zh	将选定邮件移至
 move to trash	mail	zh	移动至回收站
+name and domain	mail	zh	名称和域名
 name and email	mail	zh	姓名和电子邮件
+name of account	mail	zh	账户名称
+name of imap servers (space separated host or host:port)	mail	zh	IMAP 服务器名称（空格分隔的主机或主机：端口）
 never display html emails	mail	zh	从不显示 HTML 邮件
+never show	mail	zh	从不显示
+never show notification	mail	zh	从不显示通知
+new mail from %1	mail	zh	来自 %1 的新邮件
+new mail notification	mail	zh	新电子邮件通知
+new message type	mail	zh	新信息类型
 new subject	mail	zh	新的主题
 no access	mail	zh	无访问
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	zh	未提供 TO/CC/BCC 地址，也未提供保存邮件的文件夹。
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	zh	未提供文件夹目标，也未提供用于保存邮件的文件夹或用于保存邮件的其他措施（保存到信息日志/票务系统），但必须提供。
 no plain text part found	mail	zh	未找到纯文本部分
 no recipient address given!	mail	zh	没有给定收件人地址！

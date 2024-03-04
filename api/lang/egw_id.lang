@@ -300,7 +300,6 @@ description	common	id	Uraian
 detail	common	id	Detil
 details	common	id	Detil
 directory	common	id	Direktori
-disable slider effects	common	id	Disable slider effects
 disabled	common	id	Disabled
 discard changes	common	id	Buang pengubahan
 djibouti	common	id	DJIBOUTI
@@ -912,11 +911,16 @@ time zone	common	id	Zonawaktu
 time zone offset	common	id	Offset zonawaktu
 title	common	id	Judul
 to	common	id	Kepada
+to start the db-tools	common	id	Untuk memulai alat bantu DB
+to start the etemplate editor	common	id	Untuk memulai editor eTemplate
+to start the search	common	id	Untuk memulai pencarian
 today	common	id	Hari ini
 todays date, eg. "%1"	common	id	Tanggal sekarang, mis. "%1"
 togo	common	id	TOGO
 tokelau	common	id	TOKELAU
 tonga	common	id	TONGA
+too many rows selected.<br />select all, or less than %1 rows	common	id	Terlalu banyak baris yang dipilih Pilih semua, atau kurang dari %1 baris
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	id	Terlalu banyak percobaan gagal untuk masuk: %1 untuk pengguna '%2', %3 untuk IP %4
 top	common	id	Top
 total	common	id	Total
 tree	common	id	Tree

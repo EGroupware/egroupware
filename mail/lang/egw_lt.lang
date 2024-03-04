@@ -111,8 +111,21 @@ mark as deleted	mail	lt	Pažymėti kaip ištrintus
 message learned as spam and moved to spam folder	mail	lt	Pranešimas išaiškintas kaip šlamštas ir perkeltas į šlamšto aplanką
 modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
+move selected to	mail	lt	Pasirinktas perkėlimas į
+move to	mail	lt	Perkelti į
+name and domain	mail	lt	Vardas ir domenas
 name and email	mail	lt	Vardas ir el. pašto adresas
+name of account	mail	lt	Sąskaitos pavadinimas
+name of imap servers (space separated host or host:port)	mail	lt	IMAP serverių pavadinimai (tarpais atskirti host arba host:port)
+never show	mail	lt	Niekada nerodyti
+never show notification	mail	lt	Niekada nerodyti pranešimo
+new mail from %1	mail	lt	Naujas laiškas iš %1
+new mail notification	mail	lt	Pranešimas apie naują el. laišką
+new message type	mail	lt	Naujo pranešimo tipas
 new subject	mail	lt	Nauja tema
+no access	mail	lt	Nėra prieigos
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	lt	Nepateiktas adresas TO/CC/BCC ir nepateiktas aplankas, į kurį būtų galima išsaugoti pranešimą.
+no adress, to send this mail to, supplied	mail	lt	Nepateiktas adresas, kuriam būtų galima siųsti šį el. laišką
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	lt	Nepateikta aplankų paskirties vieta, taip pat nepateiktas aplankas, kuriame būtų galima išsaugoti pranešimą, ar kita priemonė laiškui saugoti (išsaugoti informaciniame žurnale / bilietų sistemoje), tačiau ji būtina.
 no sneak preview in list	mail	lt	Nėra pranešimo peržiūros
 non	mail	lt	Ne

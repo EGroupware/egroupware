@@ -135,10 +135,21 @@ mark as deleted	mail	et	Märgi kui kustutatud
 message learned as spam and moved to spam folder	mail	et	Sõnum õpiti rämpspostiks ja viidi rämpsposti kausta
 modify subject	mail	et	Muuda teemat
 modify subject of this message	mail	et	Muuda selle sõnumi teemat
+move selected to	mail	et	Liigutage valitud aadressile
+move to	mail	et	Liiguta aadressile
 move to trash	mail	et	Liiguta trash-i
+name and domain	mail	et	Nimi ja domeen
 name and email	mail	et	Nimi ja e-posti aadress
+name of account	mail	et	Konto nimi
+name of imap servers (space separated host or host:port)	mail	et	IMAP-serveri nimi (tühikuga eraldatud host või host:port)
 never display html emails	mail	et	Ära näita kunagi HTML emaile
+never show	mail	et	Mitte kunagi ei näidata
+never show notification	mail	et	Mitte kunagi ei näidata teadet
+new mail from %1	mail	et	Uus e-posti aadress %1
+new mail notification	mail	et	Uue e-kirja teade
+new message type	mail	et	Uue sõnumi tüüp
 new subject	mail	et	Uus teema
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	et	Ei ole esitatud aadressi TO/CC/BCC ja ei ole esitatud kausta, kuhu sõnum salvestada.
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	et	Kaustade sihtkoht puudub, samuti ei ole ette nähtud kausta sõnumi salvestamiseks või muud meedet posti salvestamiseks (salvestada InfoLogi/Ticketsüsteemi), kuid see on vajalik.
 no signature	mail	et	pole signatuuri
 no sneak preview in list	mail	et	Sõnumi eelvaade puudub

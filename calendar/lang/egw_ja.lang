@@ -17,6 +17,7 @@
 , stati of participants reset	calendar	ja	, 参加回答状態をリセット済み
 a list of email addresses of all participants who have not declined	calendar	ja	全参加者のメール・アドレス一覧（参加辞退者を除く）
 a non blocking event will not conflict with other events	calendar	ja	ブロックしないイベントは他のイベントと衝突しません
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	ja	パーティークラッシャーとは、招待されていないにもかかわらず、なぜか招待状を受け取ってしまった人のことです。
 accept	calendar	ja	承諾
 accept or reject an invitation	calendar	ja	参加依頼に対して回答
 accepted	calendar	ja	参加回答済み
@@ -53,6 +54,7 @@ all future	calendar	ja	未来方向の全て
 all incl. rejected	calendar	ja	全参加者（参加辞退者を含む）
 all participants	calendar	ja	全参加者
 allow booking requests from any user when creating events?	calendar	ja	イベント作成時にどのユーザーからの予約リクエストも許可しますか?
+allow party crashers with email that match the following regular expression	calendar	ja	次の正規表現に一致する電子メールを持つパーティークラッシャーを許可します。
 allow users to prevent change notifications ('do not notify')	calendar	ja	ユーザに「通知無し」Allow users to prevent change notifications 'Do not notify'
 allows to edit the event again	calendar	ja	イベントの再編集を許可
 always	calendar	ja	常に
@@ -62,6 +64,7 @@ apply the action on the whole query, not only the shown events	calendar	ja	ク�
 apply the changes	calendar	ja	変更を保存
 appointment settings	calendar	ja	イベント設定
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	ja	代替策として、MySQLダンプを入手して、テーブル egw_cal_timezones に手作業でインポートする方法があります。
+at start of the event	calendar	ja	イベント開始時
 attention	calendar	ja	注意事項
 automatically purge old events after	admin	ja	下記経過後のイベントを自動削除:
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	ja	週表示中の各日表内、または選択範囲内の日表内の最初の項目で利用可能。
@@ -78,6 +81,7 @@ birthdays only	calendar	ja	誕生日のみ
 both, holidays and birthdays	calendar	ja	両方（祝祭日,誕生日）
 busy	calendar	ja	予定あり
 by	calendar	ja	作業者=
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	ja	デフォルトでは（ここでは何も設定されていません）、EGroupwareは主催者/オーナーにのみ追加を許可します。
 calendar - list	calendar	ja	カレンダー - リスト
 calendar - multi-weekly	calendar	ja	カレンダー - 複数週
 calendar - planner	calendar	ja	カレンダー - 予定表
@@ -92,22 +96,27 @@ calendar menu	calendar	ja	カレンダー・メニュー
 calendar preferences	calendar	ja	カレンダー設定
 calendar settings	admin	ja	カレンダー設定
 calendar-fieldname	calendar	ja	カレンダー フィールド名
+can not send any notifications because notifications app is not installed!	calendar	ja	通知アプリがインストールされていないため、通知を送信できません！
 can't add alarms in the past !!!	calendar	ja	現在時刻より前のアラームは追加できません!!!
 can't aquire lock!	calendar	ja	ロックを獲得できませんでした!
 canceled	calendar	ja	キャンセルされました。
 category %1 removed because of missing rights	calendar	ja	権限不足のためカテゴリ %1 は削除されました
 category acl	common	ja	カテゴリー ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	ja	カテゴリ ACL は、イベントにカテゴリを追加すること、および参加者の状態を変更することを制限します。イベントの表示に影響は与えません。
+category automatically added to new events	calendar	ja	新しいイベントに自動的に追加されるカテゴリー
 category report	calendar	ja	カテゴリーレポート
 chair	calendar	ja	幹事
+change domain of participants in caldav requests	calendar	ja	CalDAVリクエストで参加者のドメインを変更する
 change history	calendar	ja	変更履歴
 change your status	calendar	ja	ステータスを変更
 changed event-data applied	calendar	ja	変更されたイベントデータ
 charset of file	calendar	ja	ファイルの文字セット
 check all	calendar	ja	全て選択
 choose a category	calendar	ja	カテゴリを選択
+choose owner of imported data	calendar	ja	インポートしたデータの所有者を選択
 close the window	calendar	ja	ウィンドウを閉じる
 compose a mail to all participants after the event is saved	calendar	ja	イベントを保存して全参加者に送付するメールを作成
+configuration settings	calendar	ja	コンフィギュレーション設定
 conflict	calendar	ja	衝突
 copy this event	calendar	ja	このイベントをコピー
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	ja	変更をクリップボードにコピーし、%1 項目%2 をリロードしてマージ
@@ -142,6 +151,8 @@ days	calendar	ja	日
 days of the week for a weekly repeated event	calendar	ja	毎週繰り返すイベントの曜日
 days repeated	calendar	ja	曜日
 dayview	calendar	ja	日表示
+default alarm added for yourself or all participants	calendar	ja	<br>アラームは新しい予定に対して自動的に挿入されます。
+default alarm for	calendar	ja	デフォルトのアラーム
 default alarm for regular events	calendar	ja	通常イベントの既定アラーム
 default alarm for whole-day events	calendar	ja	終日イベントの既定アラーム
 default appointment length (in minutes)	calendar	ja	イベントの時間長（分）の既定値
@@ -159,6 +170,7 @@ delete series	calendar	ja	繰返しイベント削除
 delete this alarm	calendar	ja	このアラームを削除
 delete this event	calendar	ja	このイベントを削除
 delete this exception	calendar	ja	この例外を削除
+delete this meeting for all participants	calendar	ja	参加者全員のこの会議を削除する
 delete this recurrence	calendar	ja	この繰返し設定を削除
 delete this series of recurring events	calendar	ja	この繰返しイベントを削除
 deleted	calendar	ja	削除済み
@@ -214,6 +226,7 @@ error: you can't shift a series from the past!	calendar	ja	エラー: 繰返し�
 event	common	ja	イベント
 event deleted	calendar	ja	イベントを削除しました。
 event details follow	calendar	ja	イベント詳細
+event has been deleted by organizer!	calendar	ja	イベントは主催者によって削除されました！
 event saved	calendar	ja	イベントを保存しました。
 event will occupy the whole day	calendar	ja	終日行なわれるイベント
 events	common	ja	イベント
@@ -257,6 +270,7 @@ freetime	calendar	ja	空き時間
 freetime search	calendar	ja	空き時間検索
 fri	calendar	ja	金
 full description	calendar	ja	詳細
+full edit dialog	calendar	ja	フル編集ダイアログ
 fullname of person to notify	calendar	ja	通知先氏名
 general fields:	calendar	ja	一般項目:
 general settings	calendar	ja	一般設定
@@ -295,7 +309,7 @@ how many weeks should the multiple week view show?	calendar	ja	複数週表示�
 how much entries to skip	calendar	ja	読み飛ばすべき項目数
 html link to the current record	calendar	ja	現在のレコードに対する HTML リンク
 ical	calendar	ja	iCal
-ical / rfc2445	calendar	ja	iCal / rfc2445
+ical / rfc2445	calendar	ja	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	ja	iCalは、既存のイベントの所有者を変更することはできません。これは新規イベントのみに適用されます。
 ical export	calendar	ja	iCal エクスポート
 ical file	calendar	ja	iCal ファイル
@@ -320,7 +334,7 @@ invalid email-address "%1" for user %2	calendar	ja	ユーザ %2 のメール・�
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	calendar	ja	所有者(ID: %1）が不正です。代わりに %2 を使用しました。
 invitations	calendar	ja	参加依頼
 invite	common	ja	参加を依頼
-it can not read timezones from sqlite database %1!	calendar	ja	sqlite データベース %1 からタイムゾーン情報を取得できませんでした!
+it can not read timezones from sqlite database %1!	calendar	ja	SQLite データベース %1 からタイムゾーン情報を取得できませんでした!
 just me	calendar	ja	自分のみ
 keep exceptions	calendar	ja	例外を保持
 keep the series unchanged.	calendar	ja	繰返しの変更無し。
@@ -665,7 +679,7 @@ wk	calendar	ja	週
 work day ends on	calendar	ja	日表示の終了時刻
 work day starts on	calendar	ja	日表示の開始時刻
 workday	calendar	ja	就業日カレンダー
-workdays	calendar	ja	<nobr>就業日</nobr>
+workdays	calendar	ja	就業日
 yearly	calendar	ja	年単位
 yearly planner	calendar	ja	年間予定表
 years	admin	ja	年

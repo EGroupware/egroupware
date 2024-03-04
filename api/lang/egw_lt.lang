@@ -278,6 +278,10 @@ show password	common	lt	Rodyti slaptažodį
 show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
+too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
+total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
+transparant bg for the icons?	common	lt	Transparant bg for the icons
 yemen	common	lt	JEMENAS
 your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lt	Jūsų naršyklė nėra atnaujinta (suderinama su JavaScript ES6), gali būti, kad neveiks kai kurios funkcijos.

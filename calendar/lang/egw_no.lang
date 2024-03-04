@@ -1,26 +1,42 @@
 %1 %2 in %3	calendar	no	%1 %2 i %3
+%1 days	calendar	no	%1 dager
+%1 event(s) %2	calendar	no	%1 hendelse(r) %2
 %1 event(s) %2, %3 failed because of insufficient rights !!!	calendar	no	%1 hendelse(r) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 events in ical file, only first one imported and displayed!	calendar	no	%1 hendelser i iCal-filen, bare den første importeres og vises!
 %1 hours	calendar	no	%1 timer
+%1 minutes	calendar	no	%1 minutter
+%1 participants removed because of missing invite grants	calendar	no	%1 minutter
 %1 records imported	calendar	no	%1 oppføringer importert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	no	%1 oppføringer lest (ikke importert enda, du kan gå tilbake og hake av Test Import)
+%1 weeks	calendar	no	%1 uker
+%s the event	calendar	no	%s arrangementet
 (%1 events in %2 seconds)	calendar	no	(%1 hendelser på %2 sekunder)
 a non blocking event will not conflict with other events	calendar	no	En hendelse som ikke blokkerer vil ikke være i konflikt med andre hendelser
-accept	calendar	no	aksepter
+a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	no	En party crasher er en person som IKKE er invitert til møtet, men som på en eller annen måte har fått invitasjonen.
+accept	calendar	no	Aksepter
 accept or reject an invitation	calendar	no	Aksepter eller avslå invitasjonen
 accepted	calendar	no	Godtatt
-access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender !
+access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender!
+access to calendar of %1 denied!	calendar	no	Tilgang til kalenderen til %1 nektet!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	no	Handling som utløste denne meldingen: Lagt til, Kansellert, Akseptert, Avslått, ...
 actions	calendar	no	Aksjoner
+actions...	calendar	no	Handlinger ...
 add alarm	calendar	no	Legg til alarm
 add appointments via shortened dialog or complete edit window	calendar	no	Legg til avtaler via forkortet dialogboks eller fullstendig redigeringsvindu
+add current view as favorite	calendar	no	Legg til gjeldende visning som favoritt
+add new alarm	calendar	no	Legg til ny alarm
 add new event	calendar	no	Legg til ny avtale
+add new participants or resource	calendar	no	Legg til nye deltakere eller ressurser
 add timesheet entry	calendar	no	Legg til forekomst i timeregistrering
 added	calendar	no	Lagt til
 added by synchronization	calendar	no	Lagt til ved synkronisering
+after	calendar	no	Etter
+after %1	calendar	no	Etter %1
 after current date	calendar	no	Etter inneværende dato
+age:	calendar	no	Alder:
 alarm	calendar	no	Alarm
 alarm added	calendar	no	Alarm lagt til
+alarm added automatic to new events before event start-time	calendar	no	Alarm legges automatisk til nye hendelser før starttidspunktet for hendelsen.
 alarm deleted	calendar	no	Alarm slettet
 alarm for %1 at %2 in %3	calendar	no	Alarm for %1 ved %2 i %3
 alarm management	calendar	no	Alarm Styring
@@ -28,8 +44,13 @@ alarms	calendar	no	Alarmer
 all categories	calendar	no	Alle kategorier
 all day	calendar	no	Hele Dagen
 all events	calendar	no	Alle hendelser
+all exceptions are converted into single events.	calendar	no	Alle unntak konverteres til enkelthendelser.
+all future	calendar	no	Alle fremtidige
+all incl. rejected	calendar	no	Alle inkl. avvist
 all participants	calendar	no	Alle deltagere
 allow booking requests from any user when creating events?	calendar	no	Tillate bestillingsforespørsler fra alle brukere når du oppretter hendelser?
+allow party crashers with email that match the following regular expression	calendar	no	Tillat party crasher med e-post som samsvarer med følgende regulære uttrykk
+allow users to prevent change notifications ('do not notify')	calendar	no	Tillat brukere å forhindre endringsvarsler 'Ikke varsle'
 allows to edit the event again	calendar	no	Tillate endring av alarmen
 always	calendar	no	Alltid
 always use full edit dialog	calendar	no	Bruk alltid hele redigeringsdialogen
@@ -44,6 +65,7 @@ birthday	calendar	no	Fødselsdag
 birthdays	admin	no	Fødselsdager
 busy	calendar	no	Opptatt
 by	calendar	no	av
+by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	no	Som standard (ingenting er angitt her) tillater EGroupware bare at arrangøren/eieren legger til dem.
 calendar event	calendar	no	Kalender Hendelse
 calendar menu	calendar	no	Kalendermeny
 calendar preferences	calendar	no	Kalender Preferanser
@@ -56,14 +78,17 @@ changed event-data applied	calendar	no	Endrede hendelsesdata brukt
 charset of file	calendar	no	Karaktersett for filen
 check all	calendar	no	Kontroller alle
 choose a category	calendar	no	Velg en kategori
+choose owner of imported data	calendar	no	Velg eier av importerte data
 close the window	calendar	no	Lukk vinduet
 compose a mail to all participants after the event is saved	calendar	no	Komponer en mail til alle deltagere etter at hendelsen er lagret
+configuration settings	calendar	no	Konfigurasjonsinnstillinger
 copy this event	calendar	no	Kopier denne hendelsen
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 countries	calendar	no	Land
 country	calendar	no	Land
 create new links	calendar	no	Opprett ny lenke
 created	calendar	no	Opprettet
+creator	calendar	no	Skaper
 csv	calendar	no	CSV
 csv-fieldname	calendar	no	CSV-Feltnavn
 csv-filename	calendar	no	CSV-Filnavn
@@ -72,11 +97,11 @@ custom fields	common	no	Egendefinerte felt
 daily	calendar	no	Daglig
 date range	calendar	no	Datointervall
 day	calendar	no	Dag
-days	calendar	no	dager
+days	calendar	no	Dager
 days of the week for a weekly repeated event	calendar	no	Ukedag for ukentlig repeterende hendelser
-days repeated	calendar	no	dager gjentatt
+days repeated	calendar	no	Dager gjentatt
 dayview	calendar	no	Dagvisning
-default appointment length (in minutes)	calendar	no	standard avtalelengde (i minutter)
+default appointment length (in minutes)	calendar	no	Standard avtalelengde (i minutter)
 default calendar filter	calendar	no	Standard kalender filter
 default calendar view	calendar	no	Standard kalender visning
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	no	Standard lengde for nyopprettede hendelse. Lengden er i minutter, f.eks 60 for 1 time.
@@ -86,28 +111,30 @@ delete this alarm	calendar	no	Slett denne alarmen
 delete this event	calendar	no	Slett denne hendelsen
 delete this exception	calendar	no	Slett dette unntaket
 delete this series of recurring events	calendar	no	Slett serie med repeterende hendelser
-deleted	calendar	no	slettet
+deleted	calendar	no	Slettet.
 display status of events	calendar	no	Vis Status av Hending
 displayed view	calendar	no	Gjeldende visning
-do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisning uten helg ?
+do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisning uten helg?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	no	Vil du bli varslet om alle forandrede avtaler? Du blir varslet om alle endringer du selv utfører.<br>Du kan begrense varslingen til bare å gjelde spesifikke endringer. Hvert objekt inkluderer alle varslingene over det. Alle endringer inkluderer endringer av tittel, beskrivelse, men ikke deltakeres responser. Hvis eieren av en oppføring ber om varsling, vil han alltid få deltakeres responser som godkjenninger eller avslag også.
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	no	Ønsker du å motta regelmessige sammendrag av dine avtaler via e-post?<br>Oppsummeringen vil bli sendt til din standard e-post adresse på morgenen samme dag, eller på mandager for ukentlige sammendrag.<br>Den vil bare bli sendt når du har en avtale den dagen eller uken.
 download	calendar	no	Last ned
 download this event as ical	calendar	no	Last ned denne hendelsen som iCal
 duration	calendar	no	Varighet
 duration of the meeting	calendar	no	Varighet av møtet
+edit event in calendar	calendar	no	Rediger hendelse i kalenderen
 edit exception	calendar	no	Rediger unntak
 edit series	calendar	no	Redigere Serie
+edit status or alarms for this particular day	calendar	no	Rediger status eller alarmer for denne dagen
 edit this event	calendar	no	Endre hendelse
 edit this series of recurring events	calendar	no	Endre denne serien med repeterende hendelser
 email address migration	calendar	no	Migrering av e-postadresser
-empty for all	calendar	no	tøm for alle
+empty for all	calendar	no	Tøm for alle
 end	calendar	no	Slutt
 end date/time	calendar	no	Slutt Dato/Tid
 enddate	calendar	no	Sluttdato
-enddate / -time of the meeting, eg. for more then one day	calendar	no	Sluttdato / - tid for møtet, dersom mere enn en dag.
+enddate / -time of the meeting, eg. for more then one day	calendar	no	Sluttdato/-tid for møtet, dersom mere enn en dag.
 enddate of the export	calendar	no	Sluttdato for eksport
-ends	calendar	no	slutter
+ends	calendar	no	Slutter
 error adding the alarm	calendar	no	Feil ved forsøk på å sette alarm
 error notifying %1	calendar	no	Feil ved varsling av %1
 error: importing the ical	calendar	no	Feil: Ved import av iCal
@@ -135,7 +162,7 @@ for	calendar	no	for
 format of event updates	calendar	no	Format på hendelsesoppdateringer
 forward half a month	calendar	no	Forover en halv mnd.
 forward one month	calendar	no	Forover en mnd.
-freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	no	Ledig/opptatt: Ukjent bruker '%1', feil passord eller ikke tilgjengelig når du ikke er innlogget !!!
+freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	no	Ledig/opptatt: Ukjent bruker '%1', feil passord eller ikke tilgjengelig når du ikke er innlogget!
 freetime search	calendar	no	Søk etter fri tid
 fri	calendar	no	Fre
 full description	calendar	no	Full beskrivelse
@@ -149,25 +176,25 @@ group public only	calendar	no	Bare offentlig gruppe
 groupmember(s) %1 not included, because you have no access.	calendar	no	Gruppemedlem(mer) %1 ikke inkludert fordi du ikke har nødvendig tillatelse
 h	calendar	no	t
 here is your requested alarm.	calendar	no	Her er varslingen du ba om.
-high priority	calendar	no	høy prioritet
+high priority	calendar	no	Høy prioritet
 history	calendar	no	Historikk
 holiday	calendar	no	Ferie
 holidays	calendar	no	Ferier
 hours	calendar	no	timer
 how far to search (from startdate)	calendar	no	Hvor langt skal det søkes (fra startdato)
 ical	calendar	no	iCal
-ical / rfc2445	calendar	no	iCal / rfc2445
+ical / rfc2445	calendar	no	iCal / RFC2445
 ical export	calendar	no	iCal eksport
 ical file	calendar	no	iCal fil
 ical import	calendar	no	iCal import
 ical successful imported	calendar	no	iCal ble importert
-if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	no	Dersom du ikke setter et passord her vil informasjonen være tilgjengelig for alle som kjenner nettadressen !
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	no	Dersom du ikke setter et passord her vil informasjonen være tilgjengelig for alle som kjenner nettadressen!
 ignore conflict	calendar	no	Ignorer konflikt
 import	calendar	no	Importer
 import csv-file	common	no	Importer CSV-Fil
 interval	calendar	no	Intervall
 invalid email-address "%1" for user %2	calendar	no	Feil e-mailadresse "%1" for bruker %2
-last	calendar	no	siste
+last	calendar	no	Siste
 last changed	calendar	no	Sist endret
 lastname of person to notify	calendar	no	Etternavn til person som skal varsles
 link to view the event	calendar	no	Lenke til hendelse
@@ -175,14 +202,14 @@ links	calendar	no	Lenker
 links, attachments	calendar	no	Lenker, tillegg
 listview	calendar	no	Listevisning
 location	calendar	no	Lokasjon
-location, start- and endtimes, ...	calendar	no	Lokasjon, start- og sluttid,...
+location, start- and endtimes, ...	calendar	no	Lokasjon, start- og sluttid, ...
 mail all participants	calendar	no	Send e-mail til deltagerne
-make freebusy information available to not logged in persons?	calendar	no	Skal informasjon om ledig/opptatt være tilgjengelig for personer som ikke er pålogget ?
+make freebusy information available to not logged in persons?	calendar	no	Skal informasjon om ledig/opptatt være tilgjengelig for personer som ikke er pålogget?
 maximum available quantity of %1 exceeded!	calendar	no	Maksimalt tilgjengelig antall %1 overskredet!
 min days	calendar	no	Min dager
 minimum number of users for showing day view as consolidated.	calendar	no	Minimum antall brukere for å vise dagvisning som konsolidert.
 minimum number of users for showing week view as consolidated.	calendar	no	Minimum antall brukere for å vise ukevisning som konsolidert.
-minutes	calendar	no	minutter
+minutes	calendar	no	Minutter
 modified	calendar	no	Endret
 mon	calendar	no	Man
 month	calendar	no	Måned
@@ -196,11 +223,11 @@ never notify externals (non-users) about events i create	calendar	no	Aldri varsl
 new	calendar	no	Opprett
 new search with the above parameters	calendar	no	Nytt søk med ovenstårende parametre
 no events found	calendar	no	Ingen hendelser funnet
-no filter	calendar	no	uten filter
+no filter	calendar	no	Uten filter
 no matches found	calendar	no	Ingen treff funnet
 no response	calendar	no	Ingen Respons
 non blocking	calendar	no	Ikke blokkerende
-not	calendar	no	ikke
+not	calendar	no	Ikke
 notification messages for added events	calendar	no	Varslingsmeldinger for tillagte hendelser
 notification messages for canceled events	calendar	no	Varslingsmeldinger for avbrutte hendelser
 notification messages for modified events	calendar	no	Varslingsmeldinger for endrede hendelser
@@ -215,24 +242,24 @@ observance rule	calendar	no	Regel
 occurence	calendar	no	Hendelse
 old startdate	calendar	no	Gammel Startdato
 on %1 %2 %3 your meeting request for %4	calendar	no	På %1 %2 %3 din møte forespørsel for %4
-on all modification, but responses	calendar	no	på alle endringer, utenom responser
-on any time change too	calendar	no	på alle tidsendringer også
-on invitation / cancellation only	calendar	no	bare på invitasjon / kansellering
-on participant responses too	calendar	no	på deltakerers responser også
-on time change of more than 4 hours too	calendar	no	på tidsendringer på mer en 4 timer også
-one month	calendar	no	en måned
-one week	calendar	no	en uke
-one year	calendar	no	et år
+on all modification, but responses	calendar	no	På alle endringer, utenom responser
+on any time change too	calendar	no	På alle tidsendringer også
+on invitation / cancellation only	calendar	no	Bare på invitasjon / kansellering
+on participant responses too	calendar	no	På deltakerers responser også
+on time change of more than 4 hours too	calendar	no	På tidsendringer på mer en 4 timer også
+one month	calendar	no	En måned
+one week	calendar	no	En uke
+one year	calendar	no	Et år
 only the initial date of that recurring event is checked!	calendar	no	Bare startdato for den repeterende handlingen blir kontrollert !
 open todo's:	calendar	no	Åpne gjøremål liste:
 output unit	calendar	no	Enhet for utdata
-overlap holiday	calendar	no	overlapp ferie
+overlap holiday	calendar	no	Overlapp ferie
 participants	calendar	no	Deltakere
 participants uninvited from an event	calendar	no	Deltagere avmeldt fra en hendelse
-participants, resources, ...	calendar	no	Deltagere, ressurser,....
+participants, resources, ...	calendar	no	Deltagere, ressurser, ...
 password for not loged in users to your freebusy information?	calendar	no	Passord for ikke påloggede brukere til din freebusy informasjon?
-people holiday	calendar	no	personer ferie
-permission denied	calendar	no	Ingen tilgang
+people holiday	calendar	no	Personer ferie
+permission denied	calendar	no	Ingen tilgang.
 planner by category	calendar	no	Planlegger for kategorier
 planner by user	calendar	no	Planlegger for bruker
 please note: you can configure the field assignments after you uploaded the file.	calendar	no	Vennligst noter: Du kan konfigurere felttillegene etter at du har lastet opp filen.
@@ -243,12 +270,13 @@ private and group public	calendar	no	Privat og Felles
 private event	calendar	no	Privat arrangement
 private only	calendar	no	Bare Privat
 quantity	calendar	no	Antall
+quick add	calendar	no	Hurtigtillegg
 re-edit event	calendar	no	Omgjøre oppføring
 receive email updates	calendar	no	Motta e-post oppdateringer
 receive summary of appointments	calendar	no	Motta et sammendrag av avtaler
 recordings	calendar	no	Registreringer
 recurrence	calendar	no	Repeterende
-recurring event	calendar	no	periodisk oppføring
+recurring event	calendar	no	Periodisk oppføring
 rejected	calendar	no	Avslått
 removes the event from my calendar	calendar	no	Fjerner arrangementet fra kalenderen min
 repeat days	calendar	no	Repeterende dag
@@ -269,26 +297,26 @@ saves the changes made	calendar	no	Lagre endringene
 saves the event ignoring the conflict	calendar	no	Lagre hendelse uten hensyn til konflikt
 scheduling conflict	calendar	no	Planleggingskonflikt
 select a %1	calendar	no	Velg en %1
-select a time	calendar	no	velg en tid
+select a time	calendar	no	Velg en tid
 select resources	calendar	no	Velg ressurser
 select who should get the alarm	calendar	no	Velg hvem som skal motta alarmen
 send notifications	calendar	no	Send varsler
 send notifications to users right now	calendar	no	Send varsler til deltakere akkurat nå
 set new events to private	calendar	no	Sett nye oppføringer som private
 should new events created as private by default ?	calendar	no	Skal nye oppføringer som blir laget, være private som standard?
-should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	no	Skal status på oppførings-deltakere(godta, avslå,...) bli vist som bokser etter hver deltakers navn ?
+should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	no	Skal status på oppførings-deltakere(godta, avslå,...) bli vist som bokser etter hver deltakers navn?
 show %1 from %2	calendar	no	Vis %1 fra %2
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	no	Vises som ikke-blokkerende arrangementer hele dagen samt via mouseover på datoen.
 show list of upcoming events	calendar	no	Vis liste av kommende oppføringer
-show this month	calendar	no	vis denne måneden
-show this week	calendar	no	vis denne uken
-single event	calendar	no	enkel oppføring
+show this month	calendar	no	Vis denne måneden
+show this week	calendar	no	Vis denne uken
+single event	calendar	no	Enkel oppføring
 single participant	calendar	no	Enkelt deltaker
 sort by	calendar	no	Sorter etter
 start	calendar	no	Start
 start date/time	calendar	no	Start Dato/Tid
 startdate	calendar	no	Startdato
-startdate / -time	calendar	no	Startdato /-tid
+startdate / -time	calendar	no	Startdato/-tid
 startdate and -time of the search	calendar	no	Startdato og -tid i søket
 startdate of the export	calendar	no	Startdato for eksport
 startrecord	calendar	no	Startrekke
@@ -314,13 +342,13 @@ this message is sent to uninvited participants.	calendar	no	Denne meldingen er t
 this message is sent when you accept, tentative accept or reject an event.	calendar	no	Denne meldingen blir sendt når du godtar, forsøksvis godtar, eller avslår en oppføring.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	no	Denne meldingen blir sendt når du har satt en Alarm for en spesiell oppføring. Inkluder all den informasjonen du trenger.
 this module displays the current month	calendar	no	Denne modulen viser inneværende måned
-three month	calendar	no	tre måneder
+three month	calendar	no	Tre måneder
 thu	calendar	no	Tor
 til	calendar	no	til
 timeframe	calendar	no	Tidsrom
 timeframe to search	calendar	no	Tidrom for søk
 title of the event	calendar	no	Tittel på oppføringen
-to many might exceed your execution-time-limit	calendar	no	for mange vil muligens overskride din eksekverings-tidsgrense
+to many might exceed your execution-time-limit	calendar	no	For mange vil muligens overskride din eksekverings-tidsgrense
 toggle weekend	calendar	no	Bytt helg
 translation	calendar	no	Oversetting
 tue	calendar	no	Tir
@@ -328,7 +356,7 @@ two weeks	calendar	no	To uker
 uninvited	calendar	no	Ikke lenger invitert
 updated	calendar	no	Oppdatert
 use end date	calendar	no	Bruk sluttdato
-use the selected time and close the popup	calendar	no	bruk valgt tid og lukk popup-vinduet
+use the selected time and close the popup	calendar	no	Bruk valgt tid og lukk popup-vinduet
 utilities	calendar	no	Verktøy
 view this event	calendar	no	Vis denne hendelsen
 wed	calendar	no	Ons
@@ -346,12 +374,12 @@ work day ends on	calendar	no	Arbeidsdagen ender på
 work day starts on	calendar	no	Arbeidsdagen starter på
 yearly	calendar	no	Årlig
 yearview	calendar	no	Årlig Visning
-you can either set a year or a occurrence, not both !!!	calendar	no	Du kan enten sette ett år eller en hendelse, ikke begge!!!
-you can only set a year or a occurrence !!!	calendar	no	Du kan bare sette ett år eller en hendelse !!!
+you can either set a year or a occurrence, not both !!!	calendar	no	Du kan enten sette ett år eller en hendelse, ikke begge!
+you can only set a year or a occurrence !!!	calendar	no	Du kan bare sette ett år eller en hendelse!
 you do not have permission to read this record!	calendar	no	Du har ikke tilgang til å lese denne oppføringen!
 you have a meeting scheduled for %1	calendar	no	Du har ett møte planlagt for %1
 you have been uninvited from the meeting at %1	calendar	no	Du har blitt avmeldt fra møtet den %1
 you need to select an ical file first	calendar	no	Du må velge en iCal-fil først
-you need to set either a day or a occurrence !!!	calendar	no	Du må enten sette en dag eller hendelse !!!
+you need to set either a day or a occurrence !!!	calendar	no	Du må enten sette en dag eller hendelse!
 your meeting scheduled for %1 has been canceled	calendar	no	Møtet ditt planlagt for %1 har blitt kansellert
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	no	Møtet ditt som var planlagt for %1 har blitt flyttet til %2

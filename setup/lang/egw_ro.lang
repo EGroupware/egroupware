@@ -1,3 +1,18 @@
+error searching "dn=%1" for "%2"!	setup	ro	Eroare la căutarea "DN=%1" pentru "%2"!
+error uploading your backup!	setup	ro	Eroare la încărcarea copiei de rezervă!
+every	setup	ro	Fiecare
+export has been completed!	setup	ro	Exportul a fost finalizat!
+failed to mount backup directory!	setup	ro	A eșuat montarea directorului Backup!
+failed updating user "%1" dn="%2"!	setup	ro	A eșuat actualizarea utilizatorului "%1" DN="%2"!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	ro	A eșuat la scrierea fișierului de configurare header.inc.php, verificați permisiunile!
+fallback authentication	setup	ro	Autentificare de rezervă
+optional, if only authentication and anonymous search is enabled	setup	ro	opcional, se apenas a autenticação E a pesquisa anônima estiverem ativadas
+or leave empty and select openidconnect as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione OpenID Connect como tipo de autenticação acima para logon único
+or leave empty and select saml as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione SAML como tipo de autenticação acima para logon único
+password	setup	ro	Senha
+password for smtp-authentication	setup	ro	Senha para autenticação SMTP
+password needed for domain configuration.	setup	ro	Senha necessária para a configuração do domínio.
+passwords --> sql	setup	ro	Senhas --> SQL
 regular expression to filter by dn	setup	ro	Expresie regulată pentru a filtra după DN
 rejected lines	setup	ro	Linii respinse
 remove	setup	ro	Eliminați

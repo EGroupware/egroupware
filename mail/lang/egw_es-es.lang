@@ -140,7 +140,7 @@ delete folder	mail	es-es	Suprimir carpeta
 delete folder %1 ?	mail	es-es	¿SUPRIMIR carpeta %1?
 delete this acl	mail	es-es	Suprimir esta lista de control de acceso
 deleted	mail	es-es	suprimido
-deleted %1 messages in %2	mail	es-es	suprimido %1 mensajes en %2
+deleted %1 messages in %2	mail	es-es	Suprimido %1 mensajes en %2.
 deleted!	mail	es-es	suprimido!
 deleting %1 folders in progress ...	mail	es-es	Supreción de %1 carpetas en curso ...
 deleting folders	mail	es-es	Suprimiendo carpetas
@@ -378,6 +378,7 @@ move to archive	mail	es-es	Mover a carpeta de archivo
 move to trash	mail	es-es	Mover a la papelera
 moved %1 message(s) from %2 to %3	mail	es-es	Movido %1 mensaje(s) de %2 a %3
 moving folders from one mailaccount to another is not supported	mail	es-es	Mover carpetas de una cuenta de correo a otra no está soportada
+name and domain	mail	es-es	Nombre y dominio
 name and email	mail	es-es	Nombre y correo electrónico
 name of account	mail	es-es	Nombre de la cuenta
 name of imap servers (space separated host or host:port)	mail	es-es	Nombre de los servidores IMAP (host separado por espacios o host:puerto)
@@ -500,8 +501,8 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	es-es	Responder a
 report as ham	mail	es-es	Informar como Ham
 report as spam	mail	es-es	Reportar como spam
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	es-es	Informar de este contenido de correo electrónico como Ham (no spam) - soluciones de spam como spamTitan aprenderán
-report this email content as spam - spam solutions like spamtitan will learn	mail	es-es	Reportar este contenido de correo-e como Spam - soluciones antispam como spamTitan aprenderán
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	es-es	Informar de este contenido de correo electrónico como Ham (no spam) - soluciones de spam como SpamTitan aprenderán
+report this email content as spam - spam solutions like spamtitan will learn	mail	es-es	Reportar este contenido de correo-e como Spam - soluciones antispam como SpamTitan aprenderán
 required pear class mail/mimedecode.php not found.	mail	es-es	Requerido PEAR clase Mail/mimeDecode.php no se encuentra.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	es-es	¡Requerido para deshabilitar si usa Dovecot con banderas vistas privadas en carpeta compartida o de usuario!
 resend after how many days?	mail	es-es	¿Reenviar después de cuántos días?
@@ -611,7 +612,7 @@ source	mail	es-es	Fuente
 sources	mail	es-es	Fuentes
 spamtitan api url	mail	es-es	URL del API SpamTitan
 spamtitan integration requires epl version	mail	es-es	La integración de SpamTitan requiere la versión EPL
-start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuevos mensajes con el tipo MIME plain/text o HTML?
+start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuevos mensajes con el tipo text o HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	es-es	Responda y reenvíe mensajes de correo electrónico en formato de texto, en formato HTML o según el formato en que el remitente redactó originalmente el mensaje (por defecto).
 step 1: imap - incoming mail	mail	es-es	Paso 1: IMAP - correo entrante
 step 2: folder	mail	es-es	Paso 2: Carpeta
