@@ -666,6 +666,15 @@ declare interface IegwGlobal
 	 * @return {string}
 	 */
 	encodePathComponent(_comp : string) : string;
+
+	/**
+	 * Hash a string
+	 *
+	 * @param string
+	 */
+	async
+
+	hashString(name : any) : Promise<string>;
 	/**
 	 * Escape HTML special chars, just like PHP
 	 *
