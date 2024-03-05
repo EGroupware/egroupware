@@ -6,6 +6,7 @@ import {ManualMessage} from "../Validators/ManualMessage";
 import {LionValidationFeedback, Validator} from "@lion/form-core";
 import {et2_csvSplit} from "../et2_core_common";
 import {dedupeMixin} from "@lion/core";
+import {property} from "lit/decorators/property.js";
 
 // LionValidationFeedback needs to be registered manually
 window.customElements.define('lion-validation-feedback', LionValidationFeedback);
@@ -52,6 +53,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 	class Et2InputWidgetClass extends Et2Widget(superclass) implements et2_IInput, et2_IInputNode, et2_ISubmitListener
 	{
 		private __readonly : boolean;
+		private __label : string = "";
 		protected _oldValue : string | number | Object;
 		protected node : HTMLElement;
 
@@ -185,7 +187,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.defaultValidators = [];
 			this._messagesHeldWhileFocused = [];
 
-			this.__readonly = false;
+			this.readonly = false;
 			this._oldValue = this.getValue();
 
 			this.isSlComponent = typeof (<any>this).handleChange === 'function';
@@ -389,12 +391,14 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		}
 
 		/**
+		 * The label of the widget
 		 * Legacy support for labels with %s that get wrapped around the widget
 		 *
 		 * Not the best way go with webComponents - shouldn't modify their DOM like this
 		 *
 		 * @param new_label
 		 */
+		@property()
 		set label(new_label : string)
 		{
 			if(!new_label || !new_label.includes("%s"))

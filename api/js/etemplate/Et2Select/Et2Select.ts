@@ -967,7 +967,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     size=${this.size || "medium"}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
-                    ?editable=${isEditable}
+                    .editable=${isEditable}
                     .value=${option.value.replaceAll("___", " ")}
                     @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
