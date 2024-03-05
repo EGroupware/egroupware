@@ -8,6 +8,7 @@
         "rootDir": "./",
         "emitDecoratorMetadata": false,
         "experimentalDecorators": true,
+      "useDefineForClassFields": false,
         "removeComments": false,
         "moduleResolution": "node",
         "noImplicitAny": false,

@@ -12,6 +12,8 @@ import {css, html, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {state} from "lit/decorators/state.js";
+import {property} from "lit/decorators/property.js";
+import {Et2Textbox} from "../../Et2Textbox/Et2Textbox";
 
 /**
  * Tag is usually used in a Select with multiple=true, but there's no reason it can't go anywhere
@@ -69,23 +71,16 @@ export class Et2Tag extends Et2Widget(SlTag)
 			`];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			editable: {type: Boolean, reflect: true},
-			value: {type: String, reflect: true}
-		}
-	}
+	@property({type: Boolean}) editable = false;
+	@property({type: String, reflect: true}) value = "";
 
 	@state() current = false; // the user has keyed into the tag (focused), but hasn't done anything yet (shows a highlight)
+	@state() isEditing = false;
 
 	constructor(...args : [])
 	{
 		super(...args);
-		this.value = "";
 		this.pill = false;
-		this.editable = false;
 		this.removable = true;
 
 		this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -203,8 +198,9 @@ export class Et2Tag extends Et2Widget(SlTag)
 		this.setAttribute("contenteditable", "true");
 
 		this.requestUpdate();
-		this.updateComplete.then(() =>
+		this.updateComplete.then(async() =>
 		{
+			await this._editNode.updateComplete;
 			// This stops drag and drop from interfereing with mouse edits
 			this._editNode.input.setAttribute("contenteditable", "true");
 
@@ -233,7 +229,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 		})
 	}
 
-	get _editNode() : HTMLInputElement
+	get _editNode() : Et2Textbox
 	{
 		return this.shadowRoot.querySelector('et2-textbox');
 	}
