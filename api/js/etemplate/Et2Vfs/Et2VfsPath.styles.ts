@@ -70,7 +70,9 @@ export default css`
 	/* Sizes */
 
 	.form-control--medium, .form-control--medium .form-control-input {
-		min-height: var(--sl-input-height-medium);
+		min-height: calc(var(--sl-input-height-medium) - var(--sl-input-border-width) * 2);
+		padding-top: 0;
+		padding-bottom: 0;
 	}
 
 	.form-control--medium .vfs-path__edit {

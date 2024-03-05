@@ -39,6 +39,10 @@ input#filemanager-index_path {
 	flex: 20 1 auto;
 }
 
+#filemanager-index_nm_path {
+	flex-grow: 1
+}
+
 /**
  * Tile view
  */

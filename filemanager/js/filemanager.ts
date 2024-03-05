@@ -916,6 +916,9 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		this.path_widget[etemplate_name].set_value(_dir);
+
+		// Dispatch a change event for the nm
+		this.path_widget[etemplate_name].dispatchEvent(new Event("change"));
 	}
 
 	/**
