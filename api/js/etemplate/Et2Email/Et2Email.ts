@@ -258,6 +258,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			this.value = _value;
 		}
+		this.requestUpdate("value");
 	}
 
 	willUpdate(changedProperties : PropertyValues)
