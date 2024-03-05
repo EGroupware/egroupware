@@ -1076,13 +1076,13 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			} else {
 				$output->flag->flagstatus = 0;
 			}
-			if (!empty($headers['answered']))
+			if (!empty($headers['forwarded']))
 			{
-				$output->lastverexecuted = AS_REPLYTOSENDER;
+				$output->lastverbexecuted = AS_FORWARD;
 			}
-			elseif (!empty($headers['forwarded']))
+			elseif (!empty($headers['answered']))
 			{
-				$output->lastverexecuted = AS_FORWARD;
+				$output->lastverbexecuted = AS_REPLYTOSENDER;
 			}
 			$output->subject = $headers['subject'];
 			$output->importance = $headers['priority'] > 3 ? 0 :
@@ -1799,18 +1799,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!$this->mail->folderIsSelectable($folder))
 		{
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not select folder $folder returning fake state");
-			$syncstate = "M:".'0'."-R:".'0'."-U:".'0'."-NUID:".'0'."-UIDV:".'0';
+			$syncstate = "M:".'0'."-R:".'0'."-U:".'0'."-NUID:".'0'."-UIDV:".'0'."-MODSEQ:".'0';
 			return array();
 		}
 
 		$this->mail->reopen($folder);
 
-		if (!($status = $this->mail->getFolderStatus($folder,$ignoreStatusCache=true)))
+		if (!($status = $this->mail->getFolderStatus($folder, true, false, true, true)))
 		{
 			ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.": could not stat folder $folder ");
 			return false;
 		}
-		$syncstate = "M:". $status['messages'] ."-R:". $status['recent'] ."-U:". $status['unseen']."-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity'];
+		$syncstate = "M:".$status['messages']."-R:".$status['recent']."-U:".$status['unseen'].
+			"-NUID:".$status['uidnext']."-UIDV:".$status['uidvalidity']."-MODSEQ:".($status['highestmodseq'] ?? '0');
 
 		if ($this->debugLevel) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__."($folderid, ...) $folder ($account) returning ".array2string($syncstate));
 		return array();

@@ -1159,12 +1159,12 @@ class Mail
 	 *
 	 * @param folderName string the foldername
 	 * @param ignoreStatusCache bool ignore the cache used for counters
-	 *
+	 * @param bool $getModSeq true: query highestmodseq (returned in uppercase!)
 	 * @return array
 	 *
 	 * @throws Exception
 	 */
-	function _getStatus($folderName,$ignoreStatusCache=false)
+	function _getStatus($folderName,$ignoreStatusCache=false,bool $getModSeq=false)
 	{
 		static $folderStatus = null;
 		if (!$ignoreStatusCache && isset($folderStatus[$this->icServer->ImapServerId][$folderName]))
@@ -1174,7 +1174,7 @@ class Mail
 		}
 		try
 		{
-			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName,$ignoreStatusCache);
+			$folderStatus[$this->icServer->ImapServerId][$folderName] = $this->icServer->getStatus($folderName,$ignoreStatusCache,$getModSeq);
 		}
 		catch (\Exception $e)
 		{
@@ -1188,13 +1188,14 @@ class Mail
 	 *
 	 * returns an array information about the imap folder, may be used as  wrapper to retrieve results from cache
 	 *
-	 * @param _folderName string the foldername
-	 * @param ignoreStatusCache bool ignore the cache used for counters
-	 * @param basicInfoOnly bool retrieve only names and stuff returned by getMailboxes
-	 * @param fetchSubscribedInfo bool fetch Subscribed Info on folder
+	 * @param $_folderName string the foldername
+	 * @param $ignoreStatusCache bool ignore the cache used for counters
+	 * @param $basicInfoOnly bool retrieve only names and stuff returned by getMailboxes
+	 * @param $fetchSubscribedInfo bool fetch Subscribed Info on folder
+	 * @param bool $getModSeq true: return highestmodseq with key "highestmodseq"
 	 * @return array|false
 	 */
-	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true)
+	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false,$fetchSubscribedInfo=true, bool $getModSeq=false)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
 		if (!is_string($_folderName) || empty($_folderName)||(isset(self::$profileDefunct[$this->profileID]) && strlen(self::$profileDefunct[$this->profileID])))
@@ -1243,7 +1244,7 @@ class Mail
 		if($ignoreStatusCache||!$folderInfo|| !is_array($folderInfo)) {
 			try
 			{
-				$folderInfo = $this->_getStatus($_folderName,$ignoreStatusCache);
+				$folderInfo = $this->_getStatus($_folderName,$ignoreStatusCache,$getModSeq);
 			}
 			catch (\Exception $e)
 			{
@@ -1280,6 +1281,10 @@ class Mail
 		}
 		if ($folderInfo) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
 		//error_log(__METHOD__.' ('.__LINE__.') '.' '.$_folderName.array2string($retValue['attributes']));
+		if ($getModSeq)
+		{
+			$retValue['highestmodseq'] = $folderInfo['HIGHESTMODSEQ'] ?? 0;
+		}
 		if ($basicInfoOnly || (isset($retValue['attributes']) && stripos(array2string($retValue['attributes']),'noselect')!==false))
 		{
 			return $retValue;
@@ -1314,12 +1319,16 @@ class Mail
 		try
 		{
 			//$folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache);
-			$folderStatus = $this->getMailBoxCounters($_folderName,false);
+			$folderStatus = $this->getMailBoxCounters($_folderName,false, empty($retValue['highestmodseq']) && $getModSeq);
 			$retValue['messages']		= $folderStatus['MESSAGES'];
 			$retValue['recent']		= $folderStatus['RECENT'];
 			$retValue['uidnext']		= $folderStatus['UIDNEXT'];
 			$retValue['uidvalidity']	= $folderStatus['UIDVALIDITY'];
 			$retValue['unseen']		= $folderStatus['UNSEEN'];
+			if (empty($retValue['highestmodseq']) && $getModSeq)
+			{
+				$retValue['highestmodseq'] = $folderStatus['HIGHESTMODSEQ'];
+			}
 			if (//$retValue['unseen']==0 &&
 				(isset($this->mailPreferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
 				$this->mailPreferences['trustServersUnseenInfo']==false) ||
@@ -3381,13 +3390,14 @@ class Mail
 	 * function to retrieve the counters for a given folder
 	 * @param string $folderName
 	 * @param boolean $_returnObject return the counters as object rather than an array
+	 * @param bool $getModSeq true: query highestmodseq (returned in uppercase!)
 	 * @return mixed false or array of counters array(MESSAGES,UNSEEN,RECENT,UIDNEXT,UIDVALIDITY) or object
 	 */
-	function getMailBoxCounters($folderName,$_returnObject=true)
+	function getMailBoxCounters($folderName,$_returnObject=true, bool $getModSeq=false)
 	{
 		try
 		{
-			$folderStatus = $this->icServer->getMailboxCounters($folderName);
+			$folderStatus = $this->icServer->getMailboxCounters($folderName, $getModSeq);
 			//error_log(__METHOD__.' ('.__LINE__.') '.$folderName.": FolderStatus:".array2string($folderStatus).function_backtrace());
 		}
 		catch (\Exception $e)
@@ -3395,15 +3405,22 @@ class Mail
 			if (self::$debug) error_log(__METHOD__." returned FolderStatus for Folder $folderName:".$e->getMessage());
 			return false;
 		}
-		if(is_array($folderStatus)) {
-			if ($_returnObject===false) return $folderStatus;
+		if(is_array($folderStatus))
+		{
+			if (!$_returnObject)
+			{
+				return $folderStatus;
+			}
 			$status =  new \stdClass;
 			$status->messages   = $folderStatus['MESSAGES'];
 			$status->unseen     = $folderStatus['UNSEEN'];
 			$status->recent     = $folderStatus['RECENT'];
 			$status->uidnext        = $folderStatus['UIDNEXT'];
 			$status->uidvalidity    = $folderStatus['UIDVALIDITY'];
-
+			if ($getModSeq)
+			{
+				$status->highestmodseq    = $folderStatus['HIGHESTMODSEQ'];
+			}
 			return $status;
 		}
 		return false;

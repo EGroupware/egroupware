@@ -558,13 +558,14 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * getMailboxCounters
 	 *
 	 * @param array|string $mailbox
+	 * @param bool $getModSeq true: query highestmodseq (returned in uppercase!)
 	 * @return array|false with counters
 	 */
-	function getMailboxCounters($mailbox)
+	function getMailboxCounters($mailbox, bool $getModSeq=false)
 	{
 		try
 		{
-			$status = $this->status($mailbox);
+			$status = $this->status($mailbox, Horde_Imap_Client::STATUS_ALL | ($getModSeq ? Horde_Imap_Client::STATUS_HIGHESTMODSEQ : 0));
 			foreach ($status as $key => $v)
 			{
 				$_status[strtoupper($key)]=$v;
@@ -587,10 +588,11 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 * getStatus
 	 *
 	 * @param string $mailbox
-	 * @param bool ignoreStatusCache ignore the cache used for counters
+	 * @param bool $ignoreStatusCache ignore the cache used for counters
+	 * @param bool $getModSeq true: return highestmodseq with key "modseq"
 	 * @return array with counters
 	 */
-	function getStatus($mailbox, $ignoreStatusCache=false)
+	function getStatus($mailbox, $ignoreStatusCache=false, bool $getModSeq=false)
 	{
 		$mailboxes = $this->listMailboxes($mailbox,Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, array(
 				'attributes'=>true,
@@ -601,6 +603,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 
 		$flags = Horde_Imap_Client::STATUS_ALL;
 		if ($ignoreStatusCache) $flags |= Horde_Imap_Client::STATUS_FORCE_REFRESH;
+		if ($getModSeq) $flags |= Horde_Imap_Client::STATUS_HIGHESTMODSEQ;
 
 		$mboxes = new Horde_Imap_Client_Mailbox_List($mailboxes);
 		//error_log(__METHOD__.__LINE__.array2string($mboxes->count()));
