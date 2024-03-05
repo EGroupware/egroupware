@@ -7323,8 +7323,11 @@ class Mail
 				$structure->setTransferEncoding('8bit');
 				$structure->setCharset('utf-8');
 			}
-			// if we have no text body, but only a PDF or an image, set binary, as it's already base64 transfer-encoded
-			if ($structure->getType() === 'application/pdf' || $structure->getPrimaryType() === 'image')
+			// if we have no text body, but only a PDF or an image AND transfer-encoding is NOT base64,
+			// set binary, as it's already base64 transfer-encoded but lacks the necessary header
+			if (($structure->getType() === 'application/pdf' || $structure->getPrimaryType() === 'image') &&
+				// hack to read protected $structure->_transfer_encoding
+				unserialize($structure->serialize())[9] !== 'base64')
 			{
 				$structure->setTransferEncoding('binary', ['send' => true]);
 			}
