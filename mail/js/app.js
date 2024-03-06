@@ -4059,7 +4059,7 @@ app.classes.mail = AppJS.extend(
 				action = _egw_action.id;
 			}
 
-			Object.assign(content, self.et2.getInstanceManager().getValues(self.et2, true));
+			Object.assign(content, {...self.et2.getInstanceManager().getValues(self.et2, true), attachments: content.attachments});
 
 			if (content)
 			{
