@@ -4,6 +4,8 @@ import shoelace from "../Styles/shoelace";
 import {css, html, LitElement, TemplateResult} from "lit";
 import {SelectOption} from "./FindSelectOptions";
 import {repeat} from "lit/directives/repeat.js";
+import {property} from "lit/decorators/property.js";
+import {SlMenuItem} from "@shoelace-style/shoelace";
 
 /**
  * A selectbox that shows more than one row at a time
@@ -56,19 +58,7 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Toggle between single and multiple selection
-			 */
-			multiple: {
-				type: Boolean,
-				reflect: true,
-			}
-		}
-	}
+	@property({type: Boolean, reflect: true}) multiple = false;
 
 	private __value : String[] | null;
 
@@ -88,6 +78,11 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		{
 			this.addEventListener("sl-change", this._triggerChange);
 		});
+	}
+
+	private getAllItems() : SlMenuItem[]
+	{
+		return <SlMenuItem[]>Array.from(this.shadowRoot?.querySelectorAll('sl-menu-item')) ?? [];
 	}
 
 	/**
@@ -118,15 +113,12 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		this.dispatchEvent(new Event("change"));
 	}
 
+	@property()
 	get value()
 	{
-		let value = [];
-		if(this.defaultSlot)
-		{
-			value = this.getAllItems()
+		let value = this.hasUpdated ? this.getAllItems()
 				.filter((item) => item.checked)
-				.map((item) => item.value);
-		}
+			.map((item) => item.value) : this.__value ?? []
 		return this.multiple ? value : value.pop();
 	}
 
@@ -154,15 +146,16 @@ export class Et2Listbox extends RowLimitedMixin(Et2WidgetWithSelectMixin(LitElem
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		return html`
-            <sl-option
+            <sl-menu-item
                     value="${option.value}"
                     title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
                     class="${option.class}" .option=${option}
-                    .selected=${checked}
+                    type="checkbox"
+                    ?checked=${checked}
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
-            </sl-option>`;
+            </sl-menu-item>`;
 	}
 
 	render()
