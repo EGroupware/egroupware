@@ -231,6 +231,10 @@ class Storage
 	 */
 	var $soextra;
 	var $sodistrib_list;
+	/**
+	 * @var Api\Db
+	 */
+	var $db;
 
 	/**
 	 * Constructor

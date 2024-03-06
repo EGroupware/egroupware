@@ -629,7 +629,6 @@ class setup_process
 		{
 			$this->init_process();
 		}
-		$this->oProc->m_odb->HaltOnError = 'yes';
 
 		foreach($setup_info as $appname => &$appdata)
 		{

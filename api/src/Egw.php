@@ -17,6 +17,7 @@ namespace EGroupware\Api;
 // explicitly list old, non-namespaced classes
 // they are only used, if phpgwapi is installed
 use accounts as egw_accounts;
+use EGroupware\Api\Egw\Applications;
 use egw_session;
 use common;
 
@@ -56,6 +57,26 @@ class Egw extends Egw\Base
 	 * @var Session
 	 */
 	public $session;
+
+	/**
+	 * @var Acl
+	 */
+	public $acl;
+
+	/**
+	 * @var Preferences
+	 */
+	public $preferences;
+
+	/**
+	 * @var Applications
+	 */
+	public $applications;
+
+	/**
+	 * @var Asyncservice
+	 */
+	public $asyncservice;
 
 	/**
 	 * Constructor: Instantiates the sub-classes

@@ -72,6 +72,12 @@ class Backup
 	 */
 	const GUACAMOLE_REGEXP = '/^guacamole_/';
 	/**
+	 * Files directory
+	 *
+	 * @var string
+	 */
+	public $files_dir;
+	/**
 	 * Backup directory.
 	 *
 	 * @var string
@@ -89,6 +95,8 @@ class Backup
 	 * @var boolean
 	 */
 	public $backup_files = false ;
+	public $charset = 'utf-8';
+	public $api_version;
 	/**
 	 * Reference to schema_proc's Api\Db object
 	 *
@@ -935,7 +943,7 @@ class Backup
 
 		fwrite($f,"charset: $this->charset\n\n");
 
-		$this->schema_backup($f);	// add the schema in a human readable form too
+		$this->schema_backup($f);	// add the schema in a human-readable form too
 
 		fwrite($f,"\nschema: ".json_encode($this->schemas)."\n");
 

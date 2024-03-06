@@ -636,7 +636,7 @@ class Select extends Etemplate\Widget
 		if($widget_type && is_object($widget_type))
 		{
 			$widget = $widget_type;
-			$widget_type = $widget->attrs['type'] ? $widget->attrs['type'] : $widget->type;
+			$widget_type = $widget->attrs['type'] ?? $widget->type;
 			if(substr($widget_type, 0, 4) == 'et2-')
 			{
 				$widget_type = str_replace('et2-', '', $widget_type);
