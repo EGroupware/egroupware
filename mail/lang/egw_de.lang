@@ -227,6 +227,7 @@ event details follow	mail	de	Details zum Termin folgen
 every %1. day	mail	de	Jeden %1. Tag
 everyone	mail	de	Alle Anwender
 examine namespace to retrieve folders in others and shared	mail	de	Den Namensraum untersuchen, um Ordner in anderen und gemeinsam genutzten Ordnern abzurufen
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	de	Schließe Anhänge größer als die angegebene Größe vom automatischen Speichern als Entwurf aus (in MB)
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
