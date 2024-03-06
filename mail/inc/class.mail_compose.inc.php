@@ -2557,10 +2557,10 @@ class mail_compose
 			case 'html':
 				$body = $_formData['body'];
 
+				static $ruler = '<hr class="ruler"';
 				if (!empty($attachment_links))
 				{
 					// if we have a ruler, replace it with the attachment block
-					static $ruler = '<hr class="ruler"';
 					if (strpos($body, $ruler) !== false)
 					{
 						$body = preg_replace('#'.$ruler.'[^>]*>#', $attachment_links, $body);

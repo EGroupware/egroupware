@@ -49,6 +49,21 @@ class Mail
 	var $profileID = 0;
 
 	/**
+	 * @var int
+	 */
+	var $accountid;
+
+	/**
+	 * @var array
+	 */
+	var $sessionData;
+
+	/**
+	 * @var Horde_Idna
+	 */
+	var $idna2;
+
+	/**
 	 * delimiter - used to separate acc_id from mailbox / folder-tree-structure
 	 *
 	 * @var string

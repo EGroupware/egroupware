@@ -119,6 +119,11 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	protected $enableSieve = false;
 
 	/**
+	 * @var string|null
+	 */
+	protected $loginType;
+
+	/**
 	 * Connection is an admin connection
 	 *
 	 * @var boolean|int|string $isAdminConnection admin connection if true or account_id or imap username
@@ -339,7 +344,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 					return $this->getParam($name);
 				}
 				// calling Horde_Imap_Client's __get() method available since 2.24.1
-				return is_callable('parent::__get') ? parent::__get($name) : null;
+				return parent::__get($name);
 		}
 	}
 
