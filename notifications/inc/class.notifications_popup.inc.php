@@ -243,7 +243,7 @@ class notifications_popup implements notifications_iface
 			} else {
 				$image = '';
 			}
-			if($link->popup && !$GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient'])
+			if($link->popup && empty($GLOBALS['egw_info']['user']['preferences']['notifications']['external_mailclient']))
 			{
 				$data = array(
 					"data-app = '{$link->app}'",
