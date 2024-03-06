@@ -356,13 +356,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	getValue()
 	{
+		if(this.multiple){
 		let res:string[] = []
 		if(this.selectedNodes?.length)
 			for (const selectedNode of this.selectedNodes)
 			{
 				res.push(selectedNode.id)
 			}
-		return res
+		return res}
+		else {
+			this.getSelectedItem().id
+		}
 	}
 
 	/**
