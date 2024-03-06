@@ -100,7 +100,7 @@ export class Et2VfsSelectDialog
 	@property() mime : string | string[] | RegExp = "";
 
 	/** List of mimetypes to allow user to filter.  */
-	@property() mimeList : SelectOption[] = [
+	@property({type: Array}) mimeList : SelectOption[] = [
 		{
 			value: "/(application\\/vnd.oasis.opendocument.text|application\\/vnd.openxmlformats-officedocument.wordprocessingml.document)/i",
 			label: "Documents"
@@ -209,8 +209,6 @@ export class Et2VfsSelectDialog
 		{
 			this.path = <string>this.egw()?.preference("startfolder", "filemanager") || "~";
 		}
-		// Get file list
-		this.startSearch();
 	}
 
 	async getUpdateComplete()
@@ -230,6 +228,8 @@ export class Et2VfsSelectDialog
 			this._dialog.panel.style.width = "60em";
 			this._dialog.panel.style.height = "40em";
 		});
+		// Get file list
+		this.startSearch();
 	}
 
 	protected willUpdate(changedProperties : PropertyValues)
@@ -297,9 +297,11 @@ export class Et2VfsSelectDialog
 		}
 		return Promise.all([
 			this.updateComplete,
-			this._searchPromise,
-			this._dialog.show()
+			this._searchPromise
 		]).then(() =>
+		{
+			return this._dialog.show();
+		}).then(() =>
 		{
 			// Set current file to first value
 			if(this.value && this.value[0])
@@ -320,6 +322,7 @@ export class Et2VfsSelectDialog
 
 	async getComplete() : Promise<[number, Object]>
 	{
+		await this.updateComplete;
 		const value = await this._dialog.getComplete();
 		await this.handleClose();
 		value[1] = this.value;
