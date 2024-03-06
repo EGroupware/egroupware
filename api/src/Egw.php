@@ -76,7 +76,7 @@ class Egw extends Egw\Base
 	/**
 	 * @var Asyncservice
 	 */
-	public $asyncservice;
+	protected $asyncservice;
 
 	/**
 	 * Constructor: Instantiates the sub-classes
