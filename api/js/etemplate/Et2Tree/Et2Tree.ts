@@ -347,7 +347,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	public getSelectedItem(): TreeItemData
 	{
-		return this._currentOption || this._selectOptions[0]
+		return this._currentOption || (this._selectOptions ? this._selectOptions[0] : null);
 	}
 
 	/**
@@ -356,17 +356,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	getValue()
 	{
-		if(this.multiple){
-		let res:string[] = []
-		if(this.selectedNodes?.length)
-			for (const selectedNode of this.selectedNodes)
+		if(this.multiple)
+		{
+			let res:string[] = [];
+			if(this.selectedNodes?.length)
 			{
-				res.push(selectedNode.id)
+				for (const selectedNode of this.selectedNodes)
+				{
+					res.push(selectedNode.id);
+				}
 			}
-		return res}
-		else {
-			this.getSelectedItem().id
+			return res;
 		}
+		return this.getSelectedItem()?.id;
 	}
 
 	/**
