@@ -126,6 +126,10 @@
 					<et2-description  value="Default value for remembering S/MIME passphrase in minutes"></et2-description>
 					<et2-textbox  id="newsettings[smime_pass_exp]"></et2-textbox>
 				</row>
+				<row>
+					<et2-description  value="Exclude attachments greater than given size from automatic saving as draft (in MB)"></et2-description>
+					<et2-number  id="newsettings[autosave_attachment_limit_mb]"></et2-number>
+				</row>
 			</rows>
 		</grid>
 	</template>

@@ -2667,9 +2667,15 @@ class mail_compose
 								break;
 						}
 					}
-					// attach files not for autosaving
-					elseif ($_formData['filemode'] == Vfs\Sharing::ATTACH && !$_autosaving)
+					// attach files not for autosaving, if size-limit is configured and attachment is bigger
+					elseif ($_formData['filemode'] == Vfs\Sharing::ATTACH)
 					{
+						// exclude attachments greater configured size from autosaving
+						if ($_autosaving && !empty(Mail::$mailConfig['autosave_attachment_limit_mb']) &&
+							$attachment['size'] > 1024*1024*Mail::$mailConfig['autosave_attachment_limit_mb'])
+						{
+							continue;
+						}
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
 							Vfs::load_wrapper('vfs');
@@ -2761,6 +2767,9 @@ class mail_compose
 	 */
 	public function ajax_saveAsDraft ($content, $action='button[saveAsDraft]')
 	{
+		// release session, as we don't need it and it blocks parallel requests
+		$GLOBALS['egw']->session->commit_session();
+
 		//error_log(__METHOD__.__LINE__.array2string($content)."(, action=$action)");
 		$response = Api\Json\Response::get();
 		$success = true;

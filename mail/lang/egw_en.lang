@@ -227,6 +227,7 @@ event details follow	mail	en	Event details follow
 every %1. day	mail	en	Every %1. day
 everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	en	Exclude attachments greater than given size from automatic saving as draft (in MB)
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
 failed to delete %1	mail	en	Failed to delete %1
