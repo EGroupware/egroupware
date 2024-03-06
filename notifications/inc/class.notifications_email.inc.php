@@ -79,7 +79,7 @@ class notifications_email implements notifications_iface {
 
 		// Use configured mail ac
 		$ident = null;
-		if($this->config->async_identity)
+		if(!empty($this->config->async_identity))
 		{
 			$ident = Api\Mail\Account::read($this->config->async_identity, $_sender->account_id ?? null);
 		}
