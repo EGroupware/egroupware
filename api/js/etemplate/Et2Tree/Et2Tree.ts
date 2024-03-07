@@ -883,7 +883,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				res = value
 				return res
 			}
-			else if(_id.startsWith(value.id) && typeof value.item !== "undefined")
+			else if(_id?.startsWith(value.id) && typeof value.item !== "undefined")
 			{
 				res = this._search(_id, value.item)
 			}

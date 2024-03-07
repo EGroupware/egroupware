@@ -1890,8 +1890,8 @@ app.classes.mail = AppJS.extend(
 	archivefolder_enabled: function(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _senders[0].id.split('::')[2]; // this is operating on mails
-		var node = ftree ? ftree.getNode(acc_id) : null;
+		var acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
+		var node = ftree && acc_id ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.archivefolder;
 	},
