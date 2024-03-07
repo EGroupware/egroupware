@@ -509,12 +509,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	setStyle(_id, _style)
 	{
-		var temp = this.getDomNode(_id).defaultSlot;
+		const temp = this.getDomNode(_id).defaultSlot;
 		if (!temp) return 0;
-		if (!temp.style.cssText)
 			temp.setAttribute("style", _style);
-		else
-			temp.style.cssText = temp.style.cssText + ";" + _style;
 	}
 
 	/**

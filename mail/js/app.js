@@ -1950,7 +1950,7 @@ app.classes.mail = AppJS.extend(
 			if(_status[folderId]["unseenCount"])
 			{
 				ftree.setStyle(folderId, 'font-weight: bold !important');
-			}else {
+			}else if(!_status[folderId]["unseenCount"] || _status[folderId]["unseenCount"] ===0 || _status[folderId]["unseenCount"] ==="0") {
 				ftree.setStyle(folderId, 'font-weight: normal');
 			}
 			ftree.set_badge(folderId,_status[folderId]["unseenCount"]);
@@ -2177,8 +2177,12 @@ app.classes.mail = AppJS.extend(
 		if (icounter>0)
 		{
 			let newcounter = icounter - 1;
-			if (newcounter === 0) newcounter = null;
-			ftree.set_badge(_foldernode.id, newcounter)
+			if (newcounter === 0)
+			{
+				newcounter = null;
+				ftree.setStyle(_foldernode.id, 'font-weight: normal');
+			}
+			ftree.set_badge(_foldernode.id, newcounter?.toString());
 		}
 	},
 
