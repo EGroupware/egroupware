@@ -698,9 +698,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					${selectOption.label ?? selectOption.text}
 				</span>
                 ${selectOption.unreadMessages ?
-                        html`
-                            <sl-badge pill>${selectOption.unreadMessages}</sl-badge>
-                        ` : nothing}
+					html`
+						<sl-badge pill variant="danger">${selectOption.unreadMessages}</sl-badge>
+					` : nothing}
 
                 ${selectOption.children ? repeat(selectOption.children, this._optionTemplate) : (selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing)}
             </sl-tree-item>`
