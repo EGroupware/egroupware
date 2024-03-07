@@ -70,7 +70,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	@property({type: Boolean})
 	highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
 	@property({type: String})
-	autoloading: String = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
 	@property()
 	onopenstart //description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
 	@property()
@@ -129,7 +129,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			{
 				url = '/json.php?menuaction=' + url;
 			}
-			this.autoloading_url = url;
+			this.autoloading = url;
 		}
 
 		// Check if top level should be autoloaded
@@ -774,7 +774,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	handleLazyLoading(_item: TreeItemData)
 	{
-		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading_url)),
+		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
 			{
 				id: _item.id
 			})
@@ -939,7 +939,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	private installHandler(_name: String, _handler: Function)
 	{
-		if (this.input == null) this.createTree();
+		//if (this.input == null) this.createTree();
 		// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
 		// if (_name == "onchange") {
 		//     _name = this.options.multiple ? "oncheck" : "onselect"
@@ -966,17 +966,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		// // to allow "," in value, eg. folder-names, IF value is specified as array
 		// widget.input.dlmtr = ':}-*(';
 		// @ts-ignore from static get properties
-		if (this.autoloading)
-		{
-			// @ts-ignore from static get properties
-			let url = this.autoloading;
 
-			if (url.charAt(0) != '/' && url.substr(0, 4) != 'http')
-			{
-				url = '/json.php?menuaction=' + url;
-			}
-			this.autoloading_url = url;
-		}
 	}
 
 }
