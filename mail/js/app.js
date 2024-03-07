@@ -1949,7 +1949,7 @@ app.classes.mail = AppJS.extend(
 			// display folder-name bold for unseen mails
 			if(_status[folderId]["unseenCount"])
 			{
-				ftree.set_unreadCounter(folderId,_status[folderId]["unseenCount"]);
+				ftree.set_badge(folderId,_status[folderId]["unseenCount"]);
 				ftree.setStyle(folderId, 'font-weight: bold !important');
 			}
 

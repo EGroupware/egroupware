@@ -33,7 +33,7 @@ export type TreeItemData = SelectOption & {
 	tooltip: String,
 	userdata: any[]
 	//here we can store the number of unread messages, if there are any
-	unreadMessages?: number;
+	badge?: String;
 }
 
 /**
@@ -343,9 +343,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this.onselect = _handler;
 	}
 
-	public set_unreadCounter(_id: string, _value: number)
+	public set_badge(_id: string, _value: string)
 	{
-		this.getNode(_id).unreadMessages = _value;
+		this.getNode(_id).badge = _value;
 		this.requestUpdate();
 	}
 
@@ -697,9 +697,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                 <span class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
-                ${selectOption.unreadMessages ?
+                ${selectOption.badge ?
 					html`
-						<sl-badge pill variant="danger">${selectOption.unreadMessages}</sl-badge>
+						<sl-badge pill variant="danger">${selectOption.badge}</sl-badge>
 					` : nothing}
 
                 ${selectOption.children ? repeat(selectOption.children, this._optionTemplate) : (selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing)}
