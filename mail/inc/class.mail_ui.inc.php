@@ -4124,11 +4124,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
-							$oA[$_folderName] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
+							$oA[$_folderName] = ['displayName' => $fS['shortDisplayName'], 'unseenCount' => $fS['unseen']];
 						}
 						if ($fS['unseen']==0 && $fS['shortDisplayName'])
 						{
-							$oA[$_folderName] = $fS['shortDisplayName'];
+							$oA[$_folderName] = ['displayName' => $fS['shortDisplayName']];
 						}
 					}
 				}

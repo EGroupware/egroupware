@@ -32,6 +32,8 @@ export type TreeItemData = SelectOption & {
 	text: String,
 	tooltip: String,
 	userdata: any[]
+	//here we can store the number of unread messages, if there are any
+	unreadMessages?: number;
 }
 
 /**
@@ -341,6 +343,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this.onselect = _handler;
 	}
 
+	public set_unreadCounter(_id: string, _value: number)
+	{
+		this.getNode(_id).unreadMessages = _value;
+		this.requestUpdate();
+	}
 
 	/**
 	 * @return currently selected Item or First Item, if no selection was made yet
@@ -485,7 +492,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	setStyle(_id, _style)
 	{
-		var temp = this.getDomNode(_id);
+		var temp = this.getDomNode(_id).defaultSlot;
 		if (!temp) return 0;
 		if (!temp.style.cssText)
 			temp.setAttribute("style", _style);
@@ -496,12 +503,56 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	/**
 	 * getTreeNodeOpenItems TODO
 	 *
-	 * @param {string} _nodeID the nodeID where to start from (initial node)
+	 * @param {string} _nodeID the nodeID where to start from (initial node) 0 means for all items
 	 * @param {string} mode the mode to run in: "forced" fakes the initial node openState to be open
 	 * @return {object} structured array of node ids: array(message-ids)
 	 */
-	getTreeNodeOpenItems(_nodeID: string, mode?: string)
+	getTreeNodeOpenItems(_nodeID: string | 0, mode?: string)
 	{
+
+
+		//let z:string[] = this.input.getSubItems(_nodeID).split(this.input.dlmtr);
+		let subItems =
+			(_nodeID == 0) ?
+				this._selectOptions.map(option => this.getDomNode(option.id)) ://NodeID == 0 means that we want all tree Items
+				this.getDomNode(_nodeID).getChildrenItems();// otherwise get the subItems of the given Node
+		let oS: boolean;
+		let PoS: 0 | 1 | -1;
+		let rv: string[];
+		let returnValue = (_nodeID == 0) ? [] : [_nodeID]; // do not keep 0 in the return value...
+		// it is not needed and only throws a php warning later TODO check with ralf what happens in mail_ui.inc.php with ajax_setFolderStatus
+		let modetorun = "none";
+		if (mode)
+		{
+			modetorun = mode;
+		}
+		PoS = (_nodeID == 0) ? 1 : (this.getDomNode(_nodeID).expanded ? 1 : 0)
+		if (modetorun == "forced") PoS = 1;
+		if (PoS == 1)
+		{
+			for (const item of subItems)
+			{
+				//oS = this.input.getOpenState(z[i]);
+				oS = item.expanded // iff current item is expanded go deeper
+				//if (oS == -1) {returnValue.push(z[i]);}
+				//if (oS == 0) {returnValue.push(z[i]);}
+				if (!oS)
+				{
+					returnValue.push(item.id)
+				}
+				//if (oS == 1)
+				else
+				{
+					rv = this.getTreeNodeOpenItems(item.id);
+					for (const recId of rv)
+					{
+						returnValue.push(recId);
+					}
+				}
+			}
+		}
+		//alert(returnValue.join('#,#'));
+		return returnValue;
 
 	}
 
@@ -546,7 +597,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		let item = this.getNode(_id);
 		if(item)
 		{
-			item.open = true;
+			item.open = 1;
 		}
 		this.requestUpdate();
 	}
@@ -643,8 +694,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     }}
             >
                 <sl-icon src="${img ?? nothing}"></sl-icon>
+                <span class="tree-item__label">
+					${selectOption.label ?? selectOption.text}
+				</span>
+                ${selectOption.unreadMessages ?
+                        html`
+                            <sl-badge pill>${selectOption.unreadMessages}</sl-badge>
+                        ` : nothing}
 
-                <span class="tree-item__label">${selectOption.label ?? selectOption.text}</span>
                 ${selectOption.children ? repeat(selectOption.children, this._optionTemplate) : (selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing)}
             </sl-tree-item>`
 	}

@@ -1937,14 +1937,22 @@ app.classes.mail = AppJS.extend(
 	 * mail_setFolderStatus, function to set the status for the visible folders
 	 *
 	 * @param {array} _status
+	 *
+	 * type _status =
+	 * {'folderId':{displayName:String, unseenCount?:number}}
 	 */
 	mail_setFolderStatus: function(_status) {
 		if (!this.et2 && !this.checkET2()) return;
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		for (var i in _status) {
-			ftree.setLabel(i,_status[i]);
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		for (const folderId in _status) {
+			ftree.setLabel(folderId,_status[folderId]["displayName"]);
 			// display folder-name bold for unseen mails
-			ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
+			if(_status[folderId]["unseenCount"])
+			{
+				ftree.set_unreadCounter(folderId,_status[folderId]["unseenCount"]);
+				ftree.setStyle(folderId, 'font-weight: bold !important');
+			}
+
 			//alert(i +'->'+_status[i]);
 		}
 	},
