@@ -33,7 +33,7 @@ export type TreeItemData = SelectOption & {
 	tooltip: String,
 	userdata: any[]
 	//here we can store the number of unread messages, if there are any
-	badge?: String;
+	badge?: string;
 }
 
 /**
@@ -111,11 +111,26 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		this.selectedNodes = [];
 	}
 
+	private _initCurrent()
+	{
+		this._currentSlTreeItem = this.selected;
+		this._currentOption = this._currentSlTreeItem?this.getNode(this._currentSlTreeItem?.id):null
+	}
 	firstUpdated()
 	{
 		// This is somehow required to set the autoload URL properly?
 		// TODO: Make this not needed, either this.autoload_url should be properly set or go away in favour of using this.autoload
-		this.createTree();
+		if (this.autoloading)
+		{
+			// @ts-ignore from static get properties
+			let url = this.autoloading;
+
+			if (url.charAt(0) != '/' && url.substr(0, 4) != 'http')
+			{
+				url = '/json.php?menuaction=' + url;
+			}
+			this.autoloading_url = url;
+		}
 
 		// Check if top level should be autoloaded
 		if(this.autoloading && !this._selectOptions?.length)
@@ -123,9 +138,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			this.handleLazyLoading({item: this._selectOptions}).then((results) =>
 			{
 				this._selectOptions = results?.item ?? [];
+				this._initCurrent()
 				this.requestUpdate("_selectOptions");
 			})
 		}
+		if (this._selectOptions?.length) this._initCurrent()
 
 		// Actions can't be initialized without being connected to InstanceManager
 		this._initActions();
@@ -697,7 +714,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                 <span class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
-                ${selectOption.badge ?
+                ${(selectOption.badge) ?
 					html`
 						<sl-badge pill variant="danger">${selectOption.badge}</sl-badge>
 					` : nothing}

@@ -1949,10 +1949,11 @@ app.classes.mail = AppJS.extend(
 			// display folder-name bold for unseen mails
 			if(_status[folderId]["unseenCount"])
 			{
-				ftree.set_badge(folderId,_status[folderId]["unseenCount"]);
 				ftree.setStyle(folderId, 'font-weight: bold !important');
+			}else {
+				ftree.setStyle(folderId, 'font-weight: normal');
 			}
-
+			ftree.set_badge(folderId,_status[folderId]["unseenCount"]);
 			//alert(i +'->'+_status[i]);
 		}
 	},
@@ -2169,16 +2170,15 @@ app.classes.mail = AppJS.extend(
 	mail_reduceCounterWithoutServerRoundtrip: function()
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var _foldernode = ftree.getSelectedNode();
-            var counter = _foldernode.text.match(this._unseen_regexp);
+		var _foldernode = ftree.getSelectedItem();
+		var counter = _foldernode.badge;
 		var icounter = 0;
-		if ( counter ) icounter = parseInt(counter[0].replace(' (','').replace(')',''));
+		if (counter) icounter = parseInt(counter);
 		if (icounter>0)
 		{
-			var newcounter = icounter-1;
-                if (newcounter > 0) _foldernode.text = _foldernode.text.replace(' (' + String(icounter) + ')', ' (' + String(newcounter) + ')');
-                if (newcounter == 0) _foldernode.text = _foldernode.text.replace(' (' + String(icounter) + ')', '');
-                ftree.setLabel(_foldernode.id, _foldernode.text);
+			let newcounter = icounter - 1;
+			if (newcounter === 0) newcounter = null;
+			ftree.set_badge(_foldernode.id, newcounter)
 		}
 	},
 
