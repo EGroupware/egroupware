@@ -4203,3 +4203,9 @@ button.shortcut-buttons-flatpickr-button {
 .tox .tox-editor-container .tox-editor-header {
 	z-index: auto;
 }
+
+/* Right-align "As PDF" checkbox in merge dialog */
+et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
+	order: 10;
+	margin-left: auto;
+}
