@@ -6227,7 +6227,7 @@ class Mail
 	 * Some broken clients e.g. SAP Netweaver sends mails containing only a base64 decoded PDF, but set NO Content-Transfer-Type: base64.
 	 *
 	 * @param Horde_Mime_Part $part
-	 * @return Horde_Mime_Part
+	 * @return bool true: part needed fixing AND is base64 encoded, false: no need to fix the part
 	 */
 	public static function fixBinaryPart(Horde_Mime_Part $part)
 	{
@@ -6238,8 +6238,9 @@ class Mail
 			unserialize($part->serialize())[9] !== 'base64')
 		{
 			$part->setTransferEncoding('binary', ['send' => true]);
+			return true;
 		}
-		return $part;
+		return false;
 	}
 
 	/**
@@ -6261,12 +6262,12 @@ class Mail
 		$fetchAsBinary = true;
 		if ($_mimetype && strtolower($_mimetype)=='message/rfc822') $fetchAsBinary = false;
 
-		self::fixBinaryPart($part);
+		$need_base64 = self::fixBinaryPart($part);
 
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
 			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
-				array('encoding' => !$fetchAsBinary&&!$encoding?'8bit':$encoding));
+				array('encoding' => $need_base64 ? 'base64' : (!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
 
 		return $part;
 	}
