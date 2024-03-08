@@ -174,6 +174,8 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @param {T} superClass
  * @returns {Constructor<SearchMixinInterface<DataType, Results>> & T}
  * @constructor
+ *
+ * @event et2-select - Emitted when the selection changes
  */
 export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 	{ egw() : IegwAppLocal, noLang : boolean } & LitElement>,
@@ -464,7 +466,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		/**
 		 * Toggles a search result's selected state
 		 */
-		private toggleResultSelection(result : HTMLElement & SearchResultElement, force? : boolean)
+		protected toggleResultSelection(result : HTMLElement & SearchResultElement, force? : boolean)
 		{
 			if(force === true || force === false)
 			{
@@ -503,6 +505,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				this.value = [this.selectedResults[0]?.value] ?? [];
 			}
 			 */
+
+			this.updateComplete.then(() =>
+			{
+				this.dispatchEvent(new Event("et2-select"));
+			})
 		}
 
 

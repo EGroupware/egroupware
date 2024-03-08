@@ -494,6 +494,22 @@ export class Et2VfsSelectDialog
 	}
 
 	/**
+	 * Toggles a search result's selected state
+	 */
+	protected toggleResultSelection(result : HTMLElement & SearchResultElement, force? : boolean)
+	{
+		if(!this.multiple)
+		{
+			this._resultNodes.forEach(n =>
+			{
+				n.selected = false;
+				n.requestUpdate("selected");
+			});
+		}
+		super.toggleResultSelection(result, force);
+	}
+
+	/**
 	 * This method must be called whenever the selection changes. It will update the selected file cache, the current
 	 * value, and the display value
 	 */
