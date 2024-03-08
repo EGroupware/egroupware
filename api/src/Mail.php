@@ -4996,9 +4996,9 @@ class Mail
 		}
 
 		// if message is just a pdf, return it to browser to display
-		if ($_structure->getType() === 'application/pdf')
+		if ($_structure->getType() === 'application/pdf' || $_structure->getPrimaryType() === 'image')
 		{
-			header('Content-Type: application/pdf');
+			header('Content-Type: '.$_structure->getType());
 			echo $this->getAttachment($_uid, $_partID ?? '1', 0, true, $_folder)->getContents();
 			exit();
 		}
@@ -5090,7 +5090,7 @@ class Mail
 
 	/**
 	 * normalizeBodyParts - function to gather and normalize all body Information
-	 * as we may recieve a bodyParts structure from within getMessageBody nested deeper than expected
+	 * as we may receive a bodyParts structure from within getMessageBody nested deeper than expected
 	 * so this is used to normalize the output, so we are able to rely on our expectation
 	 * @param _bodyParts - Body Array
 	 * @return array - a normalized Bodyarray
@@ -6214,6 +6214,35 @@ class Mail
 	}
 
 	/**
+	 * Check if part is binary e.g. a PDF or an image and claims not to be transfer-encoded --> fix it
+	 *
+	 * This works under the assumption, that no one really sends binary data unencoded through mail!
+	 * Therefore, we assume it must be already base64 encoded, just the header was forgotten.
+	 *
+	 * This violates the mime-rfc, which states explicit that no Content-Transfer-Encoding header means "binary"!
+	 * Horde_Mime_Part does NOT allow to check if we have no Content-Transfer-Type header, or it has the value "binary".
+	 *
+	 * Another approach would be to check the data-stream, if it is really base64 encoded or not ...
+	 *
+	 * Some broken clients e.g. SAP Netweaver sends mails containing only a base64 decoded PDF, but set NO Content-Transfer-Type: base64.
+	 *
+	 * @param Horde_Mime_Part $part
+	 * @return Horde_Mime_Part
+	 */
+	public static function fixBinaryPart(Horde_Mime_Part $part)
+	{
+		// if we have no text body, but only a PDF or an image AND transfer-encoding is NOT base64,
+		// set binary, as it's already base64 transfer-encoded but lacks the necessary header
+		if (($part->getType() === 'application/pdf' || $part->getPrimaryType() === 'image') &&
+			// hack to read protected $structure->_transfer_encoding
+			unserialize($part->serialize())[9] !== 'base64')
+		{
+			$part->setTransferEncoding('binary', ['send' => true]);
+		}
+		return $part;
+	}
+
+	/**
 	 * Fetch and add contents to a part
 	 *
 	 * To get contents you use $part->getContents();
@@ -6231,13 +6260,13 @@ class Mail
 		$encoding = null;
 		$fetchAsBinary = true;
 		if ($_mimetype && strtolower($_mimetype)=='message/rfc822') $fetchAsBinary = false;
+
+		self::fixBinaryPart($part);
+
 		// we need to set content on structure to decode transfer encoding
 		$part->setContents(
 			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding, $fetchAsBinary),
-			// some mailers e.g. "SAP NetWeaver 750" send just the PDF, with no body or multipart
-			// AND therefore NO transfer-encoding --> use base64 when fetching as binary
-			array('encoding' => !isset($part->parent) && $fetchAsBinary && $part->getType() === 'application/pdf' ? 'base64' :
-				(!$fetchAsBinary&&!$encoding?'8bit':$encoding)));
+				array('encoding' => !$fetchAsBinary&&!$encoding?'8bit':$encoding));
 
 		return $part;
 	}
@@ -7338,14 +7367,8 @@ class Mail
 				$structure->setTransferEncoding('8bit');
 				$structure->setCharset('utf-8');
 			}
-			// if we have no text body, but only a PDF or an image AND transfer-encoding is NOT base64,
-			// set binary, as it's already base64 transfer-encoded but lacks the necessary header
-			if (($structure->getType() === 'application/pdf' || $structure->getPrimaryType() === 'image') &&
-				// hack to read protected $structure->_transfer_encoding
-				unserialize($structure->serialize())[9] !== 'base64')
-			{
-				$structure->setTransferEncoding('binary', ['send' => true]);
-			}
+			self::fixBinaryPart($structure);
+
 			$mailer->setBasePart($structure);
 			//error_log(__METHOD__.__LINE__.':'.array2string($structure));
 
