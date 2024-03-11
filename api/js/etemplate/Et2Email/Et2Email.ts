@@ -374,9 +374,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		});
 
 		// Select the target option
+		this.currentOption = option;
 		if(option)
 		{
-			this.currentOption = option;
 			option.current = true;
 			option.tabIndex = 0;
 			option.focus();
@@ -880,11 +880,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			if(!this.open)
 			{
-				this.show();
+				return this.show();
 			}
-			event.stopPropagation();
-			this.setCurrentOption(this._suggestions[0]);
-			return;
+			return this.handleSuggestionsKeyDown(event);
 		}
 		// Tab or enter checks current value
 		else if(Et2Email.TAG_BREAK.indexOf(event.key) !== -1)
@@ -1042,8 +1040,9 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	handleSuggestionsKeyDown(event : KeyboardEvent)
 	{
 		// Select the option
-		const value = (<string>this.currentOption.value).replaceAll("___", " ");
-		if(this.currentOption && ["ArrowRight", " ", ...Et2Email.TAG_BREAK].includes(event.key) && this.addAddress(value))
+		if(this.currentOption && ["ArrowRight", " ", ...Et2Email.TAG_BREAK].includes(event.key) &&
+			this.addAddress((<string>this.currentOption.value).replaceAll("___", " "))
+		)
 		{
 			if(this._close_on_select)
 			{
