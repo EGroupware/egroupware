@@ -163,7 +163,12 @@ class addressbook_hooks
 			'default'=> '0'
 		);
 		$settings['hide_groups_as_lists'] = array(
-			'type'   => 'check',
+			'type'   => 'select',
+			'values' => [
+				'0' => lang('Include all groups'),
+				'1' => lang('Hide all groups'),
+				'2' => lang('Hide groups without email address'),
+			],
 			'label'  => 'Hide user groups as distribution lists',
 			'name'   => 'hide_groups_as_lists',
 			'help'   => 'User groups are automatically shown as distribution lists.',
