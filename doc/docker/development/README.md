@@ -78,7 +78,7 @@ service:
 * do not use ```http://localhost/egroupware/```, as push, Collabora and Rocket.Chat will not be able to communicate
   - localhost in each container is NOT the host system, but the container itself!
   - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
-  - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which as a commented out extra_host
+  - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which has a commented out extra_host
 * Ubuntu 22.04 docker adds firewall rules disabling access to docker0 / 172.17.0.1 from within the containers.
 Stopping eg. FPM to access IDE/PHPStorm debug port or a MariaDB running on the host bound to 172.17.0.1. 
 To fix that, you have to create an explicit firewall rule to allow containers to acces 172.17.0.1:
