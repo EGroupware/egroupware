@@ -28,7 +28,9 @@ The container and docker-compose.yml file in this directory are the easiest way 
 mkdir dev && cd dev
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/docker-compose.yml
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/nginx.conf
-mkdir sources data
+mkdir -p sources data/default/files/sqlfs data/default/backup sessions
+# on a Linux host NOT using Docker desktop data and sessions directories MUST be owned by www-data:www-data (33:33, if not Debian/Ubuntu!)
+chown -R www-data:www-data data sessions
 # edit docker-compose.yml to fit your needs eg.
 # ports to use for Nginx / the webserver, by default 8080 and 4443
 # xdebug port, default 9001 (NOT 9000!)
@@ -72,7 +74,7 @@ service:
   - prefix them with ```sudo``` or
   - add yourself to the ```docker``` group: ```sudo usermod -aG docker $USER``` and then run ```newgrp docker``` everytime you open a terminal
 * permissions of sources directory need to be changed after install: ```chown -R $USER sources```
-* permissions of data directory must be readable and writable by www-data user (#33)
+* permissions of data and sessions directory must be readable and writable by www-data user (#33): ```chown -R 33:33 data sessions```
 * do not use ```http://localhost/egroupware/```, as push, Collabora and Rocket.Chat will not be able to communicate
   - localhost in each container is NOT the host system, but the container itself!
   - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
