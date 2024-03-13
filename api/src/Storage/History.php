@@ -181,7 +181,7 @@ class History
 		foreach(isset($GLOBALS['egw']->sharing) ? $GLOBALS['egw']->sharing : [] as $token => $share_obj)
 		{
 			// Make sure share is of the correct type to access an entry, and it is the correct entry
-			if($share_obj instanceof Api\Link\Sharing && "$appname::$id" === $share_obj['share_path'])
+			if($share_obj instanceof Api\Link\Sharing && "$appname::$id" === $share_obj->get_path())
 			{
 				$share_with .= $share_obj->get_share_with();
 			}
