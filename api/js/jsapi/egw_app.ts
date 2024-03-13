@@ -23,6 +23,7 @@ import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 import {loadWebComponent} from "../etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectDialog} from "../etemplate/Et2Vfs/Et2VfsSelectDialog";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
+import type {EgwAction} from "../egw_action/EgwAction";
 
 /**
  * Type for push-message
@@ -823,7 +824,7 @@ export abstract class EgwApp
 			let split = _selected[i].id.split("::");
 			ids.push(split[1]);
 		}
-		let document = await this._getMergeDocument();
+		let document = await this._getMergeDocument(nm?.getInstanceManager(), _action);
 		if(!document.document)
 		{
 			return;
@@ -844,7 +845,7 @@ export abstract class EgwApp
 		{
 			vars.id = JSON.stringify(ids);
 		}
-		egw.open_link(egw.link('/index.php', vars), '_blank');
+		this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
 	}
 
 	/**
@@ -854,8 +855,13 @@ export abstract class EgwApp
 	 * @protected
 	 */
 
-	protected _getMergeDocument() : Promise<{ document : string, pdf : boolean, mime : string }>
+	protected _getMergeDocument(et2?, action? : EgwAction) : Promise<{
+		document : string,
+		pdf : boolean,
+		mime : string
+	}>
 	{
+		let path = action?.data?.merge_data?.directory ?? "";
 		let dirPref = <string>this.egw.preference('document_dir', this.appname) ?? "";
 		let dirs = dirPref.split('/[,\s]+\//');
 		dirs.forEach((d, index) =>
@@ -869,9 +875,13 @@ export abstract class EgwApp
 			class: "egw_app_merge_document",
 			title: this.egw.lang("Insert in document"),
 			mode: "open",
-			path: dirs.pop() ?? "",
+			path: path ?? dirs?.pop() ?? "",
 			open: true
-		}, this.et2);
+		}, et2.widgetContainer);
+		if(!et2)
+		{
+			document.body.append(fileSelect);
+		}
 		let pdf = <Et2Checkbox><unknown>loadWebComponent("et2-checkbox", {
 			slot: "footer",
 			label: "As PDF"
@@ -894,7 +904,7 @@ export abstract class EgwApp
 		{
 			if(!values[0])
 			{
-				return {};
+				return {document: '', pdf: false, mime: ""};
 			}
 
 			const value = values[1].pop() ?? "";

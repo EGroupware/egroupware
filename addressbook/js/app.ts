@@ -1119,21 +1119,20 @@ class AddressbookApp extends EgwApp
 	 * @param {egwAction} action - The document they clicked
 	 * @param {egwActionObject[]} selected - Rows selected
 	 */
-	merge_mail(action, selected, target)
+	_mergeEmail(action, data)
 	{
 		// Special processing for email documents - ask about infolog
-		if(action && action.data && selected.length > 1)
+		if(action && data && (data.id.length > 1 || data.select_all))
 		{
-			var callback = function(button, value) {
+			const callback = (button, value) =>
+			{
 				if(button == Et2Dialog.OK_BUTTON)
 				{
-					var _action_data = jQuery.extend(true, {}, action.data);
 					if(value.infolog)
 					{
-						_action_data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
-						action.data = _action_data;
+						data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
 					}
-					nm_action(action, selected, target);
+					return super._mergeEmail(action, data);
 				}
 			};
 			let dialog = new Et2Dialog(this.egw);
@@ -1150,7 +1149,7 @@ class AddressbookApp extends EgwApp
 		else
 		{
 			// Normal processing for only one contact selected
-			return nm_action(action, selected, target);
+			return super._mergeEmail(action, data);
 		}
 	}
 

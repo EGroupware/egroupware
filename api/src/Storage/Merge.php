@@ -2410,7 +2410,16 @@ abstract class Merge
 	public static function document_action($dirs, $group = 0, $caption = 'Insert in document', $prefix = 'document_', $default_doc = '',
 										   $export_limit = null)
 	{
-		$documents = array();
+		if(count($dirs = preg_split('/[,\s]+\//', $dirs)) > 1)
+		{
+			foreach($dirs as $n => &$d)
+			{
+				if($n)
+				{
+					$d = '/' . $d;
+				}    // re-adding trailing slash removed by split
+			}
+		}
 		if($export_limit == null)
 		{
 			$export_limit = self::getExportLimit();
@@ -2426,7 +2435,8 @@ abstract class Merge
 			'group'          => $group,
 			'merge_data' => array(
 				'menuaction' => $GLOBALS['egw_info']['flags']['currentapp'] . '.' . get_called_class() . '.merge_entries',
-				'merge'      => get_called_class()
+				'merge'     => get_called_class(),
+				'directory' => $dirs[0] ?? ""
 			)
 		);
 	}
