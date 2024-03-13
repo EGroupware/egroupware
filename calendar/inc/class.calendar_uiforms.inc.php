@@ -2130,8 +2130,7 @@ class calendar_uiforms extends calendar_ui
 				$event['end'] += $diff;
 			}
 
-			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true)) && // true = read the exception
-				!$existing_event['deleted'])
+			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true))) // true = read the exception
 			{
 				// check if mail is from extern organizer
 				$from_extern_organizer = false;
@@ -2179,7 +2178,7 @@ class calendar_uiforms extends calendar_ui
 							// warn user about party-crashers (non-participants sending a reply)
 							if (!isset($existing_status))
 							{
-								if (!empty($event['sender_warning'])) $event['sender_warning'] .= "\n";
+								if (!empty($event['sender_warning'])) $event['sender_warning'] .= "\n\n";
 								$event['sender_warning'] .= lang('Replying "%1" is NOT a participant of the event! Only continue if you want to add as new participant.', $participant);
 							}
 							calendar_so::split_status($existing_status, $quantity, $role);
@@ -2255,7 +2254,7 @@ class calendar_uiforms extends calendar_ui
 			$event['recure'] = $this->bo->recure2string($event);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
-			// EGroupware event has been deleted, dont let user resurect it by accepting again
+			// EGroupware event has been deleted, don't let user resurrect it by accepting again
 			if ($existing_event && $existing_event['deleted'] && strtolower($ical_method) !== 'cancel')
 			{
 				// check if this is an EGroupware event or has an external organizer
@@ -2265,12 +2264,8 @@ class calendar_uiforms extends calendar_ui
 					calendar_so::split_status($status, $quantity, $role);
 					if (!is_numeric($uid) && $role == 'CHAIR') break;
 				}
-				if (!(!is_numeric($uid) && $role == 'CHAIR'))
-				{
-					$event['error'] = lang('Event has been deleted by organizer!');
-					$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
-						$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
-				}
+				$event['sender_warning'] = lang('Event has been deleted by organizer!').
+					(!empty($event['sender_warning']) ? "\n\n".$event['sender_warning'] : '');
 			}
 			// ignore events in the past (for recurring events check enddate!)
 			elseif ($this->bo->date2ts($event['start']) < $this->bo->now_su &&

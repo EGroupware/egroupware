@@ -10,7 +10,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@sender_warning">
-					<grid width="100%" class="meetingRequest" span="all">
+					<grid width="100%" class="meetingRequest meetingWarning" span="all">
 						<columns>
 							<column/>
 						</columns>
@@ -19,35 +19,42 @@
 								<et2-description  value="Attention"></et2-description>
 							</row>
 							<row class="row">
-								<et2-description  id="sender_warning" class="meetingRequestError"></et2-description>
+								<et2-description  id="sender_warning"></et2-description>
 							</row>
 						</rows>
 					</grid>
 				</row>
 				<row disabled="!@ics_method=request">
-					<et2-description  value="This mail contains a meeting request" class="meetingRequestMessage"></et2-description>
-					<et2-hbox>
-						<et2-button  label="Apply" id="button[apply]" class="leftPad5" hideOnReadonly="true"></et2-button>
-						<et2-button  label="Accept" id="button[accept]" class="leftPad5" image="calendar/accepted"></et2-button>
-						<et2-button  label="Tentative" id="button[tentativ]" class="leftPad5" image="calendar/tentative"></et2-button>
-						<et2-button  label="Reject" id="button[reject]" class="leftPad5" image="calendar/rejected"></et2-button>
-						<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5" noSubmit="true"></et2-button>
-					</et2-hbox>
-					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
+					<et2-vbox>
+						<et2-description  value="This mail contains a meeting request" class="meetingRequestMessage"></et2-description>
+						<et2-hbox class="buttonRow">
+							<et2-button  label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
+							<et2-button  label="Accept" id="button[accept]" image="calendar/accepted"></et2-button>
+							<et2-button  label="Tentative" id="button[tentativ]" image="calendar/tentative"></et2-button>
+							<et2-button  label="Reject" id="button[reject]" image="calendar/rejected"></et2-button>
+							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true"
+								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 				<row disabled="!@ics_method=reply">
-					<et2-description  value="This mail contains a reply to a meeting request" class="meetingRequestMessage"></et2-description>
-					<et2-button  label="Apply" id="button[apply]" class="leftPad5"></et2-button>
-					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
+					<et2-vbox>
+						<et2-description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"></et2-description>
+						<et2-hbox class="buttonRow">
+							<et2-button label="Apply" id="button[apply]"></et2-button>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 				<row disabled="!@ics_method=cancel">
-					<et2-description  value="This mail cancels a meeting" class="meetingRequestMessage"></et2-description>
-					<et2-hbox>
-						<et2-button  label="Apply" statustext="Removes the event from my calendar" id="button[cancel]" class="leftPad5"></et2-button>
-						<et2-button  label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" class="leftPad5" onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
-						<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"></et2-button>
-					</et2-hbox>
-					<et2-description  id="error" class="meetingRequestError" align="right"></et2-description>
+					<et2-vbox>
+						<et2-description  value="This mail cancels a meeting" class="meetingRequestMessage"></et2-description>
+						<et2-hbox class="buttonRow">
+							<et2-button  label="Apply" statustext="Removes the event from my calendar" id="button[cancel]"></et2-button>
+							<et2-button  label="Delete" statustext="Delete this meeting for all participants" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this meeting for all participants','Delete')"></et2-button>
+							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit"
+								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;"></et2-button>
+						</et2-hbox>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>
@@ -60,6 +67,9 @@
 			<rows>
 				<row class="th">
 					<et2-description  id="ics_method_label" span="all"></et2-description>
+				</row>
+				<row class="row">
+					<et2-description  id="error" class="meetingRequestError" span="all"></et2-description>
 				</row>
 				<row class="row">
 					<et2-description  value="Title"></et2-description>
@@ -75,9 +85,9 @@
 				</row>
 				<row class="row">
 					<et2-description  value="Date"></et2-description>
-					<et2-hbox>
+					<et2-hbox class="dates">
 						<et2-date-time  id="start" readonly="true"></et2-date-time>
-						<et2-date-time  label="-" id="end" readonly="true" class="leftPad5"></et2-date-time>
+						<et2-date-time  label="-" id="end" readonly="true"></et2-date-time>
 					</et2-hbox>
 				</row>
 				<row class="row" disabled="!@recure">
@@ -107,7 +117,7 @@
 				overflow-y: auto;
 			}
 			.meetingRequestMessage {
-				font-size: 120%;
+				font-size: 150%;
 			}
 
 			table.meetingRequest {
@@ -123,6 +133,7 @@
 			}
 			.meetingRequest td {
 				padding: 3px;
+				padding-left: 0;
 			}
 			.meetingRequest a {
 				display: inline-block;
@@ -130,11 +141,22 @@
 				overflow-wrap: break-word;
 				vertical-align: text-top;
 			}
-
+			et2-hbox.dates {
+				padding-left: 5px;
+			}
+			.meetingWarning tr.th {
+				background-color: #dc2625;
+			}
+			.meetingWarning tr.row td {
+				font-size: 120% !important;
+			}
 			.meetingRequestError {
-				color: red;
 				font-style: italic;
-				font-size: 120%;
+				color: red;
+			}
+			.buttonRow {
+				padding-top: 10px;
+				padding-bottom: 10px;
 			}
 		</styles>
 	</template>
