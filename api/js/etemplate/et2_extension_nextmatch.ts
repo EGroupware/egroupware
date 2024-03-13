@@ -2148,7 +2148,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			if(colName)
 			{
 				// Server side wants each cf listed as a seperate column
-				if(widget.instanceOf(et2_nextmatch_customfields))
+				if(widget.instanceOf(et2_nextmatch_customfields) && visibility[colMgr.columns[i].id].visible && visibility[colMgr.columns[i].id].enabled)
 				{
 					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 					colName = widget.id;
@@ -2157,7 +2157,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						if(widget.options.fields[name]) custom_fields.push(et2_nextmatch_customfields.PREFIX + name);
 					}
 				}
-				if(visibility[colMgr.columns[i].id].visible)
+				if(visibility[colMgr.columns[i].id].visible && visibility[colMgr.columns[i].id].enabled)
 				{
 					colDisplay.push(colName);
 				}
@@ -2209,9 +2209,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 				// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 				colName = widget.id;
+				let show_custom_fields = false;
 				if(column_list.indexOf(colName) !== -1)
 				{
-					visibility[columnMgr.columns[i].id].visible = true;
+					show_custom_fields = true;
 				}
 
 				const cf = this.columns[i].widget.options.customfields;
@@ -2229,6 +2230,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					visible[column_list[j].substring(1)] = true;
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
+				visibility[columnMgr.columns[i].id].visible = show_custom_fields && Object.values(visible).filter(f => f).length > 0;
 			}
 			this.columns[i].visible = visibility[columnMgr.columns[i].id]?.visible;
 
