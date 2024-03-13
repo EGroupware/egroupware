@@ -1067,6 +1067,25 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 		}
 
+		// if path not found, check the UID and return "403 Forbidden" if event is deleted or user has not rights to event with same UID
+		if (!isset($oldEvent) && ($events = $handler->icaltoegw($vCalendar)) &&
+			($oldEvents = $this->bo->read(['cal_uid' => $events[0]['uid'], 'cal_reference=0'], null, false, 'server')) !== null)
+		{
+			foreach($oldEvents as $oldEvent)
+			{
+				if (empty($oldEvent['deleted']))
+				{
+					break;
+				}
+			}
+			if (!empty($oldEvent['deleted']))
+			{
+				$this->caldav->log("Event with UID='{$events[0]['uid']}' has already been deleted!");
+				return '403 Forbidden';
+			}
+			// case user has no edit-rights for $oldEvent is handled below
+		}
+
 		if (is_array($oldEvent))
 		{
 			$eventId = $oldEvent['id'];
@@ -1583,6 +1602,21 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		$return_no_access = true;	// to allow to check if current use is a participant and reject the event for him
 		$event = $this->_common_get_put_delete('DELETE',$options,$id,$return_no_access);
 
+		/* user has delete-rights, check if we have an external organizer and more participants
+		if ($event && $return_no_access && count($event['participants']) > 2)
+		{
+			foreach($event['participants'] as $uid => $status)
+			{
+				$quantity = $role = null;
+				calendar_so::split_status($status, $quantity, $role);
+				if (!is_numeric($uid) && $role == 'CHAIR') break;
+			}
+			if (!(!is_numeric($uid) && $role == 'CHAIR'))
+			{
+				$return_no_access = false;  // only set status rejected, but do NOT delete the event
+			}
+		}*/
+
 		// no event found --> 404 Not Found
 		if (!is_array($event))
 		{
@@ -1643,15 +1677,31 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * the same UID and/or caldav_name as not deleted events and would block access to valid entries
 	 *
 	 * @param string|id $id
-	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
+	 * @return array|boolean array with entry, false if no read rights or deleted, null if $id does not exist
 	 */
 	function read($id)
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true,
+		$event = $this->bo->read(array($column => $id, 'cal_reference=0'), null, true,
 			$date_format = Api\CalDAV::isJSON() ? 'object' : 'server');
-		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
+
+		// read with array as 1. param, returns an array of events!
+		// as we no longer return only NOT-deleted events, there might be more
+		if ($event)
+		{
+			foreach ($event as $event)
+			{
+				if (empty($event['cal_deleted'])) break;
+			}
+			// the above prefers a NOT deleted event over deleted noes, thought all might be deleted
+			if (!empty($event['cal_deleted']))
+			{
+				$retval = false;
+				if ($this->debug > 0) error_log(__METHOD__."($id) event has been deleted returning ".array2string($retval));
+				return $retval;
+			}
+		}
 
 		if (!($retval = $this->bo->check_perms(calendar_bo::ACL_FREEBUSY,$event, 0, 'server')) &&
 			// above can be true, if current user is not in master but just a recurrence
