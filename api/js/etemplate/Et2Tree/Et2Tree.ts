@@ -143,12 +143,26 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				this._selectOptions = results?.item ?? [];
 				this._initCurrent()
 				this.requestUpdate("_selectOptions");
+				this.updateComplete.then((value) => {
+					if (value)
+					{
+						this._link_actions(this.actions)
+					}
+
+				})
 			})
 		}
 		if (this._selectOptions?.length) this._initCurrent()
 
 		// Actions can't be initialized without being connected to InstanceManager
 		this._initActions();
+		//TODO do it on first updated
+		this._link_actions(this.actions)
+	}
+
+	protected updated(_changedProperties: PropertyValues)
+	{
+		super.updated(_changedProperties);
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -211,7 +225,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					right: 0.5em;
 				}
 			`
-			//todo bg color on drop-hover should take precedence over selected color change
+
 
 		]
 	}
@@ -280,6 +294,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		if(new_options?.length)
 		{
 			this._selectOptions = new_options;
+			this.updateComplete.then(()=>this._link_actions(this.actions))
 		}
 	}
 
@@ -886,11 +901,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return action_links;
 	}
 
-	protected updated(_changedProperties: PropertyValues)
-	{
-		this._link_actions(this.actions)
-		super.updated(_changedProperties);
-	}
 
 	/**
 	 *
