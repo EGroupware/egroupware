@@ -1945,7 +1945,7 @@ app.classes.mail = AppJS.extend(
 		if (!this.et2 && !this.checkET2()) return;
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		for (const folderId in _status) {
-			ftree.setLabel(folderId,_status[folderId]["displayName"]);
+			//ftree.setLabel(folderId,_status[folderId]["displayName"]);
 			// display folder-name bold for unseen mails
 			if(_status[folderId]["unseenCount"])
 			{
