@@ -200,7 +200,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				sl-tree-item.drop-hover sl-tree-item{
 					background-color: white ;
 				}
-
+				
+				sl-badge::part(base){
+				
+					background-color: rgb(130, 130, 130);
+					font-size: 0.75em;
+					font-weight: 700;
+					position: absolute;
+					top: 0;
+					right: 0.5em;
+				}
 			`
 			//todo bg color on drop-hover should take precedence over selected color change
 
@@ -331,7 +340,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	public set_onopenstart(_handler: any)
 	{
 		this.onopenstart = _handler
-		this.installHandler("onopenstart", _handler)
 	}
 
 	/**
@@ -341,7 +349,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	public set_onopenend(_handler: any)
 	{
 		this.onopenend = _handler
-		this.installHandler('onopenend', _handler);
 	}
 
 
@@ -716,7 +723,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				</span>
                 ${(selectOption.badge) ?
 					html`
-						<sl-badge pill variant="danger">${selectOption.badge}</sl-badge>
+						<sl-badge pill variant="neutral">${selectOption.badge}</sl-badge>
 					` : nothing}
 
                 ${selectOption.children ? repeat(selectOption.children, this._optionTemplate) : (selectOption.item ? repeat(selectOption.item, this._optionTemplate) : nothing)}
@@ -943,24 +950,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		}
 	}
 
-	private installHandler(_name: String, _handler: Function)
-	{
-		//if (this.input == null) this.createTree();
-		// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
-		// if (_name == "onchange") {
-		//     _name = this.options.multiple ? "oncheck" : "onselect"
-		// }
-		// let handler = _handler;
-		// let widget = this;
-		// this.input.attachEvent(_name, function(_id){
-		//     let args = jQuery.makeArray(arguments);
-		//     // splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
-		//     args.splice(1, 0, widget);
-		//     // try to close mobile sidemenu after clicking on node
-		//     if (egwIsMobile() && typeof args[2] == 'string') framework.toggleMenu('on');
-		//     return handler.apply(this, args);
-		// });
-	}
+
 
 	private createTree()
 	{
