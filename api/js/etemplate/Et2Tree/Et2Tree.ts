@@ -4,7 +4,6 @@ import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions"
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
-import {query} from "lit/decorators/query.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -48,7 +47,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	static RESULT_LIMIT: number = 100;
 	//does not work because it would need to be run on the shadow root
-	@query("sl-tree-item[selected]") selected: SlTreeItem;
+	//@query("sl-tree-item[selected]") selected: SlTreeItem;
+
+	/**
+	 * get the first selected node using attributes on the shadow root elements
+	 */
+	private get selected(){
+		return this.shadowRoot.querySelector("sl-tree-item[selected]")
+	}
 	@property({type: Boolean})
 	multiple: Boolean = false;
 	@property({type: String})
@@ -95,7 +101,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	@state()
 	selectedNodes: SlTreeItem[]
 
-	private input: any = null;
 	private _actionManager: EgwAction;
 
 	private get _tree() { return this.shadowRoot.querySelector('sl-tree') ?? null};
@@ -118,8 +123,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 	firstUpdated()
 	{
-		// This is somehow required to set the autoload URL properly?
-		// TODO: Make this not needed, either this.autoload_url should be properly set or go away in favour of using this.autoload
 		if (this.autoloading)
 		{
 			// @ts-ignore from static get properties
@@ -750,7 +753,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                             (event) => {
                                 event.detail.id = event.target.id
                                 event.detail.item = event.target
-                                this.onopenstart(event.detail.id, this, 1)
+								if (this.onopenstart)
+								{
+									this.onopenstart(event.detail.id, this, 1)
+								}
                             }
                     }
                     @sl-after-expand=${
@@ -758,7 +764,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                                 event.detail.id = event.target.id
                                 event.detail.item = event.target
 
-                                this.onopenend(event.detail.id, this, -1)
+								if (this.onopenend)
+								{
+									this.onopenend(event.detail.id, this, -1)
+								}
 
                             }
                     }

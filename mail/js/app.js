@@ -2169,10 +2169,10 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_reduceCounterWithoutServerRoundtrip: function()
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var _foldernode = ftree.getSelectedItem();
-		var counter = _foldernode.badge;
-		var icounter = 0;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const _foldernode = ftree.getSelectedItem();
+		let counter = _foldernode.badge;
+		let icounter = 0;
 		if (counter) icounter = parseInt(counter);
 		if (icounter>0)
 		{
