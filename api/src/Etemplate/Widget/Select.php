@@ -269,7 +269,7 @@ class Select extends Etemplate\Widget
 						}
 				}
 			}
-			if ($ok && $value === '' && $this->required)
+			if ($ok && $this->required && ((string)$value === '' || is_array($value) && !$value))
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 			}
