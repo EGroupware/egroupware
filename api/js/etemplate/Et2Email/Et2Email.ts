@@ -1351,7 +1351,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
                             ?active=${this.open}
                     >
                         <div
-                                part="combobox"
+                                part="combobox base"
                                 class="email__combobox"
                                 slot="anchor"
                                 @keydown=${this.handleComboboxKeyDown}

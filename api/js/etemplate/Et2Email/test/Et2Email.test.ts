@@ -233,4 +233,4 @@ inputBasicTests(async() =>
 	const element = await before();
 	element.noLang = true;
 	return element
-}, "", "input");
+}, "fake@example.com", "input");
