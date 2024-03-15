@@ -188,6 +188,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this._messagesHeldWhileFocused = [];
 
 			this.readonly = false;
+			this.required = false;
 			this._oldValue = this.getValue();
 
 			this.isSlComponent = typeof (<any>this).handleChange === 'function';
@@ -223,7 +224,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 * A property has changed, and we want to make adjustments to other things
 		 * based on that
 		 *
-		 * @param {import('@lion/core').PropertyValues } changedProperties
+		 * @param changedProperties
 		 */
 		updated(changedProperties : PropertyValues)
 		{

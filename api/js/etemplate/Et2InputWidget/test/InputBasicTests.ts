@@ -117,11 +117,16 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 	{
 		beforeEach(async() =>
 		{
+			assert.isNotEmpty(test_value, "test_value needs to be a value");
+
 			element = await before();
+			await elementUpdated(<Element><unknown>element);
+			element.required = true;
+			await elementUpdated(<Element><unknown>element);
 		});
 
 		// This is just visually comparing for a difference, no deep inspection
-		it("looks different when required")
+		//it("looks different when required")
 
 		/*
 		Not yet working attempt to have playwright compare visually
@@ -141,5 +146,35 @@ export function inputBasicTests(before : Function, test_value : string, value_se
 
 		 */
 
+		it("is invalid without a value", async() =>
+		{
+			element.set_value("");
+
+			// wait for asychronous changes to the DOM
+			await elementUpdated(<Element><unknown>element);
+
+			// widget returns what we gave it
+			assert.equal(element.get_value(), "");
+			assert.equal(element.required, true, "required not set");
+
+			// widget fails validation
+			let messages = [];
+			assert.isFalse(element.isValid(messages), `Required has no value (${element.getValue()}), but is considered valid`);
+		});
+		it("is valid with a value", async() =>
+		{
+			element.set_value(test_value);
+
+			// wait for asychronous changes to the DOM
+			await elementUpdated(<Element><unknown>element);
+
+			// widget returns what we gave it
+			assert.equal(element.get_value(), test_value);
+			assert.equal(element.required, true, "required not set");
+
+			// widget fails validation
+			let messages = [];
+			assert.isTrue(element.isValid(messages), `Required has a value (${element.getValue()}), but is not considered valid. ` + messages.join("\n"));
+		});
 	});
 }

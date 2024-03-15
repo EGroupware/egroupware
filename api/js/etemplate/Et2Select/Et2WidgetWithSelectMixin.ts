@@ -8,7 +8,7 @@
  */
 
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {html, LitElement, PropertyValues, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
@@ -134,26 +134,6 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 
 		}
 
-		willUpdate(changedProperties : PropertyValues<this>)
-		{
-			// Add in actual option tags to the DOM based on the new select_options
-			if(changedProperties.has('select_options') || changedProperties.has("emptyLabel"))
-			{
-				// Add in options as children to the target node
-				const optionPromise = this._renderOptions();
-
-				// This is needed to display initial load value in some cases, like infolog nm header filters
-				if(typeof this.selectionChanged !== "undefined")
-				{
-					optionPromise.then(async() =>
-					{
-						await this.updateComplete;
-						this.selectionChanged();
-					});
-				}
-			}
-		}
-
 		public getValueAsArray()
 		{
 			if(Array.isArray(this.value))
@@ -186,48 +166,6 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 				});
 			}
 			return search(options ?? this.select_options, value);
-		}
-
-		/**
-		 * Render select_options as child DOM Nodes
-		 * @protected
-		 */
-		protected _renderOptions()
-		{
-			return Promise.resolve();
-			// Add in options as children to the target node
-			if(!this._optionTargetNode)
-			{
-				return Promise.resolve();
-			}
-			/**
-			 * Doing all this garbage to get the options to always show up.
-			 * If we just do `render(options, target)`, they only show up in the DOM the first time.  If the
-			 * same option comes back in a subsequent search, map() does not put it into the DOM.
-			 * If we render into a new target, the options get rendered, but we have to wait for them to be
-			 * rendered before we can do anything else with them.
-			 */
-			let temp_target = document.createElement("div");
-
-			let options = html`${this._emptyLabelTemplate()}${this.select_options
-				// Filter out empty values if we have empty label to avoid duplicates
-				.filter(o => this.emptyLabel ? o.value !== '' : o)
-				.map(this._groupTemplate.bind(this))}`;
-
-			render(options, temp_target);
-			this._optionRenderPromise = Promise.all(([...temp_target.querySelectorAll(":scope > *")].map(item => item.render)))
-				.then(() =>
-				{
-					this._optionTargetNode.replaceChildren(
-						...Array.from(temp_target.querySelectorAll(":scope > *")),
-						...Array.from(this._optionTargetNode.querySelectorAll(":scope > [slot]"))
-					);
-					if(typeof this.handleMenuSlotChange == "function")
-					{
-						this.handleMenuSlotChange();
-					}
-				});
-			return this._optionRenderPromise;
 		}
 
 		/**

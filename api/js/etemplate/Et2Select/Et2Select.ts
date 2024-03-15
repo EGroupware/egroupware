@@ -293,9 +293,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** The select's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = '';
 
-	/** The select's required attribute. */
-	@property({type: Boolean, reflect: true}) required = false;
-
 	/** If the select is limited to 1 row, we show the number of tags not visible */
 	@state()
 	protected _tagsHidden = 0;
@@ -817,9 +814,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return this.select?.open ?? false;
 	}
 
-	protected _renderOptions()
-	{return Promise.resolve();}
-
 	protected get select() : SlSelect
 	{
 		return this.shadowRoot?.querySelector("sl-select");
@@ -1034,7 +1028,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             ${this._styleTemplate()}
             <sl-select
-                    exportparts="prefix, tags, display-input, expand-icon, combobox, listbox, option"
+                    exportparts="prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
                     ?multiple=${this.multiple}

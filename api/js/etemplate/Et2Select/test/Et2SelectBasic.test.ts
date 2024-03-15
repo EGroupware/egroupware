@@ -157,6 +157,6 @@ inputBasicTests(async() =>
 {
 	const element = await before();
 	element.noLang = true;
-	element.select_options = [{value: "", label: ""}];
+	element.select_options = [{value: "", label: ""}, {value: "one", label: "one"}];
 	return element
-}, "", "sl-select");
+}, "one", "sl-select");
