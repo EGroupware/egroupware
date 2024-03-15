@@ -594,10 +594,10 @@ export class Et2VfsSelectDialog
 			// Not a dir, just select it
 			this.handleFileClick(event);
 
-			// If we only want one, we've got it.  Close.
+			// If we only want one, we've got it.  Close by clicking the primary button
 			if(!this.multiple)
 			{
-				this.hide();
+				this.shadowRoot.querySelector('et2-button[variant="primary"]')?.click();
 			}
 		}
 	}
