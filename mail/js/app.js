@@ -508,9 +508,7 @@ app.classes.mail = AppJS.extend(
 		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
 			let folder_id = {};
-			folder_id[folder] = (foldertree.getLabel(folder) || pushData.acl.folder)
-				.replace(this._unseen_regexp, '')+
-				(pushData.acl.unseen ? " ("+pushData.acl.unseen+")" : '');
+			folder_id[folder] = pushData.acl.unseen;
 			this.mail_setFolderStatus(folder_id);
 		}
 
@@ -1947,13 +1945,13 @@ app.classes.mail = AppJS.extend(
 		for (const folderId in _status) {
 			//ftree.setLabel(folderId,_status[folderId]["displayName"]);
 			// display folder-name bold for unseen mails
-			if(_status[folderId]["unseenCount"])
+			if(_status[folderId])
 			{
 				ftree.setStyle(folderId, 'font-weight: bold !important');
-			}else if(!_status[folderId]["unseenCount"] || _status[folderId]["unseenCount"] ===0 || _status[folderId]["unseenCount"] ==="0") {
+			}else if(!_status[folderId] || _status[folderId] ===0 || _status[folderId] ==="0") {
 				ftree.setStyle(folderId, 'font-weight: normal');
 			}
-			ftree.set_badge(folderId,_status[folderId]["unseenCount"]);
+			ftree.set_badge(folderId,_status[folderId]);
 			//alert(i +'->'+_status[i]);
 		}
 	},

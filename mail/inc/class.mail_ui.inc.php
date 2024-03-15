@@ -4120,16 +4120,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							if (Mail::$debug) error_log(__METHOD__,' ()'.$e->getMessage ());
 							continue;
 						}
-						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
-							$oA[$_folderName] = ['displayName' => $fS['shortDisplayName'], 'unseenCount' => $fS['unseen']];
+							$oA[$_folderName] = ''.$fS['unseen'];
 						}
-						if ($fS['unseen']==0 && $fS['shortDisplayName'])
-						{
-							$oA[$_folderName] = ['displayName' => $fS['shortDisplayName']];
-						}
+
 					}
 				}
 			}
