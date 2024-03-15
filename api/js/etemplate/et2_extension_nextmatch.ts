@@ -368,6 +368,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		this.controller = null;
 		this.rowProvider = null;
 
+		this._queue_refresh_callback = this._queue_refresh_callback.bind(this);
 	}
 
 	/**
@@ -961,8 +962,13 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 				if(data.total >= 1)
 				{
-					this.type == et2_nextmatch.ADD ? this.nm.refresh_add(this.uid, this.type, controller)
-												   : this.nm.refresh_update(this.uid, controller);
+					row_ids.forEach(id =>
+					{
+						let uid = `${this.prefix}::${id}`;
+						this.type == et2_nextmatch.ADD ? this.nm.refresh_add(uid, this.type, controller)
+													   : this.nm.refresh_update(uid, controller);
+					})
+
 				}
 				else if(this.type == et2_nextmatch.UPDATE)
 				{
@@ -1148,7 +1154,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			if(types[type].length > 0)
 			{
-				// Fire each change type once will all changed IDs
+				// Fire each change type once with all changed IDs
 				this.refresh(types[type].filter((v, i, a) => a.indexOf(v) === i), type);
 			}
 		}
