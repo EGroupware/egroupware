@@ -1112,8 +1112,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 
 		// Bind so we can get the queued data when tab is re-activated
-		let tab = jQuery(this.getInstanceManager().DOMContainer.parentNode)
-			.one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
+		// only do it for this._queued_refreshes === [], to not install multiple event-handlers (jQuery.one() does NOT help here!)
+		if (Array.isArray(this._queued_refreshes) && !this._queued_refreshes.length)
+		{
+			jQuery(this.getInstanceManager().DOMContainer.parentNode).one('show.et2_nextmatch', this._queue_refresh_callback.bind(this));
+		}
 
 
 		// Edit means refresh everything, so no need to keep queueing
