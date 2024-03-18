@@ -9,7 +9,7 @@
  */
 
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
-import {css, html, nothing, TemplateResult} from "@lion/core";
+import {css, html, nothing, TemplateResult} from "lit";
 import {IsEmail} from "../../api/js/etemplate/Validators/IsEmail";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2StaticSelectMixin} from "../../api/js/etemplate/Et2Select/StaticOptions";
