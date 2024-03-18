@@ -901,9 +901,12 @@ window.egw_fw_ui_category = function(_contDiv, _name, _title, _content, _callbac
 	//Add content and header to the content div, add some magic jQuery code in order to make it foldable
 	this.headerDiv._parent = this;
 	entryH2._parent = this;
-	jQuery(this.headerDiv).on("keydown",
+	this.headerDiv.addEventListener("keydown",
 		function(e) {
-			if(e.type == "keydown" && [EGW_KEY_ENTER, EGW_KEY_SPACE].indexOf(e.which) == -1) return;
+			if (!["Enter", " "].includes(e.key) || e.target !== this)
+			{
+				return;
+			}
 			if (!jQuery(this).hasClass("egw_fw_ui_category_active"))
 			{
 				this._parent.open(false);
@@ -912,9 +915,9 @@ window.egw_fw_ui_category = function(_contDiv, _name, _title, _content, _callbac
 			{
 				this._parent.close(false);
 			}
-			e.stopPropagation();
-		});
-	jQuery(entryH2).on("click",
+		}
+	);
+	entryH2.addEventListener("click",
 		function(e) {
 			if (!jQuery(this).parent().hasClass("egw_fw_ui_category_active"))
 			{
