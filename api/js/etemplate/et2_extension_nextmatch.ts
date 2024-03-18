@@ -972,8 +972,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				}
 				else if(this.type == et2_nextmatch.UPDATE)
 				{
-					// Remove row from controller
-					this.controller.deleteRow(this.uid);
+					// Remove rows from controller
+					row_ids.forEach(id =>
+					{
+						let uid = `${this.prefix}::${id}`;
+						this.controller.deleteRow(uid);
+					});
 
 					// Adjust total rows, clean grid
 					this.controller._grid.setTotalCount(this.nm.controller._grid._total - row_ids.length);
