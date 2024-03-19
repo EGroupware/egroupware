@@ -695,6 +695,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	}
 
+	protected handleTagClick(event : MouseEvent)
+	{
+		if(typeof this.onTagClick == "function")
+		{
+			event.stopPropagation();
+			return this.onTagClick(event, event.target);
+		}
+	}
+
 	/**
 	 * Callback for the intersection observer so we know when tags don't fit
 	 *
@@ -965,7 +974,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     .value=${option.value.replaceAll("___", " ")}
                     @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
-                    @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
+                    @mousedown=${typeof this.onTagClick == "function" ? (e) => this.handleTagClick(e) : nothing}
             >
                 ${image ?? nothing}
                 ${option.getTextLabel().trim()}
