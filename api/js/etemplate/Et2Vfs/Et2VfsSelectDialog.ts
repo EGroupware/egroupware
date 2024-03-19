@@ -524,7 +524,7 @@ export class Et2VfsSelectDialog
 		}
 		else
 		{
-			this.value = [this.selectedResults[0]?.value.path] ?? [];
+			this.value = (this.selectedResults?.length ? [this.selectedResults[0].value.path] : []) ?? [];
 		}
 	}
 
