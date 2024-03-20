@@ -1515,7 +1515,9 @@ class Mail
 		}
 		else
 		{
-			$sortResult = (is_array($_thisUIDOnly) ? $_thisUIDOnly:(array)$_thisUIDOnly);
+			$sortResult = (array)$_thisUIDOnly;
+			// we must return a total: if we return only certain UIDs, the total is the number of UIDs given
+			$total = count($sortResult);
 		}
 
 
