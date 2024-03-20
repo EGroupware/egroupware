@@ -807,7 +807,10 @@ class Link extends Link\Storage
 			echo "Options: "; _debug_array($options);
 		}
 		// limit number of returned rows by default to 100, if no limit is set
-		if (!isset($options['num_rows'])) $options['num_rows'] = self::DEFAULT_NUM_ROWS;
+		if(!isset($options['num_rows']))
+		{
+			$options['num_rows'] = max((int)$GLOBALS['egw_info']['user']['preference']['common']['maxmatchs'], self::DEFAULT_NUM_ROWS);
+		}
 
 		$result = self::exec($method, array($pattern, &$options));
 

@@ -106,7 +106,10 @@ class Link extends Etemplate\Widget
 	public static function ajax_link_search($app, $type, $pattern, $options=array())
 	{
 		$options['type'] = $type ?: $options['type'];
-		if(!$options['num_rows']) $options['num_rows'] = 100;
+		if(!$options['num_rows'])
+		{
+			$options['num_rows'] = max((int)$GLOBALS['egw_info']['user']['preference']['common']['maxmatchs'], 100);
+		}
 
 		$links = Api\Link::query($app, $pattern, $options);
 

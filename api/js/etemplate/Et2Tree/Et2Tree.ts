@@ -41,11 +41,6 @@ export type TreeItemData = SelectOption & {
  */
 export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 {
-	/**
-	 * Limit server searches to 100 results, matches Link::DEFAULT_NUM_ROWS
-	 * @type {number}
-	 */
-	static RESULT_LIMIT: number = 100;
 	//does not work because it would need to be run on the shadow root
 	//@query("sl-tree-item[selected]") selected: SlTreeItem;
 
