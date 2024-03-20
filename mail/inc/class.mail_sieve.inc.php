@@ -121,6 +121,7 @@ class mail_sieve
 			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',$this->currentIdentity,$this->account->acc_id);
 			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
+		Api\Framework::bodyClass('scrollVertical');
 		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,array());
 	}
 
