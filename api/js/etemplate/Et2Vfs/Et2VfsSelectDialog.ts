@@ -329,6 +329,23 @@ export class Et2VfsSelectDialog
 		return value;
 	}
 
+	protected localSearch<FileInfo>(search : string, searchOptions : object, localOptions : FileInfo[] = []) : Promise<FileInfo[]>
+	{
+		return super.localSearch(search, {...searchOptions, mime: this.mime}, localOptions);
+	}
+
+	public searchMatch<FileInfo>(search : string, searchOptions : Object, option : FileInfo) : boolean
+	{
+		let result = super.searchMatch(search, searchOptions, option);
+
+		// Add in local mime check
+		if(result && searchOptions.mime)
+		{
+			result = result && option.mime.match(searchOptions.mime);
+		}
+		return result;
+	}
+
 	remoteSearch<FileInfo>(search : string, options : object) : Promise<FileInfo[]>
 	{
 		// Include a limit, even if options don't, to avoid massive lists breaking the UI
@@ -892,7 +909,7 @@ export class Et2VfsSelectDialog
 
 customElements.define("et2-vfs-select-dialog", Et2VfsSelectDialog);
 
-export interface FileInfo extends SearchResult
+export type FileInfo = SearchResult &
 {
 	mime : string,
 	isDir : boolean,
