@@ -326,7 +326,7 @@ class mail_compose
 		$_contentHasSigID = $_content?array_key_exists('mailidentity',(array)$_content):false;
 		$_contentHasMimeType = $_content? array_key_exists('mimeType',(array)$_content):false;
 
-		// fetch appendix data which is an assistance input value consisiting of json data
+		// fetch appendix data which is an assistance input value consisting of json data
 		if (!empty($_content['appendix_data']))
 		{
 			$appendix_data = json_decode($_content['appendix_data'], true);
@@ -2283,7 +2283,8 @@ class mail_compose
 		//_debug_array($headers);
 		//error_log(__METHOD__.__LINE__.'->'.array2string($this->mailPreferences['htmlOptions']));
 		try {
-			$bodyParts = $mail_bo->getMessageBody($_uid, ($this->mailPreferences['htmlOptions']?$this->mailPreferences['htmlOptions']:''), $_partID);
+			$bodyParts = $mail_bo->getMessageBody($_uid, $this->mailPreferences['htmlOptions']??'', $_partID,
+				null, false, '', $nul, false);
 		}
 		catch (Mail\Smime\PassphraseMissing $e)
 		{
@@ -2374,11 +2375,8 @@ class mail_compose
 				$this->sessionData['body'] .= "\r\n";
 				$hasSignature = false;
 				// create body new, with good line breaks and indention
-				foreach(explode("\n",$newBody) as $value) {
-					// the explode is removing the character
-					//$value .= 'ee';
-
-					// Try to remove signatures from qouted parts to avoid multiple
+				foreach($newBody ? explode("\n",$newBody) : [] as $value) {
+					// Try to remove signatures from quoted parts to avoid multiple
 					// signatures problem in reply (rfc3676#section-4.3).
 					if ($_mode != 'forward' && ($hasSignature || ($hasSignature = preg_match("/^--\s[\r\n]$/",$value))))
 					{
