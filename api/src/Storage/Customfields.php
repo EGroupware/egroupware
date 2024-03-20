@@ -435,8 +435,10 @@ class Customfields implements \IteratorAggregate
 			'cf_len'      => (string)$cf['len'] !== '' ? $cf['len'] : null,
 			'cf_rows'     => (string)$cf['rows'] !== '' ? $cf['rows'] : null,
 			'cf_order'    => $cf['order'],
+			'cf_tab'      => $cf['tab'] ?? null ?: null,
 			'cf_needed'   => $cf['needed'],
 			'cf_private'  => $cf['private'] ? implode(',', $cf['private']) : null,
+			'cf_readonly' => $cf['readonly'] ? implode(',', $cf['readonly']) : null,
 			'cf_modifier' => $GLOBALS['egw_info']['user']['account_id'],
 			'cf_modified' => time(),
 		), array(

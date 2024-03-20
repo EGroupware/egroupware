@@ -269,6 +269,7 @@ custom 1	admin	en	Custom 1
 custom 2	admin	en	Custom 2
 custom 3	admin	en	Custom 3
 custom fields	admin	en	Custom fields
+custom fields tab	admin	en	custom fields tab
 custom translation	admin	en	Custom translation
 customfield '%1' added	admin	en	Customfield '%1' added
 customfield '%1' deleted	admin	en	Customfield '%1' deleted
@@ -660,6 +661,7 @@ must change password upon next login	admin	en	Must change password upon next log
 name must not be empty !!!	admin	en	Name must not be empty!
 name of account	admin	en	Name of account
 name of organisation	admin	en	Name of organization
+name of tab to create and show field in	admin	en	Name of tab to create and show field in
 name of the egroupware instance, eg. default	admin	en	Name of the EGroupware instance
 new group name	admin	en	New group name
 new name	admin	en	New name
@@ -813,6 +815,7 @@ search peer servers	admin	en	Search peer servers
 secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
 secure connection	admin	en	Secure connection
 security	admin	en	Security
+select accounts for which the custom field should be readonly	admin	en	Select accounts for which the custom field should be readonly
 select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
 select group managers	admin	en	Select group managers
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	en	Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.

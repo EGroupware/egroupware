@@ -31,22 +31,29 @@
 					<et2-description  value="Private"></et2-description>
 					<et2-select-account  statustext="Select accounts for which the custom field should be visible" id="cf_private" rows="3" span="3" multiple="1" placeholder="Add user or group" accountType="both"></et2-select-account>
 				</row>
+				<row disabled="!@use_readonly">
+					<et2-description value="Readonly"></et2-description>
+					<et2-select-account statustext="Select accounts for which the custom field should be readonly" id="cf_readonly" rows="3" span="3" multiple="1" placeholder="Add user or group" accountType="both"></et2-select-account>
+				</row>
 				<row>
 					<et2-description  statustext="each value is a line like id[=label], or use @path to read options from a file in EGroupware directory" value="Options"></et2-description>
 					<et2-textarea  statustext="@statustext" id="cf_values" rows="5" cols="30" span="3" width="99%"></et2-textarea>
 				</row>
 				<row>
-					<et2-description  value="Attributes"></et2-description>
-					<et2-box  span="3" class="attributes">
-						<et2-description  value="Length"></et2-description>
-						<et2-number  statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
-						<et2-description  value="Rows"></et2-description>
-						<et2-number  statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
-						<et2-description  value="Order"></et2-description>
+					<et2-description  value="Length"></et2-description>
+					<et2-hbox span="all">
+						<et2-number statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
+						<et2-description value="Rows"></et2-description>
+						<et2-number statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
+					</et2-hbox>
+				</row>
+				<row>
+					<et2-description  value="Order"></et2-description>
+					<et2-hbox  span="all">
 						<et2-number  statustext="determines the order the fields are displayed" id="cf_order" min="1" precision="0"></et2-number>
-					</et2-box>
-
-					<et2-description></et2-description>
+						<et2-description value="Tab"></et2-description>
+						<et2-textbox id="cf_tab" size="32" maxlength="64" placeholder="custom fields tab" statustext="Name of tab to create and show field in"></et2-textbox>
+					</et2-hbox>
 				</row>
 			</rows>
 		</grid>

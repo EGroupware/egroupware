@@ -35,9 +35,11 @@
 				<column width="100px"/>
 				<column width="50px"/>
 				<column width="100px" disabled="!@use_private"/>
+				<column width="100px" disabled="!@use_readonly"/>
 				<column width="60%"/>
 				<column width="50px"/>
 				<column width="50px"/>
+				<column width="120px"/>
 				<column width="120px"/>
 			</columns>
 			<rows>
@@ -48,12 +50,14 @@
 					<nextmatch-header label="Type of field" id="cf_type"/>
 					<nextmatch-header label="Required" id="cf_needed"/>
 					<nextmatch-header label="Private" id="cf_private"/>
+					<nextmatch-header label="Readonly" id="cf_readonly"/>
 					<nextmatch-header label="Options"/>
 					<et2-vbox>
 						<nextmatch-header label="Length"/>
 						<nextmatch-header label="Rows"/>
 					</et2-vbox>
 					<nextmatch-sortheader label="Order" id="cf_order"/>
+					<nextmatch-sortheader label="Tab" id="cf_tab"/>
 					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
@@ -66,13 +70,15 @@
                     <customfields-types statustext="Type of customfield" id="{$row}[cf_type]" readonly="true"
                                         app="$cont[appname]"/>
                     <et2-checkbox  id="${row}[cf_needed]" readonly="true" selectedValue="1" unselectedValue="0"></et2-checkbox>
-                    <et2-select-account  id="${row}[cf_private]" readonly="true" accountType="both"></et2-select-account>
+					<et2-select-account  id="${row}[cf_private]" readonly="true" accountType="both"></et2-select-account>
+					<et2-select-account  id="${row}[cf_readonly]" readonly="true" accountType="both"></et2-select-account>
                     <et2-description  id="${row}[cf_values]" class="values" noLang="1"></et2-description>
                     <et2-vbox>
                         <et2-description  id="${row}[cf_len]" noLang="1"></et2-description>
                         <et2-description  id="${row}[cf_rows]" noLang="1"></et2-description>
                     </et2-vbox>
                     <et2-description  id="${row}[cf_order]" noLang="1"></et2-description>
+					<et2-description  id="${row}[cf_tab]" noLang="1"></et2-description>
                     <et2-vbox>
                         <et2-date-time  id="${row}[cf_modified]" readonly="true"></et2-date-time>
                         <et2-select-account  id="${row}[cf_modifier]" readonly="true"></et2-select-account>

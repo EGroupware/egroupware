@@ -269,6 +269,7 @@ custom 1	admin	de	Benutzerdefiniert 1
 custom 2	admin	de	Benutzerdefiniert 2
 custom 3	admin	de	Benutzerdefiniert 3
 custom fields	admin	de	Benutzerdefinierte Felder
+custom fields tab	admin	de	Benutzerdefinierte Felder Tab
 custom translation	admin	de	Eigene Übersetzung
 customfield '%1' added	admin	de	Benutzerdefiniertes Feld '%1' hinzugefügt
 customfield '%1' deleted	admin	de	Benutzerdefiniertes Feld '%1' gelöscht
@@ -660,6 +661,7 @@ must change password upon next login	admin	de	Muss das Passwort beim nächsten L
 name must not be empty !!!	admin	de	Name darf nicht leer sein!
 name of account	admin	de	Name des Kontos
 name of organisation	admin	de	Name der Organisation
+name of tab to create and show field in	admin	de	Name des anzulegenden Tabs in dem das Feld angezeigt wird
 name of the egroupware instance, eg. default	admin	de	Name der EGroupware-Instanz, z.B. default
 new group name	admin	de	Neuer Gruppenname
 new name	admin	de	Neuer Name
@@ -813,6 +815,7 @@ search peer servers	admin	de	Serververbund durchsuchen
 secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung deaktiviert.
 secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
+select accounts for which the custom field should be readonly	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld schreibgeschützt sein soll.
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
 select group managers	admin	de	Gruppenmanager auswählen
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	de	Wählen Sie die Sprache, um eine sprachabhängige Nachricht zu definieren. Sprache 'Englisch' ist die Standardseite für alle Sprachen, daher müssen Sie für die Einstellung einer allgemeinen Nachricht für allen Sprachen nur die Seite 'Englisch' erstellen.

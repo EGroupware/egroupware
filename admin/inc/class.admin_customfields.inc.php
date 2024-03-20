@@ -44,6 +44,11 @@ class admin_customfields
 	protected $use_private = false;
 
 	/**
+	 * Allow custom fields to be readonly for certain users/groups
+	 */
+	protected $use_readonly = false;
+
+	/**
 	* userdefiened types e.g. type of infolog
 	*
 	* @var array
@@ -341,6 +346,7 @@ class admin_customfields
 			die(lang('Error! No appname found'));
 		}
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || !empty($content['use_private']);
+		$this->use_readonly = !isset($_GET['use_readonly']) || (boolean)$_GET['use_readonly'] || !empty($content['use_readonly']);
 
 		// Read fields, constructor doesn't always know appname
 		$this->fields = Api\Storage\Customfields::get($this->appname,true);
@@ -453,6 +459,7 @@ class admin_customfields
 		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
 		$content['cf_order'] = (count($this->fields)+1) * 10;
 		$content['use_private'] = $this->use_private;
+		$content['use_readonly'] = $this->use_readonly;
 
 		if($cf_id)
 		{

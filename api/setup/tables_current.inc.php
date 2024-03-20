@@ -382,7 +382,8 @@ $phpgw_baseline = array(
 			'cf_private' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id'),
 			'cf_modifier' => array('type' => 'int','meta' => 'account','precision' => '4','comment' => 'last modifier'),
 			'cf_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time'),
-			'cf_tab' => array('type' => 'varchar','precision' => '64','comment' => 'tab customfield should be shown')
+			'cf_tab' => array('type' => 'varchar','precision' => '64','comment' => 'tab customfield should be shown'),
+			'cf_readonly' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id')
 		),
 		'pk' => array('cf_id'),
 		'fk' => array(),
