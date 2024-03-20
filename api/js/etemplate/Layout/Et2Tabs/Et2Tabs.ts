@@ -544,6 +544,31 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	}
 
 	/**
+	 * get tab panel-name or label the given widget is in
+	 *
+	 * @param widget
+	 * @param label true: return label, otherwise return panel-name
+	 * @return string panel-name or undefined
+	 */
+	static getTabPanel(widget, label)
+	{
+		let tab = widget;
+		while(tab._parent && tab._parent.nodeName !== 'ET2-TABBOX')
+		{
+			tab = tab._parent;
+		}
+		if (tab.nodeName === 'ET2-TAB-PANEL')
+		{
+			if (label)
+			{
+				return tab._parent?.querySelector('et2-tab[panel="'+tab.name+'"]')?.innerText;
+			}
+			return tab.name;
+		}
+		return undefined;
+	}
+
+	/**
 	 * Reimplement to allow our existing function signatures too
 	 *
 	 * @deprecated use this.show(name : string)

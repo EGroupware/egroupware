@@ -27,6 +27,7 @@ import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {loadWebComponent} from "./Et2Widget/Et2Widget";
 import {LitElement} from "lit";
 import {Et2VfsSelectButton} from "./Et2Vfs/Et2VfsSelectButton";
+import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 
 export class et2_customfields_list extends et2_valueWidget implements et2_IDetachedDOM, et2_IInput
 {
@@ -50,7 +51,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			'name': 'Field filter',
 			"default": "",
 			"type": "any", // String or array
-			"description": "Filter displayed custom fields by their 'type2' attribute"
+			"description": "Filter displayed custom fields by their 'type2' attribute, use 'previous' for the filter of the previous / regular cf widget"
 		},
 		'private': {
 			ignore: true,
@@ -67,6 +68,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			"type": "string",
 			"default": et2_no_init,
 			"description": "JS code which is executed when the value changes."
+		},
+		// filter cfs by a given tab value
+		'tab': {
+			name: "tab",
+			type: "string",
+			default: null,
+			description: "only show cfs with the given tab attribute value, use 'panel' for the tab-panel the widget is in"
 		},
 		// Allow changing the field prefix.  Normally it's the constant but importexport filter changes it.
 		"prefix": {
@@ -87,6 +95,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	private rows = {};
 	widgets = {};
 	private detachedNodes = [];
+
+	static previous_type_filter;
 
 	constructor(_parent?, _attrs? : WidgetConfig, _child? : object)
 	{
@@ -122,6 +132,13 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			}
 		}
 
+		// allow to use previous type_filter
+		if (this.options.type_filter === "previous")
+		{
+			this.options.type_filter = et2_customfields_list.previous_type_filter;
+		}
+		et2_customfields_list.previous_type_filter = this.options.type_filter;
+
 		if(this.options.type_filter && typeof this.options.type_filter == "string")
 		{
 			this.options.type_filter = this.options.type_filter.split(",");
@@ -150,6 +167,33 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						this.options.fields[field_name] = true;
 
 					}
+				}
+			}
+		}
+
+		// filter fields by tab attribute
+		if (this.options.tab === 'panel')
+		{
+			this.options.tab = Et2Tabs.getTabPanel(this, true);
+		}
+		if (typeof this.options.fields === "undefined" || !Object.keys(this.options.fields).length)
+		{
+			this.options.fields = {};
+			for(let field_name in this.options.customfields)
+			{
+				if (this.options.customfields[field_name].tab === this.options.tab)
+				{
+					this.options.fields[field_name] = true;
+				}
+			}
+		}
+		else
+		{
+			for(let field_name in this.options.customfields)
+			{
+				if (this.options.customfields[field_name].tab !== this.options.tab)
+				{
+					delete this.options.fields[field_name];
 				}
 			}
 		}
@@ -232,7 +276,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			// Avoid creating field twice
 			if(!this.rows[id])
 			{
-
 				const row = jQuery(document.createElement("tr"))
 					.appendTo(this.tbody)
 					.addClass(this.id + '_' + id);
