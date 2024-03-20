@@ -4958,9 +4958,11 @@ class Mail
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @param string $_folder folder to work on
 	 * @param Horde_Mime_part& $calendar_part =null on return calendar-part or null, if there is none
+	 * @param bool $output_no_body true: if we have no "real" body, but a PDF or image, output it to display, false: return empty body
 	 * @return array containing the message body, mimeType and charset
 	 */
-	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '', &$calendar_part=null)
+	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false,
+	                        $_folder = '', &$calendar_part=null, bool $output_no_body=true)
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
@@ -4998,7 +5000,7 @@ class Mail
 		}
 
 		// if message is just a pdf, return it to browser to display
-		if ($_structure->getType() === 'application/pdf' || $_structure->getPrimaryType() === 'image')
+		if ($output_no_body && ($_structure->getType() === 'application/pdf' || $_structure->getPrimaryType() === 'image'))
 		{
 			header('Content-Type: '.$_structure->getType());
 			echo $this->getAttachment($_uid, $_partID ?? '1', 0, true, $_folder)->getContents();
