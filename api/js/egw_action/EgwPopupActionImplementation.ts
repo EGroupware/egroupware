@@ -534,8 +534,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
                     for (const k in selected) {
-                        if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
-                    }
+						if(selected[k].id)
+						{
+							clipboard.selected.push({
+								id: selected[k].id,
+								data: {...(window.egw.dataGetUIDdata(selected[k].id)?.data ?? {}), ...selected[k].data}
+							});
+						}
+					}
 
                     // Save it in session
                     window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
@@ -561,8 +567,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
                     for (const k in selected) {
-                        if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
-                    }
+						if(selected[k].id)
+						{
+							clipboard.selected.push({
+								id: selected[k].id,
+								data: {...(window.egw.dataGetUIDdata(selected[k].id)?.data ?? {}), ...selected[k].data}
+							});
+						}
+					}
 
                     // Save it in session
                     window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));

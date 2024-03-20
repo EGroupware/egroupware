@@ -24,6 +24,7 @@ import type {ValidationType} from "@lion/form-core/types/validate/ValidateMixinT
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
+import {Et2LinkPasteDialog, getClipboardFiles} from "./Et2LinkPasteDialog";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -96,7 +97,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			...super.scopedElements,
 			'et2-button': Et2Button,
 			'et2-link-entry': Et2LinkEntry,
-			'et2-vfs-select': Et2VfsSelectButton
+			'et2-vfs-select': Et2VfsSelectButton,
+			'et2-link-paste-dialog': Et2LinkPasteDialog
 		};
 	}
 
@@ -139,11 +141,17 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		// otherwise it only gives an error on server-side
 		let method = null;
 		let method_id = null;
+		let pasteEnabled = false;
+		let pasteTooltip = ""
 		if(this.value && this.value.to_id && typeof this.value.to_id != 'object')
 		{
 			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			method_id = this.value.to_app + ':' + this.value.to_id;
+
+			let clipboard_files = getClipboardFiles();
+			pasteEnabled = clipboard_files.length > 0;
 		}
+
 		return html`
             <slot name="before"></slot>
             <et2-vfs-select
@@ -159,7 +167,30 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
                             label=${this.egw().lang("copy")}></et2-button>
                 <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
                             label=${this.egw().lang("move")}></et2-button>
-            </et2-vfs-select>`;
+            </et2-vfs-select>
+            <et2-vfs-select image="linkpaste" aria-label=${this.egw().lang("paste files")} noSubmit="true"
+                            title=${this.egw().lang("paste files")}
+                            ?readonly=${this.readonly}
+                            ?disabled=${!pasteEnabled}
+                            method=${method || nothing}
+                            method-id=${method_id || nothing}
+                            multiple
+                            @click=${(e) =>
+                            {
+                                // Pre-select all files
+                                let files = [];
+                                getClipboardFiles().forEach(f => files.push(f.value));
+                                e.target.firstElementChild.value = files;
+                                e.target.firstElementChild.requestUpdate();
+                            }}
+                            .onchange=${this.handleVfsSelected}
+            >
+                <et2-link-paste-dialog open
+                                       title=${this.egw().lang("paste")}
+                                       .buttonLabel=${this.egw().lang("paste")}
+                ></et2-link-paste-dialog>
+            </et2-vfs-select>
+		`;
 	}
 
 	/**
@@ -433,6 +464,27 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		{
 			delete this.value.to_id[e.detail.link_id || ""]
 		}
+	}
+
+	handleFilePaste([button, files])
+	{
+		if(!button)
+		{
+			return;
+		}
+		let values = {};
+		for(var i = 0; i < files.length; i++)
+		{
+			values['link:' + files[i]] = {
+				app: 'link',
+				id: files[i],
+				type: 'unknown',
+				icon: 'link',
+				remark: '',
+				title: files[i]
+			};
+		}
+		this._link_result(values);
 	}
 
 	handleVfsSelected(event, select : Et2VfsSelectButton)
