@@ -292,11 +292,10 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 * Check if one of our [local] items matches the search
 		 *
 		 * @param search
-		 * @param item
 		 * @returns {boolean}
 		 * @protected
 		 */
-		public searchMatch<DataType extends SearchResult>(search : string, option : DataType) : boolean
+		public searchMatch<DataType extends SearchResult>(search : string, searchOptions : Object, option : DataType) : boolean
 		{
 			if(!option || !option.value)
 			{
@@ -341,7 +340,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 					{
 						return;
 					}
-					if(this.searchMatch<DataType>(value, option))
+					if(this.searchMatch<DataType>(value, searchOptions, option))
 					{
 						local.results.push(option);
 						local.total++;
