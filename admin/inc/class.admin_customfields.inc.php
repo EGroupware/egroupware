@@ -139,7 +139,7 @@ class admin_customfields
 		$this->use_private = !empty($_GET['use_private']) && $_GET['use_private'] !== 'undefined' || !empty($content['use_private']);
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = Api\Storage\Customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true, null, null, null);
 
 		$this->tmpl = new Etemplate();
 		$this->tmpl->read('admin.customfields');
@@ -349,7 +349,7 @@ class admin_customfields
 		$this->use_readonly = !isset($_GET['use_readonly']) || (boolean)$_GET['use_readonly'] || !empty($content['use_readonly']);
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = Api\Storage\Customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true, null, null, null);
 
 		// Update based on info returned from template
 		if (is_array($content))

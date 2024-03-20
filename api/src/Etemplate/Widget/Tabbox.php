@@ -14,6 +14,7 @@
 namespace EGroupware\Api\Etemplate\Widget;
 
 use EGroupware\Api\Etemplate;
+use EGroupware\Api;
 
 /**
  * eTemplate Tabs widget stacks multiple sub-templates and lets you switch between them
@@ -127,6 +128,43 @@ class Tabbox extends Etemplate\Widget
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
 			if (true) $valid = $value;
+		}
+	}
+
+	/**
+	 * Method called before eT2 request is sent to client
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand=null)
+	{
+		[$app] = explode('.', self::$request->template['name']);
+		if (empty($app) || !($cfs = Api\Storage\Customfields::get($app, false, null, null, true)))
+		{
+			return;
+		}
+		$tabs = [];
+		$content = self::$request->content;
+		foreach($cfs as $cf)
+		{
+			if (!empty($cf['tab']))
+			{
+				$tab = $tabs[$cf['tab']]['id'] ?? 'cf-tab'.(1+count($tabs));
+				if (!isset($tabs[$cf['tab']]))
+				{
+					$tabs[$cf['tab']] = array(
+						'id' => $tab,
+						'template' => 'api.cf-tab',
+						'label' => $cf['tab'],
+					);
+				}
+			}
+		}
+		if ($tabs)
+		{
+			self::$request->content = $content;
+			self::setElementAttribute($this->id, 'extraTabs', array_values($tabs));
 		}
 	}
 }
