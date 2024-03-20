@@ -70,7 +70,7 @@ class Customfields implements \IteratorAggregate
 	 * @param ?bool $tabs false: do NOT return cfs with explicit tab, true: only return cfs with explicit tab, null: return all
 	 * @return array with customfields
 	 */
-	function __construct($app, $account=false, $only_type2=null, $start=0, $num_rows=null, Api\Db $db=null, bool $tabs=false)
+	function __construct($app, $account = false, $only_type2 = null, $start = 0, $num_rows = null, Api\Db $db = null, bool $tabs = null)
 	{
 		$this->app = $app;
 
