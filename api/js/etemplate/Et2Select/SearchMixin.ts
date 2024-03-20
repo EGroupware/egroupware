@@ -242,13 +242,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		protected static MIN_CHARS = 2;
 
-		/**
-		 * Limit server searches to 100 results, matches Link::DEFAULT_NUM_ROWS
-		 * @type {number}
-		 */
-		static RESULT_LIMIT : number = 100;
-
-
 		// Hold the original option data from earlier search results, since we discard on subsequent search
 		private _selected_remote = <SelectOption[]>[];
 
@@ -1223,6 +1216,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			const controller = new AbortController();
 			const signal = controller.signal;
 			let response_ok = false;
+			let resultLimit = Math.max(parseInt(this.egw().preference('maxmatchs', 'common')), 100);
 			return StaticOptions.cached_from_file(this, this.searchUrl)
 				.then(options =>
 				{
@@ -1234,9 +1228,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					});
 					// Limit results
 					this._total_result_count += filtered.length;
-					if(filtered.length > Et2WidgetWithSearch.RESULT_LIMIT)
+					if(filtered.length > resultLimit)
 					{
-						filtered.splice(Et2WidgetWithSearch.RESULT_LIMIT);
+						filtered.splice(resultLimit);
 					}
 					// Add the matches
 					this._total_result_count -= this.processRemoteResults(filtered);
@@ -1269,7 +1263,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		{
 			// Include a limit, even if options don't, to avoid massive lists breaking the UI
 			let sendOptions = {
-				num_rows: Et2WidgetWithSearch.RESULT_LIMIT,
+				num_rows: parseInt(this.egw().preference('maxmatchs', 'common')) ?? 100,
 				...options
 			}
 			return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath(this.searchUrl)),
