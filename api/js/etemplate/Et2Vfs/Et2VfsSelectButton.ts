@@ -78,7 +78,11 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	protected readonly hasSlotController = new HasSlotController(this, '');
 	protected processingPromise : Promise<FileActionResult> = null;
 
-	get _dialog() : Et2VfsSelectDialog {return this.shadowRoot.querySelector("et2-vfs-select-dialog") ?? null};
+	get _dialog() : Et2VfsSelectDialog
+	{
+		return this.hasSlotController.test("[default]") ? <Et2VfsSelectDialog><unknown>this.querySelector("*") :
+			   <Et2VfsSelectDialog><unknown>this.shadowRoot.querySelector("et2-vfs-select-dialog") ?? null
+	};
 
 	constructor()
 	{
@@ -217,7 +221,8 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
                 ${processing ? html`
                     <sl-spinner></sl-spinner>` : nothing}
             </et2-button>
-            ${hasUserDialog ? nothing : this.dialogTemplate()}
+            ${hasUserDialog ? html`
+                <slot></slot>` : this.dialogTemplate()}
 		`;
 	}
 }
