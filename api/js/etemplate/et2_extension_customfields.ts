@@ -641,12 +641,21 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 		return true;
 	}
+
+	_setup_int(field_name, field, attrs)
+	{
+		delete (attrs.label);
+		field.type = "number"
+		attrs.precision = 0;
+		return true;
+	}
+
 	_setup_float( field_name, field, attrs)
 	{
 		// No label on the widget itself
 		delete(attrs.label);
 
-		field.type = 'float';
+		field.type = 'number';
 
 		if(field.len)
 		{
@@ -654,6 +663,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 		return true;
 	}
+
 	_setup_select( field_name, field, attrs)
 	{
 		// No label on the widget itself
