@@ -165,6 +165,11 @@ class Tabbox extends Etemplate\Widget
 		{
 			self::$request->content = $content;
 			self::setElementAttribute($this->id, 'addTabs', true);
+			// if app already specifed extraTabs (like e.g. Addressbook), we need to add to them not overwrite them
+			if (($extra_tabs = self::setElementAttribute($this->id, 'extraTabs', null)))
+			{
+				$tabs = array_merge($extra_tabs, array_values($tabs));
+			}
 			self::setElementAttribute($this->id, 'extraTabs', array_values($tabs));
 		}
 	}
