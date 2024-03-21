@@ -1559,9 +1559,16 @@ class mail_compose
 					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
 					if ($from =='composefromdraft') $content['mode'] = 'composefromdraft';
 					$content['processedmail_id'] = $mail_id;
-
 					$_focusElement = 'body';
-					$suppressSigOnTop = true;
+					// for an empty body, we can use the users preferred compose-format and no need to suppress the signature
+					if (empty($content['body']))
+					{
+						$content['mimeType'] = $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] === 'Text' ? 'plain' : 'html';
+					}
+					else
+					{
+						$suppressSigOnTop = true;
+					}
 					break;
 				case 'reply':
 				case 'reply_all':
@@ -1824,7 +1831,8 @@ class mail_compose
 		// remove a printview tag if composing
 		$searchfor = '/^\['.lang('printview').':\]/';
 		$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
-		$bodyParts = $mail_bo->getMessageBody($_uid,'always_display', $_partID);
+		$bodyParts = $mail_bo->getMessageBody($_uid,'always_display', $_partID,
+			null, false, null, $nul, false);
 		//_debug_array($bodyParts);
 		#$fromAddress = ($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? $headers['FROM'][0]['RFC822_EMAIL'] : $headers['FROM'][0]['EMAIL'];
 		if($bodyParts['0']['mimeType'] == 'text/html') {
@@ -2328,7 +2336,11 @@ class mail_compose
 			htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE, Mail::$displayCharset, false),
 			lang("original message"), 'originalMessage');
 
-		if($bodyParts['0']['mimeType'] == 'text/html')
+		if (empty($bodyParts['0']['body']))
+		{
+			// no need to quote empty body
+		}
+		elseif($bodyParts['0']['mimeType'] == 'text/html')
 		{
 			$this->sessionData['mimeType'] 	= 'html';
 			if (!empty($styles)) $this->sessionData['body'] .= "\n".$styles."\n";
