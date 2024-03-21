@@ -186,11 +186,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			{
 				let tab = this.extraTabs[i];
 				let tab_id = tab.id || tab.template;
-				let tab_options = {id: tab_id, template: tab.template, url: tab.url, content: undefined};
-				if(tab.id)
-				{
-					tab_options.content = tab.id;
-				}
+				let tab_options = {id: tab_id, template: tab.template, url: tab.url, content: tab.content};
 				tabData[tab.prepend ? 'unshift' : 'push'].call(tabData, {
 					"id": tab_id,
 					"label": this.egw().lang(tab.label),

@@ -165,17 +165,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					if(jQuery.inArray(types[i],this.options.type_filter) > -1)
 					{
 						this.options.fields[field_name] = true;
-
 					}
 				}
 			}
 		}
 
-		// filter fields by tab attribute
+		// tab === "panel" --> use label of tab panel
 		if (this.options.tab === 'panel')
 		{
 			this.options.tab = Et2Tabs.getTabPanel(this, true);
 		}
+		// filter fields additionally by tab attribute
 		if (typeof this.options.fields === "undefined" || !Object.keys(this.options.fields).length)
 		{
 			this.options.fields = {};
@@ -193,7 +193,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			{
 				if (this.options.customfields[field_name].tab !== this.options.tab)
 				{
-					delete this.options.fields[field_name];
+					this.options.fields[field_name] = false;
+				}
+				else if (this.options.tab)
+				{
+					this.options.fields[field_name] = true;
 				}
 			}
 		}

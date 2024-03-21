@@ -481,9 +481,9 @@ class Customfields extends Transformer
 		{
 			foreach(array_keys($value_in) as $field)
 			{
-				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))];
+				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))] ?? null;
 
-				if((string)$use_private !== '' &&    // are only (non-)private fields requested
+				if(!isset($field_settings) || (string)$use_private !== '' &&    // are only (non-)private fields requested
 					(boolean)$field_settings['private'] != ($use_private != '0'))
 				{
 					continue;

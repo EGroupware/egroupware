@@ -451,6 +451,7 @@ class preferences_settings
 					$tab = 'tab'.(1+count($tabs));
 					$tabs[] = array(
 						'id' => $tab,
+						'content' => $tab,
 						'template' => 'preferences.settings.tab1',
 						'label' => $setting['title'],
 					);
