@@ -164,6 +164,7 @@ class Tabbox extends Etemplate\Widget
 		if ($tabs)
 		{
 			self::$request->content = $content;
+			self::setElementAttribute($this->id, 'addTabs', true);
 			self::setElementAttribute($this->id, 'extraTabs', array_values($tabs));
 		}
 	}
