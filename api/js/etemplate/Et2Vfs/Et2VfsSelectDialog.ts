@@ -583,11 +583,20 @@ export class Et2VfsSelectDialog
 
 		if(file && !file.disabled)
 		{
-			// Can't select a directory normally, can't select anything in "saveas"
-			if(file.value.isDir && this.mode != "select-dir" || this.mode == "saveas")
+			// Can't select a directory normally
+			if(file.value.isDir && this.mode != "select-dir")
 			{
 				event.preventDefault();
 				event.stopPropagation();
+				return;
+			}
+			// can't select anything in "saveas", but set the file name
+			else if(this.mode == "saveas")
+			{
+				this._filenameNode.value = file.value.name;
+				event.preventDefault();
+				event.stopPropagation();
+				this.updateComplete.then(() => this._filenameNode.focus());
 				return;
 			}
 			// Set focus after updating so the value is announced by screen readers

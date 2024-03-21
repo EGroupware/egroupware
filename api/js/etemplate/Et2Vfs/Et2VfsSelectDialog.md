@@ -33,7 +33,7 @@ When the user closes the dialog, getComplete() will return the selected files.
 
 ```js
 const dialog = this.et2.getWidgetById("files");
-let files = await dialog.getComplete();
+let [button, files] = await dialog.getComplete();
 ```
 
 This is probably the best way to get files (or directories) that you then want to do something with on the client. See

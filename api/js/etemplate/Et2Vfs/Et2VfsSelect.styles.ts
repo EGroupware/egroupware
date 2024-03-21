@@ -8,6 +8,7 @@ export default css`
 	et2-dialog::part(body) {
 		display: flex;
 		flex-direction: column;
+		gap: var(--sl-spacing-small);
 	}
 
 	.et2_toolbar {
