@@ -136,6 +136,7 @@ class pixelegg_framework extends Api\Framework\Ajax
 			 table.egwGridView_grid, .calendar_calTimeRow .calendar_calTimeRowTime, .calendar_calGridHeader .calendar_calDayColHeader > div[data-date],
 			 .selectedTreeRow, .standartTreeRow, .standartTreeRow_lor, .selectedTreeRow_lor{
 				font-size: {$textsize}px;
+				--sl-font-size-medium: {$textsize}px;
 			}
 			et2-lavatar, et2-avatar {font-size: 12px}
 			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon,
