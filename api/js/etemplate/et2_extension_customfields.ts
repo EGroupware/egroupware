@@ -232,7 +232,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					{
 						this.options.fields[field_name] = default_tab[1] !== '-non-private';
 					}
-					else	// non-private cf
+					else if (this.options.fields[field_name])	// non-private cf
 					{
 						this.options.fields[field_name] = default_tab[1] !== '-private';
 					}

@@ -169,10 +169,16 @@ class Tabbox extends Etemplate\Widget
 		$exclude = self::getElementAttribute($form_name, 'cfExclude') ?? $this->attrs['cfExclude'] ?? null;
 		$exclude = $exclude ? explode(',', $exclude) : [];
 
+		$type_filter = self::expand_name(self::getElementAttribute($form_name, 'cfTypeFilter') ?? $this->attrs['cfTypeFilter'] ?? null,
+			0, 0, 0, 0, self::$request->content);
+		$type_filter = $type_filter ? explode(',', $type_filter) : [];
+
 		$tabs = $private_tab = $default_tab = [];
 		foreach($cfs as $cf)
 		{
-			if (in_array($cf['name'], $exclude))
+			// if excluded or wrong type --> ignore
+			if (in_array($cf['name'], $exclude) ||
+				$type_filter && $cf['type2'] && !array_intersect($cf['type2'], $type_filter))
 			{
 				continue;
 			}
@@ -221,10 +227,10 @@ class Tabbox extends Etemplate\Widget
 		if ($tabs || $default_tab || $private_tab)
 		{
 			// pass given cfTypeFilter attribute via content to all customfields widgets (set in api.cf-tab template)
-			if (($type_filter = self::getElementAttribute($form_name, 'cfTypeFilter') ?? $this->attrs['cfTypeFilter'] ?? null))
+			if ($type_filter)
 			{
 				$content = self::$request->content;
-				$content['cfTypeFilter'] = self::expand_name($type_filter, 0, 0, 0, 0, $content);
+				$content['cfTypeFilter'] = implode(',', $type_filter);
 				self::$request->content = $content;
 			}
 			// pass cfExclude attribute via content to all customfields widgets (set in api.cf-tab template)
