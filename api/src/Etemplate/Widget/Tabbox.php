@@ -33,6 +33,7 @@ use EGroupware\Api;
  * - cfTypeFilter: optional type-filter for automatic created custom-fields tabs
  * - cfPrivateTab: true: create an extra tab for private custom-fields, false (default): show private ones together with non-private ones
  * - cfPrepend: value for prepend tab-attribute for dynamic generated custom-field tabs, default "history"
+ * - cfExclude: custom fields to exclude, comma-separated, to list fields added e.g. manually to the template
  */
 class Tabbox extends Etemplate\Widget
 {
@@ -161,9 +162,16 @@ class Tabbox extends Etemplate\Widget
 		// check if template still contains a legacy customfield tab
 		$have_legacy_cf_tab = $this->haveLegacyCfTab();
 
+		$exclude = self::getElementAttribute($form_name, 'cfExclude') ?? $this->attrs['cfExclude'] ?? null;
+		$exclude = $exclude ? explode(',', $exclude) : [];
+
 		$tabs = $private_tab = $default_tab = [];
 		foreach($cfs as $cf)
 		{
+			if (in_array($cf['name'], $exclude))
+			{
+				continue;
+			}
 			if (!empty($cf['tab']))
 			{
 				$tab = $tabs[$cf['tab']]['id'] ?? 'cf-tab'.(1+count($tabs));
@@ -213,6 +221,13 @@ class Tabbox extends Etemplate\Widget
 			{
 				$content = self::$request->content;
 				$content['cfTypeFilter'] = self::expand_name($type_filter, 0, 0, 0, 0, $content);
+				self::$request->content = $content;
+			}
+			// pass cfExclude attribute via content to all customfields widgets (set in api.cf-tab template)
+			if ($exclude)
+			{
+				$content = self::$request->content;
+				$content['cfExclude'] = implode(',', $exclude);
 				self::$request->content = $content;
 			}
 

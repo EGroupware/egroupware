@@ -42,6 +42,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			'description': 'Auto filled',
 			'type': 'any'
 		},
+		exclude: {
+			name: 'Fields to exclude',
+			description: 'comma-separated list of fields to exclude',
+			type: 'string',
+			default: undefined,
+		},
 		'value': {
 			'name': 'Custom fields',
 			'description': 'Auto filled',
@@ -183,12 +189,14 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				this.options.tab = Et2Tabs.getTabPanel(this, true);
 			}
 		}
+		const exclude : Array<string> = this.options.exclude ? this.options.exclude.split(',') : [];
 		// filter fields additionally by tab attribute
 		if (typeof this.options.fields === "undefined" || !Object.keys(this.options.fields).length)
 		{
 			this.options.fields = {};
 			for(let field_name in this.options.customfields)
 			{
+				if (exclude.indexOf(field_name) >= 0) continue;
 				if (this.options.customfields[field_name].tab === this.options.tab)
 				{
 					this.options.fields[field_name] = true;
@@ -210,7 +218,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			for(let field_name in this.options.customfields)
 			{
-				if (default_tab ? this.options.customfields[field_name].tab : this.options.customfields[field_name].tab !== this.options.tab)
+				if (exclude.indexOf(field_name) >= 0)
+				{
+					this.options.fields[field_name] = false;
+				}
+				else if (default_tab ? this.options.customfields[field_name].tab : this.options.customfields[field_name].tab !== this.options.tab)
 				{
 					this.options.fields[field_name] = false;
 				}
