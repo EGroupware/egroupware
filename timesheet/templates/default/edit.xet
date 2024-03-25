@@ -75,11 +75,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<et2-box  width="100%" overflow="auto">
-			<customfields class="et2_fullWidth"/>
-		</et2-box>
-	</template>
 	<template id="timesheet.edit.history" template="" lang="" group="0" version="1.7.001">
 		<historylog id="history"/>
 	</template>
@@ -152,7 +147,6 @@
 							<tab id="notes" label="Description"/>
 							<tab id="general" label="Details"/>
 							<tab id="links" label="Links"/>
-							<tab id="customfields" label="Custom Fields"/>
 							<tab id="history" label="History"/>
 							<tab id="events" label="Events"/>
 						</tabs>
@@ -160,7 +154,6 @@
 							<template id="timesheet.edit.notes"/>
 							<template id="timesheet.edit.general"/>
 							<template id="timesheet.edit.links"/>
-							<template id="timesheet.edit.customfields"/>
 							<template id="timesheet.edit.history"/>
 							<template id="timesheet.edit.events"/>
 						</tabpanels>

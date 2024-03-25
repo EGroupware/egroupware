@@ -64,9 +64,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
-		<customfields type_filter="@info_type"/>
-	</template>
 	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
 		<historylog id="history" width="100%"/>
 	</template>
@@ -171,13 +168,12 @@
                     </et2-hbox>
 				</row>
 				<row>
-					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="350px">
+					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="350px" cfTypeFilter="@info_type">
                         <tabs>
                             <tab id="description" label="Description" statustext="longer textual description"/>
                             <tab id="details" label="Details" statustext="Location, priority , ..."/>
                             <tab id="links" label="Links" statustext="Links of this entry"/>
                             <tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
-                            <tab id="customfields" label="Customfields" statustext="Custom fields"/>
                             <tab id="history" label="History" statustext="Change history"/>
                         </tabs>
                         <tabpanels>
@@ -185,7 +181,6 @@
                             <template id="infolog.edit.details"/>
                             <template id="infolog.edit.links"/>
                             <template id="infolog.edit.project"/>
-                            <template id="infolog.edit.customfields"/>
                             <template id="infolog.edit.history"/>
                         </tabpanels>
                     </et2-tabbox>

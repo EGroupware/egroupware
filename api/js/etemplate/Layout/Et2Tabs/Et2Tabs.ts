@@ -186,8 +186,20 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			{
 				let tab = this.extraTabs[i];
 				let tab_id = tab.id || tab.template;
-				let tab_options = {id: tab_id, template: tab.template, url: tab.url, content: tab.content};
-				tabData[tab.prepend ? 'unshift' : 'push'].call(tabData, {
+				let tab_options = {id: tab_id, template: tab.template, url: tab.url, content: tab.content, title: tab.statustext};
+				let pos = tabData.length;
+				if (typeof tab.prepend === "string")
+				{
+					if ((pos = tabData.findIndex(t => t.id === tab.prepend)) === -1)
+					{
+						pos = tabData.length;
+					}
+				}
+				else if (tab.prepend)
+				{
+					pos = 0;
+				}
+				tabData.splice(pos, 0, {
 					"id": tab_id,
 					"label": this.egw().lang(tab.label),
 					"widget": null,
@@ -543,10 +555,10 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	 * get tab panel-name or label the given widget is in
 	 *
 	 * @param widget
-	 * @param label true: return label, otherwise return panel-name
+	 * @param label true: return label, otherwise return panel-name / id
 	 * @return string panel-name or undefined
 	 */
-	static getTabPanel(widget, label)
+	static getTabPanel(widget, label? : boolean) : string|undefined
 	{
 		let tab = widget;
 		while(tab._parent && tab._parent.nodeName !== 'ET2-TABBOX')

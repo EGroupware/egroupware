@@ -2283,8 +2283,6 @@ class addressbook_ui extends addressbook_bo
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
 			$content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $content['cat_id_tree'] : $content['cat_id'];
-			if ($this->config['private_cf_tab']) $content = (array)$content['private_cfs'] + $content;
-			unset($content['private_cfs']);
 
 			switch($button)
 			{
@@ -2654,16 +2652,6 @@ class addressbook_ui extends addressbook_bo
 
 		// Avoid ID conflict with tree & selectboxes
 		$content['cat_id_tree'] = $content['cat_id'];
-
-		// Avoid setting conflicts with private custom fields
-		$content['private_cfs'] = array();
-		foreach(Api\Storage\Customfields::get('addressbook', true) as $name => $cf)
-		{
-			if ($this->config['private_cf_tab'] && $cf['private'] && isset($content['#'.$name]))
-			{
-				$content['private_cfs']['#'.$name] = $content['#'.$name];
-			}
-		}
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
@@ -3234,8 +3222,6 @@ class addressbook_ui extends addressbook_bo
 
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys['tabs']['custom'] = !$this->customfields;
-		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
@@ -3385,10 +3371,6 @@ class addressbook_ui extends addressbook_bo
 			}
 			else
 			{
-				if($this->config['private_cf_tab'])
-				{
-					$_content = array_merge($_content, $_content['private_cfs']);
-				}
 				$query['advanced_search'] = array_intersect_key(
 					$_content,
 					array_flip(array_merge($this->get_contact_columns(), array('operator', 'meth_select')))
@@ -3466,15 +3448,6 @@ class addressbook_ui extends addressbook_bo
 				}
 				// Make them not required, otherwise you can't search
 				$this->tmpl->setElementAttribute('#' . $name, 'required', FALSE);
-				if($this->config['private_cf_tab'] == 'True' && $data['private'])
-				{
-					if(isset($content['#' . $name]))
-					{
-						$content['private_cfs']['#' . $name] = $content['#' . $name];
-					}
-					// Private CF tab results in a different ID, turn required off there too
-					$this->tmpl->setElementAttribute('private_cfs[#' . $name . ']', 'required', FALSE);
-				}
 			}
 		}
 		// configure edit template as search dialog
@@ -3485,8 +3458,6 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['button'] = false;
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys['tabs']['custom'] = !$this->customfields;
-		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['links'] = true;
 		$readonlys['tabs']['distribution_list'] = true;
 		$readonlys['tabs']['history'] = true;

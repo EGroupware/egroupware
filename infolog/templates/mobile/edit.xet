@@ -56,9 +56,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
-		<customfields type_filter="@info_type"/>
-	</template>
 	<template id="infolog.edit.details" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
@@ -185,13 +182,12 @@
 					<et2-select-percent  span="4" statustext="Percent completed" id="info_percent" onchange="app.infolog.statusChanged"></et2-select-percent>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox id="tabs" span="all" cfTypeFilter="@info_type">
                         <tabs>
                             <tab id="description" label="Description" statustext="longer textual description"/>
                             <tab id="details" label="Details" statustext="Location, priority , ..."/>
                             <tab id="links" label="Links" statustext="Links of this entry"/>
                             <tab id="project" label="Projectmanager" statustext="Project settings: price, times"/>
-                            <tab id="customfields" label="Customfields" statustext="Custom fields"/>
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
@@ -199,7 +195,6 @@
                             <template id="infolog.edit.details"/>
                             <template id="infolog.edit.links"/>
                             <template id="infolog.edit.project"/>
-                            <template id="infolog.edit.customfields"/>
                             <template id="infolog.edit.ownership"/>
                         </tabpanels>
                     </et2-tabbox>

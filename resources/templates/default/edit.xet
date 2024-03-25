@@ -101,21 +101,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit_tabs.custom" template="" lang="" group="0" version="">
-		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row class="th" height="20">
-					<et2-description  value="Custom fields"></et2-description>
-				</row>
-				<row valign="top">
-					<customfields type_filter="@cat_id"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="resources.edit_tabs.history" template="" lang="" group="0" version="">
 		<historylog id="history" width="100%"/>
 	</template>
@@ -156,19 +141,17 @@
 					<et2-description></et2-description>
 				</row>
 				<row>
-					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="250">
+					<et2-tabbox  id="tabs" span="all" width="100%" tabHeight="250" cfTypeFilter="@cat_id">
 						<tabs>
 							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
 							<tab id="general" label="Details" statustext="General informations about resource"/>
 							<tab id="links" label="Links" statustext="Web-Page of resource"/>
-							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
 							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="resources.edit_tabs.page"/>
 							<template id="resources.edit_tabs.general"/>
 							<template id="resources.edit_tabs.links"/>
-							<template id="resources.edit_tabs.custom"/>
 							<template id="resources.edit_tabs.history"/>
 						</tabpanels>
 					</et2-tabbox>

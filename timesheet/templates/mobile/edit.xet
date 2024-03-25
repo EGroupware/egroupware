@@ -61,9 +61,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit.customfields" template="" lang="" group="0" version="1.5.001">
-		<customfields/>
-	</template>
 	<template id="timesheet.edit.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
 			<columns>
@@ -141,14 +138,12 @@
                             <tab id="notes" label="Description"/>
                             <tab id="general" label="Details"/>
                             <tab id="links" label="Links"/>
-                            <tab id="customfields" label="Custom Fields"/>
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels class="dialog-main-timeframe">
                             <template id="timesheet.edit.notes"/>
                             <template id="timesheet.edit.general"/>
                             <template id="timesheet.edit.links"/>
-                            <template id="timesheet.edit.customfields"/>
                             <template id="timesheet.edit.ownership"/>
                         </tabpanels>
                     </et2-tabbox>

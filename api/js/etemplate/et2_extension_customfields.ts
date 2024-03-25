@@ -171,9 +171,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 
 		// tab === "panel" --> use label of tab panel
+		const default_tab = Et2Tabs.getTabPanel(this)?.match(/^cf-default(-(non-)?private)?$/);
 		if (this.options.tab === 'panel')
 		{
-			this.options.tab = Et2Tabs.getTabPanel(this, true);
+			if (default_tab)
+			{
+				this.options.tab = null;
+			}
+			else
+			{
+				this.options.tab = Et2Tabs.getTabPanel(this, true);
+			}
 		}
 		// filter fields additionally by tab attribute
 		if (typeof this.options.fields === "undefined" || !Object.keys(this.options.fields).length)
@@ -185,17 +193,39 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				{
 					this.options.fields[field_name] = true;
 				}
+				else if (default_tab)
+				{
+					if (this.options.customfields[field_name].private.length)	// private cf
+					{
+						this.options.fields[field_name] = default_tab[1] !== '-non-private';
+					}
+					else	// non-private cf
+					{
+						this.options.fields[field_name] = default_tab[1] !== '-private';
+					}
+				}
 			}
 		}
 		else
 		{
 			for(let field_name in this.options.customfields)
 			{
-				if (this.options.customfields[field_name].tab !== this.options.tab)
+				if (default_tab ? this.options.customfields[field_name].tab : this.options.customfields[field_name].tab !== this.options.tab)
 				{
 					this.options.fields[field_name] = false;
 				}
-				else if (this.options.tab)
+				else if (default_tab)
+				{
+					if (this.options.customfields[field_name].private.length)	// private cf
+					{
+						this.options.fields[field_name] = default_tab[1] !== '-non-private';
+					}
+					else	// non-private cf
+					{
+						this.options.fields[field_name] = default_tab[1] !== '-private';
+					}
+				}
+				else if (this.options.customfields[field_name].tab === this.options.tab)
 				{
 					this.options.fields[field_name] = true;
 				}
@@ -326,6 +356,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					// Label in first column, widget in 2nd
 					const label = this.options.label || field.label || '';
 					jQuery(document.createElement("td"))
+						.attr('colspan', (attrs.type || field.type) === 'label' ? 2 : 1)
 						.prependTo(row);
 					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
 				}

@@ -144,18 +144,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.4.001">
-		<grid width="100%" overflow="auto">
-			<columns>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<customfields/>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%">
 			<columns>
@@ -229,7 +217,6 @@
 							<tab id="description" label="Description" statustext="Full description"/>
 							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
 							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
-							<tab id="custom" label="Custom" statustext="Custom fields"/>
 							<tab id="links" label="Links" statustext="Links, Attachments"/>
 							<tab id="history" label="History" statustext="Change history"/>
 						</tabs>
@@ -237,7 +224,6 @@
 							<template id="calendar.edit.description"/>
 							<template id="calendar.edit.participants"/>
 							<template id="calendar.edit.recurrence"/>
-							<template id="calendar.edit.custom"/>
 							<template id="calendar.edit.links"/>
 							<template id="calendar.edit.history"/>
 						</tabpanels>
