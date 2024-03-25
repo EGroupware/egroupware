@@ -158,6 +158,10 @@ class Tabbox extends Etemplate\Widget
 		}
 
 		$prepend = $this->attrs['cfPrepend'] ?? 'history';
+		if (in_array($prepend, ['true', '1', 'false', '0', '']))
+		{
+			$prepend = in_array($prepend, ['true', '1']);
+		}
 
 		// check if template still contains a legacy customfield tab
 		$have_legacy_cf_tab = $this->haveLegacyCfTab();
