@@ -258,6 +258,7 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 		{
 			this.value = _value;
 		}
+		this._valueUID = this.egw().uid();
 		this.requestUpdate("value");
 	}
 
@@ -1144,9 +1145,12 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	handleTagRemove(event : SlRemoveEvent, value : string)
 	{
+		event.stopPropagation();
+
 		// Find the tag value and remove it from current value
 		const index = this.value.indexOf(value);
 		this.value.splice(index, 1);
+		this._valueUID = this.egw().uid();
 		this.requestUpdate("value");
 		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
