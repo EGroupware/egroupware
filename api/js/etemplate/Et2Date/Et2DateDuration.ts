@@ -539,6 +539,21 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 		}
 	}
 
+	handleInputChange(event)
+	{
+		// Rather than error, roll over when possible
+		const changed = event.target;
+		if(typeof changed.max == "number" && parseInt(changed.value) >= changed.max)
+		{
+			const next = changed.previousElementSibling;
+			if(next)
+			{
+				next.value = next.valueAsNumber + Math.floor(changed.valueAsNumber / changed.max);
+				changed.value = changed.valueAsNumber % changed.max;
+			}
+		}
+	}
+
 	/**
 	 * Render the needed number inputs according to selectUnit & displayFormat properties
 	 *
@@ -593,7 +608,9 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
                                 exportparts="scroll:scroll,scrollbutton:scrollbutton"
                                 name=${input.name}
                                 min=${input.min} max=${input.max} precision=${input.precision} title=${input.title}
-                                value=${input.value}></et2-number>`
+                                value=${input.value}
+                                @sl-change=${this.handleInputChange}
+                    ></et2-number>`
         )}
 		`;
 	}
