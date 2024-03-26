@@ -120,7 +120,12 @@ class pixelegg_framework extends Api\Framework\Ajax
 				background-image: url($header);
 			}
 		";
-		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'];
+		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
+		$ret['app_css'] .= "
+			:root, :host, body {
+				font-size: {$textsize}px;
+			}
+		";
 		if (!empty($textsize) && is_numeric($textsize) && $textsize != '12')
 		{
 			$iconSize = $textsize+2;
