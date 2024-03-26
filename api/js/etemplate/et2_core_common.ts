@@ -193,6 +193,27 @@ export function et2_checkType(_val, _type, _attr, _widget)
 	// parseInt(_val) to the value itself.
 	if (_type == "integer")
 	{
+		const unit_reg_exp = /^(\d+)([kmg]{0,1}b?)$/i;
+		// allow to use b, k, kb, m, mb, g or gb postfix
+		if (typeof _val === "string" && _val.match(unit_reg_exp))
+		{
+			const matches = _val.match(unit_reg_exp);
+			switch(matches[2][0].toLowerCase())
+			{
+				case 'b':
+					_val = parseInt(matches[1]);
+					break;
+				case 'k':
+					_val = parseInt(matches[1])*1024;
+					break;
+				case 'm':
+					_val = parseInt(matches[1])*1024*1024;
+					break;
+				case 'g':
+					_val = parseInt(matches[1])*1024*1024*1024;
+					break;
+			}
+		}
 		if (parseInt(_val) == _val)
 		{
 			return parseInt(_val);

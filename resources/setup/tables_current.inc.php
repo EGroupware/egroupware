@@ -43,7 +43,7 @@ $phpgw_baseline = array(
 	'egw_resources_extra' => array(
 		'fd' => array(
 			'extra_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'extra_name' => array('type' => 'varchar','meta' => 'cfname','precision' => '40','nullable' => False),
+			'extra_name' => array('type' => 'varchar','meta' => 'cfname','precision' => '64','nullable' => False),
 			'extra_owner' => array('type' => 'int','meta' => 'account','precision' => '4','nullable' => False,'default' => '-1'),
 			'extra_value' => array('type' => 'varchar','meta' => 'cfvalue','precision' => '16384','nullable' => False,'default' => '')
 		),
