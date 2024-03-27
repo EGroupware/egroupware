@@ -149,7 +149,6 @@ import './et2_widget_script';
 import './et2_widget_countdown';
 import './et2_extension_nextmatch';
 import './et2_extension_customfields';
-import './vfsSelectUI';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
