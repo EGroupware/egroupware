@@ -244,6 +244,7 @@ connection is not secure! everyone can read eg. your credentials.	admin	de	Die V
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain<br>(Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere EGw-Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
+copy of	admin	de	Kopie von
 could not append message:	admin	de	Diese E-Mail lässt sich nicht anzeigen
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12-Datei extrahieren. Entweder ist die p12-Datei kaputt oder das Passwort ist falsch!

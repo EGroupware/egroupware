@@ -459,7 +459,6 @@ class admin_customfields
 		$readonlys = array();
 
 		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
-		$content['cf_order'] = (count($this->fields)+1) * 10;
 		$content['use_private'] = $this->use_private;
 		$content['use_readonly'] = $this->use_readonly;
 
@@ -471,17 +470,31 @@ class admin_customfields
 			{
 				$content['cf_private'] = explode(',',$content['cf_private']);
 			}
-			if($content['cf_name'])
+			if($content['cf_readonly'])
 			{
-				$readonlys['cf_name'] = true;
-			}
-			if ($content['cf_type'] === 'serial')
-			{
-				$readonlys['cf_values'] = true; // only allow to set start-value, but not change it after
+				$content['cf_readonly'] = explode(',',$content['cf_readonly']);
 			}
 			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]) || $content['cf_type'] === 'filemanager')
 			{
 				$content['cf_values'] = json_decode($content['cf_values'], true);
+			}
+			if ($_GET['action'] ?? null === 'copy')
+			{
+				unset($content['cf_id'], $cf_id);
+				$content['cf_name'] = lang('Copy of').' '.$content['cf_name'];
+				$content['cf_order'] += 5;  // behind copied field
+				$readonlys['button[delete]'] = true;
+			}
+			else
+			{
+				if($content['cf_name'])
+				{
+					$readonlys['cf_name'] = true;
+				}
+				if ($content['cf_type'] === 'serial')
+				{
+					$readonlys['cf_values'] = true; // only allow to set start-value, but not change it after
+				}
 			}
 		}
 		else
@@ -571,6 +584,13 @@ class admin_customfields
 				'popup' => '500x380',
 				'group' => $group=1,
 				'disableClass' => 'th',
+			),
+			'copy' => array(
+				'caption' => 'Copy',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction='.$edit.'&cf_id=$id&use_private='.$this->use_private.'&action=copy',
+				'popup' => '500x380',
+				'group' => $group,
 			),
 			'add' => array(
 				'caption' => 'Add',

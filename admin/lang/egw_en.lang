@@ -244,6 +244,7 @@ connection is not secure! everyone can read eg. your credentials.	admin	en	Conne
 continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
+copy of	admin	en	Copy of
 could not append message:	admin	en	Could not append Message:
 could not complete request. reason given: %s	admin	en	Could not complete request. %s
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	en	Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!
