@@ -343,7 +343,7 @@ class Customfields extends Transformer
 			case 'vfs-upload':
 				$widget->attrs['path'] = $field['app'] . ':' .
 					self::expand_name('$cont['.Api\Link::get_registry($field['app'],'view_id').']',0,0,0,0,self::$request->content).
-					':'.$field['label'];
+					':'.(preg_match('/^[a-z_]+:[^:]+:(.+)$/', $field['name'], $matches) ? $matches[1] : $field['name']);
 				break;
 
 			case 'link-to':

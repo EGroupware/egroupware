@@ -880,12 +880,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		attrs.type = 'vfs-upload';
 		delete(attrs.label);
 
-		// fix vfs-upload id="$app:$id:$rest" e.g. "infolog:$cont[info_id]:test.pdf"
-		const vfs_app_id_regexp = /^#([a-z_]+):([@$][^:]+):(.*)$/;
-		if (attrs.id.match(vfs_app_id_regexp))
-		{
-			attrs.id = <string>this.getArrayMgr('content').expandName(attrs.id);
-		}
 		// allow to set/pass further et2_file attributes to the vfs-upload
 		if (field.values && typeof field.values === 'object')
 		{

@@ -39,7 +39,7 @@ class Vfs extends File
 	{
 		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
 		{
-			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont' => self::$request->content));
+			$form_name = self::form_name($cname, $this->id, $expand ?: array('cont' => self::$request->content));
 			if (!empty($this->attrs['path']))
 			{
 				$path = self::expand_name($this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
@@ -286,21 +286,21 @@ class Vfs extends File
 	{
 		$name = $_REQUEST['widget_id'];
 
-		// Find real path
-		if($path[0] != '/')
+		// Find real path, could be "$app:$id:$path"
+		if($path[0] !== '/')
 		{
 			$path = self::get_vfs_path($path);
 		}
 		$filename = $file['name'];
-		if ($path && substr($path,-1) != '/')
+		if ($path && substr($path,-1) !== '/')
 		{
-			// add extension to path
-			$parts = explode('.',$filename);
-			// check if path already contains a valid extension --> dont add an other one
-			$path_parts = explode('.', $path);
-			if (count($path_parts) > 2 && (!($extension = array_pop($path_parts)) || !Api\MimeMagic::ext2mime($extension)) &&
-				($extension = array_pop($parts)) && Api\MimeMagic::ext2mime($extension))       // really an extension --> add it to path
+			$parts = explode('.', $filename);
+			// check if path already contains a valid extension --> don't add another one
+			$path_parts = explode('.', Api\Vfs::basename($path));
+			if ((!($path_ext = array_pop($path_parts)) || Api\MimeMagic::ext2mime($path_ext) === 'application/octet-stream') &&
+				($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])))
 			{
+				// add extension to path
 				$path .= '.'.$extension;
 			}
 			$file['name'] = Api\Vfs::basename($path);

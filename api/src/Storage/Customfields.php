@@ -637,7 +637,9 @@ class Customfields implements \IteratorAggregate
 
 	protected static function handle_file($entry_id, $field, $value)
 	{
-		$path = Api\Etemplate\Widget\Vfs::get_vfs_path($field['app'].":$entry_id:".$field['label']);
+		$path = Api\Etemplate\Widget\Vfs::get_vfs_path($field['app'].':'.$entry_id.':'.
+			(preg_match('/^[a-z_]+:[^:]+:(.+)$/', $field['name'], $matches) ? $matches[1] : $field['name']));
+
 		if($path)
 		{
 			foreach($value as $file)
