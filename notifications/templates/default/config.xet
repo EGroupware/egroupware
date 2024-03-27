@@ -35,7 +35,7 @@
 				</row>
 				<row>
                     <et2-description  value="Mail account to use for notifications"></et2-description>
-                    <et2-select  id="newsettings[async_identity]"></et2-select>
+                    <et2-select  id="newsettings[async_identity]" emptyLable="automatic"></et2-select>
                 </row>
 			</rows>
 		</grid>
