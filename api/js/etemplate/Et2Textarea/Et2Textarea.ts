@@ -72,13 +72,13 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 	connectedCallback()
 	{
 		super.connectedCallback();
-		if(this.__width && this._inputNode)
+		if(this.__width)
 		{
-			this._inputNode.style.width = this.__width;
+			this.style.width = this.__width;
 		}
-		if(this.__height && this._inputNode)
+		if(this.__height)
 		{
-			this._inputNode.style.height = this.__height;
+			this.style.height = this.__height;
 		}
 	}
 
