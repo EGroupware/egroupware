@@ -107,7 +107,6 @@ class admin_hooks
 			if (! $GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 			{
 				$file['Clear cache and register hooks'] = array(
-					'id' => 'admin/clear_cache',
 					'no_lang' => true,
 					'link' => "javascript:app.admin.clear_cache();",
 				 );
