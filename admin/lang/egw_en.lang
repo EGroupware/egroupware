@@ -990,6 +990,7 @@ use pure html compliant code (not fully working yet)	admin	en	Use pure HTML comp
 use save or apply to store the received oauth token!	admin	en	Use save or apply to store the received OAuth token!
 use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via HTTPS)
 use smtp auth	admin	en	Use SMTP authentication
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	en	use the following options:\nnoVfsSelect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	en	Use theme
 use tls authentication	admin	en	Use TLS authentication
 use tls encryption	admin	en	Use TLS encryption

@@ -926,30 +926,34 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			this.rows[attrs.id] = cf[0];
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
 
-			// Add a link to existing VFS file
-			const required = attrs.needed ?? attrs.required;
-			delete attrs.needed;
-			const select_attrs = {
-				...attrs,
-				// Filemanager select
-				...{
-					path: '~',
-					mode: widget.options.multiple ? 'open-multiple' : 'open',
-					method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
-					methodId: attrs.path,
-					buttonLabel: this.egw().lang('Link')
-				},
-				type: 'et2-vfs-select',
-				required: required
+			// should we show the VfsSelect
+			if (!field.values || typeof field.values !== 'object' || !field.values.noVfsSelect)
+			{
+				// Add a link to existing VFS file
+				const required = attrs.needed ?? attrs.required;
+				delete attrs.needed;
+				const select_attrs = {
+					...attrs,
+					// Filemanager select
+					...{
+						path: '~',
+						mode: widget.options.multiple ? 'open-multiple' : 'open',
+						method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
+						methodId: attrs.path,
+						buttonLabel: this.egw().lang('Link')
+					},
+					type: 'et2-vfs-select',
+					required: required
+				}
+				select_attrs.id = attrs.id + '_vfs_select';
+
+				// This controls where the button is placed in the DOM
+				this.rows[select_attrs.id] = cf[0];
+
+				// Do not store in the widgets list, one name for multiple widgets would cause problems
+				widget = <Et2VfsSelectButton>loadWebComponent(select_attrs.type, select_attrs, this);
+				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}
-			select_attrs.id = attrs.id + '_vfs_select';
-
-			// This controls where the button is placed in the DOM
-			this.rows[select_attrs.id] = cf[0];
-
-			// Do not store in the widgets list, one name for multiple widgets would cause problems
-			widget = <Et2VfsSelectButton>loadWebComponent(select_attrs.type, select_attrs, this);
-			jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 		}
 		return false;
 	}

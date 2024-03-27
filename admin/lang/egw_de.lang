@@ -990,6 +990,7 @@ use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML 
 use save or apply to store the received oauth token!	admin	de	Benutze Speicher oder Übernehmen um das erhaltene OAuth-Token zu speichern!
 use secure cookies (transmitted only via https)	admin	de	Benutze sichere Cookies (werden nur per HTTPS übertragen)
 use smtp auth	admin	de	SMTP Authentifizierung benutzen
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	de	Benutzen Sie folgende Optionen:\nnoVfsSelect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	de	Benutztes Farbschema
 use tls authentication	admin	de	TLS-Authentifizierung benutzen
 use tls encryption	admin	de	TLS-Verschlüsselung benutzen

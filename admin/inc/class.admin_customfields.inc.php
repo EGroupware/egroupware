@@ -89,7 +89,8 @@ class admin_customfields
 		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'button'	=> 'each value is a line like label=[javascript]',
 		'password'  => 'set length=# for minimum password length, strength=# for password strength',
-		'serial'    => 'you can set an initial value, which gets incremented every time a new serial get generated'
+		'serial'    => 'you can set an initial value, which gets incremented every time a new serial get generated',
+		'filemanager' => "use the following options:\nnoVfsSelect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M",
 	);
 
 	/**
@@ -126,6 +127,10 @@ class admin_customfields
 			$this->content_types = Api\Config::get_content_types($this->appname);
 		}
 		$this->so = new Api\Storage\Base('api','egw_customfields',null,'',true);
+
+		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
+		Framework::includeCSS('admin','app');
+		Api\Translation::add_app('admin');
 	}
 
 	/**
@@ -280,10 +285,6 @@ class admin_customfields
 		$readonlys = null;
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
-		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
-		Framework::includeCSS('admin','app');
-		Api\Translation::add_app('admin');
-
 		// Set app to admin to make sure actions are correctly loaded into admin
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
@@ -384,7 +385,7 @@ class admin_customfields
 						{
 							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
 						}
-						elseif (isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+						elseif (isset($GLOBALS['egw_info']['apps'][$content['cf_type']]) && $content['cf_type'] !== 'filemanager')
 						{
 							if (!empty($content['cf_values']) && ($content['cf_values'][0] !== '{' || ($values=json_decode($content['cf_values'])) === null))
 							{
@@ -478,7 +479,7 @@ class admin_customfields
 			{
 				$readonlys['cf_values'] = true; // only allow to set start-value, but not change it after
 			}
-			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]) || $content['cf_type'] === 'filemanager')
 			{
 				$content['cf_values'] = json_decode($content['cf_values'], true);
 			}
