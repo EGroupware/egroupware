@@ -71,6 +71,7 @@ class Tabbox extends Etemplate\Widget
 			foreach($tabs as &$tab)
 			{
 				$template= clone Template::instance($tab['template']);
+				if (isset($tab['content'])) $template->attrs['content'] = $tab['content'];
 				$this->children[1]->children[] = $template;
 				$tab['url'] = Template::rel2url($template->rel_path);
 				//$this->tabs[] = $tab;
