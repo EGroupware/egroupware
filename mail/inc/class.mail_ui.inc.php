@@ -4354,7 +4354,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
 					if ($fS['unseen'])
 					{
-						$oA[$_folderName]['desc'] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
+						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
+						$oA[$_folderName]['unseenCount'] = $fS['unseen'];
 
 					}
 					else
