@@ -797,6 +797,11 @@ et2-dialog et2-button {
     max-width: 100ex;
 }
 
+td.et2_customfield_header et2-label {
+    font-size: 120%;
+    font-weight: bold;
+}
+
 /* Custom field list inside nextmatch rows gets an icon for each row */
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
     background-image: url('images/dialog_info.svg');

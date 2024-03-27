@@ -834,6 +834,7 @@ select where you want to store/retrieve user accounts	admin	en	Select where you 
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right).
 selectbox	admin	en	Select box
 send using this email-address	admin	en	Send using this email address
+serial number	admin	en	Serial number
 server %1 has been updated	admin	en	Server %1 has been updated
 server list	admin	en	Server list
 server password	admin	en	Server password
@@ -1051,6 +1052,7 @@ yes, use credentials of current user or if given credentials below	admin	en	Yes,
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	en	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
+you can set an initial value, which gets incremented every time a new serial get generated	admin	en	you can set an initial value, which gets incremented every time a new serial get generated
 you can use wizard to fix account settings or delete account.	admin	en	You can use wizard to fix account settings or delete account.
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
 you have no email address for your user set !!!	admin	en	You have no email address set for your user!

@@ -367,9 +367,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				{
 					// Label in first column, widget in 2nd
 					const label = this.options.label || field.label || '';
-					jQuery(document.createElement("td"))
-						.attr('colspan', (attrs.type || field.type) === 'label' ? 2 : 1)
-						.prependTo(row);
+					const label_td = jQuery(document.createElement("td")).prependTo(row);
+					if (['label','header'].indexOf(attrs.type || field.type) !== -1)
+					{
+						label_td.attr('colspan', 2).addClass('et2_customfield_'+(attrs.type || field.type));
+					}
 					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
 				}
 
@@ -682,6 +684,15 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				}
 			}
 		}
+		return true;
+	}
+
+	_setup_serial(field_name, field, attrs)
+	{
+		delete (attrs.label);
+		field.type = "number"
+		attrs.precision = 0;
+		attrs.readonly = true;
 		return true;
 	}
 

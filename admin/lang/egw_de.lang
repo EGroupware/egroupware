@@ -834,6 +834,7 @@ select where you want to store/retrieve user accounts	admin	de	Wo möchten Sie d
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	de	An welcher Position soll die Anwendung in der Navigationsleiste erscheinen, von ganz unten (links) bis ganz oben (rechts)
 selectbox	admin	de	Auswahlfeld
 send using this email-address	admin	de	Zum Versenden wird diese E-Mail-Adresse benutzt
+serial number	admin	de	Fortlaufende Nummer
 server %1 has been updated	admin	de	Server %1 wurde aktualisiert
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
@@ -1051,6 +1052,7 @@ yes, use credentials of current user or if given credentials below	admin	de	Ja, 
 yes, use webspellchecker	admin	de	Ja, benutze nur den WebSpellChecker (online)
 you can not use --dry-run together with --skip-checks!	admin	de	Die Verwendung von --dry-run und --skip-checks zusammen ist nicht möglich!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	de	Sie können die Passwort-Verschlüsselung nur ändern, wenn sie ein zufälliges Passwort setzen oder bisher Passworte im Klartext gespeichert haben!
+you can set an initial value, which gets incremented every time a new serial get generated	admin	de	Sie können einen initialen Wert setzen, dieser wird hochgezählt um  eine neue Nummer zu generieren
 you can use wizard to fix account settings or delete account.	admin	de	Sie können jetzt den Assistenten verwenden um die Konteneinstellungen zu ändern oder das Konto löschen.
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.

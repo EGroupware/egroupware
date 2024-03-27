@@ -38,6 +38,7 @@ class Customfields extends Transformer
 		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
+		'header'   => 'Header',
 		'select'   => 'Selectbox',
 		'ajax_select' => 'Search',
 		'radio'    => 'Radiobutton',
@@ -51,6 +52,7 @@ class Customfields extends Transformer
 		'url-phone'=> 'Phone number',
 		'htmlarea' => 'Formatted Text (HTML)',
 		'link-entry' => 'Select entry',         // should be last type, as the individual apps get added behind
+		'serial'   => 'Serial number',
 	);
 
 	/**
@@ -540,6 +542,20 @@ class Customfields extends Transformer
 					$valid = false;
 				}
 				//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
+			}
+			// serials do NOT return a value, as they are always readonly
+			foreach(array_filter($customfields, static function($field)
+			{
+				return $field['type'] === 'serial';
+			}) as $field)
+			{
+				$valid =& self::get_array($validated, self::$prefix.$field['name'], true);
+				if (empty($valid = self::$request->content[self::$prefix.$field['name']]))
+				{
+					$content = self::$request->content;
+					$valid = $content[self::$prefix.$field['name']] = Api\Storage\Customfields::getSerial($field['id']);
+					self::$request->content = $content;
+				}
 			}
 		}
 		elseif ($this->type == 'customfields-types')

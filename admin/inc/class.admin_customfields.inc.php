@@ -88,7 +88,8 @@ class admin_customfields
 		'select'	=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'button'	=> 'each value is a line like label=[javascript]',
-		'password'=> 'set length=# for minimum password length, strength=# for password strength'
+		'password'  => 'set length=# for minimum password length, strength=# for password strength',
+		'serial'    => 'you can set an initial value, which gets incremented every time a new serial get generated'
 	);
 
 	/**
@@ -472,6 +473,10 @@ class admin_customfields
 			if($content['cf_name'])
 			{
 				$readonlys['cf_name'] = true;
+			}
+			if ($content['cf_type'] === 'serial')
+			{
+				$readonlys['cf_values'] = true; // only allow to set start-value, but not change it after
 			}
 			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
 			{

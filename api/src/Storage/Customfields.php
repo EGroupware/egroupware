@@ -649,6 +649,38 @@ class Customfields implements \IteratorAggregate
 			}
 		}
 	}
+
+	/**
+	 * Generate a new serial-number from the database
+	 *
+	 * @param int $id cf_id for custom-field
+	 * @return int the new serial number
+	 */
+	public static function getSerial(int $id) : int
+	{
+		self::$db->transaction_begin();
+		foreach(self::$db->select(self::TABLE, 'cf_values', $where=[
+			'cf_id' => $id,
+			'cf_type' => 'serial',
+		], __LINE__, __FILE__, false, 'FOR UPDATE') as $row)
+		{
+			if (empty($row['cf_values']) || !is_numeric($row['cf_values']))
+			{
+				$row['cf_values'] = 1;
+			}
+			else
+			{
+				$row['cf_values'] += 1;
+			}
+			break;
+		}
+		if (isset($row) && self::$db->update(self::TABLE, $row, $where, __LINE__, __FILE__) && self::$db->transaction_commit())
+		{
+			return $row['cf_values'];
+		}
+		self::$db->transaction_abort();
+		throw new Api\Db\Exception("Could not generate serial number for custom-field #$id!");
+	}
 }
 
 Customfields::init_static();
