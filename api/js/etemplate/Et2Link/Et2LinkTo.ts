@@ -159,7 +159,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
                     method=${method || nothing}
                     method-id=${method_id || nothing}
                     multiple
-                    title=${this.egw().lang("link")}
+                    title=${this.egw().lang("select file(s) from vfs")}
                     .buttonLabel=${this.egw().lang('Link')}
                     .onchange=${this.handleVfsSelected}
             >
@@ -168,8 +168,8 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
                 <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
                             label=${this.egw().lang("move")}></et2-button>
             </et2-vfs-select>
-            <et2-vfs-select image="linkpaste" aria-label=${this.egw().lang("paste files")} noSubmit="true"
-                            title=${this.egw().lang("paste files")}
+            <et2-vfs-select image="linkpaste" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
+                            title=${this.egw().lang("Clipboard contents")}
                             ?readonly=${this.readonly}
                             ?disabled=${!pasteEnabled}
                             method=${method || nothing}
@@ -186,9 +186,18 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
                             .onchange=${this.handleVfsSelected}
             >
                 <et2-link-paste-dialog open
-                                       title=${this.egw().lang("paste")}
-                                       .buttonLabel=${this.egw().lang("paste")}
-                ></et2-link-paste-dialog>
+                                       title=${this.egw().lang("Clipboard contents")}
+                                       .buttonLabel=${this.egw().lang("link")}
+                >
+                    <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
+                                label=${this.egw().lang("copy")}
+                                title=${this.egw().lang("Copy selected files")}
+                    ></et2-button>
+                    <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
+                                label=${this.egw().lang("move")}
+                                title=${this.egw().lang("Move selected files")}
+                    ></et2-button>
+                </et2-link-paste-dialog>
             </et2-vfs-select>
 		`;
 	}

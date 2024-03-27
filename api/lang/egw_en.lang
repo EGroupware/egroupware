@@ -300,6 +300,7 @@ click to open colorpicker	common	en	Click to open colourpicker
 click to order after that criteria	common	en	Order after criteria
 clickable path	common	en	Clickable path
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	en	Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.
+clipboard contents	common	en	Clipboard contents
 close	common	en	Close
 close sidebox	common	en	Close side menu
 closes the window without saving the changes	common	en	Close without saving
