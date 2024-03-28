@@ -107,7 +107,6 @@ import './Et2Textbox/Et2Searchbox';
 import "./Et2Tree/Et2Tree";
 import "./Et2Tree/Et2TreeDropdown";
 import "./Et2Tree/Et2TreeDropdownCategory";
-import "./Et2Tree/Et2MultiselectTree"
 
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
