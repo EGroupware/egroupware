@@ -1064,11 +1064,9 @@ abstract class Framework extends Framework\Extra
 			));
 		}
 		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
-		self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+		self::includeJS('/api/js/dhtmlxMenu/codebase/dhtmlxcommon.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
-		self::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
-		self::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$map = null;

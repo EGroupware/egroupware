@@ -130,7 +130,6 @@ import './et2_widget_html';
 import './et2_widget_htmlarea';
 import './et2_widget_taglist';
 import './et2_widget_toolbar';
-import './et2_widget_tree';
 import './et2_widget_historylog';
 import './et2_widget_hrule';
 import './et2_widget_iframe';
