@@ -407,7 +407,7 @@ class Customfields implements \IteratorAggregate
 			$cfs[$cf['name']] = $cf;
 		}
 
-		if($old['order'] != $cf['order'] || $cf['order'] % 10 !== 0)
+		if($old['order'] != $cf['order'] || (int)$cf['order'] % 10 !== 0)
 		{
 			$cfs[$cf['name']]['order'] = $cf['order'];
 			uasort($cfs, function($a1, $a2){
@@ -651,12 +651,17 @@ class Customfields implements \IteratorAggregate
 	}
 
 	/**
+	 * Regular expression for serial value/format allowing e.g. "RE2024-0000" for using a prefix of "RE2024-" and a 4-digit number
+	 */
+	const SERIAL_PREG = '/\d+$/';
+
+	/**
 	 * Generate a new serial-number from the database
 	 *
 	 * @param int $id cf_id for custom-field
-	 * @return int the new serial number
+	 * @return string the new (formatted) serial number
 	 */
-	public static function getSerial(int $id) : int
+	public static function getSerial(int $id) : string
 	{
 		self::$db->transaction_begin();
 		foreach(self::$db->select(self::TABLE, 'cf_values', $where=[
@@ -664,13 +669,14 @@ class Customfields implements \IteratorAggregate
 			'cf_type' => 'serial',
 		], __LINE__, __FILE__, false, 'FOR UPDATE') as $row)
 		{
-			if (empty($row['cf_values']) || !is_numeric($row['cf_values']))
+			// we increment the last digit-group
+			if (empty($row['cf_values']) || !preg_match(self::SERIAL_PREG, $row['cf_values'], $matches))
 			{
 				$row['cf_values'] = 1;
 			}
 			else
 			{
-				$row['cf_values'] += 1;
+				$row['cf_values'] = preg_replace(self::SERIAL_PREG, sprintf('%0'.strlen($matches[0]).'d', 1+(int)$matches[0]), $row['cf_values']);
 			}
 			break;
 		}

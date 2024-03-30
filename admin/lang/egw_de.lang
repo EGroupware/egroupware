@@ -571,6 +571,7 @@ interface	admin	de	Schnittstelle
 international use	admin	de	Internationale Benutzung
 invalid argument '%1' !!!	admin	de	Ungültiges Argument "%1"!
 invalid email	admin	de	Ungültige E-Mail-Adresse
+invalid format, must end in a group of digits e.g. %1 or %2	admin	de	Ungültiges Format, muss in einer Gruppe von Zahlen enden z.B. %1 oder %2
 invalid formated date "%1"!	admin	de	Ungültig formatiertes Datum "%1"!
 invalid remote id or name "%1"!	admin	de	Ungültige Remote-ID oder Name "%1"!
 invalid type "%1"!	admin	de	Ungültiger Typ "%1"!

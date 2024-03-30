@@ -690,8 +690,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 	_setup_serial(field_name, field, attrs)
 	{
 		delete (attrs.label);
-		field.type = "number"
-		attrs.precision = 0;
+		field.type = "textbox"
 		attrs.readonly = true;
 		return true;
 	}

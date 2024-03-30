@@ -15,9 +15,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 
 /**
- * Customfields class -  manages customfield definitions in egw_config table
- *
- * The repository name (config_name) is 'customfields'.
+ * Customfields class -  manages custom-field definitions in egw_customfields table through Api\Storage\Customfields class.
  *
  * Applications can have customfields by sub-type by having a template
  * named '<appname>.admin.types'.  See admin.customfields.types as an
@@ -381,7 +379,16 @@ class admin_customfields
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
-						if($content['cf_values'][0] === '@')
+						if ($content['cf_type'] === 'serial')
+						{
+							if (!preg_match(Api\Storage\Customfields::SERIAL_PREG, $content['cf_values']))
+							{
+								Api\Etemplate::set_validation_error('cf_values', lang('Invalid Format, must end in a group of digits e.g. %1 or %2', "'0000'", "'RE2024-0000'"));
+								break;
+							}
+							$values = $content['cf_values'];
+						}
+						elseif($content['cf_values'][0] === '@')
 						{
 							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
 						}
@@ -500,6 +507,7 @@ class admin_customfields
 		else
 		{
 			$readonlys['button[delete]'] = true;
+			$content['cf_order'] = 10*(1+count($this->fields));
 		}
 		if (is_array($content['cf_values']))
 		{
@@ -751,7 +759,7 @@ class admin_customfields
 
 		foreach($rows as &$row)
 		{
-			$row['cf_values'] = json_decode($row['cf_values'], true);
+			$row['cf_values'] = json_decode($row['cf_values'], true) ?? $row['cf_values'];
 			if (is_array($row['cf_values']))
 			{
 				$values = '';
