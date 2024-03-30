@@ -521,12 +521,13 @@ class Sql extends Api\Storage
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !$ignore_acl)
 		{
-			// add read ACL for groupmembers (they have no
-			if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'groupmembers' &&
+			// add read ACL for account_selection "none" or "groupmembers", they have no grant for accounts
+			if (in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], ['none', 'groupmembers']) &&
 				(!isset($filter['owner']) || in_array('0',(array)$filter['owner'])))
 			{
-				$groupmembers = array();
-				foreach($GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $group_id)
+				$groupmembers = array($GLOBALS['egw_info']['user']['account_id']);
+				foreach($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] === 'none' ? [] :
+					$GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'],true) as $group_id)
 				{
 					if (($members = $GLOBALS['egw']->accounts->members($group_id,true)))
 					{

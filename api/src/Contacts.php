@@ -1247,12 +1247,12 @@ class Contacts extends Contacts\Storage
 		}
 		$owner = $contact['owner'];
 
-		// allow the user to edit his own account
-		if (!$owner && $needed == Acl::EDIT && $contact['account_id'] == $user && $this->own_account_acl)
+		// allow the user to read and edit his own account
+		if (!$owner && in_array($needed, [Acl::READ, Acl::EDIT]) && $contact['account_id'] == $user && $this->own_account_acl)
 		{
 			$access = true;
 		}
-		// dont allow to delete own account (as admin handels it too)
+		// don't allow to delete own account (as admin handles it too)
 		elseif (!$owner && $needed == Acl::DELETE && ($deny_account_delete || $contact['account_id'] == $user))
 		{
 			$access = false;
