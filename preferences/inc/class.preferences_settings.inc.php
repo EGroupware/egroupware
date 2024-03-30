@@ -618,6 +618,7 @@ class preferences_settings
 			$tpl->setElementAttribute('tabs', 'extraTabs', array(
 				array(
 					'id'       => 'tab1',
+					'content'  => 'tab1',
 					'template' => 'preferences.settings.tab1',
 					'label'    => 'general settings'
 				)));
