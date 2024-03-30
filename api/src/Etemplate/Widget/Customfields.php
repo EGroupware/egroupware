@@ -259,7 +259,10 @@ class Customfields extends Transformer
 						['download' => $stat['mtime']]
 					);
 				}
-				Select::fix_encoded_options($data['values']);
+				if (is_array($data['values']))
+				{
+					Select::fix_encoded_options($data['values']);
+				}
 			}
 		}
 		if($fields != $customfields)
