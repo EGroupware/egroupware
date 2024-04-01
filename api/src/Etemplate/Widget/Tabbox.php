@@ -30,6 +30,7 @@ use EGroupware\Api;
  *   + id:       id of tab
  *   + content:  optional namespace (content attribute of template)
  *   + statustext: tooltip of label
+ * - cfDisabled: true: disable adding custom-fields e.g. for templates not showing an entry, false (default): add custom-fields automatic
  * - cfTypeFilter: optional type-filter for automatic created custom-fields tabs
  * - cfPrivateTab: true: create an extra tab for private custom-fields, false (default): show private ones together with non-private ones
  * - cfPrepend: value for prepend tab-attribute for dynamic generated custom-field tabs, default "history"
@@ -162,6 +163,11 @@ class Tabbox extends Etemplate\Widget
 		if (in_array($prepend, ['true', '1', 'false', '0', '']))
 		{
 			$prepend = in_array($prepend, ['true', '1']);
+		}
+		// is adding of CFs disabled --> exit
+		if (!empty($this->attrs['cfDisabled']))
+		{
+			return;
 		}
 
 		// check if template still contains a legacy customfield tab
