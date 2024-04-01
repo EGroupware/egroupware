@@ -28,7 +28,7 @@
 				<row class="th">
 					<et2-vbox>
 						<et2-nextmatch-header-filter  id="info_type" noLang="1" emptyLabel="Type"/>
-						<et2-nextmatch-header-filter  align="center" id="info_status" class="selectboxFullWidth" emptyLabel="Status"/>
+						<et2-nextmatch-header-filter  id="info_status" emptyLabel="Status"></et2-nextmatch-header-filter>
 						<nextmatch-sortheader align="right" label="Completed" id="info_percent"/>
 					</et2-vbox>
 					<grid width="100%" spacing="0" padding="0">

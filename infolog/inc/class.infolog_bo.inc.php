@@ -120,11 +120,15 @@ class infolog_bo
 	 */
 	var $user;
 	/**
-	 * History loggin: ''=no, 'history'=history & delete allowed, 'history_admin_delete', 'history_no_delete'
+	 * History logging: ''=no, 'history'=history & delete allowed, 'history_admin_delete', 'history_no_delete'
 	 *
 	 * @var string
 	 */
 	var $history;
+	/**
+	 * @var string "yes": archived entries can not be changed, "but_admins" noone but admins can change archived entries
+	 */
+	var $archived_readonly;
 	/**
 	 * Instance of infolog_tracking, only instaciated if needed!
 	 *
@@ -286,6 +290,18 @@ class infolog_bo
 			}
 			$this->history = $config_data['history'];
 
+			if (($this->archived_readonly = $config_data['archived_readonly'] ?? null))
+			{
+				// add "archive" status to all types
+				foreach($this->status as $type => &$statis)
+				{
+					if ($type !== 'defaults' && !isset($statis['archive']))
+					{
+						$statis['archive'] = 'archive';
+					}
+				}
+			}
+
 			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
 		}
 		// sort types by there translation
@@ -332,7 +348,7 @@ class infolog_bo
 	}
 
 	/**
-	 * check's if user has the requiered rights on entry $info_id
+	 * check's if user has the required rights on entry $info_id
 	 *
 	 * @param int|array $info data or info_id of infolog entry to check
 	 * @param int $required_rights ACL::{READ|EDIT|ADD|DELETE}|infolog_bo::ACL_UNDELETE
@@ -364,10 +380,16 @@ class infolog_bo
 
 		if (!isset($access))
 		{
-			// handle delete for the various history modes
 			if (!is_array($info) && !($info = $this->so->read(array('info_id' => $info_id)))) return false;
 
-			if ($info['info_status'] == 'deleted' &&
+			// handle edit for archived entries
+			if ($info['info_status'] === 'archive' && $this->archived_readonly && $required_rights == ACL::EDIT &&
+				($this->archived_readonly === 'yes' || empty($GLOBALS['egw_info']['users']['apps']['admin'])))
+			{
+				$access = false;
+			}
+			// handle delete for the various history modes
+			elseif ($info['info_status'] === 'deleted' &&
 				($required_rights == Acl::EDIT ||		// no edit rights for deleted entries
 				 $required_rights == Acl::ADD  ||		// no add rights for deleted entries
 				 $required_rights == Acl::DELETE && ($this->history == 'history_no_delete' || // no delete at all!
