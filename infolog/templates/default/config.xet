@@ -29,6 +29,14 @@
                     <et2-description value="History logging and deleting of items"></et2-description>
                     <et2-select id="history"></et2-select>
                 </row>
+                <row>
+                    <et2-description value="Handling of status 'archived'"></et2-description>
+                    <et2-select id="archived_readonly">
+                        <option value="">{No special handling} ({Default})</option>
+                        <option value="yes">Entry can NOT be changed anymore, after status is set</option>
+                        <option value="but_admins">Entry can NOT be changed by anybody, but EGroupware admins</option>
+                    </et2-select>
+                </row>
                 <row class="th">
                     <et2-description value="Other configurations" span="all"></et2-description>
                 </row>
@@ -46,7 +54,7 @@
                 </row>
                 <row>
                     <et2-description value="Prefix for sub-entries (default: Re:)"></et2-description>
-					<et2-textbox  id="sub_prefix" noLang="1"></et2-textbox>
+					<et2-textbox  id="sub_prefix" noLang="1" placeholder="Re:"></et2-textbox>
 				</row>
 				<row>
 					<et2-description  value="Fields to exclude when creating a sub-entry:"></et2-description>
@@ -100,7 +108,7 @@
     <template id="infolog.config" template="" lang="" group="0" version="1.9.001">
         <et2-vbox>
             <et2-description  id="msg" span="all" class="message"></et2-description>
-            <et2-tabbox  id="configuration|notification">
+            <et2-tabbox  id="configuration|notification" cfDisabled="true">
                 <tabs>
                     <tab id="configuration" label="Configuration"/>
                     <tab id="notification" label="Notification"/>

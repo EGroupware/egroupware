@@ -2631,6 +2631,7 @@ class infolog_ui
 				Api\Config::save_value('responsible_edit', $this->bo->responsible_edit, 'infolog');
 				Api\Config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
 				Api\Config::save_value('history', $this->bo->history = $content['history'], 'infolog');
+				Api\Config::save_value('archived_readonly', $this->bo->archived_readonly = $content['archived_readonly'], 'infolog');
 				Api\Config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
 				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 				Api\Config::save_value('allow_past_due_date', $content['allow_past_due_date'], 'infolog');
