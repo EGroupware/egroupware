@@ -384,7 +384,7 @@ class infolog_bo
 
 			// handle edit for archived entries
 			if ($info['info_status'] === 'archive' && $this->archived_readonly && $required_rights == ACL::EDIT &&
-				($this->archived_readonly === 'yes' || empty($GLOBALS['egw_info']['users']['apps']['admin'])))
+				($this->archived_readonly === 'yes' || empty($GLOBALS['egw_info']['user']['apps']['admin'])))
 			{
 				$access = false;
 			}
