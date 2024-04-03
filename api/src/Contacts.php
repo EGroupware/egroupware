@@ -913,7 +913,7 @@ class Contacts extends Contacts\Storage
 		{
 			if (!isset($contact['owner']) || !isset($contact['private']))	// owner/private not set on update, eg. SyncML
 			{
-				if (($old = $this->read($contact['id']) ?: null))	// --> try reading the old entry and set it from there
+				if (($old = $this->read($contact['id'], $ignore_acl) ?: null))	// --> try reading the old entry and set it from there
 				{
 					if(!isset($contact['owner']))
 					{
