@@ -298,6 +298,7 @@ class infolog_bo
 					if ($type !== 'defaults' && !isset($statis['archive']))
 					{
 						$statis['archive'] = 'archive';
+						$statis['archive_too'] = lang('Archived too');
 					}
 				}
 			}

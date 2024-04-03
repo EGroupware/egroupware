@@ -60,6 +60,7 @@ application mail expected but got: %1	infolog	de	Mail-Applikation erwartet aber 
 apply the action on the whole query, not only the shown entries!!!	infolog	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur auf die angezeigten Datensätze!
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
+archived too	infolog	de	Auch archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den InfoLog schliessen?
 are you shure you want to delete this entry ?	infolog	de	Wollen Sie diesen InfoLog wirklich löschen?
 attach a file	infolog	de	Datei anhängen

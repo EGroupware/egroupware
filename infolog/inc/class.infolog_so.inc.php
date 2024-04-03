@@ -299,8 +299,8 @@ class infolog_so
 	 * generate sql to filter based on the status of the log-entry
 	 *
 	 * @param string $_filter done = done or billed, open = not (done, billed, cancelled or deleted), offer = offer
-	 * @param boolean $prefix_and =true if true prefix the fileter with ' AND '
-	 * @return string the necesary sql
+	 * @param boolean $prefix_and =true if true prefix the filter with ' AND '
+	 * @return string the necessary sql
 	 */
 	function statusFilter($_filter = '',$prefix_and=true)
 	{
@@ -883,6 +883,13 @@ class infolog_so
 							$filtermethod .= ' AND '.$this->db->expression($this->info_table,'main.',array('info_id' => $data));
 							break;
 
+						case 'info_status':
+							if ($data === 'archive_too')
+							{
+								$filtermethod .= "AND info_status NOT IN ('deleted','template','nonactive')";
+								break;
+							}
+							// fall through
 						default:
 							$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
 							break;
