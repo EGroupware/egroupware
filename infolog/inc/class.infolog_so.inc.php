@@ -305,7 +305,7 @@ class infolog_so
 	function statusFilter($_filter = '',$prefix_and=true)
 	{
 		$vars = null;
-		preg_match('/(done|open|offer|deleted|\+deleted)/',$_filter,$vars);
+		preg_match('/(done|open|offer|deleted|\+deleted|\+archived)/',$_filter,$vars);
 		$filter = $vars[1]??null;
 
 		switch ($filter)
@@ -315,6 +315,7 @@ class infolog_so
 			case 'offer':	$filter = "info_status = 'offer'";    break;
 			case 'deleted': $filter = "info_status = 'deleted'";  break;
 			case '+deleted':$filter = "NOT (info_status IN ('template','nonactive','archive'))"; break;
+			case '+archived':$filter = "NOT (info_status IN ('deleted','template','nonactive'))"; break;
 			default:        $filter = "NOT (info_status IN ('deleted','template','nonactive','archive'))"; break;
 		}
 		return ($prefix_and ? ' AND ' : '').$filter;
@@ -883,13 +884,6 @@ class infolog_so
 							$filtermethod .= ' AND '.$this->db->expression($this->info_table,'main.',array('info_id' => $data));
 							break;
 
-						case 'info_status':
-							if ($data === 'archive_too')
-							{
-								$filtermethod .= "AND info_status NOT IN ('deleted','template','nonactive')";
-								break;
-							}
-							// fall through
 						default:
 							$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
 							break;
