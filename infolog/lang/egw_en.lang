@@ -183,6 +183,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	en
 edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
+editable fields for status 'archived'	admin	en	Editable fields for status 'archived'
 empty for all	infolog	en	Empty for all
 encrypt description	infolog	en	Encrypt description
 end	infolog	en	End
@@ -193,8 +194,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	e
 enter a textual description of the log-entry	infolog	en	Enter text description of the InfoLog entry
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
-entry can not be changed anymore, after status is set	infolog	en	Entry can NOT be changed anymore, after status is set
-entry can not be changed by anybody, but egroupware admins	infolog	en	Entry can NOT be changed by anybody, but EGroupware admins
+entry can not be changed anymore, after status is set	admin	en	Entry can NOT be changed anymore, after status is set
+entry can not be changed by anybody, but egroupware admins	admin	en	Entry can NOT be changed by anybody, but EGroupware admins
 error: importing the ical	infolog	en	Error: importing the iCal
 error: no mail (mailbox / uid) given!	infolog	en	Error: no mail (Mailbox / UID) given!
 error: saving the entry	infolog	en	Error saving the entry!
@@ -226,7 +227,7 @@ general fields:	infolog	en	General fields:
 general settings	infolog	en	General settings
 global categories	infolog	en	Global categories
 group owner for	infolog	en	Group owner for
-handling of status 'archived'	infolog	en	Handling of status 'archived'
+handling of status 'archived'	admin	en	Handling of status 'archived'
 high	infolog	en	High
 history	infolog	en	History
 history logging	infolog	en	History logging
@@ -317,7 +318,7 @@ no entries found, try again ...	infolog	en	No entries found, try again ...
 no filter	infolog	en	No filter
 no links or attachments	infolog	en	No links or attachments
 no project	infolog	en	No project
-no special handling	infolog	en	No special handling
+no special handling	admin	en	No special handling
 nonactive	infolog	en	Non active
 none	infolog	en	None
 normal	infolog	en	Normal

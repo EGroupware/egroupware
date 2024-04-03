@@ -130,6 +130,10 @@ class infolog_bo
 	 */
 	var $archived_readonly;
 	/**
+	 * @var array fields editable for status archived
+	 */
+	var $archived_editable;
+	/**
 	 * Instance of infolog_tracking, only instaciated if needed!
 	 *
 	 * @var infolog_tracking
@@ -302,6 +306,7 @@ class infolog_bo
 					}
 				}
 			}
+			$this->archived_editable = $config_data['archived_editable'] ?? null;
 
 			$this->limit_modified_n_month = $config_data['limit_modified_n_month'] ?? null;
 		}

@@ -183,6 +183,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	de
 edit status	infolog	de	Status ändern
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	Diesen Eintrag bearbeiten
+editable fields for status 'archived'	admin	de	Bearbeitbare Felder für Status 'Archiviert'
 empty for all	infolog	de	Leer für alle
 encrypt description	infolog	de	Beschreibung verschlüsseln
 end	infolog	de	Ende
@@ -193,8 +194,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	d
 enter a textual description of the log-entry	infolog	de	Geben Sie eine textliche Beschreibung des Eintrags ein
 enter the query pattern	infolog	de	Geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
-entry can not be changed anymore, after status is set	infolog	de	Eintrag kann NICHT mehr geändert werden, nach dem der Status gesetzt wurde
-entry can not be changed by anybody, but egroupware admins	infolog	de	Eintrag kann NICHT mehr geändert werden von jedem, außer EGroupware Administratoren
+entry can not be changed anymore, after status is set	admin	de	Eintrag kann NICHT mehr geändert werden, nach dem der Status gesetzt wurde
+entry can not be changed by anybody, but egroupware admins	admin	de	Eintrag kann NICHT mehr geändert werden von jedem, außer EGroupware Administratoren
 error: importing the ical	infolog	de	Fehler beim Import der iCal
 error: no mail (mailbox / uid) given!	infolog	de	Fehler: keine Mail (Mailbox / UID) angegeben!
 error: saving the entry	infolog	de	Fehler: beim Speichern des Eintrags
@@ -226,7 +227,7 @@ general fields:	infolog	de	Allgemeine Felder:
 general settings	infolog	de	Allgemeine Einstellungen:
 global categories	infolog	de	Globale Kategorien
 group owner for	infolog	de	Gruppeneigentümer für
-handling of status 'archived'	infolog	de	Behandlung des Status 'Archiviert'
+handling of status 'archived'	admin	de	Behandlung des Status 'Archiviert'
 high	infolog	de	Hoch
 history	infolog	de	Historie
 history logging	infolog	de	Protokollierung der Historie
@@ -317,7 +318,7 @@ no entries found, try again ...	infolog	de	Kein Einträge gefunden, noch einmal 
 no filter	infolog	de	Kein Filter
 no links or attachments	infolog	de	Keine Verknüpfungen oder Anhänge
 no project	infolog	de	Kein Projekt
-no special handling	infolog	de	Keine spezielle Behandlung
+no special handling	admin	de	Keine spezielle Behandlung
 nonactive	infolog	de	Nicht aktiv
 none	infolog	de	Keine
 normal	infolog	de	Normal
