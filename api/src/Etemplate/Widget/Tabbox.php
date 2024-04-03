@@ -146,13 +146,12 @@ class Tabbox extends Etemplate\Widget
 	public function beforeSendToClient($cname, array $expand=null)
 	{
 		[$app] = explode('.', self::$request->template['name']);
-		// no need to run again for responses, or if we have no custom fields
-		if (!empty(self::$response) || empty($app) || !($cfs = Api\Storage\Customfields::get($app, false, null, null, true)))
+		// no need to run if we have no custom fields
+		if (empty($app) || !($cfs = Api\Storage\Customfields::get($app, false, null, null, true)))
 		{
 			return;
 		}
-		$form_name = self::form_name($cname, $this->id, $expand);
-		$extra_private_tab = self::expand_name(self::getElementAttribute($form_name, 'cfPrivateTab') ?? $this->attrs['cfPrivateTab'] ?? false,
+		$extra_private_tab = self::expand_name($this->attrs['cfPrivateTab'] ?? false,
 			0, 0, 0, 0, self::$request->content);
 		if (is_string($extra_private_tab) && $extra_private_tab[0] === '!')
 		{
@@ -173,10 +172,10 @@ class Tabbox extends Etemplate\Widget
 		// check if template still contains a legacy customfield tab
 		$have_legacy_cf_tab = $this->haveLegacyCfTab();
 
-		$exclude = self::getElementAttribute($form_name, 'cfExclude') ?? $this->attrs['cfExclude'] ?? null;
+		$exclude = $this->attrs['cfExclude'] ?? null;
 		$exclude = $exclude ? explode(',', $exclude) : [];
 
-		$type_filter = self::expand_name(self::getElementAttribute($form_name, 'cfTypeFilter') ?? $this->attrs['cfTypeFilter'] ?? null,
+		$type_filter = self::expand_name($this->attrs['cfTypeFilter'] ?? null,
 			0, 0, 0, 0, self::$request->content);
 		$type_filter = $type_filter ? explode(',', $type_filter) : [];
 
@@ -247,7 +246,11 @@ class Tabbox extends Etemplate\Widget
 				$content['cfExclude'] = implode(',', $exclude);
 				self::$request->content = $content;
 			}
-
+			// we must not add tabs again!
+			if (!empty(self::$response))
+			{
+				return;
+			}
 			// addTabs is default false (= replace tabs), we need a default of true
 			$add_tabs =& self::setElementAttribute($this->id, 'addTabs', null);
 			if (!isset($add_tabs)) $add_tabs = true;

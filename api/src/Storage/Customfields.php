@@ -669,20 +669,30 @@ class Customfields implements \IteratorAggregate
 			'cf_type' => 'serial',
 		], __LINE__, __FILE__, false, 'FOR UPDATE') as $row)
 		{
-			// we increment the last digit-group
-			if (empty($row['cf_values']) || !preg_match(self::SERIAL_PREG, $row['cf_values'], $matches))
+			if (!empty($row['cf_values']) && ($v = json_decode($row['cf_values'], true)))
 			{
-				$row['cf_values'] = 1;
+				$values = $v;
 			}
 			else
 			{
-				$row['cf_values'] = preg_replace(self::SERIAL_PREG, sprintf('%0'.strlen($matches[0]).'d', 1+(int)$matches[0]), $row['cf_values']);
+				$values = ['value' => $row['cf_values'] ?? null];
 			}
+			// we increment the last digit-group
+			if (empty($values['value']) || !preg_match(self::SERIAL_PREG, $values['value'], $matches))
+			{
+				$values['value'] = 1;
+			}
+			else
+			{
+				$values['value'] = preg_replace(self::SERIAL_PREG,
+					sprintf('%0'.strlen($matches[0]).'d', 1+(int)$matches[0]), $values['value']);
+			}
+			$row['cf_values'] = json_encode($values);
 			break;
 		}
 		if (isset($row) && self::$db->update(self::TABLE, $row, $where, __LINE__, __FILE__) && self::$db->transaction_commit())
 		{
-			return $row['cf_values'];
+			return $values['value'];
 		}
 		self::$db->transaction_abort();
 		throw new Api\Db\Exception("Could not generate serial number for custom-field #$id!");

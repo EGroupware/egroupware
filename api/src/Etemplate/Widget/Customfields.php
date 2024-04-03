@@ -295,7 +295,7 @@ class Customfields extends Transformer
 	}
 
 	/**
-	 * Instanciate (server-side) widget used to implement custom-field, to run its beforeSendToClient or validate method
+	 * Instantiate (server-side) widget used to implement custom-field, to run its beforeSendToClient or validate method
 	 *
 	 * @param string $fname custom field name
 	 * @param array $field custom field data
@@ -546,12 +546,35 @@ class Customfields extends Transformer
 				}
 				//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
 			}
+		}
+		if ($this->type == 'customfields-types')
+		{
+			// Transformation doesn't handle validation
+			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
+			if (true) $valid = $value_in;
+			//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+		}
+		else
+		{
 			// serials do NOT return a value, as they are always readonly
 			foreach(array_filter($customfields, static function($field)
 			{
 				return $field['type'] === 'serial';
 			}) as $field)
 			{
+				if (!empty($this->attrs['exclude']) && in_array($field['name'],
+						explode(',', self::expand_name($this->attrs['exclude'], 0, 0, 0, 0, self::$request->content))))
+				{
+					continue;
+				}
+				// check if we have condition(s) beside the value, and they are NOT meet --> do NOT generate the serial
+				if (is_array($field['values']) && array_filter($field['values'], static function($val, $name) use ($content)
+					{
+						return $name === 'value' ? false : $val != $content[$name];
+					}, ARRAY_FILTER_USE_BOTH))
+				{
+					continue;
+				}
 				$valid =& self::get_array($validated, self::$prefix.$field['name'], true);
 				if (empty($valid = self::$request->content[self::$prefix.$field['name']]))
 				{
@@ -560,13 +583,7 @@ class Customfields extends Transformer
 					self::$request->content = $content;
 				}
 			}
-		}
-		elseif ($this->type == 'customfields-types')
-		{
-			// Transformation doesn't handle validation
-			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
-			if (true) $valid = $value_in;
-			//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+
 		}
 	}
 }

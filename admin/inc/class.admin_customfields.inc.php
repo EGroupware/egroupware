@@ -379,16 +379,11 @@ class admin_customfields
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
-						if ($content['cf_type'] === 'serial')
+						if ($content['cf_type'] === 'serial' && !str_starts_with($content['cf_values'], 'value='))
 						{
-							if (!preg_match(Api\Storage\Customfields::SERIAL_PREG, $content['cf_values']))
-							{
-								Api\Etemplate::set_validation_error('cf_values', lang('Invalid Format, must end in a group of digits e.g. %1 or %2', "'0000'", "'RE2024-0000'"));
-								break;
-							}
-							$values = $content['cf_values'];
+							$content['cf_values'] = 'value=' . $content['cf_values'];
 						}
-						elseif($content['cf_values'][0] === '@')
+						if($content['cf_values'][0] === '@')
 						{
 							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
 						}
@@ -415,6 +410,11 @@ class admin_customfields
 								}
 								$values[$var] = trim($value)==='' ? $var : $value;
 							}
+						}
+						if ($content['cf_type'] === 'serial' && !preg_match(Api\Storage\Customfields::SERIAL_PREG, $values['value']))
+						{
+							Api\Etemplate::set_validation_error('cf_values', lang('Invalid Format, must end in a group of digits e.g. %1 or %2', "'0000'", "'RE2024-0000'"));
+							break;
 						}
 						$content['cf_values'] = $values;
 					}
@@ -559,8 +559,9 @@ class admin_customfields
 			'cf_id'       => $cf_id,
 			'cf_app'      => $this->appname,
 			'cf_name'     => $content['cf_name'],
+			'cf_values'   => $content['cf_values'],
 			'use_private' => $this->use_private,
-		),                2);
+		), 2);
 	}
 
 	/**
