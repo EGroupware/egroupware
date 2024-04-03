@@ -176,7 +176,8 @@ class infolog_bo
 		'upcoming'                 => 'upcoming',
 		'open-upcoming'			   => 'open and upcoming',
 		'bydate'                   => 'startdate',
-		'duedate'                  => 'enddate'
+		'duedate'                  => 'enddate',
+		'+archived'                => 'archived too',
 	);
 
 	/**
@@ -298,7 +299,6 @@ class infolog_bo
 					if ($type !== 'defaults' && !isset($statis['archive']))
 					{
 						$statis['archive'] = 'archive';
-						$statis['archive_too'] = lang('Archived too');
 					}
 				}
 			}
