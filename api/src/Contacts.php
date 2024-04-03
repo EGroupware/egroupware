@@ -913,7 +913,7 @@ class Contacts extends Contacts\Storage
 		{
 			if (!isset($contact['owner']) || !isset($contact['private']))	// owner/private not set on update, eg. SyncML
 			{
-				if (($old = $this->read($contact['id'])))	// --> try reading the old entry and set it from there
+				if (($old = $this->read($contact['id']) ?: null))	// --> try reading the old entry and set it from there
 				{
 					if(!isset($contact['owner']))
 					{
@@ -1005,7 +1005,7 @@ class Contacts extends Contacts\Storage
 		// Get old record for tracking changes
 		if (!isset($old) && $isUpdate)
 		{
-			$old = $this->read($contact['id']);
+			$old = $this->read($contact['id']) ?: null;
 		}
 		$to_write = $contact;
 		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
@@ -1086,7 +1086,7 @@ class Contacts extends Contacts\Storage
 			if(empty($contact['account_id']) || $contact['account_id'] && $this->account_repository == 'sql')
 			{
 				if (!isset($this->tracking)) $this->tracking = new Contacts\Tracking($this);
-				$this->tracking->track($to_write, $old ?? null, null, $deleted);
+				$this->tracking->track($to_write, $old, null, $deleted);
 			}
 
 			// Notify linked apps about changes in the contact data
