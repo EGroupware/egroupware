@@ -2683,7 +2683,7 @@ class addressbook_ui extends addressbook_bo
 		if ($view)
 		{
 			$readonlys['__ALL__'] = true;
-			$readonlys['button[cancel]'] = false;
+			$readonlys['button[cancel]'] = $readonlys['button[ok]'] = false;
 		}
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
@@ -2708,7 +2708,7 @@ class addressbook_ui extends addressbook_bo
 		if (!$this->is_admin() && !$content['owner'] && $content['account_id'] == $this->user && $this->own_account_acl && !$view)
 		{
 			$readonlys['__ALL__'] = true;
-			$readonlys['button[cancel]'] = false;
+			$readonlys['button[cancel]'] = $readonlys['button[ok]'] = false;
 
 			foreach($this->own_account_acl as $field)
 			{
