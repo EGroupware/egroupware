@@ -195,7 +195,7 @@ class Backup
 	 */
 	public function fopen_backup(string $name=null, bool $reading=false, bool $un_compress=true)
 	{
-		if ($name)
+		if ($name[0] !== '/')
 		{
 			$name = $this->backup_dir.'/'.basename($name);
 		}
