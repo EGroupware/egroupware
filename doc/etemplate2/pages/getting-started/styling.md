@@ -25,6 +25,33 @@ Some handy excerpts:
 }
 ```
 
+Use these variables instead of specific colors to make maintenance and customisation easier. In most places, we can
+use Shoelace's [design tokens](https://github.com/shoelace-style/shoelace/blob/current/src/themes/light.css ) as well
+
+```html:preview
+<style>    
+.customStyle {
+    background-color: var(--primary-background-color, white);
+    border: 1px solid var(--input-border-color);
+    color: var(--label-color);
+    
+    /* Shoelace gives us many variables as well */
+    padding: var(--sl-spacing-medium);
+}
+
+.customStyle.warning {
+    /* Local override of the label color */
+    --label-color: red;
+    
+    background-color: var(--warning-color);
+    border-width: 2px;
+}
+</style>
+
+<et2-box class="customStyle">customStyle</et2-box>
+<et2-box class="customStyle warning">customStyle + warning</et2-box>
+```
+
 ## Useful CSS classes
 
 ### hide
@@ -50,3 +77,56 @@ These widgets are in an et2-vbox:
 |                               *Fixed width labels using et2-label-fixed*                                |
 |                 ![fixed label example #3](/assets/images/styling_et2-label-fixed_3.png)                 |
 | *--label_width CSS variable changed for more space*            <br/>Note how 'Responsible' widget wraps |
+
+## Directly Customising Widgets
+
+If you need to customise an individual widget further, you can
+use [CSS Parts](https://shoelace.style/getting-started/customizing#css-parts)
+or [Custom Properties](https://shoelace.style/getting-started/customizing#custom-properties) to directly override the
+widget's internal styling.
+
+## Examples
+
+### Custom Button Color
+
+```html:preview
+<et2-button class="tomato-button">Custom button</et2-button>
+<style>
+  .tomato-button::part(base) {
+    background: var(--sl-color-neutral-0);
+    border: solid 1px tomato;
+  }
+
+  .tomato-button::part(base):hover {
+    background: rgba(255, 99, 71, 0.1);
+  }
+
+  .tomato-button::part(base):active {
+    background: rgba(255, 99, 71, 0.2);
+  }
+
+  .tomato-button::part(base):focus-visible {
+    box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.33);
+  }
+
+  .tomato-button::part(label) {
+    color: tomato;
+  }
+</style>
+```
+
+### Fixed width labels
+
+Here we've used the class `et2-label-fixed` and overridden the standard width of `8em` to `--label-width: 16em;`. Adjust
+the viewport width to see the widgets reflow when there's not enough horizontal space. No grid is used, which allows the
+reflow from 2 columns to 1 column.
+
+```html:preview
+<style>
+.fixed-example {
+    --label-width: 16em;
+}
+</style>
+<et2-select class="fixed-example et2-label-fixed" label="Select"></et2-select>
+<et2-select-number class="fixed-example et2-label-fixed" label="Select number from list"></et2-select-number>
+```
