@@ -44,7 +44,9 @@ class HtmlArea extends Etemplate\Widget
 		'Trebuchet MS, Helvetica, sans-serif' => 'Trebuchet MS',
 		'Verdana, Geneva, sans-serif' => 'Verdana',
 		'webdings' => 'Webdings',
-		'wingdings,zapf dingbats' => 'Wingdings'
+		'wingdings,zapf dingbats' => 'Wingdings',
+		'egroupware,arial,helvetica,sans-serif' => 'EGroupware',
+		'egroupware2,arial black,avant garde' => 'EGroupware Bold',
 	);
 
 	/**
@@ -199,7 +201,7 @@ class HtmlArea extends Etemplate\Widget
 		$font_size = ($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] ?? '10').
 			($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'] ?? 'pt');
 
-		return <<<EOF
+		return \pixelegg_framework::web_fonts().<<<EOF
 /**
  * Copyright (c) Tiny Technologies, Inc. All rights reserved.
  * Licensed under the LGPL or a commercial license.

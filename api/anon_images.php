@@ -31,7 +31,7 @@ function send_image()
 
 	if (!file_exists($path) || empty($_GET['src']) ||
 		basename($_GET['src']) !== $_GET['src'] ||    // make sure no directory traversal
-		!preg_match('/^[a-z 0-9._-]+\.(jpe?g|png|gif|svg|ico)$/i', $_GET['src']) ||    // only allow images, not eg. Javascript!
+		!preg_match('/^[a-z 0-9._-]+\.(jpe?g|png|gif|svg|ico|woff2)$/i', $_GET['src']) ||    // only allow images, not eg. Javascript!
 		!file_exists($path .= '/' . $_GET['src']) ||
 		!($fp = fopen($path, 'r')))
 	{

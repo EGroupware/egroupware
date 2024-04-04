@@ -109,6 +109,9 @@ class pixelegg_framework extends Api\Framework\Ajax
 		{
 			$loginbox_color = $color_darker;
 		}
+		// custom web-font
+		$ret['app_css'] .= self::web_fonts();
+
 		//always set header logo used  in sharing regardless of custom color being set
 		$header = !empty($GLOBALS['egw_info']['server']['login_logo_header']) ? Api\Framework::get_login_logo_or_bg_url('login_logo_header', 'logo')
 			: Api\Framework::get_login_logo_or_bg_url('login_logo_file', 'logo');
@@ -122,8 +125,10 @@ class pixelegg_framework extends Api\Framework\Ajax
 		";
 		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
 		$ret['app_css'] .= "
-			:root, :host, body {
+			:root, :host, body, input {
 				font-size: {$textsize}px;
+				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 			}
 		";
 		if (!empty($textsize) && is_numeric($textsize) && $textsize != '12')
@@ -222,6 +227,33 @@ body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_category_active{background-colo
 			}
 		}
 		return $ret;
+	}
+
+	/**
+	 * Return CSS to load and define our custom web-fonts as font-family: egroupware(2)
+	 *
+	 * @return string
+	 */
+	public static function web_fonts()
+	{
+		$css = '';
+		// custom web-font
+		foreach([
+			        'egroupware' => $GLOBALS['egw_info']['server']['font_face_url'] ?? null,
+			        'egroupware2' => $GLOBALS['egw_info']['server']['font_face_url2'] ?? null,
+		        ] as $family => $url)
+		{
+			if ($url)
+			{
+				$css .= '
+	@font-face {
+		font-family: '.$family.';
+		src: url("'.htmlspecialchars(is_array($url) ? array_shift($url) : $url).'") format("woff2");
+	}
+';
+			}
+		}
+		return $css;
 	}
 
 	/**

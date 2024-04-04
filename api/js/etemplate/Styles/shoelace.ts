@@ -42,7 +42,8 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-	  --sl-button-font-size-medium: var(--sl-font-size-medium);
+	--sl-font-sans: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	--sl-button-font-size-medium: var(--sl-font-size-medium);
 	--sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
 	--sl-spacing-small: 0.1rem;
 	--sl-spacing-medium: 0.5rem;
