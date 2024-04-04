@@ -40,9 +40,9 @@ export class Et2LinkPasteDialog extends Et2VfsSelectDialog
 		this.handleFileClick(event);
 	}
 
-	protected localSearch<DataType extends SearchResult>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
+	protected async localSearch<DataType extends SearchResult>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
 	{
-		const files = getClipboardFiles();
+		const files = await getClipboardFiles();
 
 		// We don't care if they're directories, treat them all as files (no double click, all selectable)
 		files.forEach(f => f.isDir = false);
@@ -66,7 +66,7 @@ export class Et2LinkPasteDialog extends Et2VfsSelectDialog
  *
  * @return {string[]} Paths
  */
-export function getClipboardFiles()
+export async function getClipboardFiles()
 {
 	let clipboard_files = [];
 	if(typeof window.egw.getSessionItem('phpgwapi', 'egw_clipboard') != 'undefined')
@@ -75,23 +75,36 @@ export function getClipboardFiles()
 			type: [],
 			selected: []
 		};
-		if(clipboard.type.indexOf('file') >= 0)
+		for(let i = 0; i < clipboard.selected.length; i++)
 		{
-			for(let i = 0; i < clipboard.selected.length; i++)
+			let split = clipboard.selected[i].id.split('::');
+			const app = split.shift();
+			if(app == 'filemanager')
 			{
-				let split = clipboard.selected[i].id.split('::');
-				if(split.shift() == 'filemanager')
-				{
-					const data = clipboard.selected[i].data ?? {};
-					clipboard_files.push({
-						value: split.join("::"),
-						name: data.name ?? clipboard.selected[i].id,
-						mime: data.mime,
-						isDir: data.is_dir ?? false,
-						path: data.path ?? split.join("::"),
-						downloadUrl: data.download_url
-					});
-				}
+				const data = clipboard.selected[i].data ?? {};
+				clipboard_files.push({
+					value: clipboard.selected[i].id,
+					app: app,
+					id: split.join("::"),
+					name: data.name ?? clipboard.selected[i].id,
+					mime: data.mime,
+					isDir: data.is_dir ?? false,
+					path: data.path ?? split.join("::"),
+					downloadUrl: data.download_url
+				});
+			}
+			else
+			{
+				clipboard_files.push({
+					value: clipboard.selected[i].id,
+					app: app,
+					id: split.join("::"),
+					path: clipboard.selected[i].id,
+					name: await window.egw().link_title(app, split.join("::"), true),
+					mime: `egroupware/${app}`,
+					icon: window.egw().image("navbar", app),
+					symlink: true
+				});
 			}
 		}
 	}
