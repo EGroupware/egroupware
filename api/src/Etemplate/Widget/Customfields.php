@@ -186,7 +186,7 @@ class Customfields extends Transformer
 				unset($fields[$key]);
 			}
 
-			// Rmove fields for none private cutomfields when name refers to a single custom field
+			// move fields for none private customfields when name refers to a single custom field
 			$matches = null;
 			if (($pos=strpos($form_name,$this->attrs['prefix'])) !== false &&
 			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
@@ -570,7 +570,7 @@ class Customfields extends Transformer
 				// check if we have condition(s) beside the value, and they are NOT meet --> do NOT generate the serial
 				if (is_array($field['values']) && array_filter($field['values'], static function($val, $name) use ($content)
 					{
-						return $name === 'value' ? false : $val != $content[$name];
+						return $name === 'last' ? false : $val != $content[$name];
 					}, ARRAY_FILTER_USE_BOTH))
 				{
 					continue;

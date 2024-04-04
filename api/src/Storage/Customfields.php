@@ -675,24 +675,28 @@ class Customfields implements \IteratorAggregate
 			}
 			else
 			{
-				$values = ['value' => $row['cf_values'] ?? null];
+				$values = null;
+			}
+			if (!is_array($values))
+			{
+				$values = ['last' => $values];
 			}
 			// we increment the last digit-group
-			if (empty($values['value']) || !preg_match(self::SERIAL_PREG, $values['value'], $matches))
+			if (empty($values['last']) || !preg_match(self::SERIAL_PREG, $values['last'], $matches))
 			{
-				$values['value'] = 1;
+				$values['last'] = 1;
 			}
 			else
 			{
-				$values['value'] = preg_replace(self::SERIAL_PREG,
-					sprintf('%0'.strlen($matches[0]).'d', 1+(int)$matches[0]), $values['value']);
+				$values['last'] = preg_replace(self::SERIAL_PREG,
+					sprintf('%0'.strlen($matches[0]).'d', 1+(int)$matches[0]), $values['last']);
 			}
 			$row['cf_values'] = json_encode($values);
 			break;
 		}
 		if (isset($row) && self::$db->update(self::TABLE, $row, $where, __LINE__, __FILE__) && self::$db->transaction_commit())
 		{
-			return $values['value'];
+			return $values['last'];
 		}
 		self::$db->transaction_abort();
 		throw new Api\Db\Exception("Could not generate serial number for custom-field #$id!");
