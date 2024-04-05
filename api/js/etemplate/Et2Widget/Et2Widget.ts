@@ -641,6 +641,9 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 					delete this._mgrs[key];
 				}
 			}
+
+			// if widget exists DOM-wise outside the parent, we need to explicitly remove it
+			if (this._parent_node) this.remove();
 		}
 
 		isInTree() : boolean
