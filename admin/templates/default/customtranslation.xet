@@ -2,10 +2,10 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="admin.customtranslation" template="" lang="" group="0" version="1.9.001">
-		<grid id="rows">
+		<grid id="rows" width="100%">
 			<columns>
-				<column/>
-				<column/>
+				<column width="50%"/>
+				<column width="50%"/>
 				<column/>
 			</columns>
 			<rows>
