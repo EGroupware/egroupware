@@ -1161,6 +1161,12 @@ abstract class Tracking
 		//error_log(__METHOD__.'('.array2string($html_mail).",'$type',".array2string($modified).",'$line',".array2string($data).')');
 		$content = '';
 
+		if (is_array($data))
+		{
+			error_log(__METHOD__."(".json_encode(func_get_args()).") data should be a string, no array!");
+			$data = implode(', ', $data);
+		}
+
 		if ($html_mail)
 		{
 			if (!$this->html_content_allow) $line = Api\Html::htmlspecialchars($line);	// XSS
