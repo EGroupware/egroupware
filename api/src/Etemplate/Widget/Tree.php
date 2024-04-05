@@ -169,29 +169,9 @@ class Tree extends Etemplate\Widget
 		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(self::htmlencode_node($data));
+		echo json_encode($data);
 
 		exit;
-	}
-
-	/**
-	 * HTML encoding of text and tooltip of node including all children
-	 *
-	 * @param array $item
-	 * @return array
-	 */
-	public static function htmlencode_node(array $item)
-	{
-		$item['text'] = Api\Html::htmlspecialchars($item['text']);
-
-		if (isset($item['item']) && is_array($item['item']))
-		{
-			foreach($item['item'] as &$child)
-			{
-				$child = self::htmlencode_node($child);
-			}
-		}
-		return $item;
 	}
 
 	/**
