@@ -789,6 +789,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 								{
 									this.onopenend(event.detail.id, this, -1)
 								}
+								this._link_actions(this.actions)
 
                             }
                     }
