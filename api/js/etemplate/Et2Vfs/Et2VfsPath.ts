@@ -169,13 +169,18 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	protected handlePathClick(event : MouseEvent)
 	{
-		if(event.target instanceof SlBreadcrumbItem && event.composedPath().includes(this))
+		let target = event.target;
+		if(target.slot == "separator")
+		{
+			target = target.parentNode;
+		}
+		if(target instanceof SlBreadcrumbItem && event.composedPath().includes(this))
 		{
 			event.preventDefault();
 			event.stopPropagation();
 
-			const dirs = Array.from(event.target.parentElement.querySelectorAll('sl-breadcrumb-item')) ?? [];
-			let stopIndex = dirs.indexOf(event.target) + 1;
+			const dirs = Array.from(target.parentElement.querySelectorAll('sl-breadcrumb-item')) ?? [];
+			let stopIndex = dirs.indexOf(target) + 1;
 			let newPath = dirs.slice(0, stopIndex)
 				// Strip out any extra space
 				.map(d => d.textContent.trim().replace(/\/*$/, '').trim() + "/")
@@ -188,8 +193,13 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 			if(!(this.disabled || this.readonly))
 			{
 				const oldValue = this.value;
+				this.value = newPath.join("")
+
 				// No trailing slash in the value
-				this.value = newPath.join("").replace(/\/*$/, '');
+				if(this.value !== "/" && this.value.endsWith("/"))
+				{
+					this.value = this.value.replace(/\/*$/, '');
+				}
 				if(oldValue != this.value)
 				{
 					this.updateComplete.then(() =>
@@ -217,7 +227,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
 		// No trailing slash in the path
-		const pathParts = this.value === "/" ? [""] : this.value
+		const pathParts = this.value === "/" ? ["/"] : this.value
 			// Remove trailing /
 			.replace(/\/*$/, '')
 			.split('/');

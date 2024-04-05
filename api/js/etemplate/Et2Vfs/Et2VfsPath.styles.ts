@@ -64,7 +64,9 @@ export default css`
 
 	sl-breadcrumb-item::part(separator) {
 		color: var(--input-text-color);
-		margin: 0 var(--sl-spacing-2x-small);
+		margin: 0;
+		padding: 0 var(--sl-spacing-2x-small);
+		cursor: pointer;
 	}
 
 	/* Sizes */
