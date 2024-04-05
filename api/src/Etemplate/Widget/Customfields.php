@@ -309,18 +309,14 @@ class Customfields extends Transformer
 			$link_types = Api\Link::app_list();
 		}
 
-		$type = $field['type'];
-		// Link-tos needs to change from appname to link-to
-		if(!empty($link_types[$field['type']]))
+		if (($type = $field['type']) === 'filemanager')
 		{
-			if($type == 'filemanager')
-			{
-				$type = 'vfs-upload';
-			}
-			else
-			{
-				$type = 'link-to';
-			}
+			$type = 'vfs-upload';
+		}
+		// Link-tos needs to change from appname to link-to
+		elseif(!empty($link_types[$type]))
+		{
+			$type = 'link-to';
 		}
 		$xml = '<' . $type . ' type="' . $type . '" id="' . self::$prefix . $fname . '" required="' . $field['needed'] . '"/>';
 		$widget = self::factory($type, $xml, self::$prefix . $fname);
