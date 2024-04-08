@@ -73,14 +73,19 @@ class Avatar
 		{
 			if (($parts = preg_split('/[, ]+/', $matches[1])))
 			{
-				return ['fname' => array_shift($parts), 'lname' => array_pop($parts)];
+				// if we have a usual title prefixing the name, skip it
+				while (preg_match('/^(Hr\.|Herr|Mr.|Mister|Fr\.|Frau|Ms.|Miss|Dr\.|Doktor|Prof.|Professor)/', $parts[0]))
+				{
+					array_shift($parts);
+				}
+				return ['fname' => array_shift($parts), 'lname' => array_shift($parts), 'label' => $matches[1]];
 			}
 			$address = $matches[2];
 		}
 		if (($parts = preg_split('/[._]/', $address)) && count($parts) >= 2)
 		{
-			return ['fname' => array_shift($parts), 'lname' => array_pop($parts)];
+			return ['fname' => array_shift($parts), 'lname' => array_pop($parts), 'label' => $address];
 		}
-		return ['fname' => $address[0], 'lname' => $address[1]];
+		return ['fname' => $address[0], 'lname' => $address[1], 'label' => $address];
 	}
 }
