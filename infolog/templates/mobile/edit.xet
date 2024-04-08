@@ -68,7 +68,7 @@
 			<rows>
 				<row>
 					<et2-description  value="CC"></et2-description>
-					<et2-select-email  id="info_cc" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="email"></et2-select-email>
+					<et2-email  id="info_cc" width="100%" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="email"></et2-email>
 				</row>
 				<row>
 					<et2-description  value="Responsible" for="info_responsible"></et2-description>

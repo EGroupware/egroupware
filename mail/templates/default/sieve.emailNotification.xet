@@ -22,7 +22,7 @@
 				</row>
 				<row>
 					<et2-description  value="External email address:"></et2-description>
-					<et2-select-email  id="externalEmail" required="true" width="40%" allowFreeEntries="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-select-email>
+					<et2-email  id="externalEmail" required="true" width="40%" allowFreeEntries="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 				</row>
 				<row>
 					<et2-description  value="Display mail subject in notification:	"></et2-description>
