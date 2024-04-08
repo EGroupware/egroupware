@@ -351,6 +351,9 @@ function send_template()
 			return '<et2-select' . $matches[2] . stringAttrs($attrs) . '>'.$matches[5].'</et2-select' . $matches[2] . '>';
 		}, $str);
 
+		// use et2-email instead of et2-select-email
+		$str = preg_replace('#<et2-select-email\s(.*?")\s*></et2-select-email>#s', '<et2-email $1></et2-email>', $str);
+
 		// nextmatch headers
 		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)
 		{
