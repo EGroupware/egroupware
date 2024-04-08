@@ -11,7 +11,7 @@
 
 import type {Et2Select} from "./Et2Select/Et2Select";
 import type {Et2SelectAccount} from "./Et2Select/Select/Et2SelectAccount";
-import type {Et2SelectEmail} from "./Et2Select/Select/Et2SelectEmail";
+import type {Et2Email} from "./Et2Email/Et2Email";
 import type {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import type {Et2SelectThumbnail} from "./Et2Select/Select/Et2SelectThumbnail";
 
@@ -28,9 +28,9 @@ export type et2_taglist = Et2Select;
 export type et2_taglist_account = Et2SelectAccount;
 
 /**
- * @deprecated use et2_SelectEmail
+ * @deprecated use ET2Email
  */
-export type et2_taglist_email = Et2SelectEmail;
+export type et2_taglist_email = Et2Email;
 
 /**
  * @deprecated use Et2SelectCatgory
