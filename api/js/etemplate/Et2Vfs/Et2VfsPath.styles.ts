@@ -6,7 +6,7 @@ export default css`
 		flex: 1;
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: 0.1rem 0.5rem;
@@ -28,8 +28,7 @@ export default css`
 
 	.vfs-path__value-input {
 		flex: 1 1 auto;
-		order: 10;
-		min-width: 7em;
+		min-width: 20em;
 		border: none;
 		outline: none;
 		color: var(--input-text-color);
@@ -44,6 +43,7 @@ export default css`
 	.vfs-path__edit {
 		flex-grow: 0;
 		display: inline-flex;
+		visibility: hidden;
 		align-items: center;
 		justify-content: center;
 		font-size: inherit;
@@ -53,11 +53,34 @@ export default css`
 		padding: 0;
 		transition: var(--sl-transition-fast) color;
 		cursor: pointer;
-		margin-left: auto;
+	}
+
+	:host(:hover) .vfs-path__edit {
+		visibility: visible;
 	}
 
 	/* Breadcrumb directories */
 
+	sl-breadcrumb {
+		flex: 1 1 auto;
+		overflow: hidden;
+		min-width: 20em;
+	}
+
+	et2-image {
+		flex: none;
+		height: 1.5em;
+	}
+
+	sl-breadcrumb::part(base) {
+		flex-wrap: nowrap;
+		flex-direction: row-reverse;
+		justify-content: flex-start;
+	}
+
+	sl-breadcrumb-item::part(base) {
+		font-size: var(--sl-font-size-medium);
+	}
 	sl-breadcrumb-item::part(label) {
 		color: var(--input-text-color);
 	}
@@ -67,6 +90,18 @@ export default css`
 		margin: 0;
 		padding: 0 var(--sl-spacing-2x-small);
 		cursor: pointer;
+	}
+
+	sl-breadcrumb-item:first-of-type {
+		margin-right: auto;
+	}
+
+	sl-breadcrumb-item:first-of-type::part(separator) {
+		display: none;
+	}
+
+	sl-breadcrumb-item:last-of-type::part(separator) {
+		display: initial;
 	}
 
 	/* Sizes */

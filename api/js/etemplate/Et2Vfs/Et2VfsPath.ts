@@ -8,7 +8,7 @@
  */
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing, TemplateResult} from "lit";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsPath.styles";
 import {property} from "lit/decorators/property.js";
@@ -18,6 +18,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {FileInfo} from "./Et2VfsSelectDialog";
 import {SlBreadcrumbItem} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../Et2Widget/slot";
+import {until} from "lit/directives/until.js";
 
 /**
  * @summary Display an editable path from the VFS
@@ -144,6 +145,8 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	protected handleEditMouseDown(event : MouseEvent)
 	{
+		event.preventDefault();
+		event.stopPropagation();
 		this.edit();
 	}
 
@@ -162,8 +165,6 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 				event.preventDefault();
 				this.blur();
 				break;
-
-
 		}
 	}
 
@@ -174,16 +175,21 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		{
 			target = target.parentNode;
 		}
+		else if(target instanceof Image && target.parentElement.slot == "prefix")
+		{
+			// Icon
+			target = target.parentElement.parentElement;
+		}
 		if(target instanceof SlBreadcrumbItem && event.composedPath().includes(this))
 		{
 			event.preventDefault();
 			event.stopPropagation();
 
-			const dirs = Array.from(target.parentElement.querySelectorAll('sl-breadcrumb-item')) ?? [];
+			const dirs = Array.from(target.parentElement.querySelectorAll('sl-breadcrumb-item')).reverse() ?? [];
 			let stopIndex = dirs.indexOf(target) + 1;
 			let newPath = dirs.slice(0, stopIndex)
 				// Strip out any extra space
-				.map(d => d.textContent.trim().replace(/\/*$/, '').trim() + "/")
+				.map(d => (d.dataset.value ?? "").trim().replace(/\/*$/, '').trim() + "/")
 				.filter(p => p);
 			if(newPath[0] !== '/')
 			{
@@ -220,6 +226,45 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		}
 	}
 
+	protected _getIcon(pathParts)
+	{
+		let image = this.egw().image("filemanager", "api");
+		if(pathParts.length > 2 && pathParts[1] == "apps")
+		{
+			image = this.egw().image('navbar', pathParts[2].toLowerCase());
+		}
+
+		return image;
+	}
+
+	protected pathPartTemplate(pathParts, path, i)
+	{
+		let index = pathParts.length - 1 - i;
+		let pathName : string | TemplateResult<1> = path.trim();
+		if(pathParts.length > 1 && pathParts[1] == "apps")
+		{
+			switch(index)
+			{
+				case 1:
+					pathName = this.egw().lang("applications");
+					break;
+				case 2:
+					pathName = this.egw().lang(pathName);
+					break;
+				case 3:
+					if(!isNaN(<number><unknown>pathName))
+					{
+						pathName = html`${until(this.egw().link_title(pathParts[2], pathParts[3], true) || pathName, pathName)}`
+					}
+			}
+		}
+		return html`
+            <sl-breadcrumb-item class="vfs-path__directory" data-value="${path.trim()}">
+                ${pathName}
+                <span slot="separator">/</span>
+            </sl-breadcrumb-item>`;
+	}
+
 	render()
 	{
 		const hasLabelSlot = this.hasSlotController.test('label');
@@ -227,12 +272,14 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
 		// No trailing slash in the path
-		const pathParts = this.value === "/" ? ["/"] : this.value
+		const pathParts = this.value
 			// Remove trailing /
 			.replace(/\/*$/, '')
 			.split('/');
 		const isEditable = !(this.disabled || this.readonly);
 		const editing = this.editing && isEditable;
+
+		let icon = this._getIcon(pathParts);
 
 		return html`
             <div
@@ -259,7 +306,16 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                 <div part="form-control-input" class="form-control-input"
                      @click=${() => this.focus()}
                 >
-                    <slot part="prefix" name="prefix"></slot>
+                    <slot part="prefix" name="prefix">
+                        ${icon ? html`
+                            <et2-image src="${icon}" slot="prefix"
+                                       @click=${(e) =>
+                                       {
+                                           this.setValue("/");
+                                           this.updateComplete.then(() => {this.dispatchEvent(new Event("change", {bubbles: true}))});
+                                       }}
+                            ></et2-image>` : nothing}
+                    </slot>
                     ${editing ? html`
                         <input
                                 class="vfs-path__value-input"
@@ -271,19 +327,15 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                 aria-hidden="true"
                                 @blur=${() => this.blur()}
                                 @keydown=${this.handleKeyDown}
-                        />` : html`
+                        />
+                        <div class="vfs-path__edit"/>` : html`
                         <sl-breadcrumb
+                                label=${this.label || this.egw().lang("path")}
                                 class="vfs-path__breadcrumb"
                                 @click=${this.handlePathClick}
                         >
                             <span slot="separator">/</span>
-                            ${repeat(pathParts, (path) =>
-                            {
-                                return html`
-                                    <sl-breadcrumb-item class="vfs-path__directory">${path.trim()}
-                                        <span slot="separator">/</span>
-                                    </sl-breadcrumb-item>`;
-                            })}
+                            ${repeat(pathParts.toReversed(), (part, i) => this.pathPartTemplate(pathParts, part, i))}
                         </sl-breadcrumb>
                         ${!isEditable ? nothing : html`
                             <button
@@ -291,7 +343,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                     class="vfs-path__edit"
                                     type="button"
                                     aria-label=${this.egw().lang('edit')}
-                                    @mousedown=${this.handleEditMouseDown}
+                                    @click=${this.handleEditMouseDown}
                                     tabindex="-1"
                             >
                                 <slot name="edit-icon">
