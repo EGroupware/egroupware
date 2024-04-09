@@ -128,6 +128,7 @@ class addressbook_contactform
 				}
 			}
 		}
+		static $contact = null;
 		if (!is_array($content))
 		{
 			$preserv['tpl_form_name'] = $tpl_name;
@@ -143,11 +144,7 @@ class addressbook_contactform
 			{
 				if ($name[0] == '#')	// custom field
 				{
-					static $contact;
-					if (is_null($contact))
-					{
-						$contact = new Api\Contacts();
-					}
+					if (!isset($contact)) $contact = new Api\Contacts();
 					$content['show']['custom'.$custom] = true;
 					$content['customfield'][$custom] = $name;
 					$content['customlabel'][$custom] = $contact->customfields[substr($name,1)]['label'];
@@ -178,8 +175,7 @@ class addressbook_contactform
 				$preserv[$name]=$value;
 				if ($name[0] == '#')     // custom field
 				{
-					static $contact;
-					if (is_null($contact)) $contact = new Api\Contacts();
+					if (!isset($contact)) $contact = new Api\Contacts();
 					$content['show']['custom'.$custom] = true;
 					$content['customfield'][$custom] = $name;
 					$content['customlabel'][$custom] = $contact->customfields[substr($name,1)]['label'];
