@@ -11,7 +11,6 @@ import './Select/Et2SelectCategory';
 import './Select/Et2SelectCountry';
 import './Select/Et2SelectDay';
 import './Select/Et2SelectDayOfWeek';
-import './Select/Et2SelectEmail';
 import './Select/Et2SelectHour';
 import './Select/Et2SelectLang';
 import './Select/Et2SelectMonth';
