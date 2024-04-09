@@ -115,7 +115,7 @@
   box-shadow: none;
 }
 /* Hide email in sidebox */
-#calendar-sidebox_owner sl-option::part(suffix) {
+#calendar-sidebox_owner::part(tag__suffix) {
   display: none;
 }
 /* Conflict display */
@@ -1443,6 +1443,8 @@ img.calendar_print_appicon {
 }
 /* Integration slide switches in toolbar */
 #calendar-toolbar_toolbar et2-switch {
+  --sl-toggle-size-medium: 30px;
+  --height: 30px;
   height: var(--height);
   display: inline-flex;
 }
@@ -1452,6 +1454,7 @@ img.calendar_print_appicon {
   background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
+  --width: var(--height);
 }
 #calendar-toolbar_toolbar span[data-group="integration"] > et2-switch::part(base),
 #toolbar-menulist et2-switch[id^="calendar-toolbar_toolbar-integration"],
@@ -1467,11 +1470,11 @@ et2-switch#calendar-toolbar_toolbar-weekend {
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label span {
   background-size: 20px;
-  height: 75%;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend .label {
   width: 100%;
   height: 100%;
+  align-items: normal;
 }
 #calendar-toolbar_toolbar et2-switch#calendar-toolbar_toolbar-weekend {
   min-width: 60px;
@@ -1499,7 +1502,6 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   visibility: hidden;
 }
 #calendar-toolbar_toolbar et2-switch {
-  height: 32px;
   display: inline-block;
   vertical-align: top;
   border: 1px solid var(--sl-color-neutral-300);
@@ -2628,7 +2630,7 @@ div#calendar-container div.calendar {
 }
 div#calendar-container div.calendar table {
   background-color: #fafafa;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 div#calendar-container div.calendar table thead .button {
   background-color: #FFDD73;
