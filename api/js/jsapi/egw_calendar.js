@@ -139,7 +139,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 				// one widget listening for the response by the time it gets back,
 				// and we can't do that when it's queued.
 				_holiday_cache[year] = window.fetch(
-					egw.link('/calendar/holidays.php', {year: year})
+					egw.link('/calendar/holidays.php', {year: year, url: this.config('ical_holiday_url') || ''})
 				).then((response) =>
 				{
 					return _holiday_cache[year] = response.json();

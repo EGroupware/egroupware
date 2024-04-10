@@ -158,7 +158,7 @@ class calendar_holidays
 	 * @param ?string $lang 2-digit iso language code or NULL
 	 * @return array|Iterator parsed events
 	 */
-	protected static function fetch($country, $lang=null)
+	public static function fetch($country, $lang=null)
 	{
 		if (!($url = self::is_url($country) ? $country : self::ical_url($country, $lang)))
 		{
