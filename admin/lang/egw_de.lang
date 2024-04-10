@@ -2,7 +2,7 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
-%1 accounts being activated	admin	de	%1 Konten wurden aktiviert
+%1 accounts being activated	admin	de	%1 Konten werden aktiviert
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
 %1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Konten gelöscht.
