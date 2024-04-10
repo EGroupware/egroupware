@@ -22,7 +22,7 @@ use EGroupware\Api;
  * The contact storage has 3 operation modi (contact_repository):
  * - sql: contacts are stored in the SQL table egw_addressbook & egw_addressbook_extra (custom fields)
  * - ldap: contacts are stored in LDAP (accounts have to be stored in LDAP too!!!).
- *   Custom fields are not availible in that case!
+ *   Custom fields are not available in that case!
  * - sql-ldap: contacts are read and searched in SQL, but saved to both SQL and LDAP.
  *   Other clients (Thunderbird, ...) can use LDAP readonly. The get maintained via eGroupWare only.
  *
@@ -37,7 +37,7 @@ use EGroupware\Api;
 class Storage
 {
 	/**
-	 * name of customefields table
+	 * name of customfields table
 	 *
 	 * @var string
 	 */
