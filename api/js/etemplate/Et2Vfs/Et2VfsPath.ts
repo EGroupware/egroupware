@@ -226,6 +226,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		}
 	}
 
+	protected handleScroll(event : WheelEvent)
+	{
+		this.shadowRoot.querySelector("sl-breadcrumb").scrollLeft += event.deltaY;
+	}
+
 	protected _getIcon(pathParts)
 	{
 		let image = this.egw().image("filemanager", "api");

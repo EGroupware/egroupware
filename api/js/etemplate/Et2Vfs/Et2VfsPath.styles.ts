@@ -3,6 +3,8 @@ import {css} from 'lit';
 export default css`
 
 	.form-control-input {
+		min-width: 15em;
+
 		flex: 1;
 		display: flex;
 		flex-direction: row;
@@ -28,7 +30,7 @@ export default css`
 
 	.vfs-path__value-input {
 		flex: 1 1 auto;
-		min-width: 20em;
+		min-width: 12em;
 		border: none;
 		outline: none;
 		color: var(--input-text-color);
@@ -64,7 +66,7 @@ export default css`
 	sl-breadcrumb {
 		flex: 1 1 auto;
 		overflow: hidden;
-		min-width: 20em;
+		min-width: 10em;
 	}
 
 	et2-image {
