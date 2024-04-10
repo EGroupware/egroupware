@@ -1766,7 +1766,7 @@ class admin_mail
 	 * @param array $_data account an array of data called via long task running dialog
 	 *	$_data:array (
 	 *		id => account_id,
-	 *		qouta => quotaLimit,
+	 *		quota => quotaLimit,
 	 *		domain => mailLocalAddress,
 	 *		status => mail activation status('active'|'')
 	 *	)
@@ -1781,24 +1781,22 @@ class admin_mail
 		$response = Api\Json\Response::get();
 		if (($account = $GLOBALS['egw']->accounts->read($_data['id'])))
 		{
-			if ($_data['quota'] !== '' || $_data['accountStatus'] !== ''
-				|| strpos($_data['domain'], '.'))
+			if ($_data['quota'] !== '' || $_data['accountStatus'] !== '' || strpos($_data['domain'], '.'))
 			{
-				$emailadmin = Mail\Account::get_default();
-				if (!Mail\Account::is_multiple($emailadmin))
+				$ea_account = Mail\Account::get_default(false, false, false, false, $_data['id']);
+				if (!Mail\Account::is_multiple($ea_account))
 				{
 					$msg = lang('No default account found!');
 					return $response->data($msg);
 				}
 
-				$ea_account = Mail\Account::read($emailadmin->acc_id, $_data['id']);
-				if (($userData = $ea_account->getUserData ()))
+				if (($userData = $ea_account->getUserData()))
 				{
 					$userData = array(
 						'acc_smtp_type' => $ea_account->acc_smtp_type,
 						'accountStatus' => $_data['status'],
-						'quotaLimit' => $_data['qouta']? $_data['qouta']: $userData['qoutaLimit'],
-						'mailLocalAddress' => $userData['mailLocalAddress']
+						'quotaLimit' => $_data['quota'] ?: $userData['quotaLimit'],
+						'mailLocalAddress' => $userData['mailLocalAddress'],
 					);
 
 					if (strpos($_data['domain'], '.') !== false)
@@ -1810,15 +1808,15 @@ class admin_mail
 							$alias = preg_replace('/@'.preg_quote($ea_account->acc_domain, '/').'$/', '@'.$_data['domain'], $alias);
 						}
 					}
-					// fullfill the saveUserData requirements
+					// fulfill the saveUserData requirements
 					$userData += $ea_account->params;
 					$ea_account->saveUserData($_data['id'], $userData);
-					$msg = '#'.$_data['id'].' '.$account['account_fullname']. ' '.($userData['accountStatus'] == 'active'? lang('activated'):lang('deactivated'));
+					$msg = $account['account_fullname'].' ('.'#'.$_data['id'].'): '.
+						($userData['accountStatus'] === 'active' ? lang('activated') : lang('deactivated'));
 				}
 				else
 				{
 					$msg = lang('No profile defined for user %1', '#'.$_data['id'].' '.$account['account_fullname']."\n");
-
 				}
 			}
 		}
