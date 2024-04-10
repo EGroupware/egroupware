@@ -840,7 +840,26 @@ END:VALARM';
 
 	public static function config_validate()
 	{
-		$GLOBALS['egw_info']['server']['found_validation_hook'] = array('calendar_purge_old');
+		$GLOBALS['egw_info']['server']['found_validation_hook'] = [
+			'calendar_purge_old',
+			'ical_holiday_url' => 'calendar_hooks::ical_holiday_url',
+		];
+	}
+
+	/**
+	 * Validate the iCal URL
+	 *
+	 * @param string $url
+	 * @param Api\Config $c
+	 * @return string|null error message or null on success
+	 */
+	public static function ical_holiday_url(string $url, Api\Config $c) : ?string
+	{
+		if (!empty($url) && (!preg_match('#^(/|https?://[^/]+/[^/]+)#', $url) || !calendar_holidays::fetch($url)))
+		{
+			return "Invalid iCalendar URL: $url";
+		}
+		return null;
 	}
 
 	/**
