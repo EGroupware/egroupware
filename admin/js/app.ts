@@ -1251,7 +1251,7 @@ class AdminApp extends EgwApp
 
 		for (var i=0;i< Object.keys(_selected).length;i++)
 		{
-			accounts[i] = [{id:_selected[i]['id'].split('::')[1],qouta:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2._inst.etemplate_exec_id];
+			accounts[i] = [{id:_selected[i]['id'].split('::')[1],quota:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2._inst.etemplate_exec_id];
 		}
 		var callbackDialog = function (btn){
 			if(btn === Et2Dialog.YES_BUTTON)
