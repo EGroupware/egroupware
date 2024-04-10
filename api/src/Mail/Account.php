@@ -489,7 +489,7 @@ class Account implements \ArrayAccess
 		// it is quicker to try connection, assuming we want to do that anyway, instead of reading user-data
 		if ($try_connect)
 		{
-			// as querying user-data is a lot slower then just trying to connect, and we need probably need to connect anyway, we try that
+			// as querying user-data is a lot slower than just trying to connect, and we need probably need to connect anyway, we try that
 			$imap = $this->imapserver();
 			try {
 				$imap->login();
@@ -1595,15 +1595,21 @@ class Account implements \ArrayAccess
 	 * @param boolean $return_id =false true: return acc_id, false return account object
 	 * @param boolean $log_no_default =true true: error_log if no default found, false be silent
 	 * @param boolean $user_context =true false: we have no user context, need a smtp-only account or one without password
-	 * @param boolean|int $current_user true: search only for current user, false search for all, or integer account_id to search for
+	 * @param boolean|int $current_user true: search only for current user, false search for all,
+	 *  or integer account_id to search for (we can NOT connect to an IMAP account in that case!)
+	 * @param ?boolean $multiple =null true: only return accounts for multiple, false: only return single accounts, null (default): return both
 	 * @return Account|int|null
 	 */
-	static function get_default($smtp=false, $return_id=false, $log_no_default=true, $user_context=true, $current_user=true)
+	static function get_default($smtp=false, $return_id=false, $log_no_default=true, $user_context=true, $current_user=true, ?bool $multiple=null)
 	{
 		try
 		{
 			foreach(self::search($current_user, 'params') as $acc_id => $params)
 			{
+				if (isset($multiple) && $multiple !== self::is_multiple($params))
+				{
+					continue;
+				}
 				if ($smtp)
 				{
 					if (!$params['acc_smtp_host'] || !$params['acc_smtp_port']) continue;
@@ -1630,7 +1636,7 @@ class Account implements \ArrayAccess
 					if (!$params['acc_imap_host'] || !$params['acc_imap_port']) continue;
 					$account = new Account($params, is_bool($current_user) ? null : $current_user);
 					// continue if we have either no imap username or password
-					if (!$account->is_imap()) continue;
+					if (is_bool($current_user) && !$account->is_imap()) continue;
 				}
 				return $return_id ? $acc_id : (isset($account) && $account->acc_id == $acc_id ?
 					$account : new Account($params, is_bool($current_user) ? null : $current_user));

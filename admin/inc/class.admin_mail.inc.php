@@ -1783,14 +1783,14 @@ class admin_mail
 		{
 			if ($_data['quota'] !== '' || $_data['accountStatus'] !== '' || strpos($_data['domain'], '.'))
 			{
-				$ea_account = Mail\Account::get_default(false, false, false, false, $_data['id']);
-				if (!Mail\Account::is_multiple($ea_account))
+				$ea_account = Mail\Account::get_default(false, false, false, true, $_data['id'], true);
+				if (!$ea_account || !Mail\Account::is_multiple($ea_account))
 				{
-					$msg = lang('No default account found!');
+					$msg = $account['account_fullname'].' (#'.$_data['id'].'): '.lang('No default account found!');
 					return $response->data($msg);
 				}
 
-				if (($userData = $ea_account->getUserData()))
+				if ($ea_account && ($userData = $ea_account->getUserData()))
 				{
 					$userData = array(
 						'acc_smtp_type' => $ea_account->acc_smtp_type,
@@ -1811,12 +1811,12 @@ class admin_mail
 					// fulfill the saveUserData requirements
 					$userData += $ea_account->params;
 					$ea_account->saveUserData($_data['id'], $userData);
-					$msg = $account['account_fullname'].' ('.'#'.$_data['id'].'): '.
+					$msg = $account['account_fullname'].' (#'.$_data['id'].'): '.
 						($userData['accountStatus'] === 'active' ? lang('activated') : lang('deactivated'));
 				}
 				else
 				{
-					$msg = lang('No profile defined for user %1', '#'.$_data['id'].' '.$account['account_fullname']."\n");
+					$msg = lang('No profile defined for user %1', $account['account_fullname'].' (#'.$_data['id'].")\n");
 				}
 			}
 		}
