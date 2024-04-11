@@ -162,8 +162,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	//Sl-Trees handle their own onClick events
 	_handleClick(_ev)
 	{
-		//if onclick is defined, and we have a resonable target (e.g. one single item that was clicked on, trigger the onclick function
-		if (typeof this.onclick == "function" && typeof _ev.target.value == "string")
+		// check if not expand icon (> or v) was clicked, we have an onclick handler and a string value
+		if (!(_ev.composedPath()[0].tagName === 'svg' && _ev.composedPath()[0].classList.contains('bi-chevron-right')) &&
+			typeof this.onclick === "function" && typeof _ev.target.value === "string")
 		{
 			this.onclick(_ev.target.value, this, _ev.target.value)
 		}
