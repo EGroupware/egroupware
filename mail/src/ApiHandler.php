@@ -365,11 +365,11 @@ class ApiHandler extends Api\CalDAV\Handler
 
 		// save posted eml to a temp-dir
 		$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'view-eml-');
-		if (!(is_resource($content) ?
+		if ((is_resource($content) ?
 			stream_copy_to_stream($content, $fp = fopen($eml, 'w')) :
-			file_put_contents($eml, $content)))
+			file_put_contents($eml, $content)) === false)
 		{
-			throw new \Exception('Error storing attachment');
+			throw new \Exception('Error storing eml file');
 		}
 		if (isset($fp)) fclose($fp);
 
