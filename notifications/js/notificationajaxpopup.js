@@ -5,7 +5,7 @@
  * @package notifications
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
- * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>, Ralf Becker <rb@stylite.de>
+ * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>, Ralf Becker <rb@egroupware.org>
  * @version $Id$
  */
 
@@ -60,7 +60,7 @@
 		var EGW_PR_NOTIFY_MEDIUM = 2;
 
 		/**
-		 * Low priority for notifing about an entry
+		 * Low priority for notifying about an entry
 		 * Action: Not defined
 		 * @type Number
 		 */
@@ -85,7 +85,7 @@
 		var TIMEOUT = 0;
 
 		/**
-		 * Constructor inits polling and installs handlers, polling frequence is passed via data-poll-interval of script tag
+		 * Constructor inits polling and installs handlers, polling frequency is passed via data-poll-interval of script tag
 		 */
 		function notifications() {
 			var notification_script = document.getElementById('notifications_script_id');
@@ -211,7 +211,7 @@
 			});
 			// clear the list
 			$egwpopup_list.empty();
-			// define time label deviders
+			// define time label dividers
 			var $today = jQuery(document.createElement('div'))
 						.addClass('egwpopup_time_label')
 						.text(egw.lang('today'))
@@ -327,7 +327,6 @@
 
 				if (notifymessages[id]['status'] != 'SEEN')
 				{
-
 					$mark.click(jQuery.proxy(this.message_seen, this,[$message]))
 						.attr('title',egw.lang('mark as read'));
 				}
@@ -407,7 +406,7 @@
 		};
 
 		/**
-		 * Opens the relavant entry from clicked message
+		 * Opens the relevant entry from clicked message
 		 *
 		 * @param {jquery object} _node
 		 * @param {object} _event
@@ -571,12 +570,9 @@
 
 		notifications.prototype.delete_all = function () {
 			if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-			var self = this;
-			egw.json("notifications.notifications_ajax.delete_message", [notifymessages], function(_data){
-				if (_data && _data['deleted']) self.total -= Object.keys(_data['deleted']).length;
-				self.counterUpdate();
-			}).sendRequest(true);
+			egw.request("notifications.notifications_ajax.delete_message", [notifymessages.map(d => d.id)]);
 			notifymessages = {};
+			this.total = 0;
 			jQuery("#egwpopup_list").empty();
 			egw.loading_prompt('popup_notifications', false);
 			this.bell("inactive");
@@ -589,15 +585,11 @@
 			_event.stopPropagation();
 			var egwpopup_message = _node[0];
 			var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-			var self = this;
-			var request = egw.json("notifications.notifications_ajax.delete_message", [[notifymessages[id]]],function(_data){
-				if (_data && _data['deleted'])	self.total -= Object.keys(_data['deleted']).length;
-				self.counterUpdate();
-			});
-			request.sendRequest(true);
+			egw.request("notifications.notifications_ajax.delete_message", [[id]]);
 			var nextNode = egwpopup_message.next();
 			var keepLoadingPrompt = false;
 			delete (notifymessages[id]);
+			this.total -= 1;
 			if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig) && egwpopup_message.hasClass('egwpopup_expanded'))
 			{
 				nextNode.trigger('click');
@@ -667,9 +659,14 @@
 
 			var hasUnseen = [];
 			_rawData = _rawData || [];
-			// Dont process the data if they're the same as it could get very expensive to
-			// proccess html their content.
-			if (_currentRawData.length>0 && _currentRawData.length == _rawData.length) return;
+			// Don't process the data if they're the same as it could get very expensive to
+			// process html their content.
+			if (_currentRawData.length && _currentRawData.length == _rawData.length &&
+				// check objects in both arrays have the same id
+				!_rawData.some((d, i) => d.id != _currentRawData[i].id))
+			{
+				return;
+			}
 			_currentRawData = _rawData || [];
 			var old_notifymessages = notifymessages;
 			notifymessages = {};

@@ -131,11 +131,17 @@ class notifications_ajax
 	/**
 	 * Remove given notification id(s) from the table
 	 *
-	 * @param array $notifymessages one or multiple notify_id(s)
+	 * @param int[]|array[] $notifymessages one or multiple notify_id(s) or objects incl. id attribute
 	 */
 	public function delete_message(array $notifymessages)
 	{
 		$this->update($notifymessages, null);   // null = delete
+
+		// if we delete all messages (we either delete one or all!), we return the next chunk of messages directly
+		if (count($notifymessages) > 1)
+		{
+			$this->get_notifications();
+		}
 	}
 
 	/**
