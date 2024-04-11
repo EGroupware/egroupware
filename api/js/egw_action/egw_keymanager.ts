@@ -16,11 +16,12 @@
 import {egw_getAppObjectManager, egw_globalObjectManager} from "./egw_action";
 import {_egw_active_menu} from "./egw_menu";
 import {
-	EGW_AO_FLAG_DEFAULT_FOCUS,
 	EGW_AO_EXEC_SELECTED,
-	EGW_VALID_KEYS,
+	EGW_AO_FLAG_DEFAULT_FOCUS,
+	EGW_KEY_F1,
+	EGW_KEY_F12,
 	EGW_KEY_MENU,
-	EGW_KEY_F1, EGW_KEY_F12
+	EGW_VALID_KEYS
 } from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
 import type {EgwActionObject} from "./EgwActionObject";
@@ -61,7 +62,8 @@ function _egw_nodeIsInInput(_node)
 	if ((_node != null) && (_node != document))
 	{
 		const tagName = _node.tagName.toLowerCase();
-		if (tagName == "input" || tagName == "select" || tagName == 'textarea' || tagName == 'button' ||
+		if(typeof _node.implements === "function" && _node.implements("et2_IInput") ||
+			["input", "select", 'textarea', 'button'].indexOf(tagName) != -1 ||
 			['et2-textbox', 'et2-number', 'et2-searchbox', 'et2-select', 'et2-textarea', 'et2-button'].indexOf(tagName) != -1)
 		{
 			return true;
