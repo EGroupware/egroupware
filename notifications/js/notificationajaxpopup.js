@@ -570,9 +570,11 @@
 
 		notifications.prototype.delete_all = function () {
 			if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-			egw.request("notifications.notifications_ajax.delete_message", [notifymessages.map(d => d.id)]);
+			egw.request("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]);
 			notifymessages = {};
+			_currentRawData = [];	// otherwise response from delete_message/get_notifications might not get parsed
 			this.total = 0;
+			this.counterUpdate();
 			jQuery("#egwpopup_list").empty();
 			egw.loading_prompt('popup_notifications', false);
 			this.bell("inactive");
@@ -590,6 +592,7 @@
 			var keepLoadingPrompt = false;
 			delete (notifymessages[id]);
 			this.total -= 1;
+			this.counterUpdate();
 			if (nextNode.length > 0 && nextNode[0].id.match(/egwpopup_message_/ig) && egwpopup_message.hasClass('egwpopup_expanded'))
 			{
 				nextNode.trigger('click');
