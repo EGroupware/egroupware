@@ -3,6 +3,7 @@ import {css} from 'lit';
 export default css`
 
 	.form-control-input {
+		position: relative;
 		min-width: 15em;
 
 		flex: 1;
@@ -61,12 +62,29 @@ export default css`
 		visibility: visible;
 	}
 
-	/* Breadcrumb directories */
-
-	sl-breadcrumb {
+	.vfs-path__scroll {
 		flex: 1 1 auto;
 		overflow: hidden;
 		min-width: 10em;
+	}
+
+	.form-control-input sl-icon-button[name*="caret"] {
+		display: none;
+		position: absolute;
+		background: var(--sl-input-background-color);
+	}
+
+	.form-control-input sl-icon-button[name*="caret"]:last-of-type {
+		right: 2em;
+	}
+
+	:host(:hover) .form-control-input.vfs-path__overflow sl-icon-button[name*="caret"] {
+		display: initial;
+	}
+
+	/* Breadcrumb directories */
+
+	sl-breadcrumb {
 	}
 
 	et2-image {
@@ -76,8 +94,6 @@ export default css`
 
 	sl-breadcrumb::part(base) {
 		flex-wrap: nowrap;
-		flex-direction: row-reverse;
-		justify-content: flex-start;
 	}
 
 	sl-breadcrumb-item::part(base) {
@@ -95,15 +111,15 @@ export default css`
 	}
 
 	sl-breadcrumb-item:first-of-type {
-		margin-right: auto;
 	}
 
 	sl-breadcrumb-item:first-of-type::part(separator) {
-		display: none;
+		display: initial;
 	}
 
 	sl-breadcrumb-item:last-of-type::part(separator) {
-		display: initial;
+		/* Trailing / */
+		display: none;
 	}
 
 	/* Sizes */

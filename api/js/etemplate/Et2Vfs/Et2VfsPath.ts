@@ -8,7 +8,7 @@
  */
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, nothing, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsPath.styles";
 import {property} from "lit/decorators/property.js";
@@ -69,6 +69,13 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		this.handleEditMouseDown = this.handleEditMouseDown.bind(this);
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handlePathClick = this.handlePathClick.bind(this);
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated(changedProperties);
+
+		this.checkPathOverflow();
 	}
 
 	@property()
@@ -138,6 +145,30 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		})
 	}
 
+	protected checkPathOverflow()
+	{
+		const wrapper = this.shadowRoot.querySelector(".vfs-path__scroll");
+		const path = wrapper?.querySelector("sl-breadcrumb");
+		const scroll = path?.shadowRoot.querySelector("nav");
+		if(!wrapper || !scroll)
+		{
+			return;
+		}
+		path.updateComplete.then(() =>
+		{
+			if(wrapper.clientWidth < scroll.scrollWidth)
+			{
+				// Too small
+				wrapper.scrollLeft = scroll.scrollWidth - wrapper.clientWidth;
+				wrapper.parentElement.classList.add("vfs-path__overflow");
+			}
+			else
+			{
+				wrapper.parentElement.classList.remove("vfs-path__overflow");
+			}
+		});
+	}
+
 	protected handleLabelClick()
 	{
 		this.edit();
@@ -185,7 +216,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 			event.preventDefault();
 			event.stopPropagation();
 
-			const dirs = Array.from(target.parentElement.querySelectorAll('sl-breadcrumb-item')).reverse() ?? [];
+			const dirs = Array.from(target.parentElement.querySelectorAll('sl-breadcrumb-item')) ?? [];
 			let stopIndex = dirs.indexOf(target) + 1;
 			let newPath = dirs.slice(0, stopIndex)
 				// Strip out any extra space
@@ -228,7 +259,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	protected handleScroll(event : WheelEvent)
 	{
-		this.shadowRoot.querySelector("sl-breadcrumb").scrollLeft += event.deltaY;
+		this.shadowRoot.querySelector(".vfs-path__scroll").scrollLeft += event.deltaY;
 	}
 
 	protected _getIcon(pathParts)
@@ -242,9 +273,8 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		return image;
 	}
 
-	protected pathPartTemplate(pathParts, path, i)
+	protected pathPartTemplate(pathParts, path, index)
 	{
-		let index = pathParts.length - 1 - i;
 		let pathName : string | TemplateResult<1> = path.trim();
 		if(pathParts.length > 1 && pathParts[1] == "apps")
 		{
@@ -310,6 +340,13 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                 </label>
                 <div part="form-control-input" class="form-control-input"
                      @click=${() => this.focus()}
+                     @mouseout=${(e) =>
+                     {
+                         if(e.target.classList.contains("form-control-input"))
+                         {
+                             this.checkPathOverflow();
+                         }
+                     }}
                 >
                     <slot part="prefix" name="prefix">
                         ${icon ? html`
@@ -334,14 +371,30 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                 @keydown=${this.handleKeyDown}
                         />
                         <div class="vfs-path__edit"/>` : html`
+                        <sl-icon-button name="caret-left"
+                                        @click=${(e) =>
+                                        {
+                                            e.stopPropagation();
+                                            this.handleScroll({deltaY: -20})
+                                        }}></sl-icon-button>
+                        <div class="vfs-path__scroll"
+                             @wheel=${this.handleScroll}
+                        >
                         <sl-breadcrumb
                                 label=${this.label || this.egw().lang("path")}
                                 class="vfs-path__breadcrumb"
                                 @click=${this.handlePathClick}
                         >
                             <span slot="separator">/</span>
-                            ${repeat(pathParts.toReversed(), (part, i) => this.pathPartTemplate(pathParts, part, i))}
+                            ${repeat(pathParts, (part, i) => this.pathPartTemplate(pathParts, part, i))}
                         </sl-breadcrumb>
+                        </div>
+                        <sl-icon-button name="caret-right"
+                                        @click=${(e) =>
+                                        {
+                                            e.stopPropagation();
+                                            this.handleScroll({deltaY: 20})
+                                        }}></sl-icon-button>
                         ${!isEditable ? nothing : html`
                             <button
                                     part="edit-button"
