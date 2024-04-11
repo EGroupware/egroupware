@@ -1,9 +1,9 @@
-## Creating a component
+## Creating a widget
 
 ETemplate components are [LitElements](https://lit.dev/docs/) that are wrapped with
 our [Et2Widget](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Widget/Et2Widget.ts) mixin,
 which adds properties and methods to support loading from our template files and returning values to the server. They
-should (relatively) stand-alone.
+should be (relatively) stand-alone.
 
 Common components are in `api/js/etemplate/`. You can add application specific components in `<appname>/js/`.
 
