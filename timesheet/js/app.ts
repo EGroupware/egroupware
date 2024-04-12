@@ -132,9 +132,17 @@ class TimesheetApp extends EgwApp
 
 		if (nm_value.col_filter && nm_value.col_filter.linked)
 		{
-			var split = nm_value.col_filter.linked.split(':') || '';
-			extras.link_app = split[0] || '';
-			extras.link_id = split[1] || '';
+			if(typeof nm_value.col_filter.linked === "string")
+			{
+				const split = nm_value.col_filter.linked.split(':') || '';
+				extras.link_app = split[0] || '';
+				extras.link_id = split[1] || '';
+			}
+			else
+			{
+				extras.link_app = nm_value.col_filter.linked.app;
+				extras.link_id = nm_value.col_filter.linked.id;
+			}
 		}
 		if (nm_value.col_filter && nm_value.col_filter.pm_id)
 		{
