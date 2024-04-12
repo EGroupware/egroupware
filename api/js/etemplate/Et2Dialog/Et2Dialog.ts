@@ -10,8 +10,6 @@
 
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {et2_button} from "../et2_widget_button";
-import {et2_widget} from "../et2_core_widget";
 import {css, html, LitElement, render} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
@@ -19,7 +17,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
 import {SlotMixin} from "@lion/core";
 import {et2_template} from "../et2_widget_template";
-import {etemplate2} from "../etemplate2";
+import type {etemplate2} from "../etemplate2";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -1250,7 +1248,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		let button = _senders;
 		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
 		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-		let egw = _senders instanceof et2_widget ? _senders.egw() : undefined;
+		let egw = _senders instanceof Et2Widget ? _senders.egw() : undefined;
 		let callbackDialog = function(button_id)
 		{
 			if(button_id == Et2Dialog.YES_BUTTON)
@@ -1259,10 +1257,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				{
 					senders.getRoot().getInstanceManager().postSubmit(button);
 				}
-				else if(senders.instanceOf(et2_button) && senders.getType() !== "buttononly")
+				else if(senders.instanceOf(Et2Button) && senders.getType() !== "buttononly")
 				{
 					senders.clicked = true;
-					senders.getInstanceManager().submit(senders, false, senders.options.novalidate);
+					senders.getInstanceManager().submit(senders, false, senders.novalidate);
 					senders.clicked = false;
 				}
 				else
