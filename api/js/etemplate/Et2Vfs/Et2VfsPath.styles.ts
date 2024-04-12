@@ -68,6 +68,11 @@ export default css`
 		min-width: 10em;
 	}
 
+	.vfs-path__overflow .vfs-path__scroll {
+		min-width: 8em;
+		margin-right: 2em;
+	}
+
 	.form-control-input sl-icon-button[name*="caret"] {
 		display: none;
 		position: absolute;

@@ -154,17 +154,14 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		{
 			return;
 		}
+		wrapper.parentElement.classList.remove("vfs-path__overflow");
 		path.updateComplete.then(() =>
 		{
 			if(wrapper.clientWidth < scroll.scrollWidth)
 			{
 				// Too small
-				wrapper.scrollLeft = scroll.scrollWidth - wrapper.clientWidth;
 				wrapper.parentElement.classList.add("vfs-path__overflow");
-			}
-			else
-			{
-				wrapper.parentElement.classList.remove("vfs-path__overflow");
+				wrapper.scrollLeft = scroll.scrollWidth - wrapper.clientWidth;
 			}
 		});
 	}
