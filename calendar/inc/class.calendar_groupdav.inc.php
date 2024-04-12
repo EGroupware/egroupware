@@ -854,7 +854,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		if (isset($json))
 		{
-			return Api\CalDAV\JsCalendar::JsEvent($events[0], $json, array_slice($events, 1));
+			// master aka $events[0] might not be set, for a series where current user only participates in one or *more* exceptions
+			return Api\CalDAV\JsCalendar::JsEvent(array_shift($events), $json, $events);
 		}
 		return $handler->exportVCal($events, '2.0', $method);
 	}

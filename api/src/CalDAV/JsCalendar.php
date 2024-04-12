@@ -33,7 +33,7 @@ class JsCalendar extends JsBase
 	 * Get JsEvent for given event
 	 *
 	 * @param int|array $event
-	 * @param bool|"pretty" $encode=true true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data e.g. from listing
+	 * @param bool|"pretty" $encode true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data e.g. from listing
 	 * @param ?array $exceptions=null
 	 * @return string|array
 	 * @throws Api\Exception\NotFound
@@ -69,7 +69,7 @@ class JsCalendar extends JsBase
 			'egroupware.org:customfields' => self::customfields($event),
 		] + self::Locations($event);
 
-		if (!empty($event['recur_type']))
+		if (!empty($event['recur_type']) || $exceptions)
 		{
 			$data = array_merge($data, self::Recurrence($event, $data, $exceptions));
 		}
@@ -600,50 +600,49 @@ class JsCalendar extends JsBase
 	 */
 	protected static function Recurrence(array $event, array $data, array $exceptions=[])
 	{
-		if (empty($event['recur_type']))
-		{
-			return [];  // non-recurring event
-		}
-		$rriter = \calendar_rrule::event2rrule($event, false);
-		$rrule = $rriter->generate_rrule('2.0');
-		$rule = array_filter([
-			self::AT_TYPE => self::TYPE_RECURRENCE_RULE,
-			'frequency' => strtolower($rrule['FREQ']),
-			'interval' => $rrule['INTERVAL'] ?? null,
-			'until' => empty($rrule['UNTIL']) ? null : self::DateTime($rrule['UNTIL'], $event['tzid']),
-		]);
-		if (!empty($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']) &&
-			$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] !== 'Monday')
-		{
-			$rule['firstDayOfWeek'] = strtolower(substr($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'], 0, 2));
-		}
-		if (!empty($rrule['BYDAY']))
-		{
-			$rule['byDay'] = array_filter([
-				self::AT_TYPE => self::TYPE_NDAY,
-				'day' => strtolower(substr($rrule['BYDAY'], $rriter->monthly_byday_num ? strlen((string)$rriter->monthly_byday_num) : 0)),
-				'nthOfPeriod' => $rriter->monthly_byday_num,
-			]);
-		}
-		elseif (!empty($rrule['BYMONTHDAY']))
-		{
-			$rule['byMonthDay'] = [$rrule['BYMONTHDAY']];   // EGroupware supports only a single day!
-		}
-
 		$overrides = [];
-		// adding excludes to the overrides
-		if (!empty($event['recur_exception']))
+		if (!empty($event['recur_type']))
 		{
-			foreach ($event['recur_exception'] as $timestamp)
+			$rriter = \calendar_rrule::event2rrule($event, false);
+			$rrule = $rriter->generate_rrule('2.0');
+			$rule = array_filter([
+				self::AT_TYPE => self::TYPE_RECURRENCE_RULE,
+				'frequency' => strtolower($rrule['FREQ']),
+				'interval' => $rrule['INTERVAL'] ?? null,
+				'until' => empty($rrule['UNTIL']) ? null : self::DateTime($rrule['UNTIL'], $event['tzid']),
+			]);
+			if (!empty($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']) &&
+				$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] !== 'Monday')
 			{
-				$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
-				if (!empty($event['whole_day']))
+				$rule['firstDayOfWeek'] = strtolower(substr($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'], 0, 2));
+			}
+			if (!empty($rrule['BYDAY']))
+			{
+				$rule['byDay'] = array_filter([
+					self::AT_TYPE => self::TYPE_NDAY,
+					'day' => strtolower(substr($rrule['BYDAY'], $rriter->monthly_byday_num ? strlen((string)$rriter->monthly_byday_num) : 0)),
+					'nthOfPeriod' => $rriter->monthly_byday_num,
+				]);
+			}
+			elseif (!empty($rrule['BYMONTHDAY']))
+			{
+				$rule['byMonthDay'] = [$rrule['BYMONTHDAY']];   // EGroupware supports only a single day!
+			}
+
+			// adding excludes to the overrides
+			if (!empty($event['recur_exception']))
+			{
+				foreach ($event['recur_exception'] as $timestamp)
 				{
-					$ex_date->setTime(0, 0, 0);
+					$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
+					if (!empty($event['whole_day']))
+					{
+						$ex_date->setTime(0, 0, 0);
+					}
+					$overrides[self::DateTime($ex_date, $event['tzid'])] = [
+						'excluded' => true,
+					];
 				}
-				$overrides[self::DateTime($ex_date, $event['tzid'])] = [
-					'excluded' => true,
-				];
 			}
 		}
 
@@ -654,7 +653,7 @@ class JsCalendar extends JsBase
 		}
 
 		return array_filter([
-			'recurrenceRules' => [$rule],
+			'recurrenceRules' => isset($rule) ? [$rule] : null,
 			'recurrenceOverrides' => $overrides,
 		]);
 	}
