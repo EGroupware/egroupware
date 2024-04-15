@@ -403,7 +403,7 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
         // detect modification time
         // see rfc2518, section 13.7
         // some clients seem to treat this as a reverse rule
-        // requiering a Last-Modified header if the getlastmodified header was set
+        // requiring a Last-Modified header if the getlastmodified header was set
         $options['mtime'] = filemtime($fspath);
 
         // detect resource size
@@ -435,6 +435,16 @@ class HTTP_WebDAV_Server_Filesystem extends HTTP_WebDAV_Server
 
         // no need to check result here, it is handled by the base class
         $options['stream'] = fopen($fspath, "r");
+
+		// hack to fix downloads from s3direct stream-wrapper reporting slightly wrong sizes in stat calls due to encryption
+		if (class_exists('EGroupware\Api\Vfs') &&
+			($url=EGroupware\Api\Vfs::resolve_url($options['path'])) &&
+			str_starts_with($url, 'stylite.s3direct://'))
+		{
+			fseek($options['stream'], 0, SEEK_END);
+			$options['size'] = ftell($options['stream']);
+			fseek($options['stream'], 0);
+		}
 
         return true;
     }
