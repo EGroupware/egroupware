@@ -596,7 +596,7 @@ abstract class Tracking
 
 		if (!$this->notify_current_user && $this->user)		// do we have a current user and should we notify the current user about his own changes
 		{
-			//error_log("do_notificaton() adding user=$this->user to email_sent, to not notify him");
+			//error_log("do_notification() adding user=$this->user to email_sent, to not notify him");
 			$email_sent[] = $GLOBALS['egw']->accounts->id2name($this->user,'account_email');
 		}
 		$skip_notify = $this->get_config('skip_notify',$data,$old);
@@ -722,8 +722,8 @@ abstract class Tracking
 	 *
 	 * Called by track() or externally for sending async notifications
 	 *
-	 * Method changes $GLOBALS['egw_info']['user'], so everything called by it, eg. get_(subject|body|links|attachements),
-	 * must NOT store something from user enviroment! By the end of the method, everything get changed back.
+	 * Method changes $GLOBALS['egw_info']['user'], so everything called by it, e.g. get_(subject|body|links|attachments),
+	 * must NOT store something from user environment! By the end of the method, everything get changed back.
 	 *
 	 * @param array $data current entry
 	 * @param array $old = null old/last state of the entry or null for a new entry
@@ -807,7 +807,7 @@ abstract class Tracking
 			$attachments = $this->get_attachments($data,$old,$receiver);
 		}
 
-		// restore user enviroment BEFORE calling notification class or returning
+		// restore user environment BEFORE calling notification class or returning
 		$GLOBALS['egw_info']['user'] = $save_user;
 		// need to call preferences constructor and read_repository, to set user timezone again
 		$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
@@ -843,12 +843,12 @@ abstract class Tracking
 				$notification->set_reply_to($reply_to);
 				$notification->set_subject($subject);
 				$notification->set_links(array($link));
-				$notification->set_popupdata($link?$link['app']:null, $link);
+				$notification->set_popupdata($link['app']??null, $link, $link['id']??null);
 				if ($attachments && is_array($attachments))
 				{
 					$notification->set_attachments($attachments);
 				}
-				// run immediatly during async service, as sending mail with Horde fails, if PHP is already in shutdown
+				// run immediately during async service, as sending mail with Horde fails, if PHP is already in shutdown
 				// (json requests take care of that by calling Egw::__desctruct() explicit before it's regular triggered)
 				$run = isset($GLOBALS['egw_info']['flags']['async-service']) ? 'call_user_func_array' : Api\Egw::class.'::on_shutdown';
 				$run(static function($notification, $sender, $receiver, $subject)
@@ -1088,7 +1088,7 @@ abstract class Tracking
 	 * @param array $data
 	 * @param array $old
 	 * @param boolean $integrate_link to have links embedded inside the body
-	 * @param int|string $receiver nummeric account_id or email address
+	 * @param int|string $receiver numeric account_id or email address
 	 * @return string
 	 */
 	public function get_body($html_email,$data,$old,$integrate_link = true,$receiver=null)

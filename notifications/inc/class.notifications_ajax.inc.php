@@ -129,13 +129,14 @@ class notifications_ajax
 	}
 
 	/**
-	 * Remove given notification id(s) from the table
+	 * Remove given notification id(s) and app_ids from the table
 	 *
 	 * @param int[]|array[] $notifymessages one or multiple notify_id(s) or objects incl. id attribute
+	 * @param array[] $app_ids app-name int[] pairs
 	 */
-	public function delete_message(array $notifymessages)
+	public function delete_message(array $notifymessages, array $app_ids=[])
 	{
-		$this->update($notifymessages, null);   // null = delete
+		$this->update($notifymessages, null, $app_ids ?? []);   // null = delete
 
 		// if we delete all messages (we either delete one or all!), we return the next chunk of messages directly
 		if (count($notifymessages) > 1)
@@ -165,11 +166,12 @@ class notifications_ajax
 	 *
 	 * @param array $notifymessages
 	 * @param string|null $status use null to delete
+	 * @param array[] $app_ids app-name int[] pairs
 	 * @return array
 	 */
-	protected function update(array $notifymessages, $status='SEEN')
+	protected function update(array $notifymessages, $status='SEEN', array $app_ids=[])
 	{
-		$notify_ids = $app_ids = [];
+		$notify_ids = [];
 		foreach ($notifymessages as $data)
 		{
 			if (is_array($data) && !empty($data['id']))
@@ -187,14 +189,13 @@ class notifications_ajax
 		}
 		$cut_off = $this->db->quote(Api\DateTime::to(self::CUT_OFF_DATE, Api\DateTime::DATABASE));
 		try {
-			// MariaDB code using JSON_EXTRACT()
 			foreach($app_ids as $app => $ids)
 			{
 				$where = [
 					'account_id' => $this->recipient->account_id,
 					'notify_type' => self::_type,
-					"JSON_EXTRACT(notify_data, '$.appname') = ".$this->db->quote($app),
-					"JSON_EXTRACT(notify_data, '$.data.id') IN (".implode(',', array_map([$this->db, 'quote'], array_unique($ids))).')',
+					'notify_app' => $app,
+					'notify_app_id' => array_unique($ids),
 					'notify_created > '.$cut_off,
 				];
 				if (isset($status))
@@ -207,21 +208,8 @@ class notifications_ajax
 				}
 			}
 		}
-		// other DBs
 		catch (Api\Db\Exception $e) {
-			foreach($this->db->select(self::_notification_table, 'notify_id,notify_data', [
-				'account_id' => $this->recipient->account_id,
-				'notify_type' => self::_type,
-				'notify_created > '.$cut_off,
-				"notify_data <> '[]'",  // does not return NULL or '[]' rows
-			], __LINE__, __FILE__, false,'', self::_appname) as $row)
-			{
-				if (($data = json_decode($row['notify_data'], true)) &&
-					isset($data['data']['id']) && in_array($data['data']['id'], $app_ids[$data['appname']] ?? []))
-				{
-					$notify_ids[] = $row['notify_id'];
-				}
-			}
+			// ignore, if DB is not yet updated with notify_app(_id) columns
 		}
 		$where = [
 			'notify_id' => array_unique($notify_ids),
