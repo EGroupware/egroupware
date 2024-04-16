@@ -72,9 +72,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
 	@property({type: String})
 	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
-	@property()
+	@property({type: Function})
 	onopenstart //description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
-	@property()
+	@property({type: Function})
 	onopenend   //description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
 	@property({type: String})
 	imagePath: String = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
@@ -397,27 +397,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	public getSelectedItem(): TreeItemData
 	{
 		return this._currentOption || (this._selectOptions ? this._selectOptions[0] : null);
-	}
-
-	/**
-	 * getValue, retrieves the Ids of the selected Items
-	 * @return string or object or null
-	 */
-	getValue()
-	{
-		if(this.multiple)
-		{
-			let res:string[] = [];
-			if(this.selectedNodes?.length)
-			{
-				for (const selectedNode of this.selectedNodes)
-				{
-					res.push(selectedNode.id);
-				}
-			}
-			return res;
-		}
-		return this.getSelectedItem()?.id;
 	}
 
 	/**

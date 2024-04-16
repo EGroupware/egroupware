@@ -4567,33 +4567,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Show ajax-loader when the autoloading get started
-	 *
-	 * @param {type} _id item id
-	 * @param {type} _widget tree widget
-	 * @returns {Boolean}
-	 */
-	subscription_autoloadingStart: function (_id, _widget)
-	{
-		var node = _widget.input._globalIdStorageFind(_id);
-		if (node && typeof node.htmlNode != 'undefined')
-		{
-			var img = jQuery('img',node.htmlNode)[0];
-			img.src = egw.image('ajax-loader', 'admin');
-		}
-		return true;
-	},
-
-	/**
-	 * Revert back the icon after autoloading is finished
-	 * @returns {Boolean}
-	 */
-	subscription_autoloadingEnd: function ()
-	{
-		return true;
-	},
-
-	/**
 	 * Popup the subscription dialog
 	 *
 	 * @param {action} _action
@@ -5582,29 +5555,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Show ajax-loader when the autoloading get started
-	 *
-	 * @param {type} _id item id
-	 * @param {type} _widget tree widget
-	 * @returns {Boolean}
-	 */
-	folderMgmt_autoloadingStart: function(_id, _widget)
-	{
-		return this.subscription_autoloadingStart (_id, _widget);
-	},
-
-	/**
-	 * Revert back the icon after autoloading is finished
-	 * @param {type} _id item id
-	 * @param {type} _widget tree widget
-	 * @returns {Boolean}
-	 */
-	folderMgmt_autoloadingEnd: function(_id, _widget)
-	{
-		return true;
-	},
-
-	/**
 	 *
 	 * @param {type} _ids
 	 * @param {type} _widget
@@ -5686,7 +5636,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	folderMgmt_onCheck: function (_id, _widget)
 	{
-		var selected = _widget.input.getAllChecked();
+		var selected = _widget.value;
 		if (selected && selected.split(_widget.input.dlmtr).length > 5)
 		{
 			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'), 'success');
@@ -5694,39 +5644,31 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Detele button handler
+	 * Delete button handler
 	 * triggers longTask dialog and send delete operation url
 	 *
 	 */
 	folderMgmt_deleteBtn: function ()
 	{
-		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
-		var menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
+		const tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
+		const menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
 
-		var callbackDialog = function(_btn)
+		const callbackDialog = function(_btn)
 		{
 			egw.appName='mail';
 			if (_btn === Et2Dialog.YES_BUTTON)
 			{
 				if (tree)
 				{
-					var selFolders = tree.input.getAllChecked();
-					if (selFolders)
+					const selFolders = tree.value;
+					if (selFolders && selFolders.length)
 					{
-						var selFldArr = selFolders.split(tree.input.dlmtr);
-						var msg = egw.lang('Deleting %1 folders in progress ...', selFldArr.length);
+						const msg = egw.lang('Deleting %1 folders in progress ...', selFolders.length);
 						Et2Dialog.long_task(function (_val, _resp)
 						{
-							console.log(_val, _resp);
 							if (_val && _resp.type !== 'error')
 							{
-								var stat = [];
-								var folderName = '';
-								for (var i = 0; i < selFldArr.length; i++)
-								{
-									folderName = selFldArr[i].split('::');
-									stat[selFldArr[i]] = folderName[1];
-								}
+								const stat = selFolders.map(id => id.split('::')[1]);
 								// delete the item from index folderTree
 								egw.window.app.mail.mail_removeLeaf(stat);
 							}
@@ -5735,7 +5677,7 @@ app.classes.mail = AppJS.extend(
 								// submit
 								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 							}
-						}, msg, egw.lang('Deleting folders'), menuaction, selFldArr, 'mail');
+						}, msg, egw.lang('Deleting folders'), menuaction, selFolders, 'mail');
 						return true;
 					}
 				}

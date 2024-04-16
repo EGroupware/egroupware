@@ -1073,7 +1073,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 }
 #popupMainDiv {height: 100%}
 .treeContainer {
-	height: calc(100% - 10px);
+	height: calc(100% - 110px);
 	overflow-y: auto;
 }
 #mail-index_mail-index-header_right {gap: 1ex;}
