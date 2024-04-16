@@ -9,6 +9,8 @@
  * @subpackage setup
  */
 
+use EGroupware\Api;
+
 function notifications_upgrade0_5()
 {
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_notificationpopup','account_id',array(
@@ -201,4 +203,60 @@ function notifications_upgrade21_1()
 	));
 
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '23.1';
+}
+
+/**
+ * Add explicit columns for app-name and -id
+ *
+ * @return string
+ */
+function notifications_upgrade23_1()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_notificationpopup','notify_app',array(
+		'type' => 'ascii',
+		'precision' => '16',
+		'comment' => 'appname'
+	));
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_notificationpopup','notify_app_id',array(
+		'type' => 'ascii',
+		'precision' => '64',
+		'comment' => 'application id'
+	));
+
+	/** @var Api\Db $db */
+	$db = $GLOBALS['egw_setup']->db;
+	try {
+		$db->update('egw_notificationpopup',array(
+			"notify_app=JSON_VALUE(notify_data,'$.data.app')",
+			"notify_app_id=JSON_VALUE(notify_data,'$.data.id')",
+		), 'notify_data IS NOT NULL', __LINE__, __FILE__, 'notifications');
+	}
+	catch (Api\Db\Exception\InvalidSql $e) {
+		$start = 0;
+		$chunk_size = 1000;
+		do
+		{
+			foreach($rs=$db->select('egw_notificationpopup','notify_id,notify_data','notify_data IS NOT NULL',
+				__LINE__, __FILE__, $start, '', 'notifications', $chunk_size) as $row)
+			{
+				$data = json_decode($row['notify_data']);
+				if ($data && !empty($data['data']['id']))
+				{
+					$db->update('egw_notficationpopup', [
+						'notify_app' => $data['data']['app'],
+						'notify_id'  => $data['data']['id'],
+					], ['notify_id' => $row['notify_id']], __LINE__, __FILE__, 'notifications');
+				}
+				++$start;
+			}
+		}
+		while ($start && !($start % $chunk_size));
+	}
+
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_notificationpopup', array('notify_app','notify_app_id'), false);
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_notificationpopup', array('account_id','notify_type'), false);
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_notificationpopup', array('account_id'));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '23.1.001';
 }

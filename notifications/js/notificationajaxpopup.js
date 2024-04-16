@@ -6,7 +6,6 @@
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>, Ralf Becker <rb@egroupware.org>
- * @version $Id$
  */
 
 'use strict';
@@ -570,7 +569,17 @@
 
 		notifications.prototype.delete_all = function () {
 			if (!notifymessages || Object.entries(notifymessages).length == 0) return false;
-			egw.request("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages)]);
+			const app_ids = {};
+			for(const id in notifymessages)
+			{
+				const notification = notifymessages[id];
+				if (notification.data?.id && notification.data.app)
+				{
+					if (typeof app_ids[notification.data.app] === "undefined") app_ids[notification.data.app] = [];
+					app_ids[notification.data.app].push(notification.data.id);
+				}
+			}
+			egw.request("notifications.notifications_ajax.delete_message", [Object.keys(notifymessages), app_ids]);
 			notifymessages = {};
 			_currentRawData = [];	// otherwise response from delete_message/get_notifications might not get parsed
 			this.total = 0;
@@ -585,11 +594,14 @@
 		 */
 		notifications.prototype.button_delete = function(_node, _event) {
 			_event.stopPropagation();
-			var egwpopup_message = _node[0];
-			var id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
-			egw.request("notifications.notifications_ajax.delete_message", [[id]]);
-			var nextNode = egwpopup_message.next();
-			var keepLoadingPrompt = false;
+			const egwpopup_message = _node[0];
+			const id = egwpopup_message[0].id.replace(/egwpopup_message_/ig,'');
+			const notification = notifymessages[id];
+			const app_ids = {};
+			if (notification.data?.id) app_ids[notification.data.app] = [notification.data.id];
+			egw.request("notifications.notifications_ajax.delete_message", [[id], app_ids]);
+			const nextNode = egwpopup_message.next();
+			let keepLoadingPrompt = false;
 			delete (notifymessages[id]);
 			this.total -= 1;
 			this.counterUpdate();
@@ -935,7 +947,8 @@
 			// toggle notifications bar
 			jQuery('.button_right_toggle', '#egwpopup').click(function(){window.app.notifications.toggle();});
 			$egwpopup_fw.click(function(){window.app.notifications.toggle();});
-			jQuery(".egwpopup_deleteall", '#egwpopup').click(function(){
+			jQuery(".egwpopup_deleteall", '#egwpopup').click(function(_ev){
+				_ev.stopPropagation();
 				et2_dialog.show_dialog( function(_button){
 						if (_button == 2) window.app.notifications.delete_all();
 					},

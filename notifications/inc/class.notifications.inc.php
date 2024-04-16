@@ -593,7 +593,7 @@ class notifications {
 						}
 						break; // stop running through chain
 					}
-					// backend sucseeded
+					// backend succeeded
 					$user_notified = true;
 					if($action == 'stop' || $action == 'fail') { break; } // stop running through chain
 				}
@@ -827,13 +827,15 @@ class notifications {
 	 * Set popup data
 	 *
 	 * @param string $_appname
-	 * @param array $_data
+	 * @param ?array $_data
+	 *
 	 * @return boolean
 	 */
-	public function set_popupdata($_appname, $_data)
+	public function set_popupdata(string $_appname, ?array $_data, ?int $_id=null)
 	{
 		$this->popup_data = array(
 			'appname' => $_appname,
+			'id'      => $_id ?: $_data['id'] ?? null,
 			'data'    => $_data
 		);
 

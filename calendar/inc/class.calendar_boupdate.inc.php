@@ -1236,9 +1236,9 @@ class calendar_boupdate extends calendar_bo
 						// popup notifiactions: set subject, different message (without separator) and (always) links
 						$notification->set_popupsubject($subject);
 
-						if ($method =='REQUEST')
+						if ($method == 'REQUEST')
 						{
-							// Add ACCEPT|REHECT|TENTATIVE actions
+							// Add ACCEPT|REJECT|TENTATIVE actions
 							$notification->set_popupdata('calendar', array(
 								'event_id' => $event['id'],
 								'user_id' => $userid,

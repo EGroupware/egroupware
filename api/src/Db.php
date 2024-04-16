@@ -2287,7 +2287,7 @@ class Db
 
 		if ($this->Debug) echo "<p>sql='$sql'</p>";
 
-		if ($line === false && $file === false)	// call by union, to return the sql rather then run the query
+		if ($line === false && $file === false)	// call by union, to return the sql rather than run the query
 		{
 			return $sql;
 		}

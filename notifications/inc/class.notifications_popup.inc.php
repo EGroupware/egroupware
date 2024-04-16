@@ -18,7 +18,7 @@ use EGroupware\Api;
  * @abstract egwpopup is a two stage notification. In the first stage
  * notification is written into self::_notification_table.
  * In the second stage a request from the client reads
- * out the table to look if there is a notificaton for this
+ * out the table to look if there is a notification for this
  * client. The second stage is done in class.notifications_ajax.inc.php
  */
 class notifications_popup implements notifications_iface
@@ -128,6 +128,8 @@ class notifications_popup implements notifications_iface
 			'notify_type'    => self::_type,
 			'notify_data'    => $_data && is_array($_data) ? json_encode($_data) : NULL,
 			'notify_created' => new Api\DateTime(),
+			'notify_app'     => $_data['appname'],
+			'notify_app_id'  => $_data['id'],
 		), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 		$push = new Api\Json\Push($this->recipient->account_id);
@@ -154,10 +156,20 @@ class notifications_popup implements notifications_iface
 
 		$result = [];
 		if (($total =  $db->select(self::_notification_table, 'COUNT(*)', [
-			'account_id' => $_account_id,
-			'notify_type' => self::_type,
-			'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
-		], __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()))
+				'account_id' => $_account_id,
+				'notify_type' => self::_type,
+				'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
+				'notify_app_id IS NULL',
+			], __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()+
+			$db->select(
+				'('.$db->select(self::_notification_table, 'notify_app,notify_app_id', [
+					'account_id' => $_account_id,
+					'notify_type' => self::_type,
+					'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
+					'notify_app_id IS NOT NULL',
+				], false, false, false, 'GROUP BY notify_app,notify_app_id', self::_appname).') AS app_ids',
+				'COUNT(*)', false, __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()
+		))
 		{
 			$n = 0;
 			$chunk_size = 150;
@@ -188,26 +200,22 @@ class notifications_popup implements notifications_iface
 						'current' => new Api\DateTime('now'),
 						'actions' => is_array($actions) ? $actions : NULL,
 						'extra_data' => $data['data'] ?? [],
+						'app' => $notification['notify_app'] ?? $data['data']['app'] ?? null,
+						'app_id'  => $notification['notify_app_id'] ?? $data['data']['id'] ?? null,
 					];
 					// aggregate by app:id reporting only the newest entry
-					if (!empty($data['extra_data']['id']))
+					if (!empty($data['app_id']))
 					{
-						if (!isset($result[$id = $data['extra_data']['app'] . ':' . $data['extra_data']['id']]))
+						if (!isset($result[$id = $data['app'] . ':' . $data['app_id']]))
 						{
 							$result[$id] = $data;
-						}
-						else
-						{
-							$total--;
-							/* in case we want to show all
-							$result['id']['others'][] = $data;
-							*/
 						}
 					}
 					else
 					{
 						$result[] = $data;
 					}
+					if (count($result) >= min($num_rows, $total)) break;
 				}
 				$n += $chunk_size;
 			}
