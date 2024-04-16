@@ -1342,7 +1342,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			isModal: true,
 			buttons: buttons
 		});
-		dialog.egw().window.document.body.appendChild(<LitElement><unknown>dialog);
+		document.body.appendChild(<LitElement><unknown>dialog);
 
 		let log = null;
 		let progressbar = null;
