@@ -471,8 +471,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                              tabindex="-1"
                              placeholder="${this.egw().lang("search")}"
                              style="flex: 1 1 auto;"
-                               @keydown=${this._handleSearchKeyDown}
-                               @blur=${this._handleSearchBlur}
+                             @mousedown=${this._handleSearchMouseDown}
+                             @keydown=${this._handleSearchKeyDown}
+                             @blur=${this._handleSearchBlur}
                              @sl-clear=${this._handleSearchClear}
                              @sl-change=${this._handleSearchChange}
                 ></et2-textbox>
@@ -929,6 +930,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		async _handleSearchBlur(event : FocusEvent)
 		{
+			event.stopPropagation();
 			clearTimeout(this._searchTimeout);
 		}
 
