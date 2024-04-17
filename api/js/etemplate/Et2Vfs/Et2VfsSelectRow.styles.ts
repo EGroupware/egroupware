@@ -62,6 +62,7 @@ export default css`
 		padding-inline-end: var(--sl-spacing-2x-small);
 	}
 
+	.file et2-image,
 	.file et2-vfs-mime {
 		/* line-height-normal has no unit */
 		height: calc(var(--sl-line-height-normal) * 1em);

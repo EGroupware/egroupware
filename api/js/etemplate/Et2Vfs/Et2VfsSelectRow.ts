@@ -72,7 +72,11 @@ export class Et2VfsSelectRow extends Et2Widget(LitElement)
             >
                 <sl-icon part="checked-icon" class="file__check" name="check-lg" aria-hidden="true"></sl-icon>
                 <slot part="prefix" name="prefix" class="file__prefix"></slot>
-                <et2-vfs-mime .value=${this.value}></et2-vfs-mime>
+                ${typeof this.value.icon == "string" ? html`
+                                                         <et2-image src=${this.value.icon}></et2-image>` :
+                  html`
+                      <et2-vfs-mime .value=${this.value}></et2-vfs-mime>`
+                }
                 ${this.value.name}
                 <slot part="suffix" name="suffix" class="file__suffix"></slot>
             </div>
