@@ -3159,7 +3159,7 @@ tab_height CDATA #IMPLIED
 align_tabs (v|h) "h"
 >
 <!ELEMENT tabs (tab)>
-<!ELEMENT tab EMPTY*>
+<!ELEMENT tab EMPTY>
 <!ATTLIST tab
 id CDATA #IMPLIED
 label CDATA #IMPLIED
