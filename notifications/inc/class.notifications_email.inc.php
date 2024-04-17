@@ -65,7 +65,8 @@ class notifications_email implements notifications_iface {
 	 * @param object $_config
 	 * @param object $_preferences
 	 */
-	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null) {
+	public function __construct($_sender, $_recipient, $_config = null, $_preferences = null)
+	{
 		if(!is_object($_sender)) { throw new Exception("no sender given."); }
 		if(!is_object($_recipient)) { throw new Exception("no recipient given."); }
 		$this->sender = $_sender;
@@ -77,13 +78,19 @@ class notifications_email implements notifications_iface {
 			unset($this->mail);
 		}
 
+		// only pass account_id of sender, if different from current user, to be able to use current users
+		// personal mail account (requiring his password!) and not the global SMTP only account
+		$called_for = null;
+		if (!empty($_sender->account_id) && $_sender->account_id != $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$called_for = $_sender->account_id;
+		}
 		// Use configured mail account
-		$ident = null;
 		if(!empty($this->config->async_identity))
 		{
-			$ident = Api\Mail\Account::read($this->config->async_identity, $_sender->account_id ?? null);
+			$ident = Api\Mail\Account::read($this->config->async_identity, $called_for);
 		}
-		$this->mail = new Api\Mailer($ident, $_sender->account_id ?? null);
+		$this->mail = new Api\Mailer($ident ?? null, $called_for);
 	}
 
 	/**
@@ -154,7 +161,8 @@ class notifications_email implements notifications_iface {
 	 * @param boolean $_render_external
 	 * @return plain or html rendered link(s) as complete string
 	 */
-	private function render_links($_links = false, $_render_html = false, $_render_external = true) {
+	private function render_links($_links = false, $_render_html = false, $_render_external = true)
+	{
 		if(!is_array($_links) || count($_links) == 0) { return false; }
 
 		// provide defaults if given arguments are null
