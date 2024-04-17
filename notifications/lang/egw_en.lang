@@ -2,6 +2,7 @@
 account:	notifications	en	Account:
 all possible notification backends	notifications	en	All possible notification backends
 are you sure you want to delete all notifications?	notifications	en	Are you sure you want to delete all notifications?
+automatic deleted notifications older than	admin	en	Automatic deleted notifications older than
 browser	notifications	en	Browser
 browser is starting.	notifications	en	Browser is starting.
 cancal settings?	notifications	en	Cancel settings?
@@ -65,6 +66,7 @@ more info	notifications	en	More info
 notification	common	en	Notification
 notifier	notifications	en	Notifier
 notify me by	notifications	en	Notify me by
+only used if no push server available!	admin	en	Only used if no push server available!
 open notified entry	notifications	en	Open notified entry
 optimize e-mails for external mail client	notifications	en	Optimize emails for external email client
 page not found, please check serveraddress.	notifications	en	Page not found, please check server address.

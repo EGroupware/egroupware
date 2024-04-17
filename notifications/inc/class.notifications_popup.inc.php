@@ -158,14 +158,14 @@ class notifications_popup implements notifications_iface
 		if (($total =  $db->select(self::_notification_table, 'COUNT(*)', [
 				'account_id' => $_account_id,
 				'notify_type' => self::_type,
-				'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
+				'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::$cut_off_date, Api\DateTime::DATABASE))),
 				'notify_app_id IS NULL',
 			], __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()+
 			$db->select(
 				'('.$db->select(self::_notification_table, 'notify_app,notify_app_id', [
 					'account_id' => $_account_id,
 					'notify_type' => self::_type,
-					'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::CUT_OFF_DATE, Api\DateTime::DATABASE))),
+					'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::$cut_off_date, Api\DateTime::DATABASE))),
 					'notify_app_id IS NOT NULL',
 				], false, false, false, 'GROUP BY notify_app,notify_app_id', self::_appname).') AS app_ids',
 				'COUNT(*)', false, __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()

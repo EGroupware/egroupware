@@ -23,11 +23,6 @@ class notifications_ajax
 	const _appname = 'notifications';
 
 	/**
-	 * Mailappname
-	 */
-	const _mailappname = 'mail';
-
-	/**
 	 * Notification table in SQL database
 	 */
 	const _notification_table = 'egw_notificationpopup';
@@ -40,7 +35,7 @@ class notifications_ajax
 	/**
 	 * Do NOT consider notifications older than this
 	 */
-	const CUT_OFF_DATE = '-30days';
+	static public $cut_off_date = '-30days';
 
 	/**
 	 * holds account object for user to notify
@@ -48,13 +43,6 @@ class notifications_ajax
 	 * @var object
 	 */
 	private $recipient;
-
-	/**
-	 * holds config object (sitewide application config)
-	 *
-	 * @var object
-	 */
-	private $config;
 
 	/**
 	 * holds preferences array of user to notify
@@ -91,7 +79,7 @@ class notifications_ajax
 	public function __construct()
 	{
 		$this->response = Api\Json\Response::get();
-		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
+		$this->recipient = (object)$GLOBALS['egw_info']['user'];
 
 		$this->db = $GLOBALS['egw']->db;
 
@@ -187,7 +175,7 @@ class notifications_ajax
 				$notify_ids[] = $data;
 			}
 		}
-		$cut_off = $this->db->quote(Api\DateTime::to(self::CUT_OFF_DATE, Api\DateTime::DATABASE));
+		$cut_off = $this->db->quote(Api\DateTime::to(self::$cut_off_date, Api\DateTime::DATABASE));
 		try {
 			foreach($app_ids as $app => $ids)
 			{
@@ -242,5 +230,15 @@ class notifications_ajax
 		$entries = notifications_popup::read($this->recipient->account_id);
 		$this->response->apply('app.notifications.append', array($entries['rows']??[], $browserNotify, $entries['total']??0));
 		return true;
+	}
+
+	public function initStatic()
+	{
+		$config = Api\Config::read(self::_appname);
+
+		if (!empty($config['popup_cut_off_days']) && $config['popup_cut_off_days'] > 0)
+		{
+			self::$cut_off_date = "-$config[popup_cut_off_days]days";
+		}
 	}
 }
