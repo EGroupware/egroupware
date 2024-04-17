@@ -49,9 +49,9 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	{
 		if (tooltip_div != null)
 		{
-			tooltip_div.remove();
 			tooltip_div = null;
 		}
+		_wnd.document.querySelectorAll("body > .egw_tooltip").forEach(t => t.remove());
 	}
 
 	/**
