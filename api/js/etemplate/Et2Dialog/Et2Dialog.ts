@@ -1248,7 +1248,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		let button = _senders;
 		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
 		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-		let egw = _senders instanceof Et2Widget ? _senders.egw() : undefined;
+		let egw = _senders?.egw();
 		let callbackDialog = function(button_id)
 		{
 			if(button_id == Et2Dialog.YES_BUTTON)
