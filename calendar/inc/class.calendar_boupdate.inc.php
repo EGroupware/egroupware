@@ -1246,7 +1246,7 @@ class calendar_boupdate extends calendar_bo
 								'id' => $event['id'],
 								'app' => 'calendar',
 								'videoconference' => $details['videoconference'],
-							));
+							), $event['id']);
 						}
 						if ($m_type === MSG_ALARM)
 						{
@@ -1257,7 +1257,7 @@ class calendar_boupdate extends calendar_bo
 									'account_id' => $senderid,
 									'name' =>  Api\Accounts::username($senderid)
 								)
-								+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []));
+								+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []), $event['id']);
 						}
 						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
 						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
