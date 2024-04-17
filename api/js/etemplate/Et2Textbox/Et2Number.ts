@@ -161,7 +161,11 @@ export class Et2Number extends Et2Textbox
 	{
 		let val = this.__value;
 
-		if("" + val !== "")
+		if(val === "")
+		{
+			return 0;
+		}
+		else if("" + val !== "")
 		{
 			// remove decimal separator from user prefs
 			const format = this.egw().preference('number_format');
@@ -185,8 +189,16 @@ export class Et2Number extends Et2Textbox
 	private handleScroll(e)
 	{
 		const old_value = this.value;
-		const min = parseFloat(this.min ?? Number.MIN_SAFE_INTEGER);
-		const max = parseFloat(this.max ?? Number.MAX_SAFE_INTEGER);
+		let min = parseFloat(this.min ?? Number.MIN_SAFE_INTEGER);
+		if(Number.isNaN(min))
+		{
+			min = Number.MIN_SAFE_INTEGER;
+		}
+		let max = parseFloat(this.max ?? Number.MAX_SAFE_INTEGER);
+		if(Number.isNaN(max))
+		{
+			max = Number.MAX_SAFE_INTEGER;
+		}
 		this.value = "" + Math.min(Math.max(this.valueAsNumber + e.detail * (parseFloat(this.step) || 1), min), max);
 		this.dispatchEvent(new CustomEvent("sl-change", {bubbles: true}));
 		this.requestUpdate("value", old_value);
