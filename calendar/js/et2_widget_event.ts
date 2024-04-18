@@ -98,17 +98,20 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 								// Bind actions on first mouseover for faster creation
 								if (event._need_actions_linked)
 								{
-										event._copy_parent_actions();
+									event._copy_parent_actions();
 								}
 								// Tooltip
 								if (!event._tooltipElem)
 								{
-										event.options.statustext_html = true;
-										event.set_statustext(event._tooltip());
-										if (event.statustext)
-										{
-												return event.div.trigger('mouseenter');
-										}
+									event.options.statustext_html = true;
+									event.set_statustext(event._tooltip());
+									// Rebind with options
+									event.egw().tooltipUnbind(event._tooltipElem);
+									event.egw().tooltipBind(event.getTooltipElement(), event.statustext, event.options.statustext_html, {hideonhover: false});
+									if(event.statustext)
+									{
+										return jQuery(event.getTooltipElement()).trigger('mouseenter');
+									}
 								}
 								// Hacky to remove egw's tooltip border and let the mouse in
 								window.setTimeout(function ()
@@ -121,17 +124,12 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 												{
 													event.div.off('mouseleave.tooltip');
 												}
-
-												jQuery('body.egw_tooltip').remove();
-												jQuery('body').append(this);
 												jQuery(this).stop(true).fadeTo(400, 1)
 													.on('mouseleave', function()
 													{
 														jQuery(this).fadeOut('400', function()
 														{
-															jQuery(this).remove();
-															// Set up to work again
-															event.set_statustext(event._tooltip());
+															event.egw().tooltipCancel();
 														});
 													});
 											});
