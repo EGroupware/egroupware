@@ -1,0 +1,2954 @@
+<?xml encoding="UTF-8"?>
+
+<!--
+==========================================================
+    EGroupware: eTemplate 2.0 DTD
+    AUTHOR: Hadi Nategh <hn[AT]egroupware.org>, Ralf Becker <rb[AT]egroupware.org>
+    COPYRIGHT: 2016-2024 by EGroupware GmbH
+    LICENSE: https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License Version 2+
+    PUBLIC ID: "https://www.egroupware.org/etemplate2.0.dtd"
+    Version: 1.2
+==========================================================
+
+==========================================================
+    An example how to use this DTD from your XML document:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+    <overlay>
+    ...
+    </overlay>
+==========================================================
+-->
+
+<!ENTITY % Widgets "template|grid|groupbox|caption|entry|contact-value|contact-account|contact-template|infolog-value
+                    |tracker-value|records-value|hidden|radio|radiogroup|diff|styles|customfields|customfields-list|html
+                    |htmlarea|toolbar|historylog|hrule|file|progress|vfs|vfs-name|vfs-size|vfs-mode|vfs-upload|video
+                    |audio|barcode|itempicker|script|countdown|et2-avatar|et2-avatar-group|et2-lavatar|et2-colorpicker
+                    |et2-checkbox|et2-button|et2-button-icon|et2-button-scroll|et2-button-timestamp|et2-date
+                    |et2-date-duration|et2-date-range|et2-date-since|et2-date-time|et2-date-timeonly|et2-date-time-today
+                    |et2-description|et2-label|et2-dialog|et2-dropdown-button|et2-email|et2-favorites|et2-iframe
+                    |et2-appicon|et2-image|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list
+                    |et2-link-paste-dialog|et2-link-search|et2-link-string|et2-link-to|et2-nextmatch-columnselection
+                    |et2-portlet|et2-listbox|et2-select|et2-spinner|et2-switch|et2-textarea|et2-number|et2-password
+                    |et2-searchbox|et2-textbox|et2-tree|et2-tree-dropdown|et2-tree-cat|et2-url|et2-url-email|et2-url-fax
+                    |et2-url-phone|et2-vfs-mime|et2-vfs-path|et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row
+                    |et2-vfs-uid|et2-vfs-gid|et2-details|et2-box|et2-hbox|et2-vbox|et2-split|et2-tabbox">
+
+<!ELEMENT overlay (template)*>
+
+<!ELEMENT template (%Widgets;)*>
+
+<!ATTLIST template
+    template CDATA #IMPLIED
+    group CDATA #IMPLIED
+    version CDATA #IMPLIED
+    lang CDATA #IMPLIED
+    content CDATA #IMPLIED
+    url CDATA #IMPLIED
+    onload CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT grid (columns,rows)>
+
+<!ELEMENT columns (column)*>
+
+<!ELEMENT column EMPTY>
+
+<!ATTLIST column
+    disabled CDATA #IMPLIED
+    class CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
+<!ELEMENT rows (row)*>
+
+<!ELEMENT row (%Widgets;)>
+
+<!ATTLIST row
+    class CDATA #IMPLIED
+    height CDATA #IMPLIED
+    valign CDATA #IMPLIED
+    disabled CDATA #IMPLIED
+    part CDATA #IMPLIED>
+
+<!ATTLIST grid
+    border CDATA #IMPLIED
+    align CDATA 'left'
+    spacing CDATA #IMPLIED
+    padding CDATA #IMPLIED
+    sortable CDATA #IMPLIED
+    sortable_containment CDATA #IMPLIED
+    sortable_connectWith CDATA #IMPLIED
+    sortable_placeholder CDATA #IMPLIED
+    sortable_cancel CDATA #IMPLIED
+    sortable_recieveCallback CDATA #IMPLIED
+    sortable_startCallback CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT groupbox (%Widgets;)*>
+
+<!ATTLIST groupbox
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT caption EMPTY>
+
+<!ATTLIST caption
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT entry EMPTY>
+
+<!ATTLIST entry
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT contact-value EMPTY>
+
+<!ATTLIST contact-value
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT contact-account EMPTY>
+
+<!ATTLIST contact-account
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT contact-template EMPTY>
+
+<!ATTLIST contact-template
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT infolog-value EMPTY>
+
+<!ATTLIST infolog-value
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT tracker-value EMPTY>
+
+<!ATTLIST tracker-value
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT records-value EMPTY>
+
+<!ATTLIST records-value
+    field CDATA #IMPLIED
+    compare CDATA #IMPLIED
+    alternate_fields CDATA #IMPLIED
+    precision CDATA '2'
+    regex CDATA #IMPLIED
+    regex_replace CDATA #IMPLIED
+    value CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT hidden EMPTY>
+
+<!ATTLIST hidden
+    multiline (false|true|1) 'false'
+    size CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    blur CDATA #IMPLIED
+    rows CDATA #IMPLIED
+    cols CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT option EMPTY>
+
+<!ATTLIST option
+    value CDATA #IMPLIED>
+
+<!ELEMENT radio EMPTY>
+
+<!ATTLIST radio
+    set_value CDATA 'true'
+    ro_true CDATA 'x'
+    ro_false CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT radiogroup EMPTY>
+
+<!ATTLIST radiogroup
+    label CDATA #IMPLIED
+    value CDATA 'true'
+    ro_true CDATA 'x'
+    ro_false CDATA #IMPLIED
+    options CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT diff EMPTY>
+
+<!ATTLIST diff
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT styles EMPTY>
+
+<!ATTLIST styles
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT customfields EMPTY>
+
+<!ATTLIST customfields
+    customfields CDATA #IMPLIED
+    fields CDATA #IMPLIED
+    value CDATA #IMPLIED
+    type_filter CDATA #IMPLIED
+    private (false|true|1) 'undefined'
+    sub_app CDATA #IMPLIED
+    onchange CDATA #IMPLIED
+    prefix CDATA '#'
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT customfields-list EMPTY>
+
+<!ATTLIST customfields-list
+    customfields CDATA #IMPLIED
+    fields CDATA #IMPLIED
+    value CDATA #IMPLIED
+    type_filter CDATA #IMPLIED
+    private (false|true|1) 'undefined'
+    sub_app CDATA #IMPLIED
+    onchange CDATA #IMPLIED
+    prefix CDATA '#'
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT html EMPTY>
+
+<!ATTLIST html
+    label CDATA #IMPLIED
+    needed CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT htmlarea EMPTY>
+
+<!ATTLIST htmlarea
+    mode CDATA #IMPLIED
+    height CDATA #IMPLIED
+    width CDATA #IMPLIED
+    value CDATA #IMPLIED
+    imageUpload CDATA #IMPLIED
+    file_picker_callback CDATA #IMPLIED
+    images_upload_handler CDATA #IMPLIED
+    menubar (false|true|1) 'true'
+    statusbar (false|true|1) 'true'
+    valid_children CDATA '+body[style]'
+    toolbar CDATA #IMPLIED
+    toolbar_mode CDATA 'floating'
+    readonly CDATA #IMPLIED
+    toggle_readonly (false|true|1) 'true'
+    save_callback CDATA #IMPLIED
+    save_callback_params CDATA #IMPLIED
+    editable_height CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT tabs (tab)>
+
+<!ELEMENT tab EMPTY>
+
+<!ATTLIST tab
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED>
+
+<!ELEMENT tabpanels (template|%Widgets;)*>
+
+<!ENTITY % attlist.tabbox "
+    tabs CDATA #IMPLIED
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED">
+
+<!ELEMENT toolbar EMPTY>
+
+<!ATTLIST toolbar
+    view_range CDATA '5'
+    flat_list (false|true|1) 'true'
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT historylog EMPTY>
+
+<!ATTLIST historylog
+    value CDATA #IMPLIED
+    status_id CDATA 'status'
+    columns CDATA 'user_ts,owner,status,new_value,old_value'
+    get_rows CDATA 'EGroupware\Api\Storage\History::get_rows'
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT hrule EMPTY>
+
+<!ATTLIST hrule
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT file EMPTY>
+
+<!ATTLIST file
+    multiple (false|true|1) 'false'
+    max_file_size CDATA #IMPLIED
+    mime CDATA #IMPLIED
+    blur CDATA #IMPLIED
+    progress CDATA #IMPLIED
+    onStart CDATA #IMPLIED
+    onFinish CDATA #IMPLIED
+    drop_target CDATA #IMPLIED
+    label CDATA 'Choose file...'
+    progress_dropdownlist (false|true|1) 'false'
+    onFinishOne CDATA #IMPLIED
+    accept CDATA #IMPLIED
+    chunk_size CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT progress EMPTY>
+
+<!ATTLIST progress
+    href CDATA #IMPLIED
+    extra_link_target CDATA '_self'
+    extra_link_popup CDATA #IMPLIED
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT vfs EMPTY>
+
+<!ATTLIST vfs
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT vfs-name EMPTY>
+
+<!ATTLIST vfs-name
+    multiline (false|true|1) 'false'
+    size CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    blur CDATA #IMPLIED
+    rows CDATA #IMPLIED
+    cols CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT vfs-size EMPTY>
+
+<!ATTLIST vfs-size
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    font_style CDATA #IMPLIED
+    href CDATA #IMPLIED
+    activate_links (false|true|1) 'false'
+    for CDATA #IMPLIED
+    extra_link_target CDATA '_browser'
+    extra_link_popup CDATA #IMPLIED
+    expose_view (false|true|1) 'false'
+    mime CDATA #IMPLIED
+    mime_data CDATA #IMPLIED
+    hover_action CDATA #IMPLIED
+    hover_action_title CDATA 'Edit'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT vfs-mode EMPTY>
+
+<!ATTLIST vfs-mode
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    font_style CDATA #IMPLIED
+    href CDATA #IMPLIED
+    activate_links (false|true|1) 'false'
+    for CDATA #IMPLIED
+    extra_link_target CDATA '_browser'
+    extra_link_popup CDATA #IMPLIED
+    expose_view (false|true|1) 'false'
+    mime CDATA #IMPLIED
+    mime_data CDATA #IMPLIED
+    hover_action CDATA #IMPLIED
+    hover_action_title CDATA 'Edit'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT vfs-upload EMPTY>
+
+<!ATTLIST vfs-upload
+    value CDATA #IMPLIED
+    path CDATA #IMPLIED
+    multiple (false|true|1) 'false'
+    max_file_size CDATA #IMPLIED
+    mime CDATA #IMPLIED
+    blur CDATA #IMPLIED
+    progress CDATA #IMPLIED
+    onStart CDATA #IMPLIED
+    onFinish CDATA #IMPLIED
+    drop_target CDATA #IMPLIED
+    label CDATA 'Choose file...'
+    progress_dropdownlist (false|true|1) 'false'
+    onFinishOne CDATA #IMPLIED
+    accept CDATA #IMPLIED
+    chunk_size CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED
+    callback CDATA #IMPLIED>
+
+<!ELEMENT video EMPTY>
+
+<!ATTLIST video
+    video_src CDATA #IMPLIED
+    src_type CDATA #IMPLIED
+    muted (false|true|1) 'false'
+    autoplay (false|true|1) 'false'
+    starttime CDATA #IMPLIED
+    controls (false|true|1) 'false'
+    poster CDATA #IMPLIED
+    loop (false|true|1) 'false'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT audio EMPTY>
+
+<!ATTLIST audio
+    src CDATA #IMPLIED
+    src_type CDATA #IMPLIED
+    muted (false|true|1) 'false'
+    autoplay (false|true|1) 'false'
+    controls (false|true|1) 'true'
+    loop (false|true|1) 'false'
+    autohide (false|true|1) 'false'
+    preload CDATA 'auto'
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT barcode EMPTY>
+
+<!ATTLIST barcode
+    code_type CDATA 'datamatrix'
+    bgColor CDATA '#FFFFFF'
+    barColor CDATA '#000000'
+    format CDATA 'css'
+    barWidth CDATA '1'
+    barHeight CDATA '50'
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT itempicker EMPTY>
+
+<!ATTLIST itempicker
+    action CDATA #IMPLIED
+    action_label CDATA 'Action'
+    application CDATA #IMPLIED
+    blur CDATA #IMPLIED
+    value CDATA #IMPLIED
+    query CDATA #IMPLIED
+    needed (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    onfocus CDATA #IMPLIED
+    validation_error CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    label CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT script EMPTY>
+
+<!ATTLIST script
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT countdown EMPTY>
+
+<!ATTLIST countdown
+    format CDATA 's'
+    onFinish CDATA #IMPLIED
+    hideEmpties CDATA #IMPLIED
+    precision CDATA #IMPLIED
+    alarm CDATA #IMPLIED
+    onAlarm CDATA #IMPLIED
+    label CDATA #IMPLIED
+    value CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    statustext_html (false|true|1) 'false'
+    align CDATA 'left'
+    onclick CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    class CDATA #IMPLIED
+    overflow CDATA #IMPLIED
+    parent_node CDATA #IMPLIED
+    actions CDATA #IMPLIED
+    default_execute CDATA #IMPLIED
+    resize_ratio CDATA #IMPLIED
+    data CDATA #IMPLIED
+    background CDATA #IMPLIED
+    id CDATA #IMPLIED
+    no_lang (false|true|1) 'false'
+    span CDATA #IMPLIED
+    type CDATA #IMPLIED
+    readonly CDATA #IMPLIED
+    attributes CDATA #IMPLIED>
+
+<!ELEMENT et2-avatar EMPTY>
+
+<!ATTLIST et2-avatar
+    label CDATA ''
+    contactId CDATA ''
+    src CDATA ''
+    shape CDATA 'rounded'
+    editable (false|true|1) 'false'
+    image CDATA #IMPLIED
+    crop (false|true|1) 'false'
+    size CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-avatar-group EMPTY>
+
+<!ATTLIST et2-avatar-group
+    value CDATA '[]'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-lavatar EMPTY>
+
+<!ATTLIST et2-lavatar
+    lname CDATA ''
+    fname CDATA ''
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA ''
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    contactId CDATA ''
+    src CDATA ''
+    shape CDATA 'rounded'
+    editable (false|true|1) 'false'
+    image CDATA #IMPLIED
+    crop (false|true|1) 'false'
+    size CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-colorpicker EMPTY>
+
+<!ATTLIST et2-colorpicker
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-checkbox EMPTY>
+
+<!ATTLIST et2-checkbox
+    selectedValue CDATA 'true'
+    unselectedValue CDATA ''
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-button EMPTY>
+
+<!ATTLIST et2-button
+    label CDATA #IMPLIED
+    image CDATA #IMPLIED
+    hide (false|true|1) 'false'
+    noSubmit (false|true|1) 'false'
+    noValidation (false|true|1) 'false'
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-button-icon EMPTY>
+
+<!ATTLIST et2-button-icon
+    image CDATA #IMPLIED
+    hide (false|true|1) 'false'
+    noSubmit (false|true|1) 'false'
+    noValidation (false|true|1) 'false'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-button-scroll EMPTY>
+
+<!ATTLIST et2-button-scroll
+    image CDATA #IMPLIED
+    hide (false|true|1) 'false'
+    noSubmit (false|true|1) 'false'
+    noValidation (false|true|1) 'false'
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-button-timestamp EMPTY>
+
+<!ATTLIST et2-button-timestamp
+    target CDATA #IMPLIED
+    format CDATA #IMPLIED
+    timezone CDATA #IMPLIED
+    image CDATA 'timestamp'
+    hide (false|true|1) 'false'
+    noSubmit (false|true|1) 'true'
+    noValidation (false|true|1) 'false'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date EMPTY>
+
+<!ATTLIST et2-date
+    inline (false|true|1) #IMPLIED
+    placeholder CDATA #IMPLIED
+    freeMinuteEntry (false|true|1) 'false'
+    placement CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    yearRange CDATA #IMPLIED
+    dataFormat CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date-duration EMPTY>
+
+<!ATTLIST et2-date-duration
+    dataFormat CDATA 'm'
+    displayFormat CDATA 'dhm'
+    selectUnit (false|true|1) 'true'
+    percentAllowed (false|true|1) 'false'
+    hoursPerDay CDATA '8'
+    emptyNot0 (false|true|1) 'false'
+    shortLabels (false|true|1) 'false'
+    step CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date-range EMPTY>
+
+<!ATTLIST et2-date-range
+    relative (false|true|1) #IMPLIED
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date-since EMPTY>
+
+<!ATTLIST et2-date-since
+    units CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-date-time EMPTY>
+
+<!ATTLIST et2-date-time
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    inline (false|true|1) #IMPLIED
+    placeholder CDATA #IMPLIED
+    freeMinuteEntry (false|true|1) 'false'
+    placement CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date-timeonly EMPTY>
+
+<!ATTLIST et2-date-timeonly
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    inline (false|true|1) #IMPLIED
+    placeholder CDATA #IMPLIED
+    freeMinuteEntry (false|true|1) 'false'
+    placement CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-date-time-today EMPTY>
+
+<!ATTLIST et2-date-time-today
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-description EMPTY>
+
+<!ATTLIST et2-description
+    activateLinks (false|true|1) 'false'
+    extraLinkTarget CDATA '_browser'
+    extraLinkPopup CDATA ''
+    href CDATA #IMPLIED
+    value CDATA ''
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    for CDATA #IMPLIED>
+
+<!ELEMENT et2-label EMPTY>
+
+<!ATTLIST et2-label
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    activateLinks (false|true|1) 'false'
+    extraLinkTarget CDATA '_browser'
+    extraLinkPopup CDATA ''
+    href CDATA #IMPLIED
+    value CDATA ''
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-dialog EMPTY>
+
+<!ATTLIST et2-dialog
+    callback CDATA #IMPLIED
+    isModal (false|true|1) 'false'
+    title CDATA #IMPLIED
+    buttons CDATA #IMPLIED
+    template CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    message CDATA #IMPLIED
+    dialog_type CDATA #IMPLIED
+    icon CDATA #IMPLIED
+    value CDATA #IMPLIED
+    destroyOnClose (false|true|1) 'true'
+    appendTo CDATA #IMPLIED
+    hideOnEscape CDATA #IMPLIED
+    noCloseButton (false|true|1) #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-dropdown-button EMPTY>
+
+<!ATTLIST et2-dropdown-button
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-email EMPTY>
+
+<!ATTLIST et2-email
+    value CDATA '[]'
+    placeholder CDATA ''
+    allowDragAndDrop CDATA 'true'
+    allowPlaceholder (false|true|1) #IMPLIED
+    includeLists (false|true|1) #IMPLIED
+    emailDisplay CDATA #IMPLIED
+    help-text CDATA ''
+    open (false|true|1) 'false'
+    searchOptions CDATA '{includeLists: true}'
+    searchUrl CDATA 'EGroupware\\Api\\Etemplate\\Widget\\Taglist::ajax_email'
+    rows CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-favorites EMPTY>
+
+<!ATTLIST et2-favorites
+    defaultPref CDATA #IMPLIED
+    app CDATA #IMPLIED
+    filters CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-iframe EMPTY>
+
+<!ATTLIST et2-iframe
+    label CDATA #IMPLIED
+    seamless (false|true|1) #IMPLIED
+    name CDATA #IMPLIED
+    fullscreen (false|true|1) #IMPLIED
+    needed (false|true|1) #IMPLIED
+    src CDATA #IMPLIED
+    allow CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-appicon EMPTY>
+
+<!ATTLIST et2-appicon
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA ''
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    src CDATA ''
+    defaultSrc CDATA 'nonav'
+    href CDATA ''
+    extraLinkTarget CDATA '_self'
+    extraLinkPopup CDATA ''
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-image EMPTY>
+
+<!ATTLIST et2-image
+    label CDATA ''
+    src CDATA ''
+    defaultSrc CDATA ''
+    href CDATA ''
+    extraLinkTarget CDATA '_self'
+    extraLinkPopup CDATA ''
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link EMPTY>
+
+<!ATTLIST et2-link
+    app CDATA #IMPLIED
+    entryId CDATA #IMPLIED
+    value CDATA #IMPLIED
+    linkHook CDATA #IMPLIED
+    targetApp CDATA #IMPLIED
+    extraLinkTarget CDATA #IMPLIED
+    breakTitle CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link-add EMPTY>
+
+<!ATTLIST et2-link-add
+    value CDATA #IMPLIED
+    application CDATA #IMPLIED
+    applicationList CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-link-apps EMPTY>
+
+<!ATTLIST et2-link-apps
+    onlyApp CDATA ''
+    applicationList CDATA '[]'
+    appIcons (false|true|1) 'true'
+    placeholder CDATA ''
+    multiple (false|true|1) 'false'
+    disabled (false|true|1) 'false'
+    clearable (false|true|1) 'false'
+    label CDATA ''
+    placement CDATA 'bottom'
+    help-text CDATA ''
+    value CDATA #IMPLIED
+    onTagClick CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link-entry EMPTY>
+
+<!ATTLIST et2-link-entry
+    value CDATA #IMPLIED
+    onlyApp CDATA #IMPLIED
+    applicationList CDATA #IMPLIED
+    appIcons (false|true|1) #IMPLIED
+    query CDATA #IMPLIED
+    select CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    searchOptions CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-link-list EMPTY>
+
+<!ATTLIST et2-link-list
+    onchange CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    application CDATA #IMPLIED
+    entryId CDATA #IMPLIED
+    onlyApp CDATA #IMPLIED
+    linkType CDATA #IMPLIED
+    showDeleted (false|true|1) #IMPLIED
+    value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link-paste-dialog EMPTY>
+
+<!ATTLIST et2-link-paste-dialog
+    search (false|true|1) 'true'
+    searchUrl CDATA ''
+    searchOptions CDATA '{}'
+    resultsOpen (false|true|1) 'false'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    value CDATA '[]'
+    title CDATA 'Select'
+    mode CDATA #IMPLIED
+    buttonLabel CDATA 'Select'
+    filename CDATA ''
+    multiple (false|true|1) 'true'
+    path CDATA ''
+    mime CDATA ''
+    mimeList CDATA '[&#xA;&#9;&#9;{&#xA;&#9;&#9;&#9;value: &quot;/(application\\/vnd.oasis.opendocument.text|application\\/vnd.openxmlformats-officedocument.wordprocessingml.document)/i&quot;,&#xA;&#9;&#9;&#9;label: &quot;Documents&quot;&#xA;&#9;&#9;},&#xA;&#9;&#9;{&#xA;&#9;&#9;&#9;value: &quot;/(application\\/vnd.oasis.opendocument.spreadsheet|application\\/vnd.openxmlformats-officedocument.spreadsheetml.sheet)/i&quot;,&#xA;&#9;&#9;&#9;label: &quot;Spreadsheets&quot;&#xA;&#9;&#9;},&#xA;&#9;&#9;{value: &quot;image/&quot;, label: &quot;Images&quot;},&#xA;&#9;&#9;{value: &quot;video/&quot;, label: &quot;Videos&quot;}&#xA;&#9;]'
+    help-text CDATA ''
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-link-search EMPTY>
+
+<!ATTLIST et2-link-search
+    app CDATA #IMPLIED
+    placeholder CDATA ''
+    multiple (false|true|1) 'false'
+    disabled (false|true|1) 'false'
+    clearable (false|true|1) 'true'
+    label CDATA ''
+    placement CDATA 'bottom'
+    help-text CDATA ''
+    value CDATA #IMPLIED
+    onTagClick CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link-string EMPTY>
+
+<!ATTLIST et2-link-string
+    application CDATA #IMPLIED
+    entryId CDATA #IMPLIED
+    onlyApp CDATA #IMPLIED
+    linkType CDATA #IMPLIED
+    showDeleted (false|true|1) #IMPLIED
+    value CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-link-to EMPTY>
+
+<!ATTLIST et2-link-to
+    noFiles (false|true|1) 'false'
+    onlyApp CDATA #IMPLIED
+    applicationList CDATA #IMPLIED
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-nextmatch-columnselection EMPTY>
+
+<!ATTLIST et2-nextmatch-columnselection
+    value CDATA #IMPLIED
+    columns CDATA #IMPLIED
+    autoRefresh CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-portlet EMPTY>
+
+<!ATTLIST et2-portlet
+    title CDATA #IMPLIED
+    editTemplate CDATA #IMPLIED
+    color CDATA #IMPLIED
+    settings CDATA #IMPLIED
+    actions CDATA '{}'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-listbox EMPTY>
+
+<!ATTLIST et2-listbox
+    multiple (false|true|1) 'false'
+    value CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-select EMPTY>
+
+<!ATTLIST et2-select
+    placeholder CDATA ''
+    multiple (false|true|1) 'false'
+    disabled (false|true|1) 'false'
+    clearable (false|true|1) 'false'
+    label CDATA ''
+    placement CDATA 'bottom'
+    help-text CDATA ''
+    value CDATA #IMPLIED
+    onTagClick CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-spinner EMPTY>
+
+<!ATTLIST et2-spinner
+    style CDATA ''
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-switch EMPTY>
+
+<!ATTLIST et2-switch
+    toggleOn CDATA ''
+    toggleOff CDATA ''
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-textarea EMPTY>
+
+<!ATTLIST et2-textarea
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    span CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    rows CDATA #IMPLIED
+    resizeRatio CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-number EMPTY>
+
+<!ATTLIST et2-number
+    min CDATA #IMPLIED
+    max CDATA #IMPLIED
+    step CDATA #IMPLIED
+    precision CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-password EMPTY>
+
+<!ATTLIST et2-password
+    plaintext (false|true|1) 'true'
+    suggest CDATA '0'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-searchbox EMPTY>
+
+<!ATTLIST et2-searchbox
+    overlay (false|true|1) 'false'
+    fix (false|true|1) 'true'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-textbox EMPTY>
+
+<!ATTLIST et2-textbox
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-tree EMPTY>
+
+<!ATTLIST et2-tree
+    multiple CDATA 'false'
+    leafIcon CDATA #IMPLIED
+    collapsedIcon CDATA #IMPLIED
+    openIcon CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    highlighting CDATA 'false'
+    autoloading CDATA ''
+    onopenstart CDATA #IMPLIED
+    onopenend CDATA #IMPLIED
+    imagePath CDATA #IMPLIED
+    value CDATA '[]'
+    actions CDATA #IMPLIED
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-tree-dropdown EMPTY>
+
+<!ATTLIST et2-tree-dropdown
+    placeholder CDATA ''
+    multiple (false|true|1) 'false'
+    help-text CDATA ''
+    open (false|true|1) 'false'
+    actions CDATA '{}'
+    value CDATA #IMPLIED
+    search (false|true|1) 'true'
+    searchUrl CDATA ''
+    searchOptions CDATA '{}'
+    resultsOpen (false|true|1) 'false'
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-tree-cat EMPTY>
+
+<!ATTLIST et2-tree-cat
+    application CDATA ''
+    globalCategories (false|true|1) 'true'
+    search (false|true|1) 'true'
+    searchUrl CDATA ''
+    searchOptions CDATA '{}'
+    resultsOpen (false|true|1) 'false'
+    emptyLabel CDATA ''
+    select_options CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    placeholder CDATA ''
+    multiple (false|true|1) 'false'
+    help-text CDATA ''
+    open (false|true|1) 'false'
+    actions CDATA '{}'
+    value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-url EMPTY>
+
+<!ATTLIST et2-url
+    allowPath (false|true|1) 'false'
+    trailingSlash (false|true|1) 'undefined'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-url-email EMPTY>
+
+<!ATTLIST et2-url-email
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-url-fax EMPTY>
+
+<!ATTLIST et2-url-fax
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-url-phone EMPTY>
+
+<!ATTLIST et2-url-phone
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    validator CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-mime EMPTY>
+
+<!ATTLIST et2-vfs-mime
+    mime CDATA #IMPLIED
+    symlink (false|true|1) #IMPLIED
+    value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-path EMPTY>
+
+<!ATTLIST et2-vfs-path
+    help-text CDATA ''
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-select EMPTY>
+
+<!ATTLIST et2-vfs-select
+    image CDATA #IMPLIED
+    value CDATA '[]'
+    title CDATA 'Select'
+    mode CDATA #IMPLIED
+    buttonLabel CDATA 'Select'
+    filename CDATA ''
+    multiple (false|true|1) 'false'
+    path CDATA ''
+    mime CDATA ''
+    method CDATA ''
+    method-id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-select-dialog EMPTY>
+
+<!ATTLIST et2-vfs-select-dialog
+    value CDATA '[]'
+    title CDATA 'Select'
+    mode CDATA #IMPLIED
+    buttonLabel CDATA 'Select'
+    filename CDATA ''
+    multiple (false|true|1) 'false'
+    path CDATA ''
+    mime CDATA ''
+    mimeList CDATA '[&#xA;&#9;&#9;{&#xA;&#9;&#9;&#9;value: &quot;/(application\\/vnd.oasis.opendocument.text|application\\/vnd.openxmlformats-officedocument.wordprocessingml.document)/i&quot;,&#xA;&#9;&#9;&#9;label: &quot;Documents&quot;&#xA;&#9;&#9;},&#xA;&#9;&#9;{&#xA;&#9;&#9;&#9;value: &quot;/(application\\/vnd.oasis.opendocument.spreadsheet|application\\/vnd.openxmlformats-officedocument.spreadsheetml.sheet)/i&quot;,&#xA;&#9;&#9;&#9;label: &quot;Spreadsheets&quot;&#xA;&#9;&#9;},&#xA;&#9;&#9;{value: &quot;image/&quot;, label: &quot;Images&quot;},&#xA;&#9;&#9;{value: &quot;video/&quot;, label: &quot;Videos&quot;}&#xA;&#9;]'
+    help-text CDATA ''
+    searchUrl CDATA 'EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_vfsSelectFiles'
+    search (false|true|1) 'true'
+    searchOptions CDATA '{}'
+    resultsOpen (false|true|1) 'false'
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-select-row EMPTY>
+
+<!ATTLIST et2-vfs-select-row
+    value CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    class CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-uid EMPTY>
+
+<!ATTLIST et2-vfs-uid
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-gid EMPTY>
+
+<!ATTLIST et2-vfs-gid
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-details (%Widgets;)>
+
+<!ATTLIST et2-details
+    toggleOnHover (false|true|1) 'false'
+    hoist (false|true|1) 'false'
+    toggleAlign CDATA 'right'
+    overlaySummaryOnOpen (false|true|1) 'false'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-box (%Widgets;)>
+
+<!ATTLIST et2-box
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    overflow CDATA #IMPLIED>
+
+<!ELEMENT et2-hbox (%Widgets;)>
+
+<!ATTLIST et2-hbox
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    overflow CDATA #IMPLIED>
+
+<!ELEMENT et2-vbox (%Widgets;)>
+
+<!ATTLIST et2-vbox
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    overflow CDATA #IMPLIED>
+
+<!ELEMENT et2-split (%Widgets;)>
+
+<!ATTLIST et2-split
+    position CDATA #IMPLIED
+    primary CDATA #IMPLIED
+    orientation CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED>
+
+<!ELEMENT et2-tabbox (tabs,tabpanels)>
+
+<!ATTLIST et2-tabbox
+    extraTabs CDATA '[]'
+    addTabs (false|true|1) 'false'
+    tabHeight CDATA #IMPLIED
+    alignTabs CDATA #IMPLIED
+    value CDATA #IMPLIED
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    span CDATA #IMPLIED
+    cfDisabled (false|true|1) #IMPLIED
+    cfTypeFilter CDATA #IMPLIED
+    cfPrivateTab (false|true|1) #IMPLIED
+    cfPrepend CDATA #IMPLIED
+    cfExclude CDATA #IMPLIED
+    tabindex CDATA #IMPLIED>
