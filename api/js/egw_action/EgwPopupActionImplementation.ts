@@ -94,11 +94,12 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      */
     private _registerDefault =  (_node, _callback, _context)=> {
         const defaultHandler =  (e)=> {
-            // Prevent bubbling bound event on <a> tag, on touch devices
-            // a tag should be handled by default event
-            if (window.egwIsMobile() && e.target.tagName == "A") return true;
+            //allow bubbling of the expand folder event
             //do not stop bubbling of events if the event is supposed to be handled by the et2-tree
-            if (window.egwIsMobile() && e.target.className == "tree-item__label") return true;
+            if (window.egwIsMobile() && e.currentTarget.tagName == "SL-TREE-ITEM") return true;
+            // a tag should be handled by default event
+            // Prevent bubbling bound event on <a> tag, on touch devices
+            if (window.egwIsMobile() && e.target.tagName == "A") return true;
 
 
             if (typeof document["selection"] != "undefined" && typeof document["selection"].empty != "undefined") {
