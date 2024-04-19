@@ -147,7 +147,7 @@
         <element name="overlay">
             <ref name="attlist.overlay"/>
             <zeroOrMore>
-                <ref name="Widgets"/>
+                <ref name="template"/>
             </zeroOrMore>
         </element>
     </define>
@@ -295,7 +295,9 @@
     <define name="row">
         <element name="row">
             <ref name="attlist.row"/>
-            <ref name="Widgets"/>
+            <oneOrMore>
+                <ref name="Widgets"/>
+            </oneOrMore>
         </element>
     </define>
     <define name="attlist.row" combine="interleave">
@@ -313,6 +315,9 @@
         </optional>
         <optional>
             <attribute name="part"/>
+        </optional>
+        <optional>
+            <attribute name="id"/>
         </optional>
     </define>
     <define name="attlist.grid" combine="interleave">
@@ -11611,7 +11616,7 @@
             <attribute name="type_filter"/>
         </optional>
         <optional>
-            <attribute name="private" a:defaultValue="undefined">
+            <attribute name="private">
                 <choice>
                     <value>true</value>
                     <value>false</value>
@@ -11729,7 +11734,7 @@
             <attribute name="type_filter"/>
         </optional>
         <optional>
-            <attribute name="private" a:defaultValue="undefined">
+            <attribute name="private">
                 <choice>
                     <value>true</value>
                     <value>false</value>
@@ -12254,7 +12259,9 @@
     <define name="tabs">
         <element name="tabs">
             <ref name="attlist.tabs"/>
-            <ref name="tab"/>
+            <zeroOrMore>
+                <ref name="tab"/>
+            </zeroOrMore>
         </element>
     </define>
     <define name="attlist.tabs" combine="interleave">

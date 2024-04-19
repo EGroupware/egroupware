@@ -23,7 +23,7 @@
 -->
 
 <!ENTITY % Widgets "template|grid|vbox|box|details|hbox|groupbox|caption|split|button|buttononly|colorpicker|description|label|entry|contact-value|contact-account|contact-template|infolog-value|tracker-value|records-value|textbox|hidden|searchbox|int|integer|float|passwd|url|url-email|url-phone|url-fax|menupopup|listbox|select|select-cat|select-percent|select-priority|select-country|select-state|select-year|select-month|select-day|select-dow|select-hour|select-number|select-app|select-lang|select-bool|select-timezone|select-bitwise|menulist|checkbox|radio|radiogroup|date|date-time|date-timeonly|date-duration|date-since|date-time_today|time_or_date|date-range|diff|dropdown_button|styles|link-to|link-apps|link-entry|link|link-string|link-list|link-add|select-account|taglist|taglist-account|taglist-email|taglist-cat|taglist-thumbnail|taglist-state|customfields|customfields-list|favorites|html|htmlarea|tabbox|button-timestamp|timestamper|toolbar|tree|tree-cat|historylog|hrule|image|appicon|avatar|lavatar|iframe|file|progress|portlet|ajax_select|vfs|vfs-name|vfs-path|vfs-mime|vfs-size|vfs-mode|vfs-uid|vfs-gid|vfs-upload|vfs-select|video|audio|barcode|itempicker|script|countdown">
-<!ELEMENT overlay (%Widgets;)*>
+<!ELEMENT overlay (template)*>
 <!ELEMENT template (%Widgets;)*>
 <!ATTLIST template
 template CDATA #IMPLIED
@@ -59,13 +59,14 @@ attributes CDATA #IMPLIED
 						class CDATA #IMPLIED
 						width CDATA #IMPLIED>
 					<!ELEMENT rows (row)*>
-					<!ELEMENT row (%Widgets;)>
+					<!ELEMENT row (%Widgets;)+>
 					<!ATTLIST row
 						class CDATA #IMPLIED
 						height CDATA #IMPLIED
 						valign CDATA #IMPLIED
 						disabled CDATA #IMPLIED
 						part CDATA #IMPLIED
+						id CDATA #IMPLIED
 					>
 <!ATTLIST grid
 border CDATA #IMPLIED
@@ -2984,7 +2985,7 @@ customfields CDATA #IMPLIED
 fields CDATA #IMPLIED
 value CDATA #IMPLIED
 type_filter CDATA #IMPLIED
-private (true|false) "undefined"
+private (true|false) #IMPLIED
 sub_app CDATA #IMPLIED
 onchange CDATA #IMPLIED
 prefix CDATA "#"
@@ -3017,7 +3018,7 @@ customfields CDATA #IMPLIED
 fields CDATA #IMPLIED
 value CDATA #IMPLIED
 type_filter CDATA #IMPLIED
-private (true|false) "undefined"
+private (true|false) #IMPLIED
 sub_app CDATA #IMPLIED
 onchange CDATA #IMPLIED
 prefix CDATA "#"
@@ -3158,7 +3159,7 @@ add_tabs (true|false) "false"
 tab_height CDATA #IMPLIED
 align_tabs (v|h) "h"
 >
-<!ELEMENT tabs (tab)>
+<!ELEMENT tabs (tab)*>
 <!ELEMENT tab EMPTY>
 <!ATTLIST tab
 id CDATA #IMPLIED

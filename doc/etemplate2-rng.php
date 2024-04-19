@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /**
  * eTemplate2 XML schema
@@ -31,9 +32,10 @@ if (!file_exists(($file = __DIR__."/etemplate2/etemplate2.rng")))
 	die("Missing file '$file', you need to generate it from 'etemplate2.dtd' e.g. with PHPStorm!");
 }
 $grammar = new SimpleXMLElement(file_get_contents($file));
-$widgets = getByName($grammar, 'Widgets');
+$widgets_choice = getByName($grammar, 'Widgets')->choice;
 /**
  * Manually overwriting problems / errors in what we automatically generate
+ * Use class-name (e.g. Et2Button) so all descends inherit the fix, use-tag to fix only specific widget.
  * @todo fix in TS sources
  */
 $overwrites = [
@@ -44,7 +46,9 @@ $overwrites = [
 			'id' => 'string',   // commented out with some reasoning in Et2Widget
 			//'data' => null,   // ToDo: not sure, but AFAIK this is no attribute, but somehow listed in each widget
 			'width'  => 'string',
+            'height' => 'string',
 			'span' => 'string', // actually int|"all"
+            'slot' => 'string',
 		],
 	],
 	'Et2InputWidget' => [
@@ -109,7 +113,34 @@ $overwrites = [
 	'et2-split' => [
 		'.children' => 'Widgets',
 	],
-	'et2-select-*' => 'et2-select',     // seems like et2-select-* widgets are NOT parsed
+	'et2-url-email' => [
+		'.attrs' => [
+			'emailDisplay' => 'string', // can't see that anywhere in the code, but in addressbook.index.xet
+		],
+	],
+	'et2-nextmatch-header-custom' => [
+        '.attrs' => [
+            'emptyLabel' => 'string',
+        ],
+    ],
+    'Et2Button' => [
+	    '.attrs' => [
+		    'image' => 'string',
+            'noSubmit' => 'boolean',
+	    ],
+    ],
+    'Et2Select' => [
+        '.attrs' => [
+	        'rows' => 'int',
+            'tabindex' => 'int',
+            'allowFreeEntries' => 'boolean',
+        ],
+    ],
+    'et2-email' => [
+	    '.attrs' => [
+		    'onTagClick' => 'function',
+	    ],
+    ],
 ];
 
 /**
@@ -118,13 +149,75 @@ $overwrites = [
 // make overlay the only allowed start element
 removeNode($grammar->start->choice);
 $grammar->start->addChild('ref')->addAttribute('name', 'overlay');
-// overlay can only container template, not all widgets
-getByName($grammar, 'overlay')->element->zeroOrMore->ref->attributes()['name'] = 'template';
-getByName($grammar, 'attlist.vfs-upload')->addChild('optional')
-	->addChild('attribute')->addAttribute('name', 'callback');
-// add statustext to tab
-getByName($grammar, 'attlist.tab')->addChild('optional')
-	->addChild('attribute')->addAttribute('name', 'statustext');
+// fix legacy widgets: attribute-name => (array of) widgets
+$missing_legacy_attributes = [
+    'callback' => 'vfs-upload',
+    'statustext' => 'tab',
+	'minWidth' => 'column',
+	'maxWidth' => 'column',
+    'id' => [
+		'.optional' => false,
+		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields', 'nextmatch',
+    ],
+	'template' => ['.optional' => false, 'nextmatch'],
+	'header_left' => 'nextmatch',
+	'header_row' => 'nextmatch',
+	'header_right' => 'nextmatch',
+	'disabled' => 'nextmatch',
+	'onselect' => 'nextmatch',
+	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader'],
+	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader'],
+	'label' => [
+        '.optional' => false,
+        'nextmatch-header', 'nextmatch-sortheader',
+    ],
+    'sortmode' => [
+        '.values' => ['ASC', 'DESC'],
+        '.default' => 'ASC',
+	    'nextmatch-sortheader',
+    ],
+];
+foreach($missing_legacy_attributes as $attribute => $widgets)
+{
+    foreach((array)$widgets as $key => $widget)
+    {
+        if (!is_int($key)) continue;	// .(values|default)
+        // widget not found add it plus it's attribute-list
+        if (!getByName($grammar, $widget))
+        {
+	        $widgets_choice->addChild('ref')->addAttribute('name', $widget);
+	        ($define = $grammar->addChild('define'))->addAttribute('name', $widget);
+	        ($element = $define->addChild('element'))->addAttribute('name', $widget);
+            $element->addChild('ref')->addAttribute('name', 'attlist.'.$widget);
+            $element->addChild('empty');	// no children allowed
+	        $grammar->addChild('define')->addAttribute('name', 'attlist.'.$widget);
+        }
+        // add (optional) attribute
+        if (!is_array($widgets) || (!isset($widgets['.optional']) || $widgets['.optional'] === true))
+        {
+	        $attr = getByName($grammar, 'attlist.'.$widget)->addChild('optional')
+	        	->addChild('attribute');
+        }
+        else
+        {
+	        $attr = getByName($grammar, 'attlist.'.$widget)->addChild('attribute');
+        }
+ 	    $attr->addAttribute('name', $attribute);
+        // add values and/or default
+        if (is_array($widgets) && isset($widgets['.values']))
+        {
+            $choice = $attr->addChild('choice');
+            foreach($widgets['.values'] as $value)
+            {
+                $choice->addChild('value', $value);
+            }
+        }
+	    if (is_array($widgets) && isset($widgets['.default']))
+	    {
+            $attr->addAttribute('a:defaultValue', $widgets['.default'], 'http://relaxng.org/ns/compatibility/annotations/1.0');
+	    }
+    }
+}
 
 // build a hashed version of all classes, members and attributes to e.g. find ancestors
 $classes = [];
@@ -175,7 +268,7 @@ foreach($data['modules'] as $module)
 		$attrs = $element->addChild('ref');
 		$attrs->addAttribute('name', 'attlist.'.$export['name']);
 		// add to widgets
-		$widgets->choice->addChild('ref')->addAttribute('name', $export['name']);
+		$widgets_choice->addChild('ref')->addAttribute('name', $export['name']);
 
 		// add the element-attributes
 		$attrs = $grammar->addChild('define');
@@ -193,10 +286,11 @@ foreach($data['modules'] as $module)
 		}
 		else
 		{
+            $list = $element->addChild('oneOrMore');    // zeroOrMore for e.g. empty boxes?
 			// add allowed children
 			foreach((array)$overwrites[$export['name']]['.children'] as $child)
 			{
-				$element->addChild('ref')->addAttribute('name', $child);
+				$list->addChild('ref')->addAttribute('name', $child);
 			}
 		}
 
@@ -206,7 +300,7 @@ foreach($data['modules'] as $module)
 }
 
 $remove = [];
-foreach($widgets->choice->children() as $widget)
+foreach($widgets_choice->children() as $widget)
 {
 	if (preg_match($overwrites['.remove'], $name=(string)$widget->attributes()['name']))
 	{
@@ -261,8 +355,8 @@ echo preg_replace('#<choice>
  */
 function removeWidget(string $name)
 {
-	global $grammar, $widgets;
-	if (removeByName($widgets->choice, $name))
+	global $grammar, $widgets_choice;
+	if (removeByName($widgets_choice, $name))
 	{
 		removeByName($grammar, $name);
 		removeByName($grammar, 'attlist.'.$name);
@@ -381,7 +475,10 @@ function attributes(array $class, ?SimpleXMLElement $attrs=null)
 			{
 				$default = substr($default, 1, -1);
 			}
-			$attribute->addAttribute('a:defaultValue', $default, 'http://relaxng.org/ns/compatibility/annotations/1.0');
+            if ($default !== 'undefined')   // do NOT add undefined, it's the default anyway
+            {
+                $attribute->addAttribute('a:defaultValue', $default, 'http://relaxng.org/ns/compatibility/annotations/1.0');
+            }
 		}
 		switch ($attr['type']['text'] ?? 'any')
 		{
