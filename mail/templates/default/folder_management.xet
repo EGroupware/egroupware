@@ -6,8 +6,8 @@
 			<et2-description  value="Folder Management" class="mail_folder_management_header"></et2-description>
 		</et2-hbox>
 		<et2-hbox  class="treeContainer">
-			<et2-tree id="tree" multiple="true" autoloading="mail_ui::ajax_folderMgmtTree_autoloading" multimarking="strict"
-				oncheck="app.mail.folderMgmt_onCheck" onselect="app.mail.folderMgmt_onSelect" highlighting="true"></et2-tree>
+			<et2-tree id="tree" multiple="true" autoloading="mail_ui::ajax_folderMgmtTree_autoloading"
+				x-onselect="app.mail.folderMgmt_onSelect" onclick="app.mail.foldertree_subselect"></et2-tree>
 		</et2-hbox>
 		<et2-hbox  class="dialogFooterToolbar">
 			<et2-button  statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"></et2-button>

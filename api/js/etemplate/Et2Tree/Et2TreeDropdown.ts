@@ -63,6 +63,9 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	/** The component's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = "";
 
+	@property({type: String})
+	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+
 	/**
 	 * Indicates whether the dropdown is open. You can toggle this attribute to show and hide the tree, or you can
 	 * use the `show()` and `hide()` methods and this attribute will reflect the open state.
@@ -636,6 +639,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 ._selectOptions=${this.select_options}
                                 .actions=${this.actions}
                                 .styleTemplate=${() => this.styleTemplate()}
+								.autoloading="${this.autoloading}"
 
                                 @sl-selection-change=${this.handleTreeChange}
                         >

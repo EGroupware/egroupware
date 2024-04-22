@@ -690,10 +690,8 @@ app.classes.mail = AppJS.extend(
 						break;
 					case 'add':
 						const current_id = tree.getValue();
-						tree.refreshItem(0);	// refresh root
-						// ToDo: tree.refreshItem() and openItem() should return a promise
 						// need to wait tree is refreshed: current and new id are there AND current folder is selected again
-						const interval = window.setInterval(() => {
+						tree.refreshItem(0).then(() => {
 							if (tree.getNode(_id) && tree.getNode(current_id))
 							{
 								if (!tree.getSelectedNode())
@@ -702,24 +700,21 @@ app.classes.mail = AppJS.extend(
 								}
 								else
 								{
-									window.clearInterval(interval);
 									// open new account
-									tree.openItem(_id, true);
 									// need to wait new folders are loaded AND current folder is selected again
-									const open_interval = window.setInterval(() => {
+									tree.openItem(_id, true).then(() => {
 										if (tree.getNode(_id + '::INBOX')) {
 											if (!tree.getSelectedNode()) {
 												tree.reSelectItem(current_id);
 											} else {
-												window.clearInterval(open_interval);
 												this.mail_changeFolder(_id + '::INBOX', tree, current_id);
 												tree.reSelectItem(_id + '::INBOX');
 											}
 										}
-									}, 200);
+									});
 								}
 							}
-						}, 200);
+						});
 						break;
 					default: // null
 				}
@@ -4549,24 +4544,6 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Submit on apply button and save current tree state
-	 *
-	 * @param {type} _egw
-	 * @param {type} _widget
-	 * @returns {undefined}
-	 */
-	subscription_apply: function (_egw, _widget)
-	{
-		var tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('foldertree');
-		if (tree)
-		{
-			tree.input._xfullXML = true;
-			this.subscription_treeLastState = tree.input.serializeTreeToJSON();
-		}
-		this.et2._inst.submit(_widget);
-	},
-
-	/**
 	 * Popup the subscription dialog
 	 *
 	 * @param {action} _action
@@ -4611,16 +4588,26 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
-	 * Onclick for node/foldername in subscription popup
+	 * Onclick for foldertree to (un)select children
 	 *
 	 * Used to (un)check node including all children
 	 *
 	 * @param {string} _id id of clicked node
 	 * @param {et2_tree} _widget reference to tree widget
+	 * @param {PoinerEvent} _ev
 	 */
-	subscribe_onclick: function(_id, _widget)
+	foldertree_subselect: function(_id, _widget, _ev)
 	{
-		_widget.setSubChecked(_id, "toggle");
+		const node = _widget.getNode(_id);
+		// do we need to autoload the subitems first
+		if (node.child && !node.item.length)
+		{
+			_widget.refreshItem(_id).then(() =>_widget.setSubChecked(_id, "toggle"));
+		}
+		else
+		{
+			_widget.setSubChecked(_id, "toggle");
+		}
 	},
 
 	/**
@@ -5555,6 +5542,7 @@ app.classes.mail = AppJS.extend(
 	},
 
 	/**
+	 * Range selection for old dhtmlx tree currently NOT used
 	 *
 	 * @param {type} _ids
 	 * @param {type} _widget
@@ -5572,7 +5560,7 @@ app.classes.mail = AppJS.extend(
 		 *
 		 * @param {string} _a start node id
 		 * @param {string} _b end node id
-		 * @param {string} _branch totall node ids in the level
+		 * @param {string} _branch total node ids in the level
 		 */
 		var rangeSelector = function(_a,_b, _branch)
 		{
@@ -5608,38 +5596,6 @@ app.classes.mail = AppJS.extend(
 		if (resetSelection)
 		{
 			_widget.input._unselectItems();
-		}
-	},
-
-	/**
-	 * Set enable/disable checkbox
-	 *
-	 * @param {object} _widget tree widget
-	 * @param {string} _itemId item tree id
-	 * @param {boolean} _stat - status to be set on checkbox true/false
-	 */
-	folderMgmt_setCheckbox: function (_widget, _itemId, _stat)
-	{
-		if (_widget)
-		{
-			_widget.input.setCheck(_itemId, _stat);
-			_widget.input.setSubChecked(_itemId,_stat);
-		}
-	},
-
-	/**
-	 *
-	 * @param {type} _id
-	 * @param {type} _widget
-	 * @TODO: Implement onCheck handler in order to select or deselect subItems
-	 *	of a checked parent node
-	 */
-	folderMgmt_onCheck: function (_id, _widget)
-	{
-		var selected = _widget.value;
-		if (selected && selected.split(_widget.input.dlmtr).length > 5)
-		{
-			egw.message(egw.lang('If you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.'), 'success');
 		}
 	},
 

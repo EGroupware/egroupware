@@ -408,7 +408,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return this._currentSlTreeItem
 	}
 
-	getDomNode(_id): SlTreeItem
+	getDomNode(_id): SlTreeItem|null
 	{
 		return this.shadowRoot.querySelector("sl-tree-item[id='" + _id + "'");
 	}
@@ -487,19 +487,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 * @param {string} _id ID of the node
 	 * @param {Object} [data] If provided, the item is refreshed directly  with
 	 *    the provided data instead of asking the server
-	 * @return void
+	 * @return Promise
 	 */
 	refreshItem(_id, data)
 	{
+		/* TODO currently always ask the sever
 		if (typeof data != "undefined" && data != null)
 		{
-			//TODO currently always ask the sever
+
 			//data seems never to be used
 			this.refreshItem(_id, null)
-		} else
+		} else*/
 		{
 			let item = this.getNode(_id)
-			this.handleLazyLoading(item).then((result) => {
+			return this.handleLazyLoading(item).then((result) => {
 				item.item = [...result.item]
 				this.requestUpdate("_selectOptions")
 			})
@@ -578,6 +579,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 * @param _id
 	 * @param _newItemId
 	 * @param _label
+	 * @return Promise
 	 */
 	public renameItem(_id, _newItemId, _label)
 	{
@@ -602,6 +604,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 		if (typeof _label != 'undefined') this.setLabel(_newItemId, _label);
 		this.requestUpdate()
+		return this.updatedComplete();
 	}
 
 	public focusItem(_id)
@@ -610,7 +613,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		item.focused = true
 	}
 
-	public openItem(_id)
+	/**
+	 * Open an item, which might trigger lazy-loading
+	 *
+	 * @param string _id
+	 * @return Promise
+	 */
+	public openItem(_id : string)
 	{
 		let item = this.getNode(_id);
 		if(item)
@@ -618,6 +627,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			item.open = 1;
 		}
 		this.requestUpdate();
+		return this.updateComplete;
 	}
 
 	/**
@@ -645,6 +655,38 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			this._currentSlTreeItem = node;
 			node.selected = true
 		}
+	}
+
+	/**
+	 * Set or unset checkbox of given node and all it's children based on given value
+	 *
+	 * @param _id
+	 * @param _value "toggle" means the current nodes value, as the toggle already happened by default
+	 * @return boolean false if _id was not found
+	 */
+	setSubChecked(_id : string, _value : boolean|"toggle")
+	{
+		const node = this.getDomNode(_id);
+		if (!node) return false;
+
+		if (_value !== 'toggle')
+		{
+			node.selected = _value;
+		}
+		Array.from(node.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) => {
+			item.selected = node.selected;
+		});
+		// set selectedNodes and value
+		this.selectedNodes = [];
+		this.value = [];
+		Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) => {
+			if (item.selected)
+			{
+				this.selectedNodes.push(item);
+				this.value.push(item.id);
+			}
+		});
+		return true;
 	}
 
 	getUserData(_nodeId, _name)
@@ -731,22 +773,57 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
             ${this.styleTemplate()}
             <sl-tree
                     part="tree"
-                    .selection=${this.multiple ? "multiple" : "single"}
+                    .selection=${/* implement unlinked multiple: this.multiple ? "multiple" :*/ "single"}
                     @sl-selection-change=${
                             (event: any) => {
-                                this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value) : null);
+                                this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
                                 this._currentOption = this.getNode(event.detail.selection[0].id) ?? this.optionSearch(event.detail.selection[0].id, this._selectOptions, 'id', 'item');
                                 const ids = event.detail.selection.map(i => i.id);
-                                this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
+								// implemented unlinked multiple
+								if (this.multiple)
+                                {
+                                    const idx = this.value.indexOf(ids[0]);
+                                    if (idx < 0)
+                                    {
+                                        this.value.push(ids[0]);
+                                    }
+                                    else
+                                    {
+                                        this.value.splice(idx, 1);
+                                    }
+									// sync tree-items selected attribute with this.value
+									this.selectedNodes = [];
+                                    Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) =>
+                                    {
+                                        if(this.value.includes(item.id))
+                                        {
+                                            item.setAttribute("selected", "");
+											this.selectedNodes.push(item);
+                                        }
+                                        else
+                                        {
+                                            item.removeAttribute("selected");
+                                        }
+                                    });
+                                    this._tree.requestUpdate();
+                                }
+								else
+                                {
+                                    this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
+                                }
                                 event.detail.previous = this._previousOption?.id;
                                 this._currentSlTreeItem = event.detail.selection[0];
+								/* implemented unlinked-multiple
 								if(this.multiple)
 								{
 									this.selectedNodes = event.detail.selection
-								}
+								}*/
                                 if(typeof this.onclick == "function")
                                 {
-                                    this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+									// wait for the update, so app founds DOM in the expected state
+									this._tree.updateComplete.then(() => {
+                                        this.onclick(event.detail.selection[0].id, this, event.detail.previous)
+									});
                                 }
                             }
                     }
@@ -939,22 +1016,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			}
 		}
 	}
-
-
-
-	private createTree()
-	{
-		// widget.input = document.querySelector("et2-tree");
-		// // Allow controlling icon size by CSS
-		// widget.input.def_img_x = "";
-		// widget.input.def_img_y = "";
-		//
-		// // to allow "," in value, eg. folder-names, IF value is specified as array
-		// widget.input.dlmtr = ':}-*(';
-		// @ts-ignore from static get properties
-
-	}
-
 }
 
 customElements.define("et2-tree", Et2Tree);
