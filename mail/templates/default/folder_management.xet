@@ -10,7 +10,7 @@
 				x-onselect="app.mail.folderMgmt_onSelect" onclick="app.mail.foldertree_subselect"></et2-tree>
 		</et2-hbox>
 		<et2-hbox  class="dialogFooterToolbar">
-			<et2-button  statustext="Delete" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"></et2-button>
+			<et2-button  statustext="Delete selected folders" label="Delete" id="button[delete]" onclick="app.mail.folderMgmt_deleteBtn"></et2-button>
 			<et2-button  label="Cancel" id="button[cancel]" onclick="window.close()"></et2-button>
 		</et2-hbox>
 	</template>

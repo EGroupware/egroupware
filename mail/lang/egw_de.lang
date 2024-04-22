@@ -139,6 +139,7 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll. Die Bezeichnungen beziehen sich auf die Felder im E-Mail-Konto.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
+delete selected folders	mail	de	Ausgewählte Ordner löschen
 delete this acl	mail	de	Zugriffsrechte löschen
 deleted	mail	de	Gelöscht
 deleted %1 messages in %2	mail	de	Es wurden %1 Nachricht(en) in %2 gelöscht.
@@ -719,6 +720,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	de	Sie müssen Ihr S/MIME-Passwort eingeben um diese Nachricht zu senden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	de	Sie müssen das Mailvelope-Plugin für Chrome oder Firefox von %1 installieren.
 you need to save the message as draft first before to be able to save it into vfs	mail	de	Sie müssen die E-Mail zuerst als Entwurf speichern, bevor Sie die Mail im EGroupware Dateimanager speichern können.
+you need to select some folders first (by clicking on them)!	mail	de	Sie müssen zuerst einige Ordner auswählen (in dem Sie diese anklicken)!
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!<br>Bitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.<br>Wenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
