@@ -108,6 +108,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				--icon-width: 20px;
 			  }
 
+				.form-control--has-label::part(form-control-label) {
+					margin-right: var(--sl-spacing-medium);
+				}
 
 			  ::slotted(img), img {
 				vertical-align: middle;
@@ -1037,7 +1040,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return html`
             ${this._styleTemplate()}
             <sl-select
-                    exportparts="prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option"
+                    class=${classMap({
+                        "form-control--has-label": this.label !== ""
+                    })}
+                    exportparts="form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
                     ?multiple=${this.multiple}
