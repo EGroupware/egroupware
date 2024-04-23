@@ -1579,6 +1579,12 @@
     <optional>
       <attribute name="value"/>
     </optional>
+    <optional>
+      <attribute name="value"/>
+    </optional>
+    <optional>
+      <attribute name="statustext"/>
+    </optional>
   </define>
   <define name="radio">
     <element name="radio">
@@ -8820,7 +8826,9 @@
   <define name="et2-select">
     <element name="et2-select">
       <ref name="attlist.et2-select"/>
-      <empty/>
+      <zeroOrMore>
+        <ref name="option"/>
+      </zeroOrMore>
     </element>
   </define>
   <define name="attlist.et2-select" combine="interleave">
@@ -9290,6 +9298,9 @@
       <attribute name="resizeRatio"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -9424,6 +9435,9 @@
       <attribute name="maxlength"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -9556,6 +9570,9 @@
     </optional>
     <optional>
       <attribute name="maxlength"/>
+    </optional>
+    <optional>
+      <attribute name="size"/>
     </optional>
     <optional>
       <attribute name="tabindex"/>
@@ -9698,6 +9715,9 @@
       <attribute name="maxlength"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -9818,6 +9838,9 @@
     </optional>
     <optional>
       <attribute name="maxlength"/>
+    </optional>
+    <optional>
+      <attribute name="size"/>
     </optional>
     <optional>
       <attribute name="tabindex"/>
@@ -10404,6 +10427,9 @@
       <attribute name="maxlength"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -10529,6 +10555,9 @@
       <attribute name="maxlength"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -10651,6 +10680,9 @@
       <attribute name="maxlength"/>
     </optional>
     <optional>
+      <attribute name="size"/>
+    </optional>
+    <optional>
       <attribute name="tabindex"/>
     </optional>
   </define>
@@ -10771,6 +10803,9 @@
     </optional>
     <optional>
       <attribute name="maxlength"/>
+    </optional>
+    <optional>
+      <attribute name="size"/>
     </optional>
     <optional>
       <attribute name="tabindex"/>

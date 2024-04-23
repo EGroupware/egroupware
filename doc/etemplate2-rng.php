@@ -60,6 +60,7 @@ $overwrites = [
 		'.attrs' => [
 			'placeholder' => 'string',
 			'maxlength' => 'int',
+			'size' => 'int',
 		],
 	],
 	'Et2InvokerMixin' => 'Et2TextBox',
@@ -73,6 +74,7 @@ $overwrites = [
 			'maxlength' => 'int',
 			'rows' => 'int',
 			'resizeRatio' => 'number',  // is this correct
+			'size' => 'int',
 		],
 	],
 	'et2-date' => [
@@ -136,6 +138,9 @@ $overwrites = [
             'allowFreeEntries' => 'boolean',
         ],
     ],
+	'et2-select' => [
+		'.children' => ['.quantity' => 'zeroOrMore', 'option'],
+	],
     'et2-email' => [
 	    '.attrs' => [
 		    'onTagClick' => 'function',
@@ -172,6 +177,7 @@ $missing_legacy_attributes = [
 	'minWidth' => 'column',
 	'onchange'  => 'customfields-types',
 	'onselect' => 'nextmatch',
+    'value' => 'option',
 	'readonly' => 'customfields-types',
     'sortmode' => [
         '.values' => ['ASC', 'DESC'],
@@ -179,7 +185,7 @@ $missing_legacy_attributes = [
 	    'nextmatch-sortheader',
     ],
 	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
-	'statustext' => ['tab', 'customfields-types'],
+	'statustext' => ['tab', 'customfields-types', 'option'],
 	'template' => ['.optional' => false, 'nextmatch'],
 	'tab'     => 'customfields',
 ];
@@ -292,9 +298,11 @@ foreach($data['modules'] as $module)
 		}
 		else
 		{
-            $list = $element->addChild('oneOrMore');    // zeroOrMore for e.g. empty boxes?
+			$children = (array)$overwrites[$export['name']]['.children'];
+            $list = $element->addChild($children['.quantity'] ?? 'oneOrMore');    // zeroOrMore for e.g. empty boxes?
+			unset($children['.quantity']);
 			// add allowed children
-			foreach((array)$overwrites[$export['name']]['.children'] as $child)
+			foreach($children as $child)
 			{
 				$list->addChild('ref')->addAttribute('name', $child);
 			}
