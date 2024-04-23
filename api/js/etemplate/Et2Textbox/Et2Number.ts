@@ -161,11 +161,7 @@ export class Et2Number extends Et2Textbox
 	{
 		let val = super.value;
 
-		if(val === "")
-		{
-			return 0;
-		}
-		else if("" + val !== "")
+		if("" + val !== "")
 		{
 			// remove decimal separator from user prefs
 			const format = this.egw().preference('number_format');
