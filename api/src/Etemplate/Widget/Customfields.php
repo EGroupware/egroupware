@@ -22,7 +22,6 @@ use EGroupware\Api;
  */
 class Customfields extends Transformer
 {
-
 	/**
 	 * Allowed types of customfields
 	 *
@@ -209,21 +208,7 @@ class Customfields extends Transformer
 		switch($type = $this->type)
 		{
 			case 'customfields-types':
-				foreach(self::$cf_types as $lname => $label)
-				{
-					$sel_options[$lname] = lang($label);
-					$fields_with_vals[]=$lname;
-				}
-				$link_types = array_intersect_key(Api\Link::app_list('query'), Api\Link::app_list('title'));
-				// Explicitly add in filemanager, which does not support query or title
-				$link_types['filemanager'] = lang('filemanager');
-
-				ksort($link_types);
-				foreach($link_types as $lname => $label)
-				{
-					$sel_options[$lname] = '- '.$label;
-				}
-				self::$transformation['type'][$type]['sel_options'] = $sel_options;
+				self::$transformation['type'][$type]['sel_options'] = self::getCfTypes($fields_with_vals);
 				self::$transformation['type'][$type]['no_lang'] = true;
 				return parent::beforeSendToClient($cname, $expand);
 			case 'customfields-list':
@@ -292,6 +277,32 @@ class Customfields extends Transformer
 				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '' : $form_name, $expand);
 			}
 		}
+	}
+
+	/**
+	 * Get cf types for sel_options
+	 *
+	 * @param array|null $fields_with_vals
+	 * @return array
+	 */
+	public static function getCfTypes(?array &$fields_with_vals=null)
+	{
+		$sel_options = [];
+		foreach(self::$cf_types as $lname => $label)
+		{
+			$sel_options[$lname] = lang($label);
+			$fields_with_vals[]=$lname;
+		}
+		$link_types = array_intersect_key(Api\Link::app_list('query'), Api\Link::app_list('title'));
+		// Explicitly add in filemanager, which does not support query or title
+		$link_types['filemanager'] = lang('filemanager');
+
+		ksort($link_types);
+		foreach($link_types as $lname => $label)
+		{
+			$sel_options[$lname] = $label;
+		}
+		return $sel_options;
 	}
 
 	/**

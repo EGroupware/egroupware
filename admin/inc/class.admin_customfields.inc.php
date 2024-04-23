@@ -261,7 +261,7 @@ class admin_customfields
 				$content['content_types']['no_edit_types'] = true;
 			}
 			// do NOT allow to delete original contact content-type for addressbook,
-			// as it only creates support problems as users incidently delete it
+			// as it only creates support problems as users accidentally delete it
 			if ($this->appname == 'addressbook' && $this->content_type == 'n')
 			{
 				$readonlys['content_types']['delete'] = true;
@@ -273,6 +273,8 @@ class admin_customfields
 			// Disable content types
 			$this->tmpl->disableElement('content_types', true);
 		}
+		$sel_options['cf_type'] = Etemplate\Widget\Customfields::getCfTypes();
+		$sel_options['cf_tab'] = $this->so->query_list('cf_tab', '', ['cf_app' => $this->appname]);
 		$preserve = array(
 			'appname' => $this->appname,
 			'use_private' => $this->use_private,

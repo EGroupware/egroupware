@@ -44,20 +44,20 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="cf_type2"/>
+					<et2-nextmatch-header-filter emptyLabel="Type" id="cf_type2"/>
 					<nextmatch-sortheader label="Name" id="cf_name"/>
 					<nextmatch-sortheader label="Label" id="cf_label"/>
-					<nextmatch-header label="Type of field" id="cf_type"/>
+					<et2-nextmatch-header-filter emptyLabel="Type of field" id="cf_type"/>
 					<nextmatch-header label="Required" id="cf_needed"/>
 					<nextmatch-header label="Private" id="cf_private"/>
 					<nextmatch-header label="Readonly" id="cf_readonly"/>
-					<nextmatch-header label="Options"/>
+					<nextmatch-header label="Options" id="cf_values"/>
 					<et2-vbox>
-						<nextmatch-header label="Length"/>
-						<nextmatch-header label="Rows"/>
+						<nextmatch-header label="Length" id="cf_len"/>
+						<nextmatch-header label="Rows" id="cf_rows"/>
 					</et2-vbox>
 					<nextmatch-sortheader label="Order" id="cf_order"/>
-					<nextmatch-sortheader label="Tab" id="cf_tab"/>
+					<et2-nextmatch-header-filter emptyLabel="Tab" id="cf_tab"/>
 					<nextmatch-sortheader label="Last modified" id="cf_modified"/>
 				</row>
 				<row class="row" valign="top">
