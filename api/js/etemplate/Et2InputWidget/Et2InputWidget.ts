@@ -412,6 +412,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.label = pre;
 			if(post?.trim().length > 0)
 			{
+				this.__label = pre;
 				this.updateComplete.then(() =>
 				{
 					const label = document.createElement("et2-description");
