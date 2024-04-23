@@ -24,10 +24,10 @@
 <!ENTITY % Widgets "template|grid|groupbox|caption|entry|contact-value|contact-account|contact-template|infolog-value
                     |tracker-value|records-value|hidden|radio|radiogroup|diff|styles|customfields|customfields-list|html
                     |htmlarea|toolbar|historylog|hrule|file|progress|vfs|vfs-name|vfs-size|vfs-mode|vfs-upload|video
-                    |audio|barcode|itempicker|script|countdown|nextmatch-header|nextmatch-sortheader
-                    |nextmatch-customfields|nextmatch|et2-avatar|et2-avatar-group|et2-lavatar|et2-checkbox|et2-button
-                    |et2-button-icon|et2-button-scroll|et2-button-timestamp|et2-colorpicker|et2-description|et2-label
-                    |et2-date|et2-date-duration|et2-date-range|et2-date-since|et2-date-time|et2-date-timeonly
+                    |audio|barcode|itempicker|script|countdown|customfields-types|nextmatch|nextmatch-header
+                    |nextmatch-customfields|nextmatch-sortheader|et2-avatar|et2-avatar-group|et2-lavatar|et2-checkbox
+                    |et2-button|et2-button-icon|et2-button-scroll|et2-button-timestamp|et2-colorpicker|et2-description
+                    |et2-label|et2-date|et2-date-duration|et2-date-range|et2-date-since|et2-date-time|et2-date-timeonly
                     |et2-date-time-today|et2-dialog|et2-dropdown-button|et2-email|et2-favorites|et2-iframe|et2-appicon
                     |et2-image|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list|et2-link-paste-dialog
                     |et2-link-search|et2-link-string|et2-link-to|et2-portlet|et2-listbox|et2-select|et2-spinner
@@ -82,8 +82,8 @@
     disabled CDATA #IMPLIED
     class CDATA #IMPLIED
     width CDATA #IMPLIED
-    minWidth CDATA #IMPLIED
-    maxWidth CDATA #IMPLIED>
+    maxWidth CDATA #IMPLIED
+    minWidth CDATA #IMPLIED>
 
 <!ELEMENT rows (row)*>
 
@@ -589,7 +589,9 @@
     span CDATA #IMPLIED
     type CDATA #IMPLIED
     readonly CDATA #IMPLIED
-    attributes CDATA #IMPLIED>
+    attributes CDATA #IMPLIED
+    exclude CDATA #IMPLIED
+    tab CDATA #IMPLIED>
 
 <!ELEMENT customfields-list EMPTY>
 
@@ -1255,42 +1257,53 @@
     readonly CDATA #IMPLIED
     attributes CDATA #IMPLIED>
 
-<!ELEMENT nextmatch-header EMPTY>
+<!ELEMENT customfields-types EMPTY>
 
-<!ATTLIST nextmatch-header
-    id CDATA #REQUIRED
-    span CDATA #IMPLIED
+<!ATTLIST customfields-types
+    app CDATA #IMPLIED
     class CDATA #IMPLIED
-    label CDATA #REQUIRED>
-
-<!ELEMENT nextmatch-sortheader EMPTY>
-
-<!ATTLIST nextmatch-sortheader
     id CDATA #REQUIRED
+    onchange CDATA #IMPLIED
+    readonly CDATA #IMPLIED
     span CDATA #IMPLIED
-    class CDATA #IMPLIED
-    label CDATA #REQUIRED
-    sortmode (ASC|DESC) 'ASC'>
-
-<!ELEMENT nextmatch-customfields EMPTY>
-
-<!ATTLIST nextmatch-customfields
-    id CDATA #REQUIRED
-    span CDATA #IMPLIED
-    class CDATA #IMPLIED>
+    statustext CDATA #IMPLIED>
 
 <!ELEMENT nextmatch EMPTY>
 
 <!ATTLIST nextmatch
-    id CDATA #REQUIRED
-    template CDATA #REQUIRED
-    header_left CDATA #IMPLIED
-    header_row CDATA #IMPLIED
-    header_right CDATA #IMPLIED
+    class CDATA #IMPLIED
     disabled CDATA #IMPLIED
+    id CDATA #REQUIRED
+    header_left CDATA #IMPLIED
+    header_right CDATA #IMPLIED
+    header_row CDATA #IMPLIED
     onselect CDATA #IMPLIED
     span CDATA #IMPLIED
-    class CDATA #IMPLIED>
+    template CDATA #REQUIRED>
+
+<!ELEMENT nextmatch-header EMPTY>
+
+<!ATTLIST nextmatch-header
+    class CDATA #IMPLIED
+    id CDATA #REQUIRED
+    label CDATA #REQUIRED
+    span CDATA #IMPLIED>
+
+<!ELEMENT nextmatch-customfields EMPTY>
+
+<!ATTLIST nextmatch-customfields
+    class CDATA #IMPLIED
+    id CDATA #REQUIRED
+    span CDATA #IMPLIED>
+
+<!ELEMENT nextmatch-sortheader EMPTY>
+
+<!ATTLIST nextmatch-sortheader
+    class CDATA #IMPLIED
+    id CDATA #REQUIRED
+    label CDATA #REQUIRED
+    sortmode (ASC|DESC) 'ASC'
+    span CDATA #IMPLIED>
 
 <!ELEMENT et2-avatar EMPTY>
 
@@ -1861,6 +1874,7 @@
     span CDATA #IMPLIED
     slot CDATA #IMPLIED
     onTagClick CDATA #IMPLIED
+    multiple (false|true|1) #IMPLIED
     tabindex CDATA #IMPLIED>
 
 <!ELEMENT et2-favorites EMPTY>

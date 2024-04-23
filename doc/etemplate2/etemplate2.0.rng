@@ -58,10 +58,11 @@
       <ref name="itempicker"/>
       <ref name="script"/>
       <ref name="countdown"/>
-      <ref name="nextmatch-header"/>
-      <ref name="nextmatch-sortheader"/>
-      <ref name="nextmatch-customfields"/>
+      <ref name="customfields-types"/>
       <ref name="nextmatch"/>
+      <ref name="nextmatch-header"/>
+      <ref name="nextmatch-customfields"/>
+      <ref name="nextmatch-sortheader"/>
       <ref name="et2-avatar"/>
       <ref name="et2-avatar-group"/>
       <ref name="et2-lavatar"/>
@@ -299,10 +300,10 @@
       <attribute name="width"/>
     </optional>
     <optional>
-      <attribute name="minWidth"/>
+      <attribute name="maxWidth"/>
     </optional>
     <optional>
-      <attribute name="maxWidth"/>
+      <attribute name="minWidth"/>
     </optional>
   </define>
   <define name="rows">
@@ -2070,6 +2071,12 @@
     </optional>
     <optional>
       <attribute name="attributes"/>
+    </optional>
+    <optional>
+      <attribute name="exclude"/>
+    </optional>
+    <optional>
+      <attribute name="tab"/>
     </optional>
   </define>
   <define name="customfields-list">
@@ -4530,59 +4537,31 @@
   <start>
     <ref name="overlay"/>
   </start>
-  <define name="nextmatch-header">
-    <element name="nextmatch-header">
-      <ref name="attlist.nextmatch-header"/>
+  <define name="customfields-types">
+    <element name="customfields-types">
+      <ref name="attlist.customfields-types"/>
       <empty/>
     </element>
   </define>
-  <define name="attlist.nextmatch-header">
-    <attribute name="id"/>
+  <define name="attlist.customfields-types">
     <optional>
-      <attribute name="span"/>
+      <attribute name="app"/>
     </optional>
     <optional>
       <attribute name="class"/>
     </optional>
-    <attribute name="label"/>
-  </define>
-  <define name="nextmatch-sortheader">
-    <element name="nextmatch-sortheader">
-      <ref name="attlist.nextmatch-sortheader"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="attlist.nextmatch-sortheader">
     <attribute name="id"/>
+    <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
+      <attribute name="readonly"/>
+    </optional>
     <optional>
       <attribute name="span"/>
     </optional>
     <optional>
-      <attribute name="class"/>
-    </optional>
-    <attribute name="label"/>
-    <optional>
-      <attribute name="sortmode" a:defaultValue="ASC">
-        <choice>
-          <value>ASC</value>
-          <value>DESC</value>
-        </choice>
-      </attribute>
-    </optional>
-  </define>
-  <define name="nextmatch-customfields">
-    <element name="nextmatch-customfields">
-      <ref name="attlist.nextmatch-customfields"/>
-      <empty/>
-    </element>
-  </define>
-  <define name="attlist.nextmatch-customfields">
-    <attribute name="id"/>
-    <optional>
-      <attribute name="span"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
+      <attribute name="statustext"/>
     </optional>
   </define>
   <define name="nextmatch">
@@ -4592,19 +4571,21 @@
     </element>
   </define>
   <define name="attlist.nextmatch">
-    <attribute name="id"/>
-    <attribute name="template"/>
     <optional>
-      <attribute name="header_left"/>
+      <attribute name="class"/>
     </optional>
     <optional>
-      <attribute name="header_row"/>
+      <attribute name="disabled"/>
+    </optional>
+    <attribute name="id"/>
+    <optional>
+      <attribute name="header_left"/>
     </optional>
     <optional>
       <attribute name="header_right"/>
     </optional>
     <optional>
-      <attribute name="disabled"/>
+      <attribute name="header_row"/>
     </optional>
     <optional>
       <attribute name="onselect"/>
@@ -4612,8 +4593,61 @@
     <optional>
       <attribute name="span"/>
     </optional>
+    <attribute name="template"/>
+  </define>
+  <define name="nextmatch-header">
+    <element name="nextmatch-header">
+      <ref name="attlist.nextmatch-header"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-header">
     <optional>
       <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <attribute name="label"/>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+  </define>
+  <define name="nextmatch-customfields">
+    <element name="nextmatch-customfields">
+      <ref name="attlist.nextmatch-customfields"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-customfields">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <optional>
+      <attribute name="span"/>
+    </optional>
+  </define>
+  <define name="nextmatch-sortheader">
+    <element name="nextmatch-sortheader">
+      <ref name="attlist.nextmatch-sortheader"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="attlist.nextmatch-sortheader">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <attribute name="id"/>
+    <attribute name="label"/>
+    <optional>
+      <attribute name="sortmode" a:defaultValue="ASC">
+        <choice>
+          <value>ASC</value>
+          <value>DESC</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="span"/>
     </optional>
   </define>
   <define name="et2-avatar">
@@ -6966,6 +7000,15 @@
     </optional>
     <optional>
       <attribute name="onTagClick"/>
+    </optional>
+    <optional>
+      <attribute name="multiple">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="tabindex"/>

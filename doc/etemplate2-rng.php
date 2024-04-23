@@ -139,6 +139,7 @@ $overwrites = [
     'et2-email' => [
 	    '.attrs' => [
 		    'onTagClick' => 'function',
+            'multiple' => 'boolean',
 	    ],
     ],
 ];
@@ -151,31 +152,36 @@ removeNode($grammar->start->choice);
 $grammar->start->addChild('ref')->addAttribute('name', 'overlay');
 // fix legacy widgets: attribute-name => (array of) widgets
 $missing_legacy_attributes = [
+	'app' => 'customfields-types',
     'callback' => 'vfs-upload',
-    'statustext' => 'tab',
-	'minWidth' => 'column',
-	'maxWidth' => 'column',
-    'id' => [
-		'.optional' => false,
-		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields', 'nextmatch',
-    ],
-	'template' => ['.optional' => false, 'nextmatch'],
-	'header_left' => 'nextmatch',
-	'header_row' => 'nextmatch',
-	'header_right' => 'nextmatch',
+	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
 	'disabled' => 'nextmatch',
-	'onselect' => 'nextmatch',
-	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader'],
-	'class' => ['nextmatch','nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader'],
+	'exclude' => 'customfields',
+	'id' => [
+		'.optional' => false,
+		'nextmatch-header', 'nextmatch-sortheader', 'nextmatch-customfields', 'nextmatch', 'customfields-types',
+	],
+	'header_left' => 'nextmatch',
+	'header_right' => 'nextmatch',
+	'header_row' => 'nextmatch',
 	'label' => [
-        '.optional' => false,
-        'nextmatch-header', 'nextmatch-sortheader',
-    ],
+		'.optional' => false,
+		'nextmatch-header', 'nextmatch-sortheader',
+	],
+	'maxWidth' => 'column',
+	'minWidth' => 'column',
+	'onchange'  => 'customfields-types',
+	'onselect' => 'nextmatch',
+	'readonly' => 'customfields-types',
     'sortmode' => [
         '.values' => ['ASC', 'DESC'],
         '.default' => 'ASC',
 	    'nextmatch-sortheader',
     ],
+	'span' => ['nextmatch', 'nextmatch-header', 'nextmatch-customfields', 'nextmatch-sortheader', 'customfields-types'],
+	'statustext' => ['tab', 'customfields-types'],
+	'template' => ['.optional' => false, 'nextmatch'],
+	'tab'     => 'customfields',
 ];
 foreach($missing_legacy_attributes as $attribute => $widgets)
 {
