@@ -47,7 +47,7 @@ class Tabbox extends Etemplate\Widget
 	 *
 	 * @param string|callable $method_name or function($cname, $expand, $widget)
 	 * @param array $params =array('') parameter(s) first parameter has to be the cname, second $expand!
-	 * @param boolean $respect_disabled =false false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
+	 * @param boolean $respect_disabled false (default): ignore disabled, true: method is NOT run for disabled widgets AND their children
 	 */
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
@@ -141,9 +141,9 @@ class Tabbox extends Etemplate\Widget
 	 * Method called before eT2 request is sent to client
 	 *
 	 * @param string $cname
-	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array|null $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand=null)
+	public function beforeSendToClient($cname, ?array $expand=null)
 	{
 		[$app] = explode('.', self::$request->template['name']);
 		// no need to run if we have no custom fields
@@ -163,10 +163,10 @@ class Tabbox extends Etemplate\Widget
 		{
 			$prepend = in_array($prepend, ['true', '1']);
 		}
-		// is adding of CFs disabled --> exit
-		if (!empty($this->attrs['cfDisabled']))
+		// is adding of CFs disabled --> unset them all
+		if (!empty($this->attrs['cfDisabled']) && $this->attrs['cfDisabled'] !== 'false')
 		{
-			return;
+			$cfs = [];
 		}
 
 		// check if template still contains a legacy customfield tab
@@ -230,26 +230,29 @@ class Tabbox extends Etemplate\Widget
 				];
 			}
 		}
+		// filter out previously added custom-field tabs, as they might change due to cfTypeFilter
+		if (($extra_tabs =& self::getElementAttribute($this->id, 'extraTabs')))
+		{
+			$extra_tabs = array_filter($extra_tabs, static function($tab)
+			{
+				return !preg_match('/^cf-(default(-(non-)?private)?|tab\d+)$/', $tab['id']);
+			});
+		}
 		if ($tabs || $default_tab || $private_tab)
 		{
 			// pass given cfTypeFilter attribute via content to all customfields widgets (set in api.cf-tab template)
-			if ($type_filter)
+			if (($type_filter=implode(',', $type_filter)))
 			{
 				$content = self::$request->content;
-				$content['cfTypeFilter'] = implode(',', $type_filter);
+				$content['cfTypeFilter'] = $type_filter;
 				self::$request->content = $content;
 			}
 			// pass cfExclude attribute via content to all customfields widgets (set in api.cf-tab template)
-			if ($exclude)
+			if (($exclude=implode(',', $exclude)))
 			{
 				$content = self::$request->content;
-				$content['cfExclude'] = implode(',', $exclude);
+				$content['cfExclude'] = $exclude;
 				self::$request->content = $content;
-			}
-			// we must not add tabs again!
-			if (!empty(self::$response))
-			{
-				return;
 			}
 			// addTabs is default false (= replace tabs), we need a default of true
 			$add_tabs =& self::setElementAttribute($this->id, 'addTabs', null);
@@ -260,7 +263,7 @@ class Tabbox extends Etemplate\Widget
 			$extra_tabs = array_merge($extra_tabs ?? [], $default_tab, $private_tab, array_values($tabs));
 
 			// if we have no explicit default cf widget/tab, we need to call customfields::beforeSendToClient() to pass cfs to client-side
-			$cfs = new Customfields('<customfields/>');
+			$cfs = new Customfields("<customfields type_filter=\"$type_filter\" exclude=\"$exclude\"/>");
 			$cfs->beforeSendToClient($cname, $expand);
 		}
 	}

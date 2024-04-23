@@ -151,12 +151,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		}
 		if(this.options.type_filter)
 		{
-			const already_filtered = !jQuery.isEmptyObject(this.options.fields);
 			for(let field_name in this.options.customfields)
 			{
-				// Already excluded?
-				if(already_filtered && !this.options.fields[field_name]) continue;
-
 				if(!this.options.customfields[field_name].type2 || this.options.customfields[field_name].type2.length == 0 ||
 					this.options.customfields[field_name].type2 == '0')
 				{
@@ -236,10 +232,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					{
 						this.options.fields[field_name] = default_tab[1] !== '-private';
 					}
-				}
-				else if (this.options.tab && this.options.customfields[field_name].tab === this.options.tab)
-				{
-					this.options.fields[field_name] = true;
 				}
 			}
 		}
