@@ -137,13 +137,15 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				margin-inline-start: var(--sl-input-spacing-medium);
 			  }
 
-			  et2-select {
+				sl-select {
 				color: var(--input-text-color);
 				border-left: 1px solid var(--input-border-color);
 				flex: 2 1 auto;
+					min-width: min-content;
+					width: 8em;
 			  }
 
-			  et2-select::part(control) {
+				sl-select::part(control) {
 				border-top-left-radius: 0px;
 				border-bottom-left-radius: 0px;
 			  }
@@ -151,6 +153,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 			  .duration__input {
 				flex: 1 1 auto;
 				max-width: 4.5em;
+				  min-width: 3em;
 				margin-right: -2px;
 			  }
 
