@@ -98,7 +98,7 @@
                                 <et2-select-cat  statustext="select a category for this entry" id="info_cat" emptyLabel="None"></et2-select-cat>
                             </row>
                             <row>
-                                <et2-description  value="Parent" fontStyle="1"></et2-description>
+                                <et2-description  value="Parent"></et2-description>
                                 <et2-link-entry  id="info_id_parent" onchange="if(egw &amp;&amp; widget) { if(widget._oldValue) window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget._oldValue,false);window.opener.egw.dataStoreUID(egw.appName+&quot;::&quot;+widget.getValue(),false);}" query="app.infolog.parent_query" onlyApp="infolog"></et2-link-entry>
                             </row>
                             <row class="row">
@@ -139,9 +139,9 @@
 					<et2-description  value="Title" for="info_subject"></et2-description>
 					<et2-hbox  span="4">
 						<et2-textbox  statustext="a short subject for the entry" id="info_subject" class="et2_required" maxlength="255" tabindex="1"></et2-textbox>
-						<et2-description  id="info_id" readonly="true" width="5em"></et2-description>
+						<et2-description  id="info_id" width="5em"></et2-description>
 					</et2-hbox>
-                    <et2-appicon  src="infolog" for="info_id"></et2-appicon>
+                    <et2-appicon  src="infolog"></et2-appicon>
 				</row>
 				<row class="dialogHeader2">
 					<et2-description  value="Type" for="info_type"></et2-description>
