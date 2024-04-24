@@ -1144,7 +1144,7 @@ app.classes.mail = AppJS.extend(
 		// don't go further if the preview is supposed to be disabled and we're not in mobile view
 		if (previewPane == 'hide' && !egwIsMobile()) return;
 
-		if(typeof selected != 'undefined' && selected.length == 1)
+		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
 			data = egw.dataGetUIDdata(rowId).data;
