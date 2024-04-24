@@ -282,7 +282,7 @@ class admin_customfields
 		);
 
 		// Allow extending app a change to change content before display
-		$readonlys = null;
+		if (!isset($readonlys)) $readonlys = [];
 		static::app_index($content, $sel_options, $readonlys, $preserve);
 
 		// Set app to admin to make sure actions are correctly loaded into admin

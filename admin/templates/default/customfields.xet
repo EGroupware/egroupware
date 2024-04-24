@@ -27,7 +27,7 @@
 		</grid>
 	</template>
 	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.9.001">
-		<grid readonly="true">
+		<grid>
 			<columns>
 				<column disabled="!@type2" width="50px"/>
 				<column width="30%"/>

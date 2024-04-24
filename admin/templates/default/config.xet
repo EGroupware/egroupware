@@ -32,7 +32,7 @@
 							<option value="account">{Username}@domain.com</option>
 							<option value="none">Do not generate EMail addresses</option>
 						</et2-select>
-						<et2-checkbox  label="Lowercase EMail addresses" id="newsettings[email_address_lowercase]" value="true"></et2-checkbox>
+						<et2-checkbox  label="Lowercase EMail addresses" id="newsettings[email_address_lowercase]"></et2-checkbox>
 					</et2-vbox>
 				</row>
 				<row>
