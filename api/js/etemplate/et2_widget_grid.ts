@@ -391,6 +391,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		{
 			// No auto-repeat
 			this.lastRowNode = null;
+			this.table.attr({role: "presentation"})
 		}
 	}
 
