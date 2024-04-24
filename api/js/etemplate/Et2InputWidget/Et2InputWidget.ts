@@ -450,13 +450,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				{
 					const label = document.createElement("et2-description");
 					label.innerText = post;
-					// Put in suffix, if parent has a suffix slot
-					if(this.parentNode?.shadowRoot?.querySelector("slot[name='suffix']"))
-					{
-						label.slot = "suffix";
-					}
-
-					this.parentNode.append(label);
+					// Add into shadowDOM (may go missing, in which case we need a different strategy)
+					this.shadowRoot?.querySelector(".form-control-input").after(label);
 				});
 			}
 		}
