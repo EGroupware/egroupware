@@ -28,7 +28,7 @@ class kdots_framework extends Api\Framework\Ajax
 	protected function _get_header(array $extra = array())
 	{
 		$data = parent::_get_header($extra);
-		$data['applicationlist'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
+		$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
 
 		return $data;
 	}

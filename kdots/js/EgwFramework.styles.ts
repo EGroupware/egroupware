@@ -6,6 +6,8 @@ export default css`
 		width: 100vw;
 		height: 100vh;
 		position: relative;
+
+		--icon-size: 32px;
 	}
 
 	.egw_fw__layout-default {
@@ -108,5 +110,36 @@ export default css`
 
 	.egw_fw__header sl-icon-button {
 		color: inherit;
+	}
+
+	.egw_fw__app_list::part(panel) {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		background-color: var(--sl-color-neutral-0);
+		font-size: var(--icon-size);
+	}
+
+	.egw_fw__open_applications et2-image {
+		height: var(--icon-size);
+		width: var(--icon-size);
+	}
+
+	.egw_fw__open_applications sl-tab::part(base) {
+		padding: 0px;
+		font-size: var(--icon-size);
+	}
+
+	.egw_fw__open_applications sl-tab::part(close-button) {
+		visibility: hidden;
+		margin-inline-start: var(--sl-spacing-2x-small);
+		color: var(--sl-color-neutral-100);
+	}
+
+	.egw_fw__open_applications sl-tab et2-image {
+		padding: var(--sl-spacing-small) var(--sl-spacing-3x-small);
+	}
+
+	.egw_fw__open_applications sl-tab:hover::part(close-button) {
+		visibility: visible;
 	}
 `

@@ -44,13 +44,7 @@
 		</script>
 	</div>
 
-
-	<!-- Fake apps -->
-	<sl-icon-button name="backpack" slot="header" label="Backpack application"></sl-icon-button>
-	<sl-icon-button name="airplane" slot="header" label="Airplaine application"></sl-icon-button>
-	<sl-icon-button name="mortarboard" slot="header" label="Mortarboard application"></sl-icon-button>
-	<et2-image src="mail/navbar" slot="header"></et2-image>
-
+	<!-- status app is looking for this -->
 	<div slot="aside" id="egw_fw_sidebar_r"></div>
 
 	<!-- Fake app -->
