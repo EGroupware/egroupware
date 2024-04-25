@@ -113,6 +113,12 @@ abstract class Framework extends Framework\Extra
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
 		}
+		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] !== $GLOBALS['egw_info']['server']['template_set'] &&
+			class_exists($class = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] . '_framework')
+		)
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
 		// then jdots aka Stylite template
 		if (file_exists(EGW_SERVER_ROOT.'/jdots') && empty($GLOBALS['egw_info']['server']['template_set']))
 		{
