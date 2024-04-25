@@ -1210,13 +1210,14 @@ class Ldap
 	 * @param string $_filter
 	 * @param array $_attributes
 	 * @param int $_addressbooktype
-	 * @param array $_skipPlugins =null schema-plugins to skip
+	 * @param ?array $_skipPlugins =null schema-plugins to skip
 	 * @param string $order_by sql order string eg. "contact_email ASC"
 	 * @param null|int|array $start [$start, $num_rows], on return null, if result sorted and limited by server
 	 * @param bool $read_photo true: return the binary content of the image, false: return true or false if there is an image or not
-	 * @return array/boolean with eGW contacts or false on error
+	 * @return array with contacts
+	 * @throws \Exception on error with LDAP error message
 	 */
-	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, array $_skipPlugins=null, $order_by=null, &$start=null, bool $read_photo=false)
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, ?array $_skipPlugins=null, $order_by=null, &$start=null, bool $read_photo=false)
 	{
 		$_attributes[] = 'entryUUID';
 		$_attributes[] = 'objectClass';
@@ -1280,7 +1281,10 @@ class Ldap
 		{
 			$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
 		}
-		if(!$result || !$entries = ldap_get_entries($this->ds, $result)) return array();
+		if(!$result || ($entries = ldap_get_entries($this->ds, $result)) === false)
+		{
+			throw new \Exception(ldap_error($this->ds) ?: 'Unable to retrieve LDAP result', ldap_errno($this->ds));
+		}
 		$this->total += $entries['count'];
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");
 
