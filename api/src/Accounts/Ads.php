@@ -611,6 +611,7 @@ class Ads
 	 *
 	 * @param array $group with values for keys account_id and account_dn
 	 * @return array
+	 * @throws \Exception on error
 	 */
 	public function getMembers(array $group)
 	{
@@ -1263,6 +1264,7 @@ class Ads
 	 * @param int $num_rows number of rows to return if isset($start)
 	 * @param ?int $total on return total number of rows
 	 * @return array account_id => account_lid or values for $attrs pairs
+	 * @throws \Exception on error
 	 */
 	protected function filter($attr_filter, $account_type=null, array $attrs=null, array $accounts=array(), $filter_expired=false, $order_by=null, &$start=null, $num_rows=null, &$total=null)
 	{

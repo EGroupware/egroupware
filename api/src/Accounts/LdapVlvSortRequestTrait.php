@@ -81,7 +81,8 @@ trait LdapVlvSortRequestTrait
 	 * @param ?int& $start on return null, if result sorted and limited by server
 	 * @param int $num_rows number of rows to return if isset($start)
 	 * @param ?int $total on return total number of rows
-	 * @return array|false result of ldap_get_entries with key 'count' unset
+	 * @return array result of ldap_get_entries with key 'count' unset
+	 * @throws \Exception on error with ldap_error() as message
 	 */
 	protected function vlvSortQuery(string $context, string $filter, array $attrs, string $order_by=null, int &$start=null, int$num_rows=null, int &$total=null)
 	{
@@ -123,14 +124,14 @@ trait LdapVlvSortRequestTrait
 				$attrs, null, null, null, null, $control);
 		}
 
-		if ($sri && ($allValues = ldap_get_entries($ds, $sri)))
+		if ($sri && ($allValues = ldap_get_entries($ds, $sri)) !== false)
 		{
 			// check if given controls succeeded
 			if ($control && ldap_parse_result($ds, $sri, $errcode, $matcheddn, $errmsg, $referrals, $serverctrls) &&
 				(isset($serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'])))
 			{
 				$total = $serverctrls[LDAP_CONTROL_VLVRESPONSE]['value']['count'];
-				$start = null;	// so caller does NOT run it's own limit
+				$start = null;	// so caller does NOT run its own limit
 			}
 			else
 			{
@@ -138,9 +139,13 @@ trait LdapVlvSortRequestTrait
 			}
 			unset($allValues['count']);
 		}
-		else error_log(__METHOD__."() ldap_search(\$ds, '$context', '$filter') returned ".array2string($sri)." allValues=".array2string($allValues));
+		else
+		{
+			error_log(__METHOD__."() ldap_search(\$ds, '$context', '$filter') returned ".array2string($sri)." allValues=".array2string($allValues));
+			throw new \Exception(ldap_error($ds) ?: 'Unable to retrieve LDAP result', ldap_errno($ds));
+		}
 
 		//error_log(date('Y-m-d H:i:s ').__METHOD__."('$context', '$filter', ".json_encode($attrs).", order_by=$order_by, start=$start, num_rows=$num_rows) ldap_search($ds, '$context', '$filter')\n==> returning ".count($allValues)."/$total ".substr(array2string($allValues), 0, 1024)."\n--> ".function_backtrace()."\n\n", 3, '/var/lib/egroupware/ads.log');
-		return $allValues ?? false;
+		return $allValues;
 	}
 }
