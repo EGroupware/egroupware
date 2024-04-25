@@ -828,7 +828,10 @@ class Import
 			if (is_a($this->accounts, Ads::class))
 			{
 				// ADS::members() calls the frontend, have to use ADS::getMembers() instead
-				$set_members[$sql_id] = $this->accounts->getMembers($group);
+				$set_members[$sql_id] = $this->accounts->getMembers([
+					'account_id' => $account_id,    // must be the RID ($group['account_id'] === $sql_id!)
+					'account_dn' => $group['account_dn'],
+				]);
 			}
 			else
 			{
