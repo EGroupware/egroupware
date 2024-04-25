@@ -142,7 +142,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 				autocomplete: {
 					type: String
-				}
+				},
+				ariaLabel : String,
+				ariaDescription : String,
+				helpText : String,
 			};
 		}
 
@@ -157,6 +160,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return {
 				...super.translate,
 				placeholder: true,
+				ariaLabel : true,
+				ariaDescription : true,
+				helpText : true,
 			}
 		}
 
@@ -246,6 +252,20 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				// Base off this.value, not this.getValue(), to ignore readonly
 				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+			}
+
+			if (changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription') ||
+				changedProperties.has("statustext") || changedProperties.has('helpText'))
+			{
+				const input = this.getInputNode();
+				if (input && (changedProperties.has('ariaLabel') || changedProperties.has("statustext")))
+				{
+					input.ariaLabel = this.ariaLabel || this.statustext;
+				}
+				if (input && (changedProperties.has('ariaDescription') || changedProperties.has('helpText')))
+				{
+					input.ariaDescription = this.ariaDescription || this.helpText;
+				}
 			}
 		}
 
@@ -498,10 +518,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return ok;
 		}
 
+		/**
+		 * Get input to e.g. set aria-attributes
+		 */
 		getInputNode()
 		{
-			// From LionInput
-			return this._inputNode;
+			return this.shadowRoot?.querySelector('input');
 		}
 
 		transformAttributes(attrs)
