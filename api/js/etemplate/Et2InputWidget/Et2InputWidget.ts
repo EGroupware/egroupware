@@ -216,6 +216,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			});
 			this.addEventListener("focus", this.et2HandleFocus);
 			this.addEventListener("blur", this.et2HandleBlur);
+
+			// set aria-label and -description fallbacks (done here and not in updated to ensure reliable fallback order)
+			if (!this.ariaLabel) this.ariaLabel = this.label || this.placeholder || this.statustext;
+			if (!this.ariaDescription) this.ariaDescription = this.helpText || (this.statustext !== this.ariaLabel ? this.statustext : '');
+			// pass them on to input-node,  if we have one / this.getInputNode() returns one
+			const input = this.getInputNode();
+			if (input)
+			{
+				input.ariaLabel = this.ariaLabel;
+				input.ariaDescription = this.ariaDescription;
+			}
 		}
 
 		disconnectedCallback()
@@ -252,20 +263,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				// Base off this.value, not this.getValue(), to ignore readonly
 				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
-			}
-
-			if (changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription') ||
-				changedProperties.has("statustext") || changedProperties.has('helpText'))
-			{
-				const input = this.getInputNode();
-				if (input && (changedProperties.has('ariaLabel') || changedProperties.has("statustext")))
-				{
-					input.ariaLabel = this.ariaLabel || this.statustext;
-				}
-				if (input && (changedProperties.has('ariaDescription') || changedProperties.has('helpText')))
-				{
-					input.ariaDescription = this.ariaDescription || this.helpText;
-				}
 			}
 		}
 

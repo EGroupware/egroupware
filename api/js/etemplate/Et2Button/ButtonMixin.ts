@@ -28,7 +28,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		cancel: /cancel(&|\]|$)/,
 		delete: /delete(&|\]|$)/,
 		discard: /discard(&|\]|$)/,
-		edit: /edit(&|\[\]|$)/,
+		edit: /edit(&|\[|\]|$)/,
 		next: /(next|continue)(&|\]|$)/,
 		finish: /finish(&|\]|$)/,
 		back: /(back|previous)(&|\]|$)/,
@@ -425,5 +425,13 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 		// If "null" is returned, the result is not added to the submitted
 		// array.
 		return null;
+	}
+
+	/**
+	 * Reimplemented to pass aria-attributes to button
+	 */
+	getInputNode()
+	{
+		return this.shadowRoot.querySelector('button');
 	}
 }
