@@ -41,7 +41,11 @@ export class EgwFramework extends LitElement
 
 			// TEMP STUFF
 			css`
-				.placeholder {
+				:host .placeholder {
+					display: none;
+				}
+
+				:host(.placeholder) .placeholder {
 					width: 100%;
 					display: block;
 					font-size: 200%;
@@ -57,25 +61,21 @@ export class EgwFramework extends LitElement
 					--placeholder-background-color: #75bd20;
 				}
 
-				.egw_fw__footer .placeholder {
-					background-color: hsl(182, 58%, 62%);
-				}
-
-				.egw_fw__main-wrapper {
-					--placeholder-background-color: #e97234;
-				}
-
 				.egw_fw__status .placeholder {
 					writing-mode: vertical-rl;
 					text-orientation: mixed;
 					height: 100%;
 				}
 
-				[class*="left"] .placeholder {
-					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(1, 1, 1, .5));
+				:host(.placeholder) [class*="left"] .placeholder {
+					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, .5, 1, .5));
 				}
 
-				[class*="footer"] .placeholder {
+				:host(.placeholder) [class*="right"] .placeholder {
+					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(.5, 1, .5, .5));
+				}
+
+				:host(.placeholder) [class*="footer"] .placeholder {
 					background-color: color-mix(in lch, var(--placeholder-background-color), rgba(1, 1, 1, .05));
 				}
 
@@ -176,7 +176,7 @@ export class EgwFramework extends LitElement
                                     snap="150px ${iconSize} 0px"
                                     snap-threshold="${Math.min(40, parseInt(iconSize) - 5)}"
                                     aria-label="Side menu resize">
-                        <main slot="start" part="main">
+                        <main slot="start" part="main" class="egw_fw__main">
                             <slot></slot>
                         </main>
                         <sl-icon slot="divider" name="grip-vertical"></sl-icon>

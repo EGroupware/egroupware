@@ -34,21 +34,22 @@
 {include_wz_tooltip}
 <!-- END head -->
 <!-- BEGIN framework -->
-<egw-framework id="egw_fw_basecontainer" class="sl-theme-light"
+<egw-framework id="egw_fw_basecontainer" class="sl-theme-light "
 			   application-list="{application-list}"
 >
 	<a slot="logo" href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="Site logo"/></a>
 	<div slot="header-right" id="egw_fw_topmenu_info_items">
         {topmenu_info_items}
-		<script>
-		</script>
+	</div>
+	<div slot="header">
+		<sl-switch slot="header" id="placeholders" checked>Placeholders</sl-switch>
 	</div>
 
 	<!-- status app is looking for this -->
 	<div slot="aside" id="egw_fw_sidebar_r"></div>
 
 	<!-- Fake app -->
-	<egw-app name="fake app">
+	<egw-app name="fake app" class="placeholder">
 		<div slot="banner">Something inside the app - main</div>
 	</egw-app>
 </egw-framework>
