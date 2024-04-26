@@ -482,6 +482,26 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			// initializeComponent() so this._inputNode is not available before this
 			this.findInputField().addEventListener('change', this._updateValueOnChange);
 			this.findInputField().addEventListener("input", this._handleInputChange);
+
+			// pass aria(Label|Description) to real input node
+			const input = this.getInputNode();
+			if (input)
+			{
+				input.ariaLabel = this.ariaLabel || this.placeholder;
+				input.ariaDescription = this.ariaDescription || this.statustext ||
+					this.egw().lang('Format')+' '+this.getOptions().altFormat.split('').map(c => {
+						switch(c)
+						{
+							case 'Y': return this.egw().lang('Year');
+							case 'm': return this.egw().lang('Month');
+							case 'd': return this.egw().lang('Day');
+							case 'h':
+							case 'H': return this.egw().lang('Hour');
+							case 'i': return this.egw().lang('Minute');
+							default: return c;
+						}
+					}).join(' ');
+			}
 		}
 	}
 
@@ -923,6 +943,24 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 	findInputField() : HTMLInputElement
 	{
 		return <HTMLInputElement>this._inputNode?.shadowRoot?.querySelector('input:not([type="hidden"])');
+	}
+
+	getInputNode()
+	{
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return super.getInputNode();
+		}
+		return this.findInputField();
+	}
+
+	focus()
+	{
+		if(!(typeof egwIsMobile == "function" && egwIsMobile()))
+		{
+			this.open();
+		}
+		this.getInputNode()?.focus();
 	}
 
 	/**
