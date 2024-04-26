@@ -220,6 +220,16 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			// set aria-label and -description fallbacks (done here and not in updated to ensure reliable fallback order)
 			if (!this.ariaLabel) this.ariaLabel = this.label || this.placeholder || this.statustext;
 			if (!this.ariaDescription) this.ariaDescription = this.helpText || (this.statustext !== this.ariaLabel ? this.statustext : '');
+			this._setAriaAttributes();
+		}
+
+		/**
+		 * Set aria-attributes on our input node
+		 *
+		 * @protected
+		 */
+		protected _setAriaAttributes()
+		{
 			// pass them on to input-node,  if we have one / this.getInputNode() returns one
 			const input = this.getInputNode();
 			if (input)
@@ -263,6 +273,12 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			{
 				// Base off this.value, not this.getValue(), to ignore readonly
 				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+			}
+
+			// pass aria-attributes to our input node
+			if (changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription'))
+			{
+				this._setAriaAttributes();
 			}
 		}
 
