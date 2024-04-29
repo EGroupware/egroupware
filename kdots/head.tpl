@@ -50,7 +50,7 @@
 
 	<!-- Fake app -->
 	<egw-app name="fake app" class="placeholder">
-		<div slot="banner">Something inside the app - main</div>
+		<div style="border: 1px dotted">Something inside the app - main</div>
 	</egw-app>
 </egw-framework>
 
