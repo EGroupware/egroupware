@@ -171,6 +171,17 @@ class Customfields extends Transformer
 		$use_private = self::expand_name($this->attrs['private'] ?? null,0,0,'','',self::$cont);
 		$this->attrs['type_filter'] = self::expand_name($this->attrs['type_filter'] ?? null,0,0,'','',self::$cont);
 
+		// check if name refers to a single custom field --> show only that
+		$matches = null;
+		if(($pos = strpos($form_name, $this->attrs['prefix'])) !== false && // allow the prefixed name to be an array index too
+			preg_match($preg = '/' . $this->attrs['prefix'] . '([^\]]+)/', $form_name, $matches) && isset($fields[$name = $matches[1]]))
+		{
+			$fields = array($name => $fields[$name]);
+			$value = self::get_array(self::$request->content, $form_name, false, true);
+			$fields[$name]['value'] = $value;
+			$form_name = $this->attrs['prefix'] . $name;
+		}
+
 		foreach((array)$fields as $key => $field)
 		{
 			// remove private or non-private cf's, if only one kind should be displayed
@@ -192,16 +203,6 @@ class Customfields extends Transformer
 			{
 				unset($fields[$key]);
 			}
-		}
-		// check if name refers to a single custom field --> show only that
-		$matches = null;
-		if (($pos=strpos($form_name,$this->attrs['prefix'])) !== false && // allow the prefixed name to be an array index too
-			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && isset($fields[$name=$matches[1]]))
-		{
-			$fields = array($name => $fields[$name]);
-			$value = self::get_array(self::$request->content, $form_name, false, true);
-			$fields[$name]['value'] = $value;
-			$form_name = $this->attrs['prefix'] . $name;
 		}
 
 		if(!is_array($fields)) $fields = array();
