@@ -368,10 +368,10 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			for(let key in data)
 			{
-				// Don't overwrite fields with global values
-				if(global_data[key] && key !== 'fields')
+				// Don't overwrite fields / customfields with global values
+				if(global_data[key] && key !== 'fields' && !(key == "customfields" && typeof data.customfields != undefined))
 				{
-					data[key] = jQuery.extend(true, {}, data[key], global_data[key]);
+					data[key] = {...data[key], ...global_data[key]};
 				}
 			}
 		}
