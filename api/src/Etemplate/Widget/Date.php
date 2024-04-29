@@ -135,7 +135,7 @@ class Date extends Transformer
 				// do NOT stall for somehow invalid values: log it and return empty
 				if($value)
 				{
-					$e->details = $this->id . ': ' . json_encode($value);
+					//error_log(__METHOD__."()".$this->id . ': ' . json_encode($value));
 					_egw_log_exception($e);
 				}
 				return null;
