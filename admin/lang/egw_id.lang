@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	id	%1 kredensial email dihapus
 %1 not found or not executable !!!	admin	id	%1 tidak ditemukan atau tidak dapat dieksekusi!
 %1 phrases saved.	admin	id	%1 frasa disimpan.
-%1 rights for %2 and applications %3	admin	id	%1 hak untuk %2 dan aplikasi %3 .
+%1 rights for %2 and applications %3	admin	id	%1 hak untuk %2 dan aplikasi %3.
 %1 run rights for applications	admin	id	%1 menjalankan hak untuk aplikasi
 %1 sessions killed	admin	id	%1 sesi dimatikan.
 %1 successful	admin	id	%1 berhasil
@@ -37,16 +37,22 @@
 2-factor-authentication for interactive login	admin	id	Autentikasi 2-Faktor untuk login interaktif
 3 month	admin	id	3 bulan
 6 month	admin	id	6 bulan
+access by	admin	id	Akses oleh
+access control	admin	id	Kontrol akses
+access to %1 data by others	admin	id	Akses ke %1 data oleh orang lain
 access token revoked.	admin	id	Token Akses dicabut.
 account	admin	id	Akun
+account "%1" has no plaintext password!	admin	id	Akun "%1" TIDAK memiliki kata sandi teks!
 account %1 %2	admin	id	Akoun %1 %2
 account '%1' deleted.	admin	id	Akoun '%1' dihapus.
-account '%1' not found !!!	admin	id	Akoun '%1' tidak ditemukan !!!
+account '%1' not found !!!	admin	id	Akoun '%1' tidak ditemukan!
 account active	admin	id	Akoun aktif
-account has been created	common	id	Akoun telah dibuat
-account has been deleted	common	id	Akoun telah dihapus
-account has been updated	common	id	Akoun telah dikinikan
+account deleted.	admin	id	Akun dihapus.
+account has been created	common	id	Akoun telah dibuat.
+account has been deleted	common	id	Akoun telah dihapus.
+account has been updated	common	id	Akoun telah dikinikan.
 account list	admin	id	Daftar Akoun
+account not found!	common	id	Akun tidak ditemukan!
 account permissions	admin	id	Ijin-ijin Akoun
 account preferences	admin	id	Kesukaan Akoun
 acl added.	admin	id	ACL ditambakan.
@@ -77,17 +83,17 @@ add sub-category	admin	id	Tambah sub-kategori
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
 admin name	admin	id	Nama Admin
-admin password	admin	id	Password Admin
+admin password	admin	id	Kata sandi admin
 admin username	admin	id	Nama Admin
 administration	admin	id	Administrasi
 admins	admin	id	Admins
 advanced options	admin	id	Opsi Canggih
 aliases	admin	id	Alias
-all applications	admin	id	All applications
+all applications	admin	id	Semua aplikasi
 all categories	admin	id	Semua kategori
 all users	admin	id	Semua pengguna
 alternate email address	admin	id	Alamat email pengganti
-anonymous user	admin	id	Anonymous user
+anonymous user	admin	id	Pengguna Anonymous
 any application	admin	id	Semua aplikasi
 any group	admin	id	Semua kelompok
 any user	admin	id	Semua pengguna
@@ -118,18 +124,18 @@ category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
-change account_id	admin	id	Ubah account_ID
+change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
 change login screen message	admin	id	Ubah pesan pada layar utama
-children	admin	id	Children
+children	admin	id	Anak
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
 continue	admin	id	Lanjutkan
-could not open secure connection to the imap server. %s : %s.	admin	id	Could not open secure connection to the IMAP server. %s : %s.
+could not open secure connection to the imap server. %s : %s.	admin	id	Tidak dapat membuka koneksi aman ke server IMAP. %s : %s.
 country	admin	id	Negara
 country selection	admin	id	Pemilihan Negara
-cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	id	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	admin	id	CRAM-MD5 atau DIGEST-MD5 memerlukan paket Auth_SASL untuk diinstal.
 create group	admin	id	Bikin Kelompok
 created	admin	id	Dibuat
 created with id #%1	admin	id	Dibuat dengan ID #%1
@@ -252,8 +258,8 @@ ip	admin	id	IP
 jobs	admin	id	Jobs
 kill	admin	id	Kill
 kill session	admin	id	Kill session
-last %1 logins	admin	id	Last %1 logins
-last %1 logins for %2	admin	id	Last %1 logins for %2
+last %1 logins	admin	id	Login %1 terakhir
+last %1 logins for %2	admin	id	Login %1 terakhir untuk %2
 last login	admin	id	Login terakhir
 last login from	admin	id	Login terakhir dari
 last submission:	admin	id	Pengiriman terakhir:
@@ -271,21 +277,21 @@ ldap settings	admin	id	Pengaturan LDAP
 leave empty for no quota	admin	id	Kosongkan bila tanpa kuota
 leave without saveing the entry	admin	id	Tinggalkan tanpa menyimpan entri
 leaves without saveing	admin	id	Tinggalkan tanpa menyimpan
-length<br>rows	admin	id	Length<br>Rows
+length<br>rows	admin	id	Panjang<br>Baris
 limit to members of	admin	id	Terbatas untuk anggota dari
 list config settings	admin	id	Daftar pengaturan konfigurasi
 list current sessions	admin	id	Daftar sesi sekarang
 list of current users	admin	id	Daftar pengguna sekarang
-logged out	admin	id	Logged out
+logged out	admin	id	Keluar
 login history	admin	id	Riwayat Login
 login message	admin	id	Login message
 login screen	admin	id	Login screen
 login shell	admin	id	Login shell
 login time	admin	id	Login Time
 login-status	admin	id	Login-Status
-loginid	admin	id	LoginID
-logintime	admin	id	Logintime
-logoutime	admin	id	Logoutime
+loginid	admin	id	Login ID
+logintime	admin	id	Waktu masuk
+logoutime	admin	id	Waktu keluar
 mail settings	admin	id	Pengaturan Mail
 main email-address	admin	id	Alamat eMail Utama
 manage mapping	admin	id	Mengelola pemetaan
@@ -300,12 +306,12 @@ more secure	admin	id	Lebih aman
 name of organisation	admin	id	Nama Organisasi
 new group name	admin	id	Nama kelompok baru
 new name	admin	id	Nama baru
-next run	admin	id	Next run
-no algorithms available	admin	id	No algorithms available
+next run	admin	id	Jalankan berikutnya
+no algorithms available	admin	id	Tidak ada algoritma yang tersedia!
 no alternate email address	admin	id	Tanpa alamat email pengganti
 no encryption	admin	id	Tanpa enkripsi
-no matches found	admin	id	No matches found
-no modes available	admin	id	No modes available
+no matches found	admin	id	Tidak ditemukan kecocokan!
+no modes available	admin	id	Tidak ada mode yang tersedia!
 number of row for a multiline inputfield or line of a multi-select-box	admin	id	Jumlah baris untuk bidang input multi-baris atau baris dari kotak multi-pilihan
 oauth authentiction	admin	id	Otentikasi OAuth
 offer to installing egroupware as mail-handler	admin	id	Menawarkan untuk menginstal EGroupware sebagai penangan email
@@ -320,7 +326,7 @@ other security configuration	admin	id	Konfigurasi keamanan lainnya
 outbound	admin	id	Outbound
 own categories	admin	id	Kategori sendiri
 own install id	admin	id	ID penginstalan sendiri
-own install id:	admin	id	Own install ID:
+own install id:	admin	id	Memiliki ID penginstalan sendiri:
 passthrough	admin	id	Passthrough
 password for smtp-authentication	admin	id	Password for SMTP-authentication
 password updated	admin	id	Password updated
@@ -364,7 +370,7 @@ select group managers	admin	id	Pilih Manajer Kelompok
 select type of imap server	admin	id	Pilih tipe Server IMAP
 select type of imap/pop3 server	admin	id	Pilih tipe Server IMAP/POP3
 select type of smtp server	admin	id	Pilih tipe Server SMTP
-selectbox	admin	id	Selectbox
+selectbox	admin	id	Pilih kotak
 send using this email-address	admin	id	Kirim menggunakan alamat eMail ini
 server list	admin	id	Server List
 server password	admin	id	Server Password
@@ -395,7 +401,7 @@ standard imap server	admin	id	Server IMAP Standar
 standard pop3 server	admin	id	Server POP3 Standar
 standard smtp-server	admin	id	Server SMTP Standar
 start	admin	id	Mulai
-start testjob!	admin	id	Start TestJob!
+start testjob!	admin	id	Mulai pekerjaan tes!
 starts with	admin	id	Diawali dengan
 stationery	admin	id	Stationery
 submit changes	admin	id	Submit Changes
@@ -408,7 +414,7 @@ success	admin	id	Sukses
 template selection	admin	id	Pemilihan Templat
 templates	admin	id	Templat
 text entry	admin	id	Text Entry
-the api is current	admin	id	The API is current
+the api is current	admin	id	API saat ini
 the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	Pengguna berikut ini masih menjadi anggota kelompok %1
 times	admin	id	Times
@@ -422,9 +428,9 @@ two days	admin	id	Dua hari
 two hours	admin	id	Dua jam
 two months	admin	id	Dua bulan
 two weeks	admin	id	Dua minggu
-type of customfield	admin	id	Type of customfield
-unexpected response from server to login command.	admin	id	Unexpected response from server to LOGIN command.
-unknown account: %1 !!!	admin	id	Akoun takdikenal: %1 !
+type of customfield	admin	id	Jenis bidang khusus
+unexpected response from server to login command.	admin	id	Respons yang tidak diharapkan dari server terhadap perintah LOGIN.
+unknown account: %1 !!!	admin	id	Akoun takdikenal: %1!
 unknown command %1!	admin	id	Perintah %1 tak dikenal!
 unknown option %1	admin	id	Opsi %1 tak dikenal
 up	admin	id	Naik

@@ -269,7 +269,7 @@ custom 1	admin	fr	Personnalisé 1
 custom 2	admin	fr	Personnalisé 2
 custom 3	admin	fr	Personnalisé 3
 custom fields	admin	fr	Champs personnalisés
-custom translation	admin	fr	Traduction personnalisée
+custom translation	admin	fr	Traduction personnalisées
 customfield '%1' added	admin	fr	Champ personnalisé '%1' ajouté
 customfield '%1' deleted	admin	fr	Champ personnalisé '%1' supprimé
 customfield '%1' modified	admin	fr	Champ personnalisé '%1' modifié
@@ -727,7 +727,6 @@ path information	admin	fr	Information sur le chemin
 peer server list	admin	fr	Liste des serveurs (peer servers)
 peer servers	admin	fr	Serveurs pairs
 percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
-percent this user has logged out	admin	fr	Pourcentage de déconnexion de cet utilisateur
 periodic	admin	fr	Périodique
 permission denied	admin	fr	Permission refusée
 permission denied !!!	admin	fr	Permission refusée !
@@ -777,8 +776,6 @@ remote administration need to be enabled in the remote instance under admin &gt;
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	fr	Administration à distance doit être activé dans l'instance à distance sous Admin > Configuration du site !
 remote instance saved	admin	fr	Instance distante enregistrée.
 remove	admin	fr	Supprimer
-remove all users from this group	admin	fr	Retirer tous les utilisateurs de ce groupe
-remove all users from this group ?	admin	fr	Retirer tous les utilisateurs de ce groupe ?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	fr	Enlever l'accès des groupes peut causer des problèmes pour les données dans cette catégorie. Etes-vous certain? Les utilisateurs dans ces groupes pourraient ne plus avoir accès :
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	fr	Renommer l'utilisateur "anonymous" va casser le partage et Collabora Online Office !
 requested	admin	fr	Requis
@@ -968,7 +965,7 @@ unsupported action '%1' !!!	admin	fr	Action '%1' non supportée !
 unwilling to save category with current settings. check for inconsistency:	admin	fr	Impossible d'enregistrer la catégorie avec les paramètres actuels. Vérifier pour les inconsistances:
 up	admin	fr	Haut
 update current email address:	admin	fr	Mettre à jour l'adresse email actuelle :
-updated	admin	fr	Mis à jour
+updated	admin	fr	mis à jour
 upload your background image or enter the url	admin	fr	Uploader le fonds d'écran ou entrer l'URL
 upload your certificate .p12/.pfx file	admin	fr	Uploader votre certificat .p12/.pfx
 upload your favicon or enter the url	admin	fr	Uploader votre icone ou entrer l'URL

@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	de	%1 Mail Zugangsdaten gelöscht
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!
 %1 phrases saved.	admin	de	%1 Phrasen gespeichert.
-%1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
+%1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3.
 %1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
 %1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 successful	admin	de	%1 erfolgreich
@@ -273,7 +273,7 @@ custom egroupware bold web font as woff2 file	admin	de	Eigener EGroupware Bold W
 custom egroupware web font as woff2 file	admin	de	Eigener EGroupware Web-Font als woff2 Datei
 custom fields	admin	de	Benutzerdefinierte Felder
 custom fields tab	admin	de	Benutzerdefinierte Felder Tab
-custom translation	admin	de	Eigene Übersetzung
+custom translation	admin	de	Eigene Übersetzungen
 customfield '%1' added	admin	de	Benutzerdefiniertes Feld '%1' hinzugefügt
 customfield '%1' deleted	admin	de	Benutzerdefiniertes Feld '%1' gelöscht
 customfield '%1' modified	admin	de	Benutzerdefiniertes Feld '%1' aktulisiert
@@ -427,7 +427,7 @@ enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Se
 enter the title for your site	admin	de	Titel der EGroupware-Installation
 enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.<br> Der Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein.
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	de	Geben Sie den VFS-Pfad an, in dem noch mehr Bilder oder Symbole abgelegt und von EGroupware-Applikationen verwendet werden können.\nDer Pfad muss mit einem "/" beginnen und von allen Benutzern lesbar sein
 enter your default ftp server	admin	de	Standard-FTP-Server
 enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your default mail domain (from: user@domain)	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
@@ -733,7 +733,6 @@ path information	admin	de	Pfad-Information
 peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
-percent this user has logged out	admin	de	Prozentsatz, wie oft sich dieser Benutzer abgemeldet hat
 periodic	admin	de	Periodisch
 permission denied	admin	de	Zugriff verweigert
 permission denied !!!	admin	de	Zugriff verweigert!
@@ -783,8 +782,6 @@ remote administration need to be enabled in the remote instance under admin &gt;
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
 remote instance saved	admin	de	Remote Instanz gespeichert
 remove	admin	de	Entfernen
-remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
-remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
 requested	admin	de	Angefordert
@@ -976,7 +973,7 @@ unsupported action '%1' !!!	admin	de	Nicht unterstützte Aktion '%1'!
 unwilling to save category with current settings. check for inconsistency:	admin	de	Kategorie kann mit den aktuellen Einstellungen nicht gespeichert werden. Bitte überprüfen sie die Einstellungen auf Ungereimtheiten.
 up	admin	de	Hoch
 update current email address:	admin	de	Aktualisiere aktuelle E-Mail-Adresse
-updated	admin	de	Aktualisiert
+updated	admin	de	aktualisiert
 upload your background image or enter the url	admin	de	Laden Sie ein Hintergrundbild hoch oder geben Sie eine entsprechende URL ein
 upload your certificate .p12/.pfx file	admin	de	Zertifikat hochladen (.p12/.pfx-Datei)
 upload your favicon or enter the url	admin	de	Laden Sie ein Favicon hoch oder geben Sie eine URL dafür ein

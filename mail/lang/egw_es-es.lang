@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	es-es	%1 se ha eliminado de las direcciones de correo-e en la lista blanca
 %1 is not writable by you!	mail	es-es	¡NO tiene permiso de escritura en %1!
 %1 mails selected	mail	es-es	%1 correos seleccionados
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	es-es	%1 requiere la extensión Sieve %2, pruebe con %1 o con un número mayor de días.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	es-es	(*) Por favor considere, reenviar a varias direcciones no funcionará si el número de direcciones excede el límite. Para la mayoría de los servidores de correo, el límite es 4 por defecto; póngase en contacto con el administrador del servidor de correo para obtener más información.
 (leave empty for no quota)	mail	es-es	(Dejar vacío para sin cuota)
 (no subject)	mail	es-es	(sin asunto)

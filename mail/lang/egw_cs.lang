@@ -1,6 +1,7 @@
 %1 attachments	mail	cs	%1 příloh
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	cs	%1 vyžaduje rozšíření Sieve %2, možná zkuste %1 nebo vyšší počet dní.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
 (leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
 (no subject)	mail	cs	(žádný předmět)
