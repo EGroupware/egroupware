@@ -1,4 +1,4 @@
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, nothing} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
@@ -94,6 +94,8 @@ export class EgwFrameworkApp extends LitElement
 			"egw_fw_app__left": true,
 			"egw_fw_app__aside-collapsed": this.leftCollapsed
 		});
+		const leftWidth = this.leftCollapsed ? 0 : parseInt(this.egw.preference("jdotssideboxwidth", this.name) || 0) || 250;
+		const rightWidth = (parseInt(this.egw.preference("app_right_width", this.name) || 0) || 0);
 		return html`
             <div class="egw_fw_app__header">
                 <div class="egw_fw_app__name" part="name">
@@ -107,40 +109,46 @@ export class EgwFrameworkApp extends LitElement
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
             </div>
-            <main class="egw_fw_app__main" part="main"
-                  aria-label="${this.name}" tabindex="0">
-                <aside class=${leftClassMap} part="left">
-                    <div class="egw_fw_app__aside_header">
-                        <slot name="left-header"><span class="placeholder">left-header</span></slot>
-                    </div>
-                    <div class="egw_fw_app__aside_content">
-                        <slot name="left"><span class="placeholder">left</span></slot>
-                    </div>
+            <main class="egw_fw_app__main" part="main" aria-label="${this.name}" tabindex="0">
+                <sl-split-panel class="egw_fw_app__outerSplit" primary="start" position-in-pixels="${leftWidth}">
+                    <aside slot="start" part="left" class=${leftClassMap}>
+                        <div class="egw_fw_app__aside_header header">
+                            <slot name="left-header"><span class="placeholder">left-header</span></slot>
+                        </div>
+                        <div class="egw_fw_app__aside_content content">
+                            <slot name="left"><span class="placeholder">left</span></slot>
+                        </div>
 
-                    <div class="egw_fw_app__aside_footer">
-                        <slot name="left-footer"><span class="placeholder">left-footer</span></slot>
-                    </div>
-                </aside>
-                <aside class="egw_fw_app__aside egw_fw_app__right" part="right">
-                    <div class="egw_fw_app__aside_header">
-                        <slot name="right-header"><span class="placeholder">right-header</span></slot>
-                    </div>
-                    <div class="egw_fw_app__aside_content">
-                        <slot name="right"><span class="placeholder">right</span></slot>
-                    </div>
-                    <div class="egw_fw_app__aside_footer">
-                        <slot name="right-footer"><span class="placeholder">right-footer</span></slot>
-                    </div>
-                </aside>
-                <header class="egw_fw_app__header" part="content-header">
-                    <slot name="header"><span class="placeholder">header</span></slot>
-                </header>
-                <main class="egw_fw_app__main_content" part="content">
-                <slot><span class="placeholder">main</span></slot>
-                </main>
-                <footer class="egw_fw_app__footer" part="footer">
-                    <slot name="footer"><span class="placeholder">main-footer</span></slot>
-                </footer>
+                        <div class="egw_fw_app__aside_footer footer">
+                            <slot name="left-footer"><span class="placeholder">left-footer</span></slot>
+                        </div>
+                    </aside>
+                    <sl-split-panel slot="end" class="egw_fw_app__innerSplit" primary="start"
+                                    position-in-pixels=${rightWidth || nothing}
+                                    position=${rightWidth == 0 ? "100" : nothing}
+                    >
+                        <header slot="start" class="egw_fw_app__header header" part="content-header">
+                            <slot name="header"><span class="placeholder">header</span></slot>
+                        </header>
+                        <main slot=start" class="egw_fw_app__main_content content" part="content">
+                            <slot><span class="placeholder">main</span></slot>
+                        </main>
+                        <footer slot="start" class="egw_fw_app__footer footer" part="footer">
+                            <slot name="footer"><span class="placeholder">main-footer</span></slot>
+                        </footer>
+                        <aside slot="end" class="egw_fw_app__aside egw_fw_app__right" part="right">
+                            <div class="egw_fw_app__aside_header header">
+                                <slot name="right-header"><span class="placeholder">right-header</span></slot>
+                            </div>
+                            <div class="egw_fw_app__aside_content content">
+                                <slot name="right"><span class="placeholder">right</span></slot>
+                            </div>
+                            <div class="egw_fw_app__aside_footer footer">
+                                <slot name="right-footer"><span class="placeholder">right-footer</span></slot>
+                            </div>
+                        </aside>
+                    </sl-split-panel>
+                </sl-split-panel>
             </main>
 		`;
 	}

@@ -31,6 +31,22 @@ export default css`
 		max-height: 3em;
 	}
 
+	.egw_fw_app__outerSplit {
+		grid-column: start / end;
+		grid-row: start / end;
+		grid-template-rows: subgrid;
+	}
+
+	.egw_fw_app__innerSplit {
+		grid-template-rows: subgrid;
+		grid-column-end: -1;
+		grid-row: start / end;
+	}
+
+	sl-split-panel::part(divider) {
+		grid-row: start / end;
+	}
+
 	.egw_fw_app__aside {
 		overflow-x: hidden;
 		overflow-y: auto;
@@ -53,40 +69,32 @@ export default css`
 		grid-row: footer / end;
 	}
 
-	.egw_fw_app__left {
-		grid-column: left / left;
-	}
-
-	.egw_fw_app__right {
-		grid-column: right / right;
-	}
-
 	.egw_fw_app__main {
 		flex: 1 1 100%;
 		display: grid;
 		align-items: stretch;
 		justify-content: stretch;
 		overflow: hidden;
-		overflow-x: auto;
 	}
 	.egw_fw_app__header {
 		grid-row: sub-header / main;
-		grid-column: main / main;
 	}
 
 	.egw_fw_app__main_content {
 		grid-row: main / footer;
-		grid-column: main / main;
 	}
 
 	.egw_fw_app__footer {
-		grid-column: main / right;
 		grid-row: footer / end;
+	}
+
+	.header, .footer {
+		overflow: hidden;
 	}
 
 	@media (min-width: 600px) {
 		.egw_fw_app__main {
-			grid-template-columns: [start left] fit-content(20%)  [main] 1fr [right] fit-content(50%) [end];
+			grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
 			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(2em) [end];
 		}
 
