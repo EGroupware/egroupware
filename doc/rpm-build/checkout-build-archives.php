@@ -45,7 +45,7 @@ $config = array(
 	'all-add' => array('contrib'),
 	// diverse binaries we need
 	'svn' => trim(`which svn`),
-	'tar' => trim(`which gnutar` ?: `which tar`),	// tar on MacOS does not support --owner or --group
+	'tar' => trim(`which gtar` ?: `which gnutar` ?: `which tar`),	// tar on MacOS does not support --owner or --group
 	'mv' => trim(`which mv`),
 	'rm' => trim(`which rm`),
 	'zip' => trim(`which zip`),
