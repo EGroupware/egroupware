@@ -87,7 +87,7 @@ RUN set -e \
 	&& if [ "$TARGETPLATFORM" = "linux/ppc64le" ]; then \
         dist_node_v20=https://nodejs.org/dist/latest-v20.x/ \
         dist_node_v20_ppc64le=$(curl $dist_node_v20|grep ppc64le.tar.xz|cut -d'"' -f2) \
-        curl $dist_node_v20$dist_node_v20_ppc64le | tar --directory=/usr/local/ -xJvf - ; \
+        curl -L $dist_node_v20$dist_node_v20_ppc64le | tar --directory=/usr/local/ -xJvf - ; \
     else \
     	mkdir -p /etc/apt/keyrings \
         && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
