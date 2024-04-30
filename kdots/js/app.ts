@@ -3,7 +3,7 @@
  */
 
 import "./EgwFramework";
-import "./EgwApp";
+import "./EgwFrameworkApp";
 
 
 document.addEventListener('DOMContentLoaded', () =>

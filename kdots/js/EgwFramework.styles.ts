@@ -40,6 +40,7 @@ export default css`
 	/* To use the sl-split-panel, we need it to have its own space & nest stuff inside */
 
 	.egw_fw__layout-default .egw_fw__divider {
+		max-width: 100vw;
 		grid-column-start: start;
 		grid-column-end: status-start;
 		grid-row-start: main-header;
@@ -71,10 +72,20 @@ export default css`
 	}
 
 
-	@media (min-width: 500px) {
+	@media (min-width: 600px) {
 		.egw_fw__layout-default {
 			grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
 			grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
+		}
+	}
+	@media (max-width: 599px) {
+		.egw_fw__layout-default {
+			grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
+			grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
+		}
+
+		::slotted([slot="logo"]) {
+			display: none;
 		}
 	}
 

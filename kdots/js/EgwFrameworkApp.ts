@@ -1,10 +1,10 @@
 import {css, html, LitElement} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
-import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import {property} from "lit/decorators/property.js";
-
-import styles from "./EgwApp.styles";
 import {state} from "lit/decorators/state.js";
+import {classMap} from "lit/directives/class-map.js";
+
+import styles from "./EgwFrameworkApp.styles";
 
 /**
  * @summary Application component inside EgwFramework
@@ -33,7 +33,7 @@ import {state} from "lit/decorators/state.js";
  */
 @customElement('egw-app')
 //@ts-ignore
-export class EgwApp extends LitElement
+export class EgwFrameworkApp extends LitElement
 {
 	static get styles()
 	{
@@ -89,6 +89,11 @@ export class EgwApp extends LitElement
 
 	render()
 	{
+		const leftClassMap = classMap({
+			"egw_fw_app__aside": true,
+			"egw_fw_app__left": true,
+			"egw_fw_app__aside-collapsed": this.leftCollapsed
+		});
 		return html`
             <div class="egw_fw_app__header">
                 <div class="egw_fw_app__name" part="name">
@@ -104,7 +109,7 @@ export class EgwApp extends LitElement
             </div>
             <main class="egw_fw_app__main" part="main"
                   aria-label="${this.name}" tabindex="0">
-                <aside class="egw_fw_app__aside egw_fw_app__left" part="left">
+                <aside class=${leftClassMap} part="left">
                     <div class="egw_fw_app__aside_header">
                         <slot name="left-header"><span class="placeholder">left-header</span></slot>
                     </div>

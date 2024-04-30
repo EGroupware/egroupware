@@ -84,7 +84,7 @@ export default css`
 		grid-row: footer / end;
 	}
 
-	@media (min-width: 500px) {
+	@media (min-width: 600px) {
 		.egw_fw_app__main {
 			grid-template-columns: [start left] fit-content(20%)  [main] 1fr [right] fit-content(50%) [end];
 			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(2em) [end];
@@ -94,13 +94,42 @@ export default css`
 			height: 100%;
 		}
 	}
-	@media (max-width: 500px) {
+	@media (max-width: 599px) {
 		.egw_fw_app__main {
-			grid-template-areas:
-				"header"
-				"main"
-				"left right"
-				"footer"
+			grid-template-columns: [start left main-start] fit-content(50%)  [right] auto [main-end end];
+			grid-template-rows: 
+				[start sub-header] fit-content(2em) 
+				[main] auto 
+				[aside-header] fit-content(2em) 
+				[aside] min-content 
+				[aside-footer] fit-content(4em) 
+				[footer] fit-content(4em) 
+				[end];
+		}
+
+		.egw_fw_app__main_content {
+			grid-row: main / aside-header;
+			grid-column: start / end;
+		}
+
+		.egw_fw_app__aside {
+			grid-row: aside-header / footer;
+		}
+
+		.egw_fw_app__aside_header {
+			grid-row: aside-header / aside;
+		}
+
+		.egw_fw_app__aside_content {
+			grid-row: aside / aside-footer;
+		}
+
+		.egw_fw_app__aside_footer {
+			grid-row: aside-footer / footer;
+		}
+
+		.egw_fw_app__footer {
+			grid-column: start / end;
 		}
 	}
 `
