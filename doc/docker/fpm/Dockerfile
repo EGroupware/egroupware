@@ -77,7 +77,7 @@ exit $RESULT' \
 	&& cd /usr/share \
     # not all dependencies already allow PHP 8.x, thought what we use from them works
     && bash -c "[[ $PHP_VERSION  =~ ^8\..* ]]" && COMPOSER_EXTRA=--ignore-platform-reqs || true \
-	&& composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
+	&& COMPOSER_ALLOW_SUPERUSER=1 composer.phar create-project $COMPOSER_EXTRA --prefer-dist --no-scripts --no-dev egroupware/egroupware:$VERSION \
 	# clean up and remove caches
 	&& composer.phar clear-cache \
 	&& rm -f /usr/local/bin/composer.phar
@@ -95,10 +95,14 @@ RUN set -e \
         && apt-get update \
         && apt-get install -y nodejs libatomic1 ; \
     fi \
+	&& npm config set fetch-retries 5 \
 	&& npm install -g grunt-cli \
+    # npm install fails "silent" on network timeouts, retry until it works
+    && until grunt; do sleep 5; npm install -g grunt-cli; done \
+    && mkdir chunks  \
 	&& npm install \
-	&& grunt \
-    && mkdir chunks && npm run build \
+    # npm install fails "silent" on network timeouts, retry until it works
+    && until npm run build; do sleep 5; npm install; done \
 	# clean up and remove caches
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
