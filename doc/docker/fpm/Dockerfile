@@ -96,13 +96,13 @@ RUN set -e \
         && apt-get install -y nodejs libatomic1 ; \
     fi \
 	&& npm config set fetch-retries 5 \
-	&& npm install -g grunt-cli \
-    # npm install fails "silent" on network timeouts, retry until it works
-    && until grunt; do sleep 5; npm install -g grunt-cli; done \
-    && mkdir chunks  \
+	&& mkdir chunks  \
 	&& npm install \
-    # npm install fails "silent" on network timeouts, retry until it works
-    && until npm run build; do sleep 5; npm install; done \
+	# npm install fails "silent" on network timeouts, retry until it works
+	&& until npm run build; do sleep 5; npm install; done \
+	&& npm install -g grunt-cli \
+	# npm install fails "silent" on network timeouts, retry until it works
+	&& until grunt; do sleep 5; npm install -g grunt-cli; done \
 	# clean up and remove caches
 	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
