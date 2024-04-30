@@ -1,6 +1,6 @@
 %1 added	addressbook	zh	%1已添加
 %1 contact(s) %2	addressbook	zh	%1个联系人%2
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	zh	%1 联系人 %2, %3 因 %4 而失败！！！
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	zh	%1 联系人 %2, %3 因 %4 而失败！
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	zh	%1个联系人%2, %3个错误，因没有足够权限！
 %1 contacts updated (%2 errors).	addressbook	zh	%1 联系人已更新（%2 错误）。
 %1 fields in %2 other organisation member(s) changed	addressbook	zh	在%2的其他组织成员中有%1个字段被更改
@@ -84,7 +84,7 @@ calendar integration	addressbook	zh	日历集成
 calendar uri	addressbook	zh	日历网址
 can be changed via setup >> configuration	admin	zh	可以通过 安装 >> 配置进行更改
 car phone	addressbook	zh	车载电话
-categories, notes, ...	addressbook	zh	分类、备注...
+categories, notes, ...	addressbook	zh	类别、注释、...
 category tree	admin	zh	分类树
 cell phone	addressbook	zh	移动电话
 change addressbook when updating	addressbook	zh	更新时更改地址簿
@@ -248,7 +248,7 @@ import contacts	addressbook	zh	导入联系人
 import csv-file into addressbook	addressbook	zh	从 CSV 文件导入
 import file	addressbook	zh	导入文件
 import from	addressbook	zh	导入自
-import from ldif, csv, or vcard	addressbook	zh	从 Ldif、CSV 或 vCard 导入通讯簿
+import from ldif, csv, or vcard	addressbook	zh	从 LDIF、CSV 或 vCard 导入通讯簿
 import from outlook	addressbook	zh	从 Outlook 导入
 import multiple vcard	addressbook	zh	导入多重 vCard
 import next set	addressbook	zh	导入下一个集合
@@ -325,7 +325,7 @@ other number	addressbook	zh	其他号码
 other phone	addressbook	zh	其他电话
 own sorting	addressbook	zh	自定排序
 pager	common	zh	寻呼机
-parcel	addressbook	zh	Parcel
+parcel	addressbook	zh	包裹
 participants	addressbook	zh	参与者
 permission denied !!!	addressbook	zh	没有权限！
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	zh	拒绝允许！请要求管理员允许普通用户更新其公钥。
@@ -409,7 +409,7 @@ that field name has been used already !	addressbook	zh	该字段名已被使用�
 the anonymous user has probably no add rights for this addressbook.	addressbook	zh	匿名用户也许没有为该通讯簿的添加权限。
 the anonymous user needs add rights for it!	addressbook	zh	匿名用户需要为它增加权限！
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	zh	需要使用 zip 扩展名，以便在 LibreOffice 或 MS Office 文档中插入联系人数据。
-there was an error saving your data :-(	addressbook	zh	保存您的数据时发生一个错误：-(
+there was an error saving your data :-(	addressbook	zh	保存数据错误！
 this module displays a contactform, that stores direct into the addressbook.	addressbook	zh	该模块显示一个联系人表单，其储存直接输入通讯簿中。
 this person's first name was not in the address book.	addressbook	zh	这个人的名字不在通讯簿中。
 this person's last name was not in the address book.	addressbook	zh	这个人的姓不在通讯簿中。

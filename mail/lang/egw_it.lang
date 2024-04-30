@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	it	%1 è stato rimosso dalla whitelist della posta elettronica
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
 %1 mails selected	mail	it	%1 messaggi selezionati
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	it	%1 richiede l'estensione %2 di Sieve, provare %1 o un numero di giorni superiore.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	it	(*) Per favore considerare che l'inoltro a indirizzi multipli non funzionerà se il limite di indirizzi venisse superato. Per la maggior parte dei server di posta il limite predefinito è di 4. Per favore contattare l'amministratore del proprio server di posta per delucidazioni.
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)

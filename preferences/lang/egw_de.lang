@@ -31,7 +31,7 @@ code is invalid	preferences	de	Der Code ist ungültig
 color	preferences	de	Farbe
 country	preferences	de	Land
 current password	preferences	de	Aktuelles Passwort
-custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmeldemaske, Vorgabe obige Farbe abgedunkelt
+custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmelde-Seite, Vorgabe obige Farbe abgedunkelt
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark mode theme	preferences	de	Dark Mode-Thema
 dark moono theme	preferences	de	Dunkles Moono-Thema

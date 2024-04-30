@@ -1,9 +1,12 @@
 %1 attachments	mail	pt	%1 anexos
 %1 is not writable by you!	mail	pt	%1 não é gravável por você!
 %1 mails selected	mail	pt	%1 e-mails selecionados
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número de dias superior.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt	(*) Tenha em atenção que o reencaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de correio eletrónico, o limite é 4 por predefinição. Contacte o administrador do seu servidor de correio eletrónico para obter mais informações.
 (leave empty for no quota)	mail	pt	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt	(sem assunto)
 (not connected)	mail	pt	(Não conectado)
+(select mails by clicking on the line, like a checkbox)	mail	pt	(selecionar os e-mails clicando na linha, como uma caixa de verificação)
 (with checkbox enforced)	mail	pt	(Com caixa reforçado)
 account editable by user	mail	pt	onta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
@@ -24,12 +27,17 @@ after reply, visible during compose	mail	pt	Após resposta, visível durante a c
 aliases+forwards	mail	pt	Pseudónimos+Avanços
 all adresses:	mail	pt	Todos os Endereços:
 all available info	admin	pt	odas as informações disponíveis
-all messages in the folder will be lost	mail	pt	Todas as mensagens da pasta serão perdidas
+all messages in the folder will be lost	mail	pt	<br>Todas as mensagens da pasta serão perdidas
+all my email addresses	mail	pt	todos os meus endereços de correio eletrónico
 all of	mail	pt	todos de
+allow	mail	pt	Permitir
 allow external images	mail	pt	Permitir imagens externas
+allow external images from listed domains	mail	pt	Permitir imagens externas de domínios listados
 allow images from external sources in html emails	mail	pt	Permitir imagens de fontes externas em HTML e-mails
+allow images from listed domains in html emails	mail	pt	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
 allways a new window	mail	pt	Sempre numa nova janela
+always allow external sources from %1	mail	pt	Permitir sempre fontes externas a partir de %1
 always respond / auto-responder	mail	pt	Responder sempre / resposta automática
 always show html emails	mail	pt	Exibir sempre mensagens HTML
 always show notifiction	mail	pt	Mostrar sempre notificação

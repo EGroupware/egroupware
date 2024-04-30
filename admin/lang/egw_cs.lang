@@ -44,9 +44,9 @@ account %1 %2	admin	cs	Účet %1 %2
 account '%1' deleted.	admin	cs	Účet '%1' byl smazán.
 account '%1' not found !!!	admin	cs	Účet '%1' nebyl nalezen!
 account active	admin	cs	Účet aktivní
-account has been created	common	cs	Účet byl vytvořen
-account has been deleted	common	cs	Účet byl smazán
-account has been updated	common	cs	Účet byl aktualizován
+account has been created	common	cs	Účet byl vytvořen.
+account has been deleted	common	cs	Účet byl smazán.
+account has been updated	common	cs	Účet byl aktualizován.
 account list	admin	cs	Seznam účtů
 account permissions	admin	cs	Práva účtu
 account preferences	admin	cs	Předvolby účtu
@@ -68,7 +68,7 @@ add a subcategory	admin	cs	Přidat podkategorii
 add a user	admin	cs	Přidat uživatele
 add account	admin	cs	Přidat účet
 add application	admin	cs	Přidat aplikaci
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	cs	Přidat automaticky vytvořené uživatele do této skupiny (ponecháte-li prázdné, použije se 'Výchozí')
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	cs	Přidat automaticky vytvořené uživatele do této skupiny (ponecháte-li prázdné, použije se 'Výchozí').
 add global category	admin	cs	Přidat globální kategorii
 add global category for %1	admin	cs	Přidat globální kategorii pro %1
 add group	admin	cs	Přidat skupinu
@@ -95,10 +95,10 @@ all categories	admin	cs	Všechny kategorie
 all records and account information will be lost!	admin	cs	Všechny záznamy a informace o účtu budou ztraceny!
 all users	admin	cs	Všichni uživatelé
 allow anonymous access to this app	admin	cs	Povolit anonymní přístup k této aplikaci
-allow remote administration from following install id's (comma separated)	admin	cs	Povolit vzdálenou administraci z následujících instalačních ID (oddělených čárkami)
+allow remote administration from following install id's (comma separated)	admin	cs	Povolit vzdálenou administraci z následujících instalačních ID (oddělených čárkami).
 alternate email address	admin	cs	Alternativní e-mailová adresa
 anonymous user	admin	cs	Anonymní uživatel
-anonymous user (not shown in list sessions)	admin	cs	Anonymní uživatel (nezobrazuje se v seznamu relací)
+anonymous user (not shown in list sessions)	admin	cs	Anonymní uživatel (nezobrazuje se v seznamu relací).
 anonymous user does not exist!	admin	cs	Anonymní uživatel NEexistuje!
 anonymous user has no run-rights for the application!	admin	cs	Anonymní uživatel NEMÁ oprávnění ke spuštění aplikace!
 any application	admin	cs	Kterákoli aplikace
@@ -115,23 +115,23 @@ applications run rights updated.	admin	cs	Oprávnění pro běh aplikace byla za
 applies the changes	admin	cs	Použije změny
 apply the changes	admin	cs	Použít změny
 archive: zip or tar	admin	cs	Archiv: ZIP nebo tar
-are you sure you want to delete the application %1 ?	admin	cs	Určitě chcete smazat aplikaci %1 ?
+are you sure you want to delete the application %1 ?	admin	cs	Určitě chcete smazat aplikaci %1?
 are you sure you want to delete this account ?	admin	cs	Určitě chcete smazat tento účet?
 are you sure you want to delete this application ?	admin	cs	Určitě chcete smazat tuto aplikaci?
 are you sure you want to delete this category ?	common	cs	Určitě chcete smazat tuto kategorii?
-are you sure you want to delete this global category ?	admin	cs	Určitě chcete smazat tuto globální kategorii ?
+are you sure you want to delete this global category ?	admin	cs	Určitě chcete smazat tuto globální kategorii?
 are you sure you want to delete this group ?	admin	cs	Určitě chcete smazat tuto skupinu?
 are you sure you want to delete this server?	admin	cs	Určitě chcete smazat tento server?
 are you sure you want to kill this session ?	admin	cs	Určitě chcete ukončit tuto relaci?
 async services last executed	admin	cs	Asynchronní služby naposledy spuštěny
 asynchronous timed services	admin	cs	Asynchornně časované služby
 asyncservices not yet installed or other error (%1) !!!	admin	cs	Asynchronní služby nebyly dosud nainstalovány nebo jiná chyba (%1)!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	cs	Pokuste se použít správný MIME typ pro FTP místo výchozího 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	cs	Pokuste se použít správný MIME typ pro FTP místo výchozího 'application/octet-stream'.
 attribute accountstatus explained	admin	cs	Toto pracuje s atributem <b><i>-accountStatus-</i></b> z QMAIL schématu.
 attribute mail explained	admin	cs	Toto pracuje s atributem <b><i>-mail-</i></b> z QMAIL schématu a nikdy by nemělo být prázdné. Je také interním e-mailovým polem EGroupware.
 attribute mailalternateaddress explained	admin	cs	Toto pracuje s atributem <b><i>-mailAlternateAddress-</i></b> z QMAIL schématu a může být použito jako virtuální mapování nebo aliasy.
 attribute mailforwardingaddress explained	admin	cs	Toto pracuje s atributem <b><i>-mailForwardingAddress-</i></b> z QMAIL schématu a pokud je nastavené, nesmí být prázdné.
-authentication / accounts	admin	cs	Autentikace / Účty
+authentication / accounts	admin	cs	Autentikace | Účty
 auto create account records for authenticated users	admin	cs	Automaticky vytvořit záznamy pro autentikované uživatele
 back to admin/grouplist	admin	cs	Zpět na Administrátor/Skupiny uživatelů
 back to admin/userlist	admin	cs	Zpět na Administrátor/Uživatelské účty
@@ -159,7 +159,7 @@ change acl rights	admin	cs	Změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení
 change login screen message	admin	cs	Změnit zprávu na hlavní obrazovce
 change password for %1	admin	cs	Změnit heslo pro %1
-check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů
+check acl for entries of not (longer) existing accounts	admin	cs	Zkontrolovat ACL zda neobsahují záznamy již zrušených účtů.
 check ip address of all sessions	admin	cs	Kontrolovat IP adresy všech relací
 check items to <b>%1</b> to %2 for %3	admin	cs	Zkontrolovat položky k <b>%1</b> do %2 pro %3
 checking push (green for success or red for failure)	admin	cs	Zkontrolujte PUSH (zelená = OK, červená - není OK)
@@ -187,6 +187,12 @@ custom 1	admin	cs	Vlastní 1
 custom 2	admin	cs	Vlastní 2
 custom 3	admin	cs	Vlastní 3
 custom fields	admin	cs	Uživatelsky definované položky
+custom translation	admin	cs	Vlastní překlady
+customfield '%1' added	admin	cs	Přidáno vlastní pole '%1'.
+customfield '%1' deleted	admin	cs	Vlastní pole '%1' odstraněno.
+customfield '%1' modified	admin	cs	Vlastní pole "%1" upraveno.
+customfield deleted	admin	cs	Vlastní pole odstraněno.
+customfield saved.	admin	cs	Vlastní pole uloženo.
 cyrus imap server	admin	cs	Cyrus IMAP Server
 cyrus imap server administration	admin	cs	Administrace Cyrus IMAP serveru
 data	admin	cs	Data
@@ -229,8 +235,8 @@ deny access to peer servers	admin	cs	Zablokovat přístup k peer serverům
 deny access to phpinfo	admin	cs	Zablokovat přístup k phpinfo
 deny access to site configuration	admin	cs	Zablokovat přístup k nastavení webu
 deny access to user accounts	admin	cs	Zablokovat přístup k uživatelským účtům
-deny all users access to grant other users access to their entries ?	admin	cs	Zablokovat všem uživatelům právo přidělit přístup k vlastním záznamům jiným uživatelům ?
-description can not exceed 255 characters in length !	admin	cs	Popis nesmí překročit délku 255 znaků !
+deny all users access to grant other users access to their entries ?	admin	cs	Zablokovat všem uživatelům právo přidělit přístup k vlastním záznamům jiným uživatelům
+description can not exceed 255 characters in length !	admin	cs	Popis nesmí překročit délku 255 znaků!
 determines the order the fields are displayed	admin	cs	Určuje pořadí zobrazování položek
 disable	admin	cs	Zakázat
 disable "auto completion" of the login form	admin	cs	Zakázat funkci "automatického dokončení" na přihlašovacím formuláři
@@ -240,11 +246,11 @@ display	admin	cs	Zobrazit
 displaying html messages is disabled	admin	cs	Zobrazování HTML zpráv je zakázáno
 do not delete the category and return back to the list	admin	cs	NEmazat kategorii a vrátit se zpět na seznam
 do not validate certificate	admin	cs	Neověřovat certifikát
-do you also want to delete all global subcategories ?	admin	cs	Chcete také smazat všechny globální kategorie ?
-do you really want to delete this profile	admin	cs	Opravdu chcete smazat tento profil
-do you really want to reset the filter for the profile listing	admin	cs	Opravdu chcete vyresetovat filtr pro seznam profilů
+do you also want to delete all global subcategories ?	admin	cs	Chcete také smazat všechny globální kategorie?
+do you really want to delete this profile	admin	cs	Opravdu chcete smazat tento profil?
+do you really want to reset the filter for the profile listing	admin	cs	Opravdu chcete vyresetovat filtr pro seznam profilů?
 do you want to delete all global subcategories ?	admin	cs	Chcete smazat všechny globální podkategorie?
-do you want to move all global subcategories one level down ?	admin	cs	Chcete přesunout všechny globální podkategorie o jednu úroveň níže ?
+do you want to move all global subcategories one level down ?	admin	cs	Chcete přesunout všechny globální podkategorie o jednu úroveň níže?
 document root (default)	admin	cs	Kořenový adresář dokumentů (výchozí)
 domainname	admin	cs	Doménové jméno
 down	admin	cs	Dolů
@@ -274,11 +280,11 @@ emailadmin: group assigned profile	common	cs	Administrátor pošty: profil přid
 emailadmin: user assigned profile	common	cs	Administrátor pošty: profil přidělený uživateli
 enable	admin	cs	Povolit
 enable cyrus imap server administration	admin	cs	Povolit administraci Cyrus IMAP serveru
-enable debug-messages	admin	cs	Povolit debugovací zprávy
+enable debug-messages	admin	cs	Povolit debugovací zprávy.
 enable sieve	admin	cs	Povolit Sieve
 enable spellcheck in rich text editor	admin	cs	Povolit kontrolu pravopisu v richtext editoru?
-enable the soap service	admin	cs	Povolit službu SOAP
-enable the xmlrpc service	admin	cs	Povolit službu XML-RPC
+enable the soap service	admin	cs	Povolit službu SOAP.
+enable the xmlrpc service	admin	cs	Povolit službu XML-RPC.
 enabled - hidden from navbar	admin	cs	Povoleno - Skryto z navigační lišty
 enabled - popup window	admin	cs	Povoleno - Překryvné okno
 encrypted connection	admin	cs	Šifrované připojení
@@ -307,23 +313,23 @@ enter your smtp server hostname or ip address	admin	cs	Zadejte doménové jméno
 enter your smtp server port	admin	cs	Zadejte port Vašeho SMTP serveru
 entry saved	admin	cs	Záznam uložen
 error canceling timer, maybe there's none set !!!	admin	cs	Chyba při ukočení časovače, patrně není žádný nastaven!
-error changing the password for %1 !!!	admin	cs	Chyba při změně hesla pro 1% !
+error changing the password for %1 !!!	admin	cs	Chyba při změně hesla pro 1%!
 error connecting to imap server. %s : %s.	admin	cs	Chyba spojení na IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	cs	Chyba spojení na IMAP server: [%s] %s.
 error deleting log entry!	admin	cs	Chyba při mazání záznamu v logu!
-error saving	admin	cs	Chyba při ukládání
+error saving	admin	cs	Chyba při ukládání!
 error saving account!	admin	cs	Chyba při ukládání účtu!
 error saving the command!	admin	cs	Chyba při ukládání příkazu!
-error saving the entry!!!	admin	cs	Chyba při ukládání záznamu!!!
+error saving the entry!!!	admin	cs	Chyba při ukládání záznamu!
 error saving to db:	admin	cs	Chyba při ukládání do databáze:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	cs	Chyba při nastavení časovače, špatná syntaxe nebo už jeden časovač běží!
-error! no appname found	admin	cs	Chyba! Název aplikace nenalezen
+error! no appname found	admin	cs	Chyba: Název aplikace nenalezen!
 error: %1 not found or other error !!!	admin	cs	Chyba: %1 nenalezen nebo jiná chyba!
 event details follow	admin	cs	Následují detaily události
 expires	admin	cs	Vyprší
 explanation of ldapman	admin	cs	Tento modul byl zatím testován pro Postfix,LDAP,Courier-IMAP a potřebuje schémata CORE a QMAIL (OID7914). Více informací k používání a konfiguraci tohoto systému naleznete v souboru README.ldapman ve podsložce doc složky admin.
 failed to change password.	admin	cs	Nepodařilo se změnit heslo.
-fallback (after each pageview)	admin	cs	Náhradní režim (po každém zobrazení stránky)
+fallback (after each pageview)	admin	cs	Náhradní režim (po každém zobrazení stránky).
 false	admin	cs	Ne
 field '%1' already exists !!!	admin	cs	Položka '%1' již existuje!
 file space	admin	cs	Prostor pro soubory
@@ -331,7 +337,7 @@ file space must be an integer	admin	cs	Prostor pro soubory musí být celé čí
 filtered by account	admin	cs	Filtrováno podle účtu
 filtered by group	admin	cs	Filtrováno podle skupiny
 for the times above	admin	cs	Pro výše uvedené časy
-for the times below (empty values count as '*', all empty = every minute)	admin	cs	Pro níže uvedené časy (prázdné hodnoty se berou jako '*', vše prázdné = každou minutu)
+for the times below (empty values count as '*', all empty = every minute)	admin	cs	Pro níže uvedené časy (prázdné hodnoty se berou jako '*', vše prázdné = každou minutu).
 force selectbox	admin	cs	Vynuit rozbalovací nabídku
 forward also to	admin	cs	Přeposlat také na
 forward email's to	admin	cs	Přeposílat e-maily na
@@ -345,9 +351,9 @@ go directly to admin menu, returning here the next time you click on administrat
 governmental: incl. state or municipal authorities or services	admin	cs	Vládní: včetně státních nebo obecních úřadů a služeb
 grant	admin	cs	Povolit
 group ?	admin	cs	Skupina?
-group has been added	common	cs	Skupina byla přidána
-group has been deleted	common	cs	Skupina byla smazána
-group has been updated	common	cs	Skupina byla aktualizována
+group has been added	common	cs	Skupina byla přidána.
+group has been deleted	common	cs	Skupina byla smazána.
+group has been updated	common	cs	Skupina byla aktualizována.
 group list	admin	cs	Seznam skupin
 group manager	admin	cs	Správce skupin
 group name	admin	cs	Název skupiny
@@ -357,11 +363,11 @@ home directory	admin	cs	Domovský adresář
 home screen message	admin	cs	Zpráva na hlavní obrazovce
 host information	admin	cs	Informace o serveru (host)
 hour<br>(0-23)	admin	cs	Hodina<br>(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	cs	Jaká by měla být maximální velikost náhledů k odkazovaným obrázkům (v pixelech)?
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	cs	Kolik dní mají záznamy zůstat v přístupovém protokolu, než budou smazány (výchozí 90) ?
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	cs	Jaká by měla být maximální velikost náhledů k odkazovaným obrázkům (v pixelech)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	cs	Kolik dní mají záznamy zůstat v přístupovém protokolu, než budou smazány (výchozí 90)
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	cs	Kolik položek smí uživatelé bez práv administrátora exportovat (prázdné = bez omezení, ne = žádný export)
-how many minutes should an account or ip be blocked (default 1) ?	admin	cs	Kolik minut mají být účet nebo IP blokovány (výchozí 30) ?
-how should email addresses for new users be constructed?	admin	cs	Jak mají být sestaveny e-mailové adresy pro nové uživatele?
+how many minutes should an account or ip be blocked (default 1) ?	admin	cs	Kolik minut mají být účet nebo IP blokovány (výchozí 30)
+how should email addresses for new users be constructed?	admin	cs	Jak mají být sestaveny e-mailové adresy pro nové uživatele
 icon	admin	cs	Ikona
 idle	admin	cs	Nečinný
 if no acl records for user or any group the user is a member of	admin	cs	Pokud pro uživatele nebo žádnou ze skupin které je členem neexistují ACL záznamy
@@ -392,7 +398,7 @@ installed crontab	admin	cs	Nainstalovaný crontab
 instance	admin	cs	Instance
 interface	admin	cs	Rozhranní
 international use	admin	cs	Mezinárodní využití
-invalid argument '%1' !!!	admin	cs	Neplatný argument '%1' !
+invalid argument '%1' !!!	admin	cs	Neplatný argument '%1'!
 invalid formated date "%1"!	admin	cs	Neplatný formát datumu "%1"!
 invalid remote id or name "%1"!	admin	cs	Neplatné vzdálené ID nebo název "%1"!
 invalid value "%1" use yes or no!	admin	cs	Neplatná hodnota "%1", použijte ano nebo ne!
@@ -423,9 +429,9 @@ ldap server admin password	admin	cs	Heslo administrátora LDAP serveru
 ldap server hostname or ip address	admin	cs	DNS jméno nebo IP adresa LDAP serveru
 ldap settings	admin	cs	LDAP nastavení
 leave empty for no quota	admin	cs	Ponechte prázdné, nechcete-li kvótu
-leave empty to use oauth, if supported	admin	cs	Nechte prázdné, pokud chcete použít OAuth, pokud je podporován.
-leave the category untouched and return back to the list	admin	cs	Ponechat kategorii bez změny a vrátit se zpět na seznam
-leave the group untouched and return back to the list	admin	cs	Ponechat skupinu bez změny a vrátit se zpět na seznam
+leave empty to use oauth, if supported	admin	cs	Nechte prázdné, pokud chcete použít OAuth, pokud je podporován
+leave the category untouched and return back to the list	admin	cs	Ponechat kategorii bez změny a vrátit se zpět na seznam.
+leave the group untouched and return back to the list	admin	cs	Ponechat skupinu bez změny a vrátit se zpět na seznam.
 leave without saveing the entry	admin	cs	Ukončit bez uložení záznamu
 leaves without saveing	admin	cs	Ukončí bez ukládání
 length<br>rows	admin	cs	Délka<br>Řádky
@@ -464,24 +470,24 @@ name of organisation	admin	cs	Název organizace
 name of the egroupware instance, eg. default	admin	cs	Název instace EGroupware, např. default
 new group name	admin	cs	Název nové skupiny
 new name	admin	cs	Nový název
-new password [ leave blank for no change ]	admin	cs	Nové heslo [ Ponechte prázdné, nechcete-li měnit ]
+new password [ leave blank for no change ]	admin	cs	Nové heslo (Ponechte prázdné, nechcete-li měnit)
 next run	admin	cs	Další spuštění
 no algorithms available	admin	cs	Nejsou k dispozici žádné algoritmy!
 no alternate email address	admin	cs	Bez alternativní e-mailové adresy
 no encryption	admin	cs	Bez šifrování
 no forwarding email address	admin	cs	Bez e-mailové adresy pro přeposílání
-no jobs in the database !!!	admin	cs	Žádné úlohy v databázi!!!
-no login history exists for this user	admin	cs	Pro tohoto uživatele neexistuje historie přihlášení
-no matches found	admin	cs	Nenalezeny žádné záznamy
+no jobs in the database !!!	admin	cs	Žádné úlohy v databázi!
+no login history exists for this user	admin	cs	Pro tohoto uživatele neexistuje historie přihlášení!
+no matches found	admin	cs	Nenalezeny žádné záznamy!
 no message returned.	admin	cs	Žádná zpráva se nevrátila.
-no modes available	admin	cs	žádné režimy nejsou k dispozici
-no permission to add groups	admin	cs	Nemáte oprávnění přidávat skupiny
-no permission to add users	admin	cs	Nemáte oprávnění přidávat uživatele
-no permission to create groups	admin	cs	Nemáte oprávnění vytvářet skupiny
+no modes available	admin	cs	Žádné režimy nejsou k dispozici!
+no permission to add groups	admin	cs	Nemáte oprávnění přidávat skupiny!
+no permission to add users	admin	cs	Nemáte oprávnění přidávat uživatele!
+no permission to create groups	admin	cs	Nemáte oprávnění vytvářet skupiny!
 no plain text part found	admin	cs	Nebyla nalezena část ve formě prostého textu
 no supported imap authentication method could be found.	admin	cs	Nebyla nalezena žádná podporovaná metoda IMAP autentikace.
 non profit: clubs, associations, ...	admin	cs	Neziskové: kluby, asociace, ...
-note: ssl available only if php is compiled with curl support	admin	cs	Upozornění: SSL je k dispozici jen v případě, že je PHP zkompilováno s podporou curl
+note: ssl available only if php is compiled with curl support	admin	cs	Upozornění: SSL je k dispozici jen v případě, že je PHP zkompilováno s podporou curl.
 number of active users	admin	cs	Počet aktivních uživatelů
 number of row for a multiline inputfield or line of a multi-select-box	admin	cs	Počet řádků ve víceřádkovém vstupním poli nebo ve výběrovém okně
 number of sessions / egroupware logins in the last 30 days	admin	cs	Počet relací / Přihlášení do EGroupware během posledních 30 dní
@@ -509,7 +515,6 @@ path information	admin	cs	Informace o cestě
 peer server list	admin	cs	Seznam peer serverů
 peer servers	admin	cs	Peer servery
 percent of users that logged out	admin	cs	Procento odhlášených uživatelů
-percent this user has logged out	admin	cs	Procento odhlášení tohoto uživatele
 permission denied	admin	cs	Přístup zamítnut
 permission denied !!!	admin	cs	Přístup zamítnut!
 permission denied!!!	admin	cs	Přístup zamítnut!
@@ -548,8 +553,6 @@ remote administration instances	admin	cs	Instance vzdálené administrace
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	cs	Vzdálená administrace musí být povolena na vzdálené instanci pod položkou Administrátor > Konfigurace webu!
 remote instance saved	admin	cs	Vzdálená instance uložena
 remove	admin	cs	Odstranit
-remove all users from this group	admin	cs	Odstranit všechny uživatele z této skupiny
-remove all users from this group ?	admin	cs	Odstranit všechny uživatele z této skupiny?
 requested	admin	cs	Požadovaný
 requires 'openid / oauth2 server' app.	admin	cs	Vyžaduje aplikaci "OpenID / OAuth2 Server".
 reset filter	admin	cs	Vyresetovat filtr
@@ -558,27 +561,27 @@ route all mails to	admin	cs	Směrovat všechny zprávy na
 rows	admin	cs	Ŕádky
 rpm or debian package	admin	cs	Balíček RPM nebo deb
 run asynchronous services	admin	cs	Spustit asynchronní služby
-save the category	admin	cs	Uložit katergorii
-save the category and return back to the list	admin	cs	Uložit kategorii a vrátit se zpět na seznam
-saves the changes made and leaves	admin	cs	Uloží provedené změny a ukončí
-saves this entry	admin	cs	Uloží tento záznam
+save the category	admin	cs	Uložit katergorii.
+save the category and return back to the list	admin	cs	Uložit kategorii a vrátit se zpět na seznam.
+saves the changes made and leaves	admin	cs	Uloží provedené změny a ukončí.
+saves this entry	admin	cs	Uloží tento záznam.
 scheduled	admin	cs	Naplánováno
 search accounts	admin	cs	Prohledat účty
 search categories	admin	cs	Prohledat kategorie
 search groups	admin	cs	Prohledat skupiny
 search peer servers	admin	cs	Prohledat peer servery
 security	admin	cs	Zabezpečení
-select accounts for which the custom field should be visible	admin	cs	Vybrat účty, pro které má být uživatelsky definované pole viditelné
+select accounts for which the custom field should be visible	admin	cs	Vybrat účty, pro které má být uživatelsky definované pole viditelné.
 select group managers	admin	cs	Vybrat skupinové správce
 select permissions this group will have	admin	cs	Vybrat oprávnění pro tuto skupinu
-select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Pokud se jedná o hlavní kategorii, zvolte NO CATEGORY
+select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Pokud se jedná o hlavní kategorii, zvolte NO CATEGORY.
 select type of imap server	admin	cs	Vyberte typ IMAP serveru
 select type of imap/pop3 server	admin	cs	Vyberte typ IMAP/POP3 serveru
 select type of smtp server	admin	cs	Vyberte typ SMTP serveru
 select users for inclusion	admin	cs	Vyberte uživatele k zařazení
-select where you want to store/retrieve filesystem information	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o souborovém systému
-select where you want to store/retrieve user accounts	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o uživatelských účtech
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	cs	Vyberte umístění této aplikace v navigační liště, od nejnižšího(vlevo) k nejvyššímu (vpravo)
+select where you want to store/retrieve filesystem information	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o souborovém systému.
+select where you want to store/retrieve user accounts	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o uživatelských účtech.
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	cs	Vyberte umístění této aplikace v navigační liště, od nejnižšího(vlevo) k nejvyššímu (vpravo).
 selectbox	admin	cs	Rozbalovací nabídka
 send using this email-address	admin	cs	Odeslat s touto e-mailovou adresou
 server %1 has been updated	admin	cs	Server %1 byl zaktualizován
@@ -590,7 +593,7 @@ server url	admin	cs	URL serveru
 server username	admin	cs	Uživatelské jméno serveru
 sessions last 30 days	admin	cs	Relací za posledních 30 dní
 set preference values.	admin	cs	Nastavit preferované hodnoty.
-should exceptions contain a trace (including function arguments)	admin	cs	Mají výjimky obsahovat i trasování (včetně argumentů funkcí)
+should exceptions contain a trace (including function arguments)	admin	cs	Mají výjimky obsahovat i trasování (včetně argumentů funkcí).
 should the login page include a language selectbox (useful for demo-sites) ?	admin	cs	Má přihlašovací stránka zobrazovat rozbalovací nabídku s výběrem jazyka (užitečné pro demo stránky)?
 show 'powered by' logo on	admin	cs	Zobrazovat logo 'Powered by' na
 show access log	admin	cs	Zobrazit přístupový protokol
@@ -613,8 +616,8 @@ smtp-server hostname or ip address	admin	cs	DNS jméno nebo IP adresa SMTP serve
 smtp-server port	admin	cs	Port SMTP serveru
 soap	admin	cs	SOAP
 sorry, that group name has already been taken.	admin	cs	Lituji, takové jméno skupiny už bylo použito.
-sorry, the above users are still a member of the group %1	admin	cs	Lituji, výše uvedení uživatelé jsou stále členy skupiny %1
-sorry, the follow users are still a member of the group %1	admin	cs	Lituji, následující uživatelé jsou stále členy skupiny %1
+sorry, the above users are still a member of the group %1	admin	cs	Lituji, výše uvedení uživatelé jsou stále členy skupiny %1.
+sorry, the follow users are still a member of the group %1	admin	cs	Lituji, následující uživatelé jsou stále členy skupiny %1.
 sort the entries	admin	cs	Třídit záznamy
 source account #%1 does not exist!	admin	cs	Zdrojový účet #%1 NEexistuje!
 ssl	admin	cs	SSL
@@ -642,27 +645,27 @@ templates	admin	cs	Šablony
 text entry	admin	cs	Textový záznam
 that application name already exists.	admin	cs	Takové jméno aplikace již existuje.
 that application order must be a number.	admin	cs	Pořadí aplikace musí být číslo.
-that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito
-that name has been used already	admin	cs	Takový název už byl použit
+that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito.
+that name has been used already	admin	cs	Takový název už byl použit.
 that server name has been used already !	admin	cs	Takový název serveru už byl použit!
 the api is current	admin	cs	API je aktuální
 the api requires an upgrade	admin	cs	API vyžaduje aktualizaci
 the cumulated and anonymised data will be publically available:	admin	cs	Souhrnné anonymní údaje budou veřejně k dispozici na:
-the groups must include the primary group	admin	cs	Skupiny musí obsahovat i primární skupinu
+the groups must include the primary group	admin	cs	Skupiny musí obsahovat i primární skupinu.
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	admin	cs	Vypadá to, že IMAP server nepodporuje vybranou autentikační metodu. Zkontaktujte prosím Vašeho systémového administrátora.
 the install id of an instance can be found under admin > site configuration	admin	cs	Instalační ID instance je možné najít pod Administrátor > Konfigurace webu
-the login and password can not be the same	admin	cs	Přihlašovací jméno a heslo se nesmí shodovat
-the loginid can not be more then 8 characters	admin	cs	Přihlašovací id nesmí být delší než osm znaků
+the login and password can not be the same	admin	cs	Přihlašovací jméno a heslo se nesmí shodovat.
+the loginid can not be more then 8 characters	admin	cs	Přihlašovací id nesmí být delší než osm znaků.
 the mimeparser can not parse this message.	admin	cs	Mimeparser nemůže zpracovat tuto zprávu.
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	cs	Název používaný interně (<= 20 znaků), je změna způsobí nedostupnost stávajících dat
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	cs	Název používaný interně (<= 20 znaků), je změna způsobí nedostupnost stávajících dat.
 the testjob sends you a mail everytime it is called.	admin	cs	Testovací úloha Vám pošle e-mail při každém spuštění.
 the text displayed to the user	admin	cs	Text zobrazený uživateli
 the two passwords are not the same	admin	cs	Zadaná hesla se neshodují
 the users bellow are still members of group %1	admin	cs	Níže uvedení uživatelé jsou stále členy skupiny %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	cs	Skupina s tímto jménem již existuje. Uživatelé a skupiny nemohou mít stejná id.
-they must be removed before you can continue	admin	cs	Musí být odstraněni, aby jste mohl(a) pokračovat
-this application is current	admin	cs	Tato aplikace je aktuální
-this application requires an upgrade	admin	cs	Tato aplikace vyžaduje aktualizaci
+there already is a group with this name. userid's can not have the same name as a groupid	admin	cs	Skupina s tímto jménem již existuje. Uživatelé a skupiny nemohou mít stejná ID.
+they must be removed before you can continue	admin	cs	Musí být odstraněni, aby jste mohl(a) pokračovat.
+this application is current	admin	cs	Tato aplikace je aktuální.
+this application requires an upgrade	admin	cs	Tato aplikace vyžaduje aktualizaci.
 this category is currently being used by applications as a parent category	admin	cs	Tuto kategorii v současné době používají aplikace jako rodičovskou.
 this php has no imap support compiled in!!	admin	cs	Toto PHP nemá zkompilovanou podporu IMAP.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	cs	Časový limit vypršení dat aplikační relace v sekundách (výchozí hodnota je 86400 = 1 den)
@@ -693,18 +696,18 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unexpected response from server to authenticate command.	admin	cs	Neočekávaná odpověď serveru na příkaz AUTHENTICATE.
 unexpected response from server to digest-md5 response.	admin	cs	Neočekávaná odpověď serveru na Digest-MD5 odpověď.
 unexpected response from server to login command.	admin	cs	Neočekávaná odpověď serveru na příkaz LOGIN.
-unknown account: %1 !!!	admin	cs	Neznámý účet: %1 !
-unknown command %1!	admin	cs	Neznámý příkaz %1 !
+unknown account: %1 !!!	admin	cs	Neznámý účet: %1!
+unknown command %1!	admin	cs	Neznámý příkaz %1!
 unknown imap response from the server. server responded: %s	admin	cs	Neznámá IMAP odpověď server. Odpověděl: %s
-unknown option %1	admin	cs	Neznámá volba %1
-unsupported action '%1' !!!	admin	cs	Nepodporovaná akce '%1' !
+unknown option %1	admin	cs	Neznámá volba %1!
+unsupported action '%1' !!!	admin	cs	Nepodporovaná akce '%1'!
 unwilling to save category with current settings. check for inconsistency:	admin	cs	Nelze uložit kategorii s aktuálním nastavením. Zkontrolujte nekonzistenci:
 up	admin	cs	Nahoru
 update current email address:	admin	cs	Aktualizovat současnou e-mailovou adresu:
-updated	admin	cs	Aktualizováno
+updated	admin	cs	aktualizováno
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	cs	URL instalace EGroupware, např. https://egw.domain.com/egroupware
 usage	admin	cs	Využití
-use cookies to pass sessionid	admin	cs	Požívat cookies pro předání id relace
+use cookies to pass sessionid	admin	cs	Požívat cookies pro předání ID relace
 use default	admin	cs	Použít výchozí
 use ldap defaults	admin	cs	Použít výchozí hodnoty LDAP
 use predefined username and password defined below	admin	cs	Použít předdefinované uživatelské jméno a heslo uvedené níže
@@ -716,7 +719,7 @@ use tls encryption	admin	cs	Použít TLS šifrování
 user accounts	admin	cs	Uživatelské účty
 user can edit forwarding address	admin	cs	Uživatel smí editovat adresu pro přeposílání
 user data	common	cs	Uživatelská data
-user for smtp-authentication (leave it empty if no auth required)	admin	cs	Uživatel pro SMTP autentikaci (ponechte prázdné, není-li autentikace vyžadována)
+user for smtp-authentication (leave it empty if no auth required)	admin	cs	Uživatel pro SMTP autentikaci (ponechte prázdné, není-li autentikace vyžadována).
 user groups	admin	cs	Skupiny uživatelů
 user-agent	admin	cs	User-Agent
 userdata	admin	cs	Uživatelská data
@@ -745,25 +748,25 @@ who would you like to transfer all records owned by the deleted user to?	admin	c
 would you like egroupware to cache the egw info array ?	admin	cs	Ukládání informačního pole EGroupware do mezipaměti.
 would you like egroupware to check for a new version<br>when admins login ?	admin	cs	Kontrola aktualizací verzí při přihlášení administrátorů.
 would you like egroupware to check for new application versions when admins login ?	admin	cs	Kontrola aktualizací aplikací při přihlášení administrátorů.
-would you like to automaticaly load new langfiles (at login-time) ?	admin	cs	Chcete (během přihlášení) automaticky nahrávat nové jazykové soubory?
-would you like to show each application's upgrade status ?	admin	cs	Chcete ukazovat stav aktualizace každé z aplikací
-wrong account type: %1 is no %2 !!!	admin	cs	Špatný typ účtu: %1 NENÍ %2 !
+would you like to automaticaly load new langfiles (at login-time) ?	admin	cs	Chcete (během přihlášení) automaticky nahrávat nové jazykové soubory.
+would you like to show each application's upgrade status ?	admin	cs	Chcete ukazovat stav aktualizace každé z aplikací.
+wrong account type: %1 is no %2 !!!	admin	cs	Špatný typ účtu: %1 NENÍ %2!
 wrong admin-account or -password !!!	admin	cs	Špatný účet administrátora nebo heslo!
 xml-rpc	admin	cs	XML-RPC
-you have entered an invalid expiration date	admin	cs	Zadal(a) jste neplatné datum expirace
+you have entered an invalid expiration date	admin	cs	Zadal(a) jste neplatné datum expirace!
 you have no email address for your user set !!!	admin	cs	Nenastavil(a) jste uživateli žádnou emailovou adresu!
 you have received a new message on the	admin	cs	Přišla Vám nová zpráva na
 you have to enter a name, to create a new field!!!	admin	cs	Musíte zadat název pro vytvoření nové položky!
 you have to enter a name, to create a new type!	admin	cs	Musíte zadat název pro vytvoření nového typu!
-you must add at least 1 permission or group to this account	admin	cs	Musíte zadat nejméně jedno oprávnění nebo skupinu k tomuto účtu
+you must add at least 1 permission or group to this account	admin	cs	Musíte zadat nejméně jedno oprávnění nebo skupinu k tomuto účtu!
 you must enter a group name.	admin	cs	Musíte zadat jméno skupiny.
-you must enter a lastname	admin	cs	Musíte zadat příjmení
-you must enter a loginid	admin	cs	Musíte zadat přihlašovací id
+you must enter a lastname	admin	cs	Musíte zadat příjmení.
+you must enter a loginid	admin	cs	Musíte zadat přihlašovací ID
 you must enter an application name and title.	admin	cs	Musíte zadat název aplikace a titulek.
 you must enter an application name.	admin	cs	Musíte zadat název aplikace.
 you must enter an application title.	admin	cs	Musíte zadat titulek aplikace.
-you must select a file type	admin	cs	Musíte vybrat typ souboru
-you must select at least one group member.	admin	cs	Musíte vybrat alespoň jednoho člena skupiny
+you must select a file type	admin	cs	Musíte vybrat typ souboru.
+you must select at least one group member.	admin	cs	Musíte vybrat alespoň jednoho člena skupiny.
 you need to enter install id and password!	admin	cs	Musíte zadat instalační ID a heslo!
 you will need to remove the subcategories before you can delete this category	admin	cs	Než smažete tuto kategorii, musíte smazat všechny podkategorie!
 your last submission was less then %1 days ago!	admin	cs	Naposledy jste odeslal(a) údaje před méně jak %1 dnem/dny.

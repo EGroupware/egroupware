@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	en	%1 mail credentials deleted
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
 %1 phrases saved.	admin	en	%1 phrases saved.
-%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and application(s) %3 .
+%1 rights for %2 and applications %3	admin	en	%1 rights for %2 and application(s) %3.
 %1 run rights for applications	admin	en	%1 run rights for applications
 %1 sessions killed	admin	en	%1 sessions killed.
 %1 successful	admin	en	%1 successful
@@ -151,9 +151,9 @@ applications this group can use	admin	en	Applications this group can use
 applies the changes	admin	en	Applies the changes
 apply changes	admin	en	Apply changes
 apply the changes	admin	en	Apply the changes
-archive: zip or tar	admin	en	Archive: zip or tar
+archive: zip or tar	admin	en	Archive: ZIP or tar
 are you sure you want to %1 mail for selected accounts?	admin	en	Are you sure you want to %1 mail for selected accounts?
-are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1 ?
+are you sure you want to delete the application %1 ?	admin	en	Are you sure you want to delete the application %1?
 are you sure you want to delete this account ?	admin	en	Are you sure you want to delete this account?
 are you sure you want to delete this application ?	admin	en	Are you sure you want to delete this application?
 are you sure you want to delete this category ?	common	en	Are you sure you want to delete this category?
@@ -269,7 +269,8 @@ custom 1	admin	en	Custom 1
 custom 2	admin	en	Custom 2
 custom 3	admin	en	Custom 3
 custom fields	admin	en	Custom fields
-custom translation	admin	en	Custom translation
+custom fields tab	admin	en	custom fields tab
+custom translation	admin	en	Custom translations
 customfield '%1' added	admin	en	Customfield '%1' added
 customfield '%1' deleted	admin	en	Customfield '%1' deleted
 customfield '%1' modified	admin	en	Customfield '%1' modified
@@ -423,7 +424,7 @@ enter the site username for peer servers	admin	en	Enter the site username for pe
 enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.\nThe path MUST start with / and be readable by all users
 enter your default ftp server	admin	en	Enter your default FTP server
 enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain (from: user@domain)
 enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
@@ -727,7 +728,6 @@ path information	admin	en	Path information
 peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
-percent this user has logged out	admin	en	Percent this user has logged out
 periodic	admin	en	Periodic
 permission denied	admin	en	Permission denied
 permission denied !!!	admin	en	Permission denied!
@@ -777,8 +777,6 @@ remote administration need to be enabled in the remote instance under admin &gt;
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
-remove all users from this group	admin	en	Remove all users from this group
-remove all users from this group ?	admin	en	Remove all users from this group?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	en	Requested
@@ -956,7 +954,7 @@ two weeks	admin	en	Two weeks
 type '%1' already exists !!!	admin	en	Type '%1' already exists!
 type of customfield	admin	en	Type of custom field
 type of field	admin	en	Type of field
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under MS Windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
 unexpected response from server to authenticate command.	admin	en	Unexpected response from server to AUTHENTICATE command.
 unexpected response from server to digest-md5 response.	admin	en	Unexpected response from server to Digest-MD5 response.
 unexpected response from server to login command.	admin	en	Unexpected response from server to LOGIN command.
@@ -968,7 +966,7 @@ unsupported action '%1' !!!	admin	en	Unsupported action '%1'!
 unwilling to save category with current settings. check for inconsistency:	admin	en	Unable to save category with current settings. Check for inconsistency:
 up	admin	en	Up
 update current email address:	admin	en	Update current email address:
-updated	admin	en	Updated
+updated	admin	en	updated
 upload your background image or enter the url	admin	en	Upload your background image or enter the URL
 upload your certificate .p12/.pfx file	admin	en	Upload your certificate .p12/.pfx file
 upload your favicon or enter the url	admin	en	Upload your favicon or enter the URL

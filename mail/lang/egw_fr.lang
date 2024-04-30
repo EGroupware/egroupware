@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	fr	%1 retiré de la la liste blanche
 %1 is not writable by you!	mail	fr	%1 n'est pas accessible en écriture !
 %1 mails selected	mail	fr	%1 mails sélectionnés
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	fr	%1 nécessite l'extension Sieve %2, essayez peut-être %1 ou un nombre de jours plus élevé.
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet

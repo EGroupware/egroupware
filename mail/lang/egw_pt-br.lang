@@ -1,9 +1,12 @@
 %1 attachments	mail	pt-br	%1 anexos
 %1 is not writable by you!	mail	pt-br	% 1 não é gravável por você!
 %1 mails selected	mail	pt-br	% 1 e-mails selecionados
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt-br	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número maior de dias.
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt-br	(*) Leve em consideração que o encaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de e-mail, o limite é 4 por padrão. Entre em contato com o administrador do servidor de e-mail para obter mais informações.
 (leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt-br	(sem assunto)
 (not connected)	mail	pt-br	(não conectado)
+(select mails by clicking on the line, like a checkbox)	mail	pt-br	(selecione os e-mails clicando na linha, como uma caixa de seleção)
 (with checkbox enforced)	mail	pt-br	(com caixa reforçado)
 account editable by user	mail	pt-br	conta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt-br	A recuperação de direitos de ACL falhou, parece que não há direitos definidos!
@@ -18,6 +21,7 @@ add folder	mail	pt-br	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt-br	Converter correio em item, adicionar mensagem bruta (ignorar anexos de correio)
 add this certificate into contact	mail	pt-br	Adicionar este certificado ao contato
 add to addressbook	mail	pt-br	Adicionar aos Contatos
+add your domain as "%1" in options to list of email providers and enable api.	mail	pt-br	Adicione seu domínio como "%1" nas opções da lista de provedores de e-mail e ative a API.
 adding %1 to blacklisted email addresses failed because of %2	mail	pt-br	Adicionar arquivos como %1
 adding %1 to whiltelisted email addresses failed because of %2	mail	pt-br	A adição de %1 aos endereços de e-mail da lista negra falhou devido a %2
 after reply, visible during compose	mail	pt-br	Após a resposta, visível durante a composição

@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	it	%1 credenziali di posta eliminate
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile!
 %1 phrases saved.	admin	it	%1 frasi salvate
-%1 rights for %2 and applications %3	admin	it	%1 diritti per %2 e applicazioni %3 .
+%1 rights for %2 and applications %3	admin	it	%1 diritti per %2 e applicazioni %3.
 %1 run rights for applications	admin	it	%1 diritti di esecuzione per applicazioni
 %1 sessions killed	admin	it	%1 sessioni terminate.
 %1 successful	admin	it	%1 successo
@@ -153,7 +153,7 @@ apply changes	admin	it	Applica modifiche
 apply the changes	admin	it	Applica le modifiche
 archive: zip or tar	admin	it	Archivia: ZIP o tar
 are you sure you want to %1 mail for selected accounts?	admin	it	Sei sicuro di voler %1 mail per gli account selezionati?
-are you sure you want to delete the application %1 ?	admin	it	Sei sicuro di voler cancellare l'applicazione %1 ?
+are you sure you want to delete the application %1 ?	admin	it	Sei sicuro di voler cancellare l'applicazione %1?
 are you sure you want to delete this account ?	admin	it	Vuoi davvero eliminare questo account?
 are you sure you want to delete this application ?	admin	it	Vuoi davvero eliminare questa applicazione?
 are you sure you want to delete this category ?	common	it	Vuoi davvero eliminare questa categoria?
@@ -269,7 +269,7 @@ custom 1	admin	it	Personale 1
 custom 2	admin	it	Personale 2
 custom 3	admin	it	Personale 3
 custom fields	admin	it	Campi Personalizzati
-custom translation	admin	it	Traduzione personalizzata
+custom translation	admin	it	Traduzioni personalizzate
 customfield '%1' added	admin	it	Personalizzato '%1' aggiunto
 customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso
 customfield '%1' modified	admin	it	Personalizzato '%1' modificato
@@ -287,7 +287,7 @@ deactivated	admin	it	Disattivato
 debug	admin	it	Correggi errori
 default	admin	it	Predefinito
 default file system space per user	admin	it	Spazio sul filesystem predefinito per l'utente
-default file system space per user/group ?	admin	it	Spazio sul filesystem predefinito per utente/gruppo ?
+default file system space per user/group ?	admin	it	Spazio sul filesystem predefinito per utente/gruppo?
 default of currently	admin	it	predefinito attuale
 deinstall crontab	admin	it	Rimuovi crontab
 delete account	admin	it	Elimina account
@@ -522,17 +522,17 @@ host information	admin	it	Informazioni host
 hostname or ip	admin	it	Nome del computer o indirizzo IP
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	it	Dimensione massima in pixel delle miniature per le immagini collegate
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90) ?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	it	Quante voci possono esportare gli utenti semplici. Vuoto = nessun limite, no = nessuna esportazione consentita
-how many minutes should an account or ip be blocked (default 1) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30) ?
-how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti ?
+how many minutes should an account or ip be blocked (default 1) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30)?
+how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti?
 how username get constructed	admin	it	Come viene costruito il nome utente
 html/plaintext	admin	it	HTML/testo
 icon	admin	it	Icona
 identity	admin	it	Identità
 identity deleted	admin	it	Identità cancellata
-identity saved.	admin	it	identità salvata
-idle	admin	it	inattivo
+identity saved.	admin	it	Identità salvata
+idle	admin	it	Inattivo
 if different from email address	admin	it	se diverso dall'indirizzo email
 if disabled existing tokens immediatly stop working.	admin	it	Se disattivato i token attivi smetteranno di funzionare immediatamente.
 if no acl records for user or any group the user is a member of	admin	it	Se non ci sono record nell'ACL per l'utente o qualche gruppo, l'utente è un membro di
@@ -664,7 +664,7 @@ name of the egroupware instance, eg. default	admin	it	Nome della istanza EGroupw
 new group name	admin	it	Nome nuovo gruppo
 new name	admin	it	Nuovo nome
 new password	admin	it	Nuova password
-new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
+new password [ leave blank for no change ]	admin	it	Nuova password (Lascia in bianco per non cambiarla)
 next run	admin	it	Prossima esecuzione
 no algorithms available	admin	it	Nessun algoritmo disponibile
 no alternate email address	admin	it	Nessun indirizzo email alternativo
@@ -727,7 +727,6 @@ path information	admin	it	Informazioni sul Path
 peer server list	admin	it	Lista Peer server
 peer servers	admin	it	Peer servers
 percent of users that logged out	admin	it	Percentuale di utenti che sono usciti dal sistema in maniera corretta
-percent this user has logged out	admin	it	Percentuale di logout di quest'utente
 periodic	admin	it	Periodico
 permission denied	admin	it	Permesso negato
 permission denied !!!	admin	it	Permesso negato!
@@ -777,8 +776,6 @@ remote administration need to be enabled in the remote instance under admin &gt;
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	it	L'amministrazione remota deve essere abilitata nella istanza remota sotto Admin > Configurazione per tutto il sito!
 remote instance saved	admin	it	Istanza remota salvata
 remove	admin	it	Rimuovi
-remove all users from this group	admin	it	Rimuovi tutti gli utenti da questo gruppo
-remove all users from this group ?	admin	it	Rimuovi tutti gli utenti da questo gruppo?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	it	La rimozione dell'accesso ai gruppi può provocare problemi per i dati di questa categoria. Sei sicuro di volerlo fare? Gli utenti di questi gruppi potrebbero non avere più l'accesso:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	it	Rinominare l'utente "anonimo" (anonymous) renderà inutilizzabile la condivisione di file e Collabora Online Office!
 requested	admin	it	Richiesto
@@ -801,8 +798,8 @@ save as default	admin	it	salva come predefinito
 save changes	admin	it	Salva modifiche
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	it	Salvataggio del messaggio %1 fallito. Non è possibile salvare messaggi nella cartella %2 in quanto %3
 save the category	admin	it	Salva la categoria
-save the category and return back to the list	admin	it	Salva la categoria e ritorna alla lista
-saves the changes made and leaves	admin	it	Salva le modifiche fatte ed esce
+save the category and return back to the list	admin	it	Salva la categoria e ritorna alla lista.
+saves the changes made and leaves	admin	it	Salva le modifiche fatte ed esce.
 saves this entry	admin	it	Salva questa voce.
 saving of message %1 failed. destination folder %2 does not exist.	admin	it	Salvataggio del messaggio %1 fallito. La cartella di destinazione %2 non esiste.
 scheduled	admin	it	Programmato
@@ -843,8 +840,8 @@ sessions last 30 days	admin	it	Sessioni negli ultimi 30 giorni
 set a random password	admin	it	Imposta una password casuale
 set preference values.	admin	it	Imposta i valori delle preferenze
 settings	admin	it	Impostazioni
-should exceptions contain a trace (including function arguments)	admin	it	Le eccezioni dovrebbero contenere tracce, inclusi gli argomenti delle funzioni
-should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo) ?
+should exceptions contain a trace (including function arguments)	admin	it	Le eccezioni dovrebbero contenere tracce, inclusi gli argomenti delle funzioni.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo)?
 show 'powered by' logo on	admin	it	Visualizza il logo 'Powered by'
 show access log	admin	it	Visualizza i log di accesso
 show as optional, but required once user has it setup	admin	it	Mostra come facoltativa, ma è necessaria una volta che l'utente l'ha configurata.
@@ -953,14 +950,14 @@ two days	admin	it	Due giorni
 two hours	admin	it	Due ore
 two months	admin	it	Due mesi
 two weeks	admin	it	Due settimane
-type '%1' already exists !!!	admin	it	Il tipo '%1' esiste già !
+type '%1' already exists !!!	admin	it	Il tipo '%1' esiste già!
 type of customfield	admin	it	Tipo di campo personalizzato
 type of field	admin	it	Tipo di campo
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows devi installare lo schedulatore %1manualmente%2 o usare la modalità fallback. Fallback significa che i lavori vengono controllati solo dopo ogni vista pagina!
 unexpected response from server to authenticate command.	admin	it	Risposta inaspettata dal server al comando AUTHENTICATE
 unexpected response from server to digest-md5 response.	admin	it	Risposta inaspettata dal server alla risposta Digest-MD5
 unexpected response from server to login command.	admin	it	Risposta inaspettata dal server al comando LOGIN
-unknown account: %1 !!!	admin	it	Account ignoto: %1 !
+unknown account: %1 !!!	admin	it	Account ignoto: %1!
 unknown command %1!	admin	it	Comando %1 ignoto!
 unknown imap response from the server. server responded: %s	admin	it	Riposta non riconosciuta dal server IMAP %s
 unknown option %1	admin	it	Opzione %1 ignota!
@@ -1033,11 +1030,11 @@ we hope you understand the importance for this voluntary statistic and not deny 
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
 who would you like to transfer records owned by the deleted user to?	admin	it	A chi si desidera trasferire i record dell'utente cancellato?
 would you like egroupware to cache the egw info array ?	admin	it	Vuoi che EGroupware utilizzi la cache per l'array EGroupware info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che EGroupware controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
-would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che EGroupware controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che EGroupware controlli se c'è una nuova versione<br>quando un amministratore effettua il login?
+would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che EGroupware controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login)?
 would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
-wrong account type: %1 is no %2 !!!	admin	it	Tipo di account errato: %1 non è %2 !
+wrong account type: %1 is no %2 !!!	admin	it	Tipo di account errato: %1 non è %2!
 wrong admin-account or -password !!!	admin	it	Account amministrativo o password errati
 wrong credentials to access the header.inc.php file!	admin	it	Credenziali sbagliate per accedere al file header.inc.php!
 xml-rpc	admin	it	XML-RPC
@@ -1054,14 +1051,14 @@ you have no email address for your user set !!!	admin	it	Non hai inserito un ind
 you have received a new message on the	admin	it	Hai ricevuto un nuovo messaggio sul
 you have to enter a name, to create a new field!!!	admin	it	Devi inserire un nome, per creare un nuovo campo!
 you have to enter a name, to create a new type!	admin	it	Devi inserire un nome, per creare un nuovo tipo!
-you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
-you must enter a group name.	admin	it	Devi inserire un nome di gruppo
-you must enter a lastname	admin	it	Devi inserire un cognome
-you must enter a loginid	admin	it	Devi inserire un  ID di login
+you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account!
+you must enter a group name.	admin	it	Devi inserire un nome di gruppo.
+you must enter a lastname	admin	it	Devi inserire un cognome.
+you must enter a loginid	admin	it	Devi inserire un  ID di login.
 you must enter an application name and title.	admin	it	Devi inserire un nome e un titolo per l'applicazione.
-you must enter an application name.	admin	it	Devi inserire un nome per l'applicazione
-you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione
-you must select a file type	admin	it	Devi selezionare un tipo di file
+you must enter an application name.	admin	it	Devi inserire un nome per l'applicazione.
+you must enter an application title.	admin	it	Devi inserire un titolo per l'applicazione.
+you must select a file type	admin	it	Devi selezionare un tipo di file.
 you must select at least one group member.	admin	it	Devi selezionare almeno un membro del gruppo.
 you need to enter install id and password!	admin	it	Devi inserire sia l'ID di installazione che la password!
 you need to select as least one action!	admin	it	Devi selezionare almeno una azione!
