@@ -1,3 +1,32 @@
+egroupware-docker (23.1.20240430) hardy; urgency=low
+
+  * Notifications: fixed deleting and grouping of popup notifications by app-name and -id and show full total independent of max. 100 shown entries
+  * Notifications: if deleting all (visible) messages, directly return the next junk, to ease cleaning them up
+  * Notifications: configurable number of days (default 30), after which older notifications get automatic deleted
+  * Api: Fix list updates while app was hidden were not all shown when switching back to the app
+  * Api: Fix removing email tag did not properly update display
+  * Mail: fix forwarding and reply to mail with just a PDF or image was showing it and not opening a compose window
+  * Mail: fix list of Sieve rules was not scrollable
+  * Mail: configurable limit to exclude attachments from automatic saving as drafts, default is no limit / attachments are always saved in drafts
+  * Mail: revert to use first and second part of full rfc822 mail address outside angle brackets as first and last name
+  * Addressbook/Mail: new value "Hide groups without email" for preference "Hide user groups as distribution list"
+  * Calendar/CalDAV: do not allow to resurrect a deleted meeting by accepting it again via CalDAV or meeting-request from mail app
+  * Tracker: Fix mailhandling for a specific queue did not use correct queue ACL
+  * Tracker: Fix export would fail for certain filter combinations
+  * Registration: allow to customize confirmation mail
+  * InfoLog: config to handle status "archive" as unchangeable (or only changeable by an admin)
+  * eSync: fix for messages with no text body e.g. just a PDF or an image, returns empty body with attachment(s)
+  * eSync: fix syncing forwarded and replied flags to client incl. push using highestmodseq, if supported by IMAP server
+  * eSync: only first to address was shown / send to client
+  * eSync: fix inline forward with attachment(s) and smartForward (e.g. GMail client) was broken
+  * EPL eSyncPro: fix not working buttons in policy add or edit
+  * AD/LDAP Import: import could potentially deactivate or delete users if the connection to LDAP server failed
+  * AD Import: import was not correctly taking into account primaryGroup of users
+  * EPL: backups in S3 could not be renamed or downloaded via WebDAV (direct download from backup worked)
+  * EPL/CTI: fix typo incom(m)ing causing custom configuration to not identify incoming calls correctly
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 30 Apr 2024 09:27:16 +0200
+
 egroupware-docker (23.1.20240304) hardy; urgency=low
 
   * LDAP: fix error creating a new group without a description
