@@ -27,8 +27,8 @@
 	<style type="text/css">
 		{firstload_animation_style}
 	</style>
-	<script type="module" src="{webserver_url}/kdots/js/app.min.js"></script>
     {java_script}
+	<script type="module" src="{webserver_url}/kdots/js/app.min.js"></script>
 </head>
 <body {body_tags}>
 {include_wz_tooltip}

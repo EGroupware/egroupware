@@ -184,6 +184,10 @@ export class EgwFrameworkApp extends LitElement
 		}
 		// Left side is in pixels, round to 2 decimals
 		let newPosition = Math.round(event.target.panelInfo.side == "left" ? event.target.positionInPixels * 100 : event.target.position * 100) / 100;
+
+		// Update collapsed
+		this[`${event.target.panelInfo.name}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
+
 		let preferenceName = event.target.panelInfo.preference;
 		if(newPosition != event.target.panelInfo.preferenceWidth)
 		{
@@ -223,10 +227,12 @@ export class EgwFrameworkApp extends LitElement
                 <div class="egw_fw_app__name" part="name">
                     ${hasLeftSlots ? html`
                     <sl-icon-button name="${this.leftCollapsed ? "chevron-double-right" : "chevron-double-left"}"
-                                    label="${this.egw?.lang("Hide area")}"
+                                    label="${this.leftCollapsed ? this.egw.lang("Show left area") : this.egw?.lang("Hide left area")}"
                                     @click=${() =>
                                     {
                                         this.leftCollapsed = !this.leftCollapsed;
+                                        // Just in case they collapsed it manually, reset
+                                        this.leftPanelInfo.preferenceWidth = this.leftPanelInfo.preferenceWidth || this.leftPanelInfo.defaultWidth;
                                         this.requestUpdate("leftCollapsed")
                                     }}
                     ></sl-icon-button>`
@@ -238,7 +244,7 @@ export class EgwFrameworkApp extends LitElement
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
             </div>
-            <main class="egw_fw_app__main" part="main" aria-label="${this.name}" tabindex="0">
+            <div class="egw_fw_app__main" part="main">
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}
                                 primary="start" position-in-pixels="${leftWidth}"
                                 snap="0px 20%" snap-threshold="50"
@@ -278,26 +284,28 @@ export class EgwFrameworkApp extends LitElement
                         <header slot="start" class="egw_fw_app__header header" part="content-header">
                             <slot name="header"><span class="placeholder">header</span></slot>
                         </header>
-                        <main slot="start" class="egw_fw_app__main_content content" part="content">
+                        <div slot="start" class="egw_fw_app__main_content content" part="content"
+                             aria-label="${this.name}" tabindex="0">
                             <slot><span class="placeholder">main</span></slot>
-                        </main>
+                        </div>
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
                             <slot name="footer"><span class="placeholder">main-footer</span></slot>
                         </footer>
-                        <aside slot="end" class=${rightClassMap} part="right">
-                            <div class="egw_fw_app__aside_header header">
+                        <aside slot="end" class=${rightClassMap} part="right"
+                               aria-label="${this.egw.lang("%1 application details", this.egw.lang(this.name))}">
+                            <header class="egw_fw_app__aside_header header">
                                 <slot name="right-header"><span class="placeholder">right-header</span></slot>
-                            </div>
-                            <div class="egw_fw_app__aside_content content">
+                            </header>
+                            <div class="egw_fw_app__aside_content content" tabindex="0">
                                 <slot name="right"><span class="placeholder">right</span></slot>
                             </div>
-                            <div class="egw_fw_app__aside_footer footer">
+                            <footer class="egw_fw_app__aside_footer footer">
                                 <slot name="right-footer"><span class="placeholder">right-footer</span></slot>
-                            </div>
+                            </footer>
                         </aside>
                     </sl-split-panel>
                 </sl-split-panel>
-            </main>
+            </div>
 		`;
 	}
 }

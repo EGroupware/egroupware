@@ -23,6 +23,10 @@ export default css`
 		flex: 1 1 20vw;
 	}
 
+	.egw_fw_app__name h2 {
+		margin-inline-start: var(--sl-spacing-medium);
+	}
+
 	.egw_fw_app__header {
 		justify-content: flex-start;
 		align-items: center;
@@ -53,7 +57,7 @@ export default css`
 
 	sl-split-panel::part(divider) {
 		grid-row: start / end;
-		font-size: 20px;
+		font-size: var(--sl-font-size-medium);
 	}
 
 	sl-split-panel > sl-icon {
@@ -141,6 +145,17 @@ export default css`
 				[end];
 		}
 
+		sl-split-panel {
+			display: contents
+		}
+
+		sl-split-panel::part(divider) {
+			display: none;
+		}
+
+		.egw_fw_app__header {
+			grid-column: start / end;
+		}
 		.egw_fw_app__main_content {
 			grid-row: main / aside-header;
 			grid-column: start / end;

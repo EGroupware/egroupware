@@ -96,7 +96,6 @@ export class EgwFramework extends LitElement
 	get egw()
 	{
 		return window.egw ?? {
-			app_name: () => "",
 			lang: (t) => t,
 			preference: (n, app) => ""
 		};
