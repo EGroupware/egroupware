@@ -35,16 +35,42 @@ export default css`
 		grid-column: start / end;
 		grid-row: start / end;
 		grid-template-rows: subgrid;
+		--min: var(--left-min, 0px);
+		--max: var(--left-max, 20%);
 	}
 
 	.egw_fw_app__innerSplit {
 		grid-template-rows: subgrid;
 		grid-column-end: -1;
 		grid-row: start / end;
+		--max: calc(100% - var(--right-min, 0px));
+		--min: calc(100% - var(--right-max, 50%));
+	}
+
+	.egw_fw_app__innerSplit.no-content {
+		--min: 100%;
 	}
 
 	sl-split-panel::part(divider) {
 		grid-row: start / end;
+		font-size: 20px;
+	}
+
+	sl-split-panel > sl-icon {
+		position: absolute;
+		border-radius: var(--sl-border-radius-small);
+		background-color: var(--primary-background-color);
+		color: var(--sl-color-neutral-0);
+		padding: 0.5rem 0.125rem;
+		z-index: var(--sl-z-index-drawer);
+	}
+
+	sl-split-panel.no-content {
+		--divider-width: 0px;
+	}
+
+	sl-split-panel.no-content::part(divider) {
+		display: none;
 	}
 
 	.egw_fw_app__aside {
