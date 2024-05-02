@@ -203,7 +203,7 @@ abstract class Handler
 	 *
 	 * @param string|int $id
 	 * @param string $path =null implementation can use it, used in call from _common_get_put_delete
-	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
+	 * @return array|false|null array with entry, false if no read rights, null if $id does not exist
 	 */
 	abstract function read($id /*,$path=null*/);
 
@@ -247,7 +247,7 @@ abstract class Handler
 	 * Get the etag for an entry, can be reimplemented for other algorithm or field names
 	 *
 	 * @param array|int $entry array with event or cal_id
-	 * @return string|boolean string with etag or false
+	 * @return string|false string with etag or false
 	 */
 	function get_etag($entry)
 	{
@@ -255,7 +255,7 @@ abstract class Handler
 		{
 			$entry = $this->read($entry);
 		}
-		return static::etag($entry);
+		return $entry ? static::etag($entry) : false;
 	}
 
 	/**
@@ -266,7 +266,7 @@ abstract class Handler
 	 */
 	public static function etag(array $entry)
 	{
-		if (!is_array($entry) || !isset($entry['id']) || !(isset($entry['modified']) || isset($entry['etag'])))
+		if (!isset($entry['id']) || !(isset($entry['modified']) || isset($entry['etag'])))
 		{
 		//	error_log(__METHOD__."(".array2string($entry).") Cant create etag!");
 			return false;
