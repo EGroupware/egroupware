@@ -86,7 +86,6 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 				$options = array('account_type' => $type, 'tag_list' => true) + $accounts;
 				$accounts = Api\Accounts::link_query('', $options);
 			}
-			unset($list["accounts"][9]);
 			// Make sure the user themselves is in there
 			if(!array_key_exists($GLOBALS['egw_info']['user']['account_id'], $list['accounts']))
 			{
