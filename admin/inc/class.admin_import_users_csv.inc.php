@@ -29,6 +29,8 @@ class admin_import_users_csv extends importexport_basic_import_csv
 	 */
 	protected static $conditions = array( 'exists' );
 
+	protected static $record_class = "admin_egw_user_record";
+
 	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
@@ -47,14 +49,14 @@ class admin_import_users_csv extends importexport_basic_import_csv
 	{
 		$success = false;
 		// don't import empty records
-		if(count(array_unique($record)) < 2)
+		if(count(array_unique($record->get_record_array())) < 2)
 		{
 			return $success;
 		}
 
-		if(strtolower($record['account_expires']) == 'never')
+		if(strtolower($record->account_expires) == 'never')
 		{
-			$record['account_expires'] = -1;
+			$record->account_expires = -1;
 		}
 
 		if($this->definition->plugin_options['conditions'])

@@ -31,6 +31,8 @@ class admin_import_groups_csv extends importexport_basic_import_csv
 	 */
 	protected static $conditions = array( 'exists' );
 
+	protected static $record_class = "admin_egw_group_record";
+
 
 	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
