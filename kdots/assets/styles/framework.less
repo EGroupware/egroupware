@@ -79,9 +79,8 @@ egw-app {
 
 /*** HEADER ***/
 #egw_fw_topmenu_info_items {
-  display: flex !important;
+  display: flex;
   flex-direction: row-reverse;
-  height: var(--icon-size);
   background-color: #fbfbfb;
 
   & > * {
@@ -91,6 +90,9 @@ egw-app {
 
   et2-avatar {
 	--size: var(--icon-size);
+	&::part(base) {
+	  vertical-align: initial;
+	}
   }
 
   .topmenu_info_item {
@@ -112,13 +114,13 @@ egw-app {
   #topmenu_info_timer {
 	order: 1;
 	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 0px;
 
 	#topmenu_timer {
-	  position: relative;
-	  top: 10px !important;
 	  display: block;
-	  height: 45px;
-	  width: 45px;
+	  width: 100%;
 	}
 
 	&:hover {
@@ -140,51 +142,13 @@ egw-app {
 	}
   }
 
-  ul a#topmenu_cats {
-	background-image: url(../../../api/templates/default/images/topmenu_items/category.svg);
+  #topmenu_info_user_avatar {
+	sl-menu-item et2-image {
+	  width: 1em;
+	}
   }
-
-  ul a#topmenu_password {
-	background-image: url(../../../api/templates/default/images/topmenu_items/password.svg);
-  }
-
-  ul a#topmenu_search {
+  button#topmenu_info_search {
 	background-image: url(../../../api/templates/default/images/topmenu_items/search.svg);
-  }
-
-  ul a#topmenu_prefs {
-	background-image: url(../../../api/templates/default/images/topmenu_items/setup.svg);
-  }
-
-  ul a#topmenu_home {
-	background-image: url(../../../api/templates/default/images/topmenu_items/home.svg);
-  }
-
-  ul a#topmenu_acl {
-	background-image: url(../../../api/templates/default/images/topmenu_items/access.svg);
-  }
-
-  ul a#topmenu_useraccount {
-	background-image: url(../../../api/templates/default/images/accounts.svg);
-	background-repeat: no-repeat;
-	background-size: 18px;
-	background-position-x: -2px;
-  }
-
-  ul a#topmenu_calls {
-	background-image: url(../../../api/templates/default/images/phone.svg);
-	background-repeat: no-repeat;
-	background-position-x: -2px;
-  }
-}
-
-#topmenu_info_logout {
-  background-image: url(../../../api/templates/default/images/logout.svg);
-
-  a {
-	width: 45px;
-	height: 45px;
-	display: inline-block;
   }
 }
 

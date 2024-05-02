@@ -7,9 +7,13 @@ import {classMap} from "lit/directives/class-map.js";
 import styles from "./EgwFrameworkApp.styles";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
+import type {EgwFramework} from "./EgwFramework";
 
 /**
  * @summary Application component inside EgwFramework
+ *
+ * Contain an EGroupware application inside the main framework.  It consists of left, main and right areas.  Each area
+ * has a header, content and footer.  Side content areas are not shown when there is no content.
  *
  * @dependency sl-split-panel
  *
@@ -121,13 +125,13 @@ export class EgwFrameworkApp extends LitElement
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this.egw.preference(this.leftPanelInfo.preference, this.name, true).then((width) =>
+		(<Promise<string>>this.egw.preference(this.leftPanelInfo.preference, this.name, true)).then((width) =>
 		{
-			this.leftPanelInfo.preferenceWidth = parseInt(width ?? this.leftPanelInfo.defaultWidth);
+			this.leftPanelInfo.preferenceWidth = parseInt(width) ?? this.leftPanelInfo.defaultWidth;
 		});
-		this.egw.preference(this.rightPanelInfo.preference, this.name, true).then((width) =>
+		(<Promise<string>>this.egw.preference(this.rightPanelInfo.preference, this.name, true)).then((width) =>
 		{
-			this.rightPanelInfo.preferenceWidth = parseInt(width ?? this.rightPanelInfo.defaultWidth);
+			this.rightPanelInfo.preferenceWidth = parseInt(width) ?? this.rightPanelInfo.defaultWidth;
 		});
 	}
 
@@ -167,7 +171,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get egw()
 	{
-		return window.egw ?? this.parentElement.egw ?? null;
+		return window.egw ?? (<EgwFramework>this.parentElement).egw ?? null;
 	}
 
 	/**
@@ -243,6 +247,14 @@ export class EgwFrameworkApp extends LitElement
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
+                <sl-button-group>
+                    <sl-icon-button name="arrow-clockwise"
+                                    label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}></sl-icon-button>
+                    <sl-icon-button name="printer"
+                                    label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}></sl-icon-button>
+                    <sl-icon-button name="gear-wide"
+                                    label=${this.egw.lang("Site configuration for %1", this.egw.lang(this.name))}></sl-icon-button>
+                </sl-button-group>
             </div>
             <div class="egw_fw_app__main" part="main">
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}

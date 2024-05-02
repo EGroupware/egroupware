@@ -53,6 +53,8 @@
 		<div style="border: 1px dotted">Something inside the app - main</div>
 		<div slot="left">Left content</div>
 		<div slot="right">right content</div>
+		<div slot="right-header">
+		</div>
 	</egw-app>
 </egw-framework>
 

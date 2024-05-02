@@ -114,6 +114,9 @@ class kdots_framework extends Api\Framework\Ajax
 		}
 		$id = $app_data['id'] ? $app_data['id'] : ($app_data['name'] ? $app_data['name'] : $app_data['title']);
 		$title = htmlspecialchars($alt_label ? $alt_label : $app_data['title']);
-		$this->topmenu_items[] = '<sl-menu-item id="topmenu_' . $id . '" value="' . htmlspecialchars($app_data['url']) . '" title="' . $app_data['title'] . '">' . $title . '</sl-menu-item>';
+		$this->topmenu_items[] = '<sl-menu-item id="topmenu_' . $id . '" value="' . htmlspecialchars($app_data['url']) . '" title="' . $app_data['title'] . '">' .
+			"<et2-image slot='prefix' src='${app_data['icon']}'></et2-image>" .
+			$title .
+			'</sl-menu-item>';
 	}
 }

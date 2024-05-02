@@ -5,6 +5,7 @@ import {classMap} from "lit/directives/class-map.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {repeat} from "lit/directives/repeat.js";
+import {Function} from "estree";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -96,8 +97,10 @@ export class EgwFramework extends LitElement
 	get egw()
 	{
 		return window.egw ?? {
+			// Dummy egw so we don't get failures from missing methods
 			lang: (t) => t,
-			preference: (n, app) => ""
+			preference: (n, app, promise? : Function | boolean | undefined) => Promise.resolve(""),
+			set_preference(_app : string, _name : string, _val : any, _callback? : Function) {}
 		};
 	}
 

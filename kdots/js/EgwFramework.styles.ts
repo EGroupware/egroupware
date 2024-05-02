@@ -125,7 +125,7 @@ export default css`
 	}
 
 	.egw_fw__open_applications sl-tab et2-image {
-		padding: var(--sl-spacing-small) var(--sl-spacing-3x-small);
+		padding: var(--sl-spacing-2x-small) var(--sl-spacing-3x-small);
 	}
 
 	.egw_fw__open_applications sl-tab:hover::part(close-button), .egw_fw__open_applications sl-tab[active]::part(close-button) {
