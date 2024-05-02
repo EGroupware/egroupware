@@ -9,8 +9,6 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * sessions: volume for sessions, internal no need to change
 * sources-push: swoolpush subdirectory of sources
 * collabora-config: /etc/loolwsd for Collabora container, by default $PWD/data/default/loolwsd
-* rocketchat-uploads: Upload directory for Rocket.Chat, by default $PWD/data/default/rocketchat/uploads
-* rocketchat-dumps: Dump directory for MongoDB, by default $PWD/data/default/rocketchat/dump
 
 ### It runs the following containers:
 * egroupware: php-fpm
@@ -20,8 +18,6 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * egroupware-watchtower: to automatic keeps the containers up to date
 * phpmyadmin: phpMyAdmin to administrate your MariaDB
 * collabora: Collabora Online Office
-* rocketchat: Rocket.Chat
-* rocketchat-mongo: MongoDB for Rocket.Chat
 
 ### Usage:
 ```
