@@ -24,11 +24,12 @@ The container and docker-compose.yml file in this directory are the easiest way 
 mkdir dev && cd dev
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/docker-compose.yml
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/nginx.conf
-mkdir -p sources data/default/files/sqlfs data/default/backup sessions
+mkdir -p sources data/default/files/sqlfs data/default/backup data/default/loolwsd sessions
 # on a Linux host NOT using Docker desktop data and sessions directories MUST be owned by www-data:www-data (33:33, if not Debian/Ubuntu!)
 chown -R www-data:www-data data sessions
+chmod 777 data/default/loolwsd
 # edit docker-compose.yml to fit your needs eg.
-# ports to use for Nginx / the webserver, by default 8080 and 4443
+# ports to use for Nginx / the webserver, by default 80 and 443
 # xdebug port, default 9001 (NOT 9000!)
 # IDE host, default XDEBUG_REMOTE_HOST=docker.for.mac.localhost
 docker-compose up -d egroupware
