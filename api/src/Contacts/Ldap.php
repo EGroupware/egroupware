@@ -1388,9 +1388,12 @@ class Ldap
 		}
 
 		// if we have a non-empty cookie from paged results, continue reading from the server
-		while (is_array($start) && count($start) === 3 && $start[0] === false && $start[2] !== '')
+		while (is_array($start) && count($start) === 3 && $start[0] === false && $start[2] !== '' &&
+			// some Windows AD seem to get confused by using ldap_get_entries together with ldap_(first|next)_entry
+			// check if we got the requested number of entries ($start[1]) back and only continue in that case
+			count($entries)-1 === $start[1])
 		{
-			foreach($this->_searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, $_skipPlugins, $order_by, $start) as $contact)
+			foreach($this->_searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype, $_skipPlugins, $order_by, $start, $read_photo) as $contact)
 			{
 				$contacts[] = $contact;
 			}
