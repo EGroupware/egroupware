@@ -69,18 +69,18 @@ class admin_import_users_csv extends importexport_basic_import_csv
 					case 'exists' :
 						$accounts = array();
 						// Skip the search if the field is empty
-						if($record[$condition['string']] !== '')
+						if($record->$condition['string'] !== '')
 						{
 							$accounts = $GLOBALS['egw']->accounts->search(array(
 																			  'type'       => 'accounts',
-																			  'query'      => $record[$condition['string']],
+																			  'query'      => $record->$condition['string'],
 																			  'query_type' => $condition['string']
 																		  ));
 						}
 						// Search looks in the given field, but doesn't do an exact match
 						foreach((array)$accounts as $key => $account)
 						{
-							if($account[$condition['string']] != $record[$condition['string']])
+							if($account[$condition['string']] != $record->$condition['string'])
 							{
 								unset($accounts[$key]);
 							}
@@ -91,14 +91,14 @@ class admin_import_users_csv extends importexport_basic_import_csv
 							$action = $condition['true'];
 							foreach((array)$accounts as $account)
 							{
-								$record['account_id'] = $account['account_id'];
-								$success = $this->admin_action($action['action'], $record, $import_csv->get_current_position(), $admin_cmd);
+								$record->account_id = $account['account_id'];
+								$success = $this->admin_action($action['action'], $record->get_record_array(), $import_csv->get_current_position(), $admin_cmd);
 							}
 						}
 						else
 						{
 							$action = $condition['false'];
-							$success = ($this->admin_action($action['action'], $record, $import_csv->get_current_position(), $admin_cmd));
+							$success = ($this->admin_action($action['action'], $record->get_record_array(), $import_csv->get_current_position(), $admin_cmd));
 						}
 						break;
 
@@ -115,7 +115,7 @@ class admin_import_users_csv extends importexport_basic_import_csv
 		else
 		{
 			// unconditional insert
-			$success = $this->admin_action('create', $record, $import_csv->get_current_position(), $admin_cmd);
+			$success = $this->admin_action('create', $record->get_record_array(), $import_csv->get_current_position(), $admin_cmd);
 		}
 
 		return $success;
