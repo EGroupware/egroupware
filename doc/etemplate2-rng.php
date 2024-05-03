@@ -131,6 +131,8 @@ $overwrites = [
             'noSubmit' => 'boolean',
 	    ],
     ],
+    'Et2ButtonIcon' => 'Et2Button',     // no inheritance from Et2Button, but Et2ButtonMixin, which is not recognised
+	'Et2ButtonScroll' => 'Et2Button',
     'Et2Select' => [
         '.attrs' => [
 	        'rows' => 'int',

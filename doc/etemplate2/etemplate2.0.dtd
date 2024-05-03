@@ -25,22 +25,23 @@
                     |tracker-value|records-value|hidden|radio|radiogroup|diff|styles|customfields|customfields-list|html
                     |htmlarea|toolbar|historylog|hrule|file|progress|vfs|vfs-name|vfs-size|vfs-mode|vfs-upload|video
                     |audio|barcode|itempicker|script|countdown|customfields-types|nextmatch|nextmatch-header
-                    |nextmatch-customfields|nextmatch-sortheader|et2-avatar|et2-avatar-group|et2-lavatar|et2-checkbox
-                    |et2-button|et2-button-icon|et2-button-scroll|et2-button-timestamp|et2-colorpicker|et2-description
-                    |et2-label|et2-date|et2-date-duration|et2-date-range|et2-date-since|et2-date-time|et2-date-timeonly
-                    |et2-date-time-today|et2-dialog|et2-dropdown-button|et2-email|et2-favorites|et2-iframe|et2-appicon
-                    |et2-image|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list|et2-link-paste-dialog
-                    |et2-link-search|et2-link-string|et2-link-to|et2-portlet|et2-listbox|et2-select|et2-spinner
-                    |et2-switch|et2-textarea|et2-number|et2-password|et2-searchbox|et2-textbox|et2-tree
-                    |et2-tree-dropdown|et2-tree-cat|et2-url|et2-url-email|et2-url-fax|et2-url-phone|et2-vfs-mime
-                    |et2-vfs-path|et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid|et2-vfs-gid
-                    |et2-description-expose|et2-image-expose|et2-select-access|et2-select-account|et2-select-app
-                    |et2-select-bitwise|et2-select-bool|et2-select-cat|et2-select-country|et2-select-day|et2-select-dow
-                    |et2-select-hour|et2-select-lang|et2-select-month|et2-select-number|et2-select-percent
-                    |et2-select-priority|et2-select-state|et2-select-tab|et2-select-thumbnail|et2-select-timezone
-                    |et2-select-year|et2-category-tag|et2-email-tag|et2-tag|et2-thumbnail-tag|et2-box|et2-hbox|et2-vbox
-                    |et2-details|et2-split|et2-tabbox|et2-nextmatch-columnselection|et2-nextmatch-header-account
-                    |et2-nextmatch-header-custom|et2-nextmatch-header-entry|et2-nextmatch-header-filter">
+                    |nextmatch-customfields|nextmatch-sortheader|et2-avatar|et2-avatar-group|et2-lavatar|et2-button
+                    |et2-button-icon|et2-button-scroll|et2-button-timestamp|et2-checkbox|et2-colorpicker|et2-date
+                    |et2-date-duration|et2-date-range|et2-date-since|et2-date-time|et2-date-timeonly|et2-date-time-today
+                    |et2-description|et2-label|et2-dialog|et2-dropdown-button|et2-email|et2-favorites|et2-iframe
+                    |et2-appicon|et2-image|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list
+                    |et2-link-paste-dialog|et2-link-search|et2-link-string|et2-link-to|et2-portlet|et2-listbox
+                    |et2-select|et2-spinner|et2-switch|et2-textarea|et2-number|et2-password|et2-searchbox|et2-textbox
+                    |et2-tree|et2-tree-dropdown|et2-tree-cat|et2-url|et2-url-email|et2-url-fax|et2-url-phone
+                    |et2-vfs-mime|et2-vfs-path|et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid
+                    |et2-vfs-gid|et2-description-expose|et2-image-expose|et2-select-access|et2-select-account
+                    |et2-select-app|et2-select-bitwise|et2-select-bool|et2-select-cat|et2-select-country|et2-select-day
+                    |et2-select-dow|et2-select-hour|et2-select-lang|et2-select-month|et2-select-number
+                    |et2-select-percent|et2-select-priority|et2-select-state|et2-select-tab|et2-select-thumbnail
+                    |et2-select-timezone|et2-select-year|et2-category-tag|et2-email-tag|et2-tag|et2-thumbnail-tag
+                    |et2-box|et2-hbox|et2-vbox|et2-details|et2-split|et2-tabbox|et2-nextmatch-columnselection
+                    |et2-nextmatch-header-account|et2-nextmatch-header-custom|et2-nextmatch-header-entry
+                    |et2-nextmatch-header-filter">
 
 <!ELEMENT overlay (template)*>
 
@@ -1384,34 +1385,6 @@
     span CDATA #IMPLIED
     slot CDATA #IMPLIED>
 
-<!ELEMENT et2-checkbox EMPTY>
-
-<!ATTLIST et2-checkbox
-    selectedValue CDATA 'true'
-    unselectedValue CDATA ''
-    label CDATA #IMPLIED
-    readonly (false|true|1) 'false'
-    required (false|true|1) 'false'
-    onchange CDATA #IMPLIED
-    autofocus (false|true|1) #IMPLIED
-    autocomplete CDATA 'on'
-    class CDATA #IMPLIED
-    disabled (false|true|1) 'false'
-    hidden (false|true|1) #IMPLIED
-    accesskey CDATA #IMPLIED
-    parentId CDATA #IMPLIED
-    statustext CDATA #IMPLIED
-    onclick CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    align CDATA #IMPLIED
-    data CDATA #IMPLIED
-    id CDATA #IMPLIED
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    span CDATA #IMPLIED
-    slot CDATA #IMPLIED
-    tabindex CDATA #IMPLIED>
-
 <!ELEMENT et2-button EMPTY>
 
 <!ATTLIST et2-button
@@ -1421,6 +1394,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1449,44 +1425,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
-    class CDATA #IMPLIED
-    disabled (false|true|1) 'false'
-    hidden (false|true|1) #IMPLIED
-    accesskey CDATA #IMPLIED
-    parentId CDATA #IMPLIED
-    statustext CDATA #IMPLIED
-    onclick CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    align CDATA #IMPLIED
-    data CDATA #IMPLIED
-    id CDATA #IMPLIED
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    span CDATA #IMPLIED
-    slot CDATA #IMPLIED
-    tabindex CDATA #IMPLIED>
-
-<!ELEMENT et2-button-scroll EMPTY>
-
-<!ATTLIST et2-button-scroll
-    id CDATA #IMPLIED
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    span CDATA #IMPLIED
-    slot CDATA #IMPLIED>
-
-<!ELEMENT et2-button-timestamp EMPTY>
-
-<!ATTLIST et2-button-timestamp
-    target CDATA #IMPLIED
-    format CDATA #IMPLIED
-    timezone CDATA #IMPLIED
-    label CDATA #IMPLIED
-    readonly (false|true|1) 'false'
-    required (false|true|1) 'false'
-    onchange CDATA #IMPLIED
-    autofocus (false|true|1) #IMPLIED
-    autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1506,15 +1447,65 @@
     noSubmit (false|true|1) #IMPLIED
     tabindex CDATA #IMPLIED>
 
-<!ELEMENT et2-colorpicker EMPTY>
+<!ELEMENT et2-button-scroll EMPTY>
 
-<!ATTLIST et2-colorpicker
+<!ATTLIST et2-button-scroll
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    span CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    image CDATA #IMPLIED
+    noSubmit (false|true|1) #IMPLIED>
+
+<!ELEMENT et2-button-timestamp EMPTY>
+
+<!ATTLIST et2-button-timestamp
+    target CDATA #IMPLIED
+    format CDATA #IMPLIED
+    timezone CDATA #IMPLIED
     label CDATA #IMPLIED
     readonly (false|true|1) 'false'
     required (false|true|1) 'false'
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    span CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    image CDATA #IMPLIED
+    noSubmit (false|true|1) #IMPLIED
+    tabindex CDATA #IMPLIED>
+
+<!ELEMENT et2-checkbox EMPTY>
+
+<!ATTLIST et2-checkbox
+    selectedValue CDATA 'true'
+    unselectedValue CDATA ''
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1532,21 +1523,24 @@
     slot CDATA #IMPLIED
     tabindex CDATA #IMPLIED>
 
-<!ELEMENT et2-description EMPTY>
+<!ELEMENT et2-colorpicker EMPTY>
 
-<!ATTLIST et2-description
-    activateLinks (false|true|1) 'false'
-    extraLinkTarget CDATA '_browser'
-    extraLinkPopup CDATA ''
-    href CDATA #IMPLIED
-    value CDATA ''
+<!ATTLIST et2-colorpicker
+    label CDATA #IMPLIED
+    readonly (false|true|1) 'false'
+    required (false|true|1) 'false'
+    onchange CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
     parentId CDATA #IMPLIED
     statustext CDATA #IMPLIED
-    label CDATA #IMPLIED
     onclick CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
     align CDATA #IMPLIED
@@ -1556,32 +1550,7 @@
     height CDATA #IMPLIED
     span CDATA #IMPLIED
     slot CDATA #IMPLIED
-    for CDATA #IMPLIED>
-
-<!ELEMENT et2-label EMPTY>
-
-<!ATTLIST et2-label
-    class CDATA #IMPLIED
-    disabled (false|true|1) 'false'
-    hidden (false|true|1) #IMPLIED
-    accesskey CDATA #IMPLIED
-    parentId CDATA #IMPLIED
-    statustext CDATA #IMPLIED
-    label CDATA #IMPLIED
-    onclick CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    align CDATA #IMPLIED
-    data CDATA #IMPLIED
-    activateLinks (false|true|1) 'false'
-    extraLinkTarget CDATA '_browser'
-    extraLinkPopup CDATA ''
-    href CDATA #IMPLIED
-    value CDATA ''
-    id CDATA #IMPLIED
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    span CDATA #IMPLIED
-    slot CDATA #IMPLIED>
+    tabindex CDATA #IMPLIED>
 
 <!ELEMENT et2-date EMPTY>
 
@@ -1596,6 +1565,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1632,6 +1604,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1660,6 +1635,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1708,6 +1686,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1738,6 +1719,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1774,6 +1758,58 @@
     align CDATA #IMPLIED
     data CDATA #IMPLIED
     value CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    span CDATA #IMPLIED
+    slot CDATA #IMPLIED>
+
+<!ELEMENT et2-description EMPTY>
+
+<!ATTLIST et2-description
+    activateLinks (false|true|1) 'false'
+    extraLinkTarget CDATA '_browser'
+    extraLinkPopup CDATA ''
+    href CDATA #IMPLIED
+    value CDATA ''
+    for CDATA #IMPLIED
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    id CDATA #IMPLIED
+    width CDATA #IMPLIED
+    height CDATA #IMPLIED
+    span CDATA #IMPLIED
+    slot CDATA #IMPLIED>
+
+<!ELEMENT et2-label EMPTY>
+
+<!ATTLIST et2-label
+    class CDATA #IMPLIED
+    disabled (false|true|1) 'false'
+    hidden (false|true|1) #IMPLIED
+    accesskey CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    statustext CDATA #IMPLIED
+    label CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    align CDATA #IMPLIED
+    data CDATA #IMPLIED
+    activateLinks (false|true|1) 'false'
+    extraLinkTarget CDATA '_browser'
+    extraLinkPopup CDATA ''
+    href CDATA #IMPLIED
+    value CDATA ''
+    for CDATA #IMPLIED
     id CDATA #IMPLIED
     width CDATA #IMPLIED
     height CDATA #IMPLIED
@@ -1824,6 +1860,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1860,6 +1899,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -1893,6 +1935,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2024,6 +2069,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2061,6 +2109,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -2098,6 +2149,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2152,6 +2206,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2198,6 +2255,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -2257,6 +2317,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2312,6 +2375,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2345,6 +2411,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -2397,6 +2466,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2426,6 +2498,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2458,6 +2533,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2491,6 +2569,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2524,6 +2605,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2557,6 +2641,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2600,6 +2687,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2621,6 +2711,7 @@
     placeholder CDATA ''
     multiple (false|true|1) 'false'
     help-text CDATA ''
+    autoloading CDATA ''
     open (false|true|1) 'false'
     actions CDATA '{}'
     value CDATA #IMPLIED
@@ -2632,6 +2723,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2661,6 +2755,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2674,6 +2771,7 @@
     placeholder CDATA ''
     multiple (false|true|1) 'false'
     help-text CDATA ''
+    autoloading CDATA ''
     open (false|true|1) 'false'
     actions CDATA '{}'
     value CDATA #IMPLIED
@@ -2694,6 +2792,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2725,6 +2826,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2757,6 +2861,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2788,6 +2895,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2849,6 +2959,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2886,6 +2999,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -2923,6 +3039,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -3028,6 +3147,7 @@
     extraLinkPopup CDATA ''
     href CDATA #IMPLIED
     value CDATA ''
+    for CDATA #IMPLIED
     id CDATA #IMPLIED
     width CDATA #IMPLIED
     height CDATA #IMPLIED
@@ -3076,6 +3196,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3114,6 +3237,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3151,6 +3277,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3188,6 +3317,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3225,6 +3357,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3265,6 +3400,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3302,6 +3440,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3339,6 +3480,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3376,6 +3520,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3413,6 +3560,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3450,6 +3600,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3487,6 +3640,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3529,6 +3685,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3571,6 +3730,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3608,6 +3770,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3646,6 +3811,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3683,6 +3851,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3720,6 +3891,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3757,6 +3931,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -3799,6 +3976,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -4033,6 +4213,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -4067,6 +4250,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -4102,6 +4288,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
@@ -4133,6 +4322,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -4160,6 +4352,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     class CDATA #IMPLIED
     disabled (false|true|1) 'false'
     hidden (false|true|1) #IMPLIED
@@ -4202,6 +4397,9 @@
     onchange CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
     autocomplete CDATA 'on'
+    ariaLabel CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    helpText CDATA ''
     class CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     accesskey CDATA #IMPLIED
