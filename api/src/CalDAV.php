@@ -1153,7 +1153,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	{
 		header('Content-Type: application/json; charset=utf-8');
 		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
-		$is_calendar = strpos($options['path'], '/calendar') !== false;
+		$is_calendar = (bool)preg_match('#/(calendar|infolog)#', $options['path']);
 		$propfind_options = array(
 			'path'  => $options['path'],
 			'depth' => 1,

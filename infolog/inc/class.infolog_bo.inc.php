@@ -545,8 +545,9 @@ class infolog_bo
 	 * 		TZID timezone name e.g. 'UTC'
 	 * 			or NULL for timestamps in user-time
 	 * 			or false for timestamps in server-time
+	 * @param string $type 'ts' timestamp, 'object': DateTime objects
 	 */
-	 function time2time(&$values, $fromTZId=false, $toTZId=null)
+	 function time2time(&$values, $fromTZId=false, $toTZId=null, $type='ts')
 	 {
 
 		if ($fromTZId === $toTZId) return;
@@ -603,7 +604,7 @@ class infolog_bo
 			 	{
 				 	$time->setTimezone($toTZ);
 			 	}
-			 	$values[$key] = Api\DateTime::to($time,'ts');
+			 	$values[$key] = Api\DateTime::to($time, $type);
 		 	}
 		}
 		//error_log(__METHOD__.'() --> values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']));
@@ -671,9 +672,9 @@ class infolog_bo
 			$this->link_id2from($data);
 		}
 		// convert server- to user-time
-		if ($date_format == 'ts')
+		if ($date_format !== 'server')
 		{
-			$this->time2time($data);
+			$this->time2time($data, false, null, $date_format);
 
 			// pre-cache title and file access
 			self::set_link_cache($data);
