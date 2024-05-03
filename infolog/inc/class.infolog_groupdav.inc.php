@@ -188,7 +188,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 
 		// check if we have to return the full calendar data or just the etag's
 		if (!($filter['calendar_data'] = $options['props'] == 'all' &&
-			$options['root']['ns'] == Api\CalDAV::CALDAV) && is_array($options['props']))
+				$options['root']['ns'] == Api\CalDAV::CALDAV || isset($_GET['download'])) && is_array($options['props']))
 		{
 			foreach($options['props'] as $prop)
 			{
@@ -252,6 +252,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	{
 		if ($this->debug) $starttime = microtime(true);
 
+		$is_jstask = Api\CalDAV::isJSON();
 		if (($calendar_data = $filter['calendar_data']))
 		{
 			$handler = self::_get_handler();
@@ -284,7 +285,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			'order'			=> $order,
 			'sort'			=> $sort,
 			'filter'    	=> $task_filter,
-			'date_format'	=> 'server',
+			'date_format'	=> $is_jstask ? 'object' : 'server',
 			'col_filter'	=> $filter,
 			'custom_fields' => true,	// otherwise custom fields get NOT loaded!
 			'start'         => 0,
@@ -340,9 +341,18 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				);
 				if ($calendar_data)
 				{
-					$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
-					$props['getcontentlength'] = bytes($content);
-					$props[] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
+					if ($is_jstask)
+					{
+						$content = Api\CalDAV\JsCalendar::JsTask($task, false);
+						$props['getcontentlength'] = bytes(Api\CalDAV::json_encode($content, $is_jstask));
+						$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV, 'calendar-data', $content);
+					}
+					else
+					{
+						$content = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
+						$props['getcontentlength'] = bytes($content);
+						$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
+					}
 				}
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
@@ -585,8 +595,17 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			return $task;
 		}
 		$handler = $this->_get_handler();
-		$options['data'] = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
-		$options['mimetype'] = 'text/calendar; charset=utf-8';
+		// jsTask or iCal
+		if (($type=Api\CalDAV::isJSON($_SERVER['HTTP_ACCEPT'])) || ($type=Api\CalDAV::isJSON()))
+		{
+			$options['data'] = Api\CalDAV\JsCalendar::JsTask($task, $type);
+			$options['mimetype'] = Api\CalDAV\JsCalendar::MIME_TYPE_JSTASK.';charset=utf-8';
+		}
+		else
+		{
+			$options['data'] = $handler->exportVTODO($task, '2.0', null);	// no METHOD:PUBLISH for CalDAV
+			$options['mimetype'] = 'text/calendar; charset=utf-8';
+		}
 		header('Content-Encoding: identity');
 		header('ETag: "'.$this->get_etag($task).'"');
 		return true;
@@ -762,7 +781,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 */
 	function read($id)
 	{
-		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,'server');
+		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,
+			Api\CalDAV::isJson() ? 'object' : 'server');
 	}
 
 	/**
@@ -823,11 +843,11 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		{
 			$info = $this->bo->read($info,true,'server');
 		}
-		if (!is_array($info) || !isset($info['info_id']) || !isset($info['info_datemodified']))
+		if (!is_array($info) || !isset($info['info_id']) || !isset($info['info_etag']) || !isset($info['info_datemodified']))
 		{
 			return false;
 		}
-		return $info['info_id'].':'.$info['info_datemodified'];
+		return $info['info_id'].':'.$info['info_etag'].':'.Api\DateTime::to($info['info_datemodified'], 'ts');
 	}
 
 	/**

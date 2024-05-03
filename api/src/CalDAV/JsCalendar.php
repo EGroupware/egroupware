@@ -28,6 +28,7 @@ class JsCalendar extends JsBase
 	const MIME_TYPE_JSTASK = "application/jscalendar+json;type=task";
 
 	const TYPE_EVENT = 'Event';
+	const TYPE_TASK = 'Task';
 
 	/**
 	 * Get JsEvent for given event
@@ -106,9 +107,9 @@ class JsCalendar extends JsBase
 
 			// check if we use patch: method is PATCH or method is POST AND keys contain slashes
 			if ($method === 'PATCH' || !$strict && $method === 'POST' && array_filter(array_keys($data), static function ($key)
-			{
-				return strpos($key, '/') !== false;
-			}))
+				{
+					return strpos($key, '/') !== false;
+				}))
 			{
 				// apply patch on JsEvent
 				$data = self::patch($data, $old ? self::getJsCalendar($old, false) : [], !$old || !$strict);
@@ -207,6 +208,228 @@ class JsCalendar extends JsBase
 	}
 
 	/**
+	 * Get JsEvent for given event
+	 *
+	 * @param int|array $entry
+	 * @param bool|"pretty" $encode true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data e.g. from listing
+	 * @param ?array $exceptions=null
+	 * @return string|array
+	 * @throws Api\Exception\NotFound
+	 */
+	public static function JsTask($entry, $encode=true, array $exceptions=[])
+	{
+		if (is_scalar($entry) && !($entry = self::getInfolog()->read($entry, false, 'object')))
+		{
+			throw new Api\Exception\NotFound();
+		}
+		$data = [
+				self::AT_TYPE => self::TYPE_TASK,
+				'prodId' => 'EGroupware InfoLog '.$GLOBALS['egw_info']['apps']['api']['version'],
+				'uid' => self::uid($entry['info_uid']),
+				'sequence' => $entry['info_etag'],
+				'created' => self::UTCDateTime($entry['info_created']),
+				'updated' => self::UTCDateTime($entry['info_modified']),
+				'title' => $entry['info_subject'],
+				'start' => $entry['info_startdate'] ? self::DateTime($entry['info_startdate'], Api\DateTime::$user_timezone->getName()) : null,
+				'showWithoutTime' => $no_time = Api\DateTime::to($entry['info_startdate'], 'H:i') === '00:00',
+				'timeZone' => Api\DateTime::$user_timezone->getName(),
+				'due' => $entry['info_enddate'] ? self::DateTime($entry['info_enddate'], Api\DateTime::$user_timezone->getName()) : null,
+				'duration' => $entry['info_used_time'] ?
+					self::Duration(0, $entry['info_used_time']*60) : null,
+				'estimatedDuration' => $entry['info_plannedtime'] ?
+					self::Duration(0, $entry['info_plannedtime']*60) : null,
+				'recurrenceRules' => isset($entry['#RRULE']) ? null : null,
+				'recurrenceOverrides' => null,
+				//'freeBusyStatus' => $entry['non_blocking'] ? 'free' : null,   // default is busy
+				'description' => $entry['info_des'],
+				'participants' => self::Responsible($entry),
+				//'alerts' => self::Alerts($entry['alarm']),
+				'status' => in_array($entry['info_status'], ['deleted', 'cancelled']) ? 'cancelled' :
+					($entry['info_status'] === 'offer' ? 'tentative' : 'confirmed'),
+				'progress' => self::Progress($entry['info_status']),
+				'priority' => isset($entry['info_priority']) ? self::Priority($entry['info_priority']) : null,
+				'categories' => self::categories($entry['info_cat']),
+				'privacy' => $entry['info_access'],
+				'percentComplete' => (int)$entry['info_percent'],
+				'egroupware.org:type' => $entry['info_type'],
+				'egroupware.org:completed' => $entry['info_datecomplete'] ?
+					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
+				'egroupware.org:customfields' => self::customfields($entry, 'infolog'),
+			] + self::Locations(['location' => $entry['info_location'] ?? null]);
+
+		if (!empty($entry['##RRULE']))
+		{
+			$data = array_merge($data, self::cfRrule2recurrenceRules($entry));
+		}
+		$data = array_filter($data);
+
+		if ($encode)
+		{
+			return Api\CalDAV::json_encode($data, $encode === "pretty");
+		}
+		return $data;
+	}
+
+	/**
+	 * Parse JsEvent
+	 *
+	 * We use strict parsing for "application/jscalendar+json" content-type, not for "application/json".
+	 * Strict parsing checks objects for proper @type attributes and value attributes, non-strict allows scalar values.
+	 *
+	 * Non-strict parsing also automatic detects patch for POST requests.
+	 *
+	 * @param string $json
+	 * @param array $old=[] existing contact for patch
+	 * @param ?string $content_type=null application/json no strict parsing and automatic patch detection, if method not 'PATCH' or 'PUT'
+	 * @param string $method='PUT' 'PUT', 'POST' or 'PATCH'
+	 * @param ?int $calendar_owner owner of the collection
+	 * @return array
+	 */
+	public static function parseJsTask(string $json, array $old=[], string $content_type=null, $method='PUT', int $calendar_owner=null)
+	{
+		try
+		{
+			$strict = !isset($content_type) || !preg_match('#^application/json#', $content_type);
+			$data = json_decode($json, true, 10, JSON_THROW_ON_ERROR);
+
+			// check if we use patch: method is PATCH or method is POST AND keys contain slashes
+			if ($method === 'PATCH' || !$strict && $method === 'POST' && array_filter(array_keys($data), static function ($key)
+				{
+					return strpos($key, '/') !== false;
+				}))
+			{
+				// apply patch on JsEvent
+				$data = self::patch($data, $old ? self::getJsTask($old, false) : [], !$old || !$strict);
+			}
+
+			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
+
+			$event = [];
+			foreach ($data as $name => $value)
+			{
+				switch ($name)
+				{
+					case 'uid':
+						$event['info_uid'] = self::parseUid($value, $old['info_uid'], !$strict);
+						break;
+
+					case 'title':
+						$event['info_subject'] = $value;
+						break;
+
+					case 'description':
+						$event['info_des'] = $value;
+						break;
+
+					case 'start':
+					case 'duration':
+					case 'timeZone':
+					case 'showWithoutTime':
+						if (!isset($event['start']))
+						{
+							$event += self::parseStartDuration($data);
+						}
+						break;
+
+					case 'participants':
+						$event += self::parseParticipants($value, $strict, $calendar_owner);
+						break;
+
+					case 'priority':
+						$event['priority'] = self::parsePriority($value);
+						break;
+
+					case 'privacy':
+						$event['info_public'] = $value;
+						break;
+
+					case 'recurrenceRules':
+						$event += self::parseRecuranceRules2cfRrule($data['recurrenceRules']);
+						break;
+
+					case 'categories':
+						$event['info_cat'] = (int)self::parseCategories($value);
+						break;
+
+					case 'egroupware.org:customfields':
+						$event = array_merge($event, self::parseCustomfields($value, $strict));
+						break;
+
+					case 'egroupware.org:completed':
+						$event['info_datecomplete'] = self::parseDateTime();
+						break;
+
+					case 'egroupware.org:type':
+						$event['info_type'] = $value;
+
+					case 'prodId':
+					case 'created':
+					case 'updated':
+						break;
+
+					default:
+						error_log(__METHOD__ . "() $name=" . json_encode($value, self::JSON_OPTIONS_ERROR) . ' --> ignored');
+						break;
+				}
+			}
+		}
+		catch (\Throwable $e) {
+			self::handleExceptions($e, 'JsCalendar Event', $name, $value);
+		}
+
+		// if no participant given add current user as CHAIR to the event
+		if (empty($event['participants']))
+		{
+			$event['participants'][$calendar_owner ?? $GLOBALS['egw_info']['user']['account_id']] = 'ACHAIR';
+		}
+
+		return $event;
+	}
+
+	protected static $status2progress = [
+		'offer' => null,
+		'not-started' => 'needs-action',
+		'ongoing' => 'in-progress',
+		'done' => 'completed',
+		'cancelled' => 'cancelled',
+		'billed' => null,
+		'template' => null,
+		'nonactive' => null,
+		'archive' => null,
+	];
+
+	/**
+	 * Convert an InfoLog status to a JsTask progress
+	 *
+	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-progress
+	 * @param string $status
+	 * @return void
+	 */
+	protected static function Progress(string $info_status)
+	{
+		return self::$status2progress[$info_status] ?? 'egroupware.org:'.$info_status;
+	}
+
+	/**
+	 * @param string $progress
+	 * @param string $info_type
+	 * @return string known infolog status, or "not-started"
+	 */
+	protected static function parseProgress(string $progress, string $info_type=null)
+	{
+		if (!($status = array_search($progress, self::$status2progress)))
+		{
+			if (!str_starts_with('egroupware.org:', $progress) ||
+				($status = substr($progress, strlen('egroupware.org:'))) &&
+					isset($info_type) && !isset(self::getInfolog()->status[$info_type][$status]))
+			{
+				$status = 'not-started';
+			}
+		}
+		return $status;
+	}
+
+	/**
 	 * Parse categories object
 	 *
 	 * @param array $categories category-name => true pairs
@@ -267,6 +490,7 @@ class JsCalendar extends JsBase
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-localdatetime
 	 * @param null|string|\DateTime $date
+	 * @param string $timezone
 	 * @return string|null
 	 */
 	protected static function DateTime($date, $timezone)
@@ -293,7 +517,7 @@ class JsCalendar extends JsBase
 	 * @param bool $whole_day
 	 * @return string
 	 */
-	protected static function Duration($start, $end, bool $whole_day)
+	protected static function Duration($start, $end, bool $whole_day=false)
 	{
 		$start = Api\DateTime::to($start, 'object');
 		$end = Api\DateTime::to($end, 'object');
@@ -499,6 +723,61 @@ class JsCalendar extends JsBase
 		return $parsed;
 	}
 
+	/**
+	 * Return participants object of task aka Responsible
+	 *
+	 * We add info_owner (as owner), info_responsible (as attendee) and info_cc (as informational)
+	 *
+	 * @param array $entry
+	 * @return array
+	 */
+	protected static function Responsible(array $entry)
+	{
+		$participants = [];
+		foreach(array_unique(array_merge((array)$entry['info_owner'], $entry['info_responsible'],
+			$entry['info_cc'] ? explode(',', $entry['info_cc']) : [])) as $uid)
+		{
+			if (is_numeric($uid))
+			{
+				$info = [
+					'name'  => Api\Accounts::id2name($uid, 'account_fullname'),
+					'email' => Api\Accounts::id2name($uid, 'account_email'),
+				];
+			}
+			else
+			{
+				if (preg_match('/^(.*) <(.*)>$/', $uid, $matches))
+				{
+					$info = [
+						'name'  => $matches[1],
+						'email' => $matches[2],
+					];
+				}
+				else
+				{
+					$info['email'] = $uid;
+				}
+			}
+			$participant = array_filter([
+				self::AT_TYPE => self::TYPE_PARTICIPANT,
+				'name' => $info['name'] ?? null,
+				'email' => $info['email'] ?? null,
+				'kind' => $info['kind'] ?? 'individual',
+				'roles' => array_filter([
+					'owner' => $uid == $entry['info_owner'],
+					//'chair' => $role === 'CHAIR',
+					'attendee' => is_numeric($uid) && ($uid != $entry['info_owner'] || in_array($uid, $entry['info_responsible']??[])),
+					//'optional' => $role === 'OPT-PARTICIPANT',
+					'informational' => !is_numeric($uid),   // info_cc emails
+				]),
+				'participationStatus' => null,
+			]);
+			$participants[$uid] = $participant;
+		}
+
+		return $participants;
+	}
+
 	protected static function jscalRoles2role(array $roles=null, string $default_role=null)
 	{
 		$role = $default_role ?? 'REQ-PARTICIPANT';
@@ -557,7 +836,7 @@ class JsCalendar extends JsBase
 	 * @param int $priority
 	 * @return int
 	 */
-	protected static function Priority(int $priority)
+	protected static function Priority(int $priority, bool $infolog=false)
 	{
 		static $priority_egw2jscal = array(
 			0 => 0,		// undefined
@@ -565,7 +844,13 @@ class JsCalendar extends JsBase
 			2 => 5,		// normal
 			3 => 1,		// high
 		);
-		return $priority_egw2jscal[$priority];
+		static $infolog_priority_2egwjscal = array(
+			0 => 9,		// low
+			1 => 5,		// normal
+			2 => 3,		// high
+			3 => 1,		// urgent
+		);
+		return $infolog ? $infolog_priority_2egwjscal[$priority] : $priority_egw2jscal[$priority];
 	}
 
 	/**
@@ -574,7 +859,7 @@ class JsCalendar extends JsBase
 	 * @param int $priority
 	 * @return int
 	 */
-	protected static function parsePriority(int $priority)
+	protected static function parsePriority(int $priority, bool $infolog=false)
 	{
 		static $priority_jscal2egw = [
 			9 => 1, 8 => 1, 7 => 1, // low
@@ -582,7 +867,13 @@ class JsCalendar extends JsBase
 			3 => 3, 2 => 3, 1 => 3, // high
 			0 => 0, // undefined
 		];
-		return $priority_jscal2egw[$priority] ?? throw new \InvalidArgumentException("Priority must be between 0 and 9");
+		static $infolog_priority_jscal2egw = [
+			9 => 0,	8 => 0, 7 => 0,	// low
+			6 => 1, 5 => 1, 4 => 1, 0 => 1,	// normal
+			3 => 2,	2 => 2,	// high
+			1 => 3,			// urgent
+		];
+		return ($infolog?$infolog_priority_jscal2egw:$priority_jscal2egw)[$priority] ?? throw new \InvalidArgumentException("Priority must be between 0 and 9");
 	}
 
 	const TYPE_RECURRENCE_RULE = 'RecurrenceRule';
@@ -596,20 +887,25 @@ class JsCalendar extends JsBase
 	 * @param array $event
 	 * @param array $data JSCalendar representation of event to calculate overrides
 	 * @param array $exceptions exceptions
+	 * @param ?array $rrule array with values for keys "FREQ", "INTERVAL", "UNTIL", ...
 	 * @return array
 	 */
-	protected static function Recurrence(array $event, array $data, array $exceptions=[])
+	protected static function Recurrence(array $event, array $data, array $exceptions=[], ?array $rrule=null)
 	{
 		$overrides = [];
-		if (!empty($event['recur_type']))
+		if (!empty($event['recur_type']) || isset($rrule))
 		{
-			$rriter = \calendar_rrule::event2rrule($event, false);
-			$rrule = $rriter->generate_rrule('2.0');
+			if (!isset($rrule))
+			{
+				$rriter = \calendar_rrule::event2rrule($event, false);
+				$rrule = $rriter->generate_rrule('2.0');
+			}
 			$rule = array_filter([
 				self::AT_TYPE => self::TYPE_RECURRENCE_RULE,
 				'frequency' => strtolower($rrule['FREQ']),
 				'interval' => $rrule['INTERVAL'] ?? null,
 				'until' => empty($rrule['UNTIL']) ? null : self::DateTime($rrule['UNTIL'], $event['tzid']),
+				'count' => $rrule['COUNT'] ?? null ? (int)$rrule['COUNT'] : null,
 			]);
 			if (!empty($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']) &&
 				$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] !== 'Monday')
@@ -656,6 +952,44 @@ class JsCalendar extends JsBase
 			'recurrenceRules' => isset($rule) ? [$rule] : null,
 			'recurrenceOverrides' => $overrides,
 		]);
+	}
+
+	/**
+	 * Convert Infolog RRULE stored in cfs to JsCalendar RecurrenceRules
+	 *
+	 * @param array $cfs
+	 * @return array
+	 */
+	public static function cfRrule2recurrenceRules(array $cfs)
+	{
+		$rrule = [];
+		foreach(explode(';', $cfs['##RRULE']) as $pair)
+		{
+			[$name, $value] = explode('=', $pair);
+			$rrule[$name] = $value;
+		}
+		return self::Recurrence(['tzid' => Api\DateTime::$user_timezone->getName()], [], [], $rrule);
+	}
+
+	/**
+	 * Parse RecurrenceRules to InfoLog cf stored RRULE
+	 * @param array $recurenaceRules
+	 * @return array
+	 */
+	public static function parseRecuranceRules2cfRrule(array $recurenaceRules=[])
+	{
+		$rrule = [];
+		foreach($recurenaceRules as $rule)
+		{
+			foreach($rule as $name => $value)
+			{
+				$rrule[] = $name.'='.$value;
+			}
+			break;  // we support only one rule!
+		}
+		return [
+			'#RRULE' => $rrule ? implode(';', $rrule) : null,
+		];
 	}
 
 	/**
@@ -807,5 +1141,18 @@ class JsCalendar extends JsBase
 			$calendar_bo = new \calendar_boupdate();
 		}
 		return $calendar_bo;
+	}
+
+	/**
+	 * @return \infolog_bo
+	 */
+	protected static function getInfolog()
+	{
+		static $infolog_bo=null;
+		if (!isset($infolog_bo))
+		{
+			$infolog_bo = new \infolog_bo();
+		}
+		return $infolog_bo;
 	}
 }

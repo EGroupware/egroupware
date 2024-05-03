@@ -148,12 +148,13 @@ class JsBase
 	 * Return EGroupware custom fields
 	 *
 	 * @param array $contact
+	 * @param ?string $app default self::APP
 	 * @return array
 	 */
-	protected static function customfields(array $contact)
+	protected static function customfields(array $contact, ?string $app=null)
 	{
 		$fields = [];
-		foreach(Api\Storage\Customfields::get(static::APP) as $name => $data)
+		foreach(Api\Storage\Customfields::get($app ?? static::APP) as $name => $data)
 		{
 			$value = $contact['#'.$name];
 			if (isset($value))
@@ -191,12 +192,13 @@ class JsBase
 	 * Not send custom fields are set to null!
 	 *
 	 * @param array $cfs name => object with attribute data and optional type, label, values
+	 * @param ?string $app default self::APP
 	 * @return array
 	 */
-	protected static function parseCustomfields(array $cfs)
+	protected static function parseCustomfields(array $cfs, ?string $app=null)
 	{
 		$contact = [];
-		$definitions = Api\Storage\Customfields::get(static::APP);
+		$definitions = Api\Storage\Customfields::get($app ?? static::APP);
 
 		foreach($definitions as $name => $definition)
 		{
