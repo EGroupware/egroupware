@@ -369,7 +369,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 			for(let key in data)
 			{
 				// Don't overwrite fields / customfields with global values
-				if (global_data[key] && key !== 'fields' && (key !== "customfields" || !Object.keys(data.customfields).length))
+				if (global_data[key] && key !== 'fields' && (key !== "customfields" || !data.customfields || !Object.keys(data.customfields).length))
 				{
 					data[key] = {...data[key], ...global_data[key]};
 				}
