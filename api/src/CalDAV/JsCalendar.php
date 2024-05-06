@@ -324,11 +324,11 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'start':
-						$event['info_startdate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? null);
+						$event['info_startdate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? false);
 						break;
 
 					case 'due':
-						$event['info_enddate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? null);
+						$event['info_enddate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? false);
 						break;
 
 					case 'egroupware.org:completed':
@@ -393,13 +393,7 @@ class JsCalendar extends JsBase
 			}
 		}
 		catch (\Throwable $e) {
-			self::handleExceptions($e, 'JsCalendar Event', $name, $value);
-		}
-
-		// if no participant given add current user as CHAIR to the event
-		if (empty($event['participants']))
-		{
-			$event['participants'][$calendar_owner ?? $GLOBALS['egw_info']['user']['account_id']] = 'ACHAIR';
+			self::handleExceptions($e, 'JsTask', $name, $value);
 		}
 
 		return $event;
@@ -784,8 +778,9 @@ class JsCalendar extends JsBase
 			if (is_numeric($uid))
 			{
 				$info = [
-					'name'  => Api\Accounts::id2name($uid, 'account_fullname'),
+					'name'  => Api\Accounts::id2name($uid, $uid < 0 ? 'account_lid' : 'account_fullname'),
 					'email' => Api\Accounts::id2name($uid, 'account_email'),
+					'kind'  => $uid < 0 ? 'group' : 'individual',
 				];
 			}
 			else
