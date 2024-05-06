@@ -620,7 +620,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null,$prefix=null)
+	function put(&$options, $id, $user=null, $prefix=null, $method='PUT')
 	{
 		unset($prefix);	// not used, but required by function signature
 
@@ -650,7 +650,23 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		{
 			$callback_data = array(array($this, 'cat_action'), $oldTask);
 		}
-		if (!($infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id, $callback_data)))
+		$type = null;
+		if (($is_json=Api\CalDAV::isJSON($type)))
+		{
+			$task = Api\CalDAV\JsCalendar::parseJsTask($options['content'], $oldTask ?? [], $type, $method, $user) + $oldTask??[];
+			if ($callback_data)
+			{
+				$callback = array_shift($callback_data);
+				array_unshift($callback_data, $task);
+				$task = call_user_func_array($callback, $callback_data);
+			}
+			$infoId = $this->bo->write($task);
+		}
+		else
+		{
+			$infoId = $handler->importVTODO($vTodo, $taskId, false, $user, null, $id, $callback_data);
+		}
+		if (!$infoId)
 		{
 			if ($this->debug) error_log(__METHOD__."(,$id) import_vtodo($options[content]) returned false");
 			return '403 Forbidden';
