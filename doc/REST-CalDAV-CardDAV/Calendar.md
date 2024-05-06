@@ -7,6 +7,7 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 
 Following RFCs / drafts used/planned for JSON encoding of resources
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
+* [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
 
 ### Supported request methods and examples
 

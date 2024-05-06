@@ -653,7 +653,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$type = null;
 		if (($is_json=Api\CalDAV::isJSON($type)))
 		{
-			$task = Api\CalDAV\JsCalendar::parseJsTask($options['content'], $oldTask ?? [], $type, $method, $user) + $oldTask??[];
+			$task = Api\CalDAV\JsCalendar::parseJsTask($options['content'], $oldTask ?? [], $type, $method, $user) + ($oldTask??[]);
 			if ($callback_data)
 			{
 				$callback = array_shift($callback_data);

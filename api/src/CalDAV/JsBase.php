@@ -156,9 +156,9 @@ class JsBase
 		$fields = [];
 		foreach(Api\Storage\Customfields::get($app ?? static::APP) as $name => $data)
 		{
-			$value = $contact['#'.$name];
-			if (isset($value))
+			if (isset($contact['#'.$name]))
 			{
+				$value = $contact['#'.$name];
 				switch($data['type'])
 				{
 					case 'date-time':

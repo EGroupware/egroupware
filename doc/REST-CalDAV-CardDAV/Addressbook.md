@@ -10,6 +10,7 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 ([* see at end of document](#implemented-changes-from-jscontact-draft-08))
 * [draft-ietf-jmap-jscontact-vcard: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
+* [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
 
 ### Supported request methods and examples
 

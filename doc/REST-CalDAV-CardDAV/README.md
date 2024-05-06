@@ -43,6 +43,7 @@ from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree w
 - [Addressbook](Addressbook.md)
 - [Calendar](Calendar.md) 
   * currently recurring events are readonly, they are returned but can not be created or modified
+- [InfoLog](Infolog.md)
 - [Mail](Mail.md) 
   * currently only sending mails, 
   * opening interactive compose windows, 
@@ -66,10 +67,10 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 ### ToDos
 - [x] Addressbook
   - [ ] update of photos, keys, attachments
-- [ ] InfoLog
+- [X] InfoLog
 - [X] Calendar (recurring events and alarms are readonly)
   - [ ] support creating and modifying recurring events and alarms
 - [X] Mail
   - [ ] querying received mails
-- [ ] relatedTo / links
+- [X] relatedTo, links and attachments, see [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
 - [ ] storing not native supported attributes eg. localization
