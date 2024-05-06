@@ -29,6 +29,7 @@ class JsCalendar extends JsBase
 
 	const TYPE_EVENT = 'Event';
 	const TYPE_TASK = 'Task';
+	const TYPE_RELATION = 'Relation';
 
 	/**
 	 * Get JsEvent for given event
@@ -158,7 +159,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'privacy':
-						$event['public'] = $value !== 'private';
+						$event['public'] = self::parsePrivacy($value, true);
 						break;
 
 					case 'alerts':
@@ -238,8 +239,6 @@ class JsCalendar extends JsBase
 					self::Duration(0, $entry['info_used_time']*60) : null,
 				'estimatedDuration' => $entry['info_plannedtime'] ?
 					self::Duration(0, $entry['info_plannedtime']*60) : null,
-				'recurrenceRules' => isset($entry['#RRULE']) ? null : null,
-				'recurrenceOverrides' => null,
 				//'freeBusyStatus' => $entry['non_blocking'] ? 'free' : null,   // default is busy
 				'description' => $entry['info_des'],
 				'participants' => self::Responsible($entry),
@@ -252,10 +251,13 @@ class JsCalendar extends JsBase
 				'privacy' => $entry['info_access'],
 				'percentComplete' => (int)$entry['info_percent'],
 				'egroupware.org:type' => $entry['info_type'],
+				'egroupware.org:pricelist' => $entry['pl_id'] ? (int)$entry['pl_id'] : null,
+				'egroupware.org:price' => $entry['info_price'] ? (double)$entry['info_price'] : null,
 				'egroupware.org:completed' => $entry['info_datecomplete'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
+			] + self::Locations(['location' => $entry['info_location'] ?? null]) + self::relatedToParent($entry['info_id_parent']) + [
 				'egroupware.org:customfields' => self::customfields($entry, 'infolog'),
-			] + self::Locations(['location' => $entry['info_location'] ?? null]);
+			];
 
 		if (!empty($entry['##RRULE']))
 		{
@@ -322,25 +324,35 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'start':
+						$event['info_startdate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? null);
+						break;
+
+					case 'due':
+						$event['info_enddate'] = self::parseDateTime($value, $data['timeZone'] ?? null, $data['showWithoutTime'] ?? null);
+						break;
+
+					case 'egroupware.org:completed':
+						$event['info_datecompleted'] = self::parseDateTime($value, $data['timeZone'] ?? null);
+						break;
+
 					case 'duration':
-					case 'timeZone':
-					case 'showWithoutTime':
-						if (!isset($event['start']))
-						{
-							$event += self::parseStartDuration($data);
-						}
+						$event['info_used_time'] = self::parseSignedDuration($value, true)/60;
+						break;
+
+					case 'estimatedDuration':
+						$event['info_plannedtime'] = self::parseSignedDuration($value, true)/60;
 						break;
 
 					case 'participants':
-						$event += self::parseParticipants($value, $strict, $calendar_owner);
+						$event += self::parseResponsible($value, $strict, $calendar_owner);
 						break;
 
 					case 'priority':
-						$event['priority'] = self::parsePriority($value);
+						$event['info_priority'] = self::parsePriority($value, true);
 						break;
 
 					case 'privacy':
-						$event['info_public'] = $value;
+						$event['info_access'] = self::parsePrivacy($value);
 						break;
 
 					case 'recurrenceRules':
@@ -348,23 +360,30 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'categories':
-						$event['info_cat'] = (int)self::parseCategories($value);
+						$event['info_cat'] = (int)self::parseCategories($value, false);
+						break;
+
+					case 'relatedTo':
+						$event['info_id_parent'] = self::parseRelatedToParent($value);
 						break;
 
 					case 'egroupware.org:customfields':
-						$event = array_merge($event, self::parseCustomfields($value, $strict));
-						break;
-
-					case 'egroupware.org:completed':
-						$event['info_datecomplete'] = self::parseDateTime();
+						$event = array_merge($event, self::parseCustomfields($value, 'infolog'));
 						break;
 
 					case 'egroupware.org:type':
-						$event['info_type'] = $value;
+						$event['info_type'] = self::parseInfoType($value);
+						break;
+
+					case 'egroupware.org:price':
+						$event['info_price'] = self::parseFloat($value);
+						break;
 
 					case 'prodId':
 					case 'created':
 					case 'updated':
+					case 'showWithoutTime':
+					case 'timeZone':
 						break;
 
 					default:
@@ -433,17 +452,20 @@ class JsCalendar extends JsBase
 	 * Parse categories object
 	 *
 	 * @param array $categories category-name => true pairs
-	 * @param bool $multiple
+	 * @param bool $calendar true (default) use calendar AND support multiple categories, false: InfoLog with only one Category
 	 * @return ?string comma-separated cat_id's
 	 */
-	protected static function parseCategories(array $categories, bool $multiple=true)
+	protected static function parseCategories(array $categories, bool $calendar=true)
 	{
-		static $bo=null;
 		$cat_ids = [];
 		if ($categories)
 		{
-			if (!isset($bo)) $bo = new \calendar_boupdate();
-			$cat_ids = $bo->find_or_add_categories(array_keys($categories));
+			$cat_ids = ($calendar ? self::getCalendar() : self::getInfolog())->find_or_add_categories(array_keys($categories));
+
+			if (!$calendar && count ($cat_ids) > 1)
+			{
+				throw new \InvalidArgumentException("InfoLog supports only a single category currently!");
+			}
 		}
 		return $cat_ids ? implode(',', $cat_ids) : null;
 	}
@@ -509,20 +531,27 @@ class JsCalendar extends JsBase
 	}
 
 	/**
-	 * Return a duration calculated from given start- and end-time
+	 * Return a duration calculated from given start- and end-time or a duration in seconds (start=0)
 	 *
 	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-duration
-	 * @param int|string|\DateTime $start
-	 * @param int|string|\DateTime $end
-	 * @param bool $whole_day
+	 * @param int|string|\DateTime $start start-time or 0 to use duration in $end
+	 * @param int|string|\DateTime $end end-time or duration for $start===0
+	 * @param bool $whole_day true: handling for whole-day events, default: false
 	 * @return string
 	 */
 	protected static function Duration($start, $end, bool $whole_day=false)
 	{
-		$start = Api\DateTime::to($start, 'object');
-		$end = Api\DateTime::to($end, 'object');
+		if (!$start && is_numeric($end))
+		{
+			$value = $end;
+		}
+		else
+		{
+			$start = Api\DateTime::to($start, 'object');
+			$end = Api\DateTime::to($end, 'object');
 
-		$value = $end->getTimestamp() - $start->getTimestamp() + (int)$whole_day;
+			$value = $end->getTimestamp() - $start->getTimestamp() + (int)$whole_day;
+		}
 
 		$duration = '';
 		if ($value < 0)
@@ -548,6 +577,20 @@ class JsCalendar extends JsBase
 		return $duration;
 	}
 
+	/**
+	 * Parse a DateTime value
+	 *
+	 * @param string $value
+	 * @param string|null $timezone
+	 * @param bool $showWithoutTime true: return H:i set to 00:00
+	 * @return Api\DateTime
+	 * @throws Api\Exception
+	 */
+	protected static function parseDateTime(string $value, ?string $timezone=null, bool $showWithoutTime=false)
+	{
+		return new Api\DateTime($value, !empty($timezone) ? new \DateTimeZone($timezone) : null);
+	}
+
 	protected static function parseStartDuration(array $data)
 	{
 		$parsed = [];
@@ -556,8 +599,7 @@ class JsCalendar extends JsBase
 		{
 			throw new \InvalidArgumentException("Invalid or missing start: ".json_encode($data['start']));
 		}
-		$parsed['start'] = new Api\DateTime($data['start'], !empty($data['timeZone']) ? new \DateTimeZone($data['timeZone']) : null);
-		$parsed['tzid'] = $data['timeZone'] ?? null;
+		$parsed['start'] = self::parseDateTime($data['start'], $parsed['tzid'] = $data['timeZone'] ?? null);
 
 		$duration = self::parseSignedDuration($data['duration'] ?? null);
 		$parsed['end'] = new Api\DateTime($parsed['start']);
@@ -663,10 +705,11 @@ class JsCalendar extends JsBase
 	 * @param array $participants
 	 * @param bool $strict true: require @types and objects with attributes name, email, ...
 	 * @param ?int $calendar_owner owner of the calendar / collection
+	 * @param bool $calendar true: calendar, false: infolog only supporting users and email
 	 * @return array
 	 * @todo Resources and Groups without email
 	 */
-	protected static function parseParticipants(array $participants, bool $strict=true, int $calendar_owner=null)
+	protected static function parseParticipants(array $participants, bool $strict=true, int $calendar_owner=null, bool $calendar=true)
 	{
 		$parsed = [];
 
@@ -704,7 +747,8 @@ class JsCalendar extends JsBase
 						'email_home' => $participant['email'],
 					], ['id','egw_addressbook.account_id as account_id','n_fn'],
 					'egw_addressbook.account_id IS NOT NULL DESC, n_fn IS NOT NULL DESC',
-					'','',false,'OR')))
+					'','',false,'OR')) &&
+					($calendar || !empty($data['account_id'])))
 				{
 					// found an addressbook entry
 					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
@@ -776,6 +820,38 @@ class JsCalendar extends JsBase
 		}
 
 		return $participants;
+	}
+
+	/**
+	 * Parse participants object for InfoLog only supporting responsible and CC
+	 *
+	 * @param array $participants
+	 * @param bool $strict true: require @types and objects with attributes name, email, ...
+	 * @param ?int $calendar_owner owner of the calendar / collection
+	 * @return array with values for info_responsible (int[]) and info_cc (comma-separated string)
+	 */
+	protected static function parseResponsible(array $participants, bool $strict=true, int $calendar_owner=null)
+	{
+		$responsible = $cc = [];
+		foreach(self::parseParticipants($participants, $strict, $calendar_owner, false) as $uid => $status)
+		{
+			if (is_numeric($uid))
+			{
+				// we do NOT store just owner as participant, only if he has further roles / request-participant
+				if ($participants[$uid]['roles'] !== ['owner' => true])
+				{
+					$responsible[] = $uid;
+				}
+			}
+			elseif ($uid[0] === 'e')
+			{
+				$cc[] = substr($uid, 1);
+			}
+		}
+		return [
+			'info_responsible' => $responsible,
+			'info_cc' => $cc ? implode(',', $cc) : null,
+		];
 	}
 
 	protected static function jscalRoles2role(array $roles=null, string $default_role=null)
@@ -981,14 +1057,17 @@ class JsCalendar extends JsBase
 		$rrule = [];
 		foreach($recurenaceRules as $rule)
 		{
+			if ($rrule)
+			{
+				throw new \InvalidArgumentException("EGroupware currently stores only a single rule!");
+			}
 			foreach($rule as $name => $value)
 			{
 				$rrule[] = $name.'='.$value;
 			}
-			break;  // we support only one rule!
 		}
 		return [
-			'#RRULE' => $rrule ? implode(';', $rrule) : null,
+			'##RRULE' => $rrule ? implode(';', $rrule) : null,
 		];
 	}
 
@@ -1128,6 +1207,76 @@ class JsCalendar extends JsBase
 			$alarms[] = $alarm;
 		}
 		return $alarms;
+	}
+
+	/**
+	 * Parse a privacy value: "public", "private" or "secret" (currently not supported by calendar or infolog)
+	 *
+	 * @param string $value
+	 * @return bool
+	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-privacy
+	 */
+	protected static function parsePrivacy(string $value, $return_bool=false)
+	{
+		if (!in_array($value, ['public', 'private'], true))
+		{
+			throw new \InvalidArgumentException("Privacy value must be either 'public' or 'private' ('secret' is currently NOT supported)!");
+		}
+		return $return_bool ? ($value === 'public') : $value;
+	}
+
+	protected static function relatedToParent(int $info_id_parent)
+	{
+		if (!$info_id_parent || !($parent = self::getInfolog()->read($info_id_parent)))
+		{
+			if ($info_id_parent) error_log(__METHOD__."($info_id_parent) could NOT read parent!");
+			return [];
+		}
+		return [
+			'relatedTo' => [
+				$parent['info_uid'] => [
+					self::AT_TYPE => self::TYPE_RELATION,
+					'relation' => 'parent',
+				],
+			],
+		];
+	}
+
+	protected static function parseRelatedToParent(array $related_to, bool $strict=false)
+	{
+		foreach($related_to as $uid => $relation)
+		{
+			if (!($parent = self::getInfolog()->read(['info_uid' => $uid])))
+			{
+				throw new \InvalidArgumentException("UID '$uid' NOT found!");
+			}
+			if ($strict && $relation[self::AT_TYPE]??null !== self::TYPE_RELATION)
+			{
+				throw new \InvalidArgumentException("Missing or invalid @Type!");
+			}
+			if ($relation['relation'] !== 'parent')
+			{
+				throw new \InvalidArgumentException("Unsupported relation-type: ".json_encode($relation['relation']??null)."!");
+			}
+		}
+		return $parent ? $parent['info_id'] : null;
+	}
+
+	/**
+	 * Parse an InfoLog type
+	 *
+	 * @param string $type
+	 * @throws \InvalidArgumentException
+	 * @return string
+	 */
+	protected static function parseInfoType(string $type)
+	{
+		$bo = self::getInfolog();
+		if (!isset($bo->enums['type'][$type]))
+		{
+			throw new \InvalidArgumentException("Invalid / non-existing InfoLog type '$type', allowed values are: '".implode("', '", array_keys($bo->enums['type']))."'");
+		}
+		return $type;
 	}
 
 	/**
