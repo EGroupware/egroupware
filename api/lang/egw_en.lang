@@ -1008,6 +1008,7 @@ open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open sidebox	common	en	Open side box
 open the online help.	common	en	Open the online help
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	en	OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!
 operator	common	en	Operator
 optional note about the link	common	en	Optional note for link
 options	common	en	Options

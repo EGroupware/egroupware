@@ -1008,6 +1008,7 @@ open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Pop-up Fenster öffnen
 open sidebox	common	de	Seitenmenü öffnen
 open the online help.	common	de	Öffnet die Online-Hilfe.
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	de	OpenIDConnect Anmeldung erfolgreich, aber der Benutzer '%1' existiert NICHT in EGroupware, UND das automatische Anlegen von Benutzers ist ausgeschaltet!
 operator	common	de	Operator
 optional note about the link	common	de	Optionale Notiz zur Verknüpfung
 options	common	de	Optionen
