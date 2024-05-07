@@ -19,6 +19,7 @@
 				<column width="70%"/>
 				<column width="15%"/>
 				<column width="60"/>
+				<column width="60"/>
 				<column width="60" disabled="@no_ts_quantity"/>
 				<column width="60" disabled="@no_ts_unitprice"/>
 				<column width="60" disabled="@no_ts_total"/>
@@ -54,16 +55,20 @@
 					<nextmatch-sortheader label="Category" id="cat_id"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
-						<et2-date-duration id="duration" readonly="true" displayFormat="hm"></et2-date-duration>
+						<et2-date-duration id="duration" readonly="true" displayFormat="hm" align="right"></et2-date-duration>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-sortheader label="Paused" id="ts_paused"/>
+						<et2-date-duration id="paused" readonly="true" displayFormat="hm" align="right"></et2-date-duration>
 					</et2-vbox>
 					<et2-vbox>
 						<nextmatch-sortheader label="Quantity" id="ts_quantity"/>
-						<et2-number  id="quantity" readonly="true" precision="3"></et2-number>
+						<et2-number  id="quantity" readonly="true" precision="3" align="right"></et2-number>
 					</et2-vbox>
 					<nextmatch-sortheader label="Price" id="ts_unitprice"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Total" id="ts_total"/>
-						<et2-number  id="price" readonly="true" precision="2"></et2-number>
+						<et2-number  id="price" readonly="true" precision="2" align="right"></et2-number>
 					</et2-vbox>
 					<et2-nextmatch-header-filter  id="ts_owner" class="$cont[ownerClass]" noLang="1" emptyLabel="User"/>
 					<nextmatch-sortheader label="Created" id="ts_created"/>
@@ -80,8 +85,8 @@
                         <et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
                     </et2-vbox>
                     <et2-select-cat class="noWrap" id="${row}[cat_id]" readonly="true"></et2-select-cat>
-                    <et2-date-duration id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm"
-                                       selectUnit="false"></et2-date-duration>
+					<et2-date-duration id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm" selectUnit="false"></et2-date-duration>
+					<et2-date-duration id="${row}[ts_paused]" readonly="true" align="right" displayFormat="hm" selectUnit="false"></et2-date-duration>
                     <et2-number id="${row}[ts_quantity]" readonly="true" precision="3" noLang="1"></et2-number>
                     <et2-description id="${row}[ts_unitprice]" noLang="1"></et2-description>
                     <et2-number id="${row}[ts_total]" readonly="true" precision="2" noLang="1"></et2-number>

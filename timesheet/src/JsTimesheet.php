@@ -52,6 +52,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 			'description' => $timesheet['description'],
 			'start' => self::UTCDateTime($timesheet['start'], true),
 			'duration' => (int)$timesheet['duration'],
+			'paused' => (int)$timesheet['paused'],
 			'project' => $timesheet['project_blur'] ?? null,
 			'pm_id' => !empty($timesheet['pm_id']) ? (int)$timesheet['pm_id'] : null,
 			'quantity' => (double)$timesheet['quantity'],
@@ -130,6 +131,10 @@ class JsTimesheet extends Api\CalDAV\JsBase
 						{
 							$timesheet['ts_quantity'] = $timesheet['ts_duration'] / 60.0;
 						}
+						break;
+
+					case 'paused':
+						$timesheet['ts_paused'] = self::parseInt($value);
 						break;
 
 					case 'pricelist':

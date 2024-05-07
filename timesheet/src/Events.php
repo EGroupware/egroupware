@@ -218,17 +218,18 @@ class Events extends Api\Storage\Base
 	 */
 	public function storeWorkingTime()
 	{
-		if (!($events = self::getPending(true, $time)) || !$time)
+		if (!($events = self::getPending(true, $time, $paused)) || !$time)
 		{
 			throw new Api\Exception\AssertionFailed("No pending overall events!");
 		}
 		$ids = array_keys($events);
 		$bo = new \timesheet_bo();
-		// check if we already have a timesheet for the current periode
+		// check if we already have a timesheet for the current period
 		if (($period_ts = $bo->periodeWorkingTimesheet(reset($events)['tse_time'])))
 		{
-			$events = array_merge(self::get(['ts_id' => $period_ts['ts_id']], $period_total), $events);
+			$events = array_merge(self::get(['ts_id' => $period_ts['ts_id']], $period_total, $period_paused), $events);
 			$time += $period_total;
+			$paused += $period_paused;
 		}
 		$title = self::workingTimeTitle($events, $start);
 		$bo->init($period_ts);
@@ -240,6 +241,7 @@ class Events extends Api\Storage\Base
 			'end_time' => '',
 			'ts_duration' => $minutes = round($time / 60),
 			'ts_quantity' => $minutes / 60.0,
+			'ts_paused' => round($paused / 60),
 			'ts_owner' => $this->user,
 		]);
 		self::addToTimesheet($bo->data['ts_id'], $ids);
@@ -351,6 +353,15 @@ class Events extends Api\Storage\Base
 	 */
 	protected static function evaluate(array &$timer, array $row)
 	{
+		// paused timer is started or stopped
+		if ($timer['paused'] && !($row['tse_type'] & self::PAUSE))
+		{
+			$timer['was_paused'] = 60000 * round(($row['tse_time']->getTimestamp() - $timer['pause_started']->getTimestamp())/60);
+		}
+		else
+		{
+			unset($timer['was_paused']);
+		}
 		if ($row['tse_type'] & self::START)
 		{
 			$timer['start'] = $timer['started'] = $row['tse_time'];
@@ -367,6 +378,10 @@ class Events extends Api\Storage\Base
 		{
 			$timer['paused'] = ($row['tse_type'] & self::PAUSE) === self::PAUSE;
 		}
+		if ($timer['paused'])
+		{
+			$timer['pause_started'] = $row['tse_time'];
+		}
 		$timer['last'] = $row['tse_time'];
 		$timer['id'] = $row['tse_id'];
 		return $time ?? null;
@@ -378,10 +393,11 @@ class Events extends Api\Storage\Base
 	 * Not stopped events-sequences are NOT returned (stopped sequences end with a stop event).
 	 *
 	 * @param int|array $filter
-	 * @param int &$total=null on return time in seconds
+	 * @param ?int &$total=null on return time in seconds
+	 * @param ?int &$paused on return paused time in seconds
 	 * @return array[] tse_id => array pairs plus extra key sum (time-sum in seconds)
 	 */
-	public static function get($filter, int &$total=null)
+	public static function get($filter, ?int &$total=null, ?int &$paused=null)
 	{
 		if (!is_array($filter))
 		{
@@ -392,7 +408,7 @@ class Events extends Api\Storage\Base
 			'offset' => 0,
 			'paused' => false,
 		];
-		$total = $open = 0;
+		$total = $open = $paused = 0;
 		$events = [];
 		foreach(self::getInstance()->search('', false, 'tse_id', '', '',
 			false, 'AND', false, $filter) as $row)
@@ -411,6 +427,7 @@ class Events extends Api\Storage\Base
 				$row['total'] = $total + $timer['offset'] / 1000;
 			}
 			$row['time'] = $time / 1000;
+			$row['paused'] = !empty($timer['was_paused']) ? $paused += $timer['was_paused']/1000 : null;
 			$events[$row['tse_id']] = $row;
 		}
 		// remove open / unstopped timer events
@@ -427,16 +444,17 @@ class Events extends Api\Storage\Base
 	 * Not stopped events-sequences are NOT returned (stopped sequences end with a stop event).
 	 *
 	 * @param bool $overall
-	 * @param int &$time=null on return total time in seconds
+	 * @param ?int &$time=null on return total time in seconds
+	 * @param ?int &$paused=null on return total paused time in seconds
 	 * @return array[] tse_id => array pairs
 	 */
-	public static function getPending($overall=false, int &$time=null)
+	public static function getPending($overall=false, ?int &$time=null, ?int &$paused=null)
 	{
 		return self::get([
 			'ts_id' => null,
 			'account_id' => self::getInstance()->user,
 			($overall ? '' : 'NOT ').'(tse_type & '.self::OVERALL.')',
-		], $time);
+		], $time, $paused);
 	}
 
 	/**

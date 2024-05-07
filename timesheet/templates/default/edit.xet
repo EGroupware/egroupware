@@ -38,15 +38,13 @@
 				<row class="row" disabled="!@ts_viewtype">
 					<et2-description  value="comment"></et2-description>
                     <et2-textarea id="ts_description_short" rows="5" cols="50"></et2-textarea>
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
-                </row>
+                 </row>
                 <row class="row" disabled="@ts_viewtype">
                     <et2-description value="Quantity" for="ts_quantity"></et2-description>
                     <et2-number statustext="empty if identical to duration" id="ts_quantity" precision="3" placeholder="@ts_quantity_blur"></et2-number>
-                    <et2-description></et2-description>
-                </row>
+					<et2-description></et2-description>
+					<et2-date-duration label="Pause time" id="ts_paused" displayFormat="hm" span="all"></et2-date-duration>
+				</row>
                 <row class="row" disabled="@ts_viewtype">
                     <et2-description value="Category" for="cat_id"></et2-description>
                     <et2-select-cat span="all" id="cat_id" application="timesheet" emptyLabel="None"></et2-select-cat>
@@ -86,6 +84,7 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -93,6 +92,7 @@
 					<et2-description  value="Recorded"></et2-description>
 					<et2-description  value="Type"></et2-description>
 					<et2-description  value="Duration"></et2-description>
+					<et2-description  value="Paused"></et2-description>
 					<et2-description  value="Sum"></et2-description>
 				</row>
 				<row id="timesheet-events::$row_cont[tse_id]">
@@ -100,6 +100,7 @@
 					<et2-date-time  id="${row}[tse_timestamp]" readonly="true"></et2-date-time>
 					<et2-select  id="${row}[tse_type]" readonly="true"></et2-select>
 					<et2-date-duration  id="${row}[time]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
+					<et2-date-duration  id="${row}[paused]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
 					<et2-date-duration  id="${row}[total]" readonly="true" displayFormat="h:m" dataFormat="s"></et2-date-duration>
 				</row>
 			</rows>

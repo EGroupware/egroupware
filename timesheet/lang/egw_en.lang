@@ -108,6 +108,8 @@ overwrite time	common	en	Overwrite time
 overwriting start or stop time	timesheet	en	Overwriting start or stop time
 parent	admin	en	Parent
 pause	common	en	Pause
+pause time	timesheet	en	Pause time
+paused	timesheet	en	Paused
 permission denied!!!	timesheet	en	Permission denied!
 permissions error - %1 could not %2	timesheet	en	Permissions error - %1 could not %2
 prevent deleting	admin	en	Prevent deleting

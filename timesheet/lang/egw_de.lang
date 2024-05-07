@@ -108,6 +108,8 @@ overwrite time	common	de	Zeit überschreiben
 overwriting start or stop time	timesheet	de	Überschreiben der Start- oder Stop-Zeit
 parent	admin	de	Übergeordnet
 pause	common	de	Pause
+pause time	timesheet	de	Pausenzeit
+paused	timesheet	de	Pausen
 permission denied!!!	timesheet	de	Zugriff verweigert!
 permissions error - %1 could not %2	timesheet	de	Fehler in den Zugriffsberechtigungen - %1 nicht möglich %2
 prevent deleting	admin	de	Verhindert Löschung

@@ -19,7 +19,7 @@ $phpgw_baseline = array(
 			'ts_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'title of the timesheet entry'),
 			'ts_description' => array('type' => 'varchar','precision' => '16384','comment' => 'description of the timesheet entry'),
 			'ts_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'timestamp of the startdate'),
-			'ts_duration' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'duration of the timesheet-entry'),
+			'ts_duration' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'duration of the timesheet-entry'),
 			'ts_quantity' => array('type' => 'float','precision' => '8','nullable' => False,'comment' => 'quantity'),
 			'ts_unitprice' => array('type' => 'float','precision' => '4','comment' => 'unitprice'),
 			'cat_id' => array('type' => 'int','meta' => 'category','precision' => '4','default' => '0','comment' => 'category'),
@@ -28,7 +28,8 @@ $phpgw_baseline = array(
 			'ts_modifier' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False,'comment' => 'account id of the last modifier'),
 			'pl_id' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'id of the linked project'),
 			'ts_status' => array('type' => 'int','precision' => '4','comment' => 'status of the timesheet-entry'),
-			'ts_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'Creation date of the timesheet')
+			'ts_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False,'comment' => 'Creation date of the timesheet'),
+			'ts_paused' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'pause time(s) of the timesheet-entry')
 		),
 		'pk' => array('ts_id'),
 		'fk' => array(),
