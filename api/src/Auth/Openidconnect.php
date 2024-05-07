@@ -51,6 +51,8 @@ class Openidconnect implements BackendSSO
 				// fail if auto-creation of authenticated users is NOT configured
 				if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
 				{
+					error_log(__METHOD__."() OpenIDConnect login successful, but user '$account_lid' does NOT exist in EGroupware, AND automatic user creating is disabled!");
+					$_GET['cd'] = lang("OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!", $account_lid);
 					return null;
 				}
 				try {
@@ -75,7 +77,7 @@ class Openidconnect implements BackendSSO
 		}
 		catch(\Exception $e) {
 			_egw_log_exception($e);
-			$GLOBALS['egw']->session->cd_reason = 'OpenIDConnect Error: '.$e->getMessage();
+			$_GET['cd'] = 'OpenIDConnect Error: '.$e->getMessage();
 			return null;
 		}
 	}
