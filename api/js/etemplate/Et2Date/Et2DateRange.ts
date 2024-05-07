@@ -1,5 +1,4 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin} from "@lion/form-core";
 import {css, html, LitElement, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
@@ -14,7 +13,7 @@ import {egw} from "../../jsapi/egw_global";
  * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
  * but this can be specified with the properties.
  */
-export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
+export class Et2DateRange extends Et2InputWidget(LitElement)
 {
 	static get styles()
 	{

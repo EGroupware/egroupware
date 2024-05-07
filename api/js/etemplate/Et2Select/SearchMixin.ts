@@ -9,7 +9,6 @@
 
 import {css, CSSResultGroup, html, LitElement, nothing, TemplateResult} from "lit";
 import {cleanSelectOptions, SelectOption} from "./FindSelectOptions";
-import {Validator} from "@lion/form-core";
 import {Et2Tag} from "./Tag/Et2Tag";
 import {StaticOptions} from "./StaticOptions";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
@@ -17,6 +16,7 @@ import {SlOption} from "@shoelace-style/shoelace";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {until} from "lit/directives/until.js";
 import {waitForEvent} from "../Et2Widget/event";
+import {Validator} from "../Validators/Validator";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;

@@ -259,4 +259,4 @@ export class Et2VfsMime extends Et2ImageExpose
 
 }
 
-customElements.define("et2-vfs-mime", Et2VfsMime as any, {extends: 'img'});
+customElements.define("et2-vfs-mime", Et2VfsMime as any);

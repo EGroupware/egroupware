@@ -102,6 +102,7 @@ import "./Et2Vfs/Et2VfsSelectButton";
 import "./Et2Vfs/Et2VfsSelectDialog";
 import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
+import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
 import "./Et2Tree/Et2Tree";

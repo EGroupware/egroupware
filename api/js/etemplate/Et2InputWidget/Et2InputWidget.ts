@@ -1,15 +1,15 @@
+import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {et2_IInput, et2_IInputNode, et2_ISubmitListener} from "../et2_core_interfaces";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {css, LitElement, PropertyValues} from "lit";
-import {Required} from "../Validators/Required";
-import {ManualMessage} from "../Validators/ManualMessage";
-import {LionValidationFeedback, Validator} from "@lion/form-core";
+import {HasSlotController} from "../Et2Widget/slot";
 import {et2_csvSplit} from "../et2_core_common";
-import {dedupeMixin} from "@lion/core";
 import {property} from "lit/decorators/property.js";
+import {Validator} from "../Validators/Validator";
+import {ManualMessage} from "../Validators/ManualMessage";
+import {Required} from "../Validators/Required";
+import {EgwValidationFeedback} from "../Validators/EgwValidationFeedback";
+import {dedupeMixin} from "@open-wc/dedupe-mixin";
 
-// LionValidationFeedback needs to be registered manually
-window.customElements.define('lion-validation-feedback', LionValidationFeedback);
 
 /**
  * This mixin will allow any LitElement to become an Et2InputWidget
@@ -69,6 +69,9 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 		protected isSlComponent = false;
 
+		// Allows us to check to see if label or help-text is set.  Override to check additional slots.
+		protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
+
 		/** WebComponent **/
 		static get styles()
 		{
@@ -95,6 +98,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 
 				  .form-control__help-text {
 					position: relative;
+					  width: 100%;
 				  }
 				`
 			];
@@ -111,11 +115,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				label: {
 					type: String, noAccessor: true
 				},
-				// readOnly is what the property is in Lion, readonly is the attribute
-				readOnly: {
-					type: Boolean,
-					attribute: 'readonly',
-				},
+
 				// readonly is what is in the templates
 				// I put this in here so loadWebComponent finds it when it tries to set it from the template
 				readonly: {
@@ -341,7 +341,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			this.updateComplete.then(() =>
 			{
 				// Remove all messages.  Manual will be explicitly replaced, other validators will be re-run on blur.
-				this.querySelectorAll("lion-validation-feedback").forEach(e => e.remove());
+				this.querySelectorAll("egw-validation-feedback").forEach(e => e.remove());
 			});
 		}
 
@@ -400,6 +400,11 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			return this.__readonly;
 		}
 
+		/**
+		 * Was from early days (Lion)
+		 * @deprecated
+		 * @param {boolean} new_value
+		 */
 		set readOnly(new_value)
 		{
 			this.readonly = new_value;
@@ -582,7 +587,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 			let fieldName = this.id;
 			let feedbackData = [];
 			let resultPromises = [];
-			this.querySelector("lion-validation-feedback")?.remove();
+			(<EgwValidationFeedback>this.querySelector("egw-validation-feedback"))?.remove();
 
 			// Collect message of a (failing) validator
 			const doValidate = async function(validator, value)
@@ -653,7 +658,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				// Show feedback from all failing validators
 				if(feedbackData.length > 0)
 				{
-					let feedback = <LionValidationFeedback>document.createElement("lion-validation-feedback");
+					let feedback = document.createElement("egw-validation-feedback");
 					feedback.feedbackData = feedbackData;
 					feedback.slot = "help-text";
 					this.append(feedback);
@@ -719,7 +724,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		public get hasFeedbackFor() : string[]
 		{
-			let feedback = (<LionValidationFeedback>this.querySelector("lion-validation-feedback"))?.feedbackData || [];
+			let feedback = (this.querySelector("egw-validation-feedback"))?.feedbackData || [];
 			return feedback.map((f) => f.type);
 		}
 
@@ -734,7 +739,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			this.submitted = true;
 
-			// If using Lion validators, run them now
+			// If using validators, run them now
 			if(this.validate)
 			{
 				// Force update now
@@ -744,6 +749,47 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				return (this.hasFeedbackFor || []).indexOf("error") == -1;
 			}
 			return true;
+		}
+
+		/**
+		 * Common sub-template to add a label.
+		 * This goes inside the form control wrapper div, before and at the same depth as the input controls.
+		 *
+		 *
+		 * @returns {TemplateResult} Either a TemplateResult or nothing (the object).  Check for nothing to set
+		 *    'form-control--has-label' class on the wrapper div.
+		 * @protected
+		 */
+		protected _labelTemplate() : TemplateResult | typeof nothing
+		{
+			const hasLabelSlot = this.hasSlotController?.test('label');
+			const hasLabel = this.label ? true : !!hasLabelSlot;
+			return hasLabel ? html`
+                <label
+                        id="label"
+                        part="form-control-label"
+                        class="form-control__label"
+                        aria-hidden=${hasLabel ? 'false' : 'true'}
+                        @click=${typeof this.handleLabelClick == "function" ? this.handleLabelClick : nothing}
+                >
+                    <slot name="label">${this.label}</slot>
+                </label>
+			` : nothing;
+		}
+
+		protected _helpTextTemplate() : TemplateResult | typeof nothing
+		{
+			const hasHelpTextSlot = this.hasSlotController?.test('help-text');
+			const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
+			return hasHelpText ? html`
+                <div
+                        part="form-control-help-text"
+                        id="help-text"
+                        class="form-control__help-text"
+                        aria-hidden=${hasHelpText ? 'false' : 'true'}
+                >
+                    <slot name="help-text">${this.helpText}</slot>
+                </div>` : nothing;
 		}
 	}
 

@@ -17,13 +17,13 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw} from "../../api/js/jsapi/egw_global.js";
 import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
-import {LitElement} from "@lion/core";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
 import {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+import {LitElement} from "lit";
 
 /**
  * UI for Admin

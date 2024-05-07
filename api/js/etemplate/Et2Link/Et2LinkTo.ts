@@ -11,21 +11,19 @@
 
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
 import {css, html, LitElement, nothing} from "lit";
-import {ScopedElementsMixin} from "@lion/core";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
 import {LinkInfo} from "./Et2Link";
-import type {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
 import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 import {Et2LinkPasteDialog, getClipboardFiles} from "./Et2LinkPasteDialog";
 import {waitForEvent} from "../Et2Widget/event";
+import {classMap} from "lit/directives/class-map.js";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -33,7 +31,7 @@ import {waitForEvent} from "../Et2Widget/event";
  * If there is no "current entry", link information will be stored for submission instead
  * of being directly linked.
  */
-export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMixin(ValidateMixin(LitElement))))
+export class Et2LinkTo extends Et2InputWidget(LitElement)
 {
 	static get properties()
 	{
@@ -73,13 +71,10 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			.input-group__container {
 				flex: 1 1 auto;
 			}
-			.input-group {
+
+				.form-control-input {
 				display: flex;
 				width: 100%;
-				gap: 0.5rem;
-			}
-			.input-group__before {
-				display: flex;
 				gap: 0.5rem;
 			}
 			::slotted(.et2_file) {
@@ -160,13 +155,17 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		return html`
             <slot name="before"></slot>
             <et2-vfs-select
+                    id="link"
                     ?readonly=${this.readonly}
                     method=${method || nothing}
                     method-id=${method_id || nothing}
                     multiple
                     title=${this.egw().lang("select file(s) from vfs")}
                     .buttonLabel=${this.egw().lang('Link')}
-                    .onchange=${this.handleVfsSelected}
+                    @change=${async() =>
+                    {
+                        this.handleVfsSelected(await this.shadowRoot.getElementById("link")._dialog.getComplete());
+                    }}
             >
                 <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
                             label=${this.egw().lang("copy")}></et2-button>
@@ -585,6 +584,35 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	static get validationTypes() : ValidationType[]
 	{
 		return ['error', 'success'];
+	}
+
+
+	render()
+	{
+		const labelTemplate = this._labelTemplate();
+		const helpTemplate = this._helpTextTemplate();
+
+		return html`
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--medium': true,
+                        'form-control--has-label': labelTemplate !== nothing,
+                        'form-control--has-help-text': helpTemplate !== nothing
+                    })}
+            >
+                ${labelTemplate}
+                <div part="form-control-input" class="form-control-input" @sl-change=${() =>
+                {
+                    this.dispatchEvent(new Event("change", {bubbles: true}));
+                }}>
+                    ${this._inputGroupBeforeTemplate()}
+                    ${this._inputGroupInputTemplate()}
+                </div>
+                ${helpTemplate}
+            </div>
+		`;
 	}
 }
 

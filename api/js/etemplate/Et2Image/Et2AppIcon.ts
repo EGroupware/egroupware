@@ -29,4 +29,5 @@ export class Et2AppIcon extends Et2Image
 		return super.parse_href(src);
 	}
 }
-customElements.define("et2-appicon", Et2AppIcon as any, {extends: 'img'});
+
+customElements.define("et2-appicon", Et2AppIcon as any);

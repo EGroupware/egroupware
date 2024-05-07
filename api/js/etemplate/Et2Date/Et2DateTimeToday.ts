@@ -28,7 +28,6 @@ export class Et2DateTimeToday extends Et2DateReadonly
 	 * If the date is today, we show just the time.  Otherwise, the date.
 	 *
 	 * @param {Date} date
-	 * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available
 	 * @returns {string}
 	 */
 	formatDateTime(date : Date, options = {dateFormat: "", timeFormat: ""}) : string

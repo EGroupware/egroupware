@@ -9,7 +9,7 @@ import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {egw} from "../../jsapi/egw_global";
 import {ClassWithAttributes, ClassWithInterfaces} from "../et2_core_inheritance";
 import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
-import {dedupeMixin} from "@lion/core";
+import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
 
@@ -495,7 +495,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * A property has changed, and we want to make adjustments to other things
 		 * based on that
 		 *
-		 * @param {import('@lion/core').PropertyValues } changedProperties
+		 * @param  changedProperties
 		 */
 		updated(changedProperties : PropertyValues)
 		{

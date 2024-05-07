@@ -1,7 +1,8 @@
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
-import {css, html, TemplateResult, unsafeHTML} from "@lion/core";
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {css, html, TemplateResult} from "lit";
+import {unsafeHTML} from "lit/directives/unsafe-html.js"
 
 /**
  * Home portlet to show a note

@@ -546,7 +546,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.updateComplete.then(() => this.fix_bad_value());
 	}
 
-	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	/** @param changedProperties */
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);

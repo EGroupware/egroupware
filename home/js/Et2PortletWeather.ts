@@ -1,7 +1,9 @@
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
-import {classMap, css, html, nothing, repeat, TemplateResult} from "@lion/core";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import {css, html, nothing, TemplateResult} from "lit";
+import {classMap} from "lit/directives/class-map.js";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * Show current and forecast weather

@@ -15,7 +15,6 @@ import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
-import {SlotMixin} from "@lion/core";
 import {et2_template} from "../et2_widget_template";
 import type {etemplate2} from "../etemplate2";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
@@ -126,7 +125,7 @@ export interface DialogButton
  *
  * Customize initial focus by setting the "autofocus" attribute on a control, otherwise first input will have focus
  */
-export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
+export class Et2Dialog extends Et2Widget(SlDialog)
 {
 	/**
 	 * Dialogs don't always get added to an etemplate, so we keep our own egw
@@ -334,21 +333,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			'': () =>
-			{
-				// to fix problem with Safari 16.2 of NOT displaying the content, we have to use the following,
-				// instead of just return this._contentTemplate()
-				let div = document.createElement("div");
-				render(this._contentTemplate(), div);
-				return div.children[0];
-			}
-		}
-	}
-
 	/*
 	* List of properties that get translated
 	* Done separately to not interfere with properties - if we re-define label property,
@@ -525,9 +509,11 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 	}
 
-	firstUpdated()
+	firstUpdated(changedProperties)
 	{
-		super.firstUpdated();
+		super.firstUpdated(changedProperties);
+
+		render(this._contentTemplate(), this);
 
 		// If we start open, fire handler to get setup done
 		if(this.open)
@@ -764,7 +750,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 		if(changedProperties.has("buttons"))
 		{
-			render(this._buttonsTemplate(), this);
+			//render(this._buttonsTemplate(), this);
 			this.requestUpdate();
 		}
 		if(changedProperties.has("width"))
@@ -904,7 +890,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
                   <slot>${this.message}</slot>`
                 }
 
-            </div>`;
+            </div>${this._buttonsTemplate()}`;
 
 	}
 

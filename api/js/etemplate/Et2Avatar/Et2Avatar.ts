@@ -52,7 +52,6 @@ export class Et2Avatar extends Et2Widget(SlAvatar) implements et2_IDetachedDOM
 			/**
 			 * The label of the image
 			 * Actually not used as label, but we put it as title
-			 * Added here as there's no Lion parent
 			 */
 			label: {
 				type: String

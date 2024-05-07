@@ -9,12 +9,11 @@
  */
 
 
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, nothing} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
-import {FormControlMixin} from "@lion/form-core";
 import shoelace from "../Styles/shoelace";
 
 export interface formatOptions
@@ -112,7 +111,7 @@ export function formatDuration(value : number | string, options : formatOptions)
  * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
  * but this can be specified with the properties.
  */
-export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement))
+export class Et2DateDuration extends Et2InputWidget(LitElement)
 {
 	static get styles()
 	{
@@ -125,7 +124,7 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 				max-width: 100%;
 			  }
 
-			  .input-group {
+				.form-control-input {
 				display: flex;
 				flex-direction: row;
 				flex-wrap: nowrap;
@@ -399,35 +398,29 @@ export class Et2DateDuration extends Et2InputWidget(FormControlMixin(LitElement)
 
 	render()
 	{
-		return html`
-            <div part="form-control" class=${classMap({
-                'form-control': true,
-                'form-control--has-label': this.label.split("%")[0] || false
-            })}>
-                <div class="form-field__group-one form-control__label" part="form-control-label">
-                    ${this._groupOneTemplate()}
-                </div>
-                <div class="form-field__group-two" part="form-control-input">${this._groupTwoTemplate()}</div>
-            </div>
-		`;
-	}
 
-	/**
-	 * @return {TemplateResult}
-	 * @protected
-	 */
-	// eslint-disable-next-line class-methods-use-this
-	_inputGroupInputTemplate()
-	{
+		const labelTemplate = this._labelTemplate();
+		const helpTemplate = this._helpTextTemplate();
+
 		return html`
-            <div class="input-group__input" @sl-change=${() =>
-            {
-                this.dispatchEvent(new Event("change", {bubbles: true}));
-            }}>
-                <slot name="input">
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--medium': true,
+                        'form-control--has-label': labelTemplate !== nothing,
+                        'form-control--has-help-text': helpTemplate !== nothing
+                    })}
+            >
+                ${labelTemplate}
+                <div part="form-control-input" class="form-control-input" @sl-change=${() =>
+                {
+                    this.dispatchEvent(new Event("change", {bubbles: true}));
+                }}>
                     ${this._inputTemplate()}
                     ${this._formatTemplate()}
-                </slot>
+                </div>
+                ${helpTemplate}
             </div>
 		`;
 	}

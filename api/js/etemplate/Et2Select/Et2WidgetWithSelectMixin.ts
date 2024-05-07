@@ -44,7 +44,6 @@ import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
  *
  * Optionally, you can override:
  * - _emptyLabelTemplate(): How to render the empty label
- * - slots(): Most Lion components have an input slot where the <input> tag is created.
  * You can specify something else, or return {} to do your own thing.  This is a little more complicated.  You should
  * also override _inputGroupInputTemplate() to do what you normally would in render().
  *

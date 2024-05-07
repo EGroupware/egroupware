@@ -1,6 +1,7 @@
 import {Et2Date, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
-import {css} from "@lion/core";
 import {CalendarApp} from "./app";
+import {css, html, render} from "lit";
+import {app} from "../../api/js/jsapi/egw_global";
 
 export class SidemenuDate extends Et2Date
 {
@@ -35,20 +36,6 @@ export class SidemenuDate extends Et2Date
 		];
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () =>
-			{
-				// This element gets hidden and used for value - overridden from parent
-				const text = document.createElement('input');
-				text.type = "text";
-				return text;
-			}
-		}
-	}
-
 	constructor()
 	{
 		super();
@@ -60,8 +47,10 @@ export class SidemenuDate extends Et2Date
 		this._handleHeaderChange = this._handleHeaderChange.bind(this);
 	}
 
+
 	async connectedCallback()
 	{
+		render(this._inputTemplate(), this);
 		super.connectedCallback();
 
 		this.removeEventListener("change", this._oldChange);
@@ -360,7 +349,22 @@ export class SidemenuDate extends Et2Date
 		// Go directly
 		app.calendar.update_state(update);
 	}
+
+	/**
+	 * The interactive (form) element.
+	 * @protected
+	 */
+	get _inputNode()
+	{
+		return this.querySelector('input');
+	}
+
+	protected _inputTemplate()
+	{
+		// Plain input
+		return html`
+            <input type="text"></input>`;
+	}
 }
 
-// @ts-ignore TypeScript is not recognizing that Et2Date is a LitElement
 customElements.define("calendar-date", SidemenuDate);

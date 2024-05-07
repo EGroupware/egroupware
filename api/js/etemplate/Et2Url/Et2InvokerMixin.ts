@@ -9,9 +9,9 @@
 
 /* eslint-disable import/no-extraneous-dependencies */
 import {css, html, LitElement} from 'lit';
-import {dedupeMixin, SlotMixin} from '@lion/core';
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
+import {dedupeMixin} from "@open-wc/dedupe-mixin";
 
 /**
  * Invoker mixing adds an invoker button to a widget to trigger some action, e.g.:
@@ -25,7 +25,7 @@ import {colorsDefStyles} from "../Styles/colorsDefStyles";
 type Constructor<T = Et2InputWidgetInterface> = new (...args : any[]) => T;
 export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(superclass : T) =>
 {
-	class Et2Invoker extends SlotMixin(Et2InputWidget(superclass))
+	class Et2Invoker extends Et2InputWidget(superclass)
 	{
 		/** @type {any} */
 		static get properties()
@@ -193,7 +193,7 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 			return super._oldChange(_ev);
 		}
 
-		/** @param {import('@lion/core').PropertyValues } changedProperties */
+		/** @param  changedProperties */
 		firstUpdated(changedProperties)
 		{
 			super.firstUpdated(changedProperties);

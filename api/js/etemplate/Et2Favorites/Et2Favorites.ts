@@ -186,7 +186,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	}
 
 
-	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	/** @param changedProperties */
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);

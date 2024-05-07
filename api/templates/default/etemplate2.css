@@ -2112,7 +2112,7 @@ table.et2_grid tbody.ui-sortable:not(.ui-sortable-disabled) > tr:not(.th) {
  * Message styles
  */
 /* Style used for a generic message (such as success messages or validation errors) */
-div.message, lion-validation-feedback[type] {
+div.message, egw-validation-feedback[type] {
     display: block;
     border: 1px solid;
     border-color: var(--primary-color, gray);
@@ -2124,7 +2124,7 @@ div.message, lion-validation-feedback[type] {
     font-size: 12px;
 }
 
-div.message.floating, lion-validation-feedback[type] {
+div.message.floating, egw-validation-feedback[type] {
     position: absolute;
     margin: 0px;
     z-index: 1;
@@ -2132,14 +2132,14 @@ div.message.floating, lion-validation-feedback[type] {
     left: 0px;
 }
 
-lion-validation-feedback[type] {
+egw-validation-feedback[type] {
     top: initial;
     margin-top: calc(-0.2 * var(--sl-input-height-medium));
 	width: fit-content;
 	white-space: nowrap;
 }
 
-.message.validation_error, lion-validation-feedback[type="error"] {
+.message.validation_error, egw-validation-feedback[type="error"] {
     color: var(--error-color);
     border-color: var(--error-color);
     background-repeat: no-repeat;

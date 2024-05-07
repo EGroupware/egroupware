@@ -20,7 +20,7 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {LitElement} from "@lion/core";
+import {LitElement} from "lit";
 import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
 
 import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";

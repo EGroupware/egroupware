@@ -1,5 +1,5 @@
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
-import {css} from "@lion/core";
+import {css} from "lit";
 import {Et2PortletFavorite} from "../../home/js/Et2PortletFavorite";
 
 /**

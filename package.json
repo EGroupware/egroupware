@@ -82,8 +82,6 @@
   },
   "dependencies": {
     "@bundled-es-modules/pdfjs-dist": "^2.5.207-rc1",
-    "@lion/core": "^0.21.1",
-    "@lion/form-core": "^0.16.0",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@shoelace-style/shoelace": "2.15.0",
     "@types/jquery": "^3.5.29",
