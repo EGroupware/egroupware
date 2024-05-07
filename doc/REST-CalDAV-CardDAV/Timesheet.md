@@ -6,25 +6,26 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 - Timesheet application
 
 Following schema is used for JSON encoding of timesheets
-* @type: `timesheet`
-* id: integer ID
-* title: string
-* description: string (multiple lines)
-* start: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* duration: integer in minutes
-* quantity: double
-* project: string
-* pm_id: integer ID of ProjectManager app (readonly currently!)
-* unitprice: double
-* category: category object with a single(!) category-name e.g. `{"category name": true}`
-* owner: string with either email or username or integer ID
-* created: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* modified: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* modifier: string with either email or username or integer ID
-* pricelist: integer ID of projectmanager pricelist item
-* status: string
-* egroupware.org:customfields: custom-fields object, see other types
-* etag: string `"<id>:<modified-timestamp>"` (double quotes are part of the etag!)
+* `@type`: `timesheet`
+* `id`: integer ID
+* `title`: string
+* `description`: string (multiple lines)
+* `start`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `duration`: integer in minutes
+* `quantity`: double
+* `paused`: integer pause time(s) in minutes
+* `project`: string
+* `pm_id`: integer ID of ProjectManager app (readonly currently!)
+* `unitprice`: double
+* `category`: category object with a single(!) category-name e.g. `{"category name": true}`
+* `owner`: string with either email or username or integer ID
+* `created`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `modified`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `modifier`: string with either email or username or integer ID
+* `pricelist`: integer ID of projectmanager pricelist item
+* `status`: string
+* `egroupware.org:customfields`: custom-fields object, see other types
+* `etag`: string `"<id>:<modified-timestamp>"` (double quotes are part of the etag!)
 
 ### Supported request methods and examples
 
