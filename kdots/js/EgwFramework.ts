@@ -2,10 +2,12 @@ import {css, html, LitElement} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
+import {repeat} from "lit/directives/repeat.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
-import {repeat} from "lit/directives/repeat.js";
-import {Function} from "estree";
+import {egw} from "../../api/js/jsapi/egw_global";
+import {SlTab, SlTabGroup} from "@shoelace-style/shoelace";
+import {EgwFrameworkApp} from "./EgwFrameworkApp";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -94,9 +96,9 @@ export class EgwFramework extends LitElement
 	@property({type: Array, attribute: "application-list"})
 	applicationList = [];
 
-	get egw()
+	get egw() : typeof egw
 	{
-		return window.egw ?? {
+		return window.egw ?? <typeof egw>{
 			// Dummy egw so we don't get failures from missing methods
 			lang: (t) => t,
 			preference: (n, app, promise? : Function | boolean | undefined) => Promise.resolve(""),
@@ -105,14 +107,102 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 *
+	 * @param _function Framework function to be called on the server.
+	 * @param _ajax_exec_url Actual function we want to call.
+	 * @returns {string}
+	 */
+	public getMenuaction(_fun, _ajax_exec_url, appName = 'home')
+	{
+		let baseUrl = this.getBaseUrl();
+
+		// Check whether the baseurl is actually set. If not, then this application
+		// resides inside the same egw instance as the jdots framework. We'll simply
+		// return a menu action and not a full featured url here.
+		if(baseUrl != '')
+		{
+			baseUrl = baseUrl + 'json.php?menuaction=';
+		}
+
+		const menuaction = _ajax_exec_url ? _ajax_exec_url.match(/menuaction=([^&]+)/) : null;
+
+		// use template handler to call current framework, eg. pixelegg
+		return baseUrl + appName + '.kdots_framework.' + _fun + '.template' +
+			(menuaction ? '.' + menuaction[1] : '');
+	};
+
+	public loadApp(appname)
+	{
+		const app = this.applicationList.find(a => a.name == appname);
+		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
+		appComponent.id = appname;
+		appComponent.name = appname;
+		appComponent.url = app?.url;
+		this.append(appComponent);
+		app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
+		this.requestUpdate("applicationList");
+
+		return appComponent;
+	}
+
+	protected getBaseUrl() {return "";}
+
+	/**
 	 * An application tab is chosen, show the app
 	 *
 	 * @param e
 	 * @protected
 	 */
-	protected handleApplicationTabShow(e)
+	protected handleApplicationTabShow(event)
 	{
+		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
 
+		// Create & show app
+		const appname = event.target.activeTab.panel;
+		let appComponent = this.querySelector(`egw-app#${appname}`);
+		if(!appComponent)
+		{
+			appComponent = this.loadApp(appname);
+		}
+		appComponent.setAttribute("active", "");
+
+		// Update the list on the server
+		this.updateTabs(event.target.activeTab);
+	}
+
+	/**
+	 * An application tab is closed
+	 */
+	protected handleApplicationTabClose(event)
+	{
+		const tabGroup : SlTabGroup = this.shadowRoot.querySelector("sl-tab-group.egw_fw__open_applications");
+		const tab = event.target;
+		const panel = tabGroup.querySelector(`sl-tab-panel[name="${tab.panel}"]`);
+
+		// Show the previous tab if the tab is currently active
+		if(tab.active)
+		{
+			tabGroup.show(tab.previousElementSibling.panel);
+		}
+		else
+		{
+			// Show will update, but closing in the background we call directly
+			this.updateTabs(tabGroup.querySelector("sl-tab[active]"));
+		}
+
+		// Remove the tab + panel
+		tab.remove();
+		panel.remove();
+	}
+
+	private updateTabs(activeTab)
+	{
+		let appList = [];
+		Array.from(this.shadowRoot.querySelectorAll("sl-tab-group.egw_fw__open_applications sl-tab")).forEach((tab : SlTab) =>
+		{
+			appList.push({appName: tab.panel, active: activeTab.panel == tab.panel})
+		});
+		this.egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state', [appList]);
 	}
 
 	/**
@@ -134,7 +224,7 @@ export class EgwFramework extends LitElement
 	protected _applicationTabTemplate(app)
 	{
 		return html`
-            <sl-tab slot="nav" panel="${app.app}" closable aria-label="${app.title}">
+            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}">
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image src="${app.icon}"></et2-image>
                 </sl-tooltip>
@@ -167,8 +257,10 @@ export class EgwFramework extends LitElement
                     </sl-dropdown>
                     <sl-tab-group part="open-applications" class="egw_fw__open_applications" activation="manual"
                                   role="tablist"
-                                  @sl-tab-show=${this.handleApplicationTabShow}>
-                        ${repeat(this.applicationList.filter(app => app.opened), (app) => this._applicationTabTemplate(app))}
+                                  @sl-tab-show=${this.handleApplicationTabShow}
+                                  @sl-close=${this.handleApplicationTabClose}
+                    >
+                        ${repeat(this.applicationList.filter(app => app.opened).sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>

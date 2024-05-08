@@ -88,6 +88,9 @@ export class EgwFrameworkApp extends LitElement
 	@property()
 	name = "Application name";
 
+	@property()
+	url = "";
+
 	@state()
 	leftCollapsed = false;
 
@@ -122,6 +125,8 @@ export class EgwFrameworkApp extends LitElement
 	};
 	private resizeTimeout : number;
 
+	protected loadingPromise = Promise.resolve();
+
 	connectedCallback()
 	{
 		super.connectedCallback();
@@ -133,6 +138,64 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = parseInt(width) ?? this.rightPanelInfo.defaultWidth;
 		});
+
+		// Register the "data" plugin
+		this.egw.registerJSONPlugin(this.jsonDataHandler, this, 'data');
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.egw.unregisterJSONPlugin(this.jsonDataHandler, this, "data", false)
+	}
+
+	firstUpdated()
+	{
+		this.load(this.url);
+	}
+
+	protected load(url)
+	{
+		if(!url)
+		{
+			while(this.firstChild)
+			{
+				this.removeChild(this.lastChild);
+			}
+			return;
+		}
+		let targetUrl = "";
+		let useIframe = false;
+		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
+		if(matches)
+		{
+			// Matches[1] contains the menuaction which should be executed - replace
+			// the given url with the following line. This will be evaluated by the
+			// jdots_framework ajax_exec function which will be called by the code
+			// below as we set useIframe to false.
+			targetUrl = "index.php?menuaction=" + matches[1];
+			useIframe = false;
+		}
+
+		// Destroy application js
+		if(window.app[this.name] && window.app[this.name].destroy)
+		{
+			window.app[this.name].destroy();
+			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
+		}
+		return this.loadingPromise = this.egw.request(
+			this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
+			[targetUrl]
+		);
+	}
+
+	protected jsonDataHandler(type, res, req)
+	{
+		if(req.context !== this)
+		{
+			return;
+		}
+		debugger;
 	}
 
 	public showLeft()
@@ -174,6 +237,11 @@ export class EgwFrameworkApp extends LitElement
 		return window.egw ?? (<EgwFramework>this.parentElement).egw ?? null;
 	}
 
+	get framework() : EgwFramework
+	{
+		return this.closest("egw-framework");
+	}
+
 	/**
 	 * User adjusted side slider, update preference
 	 *
@@ -207,21 +275,33 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	protected _asideTemplate(parentSlot, side, label?)
+	{
+		const asideClassMap = classMap({
+			"egw_fw_app__aside": true,
+			"egw_fw_app__left": true,
+			"egw_fw_app__aside-collapsed": this.leftCollapsed,
+		});
+		return html`
+            <aside slot="${parentSlot}" part="${side}" class=${asideClassMap} aria-label="${label}">
+                <div class="egw_fw_app__aside_header header">
+                    <slot name="${side}-header"><span class="placeholder">${side}-header</span></slot>
+                </div>
+                <div class="egw_fw_app__aside_content content">
+                    <slot name="${side}"><span class="placeholder">${side}</span></slot>
+                </div>
+
+                <div class="egw_fw_app__aside_footer footer">
+                    <slot name="${side}-footer"><span class="placeholder">${side}-footer</span></slot>
+                </div>
+            </aside>`;
+	}
+
 	render()
 	{
 		const hasLeftSlots = this.hasSlotController.test('left-header') || this.hasSlotController.test('left') || this.hasSlotController.test('left-footer');
 		const hasRightSlots = this.hasSlotController.test('right-header') || this.hasSlotController.test('right') || this.hasSlotController.test('right-footer');
 
-		const leftClassMap = classMap({
-			"egw_fw_app__aside": true,
-			"egw_fw_app__left": true,
-			"egw_fw_app__aside-collapsed": this.leftCollapsed,
-		});
-		const rightClassMap = classMap({
-			"egw_fw_app__aside": true,
-			"egw_fw_app__right": true,
-			"egw_fw_app__aside-collapsed": this.rightCollapsed,
-		});
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :
 						  this.leftPanelInfo.preferenceWidth;
 		const rightWidth = this.rightCollapsed || !hasRightSlots ? this.rightPanelInfo.hiddenWidth :
@@ -268,18 +348,7 @@ export class EgwFrameworkApp extends LitElement
                         this.leftCollapsed = !this.leftCollapsed;
                         this.requestUpdate();
                     }}></sl-icon>
-                    <aside slot="start" part="left" class=${leftClassMap}>
-                        <div class="egw_fw_app__aside_header header">
-                            <slot name="left-header"><span class="placeholder">left-header</span></slot>
-                        </div>
-                        <div class="egw_fw_app__aside_content content">
-                            <slot name="left"><span class="placeholder">left</span></slot>
-                        </div>
-
-                        <div class="egw_fw_app__aside_footer footer">
-                            <slot name="left-footer"><span class="placeholder">left-footer</span></slot>
-                        </div>
-                    </aside>
+                    ${this._asideTemplate("start", "left")}
                     <sl-split-panel slot="end"
                                     class=${classMap({"egw_fw_app__innerSplit": true, "no-content": !hasRightSlots})}
                                     primary="start"
@@ -303,18 +372,7 @@ export class EgwFrameworkApp extends LitElement
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
                             <slot name="footer"><span class="placeholder">main-footer</span></slot>
                         </footer>
-                        <aside slot="end" class=${rightClassMap} part="right"
-                               aria-label="${this.egw.lang("%1 application details", this.egw.lang(this.name))}">
-                            <header class="egw_fw_app__aside_header header">
-                                <slot name="right-header"><span class="placeholder">right-header</span></slot>
-                            </header>
-                            <div class="egw_fw_app__aside_content content" tabindex="0">
-                                <slot name="right"><span class="placeholder">right</span></slot>
-                            </div>
-                            <footer class="egw_fw_app__aside_footer footer">
-                                <slot name="right-footer"><span class="placeholder">right-footer</span></slot>
-                            </footer>
-                        </aside>
+                        ${this._asideTemplate("end", "right", this.egw.lang("%1 application details", this.egw.lang(this.name)))}
                     </sl-split-panel>
                 </sl-split-panel>
             </div>

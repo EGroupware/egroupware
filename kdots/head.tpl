@@ -61,30 +61,6 @@
 
 {hook_after_navbar}
 
-<!-- END framework -->
-<!--
-
-<div id="egw_fw_basecontainer" lang="{lang_code}">
-	<div id="egw_fw_header">
-		<div id="egw_fw_topmenu">
-			<div id="egw_fw_topmenu_items">
-                {topmenu_items}
-				<div class="timezone">
-                    {user_info}
-				</div>
-                {powered_by}
-			</div>
-		</div>
-	</div>
-	<div id="egw_fw_sidebar">
-		<div id="egw_fw_sidemenu"></div>
-		<div id="egw_fw_splitter"></div>
-	</div>
-	<div id="egw_fw_main">
-		<div id="egw_fw_tabs">
-		</div>
-	</div>
-</div>
 <div id="egw_fw_firstload">
     {firstload_animation}
 </div>
