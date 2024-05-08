@@ -48,14 +48,8 @@
 	<!-- status app is looking for this -->
 	<div slot="aside" id="egw_fw_sidebar_r"></div>
 
-	<!-- Fake app -->
-	<egw-app name="fake app" class="placeholder">
-		<div style="border: 1px dotted">Something inside the app - main</div>
-		<div slot="left">Left content</div>
-		<div slot="right">right content</div>
-		<div slot="right-header">
-		</div>
-	</egw-app>
+	<!-- Currently open app -->
+	<egw-app name="{open_app_name}" url="{open_app_url}" active></egw-app>
 </egw-framework>
 
 

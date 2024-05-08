@@ -1,4 +1,4 @@
-import {css, html, LitElement} from "lit";
+import {css, html, LitElement, nothing} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
@@ -6,7 +6,7 @@ import {repeat} from "lit/directives/repeat.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {SlTab, SlTabGroup} from "@shoelace-style/shoelace";
+import {SlDropdown, SlTab, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
 
 /**
@@ -93,8 +93,15 @@ export class EgwFramework extends LitElement
 	@property()
 	layout = "default";
 
+	/**
+	 * This is the list of all applications we know about
+	 *
+	 * @type {any[]}
+	 */
 	@property({type: Array, attribute: "application-list"})
 	applicationList = [];
+
+	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
 	get egw() : typeof egw
 	{
@@ -131,16 +138,30 @@ export class EgwFramework extends LitElement
 			(menuaction ? '.' + menuaction[1] : '');
 	};
 
-	public loadApp(appname)
+	public loadApp(appname, active = false)
 	{
 		const app = this.applicationList.find(a => a.name == appname);
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
 		appComponent.id = appname;
 		appComponent.name = appname;
 		appComponent.url = app?.url;
+
 		this.append(appComponent);
-		app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
+		// App was not in the tab list
+		if(typeof app.opened == "undefined")
+		{
+			app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
 		this.requestUpdate("applicationList");
+		}
+
+		// Wait until new tab is there to activate it
+		if(active)
+		{
+			this.updateComplete.then(() =>
+			{
+				this.tabs.show(appname);
+			})
+		}
 
 		return appComponent;
 	}
@@ -214,17 +235,28 @@ export class EgwFramework extends LitElement
 	 */
 	protected _applicationListAppTemplate(app)
 	{
+		if(app.status !== "1")
+		{
+			return nothing;
+		}
+
 		return html`
             <sl-tooltip placement="bottom" role="menuitem" content="${app.title}">
                 <et2-button-icon src="${app.icon}" aria-label="${app.title}" role="menuitem" noSubmit
-                                 helptext="${app.title}"></et2-button-icon>
+                                 helptext="${app.title}"
+                                 @click=${() =>
+                                 {
+                                     this.loadApp(app.name, true);
+                                     (<SlDropdown>this.shadowRoot.querySelector(".egw_fw__app_list")).hide();
+                                 }}
+                ></et2-button-icon>
             </sl-tooltip>`;
 	}
 
 	protected _applicationTabTemplate(app)
 	{
 		return html`
-            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}">
+            <sl-tab slot="nav" panel="${app.name}" closable aria-label="${app.title}" ?active=${app.active}>
                 <sl-tooltip placement="bottom" content="${app.title}" hoist>
                     <et2-image src="${app.icon}"></et2-image>
                 </sl-tooltip>
@@ -260,7 +292,9 @@ export class EgwFramework extends LitElement
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
-                        ${repeat(this.applicationList.filter(app => app.opened).sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
+                        ${repeat(this.applicationList
+                                .filter(app => typeof app.opened !== "undefined")
+                                .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <slot name="header"><span class="placeholder">header</span></slot>
                     <slot name="header-right"><span class="placeholder">header-right</span></slot>

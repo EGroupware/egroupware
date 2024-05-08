@@ -122,6 +122,20 @@ export default css`
 		overflow: hidden;
 	}
 
+	.egw_fw_app {
+		--application-color: var(--primary-background-color);
+	}
+
+	.egw_fw_app__loading {
+		text-align: center;
+
+		sl-spinner {
+			--track-width: 1rem;
+			font-size: 10rem;
+			--indicator-color: var(--application-color, var(--primary-background-color, var(--sl-color-primary-600)));
+		}
+	}
+
 	@media (min-width: 600px) {
 		.egw_fw_app__main {
 			grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];

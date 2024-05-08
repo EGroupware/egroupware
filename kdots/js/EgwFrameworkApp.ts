@@ -1,8 +1,9 @@
-import {css, html, LitElement, nothing} from "lit";
+import {css, html, LitElement, nothing, render} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
+import {unsafeHTML} from "lit/directives/unsafe-html.js";
 
 import styles from "./EgwFrameworkApp.styles";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
@@ -138,15 +139,11 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = parseInt(width) ?? this.rightPanelInfo.defaultWidth;
 		});
-
-		// Register the "data" plugin
-		this.egw.registerJSONPlugin(this.jsonDataHandler, this, 'data');
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		this.egw.unregisterJSONPlugin(this.jsonDataHandler, this, "data", false)
 	}
 
 	firstUpdated()
@@ -186,16 +183,11 @@ export class EgwFrameworkApp extends LitElement
 		return this.loadingPromise = this.egw.request(
 			this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 			[targetUrl]
-		);
-	}
-
-	protected jsonDataHandler(type, res, req)
-	{
-		if(req.context !== this)
+		).then((data : string[]) =>
 		{
-			return;
-		}
-		debugger;
+			// Load request returns HTML.  Shove it in.
+			render(html`${unsafeHTML(data.join(""))}`, this);
+		});
 	}
 
 	public showLeft()
@@ -275,6 +267,20 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	/**
+	 * Displayed for the time between when the application is added and when the server responds with content
+	 *
+	 * @returns {TemplateResult<1>}
+	 * @protected
+	 */
+	protected _loadingTemplate()
+	{
+		return html`
+            <div class="egw_fw_app__loading">
+                <sl-spinner></sl-spinner>
+            </div>`;
+	}
+	
 	protected _asideTemplate(parentSlot, side, label?)
 	{
 		const asideClassMap = classMap({
@@ -367,7 +373,7 @@ export class EgwFrameworkApp extends LitElement
                         </header>
                         <div slot="start" class="egw_fw_app__main_content content" part="content"
                              aria-label="${this.name}" tabindex="0">
-                            <slot><span class="placeholder">main</span></slot>
+                            <slot>${this._loadingTemplate()}<span class="placeholder">main</span></slot>
                         </div>
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
                             <slot name="footer"><span class="placeholder">main-footer</span></slot>

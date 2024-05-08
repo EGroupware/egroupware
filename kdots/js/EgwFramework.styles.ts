@@ -131,4 +131,12 @@ export default css`
 	.egw_fw__open_applications sl-tab:hover::part(close-button), .egw_fw__open_applications sl-tab[active]::part(close-button) {
 		visibility: visible;
 	}
+
+	::slotted(egw-app) {
+		display: none;
+	}
+
+	::slotted(egw-app[active]) {
+		display: flex;
+	}
 `
