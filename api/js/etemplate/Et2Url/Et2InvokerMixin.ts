@@ -8,7 +8,7 @@
  */
 
 /* eslint-disable import/no-extraneous-dependencies */
-import {css, html, LitElement} from 'lit';
+import {css, html, LitElement, render} from 'lit';
 import {Et2InputWidget, Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {colorsDefStyles} from "../Styles/colorsDefStyles";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
@@ -81,17 +81,6 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 				}
 			`,
 			];
-		}
-
-		get slots()
-		{
-			return {
-				...super.slots,
-				suffix: () =>
-				{
-					return this._invokerTemplate();
-				},
-			};
 		}
 
 		/**
@@ -197,6 +186,7 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 		firstUpdated(changedProperties)
 		{
 			super.firstUpdated(changedProperties);
+			render(this._invokerTemplate(), this);
 			this._toggleInvokerDisabled();
 			this._toggleInvoker();
 		}
@@ -209,8 +199,9 @@ export const Et2InvokerMixin = dedupeMixin(<T extends Constructor<LitElement>>(s
 		_invokerTemplate()
 		{
 			return html`
-                <button
+                <button slot="suffix"
                         type="button"
+                        class="et2-invoker__button"
                         @click="${this._invokerAction}"
                         id="${this.__invokerId}"
                         aria-label="${this._invokerTitle}"
