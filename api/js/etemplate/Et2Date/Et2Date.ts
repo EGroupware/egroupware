@@ -324,11 +324,12 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 			  /* Scroll buttons */
 
-			  .input-group__container {
+				.form-control-input {
 				position: relative;
+					display: flex;
 			  }
 
-			  .input-group__container:hover .et2-date-time__scrollbuttons {
+				.form-control-input:hover .et2-date-time__scrollbuttons {
 				display: flex;
 			  }
 
@@ -1045,7 +1046,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 		// This element gets hidden and used for value, but copied by flatpickr and used for input
 		return html`
+            <slot name="prefix"></slot>
             <et2-textbox type="text" placeholder=${this.placeholder} ?required=${this.required}></et2-textbox>
+            <slot name="sufix"></slot>
             ${this._incrementButtonTemplate()}
 		`;
 	}
