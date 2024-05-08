@@ -842,8 +842,11 @@ abstract class Tracking
 				$notification->set_sender($sender);
 				$notification->set_reply_to($reply_to);
 				$notification->set_subject($subject);
-				$notification->set_links(array($link));
-				$notification->set_popupdata($link['app']??$this->app, $link, $link['id']??null);
+				if ($link)
+				{
+					$notification->set_links(array($link));
+					$notification->set_popupdata($link['app']??$this->app, $link, $link['id']??null);
+				}
 				if ($attachments && is_array($attachments))
 				{
 					$notification->set_attachments($attachments);
