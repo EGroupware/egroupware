@@ -28,13 +28,16 @@ class kdots_framework extends Api\Framework\Ajax
 	protected function _get_header(array $extra = array())
 	{
 		$data = parent::_get_header($extra);
-		$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
-		$open_app = current(array_filter($extra['navbar-apps'], function ($app)
+		if($extra['navbar-apps'])
 		{
-			return $app['active'] ?? false;
-		})) ?? [];
-		$data['open_app_name'] = $open_app['name'];
-		$data['open_app_url'] = $open_app['url'];
+			$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
+			$open_app = current(array_filter($extra['navbar-apps'], function ($app)
+			{
+				return $app['active'] ?? false;
+			})) ?? [];
+			$data['open_app_name'] = $open_app['name'];
+			$data['open_app_url'] = $open_app['url'];
+		}
 		return $data;
 	}
 

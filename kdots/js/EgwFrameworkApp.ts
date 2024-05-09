@@ -36,6 +36,7 @@ import type {EgwFramework} from "./EgwFramework";
  * @csspart right - Right optional content.
  * @csspart footer - Very bottom of the main content.
  *
+ * @cssproperty [--application-color=--primary-background-color] - Color to use for this application
  * @cssproperty [--left-min=0] - Minimum width of the left content
  * @cssproperty [--left-max=20%] - Maximum width of the left content
  * @cssproperty [--right-min=0] - Minimum width of the right content
@@ -133,11 +134,11 @@ export class EgwFrameworkApp extends LitElement
 		super.connectedCallback();
 		(<Promise<string>>this.egw.preference(this.leftPanelInfo.preference, this.name, true)).then((width) =>
 		{
-			this.leftPanelInfo.preferenceWidth = parseInt(width) ?? this.leftPanelInfo.defaultWidth;
+			this.leftPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.leftPanelInfo.defaultWidth;
 		});
 		(<Promise<string>>this.egw.preference(this.rightPanelInfo.preference, this.name, true)).then((width) =>
 		{
-			this.rightPanelInfo.preferenceWidth = parseInt(width) ?? this.rightPanelInfo.defaultWidth;
+			this.rightPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.rightPanelInfo.defaultWidth;
 		});
 	}
 
@@ -187,6 +188,10 @@ export class EgwFrameworkApp extends LitElement
 		{
 			// Load request returns HTML.  Shove it in.
 			render(html`${unsafeHTML(data.join(""))}`, this);
+
+			// Might have just slotted aside content, hasSlotController will requestUpdate()
+			// but we need to do it anyway
+			this.requestUpdate();
 		});
 	}
 
@@ -220,8 +225,10 @@ export class EgwFrameworkApp extends LitElement
 	protected hideSide(side : "left" | "right")
 	{
 		const attribute = `${side}Collapsed`;
+		const oldValue = this[attribute];
 		this[attribute] = true;
 		this[`${side}Splitter`].position = this[`${side}PanelInfo`].hiddenWidth;
+		this.requestUpdate(attribute, oldValue);
 	}
 
 	get egw()
@@ -234,6 +241,12 @@ export class EgwFrameworkApp extends LitElement
 		return this.closest("egw-framework");
 	}
 
+	private hasSideContent(side : "left" | "right")
+	{
+		return this.hasSlotController.test(`${side}-header`) ||
+			this.hasSlotController.test(side) || this.hasSlotController.test(`${side}-footer`);
+	}
+
 	/**
 	 * User adjusted side slider, update preference
 	 *
@@ -242,15 +255,23 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected async handleSlide(event)
 	{
+		// Skip if there's no panelInfo - event is from the wrong place
 		if(typeof event.target?.panelInfo != "object")
 		{
 			return;
 		}
+
+		// Skip if there's no side-content
+		if(!this.hasSideContent(event.target.panelInfo.side))
+		{
+			return;
+		}
+
 		// Left side is in pixels, round to 2 decimals
 		let newPosition = Math.round(event.target.panelInfo.side == "left" ? event.target.positionInPixels * 100 : event.target.position * 100) / 100;
 
 		// Update collapsed
-		this[`${event.target.panelInfo.name}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
+		this[`${event.target.panelInfo.side}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
 
 		let preferenceName = event.target.panelInfo.preference;
 		if(newPosition != event.target.panelInfo.preferenceWidth)
@@ -305,8 +326,8 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSlotController.test('left-header') || this.hasSlotController.test('left') || this.hasSlotController.test('left-footer');
-		const hasRightSlots = this.hasSlotController.test('right-header') || this.hasSlotController.test('right') || this.hasSlotController.test('right-footer');
+		const hasLeftSlots = this.hasSideContent("left");
+		const hasRightSlots = this.hasSideContent("right");
 
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :
 						  this.leftPanelInfo.preferenceWidth;
@@ -351,8 +372,7 @@ export class EgwFrameworkApp extends LitElement
                 >
                     <sl-icon slot="divider" name="grip-vertical" @dblclick=${() =>
                     {
-                        this.leftCollapsed = !this.leftCollapsed;
-                        this.requestUpdate();
+                        this.hideLeft();
                     }}></sl-icon>
                     ${this._asideTemplate("start", "left")}
                     <sl-split-panel slot="end"
@@ -365,8 +385,7 @@ export class EgwFrameworkApp extends LitElement
                     >
                         <sl-icon slot="divider" name="grip-vertical" @dblclick=${() =>
                         {
-                            this.rightCollapsed = !this.rightCollapsed;
-                            this.requestUpdate();
+                            this.hideRight();
                         }}></sl-icon>
                         <header slot="start" class="egw_fw_app__header header" part="content-header">
                             <slot name="header"><span class="placeholder">header</span></slot>

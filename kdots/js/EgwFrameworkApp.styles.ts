@@ -11,6 +11,8 @@ export default css`
 
 		display: flex;
 		flex-direction: column;
+
+		--application-color: var(--primary-background-color);
 	}
 
 	:host > * {
@@ -63,7 +65,7 @@ export default css`
 	sl-split-panel > sl-icon {
 		position: absolute;
 		border-radius: var(--sl-border-radius-small);
-		background-color: var(--primary-background-color);
+		background-color: var(--application-color);
 		color: var(--sl-color-neutral-0);
 		padding: 0.5rem 0.125rem;
 		z-index: var(--sl-z-index-drawer);
@@ -122,10 +124,6 @@ export default css`
 		overflow: hidden;
 	}
 
-	.egw_fw_app {
-		--application-color: var(--primary-background-color);
-	}
-
 	.egw_fw_app__loading {
 		text-align: center;
 
@@ -140,6 +138,15 @@ export default css`
 		.egw_fw_app__main {
 			grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
 			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(2em) [end];
+		}
+
+		.egw_fw_app__aside {
+			overflow-y: hidden;
+		}
+
+		.egw_fw_app__aside_content {
+			overflow-x: hidden;
+			overflow-y: auto;
 		}
 
 		::slotted(*) {

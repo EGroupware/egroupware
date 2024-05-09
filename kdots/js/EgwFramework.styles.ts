@@ -73,6 +73,9 @@ export default css`
 
 
 	@media (min-width: 600px) {
+		.egw_fw__main {
+			overflow: hidden;
+		}
 		.egw_fw__layout-default {
 			grid-template-columns: [start banner-start header-start footer-start main-start] 1fr [main-end header-end banner-end end];
 			grid-template-rows: [top banner] fit-content(2em) [header] fit-content(2em) [main-header] fit-content(2em) [main] 1fr [footer bottom] fit-content(2em);
