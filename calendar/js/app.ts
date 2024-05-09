@@ -281,7 +281,10 @@ export class CalendarApp extends EgwApp
 			case 'calendar.sidebox':
 				this.sidebox_et2 = _et2.widgetContainer;
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
-				jQuery(_et2.DOMContainer).hide();
+				if(!_et2.DOMContainer.slot)
+				{
+					jQuery(_et2.DOMContainer).hide();
+				}
 
 				this._setup_sidebox_filters();
 
