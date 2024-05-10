@@ -108,9 +108,6 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		this._handleShow = this._handleShow.bind(this);
 		this._handleHide = this._handleHide.bind(this);
 
-		// Clear initial value
-		this.__value = undefined;
-
 		if(!this.readonly)
 		{
 			this.updateComplete.then(() =>
