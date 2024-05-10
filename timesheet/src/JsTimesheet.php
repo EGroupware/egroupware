@@ -28,17 +28,19 @@ class JsTimesheet extends Api\CalDAV\JsBase
 	/**
 	 * Get JsEvent for given event
 	 *
-	 * @param int|array $event
+	 * @param int|array $timesheet
 	 * @param bool|"pretty" $encode true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data e.g. from listing
-	 * @param ?array $exceptions=null
 	 * @return string|array
-	 * @throws Api\Exception\NotFound
+	 * @throws Api\Exception\NotFound|\Exception
 	 */
-	public static function JsTimesheet(array $timesheet, $encode=true, array $exceptions=[])
+	public static function JsTimesheet($timesheet, $encode=true)
 	{
 		static $bo = null;
 		if (!isset($bo)) $bo = new \timesheet_bo();
-
+		if (is_scalar($timesheet) && !($timesheet = $bo->read($timesheet)))
+		{
+			throw new Api\Exception\NotFound();
+		}
 		if (isset($timesheet['ts_id']))
 		{
 			$timesheet = Api\Db::strip_array_keys($timesheet, 'ts_');
