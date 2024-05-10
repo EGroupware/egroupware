@@ -49,32 +49,6 @@ class ApiHandler extends Api\CalDAV\Handler
 	const JSON_RESPONSE_OPTIONS = JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR;
 
 	/**
-	 * Handle post request for mail (send or compose mail and upload attachments)
-	 *
-	 * @param array &$options
-	 * @param int $id
-	 * @param int $user =null account_id of owner, default null
-	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
-	 */
-	function post(&$options,$id,$user=null)
-	{
-		if ($this->debug) error_log(__METHOD__."($id, $user)".print_r($options,true));
-		$path = $options['path'];
-		if (empty($user))
-		{
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-		}
-		header('Content-Type: application/json');
-
-		try {
-			throw new \Exception('Not Implemented', 501);
-		}
-		catch (\Throwable $e) {
-			return self::handleException($e);
-		}
-	}
-
-	/**
 	 * Handle propfind in the timesheet folder / get request on the collection itself
 	 *
 	 * @param string $path
@@ -118,7 +92,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
 
-			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
+			// hack to support limit with sync-collection report: timesheets are returned in modified ASC order (oldest first)
 			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
 			// (which might contain further entries with identical modification time)
 			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
@@ -213,7 +187,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				$content = JsTimesheet::JsTimesheet($timesheet, false);
 				$timesheet = Api\Db::strip_array_keys($timesheet, 'ts_');
 
-				// remove contact from requested multiget ids, to be able to report not found urls
+				// remove timesheet from requested multiget ids, to be able to report not found urls
 				if (!empty($this->requested_multiget_ids) && ($k = array_search($timesheet[self::$path_attr], $this->requested_multiget_ids)) !== false)
 				{
 					unset($this->requested_multiget_ids[$k]);
@@ -244,7 +218,7 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				yield $this->add_resource($path, $timesheet, $props);
 			}
-			// sync-collection report --> return modified of last contact as sync-token
+			// sync-collection report --> return modified of last timesheet as sync-token
 			if ($sync_collection_report)
 			{
 				$this->sync_collection_token = $timesheet['modified'];
@@ -409,7 +383,7 @@ class ApiHandler extends Api\CalDAV\Handler
 									break;
 							}
 							$column = $this->filter_prop2cal[strtoupper($prop_filter)];
-							if (strpos($column, '_') === false) $column = 'contact_'.$column;
+							if (strpos($column, '_') === false) $column = 'ts_'.$column;
 							if (!isset($filters['order'])) $filters['order'] = $column;
 							$match_type = $filter['attrs']['match-type'];
 							$negate_condition = isset($filter['attrs']['negate-condition']) && $filter['attrs']['negate-condition'] == 'yes';
@@ -481,7 +455,7 @@ class ApiHandler extends Api\CalDAV\Handler
 					{
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
-						$filters[] = 'contact_modified>'.(int)$sync_token;
+						$filters[] = 'ts_modified>'.(int)$sync_token;
 						$filters['tid'] = null;	// to return deleted entries too
 					}
 					break;
@@ -543,7 +517,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		try
 		{
 			// only JsTimesheet, no *DAV
-			if (($type=Api\CalDAV::isJSON($_SERVER['HTTP_ACCEPT'])) || ($type=Api\CalDAV::isJSON()))
+			if (($type=Api\CalDAV::isJSON()))
 			{
 				$options['data'] = JsTimesheet::JsTimesheet($timesheet, $type);
 				$options['mimetype'] = 'application/json';
@@ -585,7 +559,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Handle put request for a contact
+	 * Handle put request for a timesheet
 	 *
 	 * @param array &$options
 	 * @param int $id
