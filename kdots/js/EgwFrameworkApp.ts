@@ -129,6 +129,9 @@ export class EgwFrameworkApp extends LitElement
 
 	protected loadingPromise = Promise.resolve();
 
+	/** The application's content must be in an iframe instead of handled normally */
+	protected useIframe = false;
+
 	connectedCallback()
 	{
 		super.connectedCallback();
@@ -163,7 +166,7 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 		let targetUrl = "";
-		let useIframe = false;
+		this.useIframe = true;
 		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
 		if(matches)
 		{
@@ -172,7 +175,7 @@ export class EgwFrameworkApp extends LitElement
 			// jdots_framework ajax_exec function which will be called by the code
 			// below as we set useIframe to false.
 			targetUrl = "index.php?menuaction=" + matches[1];
-			useIframe = false;
+			this.useIframe = false;
 		}
 
 		// Destroy application js
@@ -181,18 +184,38 @@ export class EgwFrameworkApp extends LitElement
 			window.app[this.name].destroy();
 			delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
 		}
-		return this.loadingPromise = this.egw.request(
-			this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
-			[targetUrl]
-		).then((data : string[]) =>
+		if(!this.useIframe)
 		{
-			// Load request returns HTML.  Shove it in.
-			render(html`${unsafeHTML(data.join(""))}`, this);
+			return this.loadingPromise = this.egw.request(
+				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
+				[targetUrl]
+			).then((data : string[]) =>
+			{
+				// Load request returns HTML.  Shove it in.
+				render(html`${unsafeHTML(data.join(""))}`, this);
 
-			// Might have just slotted aside content, hasSlotController will requestUpdate()
-			// but we need to do it anyway
+				// Might have just slotted aside content, hasSlotController will requestUpdate()
+				// but we need to do it anyway for translation
+				this.requestUpdate();
+			});
+		}
+		else
+		{
+			this.loadingPromise = new Promise((resolve, reject) =>
+			{
+				const timeout = setTimeout(() => reject(this.name + " load failed"), 5000);
+				this.addEventListener("load", () =>
+				{
+					clearTimeout(timeout);
+					resolve()
+				}, {once: true});
+
+				render(this._iframeTemplate(), this);
+			});
+			// Might have just changed useIFrame, need to update to show that
 			this.requestUpdate();
-		});
+			return this.loadingPromise;
+		}
 	}
 
 	public showLeft()
@@ -296,12 +319,33 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected _loadingTemplate()
 	{
+		// Don't show loader for iframe, it will not resolve
+		if(this.useIframe)
+		{
+			return nothing;
+		}
+
 		return html`
             <div class="egw_fw_app__loading">
                 <sl-spinner></sl-spinner>
             </div>`;
 	}
-	
+
+	/**
+	 * If we have to use an iframe, this is where it is made
+	 * @returns {typeof nothing | typeof nothing}
+	 * @protected
+	 */
+	protected _iframeTemplate()
+	{
+		if(!this.useIframe)
+		{
+			return nothing;
+		}
+		return html`
+            <iframe src="${this.url}"></iframe>`;
+	}
+
 	protected _asideTemplate(parentSlot, side, label?)
 	{
 		const asideClassMap = classMap({
@@ -392,7 +436,10 @@ export class EgwFrameworkApp extends LitElement
                         </header>
                         <div slot="start" class="egw_fw_app__main_content content" part="content"
                              aria-label="${this.name}" tabindex="0">
-                            <slot>${this._loadingTemplate()}<span class="placeholder">main</span></slot>
+                            <slot>
+                                ${this._loadingTemplate()}
+                                <span class="placeholder">main</span>
+                            </slot>
                         </div>
                         <footer slot="start" class="egw_fw_app__footer footer" part="footer">
                             <slot name="footer"><span class="placeholder">main-footer</span></slot>

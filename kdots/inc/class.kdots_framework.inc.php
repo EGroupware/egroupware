@@ -1,6 +1,7 @@
 <?php
 
 use EGroupware\Api;
+use EGroupware\Api\Image;
 
 class kdots_framework extends Api\Framework\Ajax
 {
@@ -27,9 +28,23 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected function _get_header(array $extra = array())
 	{
+		// Skip making a mess for iframe apps, they're on their own
+		if($extra['check-framework'] == true)
+		{
+			$extra['check-framework'] = false;
+			return [];
+		}
 		$data = parent::_get_header($extra);
 		if($extra['navbar-apps'])
 		{
+			// Fix wrong icon type
+			array_walk($extra['navbar-apps'], function (&$item, $key)
+			{
+				if(!$item['icon'] || !str_ends_with($item['icon'], 'svg'))
+				{
+					$item['icon'] = Image::find('api', 'navbar');
+				}
+			});
 			$data['application-list'] = htmlentities(json_encode($extra['navbar-apps'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
 			$open_app = current(array_filter($extra['navbar-apps'], function ($app)
 			{

@@ -152,6 +152,10 @@ export default css`
 		::slotted(*) {
 			height: 100%;
 		}
+
+		::slotted(iframe) {
+			width: 100%;
+		}
 	}
 	@media (max-width: 599px) {
 		.egw_fw_app__main {
@@ -202,4 +206,6 @@ export default css`
 			grid-column: start / end;
 		}
 	}
+
+
 `
