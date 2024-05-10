@@ -436,4 +436,18 @@ class JsBase
 			throw new JsParseException("Error parsing $type attribute '$name': ". $e->getMessage(), 422, $e);
 		}
 	}
+
+	/**
+	 * Parse a DateTime value
+	 *
+	 * @param string $value
+	 * @param string|null $timezone
+	 * @param bool $showWithoutTime true: return H:i set to 00:00
+	 * @return Api\DateTime
+	 * @throws Api\Exception
+	 */
+	protected static function parseDateTime(string $value, ?string $timezone=null, bool $showWithoutTime=false)
+	{
+		return new Api\DateTime($value, !empty($timezone) ? new \DateTimeZone($timezone) : null);
+	}
 }

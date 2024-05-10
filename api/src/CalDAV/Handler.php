@@ -156,7 +156,7 @@ abstract class Handler
 	abstract function propfind($path,&$options,&$files,$user);
 
 	/**
-	 * Propfind callback, if interator is used
+	 * Propfind callback, if iterator is used
 	 *
 	 * @param string $path
 	 * @param array &$filter
@@ -381,8 +381,13 @@ abstract class Handler
 		//error_log(__METHOD__."(, $id, $user) start ".function_backtrace());
 		if (isset($_SERVER['HTTP_PREFER']) && in_array('return=representation', preg_split('/, ?/', $_SERVER['HTTP_PREFER'])))
 		{
-			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			// fix path for POST request to collection
+			if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			{
+				if (!empty($this->new_id))
+				{
+					$options['path'] = rtrim($options['path'], '/').'/'.$this->new_id;
+				}
 				header('Content-Location: '.Api\Framework::getUrl($this->caldav->base_uri.$options['path']));
 			}
 
@@ -390,7 +395,14 @@ abstract class Handler
 			unset($_SERVER['HTTP_IF_MATCH']);
 			unset($_SERVER['HTTP_IF_NONE_MATCH']);
 
-			if (($ret = $this->get($options, $id ? $id : $this->new_id, $user)) && !empty($options['data']))
+			// add "Accept: application/json" for JSON and set request-method to GET
+			if (empty($_SERVER['HTTP_ACCEPT']) && Api\CalDAV::isJSON())
+			{
+				$_SERVER['HTTP_ACCEPT'] = 'application/json';
+			}
+			$_SERVER['REQUEST_METHOD'] = 'GET';
+
+			if (($ret = $this->get($options, $id ?: $this->new_id, $user)) && !empty($options['data']))
 			{
 				if (!$this->caldav->use_compression()) header('Content-Length: '.$this->caldav->bytes($options['data']));
 				header('Content-Type: '.$options['mimetype']);
