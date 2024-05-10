@@ -9,6 +9,7 @@ import styles from "./EgwFrameworkApp.styles";
 import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework} from "./EgwFramework";
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
 
 /**
  * @summary Application component inside EgwFramework
@@ -192,7 +193,19 @@ export class EgwFrameworkApp extends LitElement
 			).then((data : string[]) =>
 			{
 				// Load request returns HTML.  Shove it in.
-				render(html`${unsafeHTML(data.join(""))}`, this);
+				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
+				{
+					render(html`${unsafeHTML(data.join(""))}`, this);
+				}
+				else
+				{
+					// We got some data, use it
+					if(data.DOMNodeID)
+					{
+						this.id = data.DOMNodeID;
+					}
+				}
+				this.addEventListener("load", this.handleEtemplateLoad, {once: true});
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
@@ -268,6 +281,21 @@ export class EgwFrameworkApp extends LitElement
 	{
 		return this.hasSlotController.test(`${side}-header`) ||
 			this.hasSlotController.test(side) || this.hasSlotController.test(`${side}-footer`);
+	}
+
+	/**
+	 * An etemplate has loaded inside
+	 * Move anything top-level that has a slot
+	 */
+	protected handleEtemplateLoad(event)
+	{
+		const etemplate = etemplate2.getById(this.id);
+		if(!etemplate)
+		{
+			return;
+		}
+		// Move top level slotted components (slot watcher will requestUpdate)
+		etemplate.widgetContainer.getDOMNode().querySelectorAll(":scope > [slot]").forEach(node => {this.appendChild(node);});
 	}
 
 	/**

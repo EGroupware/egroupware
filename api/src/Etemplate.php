@@ -55,7 +55,10 @@ class Etemplate extends Etemplate\Widget\Template
 
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 
-		if ($name) $this->read($name,$template='default','default',0,'',$load_via);
+		if($name)
+		{
+			$this->read($name, null, 'default', 0, '', $load_via);
+		}
 
 		// generate new etemplate request object, if not already existing
 		if(!isset(self::$request)) self::$request = Etemplate\Request::read();
@@ -276,7 +279,8 @@ class Etemplate extends Etemplate\Widget\Template
 						'></form>' . "\n" .
 						'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 				}
-				$GLOBALS['egw']->framework->response->generic("data", array($content));
+
+				$GLOBALS['egw']->framework->response->generic("data", $this->template_set == "kdots" ? $load_array : array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 
@@ -565,6 +569,10 @@ class Etemplate extends Etemplate\Widget\Template
 	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
 
+		if($template_set == null && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'])
+		{
+			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
 		// For mobile experience try to load custom mobile templates
 		if (Header\UserAgent::mobile())
 		{
