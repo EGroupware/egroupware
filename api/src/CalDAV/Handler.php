@@ -712,6 +712,10 @@ abstract class Handler
 	 * sync-token to be filled by propfind_callback and returned by get_sync_token method
 	 */
 	protected $sync_collection_token;
+	/**
+	 * @var bool true if result was limited by nresults parameter
+	 */
+	protected $more_results;
 
 	/**
 	 * Query sync-token from a just run sync-collection report
@@ -722,10 +726,10 @@ abstract class Handler
 	 * @param int $user parameter necessary to call getctag, if no $token specified
 	 * @return string
 	 */
-	public function get_sync_collection_token($path, $user=null, $more_results=null)
+	public function get_sync_collection_token($path, $user=null)
 	{
 		//error_log(__METHOD__."('$path', $user, more_results=$more_results) this->sync_collection_token=".$this->sync_collection_token);
-		if ($more_results)
+		if ($this->more_results)
 		{
 			if (Api\CalDAV::isJSON())
 			{

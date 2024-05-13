@@ -75,31 +75,22 @@ class ApiHandler extends Api\CalDAV\Handler
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($options).",,$user,$id) filter=".array2string($filter));
 
 		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
-		if ($options['root']['name'] == 'sync-collection')
+		if ($options['root']['name'] === 'sync-collection')
 		{
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
 			$files['sync-token-params'] = array($path, $user);
 
-			$this->sync_collection_token = null;
+			$this->sync_collection_token = $this->more_results = null;
 
 			$filter['order'] = 'ts_modified ASC';	// return oldest modifications first
 			$filter['sync-collection'] = true;
 		}
 
-		if (isset($nresults))
+		if (isset($nresults) && $options['root']['name'] === 'sync-collection')
 		{
 			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
-
-			// hack to support limit with sync-collection report: timesheets are returned in modified ASC order (oldest first)
-			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-			// (which might contain further entries with identical modification time)
-			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
-			{
-				--$this->sync_collection_token;
-				$files['sync-token-params'][] = true;	// tell get_sync_collection_token that we have more entries
-			}
 		}
 		else
 		{
@@ -107,6 +98,16 @@ class ApiHandler extends Api\CalDAV\Handler
 			$files['files'] = $this->propfind_generator($path,$filter, $files['files']);
 		}
 		return true;
+	}
+
+	/**
+	 * Query ctag for infolog
+	 *
+	 * @return string
+	 */
+	public function getctag($path,$user)
+	{
+		return $this->bo->getctag($user);
 	}
 
 	/**
@@ -136,6 +137,8 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			if (++$yielded && isset($nresults) && $yielded > $nresults)
 			{
+				$this->sync_collection_token = Api\DateTime::user2server($resource['modified'], 'ts')-1;
+				$this->more_results = true;
 				return;
 			}
 			yield $resource;
@@ -192,13 +195,15 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					unset($this->requested_multiget_ids[$k]);
 				}
-				// sync-collection report: deleted entry need to be reported without properties
-				if ($timesheet['ts_status'] == \timesheet_bo::DELETED_STATUS)
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
-					if (++$yielded && isset($nresults) && $yielded > $nresults)
-					{
-						return;
-					}
+					$this->sync_collection_token = Api\DateTime::user2server($timesheet['modified'], 'ts')-1;
+					$this->more_results = true;
+					return;
+				}
+				// sync-collection report: deleted entry need to be reported without properties
+				if ($timesheet['status'] == \timesheet_bo::DELETED_STATUS)
+				{
 					yield ['path' => $path.urldecode($this->get_path($timesheet))];
 					continue;
 				}
@@ -211,10 +216,6 @@ class ApiHandler extends Api\CalDAV\Handler
 				{
 					$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
 					$props['data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'data', $content);
-				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					return;
 				}
 				yield $this->add_resource($path, $timesheet, $props);
 			}
@@ -232,6 +233,8 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
+					--$this->sync_collection_token;
+					$this->more_results = true;
 					return;
 				}
 				yield ['path' => $path.$id.self::$path_extension];
@@ -456,7 +459,7 @@ class ApiHandler extends Api\CalDAV\Handler
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
 						$filters[] = 'ts_modified>'.(int)$sync_token;
-						$filters['tid'] = null;	// to return deleted entries too
+						$filters['ts_status'] = 'all';	// to return deleted entries too
 					}
 					break;
 				case 'sync-level':

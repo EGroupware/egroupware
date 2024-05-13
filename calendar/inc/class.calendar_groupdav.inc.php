@@ -238,14 +238,14 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 
 		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
-		if ($options['root']['name'] == 'sync-collection')
+		if ($options['root']['name'] === 'sync-collection')
 		{
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
 			$files['sync-token-params'] = array($path, $user);
 
-			$this->sync_collection_token = null;
+			$this->sync_collection_token = $this->more_results = null;
 
 			$filter['order'] = 'cal_modified ASC';	// return oldest modifications first
 			$filter['sync-collection'] = true;
@@ -267,19 +267,10 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 		}
 
-		if (isset($nresults))
+		if (isset($nresults) && $options['root']['name'] === 'sync-collection')
 		{
 			unset($filter['no_total']);	// we need the total!
 			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
-
-			// hack to support limit with sync-collection report: events are returned in modified ASC order (oldest first)
-			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-			// (which might contain further entries with identical modification time)
-			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
-			{
-				--$this->sync_collection_token;
-				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
-			}
 		}
 		else
 		{
@@ -366,6 +357,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		{
 			if (++$yielded && isset($nresults) && $yielded > $nresults)
 			{
+				$this->sync_collection_token = Api\DateTime::user2server($resource['modified'], 'ts')-1;
+				$this->more_results = true;
 				return;
 			}
 			yield $resource;
@@ -385,15 +378,17 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			{
 				$no_active_participants = !$this->hasActiveParticipants($event, $filter['users'], $exceptions);
 
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					$this->sync_collection_token = Api\DateTime::user2server($event['modified'], 'ts')-1;
+					$this->more_results = true;
+					return;
+				}
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
 				if ($sync_collection && ($event['deleted'] && !$event['cal_reference'] ||
 					//in_array($event['participants'][$filter['users']][0] ?? '', array('R','X')) ||
 					$no_active_participants))
 				{
-					if (++$yielded && isset($nresults) && $yielded > $nresults)
-					{
-						return;
-					}
 					// remove event from requested multiget ids, to be able to report not found urls
 					if (!empty($this->requested_multiget_ids) && ($k = array_search($event[self::$path_attr], $this->requested_multiget_ids)) !== false)
 					{
@@ -420,7 +415,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					'getcontenttype' => $is_jscalendar ? Api\CalDAV\JsCalendar::MIME_TYPE_JSEVENT :
 						($this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar'),
 					'getetag' => '"'.$etag.'"',
-					'getlastmodified' => $event['modified'],
+					'displayname' => $event['title'],
+					'getlastmodified' => Api\DateTime::user2server($event['modified'], 'ts'),
 					// user and timestamp of creation or last modification of event, used in calendarserver only for shared calendars
 					'created-by' => Api\CalDAV::mkprop(Api\CalDAV::CALENDARSERVER, 'created-by',
 						$this->_created_updated_by_prop($event['creator'], $event['created'])),
@@ -452,10 +448,6 @@ class calendar_groupdav extends Api\CalDAV\Handler
 						)),
 					));
 				}*/
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					return;
-				}
 				yield  $this->add_resource($path, $event, $props);
 			}
 		}
