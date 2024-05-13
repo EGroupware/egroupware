@@ -208,7 +208,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
 			$files['sync-token-params'] = array($path, $user);
 
-			$this->sync_collection_token = null;
+			$this->sync_collection_token = $this->more_results = null;
 
 			$filter['order'] = 'info_datemodified ASC';	// return oldest modifications first
 			$filter['sync-collection'] = true;
@@ -217,15 +217,6 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if (isset($nresults))
 		{
 			$files['files'] = $this->propfind_generator($path, $filter, [], $nresults);
-
-			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
-			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-			// (which might contain further entries with identical modification time)
-			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
-			{
-				--$this->sync_collection_token;
-				$files['sync-token-params'][] = true;	// tel get_sync_collection_token that we have more entries
-			}
 		}
 		else
 		{
@@ -267,6 +258,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		{
 			if (++$yielded && isset($nresults) && $yielded > $nresults)
 			{
+				$this->sync_collection_token = Api\DateTime::user2server($resource['modified'], 'ts')-1;
+				$this->more_results = true;
 				return;
 			}
 			yield $resource;
@@ -321,16 +314,18 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				{
 					unset($this->requested_multiget_ids[$k]);
 				}
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					$this->sync_collection_token = Api\DateTime::user2server($task['info_modified'], 'ts')-1;
+					$this->more_results = true;
+					return;
+				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($task['info_status'] == 'deleted' ||
 					// or event is reported as removed from collection, because collection owner is no longer an attendee
 					$check_responsible && $task['info_owner'] != $check_responsible &&
 						!infolog_so::is_responsible_user($task, $check_responsible))
 				{
-					if (++$yielded && isset($nresults) && $yielded > $nresults)
-					{
-						return;
-					}
 					yield ['path' => $path.urldecode($this->get_path($task))];
 					continue;
 				}
@@ -354,10 +349,6 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						$props['calendar-data'] = Api\CalDAV::mkprop(Api\CalDAV::CALDAV,'calendar-data',$content);
 					}
 				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					return;
-				}
 				yield $this->add_resource($path, $task, $props);
 			}
 			// Please note: $query['start'] get incremented automatically by bo->search() with number of returned rows!
@@ -367,6 +358,12 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				break;
 			}
 		}
+		// sync-collection report --> return modified of last contact as sync-token
+		$sync_collection_report =  $filter['sync-collection'];
+		if ($sync_collection_report)
+		{
+			$this->sync_collection_token = $task['date_modified'];
+		}
 		// report not found multiget urls
 		if (!empty($this->requested_multiget_ids))
 		{
@@ -374,16 +371,12 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			{
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
+					--$this->sync_collection_token;
+					$this->more_results = true;
 					return;
 				}
 				yield ['path' => $path.$id.self::$path_extension];
 			}
-		}
-		// sync-collection report --> return modified of last contact as sync-token
-		$sync_collection_report =  $filter['sync-collection'];
-		if ($sync_collection_report)
-		{
-			$this->sync_collection_token = $task['date_modified'];
 		}
 		if ($this->debug)
 		{

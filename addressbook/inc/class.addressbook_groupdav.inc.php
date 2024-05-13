@@ -170,31 +170,22 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			}
 		}
 		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
-		if ($options['root']['name'] == 'sync-collection')
+		if ($options['root']['name'] === 'sync-collection')
 		{
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
 			$files['sync-token-params'] = array($path, $user);
 
-			$this->sync_collection_token = null;
+			$this->sync_collection_token = $this->more_results = null;
 
 			$filter['order'] = 'contact_modified ASC';	// return oldest modifications first
 			$filter['sync-collection'] = true;
 		}
 
-		if (isset($nresults))
+		if (isset($nresults) && $options['root']['name'] === 'sync-collection')
 		{
 			$files['files'] = $this->propfind_generator($path, $filter, $files['files'], (int)$nresults);
-
-			// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
-			// if limit is smaller than full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-			// (which might contain further entries with identical modification time)
-			if ($options['root']['name'] == 'sync-collection' && $this->bo->total > $nresults)
-			{
-				--$this->sync_collection_token;
-				$files['sync-token-params'][] = true;	// tell get_sync_collection_token that we have more entries
-			}
 		}
 		else
 		{
@@ -232,6 +223,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			if (++$yielded && isset($nresults) && $yielded > $nresults)
 			{
+				$this->sync_collection_token = $resource['modified'];
+				$this->more_results = true;
 				return;
 			}
 			yield $resource;
@@ -307,13 +300,15 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				{
 					unset($this->requested_multiget_ids[$k]);
 				}
+				if (++$yielded && isset($nresults) && $yielded > $nresults)
+				{
+					$this->sync_collection_token = $contact['modified'];
+					$this->more_results = true;
+					return;
+				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($contact['tid'] == Api\Contacts::DELETED_TYPE)
 				{
-					if (++$yielded && isset($nresults) && $yielded > $nresults)
-					{
-						return;
-					}
 					yield ['path' => $path.urldecode($this->get_path($contact))];
 					continue;
 				}
@@ -328,10 +323,6 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 						$handler->getVCard($contact['id'],$this->charset,false);
 					$props['getcontentlength'] = bytes(is_array($content) ? json_encode($content) : $content);
 					$props['address-data'] = Api\CalDAV::mkprop(Api\CalDAV::CARDDAV, 'address-data', $content);
-				}
-				if (++$yielded && isset($nresults) && $yielded > $nresults)
-				{
-					return;
 				}
 				yield $this->add_resource($path, $contact, $props);
 			}
@@ -354,6 +345,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
+					$this->sync_collection_token = Api\DateTime::user2server($resource['modified'])-1;
+					$this->more_results = true;
 					return;
 				}
 				yield $resource;
@@ -408,6 +401,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 					}
 					if (++$yielded && isset($nresults) && $yielded > $nresults)
 					{
+						$this->sync_collection_token = $GLOBALS['egw']->db->from_timestamp($list['list_modified'])-1;
+						$this->more_results = true;
 						return;
 					}
 					yield $this->add_resource($path, $list, $props);
@@ -433,6 +428,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			{
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
+					--$this->sync_collection_token;
+					$this->more_results = true;
 					return;
 				}
 				yield ['path' => $path.$id.self::$path_extension];

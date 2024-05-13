@@ -486,7 +486,14 @@ class timesheet_bo extends Api\Storage
 		}
 		if(isset($filter['ts_status']) && $filter['ts_status'] && $filter['ts_status'] != self::DELETED_STATUS)
 		{
-			$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
+			if ($filter['ts_status'] !== 'all')
+			{
+				$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
+			}
+			else
+			{
+				unset($filter['ts_status']);
+			}
 		}
 		else
 		{
@@ -1112,4 +1119,39 @@ class timesheet_bo extends Api\Storage
 		}
 		return null;
 	}
+
+	/**
+	 * Get a ctag (collection tag) for timesheet
+	 *
+	 * Currently implemented as maximum modification date (1 second granularity!)
+	 *
+	 * We have to include deleted entries, as otherwise the ctag will not change if an entry gets deleted!
+	 * (Only works if tracking of deleted entries / history is switched on!)
+	 *
+	 * @param int|array $user =null
+	 * @return string
+	 */
+	public function getctag($user=null)
+	{
+		$filter = array('ts_status' => 'all');	// --> use all entries incl. deleted
+		// show timesheets of a single user?
+		if ($user) $filter['ts_owner'] = $user;
+
+		$result = $this->search(array(),'ts_modified','ts_modified DESC','','',false,'AND',array(0,1),$filter);
+
+		if (!$result || !isset($result[0]['ts_modified']))
+		{
+			$ctag = 'empty';	// ctag for empty addressbook
+		}
+		else
+		{
+			// need to convert modified time back to server-time (was converted to user-time by search)
+			// as we use it direct in server-queries eg. CardDAV sync-report and to be consistent with CalDAV
+			$ctag = Api\DateTime::user2server($result[0]['ts_modified']);
+		}
+		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
+		return $ctag;
+	}
+
+
 }
