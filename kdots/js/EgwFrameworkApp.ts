@@ -10,6 +10,7 @@ import {SlSplitPanel} from "@shoelace-style/shoelace";
 import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 
 /**
  * @summary Application component inside EgwFramework
@@ -156,6 +157,14 @@ export class EgwFrameworkApp extends LitElement
 		this.load(this.url);
 	}
 
+	protected async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.updateComplete;
+		await this.loadingPromise;
+
+		return result
+	}
+
 	protected load(url)
 	{
 		if(!url)
@@ -231,6 +240,11 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	public setSidebox(sideboxData, hash?)
+	{
+
+	}
+
 	public showLeft()
 	{
 		this.showSide("left");
@@ -249,6 +263,85 @@ export class EgwFrameworkApp extends LitElement
 	public hideRight()
 	{
 		this.hideSide("right");
+	}
+
+	public async print()
+	{
+
+		let template;
+		let deferred = [];
+		let et2_list = [];
+		const appWindow = this.framework.egw.window;
+
+		if((template = appWindow.etemplate2.getById(this.id)) && this == template.DOMContainer)
+		{
+			deferred = deferred.concat(template.print());
+			et2_list.push(template);
+		}
+		else
+		{
+			// et2 inside, let its widgets prepare
+			this.querySelectorAll(":scope > *").forEach((domNode : HTMLElement) =>
+			{
+				let et2 = appWindow.etemplate2.getById(domNode.id);
+				if(et2 && (domNode.offsetWidth > 0 || domNode.offsetHeight > 0 || domNode.getClientRects().length > 0))
+				{
+					deferred = deferred.concat(et2.print());
+					et2_list.push(et2);
+				}
+			});
+		}
+
+		if(et2_list.length)
+		{
+			// Try to clean up after - not guaranteed
+			let afterPrint = () =>
+			{
+				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizental' : 'spinner');
+
+				// Give framework a chance to deal, then reset the etemplates
+				appWindow.setTimeout(function()
+				{
+					for(var i = 0; i < et2_list.length; i++)
+					{
+						et2_list[i].widgetContainer.iterateOver(function(_widget)
+						{
+							_widget.afterPrint();
+						}, et2_list[i], et2_IPrint);
+					}
+					this.egw.loading_prompt(this.name, false);
+				}, 100);
+				appWindow.onafterprint = null;
+			};
+			/* Not sure what this did, it triggers while preview is still up
+			if(appWindow.matchMedia)
+			{
+				var mediaQueryList = appWindow.matchMedia('print');
+				var listener = function(mql)
+				{
+					if(!mql.matches)
+					{
+						mediaQueryList.removeListener(listener);
+						afterPrint();
+					}
+				};
+				mediaQueryList.addListener(listener);
+			}
+
+			 */
+
+			appWindow.addEventListener("afterprint", afterPrint, {once: true});
+
+			// Wait for everything to be ready
+			return Promise.all(deferred).catch((e) =>
+			{
+				afterPrint();
+				if(typeof e == "undefined")
+				{
+					throw "rejected";
+				}
+			});
+		}
 	}
 
 	protected showSide(side)
@@ -396,6 +489,44 @@ export class EgwFrameworkApp extends LitElement
             </aside>`;
 	}
 
+	/**
+	 * Top right header, contains application action buttons (reload, print, config)
+	 * @returns {TemplateResult<1>}
+	 * @protected
+	 */
+	protected _rightHeaderTemplate()
+	{
+		return html`
+            <sl-button-group>
+                <et2-button-icon nosubmit name="arrow-clockwise"
+                                 label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                                 statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                                 @click=${(e) =>
+                                 {
+                                     this.egw.refresh("", this.name);
+                                     /* Could also be this.load(false); this.load(this.url) */
+                                 }}
+                ></et2-button-icon>
+                <et2-button-icon nosubmit name="printer"
+                                 label=${this.egw.lang("Print")}
+                                 statustext=${this.egw.lang("Print")}
+                                 @click=${(e) => this.framework.print()}
+                ></et2-button-icon>
+                ${this.egw.user('apps')['waffles'] !== "undefined" ? html`
+                    <et2-button-icon nosubmit name="gear-wide"
+                                     label=${this.egw.lang("Site configuration for %1", this.egw.lang(this.name))}
+                                     statustext=${this.egw.lang("App configuration")}
+                                     @click=${(e) =>
+                                     {
+                                         // @ts-ignore
+                                         egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
+                                     }}
+                    ></et2-button-icon>` : nothing
+                }
+            </sl-button-group>
+		`;
+	}
+
 	render()
 	{
 		const hasLeftSlots = this.hasSideContent("left");
@@ -426,14 +557,7 @@ export class EgwFrameworkApp extends LitElement
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
-                <sl-button-group>
-                    <sl-icon-button name="arrow-clockwise"
-                                    label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}></sl-icon-button>
-                    <sl-icon-button name="printer"
-                                    label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}></sl-icon-button>
-                    <sl-icon-button name="gear-wide"
-                                    label=${this.egw.lang("Site configuration for %1", this.egw.lang(this.name))}></sl-icon-button>
-                </sl-button-group>
+                ${this._rightHeaderTemplate()}
             </div>
             <div class="egw_fw_app__main" part="main">
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}

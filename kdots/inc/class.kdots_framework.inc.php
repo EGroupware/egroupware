@@ -53,6 +53,11 @@ class kdots_framework extends Api\Framework\Ajax
 			$data['open_app_name'] = $open_app['name'];
 			$data['open_app_url'] = $open_app['url'];
 		}
+		if($data['open_app_name'] && !$this->sidebox_done)
+		{
+			$this->do_sidebox();
+			$data['setSidebox'] = htmlentities(json_encode(static::$extra['setSidebox'], JSON_HEX_QUOT | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8');
+		}
 		return $data;
 	}
 

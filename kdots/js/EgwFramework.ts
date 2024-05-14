@@ -103,6 +103,21 @@ export class EgwFramework extends LitElement
 
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+		if(this.egw.window && this.egw.window.opener == null && !this.egw.window.framework)
+		{
+			// This works, but stops a lot else from working
+			//this.egw.window.framework = this;
+		}
+		if(this.egw.window?.framework && this.egw.window?.framework !== this)
+		{
+			// Override framework setSidebox, use arrow function to force context
+			this.egw.framework.setSidebox = (applicationName, sideboxData, hash?) => this.setSidebox(applicationName, sideboxData, hash);
+		}
+	}
+
 	get egw() : typeof egw
 	{
 		return window.egw ?? <typeof egw>{
@@ -138,20 +153,44 @@ export class EgwFramework extends LitElement
 			(menuaction ? '.' + menuaction[1] : '');
 	};
 
-	public loadApp(appname, active = false)
+	/**
+	 * Load an application into the framework
+	 *
+	 * Loading is done by name, and we look up everything we need in the applicationList
+	 *
+	 * @param {string} appname
+	 * @param {boolean} active
+	 * @param {string} url
+	 * @returns {EgwFrameworkApp}
+	 */
+	public loadApp(appname : string, active = false, url = null) : EgwFrameworkApp
 	{
+		const existing : EgwFrameworkApp = this.querySelector(`egw-app[name="${appname}"]`);
+		if(existing)
+		{
+			if(active)
+			{
+				this.tabs.show(appname);
+			}
+			if(url)
+			{
+				existing.url = url;
+			}
+			return existing;
+		}
+
 		const app = this.applicationList.find(a => a.name == appname);
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
 		appComponent.id = appname;
 		appComponent.name = appname;
-		appComponent.url = app?.url;
+		appComponent.url = url ?? app?.url;
 
 		this.append(appComponent);
 		// App was not in the tab list
 		if(typeof app.opened == "undefined")
 		{
 			app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
-		this.requestUpdate("applicationList");
+			this.requestUpdate("applicationList");
 		}
 
 		// Wait until new tab is there to activate it
@@ -164,6 +203,110 @@ export class EgwFramework extends LitElement
 		}
 
 		return appComponent;
+	}
+
+	/**
+	 * Load a link into the framework
+	 *
+	 * @param {string} _link
+	 * @param {string} _app
+	 * @returns {undefined}
+	 */
+	public linkHandler(_link : string, _app : string)
+	{
+		//Determine the app string from the application parameter
+		let app = null;
+		if(_app && typeof _app == 'string')
+		{
+			app = this.applicationList.find(a => a.name == _app);
+		}
+
+		if(!app)
+		{
+			//The app parameter was false or not a string or the application specified did not exists.
+			//Determine the target application from the link that had been passed to this function
+			app = this.parseAppFromUrl(_link);
+		}
+
+		if(app)
+		{
+			if(_app == '_tab')
+			{
+				// add target flag
+				_link += '&target=_tab';
+				const appname = app.appName + ":" + btoa(_link);
+				this.applicationList[appname] = {...app};
+				this.applicationList[appname]['name'] = appname;
+				this.applicationList[appname]['indexUrl'] = _link;
+				this.applicationList[appname]['tab'] = null;
+				this.applicationList[appname]['browser'] = null;
+				this.applicationList[appname]['title'] = 'view';
+				app = this.applicationList[appname];
+			}
+			this.loadApp(app.name, true, _link);
+		}
+		else
+		{
+			//Display some error messages to have visible feedback
+			if(typeof _app == 'string')
+			{
+				egw_alertHandler('Application "' + _app + '" not found.',
+					'The application "' + _app + '" the link "' + _link + '" points to is not registered.');
+			}
+			else
+			{
+				egw_alertHandler("No appropriate target application has been found.",
+					"Target link: " + _link);
+			}
+		}
+	}
+
+	/**
+	 * Tries to obtain the application from a menuaction
+	 * @param {string} _url
+	 */
+	protected parseAppFromUrl(_url : string)
+	{
+		let _app = null;
+
+		// Check the menuaction parts from the url
+		let matches = _url.match(/menuaction=([a-z0-9_-]+)\./i) ||
+			// Check the url for a scheme of "/app/something.php"
+			_url.match(/\/([^\/]+)\/[^\/]+\.php/i);
+		if(matches)
+		{
+			// check if this is a regular app-name
+			_app = this.applicationList.find(a => a.name == matches[1]);
+		}
+
+		return _app;
+	}
+
+	/**
+	 * Print
+	 */
+	public async print()
+	{
+		const appElement : EgwFrameworkApp = this.querySelector("egw-app[active]");
+		try
+		{
+			if(appElement)
+			{
+				await appElement.print();
+			}
+			const appWindow = this.egw.window;
+			appWindow.setTimeout(appWindow.print, 0);
+		}
+		catch
+		{
+			// Ignore rejected
+		}
+	}
+
+	public async setSidebox(appname, sideboxData, hash)
+	{
+		const app = this.loadApp(appname);
+		app.setSidebox(sideboxData, hash);
 	}
 
 	protected getBaseUrl() {return "";}
