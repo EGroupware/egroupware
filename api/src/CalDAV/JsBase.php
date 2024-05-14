@@ -119,7 +119,7 @@ class JsBase
 	 */
 	protected static function parseAccount(string $value, bool $user=true)
 	{
-		if (is_numeric($value) && ($exists = Api\Accounts::getInstance()->exists(value)) &&
+		if (is_numeric($value) && ($exists = Api\Accounts::getInstance()->exists($value)) &&
 			(!isset($user) || $exists === ($user ? 1 : 2)))
 		{
 			$account_id = (int)$value;
@@ -441,7 +441,7 @@ class JsBase
 	 * Parse a DateTime value
 	 *
 	 * @param string $value
-	 * @param string|null $timezone
+	 * @param string|null $timezone default user-timezone
 	 * @param bool $showWithoutTime true: return H:i set to 00:00
 	 * @return Api\DateTime
 	 * @throws Api\Exception
@@ -449,5 +449,31 @@ class JsBase
 	protected static function parseDateTime(string $value, ?string $timezone=null, bool $showWithoutTime=false)
 	{
 		return new Api\DateTime($value, !empty($timezone) ? new \DateTimeZone($timezone) : null);
+	}
+
+	const DATETIME_FORMAT = 'Y-m-d\TH:i:s';
+
+	/**
+	 * Return a date-time value in the given timezone
+	 *
+	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-localdatetime
+	 * @param null|string|\DateTime $date
+	 * @param string|null $timezone default user-timezone
+	 * @return string|null
+	 */
+	protected static function DateTime($date, $timezone=null)
+	{
+		static $timezones = [];
+		if (!isset($timezone)) $timezone = Api\DateTime::$user_timezone->getName();
+		if (!isset($timezones[$timezone])) $timezones[$timezone] = new \DateTimeZone($timezone);
+
+		if (!isset($date))
+		{
+			return null;
+		}
+		$date = Api\DateTime::to($date, 'object');
+		$date->setTimezone($timezones[$timezone]);
+
+		return $date->format(self::DATETIME_FORMAT);
 	}
 }

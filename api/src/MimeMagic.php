@@ -230,7 +230,7 @@ class MimeMagic
 	 * @author skwashd
 	 * @author ralfbecker - convert to a static array ;-)
 	 *
-	 * @var array of extenstion to mime mappings
+	 * @var array of extention to mime mappings
 	 */
 	static $mime_extension_map = array(
 		'txt'				=> 'text/plain',	// should be first, so text/plain maps back to .txt

@@ -499,31 +499,6 @@ class JsCalendar extends JsBase
 		return $value;
 	}
 
-	const DATETIME_FORMAT = 'Y-m-d\TH:i:s';
-
-	/**
-	 * Return a date-time value in the given timezone
-	 *
-	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-localdatetime
-	 * @param null|string|\DateTime $date
-	 * @param string $timezone
-	 * @return string|null
-	 */
-	protected static function DateTime($date, $timezone)
-	{
-		static $timezones = [];
-		if (!isset($timezones[$timezone])) $timezones[$timezone] = new \DateTimeZone($timezone);
-
-		if (!isset($date))
-		{
-			return null;
-		}
-		$date = Api\DateTime::to($date, 'object');
-		$date->setTimezone($timezones[$timezone]);
-
-		return $date->format(self::DATETIME_FORMAT);
-	}
-
 	/**
 	 * Return a duration calculated from given start- and end-time or a duration in seconds (start=0)
 	 *

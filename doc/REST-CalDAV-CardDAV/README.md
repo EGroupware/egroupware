@@ -33,6 +33,7 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 - ```/<current-username>/(resource|location)-<resource-name>``` shared calendar from a resource/location
 - ```/mail/```   REST API only
 - ```/timesheet/```   REST API only
+- ```/smallpart/```   REST API only
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 
@@ -50,6 +51,7 @@ from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree w
   * view and reply to eml files and 
   * vacation handling
 - [Timesheet](Timesheet.md)
+- [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/RESP-API.md)
 - [Links and attachments](Links-and-attachments.md)
   * linking application entries to other application entries
   * attaching files to application entries
