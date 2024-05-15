@@ -10,7 +10,7 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 
 Implemented requests (relative to https://example.org/egroupware/groupdav.php)
 
-- ```GET /mail``` get different mail accounts available to user
+#### **GET** `/mail` get different mail accounts available to user
 <details>
   <summary>Example: Querying available identities / signatures</summary>
 
@@ -29,29 +29,29 @@ Content-Type: application/json
 ```
 </details>
 
-- ```POST /mail[/<id>]``` send mail for default or given identity <id>
+#### **POST** `/mail[/<id>]` send mail for default or given identity <id>
 <details>
   <summary>Example: Sending mail</summary>
 
 The content of the POST request is a JSON encoded object with following attributes
-- ```to```: array of strings with (RFC882) email addresses like ```["info@egroupware.org", "Ralf Becker <rb@egroupware.org"]```
-- ```cc```: array of strings with (RFC882) email addresses (optional)
-- ```bcc```: array of strings with (RFC882) email addresses (optional)
-- ```replyto```: string with (RFC822) email address (optional)
-- ```subject```: string with subject
-- ```body```: string plain text body (optional)
-- ```bodyHtml```: string with html body (optional)
-- ```replyEml```: string returned from uploaded eml file to reply to (optional)
-- ```attachments```: array of strings returned from uploaded attachments (see below) or VFS path ```["/mail/attachments/<token>", "/home/<user>/<filename>", ...]```
-- ```attachmentType```: one of the following strings (optional, default "attach")
+- `to`: array of strings with (RFC882) email addresses like `["info@egroupware.org", "Ralf Becker <rb@egroupware.org"]`
+- `cc`: array of strings with (RFC882) email addresses (optional)
+- `bcc`: array of strings with (RFC882) email addresses (optional)
+- `replyto`: string with (RFC822) email address (optional)
+- `subject`: string with subject
+- `body`: string plain text body (optional)
+- `bodyHtml`: string with html body (optional)
+- `replyEml`: string returned from uploaded eml file to reply to (optional)
+- `attachments`: array of strings returned from uploaded attachments (see below) or VFS path `["/mail/attachments/<token>", "/home/<user>/<filename>", ...]`
+- `attachmentType`: one of the following strings (optional, default "attach")
   - "attach" send as attachment
   - "link" send as sharing link
   - "share_ro" send a readonly share using the current file content (VFS only)
   - "share_rw" send as writable share (VFS and EPL only)
-- ```shareExpiration```: "yyyy-mm-dd" or e.g. "+2days", default not accessed in 100 days (EPL only)
-- ```sharePassword```: string with password required to access share, default none (EPL only)
-- ```folder```: folder to store send mail, default Sent folder
-- ```priority```: 1: high, 3: normal (default), 5: low
+- `shareExpiration`: "yyyy-mm-dd" or e.g. "+2days", default not accessed in 100 days (EPL only)
+- `sharePassword`: string with password required to access share, default none (EPL only)
+- `folder`: folder to store send mail, default Sent folder
+- `priority`: 1: high, 3: normal (default), 5: low
 
 ```
 curl -i https://example.org/egroupware/groupdav.php/mail --user <user> \
@@ -89,7 +89,7 @@ Content-Type: application/json
 ```
 </details>
 
-- ```POST /mail[/<id>]/compose``` launch compose window
+#### **POST** `/mail[/<id>]/compose` launch compose window
 <details>
   <summary>Example: Opening a compose window</summary>
 
@@ -116,7 +116,7 @@ Content-Type: application/json
 ```
 </details>
 
-- ```POST /mail/attachments/<filename>``` upload mail attachments
+#### **POST** `/mail/attachments/<filename>` upload mail attachments
 <details>
   <summary>Example: Uploading an attachment  to be used for sending or composing mail</summary>
 
@@ -135,12 +135,12 @@ Location: https://example.org/egroupware/groupdav.php/mail/attachments/<token>
     "location": "/mail/attachments/<token>"
 }
 ```
-> When using curl to upload attachments it's important to use ```--data-binary```, just ```-d``` or ```--data``` is NOT sufficient!
+> When using curl to upload attachments it's important to use `--data-binary`, just `-d` or `--data` is NOT sufficient!
 
 > Use a `X-No-Location: true` header to get NO `Location: <url>` header with HTTP status `201 Created` back, but a simple `200 Ok`!
 </details>
 
-- ```POST /mail[/<id>]/view``` view an eml file
+#### **POST** `/mail[/<id>]/view` view an eml file
 <details>
   <summary>Example: Uploading an eml file to be viewed</summary>
 
@@ -162,25 +162,25 @@ HTTP/1.1 200 Ok
 ```
 > You get a `404 Not Found`, if the user is NOT online, like in compose.
 
-> When using curl to upload attachments it's important to use ```--data-binary```, just ```-d``` or ```--data``` is NOT sufficient!
+> When using curl to upload attachments it's important to use `--data-binary`, just `-d` or `--data` is NOT sufficient!
 </details>
 
-- ```POST /mail[/<id>]/vacation``` enable or disable vacation message or forwarding
+#### **POST** `/mail[/<id>]/vacation` enable or disable vacation message or forwarding
 
 <details>
   <summary>Example: Setting a vacation message with given start- and end-date</summary>
 
 The content of the POST request is a JSON encoded object with following attributes
-- ```status```: "on" (default, if not start/end), "off" or "by_date" (default, if start/end given)
-- ```start```: start-date "YYYY-mm-dd", or e.g. "+2days" (optional)
-- ```end```: end-date (last day of vacation) "YYYY-mm-dd" (optional)
-- ```text```: vacation notice to the sender (can container $$start$$ and $$end$$ placeholders)
-- ```modus```: "notice+store" (default) send vacation notice and store in INBOX, "notice": only send notice, "store": only store
-- ```forwards```: array of strings with (RFC882) email addresses (optional, default no forwarding)
-- ```addresses```: array of strings with (RFC882) email addresses (optional, default primary email address only)
-- ```days```: integer, after how many days should a sender get the vacation message again (optional, otherwise default is used)
+- `status`: "on" (default, if not start/end), "off" or "by_date" (default, if start/end given)
+- `start`: start-date "YYYY-mm-dd", or e.g. "+2days" (optional)
+- `end`: end-date (last day of vacation) "YYYY-mm-dd" (optional)
+- `text`: vacation notice to the sender (can container $$start$$ and $$end$$ placeholders)
+- `modus`: "notice+store" (default) send vacation notice and store in INBOX, "notice": only send notice, "store": only store
+- `forwards`: array of strings with (RFC882) email addresses (optional, default no forwarding)
+- `addresses`: array of strings with (RFC882) email addresses (optional, default primary email address only)
+- `days`: integer, after how many days should a sender get the vacation message again (optional, otherwise default is used)
 
-> The ```POST``` request is handled like a ```PATCH```, only the given attributes are replaced, use null to unset them.
+> The `POST` request is handled like a `PATCH`, only the given attributes are replaced, use null to unset them.
 
 ```
 curl -i https://example.org/egroupware/groupdav.php/mail/vacation --user <user> -X POST -H 'Content-Type: application/json' \
@@ -195,7 +195,7 @@ HTTP/1.1 200 Ok
 ```
 </details>
 
-- ```GET /mail[/<id>]/vacation``` get current vacation message/handling
+#### **GET** `/mail[/<id>]/vacation` get current vacation message/handling
 
 <details>
   <summary>Example: Querying the current vacation handling</summary>

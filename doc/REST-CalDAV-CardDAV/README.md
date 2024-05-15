@@ -11,34 +11,34 @@ CalDAV/CardDAV is build on HTTP and WebDAV, implementing the following additiona
 
 One can use the following URLs relative (!) to https://example.org/egroupware/groupdav.php
 
-- ```/```                        base of Cal|Card|GroupDAV tree, only certain clients (KDE, Apple) can autodetect folders from here
-- ```/principals/```             principal-collection-set for WebDAV ACL
-- ```/principals/users/<username>/```
-- ```/principals/groups/<groupname>/```
-- ```/<username>/```             users home-set with
-- ```/<username>/addressbook/``` addressbook of user or group <username> given the user has rights to view it
-- ```/<current-username>/addressbook-<other-username>/``` shared addressbooks from other user or group
-- ```/<current-username>/addressbook-accounts/``` all accounts current user has rights to see
-- ```/<username>/calendar/```    calendar of user <username> given the user has rights to view it
-- ```/<username>/calendar/?download``` download whole calendar as .ics file (GET request!)
-- ```/<current-username>/calendar-<other-username>/``` shared calendar from other user or group (only current <username>!)
-- ```/<username>/inbox/```       scheduling inbox of user <username>
-- ```/<username>/outbox/```      scheduling outbox of user <username>
-- ```/<username>/infolog/```     InfoLog's of user <username> given the user has rights to view it
-- ```/addressbook/``` all addressbooks current user has rights to, announced as directory-gateway now
-- ```/addressbook-accounts/``` all accounts current user has rights to see
-- ```/calendar/```    calendar of current user
-- ```/infolog/```     infologs of current user
-- ```/(resources|locations)/<resource-name>/calendar``` calendar of a resource/location, if user has rights to view
-- ```/<current-username>/(resource|location)-<resource-name>``` shared calendar from a resource/location
-- ```/mail/```   REST API only
-- ```/timesheet/```   REST API only
-- ```/smallpart/```   REST API only
+- `/`                        base of Cal|Card|GroupDAV tree, only certain clients (KDE, Apple) can autodetect folders from here
+- `/principals/`             principal-collection-set for WebDAV ACL
+- `/principals/users/<username>/`
+- `/principals/groups/<groupname>/`
+- `/<username>/`             users home-set with
+- `/<username>/addressbook/` addressbook of user or group <username> given the user has rights to view it
+- `/<current-username>/addressbook-<other-username>/` shared addressbooks from other user or group
+- `/<current-username>/addressbook-accounts/` all accounts current user has rights to see
+- `/<username>/calendar/`    calendar of user <username> given the user has rights to view it
+- `/<username>/calendar/?download` download whole calendar as .ics file (GET request!)
+- `/<current-username>/calendar-<other-username>/` shared calendar from other user or group (only current <username>!)
+- `/<username>/inbox/`       scheduling inbox of user <username>
+- `/<username>/outbox/`      scheduling outbox of user <username>
+- `/<username>/infolog/`     InfoLog's of user <username> given the user has rights to view it
+- `/addressbook/` all addressbooks current user has rights to, announced as directory-gateway now
+- `/addressbook-accounts/` all accounts current user has rights to see
+- `/calendar/`    calendar of current user
+- `/infolog/`     infologs of current user
+- `/(resources|locations)/<resource-name>/calendar` calendar of a resource/location, if user has rights to view
+- `/<current-username>/(resource|location)-<resource-name>` shared calendar from a resource/location
+- `/mail/`   REST API only
+- `/timesheet/`   REST API only
+- `/smallpart/`   REST API only
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 
 Calling one of the above collections with a GET request / regular browser generates an automatic index
-from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
+from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with a regular browser.
 
 ## REST API: using EGroupware CalDAV/CardDAV server with JSON
 - [Addressbook](Addressbook.md)
@@ -61,9 +61,8 @@ from the data of an ```allprop``` PROPFIND, allow browsing CalDAV/CardDAV tree w
 > a "Content-Type: application/json" header, otherwise you talk to the CalDAV/CardDAV server and don't get the response you expect!
 
 Following RFCs / drafts used/planned for JSON encoding of resources
-* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
-([* see at end of document](#implemented-changes-from-jscontact-draft-08))
-* [draft-ietf-jmap-jscontact-vcard: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
+* [rfc9553: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/rfc9553) 
+* [rfc9555: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/rfc9555)
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
 
 ### ToDos

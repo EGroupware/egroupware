@@ -6,15 +6,14 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 - Addressbook application
 
 Following RFCs / drafts used/planned for JSON encoding of resources
-* [draft-ietf-jmap-jscontact: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact) 
-([* see at end of document](#implemented-changes-from-jscontact-draft-08))
-* [draft-ietf-jmap-jscontact-vcard: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-vcard/)
+* [rfc9553: JSContact: A JSON Representation of Contact Data](https://datatracker.ietf.org/doc/html/rfc9553)
+* [rfc9555: JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/html/rfc9555)
 * [rfc8984: JSCalendar: A JSON Representation of Calendar Data](https://datatracker.ietf.org/doc/html/rfc8984)
 * [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
 
 ### Supported request methods and examples
 
-* **GET** to collections with an ```Accept: application/json``` header return all resources (similar to WebDAV PROPFIND)
+#### **GET** to collections with an `Accept: application/json` header return all resources (similar to WebDAV PROPFIND)
 <details>
   <summary>Example: Getting all entries of a given users addessbook</summary>
   
@@ -154,7 +153,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
 <details>
    <summary>Example: Requesting only changes since last sync</summary>
    
-#### ```sync-token``` from last sync need to be specified (note the null for a deleted resource!)
+#### `sync-token` from last sync need to be specified (note the null for a deleted resource!)
 ```
 curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https://example.org/egroupware/groupdav.php/addressbook/1400867824' -H "Accept: application/pretty+json" --user <username>
 {
@@ -178,7 +177,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
 ```
 </details>
 
-* **GET**  requests with an ```Accept: application/json``` header can be used to retrieve single resources / JsContact or JsCalendar schema
+#### **GET**  requests with an `Accept: application/json` header can be used to retrieve single resources / JsContact or JsCalendar schema
 <details>
    <summary>Example: GET request for a single resource showcasing available fieldes</summary>
    
@@ -358,7 +357,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: 
 ```
 </details>
 
-* **POST** requests to collection with a ```Content-Type: application/json``` header add new entries in addressbook or calendar collections
+#### **POST** requests to collection with a `Content-Type: application/json` header add new entries in addressbook or calendar collections
        (Location header in response gives URL of new resource)
 <details>
    <summary>Example: POST request to create a new resource</summary>
@@ -412,7 +411,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+#### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
 
 <details>
    <summary>Example: PUT request to update a resource</summary>
@@ -468,7 +467,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 </details>
 
 
-* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+#### **PATCH** request with a `Content-Type: application/json` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
 
 <details>
    <summary>Example: PATCH request to modify a contact with partial data</summary>
@@ -498,14 +497,14 @@ HTTP/1.1 204 No content
 ```
 </details>
 
-* **DELETE** requests delete single resources
+#### **DELETE** requests delete single resources
 
-* one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API
+* one can use `Accept: application/pretty+json` to receive pretty-printed JSON eg. for debugging and exploring the API
 
 #### Implemented [changes from JsContact draft 08](https://github.com/rsto/draft-stepanek-jscontact/compare/draft-ietf-jmap-jscontact-08):
 * localizedString type / object is removed in favor or regular String type and a [localizations object like in JsCalendar](https://datatracker.ietf.org/doc/html/rfc8984#section-4.6.1)
 * [Vendor-specific Property Extensions and Values](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.3) 
-use ```<domain-name>:<name>``` like in JsCalendar
-* top-level objects need a ```@type``` attribute with one of the following values: 
-```NameComponent```, ```Organization```, ```Title```, ```Phone```, ```Resource```, ```File```, ```ContactLanguage```, 
-```Address```, ```StreetComponent```, ```Anniversary```, ```PersonalInformation```
+use `<domain-name>:<name>` like in JsCalendar
+* top-level objects need a `@type` attribute with one of the following values: 
+`NameComponent`, `Organization`, `Title`, `Phone`, `Resource`, `File`, `ContactLanguage`, 
+`Address`, `StreetComponent`, `Anniversary`, `PersonalInformation`
