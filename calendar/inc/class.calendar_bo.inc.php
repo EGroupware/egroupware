@@ -1450,7 +1450,7 @@ class calendar_bo
 	}
 
 	/**
-	 * Converts a date as timestamp or array to a date-string and optionaly converts server- to user-time
+	 * Converts a date as timestamp or array to a date-string and optionally converts server- to user-time
 	 *
 	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
 	 * @param boolean $server2user conversation between user- and server-time default False == Off, not used if $format ends with \Z
@@ -2172,7 +2172,7 @@ class calendar_bo
 	 * Check if the event is the whole day
 	 *
 	 * @param array $event event
-	 * @return boolean true if whole day event, false othwerwise
+	 * @return boolean true if whole day event, false otherwise
 	 */
 	public static function isWholeDay($event)
 	{

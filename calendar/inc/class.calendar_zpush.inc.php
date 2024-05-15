@@ -1077,7 +1077,9 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
 		{
-			++$message->endtime;	// EGw all-day-events are 1 sec shorter!
+			// all-day-events in EGw are with time=00:00 in user- and not server-timezone, as used by ZPush
+			$message->starttime = Api\DateTime::user2server($message->starttime,'ts');
+			$message->endtime = Api\DateTime::user2server($message->endtime+1,'ts');    // EGw all-day-events are 1 sec shorter!
 		}
 		// copying strings
 		foreach(array(
