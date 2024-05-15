@@ -388,14 +388,19 @@ class infolog_groupdav extends Api\CalDAV\Handler
 	 * Process the filters from the CalDAV REPORT request
 	 *
 	 * @param array $options
-	 * @param array &$cal_filters
+	 * @param array &$filters
 	 * @param string $id
 	 * @param int &$nresult on return limit for number or results or unchanged/null
 	 * @return boolean true if filter could be processed
 	 */
-	function _report_filters($options,&$cal_filters,$id, &$nresults)
+	function _report_filters(array $options, array &$filters, $id, &$nresults)
 	{
-		if ($options['filters'])
+		// in case of JSON/REST API pass filters to report
+		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
+		{
+			$filters = $options['filters'] + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
+		}
+		elseif ($options['filters'])
 		{
 			foreach($options['filters'] as $filter)
 			{
@@ -425,7 +430,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						}
 						else
 						{
-							$cal_filters[$this->filter_prop2infolog[strtoupper($prop_filter)]] = $filter['data'];
+							$filters[$this->filter_prop2infolog[strtoupper($prop_filter)]] = $filter['data'];
 						}
 						unset($prop_filter);
 						break;
@@ -433,7 +438,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						if ($this->debug) error_log(__METHOD__."($options[path],...) param-filter='{$filter['attrs']['name']}' not (yet) implemented!");
 						break;
 					case 'time-range':
-						$cal_filters[] = $this->_time_range_filter($filter['attrs']);
+						$filters[] = $this->_time_range_filter($filter['attrs']);
 						break;
 					default:
 						if ($this->debug) error_log(__METHOD__."($options[path],".array2string($options).",...) unknown filter --> ignored");
@@ -465,8 +470,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 					{
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
-						$cal_filters[] = 'info_datemodified>'.(int)$sync_token;
-						$cal_filters['filter'] .= '+deleted';	// to return deleted entries too
+						$filters[] = 'info_datemodified>'.(int)$sync_token;
+						$filters['filter'] .= '+deleted';	// to return deleted entries too
 					}
 					break;
 				case 'sync-level':
@@ -486,7 +491,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		{
 			if ($id)
 			{
-				$cal_filters[self::$path_attr] = self::$path_extension ?
+				$filters[self::$path_attr] = self::$path_extension ?
 					basename($id,self::$path_extension) : $id;
 			}
 			else	// fetch all given url's
@@ -504,7 +509,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						}
 					}
 				}
-				$cal_filters[self::$path_attr] = $this->requested_multiget_ids;
+				$filters[self::$path_attr] = $this->requested_multiget_ids;
 			}
 			if ($this->debug > 1) error_log(__METHOD__ ."($options[path],...,$id) calendar-multiget: ids=".implode(',', $this->requested_multiget_ids));
 		}
