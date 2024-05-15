@@ -14,7 +14,7 @@
 				</row>
 				<row>
 					<et2-description  value="Accessory of"></et2-description>
-					<et2-vbox >
+					<et2-vbox>
 						<et2-select  id="accessory_of" noLang="1"></et2-select>
 						<et2-description  id="accessory_label"></et2-description>
 					</et2-vbox>
