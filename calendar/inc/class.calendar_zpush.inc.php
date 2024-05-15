@@ -187,7 +187,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
 
-		if (!$cutoffdate) $cutoffdate = time() - 100*24*3600;	// default three month back -30 breaks all sync recurrences
+		if (!$cutoffdate) $cutoffdate = time() - 365*24*3600;	// limit all to 1 year (-30 breaks all sync recurrences)
 
 		$filter = array(
 			'users' => $user,

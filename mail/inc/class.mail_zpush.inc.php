@@ -68,7 +68,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 	static $profileID;
 
 	// to control how deep one may dive into the past
-	const PAST_LIMIT = 178;
+	const PAST_LIMIT = 365;
 
 	/**
 	 * debugLevel - enables more debug
