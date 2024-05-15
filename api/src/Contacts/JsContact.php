@@ -16,8 +16,8 @@ use EGroupware\Api;
 /**
  * Rendering contacts as JSON using new JsContact format
  *
- * @link https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07 (newer, here implemented format)
- * @link https://datatracker.ietf.org/doc/html/rfc7095 jCard (older vCard compatible contact data as JSON, NOT implemented here!)
+ * @link https://datatracker.ietf.org/doc/html/rfc9553 rfc9553: JSContact: A JSON Representation of Contact Data
+ * @link https://datatracker.ietf.org/doc/html/rfc9555 rfc9555: JSContact: Converting from and to vCard
  */
 class JsContact extends Api\CalDAV\JsBase
 {
@@ -27,11 +27,13 @@ class JsContact extends Api\CalDAV\JsBase
 	const MIME_TYPE_JSCARD = "application/jscontact+json;type=card";
 	const MIME_TYPE_JSCARDGROUP = "application/jscontact+json;type=cardgroup";
 
+	const TYPE_CARD = 'Card';
+
 	/**
 	 * Get jsCard for given contact
 	 *
 	 * @param int|array $contact
-	 * @param bool|"pretty" $encode=true true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data eg. from listing
+	 * @param bool|"pretty" $encode true: JSON encode, "pretty": JSON encode with pretty-print, false: return raw data eg. from listing
 	 * @return string|array
 	 * @throws Api\Exception\NotFound
 	 */
@@ -42,6 +44,7 @@ class JsContact extends Api\CalDAV\JsBase
 			throw new Api\Exception\NotFound();
 		}
 		$data = array_filter([
+			self::AT_TYPE => self::TYPE_CARD,
 			'uid' => self::uid($contact['uid']),
 			'prodId' => 'EGroupware Addressbook '.$GLOBALS['egw_info']['apps']['api']['version'],
 			'created' => self::UTCDateTime($contact['created']),
@@ -1067,11 +1070,13 @@ class JsContact extends Api\CalDAV\JsBase
 		return $value;
 	}
 
+	const TYPE_CARDGROUP = 'CardGroup';
+
 	/**
 	 * Get jsCardGroup for given group
 	 *
 	 * @param int|array $group
-	 * @param bool|"pretty" $encode=true true: JSON, "pretty": JSON pretty-print, false: array
+	 * @param bool|"pretty" $encode true: JSON, "pretty": JSON pretty-print, false: array
 	 * @return array|string
 	 * @throws Api\Exception\NotFound
 	 */
@@ -1082,6 +1087,7 @@ class JsContact extends Api\CalDAV\JsBase
 			throw new Api\Exception\NotFound();
 		}
 		$data = array_filter([
+			self::AT_TYPE => self::TYPE_CARDGROUP,
 			'uid' => self::uid($group['list_uid']),
 			'name' => $group['list_name'],
 			'card' => self::getJsCard([

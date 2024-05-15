@@ -22,6 +22,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
 {
   "responses": {
     "/<username>/addressbook/1833": {
+      "@type": "Card",
       "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
       "prodId": "EGroupware Addressbook 21.1.001",
       "created": "2010-10-21T09:55:42Z",
@@ -55,6 +56,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/addressbook/ -H "Acc
       ],
     },
     "/<username>/addressbook/list-36": {
+      "@type": "CardGroup",
       "uid": "urn:uuid:dfa5cac5-987b-448b-85d7-6c8b529a835c",
       "name": "Example distribution list",
       "card": {
@@ -160,6 +162,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
   "responses": {
     "/addressbook/5597": null,
     "/addressbook/5593": {
+      "@type": "Card",
       "uid": "5638-8623c4830472a8ede9f9f8b30d435ea4",
       "prodId": "EGroupware Addressbook 21.1.001",
       "created": "2010-10-21T09:55:42Z",
@@ -184,6 +187,7 @@ curl 'https://example.org/egroupware/groupdav.php/addressbook/?sync-token=https:
 ```
 curl 'https://example.org/egroupware/groupdav.php/addressbook/6502' -H "Accept: application/pretty+json" --user <username>
 {
+    "@type": "Card",
     "uid": "addressbook-6502-8623c4830472a8ede9f9f8b30d435ea4",
     "prodId": "EGroupware Addressbook 21.1.003",
     "created": "2022-12-14T13:35:02Z",
@@ -506,5 +510,5 @@ HTTP/1.1 204 No content
 * [Vendor-specific Property Extensions and Values](https://datatracker.ietf.org/doc/html/draft-ietf-jmap-jscontact-07#section-1.3) 
 use `<domain-name>:<name>` like in JsCalendar
 * top-level objects need a `@type` attribute with one of the following values: 
-`NameComponent`, `Organization`, `Title`, `Phone`, `Resource`, `File`, `ContactLanguage`, 
+`Card`, `CardGroup`, `NameComponent`, `Organization`, `Title`, `Phone`, `Resource`, `File`, `ContactLanguage`, 
 `Address`, `StreetComponent`, `Anniversary`, `PersonalInformation`
