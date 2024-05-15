@@ -71,7 +71,7 @@
 				</row>
 				<row>
 					<et2-description  value="Category"></et2-description>
-					<et2-select  span="3" align="right" statustext="Which category does this resource belong to?" id="cat_id" required="1" noLang="1"></et2-select>
+					<et2-select-cat  span="3" statustext="Which category does this resource belong to?" id="cat_id" required="1" noLang="1"></et2-select-cat>
 				</row>
 				<row>
 					<et2-description  value="Usable"></et2-description>
