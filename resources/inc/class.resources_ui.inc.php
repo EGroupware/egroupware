@@ -576,6 +576,7 @@ class resources_ui
 		$read_only = array();
 		if($res_id && !$this->bo->acl->is_permitted($content['cat_id'],Acl::EDIT))
 		{
+			$sel_options['cat_id'] = $this->bo->acl->get_cats(Acl::READ);
 			$read_only['__ALL__'] = true;
 		}
 		$config = Api\Config::read('resources');
