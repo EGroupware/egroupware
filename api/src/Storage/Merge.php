@@ -15,6 +15,7 @@ namespace EGroupware\Api\Storage;
 
 use DOMDocument;
 use EGroupware\Api;
+use EGroupware\Api\Mail;
 use EGroupware\Api\Vfs;
 use EGroupware\Collabora\Conversion;
 use EGroupware\Stylite;
@@ -2091,7 +2092,7 @@ abstract class Merge
 	 * @return string with error-message on error
 	 * @throws Api\Exception
 	 */
-	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header = null)
+	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header = null, $attachments = [])
 	{
 		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
 		if(($error = $this->check_document($document, $dirs)))
@@ -2108,7 +2109,7 @@ abstract class Merge
 				try
 				{
 					$_folder = $this->keep_emails ? '' : FALSE;
-					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder);
+					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder, $import_id, $attachments);
 				}
 				catch (Api\Exception\WrongUserinput $e)
 				{
@@ -2484,12 +2485,17 @@ abstract class Merge
 	 *
 	 * @param string[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
 	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
-	 * @param boolean|null $pdf Convert result to PDF
+	 * @param Array options
+	 * @param boolean options[individual] Instead of merging all entries into the file, merge each entry into its own file
+	 * @param boolean options[pdf] Convert result to PDF
+	 * @param boolean options[link] Link generated file to the entry
+	 * @param boolean $return Return the path of the generated document instead of opening or downloading
 	 * @throws Api\Exception
 	 * @throws Api\Exception\AssertionFailed
 	 */
-	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $pdf = null)
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $options = [], bool $return = null)
 	{
+		// Setup & get what we need
 		if(is_null($document_merge) && class_exists($_REQUEST['merge']) && is_subclass_of($_REQUEST['merge'], 'EGroupware\\Api\\Storage\\Merge'))
 		{
 			$document_merge = new $_REQUEST['merge']();
@@ -2499,10 +2505,17 @@ abstract class Merge
 			$document_merge = new Api\Contacts\Merge();
 		}
 
-		if(($error = $document_merge->check_document($_REQUEST['document'], '')))
+		$documents = (array)$_REQUEST['document'];
+
+		// Check for an email
+		$email = null;
+		foreach($documents as $key => $d)
 		{
-			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
-			return;
+			if(Vfs::mime_content_type($d) == 'message/rfc822')
+			{
+				$email = $d;
+				unset($documents[$key]);
+			}
 		}
 
 		if(is_null(($ids)))
@@ -2513,14 +2526,116 @@ abstract class Merge
 		{
 			$ids = self::get_all_ids($document_merge);
 		}
-
-		if(is_null($pdf))
+		foreach(['pdf', 'individual', 'link'] as $option)
 		{
-			$pdf = (boolean)$_REQUEST['pdf'];
+			$$option = is_null($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
+		}
+		$app = (is_null($options) ? $_REQUEST['options']['app'] : $options['app']) ?? $GLOBALS['egw_info']['flags']['currentapp'];
+
+		if(is_null($return))
+		{
+			$return = (boolean)$_REQUEST['return'];
 		}
 
-		$filename = $document_merge->get_filename($_REQUEST['document'], $ids);
-		$result = $document_merge->merge_file($_REQUEST['document'], $ids, $filename, '', $header);
+		$id_group = $individual ? $ids : [$ids];
+		$merged = $attach = [];
+		$target = '';
+		foreach($id_group as $ids)
+		{
+			foreach($documents as $document)
+			{
+				if($document != $email)
+				{
+					// Generate file
+					$target = $document_merge->merge_entries_into_document((array)$ids, $document);
+				}
+
+				// PDF conversion
+				if($pdf)
+				{
+					$converted = $document_merge->pdf_conversion($target);
+					$target = $converted;
+				}
+				$merged[] = $target;
+				$attach[] = Vfs::PREFIX . $target;
+
+				// Link to entry
+				if($link)
+				{
+					foreach((array)$ids as $id)
+					{
+						Api\Link::link($app, $id, Api\Link::VFS_APPNAME, $target);
+					}
+				}
+			}
+			// One email per id group
+			if($email)
+			{
+				// Trick merge into not trying to open in compose
+				if(is_string($ids))
+				{
+					$ids = [$ids];
+				}
+				if(count((array)$ids) == 1)
+				{
+					$ids[] = null;
+				}
+				try
+				{
+					$document_merge->merge_entries_into_document($ids, $email, $attach);
+				}
+				catch (\Exception $e)
+				{
+					// Merge on an email will throw exception if it can't make the file, which is always
+					$merged[] = str_replace("Unable to generate merge file\n", '', $e->getMessage());
+				}
+				$attach = [];
+			}
+		}
+
+
+		// Find out what to do with it - can't handle multiple documents directly
+		if($return || count($merged) > 1)
+		{
+			return $merged;
+		}
+
+		// Merge done, present to user
+		if($document_merge->get_editable_mimes()[Vfs::mime_content_type($target)] &&
+			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
+		{
+			\Egroupware\Api\Egw::redirect_link('/index.php', array(
+				'menuaction' => 'collabora.EGroupware\\Collabora\\Ui.editor',
+				'path'       => $target
+			));
+		}
+		else
+		{
+			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target, true));
+		}
+	}
+
+	/**
+	 * Merge the given IDs into the given document, saves to VFS, and returns the path
+	 *
+	 * @param array $ids
+	 * @param $pdf
+	 * @return string|void
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NotFound
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Vfs\Exception\ProtectedDirectory
+	 */
+	protected function merge_entries_into_document(array $ids = [], $document, $attachments = [])
+	{
+		if(($error = $this->check_document($document, '')))
+		{
+			error_log(__METHOD__ . "({$_REQUEST['document']}) $error");
+			return;
+		}
+
+		$filename = $this->get_filename($document, $ids);
+		$result = $this->merge_file($document, $ids, $filename, '', $header, $attachments);
 
 		if(!is_file($result) || !is_readable($result))
 		{
@@ -2528,7 +2643,7 @@ abstract class Merge
 		}
 		// Put it into the vfs using user's preferred directory if writable,
 		// or expected home dir (/home/username) if not
-		$target = $document_merge->get_save_path($filename);
+		$target = $this->get_save_path($filename);
 
 		// Make sure we won't overwrite something already there
 		$target = Vfs::make_unique($target);
@@ -2536,7 +2651,52 @@ abstract class Merge
 		copy($result, Vfs::PREFIX . $target);
 		unlink($result);
 
-		// Find out what to do with it
+		return $target;
+	}
+
+	/**
+	 * Convert a file into PDF
+	 *
+	 * Removes the original file
+	 *
+	 * @param $path
+	 * @return mixed|string Path to converted file
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NotFound
+	 * @throws Api\Exception\WrongParameter
+	 * @throws Vfs\Exception\ProtectedDirectory
+	 */
+	protected function pdf_conversion($path)
+	{
+		$editable_mimes = $this->get_editable_mimes();
+		if($editable_mimes[Vfs::mime_content_type($path)])
+		{
+			$error = '';
+			$converted_path = '';
+			$convert = new Conversion();
+			$convert->convert($path, $converted_path, 'pdf', $error);
+
+			if($error)
+			{
+				error_log(__METHOD__ . "({$_REQUEST['document']}) $path => $converted_path Error in PDF conversion: $error");
+			}
+			else
+			{
+				// Remove original
+				Vfs::unlink($path);
+				$path = $converted_path;
+			}
+		}
+		return $path;
+	}
+
+	/**
+	 * Get a list of editable mime types
+	 *
+	 * @return array|String[]
+	 */
+	protected function get_editable_mimes()
+	{
 		$editable_mimes = array();
 		try
 		{
@@ -2554,38 +2714,61 @@ abstract class Merge
 			// ignore failed discovery
 			unset($e);
 		}
+		return $editable_mimes;
+	}
 
-		// PDF conversion
-		if($editable_mimes[Vfs::mime_content_type($target)] && $pdf)
+
+	/**
+	 * Merge one or more entries into one or more documents.
+	 *
+	 * @param array|null $ids
+	 * @param \EGroupware\Api\Contacts\Merge|null $document_merge
+	 * @param $documents
+	 * @param $options
+	 * @return string[] location(s) of merged files
+	 */
+	public static function ajax_merge_multiple(array $ids = [], $documents = [], $options = [])
+	{
+		$response = Api\Json\Response::get();
+		$_REQUEST['document'] = $documents;
+		$app = $options['app'] ?? $GLOBALS['egw_info']['flags']['currentapp'];
+		$message = implode(', ', Api\Link::titles($app, $ids)) . ":\n";
+
+		try
 		{
-			$error = '';
-			$converted_path = '';
-			$convert = new Conversion();
-			$convert->convert($target, $converted_path, 'pdf', $error);
+			$merge_result = static::merge_entries($ids, $document_merge, $options, true);
+		}
+		catch (\Exception $e)
+		{
+			$response->error($message . $e->getMessage());
+		}
 
-			if($error)
+		foreach($merge_result as $result)
+		{
+			if(is_string($result))
 			{
-				error_log(__METHOD__ . "({$_REQUEST['document']}) $target => $converted_path Error in PDF conversion: $error");
+				if($options['download'])
+				{
+					$response->apply('egw.open_link', [Vfs::download_url($result, true), '_browser']);
+				}
+				$message .= $result . "\n";
 			}
 			else
 			{
-				// Remove original
-				Vfs::unlink($target);
-				$target = $converted_path;
+				if($result['failed'])
+				{
+					$response->error($message . join(", ", $result['failed']));
+				}
+				else
+				{
+					if($result['success'])
+					{
+						$message .= join(", ", $result['success']);
+					}
+				}
 			}
 		}
-		if($editable_mimes[Vfs::mime_content_type($target)] &&
-			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
-		{
-			\Egroupware\Api\Egw::redirect_link('/index.php', array(
-				'menuaction' => 'collabora.EGroupware\\Collabora\\Ui.editor',
-				'path'       => $target
-			));
-		}
-		else
-		{
-			\Egroupware\Api\Egw::redirect_link(Vfs::download_url($target, true));
-		}
+		$response->data($message);
 	}
 
 	/**
