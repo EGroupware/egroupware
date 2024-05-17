@@ -370,6 +370,11 @@ class JsBase
 					$target = $value;
 				}
 			}
+			// if we unset fields stored directly in the database, they will NOT be updated :(
+			elseif (!$n)
+			{
+				$target = null;
+			}
 			else
 			{
 				unset($parent[$part]);
