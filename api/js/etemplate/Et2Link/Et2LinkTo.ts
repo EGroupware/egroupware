@@ -437,7 +437,10 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 	handleEntrySelected(event)
 	{
 		// Could be the app, could be they selected an entry
-		if(event.target == this.select._searchNode)
+		if(event.target == this.select && (
+			typeof this.select.value == "string" && this.select.value ||
+			typeof this.select.value == "object" && this.select.value.id
+		))
 		{
 			this.classList.add("can_link");
 			this.link_button.focus();
