@@ -921,7 +921,7 @@ export abstract class EgwApp
 		let fileSelect = <Et2MergeDialog><unknown>loadWebComponent('et2-merge-dialog', {
 			application: this.appname,
 			path: dirs.pop() || ""
-		}, et2.widgetContainer);
+		}, et2?.widgetContainer ?? null);
 		if(!et2)
 		{
 			document.body.append(fileSelect);
