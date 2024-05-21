@@ -871,6 +871,7 @@ export abstract class EgwApp
 			{
 				// Handle it all on the server in one request
 				mergedFiles = await this.egw.request(vars.menuaction, [vars.id, vars.document, vars.options]);
+				this.egw.message(mergedFiles, "success");
 			}
 			else
 			{

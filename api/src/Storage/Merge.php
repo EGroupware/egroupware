@@ -2528,7 +2528,7 @@ abstract class Merge
 		}
 		foreach(['pdf', 'individual', 'link'] as $option)
 		{
-			$$option = is_null($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
+			$$option = is_null($options) || empty($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
 		}
 		$app = (is_null($options) ? $_REQUEST['options']['app'] : $options['app']) ?? $GLOBALS['egw_info']['flags']['currentapp'];
 
@@ -2564,7 +2564,7 @@ abstract class Merge
 				{
 					foreach((array)$ids as $id)
 					{
-						Api\Link::link($app, $id, Api\Link::VFS_APPNAME, $target);
+						Api\Link::link($app, $id, Api\Link::VFS_LINK, Vfs::PREFIX . $target);
 					}
 				}
 			}
@@ -3237,7 +3237,7 @@ abstract class Merge
 			'type'    => 'taglist',
 			'label'   => 'Merged document filename',
 			'name'    => self::PREF_DOCUMENT_FILENAME,
-			'values'  => self::DOCUMENT_FILENAME_OPTIONS,
+			'values' => static::DOCUMENT_FILENAME_OPTIONS,
 			'help'    => 'Choose the default filename for merged documents.',
 			'xmlrpc'  => True,
 			'admin'   => False,
