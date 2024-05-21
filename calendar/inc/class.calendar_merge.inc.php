@@ -13,6 +13,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Storage\Merge;
 
 /**
  * Calendar - document merge object
@@ -129,7 +130,21 @@ class calendar_merge extends Api\Storage\Merge
 		return parent::merge_string($content, $ids, $err, $mimetype, $fix, $charset);
 	}
 
-	public static function merge_entries(array $ids = null, \EGroupware\Api\Storage\Merge &$document_merge = null, $pdf = null)
+	/**
+	 * Merge the selected IDs into the given document, save it to the VFS, then
+	 * either open it in the editor or have the browser download the file.
+	 *
+	 * @param string[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
+	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
+	 * @param Array options
+	 * @param boolean options[individual] Instead of merging all entries into the file, merge each entry into its own file
+	 * @param boolean options[pdf] Convert result to PDF
+	 * @param boolean options[link] Link generated file to the entry
+	 * @param boolean $return Return the path of the generated document instead of opening or downloading
+	 * @throws Api\Exception
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $options = [], bool $return = null)
 	{
 		$document_merge = new calendar_merge();
 
@@ -195,15 +210,15 @@ class calendar_merge extends Api\Storage\Merge
 			// Fall through
 			default:
 				$timespan = array(array(
-									  'start' => $first,
-									  'end'   => $last
-								  ));
+					'start' => $first,
+					'end'   => $last
+				));
 		}
 
 		// Add path into document
 		static::check_document($_REQUEST['document'], $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 
-		return \EGroupware\Api\Storage\Merge::merge_entries(array_key_exists('0', $ids) ? $ids : $timespan, $document_merge);
+		return parent::merge_entries(array_key_exists('0', $ids) ? $ids : $timespan, $document_merge, $options, $return);
 	}
 
 	public function get_filename_placeholders($document, $ids)
