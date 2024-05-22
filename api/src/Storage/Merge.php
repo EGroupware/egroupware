@@ -2092,7 +2092,7 @@ abstract class Merge
 	 * @return string with error-message on error
 	 * @throws Api\Exception
 	 */
-	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header = null, $attachments = [])
+	public function merge_file($document, $ids, &$name = '', $dirs = '', &$header = null)
 	{
 		//error_log(__METHOD__."('$document', ".array2string($ids).", '$name', dirs='$dirs') ->".function_backtrace());
 		if(($error = $this->check_document($document, $dirs)))
@@ -2109,7 +2109,7 @@ abstract class Merge
 				try
 				{
 					$_folder = $this->keep_emails ? '' : FALSE;
-					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder, $import_id, $attachments);
+					$msgs = $mail_bo->importMessageToMergeAndSend($this, $content_url, $ids, $_folder, $import_id);
 				}
 				catch (Api\Exception\WrongUserinput $e)
 				{
@@ -2517,6 +2517,11 @@ abstract class Merge
 				unset($documents[$key]);
 			}
 		}
+		if($email)
+		{
+			$mail_bo = Api\Mail::getInstance();
+			$mail_bo->openConnection();
+		}
 
 		if(is_null(($ids)))
 		{
@@ -2559,35 +2564,64 @@ abstract class Merge
 				$merged[] = $target;
 				$attach[] = Vfs::PREFIX . $target;
 
-				// Link to entry
+				// Move to entry
 				if($link)
 				{
 					foreach((array)$ids as $id)
 					{
-						Api\Link::link($app, $id, Api\Link::VFS_LINK, Vfs::PREFIX . $target);
+						Api\Link::link($app, $id, Api\Link::VFS_APPNAME, Vfs::PREFIX . $target);
 					}
 				}
 			}
 			// One email per id group
-			if($email)
+			if($email && $mail_bo)
 			{
 				// Trick merge into not trying to open in compose
-				if(is_string($ids))
+				$mail_ids = $ids;
+				if(is_string($mail_ids))
 				{
-					$ids = [$ids];
+					$mail_ids = [$mail_ids];
 				}
-				if(count((array)$ids) == 1)
+				if(count((array)$mail_ids) == 1)
 				{
-					$ids[] = null;
+					$mail_ids[] = null;
 				}
 				try
 				{
-					$document_merge->merge_entries_into_document($ids, $email, $attach);
+					// Special email handling so we can grab it and stick it where we want
+					$mail_folder = $document_merge->keep_emails ? '' : FALSE;
+					$mail_id = '';
+					$msgs = $mail_bo->importMessageToMergeAndSend($document_merge, Api\Vfs::PREFIX . $email, $mail_ids, $mail_folder, $mail_id, $attach);
 				}
 				catch (\Exception $e)
 				{
-					// Merge on an email will throw exception if it can't make the file, which is always
-					$merged[] = str_replace("Unable to generate merge file\n", '', $e->getMessage());
+					throw new Api\Exception("Unable to send email", 100, $e);
+				}
+				// Save to VFS so we can link to entry
+				if($link)
+				{
+					// Load message
+					$message = $mail_bo->getMessageRawBody($mail_id, '', $mail_folder);
+					if(!$message)
+					{
+						throw new Api\Exception\AssertionFailed("Unable to read merged email\n" . $mail_folder . "/$mail_id");
+					}
+
+					$filename = $document_merge->get_filename($email, (array)$ids);
+					if(!str_ends_with($filename, pathinfo($email, PATHINFO_EXTENSION)))
+					{
+						$filename .= '.' . pathinfo($email, PATHINFO_EXTENSION);
+					}
+					foreach((array)$ids as $id)
+					{
+						$target = Api\Link::vfs_path($app, $id, $filename);
+
+						// Make sure we won't overwrite something already there
+						$target = Vfs::make_unique($target);
+
+						file_put_contents(Vfs::PREFIX . $target, $message);
+						$merged[] = $target;
+					}
 				}
 				$attach = [];
 			}
@@ -2626,7 +2660,7 @@ abstract class Merge
 	 * @throws Api\Exception\WrongParameter
 	 * @throws Vfs\Exception\ProtectedDirectory
 	 */
-	protected function merge_entries_into_document(array $ids = [], $document, $attachments = [])
+	protected function merge_entries_into_document(array $ids = [], $document)
 	{
 		if(($error = $this->check_document($document, '')))
 		{
@@ -2635,7 +2669,7 @@ abstract class Merge
 		}
 
 		$filename = $this->get_filename($document, $ids);
-		$result = $this->merge_file($document, $ids, $filename, '', $header, $attachments);
+		$result = $this->merge_file($document, $ids, $filename, '', $header);
 
 		if(!is_file($result) || !is_readable($result))
 		{
