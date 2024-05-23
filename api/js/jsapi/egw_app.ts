@@ -25,6 +25,7 @@ import type {EgwAction} from "../egw_action/EgwAction";
 import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
 import {EgwActionObject} from "../egw_action/EgwActionObject";
 import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
+import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 
 /**
  * Type for push-message
@@ -867,11 +868,24 @@ export abstract class EgwApp
 			let email = document.documents.find(f => f.mime == "message/rfc822");
 
 			// Can we do this in one, or do we have to split it up for feedback?
-			if(!vars.options.individual && !email)
+			if(!vars.options.individual && (!email || email && !all && ids.length == 1))
 			{
+				vars.options.open_email = !vars.options.download && typeof email != "undefined";
+
 				// Handle it all on the server in one request
+				this.egw.loading_prompt(vars.menuaction, true);
 				mergedFiles = await this.egw.request(vars.menuaction, [vars.id, vars.document, vars.options]);
-				this.egw.message(mergedFiles, "success");
+				this.egw.loading_prompt(vars.menuaction, false);
+
+				// One entry, email template selected - we can open that in the compose window
+				if(email)
+				{
+					debugger;
+				}
+				else
+				{
+					this.egw.message(mergedFiles, "success");
+				}
 			}
 			else
 			{
@@ -927,11 +941,16 @@ export abstract class EgwApp
 		{
 			document.body.append(fileSelect);
 		}
-		// Start details open when you have multiple selected
+		// Customize dialog
 		fileSelect.updateComplete.then(() =>
 		{
+			// Start details open when you have multiple selected
 			// @ts-ignore
 			(<Et2Details>fileSelect.shadowRoot.querySelector('et2-details')).open = selected.length > 1;
+
+			// Disable individual when only one entry is selected
+			// @ts-ignore
+			(<Et2Checkbox>fileSelect.shadowRoot.querySelector("et2-details > [id='individual']")).disabled = selected.length == 1;
 		});
 		// Remove when done
 		fileSelect.getComplete().then(() => {fileSelect.remove();});

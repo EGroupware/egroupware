@@ -2531,7 +2531,7 @@ abstract class Merge
 		{
 			$ids = self::get_all_ids($document_merge);
 		}
-		foreach(['pdf', 'individual', 'link'] as $option)
+		foreach(['pdf', 'individual', 'link', 'download'] as $option)
 		{
 			$$option = is_null($options) || empty($options) ? (boolean)$_REQUEST['options'][$option] : (boolean)$options[$option];
 		}
@@ -2582,14 +2582,14 @@ abstract class Merge
 				{
 					$mail_ids = [$mail_ids];
 				}
-				if(count((array)$mail_ids) == 1)
+				if(count((array)$mail_ids) == 1 && !$open_email)
 				{
 					$mail_ids[] = null;
 				}
 				try
 				{
 					// Special email handling so we can grab it and stick it where we want
-					$mail_folder = $document_merge->keep_emails ? '' : FALSE;
+					$mail_folder = $document_merge->keep_emails ? (count($id_group) == 1 ? $mail_bo->getDraftFolder() : '') : FALSE;
 					$mail_id = '';
 					$msgs = $mail_bo->importMessageToMergeAndSend($document_merge, Api\Vfs::PREFIX . $email, $mail_ids, $mail_folder, $mail_id, $attach);
 				}
@@ -2598,7 +2598,7 @@ abstract class Merge
 					throw new Api\Exception("Unable to send email", 100, $e);
 				}
 				// Save to VFS so we can link to entry
-				if($link)
+				if($link || $download)
 				{
 					// Load message
 					$message = $mail_bo->getMessageRawBody($mail_id, '', $mail_folder);
@@ -2612,28 +2612,51 @@ abstract class Merge
 					{
 						$filename .= '.' . pathinfo($email, PATHINFO_EXTENSION);
 					}
-					foreach((array)$ids as $id)
+					if($download)
 					{
-						$target = Api\Link::vfs_path($app, $id, $filename);
+						$target = $document_merge->get_save_path($filename);
 
 						// Make sure we won't overwrite something already there
 						$target = Vfs::make_unique($target);
-
 						file_put_contents(Vfs::PREFIX . $target, $message);
 						$merged[] = $target;
+					}
+					if($link)
+					{
+						foreach((array)$ids as $id)
+						{
+							$target = Api\Link::vfs_path($app, $id, $filename);
+
+							// Make sure we won't overwrite something already there
+							$target = Vfs::make_unique($target);
+
+							file_put_contents(Vfs::PREFIX . $target, $message);
+							if(!$download)
+							{
+								$merged[] = $target;
+							}
+						}
 					}
 				}
 				$attach = [];
 			}
 		}
 
-
 		// Find out what to do with it - can't handle multiple documents directly
 		if($return || count($merged) > 1)
 		{
 			return $merged;
 		}
-
+		// Open email in compose?
+		if($email && count($id_group) == 1 && $mail_id && class_exists("mail_ui"))
+		{
+			$mail_uid = \mail_ui::generateRowID($mail_bo->profileID, $mail_folder, $mail_id);
+			$mail_popup = '';
+			$mail_info = Api\Link::edit('mail', $mail_uid, $mail_popup);
+			$mail_info['from'] = 'composefromdraft';
+			Api\Framework::popup(Api\Framework::link("/index.php", $mail_info), '_blank', $mail_popup);
+			return;
+		}
 		// Merge done, present to user
 		if($document_merge->get_editable_mimes()[Vfs::mime_content_type($target)] &&
 			!in_array(Vfs::mime_content_type($target), explode(',', $GLOBALS['egw_info']['user']['preferences']['filemanager']['collab_excluded_mimes'])))
@@ -2767,10 +2790,12 @@ abstract class Merge
 		$_REQUEST['document'] = $documents;
 		$app = $options['app'] ?? $GLOBALS['egw_info']['flags']['currentapp'];
 		$message = implode(', ', Api\Link::titles($app, $ids)) . ":\n";
+		$return = true;
+		$open_email = $options['open_email'];
 
 		try
 		{
-			$merge_result = static::merge_entries($ids, $document_merge, $options, true);
+			$merge_result = static::merge_entries($ids, $document_merge, $options, !$open_email);
 		}
 		catch (\Exception $e)
 		{
