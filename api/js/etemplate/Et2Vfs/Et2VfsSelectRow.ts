@@ -6,6 +6,7 @@ import {state} from "lit/decorators/state.js";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsSelectRow.styles";
+import {SearchResultElement} from "../Et2Widget/SearchMixin";
 
 /**
  * @summary Shows one file in the Et2VfsSelectDialog list
@@ -16,7 +17,7 @@ import styles from "./Et2VfsSelectRow.styles";
  * @csspart base - The component’s base wrapper.
  * @csspart checked-icon - The checked icon, an <sl-icon> element.
  */
-export class Et2VfsSelectRow extends Et2Widget(LitElement)
+export class Et2VfsSelectRow extends Et2Widget(LitElement) implements SearchResultElement
 {
 	static get styles()
 	{
@@ -43,6 +44,11 @@ export class Et2VfsSelectRow extends Et2Widget(LitElement)
 		this.setAttribute('aria-selected', 'false');
 	}
 
+	@property()
+	get label()
+	{
+		return this.value?.label || this.value?.name || "";
+	}
 	private handleMouseEnter()
 	{
 		this.hasHover = true;

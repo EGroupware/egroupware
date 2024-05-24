@@ -119,26 +119,26 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
                     class=egw_app_merge_document"
                     path=${this.path}
                     multiple="true"
-                    buttonLabel="Download"
+                    buttonLabel=${this.egw().lang("Download")}
                     .title="${this.egw().lang("Insert in document")}"
                     .open=${true}
                     @et2-select=${this.handleFileSelect}
             >
                 ${this.canEmail ?
                   html`
-                      <et2-button slot="footer" id="send" label="Merge &amp; send" image="mail"
+                      <et2-button slot="footer" id="send" label=${this.egw().lang("Merge & send")} image="mail"
                                   noSubmit="true"></et2-button> ` :
                   html`
-                      <et2-button slot="footer" id="send" label="Merge" image="etemplate/merge"
+                      <et2-button slot="footer" id="send" label=${this.egw().lang("Merge")} image="etemplate/merge"
                                   noSubmit="true"></et2-button>`
                 }
                 <et2-details>
                     <span slot="summary">${this.egw().lang("Merge options")}</span>
-                    <et2-checkbox label="Save as PDF" id="pdf"></et2-checkbox>
+                    <et2-checkbox label=${this.egw().lang("Save as PDF")} id="pdf"></et2-checkbox>
                     <et2-checkbox id="link"
-                                  label="${this.egw().lang("Link to each %1", <string>this.egw().link_get_registry(this.application, "entry") || this.egw().lang("entry"))}"
+                                  label="${this.egw().lang("Link to each entry")}"
                     ></et2-checkbox>
-                    <et2-checkbox label="Merge individually" id="individual"></et2-checkbox>
+                    <et2-checkbox label=${this.egw().lang("Merge individually")} id="individual"></et2-checkbox>
                 </et2-details>
             </et2-vfs-select-dialog>`;
 	}
