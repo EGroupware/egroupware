@@ -109,7 +109,7 @@ export class EgwFramework extends LitElement
 		if(this.egw.window && this.egw.window.opener == null && !this.egw.window.framework)
 		{
 			// This works, but stops a lot else from working
-			//this.egw.window.framework = this;
+			this.egw.window.framework = this;
 		}
 		if(this.egw.window?.framework && this.egw.window?.framework !== this)
 		{
@@ -153,10 +153,16 @@ export class EgwFramework extends LitElement
 			(menuaction ? '.' + menuaction[1] : '');
 	};
 
+	public getApplicationByName(appName)
+	{
+		return this.querySelector(`egw-app[name="${appName}"]`);
+	}
+
 	/**
 	 * Load an application into the framework
 	 *
-	 * Loading is done by name, and we look up everything we need in the applicationList
+	 * Loading is done by name, and we look up everything we need in the applicationList.
+	 * If already loaded, this just returns the existing EgwFrameworkApp, optionally activated & with new URL loaded.
 	 *
 	 * @param {string} appname
 	 * @param {boolean} active
@@ -181,8 +187,8 @@ export class EgwFramework extends LitElement
 
 		const app = this.applicationList.find(a => a.name == appname);
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
-		appComponent.id = appname;
-		appComponent.name = appname;
+		appComponent.setAttribute("id", appname);
+		appComponent.setAttribute("name", appname);
 		appComponent.url = url ?? app?.url;
 
 		this.append(appComponent);
@@ -203,6 +209,11 @@ export class EgwFramework extends LitElement
 		}
 
 		return appComponent;
+	}
+
+	public get activeApp() : EgwFrameworkApp
+	{
+		return this.querySelector("egw-app[active]");
 	}
 
 	/**
@@ -262,6 +273,59 @@ export class EgwFramework extends LitElement
 	}
 
 	/**
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * @param {string} _url
+	 * @param {number} _width
+	 * @param {number} _height
+	 * @param {string} _windowName or "_blank"
+	 * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
+	 * @param {boolean} _returnID true: return window, false: return undefined
+	 * @param {type} _status "yes" or "no" to display status bar of popup
+	 * @param {DOMWindow} _parentWnd parent window
+	 * @returns {DOMWindow|undefined}
+	 */
+	public openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
+	{
+		//Determine the window the popup should be opened in - normally this is the iframe of the currently active application
+		let parentWindow = _parentWnd || window;
+		let navigate = false;
+		let appEntry = null;
+		if(typeof _app != 'undefined' && _app !== false)
+		{
+			appEntry = this.getApplicationByName(_app);
+			if(appEntry && appEntry.browser == null)
+			{
+				navigate = true;
+				this.applicationTabNavigate(appEntry, appEntry.indexUrl);
+			}
+		}
+		else
+		{
+			appEntry = this.activeApp;
+		}
+
+		if(appEntry != null && appEntry.useIframe && (_app || !egw(parentWindow).is_popup()))
+		{
+			parentWindow = appEntry.iframe.contentWindow;
+		}
+
+		const windowID = egw(parentWindow).openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
+
+		windowID.framework = this;
+
+		if(navigate)
+		{
+			window.setTimeout("framework.applicationTabNavigate(framework.activeApp, framework.activeApp.indexUrl);", 500);
+		}
+
+		if(_returnID !== false)
+		{
+			return windowID;
+		}
+	}
+
+	/**
 	 * Tries to obtain the application from a menuaction
 	 * @param {string} _url
 	 */
@@ -287,7 +351,7 @@ export class EgwFramework extends LitElement
 	 */
 	public async print()
 	{
-		const appElement : EgwFrameworkApp = this.querySelector("egw-app[active]");
+		const appElement : EgwFrameworkApp = this.activeApp;
 		try
 		{
 			if(appElement)
@@ -356,7 +420,10 @@ export class EgwFramework extends LitElement
 
 		// Remove the tab + panel
 		tab.remove();
-		panel.remove();
+		if(panel)
+		{
+			panel.remove();
+		}
 	}
 
 	private updateTabs(activeTab)

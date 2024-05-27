@@ -89,7 +89,7 @@ export class EgwFrameworkApp extends LitElement
 		];
 	}
 
-	@property()
+	@property({reflect: true})
 	name = "Application name";
 
 	@property()
@@ -240,9 +240,14 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	public getMenuaction(_fun, _ajax_exec_url, appName = "")
+	{
+		return this.framework.getMenuaction(_fun, _ajax_exec_url, appName || this.name);
+	}
+
 	public setSidebox(sideboxData, hash?)
 	{
-
+		console.log("Not implemented");
 	}
 
 	public showLeft()
