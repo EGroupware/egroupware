@@ -67,7 +67,7 @@ class kdots_framework extends Api\Framework\Ajax
 
 		parent::topmenu($vars, $apps);
 
-		$vars['topmenu_items'] = "<sl-menu>" . implode("\n", $this->topmenu_items) . "</sl-menu>";
+		$vars['topmenu_items'] = "<sl-menu id='egw_fw_topmenu_items'>" . implode("\n", $this->topmenu_items) . "</sl-menu>";
 		$vars['topmenu_info_items'] = '';
 		foreach($this->topmenu_info_items as $id => $item)
 		{

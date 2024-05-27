@@ -41,12 +41,9 @@
 	<div slot="header-right" id="egw_fw_topmenu_info_items">
         {topmenu_info_items}
 	</div>
-	<div slot="header">
-		<sl-switch slot="header" id="placeholders" checked>Placeholders</sl-switch>
-	</div>
 
 	<!-- status app is looking for this -->
-	<div slot="aside" id="egw_fw_sidebar_r"></div>
+	<div slot="status" id="egw_fw_sidebar_r"></div>
 
 	<!-- Currently open app -->
 	<egw-app name="{open_app_name}" url="{open_app_url}" active></egw-app>

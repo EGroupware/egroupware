@@ -1,4 +1,4 @@
-import {css, html, LitElement, nothing} from "lit";
+import {css, html, LitElement, nothing, PropertyValues} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
@@ -116,6 +116,23 @@ export class EgwFramework extends LitElement
 			// Override framework setSidebox, use arrow function to force context
 			this.egw.framework.setSidebox = (applicationName, sideboxData, hash?) => this.setSidebox(applicationName, sideboxData, hash);
 		}
+	}
+
+	protected firstUpdated(_changedProperties : PropertyValues)
+	{
+		super.firstUpdated(_changedProperties);
+
+		// Load hidden apps like status
+		this.applicationList.forEach((app) =>
+		{
+			if(app.status == "5" && app.url)
+			{
+				this.loadApp(app.name);
+			}
+		});
+
+		// Init timer
+		this.egw.add_timer('topmenu_info_timer');
 	}
 
 	get egw() : typeof egw
@@ -503,7 +520,7 @@ export class EgwFramework extends LitElement
                                   @sl-close=${this.handleApplicationTabClose}
                     >
                         ${repeat(this.applicationList
-                                .filter(app => typeof app.opened !== "undefined")
+                                .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <slot name="header"><span class="placeholder">header</span></slot>
