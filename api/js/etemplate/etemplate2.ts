@@ -708,6 +708,11 @@ export class etemplate2
 				etemplate2._byTemplate[_name].push(this);
 
 				// Read the XML structure of the requested template
+				if(etemplate2.templates[this.name].hasAttribute("slot"))
+				{
+					this.DOMContainer.setAttribute("slot", etemplate2.templates[this.name].getAttribute("slot"));
+				}
+
 				this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
 				console.timeEnd("loadFromXML");
 				console.time("deferred");
@@ -1643,7 +1648,7 @@ export class etemplate2
 				}
 				else
 				{
-					egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+					egw.debug("error", "Could not find target node %s", data.DOMNodeID);
 				}
 			}
 
