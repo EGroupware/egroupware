@@ -137,7 +137,7 @@ export default css`
 	@media (min-width: 600px) {
 		.egw_fw_app__main {
 			grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
-			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(2em) [end];
+			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(4em) [end];
 		}
 
 		.egw_fw_app__aside {
@@ -149,8 +149,11 @@ export default css`
 			overflow-y: auto;
 		}
 
+		egw_fw_app__main_content {
+			display: flex;
+		}
+
 		::slotted(*) {
-			height: 100%;
 		}
 
 		::slotted(iframe) {

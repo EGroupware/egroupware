@@ -46,7 +46,7 @@
 	<div slot="status" id="egw_fw_sidebar_r"></div>
 
 	<!-- Currently open app -->
-	<egw-app name="{open_app_name}" url="{open_app_url}" active></egw-app>
+	<egw-app id="{open_app_name}" name="{open_app_name}" url="{open_app_url}" active></egw-app>
 </egw-framework>
 
 

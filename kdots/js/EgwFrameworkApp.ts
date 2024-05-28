@@ -11,6 +11,7 @@ import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * @summary Application component inside EgwFramework
@@ -93,6 +94,9 @@ export class EgwFrameworkApp extends LitElement
 	name = "Application name";
 
 	@property()
+	title : string = "Application title";
+
+	@property()
 	url = "";
 
 	@state()
@@ -145,11 +149,14 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.rightPanelInfo.defaultWidth;
 		});
+
+		this.addEventListener("load", this.handleEtemplateLoad);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this.removeEventListener("load", this.handleEtemplateLoad);
 	}
 
 	firstUpdated()
@@ -199,22 +206,26 @@ export class EgwFrameworkApp extends LitElement
 			return this.loadingPromise = this.egw.request(
 				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 				[targetUrl]
-			).then((data : string[]) =>
+			).then((data : string | string[] | { DOMNodeID? : string } | { DOMNodeID? : string }[]) =>
 			{
+				if(!data)
+				{
+					return;
+				}
 				// Load request returns HTML.  Shove it in.
 				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
 				{
-					render(html`${unsafeHTML(data.join(""))}`, this);
+					render(html`${unsafeHTML((<string[]>data).join(""))}`, this);
 				}
 				else
 				{
 					// We got some data, use it
-					if(data.DOMNodeID)
-					{
-						this.id = data.DOMNodeID;
-					}
+					const items = (Array.isArray(data) ? data : [data])
+						.filter(data => (typeof data.DOMNodeID == "string" && document.querySelector("[id='" + data.DOMNodeID + "']") == null));
+
+					render(html`${repeat(items, i => i.DOMNodeID, (item) => html`
+                        <div id="${item.DOMNodeID}"></div>`)}`, this);
 				}
-				this.addEventListener("load", this.handleEtemplateLoad, {once: true});
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
@@ -367,12 +378,17 @@ export class EgwFrameworkApp extends LitElement
 
 	get egw()
 	{
-		return window.egw ?? (<EgwFramework>this.parentElement).egw ?? null;
+		return window.egw(this.name) ?? (<EgwFramework>this.parentElement).egw ?? null;
 	}
 
 	get framework() : EgwFramework
 	{
 		return this.closest("egw-framework");
+	}
+
+	get appName() : string
+	{
+		return this.name;
 	}
 
 	private hasSideContent(side : "left" | "right")
@@ -387,8 +403,8 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected handleEtemplateLoad(event)
 	{
-		const etemplate = etemplate2.getById(this.id);
-		if(!etemplate)
+		const etemplate = etemplate2.getById(event.target.id);
+		if(!etemplate || !event.composedPath().includes(this))
 		{
 			return;
 		}
@@ -557,7 +573,7 @@ export class EgwFrameworkApp extends LitElement
                     ></sl-icon-button>`
                                    : nothing
                     }
-                    <h2>${this.egw?.lang(this.name) ?? this.name}</h2>
+                    <h2>${this.title ?? this.egw?.lang(this.name) ?? this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>

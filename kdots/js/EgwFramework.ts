@@ -95,11 +95,9 @@ export class EgwFramework extends LitElement
 
 	/**
 	 * This is the list of all applications we know about
-	 *
-	 * @type {any[]}
 	 */
 	@property({type: Array, attribute: "application-list"})
-	applicationList = [];
+	applicationList : ApplicationInfo[] = [];
 
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
@@ -122,17 +120,34 @@ export class EgwFramework extends LitElement
 	{
 		super.firstUpdated(_changedProperties);
 
-		// Load hidden apps like status
+		// Load hidden apps like status, as long as they can be loaded
 		this.applicationList.forEach((app) =>
 		{
-			if(app.status == "5" && app.url)
+			if(app.status == "5" && app.url && !app.url.match(/menuaction\=none/))
 			{
 				this.loadApp(app.name);
 			}
 		});
+		// Load additional tabs
+		Object.values(this.tabApps).forEach(app => this.loadApp(app.name));
 
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
+	}
+
+	/**
+	 * Special tabs that are not directly associated with an application (CRM)
+	 * @type {[]}
+	 * @private
+	 */
+	protected get tabApps() : { [id : string] : ApplicationInfo }
+	{
+		return JSON.parse(egw.getSessionItem('api', 'fw_tab_apps') || null) || {};
+	}
+
+	protected set tabApps(apps : { [id : string] : ApplicationInfo })
+	{
+		egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(apps));
 	}
 
 	get egw() : typeof egw
@@ -188,7 +203,7 @@ export class EgwFramework extends LitElement
 	 */
 	public loadApp(appname : string, active = false, url = null) : EgwFrameworkApp
 	{
-		const existing : EgwFrameworkApp = this.querySelector(`egw-app[name="${appname}"]`);
+		const existing : EgwFrameworkApp = this.querySelector(`egw-app[id="${appname}"]`);
 		if(existing)
 		{
 			if(active)
@@ -202,11 +217,22 @@ export class EgwFramework extends LitElement
 			return existing;
 		}
 
-		const app = this.applicationList.find(a => a.name == appname);
+		const app = this.applicationList.find(a => a.name == appname) ??
+			this.tabApps[appname];
+
+		if(!app)
+		{
+			console.log("Cannot load unknown app '" + appname + "'");
+			return null;
+		}
 		let appComponent = <EgwFrameworkApp>document.createElement("egw-app");
 		appComponent.setAttribute("id", appname);
-		appComponent.setAttribute("name", appname);
+		appComponent.setAttribute("name", app.internalName || appname);
 		appComponent.url = url ?? app?.url;
+		if(app.title)
+		{
+			appComponent.title = app.title;
+		}
 
 		this.append(appComponent);
 		// App was not in the tab list
@@ -217,7 +243,7 @@ export class EgwFramework extends LitElement
 		}
 
 		// Wait until new tab is there to activate it
-		if(active)
+		if(active || app.active)
 		{
 			this.updateComplete.then(() =>
 			{
@@ -242,7 +268,7 @@ export class EgwFramework extends LitElement
 	 */
 	public linkHandler(_link : string, _app : string)
 	{
-		//Determine the app string from the application parameter
+		// Determine the app string from the application parameter
 		let app = null;
 		if(_app && typeof _app == 'string')
 		{
@@ -263,13 +289,13 @@ export class EgwFramework extends LitElement
 				// add target flag
 				_link += '&target=_tab';
 				const appname = app.appName + ":" + btoa(_link);
-				this.applicationList[appname] = {...app};
-				this.applicationList[appname]['name'] = appname;
-				this.applicationList[appname]['indexUrl'] = _link;
-				this.applicationList[appname]['tab'] = null;
-				this.applicationList[appname]['browser'] = null;
-				this.applicationList[appname]['title'] = 'view';
-				app = this.applicationList[appname];
+				this.applicationList.push({
+					...app,
+					name: appname,
+					url: _link,
+					title: 'view'
+				});
+				app = this.applicationList[this.applicationList.length - 1];
 			}
 			this.loadApp(app.name, true, _link);
 		}
@@ -286,6 +312,58 @@ export class EgwFramework extends LitElement
 				egw_alertHandler("No appropriate target application has been found.",
 					"Target link: " + _link);
 			}
+		}
+	}
+
+	public tabLinkHandler(_link : string, _extra = {
+		id: ""
+	})
+	{
+		const app = this.parseAppFromUrl(_link);
+		if(app)
+		{
+			const appname = app.name + "-" + btoa(_extra.id ? _extra.id : _link).replace(/=/g, 'i');
+			if(this.getApplicationByName(appname))
+			{
+				this.loadApp(appname, true, _link);
+				return appname;
+			}
+
+			// add target flag
+			_link += '&fw_target=' + appname;
+			// create an actual clone of existing app object
+			let clone = {
+				...app,
+				..._extra,
+				//isFrameworkTab: true, ??
+				name: appname,
+				internalName: app.name,
+				url: _link,
+				// Need to override to open, base app might already be opened
+				opened: undefined
+			};
+			// Store only in session
+			let tabApps = {...this.tabApps};
+			tabApps[appname] = clone;
+			this.tabApps = tabApps;
+
+			/* ??
+			this.applications[appname]['sidemenuEntry'] = this.sidemenuUi.addEntry(
+				this.applications[appname].displayName, this.applications[appname].icon,
+				function()
+				{
+					self.applicationTabNavigate(self.applications[appname], _link, false, -1, null);
+				}, this.applications[appname], appname);
+
+			 */
+			this.loadApp(appname, true);
+
+			return appname;
+		}
+		else
+		{
+			egw_alertHandler("No appropriate target application has been found.",
+				"Target link: " + _link);
 		}
 	}
 
@@ -443,14 +521,46 @@ export class EgwFramework extends LitElement
 		}
 	}
 
+	/**
+	 * Store last status of tabs
+	 * tab status being used in order to open all previous opened
+	 * tabs and to activate the last active tab
+	 */
 	private updateTabs(activeTab)
 	{
-		let appList = [];
+		//Send the current tab list to the server
+		let data = this.assembleTabList(activeTab);
+
+		//Serialize the tab list and check whether it really has changed since the last
+		//submit
+		var serialized = egw.jsonEncode(data);
+		if(serialized != this.serializedTabState)
+		{
+			this.serializedTabState = serialized;
+			if(this.tabApps)
+			{
+				this._setTabAppsSession(this.tabApps);
+			}
+			egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state', [data]);
+		}
+	}
+
+	private assembleTabList(activeTab)
+	{
+		let appList = []
 		Array.from(this.shadowRoot.querySelectorAll("sl-tab-group.egw_fw__open_applications sl-tab")).forEach((tab : SlTab) =>
 		{
 			appList.push({appName: tab.panel, active: activeTab.panel == tab.panel})
 		});
-		this.egw.jsonq('EGroupware\\Api\\Framework\\Ajax::ajax_tab_changed_state', [appList]);
+		return appList;
+	}
+
+	private _setTabAppsSession(_tabApps)
+	{
+		if(_tabApps)
+		{
+			egw.setSessionItem('api', 'fw_tab_apps', JSON.stringify(_tabApps));
+		}
 	}
 
 	/**
@@ -519,7 +629,7 @@ export class EgwFramework extends LitElement
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
-                        ${repeat(this.applicationList
+                        ${repeat([...this.applicationList, ...Object.values(this.tabApps)]
                                 .filter(app => typeof app.opened !== "undefined" && app.status !== "5")
                                 .sort((a, b) => a.opened - b.opened), (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
@@ -546,4 +656,25 @@ export class EgwFramework extends LitElement
             </div>
 		`;
 	}
+}
+
+/**
+ * Information we keep and use about each app on the client side
+ * This might not be limited to actual EGw apps,
+ */
+export interface ApplicationInfo
+{
+	/* Internal name, used for reference & indexing.  Might not be an egw app, might have extra bits */
+	name : string,
+	/* Must be an egw app, used for the EgwFrameworkApp, preferences, etc. */
+	internalName? : string,
+	icon : string
+	title : string,
+	url : string,
+	/* What type of application (1: normal, 5: loaded but no tab) */
+	status : string,// = "1",
+	/* Is the app open, and at what place in the tab list */
+	opened? : number,
+	/* Is the app currently active */
+	active? : boolean// = false
 }
