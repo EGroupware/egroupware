@@ -3250,8 +3250,6 @@ class addressbook_ui extends addressbook_bo
 		// need to load list's app.js now, as exec calls header before other app can include it
 	//	Framework::includeJS('/'.$crm_list.'/js/app.js');
 
-		// Load CRM code
-		Framework::includeJS('.','CRM','addressbook');
 		$content['view_sidebox'] = addressbook_hooks::getViewDOMID($content['id'], $crm_list);
 		$this->tmpl->exec('addressbook.addressbook_ui.view',$content,$sel_options,$readonlys,array(
 			'id' => $content['id'],
