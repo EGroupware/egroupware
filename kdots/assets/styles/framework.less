@@ -13,7 +13,8 @@ egw-framework#egw_fw_basecontainer {
   /* Internals */
 
   &::part(status-split) {
-	--max: 150px;
+	/* This limits the max size of the status panel */
+	--max: 32px;
   }
 
   &::part(header) {
@@ -70,14 +71,6 @@ egw-framework#egw_fw_basecontainer {
 	display: flex;
 	gap: var(--sl-spacing-medium);
 	padding-left: 1em;
-  }
-}
-
-egw-app {
-  &::part(name) {
-	display: flex;
-	align-items: center;
-	text-wrap: nowrap;
   }
 }
 
@@ -168,6 +161,24 @@ egw-app {
 
 /*** END HEADER ***/
 
-div#egw_fw_basecontainer {
-  display: none;
+/*** APPLICATION ***/
+egw-app {
+  &::part(name) {
+	display: flex;
+	align-items: center;
+	text-wrap: nowrap;
+  }
+
+  &::part(content) {
+	flex-direction: column;
+  }
+}
+
+/*** END APPLICATION ***/
+
+/*** WIDGETS ***/
+/* This should mostly go away with webcomponents */
+.egwGridView_scrollarea {
+  overflow-x: hidden;
+  overflow-y: auto;
 }

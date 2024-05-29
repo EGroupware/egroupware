@@ -94,7 +94,7 @@ export class EgwFrameworkApp extends LitElement
 	name = "Application name";
 
 	@property()
-	title : string = "Application title";
+	title : string = "";
 
 	@property()
 	url = "";
@@ -161,6 +161,7 @@ export class EgwFrameworkApp extends LitElement
 
 	firstUpdated()
 	{
+
 		this.load(this.url);
 	}
 
@@ -573,7 +574,7 @@ export class EgwFrameworkApp extends LitElement
                     ></sl-icon-button>`
                                    : nothing
                     }
-                    <h2>${this.title ?? this.egw?.lang(this.name) ?? this.name}</h2>
+                    <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>

@@ -149,11 +149,14 @@ export default css`
 			overflow-y: auto;
 		}
 
-		egw_fw_app__main_content {
+		.egw_fw_app__main_content {
 			display: flex;
+			flex-direction: column;
+			align-items: stretch;
 		}
 
 		::slotted(*) {
+			flex: 1 1 auto;
 		}
 
 		::slotted(iframe) {
