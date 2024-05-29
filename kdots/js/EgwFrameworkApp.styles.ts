@@ -144,13 +144,13 @@ export default css`
 			overflow-y: hidden;
 		}
 
-		.egw_fw_app__aside_content, egw_fw_app__main_content {
+		.egw_fw_app__aside_content, .egw_fw_app__main_content {
 			overflow-x: hidden;
 			overflow-y: auto;
+			display: flex;
 		}
 
 		.egw_fw_app__main_content {
-			display: flex;
 			flex-direction: column;
 			align-items: stretch;
 		}
