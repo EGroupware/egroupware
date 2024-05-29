@@ -228,7 +228,14 @@ services:
   # Rocket.Chat server
   #rocketchat:
   #  image: quay.io/egroupware/rocket.chat:latest
-  #  command: bash -c 'for i in `seq 1 30`; do node main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
+  #  command: >
+  #      sh -c
+  #        "while true; do
+  #          node main.js &&
+  #          s=$$? && break || s=$$?;
+  #          echo \"Could not reach MongoDB. Waiting 5 secs ...\";
+  #          sleep 5;
+  #        done; (exit $$s)"
   #  restart: unless-stopped
   #  volumes:
   #    - $PWD/data/default/rocketchat/uploads:/app/uploads
