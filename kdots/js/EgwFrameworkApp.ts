@@ -12,6 +12,7 @@ import type {EgwFramework} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 import {repeat} from "lit/directives/repeat.js";
+import {until} from "lit/directives/until.js";
 
 /**
  * @summary Application component inside EgwFramework
@@ -137,6 +138,7 @@ export class EgwFrameworkApp extends LitElement
 
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
+	protected _sideboxData : any;
 
 	connectedCallback()
 	{
@@ -161,7 +163,6 @@ export class EgwFrameworkApp extends LitElement
 
 	firstUpdated()
 	{
-
 		this.load(this.url);
 	}
 
@@ -259,7 +260,8 @@ export class EgwFrameworkApp extends LitElement
 
 	public setSidebox(sideboxData, hash?)
 	{
-		console.log("Not implemented");
+		this._sideboxData = sideboxData;
+		this.requestUpdate();
 	}
 
 	public showLeft()
@@ -519,34 +521,97 @@ export class EgwFrameworkApp extends LitElement
 	protected _rightHeaderTemplate()
 	{
 		return html`
-            <sl-button-group>
-                <et2-button-icon nosubmit name="arrow-clockwise"
-                                 label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                                 statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                                 @click=${(e) =>
-                                 {
-                                     this.egw.refresh("", this.name);
-                                     /* Could also be this.load(false); this.load(this.url) */
-                                 }}
-                ></et2-button-icon>
-                <et2-button-icon nosubmit name="printer"
-                                 label=${this.egw.lang("Print")}
-                                 statustext=${this.egw.lang("Print")}
-                                 @click=${(e) => this.framework.print()}
-                ></et2-button-icon>
-                ${this.egw.user('apps')['waffles'] !== "undefined" ? html`
-                    <et2-button-icon nosubmit name="gear-wide"
-                                     label=${this.egw.lang("Site configuration for %1", this.egw.lang(this.name))}
-                                     statustext=${this.egw.lang("App configuration")}
-                                     @click=${(e) =>
-                                     {
-                                         // @ts-ignore
-                                         egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
-                                     }}
-                    ></et2-button-icon>` : nothing
-                }
-            </sl-button-group>
+            <sl-tooltip content=${this.egw.lang("Application menu")}>
+                <sl-dropdown>
+                    <sl-icon slot="trigger" name="three-dots-vertical"></sl-icon>
+                    <sl-menu>
+                        <sl-menu-item
+                                @click=${(e) =>
+                                {
+                                    this.egw.refresh("", this.name);
+                                    /* Could also be this.load(false); this.load(this.url) */
+                                }}
+                        >
+                            <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
+                            ${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                        </sl-menu-item>
+                        <sl-menu-item
+                                @click=${(e) => this.framework.print()}
+                        >
+                            <sl-icon slot="prefix" name="printer"></sl-icon>
+                            ${this.egw.lang("Print")}
+                        </sl-menu-item>
+                        ${this.egw.user('apps')['admin'] !== undefined ? html`
+                            <sl-menu-item
+                                    @click=${(e) =>
+                                    {
+                                        // @ts-ignore
+                                        egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
+                                    }}
+                            >
+                                <sl-icon slot="prefix" name="gear-wide"></sl-icon>
+                                ${this.egw.lang("App configuration")}
+                            </sl-menu-item>
+                            <sl-divider></sl-divider>
+                        ` : nothing}
+                        ${this._sideboxMenuTemplate()}
+                    </sl-menu>
+                </sl-dropdown>
+            </sl-tooltip>
 		`;
+	}
+
+	protected _sideboxMenuTemplate()
+	{
+		if(!this._sideboxData)
+		{
+			return nothing;
+		}
+
+		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], (menu) =>
+		{
+			// No favorites here
+			if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
+			{
+				return nothing;
+			}
+			// Just one thing, don't bother with submenu
+			if(menu["entries"].length == 1)
+			{
+				return html`
+                    <sl-menu-item
+                            @click=${() => this.egw.open_link(menu["entries"][0]["item_link"])}
+                    >
+                        ${menu["title"]}
+                    </sl-menu-item>`;
+			}
+			return html`
+                <sl-menu-item>
+                    ${menu["title"]}
+                    <sl-menu slot="submenu">
+                        ${repeat(menu["entries"], (entry) =>
+                        {
+                            return this._sideboxMenuItemTemplate(entry);
+                        })}
+                    </sl-menu>
+                </sl-menu-item>`;
+		})}`;
+	}
+
+	_sideboxMenuItemTemplate(item)
+	{
+		if(item["lang_item"] == "<hr />")
+		{
+			return html`
+                <sl-divider></sl-divider>`;
+		}
+		return html`
+            <sl-menu-item
+                    @click=${() => this.egw.open_link(item["item_link"])}
+            >
+                ${item["lang_item"]}
+            </sl-menu-item>`;
+
 	}
 
 	render()
@@ -579,7 +644,8 @@ export class EgwFrameworkApp extends LitElement
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
-                ${this._rightHeaderTemplate()}
+                ${until(this.framework.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
+                    <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}

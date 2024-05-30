@@ -8,6 +8,7 @@ import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {SlDropdown, SlTab, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
+import {until} from "lit/directives/until.js";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -158,6 +159,21 @@ export class EgwFramework extends LitElement
 			preference: (n, app, promise? : Function | boolean | undefined) => Promise.resolve(""),
 			set_preference(_app : string, _name : string, _val : any, _callback? : Function) {}
 		};
+	}
+
+	/**
+	 * A promise for if egw is loaded
+	 *
+	 * @returns {Promise<void>}
+	 */
+	getEgwComplete()
+	{
+		let egwLoading = Promise.resolve();
+		if(typeof this.egw.window['egw_ready'] !== "undefined")
+		{
+			egwLoading = this.egw.window['egw_ready'];
+		}
+		return egwLoading;
 	}
 
 	/**
@@ -617,7 +633,7 @@ export class EgwFramework extends LitElement
 		}
 		classes[`egw_fw__layout-${this.layout}`] = true;
 
-		return html`
+		return html`${until(this.getEgwComplete().then(() => html`
             <div class=${classMap(classes)} part="base">
                 <div class="egw_fw__banner" part="banner" role="banner">
                     <slot name="banner"><span class="placeholder">Banner</span></slot>
@@ -661,7 +677,8 @@ export class EgwFramework extends LitElement
                     <slot name="footer"><span class="placeholder">footer</span></slot>
                 </footer>
             </div>
-		`;
+		`), html`<span>Waiting for egw...</span>
+        <slot></slot>`)}`;
 	}
 }
 

@@ -42,7 +42,7 @@
         {topmenu_info_items}
 	</div>
 
-	<!-- status app is looking for this -->
+	<!-- status app is looking for this, but it could slot itself -->
 	<div slot="status" id="egw_fw_sidebar_r"></div>
 
 	<!-- Currently open app -->
