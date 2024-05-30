@@ -239,6 +239,13 @@ export class EgwFramework extends LitElement
 		if(typeof app.opened == "undefined")
 		{
 			app.opened = this.shadowRoot.querySelectorAll("sl-tab").length;
+			// Need to update tabApps directly, reference doesn't work
+			if(typeof this.tabApps[appname] == "object")
+			{
+				let tabApps = {...this.tabApps};
+				tabApps[appname] = app;
+				this.tabApps = tabApps;
+			}
 			this.requestUpdate("applicationList");
 		}
 
