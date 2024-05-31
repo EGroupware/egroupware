@@ -228,7 +228,7 @@ export class EgwFramework extends LitElement
 			}
 			if(url)
 			{
-				existing.url = url;
+				existing.load(url);
 			}
 			return existing;
 		}

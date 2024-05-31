@@ -174,7 +174,7 @@ export class EgwFrameworkApp extends LitElement
 		return result
 	}
 
-	protected load(url)
+	public load(url)
 	{
 		if(!url)
 		{
@@ -184,6 +184,7 @@ export class EgwFrameworkApp extends LitElement
 			}
 			return;
 		}
+		this.url = url;
 		let targetUrl = "";
 		this.useIframe = true;
 		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
@@ -239,13 +240,12 @@ export class EgwFrameworkApp extends LitElement
 			this.loadingPromise = new Promise((resolve, reject) =>
 			{
 				const timeout = setTimeout(() => reject(this.name + " load failed"), 5000);
-				this.addEventListener("load", () =>
+				render(this._iframeTemplate(), this);
+				this.querySelector("iframe").addEventListener("load", () =>
 				{
 					clearTimeout(timeout);
 					resolve()
 				}, {once: true});
-
-				render(this._iframeTemplate(), this);
 			});
 			// Might have just changed useIFrame, need to update to show that
 			this.requestUpdate();
@@ -578,12 +578,7 @@ export class EgwFrameworkApp extends LitElement
 			// Just one thing, don't bother with submenu
 			if(menu["entries"].length == 1)
 			{
-				return html`
-                    <sl-menu-item
-                            @click=${() => this.egw.open_link(menu["entries"][0]["item_link"])}
-                    >
-                        ${menu["title"]}
-                    </sl-menu-item>`;
+				return this._sideboxMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
 			}
 			return html`
                 <sl-menu-item>
@@ -598,6 +593,11 @@ export class EgwFrameworkApp extends LitElement
 		})}`;
 	}
 
+	/**
+	 * An individual sub-item in the 3-dots menu
+	 * @param item
+	 * @returns {TemplateResult<1>}
+	 */
 	_sideboxMenuItemTemplate(item)
 	{
 		if(item["lang_item"] == "<hr />")
@@ -607,8 +607,12 @@ export class EgwFrameworkApp extends LitElement
 		}
 		return html`
             <sl-menu-item
+                    ?disabled=${!item["item_link"]}
                     @click=${() => this.egw.open_link(item["item_link"])}
             >
+                ${typeof item["icon_or_star"] == "string" && item["icon_or_star"].endsWith("bullet.svg") ? nothing : html`
+                    <et2-image name=${item["icon_or_star"]}></et2-image>
+                `}
                 ${item["lang_item"]}
             </sl-menu-item>`;
 

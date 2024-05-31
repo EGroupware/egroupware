@@ -213,5 +213,12 @@ export default css`
 		}
 	}
 
+	/* End layout */
+
+	/* Styling */
+
+	.egw_fw_app__header sl-icon[name="three-dots-vertical"] {
+		padding: var(--sl-spacing-small);
+	}
 
 `
