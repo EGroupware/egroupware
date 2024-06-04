@@ -184,6 +184,11 @@ class DateTime extends \DateTime
 		}
 	}
 
+	public function __toString()
+	{
+		return (string)$this->format(self::DATABASE);
+	}
+
 	/**
 	 * Like DateTime::add, but additional allow to use a string run through DateInterval::createFromDateString
 	 *
