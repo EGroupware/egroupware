@@ -597,9 +597,12 @@ class calendar_rrule implements Iterator
 	{
 		if ($this->type == self::PERIOD)
 		{
-			reset($this->period);
+			$this->current = clone reset($this->period);
 		}
-		$this->current = clone $this->time;
+		else
+		{
+			$this->current = clone $this->time;
+		}
 		while ($this->valid() &&
 			$this->exceptions &&
 			in_array($this->current->format('Ymd'),$this->exceptions))
