@@ -2765,10 +2765,10 @@ class calendar_ical extends calendar_boupdate
 					if($attributes['params']['VALUE'] == 'PERIOD')
 					{
 						$vcardData['recur_type'] = calendar_rrule::PERIOD;
-						$vcardData['recur_exception'] = [];
+						$vcardData['recur_rdates'] = [];
 						foreach($attributes['values'] as $date)
 						{
-							$vcardData['recur_exception'][] = mktime(
+							$vcardData['recur_rdates'][] = mktime(
 								$hour,
 								$minutes,
 								$seconds,
@@ -3185,7 +3185,7 @@ class calendar_ical extends calendar_boupdate
 		$event['priority'] = 2; // default
 		$event['alarm'] = $alarms;
 
-		// now that we know what the vard provides,
+		// now that we know what the ical provides,
 		// we merge that data with the information we have about the device
 		while (($fieldName = array_shift($supportedFields)))
 		{
@@ -3196,6 +3196,7 @@ class calendar_ical extends calendar_boupdate
 				case 'recur_data':
 				case 'recur_exception':
 				case 'recur_count':
+				case 'recur_rdates':
 				case 'whole_day':
 					// not handled here
 					break;
@@ -3205,7 +3206,7 @@ class calendar_ical extends calendar_boupdate
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						$event['reference'] = 0;
-						foreach (array('recur_interval','recur_enddate','recur_data','recur_exception','recur_count') as $r)
+						foreach (array('recur_interval','recur_enddate','recur_data','recur_exception','recur_count','recur_rdates') as $r)
 						{
 							if (isset($vcardData[$r]))
 							{
