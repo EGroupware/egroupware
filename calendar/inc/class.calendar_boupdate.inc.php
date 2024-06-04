@@ -1404,7 +1404,7 @@ class calendar_boupdate extends calendar_bo
 		$this->check_reset_statuses($event, $old_event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if (!empty($event['recur_type']) && $event['recur_enddate'] && $event['start'])
+		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::PERIOD) && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
@@ -1485,10 +1485,11 @@ class calendar_boupdate extends calendar_bo
 		{
 			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = Api\DateTime::$user_timezone->getName());
 		}
-		// same with the recur exceptions
-		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
+		// same with the recur exceptions and rdates
+		foreach(['recur_exception', 'recur_rdates'] as $name)
 		{
-			foreach($event['recur_exception'] as &$date)
+			if (!is_array($event[$name] ?? null)) continue;
+			foreach($event[$name] as &$date)
 			{
 				if ($event['whole_day'])
 				{
@@ -2400,9 +2401,9 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $event	the vCalendar data we try to find
 	 * @param string filter='exact' exact	-> find the matching entry
-	 * 								check	-> check (consitency) for identical matches
+	 * 								check	-> check (consistency) for identical matches
 	 * 							    relax	-> be more tolerant
-	 *                              master	-> try to find a releated series master
+	 *                              master	-> try to find a related series master
 	 * @return array calendar_ids of matching entries
 	 */
 	function find_event($event, $filter='exact')
@@ -3120,12 +3121,12 @@ class calendar_boupdate extends calendar_bo
 			// we convert here from server-time to timestamps in user-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2usertime($event[$ts]) : 0;
 		}
-		// same with the recur exceptions
-		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
+		// same with the recur exceptions and rdates
+	    foreach(['recur_exception', 'recur_rdates'] as $name)
 		{
-			foreach($event['recur_exception'] as $n => $date)
+			foreach($event[$name] ?? [] as $n => $date)
 			{
-				$event['recur_exception'][$n] = $this->date2usertime($date);
+				$event[$name][$n] = $this->date2usertime($date);
 			}
 		}
 		// same with the alarms
@@ -3137,6 +3138,7 @@ class calendar_boupdate extends calendar_bo
 			}
 		}
     }
+
 	/**
 	 * Delete events that are more than $age years old
 	 *
