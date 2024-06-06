@@ -1139,7 +1139,7 @@ class calendar_so
 			{
 				$row['participants'] = array();
 			}
-			$row['recur_exception'] = $row['alarm'] = array();
+			$row['recur_exception'] = $row['recur_rdates'] = $row['alarm'] = array();
 
 			// compile a list of recurrences per cal_id
 			if (!isset($recur_ids[$row['cal_id']]) || !in_array($id, $recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
@@ -1188,9 +1188,8 @@ class calendar_so
 			// query recurrance exceptions, if needed: enum_recuring && !daywise is used in calendar_groupdav::get_series($uid,...)
 			if (!$params['enum_recuring'] || !$params['daywise'])
 			{
-				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start,recur_exception', array(
 					'cal_id' => $ids,
-					'recur_exception' => true,
 				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
 					// for enum_recurring events are not indexed by cal_id, but $cal_id.'-'.$cal_start
@@ -1202,7 +1201,14 @@ class calendar_so
 							if ($event['id'] == $row['cal_id']) break;
 						}
 					}
-					$events[$id]['recur_exception'][] = $row['cal_start'];
+					if (Api\Db::from_bool($row['recur_exception']))
+					{
+						$events[$id]['recur_exception'][] = $row['cal_start'];
+					}
+					if ($events[$id]['recur_type'] == MCAL_RECUR_RDATE)
+					{
+						$events[$id]['recur_rdates'][] = $row['cal_start'];
+					}
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
