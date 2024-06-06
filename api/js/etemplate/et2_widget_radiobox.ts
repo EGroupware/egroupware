@@ -48,6 +48,12 @@ export class et2_radiobox extends et2_inputWidget
 			"type": "string",
 			"default": "",
 			"description": "What should be displayed when readonly and not selected"
+		},
+		name: {
+			"name": "Name of radio-group",
+			"type": "string",
+			"default": "",
+			"description": "Used to group radio-buttons, defaults to id of radio-button"
 		}
 	};
 
@@ -96,7 +102,10 @@ export class et2_radiobox extends et2_inputWidget
 		super.set_id(_id);
 
 		this.dom_id = this.dom_id.replace('[]', '')+'-'+this.options.set_value;
-		if (this.input) this.input.attr('id', this.dom_id);
+		if (this.input) {
+			this.input.attr('id', this.dom_id);
+			if (this.options.name) this.input.attr('name', this.options.name);
+		}
 	}
 
 	/**
@@ -122,7 +131,7 @@ export class et2_radiobox extends et2_inputWidget
 	{
 		this.getRoot().iterateOver(function(radio)
 		{
-			if (radio.id == this.id)
+			if (radio.id == this.id && (!this.options.name || this.options.name == radio.options.name))
 			{
 				radio.input.prop('checked', _value == radio.options.set_value);
 			}
@@ -141,7 +150,8 @@ export class et2_radiobox extends et2_inputWidget
 		this.getRoot().iterateOver(function(radio)
 		{
 			values.push(radio.options.set_value);
-			if (radio.id == this.id && radio.input && radio.input.prop('checked'))
+			if (radio.id == this.id && radio.input && (!this.options.name || this.options.name == radio.options.name) &&
+				radio.input.prop('checked'))
 			{
 				val = radio.options.set_value;
 			}
@@ -487,4 +497,3 @@ export class et2_radioGroup extends et2_valueWidget implements et2_IDetachedDOM
 }
 // No such tag as 'radiogroup', but it needs something
 et2_register_widget(et2_radioGroup, ["radiogroup"]);
-
