@@ -1303,40 +1303,42 @@ class calendar_ical extends calendar_boupdate
 				{
 					$event['id'] = $event_info['stored_event']['id']; // CalDAV does only provide UIDs
 				}
-				if (is_array($event['participants']))
+				// if file contains no participants add current user
+				if (empty($event['participants']))
 				{
-					// if the client does not return a status, we restore the original one
-					foreach ($event['participants'] as $uid => $status)
+					$event['participants'] = [$user => calendar_so::combine_status('A'));
+				}
+				// if the client does not return a status, we restore the original one
+				foreach ($event['participants'] as $uid => $status)
+				{
+					// Work around problems with Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
+					// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
+					// --> allow only updates with other status then NEEDS-ACTION and therefore allow accepting or denying meeting requests for the user himself
+					if ($status[0] === 'X' || calendar_groupdav::get_agent() === 'caldavsynchronizer' && $status[0] === 'U')
 					{
-						// Work around problems with Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
-						// - always sends all participants back with status NEEDS-ACTION --> resets status of all participant, if user has edit rights
-						// --> allow only updates with other status then NEEDS-ACTION and therefore allow accepting or denying meeting requests for the user himself
-						if ($status[0] === 'X' || calendar_groupdav::get_agent() === 'caldavsynchronizer' && $status[0] === 'U')
+						if (isset($event_info['stored_event']['participants'][$uid]))
 						{
-							if (isset($event_info['stored_event']['participants'][$uid]))
+							if ($this->log)
 							{
-								if ($this->log)
-								{
-									error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-										"() Restore status for $uid\n",3,$this->logfile);
-								}
-								$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
+									"() Restore status for $uid\n",3,$this->logfile);
 							}
-							else
-							{
-								$event['participants'][$uid] = calendar_so::combine_status('U');
-							}
+							$event['participants'][$uid] = $event_info['stored_event']['participants'][$uid];
 						}
-						// restore resource-quantity from existing event as neither iOS nor Thunderbird returns our X-EGROUPWARE-QUANTITY
-						elseif ($uid[0] === 'r' && isset($event_info['stored_event']['participants'][$uid]))
+						else
 						{
-							$quantity = $role = $old_quantity = null;
-							calendar_so::split_status($status, $quantity, $role);
-							calendar_so::split_status($event_info['stored_event']['participants'][$uid], $old_quantity);
-							if ($old_quantity > 1)
-							{
-								$event['participants'][$uid] = calendar_so::combine_status('U', $old_quantity, $role);
-							}
+							$event['participants'][$uid] = calendar_so::combine_status('U');
+						}
+					}
+					// restore resource-quantity from existing event as neither iOS nor Thunderbird returns our X-EGROUPWARE-QUANTITY
+					elseif ($uid[0] === 'r' && isset($event_info['stored_event']['participants'][$uid]))
+					{
+						$quantity = $role = $old_quantity = null;
+						calendar_so::split_status($status, $quantity, $role);
+						calendar_so::split_status($event_info['stored_event']['participants'][$uid], $old_quantity);
+						if ($old_quantity > 1)
+						{
+							$event['participants'][$uid] = calendar_so::combine_status('U', $old_quantity, $role);
 						}
 					}
 				}
