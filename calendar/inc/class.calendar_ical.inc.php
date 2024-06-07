@@ -1675,7 +1675,7 @@ class calendar_ical extends calendar_boupdate
 							unset($event['id']);
 							unset($event_info['stored_event']);
 							$event['recur_type'] = MCAL_RECUR_NONE;
-							if (empty($event['recurrence']))
+							if (empty($event['recurrence']) && $event_info['master_event'])
 							{
 								// find an existing exception slot
 								$occurence = $exception = false;
