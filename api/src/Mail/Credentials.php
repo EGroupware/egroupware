@@ -224,7 +224,12 @@ class Credentials
 			{
 				continue;
 			}
-			$password = self::decrypt($row);
+			try {
+				$password = self::decrypt($row);
+			}
+			catch (NoSessionPassword $e) {
+				$password = self::UNAVAILABLE;
+			}
 
 			// Remove special x char added to the end for \0 trimming escape.
 			if ($type == self::SMIME && substr($password, -1) === 'x') $password = substr($password, 0, -1);
@@ -533,7 +538,12 @@ class Credentials
 		if (empty($key))
 		{
 			if ($account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
-				($key = Api\Cache::getSession('phpgwapi', 'password')))
+				($key = Api\Cache::getSession('phpgwapi', 'password')) &&
+				// do NOT encrypt password if (optional) SAML or OpenIdConnect auth is enabled
+				!array_filter(array_keys(Api\Config::read('phpgwapi')), static function($name)
+				{
+					return str_ends_with($name, '_discovery');
+				}))
 			{
 				$pw_enc = self::USER_AES;
 				$key = base64_decode($key);
@@ -687,7 +697,7 @@ class Credentials
 			$session_key = Api\Cache::getSession('phpgwapi', 'password');
 			if (empty($session_key))
 			{
-				throw new Api\Exception\AssertionFailed("No session password available!");
+				throw new NoSessionPassword();
 			}
 			$key = base64_decode($session_key);
 		}
@@ -920,5 +930,16 @@ class Credentials
 	static public function get_db()
 	{
 		return isset($GLOBALS['egw_setup']) ? $GLOBALS['egw_setup']->db : $GLOBALS['egw']->db;
+	}
+}
+
+/**
+ * Exception thrown if session has NO user password stored e.g. SingleSignOn via Saml or OpenIdConnect
+ */
+class NoSessionPassword extends Api\Exception\AssertionFailed
+{
+	public function __construct(?string $msg=null, $code=100, ?\Throwable $previous=null)
+	{
+		parent::__construct($msg ?: "No session password available!", $code, $previous);
 	}
 }
