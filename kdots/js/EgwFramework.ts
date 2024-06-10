@@ -268,10 +268,21 @@ export class EgwFramework extends LitElement
 		// Wait until new tab is there to activate it
 		if(active || app.active)
 		{
-			this.updateComplete.then(() =>
+			// Wait for egw
+			this.getEgwComplete().then(() =>
 			{
-				this.tabs.show(appname);
-			})
+				// Wait for redraw after getEgwComplete promise
+				this.updateComplete.then(() =>
+				{
+					// Tabs present
+					this.updateComplete.then(() =>
+					{
+						this.querySelectorAll("egw-app[active]").forEach(n => n.removeAttribute("active"));
+
+						this.tabs.show(appname);
+					});
+				});
+			});
 		}
 
 		return appComponent;
@@ -513,7 +524,11 @@ export class EgwFramework extends LitElement
 		appComponent.setAttribute("active", "");
 
 		// Update the list on the server
-		this.updateTabs(event.target.activeTab);
+		const tabGroup : SlTabGroup = this.shadowRoot.querySelector("sl-tab-group.egw_fw__open_applications");
+		tabGroup.updateComplete.then(() =>
+		{
+			this.updateTabs(appComponent);
+		});
 	}
 
 	/**
@@ -533,7 +548,10 @@ export class EgwFramework extends LitElement
 		else
 		{
 			// Show will update, but closing in the background we call directly
-			this.updateTabs(tabGroup.querySelector("sl-tab[active]"));
+			tabGroup.updateComplete.then(() =>
+			{
+				this.updateTabs(tabGroup.querySelector("sl-tab[active]"));
+			});
 		}
 
 		// Remove the tab + panel
@@ -554,6 +572,19 @@ export class EgwFramework extends LitElement
 		//Send the current tab list to the server
 		let data = this.assembleTabList(activeTab);
 
+		// Update session tabs
+		let tabs = {};
+		Object.keys(this.tabApps).forEach((t) =>
+		{
+			if(data.some(d => d.appName == t))
+			{
+				tabs[t] = this.tabApps[t];
+				tabs[t].active = t == activeTab.id;
+			}
+		});
+		this.tabApps = tabs;
+
+
 		//Serialize the tab list and check whether it really has changed since the last
 		//submit
 		var serialized = egw.jsonEncode(data);
@@ -573,7 +604,7 @@ export class EgwFramework extends LitElement
 		let appList = []
 		Array.from(this.shadowRoot.querySelectorAll("sl-tab-group.egw_fw__open_applications sl-tab")).forEach((tab : SlTab) =>
 		{
-			appList.push({appName: tab.panel, active: activeTab.panel == tab.panel})
+			appList.push({appName: tab.panel, active: activeTab.id == tab.panel})
 		});
 		return appList;
 	}
