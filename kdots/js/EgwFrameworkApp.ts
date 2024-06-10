@@ -319,9 +319,9 @@ export class EgwFrameworkApp extends LitElement
 				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizental' : 'spinner');
 
 				// Give framework a chance to deal, then reset the etemplates
-				appWindow.setTimeout(function()
+				appWindow.setTimeout(() =>
 				{
-					for(var i = 0; i < et2_list.length; i++)
+					for(let i = 0; i < et2_list.length; i++)
 					{
 						et2_list[i].widgetContainer.iterateOver(function(_widget)
 						{
@@ -449,9 +449,18 @@ export class EgwFrameworkApp extends LitElement
 			{
 				window.clearTimeout(this.resizeTimeout);
 			}
-			window.setTimeout(() =>
+			this.resizeTimeout = window.setTimeout(() =>
 			{
 				this.egw.set_preference(this.name, preferenceName, newPosition);
+
+				// Tell etemplates to resize
+				this.querySelectorAll("[id]").forEach(e =>
+				{
+					if(etemplate2.getById(e.id))
+					{
+						etemplate2.getById(e.id).resize(new Event("resize"));
+					}
+				});
 			}, 500);
 		}
 	}
