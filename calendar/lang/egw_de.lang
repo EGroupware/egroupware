@@ -247,6 +247,7 @@ exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	Existiert
+explicit dates	calendar	de	Explizite Termine
 export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format

@@ -375,6 +375,7 @@ class calendar_rrule implements Iterator
 	{
 		switch($type)
 		{
+			default:
 			case self::DAILY:
 				$duration = 24*3600;
 				break;
