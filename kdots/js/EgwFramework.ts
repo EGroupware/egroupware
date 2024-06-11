@@ -277,9 +277,7 @@ export class EgwFramework extends LitElement
 					// Tabs present
 					this.updateComplete.then(() =>
 					{
-						this.querySelectorAll("egw-app[active]").forEach(n => n.removeAttribute("active"));
-
-						this.tabs.show(appname);
+						this.showTab(appname);
 					});
 				});
 			});
@@ -512,10 +510,14 @@ export class EgwFramework extends LitElement
 	 */
 	protected handleApplicationTabShow(event)
 	{
+		// Create & show app
+		this.showTab(event.target.activeTab.panel);
+	}
+
+	public showTab(appname)
+	{
 		this.querySelectorAll("egw-app").forEach(app => app.removeAttribute("active"));
 
-		// Create & show app
-		const appname = event.target.activeTab.panel;
 		let appComponent = this.querySelector(`egw-app#${appname}`);
 		if(!appComponent)
 		{
