@@ -442,7 +442,7 @@ export class EgwFrameworkApp extends LitElement
 		this[`${event.target.panelInfo.side}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
 
 		let preferenceName = event.target.panelInfo.preference;
-		if(newPosition != event.target.panelInfo.preferenceWidth)
+		if(newPosition != event.target.panelInfo.preferenceWidth && !isNaN(newPosition))
 		{
 			event.target.panelInfo.preferenceWidth = newPosition;
 			if(this.resizeTimeout)

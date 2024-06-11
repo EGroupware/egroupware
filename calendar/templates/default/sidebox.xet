@@ -12,7 +12,7 @@ Egroupware
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
-    <template id="calendar.sidebox">
+    <template id="calendar.sidebox" slot="left">
 		<et2-vbox parentId="calendar-et2_target">
             <calendar-date id="date"></calendar-date>
             <et2-textbox type="hidden" id="first"></et2-textbox>
