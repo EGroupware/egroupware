@@ -1028,7 +1028,7 @@ class calendar_bo
 			// same with the recur exceptions and rdates
 			foreach(['recur_exception', 'recur_rdates'] as $name)
 			{
-				if (is_array($event[$name] ?? null)) continue;
+				if (!is_array($event[$name] ?? null)) continue;
 				foreach($event[$name] as &$date)
 				{
 					if ($event['whole_day'] && $date_format != 'server')
