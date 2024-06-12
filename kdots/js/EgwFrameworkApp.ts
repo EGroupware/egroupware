@@ -582,7 +582,13 @@ export class EgwFrameworkApp extends LitElement
 			// No favorites here
 			if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
 			{
-				return nothing;
+				return html`
+                    <sl-menu-item>
+                        <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
+                        ${menu["title"]}
+                        <et2-favorites-menu slot="submenu" application="${this.appName}"></et2-favorites-menu>
+                    </sl-menu-item>
+				`;
 			}
 			// Just one thing, don't bother with submenu
 			if(menu["entries"].length == 1)
