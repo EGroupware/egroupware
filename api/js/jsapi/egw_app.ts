@@ -1230,6 +1230,15 @@ export abstract class EgwApp
 					this.egw.set_preference(this.appname, favorite_pref, favorite);
 				}
 
+				// Trigger event so widgets can update
+				document.dispatchEvent(new CustomEvent("preferenceChange", {
+					bubbles: true,
+					detail: {
+						application: this.appname,
+						preference: favorite_pref
+					}
+				}));
+
 				// Add to list immediately
 				if(this.sidebox)
 				{

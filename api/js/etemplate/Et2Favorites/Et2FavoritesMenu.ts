@@ -46,6 +46,9 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	@property()
 	application : string;
 
+	@property()
+	noAdd : boolean = false;
+
 	private favorites : { [name : string] : Favorite } = {
 		'blank': {
 			name: typeof this.egw()?.lang == "function" ? this.egw().lang("No filters") : "No filters",
@@ -55,22 +58,61 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	};
 	private loadingPromise = Promise.resolve();
 
+	constructor()
+	{
+		super();
+		this.handlePreferenceChange = this.handlePreferenceChange.bind(this);
+	}
 	connectedCallback()
 	{
 		super.connectedCallback();
 
 		if(this.application)
 		{
-			this.loadingPromise = Favorite.load(this.egw(), this.application).then((favorites) =>
-			{
-				this.favorites = favorites;
-			});
+			this._load();
+		}
+		document.addEventListener("preferenceChange", this.handlePreferenceChange);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		document.removeEventListener("preferenceChange", this.handlePreferenceChange);
+	}
+
+	private _load()
+	{
+		this.loadingPromise = Favorite.load(this.egw(), this.application).then((favorites) =>
+		{
+			this.favorites = favorites;
+		});
+	}
+
+	handlePreferenceChange(e)
+	{
+		if(e && e.detail?.application == this.application)
+		{
+			this._load();
+			this.requestUpdate();
 		}
 	}
 
 	handleSelect(event)
 	{
+		if(event.detail.item.value == Favorite.ADD_VALUE)
+		{
+			return this.handleAdd(event);
+		}
 		Favorite.applyFavorite(this.egw(), this.application, event.detail.item.value);
+	}
+
+	handleAdd(event)
+	{
+		event.stopPropagation();
+		if(this.egw().window && this.egw().window.app[this.application])
+		{
+			this.egw().window.app[this.application].add_favorite({});
+		}
 	}
 
 	handleDelete(event)
@@ -89,6 +131,18 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 			// Remove from widget
 			delete this.favorites[favoriteName];
 			this.requestUpdate();
+
+			this.updateComplete.then(() =>
+			{
+				this.dispatchEvent(new CustomEvent("preferenceChange", {
+					bubbles: true,
+					composed: true,
+					detail: {
+						application: this.application,
+						preference: favoriteName
+					}
+				}));
+			});
 		});
 
 		this.requestUpdate();
@@ -123,12 +177,21 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 		{
 			return html`
                 <sl-menu
+                        part="menu"
                         @sl-select=${this.handleSelect}
                 >
                     ${this.label ? html`
                         <sl-menu-label>${this.label}</sl-menu-label>` : nothing}
                     ${repeat(Object.keys(this.favorites), (i) => this.menuItemTemplate(i, this.favorites[i]))}
                     <slot></slot>
+                    ${this.noAdd ? nothing : html`
+                        <sl-menu-item value=${Favorite.ADD_VALUE}
+                                      @sl-select=${this.handleAdd}
+                        >
+                            <sl-icon name="plus" slot="prefix"></sl-icon>
+                            ${this.egw().lang("Current view as favourite")}
+                        </sl-menu-item>`
+                    }
                 </sl-menu>
 			`;
 		});

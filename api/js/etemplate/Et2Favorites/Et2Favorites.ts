@@ -345,20 +345,21 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			// Hide the trash
 			trash.remove();
 
-			// Delete preference server side
-			Favorite.remove(this.egw(), this.app, line.value).then(response =>
+			// Delete preference server side, returns boolean
+			Favorite.remove(this.egw(), this.app, line.value).then(result =>
 			{
 				line.classList.remove("loading");
 
-				let result = response.response.find(r => r.type == "data");
+				this.dispatchEvent(new CustomEvent("preferenceChange", {
+					bubbles: true,
+					composed: true,
+					detail: {
+						application: this.application,
+						preference: line.value
+					}
+				}));
 
-				// Could not find the result we want
-				if(!result || result.type !== "data")
-				{
-					return;
-				}
-
-				if(typeof result.data == 'boolean' && result.data)
+				if(result)
 				{
 					// Remove line from list
 					line.remove();
