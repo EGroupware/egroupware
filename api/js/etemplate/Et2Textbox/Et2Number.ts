@@ -184,6 +184,7 @@ export class Et2Number extends Et2Textbox
 
 	private handleScroll(e)
 	{
+		if (this.disabled) return;
 		const old_value = this.value;
 		let min = parseFloat(this.min ?? Number.MIN_SAFE_INTEGER);
 		if(Number.isNaN(min))
@@ -208,7 +209,7 @@ export class Et2Number extends Et2Textbox
 			return '';
 		}
 
-		return html`
+		return this.disabled ? '' : html`
             <et2-button-scroll class="et2-number__scrollbuttons" slot="suffix"
                                part="scroll"
                                @et2-scroll=${this.handleScroll}></et2-button-scroll>`;
