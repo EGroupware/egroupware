@@ -113,6 +113,11 @@ class calendar_timezones
 				self::$tz_cache[$id] = Api\Db::strip_array_keys($data,'tz_');
 			}
 		}
+		// check for a Windows timezone without "Standard Time" postfix
+		if (!isset($id) && strpos($tzid, '/') === false)
+		{
+			$id = self::tz2id($tzid.' Standard Time');
+		}
 		if (isset($id) && $what != 'id')
 		{
 			return self::id2tz($id,$what);

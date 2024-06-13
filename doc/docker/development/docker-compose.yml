@@ -109,8 +109,8 @@ services:
     # old API and eTemplate(1), required for upgrades from before 14.3
     #- EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
     #
-    # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
-    - XDEBUG_REMOTE_HOST=172.17.0.1
+    # XDEBUG_REMOTE_HOST need to be set, Docker Desktop can use host.docker.internal or Linux the docker0 interface 172.17.0.1
+    - XDEBUG_REMOTE_HOST=host.docker.internal
     restart: always
     depends_on:
     - db
@@ -228,7 +228,14 @@ services:
   # Rocket.Chat server
   #rocketchat:
   #  image: quay.io/egroupware/rocket.chat:latest
-  #  command: bash -c 'for i in `seq 1 30`; do node main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
+  #  command: >
+  #      sh -c
+  #        "while true; do
+  #          node main.js &&
+  #          s=$$? && break || s=$$?;
+  #          echo \"Could not reach MongoDB. Waiting 5 secs ...\";
+  #          sleep 5;
+  #        done; (exit $$s)"
   #  restart: unless-stopped
   #  volumes:
   #    - $PWD/data/default/rocketchat/uploads:/app/uploads

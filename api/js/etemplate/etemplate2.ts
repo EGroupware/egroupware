@@ -49,11 +49,13 @@ import './Et2Date/Et2DateTimeReadonly';
 import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
+import './Et2Dialog/Et2MergeDialog';
 import './Et2DropdownButton/Et2DropdownButton';
 import './Et2Email/Et2Email';
 import './Expose/Et2ImageExpose';
 import './Expose/Et2DescriptionExpose';
 import './Et2Favorites/Et2Favorites';
+import './Et2Favorites/Et2FavoritesMenu';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';
@@ -707,6 +709,11 @@ export class etemplate2
 				etemplate2._byTemplate[_name].push(this);
 
 				// Read the XML structure of the requested template
+				if(etemplate2.templates[this.name].hasAttribute("slot"))
+				{
+					this.DOMContainer.setAttribute("slot", etemplate2.templates[this.name].getAttribute("slot"));
+				}
+
 				this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
 				console.timeEnd("loadFromXML");
 				console.time("deferred");
@@ -1642,7 +1649,7 @@ export class etemplate2
 				}
 				else
 				{
-					egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+					egw.debug("error", "Could not find target node %s", data.DOMNodeID);
 				}
 			}
 

@@ -17,13 +17,15 @@ import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
-import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
+import {fetchAll, nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
 import {loadWebComponent} from "../etemplate/Et2Widget/Et2Widget";
-import {Et2VfsSelectDialog} from "../etemplate/Et2Vfs/Et2VfsSelectDialog";
-import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import type {EgwAction} from "../egw_action/EgwAction";
+import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
+import {EgwActionObject} from "../egw_action/EgwActionObject";
+import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
+import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import {AcSelect} from "../../../achelper/js/AcSelect/AcSelect";
 
 /**
@@ -839,28 +841,90 @@ export abstract class EgwApp
 			let split = _selected[i].id.split("::");
 			ids.push(split[1]);
 		}
-		let document = await this._getMergeDocument(nm?.getInstanceManager(), _action);
-		if(!document.document)
+		let document = await this._getMergeDocument(nm?.getInstanceManager(), _action, _selected);
+		if(!document.documents || document.documents.length == 0)
 		{
 			return;
 		}
 
 		let vars = {
 			..._action.data.merge_data,
-			document: document.document,
-			pdf: document.pdf ?? false,
+			options: document.options,
 			select_all: all,
 			id: ids
 		};
-		if(document.mime == "message/rfc822")
+		if(document.options.link)
 		{
+			vars.options.app = this.appname;
+		}
+		// Just one file, an email - merge & edit or merge & send
+		if(document.documents.length == 1 && document.documents[0].mime == "message/rfc822")
+		{
+			vars.document = document.documents[0].path;
 			return this._mergeEmail(_action.clone(), vars);
 		}
 		else
 		{
-			vars.id = JSON.stringify(ids);
+			vars.document = document.documents.map(f => f.path);
 		}
-		this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
+		if(document.documents.length == 1 && !document.options.individual)
+		{
+			// Only 1 document, we can open it
+			vars.id = JSON.stringify(ids);
+			this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
+		}
+		else
+		{
+			// Multiple files, or merging individually - will result in multiple documents that we can't just open
+			vars.menuaction = vars.menuaction.replace("merge_entries", "ajax_merge_multiple");
+			vars.menuaction += "&merge=" + vars.merge;
+			let mergedFiles = [];
+
+			// Check for an email template - all other files will be merged & attached
+			let email = document.documents.find(f => f.mime == "message/rfc822");
+
+			// Can we do this in one, or do we have to split it up for feedback?
+			if(!vars.options.individual && (!email || email && !all && ids.length == 1))
+			{
+				vars.options.open_email = !vars.options.download && typeof email != "undefined";
+
+				// Handle it all on the server in one request
+				this.egw.loading_prompt(vars.menuaction, true);
+				mergedFiles = await this.egw.request(vars.menuaction, [vars.id, vars.document, vars.options]);
+				this.egw.loading_prompt(vars.menuaction, false);
+
+				// One entry, email template selected - we can open that in the compose window
+				if(email)
+				{
+					debugger;
+				}
+				else
+				{
+					this.egw.message(mergedFiles, "success");
+				}
+			}
+			else
+			{
+				// Merging documents, merge email, attach to email, send.
+				// Handled like this here so we can give feedback, server could do it all in one request
+				let idGroup = await new Promise<string[]>((resolve) =>
+				{
+					if(all)
+					{
+						fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+					}
+					else
+					{
+						resolve(vars.options.individual ? ids : [ids])
+					}
+				});
+				Et2Dialog.long_task(null /*done*/, this.egw.lang("Merging"),
+					email ? this.egw.lang("Merging into %1 and sending", email.path) : this.egw.lang("Merging into %1", vars.document.join(", ")),
+					vars.menuaction,
+					idGroup.map((ids) => {return [Array.isArray(ids) ? ids : [ids], vars.document, vars.options];}), this.egw
+				);
+			}
+		}
 	}
 
 	/**
@@ -870,10 +934,9 @@ export abstract class EgwApp
 	 * @protected
 	 */
 
-	protected _getMergeDocument(et2?, action? : EgwAction) : Promise<{
-		document : string,
-		pdf : boolean,
-		mime : string
+	protected _getMergeDocument(et2?, action? : EgwAction, selected? : EgwActionObject[]) : Promise<{
+		documents : { path : string; mime : string }[];
+		options : { [p : string] : string | boolean }
 	}>
 	{
 		let path = action?.data?.merge_data?.directory ?? "";
@@ -886,51 +949,33 @@ export abstract class EgwApp
 				d = "/" + d;
 			}
 		});
-		let fileSelect = <Et2VfsSelectDialog><unknown>loadWebComponent('et2-vfs-select-dialog', {
-			class: "egw_app_merge_document",
-			title: this.egw.lang("Insert in document"),
-			mode: "open",
-			path: path ?? dirs?.pop() ?? "",
-			open: true
-		}, et2.widgetContainer);
+		let fileSelect = <Et2MergeDialog><unknown>loadWebComponent('et2-merge-dialog', {
+			application: this.appname,
+			path: dirs.pop() || ""
+		}, et2?.widgetContainer ?? null);
 		if(!et2)
 		{
 			document.body.append(fileSelect);
 		}
-		let pdf = <Et2Checkbox><unknown>loadWebComponent("et2-checkbox", {
-			slot: "footer",
-			label: "As PDF"
-		}, fileSelect);
-
-		// Disable PDF checkbox for emails
-		fileSelect.addEventListener("et2-select", e =>
+		// Customize dialog
+		fileSelect.updateComplete.then(() =>
 		{
-			let canPDF = true;
-			fileSelect.value.forEach(path =>
-			{
-				if(fileSelect.fileInfo(path).mime == "message/rfc822")
-				{
-					canPDF = false;
-				}
-			});
-			pdf.disabled = !canPDF;
-		});
-		return fileSelect.getComplete().then((values) =>
-		{
-			if(!values[0])
-			{
-				return {document: '', pdf: false, mime: ""};
-			}
+			// Start details open when you have multiple selected
+			// @ts-ignore
+			(<Et2Details>fileSelect.shadowRoot.querySelector('et2-details')).open = selected.length > 1;
 
-			const value = values[1].pop() ?? "";
-			const fileInfo = fileSelect.fileInfo(value) ?? {};
-			fileSelect.remove();
-			return {document: value, pdf: pdf.getValue(), mime: fileInfo.mime ?? ""};
+			// Disable individual when only one entry is selected
+			// @ts-ignore
+			(<Et2Checkbox>fileSelect.shadowRoot.querySelector("et2-details > [id='individual']")).disabled = selected.length == 1;
 		});
+		// Remove when done
+		fileSelect.getComplete().then(() => {fileSelect.remove();});
+
+		return fileSelect.getComplete();
 	}
 
 	/**
-	 * Merging into an email
+	 * Merge into an email, then open it in compose for a single, send directly for multiple
 	 *
 	 * @param {object} data
 	 * @protected

@@ -100,8 +100,14 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 				if (_callback === false) return undefined;
 				const request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
 				const promise = request.sendRequest(typeof _callback !== 'undefined', 'GET');
-				if (typeof prefs[_app] === 'undefined') prefs[_app] = {};
+				if (typeof prefs[_app] === 'undefined') prefs[_app] = promise;
 				if (_callback === true) return promise.then(() => this.preference(_name, _app));
+				if (typeof _callback === 'function') return false;
+			}
+			else if (typeof prefs[_app] === 'object' && typeof prefs[_app].then === 'function')
+			{
+				if (_callback === false) return undefined;
+				if (_callback === true) return prefs[_app].then(() => this.preference(_name, _app));
 				if (typeof _callback === 'function') return false;
 			}
 			let ret;

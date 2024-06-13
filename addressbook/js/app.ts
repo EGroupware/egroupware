@@ -1111,6 +1111,62 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
+	 * Get email addresses from selected contacts
+	 *
+	 * @param selected
+	 * @param {string[]} email_fields
+	 * @param {string} name_field
+	 * @returns {Promise<string[]>}
+	 */
+	async _getEmails(selected, email_fields = ["email"], name_field = 'n_fn') : Promise<string[]>
+	{
+		if(email_fields.length == 0)
+		{
+			return [];
+		}
+
+		// Check for all selected, don't resolve until all done
+		let nm = this.et2.getWidgetById('nm');
+		let all = new Promise(function(resolve)
+		{
+			let fetching = fetchAll(selected, nm, ids => {resolve(ids.map(function(num) {return {id: 'addressbook::' + num};}))});
+			if(!fetching)
+			{
+				resolve(selected);
+			}
+		});
+		let awaited = await all;
+
+		// Go through selected & pull email addresses from data
+		let emails = [];
+		for(let i = 0; i < awaited.length; i++)
+		{
+			// Pull data from global cache
+			const data = egw.dataGetUIDdata(awaited[i].id) || {data: {}};
+			let emailAddresses = email_fields.map(field =>
+			{
+				return data.data[field];
+			})
+
+			// prefix email with full name
+			let personal = data.data[name_field] || '';
+			if(personal.match(/[^a-z0-9. -]/i))
+			{
+				personal = '"' + personal.replace(/"/, '\\"') + '"';
+			}
+
+			//remove comma in personal as it will confilict with mail content comma seperator in the process
+			personal = personal.replace(/,/g, '');
+
+			emailAddresses.forEach(mail =>
+			{
+				emails.push((personal ? personal + ' <' : '') + mail + (personal ? '>' : ''));
+			});
+		}
+		return emails;
+	}
+
+	/**
 	 * Merge the selected contacts into the target document.
 	 *
 	 * Normally we let the framework handle this, but in addressbook we want to

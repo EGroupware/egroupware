@@ -54,6 +54,7 @@ $overwrites = [
 	'Et2InputWidget' => [
 		'.attrs' => [
 			'tabindex' => 'int',
+            'value' => 'string',
 		],
 	],
 	'Et2Textbox' => [
@@ -61,8 +62,12 @@ $overwrites = [
 			'placeholder' => 'string',
 			'maxlength' => 'int',
 			'size' => 'int',
+            'type' => 'string',
 		],
 	],
+    'et2-textbox' => [
+            '.children' => ['.quantity' => 'optional', 'et2-image'],
+    ],
 	'Et2InvokerMixin' => 'Et2TextBox',
 	'et2-description' => [
 		'.attrs' => [
@@ -75,6 +80,7 @@ $overwrites = [
 			'rows' => 'int',
 			'resizeRatio' => 'number',  // is this correct
 			'size' => 'int',
+            'placeholder' => 'string',
 		],
 	],
 	'et2-date' => [
@@ -111,6 +117,9 @@ $overwrites = [
 	'et2-tab-panel' => null,
 	'et2-details' => [
 		'.children' => 'Widgets',
+		'.attrs' => [
+			'summary' => 'string',
+		],
 	],
 	'et2-split' => [
 		'.children' => 'Widgets',
@@ -129,6 +138,7 @@ $overwrites = [
 	    '.attrs' => [
 		    'image' => 'string',
             'noSubmit' => 'boolean',
+            'hideOnReadonly' => 'boolean',
 	    ],
     ],
     'Et2ButtonIcon' => 'Et2Button',     // no inheritance from Et2Button, but Et2ButtonMixin, which is not recognised

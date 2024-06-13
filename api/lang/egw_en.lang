@@ -119,6 +119,7 @@ all addressbooks	groupdav	en	All addressbooks
 all categories	common	en	All categories
 all days	common	en	All days
 all fields	common	en	All fields
+all files	common	en	All files
 all in one	groupdav	en	All in one
 all languages	common	en	All languages
 all operations save the template!	common	en	All operations save the template!
@@ -444,6 +445,7 @@ document '%1' does not exist or is not readable for you!	preferences	en	Document
 document properties	common	en	Document properties
 document title:	common	en	Document title:
 documentation	common	en	Documentation
+documents	common	en	Documents
 doesn't matter	common	en	Doesn't matter
 domain	common	en	Domain
 domain name for mail-address, eg. "%1"	common	en	Domain name for mail address, eg. "%1"
@@ -491,6 +493,7 @@ el salvador	common	en	EL SALVADOR
 element role title	common	en	Element role title
 email	common	en	Email
 email-address of the user, eg. "%1"	common	en	Email address of the user, eg. "%1"
+emails	common	en	Emails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	en	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	en	Empty file
 enable javascript onchange submit	common	en	Enable JavaScript onchange submit
@@ -701,6 +704,7 @@ if you use "2-factor-authentication", please enter the code here.	common	en	If y
 image	common	en	Image
 image directory relative to document root (use / !), example:	common	en	Image folder relative to document root (use / !), example:
 image url	common	en	Image URL
+images	common	en	Images
 import	common	en	Import
 import an etemplate from a xml-file	common	en	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	en	Import table definitions from existing DB table
@@ -812,6 +816,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	en	Link is appended to mail allowing recipients to download up to date version of files
 link target %1 not found!	common	en	Link target %1 not found!
 link title of current record	common	en	Link title of current record
+link to each entry	common	en	Link to each entry
 linkapps	common	en	Link apps
 linked	common	en	Linked
 linkentry	common	en	Link entry
@@ -867,6 +872,10 @@ maybe	common	en	Maybe
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
 menu	common	en	Menu
+merge	common	en	Merge
+merge & send	common	en	Merge & send
+merge individually	common	en	Merge individually
+merge options	common	en	Merge options
 merged document filename	preferences	en	Merged document filename
 message	common	en	Message
 message ...	common	en	Message ...
@@ -1185,6 +1194,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
+save as PDF	common	en	Save as PDF
 save as zip	common	en	Save as ZIP
 save selected columns as default preference for all users.	common	en	Save columns as default preference for all users.
 save the changes made and close the window	common	en	Save changes and close
@@ -1265,6 +1275,7 @@ select work email address	common	en	Select work email address
 select year	common	en	Select year
 selectbox	common	en	Select box
 selection	common	en	Selection
+selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder.  %1 files unselected.
 send	common	en	Send
 send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL
@@ -1343,6 +1354,7 @@ spain	common	en	SPAIN
 span	common	en	Span
 span, class	common	en	Span, Class
 special characters	common	en	special characters
+spreadsheets	common	en	Spreadsheets
 sri lanka	common	en	SRI LANKA
 stack	common	en	Stack
 start a new search, cancel this link	common	en	Start new search, cancel this link
@@ -1504,6 +1516,7 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 vertical alignment of row	common	en	Vertical alignment of row
 vfs upload directory	common	en	VFS upload folder
 video tutorials	common	en	Video Tutorials
+videos	common	en	Videos
 viet nam	common	en	VIET NAM
 view	common	en	View
 view linked %1 entries	common	en	View linked %1 entries

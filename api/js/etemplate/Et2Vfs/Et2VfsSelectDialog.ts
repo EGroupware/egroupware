@@ -8,7 +8,7 @@
  */
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2VfsSelect.styles";
 import {property} from "lit/decorators/property.js";
@@ -110,7 +110,8 @@ export class Et2VfsSelectDialog
 			label: "Spreadsheets"
 		},
 		{value: "image/", label: "Images"},
-		{value: "video/", label: "Videos"}
+		{value: "video/", label: "Videos"},
+		{value: "message/rfc822", label: "Email"}
 	];
 
 	/** The select's help text. If you need to display HTML, use the `help-text` slot instead. */
@@ -249,11 +250,26 @@ export class Et2VfsSelectDialog
 
 	public setPath(path)
 	{
+		const oldValue = this.path;
+
+		// Selection doesn't stay across sub-dirs.  Notify user we dropped them.
+		if(this.value.length && path != oldValue)
+		{
+			const length = this.value.length;
+			this.value = [];
+			this.updateComplete.then(() =>
+			{
+				render(html`
+                    <sl-alert duration="5000" closable open>
+                        <sl-icon slot="icon" name="info-circle"></sl-icon>
+                        ${this.egw().lang("Selection of files can only be done in one folder.  %1 files unselected.", length)}
+                    </sl-alert>`, <HTMLElement><unknown>this);
+			});
+		}
 		if(path == '..')
 		{
 			path = this.dirname(this.path);
 		}
-		const oldValue = this.path;
 		this._pathNode.value = this.path = path;
 		this.requestUpdate("path", oldValue);
 		this.currentResult = null;
@@ -745,7 +761,7 @@ export class Et2VfsSelectDialog
                             image="filemanager/fav_filter" noSubmit="true"
                             @click=${() => this.setPath("/apps/favorites")}
                 ></et2-button>
-                <et2-select id="app" emptyLabel="Applications" noLang="1"
+                <et2-select id="app" emptyLabel="${this.egw().lang("Applications")}" noLang="1"
                             .select_options=${this._appList}
                             @change=${(e) => this.setPath("/apps/" + e.target.value)}
                 >
@@ -813,7 +829,7 @@ export class Et2VfsSelectDialog
 
 		const buttons = [
 			{id: "ok", label: this.buttonLabel, image: image, button_id: Et2Dialog.OK_BUTTON},
-			{id: "cancel", label: "cancel", image: "cancel", button_id: Et2Dialog.CANCEL_BUTTON}
+			{id: "cancel", label: this.egw().lang("cancel"), image: "cancel", button_id: Et2Dialog.CANCEL_BUTTON}
 		];
 
 		return html`
@@ -882,6 +898,7 @@ export class Et2VfsSelectDialog
                     ></et2-vfs-path>
                 </div>
                 ${this.searchResultsTemplate()}
+                <slot></slot>
                 <sl-visually-hidden>
                     <et2-label for="mimeFilter">${this.egw().lang("mime filter")}</et2-label>
                 </sl-visually-hidden>
@@ -901,7 +918,6 @@ export class Et2VfsSelectDialog
                 >
                     ${this.mimeOptionsTemplate()}
                 </et2-select>
-                <slot></slot>
                 <div
                         part="form-control-help-text"
                         id="help-text"

@@ -247,6 +247,7 @@ exclude weekend	calendar	en	Exclude Weekend
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
+explicit dates	calendar	en	Explicit dates
 export definition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your calendar into a CSV file.

@@ -45,29 +45,28 @@ class calendar_rrule implements Iterator
 	 */
 	const WEEKLY = 2;
 	/**
-	 * Monthly recurrance iCal: monthly_bymonthday
+	 * Monthly recurrence iCal: monthly_bymonthday
 	 */
 	const MONTHLY_MDAY = 3;
 	/**
-	 * Monthly recurrance iCal: BYDAY (by weekday, eg. 1st Friday of month)
+	 * Monthly recurrence iCal: BYDAY (by weekday, eg. 1st Friday of month)
 	 */
 	const MONTHLY_WDAY = 4;
 	/**
-	 * Yearly recurrance
+	 * Yearly recurrence
 	 */
 	const YEARLY = 5;
 	/**
-	 * Hourly recurrance
+	 * Hourly recurrence
 	 */
 	const HOURLY = 8;
 	/**
-	 * Minutely recurrance
+	 * Minutely recurrence
 	 */
 	const MINUTELY = 7;
 
 	/**
-	 * By date or period
-	 * (a list of dates)
+	 * RDATE: date or period (a list of dates, instead of a RRULE)
 	 */
 	const PERIOD = 9;
 
@@ -226,9 +225,9 @@ class calendar_rrule implements Iterator
 	public $time;
 
 	/**
-	 * Current "position" / time
+	 * Current "position" / time or null, if invalid (out of explicit RDATEs)
 	 *
-	 * @var Api\DateTime
+	 * @var Api\DateTime|null
 	 */
 	public $current;
 
@@ -257,9 +256,10 @@ class calendar_rrule implements Iterator
 	 * @param int $interval =1 1, 2, ...
 	 * @param DateTime $enddate =null enddate or null for no enddate (in which case we user '+5 year' on $time)
 	 * @param int $weekdays =0 self::SUNDAY=1|self::MONDAY=2|...|self::SATURDAY=64
-	 * @param array $exceptions =null DateTime objects with exceptions
+	 * @param DateTime[] $exceptions =null DateTime objects with exceptions
+	 * @param DateTime[] $rdates =null DateTime objects with rdates (for type self::PERIOD)
 	 */
-	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null)
+	public function __construct(DateTime $time,$type,$interval=1,DateTime $enddate=null,$weekdays=0,array $exceptions=null,array $rdates=null)
 	{
 		switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
 		{
@@ -319,16 +319,15 @@ class calendar_rrule implements Iterator
 		$this->enddate = $enddate;
 		if($type == self::PERIOD)
 		{
-			foreach($exceptions as $exception)
+			foreach($rdates as $rdate)
 			{
-				$exception->setTimezone($this->time->getTimezone());
-				$this->period[] = $exception;
+				$rdate->setTimezone($this->time->getTimezone());
+				$this->period[] = $rdate;
 			}
 			$enddate = clone(count($this->period) ? end($this->period) : $this->time);
 			// Make sure to include the last date as valid
 			$enddate->modify('+1 second');
 			reset($this->period);
-			unset($exceptions);
 		}
 		// no recurrence --> current date is enddate
 		if ($type == self::NONE)
@@ -376,6 +375,7 @@ class calendar_rrule implements Iterator
 	{
 		switch($type)
 		{
+			default:
 			case self::DAILY:
 				$duration = 24*3600;
 				break;
@@ -413,11 +413,11 @@ class calendar_rrule implements Iterator
 	/**
 	 * Return the current element
 	 *
-	 * @return Api\DateTime
+	 * @return ?Api\DateTime
 	 */
-	public function current(): Api\DateTime
+	public function current(): ?Api\DateTime
 	{
-		return clone $this->current;
+		return $this->current ? clone $this->current : null;
 	}
 
 	/**
@@ -427,7 +427,7 @@ class calendar_rrule implements Iterator
 	 */
 	public function key(): int
 	{
-		return (int)$this->current->format('Ymd');
+		return $this->current ? (int)$this->current->format('Ymd') : 0;
 	}
 
 	/**
@@ -498,14 +498,15 @@ class calendar_rrule implements Iterator
 				$this->current->modify($this->interval.' minute');
 				break;
 			case self::PERIOD:
-				$index = array_search($this->current, $this->period);
-				$next = $this->enddate ?? new Api\DateTime();
-				if($index !== false && $index + 1 < count($this->period))
+				if (($next = next($this->period)))
 				{
-					$next = $this->period[$index + 1];
+					$this->current->setDate($next->format('Y'), $next->format('m'), $next->format('d'));
+					$this->current->setTime($next->format('H'), $next->format('i'), $next->format('s'), 0);
 				}
-				$this->current->setDate($next->format('Y'), $next->format('m'), $next->format('d'));
-				$this->current->setTime($next->format('H'), $next->format('i'), $next->format('s'), 0);
+				else
+				{
+					$this->current = null;
+				}
 				break;
 
 			default:
@@ -522,7 +523,7 @@ class calendar_rrule implements Iterator
 		{
 			$this->next_no_exception();
 		}
-		while($this->exceptions && in_array($this->current->format('Ymd'),$this->exceptions));
+		while($this->current && $this->exceptions && in_array($this->current->format('Ymd'),$this->exceptions));
 	}
 
 	/**
@@ -595,7 +596,14 @@ class calendar_rrule implements Iterator
 	 */
 	public function rewind(): void
 	{
-		$this->current = clone $this->time;
+		if ($this->type == self::PERIOD)
+		{
+			$this->current = $this->period ? clone reset($this->period) : null;
+		}
+		else
+		{
+			$this->current = clone $this->time;
+		}
 		while ($this->valid() &&
 			$this->exceptions &&
 			in_array($this->current->format('Ymd'),$this->exceptions))
@@ -612,6 +620,10 @@ class calendar_rrule implements Iterator
 	 */
 	public function validDate(bool $use_just_date=null): bool
 	{
+		if (!$this->current)
+		{
+			return false;
+		}
 		if ($use_just_date)
 		{
 			return $this->current->format('Ymd') <= $this->enddate_ymd;
@@ -626,7 +638,7 @@ class calendar_rrule implements Iterator
 	 */
 	public function valid(): bool
 	{
-		return $this->current->format('ts') < $this->enddate_ts;
+		return $this->current && $this->current->format('ts') < $this->enddate_ts;
 	}
 
 	/**
@@ -853,10 +865,17 @@ class calendar_rrule implements Iterator
 		{
 			foreach($event['recur_exception'] as $exception)
 			{
-				$exceptions[] = is_a($exception,'DateTime') ? $exception : new Api\DateTime($exception,$timestamp_tz);
+				$exceptions[] = is_a($exception,'DateTime') ? $exception : new Api\DateTime($exception, $timestamp_tz);
 			}
 		}
-		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate??null,$event['recur_data'],$exceptions??null);
+		if (is_array($event['recur_rdates']))
+		{
+			foreach($event['recur_rdates'] as $rdate)
+			{
+				$rdates[] = is_a($rdate,'DateTime') ? $rdate : new Api\DateTime($rdate, $timestamp_tz);
+			}
+		}
+		return new calendar_rrule($time,$event['recur_type'],$event['recur_interval'],$enddate??null,$event['recur_data'],$exceptions??null,$rdates??null);
 	}
 
 	/**
@@ -955,6 +974,7 @@ class calendar_rrule implements Iterator
 			'recur_enddate' => $this->enddate ? $this->enddate->format('ts') : null,
 			'recur_data' => $this->weekdays,
 			'recur_exception' => $this->exceptions,
+			'recur_rdates' => $this->period,
 		);
 	}
 

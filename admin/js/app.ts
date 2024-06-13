@@ -423,7 +423,14 @@ class AdminApp extends EgwApp
 		if(!_data || _data.type != undefined) return;
 
 		// Insert the content, etemplate will load into it
-		jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
+		if(typeof _data === "string" || typeof _data[0] !== "undefined")
+		{
+			jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
+		}
+		else if(typeof _data.DOMNodeID == "string")
+		{
+			this.ajax_target.setAttribute("id", _data.DOMNodeID);
+		}
 	}
 
 	/**

@@ -17,6 +17,7 @@ import {Et2Image} from "../Et2Image/Et2Image";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {cssImage} from "../Et2Widget/Et2Widget";
+import {Favorite} from "./Favorite";
 
 /**
  * Favorites widget, designed for use in the nextmatch header
@@ -108,7 +109,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 
 	// Favorites are prefixed in preferences
 	public static readonly PREFIX = "favorite_";
-	protected static readonly ADD_VALUE = "~add~";
+	static readonly ADD_VALUE = "~add~";
 
 	private favSortedList : any = [];
 	private _preferred : string;
@@ -193,8 +194,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		if(changedProperties.has("app"))
 		{
 			this._preferred = <string>this.egw().preference(this.defaultPref, this.app);
-			this.__select_options = this._load_favorites(this.app);
-			this.requestUpdate("select_options");
+			this._load_favorites(this.app);
 		}
 	}
 
@@ -205,87 +205,26 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	 */
 	_load_favorites(app)
 	{
-
-		// Default blank filter
-		let favorites : any = {
-			'blank': {
-				name: this.egw().lang("No filters"),
-				state: {}
-			}
-		};
-
-		// Load saved favorites
-		this.favSortedList = [];
-		let preferences : any = this.egw().preference("*", app);
-		for(let pref_name in preferences)
+		Favorite.load(this.egw(), app).then((favorites) =>
 		{
-			if(pref_name.indexOf(Et2Favorites.PREFIX) == 0 && typeof preferences[pref_name] == 'object')
+			let options = [];
+			Object.keys(favorites).forEach((name) =>
 			{
-				let name = pref_name.substr(Et2Favorites.PREFIX.length);
-				favorites[name] = preferences[pref_name];
-				// Keep older favorites working - they used to store nm filters in 'filters',not state
-				if(preferences[pref_name]["filters"])
-				{
-					favorites[pref_name]["state"] = preferences[pref_name]["filters"];
-				}
-			}
-			if(pref_name == 'fav_sort_pref')
+				options.push(Object.assign({value: name, label: favorites[name].name || name}, favorites[name]));
+			})
+			// Only add 'Add current' if we have a nextmatch
+			if(this._nextmatch)
 			{
-				this.favSortedList = preferences[pref_name];
-				//Make sure sorted list is always an array, seems some old fav are not array
-				if(!Array.isArray(this.favSortedList))
-				{
-					this.favSortedList = this.favSortedList.split(',');
-				}
+				options.push({value: Et2Favorites.ADD_VALUE, label: this.egw().lang('Add current')});
 			}
-		}
-
-		for(let name in favorites)
-		{
-			if(this.favSortedList.indexOf(name) < 0)
-			{
-				this.favSortedList.push(name);
-			}
-		}
-		this.egw().set_preference(this.app, 'fav_sort_pref', this.favSortedList);
-		if(this.favSortedList.length > 0)
-		{
-			let sortedListObj = {};
-
-			for(let i = 0; i < this.favSortedList.length; i++)
-			{
-				if(typeof favorites[this.favSortedList[i]] != 'undefined')
-				{
-					sortedListObj[this.favSortedList[i]] = favorites[this.favSortedList[i]];
-				}
-				else
-				{
-					this.favSortedList.splice(i, 1);
-					this.egw().set_preference(this.app, 'fav_sort_pref', this.favSortedList);
-				}
-			}
-			favorites = Object.assign(sortedListObj, favorites);
-		}
-
-		let options = [];
-		Object.keys(favorites).forEach((name) =>
-		{
-			options.push(Object.assign({value: name, label: favorites[name].name || name}, favorites[name]));
-		})
-		// Only add 'Add current' if we have a nextmatch
-		if(this._nextmatch)
-		{
-			options.push({value: Et2Favorites.ADD_VALUE, label: this.egw().lang('Add current')});
-		}
-
-		this.requestUpdate("select_options");
-		return options;
+			this.__select_options = options
+			this.requestUpdate("select_options");
+		});
 	}
 
 	public load_favorites(app)
 	{
-		this.__select_options = this._load_favorites(app);
-		this.requestUpdate("select_options");
+		this._load_favorites(app);
 	}
 
 	/**
@@ -349,7 +288,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		}
 		this._value = ev.detail.item.value;
 
-		this._apply_favorite(ev.detail.item.value);
+		Favorite.applyFavorite(this.egw(), this.app, ev.detail.item.value);
 	}
 
 	/**
@@ -360,7 +299,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	 */
 	protected _handleClick(event : MouseEvent)
 	{
-		this._apply_favorite(this.preferred);
+		Favorite.applyFavorite(this.egw, this.app, this.preferred);
 	}
 
 	/**
@@ -407,9 +346,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			trash.remove();
 
 			// Delete preference server side
-			let request = this.egw().json("EGroupware\\Api\\Framework::ajax_set_favorite",
-				[this.app, fav.name, "delete", "" + fav.group, '']).sendRequest();
-			request.then(response =>
+			Favorite.remove(this.egw(), this.app, line.value).then(response =>
 			{
 				line.classList.remove("loading");
 
@@ -443,24 +380,6 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	}
 
 	/**
-	 * Apply a favorite to the app or nextmatch
-	 *
-	 * @param {string} favorite_name
-	 * @protected
-	 */
-	protected _apply_favorite(favorite_name : string)
-	{
-		let fav = favorite_name == "blank" ? {} : this.favoriteByID(favorite_name);
-		// use app[appname].setState if available to allow app to overwrite it (eg. change to non-listview in calendar)
-		//@ts-ignore TS doesn't know about window.app
-		if(typeof window.app[this.app] != 'undefined')
-		{
-			//@ts-ignore TS doesn't know about window.app
-			window.app[this.app].setState(fav);
-		}
-	}
-
-	/**
 	 * Set the nextmatch to filter
 	 * From et2_INextmatchHeader interface
 	 *
@@ -477,8 +396,7 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 		}
 
 		// Re-generate filter list so we can add 'Add current'
-		this.__select_options = this._load_favorites(this.app);
-		this.requestUpdate("select_options");
+		this._load_favorites(this.app);
 	}
 }
 

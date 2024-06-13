@@ -966,12 +966,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 * @return {TreeItemData} node with the given _id or null
 	 * @private
 	 */
-	private _search(_id: string, data: TreeItemData[]): TreeItemData
+	private _search(_id: string|number, data: TreeItemData[]): TreeItemData
 	{
 		let res: TreeItemData = null
 		if (_id == undefined)
 		{
 			return null
+		}
+		if (typeof _id === "number")
+		{
+			_id = _id + "";
 		}
 		for (const value of data)
 		{

@@ -197,7 +197,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			class: "",
 			valign: "top",
 			span: "1",
-			disabled: false
+			disabled: false,
+			style: ""
 		};
 	}
 
@@ -285,6 +286,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
 				rowDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
 				rowDataEntry["part"] = et2_readAttrWithDefault(node, "part", "body");
+				rowDataEntry["style"] = et2_readAttrWithDefault(node, "style", "");
 
 				const id = et2_readAttrWithDefault(node, "id", "");
 				if(id)
@@ -549,6 +551,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 						{
 							this._getCell(cells, x, y).rowData.class = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.class);
 						}
+						if(this._getCell(cells, x, y).rowData.style)
+						{
+							this._getCell(cells, x, y).rowData.style = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.style);
+						}
 
 					}
 					if(!nm && typeof cell.disabled === 'string')
@@ -769,6 +775,11 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			if(this.rowData[y].valign)
 			{
 				tr.attr("valign", this.rowData[y].valign);
+			}
+
+			if(this.rowData[y].style)
+			{
+				tr.attr("style", this.rowData[y].style);
 			}
 
 			if(this.rowData[y].id)
@@ -1226,5 +1237,6 @@ interface RowEntry
 	class : string,           // "",
 	valign : string,          // "top",
 	span : string | number,   // "1",
-	disabled : boolean        // false
+	disabled : boolean,        // false
+	style: string
 }

@@ -2046,6 +2046,11 @@ div.calendar {
   width: 100%;
   line-height: 30px;
 }
+#calendar-edit #calendar-edit_calendar-edit-recurrence table.recur_rdates tbody {
+  display: table;
+  width: 100%;
+  line-height: normal;
+}
 #calendar-edit #calendar-edit_calendar-edit-custom tbody {
   display: table;
   width: 100%;

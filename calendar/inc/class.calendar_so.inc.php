@@ -43,6 +43,7 @@ if(!extension_loaded('mcal'))
 	define('MCAL_M_WEEKEND',65);
 	define('MCAL_M_ALLDAYS',127);
 }
+define('MCAL_RECUR_RDATE',9);
 
 define('REJECTED',0);
 define('NO_RESPONSE',1);
@@ -311,7 +312,7 @@ class calendar_so
 	 * All times (start, end and modified) are returned as timesstamps in servertime!
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
-	 * @param int $recur_date =0 if set read the next recurrence at or after the timestamp, default 0 = read the initital one
+	 * @param int $recur_date =0 if set read the next recurrence at or after the timestamp, default 0 = read the initial one
 	 * @param boolean $read_recurrence =false true: read the exception, not the series master (only for recur_date && $ids='<uid>'!)
 	 * @return array|boolean array with cal_id => event array pairs or false if entry not found
 	 */
@@ -426,12 +427,21 @@ class calendar_so
 			}
 			if (!(int)$recur_date && !empty($event['recur_type']))
 			{
-				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start,recur_exception', [
 					'cal_id' => $ids,
+				]+($event['recur_type'] == MCAL_RECUR_RDATE ? [] : [
 					'recur_exception' => true,
-				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
+				]), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
-					$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
+					if ($row['recur_exception'])
+					{
+						$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
+					}
+					// rdates are both, exceptions and regular dates!
+					if ($event['recur_type'] == MCAL_RECUR_RDATE)
+					{
+						$events[$row['cal_id']]['recur_rdates'][] = $row['cal_start'];
+					}
 				}
 				break;	// as above select read all exceptions (and I dont think too short uid problem still exists)
 			}
@@ -1129,7 +1139,7 @@ class calendar_so
 			{
 				$row['participants'] = array();
 			}
-			$row['recur_exception'] = $row['alarm'] = array();
+			$row['recur_exception'] = $row['recur_rdates'] = $row['alarm'] = array();
 
 			// compile a list of recurrences per cal_id
 			if (!isset($recur_ids[$row['cal_id']]) || !in_array($id, $recur_ids[$row['cal_id']])) $recur_ids[$row['cal_id']][] = $id;
@@ -1178,9 +1188,8 @@ class calendar_so
 			// query recurrance exceptions, if needed: enum_recuring && !daywise is used in calendar_groupdav::get_series($uid,...)
 			if (!$params['enum_recuring'] || !$params['daywise'])
 			{
-				foreach($this->db->select($this->dates_table, 'cal_id,cal_start', array(
+				foreach($this->db->select($this->dates_table, 'cal_id,cal_start,recur_exception', array(
 					'cal_id' => $ids,
-					'recur_exception' => true,
 				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
 					// for enum_recurring events are not indexed by cal_id, but $cal_id.'-'.$cal_start
@@ -1192,7 +1201,14 @@ class calendar_so
 							if ($event['id'] == $row['cal_id']) break;
 						}
 					}
-					$events[$id]['recur_exception'][] = $row['cal_start'];
+					if (Api\Db::from_bool($row['recur_exception']))
+					{
+						$events[$id]['recur_exception'][] = $row['cal_start'];
+					}
+					if ($events[$id]['recur_type'] == MCAL_RECUR_RDATE)
+					{
+						$events[$id]['recur_rdates'][] = $row['cal_start'];
+					}
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
@@ -1496,7 +1512,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if ($cal_id)
 		{
-			// query old recurrance information, before updating main table, where recur_endate is now stored
+			// query old recurrence information, before updating main table, where recur_endate is now stored
 			if (!empty($event['recur_type']))
 			{
 				$old_repeats = $this->db->select($this->repeats_table, "$this->repeats_table.*,range_end AS recur_enddate",
@@ -1610,7 +1626,7 @@ ORDER BY cal_user_type, cal_usre_id
 			}
 
 			$event['recur_exception'] = is_array($event['recur_exception']) ? $event['recur_exception'] : array();
-			if (!empty($event['recur_exception']))
+			if (count($event['recur_exception']) > 1)
 			{
 				sort($event['recur_exception']);
 			}
@@ -1707,7 +1723,7 @@ ORDER BY cal_user_type, cal_usre_id
 				// truncate recurrences by given exceptions
 				if (count($event['recur_exception']))
 				{
-					// added and existing exceptions: delete the execeptions from the user table, it could be the first time
+					// added and existing exceptions: delete the exceptions from the user table, it could be the first time
 					$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date' => $event['recur_exception']),__LINE__,__FILE__,'calendar');
 					// update recur_exception flag based on current exceptions
 					$this->db->update($this->dates_table, 'recur_exception='.$this->db->expression($this->dates_table,array(

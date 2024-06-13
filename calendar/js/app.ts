@@ -1263,7 +1263,7 @@ export class CalendarApp extends EgwApp
 				}
 			);
 		*/
-		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
+		if(typeof framework !== 'undefined' && framework.applications?.calendar && framework.applications.calendar.tab)
 		{
 			let swipe = new tapAndSwipe(framework.applications.calendar.tab.contentDiv, {
 					//Generic swipe handler for all directions
@@ -2429,7 +2429,7 @@ export class CalendarApp extends EgwApp
 		{
 			// This activates calendar app if you call setState from a different app
 			// such as home.  If we change state while not active, sizing is wrong.
-			if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
+			if(typeof framework !== 'undefined' && framework.applications?.calendar && framework.applications.calendar.hasSideboxMenuContent)
 			{
 				framework.setActiveApp(framework.applications.calendar);
 			}
@@ -2658,7 +2658,7 @@ export class CalendarApp extends EgwApp
 				// Show loading div to hide redrawing
 				egw.loading_prompt(
 					this.appname,true,egw.lang('please wait...'),
-					typeof framework !== 'undefined' ? framework.applications.calendar.tab.contentDiv : false,
+					typeof framework !== 'undefined' ? framework.applications?.calendar?.tab?.contentDiv : false,
 					egwIsMobile()?'horizontal':'spinner'
 				);
 
@@ -3483,7 +3483,7 @@ export class CalendarApp extends EgwApp
 		// Show ajax loader
 		if(typeof framework !== 'undefined')
 		{
-			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
+			framework.applications?.calendar?.sidemenuEntry?.showAjaxLoader();
 		}
 
 		if(state.view === 'planner' && state.sortby === 'user')
@@ -3580,7 +3580,7 @@ export class CalendarApp extends EgwApp
 				// Hide AJAX loader
 				else if(typeof framework !== 'undefined')
 				{
-					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+					framework.applications?.calendar?.sidemenuEntry.hideAjaxLoader();
 					egw.loading_prompt('calendar', false)
 
 				}

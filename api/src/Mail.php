@@ -7002,9 +7002,10 @@ class Mail
 	 * @param string&|false $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
 	 *					folder is modified.  Set to false to not keep the message.
 	 * @param string& $importID ID for the imported message, used by attachments to identify them unambiguously
+	 * @param string[] $attachments Files attached to the email - the same files for every email
 	 * @return mixed array of messages with success and failed messages or exception
 	 */
-	function importMessageToMergeAndSend(Storage\Merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, &$importID='')
+	function importMessageToMergeAndSend(Storage\Merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, &$importID = '', $attachments = [])
 	{
 		$importfailed = false;
 		$processStats = array('success'=>array(),'failed'=>array());
@@ -7074,6 +7075,10 @@ class Mail
 					$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
 
 					$mailObject->addReplyTo(Horde_Idna::encode($activeMailProfile['ident_email']),Mail::generateIdentityString($activeMailProfile,false));
+				}
+				foreach($attachments as $file)
+				{
+					$mailObject->addAttachment($file);
 				}
 				if(count($SendAndMergeTocontacts) > 1)
 				{

@@ -119,6 +119,7 @@ all addressbooks	groupdav	de	Alle Adressbücher
 all categories	common	de	Alle Kategorien
 all days	common	de	Alle Tage
 all fields	common	de	Alle Felder
+all files	common	de	Alle Dateien
 all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
 all operations save the template!	common	de	Alle Operation speichern das Template!
@@ -443,6 +444,7 @@ document '%1' does not exist or is not readable for you!	preferences	de	Das Doku
 document properties	common	de	Dokument Eigenschaften
 document title:	common	de	Titel des Dokuments:
 documentation	common	de	Dokumentation
+documents	common	de	Dokumente
 doesn't matter	common	de	Spielt keine Rolle
 domain	common	de	Domain
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
@@ -490,6 +492,7 @@ el salvador	common	de	EL SALVADOR
 element role title	common	de	Element Rolle Titel
 email	common	de	E-Mail
 email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
+emails	common	de	E-Mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	de	Eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 empty file	common	de	Datei leeren
 enable javascript onchange submit	common	de	JavaScript absenden bei Änderung (onChange) aktivieren
@@ -700,6 +703,7 @@ if you use "2-factor-authentication", please enter the code here.	common	de	Wenn
 image	common	de	Grafik
 image directory relative to document root (use / !), example:	common	de	Bildverzeichnis entsprechend zur Dokumentroot (benutze / !), Beispiel:
 image url	common	de	Bild-URL
+images	common	de	Bilder
 import	common	de	Import
 import an etemplate from a xml-file	common	de	Importiert ein eTemplate aus einer XML-Datei
 import table-definitions from existing db-table	common	de	Importiert die Tabellen-Definition aus einer bestehenden Datenbank-Tabelle
@@ -811,6 +815,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die E-Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der an gehangenen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
 link title of current record	common	de	Link-Titel des aktuellen Datensatzes
+link to each entry	common	de	Verknüpfung zum einzelnen Eintrag
 linkapps	common	de	Verknüpfung Anwendungen
 linked	common	de	Verknüpft
 linkentry	common	de	Verknüpfung Eintrag
@@ -866,6 +871,10 @@ maybe	common	de	Vieleicht
 mayotte	common	de	MAYOTTE
 medium	common	de	Mittel
 menu	common	de	Menü
+merge	common	de	Zusammenführen
+merge & send	common	de	Zusammenführen & Versenden
+merge individually	common	de	einzeln zusammenführen
+merge options	common	de	Optionen beim Zusammenführen
 merged document filename	preferences	de	Dateiname des zusammengeführten Dokuments
 message	common	de	Nachricht
 message ...	common	de	Nachricht ...
@@ -1184,6 +1193,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	de	Speichern
 save all	common	de	Alle speichern
 save as	common	de	Speichern unter
+save as PDF	common	de	Als PDF speichern
 save as zip	common	de	Als ZIP-Datei speichern
 save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	common	de	Speichert die Änderungen uns schließt das Fenster
@@ -1264,6 +1274,7 @@ select work email address	common	de	Geschäftl. E-Mail-Adresse auswählen
 select year	common	de	Jahr auswählen
 selectbox	common	de	Auswahlbox
 selection	common	de	Auswahl
+selection of files can only be done in one folder.  %1 files unselected.	common	de	Die Auswahl von Dateien kann nur in einem Ordner erfolgen.   %1 Dateien nicht ausgewählt.
 send	common	de	Senden
 send succeeded to %1	common	de	Versand erfolgreich zu %1
 senegal	common	de	SENEGAL
@@ -1342,6 +1353,7 @@ spain	common	de	SPANIEN
 span	common	de	Überspannt
 span, class	common	de	Span, Class
 special characters	common	de	Sonderzeichen
+spreadsheets	common	de	Tabellenkalkulationen
 sri lanka	common	de	SRI LANKA
 stack	common	de	Stapel
 start a new search, cancel this link	common	de	Neue Suche starten, diese Verknüpfung abbrechen
@@ -1503,6 +1515,7 @@ version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.0
 vertical alignment of row	common	de	Vertikale Ausrichtung der Zeile
 vfs upload directory	common	de	Dateimanager Upload-Ordner
 video tutorials	common	de	Video-Tutorials
+videos	common	de	Videos
 viet nam	common	de	VIETNAM
 view	common	de	Anzeigen
 view linked %1 entries	common	de	Verknüpfte %1 anzeigen

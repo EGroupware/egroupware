@@ -137,20 +137,26 @@ export default css`
 	@media (min-width: 600px) {
 		.egw_fw_app__main {
 			grid-template-columns: [start left] min-content [ main] 1fr [right] min-content [end];
-			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(2em) [end];
+			grid-template-rows: [start sub-header] fit-content(2em) [main] auto [footer] fit-content(4em) [end];
 		}
 
 		.egw_fw_app__aside {
 			overflow-y: hidden;
 		}
 
-		.egw_fw_app__aside_content {
+		.egw_fw_app__aside_content, .egw_fw_app__main_content {
 			overflow-x: hidden;
 			overflow-y: auto;
+			display: flex;
+		}
+
+		.egw_fw_app__main_content {
+			flex-direction: column;
+			align-items: stretch;
 		}
 
 		::slotted(*) {
-			height: 100%;
+			flex: 1 1 auto;
 		}
 
 		::slotted(iframe) {
@@ -207,5 +213,12 @@ export default css`
 		}
 	}
 
+	/* End layout */
+
+	/* Styling */
+
+	.egw_fw_app__header sl-icon[name="three-dots-vertical"] {
+		padding: var(--sl-spacing-small);
+	}
 
 `

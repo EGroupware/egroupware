@@ -11,6 +11,8 @@ import {HasSlotController} from "../../api/js/etemplate/Et2Widget/slot";
 import type {EgwFramework} from "./EgwFramework";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
+import {repeat} from "lit/directives/repeat.js";
+import {until} from "lit/directives/until.js";
 
 /**
  * @summary Application component inside EgwFramework
@@ -89,8 +91,11 @@ export class EgwFrameworkApp extends LitElement
 		];
 	}
 
-	@property()
+	@property({reflect: true})
 	name = "Application name";
+
+	@property()
+	title : string = "";
 
 	@property()
 	url = "";
@@ -133,6 +138,7 @@ export class EgwFrameworkApp extends LitElement
 
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
+	protected _sideboxData : any;
 
 	connectedCallback()
 	{
@@ -145,11 +151,14 @@ export class EgwFrameworkApp extends LitElement
 		{
 			this.rightPanelInfo.preferenceWidth = typeof width !== "undefined" ? parseInt(width) : this.rightPanelInfo.defaultWidth;
 		});
+
+		this.addEventListener("load", this.handleEtemplateLoad);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		this.removeEventListener("load", this.handleEtemplateLoad);
 	}
 
 	firstUpdated()
@@ -165,7 +174,7 @@ export class EgwFrameworkApp extends LitElement
 		return result
 	}
 
-	protected load(url)
+	public load(url)
 	{
 		if(!url)
 		{
@@ -175,6 +184,7 @@ export class EgwFrameworkApp extends LitElement
 			}
 			return;
 		}
+		this.url = url;
 		let targetUrl = "";
 		this.useIframe = true;
 		let matches = url.match(/\/index.php\?menuaction=([A-Za-z0-9_\.]*.*&ajax=true.*)$/);
@@ -199,22 +209,26 @@ export class EgwFrameworkApp extends LitElement
 			return this.loadingPromise = this.egw.request(
 				this.framework.getMenuaction('ajax_exec', targetUrl, this.name),
 				[targetUrl]
-			).then((data : string[]) =>
+			).then((data : string | string[] | { DOMNodeID? : string } | { DOMNodeID? : string }[]) =>
 			{
+				if(!data)
+				{
+					return;
+				}
 				// Load request returns HTML.  Shove it in.
 				if(typeof data == "string" || typeof data == "object" && typeof data[0] == "string")
 				{
-					render(html`${unsafeHTML(data.join(""))}`, this);
+					render(html`${unsafeHTML((<string[]>data).join(""))}`, this);
 				}
 				else
 				{
 					// We got some data, use it
-					if(data.DOMNodeID)
-					{
-						this.id = data.DOMNodeID;
-					}
+					const items = (Array.isArray(data) ? data : [data])
+						.filter(data => (typeof data.DOMNodeID == "string" && document.querySelector("[id='" + data.DOMNodeID + "']") == null));
+
+					render(html`${repeat(items, i => i.DOMNodeID, (item) => html`
+                        <div id="${item.DOMNodeID}"></div>`)}`, this);
 				}
-				this.addEventListener("load", this.handleEtemplateLoad, {once: true});
 
 				// Might have just slotted aside content, hasSlotController will requestUpdate()
 				// but we need to do it anyway for translation
@@ -226,13 +240,12 @@ export class EgwFrameworkApp extends LitElement
 			this.loadingPromise = new Promise((resolve, reject) =>
 			{
 				const timeout = setTimeout(() => reject(this.name + " load failed"), 5000);
-				this.addEventListener("load", () =>
+				render(this._iframeTemplate(), this);
+				this.querySelector("iframe").addEventListener("load", () =>
 				{
 					clearTimeout(timeout);
 					resolve()
 				}, {once: true});
-
-				render(this._iframeTemplate(), this);
 			});
 			// Might have just changed useIFrame, need to update to show that
 			this.requestUpdate();
@@ -240,9 +253,15 @@ export class EgwFrameworkApp extends LitElement
 		}
 	}
 
+	public getMenuaction(_fun, _ajax_exec_url, appName = "")
+	{
+		return this.framework.getMenuaction(_fun, _ajax_exec_url, appName || this.name);
+	}
+
 	public setSidebox(sideboxData, hash?)
 	{
-
+		this._sideboxData = sideboxData;
+		this.requestUpdate();
 	}
 
 	public showLeft()
@@ -300,9 +319,9 @@ export class EgwFrameworkApp extends LitElement
 				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizental' : 'spinner');
 
 				// Give framework a chance to deal, then reset the etemplates
-				appWindow.setTimeout(function()
+				appWindow.setTimeout(() =>
 				{
-					for(var i = 0; i < et2_list.length; i++)
+					for(let i = 0; i < et2_list.length; i++)
 					{
 						et2_list[i].widgetContainer.iterateOver(function(_widget)
 						{
@@ -362,12 +381,17 @@ export class EgwFrameworkApp extends LitElement
 
 	get egw()
 	{
-		return window.egw ?? (<EgwFramework>this.parentElement).egw ?? null;
+		return window.egw(this.name) ?? (<EgwFramework>this.parentElement).egw ?? null;
 	}
 
 	get framework() : EgwFramework
 	{
 		return this.closest("egw-framework");
+	}
+
+	get appName() : string
+	{
+		return this.name;
 	}
 
 	private hasSideContent(side : "left" | "right")
@@ -382,8 +406,8 @@ export class EgwFrameworkApp extends LitElement
 	 */
 	protected handleEtemplateLoad(event)
 	{
-		const etemplate = etemplate2.getById(this.id);
-		if(!etemplate)
+		const etemplate = etemplate2.getById(event.target.id);
+		if(!etemplate || !event.composedPath().includes(this))
 		{
 			return;
 		}
@@ -418,16 +442,25 @@ export class EgwFrameworkApp extends LitElement
 		this[`${event.target.panelInfo.side}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
 
 		let preferenceName = event.target.panelInfo.preference;
-		if(newPosition != event.target.panelInfo.preferenceWidth)
+		if(newPosition != event.target.panelInfo.preferenceWidth && !isNaN(newPosition))
 		{
 			event.target.panelInfo.preferenceWidth = newPosition;
 			if(this.resizeTimeout)
 			{
 				window.clearTimeout(this.resizeTimeout);
 			}
-			window.setTimeout(() =>
+			this.resizeTimeout = window.setTimeout(() =>
 			{
 				this.egw.set_preference(this.name, preferenceName, newPosition);
+
+				// Tell etemplates to resize
+				this.querySelectorAll("[id]").forEach(e =>
+				{
+					if(etemplate2.getById(e.id))
+					{
+						etemplate2.getById(e.id).resize(new Event("resize"));
+					}
+				});
 			}, 500);
 		}
 	}
@@ -497,34 +530,107 @@ export class EgwFrameworkApp extends LitElement
 	protected _rightHeaderTemplate()
 	{
 		return html`
-            <sl-button-group>
-                <et2-button-icon nosubmit name="arrow-clockwise"
-                                 label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                                 statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
-                                 @click=${(e) =>
-                                 {
-                                     this.egw.refresh("", this.name);
-                                     /* Could also be this.load(false); this.load(this.url) */
-                                 }}
-                ></et2-button-icon>
-                <et2-button-icon nosubmit name="printer"
-                                 label=${this.egw.lang("Print")}
-                                 statustext=${this.egw.lang("Print")}
-                                 @click=${(e) => this.framework.print()}
-                ></et2-button-icon>
-                ${this.egw.user('apps')['waffles'] !== "undefined" ? html`
-                    <et2-button-icon nosubmit name="gear-wide"
-                                     label=${this.egw.lang("Site configuration for %1", this.egw.lang(this.name))}
-                                     statustext=${this.egw.lang("App configuration")}
-                                     @click=${(e) =>
-                                     {
-                                         // @ts-ignore
-                                         egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
-                                     }}
-                    ></et2-button-icon>` : nothing
-                }
-            </sl-button-group>
+            <sl-tooltip content=${this.egw.lang("Application menu")}>
+                <sl-dropdown>
+                    <sl-icon slot="trigger" name="three-dots-vertical"></sl-icon>
+                    <sl-menu>
+                        <sl-menu-item
+                                @click=${(e) =>
+                                {
+                                    this.egw.refresh("", this.name);
+                                    /* Could also be this.load(false); this.load(this.url) */
+                                }}
+                        >
+                            <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
+                            ${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                        </sl-menu-item>
+                        <sl-menu-item
+                                @click=${(e) => this.framework.print()}
+                        >
+                            <sl-icon slot="prefix" name="printer"></sl-icon>
+                            ${this.egw.lang("Print")}
+                        </sl-menu-item>
+                        ${this.egw.user('apps')['admin'] !== undefined ? html`
+                            <sl-menu-item
+                                    @click=${(e) =>
+                                    {
+                                        // @ts-ignore
+                                        egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
+                                    }}
+                            >
+                                <sl-icon slot="prefix" name="gear-wide"></sl-icon>
+                                ${this.egw.lang("App configuration")}
+                            </sl-menu-item>
+                            <sl-divider></sl-divider>
+                        ` : nothing}
+                        ${this._sideboxMenuTemplate()}
+                    </sl-menu>
+                </sl-dropdown>
+            </sl-tooltip>
 		`;
+	}
+
+	protected _sideboxMenuTemplate()
+	{
+		if(!this._sideboxData)
+		{
+			return nothing;
+		}
+
+		return html`${repeat(this._sideboxData, (menu) => menu['menu_name'], (menu) =>
+		{
+			// No favorites here
+			if(menu["title"] == "Favorites" || menu["title"] == this.egw.lang("favorites"))
+			{
+				return html`
+                    <sl-menu-item>
+                        <et2-image style="width:1em;" src="fav_filter" slot="prefix"></et2-image>
+                        ${menu["title"]}
+                        <et2-favorites-menu slot="submenu" application="${this.appName}"></et2-favorites-menu>
+                    </sl-menu-item>
+				`;
+			}
+			// Just one thing, don't bother with submenu
+			if(menu["entries"].length == 1)
+			{
+				return this._sideboxMenuItemTemplate({...menu["entries"][0], lang_item: menu["title"]})
+			}
+			return html`
+                <sl-menu-item>
+                    ${menu["title"]}
+                    <sl-menu slot="submenu">
+                        ${repeat(menu["entries"], (entry) =>
+                        {
+                            return this._sideboxMenuItemTemplate(entry);
+                        })}
+                    </sl-menu>
+                </sl-menu-item>`;
+		})}`;
+	}
+
+	/**
+	 * An individual sub-item in the 3-dots menu
+	 * @param item
+	 * @returns {TemplateResult<1>}
+	 */
+	_sideboxMenuItemTemplate(item)
+	{
+		if(item["lang_item"] == "<hr />")
+		{
+			return html`
+                <sl-divider></sl-divider>`;
+		}
+		return html`
+            <sl-menu-item
+                    ?disabled=${!item["item_link"]}
+                    @click=${() => this.egw.open_link(item["item_link"])}
+            >
+                ${typeof item["icon_or_star"] == "string" && item["icon_or_star"].endsWith("bullet.svg") ? nothing : html`
+                    <et2-image name=${item["icon_or_star"]}></et2-image>
+                `}
+                ${item["lang_item"]}
+            </sl-menu-item>`;
+
 	}
 
 	render()
@@ -552,12 +658,13 @@ export class EgwFrameworkApp extends LitElement
                     ></sl-icon-button>`
                                    : nothing
                     }
-                    <h2>${this.egw?.lang(this.name) ?? this.name}</h2>
+                    <h2>${this.title || this.egw?.lang(this.name) || this.name}</h2>
                 </div>
                 <header class="egw_fw_app__header" part="header">
                     <slot name="main-header"><span class="placeholder"> ${this.name} main-header</span></slot>
                 </header>
-                ${this._rightHeaderTemplate()}
+                ${until(this.framework.getEgwComplete().then(() => this._rightHeaderTemplate()), html`
+                    <sl-spinner></sl-spinner>`)}
             </div>
             <div class="egw_fw_app__main" part="main">
                 <sl-split-panel class=${classMap({"egw_fw_app__outerSplit": true, "no-content": !hasLeftSlots})}
