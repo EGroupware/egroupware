@@ -13,6 +13,7 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_IPrint} from "../../api/js/etemplate/et2_core_interfaces";
 import {repeat} from "lit/directives/repeat.js";
 import {until} from "lit/directives/until.js";
+import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
 
 /**
  * @summary Application component inside EgwFramework
@@ -139,6 +140,7 @@ export class EgwFrameworkApp extends LitElement
 	/** The application's content must be in an iframe instead of handled normally */
 	protected useIframe = false;
 	protected _sideboxData : any;
+	private _hasFavorites = false;
 
 	connectedCallback()
 	{
@@ -261,6 +263,17 @@ export class EgwFrameworkApp extends LitElement
 	public setSidebox(sideboxData, hash?)
 	{
 		this._sideboxData = sideboxData;
+
+		if(this._sideboxData?.some(s => s.title == "Favorites" || s.title == this.egw.lang("favorites")))
+		{
+			// This might be a little late, but close enough for rendering
+			Favorite.load(this.egw, this.name).then((favorites) =>
+			{
+				this._hasFavorites = (Object.values(favorites).length > 1)
+				this.requestUpdate();
+			});
+		}
+
 		this.requestUpdate();
 	}
 
@@ -500,12 +513,13 @@ export class EgwFrameworkApp extends LitElement
             <iframe src="${this.url}"></iframe>`;
 	}
 
-	protected _asideTemplate(parentSlot, side, label?)
+	protected _asideTemplate(parentSlot, side : "left" | "right", label?)
 	{
 		const asideClassMap = classMap({
 			"egw_fw_app__aside": true,
-			"egw_fw_app__left": true,
-			"egw_fw_app__aside-collapsed": this.leftCollapsed,
+			"egw_fw_app__left": side == "left",
+			"egw_fw_app__right": side == "right",
+			"egw_fw_app__aside-collapsed": side == "left" ? this.leftCollapsed : this.rightCollapsed,
 		});
 		return html`
             <aside slot="${parentSlot}" part="${side}" class=${asideClassMap} aria-label="${label}">
@@ -513,13 +527,45 @@ export class EgwFrameworkApp extends LitElement
                     <slot name="${side}-header"><span class="placeholder">${side}-header</span></slot>
                 </div>
                 <div class="egw_fw_app__aside_content content">
+                    ${side == "left" ? this._leftMenuTemplate() : nothing}
                     <slot name="${side}"><span class="placeholder">${side}</span></slot>
                 </div>
-
                 <div class="egw_fw_app__aside_footer footer">
                     <slot name="${side}-footer"><span class="placeholder">${side}-footer</span></slot>
                 </div>
             </aside>`;
+	}
+
+	/**
+	 * Left sidebox automatic content
+	 *
+	 * @protected
+	 */
+	protected _leftMenuTemplate()
+	{
+		// Put favorites in left sidebox if any are set
+		if(!this._hasFavorites)
+		{
+			return nothing;
+		}
+		return html`${until(Favorite.load(this.egw, this.name).then((favorites) =>
+		{
+			// If more than the blank favorite is found, add favorite menu to sidebox
+			if(Object.values(favorites).length > 1)
+			{
+				const favSidebox = this._sideboxData.find(s => s.title.toLowerCase() == "favorites" || s.title == this.egw.lang("favorites"));
+				return html`
+                    <sl-details class="favorites" slot="left"
+                                ?open=${favSidebox?.opened}
+                                summary=${this.egw.lang("Favorites")}
+                                @sl-show=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, true);}}
+                                @sl-hide=${() => {this.egw.set_preference(this.name, 'jdots_sidebox_' + favSidebox.menu_name, false);}}
+                    >
+                        <et2-favorites-menu application=${this.name}></et2-favorites-menu>
+                    </sl-details>
+				`;
+			}
+		}), nothing)}`;
 	}
 
 	/**
@@ -563,14 +609,21 @@ export class EgwFrameworkApp extends LitElement
                             </sl-menu-item>
                             <sl-divider></sl-divider>
                         ` : nothing}
-                        ${this._sideboxMenuTemplate()}
+                        ${this._threeDotsMenuTemplate()}
                     </sl-menu>
                 </sl-dropdown>
             </sl-tooltip>
 		`;
 	}
 
-	protected _sideboxMenuTemplate()
+	/**
+	 * This is the "three dots menu" in the top-right corner.
+	 * Most of what was in the sidebox now goes here.
+	 *
+	 * @returns {TemplateResult<1> | typeof nothing }
+	 * @protected
+	 */
+	protected _threeDotsMenuTemplate()
 	{
 		if(!this._sideboxData)
 		{
@@ -635,7 +688,7 @@ export class EgwFrameworkApp extends LitElement
 
 	render()
 	{
-		const hasLeftSlots = this.hasSideContent("left");
+		const hasLeftSlots = this.hasSideContent("left") || this._hasFavorites;
 		const hasRightSlots = this.hasSideContent("right");
 
 		const leftWidth = this.leftCollapsed || !hasLeftSlots ? this.leftPanelInfo.hiddenWidth :

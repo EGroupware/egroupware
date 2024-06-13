@@ -148,6 +148,7 @@ export default css`
 			overflow-x: hidden;
 			overflow-y: auto;
 			display: flex;
+			flex-direction: column;
 		}
 
 		.egw_fw_app__main_content {
@@ -219,6 +220,15 @@ export default css`
 
 	.egw_fw_app__header sl-icon[name="three-dots-vertical"] {
 		padding: var(--sl-spacing-small);
+	}
+
+	sl-details.favorites::part(content) {
+		padding: 0px;
+	}
+
+	sl-details.favorites et2-favorites-menu::part(menu) {
+		border: none;
+
 	}
 
 `
