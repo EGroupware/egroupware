@@ -24,6 +24,7 @@ import {loadWebComponent} from "../etemplate/Et2Widget/Et2Widget";
 import {Et2VfsSelectDialog} from "../etemplate/Et2Vfs/Et2VfsSelectDialog";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
 import type {EgwAction} from "../egw_action/EgwAction";
+import {AcSelect} from "../../../achelper/js/AcSelect/AcSelect";
 
 /**
  * Type for push-message
@@ -204,6 +205,20 @@ export abstract class EgwApp
 		{
 			EgwApp._instances.splice(index, 1);
 		}
+	}
+
+	changeButton()
+	{
+		const acSelect: AcSelect = window.document.querySelector("ac-select")
+		acSelect.disableLinkSearch = !acSelect.disableLinkSearch
+		acSelect.requestUpdate()
+		console.log("disableLinkSearch" + acSelect.disableLinkSearch)
+	}
+
+	doSomething(thing?:any)
+	{
+		console.log("doSomething\n"+thing);
+		return true;
 	}
 
 	/**
