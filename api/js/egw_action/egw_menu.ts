@@ -9,14 +9,18 @@
  *
  */
 import {egwMenuImpl} from './egw_menu_dhtmlx';
+import {EgwMenuShoelace} from "./EgwMenuShoelace";
 import {egw_registeredShortcuts, egw_shortcutIdx} from './egw_keymanager';
 import {
 	EGW_KEY_ARROW_DOWN,
 	EGW_KEY_ARROW_LEFT,
 	EGW_KEY_ARROW_RIGHT,
-	EGW_KEY_ARROW_UP, EGW_KEY_ENTER,
+	EGW_KEY_ARROW_UP,
+	EGW_KEY_ENTER,
 	EGW_KEY_ESCAPE
 } from "./egw_action_constants";
+import {EgwFramework} from "../../../kdots/js/EgwFramework";
+
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu opens
 export var _egw_active_menu: egwMenu = null;
@@ -209,7 +213,14 @@ export class egwMenu
 		if (this.instance == null && this._checkImpl)
 		{
 			//Obtain a new egwMenuImpl object and pass this instance to it
-			this.instance = new egwMenuImpl(this.children);
+			if(window.framework instanceof EgwFramework)
+			{
+				this.instance = new EgwMenuShoelace(this.children);
+			}
+			else
+			{
+				this.instance = new egwMenuImpl(this.children);
+			}
 
 			_egw_active_menu = this;
 
@@ -234,6 +245,12 @@ export class egwMenu
 		// Let main key-handler deal with shortcuts
 		const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
 		if (typeof egw_registeredShortcuts[idx] !== "undefined")
+		{
+			return false;
+		}
+
+		// Shoelace does its own keyboard navigation
+		if(!this.instance.dhtmlxmenu)
 		{
 			return false;
 		}
