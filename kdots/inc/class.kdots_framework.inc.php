@@ -147,4 +147,26 @@ class kdots_framework extends Api\Framework\Ajax
 			$title .
 			'</sl-menu-item>';
 	}
+
+	/**
+	 * Set site-wide CSS like preferred font-size
+	 *
+	 * @return array
+	 * @see Api\Framework::_get_css()
+	 */
+	public function _get_css()
+	{
+		$ret = parent::_get_css();
+
+		$textsize = $GLOBALS['egw_info']['user']['preferences']['common']['textsize'] ?? '12';
+		$ret['app_css'] .= "
+			:root, :host, body, input {
+				font-size: {$textsize}px;
+				font-family: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+					Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+			}
+		";
+
+		return $ret;
+	}
 }
