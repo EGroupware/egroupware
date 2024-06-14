@@ -442,27 +442,27 @@ export class EgwFrameworkApp extends LitElement
 			return;
 		}
 
-		// Skip if there's no side-content
-		if(!this.hasSideContent(event.target.panelInfo.side))
-		{
-			return;
-		}
+		let panelInfo = event.target.panelInfo;
+
+		await this.loadingPromise;
 
 		// Left side is in pixels, round to 2 decimals
-		let newPosition = Math.round(event.target.panelInfo.side == "left" ? event.target.positionInPixels * 100 : event.target.position * 100) / 100;
+		let newPosition = Math.round(panelInfo.side == "left" ? event.target.positionInPixels * 100 : Math.max(100, event.target.position) * 100) / 100;
 
 		// Update collapsed
-		this[`${event.target.panelInfo.side}Collapsed`] = newPosition == event.target.panelInfo.hiddenWidth;
+		this[`${panelInfo.side}Collapsed`] = newPosition == panelInfo.hiddenWidth;
 
-		let preferenceName = event.target.panelInfo.preference;
-		if(newPosition != event.target.panelInfo.preferenceWidth && !isNaN(newPosition))
+		let preferenceName = panelInfo.preference;
+		let currentPreference = parseFloat("" + await this.egw.preference(preferenceName, this.name, true));
+
+		if(newPosition != currentPreference && !isNaN(newPosition))
 		{
-			event.target.panelInfo.preferenceWidth = newPosition;
-			if(this.resizeTimeout)
+			panelInfo.preferenceWidth = newPosition;
+			if(panelInfo.resizeTimeout)
 			{
-				window.clearTimeout(this.resizeTimeout);
+				window.clearTimeout(panelInfo.resizeTimeout);
 			}
-			this.resizeTimeout = window.setTimeout(() =>
+			panelInfo.resizeTimeout = window.setTimeout(() =>
 			{
 				this.egw.set_preference(this.name, preferenceName, newPosition);
 
