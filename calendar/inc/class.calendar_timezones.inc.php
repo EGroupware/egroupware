@@ -114,7 +114,7 @@ class calendar_timezones
 			}
 		}
 		// check for a Windows timezone without "Standard Time" postfix
-		if (!isset($id) && strpos($tzid, '/') === false)
+		if (!isset($id) && stripos($tzid, ' Standard Time') === false)
 		{
 			$id = self::tz2id($tzid.' Standard Time');
 		}
