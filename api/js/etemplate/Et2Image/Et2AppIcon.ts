@@ -30,4 +30,4 @@ export class Et2AppIcon extends Et2Image
 	}
 }
 
-customElements.define("et2-appicon", Et2AppIcon as any);
+customElements.define("et2-appicon", Et2AppIcon);
