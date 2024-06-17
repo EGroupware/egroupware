@@ -422,4 +422,4 @@ export class Et2Split extends Et2Widget(SlSplitPanel)
 	}
 }
 
-customElements.define("et2-split", Et2Split as any);
+customElements.define("et2-split", Et2Split);

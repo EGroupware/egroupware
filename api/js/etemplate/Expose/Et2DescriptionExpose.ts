@@ -126,4 +126,4 @@ export class Et2DescriptionExpose extends ExposeMixin(Et2Description) implements
 	}
 }
 
-customElements.define("et2-description-expose", Et2DescriptionExpose as any);
+customElements.define("et2-description-expose", Et2DescriptionExpose);
