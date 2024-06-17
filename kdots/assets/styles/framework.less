@@ -6,6 +6,11 @@ html, body {
   margin: 0px;
 }
 
+.egw_menu::part(popup)
+{
+  z-index: var(--sl-z-index-dropdown);
+}
+
 egw-framework#egw_fw_basecontainer {
   --icon-size: 32px;
   --sl-tooltip-arrow-size: 0;
@@ -219,3 +224,5 @@ div.et2_nextmatch {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+/*** END WIDGETS ***/
