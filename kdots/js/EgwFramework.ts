@@ -134,6 +134,12 @@ export class EgwFramework extends LitElement
 
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
+
+		// Deal with bug where avatar menu does not position correctly
+		this.getEgwComplete().then(() =>
+		{
+			(<SlDropdown>this.querySelector("#topmenu_info_user_avatar"))?.popup?.dispatchEvent(new Event("slotchange"));
+		});
 	}
 
 	/**
