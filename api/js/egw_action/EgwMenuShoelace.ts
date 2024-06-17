@@ -103,6 +103,9 @@ export class EgwMenuShoelace extends LitElement
 	public hide()
 	{
 		this.popup.active = false;
+
+		// egw_menu always creates a new menu
+		this.remove();
 	}
 
 	handleSelect(event)
@@ -115,7 +118,7 @@ export class EgwMenuShoelace extends LitElement
 		if(event.detail.item.value)
 		{
 			const item = <egwMenuItem>event.detail.item.value;
-			if(item.checkbox || typeof item.checked !== "undefined")
+			if(item.checkbox)
 			{
 				item.checked = event.detail.item.checked;
 				return;
