@@ -384,16 +384,6 @@ export class EgwFramework extends LitElement
 			let tabApps = {...this.tabApps};
 			tabApps[appname] = clone;
 			this.tabApps = tabApps;
-
-			/* ??
-			this.applications[appname]['sidemenuEntry'] = this.sidemenuUi.addEntry(
-				this.applications[appname].displayName, this.applications[appname].icon,
-				function()
-				{
-					self.applicationTabNavigate(self.applications[appname], _link, false, -1, null);
-				}, this.applications[appname], appname);
-
-			 */
 			this.loadApp(appname, true);
 
 			return appname;
@@ -420,37 +410,9 @@ export class EgwFramework extends LitElement
 	 */
 	public openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _parentWnd)
 	{
-		//Determine the window the popup should be opened in - normally this is the iframe of the currently active application
-		let parentWindow = _parentWnd || window;
-		let navigate = false;
-		let appEntry = null;
-		if(typeof _app != 'undefined' && _app !== false)
-		{
-			appEntry = this.getApplicationByName(_app);
-			if(appEntry && appEntry.browser == null)
-			{
-				navigate = true;
-				this.applicationTabNavigate(appEntry, appEntry.indexUrl);
-			}
-		}
-		else
-		{
-			appEntry = this.activeApp;
-		}
-
-		if(appEntry != null && appEntry.useIframe && (_app || !egw(parentWindow).is_popup()))
-		{
-			parentWindow = appEntry.iframe.contentWindow;
-		}
-
-		const windowID = egw(parentWindow).openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
+		const windowID = this.egw.openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
 
 		windowID.framework = this;
-
-		if(navigate)
-		{
-			window.setTimeout("framework.applicationTabNavigate(framework.activeApp, framework.activeApp.indexUrl);", 500);
-		}
 
 		if(_returnID !== false)
 		{
