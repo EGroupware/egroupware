@@ -38,6 +38,7 @@ export type TreeItemData = SelectOption & {
 /**
  * @event {{id: String, item:SlTreeItem}} sl-expand emmited when tree item expands
  * //TODO add for other events
+ * @since 23.1.x
  */
 export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 {

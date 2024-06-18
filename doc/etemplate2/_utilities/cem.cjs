@@ -17,8 +17,9 @@ module.exports.getAllComponents = function ()
 	// Find a Shoelace class declaration from their custom-elements.json
 	//
 	// for Et2* classes, we also look recursive, if they inherit from a Shoelace class
+	// or a (not included) Readonly or Mobile class, in with case we return the regular Et2-class
 	//
-	const getSlClass = function(superclass)
+	const getSlClass = function(superclass, debug)
 	{
 		let sl_class;
 		if (superclass && superclass.package === "@shoelace-style/shoelace")
@@ -28,11 +29,12 @@ module.exports.getAllComponents = function ()
 		}
 		else if (superclass && superclass.name.substring(0, 3) === "Et2")
 		{
+			const name = superclass.name.replace(/(Readonly|Mobile)$/, '');
 			customElementsManifest.modules.find(module =>
-				sl_class = module.declarations.find(declaration => declaration.name === superclass.name));
-			if (sl_class) sl_class = getSlClass(sl_class.superclass);
+				sl_class = module.declarations.find(declaration => declaration.name === name));
+			if (sl_class && name === superclass.name) sl_class = getSlClass(sl_class.superclass);
 		}
-		//console.log("getSlClass("+superclass.name+") returning ", sl_class ? sl_class.name+" with attributes: "+sl_class.attributes?.map(attribute => attribute.name).join(", ") : "undefined");
+		if (debug) console.log("getSlClass("+superclass.name+") returning ", sl_class ? sl_class.name+" with attributes: "+sl_class.attributes?.map(attribute => attribute.name).join(", ") : "undefined");
 		return sl_class;
 	}
 	//
@@ -46,7 +48,7 @@ module.exports.getAllComponents = function ()
 		if (a.name[0] !== '_' && b.name[0] === '_') return -1;
 		return a.name.localeCompare(b.name);
 	}
-	const debug='declaration.name';	// set to declaration.name to get more logging for that component
+	const debug='';	// set to declaration.name to get more logging for that component
 	const allComponents = [];
 
 	customElementsManifest.modules?.forEach(module =>
@@ -56,7 +58,7 @@ module.exports.getAllComponents = function ()
 			if (declaration.customElement)
 			{
 				// check if we have a Shoelace superclass
-				const sl_class = declaration.superclass ? getSlClass(declaration.superclass) : undefined;
+				const sl_class = declaration.superclass ? getSlClass(declaration.superclass, debug === declaration.name) : undefined;
 				if (debug === declaration.name) console.log(declaration.name+": superclass=", declaration.superclass, sl_class ? "found: "+sl_class.name : "not found");
 
 				// Generate the dist path based on the src path and attach it to the component
@@ -77,7 +79,7 @@ module.exports.getAllComponents = function ()
 					members = members.concat(sl_members);
 				}
 				let methods = members?.filter(prop => prop.kind === 'method' && prop.privacy !== 'private') || [];
-				if (declaration.name === "Et2ButtonScroll") console.log("found methods: "+methods.map(method => method.name).join(", "));
+				if (debug === declaration.name) console.log("found methods: "+methods.map(method => method.name).join(", "));
 				// add non-private and not overwritten Shoelace superclass methods
 				/* ToDo disabled, as it gives an error later (only copies 8 files and generates none)
 				if (sl_class)
@@ -108,15 +110,15 @@ module.exports.getAllComponents = function ()
 					methods,
 					properties,
 					attributes: declaration.attributes?.concat(sl_class?.attributes?.filter(attribute => !declaration.attributes.find(attr => attr.name === attribute.name))
-						/*.map(attribute => {
+						.map(attribute => {
 							return {...attribute, inheritedFrom: {name: sl_class.name, module: "@shoelace-style/shoelace"}};
-						})*/)
+						}))
 				});
 				if (debug === declaration.name) console.log("added attributes", allComponents[allComponents.length - 1].attributes);
 			}
 		});
 	});
-	console.log('Build dependency graphs');
+	if (debug) console.log('Build dependency graphs');
 	// Build dependency graphs
 	allComponents.forEach(component =>
 	{
@@ -145,7 +147,7 @@ module.exports.getAllComponents = function ()
 
 		component.dependencies = dependencies.sort();
 	});
-	console.log('Add custom docs');
+	if (debug) console.log('Add custom docs');
 	// Add custom docs - not monitored for file changes
 	allComponents.forEach(component =>
 	{
@@ -158,7 +160,7 @@ module.exports.getAllComponents = function ()
 			fs.readFile(docPath, (err, data) => component.content = data.toString());
 		}
 	})
-	console.log("return allComponentes sorted by name")
+	if (debug) console.log("return allComponentes sorted by name")
 	// Sort by name
 	return allComponents.sort((a, b) =>
 	{

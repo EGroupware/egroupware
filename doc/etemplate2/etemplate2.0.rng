@@ -4669,7 +4669,14 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
-      <attribute name="accountType"/>
+      <attribute name="accountType">
+        <choice>
+          <value>accounts</value>
+          <value>groups</value>
+          <value>both</value>
+          <value>owngroups</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="align"/>
@@ -7332,6 +7339,24 @@
       <attribute name="align"/>
     </optional>
     <optional>
+      <attribute name="ariaDescription"/>
+    </optional>
+    <optional>
+      <attribute name="ariaLabel"/>
+    </optional>
+    <optional>
+      <attribute name="autocomplete"/>
+    </optional>
+    <optional>
+      <attribute name="autofocus">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="class"/>
     </optional>
     <optional>
@@ -7347,7 +7372,19 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="freeMinuteEntry">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="height"/>
+    </optional>
+    <optional>
+      <attribute name="helpText"/>
     </optional>
     <optional>
       <attribute name="hidden">
@@ -7362,6 +7399,15 @@
       <attribute name="id"/>
     </optional>
     <optional>
+      <attribute name="inline">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
       <attribute name="label"/>
     </optional>
     <optional>
@@ -7374,10 +7420,37 @@
       </attribute>
     </optional>
     <optional>
+      <attribute name="onchange"/>
+    </optional>
+    <optional>
       <attribute name="onclick"/>
     </optional>
     <optional>
       <attribute name="parentId"/>
+    </optional>
+    <optional>
+      <attribute name="placeholder"/>
+    </optional>
+    <optional>
+      <attribute name="placement"/>
+    </optional>
+    <optional>
+      <attribute name="readonly">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="required">
+        <choice>
+          <value>false</value>
+          <value>true</value>
+          <value>1</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -7400,9 +7473,6 @@
     </optional>
     <optional>
       <attribute name="units"/>
-    </optional>
-    <optional>
-      <attribute name="value"/>
     </optional>
     <optional>
       <attribute name="width"/>
@@ -7722,58 +7792,10 @@
   </define>
   <define name="attlist.et2-date-time-today" combine="interleave">
     <optional>
-      <attribute name="accesskey"/>
-    </optional>
-    <optional>
-      <attribute name="align"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <optional>
-      <attribute name="data"/>
-    </optional>
-    <optional>
-      <attribute name="disabled">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
-      <attribute name="hidden">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="id"/>
-    </optional>
-    <optional>
-      <attribute name="label"/>
-    </optional>
-    <optional>
-      <attribute name="noLang">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="onclick"/>
-    </optional>
-    <optional>
-      <attribute name="parentId"/>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -7789,13 +7811,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="statustext"/>
-    </optional>
-    <optional>
       <attribute name="style"/>
-    </optional>
-    <optional>
-      <attribute name="value"/>
     </optional>
     <optional>
       <attribute name="width"/>
@@ -12972,7 +12988,14 @@
       <attribute name="accesskey"/>
     </optional>
     <optional>
-      <attribute name="accountType"/>
+      <attribute name="accountType">
+        <choice>
+          <value>accounts</value>
+          <value>groups</value>
+          <value>both</value>
+          <value>owngroups</value>
+        </choice>
+      </attribute>
     </optional>
     <optional>
       <attribute name="align"/>
@@ -19713,64 +19736,10 @@
   </define>
   <define name="attlist.et2-vfs-gid" combine="interleave">
     <optional>
-      <attribute name="accesskey"/>
-    </optional>
-    <optional>
-      <attribute name="align"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <optional>
-      <attribute name="data"/>
-    </optional>
-    <optional>
-      <attribute name="disabled">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
-      <attribute name="hidden">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="id"/>
-    </optional>
-    <optional>
-      <attribute name="label"/>
-    </optional>
-    <optional>
-      <attribute name="noLang">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="onclick"/>
-    </optional>
-    <optional>
-      <attribute name="parentId"/>
-    </optional>
-    <optional>
-      <attribute name="searchUrl"/>
-    </optional>
-    <optional>
-      <attribute name="select_options"/>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -19786,13 +19755,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="statustext"/>
-    </optional>
-    <optional>
       <attribute name="style"/>
-    </optional>
-    <optional>
-      <attribute name="value"/>
     </optional>
     <optional>
       <attribute name="width"/>
@@ -20478,64 +20441,10 @@
   </define>
   <define name="attlist.et2-vfs-uid" combine="interleave">
     <optional>
-      <attribute name="accesskey"/>
-    </optional>
-    <optional>
-      <attribute name="align"/>
-    </optional>
-    <optional>
-      <attribute name="class"/>
-    </optional>
-    <optional>
-      <attribute name="data"/>
-    </optional>
-    <optional>
-      <attribute name="disabled">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="height"/>
     </optional>
     <optional>
-      <attribute name="hidden">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
       <attribute name="id"/>
-    </optional>
-    <optional>
-      <attribute name="label"/>
-    </optional>
-    <optional>
-      <attribute name="noLang">
-        <choice>
-          <value>false</value>
-          <value>true</value>
-          <value>1</value>
-        </choice>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="onclick"/>
-    </optional>
-    <optional>
-      <attribute name="parentId"/>
-    </optional>
-    <optional>
-      <attribute name="searchUrl"/>
-    </optional>
-    <optional>
-      <attribute name="select_options"/>
     </optional>
     <optional>
       <attribute name="slot"/>
@@ -20551,13 +20460,7 @@
       </attribute>
     </optional>
     <optional>
-      <attribute name="statustext"/>
-    </optional>
-    <optional>
       <attribute name="style"/>
-    </optional>
-    <optional>
-      <attribute name="value"/>
     </optional>
     <optional>
       <attribute name="width"/>

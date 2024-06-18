@@ -1312,7 +1312,7 @@
 
 <!ATTLIST et2-nextmatch-header-account
     accesskey CDATA #IMPLIED
-    accountType CDATA #IMPLIED
+    accountType (accounts|groups|both|owngroups) #IMPLIED
     align CDATA #IMPLIED
     allowFreeEntries (false|true|1) #IMPLIED
     ariaDescription CDATA #IMPLIED
@@ -1897,22 +1897,33 @@
 <!ATTLIST et2-date-since
     accesskey CDATA #IMPLIED
     align CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    ariaLabel CDATA #IMPLIED
+    autocomplete CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
     class CDATA #IMPLIED
     data CDATA #IMPLIED
     disabled (false|true|1) #IMPLIED
+    freeMinuteEntry (false|true|1) #IMPLIED
     height CDATA #IMPLIED
+    helpText CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
+    inline (false|true|1) #IMPLIED
     label CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
+    onchange CDATA #IMPLIED
     onclick CDATA #IMPLIED
     parentId CDATA #IMPLIED
+    placeholder CDATA #IMPLIED
+    placement CDATA #IMPLIED
+    readonly (false|true|1) #IMPLIED
+    required (false|true|1) #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
     statustext CDATA #IMPLIED
     style CDATA #IMPLIED
     units CDATA #IMPLIED
-    value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-date-time EMPTY>
@@ -1986,23 +1997,11 @@
 <!ELEMENT et2-date-time-today EMPTY>
 
 <!ATTLIST et2-date-time-today
-    accesskey CDATA #IMPLIED
-    align CDATA #IMPLIED
-    class CDATA #IMPLIED
-    data CDATA #IMPLIED
-    disabled (false|true|1) #IMPLIED
     height CDATA #IMPLIED
-    hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
-    label CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    onclick CDATA #IMPLIED
-    parentId CDATA #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
-    statustext CDATA #IMPLIED
     style CDATA #IMPLIED
-    value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-description EMPTY>
@@ -3183,7 +3182,7 @@
 
 <!ATTLIST et2-select-account
     accesskey CDATA #IMPLIED
-    accountType CDATA #IMPLIED
+    accountType (accounts|groups|both|owngroups) #IMPLIED
     align CDATA #IMPLIED
     allowFreeEntries (false|true|1) #IMPLIED
     ariaDescription CDATA #IMPLIED
@@ -4644,25 +4643,11 @@
 <!ELEMENT et2-vfs-gid EMPTY>
 
 <!ATTLIST et2-vfs-gid
-    accesskey CDATA #IMPLIED
-    align CDATA #IMPLIED
-    class CDATA #IMPLIED
-    data CDATA #IMPLIED
-    disabled (false|true|1) #IMPLIED
     height CDATA #IMPLIED
-    hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
-    label CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    onclick CDATA #IMPLIED
-    parentId CDATA #IMPLIED
-    searchUrl CDATA #IMPLIED
-    select_options CDATA #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
-    statustext CDATA #IMPLIED
     style CDATA #IMPLIED
-    value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-vfs-mime EMPTY>
@@ -4833,23 +4818,9 @@
 <!ELEMENT et2-vfs-uid EMPTY>
 
 <!ATTLIST et2-vfs-uid
-    accesskey CDATA #IMPLIED
-    align CDATA #IMPLIED
-    class CDATA #IMPLIED
-    data CDATA #IMPLIED
-    disabled (false|true|1) #IMPLIED
     height CDATA #IMPLIED
-    hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
-    label CDATA #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    onclick CDATA #IMPLIED
-    parentId CDATA #IMPLIED
-    searchUrl CDATA #IMPLIED
-    select_options CDATA #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
-    statustext CDATA #IMPLIED
     style CDATA #IMPLIED
-    value CDATA #IMPLIED
     width CDATA #IMPLIED>

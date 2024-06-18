@@ -69,7 +69,7 @@ const formatDate = function(date : Date, options = {units: "YmdHis"})
  *
  * This is a stripped-down read-only widget used in nextmatch
  */
-export class Et2DateSinceReadonly extends Et2DateReadonly
+export class Et2DateSince extends Et2DateReadonly
 {
 	static get properties()
 	{
@@ -130,4 +130,4 @@ export class Et2DateSinceReadonly extends Et2DateReadonly
 }
 
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-date-since", Et2DateSinceReadonly);
+customElements.define("et2-date-since", Et2DateSince);

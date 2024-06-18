@@ -41,6 +41,7 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @event sl-after-hide - Emitted after the suggestion menu closes and all animations are complete.
  *
  * @csspart form-control - The form control that wraps the label, input, and help text.
+ * @since 23.1.x
  */
 
 export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeSearchResult, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))

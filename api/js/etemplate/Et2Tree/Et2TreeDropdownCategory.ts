@@ -9,6 +9,9 @@ import {css, PropertyValues, unsafeCSS} from "lit";
 import {Et2TreeDropdown} from "./Et2TreeDropdown";
 import {Et2CategoryTag} from "../Et2Select/Tag/Et2CategoryTag";
 
+/**
+ * @since 23.1.x
+ */
 export class Et2TreeDropdownCategory extends Et2TreeDropdown
 {
 
