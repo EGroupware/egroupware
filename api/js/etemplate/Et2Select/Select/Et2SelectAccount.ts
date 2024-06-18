@@ -12,6 +12,7 @@ import {cleanSelectOptions, SelectOption} from "../FindSelectOptions";
 import {SelectAccountMixin} from "../SelectAccountMixin";
 import {Et2StaticSelectMixin} from "../StaticOptions";
 import {html, nothing} from "lit";
+import {property} from "lit/decorators/property.js";
 
 export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
 
@@ -20,17 +21,6 @@ export type AccountType = 'accounts' | 'groups' | 'both' | 'owngroups';
  */
 export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et2Select))
 {
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * One of: 'accounts','groups','both','owngroups'
-			 */
-			accountType: String,
-		}
-	}
-
 	constructor()
 	{
 		super();
@@ -43,7 +33,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		}
 
 		this.searchOptions = {type: 'account', account_type: 'accounts'};
-		this.__accountType = 'accounts';
+		this.accountType = 'accounts';
 	}
 
 	connectedCallback()
@@ -95,7 +85,11 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		});
 	}
 
-	set accountType(type : AccountType)
+	/**
+	 * Which account-types to return: users, groups or both
+	 */
+	@property()
+	set accountType(type : 'accounts' | 'groups' | 'both' | 'owngroups')
 	{
 		this.__accountType = type;
 		this.searchOptions.account_type = type;
@@ -103,7 +97,7 @@ export class Et2SelectAccount extends SelectAccountMixin(Et2StaticSelectMixin(Et
 		super.select_options = this.select_options;
 	}
 
-	get accountType() : AccountType
+	get accountType() : 'accounts' | 'groups' | 'both' | 'owngroups'	// decorator requires explicit list, NOT AccountType!
 	{
 		return this.__accountType;
 	}
