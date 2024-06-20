@@ -812,6 +812,11 @@ class Link extends Link\Storage
 			$options['num_rows'] = max((int)$GLOBALS['egw_info']['user']['preference']['common']['maxmatchs'], self::DEFAULT_NUM_ROWS);
 		}
 
+		if (isset($options['order']) && !preg_match(preg_match('/^[a-z0-9_]+$/', $options['order'])))
+		{
+			unset($options['order'], $options['sort']);
+		}
+
 		$result = self::exec($method, array($pattern, &$options));
 
 		if (!isset($options['total']))

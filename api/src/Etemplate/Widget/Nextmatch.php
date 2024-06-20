@@ -336,7 +336,7 @@ class Nextmatch extends Etemplate\Widget
 		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
 		if(is_array($value['sort']))
 		{
-			$value['order'] = $value['sort']['id'];
+			$value['order'] = preg_match('/^[a-z0-9_]+$/', $value['sort']['id']) ? $value['sort']['id'] : '';
 			$value['sort'] = $value['sort']['asc'] ? 'ASC' : 'DESC';
 		}
 
