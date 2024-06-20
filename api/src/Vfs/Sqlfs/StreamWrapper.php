@@ -1767,15 +1767,25 @@ GROUP BY A.fs_id';
 	/**
 	 * Limit filename to precision of column while keeping the extension
 	 *
+	 * Also takes care to replace 4-byte utf-8 chars e.g. used in some Emojis with a replacement character.
+	 *
 	 * @param string $name
 	 * @return string
 	 */
-	static protected function limit_filename($name)
+	static public function limit_filename($name)
 	{
 		static $fs_name_precision = null;
 		if (!isset($fs_name_precision))
 		{
 			$fs_name_precision = $GLOBALS['egw']->db->get_column_attribute('fs_name', self::TABLE, 'phpgwapi', 'precision');
+		}
+		// MySQL and MariaDB not 10.1 need 4-byte utf8 chars replaced with our default utf8 charset
+		// (MariaDB 10.1 does the replacement automatic, 10.0 cuts everything off behind and MySQL gives an error)
+		// (MariaDB 10.3 gives an error too: Incorrect string value: '\xF0\x9F\x98\x8A\x0AW...')
+		// Changing charset to utf8mb4 requires schema update, shortening of some indexes and probably have negative impact on performance!
+		if (isset($name) && substr($GLOBALS['egw']->db->Type, 0, 5) === 'mysql')
+		{
+			$name = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $name);
 		}
 		if (mb_strlen($name) > $fs_name_precision)
 		{
