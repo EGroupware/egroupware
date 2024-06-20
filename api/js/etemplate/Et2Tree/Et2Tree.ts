@@ -36,6 +36,39 @@ export type TreeItemData = SelectOption & {
 }
 
 /**
+ * checks if the event has an Element in its composedPath that satisfies the Tag, className or both
+ * @param _ev
+ * @param tag
+ * @param className
+ * @returns true iff tag and classname are satisfied on the same Element somewhere in the composedPath and false otherwise
+ */
+export const composedPathContains = (_ev: any, tag?: string, className?: string) => {
+
+	// Tag and classname is given
+	// check if one element has given tag with given class
+	if(tag && className)
+	{
+		return _ev.composedPath().some((el) => {
+			return el?.classList?.contains(className) && el?.tagName?.toLowerCase() === tag.toLowerCase()
+		})
+
+	}
+	// only classname is given
+	// check if one element has given class
+	if(className && !tag)
+		return _ev.composedPath().some((el) => {
+			return el?.classList?.contains(className)
+		})
+	// only tag is given
+	// check if one element has given tag
+	if(tag && !className)
+		return _ev.composedPath().some((el) => {
+			return el?.tagName?.toLowerCase() === tag.toLowerCase()
+		})
+	return false
+}
+
+/**
  * @event {{id: String, item:SlTreeItem}} sl-expand emmited when tree item expands
  * //TODO add for other events
  */
@@ -162,8 +195,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	//Sl-Trees handle their own onClick events
 	_handleClick(_ev)
 	{
+		const labelClicked = composedPathContains(_ev,"span","tree-item__label")
+		if (!labelClicked)
+		{
+			this._currentSlTreeItem.expanded = !this._currentSlTreeItem.expanded;
+		}
 		// check if not expand icon (> or v) was clicked, we have an onclick handler and a string value
-		if (!(_ev.composedPath()[0].tagName === 'svg' && _ev.composedPath()[0].classList.contains('bi-chevron-right')) &&
+		// svg bibi-chevron-right is not necessarily the first element in composedPath
+		if (!(composedPathContains(_ev,"svg","bi-chevron-right")) &&
 			typeof this.onclick === "function" && typeof _ev.target.value === "string")
 		{
 			this.onclick(_ev.target.value, this, _ev.target.value)
@@ -223,6 +262,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					position: absolute;
 					top: 0;
 					right: 0.5em;
+				}
+
+				@media only screen and (max-device-width: 768px) {
+					:host{
+						--sl-font-size-medium: 1.2rem;
+					}
+					sl-tree-item{
+						padding: 0.1em;
+					}
+					
+					
 				}
 			`
 
