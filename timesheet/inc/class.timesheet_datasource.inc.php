@@ -70,6 +70,9 @@ class timesheet_datasource extends datasource
 		{
 			$ds['pe_real_end'] = $data['ts_start'] + 60*$data['ts_duration'];
 			$ds['pe_used_time'] = $data['ts_duration'];
+		} else {
+			$ds['pe_real_end'] = $data['ts_start'];
+			$ds['pe_used_time'] = 0;
 		}
 		if ($this->debug)
 		{
