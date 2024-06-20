@@ -1796,6 +1796,19 @@ class Vfs extends Vfs\Base
 	}
 
 	/**
+	 * Limit filename to precision of column while keeping the extension
+	 *
+	 * Also takes care to replace 4-byte utf-8 chars e.g. used in some Emojis with a replacement character.
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	static public function limitFilename($name)
+	{
+		return Vfs\Sqlfs\StreamWrapper::limit_filename($name);
+	}
+
+	/**
 	 * Encode a path: replacing certain chars with their urlencoded counterparts
 	 *
 	 * To reverse the encoding, eg. to display a filename to the user, you have to use self::decodePath()

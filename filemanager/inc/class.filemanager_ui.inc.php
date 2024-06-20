@@ -1755,7 +1755,7 @@ class filemanager_ui
 
 		foreach($selected as $tmp_name => &$data)
 		{
-			$path = Vfs::concat($dir, Vfs::encodePathComponent($data['name']));
+			$path = Vfs::concat($dir, Vfs::limitFilename(Vfs::encodePathComponent($data['name'])));
 
 			if(Vfs::deny_script($path))
 			{
