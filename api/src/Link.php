@@ -807,6 +807,11 @@ class Link extends Link\Storage
 		// limit number of returned rows by default to 100, if no limit is set
 		if (!isset($options['num_rows'])) $options['num_rows'] = self::DEFAULT_NUM_ROWS;
 
+		if (isset($options['order']) && !preg_match(preg_match('/^[a-z0-9_]+$/', $options['order'])))
+		{
+			unset($options['order'], $options['sort']);
+		}
+
 		$result = self::exec($method, array($pattern, &$options));
 
 		if (!isset($options['total']))

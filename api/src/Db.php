@@ -751,7 +751,7 @@ class Db
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	*/
-	function query($Query_String, $line = '', $file = '', $offset=0, $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
+	function query($Query_String, $line = '', $file = '', int $offset=0, int $num_rows=-1, $inputarr=false, $fetchmode=self::FETCH_BOTH, $reconnect=true)
 	{
 		if ($Query_String == '')
 		{
@@ -2229,7 +2229,7 @@ class Db
 		{
 			return $sql;
 		}
-		return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows,false,$fetchmode);
+		return $this->query($sql, $line, $file, (int)$offset, $offset===False ? -1 : (int)$num_rows, false, $fetchmode);
 	}
 
 	/**

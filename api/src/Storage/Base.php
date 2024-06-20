@@ -966,6 +966,8 @@ class Base
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start+[null,null];
 
+		$order_by = self::sanitizeOrderBy($order_by);
+
 		// fix GROUP BY clause to contain all non-aggregate selected columns
 		if ($order_by && stripos($order_by,'GROUP BY') !== false)
 		{
@@ -1064,6 +1066,39 @@ class Base
 		}
 		if (!$n) $arr = null;
 		return $arr;
+	}
+
+
+	/**
+	 * Sanitize (currently just remove) not understood ORDER BY clause
+	 *
+	 * @param string $fragment SQL fragment containing ORDER BY clause, could also contain GROUP BY etc
+	 * @return string sanitized version of $_order_by
+	 */
+	static function sanitizeOrderBy(string $fragment)
+	{
+		// check fragment contains ORDER BY --> just operate on what's behind
+		if (stripos($fragment,'ORDER BY') !== false)
+		{
+			[$group_by, $order_by] = preg_split('/order +by +/i', $fragment);
+		}
+		// check fragment not just contain GROUP BY or HAVING --> nothing to do
+		elseif ($fragment === '' || stripos($fragment,'GROUP BY')!==false || stripos($fragment,'HAVING')!==false)
+		{
+			return $fragment;
+		}
+		// fragment is ORDER BY clause
+		else
+		{
+			$order_by = $fragment;
+		}
+		if (!preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(,|$)/ui", $order_by, $all_matches) ||
+			$order_by !== implode('', $all_matches[0]))
+		{
+			//error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
+			return $group_by??'';
+		}
+		return $fragment;
 	}
 
 	/**
