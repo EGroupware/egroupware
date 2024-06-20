@@ -1706,18 +1706,23 @@ class Mail
 						((intval($mime_id) === 1) || !$mime_id) &&
 						($partdisposition !== 'attachment')) {
 							$_structure=$part;
-							$this->fetchPartContents($uid, $_structure, false,true);
-							$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(Mail\Html::convertHTMLToText($_structure->getContents()),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
-							$charSet = $part->getCharset();
-							// check if client set a wrong charset and content is utf-8 --> use utf-8
-							if (strtolower($charSet) !='utf-8' && preg_match('//u', $headerObject['BODYPREVIEW']))
-							{
-								$charSet = 'UTF-8';
+							try {
+								$this->fetchPartContents($uid, $_structure, false,true);
+								$headerObject['BODYPREVIEW']=trim(str_replace(array("\r\n","\r","\n"),' ',mb_substr(Mail\Html::convertHTMLToText($_structure->getContents()),0,((int)$_fetchPreviews<300?300:$_fetchPreviews))));
+								$charSet = $part->getCharset();
+								// check if client set a wrong charset and content is utf-8 --> use utf-8
+								if (strtolower($charSet) !='utf-8' && preg_match('//u', $headerObject['BODYPREVIEW']))
+								{
+									$charSet = 'UTF-8';
+								}
+								// add line breaks to $bodyParts
+								//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
+								$headerObject['BODYPREVIEW']  = Translation::convert_jsonsafe($headerObject['BODYPREVIEW'], $charSet);
+								//error_log(__METHOD__.__LINE__.$headerObject['BODYPREVIEW']);
 							}
-							// add line breaks to $bodyParts
-							//error_log(__METHOD__.' ('.__LINE__.') '.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
-							$headerObject['BODYPREVIEW']  = Translation::convert_jsonsafe($headerObject['BODYPREVIEW'], $charSet);
-							//error_log(__METHOD__.__LINE__.$headerObject['BODYPREVIEW']);
+							catch (\Exception $e) {
+								// mail probably has no text-part
+							}
 					}
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Uid:'.$uid.'->'.$mime_id.' Disp:'.$partdisposition.' Type:'.$partPrimaryType);
 					$cid = $part->getContentId();
@@ -4890,9 +4895,14 @@ class Mail
 		if (empty($partToReturn)&&$_tryDecodingServerside===true)
 		{
 			error_log(__METHOD__.__LINE__.' failed to fetch bodyPart in  BINARY. Try BODY');
-			$partToReturn = $this->getBodyPart($_uid, $_partID, $_folder, $_preserveSeen, $_stream, $_encoding, false);
+			try {
+				$partToReturn = $this->getBodyPart($_uid, $_partID, $_folder, $_preserveSeen, $_stream, $_encoding, false);
+			}
+			catch(\Exception $e) {
+				// mail probably has no text-body
+			}
 		}
-		return ($partToReturn?$partToReturn:null);
+		return $partToReturn ?: null;
 	}
 
 	/**
@@ -4935,15 +4945,25 @@ class Mail
 			// RB: not sure what this is: preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
 
 			// Should not try to fetch if the content is already there (e.g. Smime encrypted message)
-			if (empty($_structure->getContents())) $this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
+			try {
+				if (empty($_structure->getContents())) $this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
 
-			$bodyPart = array(
-				'body'		=> $_structure->getContents(array(
-					'stream' => $_stream,
-				)),
-				'mimeType'  => $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
-				'charSet'	=> $_structure->getCharset(),
-			);
+				$bodyPart = array(
+					'body' => $_structure->getContents(array(
+						'stream' => $_stream,
+					)),
+					'mimeType' => $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
+					'charSet' => $_structure->getCharset(),
+				);
+			}
+			catch (\Exception $e) {
+				$bodyPart = array(
+					'error'		=> 1,
+					'body'      => lang('Mail probably has no text-body').":\n\n".$e->getMessage(),
+					'mimeType'  => 'text/plain', // make sure we do not return mimeType text/html
+					'charSet'   => self::$displayCharset,
+				);
+			}
 		}
 		return $bodyPart;
 	}

@@ -344,6 +344,7 @@ mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter
 mail filter rule	mail	de	Filter-Regel
+mail probably has no text-body	mail	de	Die Mail hat vermutlich keinen Textteil
 mail settings	mail	de	E-Mail-Einstellungen
 mail source	mail	de	Nachrichten-Quelltext anzeigen
 mail-address	mail	de	E-Mail-Adresse

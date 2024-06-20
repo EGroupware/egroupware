@@ -344,6 +344,7 @@ mail	common	en	Mail
 mail acl	mail	en	Email access rights
 mail filter	mail	en	Filter
 mail filter rule	mail	en	Mail filter rule
+mail probably has no text-body	mail	en	Mail probably has no text-body
 mail settings	mail	en	Mail settings
 mail source	mail	en	Mail Source
 mail-address	mail	en	Mail-Address
