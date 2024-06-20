@@ -812,6 +812,11 @@ class Base
 	}
 
 	/**
+	 * @var bool true (default), false: do NOT sanitize, the caller should have done that before
+	 */
+	protected $sanitize_order_by = true;
+
+	/**
 	 * searches db for rows matching searchcriteria
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
@@ -831,7 +836,6 @@ class Base
 	 * @param string $join ='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
 	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 * @param boolean $need_full_no_count =false If true an unlimited query is run to determine the total number of rows, default false
-	 * @todo return an interator instead of an array
 	 * @return array|NULL|true array of matching rows (the row is an array of the cols), NULL (nothing matched) or true (multiple union queries)
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
@@ -966,7 +970,10 @@ class Base
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start+[null,null];
 
-		$order_by = self::sanitizeOrderBy($order_by);
+		if ($this->sanitize_order_by)
+		{
+			$order_by = self::sanitizeOrderBy($order_by);
+		}
 
 		// fix GROUP BY clause to contain all non-aggregate selected columns
 		if ($order_by && stripos($order_by,'GROUP BY') !== false)
@@ -1092,10 +1099,10 @@ class Base
 		{
 			$order_by = $fragment;
 		}
-		if (!preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(,|$)/ui", $order_by, $all_matches) ||
+		if (!preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
 			$order_by !== implode('', $all_matches[0]))
 		{
-			//error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
+			error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
 			return $group_by??'';
 		}
 		return $fragment;
