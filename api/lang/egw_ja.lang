@@ -1,12 +1,12 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	ja	%1 (%2 new) messages written for application '%3' and languages '%4'
-%1 active file(s) with same name as directory inactivated!	admin	ja	%1 active file(s) with same name as directory inactivated!
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	ja	アプリケーション '%3' および言語 '%4' に対して %1 (%2 新しい) メッセージが書き込まれました。
+%1 active file(s) with same name as directory inactivated!	admin	ja	フォルダと同じ名前のアクティブなファイル %1 が非アクティブになりました！
 %1 copied - the copy can now be edited	common	ja	%1 をコピーしました - コピーを編集できます
-%1 directories %2 found!	admin	ja	%1 directories %2 found!
+%1 directories %2 found!	admin	ja	%1 ディレクトリ %2 が見つかりました！
 %1 email addresses inserted	common	ja	%1 個の電子メール・アドレスを挿入しました。
 %1 email(s) added into %2	common	ja	%1 の電子メールが %2 に追加されました。
 %1 entries found, select one ...	common	ja	%1 個の項目がみつかりました。選択してください ...
 %1 etemplates deleted	common	ja	%1 個の eTemplates を削除しました。
-%1 etemplates for application '%2' dumped to '%3'	common	ja	%1 eTemplates for application '%2' dumped to '%3'
+%1 etemplates for application '%2' dumped to '%3'	common	ja	アプリケーション '%2' の %1 eTemplate(s) が '%3' にダンプされました。
 %1 etemplates found	common	ja	%1 個の eTemplate が見つかりました。
 %1 file	common	ja	%1 ファイル
 %1 is not executable by the webserver !!!	common	ja	%1 はウェブ・サーバー上で実行できません!
@@ -16,7 +16,7 @@
 %1 new etemplates imported for application '%2'	common	ja	アプリケーション %2 向けの %1 個の新規 eTemplates をインポートしました
 %1 not implemented for %2!	common	ja	%2 で %1 は実装されていません!
 %1 proxy of %2	common	ja	%1 proxy of %2
-%1 setting "%2" = %3 disallows access via http!	admin	ja	%1 setting "%2" = %3 disallows access via http!
+%1 setting "%2" = %3 disallows access via http!	admin	ja	%1 設定 "%2" = %3 は http 経由のアクセスを許可しません！
 %1 to sync	groupdav	ja	同期する%1
 %1, duplicate id	common	ja	%1, 重複 ID
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ja	%1Choose an other directory%2<br />or make %3 writable by web server.
@@ -148,6 +148,7 @@ applies the changes made	common	ja	変更を適用する
 applies the changes to the given version of the template	common	ja	Applies the changes to the given version of the template
 apply	common	ja	適用
 apply the action on the whole query, not only the shown entries	common	ja	Apply the action on the whole query, NOT only the shown entries
+apps &amp; license	common	ja	アプリとライセンス
 april	common	ja	4月
 are you sure you want to delete these entries ?	common	ja	これらの項目を削除してよろしいですか？
 are you sure you want to delete this entry ?	common	ja	この項目を削除してよろしいですか？
@@ -166,8 +167,6 @@ australia	common	ja	オーストラリア
 austria	common	ja	オーストリア
 authenticate	common	ja	認証
 author	common	ja	著者
-autohide sidebox menu's	common	ja	サイドメニューを自動的に隠す
-autohide sidebox menus	common	ja	サイドメニューを自動的に隠す
 automatic update check failed, you need to check manually!	common	ja	Automatic update check failed, you need to check manually!
 automatically refresh list	common	ja	リストの自動リフレッシュ
 autosave default category	common	ja	既定のカテゴリを自動保存
@@ -178,6 +177,7 @@ back to user login	common	ja	ログイン画面に戻る
 background color:	common	ja	背景色:
 backup key	common	ja	バックアップ・キー
 backup/restore	common	ja	バックアップ/復元
+backup/restore ...	common	ja	バックアップ／リストア ...
 backupdir '%1' is not writeable by the webserver	common	ja	ウェブ・サーバーは、バックアップ・ディレクトリ '%1' に対して書き込むことができません。
 bad login or password	common	ja	パスワードが誤っています。
 bahamas	common	ja	バハマ
@@ -194,7 +194,6 @@ benin	common	ja	ベナン
 bermuda	common	ja	バミューダ
 bhutan	common	ja	ブータン
 blocked, too many attempts	common	ja	ブロックされました（試行回数超過）
-blue moono theme	common	ja	blue moono theme
 blurtext	common	ja	blurText
 bold	common	ja	太字
 border	common	ja	ボーダー
@@ -284,18 +283,19 @@ click here to create the link	common	ja	リンクを作成
 click here to resume your egroupware session.	common	ja	クリックしてEGroupwareセッションを復旧。
 click here to start the search	common	ja	検索開始
 click here to upload the file	common	ja	ファイルをアップロード
-click or mouse over to show menus	common	ja	クリック、またはマウスオーバーでメニューを表示。
-click or mouse over to show menus?	common	ja	クリック、またはマウスオーバーでメニューを表示。
-click this image on the navbar: %1	common	ja	Click this image on the navbar: %1
-click to order after that criteria	common	ja	Order after criteria
+click this image on the navbar: %1	common	ja	ナビバーのこの画像をクリック: %1
+click to open colorpicker	common	ja	クリックしてカラーピッカーを開く
+click to order after that criteria	common	ja	基準後の順序
 clickable path	common	ja	クリッカブル・パス
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ja	制限値を明示していないクライアントに対して、ここで指定した制限値を適用します。大き過ぎる制限値を指定すると、クライアントによっては問題を引き起こす可能性があります。
+clipboard contents	common	ja	クリップボードの内容
 close	common	ja	閉じる
 close sidebox	common	ja	サイドメニューを閉じる
 closes the window without saving the changes	common	ja	保存せずに閉じる
 cocos (keeling) islands	common	ja	ココス諸島
-collection empty.	common	ja	Collection empty.
-collection listing	common	ja	Collection listing
+code	common	ja	コード
+collection empty.	common	ja	コレクションは空です。
+collection listing	common	ja	コード
 colombia	common	ja	コロンビア
 colour	common	ja	カラー
 column...	common	ja	カラム...
@@ -348,12 +348,11 @@ current	common	ja	現在
 current users	common	ja	現在のユーザ
 custom	common	ja	カスタム
 custom fields	common	ja	カスタム項目
-custom javascript for onchange	common	ja	Custom JavaScript for onChange
+custom javascript for onchange	common	ja	onchange用のカスタムJavaScript
 cut	common	ja	切り取り
 cyprus	common	ja	キプロス
 czech republic	common	ja	チェコ
 dark mode	common	ja	ダークモード
-dark moono theme	common	ja	dark moono theme
 data type	common	ja	データ・タイプ
 database error	common	ja	データベース・エラー
 database error!	common	ja	データベース・エラー!
@@ -371,13 +370,15 @@ december	common	ja	12月
 deck	common	ja	Deck (internal)
 default	common	ja	既定値
 default category	common	ja	既定のカテゴリ
+default document to insert entries	preferences	ja	エントリーを挿入するデフォルトのドキュメント
 default height for the windows	common	ja	ウィンドウの既定の高さ
+default visible actions	common	ja	デフォルトの可視アクション
 default width for the windows	common	ja	ウィンドウの既定の幅
 del	common	ja	Del
 delete	common	ja	削除
 delete a single entry by passing the id.	common	ja	ID を送信して項目を削除
 delete all selected etemplates, without further inquiry	common	ja	Delete ALL selected eTemplates, WITHOUT further inquiry
-delete and cut save the template!	common	ja	Delete and cut save the template!
+delete and cut save the template!	common	ja	テンプレートを削除して保存します！
 delete backup	common	ja	バックアップを削除
 delete backup key	common	ja	バックアップ・キーを削除
 delete category	common	ja	カテゴリを削除
@@ -394,6 +395,7 @@ delete this column	common	ja	カラムを削除
 delete this entry	common	ja	項目を削除
 delete this etemplate	common	ja	eTemplateを削除
 delete this file	common	ja	ファイルを削除
+delete this photo?	common	ja	この写真を削除しますか？
 delete this row	common	ja	行を削除
 delete whole column (can not be undone!!!)	common	ja	カラム全体を削除
 deletes the above spez. etemplate from the database, can not be undone	common	ja	データベースから eTemplate を削除
@@ -404,9 +406,10 @@ denmark	common	ja	デンマーク
 description	common	ja	説明
 detail	common	ja	詳細
 details	common	ja	詳細
-direction left to right	common	ja	左から右方法
 directory	common	ja	ディレクトリ
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ja	Directory does not exist, is not readable by the web server or is not relative to the document root!
+directory for storing merged documents	preferences	ja	マージされた文書を保存するフォルダ
+directory with documents to insert entries	preferences	ja	エントリーを挿入する文書のあるフォルダ
 disabled	common	ja	不可
 discard changes	common	ja	変更を破棄
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	ja	Displayed in front of input or input is inserted for a '%s' in the label of the Submit button or image file name.
@@ -416,6 +419,7 @@ distribution lists as groups	groupdav	ja	グループ化した配信リスト
 djibouti	common	ja	ジブチ
 do not notify	common	ja	通知しない
 do not notify of these changes	common	ja	新規作成時/変更時に通知しない
+do not use on public computers!	common	ja	公共のコンピューターでは使用しないでください！
 do you also want to delete all subcategories ?	common	ja	全サブ・カテゴリも同時に削除しますか？
 do you want to save the changes you made in table %s?	common	ja	テーブル %s に対する変更を保存しますか？
 do you want to send the message to all selected entries, without further editing?	common	ja	Do you want to send the message to all selected entries, WITHOUT further editing?
@@ -451,7 +455,7 @@ edit categories	common	ja	カテゴリを編集
 edit category	common	ja	カテゴリを編集
 edit embeded css styles or of the applications app.css file	common	ja	Edit embedded CSS styles or of the applications app.css file
 edit the etemplate spez. above	common	ja	eTemplateを編集
-edit...	common	ja	Edit...
+edit...	common	ja	編集 ...
 editable templates - db-tools	common	ja	編集可能テンプレート - DB-Tools
 editable templates - delete template	common	ja	編集可能テンプレート - テンプレート削除
 editable templates - editor	common	ja	編集可能テンプレート - エディタ
@@ -473,7 +477,7 @@ email	common	ja	電子メール
 email-address of the user, eg. "%1"	common	ja	ユーザの電子メール・アドレス（例: "%1"）
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	ja	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	ja	空のファイル
-enable javascript onchange submit	common	ja	JavaScript onChange サブミットを有効化
+enable javascript onchange submit	common	ja	JavaScript onchange サブミットを有効化
 enable logging	groupdav	ja	ロギングを有効化
 enabled	common	ja	有効
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	ja	CalDAV/CardDAV のトラフィックのロギングを有効にします。
@@ -482,9 +486,11 @@ end time	common	ja	終了時刻
 enter '' for an empty default, nothing mean no default	common	ja	Enter '' for an empty default, nothing means no default
 enter a search pattern	common	ja	検索パターンを入力
 enter filename to upload and attach, use [browse...] to search for it	common	ja	Enter file name to upload and attach, use [Browse...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ja	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	ja	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	ja	Enter new version number, has to be > old_version
+enter your file name	common	ja	ファイル名を入力
+enter your password	common	ja	パスワードを入力
 entry has been deleted sucessfully	common	ja	項目を削除しました。
 entry not found!	common	ja	項目が見つかりません!
 entry saved	common	ja	項目を保存しました。
@@ -498,7 +504,8 @@ error create parent directory %1!	common	ja	親ディレクトリ %1 作成中�
 error creating %1 %2 directory	common	ja	Error creating %1 %2 directory!
 error deleting %1 %2 directory	common	ja	Error deleting %1 %2 directory!
 error deleting %1!	common	ja	%1 削除中にエラーが発生しました!
-error renaming %1 %2 directory	common	ja	Error renaming %1 %2 directory!
+error enabling push	common	ja	プッシュ有効化エラー
+error renaming %1 %2 directory	common	ja	%1 %2 フォルダの名前変更でエラーが発生しました！
 error uploading file!	filemanager	ja	ファイルのアップロード中にエラーが発生しました!
 error: template not found !!!	common	ja	エラー: テンプレートが見つかりません!
 error: webserver is not allowed to write into '%1' !!!	common	ja	エラー: ウェブ・サーバーは '%1' に対する書き込みが許可されていません!!!
@@ -601,6 +608,7 @@ go to the first entry	common	ja	最初の項目に移動
 go to the last entry	common	ja	最後の項目に移動
 go to the next page of entries	common	ja	次のページに移動
 go to the previous page of entries	common	ja	前のページに移動
+go to your home directory	common	ja	ホームディレクトリに移動
 grant access	common	ja	利用許可設定
 greece	common	ja	ギリシャ
 greek	common	ja	ギリシャ語
@@ -656,7 +664,6 @@ how many days to sync in the past (default %1)	groupdav	ja	同期する過去方
 how many entries should the list show	common	ja	How many entries should the list show
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ja	How many icons should be shown in the top navigation bar. Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
 how many rows to print	common	ja	印刷する行数
-how to show the general egroupware menu ?	common	ja	一般 EGroupware メニューの表示方法
 html	common	ja	HTML
 html link to the current record	common	ja	このレコードへのHTMLリンク
 html links to any entries linked to the current record, excluding attached files	common	ja	添付ファイルを除く、現在のレコードにリンクされたエントリへのHTMLリンク
@@ -664,7 +671,6 @@ hungary	common	ja	ハンガリー
 iceland	common	ja	アイスランド
 id	common	ja	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	ja	If field is disabled an empty table cell is displayed
-if the clock is enabled would you like it to update it every second or every minute?	common	ja	If the clock is enabled would you like it to update it every second or every minute.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	ja	もしエラーの発生が続くようであれば、管理者にエラー・ログのチェック等を依頼してください。
 if there are some images in the background folder you can choose the one you would like to see.	common	ja	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	ja	ディレクトリ（VFS フルパス）を指定すると、%1上で各ドキュメントに対するアクションが表示され、ドキュメントをダウンロードすることができるようになります。
@@ -698,7 +704,6 @@ insert column after	common	ja	Insert column after
 insert column before	common	ja	Insert column before
 insert in %1	common	ja	%1に挿入
 insert in document	common	ja	ドキュメントに挿入
-insert in dokument	common	ja	ドキュメントに挿入
 insert new column behind this one	common	ja	Insert new column after
 insert new column in front of all	common	ja	Insert new column before all
 insert new row after this one	common	ja	Insert new row after
@@ -708,6 +713,7 @@ insert row after	common	ja	Insert row after
 insert row before	common	ja	Insert row before
 insert timestamp into description field	common	ja	説明欄にタイムスタンプを挿入
 install	common	ja	インストール
+install egroupware as mail-handler?	common	ja	メールハンドラとしてEGroupwareをインストールしますか？
 integer	common	ja	整数
 international	common	ja	国際
 introduction	common	ja	紹介
@@ -738,7 +744,6 @@ justify center	common	ja	中央揃え
 justify full	common	ja	両端揃え
 justify left	common	ja	左揃え
 justify right	common	ja	右揃え
-kama theme	common	ja	kama theme
 kenya	common	ja	ケニア
 key	common	ja	キー
 keywords	common	ja	キーワード
@@ -775,12 +780,13 @@ link is appended to mail allowing recipients to download currently attached vers
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	ja	Link is appended to mail allowing recipients to download or modify up to date version of files (EPL only)
 link is appended to mail allowing recipients to download up to date version of files	common	ja	Link is appended to mail allowing recipients to download up to date version of files
 link target %1 not found!	common	ja	Link target %1 not found!
+link title of current record	common	ja	現在のレコードのリンクタイトル
 linkapps	common	ja	Link apps
 linked	common	ja	Linked
 linkentry	common	ja	Link entry
 linklist	common	ja	Link list
 links and attached files	preferences	ja	Links and attached files
-links to specified application.  example: {{links/addressbook}}	common	ja	Links to specified application.  Example: {{links/addressbook}}
+links to specified application.  example: {{links/addressbook}}	common	ja	Links to specified application. Example: {{links/addressbook}}
 linkstring	common	ja	Link string
 linkto	common	ja	Link to
 list	common	ja	リスト
@@ -821,13 +827,13 @@ marshall islands	common	ja	マーシャル諸島
 martinique	common	ja	マルティニーク
 mauritania	common	ja	モーリタニア
 mauritius	common	ja	モーリシャス
-max number of icons in navbar	common	ja	Max number of icons in navbar
 maximum size for uploads	filemanager	ja	最大アップロード・サイズ
 may	common	ja	5月
 maybe	common	ja	Maybe
 mayotte	common	ja	マヨット
 medium	common	ja	中
 menu	common	ja	メニュー
+merged document filename	preferences	ja	マージされたドキュメントのファイル名
 message	common	ja	メッセージ
 message ...	common	ja	メッセージ ...
 message prepared for sending.	common	ja	メッセージ送信の準備ができました。
@@ -849,8 +855,6 @@ mongolia	common	ja	モンゴル
 montenegro	common	ja	モンテネグロ
 month	common	ja	月
 montserrat	common	ja	モントセラト
-moono color theme	common	ja	moono color theme
-moono theme (default)	common	ja	moono theme (default)
 more	common	ja	詳細
 more than 1 match for '%1'	common	ja	More than 1 match for '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	ja	More then one active file %1 found, inactivating %2 older revisions!
@@ -861,10 +865,10 @@ moved unconnected %1 %2 to %3.	admin	ja	Moved unconnected %1 %2 to %3.
 mozambique	common	ja	モザンビーク
 multicolumn indices	common	ja	Multi column indices
 multiple	common	ja	Multiple
+my account	common	ja	マイアカウント
 myanmar	common	ja	ミャンマー
 name	common	ja	名前
 name of other table where column is a key from	common	ja	Name of other table where column is a key from
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	ja	Name of phpgw template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	common	ja	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	common	ja	Name of the eTemplate, should be in form application.function[.subTemplate]
 name of the user, eg. "%1"	common	ja	Name of the user, eg. "%1"
@@ -908,9 +912,10 @@ no entries found, try again ...	common	ja	No entries found, try again ...
 no file	common	ja	No file
 no filename given or selected via browse...	common	ja	No filename
 no filters	common	ja	フィルター解除
-no history for this record	common	ja	No history for this record
+no history for this record	common	ja	このレコードの履歴はありません
 no key for recipient:	common	ja	No key for recipient:
-no matches found	common	ja	一致する項目が見つかりません。
+no matches found	common	ja	一致する行が見つかりません。
+no response from server: your data is probably not saved	common	ja	サーバーからの応答がありません: データが保存されていない可能性があります。
 no results match	common	ja	一致する項目が見つかりません。
 no rights to export more than %1 entries!	common	ja	No rights to export more than %1 entries!
 no row to swap with !!!	common	ja	No row to swap with!
@@ -953,8 +958,8 @@ old value	common	ja	古い値
 oman	common	ja	オマーン
 on *nix systems please type: %1	common	ja	UNIX系システムの場合は下記をタイプしてください: %1
 on mouse over	common	ja	On mouse over
-onchange	common	ja	onChange
-onclick	common	ja	onClick
+onchange	common	ja	onchange
+onclick	common	ja	onclick
 only an other version found !!!	common	ja	Other version found!
 only private	common	ja	プライベートのみ
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	ja	プロトコルを完全実装した、数少ないクライアント（Apple製等）でのみサポートされます。URLを入力するようなクライアントはサポートされません。
@@ -964,8 +969,6 @@ open	common	ja	開く
 open existing contact	common	ja	既存のコンタクトを開く
 open notify window	common	ja	通知ウィンドウを開く
 open popup window	common	ja	ポップアップ・ウィンドウを開く
-open sidebox	common	ja	サイド・ボックスを開く
-open the online help.	common	ja	オンライン・ヘルプを開く
 operator	common	ja	Operator
 optional note about the link	common	ja	Optional note for Link
 options	common	ja	オプション
@@ -1028,7 +1031,7 @@ please set your global preferences	common	ja	全体設定を設定してくだ�
 please set your preferences for this application	common	ja	アプリケーション用設定を設定してください!
 please type %1 more characters	common	ja	%1 文字以上必要です
 please type 1 more character	common	ja	あと 1 文字必要です
-please wait...	common	ja	please wait...
+please wait...	common	ja	お待ちください ...
 please, check back with us shortly.	common	ja	Please, check back with us shortly.
 pm	common	ja	午後
 poland	common	ja	ポーランド
@@ -1043,6 +1046,7 @@ preference	common	ja	設定
 preferences	common	ja	設定
 preferences for the %1 template set	preferences	ja	%1 テンプレート設定
 prev	common	ja	前へ
+preview with entry	common	ja	エントリーでプレビュー
 previous	common	ja	前へ
 previous page	common	ja	前のページ
 primary group	common	ja	プライマリ・グループ
@@ -1059,6 +1063,7 @@ protocol is required	common	ja	プロトコルを指定してください
 public	common	ja	パブリック
 puerto rico	common	ja	プエルトリコ
 qatar	common	ja	カタール
+quick add	common	ja	クイック追加
 radiobutton	common	ja	ラジオボタン
 read	common	ja	表示
 read a list of entries.	common	ja	Read a list of entries.
@@ -1073,6 +1078,8 @@ register	common	ja	登録
 regular	common	ja	正規
 reject	common	ja	拒否
 remember me	common	ja	Remember me
+remember me for %1	common	ja	%1について記憶する
+remove	api	ja	削除
 remove row (can not be undone!!!)	common	ja	行を削除
 remove selected accounts	common	ja	選択されたアカウントを削除
 remove shortcut	common	ja	ショートカットを削除
@@ -1142,10 +1149,11 @@ search accounts	common	ja	アカウントを検索
 search for '%1'	common	ja	Search for '%1'
 search letter	common	ja	文字検索
 search or select accounts	common	ja	検索またはアカウントを選択
-search...	common	ja	検索...
+search...	common	ja	検索 ...
 second	common	ja	秒
 section	common	ja	部署
 securest	common	ja	securest
+security & password	common	ja	セキュリティとパスワード
 select	common	ja	選択
 select "%1", if your client does not support multiple addressbooks.	groupdav	ja	クライアントが複数アドレス帳をサポートしない場合は、"%1" を選択してください。
 select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	ja	クライアントがグループをサポートする場合は、 "%1" を選択してください。
@@ -1162,6 +1170,7 @@ select an app to search in	common	ja	Select application to search in
 select an application	common	ja	アプリケーションを選択
 select an application, (*) = uninstalled	common	ja	アプリケーションを選択, (*) = 削除済み
 select an entry to link with	common	ja	Select entry to link with
+select an opened dialog	common	ja	開いたダイアログを選択
 select an table of the application	common	ja	アプリケーション・テーブルを選択
 select application	common	ja	アプリケーションを選択
 select application to search	common	ja	検索するアプリケーションを選択
@@ -1195,6 +1204,7 @@ select the default width for the application windows	common	ja	Select the defaul
 select the indexed columns in their desired order	common	ja	Select indexed columns in desired order
 select this etemplate to delete it	common	ja	削除する eTemplate を選択
 select user	common	ja	ユーザを選択
+select user or group	common	ja	ユーザーまたはグループを選択
 select which accounts to show	common	ja	表示するアカウントを選択
 select which values to show	common	ja	表示する値を選択
 select work email address	common	ja	メール・アドレスを選択
@@ -1218,9 +1228,13 @@ set these columns as the default	common	ja	これらを既定に設定する
 set user as only responsible user, but keeping groups	groupdav	ja	set user as only responsible user, but keeping groups
 set user as only responsible, removing all existing responsibles	groupdav	ja	set user as only responsible, removing all existing responsibles
 sets today as date	common	ja	今日の日付を用いる
+settings saved.	common	ja	設定が保存されました。
 setup	common	ja	セットアップ
 setup main menu	common	ja	セットアップ・メニュー
 seychelles	common	ja	セーシェル
+share	common	ja	共有する
+share files	common	ja	ファイルの共有
+share this %1 via url	common	ja	この%1をURLで共有する
 shift	common	ja	Shift
 shift ⇧	common	ja	Shift ⇧
 should the form be submitted or any custom javascript be executed	common	ja	Should form be submitted or any custom JavaScript executed
@@ -1229,20 +1243,11 @@ show (no save)	common	ja	表示 (保存しない)
 show all	common	ja	全て表示
 show all / cancel filter	common	ja	全て表示 / フィルター・キャンセル
 show all categorys	common	ja	全カテゴリを表示
-show as topmenu	common	ja	トップメニューとして表示
-show clock?	common	ja	時計を表示
-show home and logout button in main application bar?	common	ja	メイン・アプリ・バーにホーム・ボタンとログアウト・ボタンを表示します。
-show in sidebox	common	ja	サイドメニューで表示
 show log of following device	groupdav	ja	選択されたデバイスのログを表示
-show logo's on the desktop.	common	ja	デスクトップにロゴを表示
-show menu	common	ja	メニューを表示
-show next login	common	ja	次のログイン名を表示
-show now	common	ja	表示
 show page generation time	common	ja	ページ生成時間を表示
 show page generation time on the bottom of the page?	common	ja	ページの下端にページ生成に要した時間を表示します。
 show page generation time?	common	ja	Show page generation time
 show password	common	ja	パスワードの表示
-show the logo's of egroupware and x-desktop on the desktop.	common	ja	Show the logo of EGroupware and x-desktop on the desktop.
 show values	common	ja	値を表示
 show/hide	common	ja	サイドバーの表示/非表示
 show_more_apps	common	ja	show_more_apps
@@ -1291,6 +1296,7 @@ submitbutton	common	ja	実行ボタン
 substitutions and their meanings:	common	ja	置換文字列とその意味:
 successful created new directory %1 for unconnected nods.	admin	ja	Successful created new directory %1 for unconnected nods.
 sudan	common	ja	スーダン
+suggest password	common	ja	パスワードの提案
 sunday	common	ja	日
 sure	common	ja	Sure
 suriname	common	ja	スリナム
@@ -1331,6 +1337,8 @@ the following document-types are supported:	preferences	ja	下記のドキュメ
 the mail server returned	common	ja	メール・サーバーの応答:
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	ja	同じ名前が既にシステムに存在します。別の名前を指定してください。
 they will be sub-folders in users home (%1 attribute).	common	ja	選択されたアドレス帳は、ユーザ・ホームのサブ・フォルダとなります（%1 属性）。
+this feature is only available in epl version.	common	ja	この機能はEGroupware EPLバージョンで利用可能です。
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	ja	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	ja	同じ名前が既に使用されています!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	ja	Text gets displayed if the input field is empty and has no focus (blur)
 thursday	common	ja	木
@@ -1358,7 +1366,6 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	ja	上部
 total	common	ja	合計
 total: %1 successful: %2 failed: %3 skipped: %4	common	ja	合計: %1, 成功: %2, 失敗: %3, 省略: %4
-transparant bg for the icons?	common	ja	アイコン用に透明背景を用いる？
 tree	common	ja	ツリー
 trinidad and tobago	common	ja	トリニダード・トバゴ
 tu	common	ja	火
@@ -1389,7 +1396,7 @@ unlink	common	ja	リンクを削除
 update	common	ja	更新
 update a single entry by passing the fields.	common	ja	項目を送信して更新
 update from version '%s' to	common	ja	バージョン '%s' から更新 更新バージョン:
-update the clock per minute or per second	common	ja	時計を分毎/秒毎に更新する
+updating your account with new data from your identity provider failed!	common	ja	IDプロバイダからの新しいデータによるアカウントの更新に失敗しました！
 upload	common	ja	アップロード
 upload directory does not exist, or is not writeable by webserver	common	ja	アップロード・ディレクトリが存在しないか、書き込み権限がありません。
 upload file(s) from filemanager...	common	ja	ファイル・マネージャからファイルをアップロード...
@@ -1417,7 +1424,6 @@ value has to be at maximum '%1' !!!	common	ja	値は最大でも '%1' でなけ�
 vanuatu	common	ja	バヌアツ
 vbox	common	ja	VBox
 version	common	ja	バージョン
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	ja	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	ja	Vertical alignment of row
 vfs upload directory	common	ja	VFS アップロード・ディレクトリ
 video tutorials	common	ja	ビデオ・チュートリアル
@@ -1439,6 +1445,7 @@ western european	common	ja	西ヨーロッパ
 western sahara	common	ja	西サハラ
 what color should all the blank space on the desktop have	common	ja	What color should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ja	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ja	エントリーをドキュメントにマージすると、それらはここに保存されます。フォルダが提供されない場合、それらはホームディレクトリ(%1)に保存されます。
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ja	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	ja	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	ja	Which groups
@@ -1455,6 +1462,7 @@ work email	common	ja	メール
 working days	common	ja	就業日
 works reliable for total size up to 1-2 mb, might work for 5-10 mb, most likely to fail for >10mb	common	ja	Works reliable for total size up to 1-2 MB, might work for 5-10 MB, most likely to fail for >10MB
 would you like to display the page generation time at the bottom of every window?	common	ja	Display the page generation time at the bottom of every window
+writable	common	ja	書き込み可能
 writable share	common	ja	書き込み可能な共有
 write <app>/setup/tables_current.inc.php	common	ja	Write <app>/setup/tables_current.inc.php
 write langfile	common	ja	言語ファイルを更新
@@ -1472,7 +1480,6 @@ yes - delete including sub-entries	common	ja	はい - サブ・エントリを�
 yes and allow non-admin users to do that too (recommended)	common	ja	Yes and allow non-admin users to do that too (recommended)
 you are not allowed to export more than %1 entries!	common	ja	エクスポートする項目数は、%1 個以内に制限されています!
 you are required to change your password during your first login	common	ja	初回ログイン時にパスワード変更
-you can customize how many icons and toolbars the editor shows.	common	ja	How many icons and tool bars the editor shows.
 you can not choose more then %1 item(s)!	common	ja	%1 個以上の項目を選択することはできません!
 you can respond by visiting:	common	ja	You can respond by visiting
 you have been successfully logged out	login	ja	ログアウトしました。

@@ -1,10 +1,16 @@
-%1 email addresses inserted	common	da	%1 e-mail adresser insat
+%1 copied - the copy can now be edited	common	da	%1 kopieret - kopien kan nu redigeres
+%1 directories %2 found!	admin	da	%1 mapper %2 fundet!
+%1 email addresses inserted	common	da	%1 e-mail adresser insat.
 %1 email(s) added into %2	common	da	%1 e-mail(e) tilføjet til %2
-%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af web server
-%1 more %2 selected ...	common	da	%1 flere %2 valgt...
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br>eller gør %3 skrivbar for web server
+%1 entries found, select one ...	common	da	%1 poster fundet, vælg en ...
+%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af web server!
+%1 more %2 selected ...	common	da	%1 flere %2 valgt ...
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br>eller gør %3 skrivbar for web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1EGroupware%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 '%1' copied to clipboard	common	da	'%1' kopieret til udklipsholderen
+'%1' has an invalid format	common	da	'%1' har et ugyldigt format
+'%1' has an invalid format !!!	common	da	'%1' har et ugyldigt format!
+'%1' is not a valid date !!!	common	da	'%1' er ikke en gyldig dato!
 '%1' is not a valid json file!	common	da	'%1' er ikke en gyldig JSON-fil
 00 (disable)	admin	da	00 (deaktiveret)
 1 day	common	da	1 hour
@@ -23,6 +29,7 @@
 5 minutes	common	da	5 minutter
 5 seconds	common	da	5 sekunder
 80 (http)	admin	da	80 (http)
+abcdefghijklmnopqrstuvwxyz	common	da	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abort	common	da	Afbryd
 about	common	da	Om
 about %1	common	da	Om %1
@@ -33,14 +40,18 @@ account has been created	common	da	Kontoen er oprettet
 account has been deleted	common	da	Kontoen er slettet
 account has been updated	common	da	Kontoen er opdateret
 account is expired	common	da	Kontoen er udløbet
+accounts	common	da	Konti
 acl	common	da	ACL
 action	common	da	Handling
 actions	common	da	Handling
+actions...	common	da	Handlinger ...
 active	common	da	Aktiv
 add	common	da	Tilføj
+add %1	common	da	Tilføj %1
 add %1 category for	common	da	Tilføj kategorien %1 for
 add category	common	da	Tilføj kategori
 add current	common	da	Nuværende visning som favorit
+add new	common	da	Tilføj ny
 add shortcut	common	da	Tilføj forkortelse
 add sub	common	da	Tilføj underkategori
 add to clipboard	common	da	Tilføj til udklipsholder
@@ -60,6 +71,7 @@ algeria	common	da	Algeriet
 all	common	da	Alle
 all addressbooks	groupdav	da	Alle adressebøger
 all categories	common	da	Alle kategorier
+all days	common	da	Alle dage
 all fields	common	da	Alle felter
 all in one	groupdav	da	Alle i én
 all users	common	da	Alle brugere
@@ -75,10 +87,13 @@ antarctica	common	da	Antarktis
 antigua and barbuda	common	da	Antigua og Barbuda
 application	common	da	Applikation
 applications	common	da	Applikationer
+applies the changes made	common	da	Anvender ændringerne
 apply	common	da	Anvend
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
 are you sure you want to delete this entry ?	common	da	Vil Du virkelig slette dette felt?
+are you sure you want to logout?	common	da	Er du sikker på, at du vil logge ud?
+are you sure, you would like to delete the backup key?	common	da	Er du sikker på, at du gerne vil slette backup-nøglen?
 argentina	common	da	Argentina
 armenia	common	da	Armenien
 aruba	common	da	Aruba
@@ -89,16 +104,17 @@ australia	common	da	Australien
 austria	common	da	Østrig
 authenticate	common	da	Godkend
 author	common	da	Forfatter
-autohide sidebox menus	common	da	Gem automatisk sidemenuen
-automatically hide the sidebox menus?	common	da	Skal sidemenuen automatisk gemmes?
-autosave default category	common	da	Autogem Standard Kategori
+autosave default category	common	da	Autogem Standard Kategori.
 avatar	common	da	Avatar
 azerbaijan	common	da	Azerbaijan
 back	common	da	Tilbage
 back to user login	common	da	Tilbage til bruger login
 background color:	common	da	Baggrunds farve:
-backupdir '%1' is not writeable by the webserver	common	da	Web server kan ikke skrive i backup folder '%1'
-bad login or password	common	da	Forkert brugernavn eller password
+backup key	common	da	Backup-nøgle
+backup/restore	common	da	Sikkerhedskopiering/genoprettelse
+backup/restore ...	common	da	Sikkerhedskopiering/genoprettelse ...
+backupdir '%1' is not writeable by the webserver	common	da	Web server kan ikke skrive i backup folder '%1'.
+bad login or password	common	da	Forkert brugernavn eller password.
 bahamas	common	da	Bahamas
 bahrain	common	da	Bahrain
 bangladesh	common	da	Bangladesh
@@ -110,7 +126,7 @@ belize	common	da	Belize
 benin	common	da	Benin
 bermuda	common	da	Bermuda
 bhutan	common	da	Bhutan
-blocked, too many attempts	common	da	Afvist, for mange forsøg
+blocked, too many attempts	common	da	Afvist, for mange forsøg.
 bold	common	da	Fed
 bolivia	common	da	Bolivia
 border	common	da	Kant
@@ -130,7 +146,7 @@ cambodia	common	da	Cambodia
 cameroon	common	da	Cameroon
 canada	common	da	Canada
 cancel	common	da	Fortryd
-cannot replace %1 because it is a directory	common	da	Kan ikke erstatte %1, fordi det er en folder
+cannot replace %1 because it is a directory	common	da	Kan ikke erstatte %1, fordi det er en folder.
 cant open '%1' for %2	common	da	Kan ikke åbne '%1' for %2
 cape verde	common	da	Cape Verde
 categories	common	da	Kategorier
@@ -144,6 +160,7 @@ centered	common	da	Centreret
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
+change owner	common	da	Skift ejer
 changed	common	da	Ændret
 charset	common	da	Tegnsæt
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	da	Tjek for tomme værdier i IF-sætninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
@@ -154,9 +171,10 @@ chile	common	da	Chile
 china	common	da	Kina
 choose a background color	common	da	Vælg en baggrundsfarve
 choose a background color for the icons	common	da	Vælg en baggrundsfarve for ikonerne
-choose a background image.	common	da	Vælg et baggrundsbillede.
-choose a background style.	common	da	Vælg en baggrundsstil.
+choose a background image.	common	da	Vælg et baggrundsbillede
+choose a background style.	common	da	Vælg en baggrundsstil
 choose a text color for the icons	common	da	Vælg ikonernes tekstfarve
+choose file...	common	da	Vælg fil ...
 choose the category	common	da	Vælg kategorien
 choose the default filename for merged documents.	preferences	da	Vælg standardfilnavnet for sammenlagte dokumenter.
 choose the parent category	common	da	Vælg ovenstående kategori
@@ -166,22 +184,30 @@ clear form	common	da	Slet formular
 click	common	da	Klik
 click here to create the link	common	da	Clik her for at oprette linket
 click here to start the search	common	da	Klik her for at starte søgningen
-click or mouse over to show menus	common	da	Klik eller før musen over til sidemenuen
-click or mouse over to show menus?	common	da	Klik eller før musen over til sidemenuen?
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	da	Klienter, der ikke udtrykkeligt angiver en grænse, bliver begrænset til så mange dage. En for høj grænse kan give problemer med nogle klienter.
+clipboard contents	common	da	Udklipsholderens indhold
 close	common	da	Luk
+close sidebox	common	da	Luk sidemenuen
+closes the window without saving the changes	common	da	Luk uden at gemme
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
+code	common	da	Kode
+collection empty.	common	da	Samlingen er tom.
+collection listing	common	da	Liste over samlinger
 colombia	common	da	Columbia
 colour	common	da	Farve
+columns to print	common	da	Kolonner til udskrivning
+command ⌘	common	da	Kommando ⌘
 comment	common	da	Kommentar
 common preferences	common	da	Fælles præferencer
 comoros	common	da	Comoros
 company	common	da	Firma
 confirm	common	da	Bekræft
+confirmation required	common	da	Bekræftelse påkrævet
 congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
 contact	common	da	Kontakt
-contacting server...	common	da	Kontakter server...
-contains	common	da	indeholder
+contacting server...	common	da	Kontakter server ...
+contains	common	da	Indeholder
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
 copy "%1"	common	da	Kopier "%1"
@@ -197,7 +223,9 @@ create link	common	da	Opret link
 created	common	da	Oprettet
 created by	common	da	Oprettet af
 created by %1	common	da	Oprettet af %1
+creator	preferences	da	Skaber
 croatia	common	da	Kroatien
+ctrl	common	da	Ctrl
 cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
@@ -220,24 +248,25 @@ default category	common	da	Standard Kategori
 default height for the windows	common	da	Standard højde for vinduer
 default width for the windows	common	da	Standard bredde for vinduer
 delete	common	da	Slet
+delete backup	common	da	Slet sikkerhedskopi
+delete backup key	common	da	Slet backup-nøgle
 delete category	common	da	Slet kategori
 delete row	common	da	Slet række
+delete selected entries?	common	da	Sletning af valgte poster?
 delete this entry	common	da	Slet denne indtastning
+delete this photo?	common	da	Slet dette foto?
 denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
-direction left to right	common	da	Retning venstre til højre
 directory	common	da	Bibliotek
-disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer png image bugfix?
-disable slider effects	common	da	Deaktiver glide-effekter?
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
+directory for storing merged documents	preferences	da	Mappe til opbevaring af flettede dokumenter
+directory with documents to insert entries	preferences	da	Mappe med dokumenter til at indsætte poster
 disabled	common	da	Slået fra
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
 doctype:	common	da	Dokument type:
+document '%1' does not exist or is not readable for you!	preferences	da	Dokumentet '%1' findes ikke eller kan ikke læses af dig!
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
 documentation	common	da	Dokumentation
@@ -248,33 +277,49 @@ domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 don't ask again!	common	da	Spørg ikke igen!
+don't show this again	common	da	Vis ikke dette igen
 done	common	da	Udført
 download	common	da	Download
+download link	common	da	Link til download
 duration	common	da	Varighed
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
 ecuador	common	da	Ecuador
 edit	common	da	Redigér
 edit %1 category for	common	da	Redigér kategorien %1 for
+edit avatar	common	da	Rediger avatar
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
+edit...	common	da	Rediger ...
+egroupware	common	da	EGroupware
+egroupware administrators group, do not delete	common	da	EGroupware-administratorgruppe, må IKKE slettes
+egroupware all users group, do not delete	common	da	EGroupware alle brugere gruppe, må IKKE slettes
+egroupware anonymous users group, do not delete	common	da	EGroupware anonymous users group, må IKKE slettes
+egroupware api version	common	da	EGroupware API-version
+egroupware maintenance update %1 available	common	da	EGroupware vedligeholdelsesopdatering %1 tilgængelig
+egroupware security update %1 needs to be installed!	common	da	EGroupware sikkerhedsopdatering %1 skal installeres!
+egroupware version	common	da	EGroupware-version
 egroupware: login blocked for user '%1', ip %2	common	da	Login blokeret for bruger '%1', IP %2
 egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
 email-address of the user, eg. "%1"	common	da	E-mail-adresse for brugeren, f.eks. "%1"
+enable logging	groupdav	da	Aktivér logning
 enabled	common	da	Slået til
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	da	Muliggør logning af CalDAV/CardDAV-trafik for at diagnosticere problemer med enheder.
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for EGroupware's URL.<br>Eksempel: https://egw.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
+enter your password	common	da	Indtast din adgangskode
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
+epl only	common	da	Kun for EPL
 equatorial guinea	common	da	Equatorial Guinea
 eritrea	common	da	Eritrea
 error	common	da	Fejl
-error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2
-error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2
-error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
+error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2!
+error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2!
+error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2!
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
 exact	common	da	Nøjagtig
@@ -328,11 +373,12 @@ greenland	common	da	Grønland
 grenada	common	da	Grenada
 group	common	da	Gruppe
 group access	common	da	Gruppeadgang
-group has been added	common	da	Gruppe er tilføjet
-group has been deleted	common	da	Gruppe er slettet
-group has been updated	common	da	Gruppe er opdateret
+group has been added	common	da	Gruppe er tilføjet.
+group has been deleted	common	da	Gruppe er slettet.
+group has been updated	common	da	Gruppe er opdateret.
 group name	common	da	Gruppe navn
 group public	common	da	Adgang til gruppe
+groupdav	common	da	CalDAV / CardDAV-synkronisering
 groups	common	da	Grupper
 groups with permission for %1	common	da	Grupper med rettigheder til %1
 groups without permission for %1	common	da	Grupper uden rettigheder til %1
@@ -344,6 +390,7 @@ guinea-bissau	common	da	Guinea-Bissau
 guyana	common	da	Guyana
 h	common	da	h
 haiti	common	da	Haiti
+hbox	common	da	HBox
 heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
 height	common	da	Højde
 help	common	da	Hjælp
@@ -362,7 +409,6 @@ how many days to sync in the future (default %1)	groupdav	da	Hvor mange dage ska
 how many days to sync in the past (default %1)	groupdav	da	Hvor mange dage til synkronisering i fortiden (standard %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
 how many rows to print	common	da	Hvor mange rækker skal udskrives
-how to show the general egroupware menu ?	common	da	Sådan vises den generelle EGroupware-menu
 html	common	da	HTML
 html links to any entries linked to the current record, excluding attached files	common	da	HTML-links til alle poster, der er knyttet til den aktuelle post, undtagen vedhæftede filer
 hungary	common	da	Ungarn
@@ -378,6 +424,9 @@ infolog types to sync	common	da	InfoLog-typer, der skal synkroniseres
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
 insert column after	common	da	Indslt kolonne efter
 insert column before	common	da	Indsæt kolonne foran
+insert in %1	common	da	Indsæt i %1
+insert in document	common	da	Indsæt i dokument
+insert in dokument	common	da	Indsæt i dokument
 insert placeholder	common	da	Indsæt pladsholder
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
@@ -387,15 +436,15 @@ install egroupware as mail-handler?	common	da	Installere EGroupware som mail-han
 international	common	da	International
 invalid 2-factor authentication code	common	da	Ugyldig kode for 2-faktor-autentifikation
 invalid email	common	da	Ugyldig e-mail
-invalid filename	common	da	Ugyldigt filnavn
-invalid ip address	common	da	Ugyldig IP
+invalid filename	common	da	Ugyldigt filnavn.
+invalid ip address	common	da	Ugyldig IP.
 invalid or expired 'remember me' token	common	da	Ugyldig eller udløbet "husk mig"-token
-invalid password	common	da	Ugyldig adgangskode
+invalid password	common	da	Ugyldig adgangskode.
 iran, islamic republic of	common	da	Iran, Den Islamiske Republik
 iraq	common	da	Irak
 ireland	common	da	Irland
 israel	common	da	Israel
-it has been more then %1 days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password
+it has been more then %1 days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password.
 it is recommended that you run setup to upgrade your tables to the current version	common	da	Det anbefales at du kører setup for at opgradere dine tabeller til den nuværende version.
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	da	Det anbefales at gemme din offentlige nøgle i Adressebog, så andre brugere kan skrive krypterede mails til dig.
 italic	common	da	Kursiv
@@ -464,12 +513,16 @@ marshall islands	common	da	Marshall Øerne
 martinique	common	da	Martinique
 mauritania	common	da	Mauritanien
 mauritius	common	da	Mauritius
-max number of icons in navbar	common	da	Maksimal antal ikoner i navigations bjælken.
+maximum size for uploads	filemanager	da	Maksimal uploadstørrelse
 may	common	da	Maj
 mayotte	common	da	Mayotte
 medium	common	da	Medium
 menu	common	da	Menu
+merged document filename	preferences	da	Flettet dokument filnavn
 message	common	da	Besked
+message ...	common	da	Besked ...
+message(s) send failed!	common	da	Meddelelse(r) sendt mislykkedes!
+message(s) send ok.	common	da	Meddelelse(r) sendes OK.
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
 minute	common	da	Minut
@@ -483,7 +536,10 @@ montserrat	common	da	Montserrat
 more	common	da	Flere
 morocco	common	da	Morokko
 move	common	da	Flyt
+moved %1 children from directory fs_id=%2 to %3	admin	da	Flyttede %1 børn fra mappen fs_id=%2 til %3
+moved unconnected %1 %2 to %3.	admin	da	Flyttede ikke-forbundet %1 %2 til %3.
 mozambique	common	da	Mozambique
+my account	common	da	Min konto
 myanmar	common	da	Myanmar
 name	common	da	Navn
 name of the user, eg. "%1"	common	da	Fornavnet på brugeren, f.eks. "%1"
@@ -495,7 +551,9 @@ netherlands antilles	common	da	Hollandsk Antilles
 never	common	da	Aldrig
 new	common	da	Ny
 new caledonia	common	da	Ny Caledonien
+new egroupware release %1 available	common	da	Ny EGroupware-version %1 tilgængelig
 new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
+new favorite	common	da	Ny favorit
 new main category	common	da	Ny hovedkategori
 new password	common	da	Ny adgangskode
 new search	common	da	Ny søgning
@@ -509,19 +567,26 @@ nigeria	common	da	Nigeria
 niue	common	da	Niue
 no	common	da	Nej
 no - cancel	common	da	No - Annullere
-no entries found, try again ...	common	da	Ingen resultater fundet, prøv igen....
+no entries found, try again ...	common	da	Ingen resultater fundet, prøv igen. ...
 no file	common	da	Ingen fil
 no filters	common	da	Ingen filtre
 no history for this record	common	da	Ingen historie fundet for denne post
-no matches found	common	da	Ingen resultater fundet
+no key for recipient:	common	da	Ingen nøgle til modtageren:
+no matches found	common	da	Ingen resultater fundet.
+no response from server: your data is probably not saved	common	da	Intet svar fra serveren: Dine data er sandsynligvis IKKE gemt.
+no results match	common	da	Ingen resultater matcher
+no rights to export more than %1 entries!	common	da	Ingen rettigheder til at eksportere mere end %1 poster!
+no row to swap with !!!	common	da	Ingen række at bytte med!
 no subject	common	da	Intet Emne
+no suggestions	common	da	Ingen forslag
+no thanks	common	da	Nej tak
 none	common	da	Ingen
 norfolk island	common	da	Norfolk Øen
 normal	common	da	Normal
 northern mariana islands	common	da	Nordligt Mariana Øerne
 norway	common	da	Norge
 not	common	da	ikke
-not a user yet? register now	common	da	Ikke en bruger endnu? Registrere nu
+not a user yet? register now	common	da	Ikke en bruger endnu? Registrere nu.
 not assigned	common	da	Ikke tildelt
 note	common	da	Note
 notes	common	da	Noter
@@ -534,6 +599,8 @@ old value	common	da	Gammel Værdi
 oman	common	da	Oman
 on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 on mouse over	common	da	Ved mus over
+onchange	common	da	onchange
+onclick	common	da	onclick
 only private	common	da	Kun private
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likely not be supported!	groupdav	da	Understøttes kun af nogle få fuldt kompatible klienter (f.eks. fra Apple). Hvis du skal indtaste en URL, vil den højst sandsynligt ikke blive understøttet!
 only yours	common	da	Kun Din
@@ -564,8 +631,8 @@ paraguay	common	da	Paraguay
 parcel	common	da	Pakke
 parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
-password could not be changed	common	da	Adgangskoden kunne ikke ændres
-password has been updated	common	da	Password er opdateret
+password could not be changed	common	da	Adgangskoden kunne ikke ændres!
+password has been updated	common	da	Password er opdateret.
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!
 permission denied!	common	da	Tilladelse nægtet!
 permission denied! this is an administration only feature.	common	da	Tilladelse nægtet! Dette er kun en administrationsfunktion.
@@ -585,16 +652,16 @@ play/pause	common	da	Afspilning/Pause
 please %1 by hand	common	da	Udfør venligst %1 manuelt
 please enter a name	common	da	Indtast venligst et navn!
 please enter table-name first !!!	common	da	Indtast bordets navn først!
-please reload the egroupware desktop (f5 / cmd+r).	common	da	Genindlæs venligst EGroupware-skrivebordet (F5 / Cmd+R).
+please reload the egroupware desktop (f5 / cmd+r).	common	da	Genindlæs venligst EGroupware-skrivebordet (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	da	Husk at bruge '%1' som brugernavn til lokale login fra nu af!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
 please select	common	da	Vælg venligst
 please set your global preferences	common	da	Indstil venligst dine globale indstillinger!
-please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation
+please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation!
 please type %1 more characters	common	da	Skriv venligst %1 tegn mere
 please type 1 more character	common	da	Skriv venligst 1 tegn mere
-please wait...	common	da	Vent venligst...
-please, check back with us shortly.	common	da	Vent venligst ...  Venligst kontakt os igen om lidt.
+please wait...	common	da	Vent venligst ...
+please, check back with us shortly.	common	da	Vend tilbage til os inden længe.
 poland	common	da	Polen
 popup with search	common	da	Popup vindue med søg
 portugal	common	da	Portugal
@@ -604,6 +671,7 @@ preference	common	da	Præferencer
 preferences	common	da	Præferencer
 preferences for the %1 template set	preferences	da	Præferencer for %1-skabelonsættet
 preview with entry	common	da	Forhåndsvisning med indtastning
+previous	common	da	Tidligere
 previous page	common	da	Forrige side
 primary group	common	da	Primær gruppe
 print	common	da	Udskriv
@@ -613,26 +681,32 @@ project	common	da	Projekt
 public	common	da	Offentlig
 puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
+quick add	common	da	Hurtig tilføjelse
 read	common	da	Læs
-read a list of entries.	common	da	Læs en liste af indtastninger
+read a list of entries.	common	da	Læs en liste af indtastninger.
 read a single entry by passing the id and fieldlist.	common	da	Læs et enkelt element ved at give ID og fil-liste
 read this list of methods.	common	da	Læs denne liste over metoder
 reading	common	da	Læser
 readonly	common	da	Læs-kun
 refresh	common	da	Opdater
 reject	common	da	Afvis
+remember me	common	da	Husk mig
+remember me for %1	common	da	Husk mig for %1
+remove selected accounts	common	da	Fjern udvalgte konti
 remove this link (not the entry itself)	common	da	Fjern dette link (ikke opgaven selv)
 rename	common	da	Omdøb
 repeat password	common	da	Gentag adgangskode
 required	common	da	Krævet
 reset	common	da	Nulstil
 resources	common	da	Ressourcer
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor.
 returns an array of todo items	common	da	Returnere et array af opgaver
 returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang
 reunion	common	da	Reunion
 right	common	da	Højre
 romania	common	da	Romanien
+rotate left	common	da	Drej til venstre
+rotate right	common	da	Drej til højre
 russian federation	common	da	Rusland
 rwanda	common	da	Rwanda
 saint helena	common	da	Sankt Helena
@@ -647,10 +721,15 @@ saturday	common	da	Lørdag
 saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
 save all	common	da	Gem alle
+save as	common	da	Gem som
+save as zip	common	da	Gem som ZIP
+save selected columns as default preference for all users.	common	da	Gem kolonner som standardindstilling for alle brugere.
+save the changes made and close the window	common	da	Gem ændringer og luk
 saved column sizes to preferences.	common	da	Gemte kolonnestørrelser til præferencer.
 search	common	da	Søg
 search accounts	common	da	Søg kontoer
 section	common	da	Sektion
+security & password	common	da	Sikkerhed og adgangskode
 select	common	da	Vælg
 select a category	common	da	Vælg en kategori
 select all	common	da	Vælg alle
@@ -668,20 +747,27 @@ selectbox	common	da	Selectboks
 send	common	da	Send
 senegal	common	da	Senegal
 september	common	da	September
-server %1 has been added	common	da	Server %1 er tilføjet
+server %1 has been added	common	da	Server %1 er tilføjet.
 server name	common	da	Servernavn
-session has been killed	common	da	Sessionen er afsluttet
+session has been killed	common	da	Sessionen er afsluttet.
+set as default	common	da	Indstil som standard
+settings saved.	common	da	Indstillingerne er gemt.
 setup	common	da	Setup
 setup main menu	common	da	Setup hovedmenu
 seychelles	common	da	Seychellerne
+share files	common	da	Del filer
+share this %1 via url	common	da	Del denne %1 via URL
+shift	common	da	Shift
+shift ⇧	common	da	Shift ⇧
 show	common	da	Vis
 show all	common	da	Vis alt
 show all categorys	common	da	Vis alle kategorier
 show menu	common	da	Vis menu
 show page generation time	common	da	Vis side generations tid
-show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden?
+show page generation time on the bottom of the page?	common	da	Vis side generations tiden i bunden af siden.
 show password	common	da	Vis adgangskode
-show_more_apps	common	da	vis_flere_applikationer
+show/hide	common	da	Vis/skjul sidebar
+show_more_apps	common	da	Vis_flere_applikationer
 showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
 sierra leone	common	da	Sierra Leone
@@ -693,7 +779,7 @@ slovakia	common	da	Slovakiet
 slovenia	common	da	Slovenien
 solomon islands	common	da	Solomon Øerne
 somalia	common	da	Somalia
-sorry, your login has expired	login	da	Desværre, Din session er udløbet
+sorry, your login has expired	login	da	Desværre, Din session er udløbet.
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
@@ -719,8 +805,12 @@ tanzania, united republic of	common	da	Tanzania, Den forenede Republik
 text	common	da	Tekst
 textarea	common	da	Tekstområde
 thailand	common	da	Thailand
+the backup key has been deleted.	common	da	Backup-nøglen er blevet slettet.
 the following applications require upgrades	common	da	Følgende applikationer skal opdateres
+the following document-types are supported:	preferences	da	Følgende dokumenttyper understøttes:
 the mail server returned	common	da	Postserveren retunerede
+this feature is only available in epl version.	common	da	Denne funktion er tilgængelig i EGroupware EPL-versionen.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	da	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	da	Dette navn er allerede i brug!
 thursday	common	da	Torsdag
 time	common	da	Tid
@@ -738,6 +828,7 @@ tonga	common	da	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	da	For mange fejlede forsøg på at logge ind: %1 fra brugeren '%2', %3 fra IP'en %4
 top	common	da	Top
 total	common	da	Total
+total: %1 successful: %2 failed: %3 skipped: %4	common	da	Der er valgt for mange rækker Vælg alle eller færre end %1 rækker
 trinidad and tobago	common	da	Trinidad og Tobago
 tuesday	common	da	Tirsdag
 tunisia	common	da	Tunesien
@@ -756,7 +847,8 @@ united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
 unlink	common	da	Fjern link
 update	common	da	Opdater
-update a single entry by passing the fields.	common	da	Opdater et enkelt element ve at sende felter.
+update a single entry by passing the fields.	common	da	Opdater et enkelt element ve at sende felter
+updating your account with new data from your identity provider failed!	common	da	Opdatering af din konto med nye data fra din identitetsudbyder mislykkedes!
 upload	common	da	Upload
 url	common	da	URL
 uruguay	common	da	Uruguay
@@ -788,6 +880,7 @@ which groups	common	da	Hvilke grupper
 width	common	da	Bredde
 wk	common	da	Uge
 work email	common	da	Arbejds e-mail
+working days	common	da	Arbejdsdage
 writing	common	da	Skriver
 written by:	common	da	Skrevet af:
 year	common	da	År
@@ -796,19 +889,19 @@ yes	common	da	Ja
 yes - delete	common	da	Ja - Slet
 yes - delete including sub-entries	common	da	Ja - Slet inclusiv under-emner
 you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
-you have been successfully logged out	login	da	Du er nu logget ud
-you have not entered a title	common	da	Du har ikke indtastet en titel
-you have not entered a valid date	common	da	Du har ikke indtastet en gyldig dato
-you have not entered a valid time of day	common	da	Du har ikke indtastet en gyldig tidspunkt
-you have not entered participants	common	da	Du har ikke indtastet deltagere
+you have been successfully logged out	login	da	Du er nu logget ud.
+you have not entered a title	common	da	Du har ikke indtastet en titel.
+you have not entered a valid date	common	da	Du har ikke indtastet en gyldig dato.
+you have not entered a valid time of day	common	da	Du har ikke indtastet en gyldig tidspunkt.
+you have not entered participants	common	da	Du har ikke indtastet deltagere.
 you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
-you have successfully logged out	common	da	Du har logget ud
+you have successfully logged out	common	da	Du har logget ud.
 your account has been updated with new data from your identity provider.	common	da	Din konto er blevet opdateret med nye data fra din identitetsudbyder.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	da	Din browser er ikke opdateret (JavaScript ES6-kompatibel), du kan opleve, at nogle af funktionerne ikke virker.
 your key has been restored successfully.	common	da	Din nøgle er blevet gendannet med succes.
 your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!<br>
-your message has been sent	common	da	Din besked er afsendt
+your message has been sent	common	da	Din besked er afsendt.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	da	Din adgangskode har ikke den krævede styrke på %1 tegnklasser og en minimumslængde på %2 tegn.
 your password does not have required strength:	common	da	Din adgangskode har ikke den krævede styrke:
 your password failed the following criteria:	common	da	Dit kodeord opfylder ikke følgende kriterier:
@@ -817,6 +910,6 @@ your password might not match the password policy.	common	da	Din adgangskode pas
 your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
 your search returned 1 match	common	da	Søgningen leverede 1 resultat
 your session timed out, please log in again	login	da	Din session er gået ud af tid, log ind igen.
-your settings have been updated	common	da	Dine indstillinger er opdateret
+your settings have been updated	common	da	Dine indstillinger er opdateret.
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe

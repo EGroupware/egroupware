@@ -1,5 +1,5 @@
 %1 email(s) added into %2	common	tr	%1 e-posta(lar) %2'ye eklendi
-%1 more %2 selected ...	common	tr	%1 e-posta(lar) %2'ye eklendi
+%1 more %2 selected ...	common	tr	%1 e-posta(lar) %2'ye eklendi ...
 '%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
 '%1' is not a valid json file!	common	tr	'%1' geçerli bir JSON dosyası değil
 1 day	common	tr	1 gün
@@ -18,9 +18,9 @@
 5 minutes	common	tr	5 dakika
 5 seconds	common	tr	5 saniye
 abort	common	tr	İptal
-account has been created	common	tr	Hesap oluþturuldu
-account has been deleted	common	tr	Hesap silindi
-account has been updated	common	tr	Hesap güncellendi
+account has been created	common	tr	Hesap oluþturuldu.
+account has been deleted	common	tr	Hesap silindi.
+account has been updated	common	tr	Hesap güncellendi.
 accounts	common	tr	Hesaplar
 action	common	tr	Eylem
 actions	common	tr	Eylemler
@@ -58,7 +58,14 @@ change	common	tr	Deðiþtir
 charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	tr	Açıkça bir limit belirtmeyen müşteriler bu kadar günle sınırlandırılır. Çok yüksek bir limit bazı istemcilerde sorunlara neden olabilir.
+clipboard contents	common	tr	Pano içeriği
+code	common	tr	Kod
+collection empty.	common	tr	Koleksiyon boş.
+collection listing	common	tr	Koleksiyon listesi
 colour	common	tr	Renk
+columns to print	common	tr	Yazdırılacak sütunlar
+command ⌘	common	tr	Komut ⌘
 company	common	tr	Şirket
 copy	common	tr	Anlaşıldı
 copy "%1"	common	tr	Kopyala "%1"
@@ -84,7 +91,7 @@ done	common	tr	Tamam
 download	common	tr	İndir
 edit	common	tr	Düzenle
 enabled	common	tr	Etkin
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -112,7 +119,6 @@ home email	common	tr	Ev E-mail
 how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün senkronize edilecek (varsayılan %1)
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
 how many rows to print	common	tr	Kaç satır yazdırılacağı
-how to show the general egroupware menu ?	common	tr	Genel EGroupware menüsü nasıl gösterilir
 html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
 if you use "2-factor-authentication", please enter the code here.	common	tr	"2 Faktörlü Kimlik Doğrulama" kullanıyorsanız, lütfen kodu buraya girin.
 include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
@@ -121,7 +127,7 @@ insert placeholder	common	tr	Yer tutucu ekle
 insert timestamp into description field	common	tr	Açıklama alanına zaman damgası ekle
 install	common	tr	Kurulum
 install egroupware as mail-handler?	common	tr	EGroupware'i posta işleyicisi olarak yükleyin?
-international	common	tr	Uluslararas?
+international	common	tr	Uluslararası
 invalid 2-factor authentication code	common	tr	Geçersiz 2 Faktörlü Kimlik Doğrulama kodu
 invalid email	common	tr	Geçersiz e-posta
 invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
@@ -138,7 +144,11 @@ mailvelope addon installation failed! please try again.	common	tr	Mailvelope ekl
 mailvelope addon installation succeded. now you may configure the options.	common	tr	Mailvelope eklentisi kurulumu başarılı oldu. Şimdi seçenekleri yapılandırabilirsiniz.
 message	common	tr	Mesaj
 minute	common	tr	Dakika
+more	common	tr	Daha fazla
 move	common	tr	Hareket
+moved %1 children from directory fs_id=%2 to %3	admin	tr	fs_id=%2 klasöründeki %1 çocuk %3 klasörüne taşındı
+moved unconnected %1 %2 to %3.	admin	tr	Bağlantısız %1 %2'yi %3'e taşıdı.
+my account	common	tr	Benim Hesabım
 name	common	tr	Ýsim
 new password	common	tr	Yeni şifre
 no filters	common	tr	Filtre yok
@@ -162,7 +172,7 @@ placeholders	common	tr	Yer Tutucular
 play/pause	common	tr	Oynat/Duraklat
 please %1 by hand	common	tr	Lütfen el ile %1
 please enter a name	common	tr	Litfen bir isim giriniz
-please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Cmd + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	tr	Lütfen EGroupware masaüstünü yeniden yükleyin (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	tr	Lütfen bundan sonra yerel girişler için kullanıcı adı olarak '%1' kullanmayı unutmayın!
 please run setup to become current	common	tr	Güncel olmak için kurulumu çalıştırın
 please select	common	tr	Lütfen seçiniz
@@ -191,10 +201,10 @@ user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri
 version	common	tr	Sürüm
-you have not entered a title	common	tr	Bir baþlýk girmediniz
-you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz
-you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz
-you have not entered participants	common	tr	Katýlýmcýlarý girmediniz
+you have not entered a title	common	tr	Bir baþlýk girmediniz.
+you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz.
+you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz.
+you have not entered participants	common	tr	Katýlýmcýlarý girmediniz.
 your account has been updated with new data from your identity provider.	common	tr	Hesabınız, kimlik sağlayıcınızdan gelen yeni verilerle güncellendi.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	tr	Tarayıcınız güncel değil (JavaScript ES6 uyumlu), bazı özelliklerin çalışmadığını görebilirsiniz.
 your key has been restored successfully.	common	tr	Anahtarınız başarıyla geri yüklendi.

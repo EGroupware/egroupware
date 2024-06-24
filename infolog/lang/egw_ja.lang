@@ -5,14 +5,14 @@
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	ja	%1 個の項目を %2, %3 個は権限不足のため失敗。!
 %1 entries %2, %3 failed.	infolog	ja	%1 個の項目を %2, %3 個は失敗。
 %1 modified	infolog	ja	%1 を変更しました。
-%1 modified by %2 at %3	infolog	ja	%1 は %3 で %2 によって変更されました。
-%1 records imported	infolog	ja	%1 件インポートしました
+%1 modified by %2 at %3	infolog	ja	%1 は %3 で %2 によって変更されました
+%1 records imported	infolog	ja	%1 件インポートしました。
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ja	%1 個のレコードを読み込みましたが、まだインポートはしていません。ページを戻って、テスト・モードを解除してください。
-%1 you are responsible for is due at %2	infolog	ja	あなたが責任者である %1 の締切日は %2 です。
-%1 you are responsible for is starting at %2	infolog	ja	あなたが責任者である %1 の開始日は %2 です。
-%1 you delegated is due at %2	infolog	ja	委託した %1 の締切日は %2 です。
-%1 you delegated is starting at %2	infolog	ja	委託した %1 の開始日は %2 です。
-(and children) deleted	infolog	ja	(およびその子) を削除しました。
+%1 you are responsible for is due at %2	infolog	ja	あなたが責任者である %1 の締切日は %2 です
+%1 you are responsible for is starting at %2	infolog	ja	あなたが責任者である %1 の開始日は %2 です
+%1 you delegated is due at %2	infolog	ja	委託した %1 の締切日は %2 です
+%1 you delegated is starting at %2	infolog	ja	委託した %1 の開始日は %2 です
+(and children) deleted	infolog	ja	(およびその子) を削除しました
 (no subject)	infolog	ja	(件名無し)
 - subprojects from	infolog	ja	- サブ・プロジェクト <-
 0%	infolog	ja	0%
@@ -60,6 +60,7 @@ application mail expected but got: %1	infolog	ja	不正な %1 を受信しまし
 apply the action on the whole query, not only the shown entries!!!	infolog	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）!
 apply the changes	infolog	ja	変更を適用
 archive	infolog	ja	アーカイブ
+archived too	infolog	ja	アーカイブも
 are you shure you want to close this entry ?	infolog	ja	この項目を閉じてよろしいですか？
 are you shure you want to delete this entry ?	infolog	ja	この項目を削除してよろしいですか？
 attach a file	infolog	ja	ファイルを添付
@@ -122,8 +123,8 @@ csv-filename	infolog	ja	CSVファイル名
 csv-import	common	ja	CSV インポート
 current user	infolog	ja	現ユーザ
 custom	infolog	ja	カスタム項目
-custom contact-address, leave empty to use information from most recent link	infolog	ja	カスタム・コンタクト・メール・アドレス。直近のリンクから自動生成する場合は空欄を指定。
-custom contact-information, leave emtpy to use information from most recent link	infolog	ja	カスタム・コンタクト情報。直近のリンクから自動生成する場合は空欄を指定。
+custom contact-address, leave empty to use information from most recent link	infolog	ja	カスタム・コンタクト・メール・アドレス。直近のリンクから自動生成する場合は空欄を指定
+custom contact-information, leave emtpy to use information from most recent link	infolog	ja	カスタム・コンタクト情報。直近のリンクから自動生成する場合は空欄を指定
 custom fields	infolog	ja	カスタム項目
 custom fields, type and status	common	ja	カスタム項目 タイプ/状態
 custom from	infolog	ja	カスタム送信者
@@ -147,7 +148,7 @@ delegated overdue	infolog	ja	受託済み 期限切れ
 delegated upcomming	infolog	ja	受託済み 直近
 delegation	infolog	ja	委託
 delete	infolog	ja	削除
-delete one record by passing its id.	infolog	ja	IDを送信してレコードを削除
+delete one record by passing its id.	infolog	ja	IDを送信してレコードを削除。
 delete selected entries?	infolog	ja	選択された項目を削除しますか？
 delete this entry and all listed sub-entries	infolog	ja	この項目とリストのサブ項目を削除
 deleted	infolog	ja	削除済み
@@ -182,6 +183,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	ja
 edit status	infolog	ja	状態を編集
 edit the entry	infolog	ja	項目を編集
 edit this entry	infolog	ja	この項目を編集
+editable fields for status 'archived'	admin	ja	アーカイブ」ステータスの編集可能フィールド
 empty for all	infolog	ja	空欄に設定すると全て
 encrypt description	infolog	ja	説明を暗号化
 end	infolog	ja	完了日
@@ -192,6 +194,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	j
 enter a textual description of the log-entry	infolog	ja	インフォログ項目の説明文を入力してください。
 enter the query pattern	infolog	ja	クエリ・パターンを入力してください
 entry and all files	infolog	ja	項目と全ファイル
+entry can not be changed anymore, after status is set	admin	ja	ステータスが設定された後、エントリを変更することはできません。
+entry can not be changed by anybody, but egroupware admins	admin	ja	EGroupwareの管理者以外は変更不可
 error: importing the ical	infolog	ja	iCalのインポートでエラー!
 error: no mail (mailbox / uid) given!	infolog	ja	エラー: メール（メールボックス/UID）がありません!
 error: saving the entry	infolog	ja	項目の保存中にエラー!
@@ -223,6 +227,7 @@ general fields:	infolog	ja	一般項目:
 general settings	infolog	ja	一般設定
 global categories	infolog	ja	グローバルカテゴリ
 group owner for	infolog	ja	グループ所有者:
+handling of status 'archived'	admin	ja	アーカイブされた'ステータスの取り扱い
 high	infolog	ja	高
 history	infolog	ja	履歴
 history logging	infolog	ja	履歴を出力
@@ -313,10 +318,11 @@ no entries found, try again ...	infolog	ja	項目がみつかりませんでし�
 no filter	infolog	ja	フィルター無し
 no links or attachments	infolog	ja	リンクまたは添付がありません
 no project	infolog	ja	プロジェクト無し
+no special handling	admin	ja	特になし
 nonactive	infolog	ja	非アクティブ
 none	infolog	ja	無し
 normal	infolog	ja	通常
-not	infolog	ja	Not
+not	infolog	ja	ない
 not assigned	infolog	ja	割り当て先 無し
 not-started	infolog	ja	開始前
 note	infolog	ja	ノート
@@ -422,8 +428,6 @@ select a priority for this task	infolog	ja	優先順位を選択
 select a project	infolog	ja	プロジェクトを選択
 select a responsible user: a person you want to delegate this task	infolog	ja	責任者（このタスクを委託する人）を選択
 select a typ to edit it's status-values or delete it	infolog	ja	状態値を編集/削除するタイプを選択
-select an action	infolog	ja	アクションを選択
-select an action...	infolog	ja	アクションを選択...
 select an app to search in	infolog	ja	検索するアプリケーションを選択
 select an entry to link with	infolog	ja	リンクする項目を選択
 select multiple contacts for a further action	infolog	ja	アクションを適用するコンタクトを選択

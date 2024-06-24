@@ -2,21 +2,24 @@
 %1 active file(s) with same name as directory inactivated!	admin	pl	%1 aktywne pliki o tej samej nazwie co folder nieaktywne!
 %1 copied - the copy can now be edited	common	pl	%1 skopiowano - kopię można teraz edytować
 %1 directories %2 found!	admin	pl	Znaleziono %1 katalogów %2!
-%1 email addresses inserted	common	pl	%1 adresów email dodane
+%1 email addresses inserted	common	pl	%1 adresów email dodane.
 %1 email(s) added into %2	common	pl	%1 email(e) dodane do %2
 %1 entries found, select one ...	common	pl	Znaleziono %1 wpisów, wybierz jeden ...
-%1 etemplates deleted	common	pl	Usunięto %1 e-Szablonów
+%1 etemplates deleted	common	pl	Usunięto %1 e-Szablonów.
 %1 etemplates for application '%2' dumped to '%3'	common	pl	Zrzucono %1 e-Szablonów dla aplikacji '%2' do '%3'
-%1 etemplates found	common	pl	Znaleziono %1 e-Szablonów
+%1 etemplates found	common	pl	Znaleziono %1 eTemplate.
 %1 file	common	pl	%1 plik
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver!
 %1 matches on search criteria	common	pl	%1 spełniających kryteria wyszukiwania
 %1 more %2 selected ...	common	pl	Wybrano %1 więcej %2 ...
-%1 more...	common	pl	%1 więcej
+%1 more...	common	pl	%1 więcej ...
 %1 new etemplates imported for application '%2'	common	pl	Zaimportowano %1 nowych eTemplate dla aplikacji '%2'
 %1 not implemented for %2!	common	pl	%1 nie zaimplementowany dla %2!
+%1 proxy of %2	common	pl	%1 proxy %2
+%1 setting "%2" = %3 disallows access via http!	admin	pl	%1 ustawienie "%2" = %3 uniemożliwia dostęp przez http!
 %1 to sync	groupdav	pl	%1 do synchronizacji
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br>lub uczyń %3 dostępny do zapisu dla serwera WWW
+%1, duplicate id	common	pl	%1, duplikat ID
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br>lub uczyń %3 dostępny do zapisu dla serwera WWW.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1EGroupware%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w %3PHP%4.
 %s disabled	common	pl	%s wyłączono
 %s needed	common	pl	%s wymagane
@@ -33,7 +36,7 @@
 '%1' is not a valid timezone!	common	pl	'%1' nie jest prawidłową strefą czasową!
 '%1' is not allowed ('%2')!	common	pl	'%1' nie jest dopuszczony ('%2')!
 '%1' is not allowed%2)!	common	pl	'%1' NIE jest dozwolone (%2)!
-(session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
+(session restored in %1 seconds)	common	pl	Sesja będzie przywrócona po upływie %1 sekund.
 00 (disable)	admin	pl	00 (wyłączony)
 1 day	common	pl	jeden dzień
 1 hour	common	pl	jedna godzina
@@ -59,14 +62,14 @@ about	common	pl	O aplikacji
 about %1	common	pl	O aplikacji %1
 about egroupware	common	pl	O EGroupware
 access	common	pl	Dostęp
-access not permitted	common	pl	Dostęp zabroniony
+access not permitted	common	pl	Dostęp zabroniony.
 accesskey	common	pl	Klawisz dostępu
 accesskeys can also be specified with an & in the label (eg. &name)	common	pl	Klawisz dostępu może być również określony przez znak '&' w etykiecie (np. &Nazwa)
 account contactdata	common	pl	Dane kontakowe dla konta
-account has been created	common	pl	Konto zostało utworzone
-account has been deleted	common	pl	Konto zostało skasowane
-account has been updated	common	pl	Konto zostało uaktualnione
-account is expired	common	pl	Konto wygasło
+account has been created	common	pl	Konto zostało utworzone.
+account has been deleted	common	pl	Konto zostało skasowane.
+account has been updated	common	pl	Konto zostało uaktualnione.
+account is expired	common	pl	Konto wygasło.
 accounts	common	pl	Konta
 acl	common	pl	ACL
 action	common	pl	Operacja
@@ -114,16 +117,16 @@ all days	common	pl	Wszystkie dni
 all fields	common	pl	Wszystkie pola
 all in one	groupdav	pl	Wszystko w jednym
 all languages	common	pl	Wszystkie języki
-all operations save the template!	common	pl	Wszystkie operacje prowadzą do zapisu wzorca
+all operations save the template!	common	pl	Wszystkie operacje prowadzą do zapisu wzorca!
 all users	common	pl	Wszyscy użytkownicy
 allow editing the %1	common	pl	Zezwól na edycję %1
 allowed file type: %1	common	pl	Dopuszczony typ pliku: %1
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	pl	Umożliwia modyfikowanie odpowiedzialnych użytkowników z urządzeń, które ich nie obsługują, poprzez ustawienie adresu e-mail użytkownika jako kategorii.
-alternate style-sheet:	common	pl	Alternatywny arkusz stylu
+alternate style-sheet:	common	pl	Alternatywny arkusz stylu:
 am	common	pl	przed południem
 american samoa	common	pl	SAMOA AMERYKAŃSKIE
 an admin required that you must change your password upon login.	common	pl	Administrator wymaga zmiany hasła po zalogowaniu.
-an error happened	common	pl	Wystąpił błąd
+an error happened	common	pl	Wystąpił błąd!
 an existing and by the webserver readable directory enables the image browser and upload.	common	pl	Katalog: istniejący ORAZ możliwy do odczytu przez serwer WWW, pozwala uruchomić przeglądarkę obrazków oraz ładowanie plików na serwer.
 an indexed column speeds up querys using that column (cost space on the disk !!!)	common	pl	Kolumna indeksowana przyspiesza wyszukiwanie na tej kolumnie (zabiera przestrzeń dyskową!)
 and	common	pl	oraz
@@ -143,12 +146,13 @@ applications	common	pl	Aplikacje
 applies the changes made	common	pl	Zatwierdza wykonane zmiany
 applies the changes to the given version of the template	common	pl	Zatwierdza wykonane zmiany dla podanej wersji szablonu
 apply	common	pl	Uaktualnij
-apply the action on the whole query, not only the shown entries	common	pl	Zastosuj akcję do całego zapytania, a NIE tylko do wyświetlonych wpisów.
+apply the action on the whole query, not only the shown entries	common	pl	Zastosuj akcję do całego zapytania, a NIE tylko do wyświetlonych wpisów
 apps &amp; license	common	pl	Aplikacje i licencja
 april	common	pl	Kwiecień
 are you sure you want to delete these entries ?	common	pl	Czy na pewno usunąć te wpisy?
 are you sure you want to delete this entry ?	common	pl	Czy na pewno usunąć ten wpis?
 are you sure you want to logout?	common	pl	Czy na pewno chcesz się wylogować?
+are you sure, you would like to delete the backup key?	common	pl	Czy na pewno chcesz usunąć klucz zapasowy?
 argentina	common	pl	ARGENTYNA
 armenia	common	pl	ARMENIA
 aruba	common	pl	ARUBA
@@ -162,8 +166,6 @@ australia	common	pl	AUSTRALIA
 austria	common	pl	AUSTRIA
 authenticate	common	pl	Uwierzytelnij
 author	common	pl	Autor
-autohide sidebox menu's	common	pl	Automatycznie ukrywaj menu boczne
-autohide sidebox menus	common	pl	Automatyczne ukrywanie bocznych menu
 automatic update check failed, you need to check manually!	common	pl	Automatyczne sprawdzenie aktualizacji nie powiodło się, musisz sprawdzić ręcznie!
 automatically refresh list	common	pl	Automatycznie odśwież listę
 autosave default category	common	pl	Automatyczny zapis domyślnej kategorii
@@ -172,10 +174,11 @@ azerbaijan	common	pl	AZERBEJDŻAN
 back	common	pl	Powrót
 back to user login	common	pl	Wróć do logowania uzytkowników
 background color:	common	pl	Kolor tła
+backup key	common	pl	Klawisz kopii zapasowej
 backup/restore	common	pl	Kopia zapasowa/przywracanie
 backup/restore ...	common	pl	Kopia zapasowa/przywracanie ...
-backupdir '%1' is not writeable by the webserver	common	pl	Backupdir '%1' nie jest zapisyalny przez serwer
-bad login or password	common	pl	Błędna nazwa użytkownika lub hasło
+backupdir '%1' is not writeable by the webserver	common	pl	Backupdir '%1' nie jest zapisyalny przez serwer.
+bad login or password	common	pl	Błędna nazwa użytkownika lub hasło.
 bahamas	common	pl	BAHAMY
 bahrain	common	pl	BAHRAJN
 bangladesh	common	pl	BANGLADESZ
@@ -189,7 +192,7 @@ belize	common	pl	BELIZE
 benin	common	pl	BENIN
 bermuda	common	pl	BERMUDY
 bhutan	common	pl	BHUTAN
-blocked, too many attempts	common	pl	Zablokowane, za duzo prób
+blocked, too many attempts	common	pl	Zablokowane, za duzo prób.
 blurtext	common	pl	blurTExt
 bold	common	pl	Pogrubienie
 bolivia	common	pl	BOLIWIA
@@ -214,15 +217,18 @@ calendar	common	pl	Kalendarz
 calendars to sync in addition to personal calendar	groupdav	pl	Kalendarze do synchronizacji oprócz kalendarza osobistego
 cambodia	common	pl	KAMBODŻA
 cameroon	common	pl	KAMERUN
-can not have special sql-value null	common	pl	Nie może mieć wartości specjalnej SQL NULL
+can not have special sql-value null	common	pl	Nie może mieć wartości specjalnej SQL NULL.
+can't create directory %1 to connect found unconnected nodes to it!	admin	pl	Nie można utworzyć katalogu %1, aby podłączyć do niego znalezione niepodłączone węzły!
 canada	common	pl	KANADA
 cancel	common	pl	Anuluj
-cannot replace %1 because it is a directory	common	pl	Nie moge zamienić %1 gdyż jest to katalog
+cannot replace %1 because it is a directory	common	pl	Nie moge zamienić %1 gdyż jest to katalog.
+cannot set a category as parent, which is part of this categorys subtree!	common	pl	Nie można ustawić kategorii jako nadrzędnej, która jest częścią drzewa podrzędnego tej kategorii!
+cannot set this cat as its own parent!	common	pl	Nie można ustawić tej kategorii jako nadrzędnej!
 cant delete a single widget from a grid !!!	common	pl	Nie można usunąć pojedynczego obiektu z siatki!
 cant delete the only column of a grid !!!	common	pl	Nie można usunąć jedynej kolumny z siatki!
 cant delete the only row in a grid !!!	common	pl	Nie można usunąć jedynego wiersza z siatki!
-cant open %1, needs ziparchive	common	pl	Nie mogę otworzyć %1, potrzebuje ZipArchive
-cant open '%1' for %2	common	pl	Nie mogę otworzyć %1 do %2
+cant open %1, needs ziparchive	common	pl	Nie mogę otworzyć %1, potrzebuje PHP ZipArchive
+cant open '%1' for %2	common	pl	Nie mogę otworzyć '%1' do %2
 cape verde	common	pl	REPUBLIKA ZIELONEGO PRZYLĄDKA
 caption	common	pl	Nagłówek
 categories	common	pl	Kategorie
@@ -247,7 +253,7 @@ changed	common	pl	Zmieniono
 charset	common	pl	Zestaw znaków
 check all	common	pl	Zaznacz wszystkie
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pl	Sprawdzanie pustych wartości w instrukcjach IF. Przykład {{IF url~EMPTY~~Website:}} - Jeśli adres url nie jest pusty, wpisuje "Strona internetowa:"
-check if content should only be displayed but not altered (the content is not send back then!)	common	pl	Zaznacz, jeżeli zawartość ma być wyświetlana, ale nie zmieniana (nie jest wtedy odsyłana z powrotem do przeglądarki)
+check if content should only be displayed but not altered (the content is not send back then!)	common	pl	Zaznacz, jeżeli zawartość ma być wyświetlana, ale nie zmieniana (nie jest wtedy odsyłana z powrotem do przeglądarki).
 check if field has to be filled by user	common	pl	Zaznacz, jeżeli pole musi być wypełnione przez użytkownika
 check installation	common	pl	Sprawdź instalację
 check now	common	pl	Sprawdź teraz
@@ -266,7 +272,7 @@ choose the parent category	common	pl	Wybierz kategorię nadrzędną
 choose time	common	pl	Wybierz czas
 chosen parent category no longer exists	common	pl	Wybrana kategoria nadrzędna już nie istnieje
 christmas island	common	pl	WYSPA BOŻEGO NARODZENIA
-class	common	pl	Klasa
+class	common	pl	Class
 class, valign	common	pl	Class, Valign
 clear	common	pl	Wyczyść
 clear form	common	pl	Wyczyść formularz
@@ -277,23 +283,25 @@ click here to create the link	common	pl	Kliknij tutaj, aby stworzyć odnośnik
 click here to resume your egroupware session.	common	pl	Kliknij tutaj aby powrócić do sesji EGroupware.
 click here to start the search	common	pl	Kliknij tutaj, aby rozpocząć wyszukiwanie
 click here to upload the file	common	pl	Kliknij tutaj, aby przesłać plik
-click or mouse over to show menus	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu
-click or mouse over to show menus?	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu?
 click this image on the navbar: %1	common	pl	Kliknij ten obraz na pasku zadań: %1
+click to open colorpicker	common	pl	Kliknij, aby otworzyć selektor kolorów
 click to order after that criteria	common	pl	Kolejność według kryteriów
 clickable path	common	pl	Klikalna ścieżka
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	pl	Klienci, którzy nie określili wyraźnie limitu, są ograniczeni do tej liczby dni. Zbyt wysoki limit może powodować problemy z niektórymi klientami.
+clipboard contents	common	pl	Zawartość schowka
 close	common	pl	Zamknij
 close sidebox	common	pl	Zamknij boczne okno
 closes the window without saving the changes	common	pl	Zamyka okno bez zachowywania zmian
 cocos (keeling) islands	common	pl	WYSPY KOKOSOWE
+code	common	pl	Kod
 collection empty.	common	pl	Kolekcja pusta.
-collection listing	common	pl	Zawartość kolekcji.
+collection listing	common	pl	Zawartość kolekcji
 colombia	common	pl	KOLUMBIA
 colour	common	pl	Kolor
 column...	common	pl	Kolumna ...
 columnname	common	pl	Nazwa kolumny
 columns to print	common	pl	Kolumny do wydrukowania
+command ⌘	common	pl	Polecenie ⌘
 comment	common	pl	Komentarz
 common preferences	common	pl	Wspólne ustawienia
 comoros	common	pl	KOMORY
@@ -319,7 +327,7 @@ copy to	common	pl	Kopiuj do
 copy to clipboard	common	pl	Kopiuj do schowka
 costa rica	common	pl	KOSTARYKA
 cote d ivoire	common	pl	WYBRZEŻE KOŚCI SŁONIOWEJ
-could not contact server. operation timed out!	common	pl	Brak połączenia z serwerem. Czas operacji przekroczony.
+could not contact server. operation timed out!	common	pl	Brak połączenia z serwerem. Czas operacji przekroczony!
 create	common	pl	Utwórz
 create a new table for the application	common	pl	Tworzy nową tabelę dla aplikacji
 create directory	common	pl	Utwórz folder
@@ -335,6 +343,7 @@ css properties	common	pl	Ustawienia CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	pl	Klasa CSS dla tego rzędu, wbudowane: 'nmh', 'nmr'
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	pl	Klasa CSS dla tego rzędu, wbudowane: 'th','row'
 css-styles	common	pl	Style CSS
+ctrl	common	pl	Ctrl
 cuba	common	pl	KUBA
 currency	common	pl	Waluta
 current	common	pl	Bieżący
@@ -346,6 +355,7 @@ cut	common	pl	Wytnij
 cyprus	common	pl	CYPR
 czech republic	common	pl	REPUBLIKA CZESKA
 dark mode	common	pl	Tryb ciemny
+data type	common	pl	Typ danych
 database error	common	pl	Bład bazy danych
 database error!	common	pl	Błąd bazy danych!
 date	common	pl	Data
@@ -356,7 +366,7 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 day	common	pl	Dzień
 days	common	pl	dni
 db ensures that every row has a unique value in that column	common	pl	DBMS (baza danych) zapewnia, że każdy wiersz będzie posiadał unikalną wartość w tej kolumnie
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	pl	Opcje indeksu specyficzne dla bazy danych, np. mysql(FULLTEXT) lub mysql(100)
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	pl	Opcje indeksu specyficzne dla bazy danych, np. mysql(FULLTEXT) lub mysql(100).
 db-tools	common	pl	Narzędzia bazodanowe
 december	common	pl	Grudzień
 deck	common	pl	Pokład (wewnętrzny)
@@ -364,43 +374,49 @@ default	common	pl	Domyślnie
 default category	common	pl	Kategoria domyślna
 default document to insert entries	preferences	pl	Domyślny dokument do wstawiania wpisów
 default height for the windows	common	pl	Domyślna wysokość dla okna
+default visible actions	common	pl	Domyślne widoczne akcje
 default width for the windows	common	pl	Domyslna szerokość dla okna
 delete	common	pl	Usuń
-delete a single entry by passing the id.	common	pl	Usuń jeden wpis według podanego ID.
+delete a single entry by passing the id.	common	pl	Usuń jeden wpis według podanego ID
 delete all selected etemplates, without further inquiry	common	pl	Usuń WSZYSTKIE wybrane eSzablony, BEZ dalszych pytań
 delete and cut save the template!	common	pl	Usuń zawartość i zapisz szablon!
+delete backup	common	pl	Usuń kopię zapasową
+delete backup key	common	pl	Usuń klucz kopii zapasowej
 delete category	common	pl	Usuń kategorię
 delete column	common	pl	Usuń kolumnę
+delete file	common	pl	Usuń plik
 delete index	common	pl	Usuń indeks
+delete link	common	pl	Usuń link
+delete link?	common	pl	Usunąć link?
 delete row	common	pl	Skasuj wiersz
 delete selected entries?	common	pl	Czy skasować wybrane wpisy?
-delete the spezified etemplate	common	pl	Usuń wskazny e-Szablon
+delete the spezified etemplate	common	pl	Usuń wskazny eTemplate
 delete these entries	common	pl	Usuń te wpisy
 delete this column	common	pl	Usuń tą kolumnę
 delete this entry	common	pl	Skasuj ten wpis
-delete this etemplate	common	pl	usuń ten e-Szablon
+delete this etemplate	common	pl	usuń ten eTemplate
 delete this file	common	pl	Usuń ten plik
 delete this photo?	common	pl	Usunąć to zdjęcie?
 delete this row	common	pl	Usuń ten wierwsz
 delete whole column (can not be undone!!!)	common	pl	Usuń całą kolumnę
 deletes the above spez. etemplate from the database, can not be undone	common	pl	Usuwa wybrany eTemplate z bazy danych, nie może być cofnięte
-deletes the etemplate spez. above	common	pl	Usuwa eTemplate wskazany powyżej
-deletes this column	common	pl	Usuń tą kolumnę
-deletes this index	common	pl	Usuń ten indeks
+deletes the etemplate spez. above	common	pl	Usuwa eTemplate wskazany powyżej.
+deletes this column	common	pl	Usuń tą kolumnę.
+deletes this index	common	pl	Usuń ten indeks.
 denmark	common	pl	DANIA
 description	common	pl	Opis
 detail	common	pl	Opis szczegółowy
 details	common	pl	Opis szczegółowy
-direction left to right	common	pl	Kierunek od lewej do prawej
 directory	common	pl	Katalog
-directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pl	Katalog nie istnieje, serwer WWW nie ma do niego praw odczytu lub nie jest podkatalogiem DOCUMENT_ROOT
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pl	Katalog nie istnieje, serwer WWW nie ma do niego praw odczytu lub nie jest podkatalogiem DOCUMENT_ROOT!
 directory for storing merged documents	preferences	pl	Folder do przechowywania scalonych dokumentów
 directory with documents to insert entries	preferences	pl	Folder z dokumentami do wstawienia wpisów
 disabled	common	pl	Zablokowany
 discard changes	common	pl	Porzuć zmiany
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pl	Wyświetlane przed polami input lub wstawiany jest input w miejsce '%s' w etykiecie
-displayed in statusline of browser if input-field gets focus	common	pl	Wyświetlane w pasku statusu przeglądarki jeśli wybrany zostanie input
-displayed in the top line of the groupbox (legend)	common	pl	Wyświetlany w górnej linii groupboxa (legenda)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pl	Wyświetlane przed polami input lub wstawiany jest input w miejsce '%s' w etykiecie.
+displayed in statusline of browser if input-field gets focus	common	pl	Wyświetlane w pasku statusu przeglądarki jeśli wybrany zostanie input.
+displayed in the top line of the groupbox (legend)	common	pl	Wyświetlany w górnej linii groupboxa (legenda).
+distribution lists as groups	groupdav	pl	Listy dystrybucyjne jako grupy
 djibouti	common	pl	DŻIBUTI
 do not notify	common	pl	Nie powiadamiaj
 do not notify of these changes	common	pl	Nie wysyłaj powiadomień po utworzeniu lub zmianie
@@ -411,7 +427,7 @@ do you want to send the message to all selected entries, without further editing
 doctype:	common	pl	DOCTYPE:
 document '%1' does not exist or is not readable for you!	preferences	pl	Dokument '%1' nie istnieje lub nie masz praw do jego odczytu!
 document properties	common	pl	Ustawienia dokumentu
-document title:	common	pl	Tytuł dokumentu
+document title:	common	pl	Tytuł dokumentu:
 documentation	common	pl	Dokumentacja
 doesn't matter	common	pl	Bez znaczenia
 domain	common	pl	Domena
@@ -425,7 +441,7 @@ done	common	pl	Gotowe
 dos international	common	pl	DOS International
 download	common	pl	Pobierz
 download link	common	pl	Łącze pobierania
-drop a table - this can not be undone	common	pl	Usuń tabelę - czynność nie może być cofnięta!
+drop a table - this can not be undone	common	pl	Usuń tabelę - czynność nie może być cofnięta
 drop table	common	pl	Usuń tabelę
 dump4setup	common	pl	ZrzućDoSetup
 duration	common	pl	Czas trwania
@@ -460,6 +476,7 @@ el salvador	common	pl	SALWADOR
 email	common	pl	E-mail
 email-address of the user, eg. "%1"	common	pl	email użytkownika, np. "%1"
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pl	Osadzone style CSS, np. ".red { background: red; }" (zwróć uwagę na "." przed nazwą klasy) lub "@import url(...)" (nazwy klas są globalne dla całej strony!).
+empty file	common	pl	Pusty plik
 enable javascript onchange submit	common	pl	Aktywuj przesłanie formularza poprzez JavaScript na onchange
 enable logging	groupdav	pl	Włącz rejestrowanie
 enabled	common	pl	Aktywny
@@ -469,32 +486,33 @@ end time	common	pl	Czas końcowy
 enter '' for an empty default, nothing mean no default	common	pl	Wprowadź ciąg '' dla pustej wartości domyślnej, jeżeli nic nie wpiszesz
 enter a search pattern	common	pl	Podaje wzorzec wyszukiwania
 enter filename to upload and attach, use [browse...] to search for it	common	pl	Podaj nazwę pliku do załadowania i dołączenia, użyj [Przeglądaj...] aby go wyszukać
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu EGroupware.<br>Przykład: http://www.twojadomena.pl/egroupware   lub   /egroupware<br><b>Bez końcowego ciacha</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu EGroupware.<br>Przykład: http://www.twojadomena.pl/egroupware lub /egroupware<br><b>Bez końcowego ciacha</b>
 enter the new version number here (> old_version), empty for no update-file	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny), pusta wartość jeżeli nie chcesz aktualizować pliku
 enter the new version number here (has to be > old_version)	common	pl	Podaj nowy numer wersji (musi być większy niż aktualny)
 enter your file name	common	pl	Wprowadź nazwę pliku
 enter your password	common	pl	Wprowadź hasło
-entry has been deleted sucessfully	common	pl	Dane zostały usunięte
+entry has been deleted sucessfully	common	pl	Dane zostały usunięte.
 entry not found!	common	pl	Nie znaleziono danych!
 entry saved	common	pl	Wpis zachowany
-entry updated sucessfully	common	pl	Dane zostały uaktualnione
+entry updated sucessfully	common	pl	Dane zostały uaktualnione.
 epl only	common	pl	Tylko EPL
 equatorial guinea	common	pl	GWINEA RÓWNIKOWA
 eritrea	common	pl	ERYTREA
 error	common	pl	Błąd
 error copying uploaded file to vfs!	common	pl	Błąd przy kopiowaniu załadowanego pliku do systemu plików!
 error create parent directory %1!	common	pl	Błąd przy tworzeniu katalogu nadrzędnego %1!
-error creating %1 %2 directory	common	pl	Błąt podczas tworzenia katalogu %1 %2
-error deleting %1 %2 directory	common	pl	Błąd podczas usuwania katalogu %1 %2
+error creating %1 %2 directory	common	pl	Błąt podczas tworzenia katalogu %1 %2!
+error deleting %1 %2 directory	common	pl	Błąd podczas usuwania katalogu %1 %2!
 error deleting %1!	common	pl	Błąd przy usuwaniu %1!
 error enabling push	common	pl	Błąd włączenia push
-error renaming %1 %2 directory	common	pl	Błąd podczas zmiany nazwy katalogu %1 %2
+error renaming %1 %2 directory	common	pl	Błąd podczas zmiany nazwy katalogu %1 %2!
 error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
 error: template not found !!!	common	pl	Błąd: wzorzec nie znaleziony!
 error: webserver is not allowed to write into '%1' !!!	common	pl	Błąd: demon serwera WWW nie może zapisywać do katalogu '%1'!
 error: while saving !!!	common	pl	Błąd: podczas zapisywania!
 error: writing file (no write-permission for the webserver) !!!	common	pl	Błąd: zapisywanie pliku nie powiodło się (brak uprawnień zapisu dla serwera WWW)!
 estonia	common	pl	ESTONIA
+et2 rendering took %1s	common	pl	Renderowanie eT2 zajęło %1s
 etag	common	pl	ETag
 etemplate	common	pl	eTemplate
 etemplate '%1' imported, use save to put it in the database	common	pl	eTemplate '%1' zaimportowano, użyj 'Zapisz' aby umieścić go w bazie danych
@@ -508,32 +526,42 @@ exact	common	pl	Dokładnie
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	pl	Przykład {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - przeszukaj pole "n_prefix", dla "Mr", jeśli znaleziono, napisz Hello Mr., w przeciwnym razie napisz Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	pl	Przykład {{LETTERPREFIX}} - Daje prefiks literowy bez podwójnych spacji, jeśli na przykład tytuł jest pusty
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	pl	Przykład {{LETTERPREFIX}} - Daje prefiks literowy bez podwójnych spacji, jeśli na przykład tytuł jest pusty
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	pl	Przykład {{nenvlf role}} - jeśli pole rola nie jest puste, ustaw LF bez żadnej wartości pola
 exchange this row with the one above	common	pl	Zamień ten wiersz z jego poprzednikiem
 exchange this two columns	common	pl	Zamień te dwie kolumny
+expiration	common	pl	Wygaśnięcie
 export the loaded etemplate into a xml-file	common	pl	eksportuj załadowany eTemplate do pliku XML
 export xml	common	pl	Eksportuj do XML
 extensions loaded:	common	pl	Załadowano rozszerzenia:
+failed to change mode of required directory "%1" to %2!	admin	pl	Nie udało się zmienić trybu wymaganego folderu "%1" na %2!
 failed to change password.	common	pl	Zmiana hasła nieudana.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pl	Nie udało się skontaktować z serwerem lub serwer przesłał nieprawidłową odpowiedź. Spróbuj się zalogować ponownie. Jeżeli to nie pomoże, skontaktuj się z administratorem.
+failed to create required directory "%1"!	admin	pl	Nie udało się utworzyć wymaganego folderu „%1”!
+failed to move unconnected %1 %2 to %3!	admin	pl	Nie udało się przenieść niepołączonego %1 %2 do %3!
 falkland islands (malvinas)	common	pl	FALKLANDY (MALWINY)
 faroe islands	common	pl	WYSPY FAROE
 favorites	common	pl	Ulubione
 fax number	common	pl	Numer faxu
-features of the editor?	common	pl	Możliwości edytora?
+features of the editor?	common	pl	Możliwości edytora
 february	common	pl	Luty
 field	common	pl	Pole
 field must not be empty !!!	common	pl	Powyższe pole nie może być puste!
 fields	common	pl	Pola
 fiji	common	pl	FIDŻI
 file	common	pl	Plik
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	pl	Plik %1 nie ma zawartości w fizycznym systemie plików %2 --> nie udało się usunąć pliku!
+file %1 has no content in physical filesystem %2 --> file removed!	admin	pl	Plik %1 nie ma zawartości w fizycznym systemie plików %2 --> plik usunięty!
+file %1 has no content in physical filesystem %2!	admin	pl	Plik %1 nie ma zawartości w fizycznym systemie plików %2!
 file '%1' not found!	common	pl	Plik '%1' nie odnaleziony!
 file a file	common	pl	Przechowuj plik
 file contains more than one etemplate, last one is shown !!!	common	pl	Plik zawiera więcej niż jeden eTemplate - pokazany jest ostatni z nich!
+file information	common	pl	Informacje o pliku
 file is of wrong type (%1 != %2)!	common	pl	Zły typ pliku (%1 != %2)!
+file too large.  maximum %1	common	pl	Plik za duży. Maksymalnie %1
 file writen	common	pl	Plik został zapisany
 files	common	pl	Pliki
+files without content in physical filesystem will be removed.	admin	pl	Pliki bez zawartości w fizycznym systemie plików zostaną usunięte.
 fileupload	common	pl	Przesłanie Pliku
 filter	common	pl	Filtr
 finland	common	pl	FINLANDIA
@@ -544,13 +572,14 @@ first page	common	pl	Pierwsza strona
 firstname	common	pl	Imię
 fixme!	common	pl	NAPRAW MNIE!
 floating point	common	pl	Liczba zmiennoprzecinkowa
-folder already exists.	common	pl	Folder o takiej nazwie już istnieje
+folder already exists.	common	pl	Folder o takiej nazwie już istnieje!
 force selectbox	common	pl	Wymuś wybór z listy
 foreign key	common	pl	Klucz obcy
 forever	common	pl	Na zawsze
 formatted business address	common	pl	Sformatowany adres firmowy
 formatted private address	common	pl	Sformatowany adres prywatny
 formatted text (html)	common	pl	Tekst sformatowany (HTML)
+found unconnected %1 %2!	admin	pl	Znaleziono niepołączony %1 %2!
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
 french polynesia	common	pl	POLINEZJA FRANCUSKA
@@ -586,13 +615,13 @@ grid column attributes	common	pl	Atrybuty kolumn siatki
 grid row attributes	common	pl	Atrybuty wierszy siatki
 group	common	pl	Grupa
 group access	common	pl	Dostęp grupy
-group has been added	common	pl	Grupa została dodana
-group has been deleted	common	pl	Grupa została skasowana
-group has been updated	common	pl	Grupa została uaktualniona
+group has been added	common	pl	Grupa została dodana.
+group has been deleted	common	pl	Grupa została skasowana.
+group has been updated	common	pl	Grupa została uaktualniona.
 group name	common	pl	Nazwa grupy
 group public	common	pl	Grupowy publiczny
 groupbox	common	pl	GroupBox
-groupdav	common	pl	Serwer CalDAV, CardDAV i GroupDAV
+groupdav	common	pl	Synchronizacja CalDAV / CardDAV
 groups	common	pl	Grupy
 groups with permission for %1	common	pl	Grupy z uprawnieniami do %1
 groups without permission for %1	common	pl	Grupy bez uprawnień do %1
@@ -631,7 +660,6 @@ how many days to sync in the past (default %1)	groupdav	pl	Ile dni do synchroniz
 how many entries should the list show	common	pl	Jak dużo wpisów powinna pokazywać lista
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pl	Jak dużo ikon ma się pojawiać w pasku nawigacyjnym (nagłówku strony). Pozostałe ikony znajdą się w menu rozwijanym po prawej stronie paska nawigacyjnego.
 how many rows to print	common	pl	Ile wierszy do wydrukowania
-how to show the general egroupware menu ?	common	pl	Jak wyświetlić ogólne menu EGroupware
 html	common	pl	HTML
 html link to the current record	common	pl	Łącze HTML do bieżącego rekordu
 html links to any entries linked to the current record, excluding attached files	common	pl	Linki HTML do wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
@@ -639,7 +667,6 @@ hungary	common	pl	WĘGRY
 iceland	common	pl	ISLANDIA
 id	common	pl	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pl	Jeżeli pole jest wyłączone, pojawia się pusta komórka tabeli - dla (tymczasowego) usunięcia pola lub komórki
-if the clock is enabled would you like it to update it every second or every minute?	common	pl	Jeżeli zegar jest aktywny, czy chcesz odświeżać go co sekundę czy co minutę?
 if there are some images in the background folder you can choose the one you would like to see.	common	pl	Jeżeli są obrazki w katalogu teł, możesz wybrać ten, który chcesz zobaczyć.
 if you use "2-factor-authentication", please enter the code here.	common	pl	Jeśli używasz "2-Factor-Authentication", wprowadź tutaj kod.
 image	common	pl	Obrazek
@@ -650,9 +677,9 @@ import an etemplate from a xml-file	common	pl	Importuj e-Szablon z pliku XML
 import table-definitions from existing db-table	common	pl	Importuj definicję tabel z istniejących tabel bazy danych
 import xml	common	pl	Importuj z XML
 include access to any linked files (links tab)	common	pl	Dołącz dostęp do wszelkich połączonych plików (zakładka Links)
-increment version to not overwrite the existing template	common	pl	powiększ numer wersji, aby nie nadpisać istniejącego szablonu
-index/name of returned content (name of the template, link / method for image)	common	pl	index/name zwróconej zawartości (nazwa sablonu, linku / metody dla obrazka)
-indexed	common	pl	Indeksowana
+increment version to not overwrite the existing template	common	pl	powiększ numer wersji, aby nie nadpisać istniejącego szablonu.
+index/name of returned content (name of the template, link / method for image)	common	pl	index/name zwróconej zawartości (nazwa sablonu, linku / metody dla obrazka).
+indexed	common	pl	Indeksowana.
 indexoptions	common	pl	Opcje indeksu
 india	common	pl	INDIE
 indonesia	common	pl	INDONEZJA
@@ -670,7 +697,6 @@ insert column after	common	pl	Wstaw kolumne po
 insert column before	common	pl	Wstaw kolumne przed
 insert in %1	common	pl	Wstaw w %1
 insert in document	common	pl	Wstaw w dokumencie
-insert in dokument	common	pl	Wstaw do dokumentu
 insert new column behind this one	common	pl	Wstaw nową kolumnę za bieżącą
 insert new column in front of all	common	pl	Wstaw nową kolumnę na początku
 insert new row after this one	common	pl	Wstaw nowy wiersz za bieżącym
@@ -686,16 +712,16 @@ international	common	pl	Międzynarodowy
 introduction	common	pl	Wprowadzenie
 invalid 2-factor authentication code	common	pl	Nieprawidłowy kod uwierzytelniania dwuczynnikowego
 invalid email	common	pl	Nieprawidłowa wiadomość e-mail
-invalid filename	common	pl	Niepoprawna nazwa pliku
-invalid ip address	common	pl	Zły adres IP
-invalid or expired 'remember me' token	common	pl	Nieprawidłowy lub wygasły token "zapamiętaj mnie".
-invalid password	common	pl	Złe hasło
+invalid filename	common	pl	Niepoprawna nazwa pliku.
+invalid ip address	common	pl	Zły adres IP.
+invalid or expired 'remember me' token	common	pl	Nieprawidłowy lub wygasły token "zapamiętaj mnie"
+invalid password	common	pl	Złe hasło.
 iran, islamic republic of	common	pl	IRAN
 iraq	common	pl	IRAK
 ireland	common	pl	IRLANDIA
 israel	common	pl	IZRAEL
-it has been more then %1 days since you changed your password	common	pl	Upłynęło ponad %1 dni od momentu zmiany hasła
-it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca się uruchomienie instalatora do uaktualnienia tabel do bieżącej wersji
+it has been more then %1 days since you changed your password	common	pl	Upłynęło ponad %1 dni od momentu zmiany hasła.
+it is recommended that you run setup to upgrade your tables to the current version	common	pl	Zaleca się uruchomienie instalatora do uaktualnienia tabel do bieżącej wersji.
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	pl	Zaleca się przechowywanie klucza publicznego w Książce adresowej, aby inni użytkownicy mogli pisać do Ciebie zaszyfrowane wiadomości.
 italic	common	pl	Kursywa
 italy	common	pl	WŁOCHY
@@ -745,7 +771,7 @@ libyan arab jamahiriya	common	pl	LIBIA
 license	common	pl	Licencja
 liechtenstein	common	pl	LIECHTENSTEIN
 light mode	common	pl	Tryb jasny
-line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV zawiera ###last-check-run##  dla tabeli %3  ==> ZIGNOROWANO</b>
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV zawiera ###last-check-run## dla tabeli %3 ==> ZIGNOROWANO</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
 link	common	pl	Odnośnik
 link target %1 not found!	common	pl	Cel linku %1 nie odnaleziony!
@@ -789,7 +815,6 @@ marshall islands	common	pl	WYSPY MARSHALLA
 martinique	common	pl	MARTYNIKA
 mauritania	common	pl	MAURETANIA
 mauritius	common	pl	MAURITIUS
-max number of icons in navbar	common	pl	Maksymalna ilość ikon w pasku nawigacyjnym
 maximum size for uploads	filemanager	pl	Maksymalny rozmiar przy przesyłaniu plików
 may	common	pl	Maj
 mayotte	common	pl	MAYOTTE
@@ -811,15 +836,18 @@ month	common	pl	Miesiąc
 montserrat	common	pl	MONTSERRAT
 more	common	pl	Więcej
 more than 1 match for '%1'	common	pl	Więcej niż 1 pasujący dla '%1'
+more then one active file %1 found, inactivating %2 older revisions!	admin	pl	Znaleziono więcej niż jeden aktywny plik %1, dezaktywując %2 starsze wersje!
 morocco	common	pl	MAROKO
 move	common	pl	Przenieść
+moved %1 children from directory fs_id=%2 to %3	admin	pl	Przeniesiono %1 dzieci z folderu fs_id=%2 do %3
+moved unconnected %1 %2 to %3.	admin	pl	Przeniesiono niepołączone %1 %2 do %3.
 mozambique	common	pl	MOZAMBIK
 multicolumn indices	common	pl	Indeksy wielokolumnowe
 multiple	common	pl	Wielokrotny
+my account	common	pl	Moje konto
 myanmar	common	pl	BIRMA
 name	common	pl	Nazwa
 name of other table where column is a key from	common	pl	Nazwa innej tabeli, w której kolumna jest kluczem
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	pl	Nazwa zestawu szablonów phpgw (np. verdilak), puste = domyślne
 name of table to add	common	pl	Nazwa tabeli do dodania
 name of the etemplate, should be in form application.function[.subtemplate]	common	pl	Nazwa e-Szablonu powinna być w formie: application.function[.subTemplate]
 name of the user, eg. "%1"	common	pl	Nazwa uzytkownika, np. "%1"
@@ -858,6 +886,7 @@ niue	common	pl	NIUE
 no	common	pl	Nie
 no - cancel	common	pl	Nie - Anuluj
 no column to swap with !!!	common	pl	Brak kolumny do zamiany!
+no default set	common	pl	Brak ustawienia domyślnego
 no entries found, try again ...	common	pl	Nie znaleziono wpisów, spróbuj jeszcze raz ...
 no file	common	pl	Nie ma pliku
 no filename given or selected via browse...	common	pl	Nie podano nazwy pliku i nie wybrano jej
@@ -867,25 +896,27 @@ no matches found	common	pl	Nie znaleziono zgodnych
 no row to swap with !!!	common	pl	Brak rzędu do zamiany!
 no savant2 template directories were found in:	common	pl	Nie znaleziono katalogów wzorca Savant2 w:
 no subject	common	pl	Bez tematu
+no suggestions	common	pl	Brak sugestii
 none	common	pl	Żaden
 norfolk island	common	pl	WYSPA NORFOLK
 normal	common	pl	Normalny
 northern mariana islands	common	pl	PÓŁNOCNE WYSPY MARIANA
 norway	common	pl	NORWEGIA
 not	common	pl	nie
-not a user yet? register now	common	pl	Nie masz konta? Zapisz się teraz!
+not a user yet? register now	common	pl	Nie masz konta? Zapisz się teraz.
 not assigned	common	pl	Nie przypisany
 not null	common	pl	NOT NULL
 not readable %1 entry of user %2	common	pl	Nie można odczytać wejścia %1 użytkownika %2
 note	common	pl	Uwaga
 notes	common	pl	Uwagi
 nothing	common	pl	Nic
-nothing found - try again !!!	common	pl	Nic nie znaleziono - spróbuj ponownie.
-nothing in clipboard to paste !!!	common	pl	Schowek pusty - nie można wkleić.
-nothing matched search criteria !!!	common	pl	Brak elementów spełniających kryteria.
+nothing found - try again !!!	common	pl	Nic nie znaleziono - spróbuj ponownie!
+nothing in clipboard to paste !!!	common	pl	Schowek pusty - nie można wkleić!
+nothing matched search criteria !!!	common	pl	Brak elementów spełniających kryteria!
+nothing to save.	common	pl	Nic do zapisania.
 notifications	common	pl	Powiadomienia
 notify window	common	pl	Okno powiadamiania
-notify your administrator to correct this situation	common	pl	Powiadom Twojego Administratora, aby mógł poprawić ten problem
+notify your administrator to correct this situation	common	pl	Powiadom Twojego Administratora, aby mógł poprawić ten problem.
 november	common	pl	Listopad
 now	common	pl	Obecne
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	pl	Liczba kolumn jakie komórka powinna zajmować, lib 'all' dla wszystkich kolumn, nazwa klasy css dla tagu TD
@@ -908,8 +939,6 @@ open	common	pl	Otwórz
 open existing contact	common	pl	Otwarty istniejący kontakt
 open notify window	common	pl	Otwórz okno powiadamiania
 open popup window	common	pl	Otwórz okno typu popup
-open sidebox	common	pl	Otworz boczny kontener
-open the online help.	common	pl	Otwórz pomoc online.
 operator	common	pl	Operator
 optional note about the link	common	pl	Opcjonalna notatka związana z odnośnikiem
 options	common	pl	Opcje
@@ -935,13 +964,13 @@ parcel	common	pl	Paczka
 parent category	common	pl	Kategoria nadrzędna
 parent is a '%1' !!!	common	pl	Nadrzędny jest '%1'!
 password	common	pl	Hasło
-password could not be changed	common	pl	Hasło nie może być zmienione
-password has been updated	common	pl	Hasło zostało zaktualizowane
-password must contain at least %1 lowercase letters	common	pl	Hasło musi zawierać przynajmniej %1 małych liter
-password must contain at least %1 numbers	common	pl	Hasło musi zawierać przynajmniej %1 cyfr
-password must contain at least %1 special characters	common	pl	Hasło musi zawierać przynajmniej %1 znaków specjalnych
-password must contain at least %1 uppercase letters	common	pl	Hasło musi zawierać przynajmniej %1 WIELKICH liter
-password must have at least %1 characters	common	pl	Hasło musi składać się z przynajmniej %1 znaków
+password could not be changed	common	pl	Hasło nie może być zmienione!
+password has been updated	common	pl	Hasło zostało zaktualizowane.
+password must contain at least %1 lowercase letters	common	pl	Hasło musi zawierać przynajmniej %1 małych liter.
+password must contain at least %1 numbers	common	pl	Hasło musi zawierać przynajmniej %1 cyfr.
+password must contain at least %1 special characters	common	pl	Hasło musi zawierać przynajmniej %1 znaków specjalnych.
+password must contain at least %1 uppercase letters	common	pl	Hasło musi zawierać przynajmniej %1 WIELKICH liter.
+password must have at least %1 characters	common	pl	Hasło musi składać się z przynajmniej %1 znaków.
 paste	common	pl	Wklej
 path	common	pl	Ścieżka
 path to user and group files has to be outside of the webservers document-root!!!	common	pl	Ścieżka do plików użytkowników i grup MUSI BYĆ POZA rootem dokumentów serwera!
@@ -956,19 +985,19 @@ pg up	common	pl	Strona w górę
 pgp encryption	common	pl	Szyfrowanie PGP
 pgp encryption installation	common	pl	Instalacja szyfrowania PGP
 philippines	common	pl	FILIPINY
-phone number	common	pl	Numer  telefonu
+phone number	common	pl	Numer telefonu
 pitcairn	common	pl	PITCAIRN
 placeholders	common	pl	Placeholdery
 play/pause	common	pl	Odtwarzanie/Pauza
 please %1 by hand	common	pl	Proszę %1 ręcznie
-please enter a name	common	pl	Proszę podać nazwę
+please enter a name	common	pl	Proszę podać nazwę!
 please enter table-name first !!!	common	pl	Proszę wpierw wprowadzić nazwę tabeli!
-please reload the egroupware desktop (f5 / cmd+r).	common	pl	Przeładuj pulpit EGroupware (F5 / Cmd + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	pl	Przeładuj pulpit EGroupware (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	pl	Pamiętaj, aby od teraz używać '%1' jako nazwy użytkownika do lokalnego logowania!
 please run setup to become current	common	pl	Proszę uruchom instalację (/setup) w celu uaktualnienia
 please select	common	pl	Proszę wybrać
 please set your global preferences	common	pl	Proszę wprowadzić swoje globalne preferencje!
-please set your preferences for this application	common	pl	Proszę wprowadzić ustawienia dla tej aplikacji
+please set your preferences for this application	common	pl	Proszę wprowadzić ustawienia dla tej aplikacji!
 please type %1 more characters	common	pl	Wpisz %1 więcej znaków
 please type 1 more character	common	pl	Wpisz jeszcze 1 znak
 please wait...	common	pl	Proszę czekac ...
@@ -1002,16 +1031,19 @@ quick add	common	pl	Szybkie dodawanie
 radiobutton	common	pl	Radiobutton
 read	common	pl	Odczytaj
 read a list of entries.	common	pl	Odczytaj lstę wpisów.
-read a single entry by passing the id and fieldlist.	common	pl	Odczytaj pojedynczy wpis, podając ID oraz listę pól
+read a single entry by passing the id and fieldlist.	common	pl	Odczytaj pojedynczy wpis, podając ID oraz listę pól.
 read etemplate from database (for the keys above)	common	pl	Odczytaj eTemplate z bazy danych (dla powyższych kluczy)
 read this list of methods.	common	pl	Odczytaj listę metod.
 reading	common	pl	Odczytywanie
 readonly	common	pl	Tylko do odczytu
+readonly filemanager directory	common	pl	Folder menedżera plików tylko do odczytu
 refresh	common	pl	Odśwież
 register	common	pl	Rejestracja
 regular	common	pl	Prawidłowy
 reject	common	pl	Odrzuć
 remember me	common	pl	Pamiętaj mnie
+remember me for %1	common	pl	Zapamiętaj mnie dla %1
+remove	api	pl	Usuń
 remove row (can not be undone!!!)	common	pl	Usuń wiersz (nie można cofnąć!)
 remove selected accounts	common	pl	Usuń wybrane konta
 remove shortcut	common	pl	Usuń skrót
@@ -1025,7 +1057,7 @@ reset	common	pl	Skasuj
 resource type	common	pl	Tym zasobu
 resources	common	pl	Zasoby
 restore failed	common	pl	Odtworzenie nie powiodło się
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	pl	Pokazuje pełną listę kont w systemie.  Uwaga: Lista może być długa
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	pl	Pokazuje pełną listę kont w systemie. Uwaga: Lista może być długa.
 returns an array of todo items	common	pl	Pokazuje tablicę Zadań
 returns savely, without deleting	common	pl	Powraca zapisując, bez usuwania
 returns struct of users application access	common	pl	Returns struct of users application access
@@ -1049,12 +1081,14 @@ saudi arabia	common	pl	ARABIA SAUDYJSKA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pl	Wersja Savant2 różni się od wersji wrappera. <br>Twoja wersja: %1 <br> Wersja Savant2: %2
 save	common	pl	Zachowaj
 save all	common	pl	Zapisz wszystko
+save as	common	pl	Zapisz jako
+save as zip	common	pl	Zapisz jako ZIP
 save selected columns as default preference for all users.	common	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
 save the changes made and close the window	common	pl	Zachowuje zmiany i zamyka okno
 save the etemplate under the above keys (name, ...), change them for a saveas	common	pl	Zapisz eTemplate pod następującymi kluczami (nazwa, ...), zmień je aby zapisać pod inną nazwą
 saved column sizes to preferences.	common	pl	Zapisz rozmiary kolumn do preferencji.
 saves changes to tables_current.inc.php	common	pl	Zapisz zmiany do pliku tables_current.inc.php
-saves the template with given version number and closes the window	common	pl	Zapisuje szablon z podanym numerem wersji i zamyka okno
+saves the template with given version number and closes the window	common	pl	Zapisuje szablon z podanym numerem wersji i zamyka okno.
 scale	common	pl	Skala
 scale for float	common	pl	Skala dla float
 search	common	pl	Szukaj
@@ -1073,15 +1107,18 @@ select account	common	pl	Wybierz konto
 select action	common	pl	Wybierz akcję
 select all	common	pl	Zaznacz wszystkie
 select all %1 %2 for %3	common	pl	Wybierz wszystkie %1 %2 dla %3
+select all entries	common	pl	Wybierz wszystkie wpisy
 select an app first !!!	common	pl	Wybierz najpierw aplikację!
 select an app to search in	common	pl	Wybierz Aplikację aby w niej szukać
 select an application	common	pl	Wybierz aplikację
 select an application, (*) = uninstalled	common	pl	Wybierz aplikację, (*) = odinstalowana
 select an entry to link with	common	pl	Wybierz wpis z którym połączysz
+select an opened dialog	common	pl	Wybór otwartego okna dialogowego
 select an table of the application	common	pl	Wybierz tabelę aplikacji
-select application	common	pl	Wybierz aplikacj?
+select application	common	pl	Wybierz aplikacj
 select application to search	common	pl	Wybierz aplikację do przeszukania
 select category	common	pl	Wybierz kategorię
+select color	common	pl	Wybierz kolor
 select columns	common	pl	Wybierz kolumny
 select country	common	pl	Wybierz kraj
 select date	common	pl	Wybierz datę
@@ -1093,7 +1130,7 @@ select files from filemanager ...	common	pl	Wybieranie plików z Menedżera plik
 select group	common	pl	Wybierz grupę
 select home email address	common	pl	Wybierz prywatny adres e-meil
 select hour	common	pl	Wybierz godzinę
-select if content of field should not be translated (label gets always translated)	common	pl	Wybiesz, jeśli zawartość pola nie powinna być tłumaczona (etykieta jest tłumaczona zawsze)
+select if content of field should not be translated (label gets always translated)	common	pl	Wybiesz, jeśli zawartość pola nie powinna być tłumaczona (etykieta jest tłumaczona zawsze).
 select language	common	pl	Wybierz język
 select month	common	pl	Wybierz miesiąc
 select multiple accounts	common	pl	Wybierz wiele kont
@@ -1102,10 +1139,11 @@ select one	common	pl	Wybierz jeden
 select one ...	common	pl	Wybierz jeden ...
 select percentage	common	pl	Wybierz procent
 select priority	common	pl	Wybierz priorytet
+select some options	common	pl	Wybierz niektóre opcje
 select state	common	pl	Wybierz stan
 select the columns to display in the list	common	pl	Wybierz kolumny wyświetlane w liście
-select the default height for the application windows	common	pl	Wybierz domyślną wysokość okien aplikacji
-select the default width for the application windows	common	pl	Wybierz domyślną szerokość okien aplikacji
+select the default height for the application windows	common	pl	Wybierz domyślną wysokość okien aplikacji.
+select the default width for the application windows	common	pl	Wybierz domyślną szerokość okien aplikacji.
 select the indexed columns in their desired order	common	pl	Wybierz kol
 select this etemplate to delete it	common	pl	Wybierz ten eTemplate aby go usunąć
 select user	common	pl	Wybierz użytkownika
@@ -1117,36 +1155,31 @@ select year	common	pl	Wybierz rok
 selectbox	common	pl	Wybór z listy
 selection	common	pl	Wybór
 send	common	pl	Wyślij
+send succeeded to %1	common	pl	Wybierz niektóre opcje
 senegal	common	pl	SENEGAL
 september	common	pl	Wrzesień
 serbia	common	pl	Serbia
-server %1 has been added	common	pl	Serwer %1 został dodany
-server answered. processing response...	common	pl	Otrzymano odpowiedź serwera. Przetwarzanie...
-server contacted. waiting for response...	common	pl	Nawiązako kontakt z serweraem. Oczekiwanie...
+server %1 has been added	common	pl	Serwer %1 został dodany.
+server answered. processing response...	common	pl	Otrzymano odpowiedź serwera. Przetwarzanie ...
+server contacted. waiting for response...	common	pl	Nawiązako kontakt z serweraem. Oczekiwanie ...
 server name	common	pl	Nazwa serwera
-session has been killed	common	pl	Sesja została zamknięta
+session has been killed	common	pl	Sesja została zamknięta.
 set as default	common	pl	Ustaw jako domyslne
 sets today as date	common	pl	Ustaw "dzisiaj" jako datę
 setup	common	pl	Setup
 setup main menu	common	pl	Menu główne setupu
 seychelles	common	pl	SESZELE
-should the form be submitted or any custom javascript be executed	common	pl	Czy formularz powinien być przesłany czy będzie wykonywany kod JavaScript?
+should the form be submitted or any custom javascript be executed	common	pl	Czy formularz powinien być przesłany czy będzie wykonywany kod JavaScript
 show	common	pl	Pokaż
 show (no save)	common	pl	Pokaż (bez zapisu)
 show all	common	pl	Pokaż wszystko
 show all / cancel filter	common	pl	Pokaż wszystko / anuluj filtr
 show all categorys	common	pl	Pokaż wszystkie kategorie
-show as topmenu	common	pl	Pokaż jako Top menu
-show clock?	common	pl	Pokazywać zegar?
-show home and logout button in main application bar?	common	pl	Czy pokazywać przyciski "Strona domowa" oraz "Wylogowanie" w głównym pasku aplikacji?
-show in sidebox	common	pl	Pokaż w sidebox
-show logo's on the desktop.	common	pl	Czy pokazywać logo na biurku?
-show menu	common	pl	Pokaż menu
+show log of following device	groupdav	pl	Pokaż dziennik następującego urządzenia
 show page generation time	common	pl	Wyświetl czas generowania strony
-show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce?
-show page generation time?	common	pl	Czy pokazywać czas generowania strony?
+show page generation time on the bottom of the page?	common	pl	Wyświetlać czas generowania strony w jej stopce.
+show page generation time?	common	pl	Czy pokazywać czas generowania strony
 show password	common	pl	Pokaż hasło
-show the logo's of egroupware and x-desktop on the desktop.	common	pl	Pokazuj logo EGroupware oraz x-desktop na pulpicie.
 show values	common	pl	Pokaż wartości
 show/hide	common	pl	Pokaż/ukryj pasek boczny
 show_more_apps	common	pl	show_more_apps
@@ -1165,7 +1198,7 @@ slovakia	common	pl	SŁOWACJA
 slovenia	common	pl	SŁOWENIA
 solomon islands	common	pl	WYSPY SALOMONA
 somalia	common	pl	SOMALIA
-sorry, your login has expired	login	pl	Twoje konto wygasło
+sorry, your login has expired	login	pl	Twoje konto wygasło.
 south africa	common	pl	REPUBLIKA POŁUDNIOWEJ AFRYKI
 south georgia and the south sandwich islands	common	pl	POŁUDNIOWA GEORGIA I POŁUDNIOWE WYSPY SANDWICH
 spacing	common	pl	Rozdzielenie
@@ -1211,8 +1244,8 @@ taiwan	common	pl	TAJWAN
 tajikistan	common	pl	TADŻYKISTAN
 tanzania, united republic of	common	pl	TANZANIA
 template	common	pl	Szablon
-template deleted	common	pl	Szablon usunięto
-template saved	common	pl	Szablon zapisano
+template deleted	common	pl	Szablon usunięto.
+template saved	common	pl	Szablon zapisano.
 text	common	pl	Tekst
 text color:	common	pl	Kolor tekstu:
 textarea	common	pl	Obszar tekstu
@@ -1220,7 +1253,7 @@ thailand	common	pl	TAJLANDIA
 the following applications require upgrades	common	pl	Następujące aplikacje wymagają upgrade'u
 the mail server returned	common	pl	Serwer pocztowy zwrócił
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	pl	Istnieje już użytkownik systemowy z tą nazwą. Użytkownicy nie powinni pokrywać się nazwami z użytkownikami systemowymi.
-this name has been used already	common	pl	Ta nazwa została już użyta
+this name has been used already	common	pl	Ta nazwa została już użyta!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	pl	Ten tekst jest wyświetlany jeśli pole input jest puste i nie zostało wybrane
 thursday	common	pl	Czwartek
 tiled	common	pl	Sąsiadujący
@@ -1228,7 +1261,7 @@ time	common	pl	Czas
 time zone	common	pl	Strefa czasowa
 time zone offset	common	pl	Przesunięcie strefy czasowej
 title	common	pl	Tytuł
-titles of any entries linked to the current record, excluding attached files	preferences	pl	Tytuły wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików.
+titles of any entries linked to the current record, excluding attached files	preferences	pl	Tytuły wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
 to	common	pl	Do
 to correct this error for the future you will need to properly set the	common	pl	Aby usunąć ten błąd na przyszłość, będziesz musiał ustawić poprawnie
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	pl	Aby wyłączyć: [! = nie]<wartość>[=<test>], np. '!@data' - wyłącz kolumnę jeśli pole 'data' jest puste
@@ -1247,7 +1280,6 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	pl	Do góry
 total	common	pl	Ogółem
 total: %1 successful: %2 failed: %3 skipped: %4	common	pl	Total: %1 Successful: %2 Failed: %3 Skipped: %4
-transparant bg for the icons?	common	pl	Przezroczyste tło dla ikon?
 tree	common	pl	Drzewo
 trinidad and tobago	common	pl	TRINIDAD I TOBAGO
 tuesday	common	pl	Wtorek
@@ -1258,7 +1290,7 @@ turks and caicos islands	common	pl	TURKS AND CAICOS ISLANDS
 tuvalu	common	pl	TUVALU
 type	common	pl	Typ
 type of the column	common	pl	Typ kolumny
-type of the field (select label if field should be empty)	common	pl	Typ pola (wybierz Etykieta jeśli pole powinno być puste)
+type of the field (select label if field should be empty)	common	pl	Typ pola (wybierz Etykieta jeśli pole powinno być puste).
 uganda	common	pl	UGANDA
 ukraine	common	pl	UKRAINA
 un-delete	common	pl	Przywróć
@@ -1276,15 +1308,14 @@ united states minor outlying islands	common	pl	UNITED STATES MINOR OUTLYING ISLA
 unknown	common	pl	Nieznany
 unlink	common	pl	Odłącz
 update	common	pl	Aktualizuj
-update a single entry by passing the fields.	common	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
+update a single entry by passing the fields.	common	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól
 update from version '%s' to	common	pl	Uaktualnij z wersji '%s' do
-update the clock per minute or per second	common	pl	Uaktualniać zegar co minutę czy co sekundę?
 updating your account with new data from your identity provider failed!	common	pl	Aktualizacja konta nowymi danymi od dostawcy tożsamości nie powiodła się!
 upload	common	pl	Załaduj
 upload directory does not exist, or is not writeable by webserver	common	pl	Katalog ładowania plików nie istnieje lub serwer WWW nie ma do niego praw zapisu.
 upload file(s) from filemanager...	common	pl	Prześlij plik(i) z Menedżera plików ...
 upload new photo	common	pl	Prześlij nowe zdjęcie
-upload requires the directory to be writable by the webserver!	common	pl	Ładowanie plików wymaga, aby katalog mógł być zapisywany przez serwer WWW
+upload requires the directory to be writable by the webserver!	common	pl	Ładowanie plików wymaga, aby katalog mógł być zapisywany przez serwer WWW!
 url	common	pl	Adres URL
 url of current record	common	pl	Adres URL bieżącego rekordu
 urls of any entries linked to the current record, excluding attached files	common	pl	Adresy URL wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
@@ -1308,7 +1339,6 @@ vanuatu	common	pl	VANUATU
 vbox	common	pl	VBox
 venezuela	common	pl	WENEZUELA
 version	common	pl	Wersja
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	pl	Numer wersji, powinien być w formie: główna.pomniejsza.rewizja.numer (np. 0.9.13.001, wszystkie numery powinny być wypełnione zerami)
 vertical alignment of row	common	pl	Pionowe porządkowanie wiersza
 viet nam	common	pl	WIETNAM
 view	common	pl	Przeglądaj
@@ -1318,6 +1348,7 @@ view this linked entry in its application	common	pl	Wyświetl powiązany wpis w 
 virgin islands, british	common	pl	BRYTYJSKIE WYSPY DZIEWICZE
 virgin islands, u.s.	common	pl	AMERYKAŃSKIE WYSPY DZIEWICZE
 wallis and futuna	common	pl	WALLIS AND FUTUNA
+was not able to delete the backup key because %1	common	pl	Nie można usunąć klucza kopii zapasowej, ponieważ %1
 wednesday	common	pl	Środa
 weekend	common	pl	Weekend
 welcome	common	pl	Strona główna
@@ -1326,7 +1357,7 @@ western sahara	common	pl	SAHARA ZACHODNIA
 what color should all the blank space on the desktop have	common	pl	Jaki powinien być kolor wszelkich wolnych przestrzeni w obszarze roboczym?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
-where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware?
+where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware.
 which groups	common	pl	Które grupy
 whole query	common	pl	Całe zapytanie
 widget copied into clipboard	common	pl	Obiekt skopiowano do schowka
@@ -1338,7 +1369,7 @@ width, disabled	common	pl	Szerokość, Wyłączono
 wk	common	pl	Tydź.
 work email	common	pl	Email służbowy
 working days	common	pl	Dni robocze
-would you like to display the page generation time at the bottom of every window?	common	pl	Czy chcesz aby wyświetlany był czas generowania każdej strony na dole okna?
+would you like to display the page generation time at the bottom of every window?	common	pl	Czy chcesz aby wyświetlany był czas generowania każdej strony na dole okna
 write <app>/setup/tables_current.inc.php	common	pl	Zapisz <aplikacja>/setup/tables_current.inc.php
 write langfile	common	pl	Zapisz plik języka
 write tables	common	pl	Zapisz tabele
@@ -1353,29 +1384,28 @@ yes	common	pl	Tak
 yes - delete	common	pl	Tak - Usuń
 yes - delete including sub-entries	common	pl	Tak - Usuń wraz z podrzędnymi
 you are required to change your password during your first login	common	pl	Po pierwszym zalogowaniu się musisz zmienić swoje hasło
-you can customize how many icons and toolbars the editor shows.	common	pl	Możesz spersonalizować liczbę ikon i pasków narzędzi pokazywanych przez edytor.
 you can not choose more then %1 item(s)!	common	pl	Nie można wybrać więcej niż %1 pozycji!
-you can respond by visiting:	common	pl	Możesz odpowiedzieć odwiedzając stronę:
-you have been successfully logged out	login	pl	Zostałeś pomyślnie wylogowany
+you can respond by visiting:	common	pl	Możesz odpowiedzieć odwiedzając stronę
+you have been successfully logged out	login	pl	Zostałeś pomyślnie wylogowany.
 you have not entered a title	common	pl	Nie wprowadziłeś tytułu
-you have not entered a valid date	common	pl	Nie wprowadziłeś właściwej daty
-you have not entered a valid time of day	common	pl	Nie wprowadziłeś właściwego czasu dnia
-you have not entered participants	common	pl	Nie wprowadziłeś uczestników
-you have selected an invalid date	common	pl	Wybrałeś nieprawidłową datę
-you have selected an invalid main category	common	pl	Wybrałeś niewłaściwą kategorię główną
-you have successfully logged out	common	pl	Wylogowałes/aś się pomyślnie
+you have not entered a valid date	common	pl	Nie wprowadziłeś właściwej daty.
+you have not entered a valid time of day	common	pl	Nie wprowadziłeś właściwego czasu dnia.
+you have not entered participants	common	pl	Nie wprowadziłeś uczestników.
+you have selected an invalid date	common	pl	Wybrałeś nieprawidłową datę!
+you have selected an invalid main category	common	pl	Wybrałeś niewłaściwą kategorię główną!
+you have successfully logged out	common	pl	Wylogowałes/aś się pomyślnie.
 you may drag files out to your desktop	common	pl	Pliki można przeciągać na pulpit
 you need to %1set your timezone preference%2.	common	pl	Musisz ustawić %1strefę czasową%2.
 you need to add the webserver user '%1' to the group '%2'.	common	pl	Musisz dodać użytkownika '%1' do grupy '%2'.
-you need to be an egroupware administrator to access this functionality!	common	pl	Tylko administrator eGroupWaze ma dostęp do tej funkcji!
+you need to be an egroupware administrator to access this functionality!	common	pl	Tylko administrator EGroupware ma dostęp do tej funkcji!
 you need to select a file first!	common	pl	Musisz najpierw wybrać plik!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji!
 your account has been updated with new data from your identity provider.	common	pl	Twoje konto zostało zaktualizowane o nowe dane od dostawcy tożsamości.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pl	Twoja przeglądarka nie jest aktualna (zgodna z JavaScript ES6), niektóre funkcje mogą nie działać.
 your code is incorrect !!!	common	pl	Kod jest nieprawidłowy!
 your key has been restored successfully.	common	pl	Klucz został pomyślnie przywrócony.
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!<br>
-your message has been sent	common	pl	Wiadomość została wysłana
+your message has been sent	common	pl	Wiadomość została wysłana.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	pl	Twoje hasło nie ma wymaganej siły klas znaków %1 i minimalnej długości %2 znaków.
 your password does not have required strength:	common	pl	Twoje hasło nie ma wymaganej siły:
 your password failed the following criteria:	common	pl	Twoje hasło nie spełniło następujących kryteriów:
@@ -1384,7 +1414,7 @@ your password might not match the password policy.	common	pl	Twoje hasło może 
 your search returned %1 matchs	common	pl	Wyszukiwanie zwróciło %1 trafień
 your search returned 1 match	common	pl	Wyszukiwanie zwróciło 1 trafienie
 your session timed out, please log in again	login	pl	Twoja sesja zakończyła się, zaloguj się ponownie.
-your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
+your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione.
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE
 zoom	common	pl	Powiększenie

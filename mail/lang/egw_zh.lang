@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	zh	%1 需要 Sieve 扩展名 %2，也许可以尝试 %1 或更高的天数。
 (leave empty for no quota)	mail	zh	(留空表示没有配额)
 (no subject)	mail	zh	(无主题)
 acl rights retrieve failed, seems there are no rights set!	mail	zh	ACL 权限检索失败，似乎未设置任何权限！
@@ -54,6 +55,7 @@ default toolbar actions shown in mail's html editor	mail	zh	写邮件时在HTML�
 default value for remembering s/mime passphrase in minutes	mail	zh	记忆S/MIME口令的默认值为分钟
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	zh	定义在写邮件时，在收件人/副本/盲文中添加的联系人标签显示什么。缺省值是firstname lastname，空意味着包括所有可用的东西。
 delete folder	mail	zh	删除邮件夹
+delete selected folders	mail	zh	删除选定文件夹
 deleted	mail	zh	已删除
 disable	mail	zh	禁用
 disable caching of flags	mail	zh	禁用标志的缓存
@@ -87,6 +89,7 @@ event details follow	mail	zh	事件细节
 every %1. day	mail	zh	每 %1.
 everyone	mail	zh	所有人
 examine namespace to retrieve folders in others and shared	mail	zh	检查命名空间以检索他人和共享文件夹
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	zh	将大于给定大小的附件排除在自动保存为草稿的范围之外（以 MB 为单位）
 extended	mail	zh	扩展
 failed to subscribe folder %1!	mail	zh	订阅文件夹 %1 失败！
 failed to unsubscribe folder %1!	mail	zh	取消订阅文件夹 %1 失败！
@@ -277,7 +280,7 @@ show notification for new arriving mails	mail	zh	显示新到邮件通知
 show test connection section and control the level of info displayed?	mail	zh	显示测试连接部分并控制显示信息的级别？
 show test connection section and control the level of info displayed??	mail	zh	显示测试连接部分并控制显示信息的级别？
 show them this time only	mail	zh	仅在此时显示
-show vertical	mail	zh	垂直显示
+show vertical	mail	zh	垂直显示（三栏视图）
 show vertical with all columns	mail	zh	垂直显示所有列
 show/hide preview pane in mail list view	mail	zh	在邮件列表视图中显示/隐藏预览窗格
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	zh	显示临时可见通知，包括发件人地址、主题和邮件片段
@@ -328,6 +331,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	zh	您需要输入 S/MIME 密码才能发送此邮件。
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	zh	您需要安装 Mailvelope 插件，该插件可从 %1 安装到 Chrome 浏览器和 Firefox 浏览器。
 you need to save the message as draft first before to be able to save it into vfs	mail	zh	您需要先将邮件保存为草稿，然后才能将其保存到 VFS 中。
+you need to select some folders first (by clicking on them)!	mail	zh	您需要先选择一些文件夹（点击它们）！
 you will loose current message body, unless you save it to your clipboard!	mail	zh	您将丢失当前邮件正文，除非将其保存到剪贴板！
 you've got new mail	mail	zh	您有新邮件
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	zh	您的剩余配额 %1 太低，您可能无法继续发送/接收电子邮件。<br>虽然清理垃圾邮件或垃圾文件夹中的电子邮件可能会帮您恢复一些可用空间。<br>如果这还无济于事，请向管理员申请更多配额。

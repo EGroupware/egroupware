@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	tr	%1 için %2 Sieve uzantısı gerekiyor, belki %1 veya daha yüksek gün sayısını deneyebilirsiniz.
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
 acl rights retrieve failed, seems there are no rights set!	mail	tr	ACL hakları geri alma başarısız oldu, ayarlanmış hak yok gibi görünüyor!
 add all my aliases	mail	tr	Tüm takma adlarımı ekle
@@ -13,7 +14,7 @@ always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıc
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
 attach files	mail	tr	Dosya ekleme
-attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin
+attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin.
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
 attachments, ...	mail	tr	ekler, ...
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	tr	Seçilen tüm dosyaları %1 modu olarak eklediğinizde, listedeki mevcut tüm ekleri de %2 moduna değiştireceğinizi unutmayın.<br>Devam etmek ister misiniz?
@@ -34,7 +35,8 @@ current subject	mail	tr	Güncel konu
 default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
 default value for remembering s/mime passphrase in minutes	mail	tr	Dakika cinsinden S/MIME parolasını hatırlamak için varsayılan değer
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	tr	Bir e-posta oluştururken Kime/Kopyala/Görüntülü kopya içine eklenen kişi için kişi etiketi olarak neyin gösterileceğini tanımlar. Varsayılan ad soyaddır ve boş, mevcut olan her şeyi dahil et anlamına gelir.
-defines what to show as identity label on mail folder header	common	tr	Posta klasörü başlığında kimlik etiketi olarak neyin gösterileceğini tanımlar
+defines what to show as identity label on mail folder header	common	tr	Posta klasörü başlığında kimlik etiketi olarak neyin gösterileceğini tanımlar.
+delete selected folders	mail	tr	Seçili klasörleri sil
 deleted	mail	tr	Silindi
 disable	mail	tr	Engelle
 disable caching of flags	mail	tr	Bayrakların önbelleğe alınmasını devre dışı bırak
@@ -53,6 +55,7 @@ event details follow	mail	tr	Etkinlik Detayları Ektedir
 every %1. day	mail	tr	Her %1. günde
 everyone	mail	tr	Herkes
 examine namespace to retrieve folders in others and shared	mail	tr	Diğer ve paylaşılan klasörleri almak için ad alanını inceleyin
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	tr	Belirli boyuttan büyük ekleri otomatik taslak olarak kaydetme dışında tut (MB cinsinden)
 extended	mail	tr	Genişletilmiş
 failed to delete %1	mail	tr	%1 silinemedi
 failed to subscribe folder %1!	mail	tr	Klasör %1'e abone olunamadı!
@@ -100,7 +103,7 @@ learning as ham (not spam) failed because of %1	mail	tr	Ham (spam değil) olarak
 learning as spam failed because of %1	mail	tr	Spam olarak öğrenme %1 nedeniyle başarısız oldu
 less than	mail	tr	daha az
 limit mailing list results when searching for addresses	mail	tr	Adres ararken posta listesi sonuçlarını sınırlayın
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	tr	Varsayılan olarak açılacak/etkinleştirilecek eylemlerin listesi (örn. Mail compose olarak kaydet InfoLog eylemi)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	tr	Varsayılan olarak açılacak/etkinleştirilecek eylemlerin listesi (örn. Mail compose olarak kaydet InfoLog eylemi).
 mail	common	tr	Posta
 mail acl	mail	tr	Erişim hakları
 mail filter	mail	tr	Posta filtresi
@@ -215,10 +218,10 @@ show notification for new arriving mails	mail	tr	Yeni gelen postalar için bildi
 show test connection section and control the level of info displayed?	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi düzeyini kontrol edin?
 show test connection section and control the level of info displayed??	mail	tr	Test bağlantısı bölümünü gösterin ve görüntülenen bilgi seviyesini kontrol edin?
 show them this time only	mail	tr	Sadece bu sefer göster
-show vertical	mail	tr	Dikey göster
+show vertical	mail	tr	Dikey göster (3 sütunlu görünüm)
 show vertical with all columns	mail	tr	Tüm sütunlarla birlikte dikey göster
-show/hide preview pane in mail list view	mail	tr	Posta listesi görünümünde önizleme bölmesini gösterme/gizleme
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	tr	Kimden adresi, konu ve e-posta parçacığını içeren geçici bir görünür bildirim gösterir
+show/hide preview pane in mail list view	mail	tr	Posta listesi görünümünde önizleme bölmesini gösterme/gizleme.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	tr	Kimden adresi, konu ve e-posta parçacığını içeren geçici bir görünür bildirim gösterir.
 sign your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile imzalayın
 signature	mail	tr	İmza
 signature at top	mail	tr	üstteki imza
@@ -256,6 +259,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	tr	Bu mesajı göndermek için S/MIME parolanızı girmeniz gerekir.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	tr	Chrome ve Firefox için mevcut olan Mailvelope eklentisini %1'den yüklemeniz gerekir.
 you need to save the message as draft first before to be able to save it into vfs	mail	tr	Mesajı VFS'ye kaydedebilmek için önce taslak olarak kaydetmeniz gerekir
+you need to select some folders first (by clicking on them)!	mail	tr	Önce bazı klasörleri seçmeniz gerekir (üzerlerine tıklayarak)!
 you will loose current message body, unless you save it to your clipboard!	mail	tr	Panoya kaydetmediğiniz sürece mevcut mesaj gövdesini kaybedeceksiniz!
 you've got new mail	mail	tr	Yeni e-posta aldınız
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	tr	Kalan %1 kotanız çok düşük, daha fazla e-posta gönderip alamayabilirsiniz.<br>Çöp kutusundaki veya önemsiz klasördeki e-postaları temizlemek biraz boş alan kazanmanıza yardımcı olabilir.<br>Bu işe yaramadıysa, lütfen yöneticinizden daha fazla kota isteyin.

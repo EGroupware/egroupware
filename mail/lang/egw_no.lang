@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	no	%1 krever Sieve-utvidelsen %2, prøv kanskje %1 eller et høyere antall dager.
 (no subject)	mail	no	(uten emne)
 acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
 add as new	mail	no	Legg til som ny
@@ -37,6 +38,7 @@ date(newest first)	mail	no	Dato (nyeste først)
 date(oldest first)	mail	no	Dato (eldste først)
 default sorting order	mail	no	Standard sortering
 delete folder	mail	no	Slett Mappe
+delete selected folders	mail	no	Slett valgte mapper
 deleted	mail	no	slettet
 disable	mail	no	Deaktiver
 discard message	mail	no	Forkast melding
@@ -56,14 +58,15 @@ email address	mail	no	E-postadresse
 emailaddress	admin	no	E-postadresse
 emailadmin: profilemanagement	mail	no	eMailAdmin: Profiladministrasjon
 emails in whitelisted domains are not marked as spam	mail	no	E-poster i hvitelistede domener blir ikke merket som spam
-empty trash	mail	no	tøm søppelkurv
+empty trash	mail	no	Tøm søppelkurv
 enable	mail	no	Aktivere
 enabled	mail	no	Aktivert
 encrypt your message with smime certificate	mail	no	Krypter meldingen din med S/MIME-sertifikat
-event details follow	mail	no	Hendelses Detaljer Følger
+event details follow	mail	no	Hendelsesdetaljer følger
 every %1. day	mail	no	Hver %1. dag
 everyone	mail	no	Alle
 examine namespace to retrieve folders in others and shared	mail	no	Undersøke navnerom for å hente mapper i andre og delte mapper
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	no	Ekskluder vedlegg som er større enn en gitt størrelse fra automatisk lagring som utkast (i MB)
 extended	mail	no	Forlenget
 failed to delete %1	mail	no	Kunne ikke slette %1
 failed to subscribe folder %1!	mail	no	Kunne ikke abonnere på mappen %1!
@@ -78,7 +81,7 @@ flagged %1 messages as flagged in %2	mail	no	Flagget %1 melding(er) som flagget 
 flagged %1 messages as unflagged in %2	mail	no	Flagget %1-melding(er) som ikke flagget i %2
 folder	mail	no	Mappe
 folder %1 %2 failed because of %3!	mail	no	Mappen %1 %2 mislyktes på grunn av %3!
-folder %1 has been created successfully, although the subscription failed because of %2	mail	no	Mappen %1 er opprettet, selv om abonnementet mislyktes på grunn av %2.
+folder %1 has been created successfully, although the subscription failed because of %2	mail	no	Mappen %1 er opprettet, selv om abonnementet mislyktes på grunn av %2
 folder settings	mail	no	Mappeinnstillinger
 forward	mail	no	Videresend
 from	mail	no	Fra
@@ -91,6 +94,7 @@ ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header lines	mail	no	Hodelinjer
 html	mail	no	HTML
+html mode	mail	no	HTML-modus
 ident name	mail	no	Identnavn
 ident name email	mail	no	Identnavn [E-post]
 ident name organization email	mail	no	Identnavn Organisasjon [E-post]
@@ -112,7 +116,7 @@ inbox	mail	no	Innboks
 information to show on email tag	mail	no	Informasjon som skal vises på e-posttaggen
 initialization of mail failed. please use the wizard to cope with the problem.	mail	no	Initialiseringen av e-postmodulen mislyktes. Bruk konfigurasjonsveiviseren for å korrigere konfigurasjonen.
 inline	mail	no	Videresend
-insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	no	Sett inn signaturen øverst i den nye meldingen (eller svarmeldingen) når du åpner skrivedialogen (det er ikke sikkert du kan bytte signatur).
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	no	Sett inn signaturen øverst i den nye meldingen (eller svarmeldingen) når du åpner skrivedialogen (det er ikke sikkert du kan bytte signatur)
 job	mail	no	Arbeid
 junk	mail	no	Søppelpost
 junk folder	mail	no	søppelpost mappe
@@ -126,7 +130,7 @@ limit mailing list results when searching for addresses	mail	no	Begrense postlis
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	no	Liste over handlinger som skal slås på/aktiveres som standard (f.eks. handlingen Mail composer lagre som InfoLog).
 mail settings	mail	no	Epost innstillinger
 mails can be copied to that folder via context menu, if folder is configured.	mail	no	E-postmeldinger kan kopieres til denne mappen via kontekstmenyen hvis mappen er konfigurert.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:\n%1 \nVil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?\nHvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:<br><br>%1<br><br>Vil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?<br>Hvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
 mark as deleted	mail	no	Merk som slettet
 matches	mail	no	treff
 matches regexp	mail	no	treffer regexp
@@ -187,7 +191,7 @@ reply all	mail	no	Svar alle
 reply to	mail	no	Svar til
 replyto	mail	no	SvarTil
 report as spam	mail	no	Rapporter som søppelpost
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som Ham (ikke spam) - spam-løsninger som spamTitan vil lære av dette.
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som Ham (ikke spam) - spam-løsninger som spamTitan vil lære av dette
 report this email content as spam - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som søppelpost - spamløsninger som spamTitan vil lære seg det
 required pear class mail/mimedecode.php not found.	mail	no	Påkrevd PEAR-klasse Mail/mimeDecode.php ikke funnet.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	no	Påkrevd å deaktivere hvis du bruker Dovecot med private seen-flagg på delt mappe eller brukermappe!
@@ -208,15 +212,15 @@ send message and move to send folder (if configured)	mail	no	Send melding og fly
 send message pgp encrypted: requires keys from all recipients!	mail	no	Send meldingen PGP-kryptert: krever nøkler fra alle mottakere!
 sent folder	mail	no	Sendt Mappe
 server supports special-use folders	mail	no	Serveren støtter mapper for spesialbruk
-should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	no	Skal signaturen settes inn etter (standard) eller før et svar eller videresending, og skal signaturen være synlig og kunne endres under skriving?
+should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	no	Skal signaturen settes inn etter (standard) eller før et svar eller videresending, og skal signaturen være synlig og kunne endres under skriving.
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	no	Vis alle mapper (abonnerte OG ikke-abonnerte) i hovedskjermens mapperute.
 show notification for new arriving mails	mail	no	Vis varsel for nye innkommende e-poster
 show test connection section and control the level of info displayed?	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
 show test connection section and control the level of info displayed??	mail	no	Vis testtilkoblingsdelen og kontroller nivået på informasjonen som vises?
 show them this time only	mail	no	Vis dem bare denne gangen
-show vertical	mail	no	Vis vertikalt
+show vertical	mail	no	Vis vertikalt (3-kolonnevisning)
 show vertical with all columns	mail	no	Vis vertikalt med alle kolonner
-show/hide preview pane in mail list view	mail	no	Vis/skjul forhåndsvisningsrute i postlistevisningen
+show/hide preview pane in mail list view	mail	no	Vis/skjul forhåndsvisningsrute i postlistevisningen.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	no	Viser et midlertidig synlig varsel med avsenderadresse, emne og et utdrag av e-posten.
 sign your message with smime certificate	mail	no	Signer meldingen med S/MIME-sertifikat
 signature	mail	no	Signatur
@@ -256,6 +260,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	no	Norėdami išsiųsti šią žinutę, turite įvesti savo S/MIME slaptažodį.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	no	Jums reikia įdiegti "Mailvelope" įskiepį, kurį "Chrome" ir "Firefox" galima įsigyti iš %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	no	Kad galėtumėte išsaugoti pranešimą kaip juodraštį, pirmiausia turite jį išsaugoti VFS
+you need to select some folders first (by clicking on them)!	mail	no	Du må velge noen mapper først (ved å klikke på dem)!
 you will loose current message body, unless you save it to your clipboard!	mail	no	Prarasite esamą žinutės tekstą, nebent išsaugosite jį iškarpinėje!
 you've got new mail	mail	no	Du har fått ny e-post
-your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	no	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.\n Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.\n Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.
+your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	no	Jūsų likusi kvota %1 yra per maža, galite nebegalėti siųsti / gauti daugiau laiškų.<br>Nors išvalę laiškus iš šiukšlių ar nepageidaujamų laiškų aplanko galite atgauti šiek tiek laisvos vietos.<br>Jei tai nepadėjo, paprašykite administratoriaus suteikti daugiau kvotos.

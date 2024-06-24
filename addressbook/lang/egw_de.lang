@@ -43,7 +43,6 @@ added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
 added to distribution list	addressbook	de	hinzugefügt zum Verteiler
 additional information about using ldap as contact repository	admin	de	Zusätzliche Information über die Nutzung von LDAP zum Speichern der Kontakte
 address book	common	de	Adressbuch
-address book - vcard in	addressbook	de	Adressbuch - vCard in
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adresszeile 2
 address line 2 (private)	addressbook	de	Adresszeile 2 (Privat)
@@ -287,7 +286,7 @@ h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
 hide all accounts	addressbook	de	Zeigt keine Benutzer an
 hide all groups	addressbook	de	Alle Gruppen ausblenden
-hide groups without email address	addressbook	de	Gruppen ohne EMail Adresse ausblenden
+hide groups without email address	addressbook	de	Gruppen ohne E-Mail Adresse ausblenden
 hide user groups as distribution lists	addressbook	de	Benutzergruppen als Verteiler ausblenden
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
 history logging	admin	de	Verfolgung der Änderungen
@@ -549,7 +548,7 @@ vcards require a last name entry.	addressbook	de	vCards benötigen einen Nachnam
 verification	addressbook	de	Verifikation
 video call	addressbook	de	Video-Anruf
 view linked infolog entries	addressbook	de	Verknüpfte InfoLog-Einträge anzeigen
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!

@@ -1,6 +1,6 @@
 %1 entries %2, %3 failed.	infolog	ko	%1 항목 %2, %3이(가) 실패했습니다.
 %1 records imported	infolog	ko	%1 개의 레코드를 가져왔습니다
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요).
 (and children) deleted	infolog	ko	(및 하위) 항목이 삭제되었습니다.
 a short subject for the entry	infolog	ko	이 엔트리의 짧은 제목
 abort without deleting	infolog	ko	삭제없이 취소
@@ -14,6 +14,7 @@ add a new phonecall	infolog	ko	새 통화기록 추가
 add a new sub-task, -note, -call to this entry	infolog	ko	이 엔트리의 하위작업 추가
 add a new todo	infolog	ko	새 할일 추가
 add file	infolog	ko	파일 추가
+add or delete links	infolog	ko	링크 추가 또는 삭제
 add sub	infolog	ko	하위 추가
 add timesheet entry	infolog	ko	타임시트 엔트리에 추가
 add:	infolog	ko	추가:
@@ -26,6 +27,7 @@ allow to save entries with due date in the past	infolog	ko	과거에 마감일�
 always show them	infolog	ko	항상 표시
 application mail expected but got: %1	infolog	ko	신청 이메일이 예상되었으나 받지 못했습니다: %1
 apply the changes	infolog	ko	변경사항 적용
+archived too	infolog	ko	보관됨
 are you shure you want to delete this entry ?	infolog	ko	정말로 이 엔트리를 삭제하시겠습니까?
 attach a file	infolog	ko	파일 첨부
 attach file	infolog	ko	파일 첨부
@@ -41,11 +43,13 @@ category	infolog	ko	카테고리
 change	infolog	ko	변경
 change responsible	infolog	ko	담당자 변경
 change the status of an entry, eg. close it	infolog	ko	엔트리의 상태를 변경 (예: 만료)
+changed completion to %1%	infolog	ko	완료를 %1%로 변경했습니다.
+changed status to %1	infolog	ko	상태를 %1로 변경했습니다.
 check to set startday	infolog	ko	시작일 설정을 확인
 click here to create the link	infolog	ko	새 링크를 생성하려면 클릭하세요
 click here to start the search	infolog	ko	검색을 시작하려면 클릭하세요
 close	infolog	ko	만료
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	ko	값이 비어 있거나 합산할 때 사용할 콜론(:)으로 구분된 필드 이름 목록입니다.
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	ko	값이 비어 있거나 합산할 때 사용할 콜론(:)으로 구분된 필드 이름 목록입니다
 comment	infolog	ko	커멘트
 completed	infolog	ko	완료됨
 configuration	infolog	ko	설정
@@ -119,6 +123,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	ko
 edit status	infolog	ko	상태 수정
 edit the entry	infolog	ko	엔트리 수정
 edit this entry	infolog	ko	이 엔트리 수정
+editable fields for status 'archived'	admin	ko	'보관됨' 상태의 편집 가능한 필드
 empty for all	infolog	ko	모두 비우기
 encrypt description	infolog	ko	설명 암호화
 end	infolog	ko	종료
@@ -129,6 +134,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	k
 enter a textual description of the log-entry	infolog	ko	인포로그 항목의 텍스트 설명을 입력합니다.
 enter the query pattern	infolog	ko	질의 패턴 입력
 entry and all files	infolog	ko	항목 및 모든 파일
+entry can not be changed anymore, after status is set	admin	ko	상태가 설정된 후에는 항목을 더 이상 변경할 수 없습니다.
+entry can not be changed by anybody, but egroupware admins	admin	ko	이 항목은 이그룹웨어 관리자 외에는 누구도 변경할 수 없습니다.
 error: importing the ical	infolog	ko	오류: ical 불러오기 오류
 error: no mail (mailbox / uid) given!	infolog	ko	오류: 메일(사서함/UID)이 지정되지 않았습니다!
 error: saving the entry	infolog	ko	오류: 엔트리 저장
@@ -160,6 +167,7 @@ general fields:	infolog	ko	일반 필드입니다:
 general settings	infolog	ko	일반 설정
 global categories	infolog	ko	전역 카테고리
 group owner for	infolog	ko	그룹 소유자
+handling of status 'archived'	admin	ko	'보관됨' 상태의 처리
 high	infolog	ko	높음
 history	infolog	ko	내역
 history logging	infolog	ko	히스토리 로깅
@@ -249,6 +257,7 @@ no details	infolog	ko	내용제외
 no entries found, try again ...	infolog	ko	항목이 없습니다. 다시해주세요
 no filter	infolog	ko	필터없음
 no links or attachments	infolog	ko	링크 혹은 첨부 없음
+no special handling	admin	ko	특별한 처리 없음
 none	infolog	ko	없음
 normal	infolog	ko	일반
 not	infolog	ko	아니(not)
@@ -325,8 +334,6 @@ select a priority for this task	infolog	ko	이 엔트리의 중요도를 선택�
 select a project	infolog	ko	프로젝트를 선택하세요
 select a responsible user: a person you want to delegate this task	infolog	ko	응답자를 선택하세요 (이업무를 위임할 사람)
 select a typ to edit it's status-values or delete it	infolog	ko	유형을 선택하여 상태 값을 편집하거나 삭제합니다.
-select an action	infolog	ko	작업 선택
-select an action...	infolog	ko	작업 선택...
 select new category	infolog	ko	새 카테고리 선택
 select to filter by owner	infolog	ko	소유자에 따른 정렬
 select to filter by responsible	infolog	ko	응답에 따른 정렬
@@ -377,7 +384,7 @@ todo	infolog	ko	할일
 typ	infolog	ko	형식
 typ '%1' already exists !!!	infolog	ko	%1 형식은 이미 있습니다.
 type	infolog	ko	형식
-type ...	infolog	ko	형식 ..
+type ...	infolog	ko	형식 ...
 type of field	infolog	ko	필드 유형
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	ko	사용자 지정 필드 "%1"로 %3에 연결할 수 없습니다: "%4". %2가 일치합니다.
 unknown type: %1	infolog	ko	알 수 없는 유형: %1

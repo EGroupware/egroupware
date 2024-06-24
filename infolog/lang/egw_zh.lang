@@ -58,6 +58,8 @@ always show them	infolog	zh	始终显示
 application mail expected but got: %1	infolog	zh	预期会收到申请电子邮件，但却收到了： %1
 apply the changes	infolog	zh	应用修改
 archive	infolog	zh	存档
+archived too	infolog	zh	存档
+are you shure you want to close this entry ?	infolog	zh	您确定要关闭此条目吗？
 are you shure you want to delete this entry ?	infolog	zh	确定要删除该事项吗?
 attach a file	infolog	zh	添加文件
 attach file	infolog	zh	添加关联文件
@@ -152,6 +154,7 @@ edit or create categories for ingolog	infolog	zh	编辑或创建记事薄的类�
 edit status	infolog	zh	编辑状态
 edit the entry	infolog	zh	编辑该事项
 edit this entry	infolog	zh	编辑该事项
+editable fields for status 'archived'	admin	zh	存档 "状态下的可编辑字段
 empty for all	infolog	zh	全部清空
 encrypt description	infolog	zh	加密描述
 end	infolog	zh	结束
@@ -162,8 +165,10 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	z
 enter a textual description of the log-entry	infolog	zh	输入该事项的具体内容
 enter the query pattern	infolog	zh	输入查询模式
 entry and all files	infolog	zh	条目及所有文件
+entry can not be changed anymore, after status is set	admin	zh	状态设置后不能再更改条目
+entry can not be changed by anybody, but egroupware admins	admin	zh	除 EGroupware 管理员外，任何人都不能更改条目
 error: importing the ical	infolog	zh	错误：导入 iCal
-error: no mail (mailbox / uid) given!	infolog	zh	错误：未提供邮件（邮箱/UID）！
+error: no mail (mailbox / uid) given!	infolog	zh	错误：未提供邮件（邮箱/UID) ！
 error: saving the entry	infolog	zh	保存条目出错！
 error: the entry has been updated since you opened it for editing!	infolog	zh	错误：条目自从您打开编辑以来已经更新！
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	zh	示例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 搜索字段 "n_prefix "中的 "Mr"，如果找到，则写 "Hello Mr."，否则写 "Hello Ms."。
@@ -193,6 +198,7 @@ general fields:	infolog	zh	通用字段：
 general settings	infolog	zh	常规设置
 global categories	infolog	zh	全局类别
 group owner for	infolog	zh	组所有者为
+handling of status 'archived'	admin	zh	存档 '状态的处理'
 high	infolog	zh	高
 history	infolog	zh	历史记录
 history logging	infolog	zh	历史记录
@@ -276,11 +282,13 @@ new name	infolog	zh	新名称
 new search	infolog	zh	重新搜索
 no - cancel	infolog	zh	否
 no custom field "%1" for %2.	infolog	zh	%2 没有自定义字段"%1"。
+no describtion, links or attachments	infolog	zh	无说明、链接或附件
 no details	infolog	zh	没有细节
 no entries found, try again ...	infolog	zh	未发现条目, 再次尝试 ...
 no filter	infolog	zh	所有事项
 no links or attachments	infolog	zh	不显示任何关联
 no project	infolog	zh	无项目
+no special handling	admin	zh	无特殊处理
 nonactive	infolog	zh	未激活
 none	infolog	zh	无
 normal	infolog	zh	普通
@@ -293,6 +301,8 @@ number of records to read (%1)	infolog	zh	待读取记录数(%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	zh	文本框或多选框的高度
 offer	infolog	zh	等待回应
 old fixed definition	infolog	zh	旧的固定定义
+one day after	infolog	zh	一天后
+one day in advance	infolog	zh	提前一天
 ongoing	infolog	zh	正在进行
 only show them if there is a filter	infolog	zh	仅在有过滤器时显示
 only show them while searching	infolog	zh	仅在搜索时显示

@@ -31,9 +31,12 @@ all available info	admin	pt-br	todas as informações disponíveis
 all messages in the folder will be lost	mail	pt-br	Todas as mensagens da pasta serão perdidas
 all of	mail	pt-br	Todos
 allow external images	mail	pt-br	Permitir imagens externas
+allow external images from listed domains	mail	pt-br	Permitir imagens externas de domínios listados
 allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allow images from listed domains in html emails	mail	pt-br	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt-br	Permitir aos usuários criar novas identidades
 allways a new window	mail	pt-br	Sempre uma nova janela
+always allow external sources from %1	mail	pt-br	Sempre permitir fontes externas de %1
 always respond / auto-responder	mail	pt-br	Sempre responder / resposta automática
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
 always show notifiction	mail	pt-br	Mostrar sempre notificação
@@ -41,17 +44,20 @@ answered	mail	pt-br	Respondeu
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
 append	mail	pt-br	anexar
+are you sure you want to delete all selected folders?	mail	pt-br	Tem certeza de que deseja excluir todas as pastas selecionadas?
+are you sure you want to move folder %1 to folder %2?	mail	pt-br	Tem certeza de que deseja mover a pasta %1 para a pasta %2?
 attach files	mail	pt-br	Anexar arquivos
-attach users vcard at compose to every new mail	mail	pt-br	Anexar usuários VCard a compor a cada novo e-mail
+attach users vcard at compose to every new mail	mail	pt-br	Anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt-br	Anexar vCard
 attachment	mail	pt-br	Acessório
 attachment has been saved successfully.	mail	pt-br	O anexo foi salvo com sucesso.
 attachments	mail	pt-br	Anexos
 attachments, ...	mail	pt-br	anexos, ...
 authentication	mail	pt-br	Autenticação
-available personal email-accounts/profiles	mail	pt-br	EMail-Accounts/Profiles pessoais disponíveis
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt-br	Esteja ciente de que, ao adicionar todos os arquivos selecionados no modo %1, ele também alterará todos os anexos existentes na lista para o modo %2. \n \n Deseja prosseguir?
+available personal email-accounts/profiles	mail	pt-br	E-mail-Accounts/Profiles pessoais disponíveis
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	pt-br	Esteja ciente de que, ao adicionar todos os arquivos selecionados no modo %1, ele também alterará todos os anexos existentes na lista para o modo %2.<br>Deseja prosseguir?
 be aware that all attachments will be sent as %1!	mail	pt-br	Esteja ciente de que todos os anexos serão enviados como %1!
+before reply, visible during compose	mail	pt-br	Antes da resposta, visível durante a composição
 but check shared folders	mail	pt-br	mas verifique as pastas compartilhadas
 by date	mail	pt-br	Por data
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	pt-br	Por padrão, "http://" é simplesmente substituído por "https://". Sinta-se à vontade para configurar "https://proxy.egroupware.org/" para também carregar imagens disponíveis somente via http.
@@ -62,12 +68,15 @@ certificate details	mail	pt-br	Detalhes do certificado
 certificate in text	mail	pt-br	Certificado em texto
 certificate info for email %1	mail	pt-br	Informações do certificado para o e-mail %1
 certificate issued by	mail	pt-br	Certificado emitido por
+change editor type	mail	pt-br	Alternar o editor para o modo HTML
 changed profile	mail	pt-br	perfil alterado
 changing subject failed because of %1	mail	pt-br	Falha na alteração do assunto devido a %1
 changing subject failed folder %1 does not exist	mail	pt-br	Falha ao alterar o assunto: a pasta %1 não existe
 check message against next rule also	mail	pt-br	Verifique mensagem contra seguinte regra também
+check to save as calendar event on send	mail	pt-br	Marcar o botão para criar como evento após o envio
 check to save as infolog on send	mail	pt-br	Verificar para salvar como infolog em enviar
 check to save as tracker entry on send	mail	pt-br	Verificar para salvar como trackerentry em enviar
+choose file	mail	pt-br	Selecionar arquivo
 common acl	mail	pt-br	ACL comum
 compose	mail	pt-br	Compor
 compose as new	mail	pt-br	Compor como novo
@@ -75,6 +84,7 @@ compress folder	mail	pt-br	Compactar pasta
 condition	mail	pt-br	Condição
 configuration settings	mail	pt-br	As definições de configuração
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pt-br	Os valores configurados serão definidos automaticamente no diálogo de composição para o respeitado campo ao compor um novo e-mail.
+confirm	mail	pt-br	Confirmar
 confirm attach message	mail	pt-br	Confirme anexar mensagem
 confirm move to folder	mail	pt-br	Confirme Mover para pasta
 connect to profile %1	mail	pt-br	Conecte-se ao Perfil 1%
@@ -82,11 +92,13 @@ connection status	mail	pt-br	Status da conexão
 contact label	mail	pt-br	Etiqueta de contato
 contains	mail	pt-br	contém
 contains(*)	mail	pt-br	Contém (*)
-copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem (s) de% 2 a 3%
+convert only mail to item (ignore possible attachments)	mail	pt-br	Converter somente o e-mail em item (ignorar possíveis anexos)
+copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem(s) de %2 a 3%
 copy to	mail	pt-br	Copiar para
 could not append message:	mail	pt-br	Não foi possível anexar Mensagem:
 create new account	mail	pt-br	Criar nova conta
 cross account forward attachment is not allowed!	mail	pt-br	Não é permitido o envio de contas cruzadas!
+current folder	mail	pt-br	pasta atual
 current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
 date(newest first)	mail	pt-br	Data (mais novas primeiro)
@@ -97,12 +109,14 @@ default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilit
 default value for remembering s/mime passphrase in minutes	mail	pt-br	Valor padrão para lembrar a senha S/MIME em minutos
 default your name and email	common	pt-br	Padrão o seu nome e e-mail
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pt-br	Define o que mostrar como etiqueta de contato para contato adicional na cópia To/Copy/Blind ao compor um e-mail. O padrão é primeiro nome e meios vazios incluem todos os meios disponíveis.
-defines what to show as identity label on mail folder header	common	pt-br	Define o que deve ser mostrado como etiqueta de identidade no cabeçalho da pasta de correio
+defines what to show as identity label on mail folder header	common	pt-br	Define o que deve ser mostrado como etiqueta de identidade no cabeçalho da pasta de correio.
 delete folder	mail	pt-br	Excluir pasta
-delete folder %1 ?	mail	pt-br	Apagar pasta% 1?
+delete folder %1 ?	mail	pt-br	Apagar pasta %1?
+delete selected folders	mail	pt-br	Excluir pastas selecionadas
 deleted	mail	pt-br	removido
-deleted %1 messages in %2	mail	pt-br	apagado %1 mensagens em 2%
-deleted!	mail	pt-br	apagado
+deleted %1 messages in %2	mail	pt-br	apagado %1 mensagens em 2%.
+deleted!	mail	pt-br	apagado!
+deleting folders	mail	pt-br	Exclusão de pastas
 deny certain groups access to following features	mail	pt-br	Negar o acesso a certos grupos as seguintes características
 disable	mail	pt-br	Incapacitar
 disable caching of flags	mail	pt-br	Desativar o cache de bandeiras
@@ -110,13 +124,19 @@ disabled!	mail	pt-br	disabled!
 discard	mail	pt-br	descartar
 discard message	mail	pt-br	Descarte mensagem
 display messages in multiple windows	mail	pt-br	Exibir mensagens em múltiplas janelas
-display of html emails	mail	pt-br	Exibir emails em HTML
+display of html emails	mail	pt-br	Exibir e-mails em HTML
 display of identities	admin	pt-br	exibição de identidades
 display only when no plain text is available	mail	pt-br	Exibir somente quando não possuir versão em texto plano disponível
 displaying html messages is disabled	mail	pt-br	a exibição de mensagens HTML está desativada
 displaying plain messages is disabled	mail	pt-br	exibição de mensagens simples é desativado
 do not auto create folders	mail	pt-br	Não auto criar pastas
-do you really want to delete folder %1 ?	mail	pt-br	Você realmente quer apagar a pasta% 1?
+do not forward	mail	pt-br	Não encaminhar
+do you really want to apply %1 to all messages in the current view?	mail	pt-br	Você realmente deseja aplicar %1 a TODAS as mensagens na visualização atual?
+do you really want to delete folder %1 ?	mail	pt-br	Você realmente quer apagar a pasta %1?
+do you really want to delete this rule	mail	pt-br	Você realmente deseja EXCLUIR essa regra?
+do you really want to mark all messages as read in the current folder?	mail	pt-br	Você realmente deseja marcar TODAS as mensagens como lidas na pasta atual?
+do you really want to remove all labels from all messages in the current folder?	mail	pt-br	Você realmente deseja remover TODOS os rótulos de TODAS as mensagens da pasta atual?
+do you really want to remove all rights from this account?	mail	pt-br	Você realmente deseja remover todos os direitos dessa conta?
 do you really want to toggle flag %1 for all messages in the current view?	mail	pt-br	Você realmente deseja alternar o sinalizador %1 para TODAS as mensagens na visualização atual?
 do you really want to toggle label %1 for all messages in the current view?	mail	pt-br	Você realmente deseja alternar o rótulo %1 para TODAS as mensagens na visualização atual?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	pt-br	Deseja que seja solicitada uma confirmação antes de anexar as mensagens selecionadas ao novo e-mail?
@@ -139,20 +159,22 @@ edit account ...	mail	pt-br	Editar conta ...
 edit folder acl	mail	pt-br	Pasta Editar ACL
 edit folder acl ...	mail	pt-br	Pasta Editar ACL
 edit vacation settings	mail	pt-br	Editar configurações de férias
-effective only if server supports acl at all	admin	pt-br	efetiva apenas se o servidor suporta ACL em tudo
+effective only if server supports acl at all	admin	pt-br	Efetiva apenas se o servidor suporta ACL em tudo
 email address	mail	pt-br	Endereço de e-mail
-email notification successfully updated!	mail	pt-br	notificação de email atualizado com sucesso!
-email notification update failed	mail	pt-br	Atualização do email de notificação falhou
+email notification successfully updated!	mail	pt-br	Notificação de e-mail atualizado com sucesso!
+email notification update failed	mail	pt-br	Atualização do e-mail de notificação falhou
 emailaddress	admin	pt-br	Endereço de e-mail
-emailadmin: profilemanagement	mail	pt-br	EmailAdmin: Profile Management
+emailadmin: profilemanagement	mail	pt-br	E-mailAdmin: Profile Management
 emails in whitelisted domains are not marked as spam	mail	pt-br	Os e-mails em domínios da lista branca não são marcados como spam
+empty junk	mail	pt-br	Esvaziar pasta de lixo eletrônico
 empty trash	mail	pt-br	Esvaziar Lixeira
+empty trash and junk	mail	pt-br	Esvaziar lixeira e lixo eletrônico
 enable	mail	pt-br	Ativar
 enabled	mail	pt-br	Ativado
 enabled!	mail	pt-br	permitir
 encrypt your message with smime certificate	mail	pt-br	Criptografar sua mensagem com o certificado S/MIME
 enter the name for the new folder:	mail	pt-br	Digite o nome para a nova pasta:
-error saving %1!	mail	pt-br	Economizando% 1 Error!
+error saving %1!	mail	pt-br	Economizando %1 Error!
 error:	mail	pt-br	Erro:
 error: could not save acl	mail	pt-br	Erro: Não foi possível salvar ACL
 error: could not save message as draft	mail	pt-br	Erro: Não foi possível salvar a mensagem como Rascunho
@@ -162,15 +184,17 @@ event details follow	mail	pt-br	Seguem detalhes do evento
 every %1. day	mail	pt-br	A cada %1. dia
 everyone	mail	pt-br	Todos
 examine namespace to retrieve folders in others and shared	mail	pt-br	Examinar o namespace para recuperar pastas em outros e compartilhadas
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	pt-br	Excluir anexos maiores que o tamanho determinado do salvamento automático como rascunho (em MB)
 extended	mail	pt-br	Extendido
-failed to delete %1	mail	pt-br	A pasta %1 foi criada com êxito, embora a assinatura tenha falhado por causa de %2
+failed to delete %1	mail	pt-br	Falha ao excluir %1
 failed to subscribe folder %1!	mail	pt-br	Falha ao assinar a pasta %1!
 failed to unsubscribe folder %1!	mail	pt-br	Falha ao cancelar a assinatura da pasta %1!
 file into	mail	pt-br	Mover para
 file into:	mail	pt-br	Mover para:
-file rejected, no %2. is:%1	mail	pt-br	Arquivo rejeitado, sem% 2. É: 1%
+file rejected, no %2. is:%1	mail	pt-br	Arquivo rejeitado, sem %2. É: %1
 filemanager	mail	pt-br	Gerenciador de Arquivos
 filemode has been switched to %1	mail	pt-br	O modo de arquivo foi alterado para: %1
+files	mail	pt-br	Arquivos
 flag / unflag	mail	pt-br	Sinalizar / desmarcar
 flagged	mail	pt-br	sinalizado
 flagged %1 messages as %2 in %3	mail	pt-br	Mensagem(s) %1 sinalizada(s) como %2 em %3
@@ -180,6 +204,8 @@ folder	mail	pt-br	Pasta
 folder %1 %2 failed because of %3!	mail	pt-br	A pasta %1 %2 falhou por causa de %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	pt-br	A pasta %1 foi criada com êxito, embora a assinatura tenha falhado por causa de %2
 folder settings	mail	pt-br	Configurações da Pasta
+force html	mail	pt-br	Forçar HTML
+force plain text	mail	pt-br	Forçar texto
 forward	mail	pt-br	Encaminhar
 forward as attachment	mail	pt-br	Encaminhar como anexo
 forward inline	mail	pt-br	Encaminhar no corpo da mensagem
@@ -190,11 +216,13 @@ from(z->a)	mail	pt-br	de (Z->A)
 general	admin	pt-br	Geral
 general settings	mail	pt-br	Definições gerais
 get acl rights failed from imap server!	mail	pt-br	Falha na obtenção de direitos de ACL do servidor IMAP!
-greater than	mail	pt-br	maior que
+greater than	mail	pt-br	Maior que
 ham folder	mail	pt-br	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt-br	Manuseio de imagens externas/conteúdo misto em e-mails
 header lines	mail	pt-br	Linhas de Cabeçalho
+high	mail	pt-br	Alto
 hostname or ip	mail	pt-br	Nome do host ou IP
+how often to check with the server for new mail	mail	pt-br	Com que frequência verificar se há novos e-mails no servidor
 how to forward messages	mail	pt-br	Como encaminhar mensagens
 html	mail	pt-br	HTML
 html mode	mail	pt-br	Modo HTML
@@ -204,7 +232,7 @@ ident name organization email	mail	pt-br	Nome do usuário Nome do usuário Organ
 identity	mail	pt-br	Identificar
 identity label	mail	pt-br	Etiqueta de identidade
 if	mail	pt-br	SE
-if different from email address	mail	pt-br	Se for diferente do endereço de email
+if different from email address	mail	pt-br	Se for diferente do endereço de e-mail
 if mail header	mail	pt-br	Se cabeçalho de e-mail
 if message size	mail	pt-br	Se tamanho da mensagem
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt-br	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
@@ -239,17 +267,17 @@ mail	common	pt-br	Correio
 mail acl	mail	pt-br	Direitos de acesso
 mail filter	mail	pt-br	Filtro de correio
 mail filter rule	mail	pt-br	Regra do filtro de correio
-mail settings	mail	pt-br	Configurações de E-Mail
+mail settings	mail	pt-br	Configurações de e-Mail
 mail source	mail	pt-br	Fonte do correio
 mail-address	mail	pt-br	Endereço de correio
 mailaccount	mail	pt-br	Conta de correio
 mailinglist	mail	pt-br	Lista de correio
 mails	common	pt-br	Correios
 mails can be copied to that folder via context menu, if folder is configured.	mail	pt-br	Os e-mails podem ser copiados para essa pasta por meio do menu de contexto, se a pasta estiver configurada.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt-br	Mailserver reported:<br>%1<br>Deseja prosseguir com a exclusão imediata das mensagens selecionadas (clique em ok)?\nSe não, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	pt-br	Mailserver reported:<br><br>%1<br><br>Deseja prosseguir com a exclusão imediata das mensagens selecionadas (clique em ok)?<br>Se não, tente esvaziar a pasta de lixo antes de continuar. (clique em cancelar)
 mark all as read	mail	pt-br	Marcar tudo como lido
 mark all messages in folder as read	mail	pt-br	Marcar todas as mensagens em pasta como lidas
-mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
+mark as deleted	mail	pt-br	Marcar como excluído
 matches	mail	pt-br	coincidentes
 matches regexp	mail	pt-br	coincidentes com a expressão
 message learned as spam and moved to spam folder	mail	pt-br	Mensagem identificada como spam e movida para a pasta de spam
@@ -297,6 +325,7 @@ organization | real name email	mail	pt-br	Organização | Nome real [E-mail]
 original message	mail	pt-br	Mensagem original
 outbox	mail	pt-br	Caixa de saída
 permission denied	mail	pt-br	Permissão negada
+please configure access to an existing individual imap account.	mail	pt-br	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt-br	Configure seu certificado S/MIME na guia Encryption (Criptografia) localizada na caixa de diálogo Edit Account (Editar conta).
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt-br	Entre em contato com o administrador para validar se o servidor suporta regras de filtragem no servidor e como ativá-las no EGroupware para sua conta ativa (%1) com ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt-br	Entre em contato com o administrador para validar se o servidor oferece suporte a mensagens de férias no servidor e como ativá-las no EGroupware para sua conta ativa (%1) com ID: %2.
@@ -306,6 +335,7 @@ please select the number of days to wait between responses	mail	pt-br	Por favor,
 please supply the message to send with auto-responses	mail	pt-br	Por favor, informe a mensagem para enviar como auto-resposta.
 post	mail	pt-br	enviar
 predefined addresses for compose	mail	pt-br	Endereços pré-definidos para composição
+prevent managing filters	mail	pt-br	Impedir o gerenciamento de filtros
 preview pane	mail	pt-br	Layout da janela
 printing	mail	pt-br	Impressão
 printview	mail	pt-br	Visualização da impressão
@@ -314,14 +344,16 @@ provide a default vacation text, (used on new vacation messages when there was n
 push notifications	mail	pt-br	Notificações push
 quicksearch	mail	pt-br	Pesquia rápida
 quicksearch (with cc)	mail	pt-br	Pesquisa rápida (+Cópia)
+read / unread	mail	pt-br	Ler / Não lido
 real name	mail	pt-br	Nome real
-real name email	mail	pt-br	Nome real [Email]
-real name organization email	mail	pt-br	Nome real Organização [Email]
+real name email	mail	pt-br	Nome real [e-mail]
+real name organization email	mail	pt-br	Nome real Organização [e-mail]
 refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
 reject with	mail	pt-br	rejeitar com
 remember the password for	mail	pt-br	Lembrar a senha de
 remove all	mail	pt-br	Remover tudo
 remove immediately	mail	pt-br	Remover imediatamente
+removed folder %1	mail	pt-br	Pasta removida %1
 removing %1 from blacklisted email addresses failed because of %2	mail	pt-br	A remoção de %1 dos endereços de e-mail na lista negra falhou devido a %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	pt-br	A remoção de %1 dos endereços de e-mail da lista negra falhou devido a %2
 rename folder	mail	pt-br	Renomear pasta
@@ -352,9 +384,10 @@ saving of message %1 succeeded. check folder %2.	mail	pt-br	O salvamento da mens
 saving the rule failed:	mail	pt-br	Falha ao salvar a regra:
 security	mail	pt-br	Segurança
 see attachments for content of the orignial mail	mail	pt-br	Ver anexos para o conteúdo do e-mail original
+select all	mail	pt-br	Selecionar tudo
 select an existing entry in order to append mail content to it	mail	pt-br	Selecionar uma entrada existente para anexar o conteúdo do e-mail a ela
 select an item to read	mail	pt-br	Selecione um item para ler
-select file(s) from vfs	mail	pt-br	Selecione o arquivo (s) a partir de VFS
+select file(s) from vfs	mail	pt-br	Selecione o arquivo(s) a partir de VFS
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)
@@ -367,16 +400,18 @@ set / remove labels	mail	pt-br	Ajustar / Remover Etiquetas
 set flags	mail	pt-br	Bandeiras de bandeira
 set predefined values for compose...	mail	pt-br	Definir valores pré-definidos para compor ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pt-br	A assinatura deve ser inserida após (padrão) ou antes de uma resposta ou encaminhamento, e a assinatura deve ser visível e alterável durante a composição.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt-br	Mostrar todas as pastas (inscritas e não inscritas) no painel de pastas da tela principal
+show all attachments	mail	pt-br	Mostrar todos os anexos
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pt-br	Mostrar todas as pastas (inscritas e não inscritas) no painel de pastas da tela principal.
 show notification for new arriving mails	mail	pt-br	Mostrar notificação para novos e-mails recebidos
 show test connection section and control the level of info displayed?	mail	pt-br	Mostrar a seção de teste de conexão e controlar o nível de informações exibidas?
 show test connection section and control the level of info displayed??	mail	pt-br	Mostrar a seção de teste de conexão e controlar o nível de informações exibidas?
 show them this time only	mail	pt-br	Mostrar somente neste momento
-show vertical	mail	pt-br	Mostrar vertical
+show vertical	mail	pt-br	Mostrar vertical (visualização em 3 colunas)
 show vertical with all columns	mail	pt-br	Mostrar vertical com todas as colunas
 show/hide preview pane in mail list view	mail	pt-br	Mostrar/ocultar painel de visualização na exibição da lista de correio
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pt-br	Mostra uma notificação visível temporária que inclui o endereço de origem, o assunto e um trecho do e-mail
-sieve script name	mail	pt-br	Nome do script sieve
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pt-br	Mostra uma notificação visível temporária que inclui o endereço de origem, o assunto e um trecho do e-mail.
+sieve	mail	pt-br	Sieve
+sieve script name	mail	pt-br	Nome do script Sieve
 sign your message with smime certificate	mail	pt-br	Assine sua mensagem com o certificado S/MIME
 signature	mail	pt-br	Assinatura
 signature at top	mail	pt-br	assinatura no topo
@@ -390,18 +425,21 @@ smime signed message	mail	pt-br	Mensagem assinada S/MIME
 smtp	mail	pt-br	SMTP
 sneak preview in list	mail	pt-br	Pré-visualização da mensagem
 sort order	mail	pt-br	Ordem de classificação
-start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas mensagens com mime type plain/text ou html ?
+spamtitan api url	mail	pt-br	SpamTitan API URL
+start new messages with mime type plain/text or html?	mail	pt-br	Iniciar novas mensagens com mime type plain/text ou HTML?
 subject(a->z)	mail	pt-br	Assunto (A->Z)
 subject(z->a)	mail	pt-br	Assunto (Z->A)
 template folder	mail	pt-br	Pasta Modelos
 templates	mail	pt-br	Modelos
 text	mail	pt-br	Texto
+text mode	mail	pt-br	Modo de texto
 text/plain	mail	pt-br	Texto
 the imap server need to meet certain requirements and be configured for it:	mail	pt-br	O servidor IMAP precisa atender a determinados requisitos E ser configurado para isso:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt-br	O remetente da mensagem solicitou uma resposta para indicar que você a leu. Gostaria de enviá-la?
 the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
 the rule with priority %1 successfully saved!	mail	pt-br	A regra com prioridade %1 foi salva com sucesso!
 then	mail	pt-br	ENTÃO
+there is no imap server configured.	mail	pt-br	Não há nenhum servidor IMAP configurado.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pt-br	Não há mais espaço para armazenar o script do Sieve. Verifique a opção sieve_maxscriptsize na configuração do seu servidor de e-mail.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pt-br	Esse e-mail contém imagens externas servidas por meio de um protocolo HTTP inseguro. Lembre-se de que exibi-las ou permiti-las pode comprometer sua segurança!
 this message is smime encrypted and password protected.	mail	pt-br	Esta mensagem é criptografada por S/MIME e protegida por senha.
@@ -422,6 +460,7 @@ write	mail	pt-br	Gravar
 wrote	mail	pt-br	escreveu
 yes, only trigger connection reset	mail	pt-br	sim, apenas aciona a redefinição da conexão
 yes, show all debug information available for the user	mail	pt-br	sim, mostrar todas as informações de depuração disponíveis para o usuário
+yes, show basic info only	mail	pt-br	Sim, mostrar apenas informações básicas
 you can either choose to save as infolog or tracker, not both.	mail	pt-br	Você pode optar por salvar como InfoLog OU rastreador, mas não como ambos.
 you can select what info to be displayed on email tag	mail	pt-br	Você pode selecionar as informações a serem exibidas na tag de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt-br	Você pode usar $$start$$ para a data de início acima e $$end$$ para a data de término.
@@ -429,6 +468,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	pt-br	Você precisa inserir sua frase secreta S/MIME para enviar essa mensagem.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	pt-br	Você precisa instalar o plug-in Mailvelope disponível para Chrome e Firefox em %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	pt-br	Você precisa salvar a mensagem como rascunho antes de poder salvá-la no VFS
+you need to select some folders first (by clicking on them)!	mail	pt-br	Você precisa selecionar algumas pastas primeiro (clicando nelas)!
 you will loose current message body, unless you save it to your clipboard!	mail	pt-br	Você perderá o corpo da mensagem atual, a menos que o salve na área de transferência!
 you've got new mail	mail	pt-br	Você tem um novo e-mail
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pt-br	Sua cota restante %1 está muito baixa, talvez você não consiga enviar/receber mais e-mails.<br>Embora a limpeza de e-mails na lixeira ou na pasta de lixo eletrônico possa ajudá-lo a recuperar algum espaço livre.<br>Se isso não ajudar, peça mais cota ao administrador.

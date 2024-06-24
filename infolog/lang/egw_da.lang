@@ -2,12 +2,12 @@
 %1 deleted	infolog	da	%1 slettet.
 %1 deleted by %2 at %3	infolog	da	%1 slettet af %2 kl. %3
 %1 entries %2	infolog	da	%1 poster %2
-%1 entries %2, %3 failed because of insufficent rights !!!	infolog	da	%1 poster %2, %3 mislykkedes på grund af utilstrækkelige rettigheder !!!
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	da	%1 poster %2, %3 mislykkedes på grund af utilstrækkelige rettigheder!
 %1 entries %2, %3 failed.	infolog	da	%1 poster %2, %3 mislykkedes.
 %1 modified	infolog	da	%1 ændret
 %1 modified by %2 at %3	infolog	da	%1 ændret af %2 kl. %3
-%1 records imported	infolog	da	%1 posteringer importeret
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	da	%1 posteringer læst (ikke implementeret endnu, du skal gå tilbage og fravælge Test Import)
+%1 records imported	infolog	da	%1 posteringer importeret.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	da	%1 posteringer læst (ikke implementeret endnu, du skal gå tilbage og fravælge Test Import).
 %1 you are responsible for is due at %2	infolog	da	%1, du er ansvarlig for, forfalder kl. %2
 %1 you are responsible for is starting at %2	infolog	da	%1 du er ansvarlig for starter ved %2
 %1 you delegated is due at %2	infolog	da	%1 du har uddelegeret forfalder kl. %2
@@ -31,7 +31,9 @@ a short subject for the entry	infolog	da	Et kort emne for indtastningen
 abort without deleting	infolog	da	Afbryd uden sletning
 accept	infolog	da	Accepter
 action	infolog	da	Handling
+actual date and time	infolog	da	Faktisk dato og klokkeslæt
 add	infolog	da	Tilføj
+add / remove link	infolog	da	Tilføj/fjern link
 add a file	infolog	da	Tilføj en fil
 add a new entry	infolog	da	Tilføj et nyt felt
 add a new note	infolog	da	Tilføj en ny Note
@@ -39,18 +41,24 @@ add a new phonecall	infolog	da	Tilføj en ny Telefon besked
 add a new sub-task, -note, -call to this entry	infolog	da	Tilføj en ny under-opgave, -note, telefon besked til dette felt
 add a new todo	infolog	da	Tilføj en ny Opgave
 add file	infolog	da	Tilføj fil
+add or delete links	infolog	da	Tilføj eller slet links
 add sub	infolog	da	Tilføj Underkategori
+add timesheet entry	infolog	da	Tilføj indtastning af timeseddel
 add:	infolog	da	Tilføj:
 added	infolog	da	Tilføjet
 addressbook placeholders available	infolog	da	Pladsholdere i adressebogen er tilgængelige
 all	infolog	da	Alle
 all links and attachments	infolog	da	Alle links og vedhæftet filer
 all other %1 fields are valid	infolog	da	Alle andre %1-felter er gyldige
+all projects	infolog	da	Alle projekter
 allow to save entries with due date in the past	infolog	da	Tillad at gemme poster med forfaldsdato i fortiden
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	da	Tillader at sætte status på en indtastning, f.eks. sætte en opgave til forbi hvis den er færdig (værdierne afhænger af typen)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	da	Tillader at sætte status på en indtastning, f.eks. sætte en opgave til forbi hvis den er færdig (værdierne afhænger af typen).
+alternatives	infolog	da	Alternativer
 always show them	infolog	da	Vis dem altid
 application mail expected but got: %1	infolog	da	Ansøgnings-e-mail forventet, men modtaget: %1
 apply the changes	infolog	da	Godkend ændringer
+archived too	infolog	da	Også arkiveret
+are you shure you want to close this entry ?	infolog	da	Er du sikker på, at du vil lukke denne post?
 are you shure you want to delete this entry ?	infolog	da	Er du sikker på at du vil slette felt?
 attach a file	infolog	da	Vedhæft en fil
 attach file	infolog	da	Vedhæft fil
@@ -65,6 +73,8 @@ cancel	infolog	da	Annuller
 categories	infolog	da	Kategorier
 category	infolog	da	Kategori
 change	infolog	da	Ændring
+change completed	infolog	da	Ændring gennemført.
+change owner when updating	infolog	da	Skift ejer ved opdatering
 change responsible	infolog	da	Ansvarlig for ændring
 change the status of an entry, eg. close it	infolog	da	Ændre statusen for en indtastning, f.eks. Luk den.
 check to set startday	infolog	da	Vælg for at sætte startdatoen
@@ -72,14 +82,17 @@ click here to create the link	infolog	da	Klik her for at oprette linket
 click here to start the search	infolog	da	Klik her for at starte søgningen
 close	infolog	da	Luk
 close all	infolog	da	Luk alle
+close this entry and all listed sub-entries	infolog	da	Luk denne post og alle anførte underposter
+closed	infolog	da	Lukket.
 comment	infolog	da	Kommentar
+completed	infolog	da	Afsluttet
 configuration	infolog	da	Konfiguration
 confirm	infolog	da	Bekræft
 contact	infolog	da	Kontakt
 contact cf	infolog	da	Kontakt CF
 convert to a ticket	infolog	da	Konverter til en billet
 copy of:	infolog	da	Kopi fra:
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	da	Kopier dine ændringer til 'Udklipsholderen', %1reload indtastning%2 og bland dem
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	da	Kopier dine ændringer til 'Udklipsholderen', %1reload indtastning%2 og bland dem.
 create new links	infolog	da	Opret nyt link
 created	infolog	da	Oprettet
 creates a new field	infolog	da	Opretter et nyt felt
@@ -97,6 +110,7 @@ custom fields	infolog	da	Egne felter
 custom fields, type and status	common	da	Egne felter, type og status
 custom status for typ	infolog	da	Egen status for type
 customfields	infolog	da	Egne felter
+data exchange settings	infolog	da	Indstillinger for dataudveksling
 datecreated	infolog	da	Dato oprettet
 dates, status, access	infolog	da	Datoer, status og adgang
 days	infolog	da	Dage
@@ -111,7 +125,7 @@ delegated overdue	infolog	da	Delegeret forfaldne
 delegated upcomming	infolog	da	Delegeret kommende
 delegation	infolog	da	Overdrag
 delete	infolog	da	Slet
-delete one record by passing its id.	infolog	da	Slet en record ved at angive dets ID
+delete one record by passing its id.	infolog	da	Slet en record ved at angive dets ID.
 delete selected entries?	infolog	da	Slet valgte poster?
 delete this entry and all listed sub-entries	infolog	da	Slet denne indtastning og alle listede under-indtastninger
 deleted	infolog	da	Slettet
@@ -146,6 +160,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	da
 edit status	infolog	da	Redigér status
 edit the entry	infolog	da	Redigér indstasningen
 edit this entry	infolog	da	Redigér denne indstasning
+editable fields for status 'archived'	admin	da	Redigerbare felter for status 'arkiveret'
 empty for all	infolog	da	Tom for alle
 encrypt description	infolog	da	Krypter beskrivelse
 end	infolog	da	Slut
@@ -156,13 +171,15 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	d
 enter a textual description of the log-entry	infolog	da	Skriv en tekst-beskrivelse af InfoLog-indtastningen
 enter the query pattern	infolog	da	Indtast forspørgelses mønster
 entry and all files	infolog	da	Indtastning og alle filer
+entry can not be changed anymore, after status is set	admin	da	Indlæg kan IKKE længere ændres, efter at status er sat
+entry can not be changed by anybody, but egroupware admins	admin	da	Posten kan IKKE ændres af andre end EGroupware-administratorer
 error: importing the ical	infolog	da	Fejl: I at importere iCal'en
 error: no mail (mailbox / uid) given!	infolog	da	Fejl: ingen mail (Mailbox / UID) angivet!
-error: saving the entry	infolog	da	fejl ved: gemme indtastning
-error: the entry has been updated since you opened it for editing!	infolog	da	Fejl: Dette emne er opdateret siden du åbnede det for redigering
+error: saving the entry	infolog	da	fejl ved: gemme indtastning!
+error: the entry has been updated since you opened it for editing!	infolog	da	Fejl: Dette emne er opdateret siden du åbnede det for redigering!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	da	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søg i feltet "n_prefix", efter "Mr", hvis fundet, skriv Hello Mr. ellers skriv Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	da	Eksempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Eksempel: Hr. Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	da	Eksempel {{NELF rolle}} - Hvis feltet role ikke er tomt, får du en ny linje med værdien af feltet role.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	da	Eksempel {{NELF rolle}} - Hvis feltet role ikke er tomt, får du en ny linje med værdien af feltet role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	da	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, sættes en LF uden nogen værdi for feltet
 execute a further action for this entry	infolog	da	Udfør en yderligere handling for denne post
 existing links	infolog	da	Nuværende links
@@ -187,6 +204,7 @@ general fields:	infolog	da	Generelle felter:
 general settings	infolog	da	Generelle indstillinger
 global categories	infolog	da	Globale Kategorier
 group owner for	infolog	da	Gruppeejer for
+handling of status 'archived'	admin	da	Håndtering af status 'arkiveret'
 high	infolog	da	Høj
 history	infolog	da	Historisk
 history logging	infolog	da	Logning af historik
@@ -235,7 +253,7 @@ invalid status for entry type %1.	infolog	da	Ugyldig status for posttype %1.
 label<br>helptext	infolog	da	Label<br>Hjælp tekst
 last changed	infolog	da	Sidst ændret
 last modified	infolog	da	Sidst ændret
-leave blank to get the used time calculated by timesheet entries	infolog	da	Lad det være tomt for at få den brugte tid beregnet ud fra tidsregistreringerne.
+leave blank to get the used time calculated by timesheet entries	infolog	da	Lad det være tomt for at få den brugte tid beregnet ud fra tidsregistreringerne
 leave it empty	infolog	da	Lad det være tomt
 leave it empty for a full week	infolog	da	Lad det være tomt i en hel uge
 leave without saveing the entry	infolog	da	Forlad uden at gemme indtastningen
@@ -261,7 +279,7 @@ manage mapping	infolog	da	Administrer kortlægning
 max length of the input [, length of the inputfield (optional)]	infolog	da	Maks længde af inputtet [længde af input feltet (valg frit)]
 modifier	infolog	da	Modifikator
 modifierer	infolog	da	Modifikator
-name must not be empty !!!	infolog	da	Navn må ikke være tomt!!!
+name must not be empty !!!	infolog	da	Navn må ikke være tomt!
 name of current user, all other contact fields are valid too	infolog	da	Navn på aktuel bruger, alle andre kontaktfelter er også gyldige
 name of new type to create	infolog	da	Navn på den nye type der skal oprettes
 never hide search and filters	infolog	da	Gem aldrig 'Søg' og ' Filtre'
@@ -273,10 +291,11 @@ no - cancel	infolog	da	No - Annullere
 no custom field "%1" for %2.	infolog	da	Intet brugerdefineret felt "%1" for %2.
 no describtion, links or attachments	infolog	da	Ingen beskrivelse, links eller vedhæftelser
 no details	infolog	da	Ingen detaljer
-no entries found, try again ...	infolog	da	ingen resultater fundet, prøv igen....
+no entries found, try again ...	infolog	da	ingen resultater fundet, prøv igen ...
 no filter	infolog	da	Ingen filter
 no links or attachments	infolog	da	Ingen links eller vedhæftet filer
 no project	infolog	da	Intet projekt
+no special handling	admin	da	Ingen særlig håndtering
 nonactive	infolog	da	Ikke aktiv
 none	infolog	da	Ingen
 normal	infolog	da	Normal
@@ -310,7 +329,7 @@ owner, responsible	infolog	da	Ejer, Ansvarlig
 parent	infolog	da	Overstående
 participants for scheduling an appointment	infolog	da	Deltagere til planlægning af en aftale
 path on (web-)serverside<br>eg. /var/samba/share	infolog	da	Sti på (web-)serverens side<br>f.eks. /var/samba/share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	da	Sti til bruger og gruppe filer SKAL VÆRE UDENFOR webserveren document-root!!!
+path to user and group files has to be outside of the webservers document-root!!!	infolog	da	Sti til bruger og gruppe filer SKAL VÆRE UDENFOR webserveren document-root!
 pattern for search in addressbook	infolog	da	Mønster til søgning i adressebog
 pattern for search in projects	infolog	da	Mønster til søgning i projekter
 performance optimization for huge infolog tables	admin	da	Optimering af ydeevne for store InfoLog-tabeller
@@ -322,7 +341,7 @@ planned	infolog	da	Planlagt
 planned time	infolog	da	Planlagt tid
 prefix for sub-entries (default: re:)	infolog	da	Præfiks til underposter (standard: Re:)
 print this infolog	infolog	da	Udskriv denne InfoLog
-printing...	infolog	da	Udskrivning...
+printing...	infolog	da	Udskrivning ...
 priority	infolog	da	Prioritet
 private	infolog	da	Privat
 project	infolog	da	Projekt
@@ -331,6 +350,8 @@ project name	infolog	da	Projektets navn
 re:	infolog	da	SV:
 read one record by passing its id.	infolog	da	Læs en record ved at angive dets ID.
 receive notifications about due entries you are responsible for	infolog	da	Modtag notifikationer om elementer af typen ejet af grupper, du er en del af
+receive notifications about own items	infolog	da	Modtag meddelelser om egne varer
+receive notifications as html-mails	infolog	da	Modtag meddelelser som HTML-e-mails.
 regular expression	infolog	da	Regulært udtryk
 remark	infolog	da	Bemærkning
 remove this link (not the entry itself)	infolog	da	Fjern dette link (ikke opgaven selv)
@@ -344,7 +365,9 @@ responsible open	infolog	da	Ansvarlig - åben
 responsible open and upcoming	infolog	da	Ansvarlig åben og kommende
 responsible overdue	infolog	da	Ansvarlig forfalden
 responsible upcoming	infolog	da	Ansvarlig kommende
-returns a list / search for records.	infolog	da	Viser en liste / Søger efter posteringer
+responsible user, priority	infolog	da	Ansvarlig bruger, prioritet
+returns a list / search for records.	infolog	da	Viser en liste / Søger efter posteringer.
+rights for the responsible	infolog	da	Rettigheder for den ansvarlige
 rows	infolog	da	Rækker
 same day	infolog	da	Samme dag
 save	infolog	da	Gem
@@ -380,8 +403,8 @@ sets the status of this entry to done	infolog	da	Sætter status for denne post t
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	da	Skal InfoLog vise underkategorier, -telefon beskeder eller -noter i det normale vindue eller ikke. Du kan altid vise underkategorierne via deres forældre.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	da	Skal InfoLog vise links til andre programmer og/eller til vedhæftelser i InfoLog listen (Standard view når du er i InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	da	Skal InfoLog vise fulde navne (efternavne og familienavn) eller kun brugernavne.
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	da	Skal InfoLog-listen vise et unikt numerisk ID, som f.eks. kan bruges som billet-ID?
-should this entry only be visible to you and people you grant privat access via the acl	infolog	da	Skal denne opgave kun være tilgængelig for dig og andre du har givet privat adgang til via ACL.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	da	Skal InfoLog-listen vise et unikt numerisk ID, som f.eks. kan bruges som billet-ID.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	da	Skal denne opgave kun være tilgængelig for dig og andre du har givet privat adgang til via ACL
 show a column for used and planned times in the list.	infolog	da	Vis en kolonne for brugt og planlagt tid i listen
 show a x if content equals this compare value, otherwise show nothing	infolog	da	Vis et X, hvis indholdet er lig med denne sammenligningsværdi, ellers vises intet
 show full usernames	infolog	da	Vis fulde brugernavne
@@ -413,8 +436,8 @@ tag to mark positions for address labels	infolog	da	Tag til at markere positione
 task	infolog	da	Opgave
 test import (show importable records <u>only</u> in browser)	infolog	da	Test Import (vis importerede data <u>kun</u> i browseren)
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	da	Dokumentet kan indeholde pladsholdere som {{%1}}, der skal erstattes med data.
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	da	Navn brugt internt (<= 10 tegn), ændring gør eksisterende data utilgængelige
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	da	Navn brugt internt (<= 10 tegn), ændring gør eksisterende data utilgængelige.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige.
 the text displayed to the user	infolog	da	Teksten som vises til brugeren
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	da	Dette er filteret som Opgaver bruger når du starter applikationen. Filteret begrænser hvilke opgaver der vises som standart. Der er filter som viser kun udførte, åbne eller kommende opgaver for dig eller alle andre brugere.
 til when should the todo or phonecall be finished	infolog	da	Hvornår skal opgaven eller telefon kaldet være udført
@@ -426,6 +449,7 @@ typ	infolog	da	Type
 typ '%1' already exists !!!	infolog	da	Type '%1' eksistere allerede
 type	infolog	da	Type
 type ...	infolog	da	Type ...
+type of customfield	infolog	da	Type af brugerdefineret felt
 type of field	infolog	da	Type af felt
 type of the log-entry: note, phonecall or todo	infolog	da	Type på InfoLog-entry : Notat, telefon-kald eller ToDo
 unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	da	Kan ikke linke til %3 via brugerdefineret felt "%1": "%4". %2 matcher.
@@ -435,7 +459,9 @@ unlinked from %1	infolog	da	Ikke linket fra %1
 upcoming	infolog	da	Kommende
 urgency	infolog	da	Prioritet
 urgent	infolog	da	Haster
+use all	infolog	da	Brug alle
 use custom notification message	infolog	da	Brug brugerdefineret meddelelsesbesked
+use field from csv if possible	infolog	da	Brug felt fra CSV, hvis det er muligt
 used time	infolog	da	Brugt tid
 values for selectbox	infolog	da	Værdier for selectboks
 view all subs of this entry	infolog	da	Vis alle underkategorier for denne postering
@@ -449,7 +475,7 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which types should the calendar show	infolog	da	Hvilke typer skal kalenderen vise
 which types should the calendar show like events?	infolog	da	Hvilke typer skal kalenderen vise som begivenheder?
 will-call	infolog	da	Vil ringe
-write (add or update) a record by passing its fields.	infolog	da	Skriv (Tilføj eller opdater) en record ved at tilføje dets felter
+write (add or update) a record by passing its fields.	infolog	da	Skriv (Tilføj eller opdater) en record ved at tilføje dets felter.
 yes - close	infolog	da	Ja - Luk
 yes - close including sub-entries	infolog	da	Ja - Luk inklusive underposter
 yes - delete	infolog	da	Ja - Slet
@@ -459,11 +485,11 @@ yes, only admins can purge deleted items	infolog	da	Ja, kun administratorer kan 
 yes, with larger fontsize	infolog	da	Ja, med større skriftstørrelse
 yes, with purging of deleted items possible	infolog	da	Ja, med mulighed for rensning af slettede elementer
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	da	Du kan vælge en kategori, som skal være forvalgt, når du opretter en ny InfoLog-post.
-you can't delete one of the stock types !!!	infolog	da	Du kan ikke slette en af lagertyperne! ny InfoLog-post.
-you have entered an invalid ending date	infolog	da	Du har indtastet en ugyldig slut dato
-you have entered an invalid starting date	infolog	da	Du har indtastet en ugyldig start dato
+you can't delete one of the stock types !!!	infolog	da	Du kan ikke slette en af lagertyperne! ny InfoLog-post!
+you have entered an invalid ending date	infolog	da	Du har indtastet en ugyldig slut dato!
+you have entered an invalid starting date	infolog	da	Du har indtastet en ugyldig start dato!
 you have to enter a name, to create a new type!	infolog	da	Du skal indtaste et navn for at oprette en ny type!
-you must enter a subject or a description	infolog	da	Du skal indtaste en beskrivelse eller emne
+you must enter a subject or a description	infolog	da	Du skal indtaste en beskrivelse eller emne.
 you need to select an entry for linking.	infolog	da	Du skal vælge en post til sammenkædning.
 you need to select some entries first	infolog	da	Du skal først vælge nogle poster.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	da	Din database er ikke up to date (%1 vs. %2) Kør %3setup%4 for at opdatere database.

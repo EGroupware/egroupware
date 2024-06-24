@@ -1,22 +1,37 @@
+%1 attachments	mail	da	%1 vedhæftede filer
+%1 mails selected	mail	da	%1 e-mails valgt
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	da	%1 kræver Sieve-udvidelsen %2, prøv måske %1 eller et højere antal dage.
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
 acl rights retrieve failed, seems there are no rights set!	mail	da	ACL-rettighedshentning mislykkedes, der er tilsyneladende ikke indstillet nogen rettigheder!
+add a new folder to %1:	mail	da	Tilføj en ny mappe til %1:
 add all my aliases	mail	da	Tilføj alle mine aliasser
 add as new	mail	da	Tilføj som ny
 add files as %1	mail	da	Tilføj filer som %1
+add folder	mail	da	Tilføj mappe
 add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
 add this certificate into contact	mail	da	Tilføj dette certifikat til kontakt
 add to addressbook	mail	da	tilføj til adressebog
+add your domain as "%1" in options to list of email providers and enable api.	mail	da	Tilføj dit domæne som "%1" i indstillinger til listen over e-mailudbydere, og aktiver API.
 adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til sortlistede e-mailadresser mislykkedes på grund af %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
 after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
 aliases+forwards	mail	da	Fremmedord + viderestillinger
+all messages in the folder will be lost	mail	da	Alle beskeder i mappen vil gå tabt.
+allow external images	mail	da	Tillad eksterne billeder
+allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
+allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
+allow images from listed domains in html emails	mail	da	Tillad billeder fra listede domæner i HTML-e-mails.
+always allow external sources from %1	mail	da	Tillad altid eksterne kilder fra %1
 always respond / auto-responder	mail	da	Always respond / auto-responder
 always show html emails	mail	da	Vis altid HTML e-mails
 always show notifiction	mail	da	Vis altid meddelelse
 answered	mail	da	Besvaret
+are you sure you want to delete all selected folders?	mail	da	Er du sikker på, at du vil slette alle valgte mapper?
+are you sure you want to move folder %1 to folder %2?	mail	da	Er du sikker på, at du vil flytte mappe %1 til mappe %2?
 attach files	mail	da	Vedhæft filer
 attach users vcard at compose to every new mail	mail	da	Vedhæft brugerens vCard til hver ny mail ved oprettelse
+attachment	mail	da	Vedhæftet fil
 attachment has been saved successfully.	mail	da	Vedhæftningen er blevet gemt.
 attachments	mail	da	Vedhæftet filer
 attachments, ...	mail	da	vedhæftede filer, ...
@@ -29,27 +44,39 @@ certificate details	mail	da	Detaljer om certifikatet
 certificate in text	mail	da	Certifikat i tekst
 certificate info for email %1	mail	da	Certifikatinfo for e-mail %1
 certificate issued by	mail	da	Certifikat udstedt af
+change editor type	mail	da	Skift editor til HTML-tilstand
 changing subject failed because of %1	mail	da	Ændring af emne mislykkedes på grund af %1
 changing subject failed folder %1 does not exist	mail	da	Ændring af emne mislykkedes mappe %1 findes ikke
+check message against next rule also	mail	da	Tjek også beskeden mod næste regel
+check to save as calendar event on send	mail	da	Marker knappen for at oprette som begivenhed efter afsendelse
+check to save as infolog on send	mail	da	Marker knappen for at oprette som InfoLog efter afsendelse
+check to save as tracker entry on send	mail	da	Marker knappen for at oprette som billet efter afsendelse
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	da	Konfigurerede værdier vil automatisk blive indstillet i dialogboksen for det respekterede felt, når du skriver en ny e-mail.
+connect to profile %1	mail	da	Opret forbindelse til profil %1
 contact label	mail	da	Kontakt-label
 contains	mail	da	indeholder
 copy to	mail	da	Kopier til
 cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
+current subject	mail	da	Nuværende emne
 date(newest first)	mail	da	Dato (nyeste først)
 date(oldest first)	mail	da	Dato (ældste først)
 default sorting order	mail	da	Standart soterings rækkefølge
 default toolbar actions shown in mail's html editor	mail	da	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	da	Standardværdi for hukommelse af S/MIME-passphrase i minutter
+default your name and email	common	da	Standard for dit navn og din e-mail
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	da	Definerer, hvad der skal vises som kontaktmærke for tilføjede kontaktpersoner i Til/Kopiere/Blind kopi, når du udarbejder en e-mail. Standard er fornavn efternavn og tom betyder, at alt tilgængeligt skal medtages.
 delete folder	mail	da	Slet Mappe
+delete selected folders	mail	da	Slet udvalgte mapper
 deleted	mail	da	slettet
+deleting folders	mail	da	Sletning af mapper
 disable	mail	da	Deaktivere
 disable caching of flags	mail	da	Deaktiver caching af flag
 display of html emails	mail	da	Vis HTML i emails
 display only when no plain text is available	mail	da	Vis kun når ren tekst version er tilgængelig
+do you really want to delete folder %1 ?	mail	da	Vil du virkelig slette mappen %1?
+do you really want to delete this rule	mail	da	Vil du virkelig slette denne regel?
 do you really want to toggle flag %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte flag %1 for ALLE beskeder i den aktuelle visning?
 do you really want to toggle label %1 for all messages in the current view?	mail	da	Ønsker du virkelig at skifte etiketten %1 for ALLE beskeder i den aktuelle visning?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	da	Ønsker du at blive bedt om at bekræfte, før du vedhæfter udvalgte beskeder til en ny e-mail?
@@ -75,6 +102,7 @@ event details follow	mail	da	Hændelses detajler følger
 every %1. day	mail	da	Every %1. day
 everyone	mail	da	Enhver
 examine namespace to retrieve folders in others and shared	mail	da	Undersøg navnerummet for at hente mapper i andre og delte mapper
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	da	Udeluk vedhæftede filer, der er større end en given størrelse, fra automatisk at blive gemt som kladde (i MB)
 extended	mail	da	Udvidet
 file into	mail	da	Flyt til
 file into:	mail	da	Flyt til:
@@ -86,7 +114,7 @@ flagged %1 messages as flagged in %2	mail	da	Flaggede %1 besked(er) som flagget 
 flagged %1 messages as unflagged in %2	mail	da	Flagede %1 besked(er) som ikke-flagede i %2
 folder	mail	da	Bibliotek
 folder %1 %2 failed because of %3!	mail	da	Mappen %1 %2 mislykkedes på grund af %3!
-folder %1 has been created successfully, although the subscription failed because of %2	mail	da	Mappen %1 er blevet oprettet, selvom abonnementet mislykkedes på grund af %2.
+folder %1 has been created successfully, although the subscription failed because of %2	mail	da	Mappen %1 er blevet oprettet, selvom abonnementet mislykkedes på grund af %2
 folder settings	mail	da	Mappe indstillinger
 forward	mail	da	Vidersend
 from	mail	da	Fra
@@ -174,7 +202,7 @@ once per day	mail	da	Once per day
 only email	mail	da	Kun e-mail
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	da	Giver kun mening, hvis du transporterer adgangskoden gennem en anden kanal/uden for denne mail til modtageren!
 only name	mail	da	Kun navn
-only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	da	Kun nødvendigt for nogle servere, der ikke returnerer alle mapper på rodniveau-forespørgsler for at hente alle mapper for det niveau.
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	da	Kun nødvendigt for nogle servere, der ikke returnerer alle mapper på rodniveau-forespørgsler for at hente alle mapper for det niveau
 open in html mode	mail	da	Åbn i HTML-tilstand
 open in text mode	mail	da	Åbn i teksttilstand
 open with collabora office	mail	da	Åbn med Collabora Online
@@ -243,15 +271,15 @@ server supports special-use folders	mail	da	Serveren understøtter mapper til s�
 set flags	mail	da	Markér e-mail som
 set predefined values for compose...	mail	da	Indstil foruddefinerede værdier for sammensætning ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	da	Skal signaturen indsættes efter (standard) eller før et svar eller en videresendelse, og skal signaturen være synlig og kunne ændres under udarbejdelsen.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	da	Vis alle mapper (abonnerede OG ikke-abonnerede) i hovedskærmens mapperude.
 show notification for new arriving mails	mail	da	Vis notifikation for nye ankomne mails
 show test connection section and control the level of info displayed?	mail	da	Vis testforbindelsessektion og kontroller niveauet af vist info?
 show test connection section and control the level of info displayed??	mail	da	Vis testforbindelsessektionen, og kontroller niveauet af de viste oplysninger?
 show them this time only	mail	da	Vis dem kun denne gang
 show vertical	mail	da	Vis lodret
 show vertical with all columns	mail	da	Vis lodret med alle kolonner
-show/hide preview pane in mail list view	mail	da	Vis/skjul forhåndsvisningsrude i postlistevisning
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	da	Viser en midlertidig synlig notifikation med afsenderadresse, emne og et uddrag af e-mailen
+show/hide preview pane in mail list view	mail	da	Vis/skjul forhåndsvisningsrude i postlistevisning.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	da	Viser en midlertidig synlig notifikation med afsenderadresse, emne og et uddrag af e-mailen.
 sign your message with smime certificate	mail	da	Signer din besked med S/MIME-certifikat
 signature	mail	da	Signatur
 signature at top	mail	da	signatur øverst
@@ -287,13 +315,15 @@ write	mail	da	Skriv
 wrote	mail	da	skrev
 yes, only trigger connection reset	mail	da	ja, udløser kun nulstilling af forbindelsen
 yes, show all debug information available for the user	mail	da	ja, vis alle tilgængelige debug-informationer for brugeren
+yes, show basic info only	mail	da	ja, vis kun grundlæggende oplysninger
 you can either choose to save as infolog or tracker, not both.	mail	da	Du kan enten vælge at gemme som InfoLog ELLER tracker, ikke begge dele.
 you can select what info to be displayed on email tag	mail	da	Du kan vælge, hvilke oplysninger der skal vises på e-mail-tagget.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	da	Du kan bruge $$start$$ for ovenstående startdato og $$end$$ for slutdatoen.
 you may add this certificate into your contact, if you trust this signature.	mail	da	Du kan tilføje dette certifikat til din kontakt, hvis du stoler på denne signatur.
 you need to enter your s/mime passphrase to send this message.	mail	da	Du skal indtaste din S/MIME-passphrase for at sende denne besked.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	da	Du skal installere Mailvelope-plugin, der er tilgængeligt til Chrome og Firefox fra %1.
-you need to save the message as draft first before to be able to save it into vfs	mail	da	Du skal først gemme beskeden som kladde, før du kan gemme den i VFS.
+you need to save the message as draft first before to be able to save it into vfs	mail	da	Du skal først gemme beskeden som kladde, før du kan gemme den i VFS
+you need to select some folders first (by clicking on them)!	mail	da	You need to select some folders first (by clicking on them)!
 you will loose current message body, unless you save it to your clipboard!	mail	da	Du vil miste den aktuelle meddelelsestekst, medmindre du gemmer den i udklipsholderen!
 you've got new mail	mail	da	Du har fået en ny e-mail
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	da	Din resterende kvote %1 er for lav, du kan muligvis ikke sende/modtage flere e-mails.<br>Selvom oprydning af e-mails i papirkurven eller junk-mappen måske kan hjælpe dig med at få noget ledig plads tilbage.<br>Hvis det ikke hjalp, kan du bede din administrator om mere kvote.

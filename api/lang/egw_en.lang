@@ -172,8 +172,6 @@ australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
 authenticate	common	en	Authenticate
 author	common	en	Author
-autohide sidebox menu's	common	en	Autohide side menu
-autohide sidebox menus	common	en	Autohide side menu
 automatic update check failed, you need to check manually!	common	en	Automatic update check failed, you need to check manually!
 automatically refresh list	common	en	Automatically refresh list
 autosave default category	common	en	Auto-save default category.
@@ -202,7 +200,6 @@ benin	common	en	BENIN
 bermuda	common	en	BERMUDA
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts.
-blue moono theme	common	en	blue moono theme
 blurtext	common	en	blurText
 bold	common	en	Bold
 bolivia	common	en	BOLIVIA
@@ -263,7 +260,7 @@ change owner	common	en	Change Owner
 changed	common	en	Changed
 charset	common	en	Charset
 check all	common	en	Check all
-check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	en	Check for empty values in IF statements.  Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"
+check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	en	Check for empty values in IF statements. Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"
 check if content should only be displayed but not altered (the content is not send back then!)	common	en	Should content be displayed only, but not altered.
 check if field has to be filled by user	common	en	Check if field has to be filled by user
 check installation	common	en	Check installation
@@ -275,7 +272,7 @@ choose a background color	common	en	Choose a background colour
 choose a background color for the icons	common	en	Choose a background colour for the icons
 choose a background image.	common	en	Choose a background image
 choose a background style.	common	en	Choose a background style
-choose a text color for the icons	common	en	Choose a text colou for the icons
+choose a text color for the icons	common	en	Choose a text colour for the icons
 choose file...	common	en	Choose file ...
 choose the category	common	en	Choose the category
 choose the default filename for merged documents.	preferences	en	Choose the default filename for merged documents.
@@ -294,8 +291,6 @@ click here to create the link	common	en	Create link
 click here to resume your egroupware session.	common	en	Click to resume your EGroupware session.
 click here to start the search	common	en	Start the search
 click here to upload the file	common	en	Upload the file
-click or mouse over to show menus	common	en	Click or mouse over to show menus.
-click or mouse over to show menus?	common	en	Click or mouse over to show menus.
 click this image on the navbar: %1	common	en	Click this image on the navbar: %1
 click to open colorpicker	common	en	Click to open colourpicker
 click to order after that criteria	common	en	Order after criteria
@@ -368,7 +363,6 @@ cut	common	en	Cut
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
 dark mode	common	en	Dark mode
-dark moono theme	common	en	dark moono theme
 data type	common	en	Data type
 database error	common	en	Database error
 database error!	common	en	Database error!
@@ -422,7 +416,6 @@ denmark	common	en	DENMARK
 description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
-direction left to right	common	en	Direction left to right
 directory	common	en	Folder
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the web server or is not relative to the document root!
 directory for storing merged documents	preferences	en	Folder for storing merged documents
@@ -505,7 +498,7 @@ end time	common	en	End time
 enter '' for an empty default, nothing mean no default	common	en	Enter '' for an empty default, nothing means no default
 enter a search pattern	common	en	Enter a search pattern
 enter filename to upload and attach, use [browse...] to search for it	common	en	Enter file name to upload and attach, use [Browse ...] to search for it
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
 enter the new version number here (> old_version), empty for no update-file	common	en	Enter new version number, > old_version, empty for no update file
 enter the new version number here (has to be > old_version)	common	en	Enter new version number, has to be > old_version
 enter your file name	common	en	Enter your file name
@@ -544,7 +537,7 @@ everything	common	en	Everything
 exact	common	en	Exact
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for  example
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	en	Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is empty for example
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	en	Example {{nenvlf role}} - if field role is not empty, set a LF without any value of the field
 exchange this row with the one above	common	en	Exchange this row with the one above
@@ -578,7 +571,7 @@ file a file	common	en	File a file
 file contains more than one etemplate, last one is shown !!!	common	en	File contains more than one eTemplate, last one is shown!
 file information	common	en	File information
 file is of wrong type (%1 != %2)!	common	en	File is wrong type (%1 != %2)!
-file too large.  maximum %1	common	en	File too large.  Maximum %1
+file too large.  maximum %1	common	en	File too large. Maximum %1
 file writen	common	en	File written.
 files	common	en	Files
 files without content in physical filesystem will be removed.	admin	en	Files without content in physical filesystem will be removed.
@@ -687,7 +680,6 @@ how many days to sync in the past (default %1)	groupdav	en	How many days to sync
 how many entries should the list show	common	en	How many entries should the list show
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the top navigation bar. Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
 how many rows to print	common	en	How many rows to print
-how to show the general egroupware menu ?	common	en	How to show the general EGroupware menu
 html	common	en	HTML
 html link to the current record	common	en	HTML link to the current record
 html links to any entries linked to the current record, excluding attached files	common	en	HTML links to any entries linked to the current record, excluding attached files
@@ -695,7 +687,6 @@ hungary	common	en	HUNGARY
 iceland	common	en	ICELAND
 id	common	en	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	en	If field is disabled an empty table cell is displayed
-if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	en	If the error persists, contact your administrator for help and ask to check the error-log of the webserver.
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a folder, full VFS path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
@@ -731,7 +722,6 @@ insert column after	common	en	Insert column after
 insert column before	common	en	Insert column before
 insert in %1	common	en	Insert in %1
 insert in document	common	en	Insert in document
-insert in dokument	common	en	Insert in document
 insert new column behind this one	common	en	Insert new column after
 insert new column in front of all	common	en	Insert new column before all
 insert new row after this one	common	en	Insert new row after
@@ -772,7 +762,6 @@ justify center	common	en	Justify center
 justify full	common	en	Justify full
 justify left	common	en	Justify left
 justify right	common	en	Justify right
-kama theme	common	en	kama theme
 kazakstan	common	en	KAZAKSTAN
 kenya	common	en	KENYA
 key	common	en	Key
@@ -822,7 +811,7 @@ linked	common	en	Linked
 linkentry	common	en	Link entry
 linklist	common	en	Link list
 links and attached files	preferences	en	Links and attached files
-links to specified application.  example: {{links/addressbook}}	common	en	Links to specified application.  Example: {{links/addressbook}}
+links to specified application.  example: {{links/addressbook}}	common	en	Links to specified application. Example: {{links/addressbook}}
 linkstring	common	en	Link string
 linkto	common	en	Link to
 list	common	en	List
@@ -865,7 +854,6 @@ marshall islands	common	en	MARSHALL ISLANDS
 martinique	common	en	MARTINIQUE
 mauritania	common	en	MAURITANIA
 mauritius	common	en	MAURITIUS
-max number of icons in navbar	common	en	Max number of icons in navbar
 maximum size for uploads	filemanager	en	Maximum upload size
 may	common	en	May
 maybe	common	en	Maybe
@@ -898,8 +886,6 @@ mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 month	common	en	Month
 montserrat	common	en	MONTSERRAT
-moono color theme	common	en	moono colour theme
-moono theme (default)	common	en	moono theme (default)
 more	common	en	More
 more than 1 match for '%1'	common	en	More than 1 match for '%1'
 more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
@@ -914,7 +900,6 @@ my account	common	en	My Account
 myanmar	common	en	MYANMAR
 name	common	en	Name
 name of other table where column is a key from	common	en	Name of other table where column is a key from
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	en	Name of phpgw template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
 name of table to add	common	en	Name of table to add
 name of the etemplate, should be in form application.function[.subtemplate]	common	en	Name of the eTemplate, should be in form application.function[.subTemplate]
 name of the user, eg. "%1"	common	en	Name of the user, eg. "%1"
@@ -961,7 +946,7 @@ no filters	common	en	No filters
 no history for this record	common	en	No history for this record
 no key for recipient:	common	en	No key for recipient:
 no matches found	common	en	No matches found.
-no response from server: your data is probably not saved	common	en	No response from server: your data is probably NOT saved
+no response from server: your data is probably not saved	common	en	No response from server: your data is probably NOT saved.
 no results match	common	en	No results match
 no rights to export more than %1 entries!	common	en	No rights to export more than %1 entries!
 no row to swap with !!!	common	en	No row to swap with!
@@ -1298,7 +1283,7 @@ setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
 share	common	en	Share
-share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as read-only, but allow uploads.  Uploads are hidden, and only accessible by those with an account
+share as readonly, but allow uploads.  uploads are hidden, and only accessable by those with an account	common	en	Share as read-only, but allow uploads. Uploads are hidden, and only accessible by those with an account
 share filemanager directory	common	en	File Manager folder
 share files	common	en	Share files
 share just the associated filemanager directory, not the %1	common	en	Share just the associated File Manager folder, not the %1
@@ -1312,20 +1297,11 @@ show (no save)	common	en	Show (no save)
 show all	common	en	Show all
 show all / cancel filter	common	en	Show all / cancel filter
 show all categorys	common	en	Show all categories
-show as topmenu	common	en	Show as top menu
-show clock?	common	en	Show clock
-show home and logout button in main application bar?	common	en	Show Home and Logout buttons in main application bar.
-show in sidebox	common	en	Show in side menu
 show log of following device	groupdav	en	Show log of following device
-show logo's on the desktop.	common	en	Show logo on the desktop.
-show menu	common	en	Show menu
-show next login	common	en	Show next login
-show now	common	en	Show now
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page.
 show page generation time?	common	en	Show page generation time
 show password	common	en	Show password
-show the logo's of egroupware and x-desktop on the desktop.	common	en	Show the logo of EGroupware and x-desktop on the desktop.
 show values	common	en	Show values
 show/hide	common	en	Show/hide sidebar
 show_more_apps	common	en	Show_more_apps
@@ -1418,8 +1394,8 @@ the following document-types are supported:	preferences	en	The following documen
 the mail server returned	common	en	The mail server returned
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	en	There already is a system user with this name. Please, select another name.
 they will be sub-folders in users home (%1 attribute).	common	en	They will be sub-folders in users home (%1 attribute).
-this feature is only available in epl version.	common	en	This feature is only available in EPL version.
-this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share.  To test it, use an anonymous / incognito window.<br>%1
+this feature is only available in epl version.	common	en	This feature is available in EGroupware EPL version.
+this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share. To test it, use an anonymous / incognito window.<br>%1
 this name has been used already	common	en	This name has been used already!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
@@ -1448,7 +1424,6 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	en	Top
 total	common	en	Total
 total: %1 successful: %2 failed: %3 skipped: %4	common	en	Total: %1 Successful: %2 Failed: %3 Skipped: %4
-transparant bg for the icons?	common	en	Transparant bg for the icons
 tree	common	en	Tree
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
 tu	common	en	Tu
@@ -1480,7 +1455,6 @@ unlink	common	en	Unlink
 update	common	en	Update
 update a single entry by passing the fields.	common	en	Update a single entry by passing the fields
 update from version '%s' to	common	en	Update from version '%s' to
-update the clock per minute or per second	common	en	Update the clock per minute or per second
 updating your account with new data from your identity provider failed!	common	en	Updating your account with new data from your identity provider failed!
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload folder does not exist, or is not writable by web server.
@@ -1512,7 +1486,6 @@ vanuatu	common	en	VANUATU
 vbox	common	en	VBox
 venezuela	common	en	VENEZUELA
 version	common	en	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	en	Version number, should be in the form: major.minor.revision.number e.g. 0.9.13.001 all numbers filled up with zeros
 vertical alignment of row	common	en	Vertical alignment of row
 vfs upload directory	common	en	VFS upload folder
 video tutorials	common	en	Video Tutorials
@@ -1535,7 +1508,7 @@ western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	en	What colour should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here.  If no folder is provided, they will be stored in your home directory (%1)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here. If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	en	Where and how will the EGroupware links like Preferences, About and Log out be displayed.
 which groups	common	en	Which groups
@@ -1571,7 +1544,6 @@ yes - delete including sub-entries	common	en	Yes - Delete including sub-entries
 yes and allow non-admin users to do that too (recommended)	common	en	Yes and allow non-admin users to do that too (recommended)
 you are not allowed to export more than %1 entries!	common	en	You are not allowed to export more than %1 entries!
 you are required to change your password during your first login	common	en	You are required to change your password during your first log in
-you can customize how many icons and toolbars the editor shows.	common	en	How many icons and tool bars the editor shows.
 you can not choose more then %1 item(s)!	common	en	You can not choose more then %1 item(s)!
 you can respond by visiting:	common	en	You can respond by visiting
 you have been successfully logged out	login	en	You have been successfully logged out.

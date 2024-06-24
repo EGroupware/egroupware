@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	ko	%1 E-Mail 주소가 삽입되었습니다.
 %1 email(s) added into %2	common	ko	%2에 추가된 %1 이메일(들)
-%1 is not executable by the webserver !!!	common	ko	%1 은 웹서버에 의해 실행될 수 없습니다 !!!
+%1 is not executable by the webserver !!!	common	ko	%1 은 웹서버에 의해 실행될 수 없습니다!
 %1 more %2 selected ...	common	ko	%1 추가 %2 선택 ...
 '%1' is not a valid json file!	common	ko	'%1'이(가) 올바른 JSON 파일이 아닙니다.
 00 (disable)	admin	ko	00 ( 미사용 / 추천 )
@@ -89,7 +89,14 @@ clear	common	ko	초기화
 clear form	common	ko	초기화
 click here to create the link	common	ko	새 링크를 생성하려면 클릭하세요
 click here to start the search	common	ko	검색을 시작하려면 클릭하세요
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ko	명시적으로 한도를 지정하지 않은 고객은 이 기간으로 제한됩니다. 한도가 너무 높으면 일부 클라이언트에서 문제가 발생할 수 있습니다.
+clipboard contents	common	ko	클립보드 내용
 close	common	ko	닫기
+code	common	ko	코드
+collection empty.	common	ko	컬렉션이 비어 있습니다.
+collection listing	common	ko	컬렉션 목록
+columns to print	common	ko	인쇄할 열
+command ⌘	common	ko	명령 ⌘
 comment	common	ko	커멘트
 common preferences	common	ko	공통설정
 company	common	ko	회사
@@ -118,11 +125,6 @@ delete this entry	common	ko	이 엔트리 삭제
 description	common	ko	내용
 detail	common	ko	상세
 details	common	ko	상세
-direction left to right	common	ko	왼쪽에서 오른쪽방향
-disable internet explorer png-image-bugfix	common	ko	인터넷 익스플로러의 png 이미지 오류수정기능 비활성화
-disable slider effects	common	ko	슬라이딩 효과 비활성화
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ko	페이지의 메뉴 표시를 위한 슬라이딩 에니메이션 효과를 비활성화 하시겠습니까? 오페라나 컨쿼러등의 브라우저를 위해서는 비활성화하는것이 좋습니다.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ko	투명 PNG 이미지를 인터넷 익스플로러 5.5이상에서 보이기 위한 오류수정 스크립트의 실행을 비활성화 하시겠습니까?
 disabled	common	ko	비활성화됨
 do you also want to delete all subcategories ?	common	ko	모든 하위 분류들을 삭제하시겠습니까?
 doctype:	common	ko	문서형식:
@@ -252,7 +254,6 @@ mailvelope addon installation succeded. now you may configure the options.	commo
 main category	common	ko	기본 분류
 maintainer	common	ko	관리자
 march	common	ko	3월
-max number of icons in navbar	common	ko	네비게이션바의 최대 아이콘 갯수
 may	common	ko	5월
 medium	common	ko	중간
 message	common	ko	메세지
@@ -262,6 +263,9 @@ monday	common	ko	월요일
 month	common	ko	월
 more	common	ko	검색조건 추가
 move	common	ko	이동
+moved %1 children from directory fs_id=%2 to %3	admin	ko	%1 자식을 폴더 fs_id=%2에서 %3으로 이동했습니다.
+moved unconnected %1 %2 to %3.	admin	ko	연결되지 않은 %1 %2을(를) %3으로 이동했습니다.
+my account	common	ko	내 계정
 name	common	ko	이름
 name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
 never	common	ko	절대(never)
@@ -274,10 +278,16 @@ next	common	ko	다음
 next page	common	ko	다음 페이지로
 no	common	ko	아니오
 no - cancel	common	ko	아니오 - 취소
+no default set	common	ko	기본 설정 없음
 no entries found, try again ...	common	ko	항목을 찾지 못했습니다. 다시 시도해보세요
 no file	common	ko	파일 없음
 no history for this record	common	ko	이 레코드의 내역(변동기록)이 없습니다.
-no matches found	common	ko	일치하는 것을 찾을수 없습니다
+no key for recipient:	common	ko	수신자의 키가 없습니다:
+no matches found	common	ko	일치하는 항목이 없습니다.
+no response from server: your data is probably not saved	common	ko	서버에서 응답 없음: 데이터가 저장되지 않았을 가능성이 있습니다.
+no results match	common	ko	일치하는 결과가 없음
+no rights to export more than %1 entries!	common	ko	1개 이상의 항목을 내보낼 수 있는 권한이 없습니다!
+no row to swap with !!!	common	ko	교환할 행이 없습니다!
 no subject	common	ko	제목없음
 none	common	ko	없음
 normal	common	ko	보통
@@ -298,8 +308,6 @@ open	common	ko	개설
 open existing contact	common	ko	기존 연락처 열기
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
-open sidebox	common	ko	사이드박스 열기
-open the online help.	common	ko	온라인 도움말 열기
 operator	common	ko	운영자
 optional note about the link	common	ko	링크에 대한 선택적 참고 사항
 options	common	ko	옵션
@@ -397,8 +405,6 @@ setup	common	ko	설정
 setup main menu	common	ko	메인 메뉴 설정
 show all	common	ko	모두 보기
 show all categorys	common	ko	모든 분류 보기
-show home and logout button in main application bar?	common	ko	홈으로와 로그아웃 버튼을 주 응용프로그램 바에 출력하시겠습니까?
-show menu	common	ko	메뉴 보이기
 show page generation time	common	ko	페이지 생성시간 보이기
 show page generation time on the bottom of the page?	common	ko	페이지 생성 시간을 페이지 하단에 출력하시겠습니까?
 show page generation time?	common	ko	페이지 생성시간을 출력합니까?

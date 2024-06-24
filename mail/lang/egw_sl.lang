@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	sl	%1 je bil odstranjen iz e-poštnih naslovov, v katerih so bili vpisani
 %1 is not writable by you!	mail	sl	Nimate pravice pisanja v %1!
 %1 mails selected	mail	sl	%1 Izbrane e-pošte
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	sl	%1 zahteva razširitev Sieve %2, morda poskusite %1 ali večje število dn
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sl	(*) Upoštevajte, posredovanje več naslovom ne bo delovalo, če število naslovov presega omejitev. Za večino poštnih strežnikov je omejitev 4 privzeto, za dodatne informacije se obrnite na skrbnika poštnega strežnika.
 (leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
 (no subject)	mail	sl	(brez zadeve)
@@ -37,19 +38,19 @@ all	mail	sl	Vse
 all adresses:	mail	sl	Vsi naslovi:
 all available info	admin	sl	vse razpoložljive informacije
 all filtered	mail	sl	vse filtrirane
-all messages in the folder will be lost	mail	sl	<br>Vsa sporočila v mapi bodo izgubljena
+all messages in the folder will be lost	mail	sl	Vsa sporočila v mapi bodo izgubljena
 all my email addresses	mail	sl	vse moje e-poštne naslove
 all of	mail	sl	Vse od
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sl	Tudi vse podmape bodo izbrisane, vsa sporočila pa bodo izgubljena
 allow	mail	sl	Dovolite
 allow external images	mail	sl	Dovoli zunanje fotografije
 allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz domen s seznama
-allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML
-allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih
+allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML.
+allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih.
 allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
 allways a new window	mail	sl	Vedno novo okno
 always	mail	sl	Vedno
-always allow external sources from %1	mail	sl	Vedno prikaži html e-pošto
+always allow external sources from %1	mail	sl	Vedno dovoli zunanje vire iz %1
 always respond / auto-responder	mail	sl	Vedno odgovori / samodejni odzivnik
 always show html emails	mail	sl	Vedno prikaži HTML sporočila
 always show notifiction	mail	sl	Vedno prikaži obvestilo
@@ -67,7 +68,7 @@ are you sure you want to move folder %1 to folder %2?	mail	sl	Ali ste prepričan
 arrival	mail	sl	Sprejeto
 ask for permission	mail	sl	Prosite za dovoljenje
 attach files	mail	sl	Priložite datoteke
-attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju
+attach users vcard at compose to every new mail	mail	sl	Vsakemu novemu sporočilu priloži uporabniško kartico vCard ob sestavljanju.
 attach vcard	mail	sl	Priloži vCard
 attachment	mail	sl	Priponka
 attachment has been saved successfully.	mail	sl	Priponka je bila uspešno shranjena.
@@ -135,12 +136,13 @@ default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene
 default value for remembering s/mime passphrase in minutes	mail	sl	Privzeta vrednost za pomnjenje gesla S/MIME v minutah
 default your name and email	common	sl	Privzeto ime in e-pošto
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	sl	Določa, kaj se prikaže kot oznaka stika za dodan stik v To/Copy/Blind copy pri sestavljanju e-poštnega sporočila. Privzeto je ime priimek in prazen pomeni, da vključuje vse, kar je na voljo.
-defines what to show as identity label on mail folder header	common	sl	Določa, kaj se prikaže kot oznaka identitete v glavi poštne mape
+defines what to show as identity label on mail folder header	common	sl	Določa, kaj se prikaže kot oznaka identitete v glavi poštne mape.
 delete folder	mail	sl	Briši mapo
 delete folder %1 ?	mail	sl	DELETE Mapa %1?
+delete selected folders	mail	sl	Brisanje izbranih map
 delete this acl	mail	sl	Izbrišite ta ACL
 deleted	mail	sl	Zbrisano
-deleted %1 messages in %2	mail	sl	Izbrisanih %1 sporočil v %2
+deleted %1 messages in %2	mail	sl	Izbrisanih %1 sporočil v %2.
 deleted!	mail	sl	izbrisano!
 deleting %1 folders in progress ...	mail	sl	Brisanje %1 map v teku ...
 deleting folders	mail	sl	Brisanje map
@@ -217,20 +219,21 @@ error while setting acl for folder %1!	mail	sl	Napaka pri nastavljanju ACL za ma
 error while setting folder	mail	sl	Napaka med nastavljanjem mape
 error:	mail	sl	Napaka:
 error: could not save acl	mail	sl	Napaka: ACL ni bilo mogoče shraniti
-error: could not save message as draft	mail	sl	Napaka: ne morem shraniti sporočila kot osnutek
-error: could not save rule	mail	sl	Napaka: ne morem shraniti pravila
-error: could not send message.	mail	sl	Napaka: sporočila ni bilo mogoče poslati.
-error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporočila.
+error: could not save message as draft	mail	sl	Napaka: Ne morem shraniti sporočila kot osnutek
+error: could not save rule	mail	sl	Napaka: Ne morem shraniti pravila
+error: could not send message.	mail	sl	Napaka: Sporočila ni bilo mogoče poslati.
+error: message could not be displayed.	mail	sl	Napaka: Ne morem prikazati sporočila.
 esync will fail without a working email configuration!	mail	sl	eSync bo napačen brez delovne e-poštne konfiguracije!
 event details follow	mail	sl	Sledijo podrobnosti dogodka
 every %1. day	mail	sl	Vsak %1. dan
 everyone	mail	sl	Vse
 examine namespace to retrieve folders in others and shared	mail	sl	Preuči imenski prostor, da pridobiš mape v drugih in v skupni rabi
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	sl	Iz samodejnega shranjevanja priponk, ki so večje od določene velikosti, kot osnutek (v MB)
 extended	mail	sl	Razširjen
 extra sent folders	mail	sl	Dodatno poslane mape
 failed to delete %1	mail	sl	%1 ni bilo mogoče izbrisati
 failed to delete %1 ! reason: %2	mail	sl	Ni uspelo izbrisati %1! Razlog: %2
-failed to delete %1. server responded:	mail	sl	%1 ni bilo mogoče izbrisati. Strežnik je odgovoril:
+failed to delete %1. server responded:	mail	sl	%1 ni bilo mogoče izbrisati! Strežnik je odgovoril:
 failed to move %1 ! reason: %2	mail	sl	Ni uspel premakniti %1! Razlog: %2
 failed to rename %1 ! reason: %2	mail	sl	Ni uspelo preimenovati %1! Razlog: %2
 failed to subscribe folder %1!	mail	sl	Mape %1 ni bilo mogoče naročiti!
@@ -507,7 +510,7 @@ required pear class mail/mimedecode.php not found.	mail	sl	Potreben PEAR razred 
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sl	Potrebno onemogočiti, če uporabljate Dovecot z zastavicami private seen na skupni ali uporabniški mapi!
 resend after how many days?	mail	sl	Ponovno pošlji po številu dni?
 respond to mail sent to:	mail	sl	Odgovorite na pošto, poslano na:
-restrict acl management	admin	sl	omejiti upravljanje ACL
+restrict acl management	admin	sl	Omejiti upravljanje ACL
 rights	mail	sl	Pravice
 row order style	mail	sl	Slog zaporednih vrstic
 rule priority position	mail	sl	Položaj prednostnega pravila
@@ -586,8 +589,8 @@ show test connection section and control the level of info displayed??	mail	sl	P
 show them this time only	mail	sl	Pokaži jih samo tokrat
 show vertical	mail	sl	Prikaži navpično (prikaz v treh stolpcih)
 show vertical with all columns	mail	sl	Prikaži navpično z vsemi stolpci
-show/hide preview pane in mail list view	mail	sl	Pokaži / Skrij podokno za predogled v pogledu e-poštnega seznama
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sl	Prikaže začasno vidno obvestilo, vključno z naslovom od, predmetom in odlomkom pošte
+show/hide preview pane in mail list view	mail	sl	Pokaži / Skrij podokno za predogled v pogledu e-poštnega seznama.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sl	Prikaže začasno vidno obvestilo, vključno z naslovom od, predmetom in odlomkom pošte.
 sieve	mail	sl	Sieve
 sieve connection status	mail	sl	Stanje povezave
 sieve not activated	mail	sl	Sito ni aktivirano
@@ -613,7 +616,7 @@ sources	mail	sl	Viri
 spamtitan api url	mail	sl	URL za SpamTitan API
 spamtitan integration requires epl version	mail	sl	Integracija SpamTitan zahteva različico EPL
 start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporočilo kot navadno besedilo ali kot HTML?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sl	Začnite odgovarjati s sporočilom text ali HTML ali poskusite uporabiti prikazano obliko (privzeto)?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sl	Začnite odgovarjati s sporočilom text ali HTML ali poskusite uporabiti prikazano obliko (privzeto).
 step 1: imap - incoming mail	mail	sl	Korak 1: IMAP - prihajajoča pošta
 step 2: folder	mail	sl	Korak 2: Mapa
 step 3: sieve - server side mail filtering	mail	sl	Korak 3: Sieve - filtriranje strani na strani strežnika
@@ -658,7 +661,7 @@ toggled on actions	mail	sl	Preklopi na dejanja
 trash	mail	sl	Koš
 trash folder	mail	sl	Mapa Koš
 trust servers seen / unseen info	mail	sl	zaupni strežniki SEEN / UNSEEN info
-trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	sl	Za pridobitev statusa mape zaupajte strežniku. če izberete ne, bomo poiskali sporočila UNSEEN in jih šteli sami
+trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	sl	Za pridobitev statusa mape zaupajte strežniku. če izberete ne, bomo poiskali sporočila UNSEEN in jih šteli sami.
 trying to recover from session data	mail	sl	Poskus obnovitve iz podatkov o seji
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sl	Izklopite vodoravno črto med podpisom in sestavljenim sporočilom (to ni v skladu z RFC).<br>Če uporabljate predloge, se ta možnost uporablja samo za besedilni del sporočila.
 unable to fetch vacation!	mail	sl	Ni mogoče pridobiti počitnic!
@@ -668,7 +671,7 @@ unread	mail	sl	Neprebrano
 unsubscribe folder	mail	sl	Mapa za odjavo
 unsubscribe from folder %1	mail	sl	Odjava iz mape %1
 upload files...	mail	sl	Naloži datoteke ...
-use default timeout (20 seconds)	mail	sl	uporabi privzeto zakasnitev (20 sekund)
+use default timeout (20 seconds)	mail	sl	Uporabi privzeto zakasnitev (20 sekund)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	sl	Uporabite regularne izraze (glej https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	sl	Po potrebi uporabite vir, kot je prikazano
 use username+password from current user	mail	sl	Uporabite uporabniško ime in geslo trenutnega uporabnika
@@ -679,20 +682,20 @@ vacation notice is active	mail	sl	Obvestilo o odsotnosti je aktivno
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	sl	Obvestilo o počitnicah še ni shranjeno! (Vendar smo zapolnili nekatere privzete nastavitve za pokritje nekaterih zgornjih napak. Prosimo, popravite in preverite nastavitve in znova shranite.)
 vacation notice sucessfully updated.	mail	sl	Obvestilo o dopustu je uspešno posodobljeno.
 vacation notice update failed	mail	sl	Posodobitev obvestila o počitnica ni uspela
-vacation start-date must be before the end-date!	mail	sl	Začetni datum počitnic mora biti pred končnim
+vacation start-date must be before the end-date!	mail	sl	Začetni datum počitnic mora biti pred končnim!
 vacation update failed	mail	sl	posodobitev dopusta ni uspela
 valid for	mail	sl	Velja za
 validate addresses on submit:	mail	sl	Potrdite naslove na naslovu:
 validate selected addresses on submit:	mail	sl	Potrdite izbrane naslove ob oddaji:
 view full mail source	mail	sl	Ogled celotnega poštnega vira
 view header lines	mail	sl	Pokaži glavo
-what do do with html email	mail	sl	Kaj storiti s html e-pošto
+what do do with html email	mail	sl	Kaj storiti s HTML e-pošto
 what order the list columns are in	mail	sl	Kakšen je vrstni red stolpcev v seznamu
-what to do when you delete a message	mail	sl	Kaj storiti, ko izbrišete sporočilo
-what to do when you send a message	mail	sl	Kaj storiti, ko pošljete sporočilo
+what to do when you delete a message	mail	sl	Kaj storiti, ko izbrišete sporočilo.
+what to do when you send a message	mail	sl	Kaj storiti, ko pošljete sporočilo.
 when deleting messages	mail	sl	Ob brisanju sporočil
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	sl	Pri prikazu sporočil v pojavnem okencu ponovno uporabite isti pojavni okni ali za vsako sporočilo odpirajte novo pojavno okno
-when saving messages as item of a different app	mail	sl	Pri shranjevanju sporočil kot elementa druge aplikacije
+when saving messages as item of a different app	mail	sl	Pri shranjevanju sporočil kot elementa druge aplikacije.
 when sending messages	mail	sl	Pri pošiljanju sporočil
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
 which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
@@ -715,8 +718,9 @@ you can select what info to be displayed on email tag	mail	sl	Izberete lahko, ka
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $$end$$ lahko uporabite $$start$$ za končni datum.
 you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.
 you need to enter your s/mime passphrase to send this message.	mail	sl	Za pošiljanje tega sporočila morate vnesti geslo za S/MIME.
-you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sl	Morate namestiti vtičnik Mailvelope, ki je na voljo za Chrome in Firefox iz % .
+you need to install mailvelope plugin available for chrome and firefox from %1.	mail	sl	Morate namestiti vtičnik Mailvelope, ki je na voljo za Chrome in Firefox iz %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	sl	Najprej morate shraniti sporočilo kot osnutek, da ga lahko shranite v VFS
+you need to select some folders first (by clicking on them)!	mail	sl	Najprej morate izbrati nekaj map (s klikom nanje)!
 you will loose current message body, unless you save it to your clipboard!	mail	sl	Izgubili boste trenutno telo sporočila, razen če ga shranite v odložišče!
 you've got new mail	mail	sl	Imate novo pošto
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	sl	Preostala kvota %1 je prenizka, morda ne boste mogli pošiljati/prejemati nadaljnjih e-poštnih sporočil.<br>Čeprav lahko čiščenje e-poštnih sporočil v smetnjak ali v neželeni mapi pomaga, da dobite nekaj prostega prostora nazaj.<br>Če to ni pomagalo , vprašajte svojega skrbnika za več kvot.

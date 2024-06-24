@@ -37,7 +37,6 @@ added by synchronisation	addressbook	zh	同步并加入
 added to distribution list	addressbook	zh	已加入分发列表
 additional information about using ldap as contact repository	admin	zh	额外信息使用 LDAP 联系人库
 address book	common	zh	通讯簿
-address book - vcard in	addressbook	zh	通讯簿 - 从 vCard 导入
 address book - view	addressbook	zh	通讯簿 - 查看联系人
 address line 2	addressbook	zh	地址 2
 address type	addressbook	zh	地址类型
@@ -150,7 +149,7 @@ departments	addressbook	zh	部门
 directory with documents to insert contacts	addressbook	zh	插入联系人的文件目录
 disable	addressbook	zh	禁用
 disable last/next event column	addressbook	zh	禁用上一个/下一个事件列
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	zh	在首页显示生日提醒(也就是当您登录 EGroupware 或是点击首页图示时显示的页面)。
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	zh	在主页上显示生日
 distribution list deleted	addressbook	zh	分发列表已删除
 distribution list renamed	addressbook	zh	分发列表重命名
 distribution lists	addressbook	zh	分发列表
@@ -219,6 +218,7 @@ freebusy uri	addressbook	zh	闲忙状态网址
 full name	addressbook	zh	姓名
 general	admin	zh	通用
 general fields:	addressbook	zh	通用字段：
+general settings	addressbook	zh	常规设置
 geo	addressbook	zh	GEO
 geolocation	addressbook	zh	地理位置
 geolocation integration	admin	zh	地理位置集成
@@ -228,8 +228,11 @@ group %1	addressbook	zh	群组%1
 h	addressbook	zh	时
 hide accounts from addressbook	addressbook	zh	从通讯簿中隐藏帐号
 hide all accounts	addressbook	zh	隐藏所有账户
+hide all groups	addressbook	zh	隐藏所有群组
+hide groups without email address	addressbook	zh	隐藏没有电子邮件地址的群组
 hide user groups as distribution lists	addressbook	zh	隐藏作为分发列表的用户组
 hides accounts completly from the adressbook.	addressbook	zh	从通讯簿中完整隐藏帐号。
+history logging	admin	zh	历史记录
 home address	addressbook	zh	家庭地址
 home address, birthday, ...	addressbook	zh	家庭地址、生日、...
 home city	addressbook	zh	居住城市
@@ -240,6 +243,7 @@ home phone	addressbook	zh	家庭电话
 home state	addressbook	zh	省/自治区
 home street	addressbook	zh	居住街道
 home zip code	addressbook	zh	住地邮编
+how many contacts should non-admins be able to export	admin	zh	非管理员可以导出多少联系人。
 how many fields must match for the record to be considered a duplicate.	addressbook	zh	必须有多少个字段匹配，记录才会被认为是重复的。
 icon	addressbook	zh	图标
 if accounts are already in ldap	admin	zh	如果帐号已经存在于 LDAP
@@ -257,6 +261,7 @@ importer's personal	addressbook	zh	导入者个人
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 imports contacts into your addressbook from a vcard file.	addressbook	zh	从 vCard 文件向通讯录导入联系人。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
+include all groups	addressbook	zh	包括所有群组
 income	addressbook	zh	收入
 infolog	addressbook	zh	信息记录仪联系方式
 infolog-organisation	addressbook	zh	信息记录组织

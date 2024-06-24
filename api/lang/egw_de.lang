@@ -2,7 +2,7 @@
 %1 active file(s) with same name as directory inactivated!	admin	de	%1 aktive Dateien mit dem selben Ordner wurden deaktiviert!
 %1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
 %1 directories %2 found!	admin	de	%1 Ordner %2 gefunden!
-%1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
+%1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt.
 %1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt
 %1 entries found, select one ...	common	de	%1 Einträge gefunden, einen auswählen ...
 %1 etemplates deleted	common	de	%1 eTemplate(s) gelöscht
@@ -36,7 +36,7 @@
 '%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
 '%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
-(session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
+(session restored in %1 seconds)	common	de	Sitzung in %1 Sekunden wiederhergestellt
 00 (disable)	admin	de	00 (deaktiviert)
 1 day	common	de	1 Tag
 1 hour	common	de	1 Stunde
@@ -146,7 +146,7 @@ api	common	de	EGroupware API
 api-accounts	common	de	Benutzerkonten
 application	common	de	Anwendung
 application has no etemplates (no file %1) to restore!	common	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherstellen!
-application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
+application name needed to restore etemplates!	common	de	Anwendungsname wir benötigt zum Wiederherstellen der eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	common	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-dump zu schreiben!
 applications	common	de	Anwendungen
 applies the changes made	common	de	Übernimmt die Änderungen
@@ -172,8 +172,6 @@ australia	common	de	AUSTRALIEN
 austria	common	de	ÖSTERREICH
 authenticate	common	de	Authentifizieren
 author	common	de	Autor
-autohide sidebox menu's	common	de	Linkes Navigationsmenü ausblenden
-autohide sidebox menus	common	de	Linkes Navigationsmenü ausblenden
 automatic update check failed, you need to check manually!	common	de	Automatischer Test fehlgeschlagen, Sie müssen selbst überprüfen ob neue Updates vorliegen!
 automatically refresh list	common	de	Liste automatisch aktualisieren
 autosave default category	common	de	Standard-Kategorie automatisch speichern
@@ -202,7 +200,6 @@ benin	common	de	BENIN
 bermuda	common	de	BERMUDA
 bhutan	common	de	BHUTAN
 blocked, too many attempts	common	de	Gesperrt, zu viele Versuche
-blue moono theme	common	de	Blue Mono Theme
 blurtext	common	de	blurText
 bold	common	de	Fett
 bolivia	common	de	BOLIVIEN
@@ -294,13 +291,12 @@ click here to create the link	common	de	Hier klicken um die Verknüpfung anzuleg
 click here to resume your egroupware session.	common	de	Hier klicken um die EGroupware Sitzung wieder aufzunehmen.
 click here to start the search	common	de	Hier klicken um die Suche zu starten
 click here to upload the file	common	de	Hier klicken um die Datei hochzuladen
-click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
-click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
 click to open colorpicker	common	de	Farbauswahl
 click to order after that criteria	common	de	Anklicken um nach diesem Kriterium zu sortieren
 clickable path	common	de	Anklickbarer Pfad
 clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	de	Geräte die kein explicites Limit setzen, verwenden die angegebene Anzahl Tage. Ein zu hohes Limit kann bei einigen Geräte zu Problemen führen.
+clipboard contents	common	de	Inhalt Zwischenablage
 close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
 closes the window without saving the changes	common	de	Schließt das Fenster ohne zu speichern
@@ -367,7 +363,6 @@ cut	common	de	Ausschneiden
 cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 dark mode	common	de	Dunkler Modus
-dark moono theme	common	de	Dunkles Moono Theme
 data type	common	de	Datentyp
 database error	common	de	Datenbank Fehler
 database error!	common	de	Datenbank Fehler!
@@ -472,7 +467,7 @@ edit categories	common	de	Kategorien editieren
 edit category	common	de	Kategorie editieren
 edit embeded css styles or of the applications app.css file	common	de	Bearbeitet die eingebetteten CSS Stile oder die app.css Datei der Anwendung
 edit the etemplate spez. above	common	de	Das oben spezifizierte eTemplate bearbeiten
-edit...	common	de	Bearbeiten...
+edit...	common	de	Bearbeiten ...
 editable templates - db-tools	common	de	eTemplates - DB-Tools
 editable templates - delete template	common	de	eTemplates - Löschen
 editable templates - editor	common	de	eTemplates - Bearbeiten
@@ -504,7 +499,7 @@ end time	common	de	Endzeit
 enter '' for an empty default, nothing mean no default	common	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	common	de	Suchmuster eingeben
 enter filename to upload and attach, use [browse...] to search for it	common	de	Dateinamen zum Hochladen oder Anhängen eingeben, [Browse ...] zum Suchen verwenden
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: https://egw.domain.de/egroupware   oder   /egroupware<br><b> KEINEN Slash "/" am ende</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre EGroupware erreichbar sein wird.<br>Beispiel: https://egw.domain.de/egroupware oder /egroupware<br><b> KEINEN Slash "/" am ende</b>
 enter the new version number here (> old_version), empty for no update-file	common	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	common	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 enter your file name	common	de	Dateiname
@@ -517,7 +512,7 @@ epl only	common	de	Nur EPL
 equatorial guinea	common	de	EQUATORIAL GUINEA
 eritrea	common	de	ERITREA
 error	common	de	Fehler
-error copying uploaded file to vfs!	common	de	Fehler beim Kopieren der  hoch geladenen Datei ins VFS!
+error copying uploaded file to vfs!	common	de	Fehler beim Kopieren der hoch geladenen Datei ins VFS!
 error create parent directory %1!	common	de	Fehler beim Anlegen des Elternordners %1!
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Ordners %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Ordners %1 %2
@@ -554,7 +549,7 @@ export xml	common	de	XML-Export
 extensions loaded:	common	de	Erweiterungen geladen:
 failed to change mode of required directory "%1" to %2!	admin	de	Ändern der Zugriffsrechte für benötigtes Ordners "%1" zu %2 fehlgeschlagen!
 failed to change password.	common	de	Ändern des Passworts fehlgeschlagen.
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator wenn dies fehlschlägt.
 failed to create required directory "%1"!	admin	de	Anlegen des benötigten Ordners "%1" fehlgeschlagen!
 failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 %2 nach %3!
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
@@ -641,9 +636,9 @@ grid column attributes	common	de	Attribute der Tabellenspalte
 grid row attributes	common	de	Attribute der Tabellenzeile
 group	common	de	Gruppe
 group access	common	de	Gruppenzugriff
-group has been added	common	de	Gruppe wurde zugefügt
-group has been deleted	common	de	Gruppe wurde  gelöscht
-group has been updated	common	de	Gruppe wurde  aktualisiert
+group has been added	common	de	Gruppe wurde zugefügt.
+group has been deleted	common	de	Gruppe wurde gelöscht.
+group has been updated	common	de	Gruppe wurde aktualisiert.
 group name	common	de	Gruppenname
 group public	common	de	Group Public
 groupbox	common	de	Gruppierung
@@ -771,7 +766,6 @@ justify center	common	de	Ausrichtung mittig
 justify full	common	de	Ausrichtung im Block
 justify left	common	de	Ausrichtung links
 justify right	common	de	Ausrichtung rechts
-kama theme	common	de	Kama Theme
 kazakstan	common	de	KASACHSTAN
 kenya	common	de	KENIA
 key	common	de	Schlüssel
@@ -897,15 +891,13 @@ mongolia	common	de	MONGOLEI
 montenegro	common	de	MONTENEGRO
 month	common	de	Monat
 montserrat	common	de	MONTSERRA
-moono color theme	common	de	Mono Color Theme
-moono theme (default)	common	de	Mono Color Theme (Vorgabe)
 more	common	de	Weitere
 more than 1 match for '%1'	common	de	Mehr als 1 trifft für '%1' zu
 more then one active file %1 found, inactivating %2 older revisions!	admin	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
 move	common	de	Verschieben
 moved %1 children from directory fs_id=%2 to %3	admin	de	Verschoben %1 Kinderelemente vom Ordner fs_id=%2 nach %3
-moved unconnected %1 %2 to %3.	admin	de	Nicht verbundene Einträge verschoben  %1 %2 nach %3.
+moved unconnected %1 %2 to %3.	admin	de	Nicht verbundene Einträge verschoben %1 %2 nach %3.
 mozambique	common	de	MOZAMBIQUE
 multicolumn indices	common	de	Mehrspaltige Indices
 multiple	common	de	Mehrere
@@ -913,7 +905,6 @@ my account	common	de	Mein Benutzer
 myanmar	common	de	MYANMAR
 name	common	de	Name
 name of other table where column is a key from	common	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	de	Name des EGw-Layouts (z.B. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das Standard Layout '' zu lesen)
 name of table to add	common	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	common	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
 name of the user, eg. "%1"	common	de	Name des Benutzers, z.B. "%1"
@@ -959,8 +950,8 @@ no filename given or selected via browse...	common	de	Kein Dateiname angegeben o
 no filters	common	de	Keine Filter
 no history for this record	common	de	Keine Historie für diesen Datensatz
 no key for recipient:	common	de	Keinen Schlüssel für Empfänger:
-no matches found	common	de	Keine Treffer gefunden
-no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind vermutlich NICHT gespeichert
+no matches found	common	de	Keine Treffer gefunden.
+no response from server: your data is probably not saved	common	de	Keine Antwort vom Server: Ihre Daten sind vermutlich NICHT gespeichert.
 no results match	common	de	Kein Fund für
 no rights to export more than %1 entries!	common	de	Sie haben keine Rechte mehr als %1 Einträge zu exportieren!
 no row to swap with !!!	common	de	Keine Zeile um damit zu tauschen!
@@ -1324,7 +1315,6 @@ show page generation time	common	de	Zeit zum Erstellen der Seite anzeigen
 show page generation time on the bottom of the page?	common	de	Zeit zum Erstellen der Seite in der Fußzeile anzeigen
 show page generation time?	common	de	Erstellungszeit der Seite anzeigen?
 show password	common	de	Zeige Passwort
-show the logo's of egroupware and x-desktop on the desktop.	common	de	Zeige Logos von EGroupware und x-desktop auf dem Desktop.
 show values	common	de	Werte anzeigen
 show/hide	common	de	Anzeigen/ausblenden Seitenleiste
 show_more_apps	common	de	Mehr Applikationen anzeigen
@@ -1417,7 +1407,7 @@ the following document-types are supported:	preferences	de	Im Moment werden die 
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
 there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeordner des Benutzers (%1 Attribute).
-this feature is only available in epl version.	common	de	Diese Funktion ist in der EPL-Version verfügbar.
+this feature is only available in epl version.	common	de	Diese Funktion ist in der EGroupware EPL-Version verfügbar.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	de	Dies ist Ihre eigene Freigabe. Verwenden Sie zum Testen ein anonymes / Inkognito-Fenster.<br/>%1
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung!
 this text gets displayed if the input-field is empty and has no focus (blur)	common	de	Dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
@@ -1511,7 +1501,6 @@ vanuatu	common	de	VANUATU
 vbox	common	de	VBox
 venezuela	common	de	VENEZUELA
 version	common	de	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	de	Versionsnummer, in der Form major.minor.revision.number (zB. 0.9.15.001 alle Zahlen mit Nullen aufgefüllt)
 vertical alignment of row	common	de	Vertikale Ausrichtung der Zeile
 vfs upload directory	common	de	Dateimanager Upload-Ordner
 video tutorials	common	de	Video-Tutorials
@@ -1532,7 +1521,6 @@ weekend	common	de	Wochenende
 welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
-what color should all the blank space on the desktop have	common	de	Welche Farbe soll der freie Platz auf der Arbeitsfläche haben
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	Was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.

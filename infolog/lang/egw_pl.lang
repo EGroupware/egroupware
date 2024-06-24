@@ -6,8 +6,8 @@
 %1 entries %2, %3 failed.	infolog	pl	%1 wpisy %2, %3 nie powiodły się.
 %1 modified	infolog	pl	%1 zmodyfikowany
 %1 modified by %2 at %3	infolog	pl	%1 zmodyfikowany przez %2 w %3
-%1 records imported	infolog	pl	Zaimportowano %1 rekordów
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pl	%1 rekordów wczytano (jeszcze nie zaimportowano, możesz %2wrócić%3 i odznaczyć Test Import)
+%1 records imported	infolog	pl	Zaimportowano %1 rekordów.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	pl	%1 rekordów wczytano (jeszcze nie zaimportowano, możesz %2wrócić%3 i odznaczyć Test Import).
 %1 you are responsible for is due at %2	infolog	pl	%1, za który jesteś odpowiedzialny, jest wymagalny w %2
 %1 you are responsible for is starting at %2	infolog	pl	%1, za który jesteś odpowiedzialny, zaczyna się od %2
 %1 you delegated is due at %2	infolog	pl	%1, który delegowałeś, jest wymagalny w %2
@@ -54,28 +54,39 @@ all other %1 fields are valid	infolog	pl	Wszystkie pozostałe pola %1 są prawid
 all projects	infolog	pl	Wszystkie projekty
 allow to save entries with due date in the past	infolog	pl	Zezwalaj na zapisywanie wpisów z datą wymagalności w przeszłości
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pl	Pozwala zmienić status wpisu, np. z Do Zrobienia na Wykonane (wartości zależą od typu wpisu)
+alternatives	infolog	pl	Alternatywy
 always show them	infolog	pl	Zawsze je pokazuj
 application mail expected but got: %1	infolog	pl	Oczekiwano e-maila aplikacji, ale otrzymano: %1
 apply the changes	infolog	pl	Zastosuj zmiany
 archive	infolog	pl	Archiwum
+archived too	infolog	pl	Również zarchiwizowane
+are you shure you want to close this entry ?	infolog	pl	Czy na pewno chcesz zamknąć ten wpis?
 are you shure you want to delete this entry ?	infolog	pl	Na pewno usunąć ten wpis?
 attach a file	infolog	pl	Dołącz plik
 attach file	infolog	pl	Dołącz plik
 attachments	infolog	pl	Załączniki
-automatically check 'do not notify' for these types	infolog	pl	Automatycznie zaznaczaj opcję "Nie powiadamiaj" dla tych typów.
+attention: no contact with address %1 found.	infolog	pl	Uwaga: Nie znaleziono kontaktu z adresem %1.
+automatically check 'do not notify' for these types	infolog	pl	Automatycznie zaznaczaj opcję "Nie powiadamiaj" dla tych typów
 back to main list	infolog	pl	Wróć do głównej listy
 billed	infolog	pl	Rozliczony
 both	infolog	pl	Oba
 call	infolog	pl	Rozmowa
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	pl	Może być użyty do wyświetlania dalszych typów InfoLog w kalendarzu lub ograniczenia go do wyświetlania np. tylko zadań.
 can not return an exact number of rows and therefore hides the count.	admin	pl	Nie może zwrócić dokładnej liczby wierszy i dlatego ukrywa liczbę.
 cancel	infolog	pl	Anuluj
 cancelled	infolog	pl	Anulowany
 categories	infolog	pl	Kategorie
 category	infolog	pl	Kategoria
 change	infolog	pl	Zmiana
+change category	infolog	pl	Zmiana kategorii
 change history	infolog	pl	Zmień historię
+change owner when updating	infolog	pl	Zmiana właściciela podczas aktualizacji
 change responsible	infolog	pl	Odpowiedzialny za zmianę
 change the status of an entry, eg. close it	infolog	pl	Zmień status wpisu, np. zakończ go
+changed category to %1	infolog	pl	Zmieniono kategorię na %1
+changed completion to %1%	infolog	pl	Zmieniono zakończenie na %1%
+changed status to %1	infolog	pl	Zmieniono status na %1
+changed type	infolog	pl	Zmieniony typ
 check to set startday	infolog	pl	Sprawdź, aby ustawić dzień rozpoczęcia
 check to specify custom contact	infolog	pl	Zaznacz, aby określić niestandardowy kontakt
 choose owner of imported data	infolog	pl	Wybierz właściciela zaimportowanych danych
@@ -83,8 +94,10 @@ click here to create the link	infolog	pl	Kliknij tutaj aby stworzyć odnośnik
 click here to start the search	infolog	pl	Kliknij tutaj aby rozpocząć szukanie
 close	infolog	pl	Zamknij
 close all	infolog	pl	Zamknij wszystko
+close this entry and all listed sub-entries	infolog	pl	Zamknij ten wpis i wszystkie wymienione wpisy podrzędne
 closed	infolog	pl	Zamknięto
 comment	infolog	pl	Komentarz
+compare	infolog	pl	Porównanie
 completed	infolog	pl	Wykonany
 configuration	infolog	pl	Konfiguracja
 confirm	infolog	pl	Potwierdzenie
@@ -115,7 +128,7 @@ custom status for typ	infolog	pl	Własny status dla typu
 customfields	infolog	pl	Polawłasne
 data exchange settings	infolog	pl	Ustawienia wymiany danych
 date completed	infolog	pl	Data wykonania
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pl	Data wykonania (pozostaw puste aby zostało wypełnione automatycznie przy zmianie statusu na "zakończony"
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	pl	Data wykonania (pozostaw puste aby zostało wypełnione automatycznie przy zmianie statusu na "zakończony".
 datecreated	infolog	pl	Data utworzenia
 dates, status, access	infolog	pl	Daty, statusy i dostęp
 days	infolog	pl	Dni
@@ -141,7 +154,7 @@ description	infolog	pl	Opis
 determines the order the fields are displayed	infolog	pl	Określa kolejność wyświetlania pól
 directory with documents to insert entries	infolog	pl	Folder z dokumentami do wstawiania wpisów
 disables a status without deleting it	infolog	pl	Wyłącza status bez kasowania go
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pl	Czy chcesz potwierdzenia osoby odpowiedzialnej do: akceptacji, zakończenia zadania lub obydwu?
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pl	Czy chcesz potwierdzenia osoby odpowiedzialnej do: akceptacji, zakończenia zadania lub obydwu
 do you want a notification if items owned by groups you are part of get updated ?	infolog	pl	Czy chcesz otrzymywać powiadomienia o aktualizacji elementów należących do grup, do których należysz?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	pl	Otrzymuj powiadomienia, jeśli wpisy są przypisane do Ciebie lub przypisane wpisy są aktualizowane.
 do you want a notification, if items you are responsible for are about to start?	infolog	pl	Otrzymuj powiadomienia o rozpoczęciu wpisów, za które jesteś odpowiedzialny.
@@ -165,6 +178,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	pl
 edit status	infolog	pl	Edytuj status
 edit the entry	infolog	pl	Edytuj wpis
 edit this entry	infolog	pl	Edytuj ten wpis
+editable fields for status 'archived'	admin	pl	Edytowalne pola dla statusu 'zarchiwizowany'
 empty for all	infolog	pl	Puste dla wszystkich
 encrypt description	infolog	pl	Zaszyfruj opis
 end	infolog	pl	Zakończenie
@@ -175,13 +189,15 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	p
 enter a textual description of the log-entry	infolog	pl	Wprowadź tekstowy opis logu wpisu
 enter the query pattern	infolog	pl	Wprowadź wzorzec zapytania
 entry and all files	infolog	pl	Wejście i wszystkie pliki
+entry can not be changed anymore, after status is set	admin	pl	Wpisu NIE można już zmienić po ustawieniu statusu
+entry can not be changed by anybody, but egroupware admins	admin	pl	Wpis NIE może być zmieniony przez nikogo poza administratorami EGroupware
 error: importing the ical	infolog	pl	Błąd przy importowaniu iCal
 error: no mail (mailbox / uid) given!	infolog	pl	Błąd: nie podano poczty (skrzynki pocztowej / UID)!
-error: saving the entry	infolog	pl	Błąd przy zapisywaniu zadania
+error: saving the entry	infolog	pl	Błąd przy zapisywaniu zadania!
 error: the entry has been updated since you opened it for editing!	infolog	pl	Błąd: zadanie zostało zaktualizowane odkąd otworzyłeś je do edycji!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	pl	Przykład {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - przeszukaj pole "n_prefix", dla "Mr", jeśli znaleziono, napisz Hello Mr., w przeciwnym razie napisz Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	pl	Przykład {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Przykład: Pan Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	pl	Przykład {{NELF role}} - jeśli pole role nie jest puste, pojawi się nowy wiersz z wartością pola role
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	pl	Przykład {{nenvlf role}} - jeśli pole role nie jest puste, ustaw LF bez żadnej wartości pola
 execute a further action for this entry	infolog	pl	Wykonaj dalszą akcję dla tego wpisu
 existing links	infolog	pl	Istniejące linki
@@ -206,6 +222,7 @@ general fields:	infolog	pl	Pola ogólne:
 general settings	infolog	pl	Ustawienia ogólne
 global categories	infolog	pl	Kategorie globalne
 group owner for	infolog	pl	Właściciel grupowy dla
+handling of status 'archived'	admin	pl	Obsługa statusu 'zarchiwizowany'
 high	infolog	pl	Wysoki
 history	infolog	pl	Historia
 history logging	infolog	pl	Rejestrowanie historii
@@ -222,7 +239,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	pl	Jeśli określisz definicję eksportu, zostanie ona użyta podczas eksportu
 import next set	infolog	pl	Importuj nastepny zestaw
 importance	infolog	pl	Ważność
-imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	pl	Importuje wpisy do InfoLog z pliku CSV. CSV oznacza "Wartości oddzielone przecinkami". W zakładce opcji można również wybrać inne separatory.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	pl	Importuje wpisy do InfoLog z pliku CSV. W zakładce opcji można również wybrać inne separatory.
 imports todos into infolog from an ical file.	infolog	pl	Importuje TODO do InfoLog z pliku iCal.
 info log	common	pl	CRM Dziennik
 infolog	common	pl	CRM Dziennik
@@ -238,6 +255,9 @@ infolog encryption requires epl subscription	infolog	pl	Szyfrowanie InfoLog wyma
 infolog entry deleted	infolog	pl	Wpis nfoLog skasowany
 infolog entry saved	infolog	pl	Wpis InfoLog zapisany
 infolog filter for the home screen	infolog	pl	Filtr dziennika na stronę główną
+infolog ical export	infolog	pl	Eksport InfoLog iCal
+infolog ical import	infolog	pl	Import InfoLog iCal
+infolog id	infolog	pl	InfoLog ID
 infolog list	infolog	pl	CRM Dziennik lista
 infolog preferences	common	pl	CRM Dziennik preferencje
 infolog-fieldname	infolog	pl	CRM Dziennik - Nazwa pola
@@ -245,6 +265,7 @@ insert	infolog	pl	Wstaw
 insert in document	infolog	pl	Wstaw w dokumencie
 insert timestamp into description field	infolog	pl	Wstaw znacznik czasu do pola opisu
 invalid filename	infolog	pl	Niepoprawna nazwa pliku
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	pl	Nieprawidłowy identyfikator właściciela: %1. Zamiast tego użyto %2.
 label<br>helptext	infolog	pl	Etykieta<br>Tekst pomocy
 last changed	infolog	pl	Ostatnia zmiana
 last modified	infolog	pl	Ostatnio modyfikowany
@@ -287,6 +308,7 @@ no entries found, try again ...	infolog	pl	Nie znaleziono wpisów, spróbuj jesz
 no filter	infolog	pl	Bez filtra
 no links or attachments	infolog	pl	Brak linków lub załączników
 no project	infolog	pl	Żaden projekt
+no special handling	admin	pl	Brak specjalnej obsługi
 nonactive	infolog	pl	Nieaktywny
 none	infolog	pl	Brak
 normal	infolog	pl	Normalny
@@ -323,6 +345,7 @@ own upcoming	infolog	pl	Stworzone przez Ciebie - nadchodzące
 owner does not have edit rights	infolog	pl	Właściciel nie ma praw do edycji
 owner, responsible	infolog	pl	Właściciel, Odpowiedzialny
 parent	infolog	pl	Nadrzędny
+parent infolog	infolog	pl	Nadrzędny InfoLog
 participants for scheduling an appointment	infolog	pl	Uczestnicy planujący spotkanie
 path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	ścieżka na (web-)serwerze<br>np. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pl	Ścieżka do użytkownika i grupy MUSI BYĆ POZA rootem dokumentów www (document-root)!
@@ -342,7 +365,7 @@ price	infolog	pl	Cena
 pricelist	infolog	pl	Cennik
 primary link	infolog	pl	Główny link
 print this infolog	infolog	pl	Drukuj ten InfoLog
-printing...	infolog	pl	Drukowanie...
+printing...	infolog	pl	Drukowanie ...
 priority	infolog	pl	Priorytet
 private	infolog	pl	Prywatne
 project	infolog	pl	Projekt
@@ -358,19 +381,19 @@ read rights (default)	infolog	pl	Prawda odczytu (domyślne)
 receive notifications about items of type owned by groups you are part of	infolog	pl	Otrzymywanie powiadomień o elementach typu należących do grup, do których należysz
 regular expression	infolog	pl	Wyrażenie regularne
 remark	infolog	pl	Przypomnienie
-remove this link (not the entry itself)	infolog	pl	Usuń ten link (ale nie wpis)
+remove this link (not the entry itself)	infolog	pl	Usuń ten link (ale nie wpis).
 removed	infolog	pl	Usunięto.
 removed category	infolog	pl	usunięta kategoria
 replacement	infolog	pl	Zastąpienie
 replacements for inserting entries into documents	infolog	pl	Zamienniki do wstawiania wpisów do dokumentów
-respect timesheet run and read permissions for time totals	infolog	pl	Respektowanie uprawnień do uruchamiania i odczytu arkusza czasu dla sum czasu.
+respect timesheet run and read permissions for time totals	infolog	pl	Respektowanie uprawnień do uruchamiania i odczytu arkusza czasu dla sum czasu
 responsible	infolog	pl	Oddelegowane na Ciebie - wszystkie
 responsible open	infolog	pl	Oddelegowane na Ciebie - otwarte
 responsible open and upcoming	infolog	pl	Odpowiedzialne otwarte i nadchodzące
 responsible overdue	infolog	pl	Oddelegowane na Ciebie - zaległe
 responsible upcoming	infolog	pl	Oddelegowane na Ciebie - nadchodzące
 responsible user, priority	infolog	pl	Osoba odpowiedzialna, priorytet
-returns a list / search for records.	infolog	pl	Pokazuje listę wyszukanych rekordów
+returns a list / search for records.	infolog	pl	Pokazuje listę wyszukanych rekordów.
 rights for the responsible	infolog	pl	Uprawnienia do osoby odpowiedzialnej
 rows	infolog	pl	Wiersze
 same day	infolog	pl	Ten sam dzień
@@ -387,9 +410,7 @@ select a price	infolog	pl	Wybierz cenę
 select a priority for this task	infolog	pl	Wybierz priorytet dla tego zadania
 select a project	infolog	pl	Wybierz projekt
 select a responsible user: a person you want to delegate this task	infolog	pl	Wybierz osobę odpowiedzialną: osobę, którą delegujesz do tego zadania
-select a typ to edit it's status-values or delete it	infolog	pl	Wybierz typ, którego statusy-wartości chcesz edytować lub skasować.
-select an action	infolog	pl	Wybierz akcję
-select an action...	infolog	pl	Wybierz działanie...
+select a typ to edit it's status-values or delete it	infolog	pl	Wybierz typ, którego statusy-wartości chcesz edytować lub skasować
 select an app to search in	infolog	pl	Wybierz Aplikację aby w niej szukać
 select an entry to link with	infolog	pl	Wybierz wpis z którym połączysz
 select multiple contacts for a further action	infolog	pl	Wybierz parę kontaktów dla następującej akcji
@@ -402,17 +423,17 @@ selection cf	infolog	pl	Wybór CF
 sender	infolog	pl	Nadawca
 set status to done	infolog	pl	Ustaw status na gotowy
 set status to done for all entries	infolog	pl	Ustawienie statusu na gotowy dla wszystkich wpisów
-sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisów podrzędnych na "gotowy".
+sets the status of this entry and its subs to done	infolog	pl	Ustaw stan wpisu i jego wpisów podrzędnych na "gotowy"
 sets the status of this entry to done	infolog	pl	Ustawia status tego wpisu na gotowy
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pl	Czy Dziennik CRM ma w domyślnym widoku wyświetlać wszystkie Zadania, Rozmowy i Notatki podrzędne? Możesz zawsze dotrzeć do nich poprzez ich <i>rodzica</i>.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywać odnośniki do innych aplikacji oraz/lub załączone pliki na liście zadań (domyślny widok gdy uruchamiany jest Dziennik CRM)?
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pl	Czy Dziennik CRM powinien pokazywać odnośniki do innych aplikacji oraz/lub załączone pliki na liście zadań (domyślny widok gdy uruchamiany jest Dziennik CRM).
 should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	pl	Czy Dziennik CRM powinien pokazywać zadania na głównym ekranie a jeżeli tak, to z jakim filtrem. Działa tylko, jeżeli nie wybrano aplikacji na główny ekran (we wspólnych ustawieniach).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pl	Czy CRM - Dziennik ma używać pełnych danych osobowych (imię, nazwisko), czy tylko loginów.
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać unikalny identyfikator numeryczny, który może być używany np. jako numer kolejny zadania?
-should the infolog list show the column "last modified".	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać kolumnę "ostatnio zmodyfikowany"?
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać stopień zaawansowania tylko dla zadań "w toku", czy zawsze dwie osobne ikony?
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać unikalny identyfikator numeryczny, który może być używany np. jako numer kolejny zadania.
+should the infolog list show the column "last modified".	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać kolumnę "ostatnio zmodyfikowany".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pl	Czy na liście zadań Dziennika CRM pokazywać stopień zaawansowania tylko dla zadań "w toku", czy zawsze dwie osobne ikony.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	pl	Czy ten wpis ma być widoczny tylko przez Ciebie i innych, którym zapewnisz dostęp poprzez ACL
-show a column for used and planned times in the list.	infolog	pl	Czy pokazywać kolumnę z wykorzystanym oraz planowanym czasem na liście zadań?
+show a column for used and planned times in the list.	infolog	pl	Czy pokazywać kolumnę z wykorzystanym oraz planowanym czasem na liście zadań
 show a x if content equals this compare value, otherwise show nothing	infolog	pl	Pokaż X, jeśli zawartość jest równa tej wartości porównania, w przeciwnym razie nic nie pokazuj
 show full usernames	infolog	pl	Wyświetlaj pełną nazwę użytkownika
 show in the infolog list	infolog	pl	Pokaż listę CRM Dziennik
@@ -434,7 +455,7 @@ status	infolog	pl	Status
 status ...	infolog	pl	Status ...
 status, percent and date completed are always allowed.	infolog	pl	Status, stopień zaawansowania oraz data wykonania są zawsze możliwe do edycji.
 sub	infolog	pl	Podrz
-sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadania stają się podrzędne wobec zadań, z których je utworzono lub głównych zadań, jeżeli zadania z których je utworzono nie istnieją.
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pl	Zadania stają się podrzędne wobec zadań, z których je utworzono lub głównych zadań, jeżeli zadania z których je utworzono nie istnieją
 sub-entries will not be closed	infolog	pl	Zgłoszenia podrzędne nie będą zamykane
 sub-entry	infolog	pl	Wpis podrzędny
 subject	infolog	pl	Temat
@@ -443,25 +464,25 @@ tag to mark positions for address labels	infolog	pl	Zaznacz, aby oznaczyć pozyc
 task	infolog	pl	Zadanie
 tasks of	infolog	pl	Zadania
 template	infolog	pl	Szablon
-test import (show importable records <u>only</u> in browser)	infolog	pl	Import testowy (pokazuje importowane rekordy <u>tylko</u> w przeglądarce!)
+test import (show importable records <u>only</u> in browser)	infolog	pl	Import testowy (pokazuje importowane rekordy <u>tylko</u> w przeglądarce!).
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	pl	Dokument może zawierać symbol zastępczy, taki jak {{%1}}, który zostanie zastąpiony danymi.
 the following document-types are supported:	infolog	pl	Obsługiwane są następujące typy dokumentów:
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	Nazwa użyta wewnętrznie (<= 10 znaków), zmiana spowoduje niedostępność istniejących danych
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	Nazwa użyta wewnętrznie (<= 20 znaków), zmiana spowoduje niedostępność istniejących danych
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	Nazwa użyta wewnętrznie (<= 10 znaków), zmiana spowoduje niedostępność istniejących danych.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	Nazwa użyta wewnętrznie (<= 20 znaków), zmiana spowoduje niedostępność istniejących danych.
 the text displayed to the user	infolog	pl	Tekst wyświetlany użytkownikowi
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domyślnie używany przez CRM Dziennik po wejściu do aplikacji. Filtry ograniczają ilość wpisów w bieżącym widoku. Dostępne filtry pokazują tylko zakończone, wciąż otwarte lub nadchodzące wydarzenia, Twoje lub wszystkich użytkowników.
 til when should the todo or phonecall be finished	infolog	pl	Do kiedy powinno być zakończone Zadanie lub Rozmowa telefoniczna
 times	infolog	pl	Terminy
 titles of any entries linked to the current record, excluding attached files	infolog	pl	Tytuły wszystkich wpisów powiązanych z bieżącym rekordem, z wyłączeniem załączonych plików
 to many might exceed your execution-time-limit	infolog	pl	Zbyt wiele może spowodować przekroczenie czasu wykonywania
-to what should the startdate of new entries be set.	infolog	pl	Jaką wartość ustawić jako datę początkową dla nowych zadań?
+to what should the startdate of new entries be set.	infolog	pl	Jaką wartość ustawić jako datę początkową dla nowych zadań.
 today	infolog	pl	Dzisiaj
 todays date	infolog	pl	Dzisiejsza data
 todo	infolog	pl	Do zrobienia
 typ	infolog	pl	Typ
 typ '%1' already exists !!!	infolog	pl	Typ %1 już istnieje!
 type	infolog	pl	Typ
-type ...	infolog	pl	Typ ..
+type ...	infolog	pl	Typ ...
 type of customfield	infolog	pl	Typ pola dodatkowego
 type of field	infolog	pl	Typ pola
 type of the log-entry: note, phonecall or todo	infolog	pl	Typ wpisu InfoLog
@@ -488,12 +509,12 @@ view the parent of this entry and all his subs	infolog	pl	Zoabcz rodzica tego wp
 view this linked entry in its application	infolog	pl	Zoabcz podlinkowany wpis w jego aplikacji (np. w Książce Adresowej dla kontaktu)
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pl	Kiedy powinno się rozpocząć Zadanie lub Rozmowa telefoniczna
 which additional fields should the responsible be allowed to edit without having edit rights?	infolog	pl	Które dodatkowe pola powinna móc edytować osoba odpowiedzialna nie posiadając praw edycji?
-which implicit acl rights should the responsible get	infolog	pl	Jakie niejawne uprawnienia ACL powinien otrzymać odpowiedzialny użytkownik?
+which implicit acl rights should the responsible get	infolog	pl	Jakie niejawne uprawnienia ACL powinien otrzymać odpowiedzialny użytkownik
 which participants should be preselected when scheduling an appointment.	infolog	pl	Którzy uczestnicy powinni być wstępnie wybrani podczas planowania spotkania.
 which types should the calendar show	infolog	pl	Jakie typy powinien pokazywać kalendarz
 which types should the calendar show like events?	infolog	pl	Które typy powinny być wyświetlane w kalendarzu jako wydarzenia?
 will-call	infolog	pl	Czy połączenie
-write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach
+write (add or update) a record by passing its fields.	infolog	pl	Zapisz (dodaj lub uaktualnij) zapis przez przechodzenie po jego polach.
 yes - close	infolog	pl	Tak - Zamknij
 yes - close including sub-entries	infolog	pl	Tak - Zamknij, w tym wpisy podrzędne
 yes - delete	infolog	pl	Tak - Usuń
@@ -504,10 +525,10 @@ yes, with larger fontsize	infolog	pl	Tak, z większą czcionką
 yes, with purging of deleted items possible	infolog	pl	Tak, z możliwością usuwania usuniętych elementów
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	pl	Możesz wybrać kategorię, która ma być wstępnie wybrana podczas tworzenia nowego wpisu InfoLog.
 you can't delete one of the stock types !!!	infolog	pl	Nie możesz usunąć jesdnego z typów!
-you have entered an invalid ending date	infolog	pl	Podałeś niepoprawną datę zakończenia
-you have entered an invalid starting date	infolog	pl	Podałeś niepoprawną datę rozpoczęcia
+you have entered an invalid ending date	infolog	pl	Podałeś niepoprawną datę zakończenia!
+you have entered an invalid starting date	infolog	pl	Podałeś niepoprawną datę rozpoczęcia!
 you have to enter a name, to create a new type!	infolog	pl	Musisz wprowadzić nazwę, aby utworzyć nowy typ!
-you must enter a subject or a description	infolog	pl	Musisz podać temat lub opis
+you must enter a subject or a description	infolog	pl	Musisz podać temat lub opis.
 you need to select an entry for linking.	infolog	pl	Musisz wybrać wpis do powiązania.
 you need to select some entries first	infolog	pl	Musisz najpierw wybrać kilka wpisów.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	pl	Twoja baza jest NIEAKTUALNA (%1 vs. %2), uruchom %3setup%4 aby zaktualizować bazę.

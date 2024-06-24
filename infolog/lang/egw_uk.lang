@@ -6,8 +6,8 @@
 %1 entries %2, %3 failed.	infolog	uk	%1 записів %2, %3 не вдалося виконати.
 %1 modified	infolog	uk	%1 змінено
 %1 modified by %2 at %3	infolog	uk	%1 змінено %2 в %3
-%1 records imported	infolog	uk	%1 записів імпортовано
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	uk	%1 записів прочитано(Ще не імпортовано, верніться %2назад%3 та зніміть відмітку Тестувати Імпорт)
+%1 records imported	infolog	uk	%1 записів імпортовано.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	uk	%1 записів прочитано(Ще не імпортовано, верніться %2назад%3 та зніміть відмітку Тестувати Імпорт).
 %1 you are responsible for is due at %2	infolog	uk	%1, за який ви несете відповідальність, має бути сплачений в %2
 %1 you are responsible for is starting at %2	infolog	uk	%1, за який ви відповідаєте, починається з %2
 %1 you delegated is due at %2	infolog	uk	%1, який ви делегували, має бути сплачений о %2
@@ -31,7 +31,10 @@ a short subject for the entry	infolog	uk	Коротка тема запису
 abort without deleting	infolog	uk	Перервати без видалення
 accept	infolog	uk	прийнято
 action	infolog	uk	Дія
+actions...	infolog	uk	Дії ...
+actual date and time	infolog	uk	Актуальна дата та час
 add	infolog	uk	Додати
+add / remove link	infolog	uk	Додати / видалити посилання
 add a file	infolog	uk	Додати файл
 add a new entry	infolog	uk	Додати новий запис
 add a new note	infolog	uk	Додати нову нотатку
@@ -39,17 +42,21 @@ add a new phonecall	infolog	uk	Додати новий телефонний дз
 add a new sub-task, -note, -call to this entry	infolog	uk	Додати до цього запису нове під-завдання, -нотатку, -дзвінок
 add a new todo	infolog	uk	Додати нове Завдання
 add file	infolog	uk	Додати файл
+add or delete links	infolog	uk	Додавання або видалення посилань
 add sub	infolog	uk	Додати Підзапис
+add timesheet entry	infolog	uk	Додавання запису до табеля обліку робочого часу
 add:	infolog	uk	Додати:
 added	infolog	uk	Добавлено
 addressbook placeholders available	infolog	uk	Доступні заповнювачі адресної книги
 all	infolog	uk	Все
 all links and attachments	infolog	uk	Всі додатки та посилання
 all other %1 fields are valid	infolog	uk	Всі інші поля %1 дійсні
+all projects	infolog	uk	Всі проекти
 allow to save entries with due date in the past	infolog	uk	Дозволити зберігати записи з датою виконання в минулому
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	uk	Дозволяє встановити статус запису, наприклад, встановити Завдання як виконане у випадку закінчення (значення залежать від типу запису)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	uk	Дозволяє встановити статус запису, наприклад, встановити Завдання як виконане у випадку закінчення (значення залежать від типу запису).
 always show them	infolog	uk	Завжди показувати їх
 application mail expected but got: %1	infolog	uk	Очікуваний, але не отриманий електронний лист: %1
+archived too	infolog	uk	Також заархівовано
 are you shure you want to delete this entry ?	infolog	uk	Ви впевнені, що хочете видалити цей запис?
 attach a file	infolog	uk	Прикласти файл
 attach file	infolog	uk	Прикласти файл
@@ -81,6 +88,7 @@ creates a new status with the given values	infolog	uk	створює новий 
 creates a new typ with the given name	infolog	uk	створює новий тип з заданою назвою
 csv-fieldname	infolog	uk	CSV-Fieldname
 csv-filename	infolog	uk	CSV-Filename
+csv-import	common	uk	Імпорт CSV
 current user	infolog	uk	Поточний користувач
 custom	infolog	uk	Власне
 custom contact-address, leave empty to use information from most recent link	infolog	uk	Додаткові адреси контактів, залиште порожнім, щоб використати інформацію з останнього посилання
@@ -128,6 +136,7 @@ edit	infolog	uk	Редагувати
 edit or create categories for ingolog	infolog	uk	Редагувати або створити категорії для Записок
 edit the entry	infolog	uk	Редагувати запис
 edit this entry	infolog	uk	Редагувати цей запис
+editable fields for status 'archived'	admin	uk	Редаговані поля для статусу 'архівовано'
 empty for all	infolog	uk	порожнє для всіх
 encrypt description	infolog	uk	Зашифрувати опис
 enddate	infolog	uk	Дата закінчення
@@ -137,6 +146,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	u
 enter a textual description of the log-entry	infolog	uk	Введіть опис запису
 enter the query pattern	infolog	uk	Введіть зразок пошуку
 entry and all files	infolog	uk	Запис та всі файли
+entry can not be changed anymore, after status is set	admin	uk	Після встановлення статусу запис більше не може бути змінений
+entry can not be changed by anybody, but egroupware admins	admin	uk	Ніхто не може змінити запис, окрім адміністраторів EGroupware
 error: importing the ical	infolog	uk	Помилка: імпорт iCal
 error: no mail (mailbox / uid) given!	infolog	uk	Помилка: не вказано пошту (Поштова скринька / UID)!
 error: saving the entry	infolog	uk	Помилка збереження запису!
@@ -168,6 +179,7 @@ general fields:	infolog	uk	Загальні поля:
 general settings	infolog	uk	Загальні налаштування
 global categories	infolog	uk	Глобальні категорії
 group owner for	infolog	uk	Власник групи для
+handling of status 'archived'	admin	uk	Обробка статусу 'архівовано'
 high	infolog	uk	високий
 history	infolog	uk	Історія
 history logging	infolog	uk	Ведення журналу історії
@@ -204,7 +216,7 @@ infolog list	infolog	uk	Перелік записок
 infolog preferences	common	uk	Записки - Параметри
 infolog-fieldname	infolog	uk	Записки - Ім'я поля
 insert timestamp into description field	infolog	uk	Вставити мітку часу в поле опису
-invalid filename	infolog	uk	невірне ім'я файлу
+invalid filename	infolog	uk	невірне ім'я файлу.
 label<br>helptext	infolog	uk	Мітка<br>Пояснючий текст
 last changed	infolog	uk	Востаннє змінено
 last modified	infolog	uk	Востаннє змінено
@@ -229,16 +241,17 @@ manage mapping	infolog	uk	Керування відображенням
 max length of the input [, length of the inputfield (optional)]	infolog	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
 modifier	infolog	uk	Модифікатор
 modifierer	infolog	uk	Модифікатор
-name must not be empty !!!	infolog	uk	Назва повинна бути непорожнім
+name must not be empty !!!	infolog	uk	Назва повинна бути непорожнім!
 name of current user, all other contact fields are valid too	infolog	uk	Ім'я поточного користувача, всі інші поля контакту також дійсні
 name of new type to create	infolog	uk	Назва нового типу, що створюється
 new name	infolog	uk	нова назва
 new search	infolog	uk	Новий пошук
 no - cancel	infolog	uk	Ні - Відмовитись
 no custom field "%1" for %2.	infolog	uk	Немає кастомного поля "%1" для %2.
-no entries found, try again ...	infolog	uk	Записів не знайдено, спробуте ще...
+no entries found, try again ...	infolog	uk	Записів не знайдено, спробуте ще ...
 no filter	infolog	uk	Немає Фільтру
 no links or attachments	infolog	uk	без посилань або додатків
+no special handling	admin	uk	Ніякої спеціальної обробки
 none	infolog	uk	Немає
 normal	infolog	uk	нормальний
 not	infolog	uk	не треба
@@ -268,18 +281,18 @@ own upcoming	infolog	uk	власні майбутні
 owner, responsible	infolog	uk	Власник, Відповідальний
 participants for scheduling an appointment	infolog	uk	Учасники для планування зустрічі
 path on (web-)serverside<br>eg. /var/samba/share	infolog	uk	шлях на стороні вебсерверу<br>наприклад /var/samba/Share
-path to user and group files has to be outside of the webservers document-root!!!	infolog	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗАВНІШНІМ відносно корню документів вебсервера
+path to user and group files has to be outside of the webservers document-root!!!	infolog	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗАВНІШНІМ відносно корню документів вебсервера!
 pattern for search in addressbook	infolog	uk	Шаблон для пошуку в адресній книзі
 pattern for search in projects	infolog	uk	Шаблон для пошуку в проектах
 performance optimization for huge infolog tables	admin	uk	Оптимізація продуктивності для великих таблиць InfoLog
-permission denied	infolog	uk	Заборонено
+permission denied	infolog	uk	Заборонено!
 permissions error - %1 could not %2	infolog	uk	Помилка дозволів - %1 не зміг %2
 phone	infolog	uk	Телефонний дзвінок
 phone/email	infolog	uk	Телефон/Email
 phonecall	infolog	uk	Телефонний дзвінок
 prefix for sub-entries (default: re:)	infolog	uk	Префікс для підзаписів (за замовчуванням: Re:)
 print this infolog	infolog	uk	Надрукувати цей інфолог
-printing...	infolog	uk	Друк...
+printing...	infolog	uk	Друк ...
 priority	infolog	uk	Пріоритет
 private	infolog	uk	Особисте
 project	infolog	uk	Проект
@@ -292,7 +305,7 @@ re:	infolog	uk	Re:
 receive notifications about items of type owned by groups you are part of	infolog	uk	Отримувати сповіщення про елементи типу, що належать групам, до яких ви належите
 regular expression	infolog	uk	Регулярний вираз
 remark	infolog	uk	Ремарка
-remove this link (not the entry itself)	infolog	uk	Видалити це посилання (не сам запис)
+remove this link (not the entry itself)	infolog	uk	Видалити це посилання (не сам запис).
 removed	infolog	uk	Видалено.
 removed category	infolog	uk	видалена категорія
 replacement	infolog	uk	Заміна
@@ -317,8 +330,6 @@ select a priority for this task	infolog	uk	виберіть приоритет �
 select a project	infolog	uk	Виберіть проект
 select a responsible user: a person you want to delegate this task	infolog	uk	визначте відповідального: людину, якій Ви хочете делегувати це завдання
 select a typ to edit it's status-values or delete it	infolog	uk	виберіть тип для редагування його статусів або видалення
-select an action	infolog	uk	Виберіть дію
-select an action...	infolog	uk	Виберіть дію...
 select an app to search in	infolog	uk	Виберіть приложення в якому шукати
 select an entry to link with	infolog	uk	Виберіть запис для Посилання
 select new category	infolog	uk	Вибрати нову категорію
@@ -350,7 +361,7 @@ startdate must be before enddate!!!	infolog	uk	Дата старту повин�
 starting %1	infolog	uk	Початок %1
 startrecord	infolog	uk	Початковий запис
 status	infolog	uk	Статус
-status ...	infolog	uk	Статус...
+status ...	infolog	uk	Статус ...
 status, percent and date completed are always allowed.	infolog	uk	Статус, відсоток і дата завершення завжди дозволені.
 sub	infolog	uk	Підзапис
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	uk	Дочірні записи стають підзаписами батьківських або головних записів, якщо вони не мають батьківських записів
@@ -362,7 +373,7 @@ tag to mark positions for address labels	infolog	uk	Тег для позначе
 task	infolog	uk	Завдання
 tasks of	infolog	uk	Завдання з
 template	infolog	uk	Шаблон
-test import (show importable records <u>only</u> in browser)	infolog	uk	Тестувати Імпорт (лише показувати записи, що можуть бути імпортовані)
+test import (show importable records <u>only</u> in browser)	infolog	uk	Тестувати Імпорт (лише показувати записи, що можуть бути імпортовані).
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	uk	Документ може містити заповнювач на кшталт {{%1}}, який буде замінено даними.
 the following document-types are supported:	infolog	uk	Підтримуються наступні типи документів:
 the text displayed to the user	infolog	uk	текст, що показуються користувачу
@@ -409,11 +420,11 @@ yes, only admins can purge deleted items	infolog	uk	Так, тільки адм�
 yes, with larger fontsize	infolog	uk	Так, з більшим розміром шрифту
 yes, with purging of deleted items possible	infolog	uk	Так, з можливістю очищення видалених елементів
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	uk	Ви можете вибрати категорію, яка буде попередньо вибрана при створенні нового запису інфо-журналу.
-you can't delete one of the stock types !!!	infolog	uk	Ви не можете видалити один з вбудованих типів
-you have entered an invalid ending date	infolog	uk	Ви ввели невірну дату закінчення
-you have entered an invalid starting date	infolog	uk	Ви ввели невірну дату початку
+you can't delete one of the stock types !!!	infolog	uk	Ви не можете видалити один з вбудованих типів!
+you have entered an invalid ending date	infolog	uk	Ви ввели невірну дату закінчення!
+you have entered an invalid starting date	infolog	uk	Ви ввели невірну дату початку!
 you have to enter a name, to create a new type!	infolog	uk	Ви повинні ввести назву, щоб створити новий тип!
-you must enter a subject or a description	infolog	uk	Необхідно ввести тему або опис
+you must enter a subject or a description	infolog	uk	Необхідно ввести тему або опис.
 you need to select an entry for linking.	infolog	uk	Ви повинні вибрати запис для зв'язування.
 you need to select some entries first	infolog	uk	Вам потрібно вибрати кілька записів спочатку.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	uk	Ваша база даних НЕ є актуальною (%1 проти %2), будь ласка, запустіть %3setup%4, щоб оновити вашу базу даних.

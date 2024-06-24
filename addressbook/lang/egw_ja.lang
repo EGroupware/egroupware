@@ -14,7 +14,7 @@
 %s please calculate the result	addressbook	ja	%s 結果を計算してください
 (e.g. 1969)	addressbook	ja	(例 1969)
 (empty = use global limit, no = no export at all)	admin	ja	空 = グローバル・リミットを使用, no = エクスポートしない
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ <none> が見つかりません。</b>  一覧から変換タイプを選択してください。
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ <none> が見つかりません。</b> 一覧から変換タイプを選択してください。
 @-eval() is only availible to admins!!!	addressbook	ja	@-eval() は管理者専用です!
 account id	addressbook	ja	アカウント ID
 account repository	admin	ja	アカウント・リポジトリ
@@ -43,7 +43,6 @@ added by synchronisation	addressbook	ja	同期によって追加済み
 added to distribution list	addressbook	ja	配信リストに追加済み
 additional information about using ldap as contact repository	admin	ja	追加情報（LDAPをコンタクト・リポジトリとして参照）
 address book	common	ja	アドレス帳
-address book - vcard in	addressbook	ja	アドレス帳 - vCard追加
 address book - view	addressbook	ja	アドレス帳 - 表示
 address line 2	addressbook	ja	町域2
 address line 2 (private)	addressbook	ja	町域2 (個人)
@@ -286,6 +285,8 @@ group %1	addressbook	ja	グループ %1
 h	addressbook	ja	時間
 hide accounts from addressbook	addressbook	ja	ユーザ・アカウントを隠す
 hide all accounts	addressbook	ja	全アカウントを隠す
+hide all groups	addressbook	ja	すべてのグループを隠す
+hide groups without email address	addressbook	ja	メールアドレスのないグループを非表示にする
 hide user groups as distribution lists	addressbook	ja	配布リストとしてのユーザーグループを非表示にする
 hides accounts completly from the adressbook.	addressbook	ja	アドレス帳でユーザ・アカウントを隠します。
 history logging	admin	ja	履歴を記録
@@ -319,6 +320,7 @@ importer's personal	addressbook	ja	インポート実行者
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	CSVファイルからアドレス帳に連絡先をインポートします。CSVは「カンマ区切り値」を意味します。オプションタブで他のセパレータを選択することもできます。
 imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
 in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
+include all groups	addressbook	ja	すべてのグループを含める
 income	addressbook	ja	収入
 infolog	addressbook	ja	InfoLogお問い合わせ先
 infolog-organisation	addressbook	ja	InfoLogの組織
@@ -340,7 +342,7 @@ line 2	addressbook	ja	町域（２行目）
 link title for contacts show	addressbook	ja	コンタクト用リンク・タイトル
 links	addressbook	ja	リンク
 links and attached files	addressbook	ja	リンクと添付ファイル
-links to specified application.  example: {{links/infolog}}	addressbook	ja	アプリケーションへのリンク。  例: {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	addressbook	ja	アプリケーションへのリンク。 例: {{links/infolog}}
 list all categories	addressbook	ja	全カテゴリをリスト表示
 list all customfields	addressbook	ja	全カスタム項目をリスト表示
 list already exists!	addressbook	ja	リストは既に存在します!

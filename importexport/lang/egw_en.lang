@@ -1,5 +1,5 @@
 %1 definition(s) %2	importexport	en	%1 definition(s) %2
-%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	en	%1 definition(s) %2, %3 failed because of insufficient rights !!!
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	en	%1 definition(s) %2, %3 failed because of insufficient rights!
 %1 definitions %2	importexport	en	%1 definitions %2
 %1 is not a known user or group	importexport	en	%1 is not a known user or group
 %1 is not readable	importexport	en	%1 is not readable.
@@ -34,7 +34,7 @@ choose a plugin	importexport	en	Choose a plugin
 choose an application	importexport	en	Choose an application
 choose fields to export	importexport	en	Choose fields to export
 choose seperator and charset	importexport	en	Choose separator and charset
-column mismatch.  expected %1 columns, your file has %2.	importexport	en	Column mismatch.  Expected %1 columns, your file has %2.
+column mismatch.  expected %1 columns, your file has %2.	importexport	en	Column mismatch. Expected %1 columns, your file has %2.
 column mismatch: %1 should be %2, not %3	importexport	en	Column mismatch: %1 should be %2, not %3
 condition	importexport	en	Condition
 copied	importexport	en	Copied.
@@ -91,7 +91,7 @@ import definitions (attension: existing definitions with equal names will be ove
 imported	importexport	en	Imported
 importexport	common	en	Import | Export
 importexport wizard finished successfully!	importexport	en	Import|Export wizard finished successfully!
-imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	en	Imports information from a CSV file.  This is only a base class, and doesn't do anything on its own.
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	en	Imports information from a CSV file. This is only a base class, and doesn't do anything on its own.
 include header	importexport	en	Include header
 just me	importexport	en	Just me
 last run	importexport	en	Last run
@@ -118,12 +118,12 @@ schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import | export
 schedule import | export	importexport	en	Schedule import | export
 schedule not found	importexport	en	Schedule not found.
-schedule times are server time!  currently %s.	importexport	en	Schedule times are server time!  Currently %s.
+schedule times are server time!  currently %s.	importexport	en	Schedule times are server time! Currently %s.
 select definition	importexport	en	Select definition
 select groups	importexport	en	Select groups
 select owner	importexport	en	Select owner
 select plugin	importexport	en	Select plugin
-select...	importexport	en	Select...
+select...	importexport	en	Select ...
 set import values	importexport	en	Set import values
 skipped	importexport	en	Skipped
 some nice text	importexport	en	Some nice text

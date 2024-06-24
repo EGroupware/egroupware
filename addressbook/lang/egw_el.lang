@@ -1,13 +1,13 @@
 %1 added	addressbook	el	%1 προστέθηκε
 %1 contact(s) %2	addressbook	el	%1 επαφή(ές) %2
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	el	%1 επαφή(ες) %2, %3 απέτυχε λόγω %4 !!!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	el	%1 επαφή(ές) %2, %3 απέτυχαν εξαιτίας ανεπαρκών δικαιωμάτων !!!
-%1 contacts updated (%2 errors).	addressbook	el	%1 επαφές ενημερώθηκαν (%2 σφάλματα)
-%1 fields in %2 other organisation member(s) changed	addressbook	el	%1 πεδία σε %2 άλλου οργανισμού μέλος(η) άλλαξαν
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	el	%1 επαφή(ες) %2, %3 απέτυχε λόγω %4!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	el	%1 επαφή(ές) %2, %3 απέτυχαν εξαιτίας ανεπαρκών δικαιωμάτων!
+%1 contacts updated (%2 errors).	addressbook	el	%1 επαφές ενημερώθηκαν (%2 σφάλματα).
+%1 fields in %2 other organisation member(s) changed	addressbook	el	%1 πεδία σε %2 άλλου οργανισμού μέλος(η) άλλαξαν.
 %1 key(s) added to public keyserver "%2".	addressbook	el	% κλειδιά προστέθηκαν στον δημόσιο εξυπηρετητή κλειδιών "%2".
 %1 not implemented for %2!	addressbook	el	%1 δεν έχει υλοποιηθεί για %2!
 %1 public keys added.	addressbook	el	%1 δημόσια κλειδιά προστέθηκαν.
-%1 records imported	addressbook	el	%1 εγγραφές εισήχθησαν
+%1 records imported	addressbook	el	%1 εγγραφές εισήχθησαν.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	el	%1 εγγραφές αναγνώσθηκαν (δεν εισηχθησαν ακόμη, μπορείτε να %2επιστρέψετε%3 και να ξετσεκάρετε τη Δοκιμαστική Εισαγωγή)
 %1 shared this contact on %2 with %3 %4	addressbook	el	%1 μοιράστηκε αυτή την επαφή στο %2 %3 %4
 %1 starts with '%2'	addressbook	el	%1 ξεκινά με '%2'
@@ -15,9 +15,9 @@
 (e.g. 1969)	addressbook	el	(π.χ. 1969)
 (empty = use global limit, no = no export at all)	admin	el	Κενό = χρήση συστημικού ορίου, no = να μην γίνεται εξαγωγή.
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	el	<b>Κανένας τύπος μετατροπής <none> δεν εντοπίστηκε.</b> Παρακαλώ επιλέξτε έναν τύπο μετατροπής από τον κατάλογο
-@-eval() is only availible to admins!!!	addressbook	el	@-eval() διατίθεται μόνο σε διαχειριστές!!!
+@-eval() is only availible to admins!!!	addressbook	el	@-eval() διατίθεται μόνο σε διαχειριστές!
 account id	addressbook	el	Μοναδικός αριθμός λογαριασμού
-account repository	admin	el	Τόπος  λογαριασμού
+account repository	admin	el	Τόπος λογαριασμού
 accounts	addressbook	el	Λογαριασμοί
 actions	addressbook	el	Ενέργειες
 add %1	addressbook	el	Προσθέστε %1
@@ -43,7 +43,6 @@ added by synchronisation	addressbook	el	προστέθηκε συγχρονισ�
 added to distribution list	addressbook	el	προστέθηκε στη λίστα διανομής
 additional information about using ldap as contact repository	admin	el	Επιπρόσθετες πληροφορίες για τη χρήση του LDAP ως αποθήκη επαφής
 address book	common	el	Επαφές
-address book - vcard in	addressbook	el	Επαφές - vCard in
 address book - view	addressbook	el	Επαφές - εμφάνιση
 address line 2	addressbook	el	Γραμμή Διευθύνσεων 2
 address line 2 (private)	addressbook	el	Γραμμή Διευθύνσεων 2 (προσ.)
@@ -59,11 +58,11 @@ addressbook preferences	addressbook	el	Προτιμήσεις Επαφών
 addressbook the contact should be saved to	addressbook	el	Σε ποιο βιβλίο διεθύνσεων να αποθηκευτεί η επαφή
 addressbook the contact should be shown	addressbook	el	Βιβλίο διαυθύνσεων στο οποίο θα πρέπει να εμφανίζεται η επαφή
 addressbook vcard export	addressbook	el	Βιβλίο διευθύνσεων εξαγωγή vCard
-addressbook vcard import	addressbook	el	Βιβλίο διευθύνσεων εισαγωγή  vCard
+addressbook vcard import	addressbook	el	Βιβλίο διευθύνσεων εισαγωγή vCard
 addressbook-fieldname	addressbook	el	Επαφές-Πεδίο ονόματος
 addvcard	addressbook	el	Προσθήκη vCard
 advanced search	addressbook	el	Αναζήτηση για προχωρημένους
-all addressbooks	addressbook	el	Όλα τα  βιβλία διευθύνσεων
+all addressbooks	addressbook	el	Όλα τα βιβλία διευθύνσεων
 all contacts	addressbook	el	Όλες οι επαφές
 all in one field	addressbook	el	Όλα σε ένα πεδίο
 all types	addressbook	el	Όλοι οι τύποι
@@ -73,8 +72,8 @@ allow members of following groups to edit contact-data of accounts	addressbook	e
 allow users to maintain their own account-data	admin	el	Επιτρέψτε στους χρήστες να διατηρούν τα δικά τους στοιχεία λογαριασμού
 alt. csv import	addressbook	el	Εναλλακτική εισαγωγή CSV
 always	addressbook	el	πάντα
-apply changes to all members, whose fields have the same previous content	addressbook	el	Εφαρμογή των αλλαγών σε όλα τα μέλη, των οποίων τα πεδία έχουν το ίδιο με προηγουμένως περιεχόμενο
-apply the action on the whole query, not only the shown contacts!!!	addressbook	el	Εφαρμογή της ενέργειας σε όλες τις απορίες, ΟΧΙ μόνο των εμφανιζόμενων επαφών!!!
+apply changes to all members, whose fields have the same previous content	addressbook	el	Εφαρμογή των αλλαγών σε όλα τα μέλη, των οποίων τα πεδία έχουν το ίδιο με προηγουμένως περιεχόμενο.
+apply the action on the whole query, not only the shown contacts!!!	addressbook	el	Εφαρμογή της ενέργειας σε όλες τις απορίες, ΟΧΙ μόνο των εμφανιζόμενων επαφών!
 are you shure you want to delete this contact?	addressbook	el	Είστε σίγουρος ότι θέλετε να διαγράψετε αυτήν την επαφή;
 are you sure you want to delete this field?	addressbook	el	Θέλετε σίγουρα να διαγραφεί αυτό το πεδίο;
 assistent	addressbook	el	Βοηθός
@@ -99,12 +98,12 @@ business zip code	addressbook	el	Τ.Κ. εργασίας
 calendar fields:	addressbook	el	Πεδία Ημερολογίου:
 calendar integration	addressbook	el	Ενσωμάτωση ημερολογίου
 calendar uri	addressbook	el	Ημερολόγιο URI
-can be changed via setup >> configuration	admin	el	Μπορεί  να αλλάξει μέσω Setup >> Configuration
-can't create dn %1	addressbook	el	Δεν μπορεί να δημιουργηθεί dn %1
+can be changed via setup >> configuration	admin	el	Μπορεί να αλλάξει μέσω Setup >> Configuration
+can't create dn %1	addressbook	el	Δεν μπορεί να δημιουργηθεί DN %1
 car phone	addressbook	el	Τηλέφωνο αυτοκινήτου
 categorie	addressbook	el	Κατηγορία
 categorie added	addressbook	el	Προστέθηκε κατηγορία.
-categorie delete	addressbook	el	Διαγράφηκε η κατηγορία
+categorie delete	addressbook	el	Διαγράφηκε η κατηγορία.
 categories, notes, ...	addressbook	el	Κατηγορίες, Σημειώσεις, ...
 category path	addressbook	el	Διαδρομή κατηγορίας
 category tree	admin	el	Δέντρο κατηγοριών
@@ -120,7 +119,7 @@ choose an icon for this contact type	admin	el	Επιλέξτε μία εικόν
 choose charset	addressbook	el	Επιλογή κωδικοποίησης
 choose owner of imported data	addressbook	el	Επιλέξτε ιδιοκτήτη των εισαγόμενων δεδομένων
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	el	Επιλέξτε μία προ-δηλωμένη αντιστοίχιση ή χρησιμοποιήστε ένα δικό σας URL (χρησιμοποιήστε %r = οδός, %t = πόλη, %c = χώρα, %z = ταχυδρομικός κώδικας)
-chosse an etemplate for this contact type	admin	el	Επιλέξτε μία eΤαμπλέτα για αυτόν τον τύπο επαφής
+chosse an etemplate for this contact type	admin	el	Επιλέξτε μία eTemplate για αυτόν τον τύπο επαφής
 city	common	el	Πόλη
 city (private)	addressbook	el	Πόλη (προσ.)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	el	Καθαρισμός πεδίων βιβλίου διευθύνσεων, εφαρμόστε εάν ο συγχρονισμός δημιουργεί διπλές εγγραφές
@@ -152,17 +151,17 @@ copied	addressbook	el	αντιγράφηκε
 copied by %1, from record #%2.	addressbook	el	Αντιγράφτηκε από %1, από την εγγραφή #%2.
 copy a contact and edit the copy	addressbook	el	Αντιγραφή επαφής και επεξεργασία αντιγράφου
 copy instead of move	addressbook	el	Αντιγραφή αντί μεταφοράς
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	el	Αντιγράψτε τις αλλαγές σας στο πρόχειρο, %1 ανανεώστε την εγγραφή και εφαρμόστε τις αλλαγές σας
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	el	Αντιγράψτε τις αλλαγές σας στο πρόχειρο, %1 ανανεώστε την εγγραφή και εφαρμόστε τις αλλαγές σας.
 country	common	el	Χώρα
 country (private)	addressbook	el	Χώρα (προσ.)
 country code	addressbook	el	Κωδικός χώρας
-country code (private)	addressbook	el	Κωδικός χώρας  (προσ.)
+country code (private)	addressbook	el	Κωδικός χώρας (προσ.)
 create new links	addressbook	el	Δημιουργία νέων συνδέσμων
 created	addressbook	el	Δημιουργήθηκε
 credit	addressbook	el	Πίστωση
 crm view list	addressbook	el	Εμφάνιση λίστας CRM
 crm-view	addressbook	el	Εμφάνιση CRM
-csv-fieldname	addressbook	el	Ονομα πεδίου  CSV
+csv-fieldname	addressbook	el	Ονομα πεδίου CSV
 csv-filename	addressbook	el	Ονομα αρχείου CSV
 custom	addressbook	el	Προσαρμογή
 custom etemplate for the contactform	addressbook	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
@@ -177,10 +176,10 @@ default document to insert contacts	addressbook	el	Προεπιλεγμένο α
 default file as format	addressbook	el	Προεπιλεγμένος τύπος αρχείου
 default filter	addressbook	el	Προκαθορισμένο φίλτρο
 default format for fileas, eg. for new entries.	addressbook	el	Προκαθορισμένη μορφή για την αποθήκευση ως. Για παράδειγμα για νέες καταχωρήσεις.
-default geolocation source address	addressbook	el	Προκαθορισμένη διεύθυνση πηγής  γεωγραφικού εντοπισμού
+default geolocation source address	addressbook	el	Προκαθορισμένη διεύθυνση πηγής γεωγραφικού εντοπισμού
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	el	Η προεπιλογή είναι να ανοίγουν οι διευθύνσεις ηλεκτρονικού ταχυδρομείου στην εφαρμογή Mail του EGroupware, εφόσον ο χρήστης έχει πρόσβαση στη εφαρμογή αυτή.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	el	Ποια διεύθυνση ηλεκτρονικού ταχυδρομείου να χρησιμοποιείται για τις λίστες διανομής.
-delete a single entry by passing the id.	addressbook	el	Διαγραφή μιας καταχώρησης με εισαγωγή του id.
+delete a single entry by passing the id.	addressbook	el	Διαγραφή μιας καταχώρησης με εισαγωγή του ID.
 delete selected distribution list!	addressbook	el	Διαγραφή επιλεγμένης λίστας διανομής!
 delete this contact	addressbook	el	Διαγραφή αυτής της επαφής
 delete this organisation including all its contacts	addressbook	el	Διαγραφή αυτού του οργανισμού συμπεριλαμβανομένων και ΟΛΩΝ των επαφών του
@@ -192,20 +191,20 @@ directory with documents to insert contacts	addressbook	el	Κατάλογος μ
 disable	addressbook	el	Απενεργοποίηση
 disable last/next event column	addressbook	el	Απενεργοποίηση στήλης τελευταίου/επόμενου γεγονότος
 display contact	addressbook	el	Εμφάνιση επαφής
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Δείχνει μία υπενθύμιση γενεθλίων στην αρχική σελίδα (η σελίδα που εμφανίζεται όταν εισέρχεστε στο EGroupware ή όταν κάνετε κλικ στο εικονίδιο αρχικής σελίδας).
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	el	Εμφάνιση γενεθλίων στο Home.
 distribution list deleted	addressbook	el	Διαγράφηκε η λίστα διανομής
 distribution list renamed	addressbook	el	Μετονομάστηκε η λίστα διανομής
 distribution lists	addressbook	el	Λίστες διανομής
 distribution lists as groups	addressbook	el	Λίστες διανομής ως ομάδες
 distribution lists, ...	addressbook	el	Λίστες διανομής, ...
 do you really want to delete this contact?	addressbook	el	Θέλετε πραγματικά να διαγράψετε αυτή την επαφή;
-do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	el	Θέλετε να έχετε ένα πρόσθεστο προσωπικό βιβλίο επαφών, το οποίο να μην είναι προσβάσιμο από άλλους χρήστες ακόμη και εάν δώστε πρόσβαση στο προσωπικό σας βιβλίο επαφών;
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	el	Θέλετε να έχετε ένα πρόσθεστο προσωπικό βιβλίο επαφών, το οποίο να μην είναι προσβάσιμο από άλλους χρήστες ακόμη και εάν δώστε πρόσβαση στο προσωπικό σας βιβλίο επαφών.
 do your really want to delete this contact?	addressbook	el	Θέλετε πραγματικά να διαγράψετε αυτήν την επαφή;
 doesn't matter	addressbook	el	δεν έχει σημασία
 domestic	addressbook	el	Εσωτερικός
 don't hide empty columns	addressbook	el	Μην αποκρύπτετε κενές στήλες
 download	addressbook	el	Καταβίβαση
-download export file (uncheck to debug output in browser)	addressbook	el	Καταβίβαση αρχείου εξαγωγής (Ξετσεκάρετε για αποσφαλμάτωση εξαγωγής στο φυλλομετρητή)
+download export file (uncheck to debug output in browser)	addressbook	el	Καταβίβαση αρχείου εξαγωγής (Ξετσεκάρετε για αποσφαλμάτωση εξαγωγής στο φυλλομετρητή).
 download this contact as vcard file	addressbook	el	φορτώστε αυτήν την επαφή ως vCard αρχείο
 duplicate threshold	addressbook	el	Κατώφλι διπλών καταχωρήσεων
 duplicate warning	addressbook	el	Προειδοποίηση διπλών καταχωρήσεων
@@ -222,7 +221,7 @@ edit phonenumbers -	addressbook	el	Επεξαργασία αριθμών τηλ�
 either the configured email addesses are wrong or the mail configuration.	addressbook	el	Είτε οι διαμορφωμένες διευθύνσεις των email είναι λάθος είτε η διαμόρφωση του μηνύματος.
 email & internet	addressbook	el	Email & Internet
 email (private)	addressbook	el	διεύθυνση ηλεκτρονικού ταχυδρομείου (προσωπική)
-email addresses (comma separated) to send the contact data	addressbook	el	Διευθύνσεις Email (διαχωρισένες με κόμμα) για αποστολή των δεδομένων των επαφών
+email addresses (comma separated) to send the contact data	addressbook	el	Διευθύνσεις Email (διαχωρισένες με κόμμα) για αποστολή των δεδομένων των επαφών.
 empty	admin	el	Κενό
 empty addressbook before importing	addressbook	el	Διαγραφή καταχωρήσεων που δεν υπάρχουν στην κατάσταση CSV
 empty for all	addressbook	el	Κενό για όλα
@@ -230,8 +229,8 @@ enable an extra private addressbook	addressbook	el	Ενεργοποιήστε έ
 enclosure	addressbook	el	Συνημμένο
 end	addressbook	el	Τέλος
 enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
-error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής !!!
-error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής !!!
+error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής!
+error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής!
 error: the entry has been updated since you opened it for editing!	addressbook	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	el	Παράδειγμα {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - ψάξε στο πεδίο "n_prefix", για "Mr", αν βρεθεί, γράψε Hello Mr., αλλιώς γράψε Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	el	Παράδειγμα {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Παράδειγμα: Mr Dr. James Miller
@@ -248,25 +247,25 @@ export file name	addressbook	el	Ονομα αρχείου εξαγωγής
 export from addressbook	addressbook	el	Εξαγωγή από το βιβλίο Διευθύνσεων
 export selection	addressbook	el	Επιλογές εξαγωγής
 exported	addressbook	el	εξήχθη
-exports contacts from your addressbook into a csv file.	addressbook	el	Εξαγάγει επαφές από το βιβλίο διευθύνσεων σε ένα αρχείο CSV
+exports contacts from your addressbook into a csv file.	addressbook	el	Εξαγάγει επαφές από το βιβλίο διευθύνσεων σε ένα αρχείο CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εξάγει επαφές από το βιβλίο διευθύνσεών σας σε CSV αρχείο.CSV σημαίνει 'Comma Seperated Values'. Παρολαυτά στην καρτέλα Επιλογές μπορείτε επίσης να διαλέξετε και άλλους διαχωριστήρες.
-exports contacts from your addressbook into a vcard file.	addressbook	el	Εξαγάγει επαφές από το βιβλίο διευθύνσεων σας σε ένα αρχείο vCard
+exports contacts from your addressbook into a vcard file.	addressbook	el	Εξαγάγει επαφές από το βιβλίο διευθύνσεων σας σε ένα αρχείο vCard.
 extra	addressbook	el	Επιπλέον
 extra encodings	addressbook	el	Επιπλέον κωδικοποιήσεις
 extra private	addressbook	el	Επιπλέων προσωπικά
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!!!
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!
 favorite phone	addressbook	el	Αγαπημένο τηλέφωνο
 favorites	addressbook	el	Αγαπημένα
 fax	addressbook	el	Fax
 fax (private)	addressbook	el	fax (προσ.)
 fax number	common	el	Αριθμός Fax
-field %1 has been added !	addressbook	el	Το πεδίο %1 προστέθηκε !
-field %1 has been updated !	addressbook	el	Το πεδίο %1 ενημερώθηκε !
+field %1 has been added !	addressbook	el	Το πεδίο %1 προστέθηκε!
+field %1 has been updated !	addressbook	el	Το πεδίο %1 ενημερώθηκε!
 field name	addressbook	el	Ονομα πεδίου
 fields for the csv export	addressbook	el	Πεδία για την CSV εξαγωγή
 fields the user is allowed to edit himself	admin	el	Πεδία τα οποία ο ίδιος ο χρήστης μπορεί να επεξεργαστεί
 fields to check for duplicates	addressbook	el	Πεδία για έλεγχο διπλοεγγραφών
-fields to consider when looking for duplicate contacts.	addressbook	el	Πεδία που λαμβάνονται υπόψη στον έλεγχο πολλαπλών καταχωρήσεων της ίδια επαφής
+fields to consider when looking for duplicate contacts.	addressbook	el	Πεδία που λαμβάνονται υπόψη στον έλεγχο πολλαπλών καταχωρήσεων της ίδια επαφής.
 fields to copy when copying an address?	admin	el	Πεδία που αντιγράφονται όταν γίνεται αντιγραφή διεύθυνσης
 fields to show in address list	addressbook	el	Πεδία που θα εμφανίζονται στη λίστα διευθύνσεων
 fieldseparator	addressbook	el	Διαχωριστής πεδίων
@@ -286,15 +285,17 @@ group %1	addressbook	el	Ομάδα %1
 h	addressbook	el	h
 hide accounts from addressbook	addressbook	el	Απόκρυψη λογαριασμών
 hide all accounts	addressbook	el	Απόκρυψη όλων των λογαριασμών
+hide all groups	addressbook	el	Απόκρυψη όλων των ομάδων
+hide groups without email address	addressbook	el	Απόκρυψη ομάδων χωρίς διεύθυνση email
 hide user groups as distribution lists	addressbook	el	Οι ομάδες χρηστών να μην εμφανίζονται στις λίστες διανομής
-hides accounts completly from the adressbook.	addressbook	el	Αποκρύπτει λογαριασμούς εντελώς από το βιβλίο διευθύνσεων
+hides accounts completly from the adressbook.	addressbook	el	Αποκρύπτει λογαριασμούς εντελώς από το βιβλίο διευθύνσεων.
 history logging	admin	el	Ιστορικό εισόδων
 home address	addressbook	el	Διεύθυνση οικίας
 home address, birthday, ...	addressbook	el	Διεύθυνση οικίας, Γενέθλια, ...
 home city	addressbook	el	Πόλη οικίας
 home country	addressbook	el	Χώρα οικίας
 home email	addressbook	el	Email οικίας
-home email if given, else work email	addressbook	el	Προσωπική διεύθυνση ηλεκτρονικού ταχυδρομείου, αλλιώς διεύθυνση  εργασίας
+home email if given, else work email	addressbook	el	Προσωπική διεύθυνση ηλεκτρονικού ταχυδρομείου, αλλιώς διεύθυνση εργασίας
 home phone	addressbook	el	Τηλέφωνο οικίας
 home state	addressbook	el	Νομός οικίας
 home street	addressbook	el	Διεύθυνση οικίας
@@ -312,13 +313,14 @@ import file	addressbook	el	Εισαγωγή Αρχείου
 import from	addressbook	el	Εισαγωγή από
 import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV, ή vCard
 import from outlook	addressbook	el	Εισαγωγή από το Outlook
-import multiple vcard	addressbook	el	Εισαγωγή  πολλαπλών vCard
+import multiple vcard	addressbook	el	Εισαγωγή πολλαπλών vCard
 import next set	addressbook	el	Εισαγωγή επόμενου σετ
 import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε vCard μορφή.
 importer's personal	addressbook	el	Προσωπικά του εισαγωγέα
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων από ένα αρχείο CSV ( 'Comma Separated Values'). Στις σχετικές ρυθμίσεις μπορείτε να επιλέξετε και χαρακτήρα διαχωρισμού.
-imports contacts into your addressbook from a vcard file.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων σας από ένα αρχείο vCard
+imports contacts into your addressbook from a vcard file.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων σας από ένα αρχείο vCard.
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
+include all groups	addressbook	el	Συμπεριλάβετε όλες τις ομάδες
 income	addressbook	el	Εισόδημα
 infolog	addressbook	el	InfoLog Επικοινωνία
 infolog-organisation	addressbook	el	Οργάνωση InfoLog
@@ -343,7 +345,7 @@ links and attached files	addressbook	el	Σύνδεσμοι και συνημμέ
 links to specified application.  example: {{links/infolog}}	addressbook	el	Σύνδεσμοι προς στην οριζόμενη εφαρμογή. Για παράδειγμα {{links/infolog}}
 list all categories	addressbook	el	Τοποθέτηση σε λίστα όλων των κατηγοριών
 list all customfields	addressbook	el	Τοποθέτηση σε λίστα όλων των προσαρμοσμένων πεδίων
-list already exists!	addressbook	el	Η λίστα υπάρχει ήδη
+list already exists!	addressbook	el	Η λίστα υπάρχει ήδη!
 list created	addressbook	el	Η λίστα δημιουργήθηκε
 list creation failed, no rights!	addressbook	el	Η δημιουργία της λίστας απέτυχε, δεν έχετε το δικαίωμα!
 list of files linked to the current record	addressbook	el	Λίστα αρχείων συνδεδεμένα με την τρέχουσα εγγραφή
@@ -351,7 +353,7 @@ load custom fields in index, even if custom field column is off (eg. to display 
 load vcard	addressbook	el	Φόρτωση vCard
 location	addressbook	el	Τοποθεσία
 locations	addressbook	el	τοποθεσίες
-mail vcard	addressbook	el	Αποστολή vCard με ηλεκτρονικό ταχυδρομείο
+mail vcard	addressbook	el	Κάρτα αλληλογραφίας vCard
 main categories in their own field	addressbook	el	Κύριες κατηγορίες στο δικό τους πεδίο
 manage mapping	addressbook	el	Επεξεργασία αντιστοιχίσεων
 mark records as private	addressbook	el	Σημείωση εγγραφών ως ιδιωτικές
@@ -368,16 +370,16 @@ mobile	addressbook	el	Κινητό
 mobile phone	addressbook	el	Κινητό τηλέφωνο
 mobile phone (private)	addressbook	el	Κινητό τηλέφωνο (προσ.)
 modem phone	addressbook	el	Τηλέφωνο modem
-more ...	addressbook	el	Περισσότερα
+more ...	addressbook	el	Περισσότερα ...
 move to addressbook	addressbook	el	Μεταφορά στο βιβλίο διευθύνσεων
 moved	addressbook	el	μετακινήθηκε
 multiple vcard	addressbook	el	Πολλαπλή vCard
 name for the distribution list	addressbook	el	Όνομα για την λίστα διανομής
-name of current user, all other contact fields are valid too	addressbook	el	Όνομα του συνδεδεμένου χρήστη,  επίσης ισχύουν όλα τα πεδία επαφών.
+name of current user, all other contact fields are valid too	addressbook	el	Όνομα του συνδεδεμένου χρήστη, επίσης ισχύουν όλα τα πεδία επαφών.
 name, address	addressbook	el	Όνομα, Διεύθυνση
 name, email, phone	addressbook	el	Όνομα, email, τηλέφωνο
 new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
-new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του InfoLog
+new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του InfoLog.
 next date	addressbook	el	Επόμενη ημερομηνία
 no categories selected	addressbook	el	Δεν έχουν επιλεγεί κατηγορίες
 no country selected	addressbook	el	Δεν έχει επιλεγεί χώρα
@@ -403,19 +405,19 @@ own sorting	addressbook	el	προσωπική ταξινόμηση
 pager	common	el	Αριθμός μπίπερ
 parcel	addressbook	el	Πακέτο
 participants	addressbook	el	Συμμετέχοντες
-permission denied !!!	addressbook	el	Άδεια απορρίπτεται !!!
+permission denied !!!	addressbook	el	Άδεια απορρίπτεται!
 permissiong denied! ask your administrator to allow regular uses to update their public keys.	addressbook	el	Απαγορεύεται η πρόσβαση! Ρωτήστε τον διαχειριστή αν θέλει να επιτρέψει σε απλούς χρήστες να ανανεώνουν τα δημόσια κλειδιά τους.
 pgp key	addressbook	el	Κλειδί PGP
 phone number	common	el	Αριθμός τηλεφώνου
 phone numbers	common	el	Αριθμοί τηλεφώνων
 photo	addressbook	el	Φωτογραφία
-please enter a name for that field !	addressbook	el	Παρακαλώ εισάγετε όνομα γι' αυτό το πεδίο !
+please enter a name for that field !	addressbook	el	Παρακαλώ εισάγετε όνομα γι' αυτό το πεδίο!
 please select only one category	addressbook	el	Παρακαλώ επιλέξτε μόνο μία κατηγορία
 postal	common	el	Ταχυδρομικός
 pref	addressbook	el	Προτιμήσεις
 preferred email address to use in distribution lists	addressbook	el	Προτιμώμενη διεύθυνση ηλεκτρονικού ταχυδρομείου
 preferred phone	addressbook	el	Προτιμώμενο τηλέφωνο
-preferred type of email address to add for distribution lists	addressbook	el	Προτιμώμενος τύπος διεύθυνσης ηλεκτρονικού ταχυδρομείου για λίστες διανομής
+preferred type of email address to add for distribution lists	addressbook	el	Προτιμώμενος τύπος διεύθυνσης ηλεκτρονικού ταχυδρομείου για λίστες διανομής.
 prefix	addressbook	el	Πρόθεμα
 prevent deleting of contacts	admin	el	Απαγόρευση διαγραφής επαφών
 private address	addressbook	el	Προσωπική διεύθυνση
@@ -424,16 +426,16 @@ public key	addressbook	el	Δημόσιο κλειδί
 public sharing url	addressbook	el	Δημόσια διεύθυνση URL κοινής χρήσης
 publish into groups:	addressbook	el	Δημοσίευση σε ομάδες:
 read a list / search for entries.	addressbook	el	Ανάγνωση μιας λίστας/αναζήτηση για καταχωρήσεις.
-read a list of entries.	addressbook	el	Ανάγνωση λίστας καταχωρήσεων
-read a single entry by passing the id and fieldlist.	addressbook	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή id και λίστας πεδίων
+read a list of entries.	addressbook	el	Ανάγνωση λίστας καταχωρήσεων.
+read a single entry by passing the id and fieldlist.	addressbook	el	Ανάγνωση μεμονωμένης καταχώρησης με εισαγωγή ID και λίστας πεδίων.
 read only	addressbook	el	μόνο ανάγνωση
 record access	addressbook	el	Πρόσβαση Εγγραφής
 record owner	addressbook	el	Ιδιοκτήτης εγγραφής
 recovered	addressbook	el	Ανακτήθηκε
 region	addressbook	el	Περιοχή
 remove from distribution list	addressbook	el	Αφαίρεστη από την λίστα διανομής
-remove selected contacts from distribution list	addressbook	el	Αφαίρεση επιλεγμένων επαφών από τη λίστα διανομής
-removed from distribution list	addressbook	el	Αφαιρέθηκε από τη λίστα διανομής
+remove selected contacts from distribution list	addressbook	el	Αφαίρεση επιλεγμένων επαφών από τη λίστα διανομής.
+removed from distribution list	addressbook	el	Αφαιρέθηκε από τη λίστα διανομής.
 rename list	addressbook	el	Μετονομασία λίστας
 rename selected distribution list	addressbook	el	Μετονομασία επιλεγμένης λίστας διανομής
 repetition	addressbook	el	Επανάληψη
@@ -449,7 +451,7 @@ select a view	addressbook	el	Επιλέξτε μία προβολή
 select addressbook type	addressbook	el	Επιλέξτε τύπο βιβλίου διευθύνσεων
 select all	addressbook	el	Επιλογή όλων
 select an action or addressbook to move to	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό
-select an action or addressbook to move to...	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό...
+select an action or addressbook to move to...	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό ...
 select an opened dialog	addressbook	el	Επιλέξτε ένα ανοικτό παράθυρο
 select migration type	admin	el	Επιλέξτε τύπο μετανάστευσης
 select multiple contacts for a further action	addressbook	el	Επιλέξτε πολλαπλές επαφές για περαιτέρω ενέργειες
@@ -462,7 +464,7 @@ send emailcopy to receiver	addressbook	el	Αποστολή αντιγράφου 
 send fax via email by replacing fax number with an email address	addressbook	el	Αποστολή φαξ μέσω ηλεκτρονικού ταχυδρομείου αντικαθιστώντας τον αριθμό φαξ με μια διεύθυνση ηλεκτρονικού ταχυδρομείου
 send succeeded to %1	common	el	Η αποστολή ήταν επιτυχείς στο %1
 seperator	addressbook	el	Χαρακτήρας διαχωρισμού
-set full name and file as field in contacts of all users (either all or only empty values)	admin	el	Ορισμός πλήρους ονόματος και πεδίου 'αποθήκευση ως' για όλους τους χρήστες. Είτε όλα ή μόνο κενές τιμές.
+set full name and file as field in contacts of all users (either all or only empty values)	admin	el	Ορισμός πλήρους ονόματος και πεδίου 'αποθήκευση ως' για όλους τους χρήστες. Είτε όλα ή μόνο κενές τιμές
 set only full name	addressbook	el	Να ορίζεται μόνο το πλήρες όνομα
 share into addressbook	addressbook	el	Μοιραστείτε στο βιβλίο διευθύνσεων
 share writable	addressbook	el	Μοιραστείτε εγγράψιμο
@@ -473,7 +475,7 @@ shared with	addressbook	el	Κοινή χρήση με
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	el	Επιθυμείτε να εμφανίζονται πάντα οι στήλες φωτογραφίας και διεύθυνσης οικίας, ακόμα και αν είναι κενές.
 show	addressbook	el	Εμφάνιση
 show active accounts	addressbook	el	Εμφάνιση ενεργών λογαριασμών
-show all accounts	addressbook	el	Εμφάνιση όλων των  λογαριασμών
+show all accounts	addressbook	el	Εμφάνιση όλων των λογαριασμών
 show infolog entries for this organisation	addressbook	el	Παρουσίαση των InfoLog καταχωρήσεων για αυτόν τον οργανισμό
 show the contacts of this organisation	addressbook	el	Εμφανίστε τις επαφές αυτού του οργανισμού
 similar contacts found:	addressbook	el	Βρέθηκαν παρόμοιες επαφές
@@ -488,28 +490,28 @@ state (private)	addressbook	el	Νομός (προσ.)
 street	common	el	Οδός
 street (private)	addressbook	el	Οδός (προσ.)
 subject for email	addressbook	el	Θέμα email
-successfully imported %1 records into your addressbook.	addressbook	el	Επιτυχής εισαγωγή %1 εγγραφής(ών) στο βιβλίο Διευθύνσεων
+successfully imported %1 records into your addressbook.	addressbook	el	Επιτυχής εισαγωγή %1 εγγραφής(ών) στο βιβλίο Διευθύνσεων.
 suffix	addressbook	el	Επίθεμα
 tag to mark positions for address labels	addressbook	el	Ετικέτα για τον χαρακτηρισμό θέσεων στις ετικέτες διευθύνσεων
 tel home	addressbook	el	τηλ σπιτιού
 telephony integration	admin	el	Ενσωμάτωση τηλεφωνικού συστήματος
 test import (show importable records <u>only</u> in browser)	addressbook	el	Δοκιμαστική Εισαγωγή
 thank you for contacting us.	addressbook	el	Ευχαριστούμε που επικοινωνήσατε μαζί μας.
-that field name has been used already !	addressbook	el	Το όνομα πεδίου χρησιμοποιείται ήδη !
-the anonymous user has probably no add rights for this addressbook.	addressbook	el	Ο ανώνυμος χρήστης δεν έχει πιθανότατα δικαίωμα προσθήκης σε αυτό το βιβλίο διευθύνσεων
+that field name has been used already !	addressbook	el	Το όνομα πεδίου χρησιμοποιείται ήδη!
+the anonymous user has probably no add rights for this addressbook.	addressbook	el	Ο ανώνυμος χρήστης δεν έχει πιθανότατα δικαίωμα προσθήκης σε αυτό το βιβλίο διευθύνσεων.
 the anonymous user needs add rights for it!	addressbook	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα για να προσθέσει σε αυτό!
 the anonymous user needs read it!	addressbook	el	Ο ανώνυμος χρήστης χρειάζεται δικαιώματα ανάγνωσης!
 the following document-types are supported:	addressbook	el	Οι παρακάτω τύποι αρχείων υποστηρίζονται:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	el	Απαιτείται η επέκταση zip για την εισαγωγή στοιχείων επαφών σε αρχεία τύπου LibreOffice ή MS Office.
-there was an error saving your data :-(	addressbook	el	Υπήρξε ένα σφάλμα κατά την αποθήκευση των δεδομένων σας :-(
+there was an error saving your data :-(	addressbook	el	Υπήρξε ένα σφάλμα κατά την αποθήκευση των δεδομένων σας!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	el	Αυτή η ενότητα εμφανίζει μία φόρμα επαφών, που αποθηκεύεται απευθείας στο βιβλίο διευθύνσεων.
-this module displays block from a adddressbook group.	addressbook	el	Αυτή η ενότητα εμφανίζει μια  υπο-ενότητα του βιβλίου διευθύνσεων.
+this module displays block from a adddressbook group.	addressbook	el	Αυτή η ενότητα εμφανίζει μια υπο-ενότητα του βιβλίου διευθύνσεων.
 this person's first name was not in the address book.	addressbook	el	Το όνομα αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
 this person's last name was not in the address book.	addressbook	el	Το επίθετο αυτού του ατόμου δεν υπάρχει στο βιβλίο διευθύνσεων
 timezone	addressbook	el	Ζώνη ώρας
 title	addressbook	el	Επάγγελμα
 titles of any entries linked to the current record, excluding attached files	addressbook	el	Τίτλοι των συνδεδεμένων καταχωρήσεων τις τρέχουσας εγγραφής εκτός από τα συνημμένα αρχεία
-to many might exceed your execution-time-limit	addressbook	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσης
+to many might exceed your execution-time-limit	addressbook	el	Πάρα πολλοί. Ενδεχόμενο υπέρβασης ορίου χρόνου εκτέλεσηςv
 today is %1's birthday!	common	el	Σήμερα είναι τα γενέθλια του/της %1!
 tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια του/της %1!
 translation	addressbook	el	Μετάφραση
@@ -520,7 +522,7 @@ unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addr
 unable to delete	addressbook	el	αδυναμία διαγραφής
 unable to import into %1, using %2	addressbook	el	Αδυναμία εισαγωγής στο 1% χρησιμοποιώντας το %2
 unique id (uid)	addressbook	el	Μοναδικό (Unique) ID (UID)
-unique id<br />(to update existing records)	addressbook	el	Μοναδικό (Unique) ID (UID)<br/>για την ενημέρωση υφιστάμενων εγγραφών
+unique id<br />(to update existing records)	addressbook	el	Μοναδικό (Unique) ID (UID)<br>για την ενημέρωση υφιστάμενων εγγραφών
 unknown type %1, imported as %2	addressbook	el	Άγνωστος τύπος %1, έγινε εισαγωγή ως %2
 unshare	addressbook	el	Δεν μοιράζεται πλέον
 unshared	addressbook	el	δεν μοιράζεται πλέον
@@ -552,12 +554,12 @@ weekday	addressbook	el	Ημέρα της εβδομάδας
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	el	Σύνδεσμοι του βιβλίου διευθύνσεων που εμφανίζονται σε άλλες εφαρμογές. Οι κενές τιμές θα παραλείπονται. Πρέπει να συνδεθείτε ξανά, αν αλλάξετε αυτή τη ρύθμιση!
 when viewing a contact, show linked entries from the selected application	addressbook	el	Κατά την προβολή μιας επαφής, να εμφανίζονται οι συνδεδεμένες καταχωρήσεις από την επιλεγμένη εφαρμογή
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	el	Όταν συγχωνεύετε καταχωρήσεις σε έγγραφα, θα αποθηκεύονται εδώ. Εάν δεν έχει δοθεί κατάλογος, θα αποθηκεύονται στον αρχικό σας κατάλογο (/home/...)
-where to add the email address	addressbook	el	Θέση για  να προστεθεί η διεύθυνση ηλεκτρονικού ταχυδρομείου
+where to add the email address	addressbook	el	Θέση για να προστεθεί η διεύθυνση ηλεκτρονικού ταχυδρομείου
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	el	Ποια μορφή διεύθυνσης θα έπρεπε το βιβλίο διευθύνσεων να χρησιμοποιεί για τις χώρες που δεν γνωρίζει τη μορφή διεύθυνσής τους. Αν η μορφή διεύθυνσης μιας χώρας είναι γνωστή, χρησιμοποιεί την ανεξάρτητη αυτής της διάταξης.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	el	Ποιο βιβλίο διευθύνσεων πρέπει να επιλέγεται όταν προσθέτετε επαφή χωρίς να έχετε δικαιώματα στο συγκεκριμένο βιβλίο διευθύνσεων.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.
-which charset should be used for the vcard export.	addressbook	el	Ποια κωδικοποίηση να χρησιμοποιείται για την εξαγωγή vCard
-which charset should be used for the vcard import and export.	addressbook	el	Ποια κωδικοποίηση να χρησιμοποιείται για την εισαγωγή και εξαγωγή vCard
+which charset should be used for the vcard export.	addressbook	el	Ποια κωδικοποίηση να χρησιμοποιείται για την εξαγωγή vCard.
+which charset should be used for the vcard import and export.	addressbook	el	Ποια κωδικοποίηση να χρησιμοποιείται για την εισαγωγή και εξαγωγή vCard.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	el	Ποια πεδία θα πρέπει να εξάγωνται.Όλα σημαίνει κάθε πεδίο που είναι αποθηκευμένο στο βιβλίο διευθύνσεων συμπεριλαμβανομένου και των προσαρμοσμένων πεδίων.Η διεύθυνση εργασίας ή οικίας περιέχει μόνο το όνομα, την εταιρεία και την επιλεγμένη διεύθυνση.
 whole query	addressbook	el	ολόκληρη απορία
 work email if given, else home email	addressbook	el	Χρήση email εργασίας εάν υπάρχει, ειδάλλως το προσωπικό email
@@ -581,7 +583,7 @@ you must select a vcard. (*.vcf)	addressbook	el	Πρέπει να επιλέξε
 you must select at least 1 column to display	addressbook	el	Πρέπει να επιλέξετε τουλάχιστο μία στήλη για εμφάνιση
 you need to select a distribution list	addressbook	el	Πρέπει να επιλέξετε μια λίστα διανομής
 you need to select some contacts first	addressbook	el	Πρέπει να επιλέξετε κάποιες επαφές πρώτα
-you need to select some entries first	addressbook	el	Πρέπει να επιλέξετε πρώτα  κάποιες καταχωρήσεις
+you need to select some entries first	addressbook	el	Πρέπει να επιλέξετε πρώτα κάποιες καταχωρήσεις
 your new public key has been stored in accounts addressbook.	addressbook	el	Το νέο σας δημόσιο κλειδί αποθηκευτικέ στο βιβλίο επαφών λογαριασμών.
 zip code	common	el	Τ.Κ.
 zip code (private)	addressbook	el	Τ.Κ. (προσ.)

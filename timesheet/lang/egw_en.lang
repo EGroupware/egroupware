@@ -85,7 +85,7 @@ leaves without saveing	timesheet	en	Leaves without saving
 length<br>rows	timesheet	en	Length<br>Rows
 links	timesheet	en	Links
 links and attached files	timesheet	en	Links and attached files
-links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application.  Example: {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	timesheet	en	Links to specified application. Example: {{links/infolog}}
 list of files linked to the current record	timesheet	en	List of files linked to the current record
 manage mapping	timesheet	en	Manage mapping
 max length of the input [, length of the inputfield (optional)]	timesheet	en	Max length of the input [, length of the input field (optional)]
@@ -181,7 +181,7 @@ values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
 what should be done with unknown values?	timesheet	en	What should be done with unknown values?
-when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	en	When you merge entries into documents, they will be stored here.  If no directory is provided, they will be stored in your home directory (/home/ralf)
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	en	When you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (/home/ralf)
 will be created when saving ...	common	en	Will be created when saving ...
 working time	common	en	Working time
 working time and timer	timesheet	en	Working time and timer

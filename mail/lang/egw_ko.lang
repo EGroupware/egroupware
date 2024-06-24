@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ko	%1 には Sieve 拡張機能 %2 が必要です。%1 またはそれ以上の日数をお試しください。
 acl rights retrieve failed, seems there are no rights set!	mail	ko	ACL 권한 검색에 실패했습니다. 설정된 권한이 없는 것 같습니다.
 add as new	mail	ko	신규로 추가
 add files as %1	mail	ko	파일을 %1로 추가
@@ -17,9 +18,10 @@ certificate details	mail	ko	인증서 세부 정보
 certificate in text	mail	ko	텍스트 인증서
 certificate info for email %1	mail	ko	이메일 %1에 대한 인증서 정보
 certificate issued by	mail	ko	인증서 발급처
-changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다.
-changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다.
+changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다
+changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다
 contact label	mail	ko	연락처 레이블
+delete selected folders	mail	ko	選択したフォルダを削除する
 deleted	mail	ko	삭제됨
 do you really want to toggle flag %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 플래그를 전환하시겠습니까?
 do you really want to toggle label %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 레이블을 전환하시겠습니까?
@@ -28,24 +30,25 @@ edit account	mail	ko	계정 편집
 email address	mail	ko	이메일 주소
 emailaddress	admin	ko	이메일 주소
 emailadmin: profilemanagement	mail	ko	이메일 관리자: 프로필 관리
-emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 도메인의 이메일은 스팸으로 표시되지 않습니다.
+emails in whitelisted domains are not marked as spam	mail	ko	화이트리스트 도메인의 이메일은 스팸으로 표시되지 않습니다
 enable	mail	ko	사용
 enabled	mail	ko	사용
 encrypt your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 암호화
-event details follow	mail	ko	이벤트 세부 정보는 다음과 같습니다.
+event details follow	mail	ko	이벤트 세부 정보는 다음과 같습니다
 everyone	mail	ko	모두
-examine namespace to retrieve folders in others and shared	mail	ko	네임스페이스를 검사하여 다른 폴더 및 공유 폴더를 검색합니다.
+examine namespace to retrieve folders in others and shared	mail	ko	네임스페이스를 검사하여 다른 폴더 및 공유 폴더를 검색합니다
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	ko	指定したサイズ以上の添付ファイルを下書きとして自動保存から除外する(MB単位)
 extended	mail	ko	확장
 failed to subscribe folder %1!	mail	ko	%1 폴더를 구독하지 못했습니다!
 failed to unsubscribe folder %1!	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
 file into	mail	ko	로 이동하십시오
 file into:	mail	ko	로 이동하십시오:
 filemode has been switched to %1	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
-flagged %1 messages as %2 in %3	mail	ko	%3에서 %1 메시지를 %2로 플래그 지정했습니다.
-flagged %1 messages as flagged in %2	mail	ko	%2에서 %1 메시지를 %2로 플래그 지정했습니다.
-flagged %1 messages as unflagged in %2	mail	ko	%2에서 %1 메시지를 플래그가 없는 것으로 플래그 지정했습니다.
+flagged %1 messages as %2 in %3	mail	ko	%3에서 %1 메시지를 %2로 플래그 지정했습니다
+flagged %1 messages as flagged in %2	mail	ko	%2에서 %1 메시지를 %2로 플래그 지정했습니다
+flagged %1 messages as unflagged in %2	mail	ko	%2에서 %1 메시지를 플래그가 없는 것으로 플래그 지정했습니다
 folder %1 %2 failed because of %3!	mail	ko	%3 때문에 %1 폴더 %2을(를) 구독하지 못했습니다!
-folder %1 has been created successfully, although the subscription failed because of %2	mail	ko	%2 때문에 구독이 실패했지만 %1 폴더를 성공적으로 만들었습니다.
+folder %1 has been created successfully, although the subscription failed because of %2	mail	ko	%2 때문에 구독이 실패했지만 %1 폴더를 성공적으로 만들었습니다
 from	mail	ko	부터
 general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
@@ -66,7 +69,7 @@ import of message %1 failed. destination folder not set.	mail	ko	%1 메시지를
 import of message %1 failed. no contacts to merge and send to specified.	mail	ko	%1 메시지를 가져오지 못했습니다. 병합하여 지정한 곳으로 보낼 연락처가 없습니다.
 importance	mail	ko	중요성
 important	mail	ko	중요
-in mailbox: %1, with id: %2, and partid: %3	mail	ko	사서함: %1, ID: %2 및 PartID: %3에 있습니다.
+in mailbox: %1, with id: %2, and partid: %3	mail	ko	사서함: %1, ID: %2 및 PartID: %3에 있습니다
 in order to protect your privacy all external sources within this email are blocked.	mail	ko	개인 정보를 보호하기 위해 이 전자 메일 내의 모든 외부 소스가 차단되었습니다.
 inbox	mail	ko	받은 편지함
 information to show on email tag	mail	ko	이메일 태그에 표시할 정보
@@ -76,18 +79,18 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	ko	작업
 junk	mail	ko	정크
 junk folder	mail	ko	정크 폴더
-keep a copy of the message in your inbox	mail	ko	받은 편지함에 메시지 사본을 보관합니다.
+keep a copy of the message in your inbox	mail	ko	받은 편지함에 메시지 사본을 보관합니다
 kilobytes	mail	ko	킬로바이트
 later	mail	ko	나중에
-learning as ham (not spam) failed because of %1	mail	ko	때문에 %1 때문에 햄(스팸이 아님)으로 학습하지 못했습니다.
-learning as spam failed because of %1	mail	ko	%1 때문에 스팸으로 학습하지 못했습니다.
+learning as ham (not spam) failed because of %1	mail	ko	때문에 %1 때문에 햄(스팸이 아님)으로 학습하지 못했습니다
+learning as spam failed because of %1	mail	ko	%1 때문에 스팸으로 학습하지 못했습니다
 less than	mail	ko	미만
 limit mailing list results when searching for addresses	mail	ko	주소 검색 시 메일 그룹 결과 제한
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ko	기본적으로 전환/활성화할 작업 목록(예: 메일 작성 InfoLog 작업으로 저장)
 mail settings	mail	ko	메일 설정
 mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ko	메일 서버가 보고했습니다:\n%1 \n선택한 메시지를 즉시 삭제하여 계속 진행하시겠습니까(확인 클릭)\n그렇지 않은 경우 계속하기 전에 휴지통 폴더를 비우십시오. (취소 클릭)
-message learned as spam and moved to spam folder	mail	ko	메시지가 스팸으로 인식되어 스팸 폴더로 이동되었습니다.
+message learned as spam and moved to spam folder	mail	ko	메시지가 스팸으로 인식되어 스팸 폴더로 이동되었습니다
 move selected to	mail	ko	선택한 위치로 이동
 move to	mail	ko	다음으로 이동
 name and domain	mail	ko	이름 및 도메인
@@ -107,7 +110,7 @@ non	mail	ko	비
 only email	mail	ko	이메일만
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ko	이 메일이 아닌 다른 채널을 통해 수신자에게 비밀번호를 전송하는 경우에만 의미가 있습니다!
 only name	mail	ko	이름만
-only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	ko	루트 레벨 쿼리에서 해당 레벨의 모든 폴더를 검색하기 위해 모든 폴더를 반환하지 않는 일부 서버에만 필요합니다.
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	ko	루트 레벨 쿼리에서 해당 레벨의 모든 폴더를 검색하기 위해 모든 폴더를 반환하지 않는 일부 서버에만 필요합니다
 open in html mode	mail	ko	HTML 모드에서 열기
 open in text mode	mail	ko	텍스트 모드로 열기
 open with collabora office	mail	ko	콜러보라 온라인에서 열기
@@ -119,28 +122,28 @@ permission denied	mail	ko	접근권한이 없습니다
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ko	계정 수정 대화 상자의 암호화 탭에서 S/MIME 인증서를 구성하세요.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ko	관리자에게 문의하여 서버가 서버측 필터 규칙을 지원하는지 여부와 ID:%2의 활성 계정(%1)에 대해 EGroupware에서 이를 사용하도록 설정하는 방법을 확인하십시오.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ko	서버에서 서버측 휴가 메시지를 지원하는지 여부와 활성 계정(%1)의 ID:%2에 대해 EGroupware에서 이를 사용하도록 설정하는 방법을 확인하려면 관리자에게 문의하세요.
-please enter password	mail	ko	암호를 입력하세요.
+please enter password	mail	ko	암호를 입력하세요
 please select a address	mail	ko	주소를 선택하세요
 preview pane	mail	ko	창 레이아웃
 printing	mail	ko	인쇄
 processing of file %1 failed. failed to meet basic restrictions.	mail	ko	%1 파일을 처리하지 못했습니다. 기본 제한을 충족하지 못했습니다.
-provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ko	기본 휴가 텍스트를 입력하세요(이전에 설정된 메시지가 없는 경우 새 휴가 메시지에 사용됨).
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ko	기본 휴가 텍스트를 입력하세요(이전에 설정된 메시지가 없는 경우 새 휴가 메시지에 사용됨)
 push notifications	mail	ko	푸시 알림
 quicksearch	mail	ko	빠른 검색
 quicksearch (with cc)	mail	ko	빠른 검색(+복사)
 real name	mail	ko	실명
 real name email	mail	ko	실명 [이메일]
 real name organization email	mail	ko	실명 조직 [이메일]
-remember the password for	mail	ko	다음 비밀번호를 기억하세요.
+remember the password for	mail	ko	다음 비밀번호를 기억하세요
 remove all	mail	ko	모두 제거
-removing %1 from blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에서 %1을(를) 제거하지 못했습니다.
-removing %1 from whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용된 이메일 주소에서 %1을(를) 제거하지 못했습니다.
+removing %1 from blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에서 %1을(를) 제거하지 못했습니다
+removing %1 from whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용된 이메일 주소에서 %1을(를) 제거하지 못했습니다
 replace 'http://' in image urls with (trailing / required!)	mail	ko	이미지 URL에서 'http://'를 (후행/필수!)로 바꾸세요.
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	ko	이 메시지의 콘텐츠가 암호화되어 제대로 해독할 수 없는 것 같으므로 이 메시지에 회신하지 못했습니다. 이 암호화된 메시지의 내용을 계속 포함하려면 대신 첨부 파일로 전달을 사용해 보세요.
 report as ham	mail	ko	햄으로 신고
 report as spam	mail	ko	스팸으로 신고
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 햄(스팸이 아님)으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다.
-report this email content as spam - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 스팸으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다.
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 햄(스팸이 아님)으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다
+report this email content as spam - spam solutions like spamtitan will learn	mail	ko	이 이메일 콘텐츠를 스팸으로 신고 - 스팸타이탄과 같은 스팸 솔루션에서 학습합니다
 required pear class mail/mimedecode.php not found.	mail	ko	필수 PEAR 클래스 Mail/mimeDecode.php를 찾을 수 없습니다.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ko	공유 폴더 또는 사용자 폴더에서 비공개로 표시됨 플래그와 함께 도브콧을 사용하는 경우 비활성화하는 데 필요합니다!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	ko	보낸 사람 주소에 대한 인증서를 찾을 수 없으므로 S/MIME 암호화에 실패했습니다: %1
@@ -167,7 +170,7 @@ show test connection section and control the level of info displayed??	mail	ko	�
 show them this time only	mail	ko	이번만 표시
 show vertical	mail	ko	세로로 보기(3열 보기)
 show vertical with all columns	mail	ko	모든 열을 세로로 표시
-show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미리보기 창 표시/숨기기
+show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미리보기 창 표시/숨기기.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ko	보낸 사람 주소, 제목 및 이메일 스니펫을 포함하여 임시로 표시되는 알림을 표시합니다.
 sign your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 서명
 signed by	mail	ko	서명자
@@ -193,6 +196,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	ko	이 메시지를 보내려면 S/MIME 암호를 입력해야 합니다.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ko	%1에서 Chrome 및 Firefox에 사용할 수 있는 메일봉투 플러그인을 설치해야 합니다.
 you need to save the message as draft first before to be able to save it into vfs	mail	ko	메시지를 VFS에 저장하려면 먼저 메시지를 초안으로 저장해야 합니다.
+you need to select some folders first (by clicking on them)!	mail	ko	最初にいくつかのフォルダを選択する必要があります！
 you will loose current message body, unless you save it to your clipboard!	mail	ko	클립보드에 저장하지 않으면 현재 메시지 본문을 잃게 됩니다!
 you've got new mail	mail	ko	새 메일이 도착했습니다.
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ko	남은 할당량 %1이(가) 너무 적어 더 이상 전자 메일을 보내거나 받지 못할 수 있습니다.\n 휴지통이나 정크 폴더에 있는 전자 메일을 정리하면 여유 공간을 다시 확보하는 데 도움이 될 수 있지만 그래도 도움이 되지 않으면 관리자에게 추가 할당량을 요청하세요.

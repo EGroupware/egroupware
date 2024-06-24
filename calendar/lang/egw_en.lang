@@ -316,7 +316,7 @@ how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / RFC2445
-ical cannot change the owner of an existing event.  this applies to new events only.	calendar	en	iCal cannot change the owner of an existing event.  This applies to new events only.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	en	iCal cannot change the owner of an existing event. This applies to new events only.
 ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
 ical import	calendar	en	iCal import
@@ -524,8 +524,6 @@ search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
 select a color for this calendar	calendar	en	Select a color for calendar
 select a time	calendar	en	Select a time
-select an action	calendar	en	Select an action
-select an action...	calendar	en	Select an action ...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on. For externals we always reset participant status to unknown.
