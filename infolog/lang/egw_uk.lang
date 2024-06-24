@@ -330,8 +330,6 @@ select a priority for this task	infolog	uk	виберіть приоритет �
 select a project	infolog	uk	Виберіть проект
 select a responsible user: a person you want to delegate this task	infolog	uk	визначте відповідального: людину, якій Ви хочете делегувати це завдання
 select a typ to edit it's status-values or delete it	infolog	uk	виберіть тип для редагування його статусів або видалення
-select an action	infolog	uk	Виберіть дію
-select an action...	infolog	uk	Виберіть дію...
 select an app to search in	infolog	uk	Виберіть приложення в якому шукати
 select an entry to link with	infolog	uk	Виберіть запис для Посилання
 select new category	infolog	uk	Вибрати нову категорію

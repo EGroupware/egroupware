@@ -182,7 +182,7 @@ backcolor	common	es-es	Color de fondo
 background color:	common	es-es	Color de fondo:
 backup key	common	es-es	Clave de respaldo
 backup/restore	common	es-es	Respaldar/Restaurar
-backup/restore ...	common	es-es	Respaldar/Restaurar...
+backup/restore ...	common	es-es	Respaldar/Restaurar ...
 backupdir '%1' is not writeable by the webserver	common	es-es	El directorio de respaldo '%1' no tiene permiso de escritura para el servidor web
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
@@ -241,8 +241,8 @@ caption	common	es-es	Título
 categories	common	es-es	Categorías
 categories for	common	es-es	categorías para
 category	common	es-es	Categoría
-category %1 has been added !	common	es-es	¡Se ha añadido la categoría %1 !
-category %1 has been updated !	common	es-es	¡Se ha actualizado la categoría %1 !
+category %1 has been added !	common	es-es	¡Se ha añadido la categoría %1!
+category %1 has been updated !	common	es-es	¡Se ha actualizado la categoría %1!
 category owner	common	es-es	Propietario de la categoría
 category tree	common	es-es	Arbol de categorías
 cayman islands	common	es-es	Islas Caimán
@@ -547,7 +547,7 @@ failed to change mode of required directory "%1" to %2!	admin	es-es	¡Fallo al c
 failed to change password.	common	es-es	Fallo al cambiar la contraseña.
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	es-es	No se pudo conectar con el servidor, o se obtuvo una respuesta no válida. Intente volver a iniciar la sesión. Póngase en contacto con el administrador en caso de fallo.
 failed to create required directory "%1"!	admin	es-es	¡Fallo al crear el directorio requerido "%1"!
-failed to move unconnected %1 %2 to %3!	admin	es-es	¡Fallo al mover los desconectados %1 %2 a %3 !
+failed to move unconnected %1 %2 to %3!	admin	es-es	¡Fallo al mover los desconectados %1 %2 a %3!
 falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	ISLAS FEROE
 favorite queries	common	es-es	Consultas favoritas

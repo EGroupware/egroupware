@@ -890,7 +890,6 @@ my account	common	sk	Môj účet
 myanmar	common	sk	MYANMAR
 name	common	sk	Meno
 name of other table where column is a key from	common	sk	názov inej tabuľky, kde stĺpec je kľúčom z
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	sk	Názov sady šablón phpgw (napr. verdilak): ''= predvolená (načíta predvolenú šablónu, pre načítanie predvolenej šablóny použite 'default''')
 name of table to add	common	sk	Názov tabuľky, ktorá sa má pridať
 name of the etemplate, should be in form application.function[.subtemplate]	common	sk	Názov eTemplate, mal by byť vo forme aplikácia.funkcia[.podŠablóna]
 name of the user, eg. "%1"	common	sk	Meno používateľa, napr. "%1"

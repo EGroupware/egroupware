@@ -417,8 +417,6 @@ select a priority for this task	infolog	nl	Selecteer een prioriteit voor deze ta
 select a project	infolog	nl	Selecteer een project
 select a responsible user: a person you want to delegate this task	infolog	nl	Selecteer een verantwoordelijke gebruiker: een persoon aan wie u deze taak wilt delegeren
 select a typ to edit it's status-values or delete it	infolog	nl	Selecteer een type waarvan uw de statuswaarden wilt wijzigen of om te verwijderen
-select an action	infolog	nl	Selecteer een actie
-select an action...	infolog	nl	Selecteer een actie...
 select an app to search in	infolog	nl	Selecteer een applicatie om in te zoeken
 select an entry to link with	infolog	nl	Selecteer een InfoLog om mee te linken
 select multiple contacts for a further action	infolog	nl	Kies meerdere contacten voor verdere actie

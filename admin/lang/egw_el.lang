@@ -87,7 +87,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3)
 aliases	admin	el	Ψευδώνυμα
 all categories	admin	el	Όλες οι κατηγορίες
-all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν !
+all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν!
 all users	admin	el	Ολοι οι χρήστες
 allow anonymous access to this app	admin	el	Επιτρέπεται ανώνυμη πρόσβαση σε αυτή την εφαρμογή
 alternate email address	admin	el	εναλλακτική διεύθυνση email

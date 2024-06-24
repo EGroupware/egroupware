@@ -587,7 +587,7 @@ forever	common	it	Per sempre
 formatted business address	common	it	Indirizzo aziendale formattato
 formatted private address	common	it	Indirizzo privato formattato
 formatted text (html)	common	it	Testo Formattato (HTML)
-found unconnected %1 %2!	admin	it	Trovati disconnessi %1 %2 !
+found unconnected %1 %2!	admin	it	Trovati disconnessi %1 %2!
 fr	common	it	Fr
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
@@ -1219,7 +1219,7 @@ select month	common	it	Seleziona Mese
 select multiple accounts	common	it	Seleziona molteplici account
 select number	common	it	Seleziona Numero
 select one	common	it	Seleziona uno
-select one ...	common	it	Seleziona Uno...
+select one ...	common	it	Seleziona Uno ...
 select percentage	common	it	Seleziona Percentuale
 select priority	common	it	Seleziona Priorità
 select some options	common	it	Seleziona alcune opzioni
@@ -1544,7 +1544,7 @@ you need to select some entries first!	common	it	Devi prima selezionare alcune v
 you need to set enable logging to "%1" to create/update a log.	groupdav	it	Devi impostare la registrazione a "%1" per creare e aggiornare i registri.
 you tried to automatically size a flex column, which always takes the rest of the space	common	it	Hai tentato di ridimensionare automaticamente una colonna flessibile, che prende sempre il resto dello spazio.
 you will not be able to send or receive encrypted mails before completing that step!	common	it	Non potrai inviare e ricevere email cifrate senza completare questo step!
-you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1 !
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	it	Non hai il permesso di accesso all'applicazione %1!
 your account has been updated with new data from your identity provider.	common	it	Il vostro account è stato aggiornato con i nuovi dati del vostro fornitore di identità.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	it	Se il vostro browser non è aggiornato (compatibile con JavaScript ES6), è possibile che alcune funzioni non funzionino.
 your code is incorrect !!!	common	it	Codice errato!

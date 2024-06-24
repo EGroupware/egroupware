@@ -803,8 +803,8 @@ search peer servers	admin	en	Search peer servers
 secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
 secure connection	admin	en	Secure connection
 security	admin	en	Security
+select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
 select accounts for which the custom field should be readonly	admin	en	Select accounts for which the custom field should be readonly
-select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for
 select group managers	admin	en	Select group managers
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	en	Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.
 select multiple	admin	en	Select multiple

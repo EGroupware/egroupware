@@ -239,7 +239,7 @@ failed to move %1 ! reason: %2	mail	de	Verschieben von %1 fehlgeschlagen! Grund:
 failed to rename %1 ! reason: %2	mail	de	Umbenennen zu %1 fehlgeschlagen! Grund: %2
 failed to subscribe folder %1!	mail	de	Fehler beim Abonnieren des Folders %1!
 failed to unsubscribe folder %1!	mail	de	Fehler beim Abbestellen des Folders %1!
-file into	mail	de	verschiebe nach
+file into	mail	de	Verschiebe nach
 file into:	mail	de	Verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt. Die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
 filemanager	mail	de	Dateimanager

@@ -934,7 +934,7 @@ no	common	fr	Non
 no - cancel	common	fr	Non, annuler
 no column to swap with !!!	common	fr	Aucune colonne à intervertir !
 no default set	common	fr	Aucun défaut défini
-no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore...
+no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no file	common	fr	Pas de fichier
 no filename given or selected via browse...	common	fr	Pas de nom de fichier donné ou sélectionnée avec le navigateur ...
 no filters	common	fr	Pas de filtre
@@ -1234,7 +1234,7 @@ select month	common	fr	Choisissez un mois
 select multiple accounts	common	fr	Sélectionner des comptes multiples
 select number	common	fr	Choisissez un numéro
 select one	common	fr	Sélectionner un(e)
-select one ...	common	fr	CHoisissez un...
+select one ...	common	fr	CHoisissez un ...
 select percentage	common	fr	Choisissez un pourcentage
 select priority	common	fr	Choisissez une priorité
 select some options	common	fr	Sélectionner plusieurs options
