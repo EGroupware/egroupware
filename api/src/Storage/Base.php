@@ -1099,7 +1099,7 @@ class Base
 		{
 			$order_by = $fragment;
 		}
-		if (!preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
+		if (!preg_match_all("/(#?[a-z_][a-z0-9_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
 			$order_by !== implode('', $all_matches[0]))
 		{
 			error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
