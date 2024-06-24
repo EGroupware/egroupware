@@ -27,6 +27,10 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 				:host([type="hidden"]) {
 					display: none;
 				}
+
+				.form_control {
+					display: inline-flex;
+				}
 				.input__control {
 					border: none;
 					width: 100%;
