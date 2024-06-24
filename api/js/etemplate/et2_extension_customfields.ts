@@ -218,7 +218,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				{
 					this.options.fields[field_name] = false;
 				}
-				else if (default_tab ? this.options.customfields[field_name].tab : this.options.customfields[field_name].tab !== this.options.tab)
+				else if(default_tab ? this.options.customfields[field_name].tab : this.options.customfields[field_name].tab !== this.options.tab && this.options.tab)
 				{
 					this.options.fields[field_name] = false;
 				}
