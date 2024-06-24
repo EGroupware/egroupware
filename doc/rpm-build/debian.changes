@@ -1,3 +1,24 @@
+egroupware-docker (23.1.20240624) hardy; urgency=low
+
+  * THIS IS A SECURITY UPDATE: thanks to Christian Zaeske from SySS GmbH and Hochschule Magdeburgr-Stendal, please update ASAP
+  * Mail: fix broken PDF attachments which were quoted-printable encoded
+  * Mail: do not stall (quick-)preview on mails without text-part e.g. PDF only
+  * Mail: allow to edit/fix mail account if no session password is available e.g. SAML or OpenIdConnect SSO login
+  * Filemanager: automatic shorten too long filenames and replace 4-byte utf-8 characters, which gave an error when trying to store VFS
+  * Calendar: fix editing recurring events of type RDATE/explicit dates
+  * Calendar: fix generating/importing exceptions on recurring events using explicit RDATEs instead of a RRULE
+  * CalDAV/CardDAV/REST API: fix not working limited result
+  * eSync: fix whole-day events were one day longer (shifted by timezone difference)
+  * eSync/Mail/Calendar: limit request for all mail and events to 1 year back, instead of previous 178 or 100 days
+  * eSyncPro/EPL: fix provisioning loop cause by wrong timezone conversation
+  * Calendar/eSync/EPL: better cope with Android bug reporting always 1st of current month as cutoffdate, if a policy is given: use setting of default policy instead
+  * Resources: fix category-name not shown in edit, if user has no edit rights to the resources
+  * Resources: fix editing on mobile devices gave a template error
+  * ProjectManager: if sorting element-list by start, end, budget, time or quantity: consider both varieties, but prefer the requested one
+  * InfoLog: now fully supported by REST API
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 24 Jun 2024 10:31:40 +0200
+
 egroupware-docker (23.1.20240430) hardy; urgency=low
 
   * Notifications: fixed deleting and grouping of popup notifications by app-name and -id and show full total independent of max. 100 shown entries
