@@ -6262,7 +6262,7 @@ class Mail
 		// set binary, as it's already base64 transfer-encoded but lacks the necessary header
 		if (($part->getType() === 'application/pdf' || $part->getPrimaryType() === 'image') &&
 			// hack to read protected $structure->_transfer_encoding
-			unserialize($part->serialize())[9] !== 'base64')
+			!in_array(unserialize($part->serialize())[9],  ['base64', 'quoted-printable']))
 		{
 			$part->setTransferEncoding('binary', ['send' => true]);
 			return true;
