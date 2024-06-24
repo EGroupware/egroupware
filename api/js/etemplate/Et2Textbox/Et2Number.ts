@@ -32,6 +32,11 @@ export class Et2Number extends Et2Textbox
 				padding: 0px;
 			  }
 
+				.form-control-input {
+					min-width: min-content;
+					max-width: 6em;
+				}
+
 			`,
 		];
 	}
