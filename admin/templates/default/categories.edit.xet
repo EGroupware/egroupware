@@ -37,7 +37,7 @@
 				</row>
 				<row>
 					<et2-description  value="Category owner" for="owner"></et2-description>
-					<et2-select-account  statustext="Limit global category to members of a certain group" id="owner" multiple="true" required="1"></et2-select-account>
+					<et2-select-account  statustext="Limit global category to members of a certain group" id="owner" accountType="groups" multiple="true" required="1"></et2-select-account>
 				</row>
 
 			</rows>
