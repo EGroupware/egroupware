@@ -1472,16 +1472,22 @@ class infolog_bo
 		}
 		else
 		{
+			// Remove all accounts
+			$contacts = array_filter($contacts, function ($v)
+			{
+				return empty($v['account_id']);
+			});
+
 			// create the first address as info_contact
-			$contact = array_shift($contacts);
-			$info['info_contact'] = 'addressbook:'.$contact['id'];
+			if(count($contacts) > 0)
+			{
+				$contact = array_shift($contacts);
+				$info['info_contact'] = 'addressbook:' . $contact['id'];
+			}
 			// create the rest as "ordinary" links, skipping accounts
 			foreach ($contacts as $contact)
 			{
-				if(empty($contact['account_id']))
-				{
-					Link::link('infolog', $info['link_to']['to_id'], 'addressbook', $contact['id']);
-				}
+				Link::link('infolog', $info['link_to']['to_id'], 'addressbook', $contact['id']);
 			}
 		}
 		if (is_array($_attachments))
