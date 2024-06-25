@@ -205,7 +205,13 @@ class Vfs extends File
 
 		if ($type == 'htmlarea')
 		{
-			$result = array ('location' => Api\Framework::link(Api\Vfs::download_url($path)));
+			// try to show error to user by push and instead of the (anyway not working) URL
+			if (isset($error))
+			{
+				$push = new Json\Push();
+				$push->message($error, 'error');
+			}
+			$result = array ('location' => $error ?? Api\Framework::link(Api\Vfs::download_url($path)));
 		}
 		else
 		{
