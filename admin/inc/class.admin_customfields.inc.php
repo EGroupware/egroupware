@@ -88,7 +88,7 @@ class admin_customfields
 		'button'	=> 'each value is a line like label=[javascript]',
 		'password'  => 'set length=# for minimum password length, strength=# for password strength',
 		'serial'    => 'you can set an initial value, which gets incremented every time a new serial get generated',
-		'filemanager' => "use the following options:\nnoVfsSelect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M",
+		'filemanager' => "use the following options:\nnoVfsSelect=1\nnoUpload=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M",
 	);
 
 	/**

@@ -911,7 +911,12 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				.appendTo(row);
 
 			// Create upload widget
-			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, {...attrs}, this);
+			let upload_attrs = {...attrs};
+			if(typeof field.values?.noUpload !== "undefined")
+			{
+				upload_attrs.class = "hideme";
+			}
+			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, upload_attrs, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
@@ -929,8 +934,9 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					...{
 						path: '~',
 						mode: widget.options.multiple ? 'open-multiple' : 'open',
+						multiple: widget.options.multiple,
 						method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
-						methodId: attrs.path,
+						methodId: widget.options.path ?? attrs.path,
 						buttonLabel: this.egw().lang('Link')
 					},
 					type: 'et2-vfs-select',
@@ -943,6 +949,14 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 				// Do not store in the widgets list, one name for multiple widgets would cause problems
 				widget = <Et2VfsSelectButton>loadWebComponent(select_attrs.type, select_attrs, this);
+
+				// Update link list & show file in upload
+				widget.addEventListener("change", (e) =>
+				{
+					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
+					const info = e.target._dialog.fileInfo(e.target.value);
+					e.target.getParent().getWidgetById("#filemanager")?._addFile(info);
+				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}
 		}
