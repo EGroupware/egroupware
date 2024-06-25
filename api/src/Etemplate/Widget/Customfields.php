@@ -39,7 +39,6 @@ class Customfields extends Transformer
 		'label'    => 'Label',
 		'header'   => 'Header',
 		'select'   => 'Selectbox',
-		'ajax_select' => 'Search',
 		'radio'    => 'Radiobutton',
 		'checkbox' => 'Checkbox',
 		'date'     => 'Date',
@@ -379,7 +378,10 @@ class Customfields extends Transformer
 				break;
 
 			default:
-				if (substr($type, 0, 7) !== 'select-' && $type != 'ajax_select') break;
+				if(substr($type, 0, 7) !== 'select-')
+				{
+					break;
+				}
 				// fall-through for all select-* widgets
 			case 'select':
 				$widget->attrs['multiple'] = $field['rows'] > 1;

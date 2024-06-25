@@ -663,22 +663,6 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		return true;
 	}
 
-	_setup_ajax_select( field_name, field, attrs)
-	{
-		const attributes = ['get_rows', 'get_title', 'id_field', 'template'];
-		if(field.values)
-		{
-			for(let i = 0; i < attributes.length; i++)
-			{
-				if(typeof field.values[attributes[i]] !== 'undefined')
-				{
-					attrs[attributes[i]] = field.values[attributes[i]];
-				}
-			}
-		}
-		return true;
-	}
-
 	_setup_serial(field_name, field, attrs)
 	{
 		delete (attrs.label);

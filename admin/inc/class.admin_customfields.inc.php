@@ -106,7 +106,6 @@ class admin_customfields
 		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
 		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
 		'button'	=> array('cf_values' => true),
-		'ajax_select' => array('cf_values' => true),
 		'radio'		=> array('cf_values' => true),
 		'checkbox'	=> array('cf_values' => true),
 		'filemanager' => array('cf_values' => true),
