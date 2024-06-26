@@ -3685,7 +3685,16 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 					}, 1);
 					break;
 			}
-			self._bindHeaderInput(header);
+			// Give child templates a chance to load before we bind inputs
+			let children = [];
+			header.iterateOver((_widget) =>
+			{
+				children.push(_widget.loading);
+			}, this, et2_template);
+			Promise.all(children).then(() =>
+			{
+				self._bindHeaderInput(header);
+			});
 		});
 	}
 
