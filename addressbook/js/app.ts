@@ -1279,6 +1279,15 @@ class AddressbookApp extends EgwApp
 			// Regular handling first to clear everything but advanced search
 			super.setState(state);
 
+			// Clear group view template since the change event is not fired when we programmatically change the value
+			let index = etemplate2.getById('addressbook-index');
+			if(index && index.widgetContainer)
+			{
+				const grouped = index.widgetContainer.getWidgetById('grouped_view');
+				const nm = index.widgetContainer.getWidgetById("nm");
+				this.change_grouped_view(grouped, nm, grouped);
+			}
+
 			// Clear advanced search, which is in session and etemplate
 			egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search',[], function() {
 				framework.setWebsiteTitle('addressbook','');
@@ -1303,25 +1312,22 @@ class AddressbookApp extends EgwApp
 			var index = etemplate2.getById('addressbook-index');
 			if(index && index.widgetContainer)
 			{
-				var grouped = index.widgetContainer.getWidgetById('grouped_view');
-				var options : any[];
-				if(grouped && grouped.options && grouped.options.select_options)
+				const grouped = index.widgetContainer.getWidgetById('grouped_view');
+				let options : any[];
+				if(grouped && grouped.select_options)
 				{
-					options = grouped.options.select_options;
+					options = grouped.select_options;
 				}
 
 				// Check to see if it's not there
 				if(options && (options.find &&
-					!options.find(function(e) {console.log(e); return e.value === state.state.grouped_view;}) ||
+					!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
 					typeof options.find === 'undefined' && !options[state.state.grouped_view]
 				))
 				{
-					window.setTimeout(function() {
-						app.addressbook.setState(state);
-					}, 500);
-					var nm = index.widgetContainer.getWidgetById('nm');
-					var action = nm.controller._actionManager.getActionById('view_org');
-					var senders = [{_context: {_widget: nm}}];
+					const nm = index.widgetContainer.getWidgetById('nm');
+					const action = nm.controller._actionManager.getActionById('view_org');
+					const senders = [{_context: {_widget: nm}}];
 					return nm_action(action, senders, {}, {ids:[state.state.grouped_view]});
 				}
 			}
