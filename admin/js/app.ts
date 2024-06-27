@@ -1749,6 +1749,44 @@ class AdminApp extends EgwApp
 			}
 		});
 	}
+
+	/**
+	 * Batch reset multiple account passwords
+	 *
+	 * JS callback for admin_passwordreset so we can do longtask.  Values come from the current admin etemplate.
+	 */
+	async bulkPasswordReset()
+	{
+		const data = [];
+		const values = this.et2.getInstanceManager().getValues(this.et2);
+		let users = values.users ?? [];
+		delete values.users;
+
+
+		if(users.includes("~all~"))
+		{
+			// Doesn't always give _all_ accounts
+			const accounts = await egw.accounts("accounts");
+			debugger;
+		}
+		if(users.length == 0)
+		{
+			return;
+		}
+
+		for(let i = 0; i < users.length; i++)
+		{
+			data.push({values, user: users[i]});
+		}
+
+		Et2Dialog.long_task(
+			null, "", "Bulk Password Reset",
+			"admin.admin_passwordreset.ajax_reset",
+			data, this.egw
+		);
+	}
+
+
 }
 
 app.classes.admin = AdminApp;

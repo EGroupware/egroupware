@@ -118,138 +118,10 @@ class admin_passwordreset
 				$emailadmin = null;
 				foreach($content['users'] as $account_id)
 				{
-					if (($account = $GLOBALS['egw']->accounts->read($account_id)))
+					$result = $this->resetAccount($account_id, $content, $change_pw, $current_hash, $msg, $changed);
+					if($result === false)
 					{
-						//_debug_array($account); //break;
-						if ($content['random_pw'])
-						{
-							if (($minlength=$GLOBALS['egw_info']['server']['force_pwd_length']) < 8)
-							{
-								$minlength = 8;
-							}
-							$n = 0;
-							do {
-								$password = Api\Auth::randomstring($minlength,
-									$GLOBALS['egw_info']['server']['force_pwd_strength'] >= 4);
-								error_log(__METHOD__."() minlength=$minlength, n=$n, password=$password");
-							} while (++$n < 100 && Api\Auth::crackcheck($password, null, null, null, $account));
-							$old_password = null;
-						}
-						elseif ($change_pw && !preg_match('/^{plain}/i',$account['account_pwd']) &&
-							($current_hash != 'plain' || $current_hash == 'plain' && $account['account_pwd'][0] == '{'))
-						{
-							$msg .= lang('Account "%1" has NO plaintext password!',$account['account_lid'])."\n";
-							continue;
-						}
-						else
-						{
-							$old_password = $password = preg_replace('/^{plain}/i','',$account['account_pwd']);
-						}
-						// change password, if requested
-						try {
-							if ($change_pw && !$GLOBALS['egw']->auth->change_password($old_password,$password,$account_id))
-							{
-								$msg .= lang('Failed to change password for account "%1"!',$account['account_lid'])."\n";
-								continue;
-							}
-						}
-						catch(Exception $e) {
-							$msg .= lang('Failed to change password for account "%1"!',$account['account_lid']).' '.$e->getMessage()."\n";
-							continue;
-						}
-						// force password change on next login
-						if ((string)$content['mustchangepassword'] !== '' && !(!$content['mustchangepassword'] && $change_pw))
-						{
-							// dont use password here, as the use of passwords indicates the usage of the functionality in usermode
-							$GLOBALS['egw']->auth->setLastPwdChange($account_id, null, $content['mustchangepassword'] ? 0 : time());
-						}
-						// allow or forbid to change password, if requested
-						if ((string)$content['changepassword'] !== '')
-						{
-							if(!$content['changepassword'])
-							{
-								$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$account_id,1);
-							}
-							else
-							{
-								$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$account_id);
-							}
-						}
-						$account['account_password'] = $password;
-
-						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '' ||
-							strpos($content['mail']['domain'], '.') !== false)
-						{
-							if (!isset($emailadmin))
-							{
-								$emailadmin = Api\Mail\Account::get_default();
-								if (!Api\Mail\Account::is_multiple($emailadmin))
-								{
-									$msg = lang('No default account found!');
-									break;
-								}
-							}
-							if (($userData = $emailadmin->getUserData ($account_id)))
-							{
-								if ((string)$content['mail']['activate'] !== '')
-								{
-									$userData['accountStatus'] = $content['mail']['activate'] ? 'active' : '';
-								}
-								if ((string)$content['mail']['quota'] !== '')
-								{
-									$userData['quotaLimit'] = $content['mail']['quota'];
-								}
-								if (strpos($content['mail']['domain'], '.') !== false)
-								{
-									$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$content['mail']['domain'], $userData['mailLocalAddress']);
-
-									foreach($userData['mailAlternateAddress'] as &$alias)
-									{
-										$alias = preg_replace('/@'.preg_quote($emailadmin->acc_domain).'$/', '@'.$content['mail']['domain'], $alias);
-									}
-								}
-								$emailadmin->saveUserData($account_id, $userData);
-							}
-							else
-							{
-								$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']."\n");
-								continue;
-							}
-						}
-						$changed[] = $account;
-
-						if ($content['notify'])
-						{
-							if (strpos($account['account_email'],'@') === false)
-							{
-								$msg .= lang('Account "%1" has no email address --> not notified!',$account['account_lid']);
-								continue;
-							}
-							$send = new Api\Mailer();
-							$send->AddAddress($account['account_email'],$account['account_fullname']);
-							$replacements = array();
-							foreach($this->replacements as $name => $label)
-							{
-								$replacements['$$'.$name.'$$'] = $account['account_'.$name];
-							}
-							$send->addHeader('Subject', strtr($content['subject'], $replacements));
-							$send->setBody(strtr($content['body'], $replacements));
-							if (!empty($GLOBALS['egw_info']['user']['account_email']))
-							{
-								$send->addHeader('From', Api\Mailer::add_personal(
-									$GLOBALS['egw_info']['user']['account_email'],
-									$GLOBALS['egw_info']['user']['account_fullname']));
-							}
-							try
-							{
-								$send->Send();
-							}
-							catch (Exception $e)
-							{
-								$msg .= lang('Notifying account "%1" %2 failed!',$account['account_lid'],$account['account_email']).
-									': '.strip_tags(str_replace('<p>', "\n", $e->getMessage()))."\n";
-							}
-						}
+						break;
 					}
 				}
 				if ($changed)
@@ -288,6 +160,149 @@ class admin_passwordreset
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
 			'changed' => $changed,
 		));
+	}
+
+	protected function resetAccount($account_id, $content, $change_pw, $current_hash, &$msg, &$changed)
+	{
+		if(($account = $GLOBALS['egw']->accounts->read($account_id)))
+		{
+			if($content['random_pw'])
+			{
+				if(($minlength = $GLOBALS['egw_info']['server']['force_pwd_length']) < 8)
+				{
+					$minlength = 8;
+				}
+				$n = 0;
+				do
+				{
+					$password = Api\Auth::randomstring($minlength,
+													   $GLOBALS['egw_info']['server']['force_pwd_strength'] >= 4
+					);
+					error_log(__METHOD__ . "() minlength=$minlength, n=$n, password=$password");
+				}
+				while(++$n < 100 && Api\Auth::crackcheck($password, null, null, null, $account));
+				$old_password = null;
+			}
+			elseif($change_pw && !preg_match('/^{plain}/i', $account['account_pwd']) &&
+				($current_hash != 'plain' || $current_hash == 'plain' && $account['account_pwd'][0] == '{'))
+			{
+				$msg .= lang('Account "%1" has NO plaintext password!', $account['account_lid']) . "\n";
+				return;
+			}
+			else
+			{
+				$old_password = $password = preg_replace('/^{plain}/i', '', $account['account_pwd']);
+			}
+			// change password, if requested
+			try
+			{
+				if($change_pw && !$GLOBALS['egw']->auth->change_password($old_password, $password, $account_id))
+				{
+					$msg .= lang('Failed to change password for account "%1"!', $account['account_lid']) . "\n";
+					return;
+				}
+			}
+			catch (Exception $e)
+			{
+				$msg .= lang('Failed to change password for account "%1"!', $account['account_lid']) . ' ' . $e->getMessage() . "\n";
+				return;
+			}
+			// force password change on next login
+			if((string)$content['mustchangepassword'] !== '' && !(!$content['mustchangepassword'] && $change_pw))
+			{
+				// dont use password here, as the use of passwords indicates the usage of the functionality in usermode
+				$GLOBALS['egw']->auth->setLastPwdChange($account_id, null, $content['mustchangepassword'] ? 0 : time());
+			}
+			// allow or forbid to change password, if requested
+			if((string)$content['changepassword'] !== '')
+			{
+				if(!$content['changepassword'])
+				{
+					$GLOBALS['egw']->acl->add_repository('preferences', 'nopasswordchange', $account_id, 1);
+				}
+				else
+				{
+					$GLOBALS['egw']->acl->delete_repository('preferences', 'nopasswordchange', $account_id);
+				}
+			}
+			$account['account_password'] = $password;
+
+			if((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '' ||
+				strpos($content['mail']['domain'], '.') !== false)
+			{
+				if(!isset($emailadmin))
+				{
+					$emailadmin = Api\Mail\Account::get_default();
+					if(!Api\Mail\Account::is_multiple($emailadmin))
+					{
+						$msg = lang('No default account found!');
+						return false;
+					}
+				}
+				if(($userData = $emailadmin->getUserData($account_id)))
+				{
+					if((string)$content['mail']['activate'] !== '')
+					{
+						$userData['accountStatus'] = $content['mail']['activate'] ? 'active' : '';
+					}
+					if((string)$content['mail']['quota'] !== '')
+					{
+						$userData['quotaLimit'] = $content['mail']['quota'];
+					}
+					if(strpos($content['mail']['domain'], '.') !== false)
+					{
+						$userData['mailLocalAddress'] = preg_replace('/@' . preg_quote($emailadmin->acc_domain) . '$/', '@' . $content['mail']['domain'], $userData['mailLocalAddress']);
+
+						foreach($userData['mailAlternateAddress'] as &$alias)
+						{
+							$alias = preg_replace('/@' . preg_quote($emailadmin->acc_domain) . '$/', '@' . $content['mail']['domain'], $alias);
+						}
+					}
+					$emailadmin->saveUserData($account_id, $userData);
+				}
+				else
+				{
+					$msg .= lang('No profile defined for user %1', '#' . $account_id . ' ' . $account['account_fullname'] . "\n");
+					return;
+				}
+			}
+			$changed[] = $account;
+
+			if($content['notify'])
+			{
+				if(strpos($account['account_email'], '@') === false)
+				{
+					$msg .= lang('Account "%1" has no email address --> not notified!', $account['account_lid']);
+					return;
+				}
+				$send = new Api\Mailer();
+				$send->AddAddress($account['account_email'], $account['account_fullname']);
+				$replacements = array();
+				foreach($this->replacements as $name => $label)
+				{
+					$replacements['$$' . $name . '$$'] = $account['account_' . $name];
+				}
+				$send->addHeader('Subject', strtr($content['subject'], $replacements));
+				$send->setBody(strtr($content['body'], $replacements));
+				if(!empty($GLOBALS['egw_info']['user']['account_email']))
+				{
+					$send->addHeader('From', Api\Mailer::add_personal(
+						$GLOBALS['egw_info']['user']['account_email'],
+						$GLOBALS['egw_info']['user']['account_fullname']
+					)
+					);
+				}
+				try
+				{
+					$send->Send();
+				}
+				catch (Exception $e)
+				{
+					$msg .= lang('Notifying account "%1" %2 failed!', $account['account_lid'], $account['account_email']) .
+						': ' . strip_tags(str_replace('<p>', "\n", $e->getMessage())) . "\n";
+				}
+			}
+		}
 	}
 
 	public function ajax_clear_credentials($action_id, $account_ids)
@@ -350,5 +365,33 @@ class admin_passwordreset
 		}
 		Framework::message(implode("\n",$msg), 'success');
 		Framework::redirect_link('/index.php', 'menuaction=admin.admin_ui.index','admin');
+	}
+
+	public function ajax_reset($content)
+	{
+		$msg = '';
+		$changed = [];
+		if(!($account_repository = $GLOBALS['egw_info']['server']['account_repository']) &&
+			!($account_repository = $GLOBALS['egw_info']['server']['auth_type']))
+		{
+			$account_repository = 'sql';
+		}
+		if(!($current_hash = $GLOBALS['egw_info']['server'][$account_repository . '_encryption_type']))
+		{
+			$current_hash = 'md5';
+		}
+		$change_pw = $content['random_pw'] || $content['hash'] && $content['hash'] != $current_hash;
+
+		$result = $this->resetAccount($content['user'], $content['values'], $change_pw, $current_hash, $msg, $changed);
+
+		if(count($changed) == 1)
+		{
+			Api\Json\Response::get()->data($msg !== "" ? $msg : $GLOBALS['egw']->accounts->id2name($content['user']));
+		}
+		else
+		{
+			Api\Json\Response::get()->error($msg);
+		}
+
 	}
 }
