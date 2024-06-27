@@ -216,17 +216,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			// @ts-ignore
 			...super.styles,
 			css`
-                :host {
-                    --sl-spacing-large: 1rem;
-                }
+				:host {
+					--sl-spacing-large: 1rem;
+				}
 
 				::part(expand-button) {
 					rotate: none;
-                    padding: 0;
-					padding-left: 5em;
-					padding-right: 1em;
+					padding: 0 0 0 5em;
 					margin-left: -5em;
-					margin-right: -1em;
 
 				}
 
@@ -241,8 +238,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				}
 
 				::part(label):hover {
-                    text-decoration: underline;
-                }
+					text-decoration: underline;
+				}
 
 				.tree-item__label {
 					overflow: hidden;
