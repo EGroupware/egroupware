@@ -10,7 +10,13 @@
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {egwActionObjectInterface} from "./egw_action";
 import {Et2Tree} from "../etemplate/Et2Tree/Et2Tree";
-import {EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
+import {
+    EGW_AI_DRAG_ENTER,
+    EGW_AI_DRAG_OUT,
+    EGW_AI_DRAG_OVER,
+    EGW_AO_STATE_FOCUSED,
+    EGW_AO_STATE_SELECTED
+} from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
 
 
@@ -34,12 +40,14 @@ export class EgwDragDropShoelaceTree {
         aoi.doGetDOMNode = function () {
             return aoi.node;
         }
+        let timeout: NodeJS.Timeout;
 
         aoi.doTriggerEvent = function (_event) {
-            if (_event == EGW_AI_DRAG_OVER)
+            if (_event == EGW_AI_DRAG_ENTER)
             {
+
                 this.node.classList.add("draggedOver");
-                setTimeout(() => {
+                timeout = setTimeout(() => {
                     if (this.node.classList.contains("draggedOver"))
                     {
                         this.node.expanded = true
@@ -49,6 +57,7 @@ export class EgwDragDropShoelaceTree {
             if (_event == EGW_AI_DRAG_OUT)
             {
                 (this.node).classList.remove("draggedOver");
+                clearTimeout(timeout)
             }
             return true
         }
