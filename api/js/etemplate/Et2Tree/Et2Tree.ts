@@ -196,14 +196,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	//Sl-Trees handle their own onClick events
 	_handleClick(_ev)
 	{
-		const labelClicked = composedPathContains(_ev,"span","tree-item__label")
-		if (!labelClicked)
-		{
-			this._currentSlTreeItem.expanded = !this._currentSlTreeItem.expanded;
-		}
 		// check if not expand icon (> or v) was clicked, we have an onclick handler and a string value
-		// svg bibi-chevron-right is not necessarily the first element in composedPath
-		if (!(composedPathContains(_ev,"svg","bi-chevron-right")) &&
+		if (!(_ev.composedPath()[0].tagName === 'svg' &&
+				(_ev.composedPath()[0].classList.contains('bi-chevron-right') ||
+					_ev.composedPath()[0].classList.contains('bi-chevron-down')
+				)
+			) &&
 			typeof this.onclick === "function" && typeof _ev.target.value === "string")
 		{
 			this.onclick(_ev.target.value, this, _ev.target.value)
@@ -222,9 +220,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     --sl-spacing-large: 1rem;
                 }
 
-                ::part(expand-button) {
+				::part(expand-button) {
+					rotate: none;
                     padding: 0;
-                }
+					padding-left: 5em;
+					padding-right: 1em;
+					margin-left: -5em;
+					margin-right: -1em;
+
+				}
 
 				/* Stop icon from shrinking if there's not enough space */
 
@@ -245,18 +249,21 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					white-space: nowrap;
 					text-overflow: ellipsis;
 				}
-				sl-tree-item{
+
+				sl-tree-item {
 					background-color: white;
 				}
-				sl-tree-item.drop-hover{
+
+				sl-tree-item.drop-hover {
 					background-color: #0a5ca5;
 				}
-				sl-tree-item.drop-hover sl-tree-item{
-					background-color: white ;
+
+				sl-tree-item.drop-hover sl-tree-item {
+					background-color: white;
 				}
-				
-				sl-badge::part(base){
-				
+
+				sl-badge::part(base) {
+
 					background-color: rgb(130, 130, 130);
 					font-size: 0.75em;
 					font-weight: 700;
@@ -265,15 +272,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					right: 0.5em;
 				}
 
+
 				@media only screen and (max-device-width: 768px) {
-					:host{
+					:host {
 						--sl-font-size-medium: 1.2rem;
 					}
-					sl-tree-item{
+
+					sl-tree-item {
 						padding: 0.1em;
 					}
-					
-					
+
+
 				}
 			`
 
@@ -804,7 +813,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
                     }}
             >
-                <sl-icon src="${img ?? nothing}"></sl-icon>
+
+
+				<sl-icon src="${img ?? nothing}"></sl-icon>
                 <span class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
@@ -903,6 +914,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                     }
 
             >
+				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
+				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
                 ${repeat(this._selectOptions, this._optionTemplate)}
             </sl-tree>
 		`;
