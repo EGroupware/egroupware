@@ -1400,6 +1400,12 @@ class mail_compose
 		// set filemode icons for all attachments
 		if(!empty($content['attachments']))
 		{
+			// Make sure placeholder is there
+			$attachment_block = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' . lang('Attachments') . '</fieldset>';
+			if($content['is_html'] && strpos($content['mail_htmltext'], $attachment_block) == false)
+			{
+				$content['mail_htmltext'] .= $attachment_block;
+			}
 			foreach($content['attachments'] as &$attach)
 			{
 				$attach['is_dir'] = !empty($attach['file']) && is_dir($attach['file']);
@@ -2567,13 +2573,13 @@ class mail_compose
 			case 'html':
 				$body = $_formData['body'];
 
-				static $ruler = '<hr class="ruler"';
+				static $attachment_block = '<fieldset class="attachments mceNonEditable"';
 				if (!empty($attachment_links))
 				{
-					// if we have a ruler, replace it with the attachment block
-					if (strpos($body, $ruler) !== false)
+					// if we have a placeholder, replace it with the attachment block
+					if(strpos($body, $attachment_block) !== false)
 					{
-						$body = preg_replace('#'.$ruler.'[^>]*>#', $attachment_links, $body);
+						$body = preg_replace('#' . $attachment_block . '[^>]*>.*</fieldset>#', $attachment_links, $body);
 					}
 					// else place it before the signature
 					elseif (strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
@@ -2585,6 +2591,7 @@ class mail_compose
 						$body .= $attachment_links;
 					}
 				}
+				static $ruler = '<hr class="ruler"';
 				$body = str_replace($ruler, '<hr', $body);  // remove id from ruler, to not replace in cited mails
 
 				if(!empty($signature))

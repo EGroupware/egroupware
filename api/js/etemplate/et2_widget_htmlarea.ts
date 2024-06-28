@@ -267,7 +267,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				"visualblocks visualchars image link media template fullscreen",
 				"codesample table charmap hr pagebreak nonbreaking anchor toc ",
 				"insertdatetime advlist lists textcolor wordcount imagetools ",
-				"colorpicker textpattern help paste code searchreplace tabfocus"
+				"colorpicker textpattern help paste code searchreplace tabfocus",
+				"noneditable"
 			],
 			toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
 			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
