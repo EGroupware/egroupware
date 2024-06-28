@@ -1785,8 +1785,6 @@ class AdminApp extends EgwApp
 			data, this.egw
 		);
 	}
-
-
 }
 
 app.classes.admin = AdminApp;

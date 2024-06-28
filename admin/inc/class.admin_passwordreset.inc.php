@@ -66,6 +66,28 @@ class admin_passwordreset
 	 */
 	function index(array $content=null, $msg='')
 	{
+
+		// Setup if opened as a dialog
+		$content['dialog'] = $_GET['dialog'];
+		if($content['dialog'] && !$content['users'] && isset($_GET['ids']))
+		{
+			$content['users'] = $_GET['ids'];
+
+			$query = Api\Cache::getSession('admin', 'account_list');
+			if($_GET['select_all'] == 'true')
+			{
+				@set_time_limit(0);            // switch off the execution time limit, as it's for big selections to small
+				$query['num_rows'] = -1;       // all
+				$readonlys = null;
+				$content['users'] = [];
+				$rows = [];
+				admin_ui::get_users($query, $rows);
+				foreach($rows as $row)
+				{
+					$content['users'][] = $row['account_id'];
+				}
+			}
+		}
 		if (!($account_repository = $GLOBALS['egw_info']['server']['account_repository']) &&
 			!($account_repository = $GLOBALS['egw_info']['server']['auth_type']))
 		{

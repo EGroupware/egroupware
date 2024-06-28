@@ -180,6 +180,7 @@ bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 blocking after wrong password	admin	en	Blocking after wrong password
 bottom	admin	en	Bottom
+bulk changes	admin	en	Bulk changes
 bulk password reset	admin	en	Bulk password reset
 by	admin	en	By
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!<br>Are you really sure you want to do that?

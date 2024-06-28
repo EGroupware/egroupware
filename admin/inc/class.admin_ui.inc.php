@@ -183,6 +183,17 @@ class admin_ui
 				$actions['add']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
 			}
 			++$group;
+			$config = Api\Config::read('admin');
+			$reset = new admin_passwordreset();
+			$actions['change'] = array(
+				'caption'         => 'Bulk changes',
+				'allowOnMultiple' => true,
+				'group'           => $group,
+				'nm_action'       => 'popup',
+				'url'             => 'menuaction=admin.admin_passwordreset.index&dialog=true&ids=$id&select_all=$select_all',
+				'width'           => 750,
+				'height'          => 600
+			);
 			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
 			$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_user')));
 			foreach($apps as $app)
@@ -385,6 +396,7 @@ class admin_ui
 		{
 			$params['account_id'] = (array)$query['account_id'];
 		}
+		Api\Cache::setSession('admin', 'account_list', $query);
 
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
