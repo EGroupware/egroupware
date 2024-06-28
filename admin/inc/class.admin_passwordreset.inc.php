@@ -188,6 +188,10 @@ class admin_passwordreset
 	{
 		if(($account = $GLOBALS['egw']->accounts->read($account_id)))
 		{
+			if($content['group'])
+			{
+				$GLOBALS['egw']->accounts->set_memberships(array_merge(array_keys($account['memberships']), $content['group']), $account_id);
+			}
 			if($content['random_pw'])
 			{
 				if(($minlength = $GLOBALS['egw_info']['server']['force_pwd_length']) < 8)
