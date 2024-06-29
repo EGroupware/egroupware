@@ -61,6 +61,7 @@ allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 always use full edit dialog	calendar	en	Always use full edit dialog
 always use the full edit dialog, not this little dialog	calendar	en	Always use the full edit dialog, not this little dialog
+apply changes to (future) exceptions too?	calendar	en	Apply changes to (future) exceptions too?
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
@@ -449,6 +450,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
 organizer	calendar	en	Organizer
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	en	Otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.
 output unit	calendar	en	Output unit
 overlap holiday	calendar	en	Overlap holiday
 owner too	calendar	en	Owner too

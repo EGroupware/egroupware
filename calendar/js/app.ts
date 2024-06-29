@@ -2261,14 +2261,14 @@ export class CalendarApp extends EgwApp
 	 */
 	move_edit_series(_DOM,_button)
 	{
-		var content : any = this.et2.getArrayMgr('content').data;
-		var start_date = this.et2.getValueById('start');
-		var end_date = this.et2.getValueById('end');
-		var whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
-		var duration = ''+this.et2.getValueById('duration');
-		var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
-		var button = _button;
-		var that = this;
+		const content : any = this.et2.getArrayMgr('content').data;
+		const start_date = this.et2.getValueById('start');
+		const end_date = this.et2.getValueById('end');
+		const whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
+		const duration = ''+this.et2.getValueById('duration');
+		const is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
+		const button = _button;
+		const that = this;
 
 		let instance_date_regex = window.location.search.match(/date=(\d{4}-\d{2}-\d{2}(?:.+Z)?)/);
 		let instance_date;
@@ -2278,15 +2278,13 @@ export class CalendarApp extends EgwApp
 			instance_date.setUTCMinutes(instance_date.getUTCMinutes() +instance_date.getTimezoneOffset());
 		}
 		if (typeof content != 'undefined' && content.id != null &&
-			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0
-		)
+			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0)
 		{
 			if (content.start != start_date ||
 				content.whole_day != is_whole_day ||
 				(duration && ''+content.duration != duration ||
 				// End date might ignore seconds, and be 59 seconds off for all day events
-				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000)
-			)
+				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000))
 			{
 				et2_calendar_event.series_split_prompt(
 					content, instance_date, function(_button_id)
@@ -2294,20 +2292,22 @@ export class CalendarApp extends EgwApp
 						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
 							that.et2.getInstanceManager().submit(button);
-
 						}
 					}
 				);
+				return false;
 			}
-			else
+			// check if we have future exceptions and changes with might be applied to them too
+			if (content.future_exceptions)
 			{
-				return true;
+				Et2Dialog.show_dialog((_button) => {
+					this.et2.setValueById('apply_changes_to_exceptions', _button == Et2Dialog.YES_BUTTON);
+					this.et2.getInstanceManager().submit(button);
+				}, 'Otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.', 'Apply changes to (future) exceptions too?', undefined, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
+				return false;
 			}
 		}
-		else
-		{
-			return true;
-		}
+		return true;
 	}
 
 	/**

@@ -864,11 +864,12 @@ class calendar_uiforms extends calendar_ui
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
 					unset($preserv['edit_single']);
 				}
-				else	// conflict or error, we need to reset everything to the state befor we tried to save it
+				else	// conflict or error, we need to reset everything to the state before we tried to save it
 				{
 					$event['id'] = $event['reference'];
 					$event['reference'] = $event['recurrence'] = 0;
 					$event['uid'] = $content['uid'];
+					$preserv['apply_to_future_exceptions'] = $content['apply_to_future_exceptions'] ?? null;
 				}
 				$update_type = 'edit';
 			}
@@ -933,7 +934,14 @@ class calendar_uiforms extends calendar_ui
 			if (is_array($conflicts))
 			{
 				$event['button_was'] = $button;	// remember for ignore
+				$preserv['apply_changes_to_exceptions'] = $content['apply_changes_to_exceptions'] ?? null;
+				$preserv['no_notifications'] = $content['no_notifications'] ?? null;
 				return $this->conflicts($event,$conflicts,$preserv);
+			}
+			// check if we should apply the changes to the exceptions
+			if (!empty($content['apply_changes_to_exceptions']))
+			{
+				$this->apply_changes_to_exceptions($event, $messages, !empty($content['no_notifications']));
 			}
 
 			// Event spans multiple days, need an edit to make sure they all get updated
@@ -1201,7 +1209,7 @@ class calendar_uiforms extends calendar_ui
 		$event['recurrence'] = $preserv['recurrence'] = $preserv['actual_date'];
 		$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
 		$event['recur_type'] = MCAL_RECUR_NONE;
-		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
+		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data', 'recur_rdates') as $name)
 		{
 			unset($event[$name]);
 		}
@@ -1947,6 +1955,9 @@ class calendar_uiforms extends calendar_ui
 		//Disable videoconference if the module is not enabled
 		$etpl->disableElement('videoconference', calendar_hooks::isVideoconferenceDisabled());
 
+		$content['future_exceptions'] = !empty($content['id']) && !empty($content['recur_type']) &&
+			$this->bo->search(['start' => Api\DateTime::to('now', 'ts')], 'cal_reference='.(int)$content['id']);
+
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
 		{
@@ -1959,6 +1970,66 @@ class calendar_uiforms extends calendar_ui
 			$etpl->exec('calendar.calendar_uiforms.process_edit',$content,$sel_options,$readonlys,$preserved+[
 				'##videoconference' => $content['##videoconference'],
 			],$preserved['no_popup'] ? 0 : 2);
+		}
+	}
+
+	/**
+	 * Apply given data of event-master to future exceptions
+	 *
+	 * @param array $master
+	 * @param ?array $messages on return error-messages
+	 * @param ?bool $skip_notifications
+	 * @return void
+	 */
+	protected function apply_changes_to_exceptions(array $master, ?array $messages=null, ?bool $skip_notifications=null)
+	{
+		foreach($this->bo->search([
+			'start' => Api\DateTime::to('now', 'ts')
+		], 'cal_reference='.(int)$master['id']) as $event)
+		{
+			$changes = 0;
+			foreach($master as $name => $value)
+			{
+				switch($name)
+				{
+					case 'title';
+					case 'description':
+					case 'location':
+					case 'cat_id':
+					case 'priority':
+						if ($event[$name] != $value)
+						{
+							$event[$name] = $value;
+							$changes++;
+						}
+						break;
+
+					case 'participants':
+						// only add new participants, leave status of current participants alone
+						foreach($value as $uid => $status)
+						{
+							if (!isset($event['participants'][$uid]))
+							{
+								$event['participants'][$uid] = $status;
+								$changes++;
+							}
+						}
+						unset($event['participant_status']);
+						break;
+
+					default:
+						if ($name[0] === '#' && $event[$name] != $value)
+						{
+							$event[$name] = $value;
+							$changes++;
+						}
+						break;
+				}
+				if ($changes)
+				{
+					$this->bo->update($event, true, true, false, true, $messages, $skip_notifications);
+				}
+			}
 		}
 	}
 

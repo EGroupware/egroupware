@@ -61,6 +61,7 @@ allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeit
 always	calendar	de	Immer
 always use full edit dialog	calendar	de	Immer das komplette Bearbeiten-Fenster verwenden
 always use the full edit dialog, not this little dialog	calendar	de	Verwende immer das komplette Bearbeiten-Fenster, anstatt dem verkürzten Dialog.
+apply changes to (future) exceptions too?	calendar	de	Änderungen auch auf (zukünftige) Ausnahmen anwenden?
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine.
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
@@ -449,6 +450,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	de	Unerledigte Aufgaben:
 optional	calendar	de	Optional
 organizer	calendar	de	Organisator
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	de	Andernfalls werden Änderungen im Titel, in der Beschreibung, ... oder neue Teilnehmer nicht auf bereits erstellte Ausnahmen übertragen.
 output unit	calendar	de	Ausgabeeinheit
 overlap holiday	calendar	de	Überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
