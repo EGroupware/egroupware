@@ -518,8 +518,7 @@ class Mailer extends Horde_Mime_Mail
 		if (!($message_id = $this->getHeader('Message-ID')) &&
 			class_exists('Horde_Mime_Headers_MessageId'))	// since 2.5.0
 		{
-			$message_id = Horde_Mime_Headers_MessageId::create('EGroupware');
-			$this->addHeader('Message-ID', $message_id);
+			self::checkSetRequiredHeaders($this->_headers);
 		}
 		$body_sha1 = null;	// skip sha1, it requires whole mail in memory, which we traing to avoid now
 
@@ -644,6 +643,33 @@ class Mailer extends Horde_Mime_Mail
 		if (isset($e)) throw $e;
 	}
 
+	public static function checkSetRequiredHeaders(\Horde_Mime_Headers $headers)
+	{
+		if (!isset($headers['Message-ID']))
+		{
+			// UCS e.g. has $_SERVER['SERVER_NAME'] === '_', which is used by Horde_Mime_Headers_MessageID::create()
+			if (!preg_match($domain_regexp='/^[a-z0-9][a-z0-9_-]+(\.[a-z0-9][a-z0-9_-]+)+$/i', $server = $_SERVER['SERVER_NAME']) &&
+				!preg_match($domain_regexp, $server = $_SERVER['HTTP_HOST']) &&
+				!preg_match($domain_regexp, $server = gethostname().'.user.egroupware.org'))
+			{
+				$server = 'user.egroupware.org';
+			}
+			$headers->addHeaderOb(
+				new Horde_Mime_Headers_MessageId('Message-ID', '<'.(string)(new \Horde_Support_Guid([
+						'prefix' => 'EGroupware',
+						'server' => $server,
+					])).'>'));
+		}
+		if (!isset($headers['User-Agent']))
+		{
+			$headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['api']);
+		}
+		if (!isset($headers['Date']))
+		{
+			$headers->addHeaderOb(Horde_Mime_Headers_Date::create());
+		}
+	}
+
 	/**
      * Sends this message.
      *
@@ -669,19 +695,7 @@ class Mailer extends Horde_Mime_Mail
     public function _send($mailer, $resend = false, $flowed = true, array $opts = array())
     {
 		/* Add mandatory headers if missing. */
-		if (!$resend || !isset($this->_headers['Message-ID'])) {
-			$this->_headers->addHeaderOb(
-                Horde_Mime_Headers_MessageId::create()
-			);
-		}
-		if (!isset($this->_headers['User-Agent'])) {
-			$this->_headers->addHeaderOb(
-                Horde_Mime_Headers_UserAgent::create()
-			);
-		}
-		if (!$resend || !isset($this->_headers['Date'])) {
-            $this->_headers->addHeaderOb(Horde_Mime_Headers_Date::create());
-		}
+	    self::checkSetRequiredHeaders($this->_headers);
 
 		if (isset($this->_base)) {
 			$basepart = $this->_base;
@@ -785,6 +799,7 @@ class Mailer extends Horde_Mime_Mail
 		catch(Horde_Mail_Exception $e)
 		{
 			unset($e);
+			self::checkSetRequiredHeaders($this->_headers);
 			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
 		}
 		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
