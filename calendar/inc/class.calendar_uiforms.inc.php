@@ -336,6 +336,18 @@ class calendar_uiforms extends calendar_ui
 			}
 			$update_type = 'edit';
 		}
+		if (!empty($content['recur_rdates']['delete_rdate']))
+		{
+			$date = key($content['recur_rdates']['delete_rdate']);
+			// eT2 converts time to
+			if (!is_numeric($date)) $date = Api\DateTime::to(str_replace('Z', '', $date), 'ts');
+			unset($content['recur_rdates']['delete_rdate']);
+			if (($key = array_search($date, $content['recur_rdates'])) !== false)
+			{
+				unset($content['recur_rdates'][$key]);
+				$content['recur_rdates'] = array_values($content['recur_rdates']);
+			}
+		}
 		// delete an alarm
 		if (!empty($content['alarm']['delete_alarm']))
 		{
@@ -667,8 +679,19 @@ class calendar_uiforms extends calendar_ui
 
 		switch((string)$button)
 		{
-		case 'exception':	// create an exception in a recuring event
+		case 'exception':	// create an exception in a recurring event
 			$msg = $this->_create_exception($event,$preserv);
+			break;
+
+		case 'add_rdate':
+			if (!empty($event['recur_rdate']) && array_search($event['recur_rdate'], (array)$event['recur_rdates']) === false)
+			{
+				$event['recur_rdates'][] = $event['recur_rdate'];
+				usort($event['recur_rdates'], static function($a, $b) {
+					return $a <=> $b;
+				});
+				$msg = lang('Added recurrence on %1.', Api\DateTime::to($event['recur_rdate']));
+			}
 			break;
 
 		case 'edit':

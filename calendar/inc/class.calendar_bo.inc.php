@@ -129,7 +129,7 @@ class calendar_bo
 		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
 		MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
 		MCAL_RECUR_YEARLY       => 'Yearly',
-		MCAL_RECUR_RDATE/*calendar_rrule::PERIOD*/ => 'Explicit dates',
+		MCAL_RECUR_RDATE/*calendar_rrule::PERIOD*/ => 'Explicit recurrences',
 	);
 	/**
 	 * @var array recur_days translates MCAL recur-days to verbose labels

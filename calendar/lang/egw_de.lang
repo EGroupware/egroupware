@@ -32,6 +32,7 @@ add current view as favorite	calendar	de	Ansicht als Favorit zufügen
 add new alarm	calendar	de	Neuen Alarm erstellen
 add new event	calendar	de	Einen neuen Termin hinzufügen
 add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
+add recurrence	calendar	de	Wiederholung hinzufügen
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
 added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
@@ -247,7 +248,7 @@ exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	Existiert
-explicit dates	calendar	de	Explizite Termine
+explicit recurrences	calendar	de	Explizite Wiederholungen
 export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format
@@ -524,8 +525,6 @@ search string for the events	calendar	de	Suchtext für Termine
 select a %1	calendar	de	%1 auswählen
 select a color for this calendar	calendar	de	Wählen Sie eine Farbe für diesen Kalender
 select a time	calendar	de	Eine Zeit auswählen
-select an action	calendar	de	Befehl auswählen
-select an action...	calendar	de	Aktion auswählen ...
 select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!

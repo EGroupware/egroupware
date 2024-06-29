@@ -32,6 +32,7 @@ add current view as favorite	calendar	en	Add current view as favorite
 add new alarm	calendar	en	Add new alarm
 add new event	calendar	en	Add new appointment
 add new participants or resource	calendar	en	Add new participants or resource
+add recurrence	calendar	en	Add recurrence
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronization	calendar	en	Added by synchronization
@@ -247,7 +248,7 @@ exclude weekend	calendar	en	Exclude Weekend
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
-explicit dates	calendar	en	Explicit dates
+explicit recurrences	calendar	en	Explicit recurrences
 export definition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your calendar into a CSV file.

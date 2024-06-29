@@ -1403,17 +1403,24 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * Function for disabling the recur_data multiselect box
+	 * Function for disabling the recur_data multiselect box and add_rdate hbox
 	 *
 	 */
 	check_recur_type()
 	{
-		var recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
-		var recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
+		const recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
+		const recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
+		const addRdate = this.et2.getWidgetById('button[add_rdate]');
+		const recurRdate = this.et2.getWidgetById('recur_rdate');
 
 		if(recurType && recurData)
 		{
-			recurData.set_disabled(recurType.get_value() != 2 && recurType.get_value() != 4);
+			recurData.set_disabled(recurType.value != 2 && recurType.value != 4);
+		}
+		if (recurType && addRdate && recurRdate)
+		{
+			addRdate.set_disabled(recurType.value != 9);
+			recurRdate.set_disabled(recurType.value != 9);
 		}
 	}
 
@@ -1435,10 +1442,17 @@ export class CalendarApp extends EgwApp
 		// Update recurring date limit, if not set it can't be before start
 		if(widget)
 		{
-			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
+			const recur_end = widget.getRoot().getWidgetById('recur_enddate');
 			if(recur_end && recur_end.getValue && !recur_end.value)
 			{
 				recur_end.set_min(widget.value);
+			}
+			// update recur_rdate with start (specially time) and set start as minimum
+			const recur_rdate = widget.getRoot().getWidgetById('recur_rdate');
+			if (recur_rdate)
+			{
+				recur_rdate.set_min(widget.value);
+				recur_rdate.value = widget.value;
 			}
 
 			// Update end date, min duration is 1 minute
@@ -1453,7 +1467,6 @@ export class CalendarApp extends EgwApp
 		}
 		// Update currently selected alarm time
 		this.alarm_custom_date();
-
 	}
 
 	/**

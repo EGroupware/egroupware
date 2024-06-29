@@ -123,16 +123,22 @@
 					<et2-vbox>
 						<et2-select-dow statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6"
                                     multiple="true" placeholder=""></et2-select-dow>
-						<grid id="recur_rdates" class="recur_rdates">
+						<grid id="recur_rdates" class="recur_rdates" disabled="!@recur_rdates">
 							<columns>
+								<column/>
 								<column/>
 							</columns>
 							<rows>
 								<row>
 									<et2-date-time id="$row" readonly="true"></et2-date-time>
+									<et2-button-icon statustext="Delete this recurrence" id="delete_rdate[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this recurrence','Delete')" image="delete"></et2-button-icon>
 								</row>
 							</rows>
 						</grid>
+						<et2-hbox>
+							<et2-date-time id="recur_rdate"></et2-date-time>
+							<et2-button id="button[add_rdate]" label="Add recurrence"></et2-button>
+						</et2-hbox>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-description  value="Exceptions"></et2-description>
@@ -147,7 +153,7 @@
 						<rows>
 							<row>
 								<et2-date-time  id="$row" readonly="true"></et2-date-time>
-								<et2-button  statustext="Delete this exception" label="Delete" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button>
+								<et2-button-icon statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
 							</row>
 						</rows>
 					</grid>

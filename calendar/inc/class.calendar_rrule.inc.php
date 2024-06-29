@@ -82,7 +82,7 @@ class calendar_rrule implements Iterator
 		self::MONTHLY_WDAY => 'Monthly (by day)',
 		self::MONTHLY_MDAY => 'Monthly (by date)',
 		self::YEARLY       => 'Yearly',
-		self::PERIOD => 'By date or period'
+		self::PERIOD       => 'By date or period'
 	);
 
 	/**
@@ -316,6 +316,15 @@ class calendar_rrule implements Iterator
 		}
 		$this->interval = (int)$interval;
 
+		if ($exceptions)
+		{
+			foreach($exceptions as $exception)
+			{
+				$exception->setTimezone($this->time->getTimezone());
+				$this->exceptions[] = $exception->format('Ymd');
+			}
+			$this->exceptions_objs = $exceptions;
+		}
 		$this->enddate = $enddate;
 		if($type == self::PERIOD)
 		{
@@ -323,6 +332,11 @@ class calendar_rrule implements Iterator
 			{
 				$rdate->setTimezone($this->time->getTimezone());
 				$this->period[] = $rdate;
+			}
+			// if startdate is neither in the rdates, nor the exceptions --> prepend it to rdates
+			if (!in_array($this->time, $this->period) && !in_array($this->time, $this->exceptions_objs))
+			{
+				array_unshift($this->period, clone($this->time));
 			}
 			$enddate = clone(count($this->period) ? end($this->period) : $this->time);
 			// Make sure to include the last date as valid
@@ -352,15 +366,6 @@ class calendar_rrule implements Iterator
 		if (!($this->weekdays = (int)$weekdays) && ($type == self::WEEKLY || $type == self::MONTHLY_WDAY))
 		{
 			$this->weekdays = self::getWeekday($this->time);
-		}
-		if ($exceptions)
-		{
-			foreach($exceptions as $exception)
-			{
-				$exception->setTimezone($this->time->getTimezone());
-				$this->exceptions[] = $exception->format('Ymd');
-			}
-			$this->exceptions_objs = $exceptions;
 		}
 	}
 
