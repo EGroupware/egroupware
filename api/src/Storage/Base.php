@@ -1079,18 +1079,18 @@ class Base
 	/**
 	 * Sanitize (currently just remove) not understood ORDER BY clause
 	 *
-	 * @param string $fragment SQL fragment containing ORDER BY clause, could also contain GROUP BY etc
+	 * @param ?string $fragment SQL fragment containing ORDER BY clause, could also contain GROUP BY etc
 	 * @return string sanitized version of $_order_by
 	 */
-	static function sanitizeOrderBy(string $fragment)
+	static function sanitizeOrderBy(?string $fragment)
 	{
 		// check fragment contains ORDER BY --> just operate on what's behind
-		if (stripos($fragment,'ORDER BY') !== false)
+		if ($fragment && stripos($fragment,'ORDER BY') !== false)
 		{
 			[$group_by, $order_by] = preg_split('/order +by +/i', $fragment);
 		}
 		// check fragment not just contain GROUP BY or HAVING --> nothing to do
-		elseif ($fragment === '' || stripos($fragment,'GROUP BY')!==false || stripos($fragment,'HAVING')!==false)
+		elseif (empty($fragment) || stripos($fragment,'GROUP BY')!==false || stripos($fragment,'HAVING')!==false)
 		{
 			return $fragment;
 		}
