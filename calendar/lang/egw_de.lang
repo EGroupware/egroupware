@@ -36,6 +36,7 @@ add recurrence	calendar	de	Wiederholung hinzufügen
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
 added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
+added recurrence on %1.	calendar	de	Wiederholung am %1 hinzugefügt.
 after	calendar	de	Nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum

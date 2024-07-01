@@ -317,7 +317,7 @@ export class CalendarApp extends EgwApp
 					{
 						this.freetime_search();
 					}
-					//send Syncronus ajax request to the server to unlock the on close entry
+					//send synchronous ajax request to the server to unlock the on close entry
 					//set onbeforeunload with json request to send request when the window gets close by X button
 					if (content.data.lock_token)
 					{
@@ -1421,6 +1421,7 @@ export class CalendarApp extends EgwApp
 		{
 			addRdate.set_disabled(recurType.value != 9);
 			recurRdate.set_disabled(recurType.value != 9);
+			this.et2.getWidgetById('recur_enddate')?.set_disabled(recurType.value == 9);
 		}
 	}
 

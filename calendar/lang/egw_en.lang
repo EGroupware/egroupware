@@ -36,6 +36,7 @@ add recurrence	calendar	en	Add recurrence
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronization	calendar	en	Added by synchronization
+added recurrence on %1.	calendar	en	Added recurrence on %1.
 after	calendar	en	After
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date

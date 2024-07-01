@@ -344,8 +344,17 @@ class calendar_uiforms extends calendar_ui
 			unset($content['recur_rdates']['delete_rdate']);
 			if (($key = array_search($date, $content['recur_rdates'])) !== false)
 			{
-				unset($content['recur_rdates'][$key]);
-				$content['recur_rdates'] = array_values($content['recur_rdates']);
+				// if this is an initial edit, simply remove the rdate
+				if (empty($content['id']))
+				{
+					unset($content['recur_rdates'][$key]);
+					$content['recur_rdates'] = array_values($content['recur_rdates']);
+				}
+				// otherwise add the recurrence as (deleted) exception
+				elseif (!in_array($date, $content['recur_exception']))
+				{
+					$content['recur_exception'][] = $date;
+				}
 			}
 		}
 		// delete an alarm
