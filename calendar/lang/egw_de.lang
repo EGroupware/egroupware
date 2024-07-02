@@ -712,6 +712,7 @@ you are not allowed to book the resource selected:	calendar	de	Sie sind nicht be
 you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanfrage an die oben eingetragenen Empfänger zu versenden.
 you can either set a year or a occurrence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
+you can only notify other users, not yourself!	calendar	de	Sie können nur andere Benutzer benachrichtigen, nicht sich selbst!
 you can only set a year or a occurrence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben!
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
 you have a meeting scheduled for %1	calendar	de	Sie haben einen Termin am %1

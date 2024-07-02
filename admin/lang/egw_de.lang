@@ -95,6 +95,7 @@ add new application	admin	de	Neue Anwendung hinzufügen
 add new email address:	admin	de	Neue E-Mail-Adresse hinzufügen:
 add peer server	admin	de	Server zu Serververbund hinzufügen
 add profile	admin	de	Profil hinzufügen
+add to group	admin	de	Zu Gruppe hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
 add user	admin	de	Neuen Benutzer erstellen
 add user or group	admin	de	Benutzer oder Gruppen eingeben
@@ -186,6 +187,7 @@ bi-dir passthrough	admin	de	Weiterleitung in beide Richtungen
 bi-directional	admin	de	beide Richtungen
 blocking after wrong password	admin	de	Blockierung nach falschem Passwort
 bottom	admin	de	Unten
+bulk changes	admin	de	Massenänderungen
 bulk password reset	admin	de	Rücksetzen Passwörter
 by	admin	de	Von
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!<br>Sind Sie wirklich sicher, dass Sie das wollen?

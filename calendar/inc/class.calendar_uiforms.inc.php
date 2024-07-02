@@ -3698,7 +3698,8 @@ class calendar_uiforms extends calendar_ui
 		$this->setup_participants($event, $content, $sel_options, $readonlys,$preserve,true);
 		$content = array_merge($event, $content);
 
-		$readonlys = [];
+		// disable notifying yourself, as it is ignored anyway and user is only confused, why no notification is send
+		$readonlys = ['participants[notify]['.$GLOBALS['egw_info']['user']['account_id'].']' => true];
 
 		$etpl = new Etemplate('calendar.notify_dialog');
 		$preserve = $content;

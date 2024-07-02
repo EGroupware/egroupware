@@ -1404,7 +1404,7 @@ class mail_compose
 			$attachment_block = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' . lang('Attachments') . '</fieldset>';
 			if($content['is_html'] && strpos($content['mail_htmltext'], $attachment_block) == false)
 			{
-				$content['mail_htmltext'] .= $attachment_block;
+				//$content['mail_htmltext'] .= $attachment_block;
 			}
 			foreach($content['attachments'] as &$attach)
 			{

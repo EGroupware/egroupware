@@ -425,7 +425,7 @@ class calendar_so
 				$this->db->update($this->cal_table, array('cal_uid' => $event['uid']),
 					array('cal_id' => $event['id']),__LINE__,__FILE__,'calendar');
 			}
-			if (!(int)$recur_date && !empty($event['recur_type']))
+			if (!(int)$recur_date && !empty($event['recur_type']) || $event['recur_type'] == MCAL_RECUR_RDATE)
 			{
 				foreach($this->db->select($this->dates_table, 'cal_id,cal_start,recur_exception', [
 					'cal_id' => $ids,
