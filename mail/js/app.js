@@ -3977,6 +3977,7 @@ app.classes.mail = AppJS.extend(
 		}
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
+			this.addAttachmentPlaceholder();
 			var widget = _event.data;
 			this.et2_obj.submit();
 		}
@@ -4023,6 +4024,7 @@ app.classes.mail = AppJS.extend(
 		if (jQuery.isEmptyObject(_widget)) return;
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
+			this.addAttachmentPlaceholder();
 			this.et2_obj.submit();
 		}
 	},
@@ -5087,6 +5089,7 @@ app.classes.mail = AppJS.extend(
 						(mode == 'share_rw' || mode == 'share_ro') ? 'link' : mode;
 			}
 			this.et2.setArrayMgr('content', content);
+			this.addAttachmentPlaceholder();
 			attachments.set_value({content:content.data.attachments});
 		}
 	},
@@ -6275,5 +6278,20 @@ app.classes.mail = AppJS.extend(
 		{
 			window.open("mailto:" + _address.value);
 		}
+	},
+
+		addAttachmentPlaceholder: function ()
+		{
+			if (this.et2.getArrayMgr("content").getEntry("is_html"))
+			{
+				// Add link placeholder box
+				const email = this.et2.getWidgetById("mail_htmltext");
+				const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
+
+				if (email && !email.getValue().includes(placeholder))
+				{
+					email.editor.execCommand('mceInsertContent', false, placeholder);
+				}
+			}
 	}
 });
