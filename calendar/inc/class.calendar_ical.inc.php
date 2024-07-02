@@ -222,6 +222,7 @@ class calendar_ical extends calendar_boupdate
 			'ORGANIZER'		=> 'owner',
 			'RRULE'			=> 'recur_type',
 			'EXDATE'		=> 'recur_exception',
+			'RDATE'         => 'recur_rdates',
 			'PRIORITY'		=> 'priority',
 			'TRANSP'		=> 'non_blocking',
 			'CATEGORIES'	=> 'category',
@@ -630,8 +631,8 @@ class calendar_ical extends calendar_boupdate
 					case 'RRULE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
 						$rriter = calendar_rrule::event2rrule($event, false, $tzid);
-						$rrule = $rriter->generate_rrule($version);
-						if ($event['recur_enddate'])
+						if (!($rrule = $rriter->generate_rrule($version))) break;   // no recurring event (with rrule)
+						if (isset($rrule['UNTIL']))
 						{
 							if (!$tzid || $version != '1.0')
 							{
@@ -653,7 +654,7 @@ class calendar_ical extends calendar_boupdate
 						}
 						if ($version == '1.0')
 						{
-							if ($event['recur_enddate'] && $tzid)
+							if (isset($rrule['UNTIL']) && $tzid)
 							{
 								$rrule['UNTIL'] = self::getDateTime($rrule['UNTIL'],$tzid);
 							}
@@ -670,24 +671,25 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'EXDATE':
+					case 'RDATE':
 						if ($event['recur_type'] == MCAL_RECUR_NONE) break;
-						if (!empty($event['recur_exception']))
+						if (!empty($event[$egwFieldName]))
 						{
 							if (empty($event['whole_day']))
 							{
-								foreach ($event['recur_exception'] as $key => $timestamp)
+								foreach ($event[$egwFieldName] as $key => $timestamp)
 								{
 									// current Horde_Icalendar 2.1.4 exports EXDATE always in UTC, postfixed with a Z :(
 									// so if we set a timezone here, we have to remove the Z, see the hack at the end of this method
 									// Apple calendar on OS X 10.11.4 uses a timezone, so does Horde eg. for Recurrence-ID
 									$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
-									$event['recur_exception'][$key] = self::getDateTime($ex_date->format('ts') + $ex_date->getOffset(), $tzid, $parameters['EXDATE']);
+									$event[$egwFieldName][$key] = self::getDateTime($ex_date->format('ts') + $ex_date->getOffset(), $tzid, $parameters[$icalFieldName]);
 								}
 							}
 							else
 							{
 								// use 'DATE' instead of 'DATE-TIME' on whole day events
-								foreach ($event['recur_exception'] as $id => $timestamp)
+								foreach ($event[$egwFieldName] as $id => $timestamp)
 								{
 									$time = new Api\DateTime($timestamp,Api\DateTime::$server_timezone);
 									$time->setTimezone(self::$tz_cache[$event['tzid']]);
@@ -698,10 +700,10 @@ class calendar_ical extends calendar_boupdate
 										'mday'  => $arr['day'],
 									);
 								}
-								$event['recur_exception'] = $days;
-								if ($version != '1.0') $parameters['EXDATE']['VALUE'] = 'DATE';
+								$event[$egwFieldName] = $days;
+								if ($version != '1.0') $parameters[$icalFieldName]['VALUE'] = 'DATE';
 							}
-							$vevent->setAttribute('EXDATE', $event['recur_exception'], $parameters['EXDATE']);
+							$vevent->setAttribute($icalFieldName, $event[$egwFieldName], $parameters[$icalFieldName]);
 						}
 						break;
 
@@ -1105,9 +1107,9 @@ class calendar_ical extends calendar_boupdate
 				"()\n".array2string($retval)."\n",3,$this->logfile);
  		}
 
-		// hack to fix iCalendar exporting EXDATE always postfixed with a Z
+		// hack to fix iCalendar exporting EXDATE|RDATE always postfixed with a Z
 		// EXDATE can have multiple values and therefore be folded into multiple lines
-		return preg_replace_callback("/\nEXDATE;TZID=[^:]+:[0-9TZ \r\n,]+/", function($matches)
+		return preg_replace_callback("/\n(EXDATE|RDATE);TZID=[^:]+:[0-9TZ \r\n,]+/", static function($matches)
 			{
 				return preg_replace('/([0-9 ])Z/', '$1', $matches[0]);
 			}, $retval);
@@ -2179,6 +2181,7 @@ class calendar_ical extends calendar_boupdate
 			'recur_data'		=> 'recur_data',
 			'recur_enddate'		=> 'recur_enddate',
 			'recur_exception'	=> 'recur_exception',
+			'recur_rdates'      => 'recur_rdates',
 			'title'				=> 'title',
 			'alarm'				=> 'alarm',
 			'whole_day'			=> 'whole_day',
@@ -2764,21 +2767,19 @@ class calendar_ical extends calendar_boupdate
 					$hour = date('H', $vcardData['start']);
 					$minutes = date('i', $vcardData['start']);
 					$seconds = date('s', $vcardData['start']);
-					if($attributes['params']['VALUE'] == 'PERIOD')
+					$vcardData['recur_type'] = calendar_rrule::RDATE;
+					$vcardData['recur_rdates'] = [];
+					foreach($attributes['values'] as $date)
 					{
-						$vcardData['recur_type'] = calendar_rrule::PERIOD;
-						$vcardData['recur_rdates'] = [];
-						foreach($attributes['values'] as $date)
-						{
-							$vcardData['recur_rdates'][] = mktime(
-								$hour,
-								$minutes,
-								$seconds,
-								$date['month'],
-								$date['mday'],
-								$date['year']
-							);
-						}
+						// ToDo: use $date['period'], if set, to allow a different duration than end- - start-time
+						$vcardData['recur_rdates'][] = mktime(
+							$date['hour'] ?? $hour,
+							$date['minute'] ?? $minutes,
+							$date['second'] ?? $seconds,
+							$date['month'],
+							$date['mday'],
+							$date['year']
+						);
 					}
 					break;
 				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps

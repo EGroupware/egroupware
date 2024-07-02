@@ -1422,6 +1422,7 @@ export class CalendarApp extends EgwApp
 			addRdate.set_disabled(recurType.value != 9);
 			recurRdate.set_disabled(recurType.value != 9);
 			this.et2.getWidgetById('recur_enddate')?.set_disabled(recurType.value == 9);
+			this.et2.getWidgetById('recur_interval')?.set_disabled(recurType.value == 9);
 		}
 	}
 

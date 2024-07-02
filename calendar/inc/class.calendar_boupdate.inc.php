@@ -302,7 +302,7 @@ class calendar_boupdate extends calendar_bo
 			$this->log2file($event2save,$event,$old_event);
 		}
 		// send notifications if the event is in the future
-		if(!$skip_notification && $event['end'] > $this->now_su)
+		if(!$skip_notification && $this->eventInFuture($event))
 		{
 			if ($new_event)
 			{
@@ -857,11 +857,28 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
 	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
-	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
+	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, ?array $alarm=null, $ignore_prefs=false)
 	{
 		Api\Egw::on_shutdown([$this, '_send_update'], func_get_args());
+	}
+
+	/**
+	 * Check event is (ending) in the future
+	 *
+	 * @param array $event
+	 * @param int $grace_time
+	 * @return bool
+	 */
+	public function eventInFuture(array $event, int $grace_time=10) : bool
+	{
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			return empty($event['recur_enddate']) || $event['recur_enddate'] > $this->now_su - $grace_time;
+		}
+		return $event['end'] > $this->now_su - $grace_time;
 	}
 
 	/**
@@ -876,7 +893,7 @@ class calendar_boupdate extends calendar_bo
 	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
-	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null, $ignore_prefs = false)
+	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, ?array $alarm=null, $ignore_prefs = false)
 	{
 		//error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...)");
 		if (!is_array($to_notify))
@@ -893,9 +910,7 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// ignore events in the past (give a tolerance of 10 seconds for the script)
-		if($new_event && $this->date2ts($new_event['start']) < ($this->now_su - 10) ||
-			!$new_event && $old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10)
-		)
+		if($new_event && !$this->eventInFuture($new_event) || !$new_event && $old_event && !$this->eventInFuture($old_event))
 		{
 			error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...) --> ignoring event in the past: start=".
 				date('Y-m-d H:i:s', ($new_event ?: $old_event)['start'])." < ".date('Y-m-d H:i:s', $this->now_su-10));
@@ -982,6 +997,10 @@ class calendar_boupdate extends calendar_bo
 		$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
 		$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
 		if ($old_event) $olddate = new Api\DateTime($old_event['start'], new DateTimeZone($user_prefs['common']['tz']));
+		$rdates = array_map(static function($rdate) use ($user_prefs)
+		{
+			return new Api\DateTime($rdate, new DateTimeZone($user_prefs['common']['tz']));
+		}, $event['recur_rdates']);
 
 		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
 		$owner_prefs = $ics = null;
@@ -1114,17 +1133,20 @@ class calendar_boupdate extends calendar_bo
 				// Set dates:
 				// $details in "preference" format, $cleared_event as DateTime so calendar_ical->exportVCal() gets
 				// the times right, since it assumes a timestamp is in server time
-				$startdate->setTimezone($timezone);
+				$cleared_event['start'] = $startdate->setTimezone($timezone);
 				$details['startdate'] = $startdate->format($timeformat);
-				$cleared_event['start'] = $startdate;
 
-				$enddate->setTimezone($timezone);
+				$cleared_event['end'] = $enddate->setTimezone($timezone);
 				$details['enddate'] = $enddate->format($timeformat);
-				$cleared_event['end'] = $enddate;
 
-				$modified->setTimezone($timezone);
+				$cleared_event['updated'] = $modified->setTimezone($timezone);
 				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
-				$cleared_event['updated'] = $modified;
+
+				// we also need to "fix" timezone for rdates, to not get wrong times!
+				$cleared_event['recur_rdates'] = array_map(static function ($rdate) use ($timezone)
+				{
+					return $rdate->setTimezone($timezone);
+				}, $rdates);
 
 				// Current date doesn't need to go into the cleared event, just for details
 				$date->setTimezone($timezone);
@@ -1404,7 +1426,7 @@ class calendar_boupdate extends calendar_bo
 		$this->check_reset_statuses($event, $old_event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::PERIOD) && $event['start'])
+		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::RDATE) && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
@@ -2064,7 +2086,7 @@ class calendar_boupdate extends calendar_bo
 		$event_arr = $this->event2array($event);
 		foreach($event_arr as $key => $val)
 		{
-			if ($key == 'recur_type') $key = 'repetition';
+			if ($key == 'recur_type') $details['repetition'] = $val['data'];
 			$details[$key] = $val['data'];
 		}
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
