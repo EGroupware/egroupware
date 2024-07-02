@@ -925,7 +925,7 @@ class JsCalendar extends JsBase
 	protected static function Recurrence(array $event, array $data, array $exceptions=[], ?array $rrule=null)
 	{
 		$overrides = [];
-		if (!empty($event['recur_type']) || isset($rrule))
+		if ((!empty($event['recur_type']) || isset($rrule)) && $event['recur_type'] != \calendar_rrule::RDATE)
 		{
 			if (!isset($rrule))
 			{
@@ -956,21 +956,33 @@ class JsCalendar extends JsBase
 			{
 				$rule['byMonthDay'] = [$rrule['BYMONTHDAY']];   // EGroupware supports only a single day!
 			}
-
-			// adding excludes to the overrides
-			if (!empty($event['recur_exception']))
+		}
+		elseif (!empty($event['recur_rdates']) && $event['recur_type'] == \calendar_rrule::RDATE)
+		{
+			foreach($event['recur_rdates'] as $rdate)
 			{
-				foreach ($event['recur_exception'] as $timestamp)
+				if ($rdate != $event['start'])
 				{
-					$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
-					if (!empty($event['whole_day']))
-					{
-						$ex_date->setTime(0, 0, 0);
-					}
-					$overrides[self::DateTime($ex_date, $event['tzid'])] = [
-						'excluded' => true,
+					$overrides[self::DateTime($rdate, $event['tzid'])] = [
+						'start' => self::DateTime($rdate, $event['tzid']),
 					];
 				}
+			}
+		}
+
+		// adding excludes to the overrides
+		if (!empty($event['recur_type']) && !empty($event['recur_exception']))
+		{
+			foreach ($event['recur_exception'] as $timestamp)
+			{
+				$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
+				if (!empty($event['whole_day']))
+				{
+					$ex_date->setTime(0, 0, 0);
+				}
+				$overrides[self::DateTime($ex_date, $event['tzid'])] = [
+					'excluded' => true,
+				];
 			}
 		}
 
