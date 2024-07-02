@@ -49,4 +49,4 @@ export class Et2ImageExpose extends ExposeMixin(Et2Image) implements et2_IDetach
 	}
 }
 
-customElements.define("et2-image-expose", Et2ImageExpose, {extends: 'img'});
+customElements.define("et2-image-expose", Et2ImageExpose);
