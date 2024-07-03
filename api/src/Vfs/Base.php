@@ -428,16 +428,6 @@ class Base
 			// nothing to do
 			return;
 		}
-		if($target[0] != '/')
-		{
-			$query = Vfs::parse_url($target, PHP_URL_QUERY);
-			$target = Vfs::parse_url($target, PHP_URL_PATH);
-			if($query)
-			{
-				// Don't cache without query, some StreamWrappers need those parameters
-				$target = "?$query";
-			}
-		}
 
 		self::$symlink_cache[$path] = $target;
 
