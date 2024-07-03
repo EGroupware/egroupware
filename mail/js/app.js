@@ -5089,9 +5089,9 @@ app.classes.mail = AppJS.extend(
 						(mode == 'share_rw' || mode == 'share_ro') ? 'link' : mode;
 			}
 			this.et2.setArrayMgr('content', content);
-			this.addAttachmentPlaceholder();
 			attachments.set_value({content:content.data.attachments});
 		}
+		this.addAttachmentPlaceholder();
 	},
 
 	/**
@@ -6286,9 +6286,10 @@ app.classes.mail = AppJS.extend(
 			{
 				// Add link placeholder box
 				const email = this.et2.getWidgetById("mail_htmltext");
+				const attach_type = this.et2.getWidgetById("filemode");
 				const placeholder = '<fieldset class="attachments mceNonEditable"><legend>Download attachments</legend>' + this.egw.lang('Attachments') + '</fieldset>';
 
-				if (email && !email.getValue().includes(placeholder))
+				if (email && !email.getValue().includes(placeholder) && attach_type.getValue() !== "attach")
 				{
 					email.editor.execCommand('mceInsertContent', false, placeholder);
 				}
