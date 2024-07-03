@@ -11,6 +11,7 @@
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {egw} from "../jsapi/egw_global";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
+import {EGW_AO_STATE_DRAGGING} from "./egw_action_constants";
 
 export class EgwDragActionImplementation implements EgwActionImplementation {
     type = "drag";
@@ -228,6 +229,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 // Add a basic class to the helper in order to standardize the background layout
                 ai.helper.classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
                 document.body.append(ai.helper);
+
+				// Set a dragging state
+				ai.selected.forEach((item) =>
+				{
+					item.iface?.setState(ai.selected[0].iface.getState() | EGW_AO_STATE_DRAGGING);
+				});
                 this.classList.add('drag--moving');
 
                 event.dataTransfer.setData('application/json', JSON.stringify(data))

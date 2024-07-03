@@ -15,13 +15,14 @@
 	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
 */
 
+import {egwActionObjectInterface} from "../egw_action/egw_action";
 import {
-	egwActionObjectInterface
-} from "../egw_action/egw_action";
-import {EGW_AO_SHIFT_STATE_MULTI,
+	EGW_AO_SHIFT_STATE_MULTI,
+	EGW_AO_STATE_DRAGGING,
 	EGW_AO_STATE_FOCUSED,
-	EGW_AO_STATE_SELECTED} from '../egw_action/egw_action_constants';
-import {egwBitIsSet, egwGetShiftState, egwPreventSelect, egwSetBit, egwUnfocus, egwIsMobile} from "../egw_action/egw_action_common";
+	EGW_AO_STATE_SELECTED
+} from '../egw_action/egw_action_constants';
+import {egwBitIsSet, egwGetShiftState, egwIsMobile, egwSetBit, egwUnfocus} from "../egw_action/egw_action_common";
 import {_egw_active_menu} from "../egw_action/egw_menu";
 import {tapAndSwipe} from "../tapandswipe";
 
@@ -148,10 +149,9 @@ export function et2_dataview_rowAOI(_node)
 			this.checkBox.checked = selected;
 		}
 
-		jQuery(this.node).toggleClass('focused',
-			egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
-		jQuery(this.node).toggleClass('selected',
-			selected);
+		this.node.classList.toggle('focused', egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
+		this.node.classList.toggle('selected', selected);
+		this.node.classList.toggle('drag--moving', egwBitIsSet(_state, EGW_AO_STATE_DRAGGING));
 	};
 
 	return aoi;

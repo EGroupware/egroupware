@@ -17,11 +17,13 @@ export const EGW_AO_STATE_NORMAL = 0x00;
 export const EGW_AO_STATE_SELECTED = 0x01;
 export const EGW_AO_STATE_FOCUSED = 0x02;
 export const EGW_AO_STATE_VISIBLE = 0x04;  //< Can only be set by the AOI, means that the object is attached to the DOM-Tree and visible
+export const EGW_AO_STATE_DRAGGING = 0x08;
 export type EGW_AO_STATES =
 	typeof EGW_AO_STATE_NORMAL
 	| typeof EGW_AO_STATE_SELECTED
 	| typeof EGW_AO_STATE_FOCUSED
 	| typeof EGW_AO_STATE_VISIBLE
+	| typeof EGW_AO_STATE_DRAGGING
 
 export const EGW_AO_EVENT_DRAG_OVER_ENTER = 0x00;
 export const EGW_AO_EVENT_DRAG_OVER_LEAVE = 0x01;
