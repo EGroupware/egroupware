@@ -703,7 +703,8 @@ class calendar_ical extends calendar_boupdate
 								$event[$egwFieldName] = $days;
 								if ($version != '1.0') $parameters[$icalFieldName]['VALUE'] = 'DATE';
 							}
-							$vevent->setAttribute($icalFieldName, $event[$egwFieldName], $parameters[$icalFieldName]);
+							$vevent->setAttribute($icalFieldName, // for RDATE, do not export first RDATE as identical with DTSTART
+								array_slice($event[$egwFieldName], $icalFieldName === 'RDATE' ? 1 : 0), $parameters[$icalFieldName]);
 						}
 						break;
 
