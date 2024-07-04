@@ -577,7 +577,8 @@ class calendar_boupdate extends calendar_bo
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
-		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location'] as $field)
+		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location',
+			'recur_exception','recur_rdates', 'recur_enddate'] as $field)
 		{
 			if($new_event[$field] !== $old_event[$field])
 			{
@@ -628,7 +629,7 @@ class calendar_boupdate extends calendar_bo
 	 * checks if $userid has requested (in $part_prefs) updates for $msg_type
 	 *
 	 * @param int $userid numerical user-id
-	 * @param array $part_prefs preferces of the user $userid
+	 * @param array $part_prefs preferences of the user $userid
 	 * @param int &$msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $old_event Event before the change
 	 * @param array $new_event Event after the change
@@ -701,7 +702,11 @@ class calendar_boupdate extends calendar_bo
 						$diff = max(abs(self::date2ts($old_event['start']??null)-self::date2ts($new_event['start']??null)),
 							abs(self::date2ts($old_event['end']??null)-self::date2ts($new_event['end']??null)));
 						$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
-						if ($msg_type == MSG_MODIFIED && $diff > $check)
+						if ($msg_type == MSG_MODIFIED && ($diff > $check ||
+							// also notify if recurrences where added or removed
+							$old_event['recur_exception'] != $new_event['recur_exception'] ||
+							$old_event['recur_rdates'] != $new_event['recur_rdates'] ||
+							$old_event['recur_enddate'] != $new_event['recur_enddate']))
 						{
 							++$want_update;
 						}
