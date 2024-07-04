@@ -33,6 +33,8 @@ import {until} from "lit/directives/until.js";
  * @csspart footer
  *
  * @cssproperty [--icon-size=32] - Height of icons used in the framework
+ * @cssproperty [--tab-icon-size=32] - Height of application icons in header bar
+ * @cssproperty [--tab-icon-size-active=40] - Height of active application icon
  */
 @customElement('egw-framework')
 //@ts-ignore

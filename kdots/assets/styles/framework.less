@@ -23,12 +23,14 @@ egw-framework#egw_fw_basecontainer {
   }
 
   &::part(header) {
-	background-color: var(--primary-background-color);
-	color: var(--sl-color-neutral-0);
+	--icon-size: 32px;
+	--tab-icon-size: var(--icon-size);
+	--tab-icon-size-active: 40px;
+
+	color: var(--primary-background-color);
 	gap: var(--sl-spacing-medium);
 
 	font-size: var(--icon-size);
-
   }
 
   /* Content slotted inside */
@@ -181,6 +183,78 @@ egw-app {
 
   & > div[id] > div {
 	height: 100%;
+  }
+}
+
+/* Individual application colors, should go in each app's CSS */
+body, :root {
+  // Color code for applications - not used by framework
+  --addressbook-color: #003366;
+  --admin-color: #333333;
+  --bookmarks-color: #CC6633;
+  --calendar-color: #CC0033;
+  --filemanager-color: #ff9933;
+  --infolog-color: #660033;
+  --mail-color: #006699;
+  --projectmanager-color: #669999;
+  --resources-color: #003333;
+  --timesheet-color: #330066;
+  --tracker-color: #009966;
+  --wiki-color: #797979;
+  --ranking-color: #404040;
+  --default-color: #797979;
+  --kanban-color: #4663c8;
+
+  egw-app[name="addressbook"] {
+	--application-color: var(--addressbook-color);
+  }
+
+  egw-app[name="admin"] {
+	--application-color: var(--admin-color);
+  }
+
+  egw-app[name="bookmarks"] {
+	--application-color: var(--bookmarks-color);
+  }
+
+  egw-app[name="calendar"] {
+	--application-color: var(--calendar-color);
+  }
+
+  egw-app[name="filemanager"] {
+	--application-color: var(--filemanager-color);
+  }
+
+  egw-app[name="infolog"] {
+	--application-color: var(--infolog-color);
+  }
+
+  egw-app[name="mail"] {
+	--application-color: var(--mail-color);
+  }
+
+  egw-app[name="projectmanager"] {
+	--application-color: var(--projectmanager-color);
+  }
+
+  egw-app[name="resources"] {
+	--application-color: var(--resources-color);
+  }
+
+  egw-app[name="timesheet"] {
+	--application-color: var(--timesheet-color);
+  }
+
+  egw-app[name="tracker"] {
+	--application-color: var(--tracker-color);
+  }
+
+  egw-app[name="wiki"] {
+	--application-color: var(--wiki-color);
+  }
+
+  egw-app[name="ranking"] {
+	--application-color: var(--ranking-color);
   }
 }
 

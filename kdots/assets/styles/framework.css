@@ -20,8 +20,10 @@ egw-framework#egw_fw_basecontainer::part(status-split) {
   --max: 32px;
 }
 egw-framework#egw_fw_basecontainer::part(header) {
-  background-color: var(--primary-background-color);
-  color: var(--sl-color-neutral-0);
+  --icon-size: 32px;
+  --tab-icon-size: var(--icon-size);
+  --tab-icon-size-active: 40px;
+  color: var(--primary-background-color);
   gap: var(--sl-spacing-medium);
   font-size: var(--icon-size);
 }
@@ -147,6 +149,77 @@ egw-app::part(content) {
 }
 egw-app > div[id] > div {
   height: 100%;
+}
+/* Individual application colors, should go in each app's CSS */
+body,
+:root {
+  --addressbook-color: #003366;
+  --admin-color: #333333;
+  --bookmarks-color: #CC6633;
+  --calendar-color: #CC0033;
+  --filemanager-color: #ff9933;
+  --infolog-color: #660033;
+  --mail-color: #006699;
+  --projectmanager-color: #669999;
+  --resources-color: #003333;
+  --timesheet-color: #330066;
+  --tracker-color: #009966;
+  --wiki-color: #797979;
+  --ranking-color: #404040;
+  --default-color: #797979;
+  --kanban-color: #4663c8;
+}
+body egw-app[name="addressbook"],
+:root egw-app[name="addressbook"] {
+  --application-color: var(--addressbook-color);
+}
+body egw-app[name="admin"],
+:root egw-app[name="admin"] {
+  --application-color: var(--admin-color);
+}
+body egw-app[name="bookmarks"],
+:root egw-app[name="bookmarks"] {
+  --application-color: var(--bookmarks-color);
+}
+body egw-app[name="calendar"],
+:root egw-app[name="calendar"] {
+  --application-color: var(--calendar-color);
+}
+body egw-app[name="filemanager"],
+:root egw-app[name="filemanager"] {
+  --application-color: var(--filemanager-color);
+}
+body egw-app[name="infolog"],
+:root egw-app[name="infolog"] {
+  --application-color: var(--infolog-color);
+}
+body egw-app[name="mail"],
+:root egw-app[name="mail"] {
+  --application-color: var(--mail-color);
+}
+body egw-app[name="projectmanager"],
+:root egw-app[name="projectmanager"] {
+  --application-color: var(--projectmanager-color);
+}
+body egw-app[name="resources"],
+:root egw-app[name="resources"] {
+  --application-color: var(--resources-color);
+}
+body egw-app[name="timesheet"],
+:root egw-app[name="timesheet"] {
+  --application-color: var(--timesheet-color);
+}
+body egw-app[name="tracker"],
+:root egw-app[name="tracker"] {
+  --application-color: var(--tracker-color);
+}
+body egw-app[name="wiki"],
+:root egw-app[name="wiki"] {
+  --application-color: var(--wiki-color);
+}
+body egw-app[name="ranking"],
+:root egw-app[name="ranking"] {
+  --application-color: var(--ranking-color);
 }
 /*** END APPLICATION ***/
 /*** WIDGETS ***/

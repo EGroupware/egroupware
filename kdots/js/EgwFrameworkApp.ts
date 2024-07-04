@@ -42,6 +42,7 @@ import {Favorite} from "../../api/js/etemplate/Et2Favorites/Favorite";
  * @csspart footer - Very bottom of the main content.
  *
  * @cssproperty [--application-color=--primary-background-color] - Color to use for this application
+ * @cssproperty [--application-header-text-color=white] - Text color in the application header
  * @cssproperty [--left-min=0] - Minimum width of the left content
  * @cssproperty [--left-max=20%] - Maximum width of the left content
  * @cssproperty [--right-min=0] - Minimum width of the right content

@@ -35,6 +35,9 @@ export default css`
 		justify-items: stretch;
 		flex: 1 0 2em;
 		max-height: 3em;
+
+		background-color: var(--application-color, --primary-background-color);
+		color: var(--application-header-text-color, white);
 	}
 
 	.egw_fw_app__outerSplit {

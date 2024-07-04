@@ -108,23 +108,41 @@ export default css`
 		font-size: var(--icon-size);
 	}
 
+	.egw_fw__open_applications {
+		--track-width: 0px;
+	}
+
+	.egw_fw__open_applications::part(tabs) {
+		align-items: baseline;
+	}
 	.egw_fw__open_applications et2-image {
-		height: var(--icon-size);
+		height: var(--tab-icon-size, 32px);
 
 		/* Allow some shrinking with limited size */
-		min-width: calc(var(--icon-size) / 2);
-		min-height: calc(var(--icon-size) / 2);
+		min-width: calc(var(--tab-icon-size, 32px) / 2);
+		min-height: calc(var(--tab-icon-size) / 2);
+	}
+
+	.egw_fw__open_applications sl-tab[active] et2-image {
+		width: var(--tab-icon-size-active, --tab-icon-size);
+	}
+
+	.egw_fw__open_applications sl-tab[active] et2-image img {
+		position: absolute;
+		height: var(--tab-icon-size-active, --tab-icon-size);
+		min-width: var(--tab-icon-size-active, --tab-icon-size);
+		min-height: var(--tab-icon-size-active, --tab-icon-size);
 	}
 
 	.egw_fw__open_applications sl-tab::part(base) {
 		padding: 0px;
-		font-size: var(--icon-size);
+		font-size: var(--tab-icon-size);
 	}
 
 	.egw_fw__open_applications sl-tab::part(close-button) {
 		visibility: hidden;
 		margin-inline-start: var(--sl-spacing-2x-small);
-		color: var(--sl-color-neutral-100);
+		color: var(--sl-color-neutral-900);
 	}
 
 	.egw_fw__open_applications sl-tab et2-image {
