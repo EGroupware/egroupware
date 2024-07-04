@@ -26,7 +26,9 @@ export default css`
 	}
 
 	.egw_fw_app__name h2 {
+		margin: 0;
 		margin-inline-start: var(--sl-spacing-medium);
+		font-size: 1em;
 	}
 
 	.egw_fw_app__header {
@@ -38,6 +40,33 @@ export default css`
 
 		background-color: var(--application-color, --primary-background-color);
 		color: var(--application-header-text-color, white);
+		font-size: 1.8em;
+	}
+
+	.egw_fw_app__header sl-icon-button::part(base), .egw_fw_app__header et2-button-icon {
+		font-size: inherit;
+		color: var(--application-header-text-color, white);
+	}
+
+	.egw_fw_app__header et2-button-icon {
+		margin: 0 var(--sl-spacing-medium);
+	}
+
+	.egw_fw_app__header sl-icon-button::part(base):hover, .egw_fw_app__header et2-button-icon::part(base):hover {
+		color: var(--application-header-text-color, white);
+		filter: brightness(70%);
+	}
+
+	.egw_fw_app__menu > div {
+		margin-left: var(--sl-spacing-medium);
+		margin-right: var(--sl-spacing-medium);
+		display: flex;
+		align-items: center;
+	}
+
+	.egw_fw_app__menu > div > sl-icon-button {
+		margin-left: var(--sl-spacing-medium);
+		margin-right: var(--sl-spacing-medium);
 	}
 
 	.egw_fw_app__outerSplit {

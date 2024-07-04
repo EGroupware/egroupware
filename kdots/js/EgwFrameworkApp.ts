@@ -577,43 +577,41 @@ export class EgwFrameworkApp extends LitElement
 	protected _rightHeaderTemplate()
 	{
 		return html`
-            <sl-tooltip content=${this.egw.lang("Application menu")}>
-                <sl-dropdown>
-                    <sl-icon slot="trigger" name="three-dots-vertical"></sl-icon>
-                    <sl-menu>
+            <et2-button-icon nosubmit name="arrow-clockwise"
+                             label=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                             statustext=${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                             @click=${(e) =>
+                             {
+                                 this.egw.refresh("", this.name);
+                                 /* Could also be this.load(false); this.load(this.url) */
+                             }}
+            ></et2-button-icon>
+            <et2-button-icon nosubmit name="printer"
+                             label=${this.egw.lang("Print")}
+                             statustext=${this.egw.lang("Print")}
+                             @click=${(e) => this.framework.print()}
+            ></et2-button-icon>
+            <sl-dropdown class="egw_fw_app__menu">
+                <div slot="trigger">${this.egw.lang("Menu")}
+                    <sl-icon-button name="chevron-double-down"></sl-icon-button>
+                </div>
+                <sl-menu>
+                    ${this.egw.user('apps')['admin'] !== undefined ? html`
                         <sl-menu-item
                                 @click=${(e) =>
                                 {
-                                    this.egw.refresh("", this.name);
-                                    /* Could also be this.load(false); this.load(this.url) */
+                                    // @ts-ignore
+                                    egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
                                 }}
                         >
-                            <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
-                            ${this.egw.lang("Reload %1", this.egw.lang(this.name))}
+                            <sl-icon slot="prefix" name="gear-wide"></sl-icon>
+                            ${this.egw.lang("App configuration")}
                         </sl-menu-item>
-                        <sl-menu-item
-                                @click=${(e) => this.framework.print()}
-                        >
-                            <sl-icon slot="prefix" name="printer"></sl-icon>
-                            ${this.egw.lang("Print")}
-                        </sl-menu-item>
-                        ${this.egw.user('apps')['admin'] !== undefined ? html`
-                            <sl-menu-item
-                                    @click=${(e) =>
-                                    {
-                                        // @ts-ignore
-                                        egw_link_handler(`/egroupware/index.php?menuaction=admin.admin_ui.index&load=admin.uiconfig.index&appname=${this.name}&ajax=true`, 'admin');
-                                    }}
-                            >
-                                <sl-icon slot="prefix" name="gear-wide"></sl-icon>
-                                ${this.egw.lang("App configuration")}
-                            </sl-menu-item>
-                            <sl-divider></sl-divider>
-                        ` : nothing}
-                        ${this._threeDotsMenuTemplate()}
-                    </sl-menu>
-                </sl-dropdown>
-            </sl-tooltip>
+                        <sl-divider></sl-divider>
+                    ` : nothing}
+                    ${this._threeDotsMenuTemplate()}
+                </sl-menu>
+            </sl-dropdown>
 		`;
 	}
 
