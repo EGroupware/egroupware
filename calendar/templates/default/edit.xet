@@ -137,27 +137,26 @@
 						</grid>
 						<et2-hbox>
 							<et2-date-time id="recur_rdate"></et2-date-time>
-							<et2-button id="button[add_rdate]" label="Add recurrence"></et2-button>
+							<et2-button id="button[add_rdate]" label="Add" statustext="Add recurrence"></et2-button>
 						</et2-hbox>
 					</et2-vbox>
+					<et2-description  value="Exceptions"></et2-description>
 					<et2-vbox>
-						<et2-description  value="Exceptions"></et2-description>
 						<et2-button statustext="Create an exception for the given date" label="@exception_label"
-                                    id="button[exception]" noLang="1" hideOnReadonly="true"></et2-button>
+									id="button[exception]" noLang="1" hideOnReadonly="true"></et2-button>
+						<grid id="recur_exception">
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<et2-date-time  id="$row" readonly="true"></et2-date-time>
+									<et2-button-icon statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
+								</row>
+							</rows>
+						</grid>
 					</et2-vbox>
-					<grid id="recur_exception">
-						<columns>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<et2-date-time  id="$row" readonly="true"></et2-date-time>
-								<et2-button-icon statustext="Delete this exception" id="delete_exception[$row_cont]" onclick="et2_dialog.confirm(widget,'Delete this exception','Delete')" image="delete"></et2-button-icon>
-							</row>
-						</rows>
-					</grid>
-					<et2-label></et2-label>
 				</row>
 			</rows>
 		</grid>

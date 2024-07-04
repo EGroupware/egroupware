@@ -1001,6 +1001,7 @@ class calendar_boupdate extends calendar_bo
 		{
 			return new Api\DateTime($rdate, new DateTimeZone($user_prefs['common']['tz']));
 		}, $event['recur_rdates']);
+		$recur_date = isset($event['recur_date']) ? new Api\DateTime($event['recur_date'], new DateTimeZone($user_prefs['common']['tz'])) : null;
 
 		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
 		$owner_prefs = $ics = null;
@@ -1147,6 +1148,12 @@ class calendar_boupdate extends calendar_bo
 				{
 					return $rdate->setTimezone($timezone);
 				}, $rdates);
+
+				if (isset($recur_date))
+				{
+					$cleared_event['recur_date'] = $recur_date->setTimezone($timezone);
+					$details['recur_date'] = $recur_date->format($timeformat);
+				}
 
 				// Current date doesn't need to go into the cleared event, just for details
 				$date->setTimezone($timezone);

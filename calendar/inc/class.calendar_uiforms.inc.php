@@ -1904,7 +1904,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(Acl::EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
 		{
-			$content['exception_label'] = $this->bo->long_date(max($preserved['actual_date'], $event['start']));
+			$content['exception_label'] = lang('Add %1', $this->bo->long_date(max($preserved['actual_date'], $event['start'])));
 		}
 		$readonlys['button[delete]'] = !$event['id'] || $preserved['hide_delete'] || !$this->bo->check_perms(Acl::DELETE, $event);
 		if($readonlys['action'])

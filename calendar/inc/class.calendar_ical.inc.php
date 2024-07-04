@@ -364,7 +364,7 @@ class calendar_ical extends calendar_boupdate
 					$recurrence = $days[$recurrence]; // use remote representation
 				}
 				// force single event
-				foreach (array('recur_enddate','recur_interval','recur_exception','recur_data','recur_date','id','etag') as $name)
+				foreach (array('recur_enddate','recur_interval','recur_exception','recur_rdates','recur_data','recur_date','id','etag') as $name)
 				{
 					unset($event[$name]);
 				}
