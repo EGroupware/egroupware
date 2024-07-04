@@ -473,7 +473,7 @@ abstract class Handler
 				'coredav'           => 'coredav',	// Apple iCal 10.7
 				'calendarstore'     => 'calendarstore',	// Apple iCal 5.0.1 under OS X 10.7.2
 				'calendaragent/'    => 'calendaragent',	// Apple iCal OS X 10.8*: Mac OS X/10.8.2 (12C54) CalendarAgent/55
-				'dataaccess'        => 'dataaccess',	// Apple addressbook iPhone
+				'dataaccess'        => 'dataaccess',	// Apple addressbook + calendar iPhone
 				'cfnetwork'         => 'cfnetwork',	// Apple Addressbook 10.6/7
 				'addressbook/'      => 'cfnetwork',	// Apple Addressbook OS X 10.8*: Mac OS X/10.8.2 (12C54) AddressBook/1167
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
@@ -488,6 +488,7 @@ abstract class Handler
 				'thunderbird'       => 'thunderbird',	// Thunderbird 115+ (no extra Lightning) or SOGo connector for addressbook, no Lightning installed
 				'caldavsynchronizer'=> 'caldavsynchronizer',	// Outlook CalDAV Synchronizer (https://caldavsynchronizer.org/)
 				'davx5'             => 'davx5',     // DAVx5 (https://www.davx5.com/)
+				'emclient'          => 'emclient',
 			) as $pattern => $name)
 			{
 				if (strpos($user_agent,$pattern) !== false)
