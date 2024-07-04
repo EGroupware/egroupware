@@ -351,7 +351,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		if(new_options?.length)
 		{
 			this._selectOptions = new_options;
-			this.updateComplete.then(()=>this._link_actions(this.actions))
 		}
 	}
 

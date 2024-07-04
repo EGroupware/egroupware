@@ -129,7 +129,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
         if (node) {
-            // Prevent selection
+			if(typeof _aoi.handlers == "undefined")
+			{
+				_aoi.handlers = {};
+			}
+			_aoi.handlers[this.type] = [];
+			// Prevent selection
             node.onselectstart = function () {
                 return false;
             };
@@ -150,19 +155,26 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             //jQuery(node).off("mousedown",egwPreventSelect)
             //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
             //node.removeEventListener("mousedown",egwPreventSelect)
-            node.addEventListener("mousedown", (event) => {
+			const mousedown = (event) =>
+			{
                 if (_context.isSelection(event)) {
                     node.setAttribute("draggable", false);
                 } else if (event.which != 3) {
                     document.getSelection().removeAllRanges();
                 }
-            })
-            node.addEventListener("mouseup", (event) => {
+			};
+			node.addEventListener("mousedown", mousedown)
+			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
+
+			const mouseup = (event) =>
+			{
 				node.setAttribute("draggable", true);
 
-                // Set cursor back to auto. Seems FF can't handle cursor reversion
-                document.body.style.cursor = 'auto'
-            })
+				// Set cursor back to auto. Seems FF can't handle cursor reversion
+				document.body.style.cursor = 'auto'
+			};
+			node.addEventListener("mouseup", mouseup)
+			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
 
 
             node.setAttribute('draggable', true);
@@ -280,7 +292,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 
             // Drag Event listeners
             node.addEventListener('dragstart', dragstart, false);
+			_aoi.handlers[this.type].push({type: 'dragstart', listener: dragstart});
             node.addEventListener('dragend', dragend, false);
+			_aoi.handlers[this.type].push({type: 'dragend', listener: dragend});
 
 
             return true;
@@ -294,6 +308,9 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         if (node) {
             node.setAttribute('draggable', "false");
         }
+		// Unregister handlers
+		_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+		delete _aoi.handlers[this.type];
         return true;
     };
 
