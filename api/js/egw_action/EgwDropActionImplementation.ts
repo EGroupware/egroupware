@@ -204,15 +204,20 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
         return false;
     };
 
-    unregisterAction: (_actionObjectInterface: any) => boolean = function (_aoi) {
-        const node = _aoi.getDOMNode();
+	unregisterAction : (_actionObjectInterface : any) => boolean = function(_aoi)
+	{
+		const node = _aoi.getDOMNode();
 
-        if (node) {
-            node.classList.remove('et2dropzone');
-        }
+		if(node)
+		{
+			node.classList.remove('et2dropzone');
+		}
 		// Unregister handlers
-		_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
-		delete _aoi.handlers[this.type];
+		if(_aoi.handlers)
+		{
+			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			delete _aoi.handlers[this.type];
+		}
         return true;
     };
 

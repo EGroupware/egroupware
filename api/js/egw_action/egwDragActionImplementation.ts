@@ -309,8 +309,11 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             node.setAttribute('draggable', "false");
         }
 		// Unregister handlers
-		_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
-		delete _aoi.handlers[this.type];
+		if(_aoi.handlers)
+		{
+			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			delete _aoi.handlers[this.type];
+		}
         return true;
     };
 
