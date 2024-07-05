@@ -85,7 +85,6 @@ egw-framework#egw_fw_basecontainer {
 #egw_fw_topmenu_info_items {
   display: flex;
   flex-direction: row-reverse;
-  background-color: #fbfbfb;
 
   & > * {
 	border: none;
@@ -102,7 +101,6 @@ egw-framework#egw_fw_basecontainer {
   .topmenu_info_item {
 	height: var(--icon-size);
 	width: var(--icon-size);
-	border-left: 1px solid #bfc0bf;
 	display: inline-block;
 	padding-left: 0px;
 	background-size: 20px;
@@ -143,6 +141,64 @@ egw-framework#egw_fw_basecontainer {
 	  background-size: 32px;
 	  background-position: center center;
 	  filter: opacity(0.3);
+	}
+  }
+
+  #topmenu_info_quick_add {
+	position: relative;
+
+	span#quick_add {
+	  display: block;
+	  background-image: url(../../../api/templates/default/images/add.svg);
+	  background-repeat: no-repeat;
+	  background-size: 24px;
+	  background-position: center;
+	  width: 100%;
+	  height: 100%;
+	  padding-right: 3px;
+
+	  &:before {
+		content: " ";
+		font-size: 2em;
+		line-height: 0.6em;
+		background-color: white;
+	  }
+	}
+
+	#quick_add_selectbox {
+	  height: 0px;
+	  display: inline-block;
+	  text-align: initial;
+
+	  sl-option {
+		white-space: nowrap;
+	  }
+	}
+
+	#quick_add_selectbox::part(emptyLabel) {
+	  /* do NOT show empty label, required for clearing value */
+	  display: none;
+	}
+
+	#quick_add_selectbox::part(form-control-input), #timer_selectbox::part(form-control-input) {
+	  border: none !important;
+	}
+
+	#quick_add_selectbox::part(form-control), #timer_selectbox::part(form-control) {
+	  margin-left: -3em;
+	}
+
+	#quick_add_selectbox::part(listbox), #timer_selectbox::part(menu) {
+	  max-height: 60vh;
+	}
+
+	#quick_add_selectbox {
+	  height: 0px;
+	  overflow: hidden;
+	}
+
+	#quick_add_selectbox::part(combobox) {
+	  visibility: hidden;
 	}
   }
 

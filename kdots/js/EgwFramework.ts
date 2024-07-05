@@ -137,9 +137,13 @@ export class EgwFramework extends LitElement
 		// Init timer
 		this.egw.add_timer('topmenu_info_timer');
 
-		// Deal with bug where avatar menu does not position correctly
+		// These need egw fully loaded
 		this.getEgwComplete().then(() =>
 		{
+			// Quick add
+			this.egw.link_quick_add('topmenu_info_quick_add');
+
+			// Deal with bug where avatar menu does not position correctly
 			(<SlDropdown>this.querySelector("#topmenu_info_user_avatar"))?.popup?.dispatchEvent(new Event("slotchange"));
 		});
 	}

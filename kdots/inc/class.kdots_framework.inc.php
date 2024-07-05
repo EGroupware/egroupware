@@ -97,6 +97,11 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	function _add_topmenu_info_item($content, $id = null)
 	{
+		if(in_array($id, ['print_title']))
+		{
+			return;
+		}
+
 		if(strpos($content, 'menuaction=admin.admin_accesslog.sessions') !== false)
 		{
 			$content = preg_replace('/href="([^"]+)"/', "href=\"javascript:egw_link_handler('\\1','admin')\"", $content);
