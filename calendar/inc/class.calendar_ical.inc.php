@@ -231,6 +231,7 @@ class calendar_ical extends calendar_boupdate
 			'SEQUENCE'		=> 'etag',
 			'STATUS'		=> 'status',
 			'ATTACH'        => 'attachments',
+			'COMMENT'       => 'comment',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -2236,6 +2237,7 @@ class calendar_ical extends calendar_boupdate
 			'recurrence'		=> 'recurrence',
 			'etag'				=> 'etag',
 			'status'			=> 'status',
+			'comment'           => 'comment',
 		);
 
 
@@ -3117,6 +3119,10 @@ class calendar_ical extends calendar_boupdate
 					break;
 				case 'X-EGROUPWARE-VIDEOCONFERENCE':
 					$event['##videoconference'] = $attributes['value'];
+					break;
+
+				case 'COMMENT': // used e.g. at mailbox.org as comment in REPLYs send to the organize
+					$event['comment'] = $attributes['value'];
 					break;
 
 				// ignore all PROPS, we dont want to store like X-properties or unsupported props

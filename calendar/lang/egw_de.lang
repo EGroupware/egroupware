@@ -373,6 +373,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	de	Max.
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
 meeting canceled	calendar	de	Termin abgesagt
 meeting request	calendar	de	Terminanfrage
+meeting request additional recurrence(s)	calendar	de	Terminanfrage zusätzliche Wiederholung(en)
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen ...
 midnight	calendar	de	Mitternacht
@@ -601,6 +602,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht
 the extern organizer changed the event!	calendar	de	Der externe Organisator hat den Termin geändert!
 the following document-types are supported:	calendar	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
+the organizer changed the event!	calendar	de	Der Organisator hat den Termin geändert!
 the original series will be terminated today and a new series be created.	calendar	de	Der bestehende Serientermin wird heute beendet und eine neue Terminserie erstellt.
 the resource you selected is already overbooked:	calendar	de	Die Ressource, die Sie buchen möchten, ist bereits überbucht
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der externe Organisator "%2", seien Sie vorsichtig!
@@ -613,6 +615,7 @@ this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen B
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	de	Das ist ein wiederholender Termin. Wollen Sie nur diese Wiederholung oder die ganze Serie löschen?
+this is a single recurrence of a recurring event.	calendar	de	Das ist eine einzelne Wiederholung einer Terminserie.
 this mail cancels a meeting	calendar	de	Diese Nachricht sagt einen Termin ab
 this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Terminanfrage
 this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage

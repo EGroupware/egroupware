@@ -373,6 +373,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	en	Max.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting canceled	calendar	en	Meeting canceled
 meeting request	calendar	en	Meeting request
+meeting request additional recurrence(s)	calendar	en	Meeting request additional recurrence(s)
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document ...
 midnight	calendar	en	Midnight
@@ -601,6 +602,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
 the extern organizer changed the event!	calendar	en	The extern organizer changed the event!
 the following document-types are supported:	calendar	en	The following document-types are supported:
+the organizer changed the event!	calendar	en	The organizer changed the event!
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already over-booked:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	en	The sender "%1" is NOT the extern organizer "%2", proceed with caution!
@@ -613,6 +615,7 @@ this entry is opened by user:	calendar	en	This entry was opened within the confi
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	en	This is a recurring event. Do you want to delete just this recurrence or the whole series?
+this is a single recurrence of a recurring event.	calendar	en	This is a single recurrence of a recurring event.
 this mail cancels a meeting	calendar	en	This mail cancels a meeting
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request

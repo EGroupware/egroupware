@@ -2247,6 +2247,10 @@ class calendar_uiforms extends calendar_ui
 				{
 					$event['sender_warning'] = lang('The sender "%1" is NOT the extern organizer "%2", proceed with caution!', $ical_sender, $organizer);
 				}
+				if ($event['recurrence'])
+				{
+					$master = $this->bo->read($event['uid']);
+				}
 				switch(strtolower($ical_method))
 				{
 					case 'reply':
@@ -2262,7 +2266,7 @@ class calendar_uiforms extends calendar_ui
 						{
 							$event['sender_warning'] = lang('The sender "%1" is NOT the participant replying "%2", proceed with caution!', $ical_sender, $participant);
 						}
-						if ($event['ical_sender_uid'] && $this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
+						if ($event['ical_sender_uid'])
 						{
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
 							// check if email matches, in case we have now something like "Name <email>"
@@ -2287,31 +2291,41 @@ class calendar_uiforms extends calendar_ui
 							calendar_so::split_status($existing_status, $quantity, $role);
 							if ($existing_status != $event['ical_sender_status'])
 							{
-								$readonlys['button[apply]'] = false;
+								$readonlys['button[apply]'] =  !$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event);
 							}
 							else
 							{
-								$event['error'] = lang('Status already applied');
+								$event['meeting-request-status'] = lang('Status already applied');
 							}
 						}
 						break;
 
 					case 'request':
+					case 'add':
 						$status = $existing_event['participants'][$user];
 						calendar_so::split_status($status, $quantity, $role);
-						if (!empty($extern_organizer) && self::event_changed($event, $existing_event))
+						if (($changed = self::event_changed($event, $existing_event)))
 						{
-							$event['error'] = lang('The extern organizer changed the event!',);
-							$readonlys['button[apply]'] = false;
+							if (!empty($extern_organizer))
+							{
+								$event['error'] = lang('The extern organizer changed the event!');
+								$readonlys['button[apply]'] = false;
+							}
+							else
+							{
+								$event['error'] = lang('The organizer changed the event!');
+							}
+							//$event['error'] .= ' '.json_encode($changed);
+							$event['changed'] = array_combine(array_keys($changed), array_fill(0, count($changed), 'meetingRequestChanged'));
 						}
-						elseif (isset($existing_event['participants'][$user]) &&
+						if (isset($existing_event['participants'][$user]) &&
 							$status != 'U' && isset($this->bo->verbose_status[$status]))
 						{
-							$event['error'] = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
+							$event['meeting-request-status'] = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
 						}
 						else
 						{
-							$event['error'] = lang('Using already existing event on server.');
+							$event['meeting-request-status'] = lang('Using already existing event on server.');
 						}
 						$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
 						$user_and_memberships[] = $user;
@@ -2354,7 +2368,7 @@ class calendar_uiforms extends calendar_ui
 					$status && $status !== 'X' ? $status : 'U';	// X --> no status given --> U = unknown
 			}
 			//error_log(__METHOD__."(...) parsed as ".array2string($event));
-			$event['recure'] = $this->bo->recure2string($event);
+			$event['recure'] = $this->bo->recure2string($master ?? null ?: $event);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
 			// EGroupware event has been deleted, don't let user resurrect it by accepting again
@@ -2371,8 +2385,7 @@ class calendar_uiforms extends calendar_ui
 					(!empty($event['sender_warning']) ? "\n\n".$event['sender_warning'] : '');
 			}
 			// ignore events in the past (for recurring events check enddate!)
-			elseif ($this->bo->date2ts($event['start']) < $this->bo->now_su &&
-				(!$event['recur_type'] || $event['recur_enddate'] && $event['recur_enddate'] < $this->bo->now_su))
+			elseif (!$this->bo->eventInFuture($event))
 			{
 				$event['error'] = lang('Requested meeting is in the past!');
 				$readonlys['button[accept]'] = $readonlys['button[tentativ]'] =
@@ -2440,10 +2453,10 @@ class calendar_uiforms extends calendar_ui
 			switch($button)
 			{
 				case 'reject':
-					if (!$event['id'])
+					if (empty($event['id']))
 					{
 						// send reply to organizer
-						$this->bo->send_update(MSG_REJECTED,array('e'.$event['organizer'] => 'DCHAIR'),$event);
+						$this->bo->send_update(MSG_REJECTED,array('e'.$event['organizer'] => 'DCHAIR'), $event);
 						break;	// no need to store rejected event
 					}
 					// fall-through
@@ -2476,7 +2489,7 @@ class calendar_uiforms extends calendar_ui
 						$event['id'] = $event['old']['id'];
 					}
 					// set status and send notification / meeting response
-					if ($this->bo->set_status($event['id'], $user, $status, $event['recurrence']))
+					if ($this->bo->set_status($event['id'], $user, $status, $event['recurrence'], false, true, false, $event['comment']))
 					{
 						$msg[] = lang('Status changed');
 					}
@@ -2520,6 +2533,9 @@ class calendar_uiforms extends calendar_ui
 			case 'cancel':
 				$event['ics_method_label'] = lang('Meeting canceled');
 				break;
+			case 'add':
+				$event['ics_method_label'] = lang('Meeting request additional recurrence(s)');
+				break;
 			case 'request':
 			default:
 				$event['ics_method_label'] = lang('Meeting request');
@@ -2540,12 +2556,12 @@ class calendar_uiforms extends calendar_ui
 	 *
 	 * @param array& $_event invitation, on return user status changed to the one from old $old
 	 * @param array $_old existing event on server
-	 * @return boolean true if there are some changes, false if not
+	 * @return array with changed event attributes plus "recur" with any "recur_*" changed, empty array if nothing changed
 	 */
 	function event_changed(array &$_event, array $_old)
 	{
 		static $keys_to_check = array('start', 'end', 'title', 'description', 'location', 'participants',
-			'recur_type', 'recur_data', 'recur_interval', 'recur_exception');
+			'recur_type', 'recur_data', 'recur_interval', 'recur_exception', 'recur_rdates');
 
 		// only compare certain fields, taking account unset, null or '' values
 		$event = array_intersect_key(array_diff($_event, [null, ''])+array('recur_exception'=>array()), array_flip($keys_to_check));
@@ -2560,9 +2576,17 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$ret = (bool)array_diff_assoc($event, $old);
-		//error_log(__METHOD__."() returning ".array2string($ret)." diff=".array2string(array_udiff_assoc($event, $old, function($a, $b) { return (int)($a != $b); })));
-		return $ret;
+		$changes = array_diff_assoc($event, $old);
+
+		if (!($changes['recure'] = array_values(array_filter(array_keys($changes), static function($name)
+		{
+			return substr($name, 0, 6) === 'recur_';
+		}))))
+		{
+			unset($changes['recure']);
+		}
+
+		return $changes;
 	}
 
 	/**
