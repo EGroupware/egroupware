@@ -37,14 +37,11 @@ import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
-// @ts-ignore
-import {date} from "../../api/js/etemplate/lib/date.js";
 import {sprintf} from "../../api/js/egw_action/egw_action_common";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 import {et2_number} from "../../api/js/etemplate/et2_widget_number";
 import {et2_template} from "../../api/js/etemplate/et2_widget_template";
-import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
@@ -59,6 +56,7 @@ import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
+import type {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
 
 /**
  * UI for calendar
@@ -2245,14 +2243,14 @@ export class CalendarApp extends EgwApp
 	 */
 	move_edit_series(_DOM,_button)
 	{
-		var content : any = this.et2.getArrayMgr('content').data;
-		var start_date = this.et2.getValueById('start');
-		var end_date = this.et2.getValueById('end');
-		var whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
-		var duration = ''+this.et2.getValueById('duration');
-		var is_whole_day = whole_day && whole_day.value == whole_day.selected_value;
-		var button = _button;
-		var that = this;
+		const content : any = this.et2.getArrayMgr('content').data;
+		const start_date = this.et2.getValueById('start');
+		const end_date = this.et2.getValueById('end');
+		const whole_day = <Et2Checkbox>this.et2.getWidgetById('whole_day');
+		const duration = ''+this.et2.getValueById('duration');
+		const is_whole_day = whole_day && whole_day.value == whole_day.selectedValue;
+		const button = _button;
+		const that = this;
 
 		let instance_date_regex = window.location.search.match(/date=(\d{4}-\d{2}-\d{2}(?:.+Z)?)/);
 		let instance_date;
@@ -4246,7 +4244,7 @@ export class CalendarApp extends EgwApp
 		{
 			if (content.grid[i] != null)
 			{
-				checkbox = <et2_checkbox> this.et2.getWidgetById(i+'[enable]');
+				checkbox = <Et2Checkbox>this.et2.getWidgetById(i+'[enable]');
 				if (checkbox)
 				{
 					checkbox.set_value(_widget.checked);
@@ -4284,7 +4282,7 @@ export class CalendarApp extends EgwApp
 	 */
 	public videoconferenceOnChange(event)
 	{
-		let widget = <et2_checkbox> this.et2.getWidgetById('videoconference');
+		let widget = <Et2Checkbox>this.et2.getWidgetById('videoconference');
 
 		if (widget && widget.get_value())
 		{
