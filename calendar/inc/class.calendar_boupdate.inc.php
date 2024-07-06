@@ -1005,7 +1005,7 @@ class calendar_boupdate extends calendar_bo
 		$rdates = array_map(static function($rdate) use ($user_prefs)
 		{
 			return new Api\DateTime($rdate, new DateTimeZone($user_prefs['common']['tz']));
-		}, $event['recur_rdates']);
+		}, $event['recur_rdates'] ?? []);
 		$recur_date = isset($event['recur_date']) ? new Api\DateTime($event['recur_date'], new DateTimeZone($user_prefs['common']['tz'])) : null;
 
 		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
