@@ -14,6 +14,7 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlCheckbox} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
+import {property} from "lit/decorators/property.js";
 
 export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 {
@@ -59,31 +60,21 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/* Different value when checked */
-			selectedValue: {type: String},
-			/* Different value when unchecked */
-			unselectedValue: {type: String}
-		}
-	}
+	@property({type: String})
+	selectedValue = 'true';
+	@property({type: String})
+	unselectedValue = '';
 
 	constructor()
 	{
 		super();
 
 		this.isSlComponent = true;
-
-		this.selectedValue = 'true';
-		this.unselectedValue = '';
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
-
 	}
 
 	get label()

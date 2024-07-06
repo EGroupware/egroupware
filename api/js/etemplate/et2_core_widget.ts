@@ -22,7 +22,7 @@ import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
-import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import {loadWebComponent,Et2Widget} from "./Et2Widget/Et2Widget";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget} from "./et2_core_inputWidget";
@@ -460,7 +460,7 @@ export class et2_widget extends ClassWithAttributes
 	 *
 	 * @param _id is the id you're searching for
 	 */
-	getWidgetById(_id): et2_widget | null
+	getWidgetById(_id): Et2Widget | et2_widget | null
 	{
 		if (this.id == _id)
 		{
@@ -480,7 +480,7 @@ export class et2_widget extends ClassWithAttributes
 		if (this.id && _id.indexOf('[') > -1 && this._children.length)
 		{
 			var ids = (new et2_arrayMgr()).explodeKey(_id);
-			var widget: et2_widget = this;
+			var widget: Et2Widget | et2_widget = this;
 			for (var i = 0; i < ids.length && widget !== null; i++)
 			{
 				widget = widget.getWidgetById(ids[i]);
