@@ -100,6 +100,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	en	Check button to create as event after sending
 check to save as infolog on send	mail	en	Check button to create as InfoLog after sending
 check to save as tracker entry on send	mail	en	Check button to create as ticket after sending
+checking admin credentials failed	mail	en	Checking admin credentials failed
 choose file	mail	en	Choose file
 common acl	mail	en	Common access rights
 compose	mail	en	Compose

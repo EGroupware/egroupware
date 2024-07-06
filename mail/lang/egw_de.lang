@@ -100,6 +100,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	de	Nach dem Versenden als Termin erstellen
 check to save as infolog on send	mail	de	Nach dem Versenden als InfoLog erstellen
 check to save as tracker entry on send	mail	de	Nach dem Versenden als Ticket erstellen
+checking admin credentials failed	mail	de	Überprüfung der Admin-Zugangsdaten fehlgeschlagen
 choose file	mail	de	Datei
 common acl	mail	de	Berechtigung
 compose	mail	de	Verfassen

@@ -1052,8 +1052,13 @@ class admin_mail
 							$account = new Mail\Account($content);
 							if ($account->acc_imap_administration)
 							{
-								$imap = $account->imapServer(true);
-								if ($imap) $imap->checkAdminConnection();
+								try {
+									$imap = $account->imapServer(true);
+									if ($imap) $imap->checkAdminConnection();
+								}
+								catch(\Horde_Imap_Client_Exception $e) {
+									Api\Json\Response::get()->message(lang('Checking admin credentials failed').': '.$e->getMessage(), 'info');
+								}
 							}
 							// test sieve connection, if not called for other user, enabled and credentials available
 							if (!$content['called_for'] && $account->acc_sieve_enabled && $account->acc_imap_username)
