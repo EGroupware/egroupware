@@ -877,9 +877,9 @@ class Db
 	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
 	* @return ADORecordSet or false, if the query fails
 	*/
-	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = '',$inputarr=false)
+	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = -1,$inputarr=false)
 	{
-		return $this->query($Query_String,$line,$file,$offset,$num_rows,$inputarr);
+		return $this->query($Query_String,$line,$file,$offset,$num_rows === '' ? -1 : (int)$num_rows,$inputarr);
 	}
 
 	/**
