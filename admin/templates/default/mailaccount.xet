@@ -47,9 +47,9 @@
 		<grid width="100%">
 			<columns>
 				<column width="115"/>
-				<column width="200"/>
+				<column width="40%"/>
 				<column width="60"/>
-				<column/>
+				<column width="30%"/>
 			</columns>
 			<rows>
 				<row class="emailadmin_no_single">
