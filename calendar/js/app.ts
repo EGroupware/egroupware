@@ -2250,7 +2250,7 @@ export class CalendarApp extends EgwApp
 		var end_date = this.et2.getValueById('end');
 		var whole_day = <et2_checkbox> this.et2.getWidgetById('whole_day');
 		var duration = ''+this.et2.getValueById('duration');
-		var is_whole_day = whole_day && whole_day.get_value() == whole_day.options.selected_value;
+		var is_whole_day = whole_day && whole_day.value == whole_day.selected_value;
 		var button = _button;
 		var that = this;
 
