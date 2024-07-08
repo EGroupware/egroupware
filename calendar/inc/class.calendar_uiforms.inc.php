@@ -2338,6 +2338,19 @@ class calendar_uiforms extends calendar_ui
 									$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 							}
 						}
+						$all_participants = ($event['participants'] ?? []) + ($existing_event['participants'] ?? []);
+						$event['participantChanges'] = array_map(function($uid, $status) use ($existing_event, $event) {
+							return [
+								'changed' => !isset($event['participants'][$uid]) ? 'meetingRequestParticipantDeleted' :
+									(!isset($existing_event['participants'][$uid]) ? 'meetingRequestChanged' :
+									($status !== $existing_event['participants'][$uid] ? 'meetingRequestChangedStatus' : '')),
+								'label' => $this->bo->participant_name($uid),
+								'status' => lang($this->bo->verbose_status[calendar_so::split_status($status, $quantity, $role)]),
+								'role' => $role === 'REQ-PARTICIPANT' ? '' : lang($this->bo->roles[$role] ??
+									(substr($role,0,6) === 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0 ?
+										$GLOBALS['egw']->categories->id2name($cat_id) : str_replace('X-','',$role))),
+							];
+						}, array_keys($all_participants), $all_participants);
 						break;
 					case 'cancel':
 						// first participant is the (external) organizer (our iCal parser adds owner first!)
@@ -2369,6 +2382,7 @@ class calendar_uiforms extends calendar_ui
 			}
 			//error_log(__METHOD__."(...) parsed as ".array2string($event));
 			$event['recure'] = $this->bo->recure2string($master ?? null ?: $event);
+			if (!empty($master)) unset($event['changed']['recure']);
 			$event['all_participants'] = implode(",\n",$this->bo->participants($event, true));
 
 			// EGroupware event has been deleted, don't let user resurrect it by accepting again
