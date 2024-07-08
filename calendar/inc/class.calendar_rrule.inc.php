@@ -699,7 +699,7 @@ class calendar_rrule implements Iterator
 				case self::RDATE:
 					$str_extra = array_map(static function (DateTime $rdate)
 					{
-						return Api\DateTime::server2user($rdate, '');
+						return str_replace(',', '', Api\DateTime::server2user($rdate, ''));
 					}, $this->rdates);
 					break;
 			}
@@ -718,6 +718,13 @@ class calendar_rrule implements Iterator
 			if ($this->time->getTimezone()->getName() != Api\DateTime::$user_timezone->getName())
 			{
 				$str_extra[] = $this->time->getTimezone()->getName();
+			}
+			if ($this->exceptions_objs)
+			{
+				$str_extra[] = lang('Exceptions').': '.implode(', ', array_map(static function (DateTime $exdate)
+				{
+					return str_replace(',', '', Api\DateTime::server2user($exdate, ''));
+				}, $this->exceptions_objs));
 			}
 			if(count($str_extra))
 			{
