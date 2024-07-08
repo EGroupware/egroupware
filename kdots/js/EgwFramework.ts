@@ -102,6 +102,9 @@ export class EgwFramework extends LitElement
 	@property({type: Array, attribute: "application-list"})
 	applicationList : ApplicationInfo[] = [];
 
+	// Keep track of open popups
+	private _popups : Window[] = [];
+
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
 	connectedCallback()
@@ -419,10 +422,26 @@ export class EgwFramework extends LitElement
 		const windowID = this.egw.openPopup(_url, _width, _height, _windowName, _app, true, _status, true);
 
 		windowID.framework = this;
+		this._popups.push(windowID);
 
 		if(_returnID !== false)
 		{
 			return windowID;
+		}
+	}
+
+	/**
+	 * Collect and close all already closed windows
+	 * egw.open_link expects it from the framework
+	 */
+	public popups_garbage_collector()
+	{
+		for(var i = 0; i < this._popups.length; i++)
+		{
+			if(this._popups[i].closed)
+			{
+				this._popups.splice(i, 1);
+			}
 		}
 	}
 
