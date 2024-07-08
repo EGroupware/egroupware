@@ -19,7 +19,6 @@ import {
 	EGW_KEY_ENTER,
 	EGW_KEY_ESCAPE
 } from "./egw_action_constants";
-import {EgwFramework} from "../../../kdots/js/EgwFramework";
 
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu opens
@@ -213,14 +212,7 @@ export class egwMenu
 		if (this.instance == null && this._checkImpl)
 		{
 			//Obtain a new egwMenuImpl object and pass this instance to it
-			if(window.framework instanceof EgwFramework)
-			{
-				this.instance = new EgwMenuShoelace(this.children);
-			}
-			else
-			{
-				this.instance = new egwMenuImpl(this.children);
-			}
+			this.instance = new egwMenuImpl(this.children);
 
 			_egw_active_menu = this;
 
