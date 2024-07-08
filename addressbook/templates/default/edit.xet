@@ -359,7 +359,7 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_work" ro_true="&amp;hearts;" />
                     <et2-description  for="org_unit" value="department"></et2-description>
-                    <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="64"></et2-textbox>
+                    <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="128"></et2-textbox>
                     <et2-description></et2-description>
                 </row>
                 <row class="dialogHeader3">

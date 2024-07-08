@@ -966,3 +966,14 @@ function api_upgrade23_1_005()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.006';
 }
+
+function api_upgrade23_1_006()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','org_unit',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'Department'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.007';
+}

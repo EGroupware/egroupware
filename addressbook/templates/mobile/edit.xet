@@ -343,7 +343,7 @@
 				</row>
 				<row>
 					<et2-description  for="org_unit" value="department"></et2-description>
-					<et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="64"></et2-textbox>
+					<et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128"></et2-textbox>
 				</row>
 
 				<row>

@@ -210,7 +210,7 @@ $phpgw_baseline = array(
 			'n_fileas' => array('type' => 'varchar','precision' => '255','comment' => 'sort as'),
 			'contact_bday' => array('type' => 'varchar','precision' => '12','comment' => 'Birtday'),
 			'org_name' => array('type' => 'varchar','precision' => '128','comment' => 'Organisation'),
-			'org_unit' => array('type' => 'varchar','precision' => '64','comment' => 'Department'),
+			'org_unit' => array('type' => 'varchar','precision' => '128','comment' => 'Department'),
 			'contact_title' => array('type' => 'varchar','precision' => '64','comment' => 'jobtittle'),
 			'contact_role' => array('type' => 'varchar','precision' => '64','comment' => 'role'),
 			'contact_assistent' => array('type' => 'varchar','precision' => '64','comment' => 'Name of the Assistent (for phone number)'),
