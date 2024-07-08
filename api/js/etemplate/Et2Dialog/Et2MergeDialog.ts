@@ -22,6 +22,7 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
 				et2-details::part(content) {
 					display: grid;
 					grid-template-columns: repeat(3, 1fr);
+					gap: var(--sl-spacing-medium);
 				}
 			`,
 		];
@@ -139,6 +140,7 @@ export class Et2MergeDialog extends Et2Widget(LitElement)
                                   label="${this.egw().lang("Link to each entry")}"
                     ></et2-checkbox>
                     <et2-checkbox label=${this.egw().lang("Merge individually")} id="individual"></et2-checkbox>
+                    <slot></slot>
                 </et2-details>
             </et2-vfs-select-dialog>`;
 	}

@@ -861,6 +861,8 @@ export abstract class EgwApp
 		if(document.documents.length == 1 && document.documents[0].mime == "message/rfc822")
 		{
 			vars.document = document.documents[0].path;
+			// Remove not applicable options
+			['pdf', 'download'].forEach(k => delete vars.options[k]);
 			return this._mergeEmail(_action.clone(), vars);
 		}
 		else
