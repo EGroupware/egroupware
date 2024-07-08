@@ -13,6 +13,7 @@
 %1 you delegated is due at %2	infolog	ro	%1 pe care l-ați delegat este scadent la %2
 %1 you delegated is starting at %2	infolog	ro	%1 pe care l-ați delegat este scadent la %2
 (and children) deleted	infolog	ro	(și copii) șterse.
+(no subject)	infolog	ro	(fără subiect)
 0%	infolog	ro	0%
 10%	infolog	ro	10%
 100%	infolog	ro	100%
@@ -24,11 +25,14 @@
 70%	infolog	ro	70%
 80%	infolog	ro	80%
 90%	infolog	ro	90%
+a short subject for the entry	infolog	ro	Un subiect scurt pentru intrare
+abort without deleting	infolog	ro	Abandonarea fără ștergere
 addressbook placeholders available	infolog	ro	Carnet de adrese disponibile
 all other %1 fields are valid	infolog	ro	Toate celelalte câmpuri %1 sunt valide
 allow to save entries with due date in the past	infolog	ro	Permiteți salvarea intrărilor cu data scadentă în trecut
 always show them	infolog	ro	Afișați-le întotdeauna
 application mail expected but got: %1	infolog	ro	E-mail de cerere așteptat, dar primit: %1
+archived too	infolog	ro	Arhivat și el
 automatically check 'do not notify' for these types	infolog	ro	Bifați automat "Do not notify" pentru aceste tipuri de cereri
 can not return an exact number of rows and therefore hides the count.	admin	ro	Nu poate returna un număr exact de rânduri și, prin urmare, ascunde numărul.
 change	infolog	ro	Modificare
@@ -68,9 +72,13 @@ download	infolog	ro	Salvați fișierul
 download url for links	infolog	ro	URL de descărcare pentru linkuri
 due %1	infolog	ro	Due %1
 due date	infolog	ro	Data scadentă
+duration	infolog	ro	Durata
 e-mail:	infolog	ro	Email:
+editable fields for status 'archived'	admin	ro	Câmpuri editabile pentru statutul 'arhivat'
 encrypt description	infolog	ro	Criptare descriere
 enddate	infolog	ro	Data scadentă
+entry can not be changed anymore, after status is set	admin	ro	Intrarea NU mai poate fi modificată, după ce statutul este setat
+entry can not be changed by anybody, but egroupware admins	admin	ro	Intrarea NU poate fi modificată de nimeni, în afară de administratorii EGroupware
 error: no mail (mailbox / uid) given!	infolog	ro	Eroare: nu s-a dat niciun mail (Mailbox / UID)!
 error: saving the entry	infolog	ro	Eroare de salvare a intrării!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
@@ -100,6 +108,7 @@ general fields:	infolog	ro	Câmpuri generale:
 general settings	infolog	ro	Setări generale
 global categories	infolog	ro	Categorii globale
 group owner for	infolog	ro	Proprietarul grupului pentru
+handling of status 'archived'	admin	ro	Gestionarea statutului 'arhivat'
 high	infolog	ro	Mare
 history	infolog	ro	Istoric
 history logging	infolog	ro	Înregistrarea istoricului
@@ -139,6 +148,7 @@ modifier	infolog	ro	Modificator
 modifierer	infolog	ro	Modificator
 name of current user, all other contact fields are valid too	infolog	ro	Numele utilizatorului curent, toate celelalte câmpuri de contact sunt de asemenea valabile
 no custom field "%1" for %2.	infolog	ro	Nu există niciun câmp personalizat "%1" pentru %2.
+no special handling	admin	ro	Nu există o gestionare specială
 notification settings	infolog	ro	Setări de notificare
 old fixed definition	infolog	ro	Vechea definiție fixă
 one day after	infolog	ro	O zi după
@@ -156,7 +166,7 @@ permissions error - %1 could not %2	infolog	ro	Eroare de permisiune - %1 nu a pu
 prefix for sub-entries (default: re:)	infolog	ro	Prefix pentru subînscrieri (implicit: Re:)
 primary link	infolog	ro	Legătură primară
 print this infolog	infolog	ro	Tipăriți acest InfoLog
-printing...	infolog	ro	Imprimarea...
+printing...	infolog	ro	Imprimarea ...
 project id	infolog	ro	ID-ul proiectului
 project name	infolog	ro	Numele proiectului
 projectmanager	infolog	ro	Manager de proiect
@@ -178,8 +188,6 @@ schedule appointment	infolog	ro	Programare programare
 second parameter for preg_replace	infolog	ro	Al doilea parametru pentru preg_replace
 select a price	infolog	ro	Selectați un preț
 select a project	infolog	ro	Selectați un proiect
-select an action	infolog	ro	Selectați o acțiune
-select an action...	infolog	ro	Selectați o acțiune...
 select new category	infolog	ro	Selectați o nouă categorie
 select users or groups	infolog	ro	Selectați utilizatori sau grupuri
 selected calendars	infolog	ro	Calendare selectate
@@ -222,6 +230,7 @@ which participants should be preselected when scheduling an appointment.	infolog
 which types should the calendar show	infolog	ro	Ce tipuri ar trebui să afișeze calendarul
 which types should the calendar show like events?	infolog	ro	Ce tipuri ar trebui să afișeze calendarul ca evenimente?
 will-call	infolog	ro	Se va apela
+write (add or update) a record by passing its fields.	infolog	ro	Scrierea, adăugarea sau actualizarea unei înregistrări prin transmiterea câmpurilor sale.
 yes - close	infolog	ro	Da - Închide
 yes - close including sub-entries	infolog	ro	Da - Închidere, inclusiv subînregistrări
 yes - delete	infolog	ro	Da - Șterge
@@ -232,7 +241,10 @@ yes, with larger fontsize	infolog	ro	Da, cu caractere de dimensiuni mai mari
 yes, with purging of deleted items possible	infolog	ro	Da, cu posibilitatea de epurare a elementelor șterse
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ro	Puteți alege o categorie care să fie preselectată, atunci când creați o nouă intrare InfoLog.
 you can't delete one of the stock types !!!	infolog	ro	Nu puteți șterge unul dintre tipurile de stoc!
+you have entered an invalid ending date	infolog	ro	Ați introdus o dată scadentă invalidă!
+you have entered an invalid starting date	infolog	ro	Ați introdus o dată de început invalidă!
 you have to enter a name, to create a new type!	infolog	ro	Trebuie să introduceți un nume, pentru a crea un nou tip!
+you must enter a subject or a description	infolog	ro	Trebuie să introduceți un subiect sau o descriere.
 you need to select an entry for linking.	infolog	ro	Trebuie să selectați o intrare pentru a o lega.
 you need to select some entries first	infolog	ro	Trebuie să selectați mai întâi câteva intrări.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	ro	Baza dvs. de date NU este actualizată (%1 vs. %2), vă rugăm să rulați %3setup%4 pentru a vă actualiza baza de date.

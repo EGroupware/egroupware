@@ -18,7 +18,10 @@ import {html} from "lit";
  * Customised Select widget for countries
  * This widget uses CSS from api/templates/default/css/flags.css to set flags
  */
-egw(window).includeCSS("api/templates/default/css/flags.css")
+if(egw && egw(window) && typeof egw(window).includeCSS == "function")
+{
+	egw(window).includeCSS("api/templates/default/css/flags.css")
+}
 
 export class Et2SelectCountry extends Et2StaticSelectMixin(Et2Select)
 {

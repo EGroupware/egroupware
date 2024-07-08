@@ -533,20 +533,22 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				// The ajax request has completed, get just the data & pass it on
 				if(response && response.response)
 				{
+					let data = [];
 					for(let value of response.response)
 					{
 						if(value.type && value.type === "data" && typeof value.data !== "undefined")
 						{
 							// Data was packed in response
-							return value.data;
+							data.push(value.data);
 						}
 						else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
 						{
 							// Just raw data
-							return value;
+							data.push(value);
 						}
 					}
-					return undefined;
+					// Normally only 1 data, but multiple etemplate.exec calls can give multiple
+					return data.length > 1 ? data : data[0];
 				}
 				return response;
 			});

@@ -13,11 +13,11 @@
 use EGroupware\Api;
 
 // add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
-const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(tabbox|description|searchbox|textbox|label|avatar|lavatar|image|appicon|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(tabbox|description|searchbox|textbox|label|avatar|lavatar|image|appicon|colorpicker|checkbox|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -419,6 +419,24 @@ function send_template()
 			if ($matches[1] === '-time_today') $matches[1] = '-time-today';
 			return "<et2-date$matches[1] $matches[2]></et2-date$matches[1]>";
 		}, $str);
+
+		// replace <tree(-cat)? multiple="..." with <et2-tree(-cat) and fix attributes
+		$str = preg_replace_callback('#<tree(-cat)?\s(.*?)\s*/>#s', static function (array $matches)
+		{
+			$tag = 'et2-tree'.($matches[1] ?? '');
+			$attrs = parseAttrs($matches[2]);
+			if (!empty($attrs['options']) && (int)$attrs['options'] > 1)
+			{
+				$attrs['multiple'] = 'true';
+			}
+			// fix renamed attrs, thought regular under_score to camelCase happens later
+			if (!empty($attrs['parent_node'])) $attrs['parentId'] = $attrs['parent_node'];
+			unset($attrs['options'], $attrs['parent_node']);
+			return "<$tag" . stringAttrs($attrs) . "></$tag>";
+		}, $str);
+
+		// replace no longer used <et2-tree-multiple.../> with <et2-tree multiple="true".../>
+		$str = preg_replace('#<et2-tree-multiple ([^>]+)(/>|</et2-tree-multiple>)#', '<et2-tree multiple="true" $1></et2-tree>', $str);
 
 		if ($template === 'mobile')
 		{

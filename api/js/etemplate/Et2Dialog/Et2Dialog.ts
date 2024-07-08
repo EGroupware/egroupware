@@ -10,16 +10,13 @@
 
 
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {et2_button} from "../et2_widget_button";
-import {et2_widget} from "../et2_core_widget";
 import {css, html, LitElement, render} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {repeat} from "lit/directives/repeat.js";
 import {styleMap} from "lit/directives/style-map.js";
-import {SlotMixin} from "@lion/core";
 import {et2_template} from "../et2_widget_template";
-import {etemplate2} from "../etemplate2";
+import type {etemplate2} from "../etemplate2";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -27,6 +24,7 @@ import {Et2Button} from "../Et2Button/Et2Button";
 import shoelace from "../Styles/shoelace";
 import {SlDialog} from "@shoelace-style/shoelace";
 import {egwIsMobile} from "../../egw_action/egw_action_common";
+import {waitForEvent} from "../Et2Widget/event";
 
 export interface DialogButton
 {
@@ -127,7 +125,7 @@ export interface DialogButton
  *
  * Customize initial focus by setting the "autofocus" attribute on a control, otherwise first input will have focus
  */
-export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
+export class Et2Dialog extends Et2Widget(SlDialog)
 {
 	/**
 	 * Dialogs don't always get added to an etemplate, so we keep our own egw
@@ -335,21 +333,6 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			'': () =>
-			{
-				// to fix problem with Safari 16.2 of NOT displaying the content, we have to use the following,
-				// instead of just return this._contentTemplate()
-				let div = document.createElement("div");
-				render(this._contentTemplate(), div);
-				return div.children[0];
-			}
-		}
-	}
-
 	/*
 	* List of properties that get translated
 	* Done separately to not interfere with properties - if we re-define label property,
@@ -526,9 +509,11 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 	}
 
-	firstUpdated()
+	firstUpdated(changedProperties)
 	{
-		super.firstUpdated();
+		super.firstUpdated(changedProperties);
+
+		render(this._contentTemplate(), this);
 
 		// If we start open, fire handler to get setup done
 		if(this.open)
@@ -562,7 +547,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 		this.addOpenListeners();
 		this._button_id = null;
-		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) => this._completeResolver);
+		this._complete_promise = this._complete_promise || new Promise<[number, Object]>((resolve) =>
+		{
+			this._completeResolver = value => resolve(value);
+		});
 
 		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
 		this.dispatchEvent(new Event('open'));
@@ -581,19 +569,23 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
-		this._button_id = null;
-		this._complete_promise = undefined;
 
 		this.dispatchEvent(new Event('close'));
 
-		if(this.destroyOnClose)
+		waitForEvent(this, 'sl-after-hide').then(() =>
 		{
-			if(this._template_widget)
+			this._button_id = null;
+
+			this._complete_promise = undefined;
+			if(this.destroyOnClose)
 			{
-				this._template_widget.clear();
+				if(this._template_widget)
+				{
+					this._template_widget.clear();
+				}
+				this.remove();
 			}
-			this.remove();
-		}
+		});
 	}
 
 	/**
@@ -758,7 +750,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		}
 		if(changedProperties.has("buttons"))
 		{
-			render(this._buttonsTemplate(), this);
+			//render(this._buttonsTemplate(), this);
 			this.requestUpdate();
 		}
 		if(changedProperties.has("width"))
@@ -898,7 +890,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
                   <slot>${this.message}</slot>`
                 }
 
-            </div>`;
+            </div>${this._buttonsTemplate()}`;
 
 	}
 
@@ -1242,7 +1234,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 		let button = _senders;
 		let dialogMsg = (typeof _dialogMsg != "undefined") ? _dialogMsg : '';
 		let titleMsg = (typeof _titleMsg != "undefined") ? _titleMsg : '';
-		let egw = _senders instanceof et2_widget ? _senders.egw() : undefined;
+		let egw = _senders?.egw();
 		let callbackDialog = function(button_id)
 		{
 			if(button_id == Et2Dialog.YES_BUTTON)
@@ -1251,10 +1243,10 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 				{
 					senders.getRoot().getInstanceManager().postSubmit(button);
 				}
-				else if(senders.instanceOf(et2_button) && senders.getType() !== "buttononly")
+				else if(senders.instanceOf(Et2Button) && senders.getType() !== "buttononly")
 				{
 					senders.clicked = true;
-					senders.getInstanceManager().submit(senders, false, senders.options.novalidate);
+					senders.getInstanceManager().submit(senders, false, senders.novalidate);
 					senders.clicked = false;
 				}
 				else
@@ -1336,7 +1328,7 @@ export class Et2Dialog extends Et2Widget(SlotMixin(SlDialog))
 			isModal: true,
 			buttons: buttons
 		});
-		dialog.egw().window.document.body.appendChild(<LitElement><unknown>dialog);
+		document.body.appendChild(<LitElement><unknown>dialog);
 
 		let log = null;
 		let progressbar = null;

@@ -30,7 +30,7 @@
 (no subject)	admin	en	(no subject)
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
--  type	admin	en	-  type
+-  type	admin	en	- type
 1 year	admin	en	1 year
 2 month	admin	en	2 month
 2 weeks	admin	en	2 weeks
@@ -41,7 +41,6 @@ access by	admin	en	Access by
 access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
 access token revoked.	admin	en	Access token revoked.
-accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
 account	admin	en	Account
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
@@ -96,6 +95,7 @@ add new email address:	admin	en	Add new email address:
 add peer server	admin	en	Add Peer Server
 add profile	admin	en	Add profile
 add sub-category	admin	en	Add sub category
+add to group	admin	en	Add to group
 add user	admin	en	Add user
 add user or group	admin	en	Add user or group
 added	admin	en	added
@@ -130,10 +130,9 @@ allowed just as second factor	admin	en	allowed just as second factor
 alternate email address	admin	en	Alternate email address
 and logged in	admin	en	and logged in
 anonymous user	admin	en	Anonymous user
-anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in list sessions.
+anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in sessions list.
 anonymous user does not exist!	admin	en	Anonymous user does NOT exist!
 anonymous user has no run-rights for the application!	admin	en	Anonymous user has NO run-rights for the application!
-anonymous user. not shown in list sessions.	admin	en	Anonymous user. Not shown in list sessions.
 any application	admin	en	Any application
 any group	admin	en	Any group
 any user	admin	en	Any user
@@ -165,10 +164,6 @@ async services last executed	admin	en	Async services last executed
 asynchronous timed services	admin	en	Asynchronous timed services
 asyncservices not yet installed or other error (%1) !!!	admin	en	Async services not yet installed or other error (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	en	Attempt to use correct MIME type for FTP instead of default 'application/octet-stream'.
-attribute accountstatus explained	admin	en	This handles the attribute <b><i>-accountStatus-</i></b> from the QMAIL schema.
-attribute mail explained	admin	en	This handles the attribute <b><i>-mail-</i></b> from the QMAIL schema and should never be empty. It is also the EGw internal email field.
-attribute mailalternateaddress explained	admin	en	This handles the attribute <b><i>-mailAlternateAddress-</i></b> from the QMAIL schema and can be handled as virtual maps or aliases.
-attribute mailforwardingaddress explained	admin	en	This handles the attribute <b><i>-mailForwardingAddress-</i></b> from QMAIL Schema and must not be empty if assigned.
 attributes	admin	en	Attributes
 authentication	admin	en	Authentication
 authentication / accounts	admin	en	Authentication | Accounts
@@ -186,6 +181,7 @@ bi-dir passthrough	admin	en	bi-dir passthrough
 bi-directional	admin	en	bi-directional
 blocking after wrong password	admin	en	Blocking after wrong password
 bottom	admin	en	Bottom
+bulk changes	admin	en	Bulk changes
 bulk password reset	admin	en	Bulk password reset
 by	admin	en	By
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!<br>Are you really sure you want to do that?
@@ -214,7 +210,7 @@ change config settings	admin	en	Change config settings
 change domain of email address and aliases	admin	en	change domain of email address and aliases
 change login screen message	admin	en	Change login screen message
 change owner	admin	en	Change owner
-change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	en	Files in /home will have owner changed to the new user.  The home folder will be moved to /home/new-user/old-home-username.
+change owner of found files to the new user, and move the home folder to /home/new-user/old-home-username.	admin	en	Files in /home will have owner changed to the new user. The home folder will be moved to /home/new-user/old-home-username.
 change password for %1	admin	en	Change password for %1
 change password hash to	admin	en	Change password hash to
 changed password hash for %1 to %2.	admin	en	Changed password hash for %1 to %2.
@@ -236,7 +232,7 @@ comma-separated ip addresses white-listed from above blocking (:optional number 
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 command was run %1 on %2	admin	en	Command was run %1 on %2
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
-config password or md5 hash from the header.inc.php	admin	en	Config password or md5 hash from the header.inc.php.
+config password or md5 hash from the header.inc.php	admin	en	Config password or MD5 hash from the header.inc.php.
 configuration	admin	en	Configuration
 configuration saved.	admin	en	Configuration saved.
 connection dropped by imap server.	admin	en	Connection dropped by IMAP server.
@@ -244,6 +240,7 @@ connection is not secure! everyone can read eg. your credentials.	admin	en	Conne
 continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
+copy of	admin	en	Copy of
 could not append message:	admin	en	Could not append Message:
 could not complete request. reason given: %s	admin	en	Could not complete request. %s
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	en	Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!
@@ -268,8 +265,10 @@ currently:	admin	en	Currently:
 custom 1	admin	en	Custom 1
 custom 2	admin	en	Custom 2
 custom 3	admin	en	Custom 3
+custom egroupware bold web font as woff2 file	admin	en	Custom EGroupware Bold web font as woff2 file
+custom egroupware web font as woff2 file	admin	en	Custom EGroupware web font as woff2 file
 custom fields	admin	en	Custom fields
-custom fields tab	admin	en	custom fields tab
+custom fields tab	admin	en	Custom fields tab
 custom translation	admin	en	Custom translations
 customfield '%1' added	admin	en	Customfield '%1' added
 customfield '%1' deleted	admin	en	Customfield '%1' deleted
@@ -342,12 +341,11 @@ disable "auto completion" of the login form	admin	en	Disable "auto completion" o
 disable all	admin	en	Disable all
 disable minifying of javascript and css files	admin	en	Disable minifying of JavaScript and CSS files
 disable pgp encryption (mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
-disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled	admin	en	Disabled
 disabled (not recomended)	admin	en	Disabled (not recommended)
 disabled, do not show on login page	admin	en	disabled, do not show on login page
 display	admin	en	Display
-displayed length of input field (set rows=1 to limit length)	admin	en	displayed length of input field (set rows=1 to limit length)
+displayed length of input field (set rows=1 to limit length)	admin	en	Displayed length of input field (set rows=1 to limit length)
 displaying html messages is disabled	admin	en	displaying HTML messages is disabled
 displaying plain messages is disabled	admin	en	displaying text messages is disabled
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
@@ -399,8 +397,6 @@ enable cyrus imap server administration	admin	en	Enable Cyrus IMAP server admini
 enable debug-messages	admin	en	Enable debug messages.
 enable sieve	admin	en	Enable Sieve
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
-enable the soap service	admin	en	Enable the SOAP service.
-enable the xmlrpc service	admin	en	Enable the XML-RPC service.
 enabled	admin	en	Enabled
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
@@ -417,7 +413,7 @@ enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Ente
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the host name of the machine on which this server is running
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware   or   /egroupware<br><b>No trailing slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
 enter the site password for peer servers	admin	en	Enter the site password for peer servers
 enter the site username for peer servers	admin	en	Enter the site username for peer servers
@@ -425,7 +421,6 @@ enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.\nThe path MUST start with / and be readable by all users
-enter your default ftp server	admin	en	Enter your default FTP server
 enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain (from: user@domain)
 enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
 enter your http proxy server	admin	en	Enter your HTTP proxy server
@@ -456,7 +451,6 @@ event details follow	admin	en	Event Details follow
 exists	admin	en	Exists
 expired	admin	en	Expired
 expires	admin	en	Expires
-explanation of ldapman	admin	en	This module has been tested so far for POSTFIX, LDAP, Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this system can be found in README.ldapman in the doc folder of ADMIN.
 export certificate as p12	admin	en	Export certificate as p12
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports permission settings into a csv file.	admin	en	Exports permission settings into a CSV File.
@@ -471,7 +465,7 @@ failed to upload %1	admin	en	Failed to upload %1
 fallback (after each pageview)	admin	en	Fallback, after each page view.
 false	admin	en	False
 field '%1' already exists !!!	admin	en	Field '%1' already exists!
-file rejected, no %2. is:%1	admin	en	File rejected, no %2. Is:%1
+file rejected, no %2. is:%1	admin	en	File rejected, no %2. Is: %1
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
 filesystem quota	admin	en	Filesystem quota
@@ -496,9 +490,6 @@ git clone	admin	en	Git clone
 global categories	common	en	Global categories
 global options	admin	en	Global options
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
-google recaptcha	admin	en	Google recaptcha
-google recaptcha secret key	admin	en	Google recaptcha secret key
-google recaptcha site key	admin	en	Google recaptcha site key
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
 group #%1 must have negative sign!	admin	en	Group #%1 must have negative sign!
@@ -549,7 +540,7 @@ imap c-client version < 2001	admin	en	IMAP C-Client Version < 2001
 imap server	admin	en	IMAP server
 imap server closed the connection.	admin	en	IMAP server closed the connection.
 imap server closed the connection. server responded: %s	admin	en	IMAP Server closed the connection. Server Responded: %s
-imap server hostname or ip address	admin	en	IMAP server hostname or ip address
+imap server hostname or ip address	admin	en	IMAP server hostname or IP address
 imap server logintyp	admin	en	IMAP server login type
 imap server name	admin	en	IMAP server name
 imap server port	admin	en	IMAP server port
@@ -567,9 +558,11 @@ installed applications, percentage of allowed users and total number of entries.
 installed crontab	admin	en	Installed crontab
 instance	admin	en	Instance
 interface	admin	en	Interface
+internal name max. 64 chars	admin	en	Internal name max. 64 chars
 international use	admin	en	International use
 invalid argument '%1' !!!	admin	en	Invalid argument '%1'!
 invalid email	admin	en	Invalid email
+invalid format, must end in a group of digits e.g. %1 or %2	admin	en	Invalid Format, must end in a group of digits e.g. %1 or %2
 invalid formated date "%1"!	admin	en	Invalid formated date "%1"!
 invalid remote id or name "%1"!	admin	en	Invalid remote ID or name "%1"!
 invalid type "%1"!	admin	en	Invalid type "%1"!
@@ -641,7 +634,6 @@ mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
 main screen message	admin	en	Main screen message
 manage mapping	admin	en	Manage mapping
-manage stationery templates	admin	en	Manage stationery templates
 manager	admin	en	Manager
 manual entry	admin	en	Manual entry
 maximum account id (e.g. 65535 or 1000000)	admin	en	Maximum account ID, e.g. 65535 or 1000000
@@ -661,6 +653,7 @@ must change password upon next login	admin	en	Must change password upon next log
 name must not be empty !!!	admin	en	Name must not be empty!
 name of account	admin	en	Name of account
 name of organisation	admin	en	Name of organization
+name of tab to create and show field in	admin	en	Name of tab to create and show field in
 name of the egroupware instance, eg. default	admin	en	Name of the EGroupware instance
 new group name	admin	en	New group name
 new name	admin	en	New name
@@ -739,7 +732,7 @@ php version	admin	en	PHP version
 phpinfo	admin	en	PHP information
 phrase	admin	en	Phrase
 phrase deleted	admin	en	Phrase deleted
-please check email.  it gets automatically deleted if email integration is used.	admin	en	Please check email.  It gets automatically deleted if email integration is used.
+please check email.  it gets automatically deleted if email integration is used.	admin	en	Please check email. It gets automatically deleted if email integration is used.
 please enter a name	admin	en	Enter a name
 please enter a name for that server !	admin	en	Enter a name for that server!
 please manually deal with entries owned by the user:	admin	en	Please manually deal with entries owned by the user:
@@ -777,7 +770,7 @@ remote administration need to be enabled in the remote instance under admin &gt;
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
-removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category. Are you sure? Users in these groups may no longer have access:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 requested	admin	en	Requested
 required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
@@ -788,7 +781,6 @@ revoke	admin	en	Revoke
 revoke this token	admin	en	Revoke this token
 revoked	admin	en	Revoked
 rights	admin	en	Rights
-route all mails to	admin	en	Route all Mails to
 rows	admin	en	Rows
 rpm or debian package	admin	en	RPM or deb package
 run	admin	en	run
@@ -801,7 +793,7 @@ save of message %1 failed. could not save message to folder %2 due to: %3	admin	
 save the category	admin	en	Save the category.
 save the category and return back to the list	admin	en	Save the category and return back to the list.
 saves the changes made and leaves	admin	en	Saves the changes made and leaves.
-saves this entry	admin	en	Saves this entry.
+saves this entry	admin	en	Saves this entry
 saving of message %1 failed. destination folder %2 does not exist.	admin	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 scheduled	admin	en	Scheduled
 search accounts	admin	en	Search accounts
@@ -811,7 +803,8 @@ search peer servers	admin	en	Search peer servers
 secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
 secure connection	admin	en	Secure connection
 security	admin	en	Security
-select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
+select accounts for which the custom field should be readonly	admin	en	Select accounts for which the custom field should be readonly
+select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for
 select group managers	admin	en	Select group managers
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	en	Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.
 select multiple	admin	en	Select multiple
@@ -829,6 +822,7 @@ select where you want to store/retrieve user accounts	admin	en	Select where you 
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	en	Select which location this app should appear on the navbar, lowest (left) to highest (right).
 selectbox	admin	en	Select box
 send using this email-address	admin	en	Send using this email address
+serial number	admin	en	Serial number
 server %1 has been updated	admin	en	Server %1 has been updated
 server list	admin	en	Server list
 server password	admin	en	Server password
@@ -867,8 +861,8 @@ smtp-server hostname or ip address	admin	en	SMTP server hostname or IP address
 smtp-server port	admin	en	SMTP server port
 soap	admin	en	SOAP
 sorry, that group name has already been taken.	admin	en	Sorry, that group name has already been taken.
-sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1 .
-sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1 .
+sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1.
+sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1.
 sort the entries	admin	en	Sort the entries
 source account #%1 does not exist!	admin	en	Source account #%1 does NOT exist!
 ssl	admin	en	SSL
@@ -888,7 +882,6 @@ submit statistic information	admin	en	Submit statistic information
 submit the search string	admin	en	Submit the search string
 submit to egroupware.org	admin	en	Submit to egroupware.org
 subtype	admin	en	Sub type
-subversion checkout	admin	en	Subversion checkout
 success	admin	en	Success
 successful connected to %1 server%2.	admin	en	Successful connected to %1 server%2.
 successfull, but no refresh-token received!	admin	en	Successfull, but NO refresh-token received!
@@ -929,12 +922,10 @@ this is a mail account for all users!	admin	en	This is a mail account for ALL us
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!<br>Account will be deleted for ALL users!<br>Are you really sure you want to do that?
 this key used in the html code your site serves to users.	admin	en	This key used in the HTML code your site serves to users.
 this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!
-this secret key used for communication between your site and google. be sure to keep it a secret.	admin	en	This secret key used for communication between your site and Google. Be sure to keep it a secret.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds. Default 14400 = 4 hours
 times	admin	en	Times
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	en	To allow us to track the growth of your individual installation use this submit ID, otherwise delete it:
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
 token created.	admin	en	Token created.
 token not found!	admin	en	Token not found!
 token revoked.	admin	en	Token revoked.
@@ -955,9 +946,6 @@ type '%1' already exists !!!	admin	en	Type '%1' already exists!
 type of customfield	admin	en	Type of custom field
 type of field	admin	en	Type of field
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	en	Under MS Windows you need to install the async service %1manually%2 or use the fallback mode. Fallback means the jobs get only checked after each page view!
-unexpected response from server to authenticate command.	admin	en	Unexpected response from server to AUTHENTICATE command.
-unexpected response from server to digest-md5 response.	admin	en	Unexpected response from server to Digest-MD5 response.
-unexpected response from server to login command.	admin	en	Unexpected response from server to LOGIN command.
 unknown account: %1 !!!	admin	en	Unknown account: %1!
 unknown command %1!	admin	en	Unknown command %1!
 unknown imap response from the server. server responded: %s	admin	en	Unknown IMAP response from the server. %s
@@ -984,6 +972,7 @@ use pure html compliant code (not fully working yet)	admin	en	Use pure HTML comp
 use save or apply to store the received oauth token!	admin	en	Use save or apply to store the received OAuth token!
 use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via HTTPS)
 use smtp auth	admin	en	Use SMTP authentication
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	en	use the following options:\nnoVfsSelect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	en	Use theme
 use tls authentication	admin	en	Use TLS authentication
 use tls encryption	admin	en	Use TLS encryption
@@ -1030,11 +1019,6 @@ we ask for the data to improve our profile in the press and to get a better unde
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	en	We're not saving any data regarding your identity.
 who would you like to transfer all records owned by the deleted user to?	admin	en	To whom would you like to transfer ALL records owned by the deleted user?
 who would you like to transfer records owned by the deleted user to?	admin	en	Who would you like to transfer records owned by the deleted user to?
-would you like egroupware to cache the egw info array ?	admin	en	Cache the EGroupware info array.
-would you like egroupware to check for a new version<br>when admins login ?	admin	en	Check for version updates when admins login.
-would you like egroupware to check for new application versions when admins login ?	admin	en	Check for application updates when admins login.
-would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Load automatically new language files at login.
-would you like to show each application's upgrade status ?	admin	en	Show each application's upgrade status.
 wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2!
 wrong admin-account or -password !!!	admin	en	Wrong admin account or password!
 wrong credentials to access the header.inc.php file!	admin	en	Wrong credentials to access the header.inc.php file!
@@ -1046,6 +1030,7 @@ yes, use credentials of current user or if given credentials below	admin	en	Yes,
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	en	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
+you can set an initial value, which gets incremented every time a new serial get generated	admin	en	you can set an initial value, which gets incremented every time a new serial get generated
 you can use wizard to fix account settings or delete account.	admin	en	You can use wizard to fix account settings or delete account.
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
 you have no email address for your user set !!!	admin	en	You have no email address set for your user!
@@ -1067,6 +1052,6 @@ you need to select some users first!	admin	en	You need to select some users firs
 you need to specify a forwarding address, when checking "%1"!	admin	en	You need to specify a forwarding address, when checking "%1"!
 you will need to remove the subcategories before you can delete this category	admin	en	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
-your message to  %1 was displayed.	admin	en	Your message to  %1 was displayed.
+your message to  %1 was displayed.	admin	en	Your message to %1 was displayed.
 your name	admin	en	Your name
 your session could not be verified.	admin	en	Your session could not be verified.

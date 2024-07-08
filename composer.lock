@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "965e8273595f5dc0093855af99bdc683",
+    "content-hash": "875dc883e9257e692cadb02e6faa82bc",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -374,7 +374,7 @@
             "version": "v2.9.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:rtfpessoa/diff2html.git",
+                "url": "https://github.com/rtfpessoa/diff2html.git",
                 "reference": "4c15a9ca93e50c78f8d02e37273076994888d499"
             },
             "dist": {
@@ -850,6 +850,7 @@
             "require": {
                 "egroupware/z-push-dev": "^2.5"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -872,9 +873,9 @@
             "description": "EGroupware support for ActiveSync protocol using z-Push",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/activesync/tree/23.1"
+                "source": "https://github.com/EGroupware/activesync/tree/master"
             },
-            "time": "2023-10-18T14:38:36+00:00"
+            "time": "2023-02-28T07:49:35+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -948,6 +949,7 @@
                 "reference": "ee3c8a2395dc841f713599f28b46570e7f3b813d",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -962,9 +964,9 @@
             "description": "EGroupware app to manage bookmarks",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/bookmarks/tree/23.1"
+                "source": "https://github.com/EGroupware/bookmarks/tree/master"
             },
-            "time": "2023-06-23T14:10:52+00:00"
+            "time": "2023-02-28T07:49:35+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -980,6 +982,7 @@
                 "reference": "404a6e526261c702dfada90bf81e3750c83ff7d4",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1002,9 +1005,9 @@
             "description": "EGroupware integration for Collabora Online Office",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/collabora/tree/23.1"
+                "source": "https://github.com/EGroupware/collabora/tree/master"
             },
-            "time": "2023-11-10T05:32:18+00:00"
+            "time": "2023-03-30T16:19:54+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -1891,6 +1894,7 @@
                 "reference": "25eff9c239e01f1952f75b8b4e7c60115aaa0b10",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1905,9 +1909,9 @@
             "description": "EGroupware app to supply and aggregate RSS/Atom feeds",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/news_admin/tree/23.1"
+                "source": "https://github.com/EGroupware/news_admin/tree/master"
             },
-            "time": "2023-10-18T14:37:52+00:00"
+            "time": "2023-04-12T09:14:09+00:00"
         },
         {
             "name": "egroupware/nls",
@@ -1994,6 +1998,7 @@
                 "psr/http-message": "^1.0",
                 "zendframework/zend-diactoros": "^1.0"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2013,9 +2018,9 @@
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/openid/tree/23.1"
+                "source": "https://github.com/EGroupware/openid/tree/master"
             },
-            "time": "2023-11-09T14:54:57+00:00"
+            "time": "2023-02-28T07:49:36+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -2034,6 +2039,7 @@
             "require": {
                 "npm-asset/dhtmlx-gantt": "~6.2"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2056,9 +2062,9 @@
             "description": "EGroupware project-management application",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/projectmanager/tree/23.1"
+                "source": "https://github.com/EGroupware/projectmanager/tree/master"
             },
-            "time": "2023-11-13T09:00:02+00:00"
+            "time": "2023-04-17T22:19:37+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -2074,6 +2080,7 @@
                 "reference": "53313308b77152a33d094d8f3664ef9089acb680",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2105,9 +2112,9 @@
             "description": "EGroupware app to allow self-registration of users",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/registration/tree/23.1"
+                "source": "https://github.com/EGroupware/registration/tree/master"
             },
-            "time": "2023-11-10T16:15:28+00:00"
+            "time": "2023-04-12T09:11:51+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -2123,6 +2130,7 @@
                 "reference": "e8736eae0577c2055e0b148541f5d227228b56b3",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2145,9 +2153,9 @@
             "description": "EGroupware Rocket.Chat app allowing to access Rocket.Chat from within EGroupware",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/rocketchat/tree/23.1"
+                "source": "https://github.com/EGroupware/rocketchat/tree/master"
             },
-            "time": "2023-04-25T15:00:26+00:00"
+            "time": "2023-04-12T09:10:52+00:00"
         },
         {
             "name": "egroupware/secret",
@@ -2223,6 +2231,7 @@
             "require": {
                 "celtic/lti": "^4.4.1"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2250,9 +2259,9 @@
             "description": "EGroupware smallPART - selfdirected media assisted learning lectures & Process Analysis Reflection Tool",
             "homepage": "https://www.smallpart.de/",
             "support": {
-                "source": "https://github.com/EGroupware/smallpart/tree/23.1"
+                "source": "https://github.com/EGroupware/smallpart/tree/master"
             },
-            "time": "2023-11-13T11:53:54+00:00"
+            "time": "2023-04-19T09:26:48+00:00"
         },
         {
             "name": "egroupware/smtp",
@@ -2376,6 +2385,7 @@
             "require": {
                 "lcobucci/jwt": "^3.1"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2398,9 +2408,9 @@
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/status/tree/23.1"
+                "source": "https://github.com/EGroupware/status/tree/master"
             },
-            "time": "2023-10-18T14:34:30+00:00"
+            "time": "2023-04-12T09:10:08+00:00"
         },
         {
             "name": "egroupware/stream-filter",
@@ -2587,6 +2597,7 @@
             "require-dev": {
                 "eaglewu/swoole-ide-helper": "dev-english"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2606,9 +2617,9 @@
             "description": "EGroupware push server using Swoole",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/swoolepush/tree/23.1"
+                "source": "https://github.com/EGroupware/swoolepush/tree/master"
             },
-            "time": "2023-08-09T07:34:08+00:00"
+            "time": "2023-02-28T07:49:34+00:00"
         },
         {
             "name": "egroupware/text-diff",
@@ -2730,6 +2741,7 @@
                 "reference": "45540bfa1cd3bd60b3b3a625fe07c1bc7de660c7",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2752,9 +2764,9 @@
             "description": "EGroupware bug-tracker and helpdesk application",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/tracker/tree/23.1"
+                "source": "https://github.com/EGroupware/tracker/tree/master"
             },
-            "time": "2023-11-16T20:37:20+00:00"
+            "time": "2023-04-12T09:09:17+00:00"
         },
         {
             "name": "egroupware/translation",

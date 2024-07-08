@@ -15,9 +15,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Etemplate;
 
 /**
- * Customfields class -  manages customfield definitions in egw_config table
- *
- * The repository name (config_name) is 'customfields'.
+ * Customfields class -  manages custom-field definitions in egw_customfields table through Api\Storage\Customfields class.
  *
  * Applications can have customfields by sub-type by having a template
  * named '<appname>.admin.types'.  See admin.customfields.types as an
@@ -42,6 +40,11 @@ class admin_customfields
 	 * Allow custom fields to be restricted to certain users/groups
 	 */
 	protected $use_private = false;
+
+	/**
+	 * Allow custom fields to be readonly for certain users/groups
+	 */
+	protected $use_readonly = false;
 
 	/**
 	* userdefiened types e.g. type of infolog
@@ -83,7 +86,9 @@ class admin_customfields
 		'select'	=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'radio'		=> 'each value is a line like id[=label], or use @path to read options from a file in EGroupware directory',
 		'button'	=> 'each value is a line like label=[javascript]',
-		'password'=> 'set length=# for minimum password length, strength=# for password strength'
+		'password'  => 'set length=# for minimum password length, strength=# for password strength',
+		'serial'    => 'you can set an initial value, which gets incremented every time a new serial get generated',
+		'filemanager' => "use the following options:\nnoVfsSelect=1\nnoUpload=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2M",
 	);
 
 	/**
@@ -101,7 +106,6 @@ class admin_customfields
 		'select-account'	=> array('cf_len' => false, 'cf_rows' => true),
 		'htmlarea'	=> array('cf_len' => true, 'cf_rows' => true),
 		'button'	=> array('cf_values' => true),
-		'ajax_select' => array('cf_values' => true),
 		'radio'		=> array('cf_values' => true),
 		'checkbox'	=> array('cf_values' => true),
 		'filemanager' => array('cf_values' => true),
@@ -120,6 +124,10 @@ class admin_customfields
 			$this->content_types = Api\Config::get_content_types($this->appname);
 		}
 		$this->so = new Api\Storage\Base('api','egw_customfields',null,'',true);
+
+		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
+		Framework::includeCSS('admin','app');
+		Api\Translation::add_app('admin');
 	}
 
 	/**
@@ -134,7 +142,7 @@ class admin_customfields
 		$this->use_private = !empty($_GET['use_private']) && $_GET['use_private'] !== 'undefined' || !empty($content['use_private']);
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = Api\Storage\Customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true, null, null, null);
 
 		$this->tmpl = new Etemplate();
 		$this->tmpl->read('admin.customfields');
@@ -252,7 +260,7 @@ class admin_customfields
 				$content['content_types']['no_edit_types'] = true;
 			}
 			// do NOT allow to delete original contact content-type for addressbook,
-			// as it only creates support problems as users incidently delete it
+			// as it only creates support problems as users accidentally delete it
 			if ($this->appname == 'addressbook' && $this->content_type == 'n')
 			{
 				$readonlys['content_types']['delete'] = true;
@@ -264,6 +272,8 @@ class admin_customfields
 			// Disable content types
 			$this->tmpl->disableElement('content_types', true);
 		}
+		$sel_options['cf_type'] = Etemplate\Widget\Customfields::getCfTypes();
+		$sel_options['cf_tab'] = $this->so->query_list('cf_tab', '', ['cf_app' => $this->appname]);
 		$preserve = array(
 			'appname' => $this->appname,
 			'use_private' => $this->use_private,
@@ -271,12 +281,8 @@ class admin_customfields
 		);
 
 		// Allow extending app a change to change content before display
-		$readonlys = null;
+		if (!isset($readonlys)) $readonlys = [];
 		static::app_index($content, $sel_options, $readonlys, $preserve);
-
-		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
-		Framework::includeCSS('admin','app');
-		Api\Translation::add_app('admin');
 
 		// Set app to admin to make sure actions are correctly loaded into admin
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';
@@ -341,9 +347,10 @@ class admin_customfields
 			die(lang('Error! No appname found'));
 		}
 		$this->use_private = !isset($_GET['use_private']) || (boolean)$_GET['use_private'] || !empty($content['use_private']);
+		$this->use_readonly = !isset($_GET['use_readonly']) || (boolean)$_GET['use_readonly'] || !empty($content['use_readonly']);
 
 		// Read fields, constructor doesn't always know appname
-		$this->fields = Api\Storage\Customfields::get($this->appname,true);
+		$this->fields = Api\Storage\Customfields::get($this->appname,true, null, null, null);
 
 		// Update based on info returned from template
 		if (is_array($content))
@@ -373,11 +380,15 @@ class admin_customfields
 					if (!empty($content['cf_values']))
 					{
 						$values = array();
+						if ($content['cf_type'] === 'serial' && !str_starts_with($content['cf_values'], 'last='))
+						{
+							$content['cf_values'] = 'last=' . $content['cf_values'];
+						}
 						if($content['cf_values'][0] === '@')
 						{
 							$values['@'] = substr($content['cf_values'], $content['cf_values'][1] === '=' ? 2:1);
 						}
-						elseif (isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+						elseif (isset($GLOBALS['egw_info']['apps'][$content['cf_type']]) && $content['cf_type'] !== 'filemanager')
 						{
 							if (!empty($content['cf_values']) && ($content['cf_values'][0] !== '{' || ($values=json_decode($content['cf_values'])) === null))
 							{
@@ -400,6 +411,11 @@ class admin_customfields
 								}
 								$values[$var] = trim($value)==='' ? $var : $value;
 							}
+						}
+						if ($content['cf_type'] === 'serial' && !preg_match(Api\Storage\Customfields::SERIAL_PREG, $values['last']))
+						{
+							Api\Etemplate::set_validation_error('cf_values', lang('Invalid Format, must end in a group of digits e.g. %1 or %2', "'0000'", "'RE2024-0000'"));
+							break;
 						}
 						$content['cf_values'] = $values;
 					}
@@ -451,8 +467,8 @@ class admin_customfields
 		$readonlys = array();
 
 		//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
-		$content['cf_order'] = (count($this->fields)+1) * 10;
 		$content['use_private'] = $this->use_private;
+		$content['use_readonly'] = $this->use_readonly;
 
 		if($cf_id)
 		{
@@ -462,18 +478,37 @@ class admin_customfields
 			{
 				$content['cf_private'] = explode(',',$content['cf_private']);
 			}
-			if($content['cf_name'])
+			if($content['cf_readonly'])
 			{
-				$readonlys['cf_name'] = true;
+				$content['cf_readonly'] = explode(',',$content['cf_readonly']);
 			}
-			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]))
+			if (!isset($GLOBALS['egw_info']['apps'][$content['cf_type']]) || $content['cf_type'] === 'filemanager')
 			{
 				$content['cf_values'] = json_decode($content['cf_values'], true);
+			}
+			if ($_GET['action'] ?? null === 'copy')
+			{
+				unset($content['cf_id'], $cf_id);
+				$content['cf_name'] = lang('Copy of').' '.$content['cf_name'];
+				$content['cf_order'] += 5;  // behind copied field
+				$readonlys['button[delete]'] = true;
+			}
+			else
+			{
+				if($content['cf_name'])
+				{
+					$readonlys['cf_name'] = true;
+				}
+				if ($content['cf_type'] === 'serial')
+				{
+					$readonlys['cf_values'] = true; // only allow to set start-value, but not change it after
+				}
 			}
 		}
 		else
 		{
 			$readonlys['button[delete]'] = true;
+			$content['cf_order'] = 10*(1+count($this->fields));
 		}
 		if (is_array($content['cf_values']))
 		{
@@ -525,8 +560,9 @@ class admin_customfields
 			'cf_id'       => $cf_id,
 			'cf_app'      => $this->appname,
 			'cf_name'     => $content['cf_name'],
+			'cf_values'   => $content['cf_values'],
 			'use_private' => $this->use_private,
-		),                2);
+		), 2);
 	}
 
 	/**
@@ -558,6 +594,13 @@ class admin_customfields
 				'popup' => '500x380',
 				'group' => $group=1,
 				'disableClass' => 'th',
+			),
+			'copy' => array(
+				'caption' => 'Copy',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction='.$edit.'&cf_id=$id&use_private='.$this->use_private.'&action=copy',
+				'popup' => '500x380',
+				'group' => $group,
 			),
 			'add' => array(
 				'caption' => 'Add',
@@ -718,7 +761,7 @@ class admin_customfields
 
 		foreach($rows as &$row)
 		{
-			$row['cf_values'] = json_decode($row['cf_values'], true);
+			$row['cf_values'] = json_decode($row['cf_values'], true) ?? $row['cf_values'];
 			if (is_array($row['cf_values']))
 			{
 				$values = '';

@@ -460,6 +460,8 @@ mcrypt initialization vector	setup	es-es	Vector de inicialización MCrypt
 mcrypt mode (default cbc)	setup	es-es	Modo de MCrypt (predeterminado CBC)
 mcrypt settings (requires mcrypt php extension)	setup	es-es	Configuración de MCrypt (necesita la extensión PHP mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de EGroupware necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
+metadata	setup	es-es	Metadatos
+metadata url	setup	es-es	URL de metadatos
 migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de EGroupware
 migration of group will fail, as sql does not allow identical ids.	setup	es-es	La migración del grupo fallará, ya que SQL NO permite IDs idénticos.
 min backup count	setup	es-es	Número máximo de copias de seguridad conservadas (cero: todas)

@@ -279,7 +279,10 @@ export class CalendarApp extends EgwApp
 			case 'calendar.sidebox':
 				this.sidebox_et2 = _et2.widgetContainer;
 				this.sidebox_hooked_templates.push(this.sidebox_et2);
-				jQuery(_et2.DOMContainer).hide();
+				if(!_et2.DOMContainer.slot)
+				{
+					jQuery(_et2.DOMContainer).hide();
+				}
 
 				this._setup_sidebox_filters();
 
@@ -312,7 +315,7 @@ export class CalendarApp extends EgwApp
 					{
 						this.freetime_search();
 					}
-					//send Syncronus ajax request to the server to unlock the on close entry
+					//send synchronous ajax request to the server to unlock the on close entry
 					//set onbeforeunload with json request to send request when the window gets close by X button
 					if (content.data.lock_token)
 					{
@@ -1258,7 +1261,7 @@ export class CalendarApp extends EgwApp
 				}
 			);
 		*/
-		if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.tab)
+		if(typeof framework !== 'undefined' && framework.applications?.calendar && framework.applications.calendar.tab)
 		{
 			let swipe = new tapAndSwipe(framework.applications.calendar.tab.contentDiv, {
 					//Generic swipe handler for all directions
@@ -1398,17 +1401,26 @@ export class CalendarApp extends EgwApp
 	}
 
 	/**
-	 * Function for disabling the recur_data multiselect box
+	 * Function for disabling the recur_data multiselect box and add_rdate hbox
 	 *
 	 */
 	check_recur_type()
 	{
-		var recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
-		var recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
+		const recurType = <et2_selectbox> this.et2.getWidgetById('recur_type');
+		const recurData = <et2_selectbox> this.et2.getWidgetById('recur_data');
+		const addRdate = this.et2.getWidgetById('button[add_rdate]');
+		const recurRdate = this.et2.getWidgetById('recur_rdate');
 
 		if(recurType && recurData)
 		{
-			recurData.set_disabled(recurType.get_value() != 2 && recurType.get_value() != 4);
+			recurData.set_disabled(recurType.value != 2 && recurType.value != 4);
+		}
+		if (recurType && addRdate && recurRdate)
+		{
+			addRdate.set_disabled(recurType.value != 9);
+			recurRdate.set_disabled(recurType.value != 9);
+			this.et2.getWidgetById('recur_enddate')?.set_disabled(recurType.value == 9);
+			this.et2.getWidgetById('recur_interval')?.set_disabled(recurType.value == 9);
 		}
 	}
 
@@ -1430,10 +1442,17 @@ export class CalendarApp extends EgwApp
 		// Update recurring date limit, if not set it can't be before start
 		if(widget)
 		{
-			var recur_end = widget.getRoot().getWidgetById('recur_enddate');
+			const recur_end = widget.getRoot().getWidgetById('recur_enddate');
 			if(recur_end && recur_end.getValue && !recur_end.value)
 			{
 				recur_end.set_min(widget.value);
+			}
+			// update recur_rdate with start (specially time) and set start as minimum
+			const recur_rdate = widget.getRoot().getWidgetById('recur_rdate');
+			if (recur_rdate)
+			{
+				recur_rdate.set_min(widget.value);
+				recur_rdate.value = widget.value;
 			}
 
 			// Update end date, min duration is 1 minute
@@ -1448,7 +1467,6 @@ export class CalendarApp extends EgwApp
 		}
 		// Update currently selected alarm time
 		this.alarm_custom_date();
-
 	}
 
 	/**
@@ -2260,15 +2278,13 @@ export class CalendarApp extends EgwApp
 			instance_date.setUTCMinutes(instance_date.getUTCMinutes() +instance_date.getTimezoneOffset());
 		}
 		if (typeof content != 'undefined' && content.id != null &&
-			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0
-		)
+			typeof content.recur_type != 'undefined' && content.recur_type != null && content.recur_type != 0)
 		{
 			if (content.start != start_date ||
 				content.whole_day != is_whole_day ||
 				(duration && ''+content.duration != duration ||
 				// End date might ignore seconds, and be 59 seconds off for all day events
-				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000)
-			)
+				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000))
 			{
 				et2_calendar_event.series_split_prompt(
 					content, instance_date, function(_button_id)
@@ -2276,20 +2292,22 @@ export class CalendarApp extends EgwApp
 						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
 							that.et2.getInstanceManager().submit(button);
-
 						}
 					}
 				);
+				return false;
 			}
-			else
+			// check if we have future exceptions and changes with might be applied to them too
+			if (content.future_exceptions)
 			{
-				return true;
+				Et2Dialog.show_dialog((_button) => {
+					this.et2.setValueById('apply_changes_to_exceptions', _button == Et2Dialog.YES_BUTTON);
+					this.et2.getInstanceManager().submit(button);
+				}, 'Otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.', 'Apply changes to (future) exceptions too?', undefined, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE);
+				return false;
 			}
 		}
-		else
-		{
-			return true;
-		}
+		return true;
 	}
 
 	/**
@@ -2424,7 +2442,7 @@ export class CalendarApp extends EgwApp
 		{
 			// This activates calendar app if you call setState from a different app
 			// such as home.  If we change state while not active, sizing is wrong.
-			if(typeof framework !== 'undefined' && framework.applications.calendar && framework.applications.calendar.hasSideboxMenuContent)
+			if(typeof framework !== 'undefined' && framework.applications?.calendar && framework.applications.calendar.hasSideboxMenuContent)
 			{
 				framework.setActiveApp(framework.applications.calendar);
 			}
@@ -2653,7 +2671,7 @@ export class CalendarApp extends EgwApp
 				// Show loading div to hide redrawing
 				egw.loading_prompt(
 					this.appname,true,egw.lang('please wait...'),
-					typeof framework !== 'undefined' ? framework.applications.calendar.tab.contentDiv : false,
+					typeof framework !== 'undefined' ? framework.applications?.calendar?.tab?.contentDiv : false,
 					egwIsMobile()?'horizontal':'spinner'
 				);
 
@@ -3478,7 +3496,7 @@ export class CalendarApp extends EgwApp
 		// Show ajax loader
 		if(typeof framework !== 'undefined')
 		{
-			framework.applications.calendar.sidemenuEntry.showAjaxLoader();
+			framework.applications?.calendar?.sidemenuEntry?.showAjaxLoader();
 		}
 
 		if(state.view === 'planner' && state.sortby === 'user')
@@ -3575,7 +3593,7 @@ export class CalendarApp extends EgwApp
 				// Hide AJAX loader
 				else if(typeof framework !== 'undefined')
 				{
-					framework.applications.calendar.sidemenuEntry.hideAjaxLoader();
+					framework.applications?.calendar?.sidemenuEntry.hideAjaxLoader();
 					egw.loading_prompt('calendar', false)
 
 				}

@@ -1,10 +1,11 @@
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
-import {classMap, css, html} from "@lion/core";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2Favorites} from "../../api/js/etemplate/Et2Favorites/Et2Favorites";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {css, html} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 
 export class Et2PortletFavorite extends Et2Portlet
 {

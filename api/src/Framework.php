@@ -113,6 +113,12 @@ abstract class Framework extends Framework\Extra
 		{
 			$GLOBALS['egw_info']['server']['template_set'] = 'pixelegg';
 		}
+		if($GLOBALS['egw_info']['user']['preferences']['common']['template_set'] !== $GLOBALS['egw_info']['server']['template_set'] &&
+			class_exists($class = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] . '_framework')
+		)
+		{
+			$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
 		// then jdots aka Stylite template
 		if (file_exists(EGW_SERVER_ROOT.'/jdots') && empty($GLOBALS['egw_info']['server']['template_set']))
 		{
@@ -1064,11 +1070,9 @@ abstract class Framework extends Framework\Extra
 			));
 		}
 		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
-		self::includeJS('/api/js/dhtmlxtree/codebase/dhtmlxcommon.js');
+		self::includeJS('/api/js/dhtmlxMenu/codebase/dhtmlxcommon.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
 		self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
-		self::includeJS('/api/js/dhtmlxtree/sources/dhtmlxtree.js');
-		self::includeJS('/api/js/dhtmlxtree/sources/ext/dhtmlxtree_json.js');
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$map = null;

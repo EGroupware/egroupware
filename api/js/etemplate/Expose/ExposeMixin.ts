@@ -19,7 +19,7 @@ import {egw} from "../../jsapi/egw_global";
 
 // Minimum data to qualify as an image and not cause errors
 const IMAGE_DEFAULT = {
-	title: egw.lang('loading'),
+	title: egw.lang ? egw.lang ? egw.lang('loading') : "'loading'" : "'loading'",
 	href: '',
 	type: 'image/png',
 	thumbnail: '',
@@ -680,7 +680,13 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		private _audio_player(_value)
 		{
 			let button = [
-				{"button_id": 1, "label": egw.lang('close'), id: '1', image: 'cancel', default: true}
+				{
+					"button_id": 1,
+					"label": egw.lang ? egw.lang("close") : "close",
+					id: '1',
+					image: 'cancel',
+					default: true
+				}
 			];
 
 			let mediaContent = this.getMedia(_value)[0];

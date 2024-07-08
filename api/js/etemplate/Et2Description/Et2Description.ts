@@ -12,11 +12,14 @@ import {css, html, LitElement, render} from "lit";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 import {et2_csvSplit} from "../et2_core_common";
+import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 
 export class Et2Description extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 
 	protected _value : string = "";
+
+	protected _forTarget : Et2InputWidget = null;
 
 	static get styles()
 	{
@@ -28,11 +31,18 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 			}
 			:host {
 				display:flex;
-				flex-direction: column;
-				justify-content: space-evenly;
+				flex-direction: row;
+				justify-content: flex-start;
 				flex: 0 1 auto !important;
 			}
-			label {display: contents;}
+
+				label {
+					padding-inline-end: 1ex;
+				}
+
+				.split-label label {
+					display: contents;
+				}
 			::slotted(a) {
 				cursor: pointer;
 				color: #26537c;
@@ -81,6 +91,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				type: String,
 				noAccessor: true
 			},
+			for: { type: String}
 		}
 	}
 
@@ -103,6 +114,15 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	{
 		super.connectedCallback();
 
+		if (this.for)
+		{
+			this._forTarget = this.getRoot().getWidgetById(this.for);
+
+			if (this._forTarget)
+			{
+				this._forTarget.ariaLabel = this.value;
+			}
+		}
 		// Put content directly in DOM
 		if(this.value)
 		{
@@ -142,6 +162,11 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 		this._value = _value;
 		this.requestUpdate('value', oldValue);
+
+		if (this._forTarget)
+		{
+			this._forTarget.ariaLabel = this._value;
+		}
 	}
 
 	updated(changedProperties)
@@ -200,7 +225,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		}
 		// Turn off IDE reformatting, or it will add an extra line break into the template
 		// @formatter:off
-		return html`<slot part="form-control-label" name="label">${label}</slot><slot part="form-control-value"></slot>${after}`;
+		return html`<slot part="form-control-label" name="label" class=${after ? "split-label" : ""}><label>${label}</label></slot><slot part="form-control-value"></slot>${after}`;
 		// @formatter:on
 	}
 
@@ -218,11 +243,15 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 	_handleClick(_ev : MouseEvent) : boolean
 	{
 		// call super to get the onclick handling running
-		super._handleClick(_ev);
+		if (super._handleClick(_ev) && !_ev.defaultPrevented && this._forTarget?.focus)
+		{
+			this._forTarget.focus();
+			_ev.preventDefault();
+			return false;
+		}
 
 		if(this.mimeData || this.href)
 		{
-
 			egw(window).open_link(this.mimeData || this.href, this.extraLinkTarget, this.extraLinkPopup, null, null, this.mime);
 			_ev.preventDefault();
 			return false;

@@ -39,7 +39,7 @@ export class et2_file extends et2_inputWidget
 			"name": "Maximum file size",
 			"type": "integer",
 			"default":0,
-			"description": "Largest file accepted, in bytes.  Subject to server limitations.  8MB = 8388608"
+			"description": "Largest file accepted, in bytes or with units: K, KB, M, MB, G or GB. Subject to server limitations."
 		},
 		"mime": {
 			"name": "Allowed file types",

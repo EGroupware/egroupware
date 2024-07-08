@@ -32,9 +32,11 @@ add current view as favorite	calendar	de	Ansicht als Favorit zufügen
 add new alarm	calendar	de	Neuen Alarm erstellen
 add new event	calendar	de	Einen neuen Termin hinzufügen
 add new participants or resource	calendar	de	Neue(n) Teilnehmer oder Ressource auswählen
+add recurrence	calendar	de	Wiederholung hinzufügen
 add timesheet entry	calendar	de	Stundenzettel hinzufügen
 added	calendar	de	Neuer Termin
 added by synchronization	calendar	de	Durch Synchronisation hinzugefügt
+added recurrence on %1.	calendar	de	Wiederholung am %1 hinzugefügt.
 after	calendar	de	Nach
 after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
@@ -60,6 +62,7 @@ allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeit
 always	calendar	de	Immer
 always use full edit dialog	calendar	de	Immer das komplette Bearbeiten-Fenster verwenden
 always use the full edit dialog, not this little dialog	calendar	de	Verwende immer das komplette Bearbeiten-Fenster, anstatt dem verkürzten Dialog.
+apply changes to (future) exceptions too?	calendar	de	Änderungen auch auf (zukünftige) Ausnahmen anwenden?
 apply the action on the whole query, not only the shown events	calendar	de	Befehl auf die gesamte Abfrage anwenden, NICHT nur auf die angezeigten Termine.
 apply the changes	calendar	de	Übernimmt die Änderungen
 appointment settings	calendar	de	Einstellungen der Terminverwaltung
@@ -247,7 +250,7 @@ exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	Existiert
-explicit dates	calendar	de	Explizite Termine
+explicit recurrences	calendar	de	Explizite Wiederholungen
 export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format
@@ -370,6 +373,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	de	Max.
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
 meeting canceled	calendar	de	Termin abgesagt
 meeting request	calendar	de	Terminanfrage
+meeting request additional recurrence(s)	calendar	de	Terminanfrage zusätzliche Wiederholung(en)
 meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen ...
 midnight	calendar	de	Mitternacht
@@ -448,6 +452,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	de	Unerledigte Aufgaben:
 optional	calendar	de	Optional
 organizer	calendar	de	Organisator
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	de	Andernfalls werden Änderungen im Titel, in der Beschreibung, ... oder neue Teilnehmer nicht auf bereits erstellte Ausnahmen übertragen.
 output unit	calendar	de	Ausgabeeinheit
 overlap holiday	calendar	de	Überlappender Feiertag
 owner too	calendar	de	Auch Besitzer
@@ -524,8 +529,6 @@ search string for the events	calendar	de	Suchtext für Termine
 select a %1	calendar	de	%1 auswählen
 select a color for this calendar	calendar	de	Wählen Sie eine Farbe für diesen Kalender
 select a time	calendar	de	Eine Zeit auswählen
-select an action	calendar	de	Befehl auswählen
-select an action...	calendar	de	Aktion auswählen ...
 select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!
@@ -599,6 +602,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	de	Die Ausnahmen werden mit der Terminserie gelöscht
 the extern organizer changed the event!	calendar	de	Der externe Organisator hat den Termin geändert!
 the following document-types are supported:	calendar	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
+the organizer changed the event!	calendar	de	Der Organisator hat den Termin geändert!
 the original series will be terminated today and a new series be created.	calendar	de	Der bestehende Serientermin wird heute beendet und eine neue Terminserie erstellt.
 the resource you selected is already overbooked:	calendar	de	Die Ressource, die Sie buchen möchten, ist bereits überbucht
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	de	Der Absender "%1" ist nicht der externe Organisator "%2", seien Sie vorsichtig!
@@ -611,6 +615,7 @@ this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen B
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	de	Das ist ein wiederholender Termin. Wollen Sie nur diese Wiederholung oder die ganze Serie löschen?
+this is a single recurrence of a recurring event.	calendar	de	Das ist eine einzelne Wiederholung einer Terminserie.
 this mail cancels a meeting	calendar	de	Diese Nachricht sagt einen Termin ab
 this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Terminanfrage
 this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage
@@ -710,6 +715,7 @@ you are not allowed to book the resource selected:	calendar	de	Sie sind nicht be
 you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanfrage an die oben eingetragenen Empfänger zu versenden.
 you can either set a year or a occurrence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
+you can only notify other users, not yourself!	calendar	de	Sie können nur andere Benutzer benachrichtigen, nicht sich selbst!
 you can only set a year or a occurrence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben!
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
 you have a meeting scheduled for %1	calendar	de	Sie haben einen Termin am %1

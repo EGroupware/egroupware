@@ -451,6 +451,7 @@ class preferences_settings
 					$tab = 'tab'.(1+count($tabs));
 					$tabs[] = array(
 						'id' => $tab,
+						'content' => $tab,
 						'template' => 'preferences.settings.tab1',
 						'label' => $setting['title'],
 					);
@@ -617,6 +618,7 @@ class preferences_settings
 			$tpl->setElementAttribute('tabs', 'extraTabs', array(
 				array(
 					'id'       => 'tab1',
+					'content'  => 'tab1',
 					'template' => 'preferences.settings.tab1',
 					'label'    => 'general settings'
 				)));

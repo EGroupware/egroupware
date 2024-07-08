@@ -41,7 +41,14 @@ cancel	common	ro	Renunţă
 charset	common	ro	Set de caractere
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ro	Verificați dacă există valori goale în declarațiile IF. Exemplu {{IF url~EMPTY~~~Website:}}} - Dacă url nu este gol, scrie "Website:"
 choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	ro	Clienții care nu indică în mod explicit o limită se limitează la acest număr de zile. O limită prea mare poate cauza probleme cu unii clienți.
+clipboard contents	common	ro	Conținutul clipboard-ului
+code	common	ro	Cod
+collection empty.	common	ro	Colecția este goală.
+collection listing	common	ro	Listarea colecției
 colour	common	ro	Culoare
+columns to print	common	ro	Coloane de tipărit
+command ⌘	common	ro	Comandă ⌘
 copy	common	ro	Copiați
 copy "%1"	common	ro	Copiați "%1"
 copy of:	common	ro	Copie de:
@@ -77,7 +84,6 @@ history log	common	ro	Istoricul versiunii
 how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se sincronizeze în viitor (implicit %1)
 how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
 how many rows to print	common	ro	Câte rânduri să se tipărească
-how to show the general egroupware menu ?	common	ro	Cum se afișează meniul general EGroupware
 html links to any entries linked to the current record, excluding attached files	common	ro	Legături HTML către orice intrări legate de înregistrarea curentă, cu excepția fișierelor atașate
 if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
 include access to any linked files (links tab)	common	ro	Includeți accesul la orice fișier legat (fila Links)
@@ -97,7 +103,11 @@ lost login id	common	ro	ID de conectare pierdut
 lost password	common	ro	Parolă pierdută
 mailvelope addon installation failed! please try again.	common	ro	Instalarea addon-ului Mailvelope a eșuat! Vă rugăm să încercați din nou.
 mailvelope addon installation succeded. now you may configure the options.	common	ro	Instalarea addon-ului Mailvelope a reușit. Acum puteți configura opțiunile.
+more	common	ro	Mai mult
 move	common	ro	Mutați
+moved %1 children from directory fs_id=%2 to %3	admin	ro	A mutat %1 copii din folderul fs_id=%2 în %3
+moved unconnected %1 %2 to %3.	admin	ro	A mutat %1 neconectat %1 %2 în %3.
+my account	common	ro	Contul meu
 new password	common	ro	Parolă nouă
 no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
@@ -115,7 +125,7 @@ pgp encryption installation	common	ro	Instalare PGP Encryption
 placeholders	common	ro	Placeholders
 play/pause	common	ro	Redare/Pauză
 please %1 by hand	common	ro	Vă rugăm să vă rugăm să vă folosiți manual de %1
-please reload the egroupware desktop (f5 / cmd+r).	common	ro	Vă rugăm să reîncărcați biroul EGroupware (F5 / Cmd + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	ro	Vă rugăm să reîncărcați biroul EGroupware (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	ro	Nu uitați să folosiți de acum înainte numele de utilizator "%1" pentru autentificarea locală!
 please type %1 more characters	common	ro	Vă rugăm să introduceți încă %1 caractere
 please type 1 more character	common	ro	Vă rugăm să introduceți încă 1 caracter

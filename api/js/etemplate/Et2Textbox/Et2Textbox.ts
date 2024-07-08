@@ -73,7 +73,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		super.connectedCallback();
 	}
 
-	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	/** @param  changedProperties */
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);

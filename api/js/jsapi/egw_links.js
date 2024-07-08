@@ -517,7 +517,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			select.setAttribute('id', 'quick_add_selectbox');
 			// Empty label is required to clear value, but we hide it
 			select.emptyLabel = "Select";
-			select.placement = "bottom end";
+			select.placement = "bottom";
 			parent.append(select);
 			const plus = parent.querySelector("span");
 			plus.addEventListener("click", () => {
@@ -551,14 +551,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					});
 				}
 				select.select_options = options;
-				/*
+
 				select.updateComplete.then(() =>
 				{
 					// Adjust popup positioning to account for hidden select parts
-					select.popup.distance = -32;
+					select.select.popup.position = "top end";
+					select.select.popup.sync = "";
+					select.select.popup.distance = -32;
 				});
-
-				 */
 			});
 		},
 

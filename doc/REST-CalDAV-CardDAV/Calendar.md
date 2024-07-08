@@ -11,7 +11,7 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 
 ### Supported request methods and examples
 
-* **GET** to collections with an ```Accept: application/json``` header return all resources (similar to WebDAV PROPFIND)
+#### **GET** to collections with an `Accept: application/json` header return all resources (similar to WebDAV PROPFIND)
 <details>
   <summary>Example: Getting all entries of a given users calendar</summary>
 
@@ -211,7 +211,7 @@ following GET parameters are supported to customize the returned properties:
 Examples: see addressbook
 
 
-* **GET**  requests with an ```Accept: application/json``` header can be used to retrieve single resources / JsContact or JsCalendar schema
+#### **GET**  requests with an `Accept: application/json` header can be used to retrieve single resources / JsContact or JsCalendar schema
 <details>
    <summary>Example: GET request for a single resource</summary>
 
@@ -248,7 +248,7 @@ curl 'https://example.org/egroupware/groupdav.php/calendar/6502' -H "Accept: app
 ```
 </details>
 
-* **POST** requests to collection with a ```Content-Type: application/json``` header add new entries in addressbook or calendar collections
+#### **POST** requests to collection with a `Content-Type: application/json` header add new entries in addressbook or calendar collections
   (Location header in response gives URL of new resource)
 <details>
    <summary>Example: POST request to create a new resource and use "Prefer: return=representation" to get it fully expanded back</summary>
@@ -300,7 +300,7 @@ X-WebDAV-Status: 201 Created
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+#### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
 
 <details>
    <summary>Example: PUT request with UID to update an existing resource or create it, if not exists</summary>
@@ -329,7 +329,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/calendar/1234
 </details>
 
 
-* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+#### **PATCH** request with a `Content-Type: application/json` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
 
 <details>
    <summary>Example: PATCH request to modify an event with partial data</summary>
@@ -345,7 +345,7 @@ HTTP/1.1 204 No content
 ```
 </details>
 
-* **DELETE** requests delete single resources
+#### **DELETE** requests delete single resources
 <details>
    <summary>Example: Delete an existing event</summary>
 
@@ -358,4 +358,4 @@ HTTP/1.1 204 No Content
 ```
 </details>
 
-* one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON e.g. for debugging and exploring the API
+* one can use `Accept: application/pretty+json` to receive pretty-printed JSON e.g. for debugging and exploring the API

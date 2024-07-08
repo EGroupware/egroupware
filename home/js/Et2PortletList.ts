@@ -1,6 +1,6 @@
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {css, html, TemplateResult} from "@lion/core";
+import {css, html, TemplateResult} from "lit";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";

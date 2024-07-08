@@ -1,7 +1,5 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {css, html, LitElement, PropertyValues} from "lit";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {SlotMixin} from "@lion/core";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {LinkInfo} from "./Et2Link";
 import {Et2Button} from "../Et2Button/Et2Button";
@@ -11,7 +9,7 @@ import {Et2Button} from "../Et2Button/Et2Button";
  *
  *
  */
-export class Et2LinkAdd extends Et2InputWidget(FormControlMixin(ValidateMixin(SlotMixin(LitElement))))
+export class Et2LinkAdd extends Et2InputWidget(LitElement)
 {
 	static get styles()
 	{

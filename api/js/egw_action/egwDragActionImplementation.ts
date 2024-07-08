@@ -11,6 +11,7 @@
 import {EgwActionImplementation} from "./EgwActionImplementation";
 import {egw} from "../jsapi/egw_global";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
+import {EGW_AO_STATE_DRAGGING} from "./egw_action_constants";
 
 export class EgwDragActionImplementation implements EgwActionImplementation {
     type = "drag";
@@ -128,7 +129,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
 
         if (node) {
-            // Prevent selection
+			if(typeof _aoi.handlers == "undefined")
+			{
+				_aoi.handlers = {};
+			}
+			_aoi.handlers[this.type] = [];
+			// Prevent selection
             node.onselectstart = function () {
                 return false;
             };
@@ -149,19 +155,26 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             //jQuery(node).off("mousedown",egwPreventSelect)
             //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
             //node.removeEventListener("mousedown",egwPreventSelect)
-            node.addEventListener("mousedown", (event) => {
+			const mousedown = (event) =>
+			{
                 if (_context.isSelection(event)) {
                     node.setAttribute("draggable", false);
                 } else if (event.which != 3) {
                     document.getSelection().removeAllRanges();
                 }
-            })
-            node.addEventListener("mouseup", (event) => {
+			};
+			node.addEventListener("mousedown", mousedown)
+			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
+
+			const mouseup = (event) =>
+			{
 				node.setAttribute("draggable", true);
 
-                // Set cursor back to auto. Seems FF can't handle cursor reversion
-                document.body.style.cursor = 'auto'
-            })
+				// Set cursor back to auto. Seems FF can't handle cursor reversion
+				document.body.style.cursor = 'auto'
+			};
+			node.addEventListener("mouseup", mouseup)
+			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
 
 
             node.setAttribute('draggable', true);
@@ -177,7 +190,14 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 // and the multiple dragDropTypes (ai.ddTypes)
                 _callback.call(_context, false, ai);
 
-                if (action && egw.app_name() == 'filemanager') {
+				// Stop parent elements from also starting to drag if we're nested
+				if(ai.selected.length)
+				{
+					event.stopPropagation();
+				}
+
+				if(action && egw.app_name() == 'filemanager')
+				{
                     if (_context.isSelection(event)) return;
 
                     // Get all selected
@@ -221,6 +241,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 // Add a basic class to the helper in order to standardize the background layout
                 ai.helper.classList.add('et2_egw_action_ddHelper', 'ui-draggable-dragging');
                 document.body.append(ai.helper);
+
+				// Set a dragging state
+				ai.selected.forEach((item) =>
+				{
+					item.iface?.setState(ai.selected[0].iface.getState() | EGW_AO_STATE_DRAGGING);
+				});
                 this.classList.add('drag--moving');
 
                 event.dataTransfer.setData('application/json', JSON.stringify(data))
@@ -247,7 +273,6 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 					Promise.all(wait).then(() =>
 					{
 						event.dataTransfer.setDragImage(ai.helper, 12, 12);
-						debugger;
 					});
 				});
 
@@ -261,11 +286,15 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 if (draggable) draggable.classList.remove('drag--moving');
                 // cleanup drop hover class from all other DOMs if there's still anything left
                 Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
-            };
+				// Clean up selected
+				ai.selected = [];
+			};
 
             // Drag Event listeners
             node.addEventListener('dragstart', dragstart, false);
+			_aoi.handlers[this.type].push({type: 'dragstart', listener: dragstart});
             node.addEventListener('dragend', dragend, false);
+			_aoi.handlers[this.type].push({type: 'dragend', listener: dragend});
 
 
             return true;
@@ -279,6 +308,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         if (node) {
             node.setAttribute('draggable', "false");
         }
+		// Unregister handlers
+		if(_aoi.handlers)
+		{
+			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			delete _aoi.handlers[this.type];
+		}
         return true;
     };
 

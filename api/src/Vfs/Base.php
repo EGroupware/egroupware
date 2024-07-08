@@ -296,7 +296,8 @@ class Base
 			'home' => str_replace(array('\\\\', '\\'), array('', '/'), $GLOBALS['egw_info']['user']['homedirectory'] ?? ''),
 		);
 		// check if we have a (base64 encoded) fallback-auth GET parameter and need to use it
-		if (empty($GLOBALS['egw_info']['user']['passwd']) && strpos(($query=Vfs::parse_url($_path, PHP_URL_QUERY)), 'fallback-auth=') !== false)
+		if (empty($GLOBALS['egw_info']['user']['passwd']) && ($query=Vfs::parse_url($_path, PHP_URL_QUERY)) &&
+			strpos($query, 'fallback-auth=') !== false)
 		{
 			parse_str($query, $query_params);
 			if (!empty($query_params['fallback-auth']) && ($raw = base64_decode($query_params['fallback-auth'])) && strpos($raw, ':') !== false)
@@ -426,16 +427,6 @@ class Base
 		{
 			// nothing to do
 			return;
-		}
-		if($target[0] != '/')
-		{
-			$query = Vfs::parse_url($target, PHP_URL_QUERY);
-			$target = Vfs::parse_url($target, PHP_URL_PATH);
-			if($query)
-			{
-				// Don't cache without query, some StreamWrappers need those parameters
-				$target = "?$query";
-			}
 		}
 
 		self::$symlink_cache[$path] = $target;

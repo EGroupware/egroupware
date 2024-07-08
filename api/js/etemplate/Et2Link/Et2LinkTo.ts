@@ -11,19 +11,19 @@
 
 
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin, ValidateMixin} from "@lion/form-core";
-import {css, html, LitElement} from "lit";
-import {ScopedElementsMixin} from "@lion/core";
+import {css, html, LitElement, nothing} from "lit";
 import {et2_createWidget, et2_widget} from "../et2_core_widget";
 import {et2_file} from "../et2_widget_file";
 import {Et2Button} from "../Et2Button/Et2Button";
 import {Et2LinkEntry} from "./Et2LinkEntry";
 import {egw} from "../../jsapi/egw_global";
-import {et2_vfsSelect} from "../et2_widget_vfs";
 import {LinkInfo} from "./Et2Link";
-import type {ValidationType} from "@lion/form-core/types/validate/ValidateMixinTypes";
 import {ManualMessage} from "../Validators/ManualMessage";
 import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
+import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
+import {Et2LinkPasteDialog, getClipboardFiles} from "./Et2LinkPasteDialog";
+import {waitForEvent} from "../Et2Widget/event";
+import {classMap} from "lit/directives/class-map.js";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -31,7 +31,7 @@ import {Et2Tabs} from "../Layout/Et2Tabs/Et2Tabs";
  * If there is no "current entry", link information will be stored for submission instead
  * of being directly linked.
  */
-export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMixin(ValidateMixin(LitElement))))
+export class Et2LinkTo extends Et2InputWidget(LitElement)
 {
 	static get properties()
 	{
@@ -71,13 +71,10 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			.input-group__container {
 				flex: 1 1 auto;
 			}
-			.input-group {
+
+				.form-control-input {
 				display: flex;
 				width: 100%;
-				gap: 0.5rem;
-			}
-			.input-group__before {
-				display: flex;
 				gap: 0.5rem;
 			}
 			::slotted(.et2_file) {
@@ -95,9 +92,15 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 			// @ts-ignore
 			...super.scopedElements,
 			'et2-button': Et2Button,
-			'et2-link-entry': Et2LinkEntry
+			'et2-link-entry': Et2LinkEntry,
+			'et2-vfs-select': Et2VfsSelectButton,
+			'et2-link-paste-dialog': Et2LinkPasteDialog
 		};
 	}
+
+	private get pasteButton() { return this.shadowRoot?.querySelector("#paste"); }
+
+	private get pasteDialog() { return this.pasteButton?.querySelector("et2-link-paste-dialog"); }
 
 	constructor()
 	{
@@ -108,6 +111,7 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		this.handleEntrySelected = this.handleEntrySelected.bind(this);
 		this.handleEntryCleared = this.handleEntryCleared.bind(this);
 		this.handleLinkButtonClick = this.handleLinkButtonClick.bind(this);
+		this.handleVfsSelected = this.handleVfsSelected.bind(this);
 
 		this.handleLinkDeleted = this.handleLinkDeleted.bind(this);
 	}
@@ -129,6 +133,84 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	{
 		super.disconnectedCallback();
 		this.getInstanceManager().DOMContainer.removeEventListener("et2-delete", this.handleLinkDeleted);
+	}
+
+	_inputGroupBeforeTemplate()
+	{
+		// only set server-side callback, if we have a real application-id (not null or array)
+		// otherwise it only gives an error on server-side
+		let method = null;
+		let method_id = null;
+		let pasteEnabled = false;
+		let pasteTooltip = ""
+		if(this.value && this.value.to_id && typeof this.value.to_id != 'object')
+		{
+			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
+			method_id = this.value.to_app + ':' + this.value.to_id;
+
+			let clipboard_files = getClipboardFiles();
+			pasteEnabled = clipboard_files.length > 0;
+		}
+
+		return html`
+            <slot name="before"></slot>
+            <et2-vfs-select
+                    id="link"
+                    ?readonly=${this.readonly}
+                    method=${method || nothing}
+                    method-id=${method_id || nothing}
+                    multiple
+                    title=${this.egw().lang("select file(s) from vfs")}
+                    .buttonLabel=${this.egw().lang('Link')}
+                    @change=${async() =>
+                    {
+                        this.handleVfsSelected(await this.shadowRoot.getElementById("link")._dialog.getComplete());
+                    }}
+            >
+                <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
+                            label=${this.egw().lang("copy")}></et2-button>
+                <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
+                            label=${this.egw().lang("move")}></et2-button>
+            </et2-vfs-select>
+            <et2-vfs-select
+                    id="paste"
+                    image="linkpaste" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
+                    title=${this.egw().lang("Clipboard contents")}
+                    ?readonly=${this.readonly}
+                    ?disabled=${!pasteEnabled}
+                    multiple
+                    @click=${async(e) =>
+                            {
+                                // Pre-select all files
+                                let files = [];
+                                let cbFiles = await getClipboardFiles();
+                                cbFiles.forEach(f => files.push(f.path));
+                                e.target.firstElementChild.value = files;
+                                e.target.firstElementChild.requestUpdate();
+
+                                waitForEvent(e.target._dialog, "sl-after-show").then(async() =>
+                                {
+                                    this.handleVfsSelected(await this.pasteButton._dialog.getComplete());
+                                });
+                            }}
+            >
+                <et2-link-paste-dialog open
+                                       title=${this.egw().lang("Clipboard contents")}
+                                       .buttonLabel=${this.egw().lang("link")}
+                >
+                    <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
+                                ?disabled=${!this.value?.to_id}
+                                label=${this.egw().lang("copy")}
+                                title=${this.egw().lang("Copy selected files")}
+                    ></et2-button>
+                    <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
+                                ?disabled=${!this.value?.to_id}
+                                label=${this.egw().lang("move")}
+                                title=${this.egw().lang("Move selected files")}
+                    ></et2-button>
+                </et2-link-paste-dialog>
+            </et2-vfs-select>
+		`;
 	}
 
 	/**
@@ -197,55 +279,6 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		this.file_upload.getDOMNode().slot = "before";
 
 		this.append(this.file_upload.getDOMNode());
-
-		// Filemanager select
-		var select_attrs : any = {
-			button_label: egw.lang('Link'),
-			button_caption: '',
-			button_icon: 'link',
-			readonly: this.readonly,
-			dialog_title: egw.lang('Link'),
-			extra_buttons: [{text: egw.lang("copy"), id: "copy", image: "copy"},
-				{text: egw.lang("move"), id: "move", image: "move"}],
-			onchange: function()
-			{
-				var values = true;
-				// If entry not yet saved, store for linking on server
-				if(!self.value.to_id || typeof self.value.to_id == 'object')
-				{
-					values = self.value.to_id || {};
-					var files = this.getValue();
-					if(typeof files !== 'undefined')
-					{
-						for(var i = 0; i < files.length; i++)
-						{
-							values['link:' + files[i]] = {
-								app: 'link',
-								id: files[i],
-								type: 'unknown',
-								icon: 'link',
-								remark: '',
-								title: files[i]
-							};
-						}
-					}
-				}
-				self._link_result(values);
-			}
-		};
-		// only set server-side callback, if we have a real application-id (not null or array)
-		// otherwise it only gives an error on server-side
-		if(self.value && self.value.to_id && typeof self.value.to_id != 'object')
-		{
-			select_attrs.method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
-			select_attrs.method_id = self.value.to_app + ':' + self.value.to_id;
-		}
-		this.vfs_select = <et2_vfsSelect>et2_createWidget("vfs-select", select_attrs, this);
-		this.vfs_select.set_readonly(this.readonly);
-		this.vfs_select.onchange = select_attrs.onchange;
-		this.vfs_select.getDOMNode().slot = "before";
-
-		this.append(this.vfs_select.getDOMNode())
 	}
 
 	/**
@@ -404,7 +437,10 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	handleEntrySelected(event)
 	{
 		// Could be the app, could be they selected an entry
-		if(event.target == this.select._searchNode)
+		if(event.target == this.select && (
+			typeof this.select.value == "string" && this.select.value ||
+			typeof this.select.value == "object" && this.select.value.id
+		))
 		{
 			this.classList.add("can_link");
 			this.link_button.focus();
@@ -453,6 +489,86 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 		}
 	}
 
+	handleFilePaste([button, files])
+	{
+		if(!button)
+		{
+			return;
+		}
+		let values = {};
+		for(var i = 0; i < files.length; i++)
+		{
+			values['link:' + files[i]] = {
+				app: 'link',
+				id: files[i],
+				type: 'unknown',
+				icon: 'link',
+				remark: '',
+				title: files[i]
+			};
+		}
+		this._link_result(values);
+	}
+
+	handleVfsSelected([button, selected])
+	{
+		if(!button || !selected?.length)
+		{
+			return;
+		}
+		let values = true;
+		// If entry not yet saved, store for linking on server
+		if(!this.value.to_id || typeof this.value.to_id == 'object')
+		{
+			values = this.value.to_id || {};
+			for(let i = 0; i < selected.length; i++)
+			{
+				const info = this.pasteDialog.fileInfo(selected[i]);
+				values['link:' + selected[i]] = {
+					app: info?.app == "filemanager" ? "link" : info?.app,
+					id: info?.app == "filemanager" ? selected[i] : info?.id,
+					type: 'unknown',
+					icon: 'link',
+					remark: '',
+					title: selected[i]
+				};
+			}
+		}
+		else
+		{
+			// Send to server to link
+			const files = [];
+			const links = [];
+			selected.forEach(id =>
+			{
+				const info = this.pasteDialog.fileInfo(id);
+				switch(info?.app)
+				{
+					case "filemanager":
+						files.push(id);
+						break;
+					default:
+						links.push({app: info.app, id: info.id});
+				}
+			});
+			if(files.length > 0)
+			{
+				const file_method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
+				const methodId = this.value.to_app + ':' + this.value.to_id;
+				this.egw().request(
+					file_method,
+					[methodId, files, button]
+				);
+			}
+			if(links.length > 0)
+			{
+				this.createLink(links);
+			}
+		}
+		this.pasteButton.value = [];
+		this._link_result(values);
+	}
+
 	get link_button() : Et2Button
 	{
 		return this.shadowRoot.querySelector("#link_button");
@@ -471,6 +587,35 @@ export class Et2LinkTo extends Et2InputWidget(ScopedElementsMixin(FormControlMix
 	static get validationTypes() : ValidationType[]
 	{
 		return ['error', 'success'];
+	}
+
+
+	render()
+	{
+		const labelTemplate = this._labelTemplate();
+		const helpTemplate = this._helpTextTemplate();
+
+		return html`
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--medium': true,
+                        'form-control--has-label': labelTemplate !== nothing,
+                        'form-control--has-help-text': helpTemplate !== nothing
+                    })}
+            >
+                ${labelTemplate}
+                <div part="form-control-input" class="form-control-input" @sl-change=${() =>
+                {
+                    this.dispatchEvent(new Event("change", {bubbles: true}));
+                }}>
+                    ${this._inputGroupBeforeTemplate()}
+                    ${this._inputGroupInputTemplate()}
+                </div>
+                ${helpTemplate}
+            </div>
+		`;
 	}
 }
 

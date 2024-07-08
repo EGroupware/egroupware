@@ -455,7 +455,12 @@ function do_upload()
 
 	if (empty($config['upload_url']))
 	{
-		$response = github_api("/repos/EGroupware/egroupware/releases", array(), 'GET');
+		$response = github_api("/repos/EGroupware/egroupware/releases", [], 'GET');
+        if (empty($response[0]['upload_url']))
+        {
+            throw new Exception("github_api('/repos/EGroupware/egroupware/releases', [], 'GET') responded with ".
+                json_encode($response, JSON_UNESCAPED_SLASHES));
+        }
 		$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response[0]['upload_url']);	// remove {?name,label} template
 	}
 

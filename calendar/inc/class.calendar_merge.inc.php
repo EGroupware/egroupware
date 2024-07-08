@@ -13,6 +13,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\Storage\Merge;
 
 /**
  * Calendar - document merge object
@@ -129,7 +130,21 @@ class calendar_merge extends Api\Storage\Merge
 		return parent::merge_string($content, $ids, $err, $mimetype, $fix, $charset);
 	}
 
-	public static function merge_entries(array $ids = null, \EGroupware\Api\Storage\Merge &$document_merge = null, $pdf = null)
+	/**
+	 * Merge the selected IDs into the given document, save it to the VFS, then
+	 * either open it in the editor or have the browser download the file.
+	 *
+	 * @param string[]|null $ids Allows extending classes to process IDs in their own way.  Leave null to pull from request.
+	 * @param Merge|null $document_merge Already instantiated Merge object to do the merge.
+	 * @param Array options
+	 * @param boolean options[individual] Instead of merging all entries into the file, merge each entry into its own file
+	 * @param boolean options[pdf] Convert result to PDF
+	 * @param boolean options[link] Link generated file to the entry
+	 * @param boolean $return Return the path of the generated document instead of opening or downloading
+	 * @throws Api\Exception
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public static function merge_entries(array $ids = null, Merge &$document_merge = null, $options = [], bool $return = null)
 	{
 		$document_merge = new calendar_merge();
 
@@ -138,72 +153,75 @@ class calendar_merge extends Api\Storage\Merge
 			$ids = json_decode($_REQUEST['id'], true);
 		}
 
-		// Try to make time span into appropriate ranges to match
-		$template = $ids['view'] ?: '';
-		if(stripos($_REQUEST['document'], 'month') !== false || stripos($_REQUEST['document'], lang('month')) !== false)
+		foreach($_REQUEST['document'] as &$document)
 		{
-			$template = 'month';
-		}
-		if(stripos($_REQUEST['document'], 'week') !== false || stripos($_REQUEST['document'], lang('week')) !== false)
-		{
-			$template = 'week';
-		}
+			// Try to make time span into appropriate ranges to match
+			$template = $ids['view'] ?: '';
+			if(stripos($document, 'month') !== false || stripos($document, lang('month')) !== false)
+			{
+				$template = 'month';
+			}
+			if(stripos($document, 'week') !== false || stripos($document, lang('week')) !== false)
+			{
+				$template = 'week';
+			}
 
-		//error_log("Detected template $template");
-		$date = $ids['date'];
-		$first = $ids['first'];
-		$last = $ids['last'];
+			//error_log("Detected template $template");
+			$date = $ids['date'];
+			$first = $ids['first'];
+			$last = $ids['last'];
 
-		// Pull dates from session if they're not in the request
-		if(!array_key_exists('first', $ids))
-		{
-			$ui = new calendar_ui();
-			$date = $ui->date;
-			$first = $ui->first;
-			$last = $ui->last;
-		}
-		switch($template)
-		{
-			case 'month':
-				// Trim to _only_ the month, do not pad to week start / end
-				$time = new Api\DateTime($date);
-				$timespan = array(array(
-									  'start' => Api\DateTime::to($time->format('Y-m-01 00:00:00'), 'ts'),
-									  'end'   => Api\DateTime::to($time->format('Y-m-t 23:59:59'), 'ts')
-								  ));
-				break;
-			case 'week':
-				$timespan = array();
-				$start = new Api\DateTime($first);
-				$end = new Api\DateTime($last);
-				$t = clone $start;
-				$t->modify('+1 week')->modify('-1 second');
-				if($t < $end)
-				{
-					do
-					{
-						$timespan[] = array(
-							'start' => $start->format('ts'),
-							'end'   => $t->format('ts')
-						);
-						$start->modify('+1 week');
-						$t->modify('+1 week');
-					}
-					while($start < $end);
+			// Pull dates from session if they're not in the request
+			if(!array_key_exists('first', $ids))
+			{
+				$ui = new calendar_ui();
+				$date = $ui->date;
+				$first = $ui->first;
+				$last = $ui->last;
+			}
+			switch($template)
+			{
+				case 'month':
+					// Trim to _only_ the month, do not pad to week start / end
+					$time = new Api\DateTime($date);
+					$timespan = array(array(
+										  'start' => Api\DateTime::to($time->format('Y-m-01 00:00:00'), 'ts'),
+										  'end'   => Api\DateTime::to($time->format('Y-m-t 23:59:59'), 'ts')
+									  ));
 					break;
-				}
-			// Fall through
-			default:
-				$timespan = array(array(
-									  'start' => $first,
-									  'end'   => $last
-								  ));
+				case 'week':
+					$timespan = array();
+					$start = new Api\DateTime($first);
+					$end = new Api\DateTime($last);
+					$t = clone $start;
+					$t->modify('+1 week')->modify('-1 second');
+					if($t < $end)
+					{
+						do
+						{
+							$timespan[] = array(
+								'start' => $start->format('ts'),
+								'end'   => $t->format('ts')
+							);
+							$start->modify('+1 week');
+							$t->modify('+1 week');
+						}
+						while($start < $end);
+						break;
+					}
+				// Fall through
+				default:
+					$timespan = array(array(
+										  'start' => $first,
+										  'end'   => $last
+									  ));
+			}
+
+			// Add path into document
+			static::check_document($document, $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
 		}
 
-		// Add path into document
-		static::check_document($_REQUEST['document'], $GLOBALS['egw_info']['user']['preferences']['calendar']['document_dir']);
-
-		return \EGroupware\Api\Storage\Merge::merge_entries(array_key_exists('0', $ids) ? $ids : $timespan, $document_merge);
+		return parent::merge_entries(array_key_exists('0', $ids) ? $ids : $timespan, $document_merge, $options, $return);
 	}
 
 	public function get_filename_placeholders($document, $ids)

@@ -261,36 +261,6 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.custom" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-box  width="100%" overflow="auto">
-						<customfields private="$cont[no_private_cfs]"  type_filter="$cont[tid]"/>
-					</et2-box>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="addressbook.edit.custom_private" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column width = "120"/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-box  width="100%" overflow="auto">
-						<customfields id="private_cfs" private="1"  type_filter="$cont[tid]"/>
-					</et2-box>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="addressbook.edit.ownership" template="" lang="" group="0" version="16.1.00">
 		<grid width="100%">
 			<columns>
@@ -373,7 +343,7 @@
 				</row>
 				<row>
 					<et2-description  for="org_unit" value="department"></et2-description>
-					<et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="64"></et2-textbox>
+					<et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" maxlength="128"></et2-textbox>
 				</row>
 
 				<row>
@@ -393,14 +363,13 @@
 					<et2-url  id="url" autocomplete="url" ></et2-url>
 				</row>
 				<row>
-                    <et2-tabbox id="tabs" span="all">
+                    <et2-tabbox id="tabs" span="all" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
                         <tabs>
                             <tab id="general" label="Organisation"/>
                             <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
                             <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
                             <tab id="links" label="Links" statustext="Links"/>
-                            <tab id="distribution_list" label="Distribution lists"
-                                 statustext="Distribution lists, ..."/>
+                            <tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
                             <tab id="custom" label="Extra" statustext="Custom fields"/>
                             <tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
                             <tab id="ownership" label="Ownership"/>

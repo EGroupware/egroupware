@@ -2239,7 +2239,7 @@ class infolog_ui
 		unset($preserv['msg']);
 		unset($preserv['links']); unset($preserv['link_to']);
 
-		// for no edit rights or implizit edit of responsible user make all fields readonly, but status and percent
+		// for no edit rights or implicit edit of responsible user make all fields readonly, but status and percent
 		if ($info_id && !$this->bo->check_access($content, Acl::EDIT) && !$undelete)
 		{
 			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
@@ -2258,6 +2258,17 @@ class infolog_ui
 		{
 			$readonlys['action'] = true;
 		}
+		// if only certain fields are editable in status "archived", set all r/o and then allow the given one plus buttons
+		elseif ($content['info_status'] === 'archive' && $this->bo->archived_editable)
+		{
+			$readonlys['__ALL__'] = true;	// make all fields not explicitly set readonly
+			foreach($this->bo->archived_editable as $name)
+			{
+				$readonlys[$name] = false;
+			}
+			$readonlys['button[edit]'] = $readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['no_notifications'] = false;
+			$readonlys['action'] = $readonlys['button[cancel]'] = false;	// always allowed
+		}
 		// ToDo: use the old status before the delete
 		if ($info_id && !empty($undelete))
 		{
@@ -2265,7 +2276,8 @@ class infolog_ui
 			$this->tmpl->setElementAttribute('button[save]', 'label', 'Un-Delete');
 		}
 
-		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($content, Acl::DELETE)))
+		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($content, Acl::DELETE) ||
+				$content['info_status'] === 'archive' && $this->bo->archived_readonly))
 		{
 			$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
 		}
@@ -2632,6 +2644,7 @@ class infolog_ui
 				Api\Config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
 				Api\Config::save_value('history', $this->bo->history = $content['history'], 'infolog');
 				Api\Config::save_value('archived_readonly', $this->bo->archived_readonly = $content['archived_readonly'], 'infolog');
+				Api\Config::save_value('archived_editable', $this->bo->archived_editable = $content['archived_editable'], 'infolog');
 				Api\Config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
 				Api\Config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 				Api\Config::save_value('allow_past_due_date', $content['allow_past_due_date'], 'infolog');
@@ -2681,7 +2694,8 @@ class infolog_ui
 				'history_no_delete'    => lang('Yes, noone can purge deleted items'),
 			),
 			'index_load_cfs'     => $this->bo->enums['type'],
-			'notification_type'  => array('~global~' => 'all') + $this->bo->enums['type']
+			'notification_type'  => array('~global~' => 'all') + $this->bo->enums['type'],
+			'archived_editable'  => $excludefields,
 		);
 		$preserve['notification_old_type'] = $content['notification_type'];
 		$this->tmpl->read('infolog.config');

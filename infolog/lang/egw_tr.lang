@@ -1,3 +1,6 @@
+%1 days in advance	infolog	tr	%1 gün önceden
+%1 deleted	infolog	tr	%1 silindi.
+%1 deleted by %2 at %3	infolog	tr	%1, %2 tarafından %3'te silindi
 %1 entries %2	infolog	tr	%1 girişler %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	tr	%1 girişler %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 entries %2, %3 failed.	infolog	tr	%1 girişleri %2, %3 başarısız oldu.
@@ -13,6 +16,7 @@ all other %1 fields are valid	infolog	tr	Diğer tüm %1 alanları geçerlidir
 allow to save entries with due date in the past	infolog	tr	Son tarihi geçmişte olan girişleri kaydetmeye izin verin
 always show them	infolog	tr	Her zaman göster onlara
 application mail expected but got: %1	infolog	tr	Başvuru e-postası bekleniyordu ancak alındı: %1
+archived too	infolog	tr	Arşivlendi de
 automatically check 'do not notify' for these types	infolog	tr	Bu türler için 'Bildirme' seçeneğini otomatik olarak işaretleyin
 can not return an exact number of rows and therefore hides the count.	admin	tr	Tam bir satır sayısı döndüremez ve bu nedenle sayıyı gizler.
 cancel	infolog	tr	İptal
@@ -51,11 +55,14 @@ due date	infolog	tr	Son tarih
 duration	infolog	tr	Süre
 e-mail:	infolog	tr	E-posta:
 edit	infolog	tr	Düzenle
+editable fields for status 'archived'	admin	tr	'Arşivlendi' durumu için düzenlenebilir alanlar
 empty for all	infolog	tr	Herkes için boş
 encrypt description	infolog	tr	Açıklamayı şifrele
 enddate	infolog	tr	BitişTarih
 enter the query pattern	infolog	tr	Sorgu desenini girin
 entry and all files	infolog	tr	Giriş ve tüm dosyalar
+entry can not be changed anymore, after status is set	admin	tr	Durum ayarlandıktan sonra giriş artık değiştirilemez
+entry can not be changed by anybody, but egroupware admins	admin	tr	Giriş, EGroupware yöneticileri dışında hiç kimse tarafından DEĞİŞTİRİLEMEZ
 error: no mail (mailbox / uid) given!	infolog	tr	Hata: posta (Posta Kutusu / UID) verilmedi!
 error: saving the entry	infolog	tr	Giriş kaydedilirken hata oluştu!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
@@ -85,6 +92,7 @@ general fields:	infolog	tr	Genel alanlar:
 general settings	infolog	tr	Genel ayarlar
 global categories	infolog	tr	Genel kategoriler
 group owner for	infolog	tr	Grup sahibi için
+handling of status 'archived'	admin	tr	'Arşivlendi' durumunun işlenmesi
 high	infolog	tr	Yüksek
 history	infolog	tr	Tarih
 history logging	infolog	tr	Tarih kaydı
@@ -126,6 +134,7 @@ modifier	infolog	tr	Değiştirici
 modifierer	infolog	tr	Değiştirici
 name of current user, all other contact fields are valid too	infolog	tr	Mevcut kullanıcının adı, diğer tüm iletişim alanları da geçerlidir
 no custom field "%1" for %2.	infolog	tr	%2 için "%1" özel alanı yok.
+no special handling	admin	tr	Özel bir işlem yok
 notification settings	infolog	tr	Bildirim ayarları
 number of records to read (%1)	infolog	tr	Okunacak kayıt sayısı (%1)
 old fixed definition	infolog	tr	Eski sabit tanım
@@ -169,8 +178,6 @@ search for:	infolog	tr	Arama yap:
 second parameter for preg_replace	infolog	tr	preg_replace için ikinci parametre
 select a price	infolog	tr	Bir fiyat seçin
 select a project	infolog	tr	Bir proje seçin
-select an action	infolog	tr	Bir eylem seçin
-select an action...	infolog	tr	Bir eylem seçin ...
 select new category	infolog	tr	Yeni kategori seçin
 select users or groups	infolog	tr	Kullanıcıları veya grupları seçme
 selected calendars	infolog	tr	Seçilen takvimler

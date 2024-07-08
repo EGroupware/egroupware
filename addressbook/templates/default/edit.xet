@@ -148,7 +148,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<tree-cat id="cat_id_tree" options="13,,width:99%"/>
+                    <et2-tree-cat id="cat_id_tree" multiple="true" placeholder="Category"/>
 					<et2-select-cat  id="cat_id" width="100%" height="195" multiple="true" placeholder="Category"></et2-select-cat>
 					<et2-description></et2-description>
 					<grid width="100%">
@@ -359,7 +359,7 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_work" ro_true="&amp;hearts;" />
                     <et2-description  for="org_unit" value="department"></et2-description>
-                    <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="64"></et2-textbox>
+                    <et2-textbox  id="org_unit" onchange="app.addressbook.check_value(widget,'$cont[id]');" tabindex="8" maxlength="128"></et2-textbox>
                     <et2-description></et2-description>
                 </row>
                 <row class="dialogHeader3">
@@ -380,16 +380,13 @@
                     <et2-description></et2-description>
                 </row>
                 <row>
-                    <et2-tabbox  id="tabs" span="all" width="100%" tabHeight="340">
+                    <et2-tabbox  id="tabs" span="all" width="100%" tabHeight="340" cfPrivateTab="!$cont[no_private_cfs]" cfTypeFilter="$cont[tid]">
                         <tabs>
                             <tab id="general" label="Organisation"/>
                             <tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
                             <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
                             <tab id="links" label="Links" statustext="Links"/>
-                            <tab id="distribution_list" label="Distribution lists"
-                                 statustext="Distribution lists, ..."/>
-                            <tab id="custom" label="Extra" statustext="Custom fields"/>
-                            <tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
+                            <tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
                             <tab id="history" label="History"/>
                         </tabs>
                         <tabpanels>
@@ -398,8 +395,6 @@
                             <template id="addressbook.edit.details"/>
                             <template id="addressbook.edit.links"/>
                             <template id="addressbook.edit.distribution_list"/>
-                            <template id="addressbook.edit.custom"/>
-                            <template id="addressbook.edit.custom_private"/>
                             <template id="addressbook.edit.history"/>
                         </tabpanels>
                     </et2-tabbox>

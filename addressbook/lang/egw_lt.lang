@@ -1,4 +1,4 @@
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl %4 !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl %4!
 %1 contacts updated (%2 errors).	addressbook	lt	%1 kontaktai atnaujinti (%2 klaidos).
 %1 key(s) added to public keyserver "%2".	addressbook	lt	%1 raktas (-ai) pridėtas (-i) į viešąjį raktų serverį "%2".
 %1 not implemented for %2!	addressbook	lt	%1 neįgyvendinta %2!
@@ -25,6 +25,7 @@ default action on double-click	addressbook	lt	Numatytasis veiksmas dukart spuste
 default geolocation source address	addressbook	lt	Numatytasis GeoLocation šaltinio adresas
 disable	addressbook	lt	Išjungti
 disable last/next event column	addressbook	lt	Išjungti stulpelį "Paskutinis / kitas įvykis".
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	lt	Rodyti gimtadienius ekrane Home.
 distribution list renamed	addressbook	lt	Pakeistas paskirstymo sąrašo pavadinimas
 distribution lists as groups	addressbook	lt	Paskirstymo sąrašai kaip grupės
 duplicate threshold	addressbook	lt	Dublikato riba
@@ -37,7 +38,7 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	lt	Pavyzdys {{nenvlf role}} - jei laukas role nėra tuščias, nustatysite LF be jokios lauko reikšmės
 export definition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
 export definitition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą.  CSV reiškia "kableliais atskirtos vertės". Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą. Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
 favorite phone	addressbook	lt	Mėgstamiausias telefonas
 favorites	addressbook	lt	Mėgstamiausi
 fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
@@ -48,12 +49,15 @@ geolocation	addressbook	lt	GeoLocation
 geolocation integration	admin	lt	GeoLocation integracija
 hide accounts from addressbook	addressbook	lt	Paslėpti naudotojų paskyras
 hide all accounts	addressbook	lt	Paslėpti visas paskyras
+hide all groups	addressbook	lt	Paslėpti visas grupes
+hide groups without email address	addressbook	lt	Paslėpti grupes be el. pašto adreso
 hide user groups as distribution lists	addressbook	lt	Paslėpti naudotojų grupes kaip paskirstymo sąrašus
 hides accounts completly from the adressbook.	addressbook	lt	Visiškai paslėpti naudotojų paskyras iš adresų knygos.
 how many fields must match for the record to be considered a duplicate.	addressbook	lt	Kiek laukų turi sutapti, kad įrašas būtų laikomas dublikatu.
 importer's personal	addressbook	lt	Asmeninė importuotojo informacija
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. CSV reiškia "kableliais atskirtos vertės". Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
 imports contacts into your addressbook from a vcard file.	addressbook	lt	Importuokite kontaktus į adresinę iš vCard failo.
+include all groups	addressbook	lt	Įtraukti visas grupes
 infolog	addressbook	lt	InfoLog kontaktai
 infolog-organisation	addressbook	lt	InfoLog organizacija
 insufficent rights to delete this list!	addressbook	lt	Nepakankamos teisės šiam sąrašui ištrinti!
@@ -98,7 +102,7 @@ show active accounts	addressbook	lt	Rodyti aktyvias paskyras
 show all accounts	addressbook	lt	Rodyti visas paskyras
 smime key	addressbook	lt	S/MIME raktas
 special	addressbook	lt	Specialusis
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	lt	Reikalingas zip plėtinys, kad kontaktų duomenis būtų galima įterpti į "LibreOffice" arba "MS Office" dokumentus.
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	lt	Reikalingas zip plėtinys, kad kontaktų duomenis būtų galima įterpti į LibreOffice arba MS Office dokumentus.
 title	addressbook	lt	Užduoties pavadinimas
 type	addressbook	lt	Tipas
 unable to import into %1, using %2	addressbook	lt	Nepavyksta importuoti į %1, naudojant %2
@@ -109,7 +113,7 @@ use a category tree?	addressbook	lt	Kategorijų pasirinkimui naudoti medį
 user groups are automatically shown as distribution lists.	addressbook	lt	Vartotojų grupės automatiškai rodomos kaip paskirstymo sąrašai.
 video call	addressbook	lt	Vaizdo skambutis
 when viewing a contact, show linked entries from the selected application	addressbook	lt	Peržiūrint kontaktą, rodyti susietus pasirinktos programos įrašus
-when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lt	Sujungiant įrašus į dokumentus, jie bus saugomi čia. Jei katalogas nenurodytas, jie bus saugomi jūsų namų kataloge (/home/...).
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	lt	Sujungiant įrašus į dokumentus, jie bus saugomi čia. Jei katalogas nenurodytas, jie bus saugomi jūsų namų kataloge (/home/...)
 yes, only admins can purge deleted items	admin	lt	Taip, ištrintus elementus gali išvalyti tik administratoriai
 yes, users can purge their deleted items	admin	lt	Taip, naudotojai gali išvalyti savo ištrintus elementus
 you are not allowed to share into the addressbook of %1	addressbook	lt	Jums neleidžiama bendrinti su adresų knyga %1

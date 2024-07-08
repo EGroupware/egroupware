@@ -12,7 +12,7 @@ Egroupware
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 
 <overlay>
-	<template id="calendar.todo" width="30%">
+    <template id="calendar.todo" width="30%" slot="right">
 		<et2-box  class="calendar_calDayTodos">
 			<et2-box  class="calendar_calDayTodosHeader" width="100%">
 				<et2-button  align="left" statustext="Add" id="add" image="add" onclick="egw.open('','infolog','add',{action: 'new',type:'task'});"></et2-button>

@@ -6,29 +6,30 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 - Timesheet application
 
 Following schema is used for JSON encoding of timesheets
-* @type: `timesheet`
-* id: integer ID
-* title: string
-* description: string (multiple lines)
-* start: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* duration: integer in minutes
-* quantity: double
-* project: string
-* pm_id: integer ID of ProjectManager app (readonly currently!)
-* unitprice: double
-* category: category object with a single(!) category-name e.g. `{"category name": true}`
-* owner: string with either email or username or integer ID
-* created: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* modified: UTCDateTime e.g. `2020-02-03T14:35:37Z`
-* modifier: string with either email or username or integer ID
-* pricelist: integer ID of projectmanager pricelist item
-* status: string
-* egroupware.org:customfields: custom-fields object, see other types
-* etag: string `"<id>:<modified-timestamp>"` (double quotes are part of the etag!)
+* `@type`: `timesheet`
+* `id`: integer ID
+* `title`: string
+* `description`: string (multiple lines)
+* `start`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `duration`: integer in minutes
+* `quantity`: double
+* `paused`: integer pause time(s) in minutes
+* `project`: string
+* `pm_id`: integer ID of ProjectManager app (readonly currently!)
+* `unitprice`: double
+* `category`: category object with a single(!) category-name e.g. `{"category name": true}`
+* `owner`: string with either email or username or integer ID
+* `created`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `modified`: UTCDateTime e.g. `2020-02-03T14:35:37Z`
+* `modifier`: string with either email or username or integer ID
+* `pricelist`: integer ID of projectmanager pricelist item
+* `status`: string
+* `egroupware.org:customfields`: custom-fields object, see other types
+* `etag`: string `"<id>:<modified-timestamp>"` (double quotes are part of the etag!)
 
 ### Supported request methods and examples
 
-* **GET** to collections with an ```Accept: application/json``` header return all timesheets (similar to WebDAV PROPFIND)
+#### **GET** to collections with an `Accept: application/json` header return all timesheets (similar to WebDAV PROPFIND)
 <details>
   <summary>Example: Getting all timesheets of a given user</summary>
   
@@ -159,7 +160,7 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/?sync-token=https://
 <details>
    <summary>Example: Requesting only changes since last sync</summary>
    
-#### ```sync-token``` from last sync need to be specified (note the null for a deleted resource!)
+#### `sync-token` from last sync need to be specified (note the null for a deleted resource!)
 ```
 curl 'https://example.org/egroupware/groupdav.php/timesheet/?sync-token=https://example.org/egroupware/groupdav.php/timesheet/1400867824' -H "Accept: application/pretty+json" --user <username>
 {
@@ -175,7 +176,7 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/?sync-token=https://
 ```
 </details>
 
-* **GET**  requests with an ```Accept: application/json``` header can be used to retrieve single resources / JsTimesheet schema
+#### **GET**  requests with an `Accept: application/json` header can be used to retrieve single resources / JsTimesheet schema
 <details>
    <summary>Example: GET request for a single resource showcasing available fieldes</summary>
    
@@ -215,7 +216,7 @@ curl 'https://example.org/egroupware/groupdav.php/timesheet/140' -H "Accept: app
 ```
 </details>
 
-* **POST** requests to collection with a ```Content-Type: application/json``` header add new entries in timesheet collections
+#### **POST** requests to collection with a `Content-Type: application/json` header add new entries in timesheet collections
        (Location header in response gives URL of new resource)
 <details>
    <summary>Example: POST request to create a new resource</summary>
@@ -251,7 +252,7 @@ ETag: "204:1707233040"
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+#### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
 
 <details>
    <summary>Example: PUT request to update a resource</summary>
@@ -277,7 +278,7 @@ HTTP/1.1 204 No Content
 </details>
 
 
-* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+#### **PATCH** request with a `Content-Type: application/json` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
 
 <details>
    <summary>Example: PATCH request to modify a timesheet with partial data</summary>
@@ -293,7 +294,7 @@ HTTP/1.1 204 No content
 ```
 </details>
 
-* **DELETE** requests delete single resources
+#### **DELETE** requests delete single resources
 
 <details>
    <summary>Example: DELETE request to delete a timesheet</summary>
@@ -305,4 +306,4 @@ HTTP/1.1 204 No content
 ```
 </details>
 
-> one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API
+> one can use `Accept: application/pretty+json` to receive pretty-printed JSON eg. for debugging and exploring the API

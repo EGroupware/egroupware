@@ -74,7 +74,7 @@ $phpgw_baseline = array(
 	'egw_cal_extra' => array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
-			'cal_extra_name' => array('type' => 'varchar','meta' => 'cfname','precision' => '40','nullable' => False),
+			'cal_extra_name' => array('type' => 'varchar','meta' => 'cfname','precision' => '64','nullable' => False),
 			'cal_extra_value' => array('type' => 'varchar','meta' => 'cfvalue','precision' => '16384','nullable' => False,'default' => '')
 		),
 		'pk' => array('cal_id','cal_extra_name'),

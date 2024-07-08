@@ -15,7 +15,7 @@ import {egw} from "../../jsapi/egw_global";
 registerIconLibrary('default', {
 	resolver: name =>
 	{
-		return typeof egw !== "undefined" ? (egw.image(name) ?? `${egw.webserverUrl || ""}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg`) : ''
+		return typeof egw !== "undefined" && typeof egw.image == "function" ? (egw.image(name) ?? `${egw.webserverUrl || ""}/node_modules/@shoelace-style/shoelace/dist/assets/icons/${name}.svg`) : ''
 	},
 });
 
@@ -42,10 +42,8 @@ export default [sl_css, css`
   :root,
   :host,
   .sl-theme-light {
-	--sl-font-size-medium: ${typeof egw != "undefined" && egw.preference && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
-	--sl-input-height-small: 24px;
-	--sl-input-height-medium: 32px;
-	--sl-button-font-size-medium: ${typeof egw != "undefined" && egw.preference && egw.preference('textsize', 'common') != '12' ? parseInt(egw.preference('textsize', 'common')) : 12}px;
+	--sl-font-sans: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	--sl-button-font-size-medium: var(--sl-font-size-medium);
 	--sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
 	--sl-spacing-small: 0.1rem;
 	--sl-spacing-medium: 0.5rem;

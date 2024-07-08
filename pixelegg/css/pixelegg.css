@@ -17,7 +17,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
  * @package pixelegg
- * @version $Id$
  */
 /**
  * addapted from orginal styles.php
@@ -1174,7 +1173,7 @@ option:checked {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1.1em;
 }
 .ui-widget .ui-widget {
@@ -1184,7 +1183,7 @@ option:checked {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 12px;
 }
 .ui-widget-content {
@@ -1876,7 +1875,7 @@ div#loginMainDiv.stockLoginBackground div#divAppIconBar div#divLogo div.login_lo
 div#loginMainDiv.stockLoginBackground div#divAppIconBar div#loginScreenMessage {
   font-weight: bold;
   color: white;
-  font-family: arial, helvetica, sans-serif;
+  font-family: egroupware, arial, helvetica, sans-serif;
 }
 div#loginMainDiv.stockLoginBackground div#centerBox form {
   border: 1px solid gray;
@@ -2188,6 +2187,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   border-bottom: 1px solid silver;
   padding-left: 25px;
   background-color: transparent;
+  font-size: 100%;
 }
 #loginMainDiv div#centerBox form table.divLoginbox input:focus {
   outline: none;
@@ -2972,7 +2972,7 @@ div.client_error_log tr td.stack > div {
 body,
 textarea,
 button {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 #egw_fw_basecontainer {
   position: fixed;
@@ -2980,7 +2980,7 @@ button {
   height: 100%;
   padding: 0px;
   margin: 0px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: #ffffff;
 }
 input {
@@ -5803,7 +5803,7 @@ button.image_button {
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: egroupware, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 1.2em;
   font-weight: normal;
   height: 30px;

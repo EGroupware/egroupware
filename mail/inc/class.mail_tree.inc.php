@@ -87,7 +87,7 @@ class mail_tree
 		{
 			if (strpos($image, '.') === false)
 			{
-				$image = basename($img=Api\Image::find('mail', 'dhtmlxtree/'.$image));
+				$image = Api\Image::find('mail', 'dhtmlxtree/' . $image);
 			}
 		}
 	}
@@ -431,7 +431,7 @@ class mail_tree
 				//User defined folders icons
 				$data[Tree::IMAGE_LEAF] =
 					$data[Tree::IMAGE_FOLDER_OPEN] =
-					$data [Tree::IMAGE_FOLDER_CLOSED] = basename(Api\Image::find('mail', 'dhtmlxtree/'."MailFolder".$key));
+					$data [Tree::IMAGE_FOLDER_CLOSED] = Api\Image::find('mail', 'dhtmlxtree/' . "MailFolder" . $key);
 			}
 			elseif(!empty($data['folderarray']['attributes']) && stripos(array2string($data['folderarray']['attributes']),'\noselect') !== false)
 			{

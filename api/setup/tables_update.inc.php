@@ -955,3 +955,25 @@ function api_upgrade23_1_004()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.005';
 }
+function api_upgrade23_1_005()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_customfields','cf_readonly',array(
+		'type' => 'ascii',
+		'meta' => 'account-commasep',
+		'precision' => '2048',
+		'comment' => 'comma-separated account_id'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.006';
+}
+
+function api_upgrade23_1_006()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','org_unit',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'comment' => 'Department'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.007';
+}

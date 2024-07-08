@@ -1,5 +1,5 @@
 %1 added	addressbook	et	%1 lisatud
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu!
 %1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4
 accounts	addressbook	et	Kontod
 actions	addressbook	et	Tegevused
@@ -16,7 +16,7 @@ added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
 advanced search	addressbook	et	Laiendatud Otsing
 allow	addressbook	et	Luba
 allow for contacts only	addressbook	et	Luba ainult kontaktidele
-always	addressbook	et	alati
+always	addressbook	et	Alati
 audio call	addressbook	et	Helikõne
 birthday	common	et	Sünnipäev
 birthdays	common	et	Sünnipäevad
@@ -29,7 +29,7 @@ choose pre-defined map source or use custom url (use %r = street, %t = city, %c 
 city	common	et	Linn
 configuration	common	et	Konfiguratsioon
 contact	common	et	Kontakt
-contains	addressbook	et	sisaldab
+contains	addressbook	et	Sisaldab
 country	common	et	Riik
 create new links	addressbook	et	Tee uued lingid
 created	addressbook	et	Tehtud
@@ -41,10 +41,11 @@ default action on double-click	addressbook	et	Topeltklõpsu vaikimisi tegevus
 default filter	addressbook	et	Vaikimisi Filter
 default geolocation source address	addressbook	et	Vaikimisi GeoLocation allika aadress
 delete this contact	addressbook	et	Kustuta see kontakt
-deleted	addressbook	et	kustutatud
+deleted	addressbook	et	Kustutatud
 disable	addressbook	et	Lülita välja
 disable last/next event column	addressbook	et	Viimase/järgmise sündmuse veeru keelamine
-doesn't matter	addressbook	et	pole tähtis
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	et	Näita sünnipäevi aadressil Home.
+doesn't matter	addressbook	et	Pole tähtis
 download	addressbook	et	Lae alla
 duplicate threshold	addressbook	et	Duplitseeritud künnis
 duplicate warning	addressbook	et	Duplikaadi hoiatus
@@ -52,7 +53,7 @@ duplicates	addressbook	et	Duplikaadid
 duration	addressbook	et	Kestvus
 email & internet	addressbook	et	Email & Internet
 empty addressbook before importing	addressbook	et	Kustutage aadressiraamatu kirjed, mis ei ole CSV-loendis
-empty for all	addressbook	et	tühi kõigijaoks
+empty for all	addressbook	et	Tühi kõigijaoks
 end	addressbook	et	Lõpp
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	et	Näide {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - otsi väljal "n_prefix", et leida "Mr", kui leitakse, siis kirjuta Hello Mr., muidu kirjuta Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	et	Näide {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Näide: Mr Dr. James Miller
@@ -73,21 +74,26 @@ geolocation	addressbook	et	GeoLocation
 geolocation integration	admin	et	GeoLocation integratsioon
 global categories	addressbook	et	Globaalsed Kategooriad
 hide all accounts	addressbook	et	Peida kõik kontod
+hide all groups	addressbook	et	Peida kõik rühmad
+hide groups without email address	addressbook	et	Peida rühmad ilma e-posti aadressita
 hide user groups as distribution lists	addressbook	et	Peida kasutajarühmad kui jaotamisloendid
 hides accounts completly from the adressbook.	addressbook	et	Peida kasutajakontod täielikult aadressiraamatust.
+history logging	admin	et	Ajaloo logimine
+how many contacts should non-admins be able to export	admin	et	Kui palju kontakte peaksid mitte-adminid saama eksportida.
 how many fields must match for the record to be considered a duplicate.	addressbook	et	Mitu välja peab kattuma, et kirjet saaks pidada duplikaadiks.
 icon	addressbook	et	Ikoon
 import	addressbook	et	Import
 importer's personal	addressbook	et	Importija isiklik
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Impordib kontaktid aadressiraamatusse CSV-failist. CSV tähendab "komadega eraldatud väärtusi". Valikute vahekaardil saate valida ka teisi eraldajaid.
 imports contacts into your addressbook from a vcard file.	addressbook	et	Impordib kontaktid oma aadressiraamatusse vCard-failist.
+include all groups	addressbook	et	Kaasa kõik rühmad
 infolog	addressbook	et	InfoLog Kontakt
 infolog-organisation	addressbook	et	InfoLogi korraldus
 invite to current call	addressbook	et	Kutsuda jooksvale kõnele
 last modified	addressbook	et	Viimati muudetud
 links	addressbook	et	Lingid
 location	addressbook	et	Asukoht
-mail vcard	addressbook	et	eMail vCard
+mail vcard	addressbook	et	Mail vCard
 merge duplicates	addressbook	et	Dubleeringute ühendamine
 merge into first or account, deletes all other!	addressbook	et	Ühenda esimesse või kontosse, kustutab kõik teised!
 move to addressbook	addressbook	et	Liikumine aadressiraamatusse
@@ -97,7 +103,7 @@ no distribution list	addressbook	et	Jaotamisloend puudub
 not shared	addressbook	et	ei ole jagatud
 organisation	addressbook	et	Organisatsioon
 participants	addressbook	et	Osalejad
-permission denied !!!	addressbook	et	Õigused puuduvad !!!
+permission denied !!!	addressbook	et	Õigused puuduvad!
 pgp key	addressbook	et	PGP-võti
 photo	addressbook	et	Foto
 prevent deleting of contacts	admin	et	Kontaktide kustutamise vältimine
@@ -120,12 +126,12 @@ smime key	addressbook	et	S/MIME võti
 start	admin	et	Start
 state	common	et	Maakond
 street	common	et	Tänav
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	et	Zip-laiend on vajalik, et sisestada kontaktandmed LibreOffice'i või MS-Office'i dokumentidesse.
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	et	Zip-laiend on vajalik, et sisestada kontaktandmed LibreOffice'i või MS Office'i dokumentidesse.
 translation	addressbook	et	Tõlkimine
 type	addressbook	et	Sisestage
 unshare	addressbook	et	Enam ei jaga
 unshared	addressbook	et	ei ole enam jagatud
-updated	addressbook	et	uuendatud
+updated	addressbook	et	Uuendatud
 user groups are automatically shown as distribution lists.	addressbook	et	Kasutajagrupid kuvatakse automaatselt jaotamisloenditena.
 video call	addressbook	et	Videokõne
 weekday	addressbook	et	Nädalati

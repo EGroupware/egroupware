@@ -9,8 +9,6 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * sessions: volume for sessions, internal no need to change
 * sources-push: swoolpush subdirectory of sources
 * collabora-config: /etc/loolwsd for Collabora container, by default $PWD/data/default/loolwsd
-* rocketchat-uploads: Upload directory for Rocket.Chat, by default $PWD/data/default/rocketchat/uploads
-* rocketchat-dumps: Dump directory for MongoDB, by default $PWD/data/default/rocketchat/dump
 
 ### It runs the following containers:
 * egroupware: php-fpm
@@ -20,17 +18,18 @@ The container and docker-compose.yml file in this directory are the easiest way 
 * egroupware-watchtower: to automatic keeps the containers up to date
 * phpmyadmin: phpMyAdmin to administrate your MariaDB
 * collabora: Collabora Online Office
-* rocketchat: Rocket.Chat
-* rocketchat-mongo: MongoDB for Rocket.Chat
 
 ### Usage:
 ```
 mkdir dev && cd dev
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/docker-compose.yml
 wget https://raw.githubusercontent.com/EGroupware/egroupware/master/doc/docker/development/nginx.conf
-mkdir sources data
+mkdir -p sources data/default/files/sqlfs data/default/backup data/default/loolwsd sessions
+# on a Linux host NOT using Docker desktop data and sessions directories MUST be owned by www-data:www-data (33:33, if not Debian/Ubuntu!)
+chown -R www-data:www-data data sessions
+chmod 777 data/default/loolwsd
 # edit docker-compose.yml to fit your needs eg.
-# ports to use for Nginx / the webserver, by default 8080 and 4443
+# ports to use for Nginx / the webserver, by default 80 and 443
 # xdebug port, default 9001 (NOT 9000!)
 # IDE host, default XDEBUG_REMOTE_HOST=docker.for.mac.localhost
 docker-compose up -d egroupware
@@ -72,11 +71,11 @@ service:
   - prefix them with ```sudo``` or
   - add yourself to the ```docker``` group: ```sudo usermod -aG docker $USER``` and then run ```newgrp docker``` everytime you open a terminal
 * permissions of sources directory need to be changed after install: ```chown -R $USER sources```
-* permissions of data directory must be readable and writable by www-data user (#33)
+* permissions of data and sessions directory must be readable and writable by www-data user (#33): ```chown -R 33:33 data sessions```
 * do not use ```http://localhost/egroupware/```, as push, Collabora and Rocket.Chat will not be able to communicate
   - localhost in each container is NOT the host system, but the container itself!
   - give you development system a name and add it to the hosts ```/etc/hosts``` as: ```127.0.0.1   devbox.egroupware.org```
-  - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which as a commented out extra_host
+  - add it as ```extra_host: - "devbox.egroupware.org:172.17.0.1"``` to each service which has a commented out extra_host
 * Ubuntu 22.04 docker adds firewall rules disabling access to docker0 / 172.17.0.1 from within the containers.
 Stopping eg. FPM to access IDE/PHPStorm debug port or a MariaDB running on the host bound to 172.17.0.1. 
 To fix that, you have to create an explicit firewall rule to allow containers to acces 172.17.0.1:

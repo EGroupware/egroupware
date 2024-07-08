@@ -50,7 +50,7 @@
 					<et2-description  id="${row}[title]" noLang="1"></et2-description>
 					<et2-description  id="${row}[role_label]"></et2-description>
 					<et2-select  id="${row}[status]" readonly="true"></et2-select>
-					<et2-checkbox  align="center" label="Notify" id="notify[$row_cont[delete_id]]"></et2-checkbox>
+					<et2-checkbox  align="right" label="Notify" id="notify[$row_cont[delete_id]]" statustext="You can only notify other users, not yourself!"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>

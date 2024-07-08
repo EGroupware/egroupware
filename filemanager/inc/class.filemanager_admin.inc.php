@@ -330,7 +330,7 @@ class filemanager_admin extends filemanager_ui
 		{
 			Framework::redirect_link('/admin/index.php', null, 'admin');
 		}
-		$check_only = !isset($_POST['fix']);
+		$check_only = !isset($_POST['edit']);
 
 		if(!($msgs = Vfs\Sqlfs\Utils::fsck($check_only)))
 		{

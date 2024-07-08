@@ -1,4 +1,4 @@
-import {Pattern} from "@lion/form-core";
+import {Pattern} from "./StringValidators"
 
 export class Regex extends Pattern
 {

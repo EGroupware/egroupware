@@ -1,5 +1,4 @@
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin} from "@lion/form-core";
 import {css, html, LitElement, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {ifDefined} from "lit/directives/if-defined.js";
@@ -14,7 +13,7 @@ import {egw} from "../../jsapi/egw_global";
  * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
  * but this can be specified with the properties.
  */
-export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
+export class Et2DateRange extends Et2InputWidget(LitElement)
 {
 	static get styles()
 	{
@@ -231,12 +230,12 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 		// or Date objects
 		{
 			value: 'Today',
-			label: egw.lang('Today'),
+			label: egw.lang ? egw.lang('Today') : 'Today',
 			from(date) {return date;},
 			to(date) {return date;}
 		},
 		{
-			label: egw.lang('Yesterday'),
+			label: egw.lang ? egw.lang("Yesterday") : "Yesterday",
 			value: 'Yesterday',
 			from(date) {
 				date.setUTCDate(date.getUTCDate() - 1);
@@ -245,7 +244,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			to: ''
 		},
 		{
-			label: egw.lang('This week'),
+			label: egw.lang ? egw.lang("This week") : "This week",
 			value: 'This week',
 			from(date) {return egw.week_start(date);},
 			to(date) {
@@ -254,7 +253,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('Last week'),
+			label: egw.lang ? egw.lang("Last week") : "Last week",
 			value: 'Last week',
 			from(date) {
 				var d = egw.week_start(date);
@@ -267,7 +266,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('This month'),
+			label: egw.lang ? egw.lang("This month") : "This month",
 			value: 'This month',
 			from(date)
 			{
@@ -282,7 +281,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('Last month'),
+			label: egw.lang ? egw.lang("Last month") : "Last month",
 			value: 'Last month',
 			from(date)
 			{
@@ -298,7 +297,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('Last 3 months'),
+			label: egw.lang ? egw.lang("Last 3 months") : "Last 3 months",
 			value: 'Last 3 months',
 			from(date)
 			{
@@ -314,7 +313,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('This year'),
+			label: egw.lang ? egw.lang("This year") : "This year",
 			value: 'This year',
 			from(d) {
 				d.setUTCMonth(0);
@@ -328,7 +327,7 @@ export class Et2DateRange extends Et2InputWidget(FormControlMixin(LitElement))
 			}
 		},
 		{
-			label: egw.lang('Last year'),
+			label: egw.lang ? egw.lang("Last year") : "Last year",
 			value: 'Last year',
 			from(d) {
 				d.setUTCMonth(0);

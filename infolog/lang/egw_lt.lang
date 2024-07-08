@@ -10,11 +10,12 @@ all other %1 fields are valid	infolog	lt	Visi kiti %1 laukai galioja
 allow to save entries with due date in the past	infolog	lt	Leisti išsaugoti įrašus, kurių terminai yra praėję
 always show them	infolog	lt	Visada juos rodyti
 application mail expected but got: %1	infolog	lt	Paraiškos el. pašto laukiama, bet gauta: %1
+archived too	infolog	lt	Taip pat archyvuota
 automatically check 'do not notify' for these types	infolog	lt	Automatiškai pažymėti "Nepranešti" šiems tipams
 can not return an exact number of rows and therefore hides the count.	admin	lt	Negali grąžinti tikslaus eilučių skaičiaus, todėl paslepia skaičių.
 change	infolog	lt	Keisti
 change responsible	infolog	lt	Atsakingas už pokytį
-colon (:) separated list of field names to use if value is empty or to sum up	infolog	lt	Dvitaškiu (:) atskirtas laukų pavadinimų sąrašas, kurį reikia naudoti, jei reikšmė yra tuščia, arba sumuoti.
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	lt	Dvitaškiu (:) atskirtas laukų pavadinimų sąrašas, kurį reikia naudoti, jei reikšmė yra tuščia, arba sumuoti
 contact cf	infolog	lt	Susisiekite su CF
 convert to a ticket	infolog	lt	Konvertuoti į bilietą
 created	infolog	lt	Sukurta
@@ -34,7 +35,7 @@ delegated upcomming	infolog	lt	Deleguotas būsimas
 delete selected entries?	infolog	lt	Ištrinti pasirinktus įrašus?
 delete this entry and all listed sub-entries	infolog	lt	Ištrinti šį įrašą ir visus išvardytus subįrašus
 directory with documents to insert entries	infolog	lt	Aplankas su dokumentais įrašams įterpti
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	lt	Ar norite gauti atsakingo asmens patvirtinimą apie užduoties priėmimą, jos užbaigimą, ar apie abu dalykus?
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	lt	Ar norite gauti atsakingo asmens patvirtinimą apie užduoties priėmimą, jos užbaigimą, ar apie abu dalykus
 do you want a notification if items owned by groups you are part of get updated ?	infolog	lt	Ar norite gauti pranešimą, jei atnaujinami grupėms, kurioms priklausote, priklausantys elementai?
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	lt	Gaukite pranešimą, jei jums priskirti įrašai arba priskirti įrašai atnaujinami.
 do you want a notification, if items you are responsible for are about to start?	infolog	lt	Gauti pranešimą, jei pradedami kurti įrašai, už kuriuos esate atsakingas.
@@ -50,10 +51,13 @@ download url for links	infolog	lt	Atsisiųsti nuorodų URL
 due %1	infolog	lt	Dėl %1
 due date	infolog	lt	Terminas
 e-mail:	infolog	lt	El:
+editable fields for status 'archived'	admin	lt	Redaguojami būsenos 'archyvuota' laukai
 encrypt description	infolog	lt	Šifruoti aprašymą
 enddate	infolog	lt	Terminas
 enter the query pattern	infolog	lt	Įveskite užklausos šabloną
 entry and all files	infolog	lt	Įrašas ir visi failai
+entry can not be changed anymore, after status is set	admin	lt	Įrašo nebegalima keisti po to, kai nustatytas statusas
+entry can not be changed by anybody, but egroupware admins	admin	lt	Įrašo NEGALI keisti niekas, išskyrus "EGroupware" administratorius
 error: no mail (mailbox / uid) given!	infolog	lt	Klaida: nepateiktas joks paštas (pašto dėžutė / UID)!
 error: saving the entry	infolog	lt	Klaida išsaugant įrašą!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	lt	Pavyzdys {{IF n_prefiksas~Mr~Hello Mr.~Hello Ms.}}} - ieškokite lauke "n_prefix" žodžio "Mr", jei radote, rašykite Hello Mr., kitu atveju rašykite Hello Ms.
@@ -61,6 +65,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	lt	Pavyzdys {{{NELF vaidmuo}} - jei laukas role nėra tuščias, bus pateikta nauja eilutė su lauko role reikšme
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	infolog	lt	Pavyzdys {{nenvlf role}} - jei laukas role nėra tuščias, nustatysite LF be jokios lauko reikšmės
 execute a further action for this entry	infolog	lt	Atlikti tolesnį šio įrašo veiksmą
+existing links	infolog	lt	Esamos nuorodos
 exists	infolog	lt	Egzistuoja
 export definition to use for nextmatch export	infolog	lt	Eksporto apibrėžtis, kurią reikia naudoti nextmatch eksportui
 exports in ical format.	infolog	lt	Eksportuoja iCal formatu.
@@ -77,6 +82,7 @@ full list of placeholder names	infolog	lt	Pilnas vietos laikiklių pavadinimų s
 general settings	infolog	lt	Bendrieji nustatymai
 global categories	infolog	lt	Bendrosios kategorijos
 group owner for	infolog	lt	Grupės savininkas
+handling of status 'archived'	admin	lt	Statuso 'archyvuota' tvarkymas
 high	infolog	lt	Didelė
 history	infolog	lt	Istorija
 history logging	infolog	lt	Istorijos registravimas
@@ -94,7 +100,7 @@ if you specify an export definition, it will be used when you export	infolog	lt	
 import next set	infolog	lt	Importuoti kitą rinkinį
 importance	infolog	lt	Svarbumas
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	lt	Importuoja įrašus į InfoLog iš CSV failo. CSV reiškia "kableliais atskirtos vertės". Skirtuke Options (parinktys) taip pat galite pasirinkti kitus skirtukus.
-imports todos into infolog from an ical file.	infolog	lt	Importuoja TODO į "InfoLog" iš "iCal" failo.
+imports todos into infolog from an ical file.	infolog	lt	Importuoja TODO į InfoLog iš iCal failo.
 info log	common	lt	InfoLog
 infolog	common	lt	InfoLog
 infolog - delete	infolog	lt	InfoLog - Ištrinti
@@ -126,6 +132,7 @@ leave it empty	infolog	lt	Palikite tuščią
 leave it empty for a full week	infolog	lt	Palikite jį tuščią visai savaitei
 length	infolog	lt	Ilgis
 limit list to last n month, if ordering by last-modified and not searching.	admin	lt	Apriboti sąrašą iki paskutinio N mėnesio, jei eiliškumas nustatomas pagal paskutinį pakeitimą ir neieškoma.
+no special handling	admin	lt	Jokio specialaus tvarkymo
 notification settings	infolog	lt	Pranešimų nustatymai
 old fixed definition	infolog	lt	Senas fiksuotas apibrėžimas
 one day after	infolog	lt	Viena diena po
@@ -142,7 +149,7 @@ performance optimization for huge infolog tables	admin	lt	Didžiulių InfoLog le
 permissions error - %1 could not %2	infolog	lt	Leidimų klaida - %1 negalėjo %2
 prefix for sub-entries (default: re:)	infolog	lt	Subįrašų priešdėlis (numatytoji reikšmė: Re:)
 print this infolog	infolog	lt	Spausdinti šį informacinį žurnalą
-printing...	infolog	lt	Spausdinti...
+printing...	infolog	lt	Spausdinti ...
 project id	infolog	lt	Projekto ID
 project name	infolog	lt	Projekto pavadinimas
 projectmanager	infolog	lt	Projekto vadovas
@@ -163,8 +170,6 @@ schedule appointment	infolog	lt	Suplanuoti susitikimą
 second parameter for preg_replace	infolog	lt	Antrasis preg_replace parametras
 select a price	infolog	lt	Pasirinkite kainą
 select a project	infolog	lt	Pasirinkite projektą
-select an action	infolog	lt	Pasirinkite veiksmą
-select an action...	infolog	lt	Pasirinkite veiksmą...
 select new category	infolog	lt	Pasirinkite naują kategoriją
 select users or groups	infolog	lt	Pasirinkite naudotojus arba grupes
 selected calendars	infolog	lt	Pasirinkti kalendoriai
@@ -175,12 +180,14 @@ set status to done for all entries	infolog	lt	Nustatyti visų įrašų būseną 
 sets the status of this entry to done	infolog	lt	Nustato šio įrašo būseną į atlikta
 show a x if content equals this compare value, otherwise show nothing	infolog	lt	Rodyti X, jei turinys lygus šiai lyginamajai vertei, priešingu atveju nerodoma nieko
 show full usernames	infolog	lt	Rodyti visus naudotojų vardus
+show in the infolog list	infolog	lt	Rodyti InfoLog sąraše
 show last modified	infolog	lt	Rodyti paskutinį kartą pakeistą
 show status and percent done separate	infolog	lt	Rodyti būseną ir atliktų darbų procentą atskirai
 show sub-entries	infolog	lt	Rodyti subįrašus
 show ticket id	infolog	lt	Rodyti bilieto ID
 show times	infolog	lt	Rodyti laikus
 start	infolog	lt	Pradėti
+startdate	infolog	lt	Pradžios data
 startdate for new entries	infolog	lt	Naujų įrašų pradžios data
 startdate must be before enddate!!!	infolog	lt	Pradžios data turi būti ankstesnė už terminą!
 starting %1	infolog	lt	Pradžios %1

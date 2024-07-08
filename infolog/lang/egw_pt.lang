@@ -86,7 +86,7 @@ change owner when updating	infolog	pt	Alterar proprietário ao atualizar
 change responsible	infolog	pt	Alterar responsável
 change the status of an entry, eg. close it	infolog	pt	Alterar o estado de um registo, ex: fechá-lo
 changed category to %1	infolog	pt	Categoria alterada para 1%
-changed completion to %1%	infolog	pt	Conclusão alterado para% 1%
+changed completion to %1%	infolog	pt	Conclusão alterado para %1%
 changed status to %1	infolog	pt	Status alterado para 1%
 changed type	infolog	pt	Tipo Changed
 check to set startday	infolog	pt	Marcar para configurar dia de início

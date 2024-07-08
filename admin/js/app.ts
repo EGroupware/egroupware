@@ -17,13 +17,13 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw} from "../../api/js/jsapi/egw_global.js";
 import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
-import {LitElement} from "@lion/core";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
 import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
 import {EgwAction} from "../../api/js/egw_action/EgwAction";
 import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+import {LitElement} from "lit";
 
 /**
  * UI for Admin
@@ -423,7 +423,14 @@ class AdminApp extends EgwApp
 		if(!_data || _data.type != undefined) return;
 
 		// Insert the content, etemplate will load into it
-		jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
+		if(typeof _data === "string" || typeof _data[0] !== "undefined")
+		{
+			jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
+		}
+		else if(typeof _data.DOMNodeID == "string")
+		{
+			this.ajax_target.setAttribute("id", _data.DOMNodeID);
+		}
 	}
 
 	/**
@@ -1741,6 +1748,42 @@ class AdminApp extends EgwApp
 				this.egw.message(this.egw.lang("Copied '%1' to clipboard", value), 'success');
 			}
 		});
+	}
+
+	/**
+	 * Batch reset multiple account passwords
+	 *
+	 * JS callback for admin_passwordreset so we can do longtask.  Values come from the current admin etemplate.
+	 */
+	async bulkPasswordReset()
+	{
+		const data = [];
+		const values = this.et2.getInstanceManager().getValues(this.et2);
+		let users = values.users ?? [];
+		delete values.users;
+
+
+		if(users.includes("~all~"))
+		{
+			// Doesn't always give _all_ accounts
+			const accounts = await egw.accounts("accounts");
+			debugger;
+		}
+		if(users.length == 0)
+		{
+			return;
+		}
+
+		for(let i = 0; i < users.length; i++)
+		{
+			data.push({values, user: users[i]});
+		}
+
+		Et2Dialog.long_task(
+			null, "", "Bulk Password Reset",
+			"admin.admin_passwordreset.ajax_reset",
+			data, this.egw
+		);
 	}
 }
 

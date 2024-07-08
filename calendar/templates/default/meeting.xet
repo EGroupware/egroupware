@@ -27,6 +27,7 @@
 				<row disabled="!@ics_method=request">
 					<et2-vbox>
 						<et2-description  value="This mail contains a meeting request" class="meetingRequestMessage"></et2-description>
+						<et2-textbox id="comment" placeholder="Comment" statustext="Add a comment to send to organizer with your response"></et2-textbox>
 						<et2-hbox class="buttonRow">
 							<et2-button  label="Apply" id="button[apply]" hideOnReadonly="true"></et2-button>
 							<et2-button  label="Accept" id="button[accept]" image="calendar/accepted"></et2-button>
@@ -35,6 +36,7 @@
 							<et2-button  statustext="Edit event in calendar" label="Edit" id="button[edit]" image="edit" hideOnReadonly="true"
 								onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" noSubmit="true"></et2-button>
 						</et2-hbox>
+						<et2-description  id="meeting-request-status" class="meetingRequestError" span="all"></et2-description>
 					</et2-vbox>
 				</row>
 				<row disabled="!@ics_method=reply">
@@ -43,6 +45,7 @@
 						<et2-hbox class="buttonRow">
 							<et2-button label="Apply" id="button[apply]"></et2-button>
 						</et2-hbox>
+						<et2-description  id="meeting-request-status" class="meetingRequestError" span="all"></et2-description>
 					</et2-vbox>
 				</row>
 				<row disabled="!@ics_method=cancel">
@@ -73,12 +76,12 @@
 				</row>
 				<row class="row">
 					<et2-description  value="Title"></et2-description>
-					<et2-description  id="title" noLang="1"></et2-description>
+					<et2-description  id="title" noLang="1" class="@changed[title]"></et2-description>
 				</row>
 				<row class="row">
 					<et2-description  value="Location"></et2-description>
 					<et2-hbox>
-						<et2-description  id="location" noLang="1"></et2-description>
+						<et2-description  id="location" noLang="1" class="@changed[location]"></et2-description>
 						<et2-description  class="et2_link" value="Videoconference" disabled="!@##videoconference" onclick="app.calendar.joinVideoConference(widget.getArrayMgr('content').getEntry('##videoconference'), widget.getArrayMgr('content').data);"></et2-description>
 						<et2-image  src="videoconference" disabled="!@##videoconference"></et2-image>
 					</et2-hbox>
@@ -86,25 +89,33 @@
 				<row class="row">
 					<et2-description  value="Date"></et2-description>
 					<et2-hbox class="dates">
-						<et2-date-time  id="start" readonly="true"></et2-date-time>
-						<et2-date-time  label="-" id="end" readonly="true"></et2-date-time>
+						<et2-date-time  id="start" readonly="true" class="@changed[start]"></et2-date-time>
+						<et2-date-time  label="-" id="end" readonly="true" class="@changed[end]"></et2-date-time>
 					</et2-hbox>
 				</row>
-				<row class="row" disabled="!@recure">
+				<row class="row" disabled="!@recurrence">
+					<et2-description></et2-description>
+					<et2-description class="meetingRequestError" value="This is a single recurrence of a recurring event."></et2-description>
+				</row>
+				<row class="row" valign="top" disabled="!@recure">
 					<et2-description  value="Recurrence"></et2-description>
-					<et2-description  id="recure" noLang="1"></et2-description>
+					<et2-description  id="recure" noLang="1" class="@changed[recure]"></et2-description>
 				</row>
 				<row class="row">
 					<et2-description  value="Organizer"></et2-description>
 					<et2-url-email  id="organizer" readonly="true"></et2-url-email>
 				</row>
-				<row class="row" valign="top">
+				<row class="row" valign="top" disabled="!@description">
 					<et2-description  value="Description"></et2-description>
-					<et2-description  id="description" noLang="ture" activateLinks="true"></et2-description>
+					<et2-description  id="description" noLang="true" activateLinks="true" class="@changed[description]"></et2-description>
 				</row>
 				<row class="row" valign="top">
 					<et2-description  value="Participants"></et2-description>
-					<et2-description  id="all_participants"></et2-description>
+					<et2-description  id="all_participants" class="@changed[participants]"></et2-description>
+				</row>
+				<row class="row" valign="top" disabled="!@comment">
+					<et2-description value="Comment"></et2-description>
+					<et2-description id="comment"></et2-description>
 				</row>
 			</rows>
 		</grid>
@@ -118,9 +129,11 @@
 			}
 			.meetingRequestMessage {
 				font-size: 150%;
+				margin-bottom: 10px;
 			}
 
 			table.meetingRequest {
+				margin-top: 10px;
 				border: 2px solid black;
 			}
 			.meetingRequest tr.th {
@@ -150,13 +163,9 @@
 			.meetingWarning tr.row td {
 				font-size: 120% !important;
 			}
-			.meetingRequestError {
+			.meetingRequestError, .meetingRequestChanged {
 				font-style: italic;
 				color: red;
-			}
-			.buttonRow {
-				padding-top: 10px;
-				padding-bottom: 10px;
 			}
 		</styles>
 	</template>

@@ -6,8 +6,8 @@
 %1 entries %2, %3 failed.	infolog	it	%1 voci %2, %3 fallite.
 %1 modified	infolog	it	%1 modificato
 %1 modified by %2 at %3	infolog	it	%1 modificate da %2 il %3
-%1 records imported	infolog	it	%1 record importati
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	it	%1 record letti (non ancora importati, puoi tornare %2indietro%3 e deselezionare Test Importazione)
+%1 records imported	infolog	it	%1 record importati.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	it	%1 record letti (non ancora importati, puoi tornare %2indietro%3 e deselezionare Test Importazione).
 %1 you are responsible for is due at %2	infolog	it	%1 per il quale sei responsabile scade il %2
 %1 you are responsible for is starting at %2	infolog	it	%1 per il quale sei responsabile inizia il %2
 %1 you delegated is due at %2	infolog	it	%1 che hai delegato, scade il %2
@@ -31,7 +31,7 @@ a short subject for the entry	infolog	it	Un breve oggetto per la nota
 abort without deleting	infolog	it	Annulla senza cancellare
 accept	infolog	it	Accetta
 action	infolog	it	Azione
-actions...	infolog	it	Azioni
+actions...	infolog	it	Azioni ...
 actual date and time	infolog	it	Data e ora effettivi
 add	infolog	it	Aggiungi
 add / remove link	infolog	it	Aggiungi/rimuovi collegamentoi
@@ -53,33 +53,34 @@ all links and attachments	infolog	it	tutti i link links e gli allegati
 all other %1 fields are valid	infolog	it	Tutti gli altri %1 campi sono validi
 all projects	infolog	it	Tutti i progetti
 allow to save entries with due date in the past	infolog	it	Permetti di salvare voci con scadenza nel passato
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	Pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	Pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce).
 alternatives	infolog	it	Alternative
 always show them	infolog	it	Mostra sempre
 application mail expected but got: %1	infolog	it	Si aspettava l'applicazione mail ma invece si ha: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	it	Applica l'azione su tutta la query, NON solo le voci visualizzate!
 apply the changes	infolog	it	Applica le modifiche
 archive	infolog	it	Archivio
+archived too	infolog	it	Archiviato anche
 are you shure you want to close this entry ?	infolog	it	Sei sicuro di voler chiudere questa voce?
 are you shure you want to delete this entry ?	infolog	it	Sei sicuro di voler cancellare questa voce?
 attach a file	infolog	it	Allega un file
 attach file	infolog	it	Allega file
 attachments	infolog	it	Allegati
-attention: no contact with address %1 found.	infolog	it	Attenzione: non è stato trovato nessun contatto con indirizzo %1
+attention: no contact with address %1 found.	infolog	it	Attenzione: non è stato trovato nessun contatto con indirizzo %1.
 automatically check 'do not notify' for these types	infolog	it	Seleziona automaticamente la casella "Non avvisare" per queste tipologie di scheda attività
 back to main list	infolog	it	Torna all'elenco principale
 billed	infolog	it	Fatturato
 both	infolog	it	Entrambi
 call	infolog	it	Chiamata
-can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	it	Può essere usato per mostrare ulteriori tipi di schede Attività nel calendario, oppure essere limitato alla visualizzazione di p.es. solo task
-can not return an exact number of rows and therefore hides the count.	admin	it	Non può restituire un numero esatto di righe e quindi nasconde il conteggio
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	it	Può essere usato per mostrare ulteriori tipi di schede Attività nel calendario, oppure essere limitato alla visualizzazione di p.es. solo task.
+can not return an exact number of rows and therefore hides the count.	admin	it	Non può restituire un numero esatto di righe e quindi nasconde il conteggio.
 cancel	infolog	it	Annulla
 cancelled	infolog	it	Annullato
 categories	infolog	it	Categorie
 category	infolog	it	Categoria
 change	infolog	it	Modifica
 change category	infolog	it	Modifica categoria
-change completed	infolog	it	Modifica completata
+change completed	infolog	it	Modifica completata.
 change completion	infolog	it	Modifica la percentuale di completamento
 change history	infolog	it	Cambia storico
 change owner when updating	infolog	it	Modifica il proprietario quando aggiorni
@@ -97,7 +98,7 @@ click here to start the search	infolog	it	Clicca qui per iniziare la ricerca
 close	infolog	it	Chiudi
 close all	infolog	it	Chiudi tutto
 close this entry and all listed sub-entries	infolog	it	Chiudi questa voce e tutte le sottovoci elencate
-closed	infolog	it	Chiuso
+closed	infolog	it	Chiuso.
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	it	Elenco con campi separati con due punti (:) da usare quando il valore è vuoto o da sommare
 comment	infolog	it	Commento
 compare	infolog	it	Confronta
@@ -132,7 +133,7 @@ custom status for typ	infolog	it	Stato personalizzato per il tipo
 customfields	infolog	it	Customfields
 data exchange settings	infolog	it	Impostazioni di scambio dati
 date completed	infolog	it	Data completamento
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	it	Data completamento (lasciala vuota per averla impostata automaticamento se lo stato è Fatto o Fatturato)
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	it	Data completamento (lasciala vuota per averla impostata automaticamento se lo stato è Fatto o Fatturato).
 datecreated	infolog	it	Data creazione
 dates, status, access	infolog	it	Date, Stato, Accesso
 days	infolog	it	Giorni
@@ -147,7 +148,7 @@ delegated overdue	infolog	it	Delegate scadute
 delegated upcomming	infolog	it	Delegate prossime
 delegation	infolog	it	Delega
 delete	infolog	it	Cancella
-delete one record by passing its id.	infolog	it	Cancella un record fornendo la sua ID
+delete one record by passing its id.	infolog	it	Cancella un record fornendo la sua ID.
 delete selected entries?	infolog	it	Eliminare le voci selezionate?
 delete this entry and all listed sub-entries	infolog	it	Cancella questa voce e tutte le sotto-voci elencate
 deleted	infolog	it	Eliminato
@@ -166,7 +167,7 @@ do you want a notification, if items you are responsible for are due?	infolog	it
 do you want a notification, if items you created get updated?	infolog	it	Inviare notifica quando schede che hai creato vengono aggiornate.
 do you want a notification, if items you delegated are about to start?	infolog	it	Inviare notifica quando attività per le quali hai la delega stanno per avviarsi.
 do you want a notification, if items you delegated are due?	infolog	it	Inviare notifica quando attività per le quali hai la delega sono in scadenza.
-do you want to receive notifications as html-mails or plain text?	infolog	it	Ricevi le notifiche come HTML o testo
+do you want to receive notifications as html-mails or plain text?	infolog	it	Ricevi le notifiche come HTML o testo.
 don't show infolog	infolog	it	NON mostrare Attività
 done	infolog	it	Eseguita
 download	infolog	it	Salvare il file
@@ -182,6 +183,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	it
 edit status	infolog	it	Modifica lo stato
 edit the entry	infolog	it	Modifica una voce
 edit this entry	infolog	it	Modifica questa voce
+editable fields for status 'archived'	admin	it	Campi modificabili per lo stato 'archiviato'
 empty for all	infolog	it	Vuoto per tutti
 encrypt description	infolog	it	Cifrare la descrizione
 end	infolog	it	Fine
@@ -192,6 +194,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	i
 enter a textual description of the log-entry	infolog	it	Inserisci una descrizione testuale per il log della voce
 enter the query pattern	infolog	it	Inserisci la stringa di ricerca
 entry and all files	infolog	it	Inserimenti e tutti i files
+entry can not be changed anymore, after status is set	admin	it	La voce NON può più essere modificata, dopo che lo stato è stato impostato
+entry can not be changed by anybody, but egroupware admins	admin	it	La voce non può essere modificata da nessuno, tranne che dagli amministratori di EGroupware.
 error: importing the ical	infolog	it	Errore: importando iCal
 error: no mail (mailbox / uid) given!	infolog	it	Errore: nessuna mail (casella/UID) data!
 error: saving the entry	infolog	it	Errore: durante il salvataggio della voce
@@ -205,7 +209,7 @@ existing links	infolog	it	Collegamenti esistenti
 exists	infolog	it	Esiste
 export definition to use for nextmatch export	infolog	it	Definizione di esportazione da usare per il "nextmatch" (corrispondenza successiva)
 exports in ical format.	infolog	it	Esporta in formato iCal
-exports infolog entries into a csv file.	infolog	it	Esporta le schede Attività in un file CSV
+exports infolog entries into a csv file.	infolog	it	Esporta le schede Attività in un file CSV.
 favorites	infolog	it	Preferiti
 fax	infolog	it	Fax
 field must not be empty !!!	infolog	it	Il campo non può essere vuoto!
@@ -219,24 +223,25 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	it	Per quali tipo devi usare questo campo
 from	infolog	it	Da
 full list of placeholder names	infolog	it	Lista completa dei nomi dei segnaposto
-general fields:	infolog	it	Campi generici
+general fields:	infolog	it	Campi generici:
 general settings	infolog	it	Impostazioni generali
 global categories	infolog	it	Categorie Globali
 group owner for	infolog	it	Proprietario di gruppo per
+handling of status 'archived'	admin	it	Gestione dello stato 'archiviato'
 high	infolog	it	Alta
 history	infolog	it	Storico
 history logging	infolog	it	Registrazione dello storico
 history logging and deleting of items	infolog	it	Registrazione dello storico e di eliminazione di schede
 how many description lines should be directly visible. further lines are available via a scrollbar.	infolog	it	Quante righe di descrizione dovranno essere visibili direttamente. Righe ulteriori sono disponibili tramite una barra di scorrimento.
-how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	it	Quanto deve essere larga l'area di descrizione. Valore numerico p.es. 60
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	it	Quanto deve essere larga l'area di descrizione. Valore numerico p.es. 60.
 html link to the current record	infolog	it	Collegamento ipertestuale al record attuale
 id	infolog	it	ID
 id#	infolog	it	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	it	Se un tipo di schede ha come proprietario un gruppo, tutte le voci di quel tipo saranno di quel gruppo e NON dell'utente che le ha create!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	it	Se non impostato, la linea con ricerca e filtri viene nascosta per meno voci di "massime occorrenze per pagina" (come definito nelle tue preferenze comuni).
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificata una directory (un percorso completo VFS), %1 visualizza una azione per ogni documento. Questa azione consente di scaricare lo specifico documento
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificata una directory (un percorso completo VFS), %1 visualizza una azione per ogni documento. Questa azione consente di scaricare lo specifico documento.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	it	Se qui viene specificato un documento (un percorso completo VFS), %1 visualizza una icona di documento aggiuntiva per ogni voce. Questa icona consente di scaricare lo specifico documento.
-if you specify an export definition, it will be used when you export	infolog	it	Se viene specificata un formato di esportazione, verrà utilizzato quando esporterai.
+if you specify an export definition, it will be used when you export	infolog	it	Se viene specificata un formato di esportazione, verrà utilizzato quando esporterai
 import next set	infolog	it	Importa il prossimo set
 importance	infolog	it	Importanza
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	it	Importa le schede attività in un file CSV. Puoi selezionare separatori anche diversi dalla virgola nella scheda opzioni.
@@ -265,7 +270,7 @@ infolog-fieldname	infolog	it	Attività - Nome del Campo
 insert	infolog	it	Inserisci
 insert in document	infolog	it	Inserisci in documento
 insert timestamp into description field	infolog	it	Inserisci timbro temporale al campo descrizione
-invalid filename	infolog	it	Nome di Campo non valido
+invalid filename	infolog	it	Nome di Campo non valido.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
 invalid status for entry type %1.	infolog	it	Stato non valido per il tipo %1
 label<br>helptext	infolog	it	Etichetta<br>Testo di Help
@@ -278,8 +283,8 @@ leave without saveing the entry	infolog	it	Uscire senza salvare la voce
 leaves without saveing	infolog	it	Uscire senza salvare
 length	infolog	it	Lunghezza
 limit list to last n month, if ordering by last-modified and not searching.	admin	it	Limita l'elenco all'ultimo N mese, se ordini in base all'ultima modifica e non stai cercando.
-limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita il numero di righe di descrizione. Predefinito = 5, 0 = nessun limite
-limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite
+limit number of description lines (default 5, 0 for no limit)	infolog	it	Limita il numero di righe di descrizione. Predefinito = 5, 0 = nessun limite.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	it	Limita la larghezza della colonna di descrizione. Predefinito = 5, 0 = nessun limite.
 link	infolog	it	Link
 linked to %1	infolog	it	Collegato a %1
 links	infolog	it	Links
@@ -298,7 +303,7 @@ max length of the input [, length of the inputfield (optional)]	infolog	it	Massi
 modifier	infolog	it	Modificatore
 modifierer	infolog	it	Modificatore
 name must not be empty !!!	infolog	it	Il nome deve essere vuoto!
-name of current user, all other contact fields are valid too	infolog	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
+name of current user, all other contact fields are valid too	infolog	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure
 name of new type to create	infolog	it	Nome del tipo da creare
 never hide search and filters	infolog	it	Non nascondere mai ricerca e filtri
 new %1	infolog	it	Nuovo %1
@@ -309,10 +314,11 @@ no - cancel	infolog	it	No - Annulla
 no custom field "%1" for %2.	infolog	it	Nessun campo personalizzato "%1" per %2.
 no describtion, links or attachments	infolog	it	Nessuna descrizione, collegamenti o allegati
 no details	infolog	it	No dettagli
-no entries found, try again ...	infolog	it	Nessun risulato, prova ancora...
+no entries found, try again ...	infolog	it	Nessun risulato, prova ancora ...
 no filter	infolog	it	Nessun Filtro
 no links or attachments	infolog	it	Nessun link o allegato
 no project	infolog	it	Nessun progetto
+no special handling	admin	it	Nessuna gestione speciale
 nonactive	infolog	it	Non attivo
 none	infolog	it	Nessuna
 normal	infolog	it	Normale
@@ -369,7 +375,7 @@ price	infolog	it	Prezzo
 pricelist	infolog	it	Listino
 primary link	infolog	it	Collegamento primario
 print this infolog	infolog	it	Stampa quest' Attività
-printing...	infolog	it	In stampa...
+printing...	infolog	it	In stampa ...
 priority	infolog	it	Priorità
 private	infolog	it	Privata
 project	infolog	it	Progetto
@@ -380,7 +386,7 @@ projectmanager	infolog	it	Project Manager
 re-planned	infolog	it	Rimodificato
 re-planned time	infolog	it	Tempo ripianificato
 re:	infolog	it	Re:
-read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID
+read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID.
 read rights (default)	infolog	it	Diritti di lettura (default)
 receive notifications about due entries you are responsible for	infolog	it	Ricevi notifiche per le voci in scadenza delle quali sei responsabile
 receive notifications about due entries you delegated	infolog	it	Ricevi notifiche per le voci in scadenza che hai delegato
@@ -392,8 +398,8 @@ receive notifications about starting entries you delegated	infolog	it	Ricevi not
 receive notifications as html-mails	infolog	it	Ricevi le notifiche come HTML
 regular expression	infolog	it	Espressione regolare
 remark	infolog	it	Osservazione
-remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce)
-removed	infolog	it	Rimosso
+remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce).
+removed	infolog	it	Rimosso.
 removed category	infolog	it	categoria rimossa
 replacement	infolog	it	Sostituzione
 replacements for inserting entries into documents	infolog	it	Sostituzioni per l'inserimento di voci in documenti
@@ -416,14 +422,14 @@ search	infolog	it	Cerca
 search for:	infolog	it	Ricerca:
 second parameter for preg_replace	infolog	it	Secondo parametro per preg_replace
 select	infolog	it	Seleziona
-select a category for this entry	infolog	it	seleziona una ricerca per questa voce
+select a category for this entry	infolog	it	Seleziona una ricerca per questa voce
 select a price	infolog	it	Seleziona un prezzo
-select a priority for this task	infolog	it	seleziona una priorità per questo ToDo
+select a priority for this task	infolog	it	Seleziona una priorità per questo ToDo
 select a project	infolog	it	Seleziona un progetto
 select a responsible user: a person you want to delegate this task	infolog	it	Seleziona un utente responsabile: una persona a cui vuoi delegare questa attività
 select a typ to edit it's status-values or delete it	infolog	it	Seleziona un tipo per modificare il suo stato o cancellarlo
 select an action	infolog	it	Seleziona una azione
-select an action...	infolog	it	Seleziona una azione
+select an action...	infolog	it	Seleziona una azione ...
 select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
 select an entry to link with	infolog	it	Seleziona una voce da linkare con
 select multiple contacts for a further action	infolog	it	Seleziona contatti multipli per azioni ulteriori
@@ -446,7 +452,7 @@ should the infolog list show a unique numerical id, which can be used eg. as tic
 should the infolog list show the column "last modified".	infolog	it	L'elenco Attività deve mostrare la colonna "ultima modifica".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	it	L'elenco Attività deve mostrare la percentuale di completamento solo per lo stato IN CORSO o due icone separate.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	it	Questa voce deve essere visibile solo alle persone a cui garantisci accesso privato attraverso la ACL
-show a column for used and planned times in the list.	infolog	it	Mostra una colonna per i tempi effettivi e pianificati nell'elenco.
+show a column for used and planned times in the list.	infolog	it	Mostra una colonna per i tempi effettivi e pianificati nell'elenco
 show a x if content equals this compare value, otherwise show nothing	infolog	it	Mostra una X se il contenuto equivale questo valore di confronto, altrimenti non mostrare nulla
 show full usernames	infolog	it	Mostra nomi utente completi
 show in the infolog list	infolog	it	Visualizza nella lista di Attività
@@ -461,7 +467,7 @@ start a new search, cancel this link	infolog	it	Inizia una nuova ricerca, annull
 startdate	infolog	it	Data Inizio
 startdate enddate	infolog	it	Data Inizio Data Fine
 startdate for new entries	infolog	it	Data iniziale per nuove voci
-startdate must be before enddate!!!	infolog	it	La data di inizio deve essere antecedente alla data fine
+startdate must be before enddate!!!	infolog	it	La data di inizio deve essere antecedente alla data fine!
 starting %1	infolog	it	Avvio %1
 startrecord	infolog	it	Record Iniziale
 status	infolog	it	Stato
@@ -478,10 +484,10 @@ task	infolog	it	ToDo
 tasks of	infolog	it	Task di
 template	infolog	it	Template
 test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
-the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	it	Il documento puà contenere dei segnaposto come {{%1}}, che saranno sostituiti con i dati
-the following document-types are supported:	infolog	it	I seguenti tipi di documento sono supportati
-the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	it	Il nome usato internamente (<= 10 caratteri), cambiandolo rende i dati esistenti indisponibili
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	Il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili
+the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	it	Il documento puà contenere dei segnaposto come {{%1}}, che saranno sostituiti con i dati.
+the following document-types are supported:	infolog	it	I seguenti tipi di documento sono supportati:
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	it	Il nome usato internamente (<= 10 caratteri), cambiandolo rende i dati esistenti indisponibili.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	Il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili.
 the text displayed to the user	infolog	it	Il testo mostrato all'utente
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	it	Questo è il filtro che Attività applica quando entri nell'applicazione. I filtri limitano le voci visualizzate nella vista attuale. Ci sono filtri per visualizzare solo le voci completate, ancora aperte o future sia tue che degli altri utenti.
 til when should the todo or phonecall be finished	infolog	it	Quando dovrebbe essere completata l'attività

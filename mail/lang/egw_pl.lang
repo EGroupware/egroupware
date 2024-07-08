@@ -1,4 +1,6 @@
+%1 attachments	mail	pl	%1 załączników
 %1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pl	%1 wymaga rozszerzenia Sieve %2, może wypróbuj %1 lub wyższą liczbę dni.
 (leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)
 acl rights retrieve failed, seems there are no rights set!	mail	pl	Pobieranie uprawnień ACL nie powiodło się, wygląda na to, że nie ustawiono żadnych uprawnień!
@@ -14,7 +16,7 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	pl	Dodanie %
 after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komponowania
 aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
-allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
+allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
 allways a new window	mail	pl	Zawsze w nowym oknie
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
@@ -23,7 +25,7 @@ answered	mail	pl	Odpowiedź na
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
 attach files	mail	pl	Dołączanie plików
-attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila
+attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila.
 attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
 attachments	mail	pl	Załączniki
 attachments, ...	mail	pl	załączniki, ...
@@ -56,8 +58,9 @@ default sorting order	mail	pl	Domyślny porządek sortowania
 default toolbar actions shown in mail's html editor	mail	pl	Funkcje włączone w pasku narzędzi edytora HTML podczas tworzenia wiadomości e-mail
 default value for remembering s/mime passphrase in minutes	mail	pl	Domyślna wartość pamiętania hasła S/MIME w minutach
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	pl	Określa co ma być pokazywane jako etykieta kontaktu dla dodawanego kontaktu w Do/Kopiuj/Blind copy podczas komponowania emaila. Domyślnie firstname lastname, a puste oznacza włączenie wszystkiego co dostępne.
-defines what to show as identity label on mail folder header	common	pl	Określa co ma być pokazywane jako etykieta tożsamości w nagłówku folderu poczty
+defines what to show as identity label on mail folder header	common	pl	Określa co ma być pokazywane jako etykieta tożsamości w nagłówku folderu poczty.
 delete folder	mail	pl	Usuń folder
+delete selected folders	mail	pl	Usuń wybrane foldery
 deleted	mail	pl	skasowany
 disable	mail	pl	Wyłącz
 disable caching of flags	mail	pl	Wyłączenie buforowania flag
@@ -76,7 +79,7 @@ do you want to prevent the editing/setup of notification by mail to other emaila
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli Sieve jest włączone)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	pl	Czy chcesz zapobiec zarządzaniu folderami (tworzenie, prawa dostępu i subskrypcja)?
 does not contain	mail	pl	nie zawiera
-does not exist on imap server.	mail	pl	nie istnije na serwerze IMAP
+does not exist on imap server.	mail	pl	nie istnije na serwerze IMAP.
 does not match	mail	pl	nie pasuje
 does not match regexp	mail	pl	nie pasuje do wzorca
 don't use draft folder	mail	pl	Nie używaj folderu szkiców
@@ -101,11 +104,13 @@ error saving %1!	mail	pl	Błąd zapisu %1!
 error:	mail	pl	Błąd:
 error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiadomości jako Szkic
 error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
+error: could not send message.	mail	pl	Błąd: Nie można wysłać wiadomości.
 error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
 event details follow	mail	pl	Detale Wydarzenia Następują
 every %1. day	mail	pl	Co %1. dzień
 everyone	mail	pl	Wszyscy
 examine namespace to retrieve folders in others and shared	mail	pl	Zbadaj przestrzeń nazw, aby pobrać foldery w innych i udostępnione
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	pl	Wyklucz załączniki większe niż podany rozmiar z automatycznego zapisywania jako wersja robocza (w MB)
 extended	mail	pl	Rozszerzone
 failed to delete %1	mail	pl	Nie udało się usunąć %1
 failed to subscribe folder %1!	mail	pl	Nie udało się zasubskrybować folderu %1!
@@ -121,7 +126,7 @@ flagged %1 messages as flagged in %2	mail	pl	Oznaczono %1 wiadomości jako oznac
 flagged %1 messages as unflagged in %2	mail	pl	Oznaczono %1 wiadomości jako nieoznaczone w %2
 folder	mail	pl	Katalog
 folder %1 %2 failed because of %3!	mail	pl	Folder %1 %2 nie powiódł się z powodu %3!
-folder %1 has been created successfully, although the subscription failed because of %2	mail	pl	Folder %1 został utworzony pomyślnie, chociaż subskrypcja nie powiodła się z powodu %2.
+folder %1 has been created successfully, although the subscription failed because of %2	mail	pl	Folder %1 został utworzony pomyślnie, chociaż subskrypcja nie powiodła się z powodu %2
 folder settings	mail	pl	Ustawienia foldera
 forward	mail	pl	Prześlij dalej
 forward as attachment	mail	pl	Prześlij dalej jako załącznik
@@ -138,6 +143,7 @@ handling of external http images / mixed content in mails	mail	pl	Obsługa zewn�
 header lines	mail	pl	Linie nagłówka
 how to forward messages	mail	pl	Sposób przekazywania wiadomości
 html	mail	pl	HTML
+html mode	mail	pl	Tryb HTML
 ident name	mail	pl	Nazwa identyfikatora
 ident name email	mail	pl	Nazwa identyfikatora [Email]
 ident name organization email	mail	pl	Nazwa identyfikatora Organizacja [Email]
@@ -163,7 +169,7 @@ inbox	mail	pl	ODEBRANE
 information to show on email tag	mail	pl	Informacje wyświetlane na tagu e-mail
 initialization of mail failed. please use the wizard to cope with the problem.	mail	pl	Inicjalizacja modułu poczty nie powiodła się. Użyj kreatora konfiguracji, aby poprawić konfigurację.
 inline	mail	pl	Do przodu
-insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	pl	wstaw podpis na górze nowej wiadomości (lub odpowiedzi) podczas otwierania okna dialogowego tworzenia (może nie być możliwe przełączanie podpisów).
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	pl	wstaw podpis na górze nowej wiadomości (lub odpowiedzi) podczas otwierania okna dialogowego tworzenia (może nie być możliwe przełączanie podpisów)
 job	mail	pl	Służbowy
 junk	mail	pl	Śmieci
 junk folder	mail	pl	Folder śmieci
@@ -174,7 +180,7 @@ learning as ham (not spam) failed because of %1	mail	pl	Uczenie się jako szynka
 learning as spam failed because of %1	mail	pl	Nauka jako spam nie powiodła się z powodu %1
 less than	mail	pl	mniej niż
 limit mailing list results when searching for addresses	mail	pl	Ograniczanie wyników list mailingowych podczas wyszukiwania adresów
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pl	Lista akcji, które mają być domyślnie włączone/aktywowane (np. akcja Mail composose zapisz jako InfoLog)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pl	Lista akcji, które mają być domyślnie włączone/aktywowane (np. akcja Mail composose zapisz jako InfoLog).
 mail	common	pl	Poczta
 mail acl	mail	pl	Prawa dostępu
 mail filter	mail	pl	Filtr poczty
@@ -228,7 +234,7 @@ one address is not valid	mail	pl	Jeden adres nie jest poprawny
 only email	mail	pl	Tylko email
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	pl	Ma sens tylko w przypadku przesyłania hasła innym kanałem / poza tą pocztą do odbiorców!
 only name	mail	pl	Tylko nazwa
-only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	pl	Potrzebne tylko w przypadku niektórych serwerów, które nie zwracają wszystkich folderów na poziomie głównym, aby pobrać wszystkie foldery dla tego poziomu.
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	pl	Potrzebne tylko w przypadku niektórych serwerów, które nie zwracają wszystkich folderów na poziomie głównym, aby pobrać wszystkie foldery dla tego poziomu
 only one window	mail	pl	tylko jedno okno
 open in html mode	mail	pl	Otwórz w trybie HTML
 open in text mode	mail	pl	Otwórz w trybie tekstowym
@@ -253,7 +259,7 @@ preview pane	mail	pl	Układ okna
 printing	mail	pl	Drukowanie
 printview	mail	pl	Wydrukuj widok
 processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
-provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pl	Podaj domyślny tekst urlopu (używany w nowych wiadomościach urlopowych, gdy nie było wcześniej skonfigurowanej wiadomości).
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	pl	Podaj domyślny tekst urlopu (używany w nowych wiadomościach urlopowych, gdy nie było wcześniej skonfigurowanej wiadomości)
 push notifications	mail	pl	Powiadomienia push
 quicksearch	mail	pl	Szybkie wyszukiwanie
 quicksearch (with cc)	mail	pl	Szybkie wyszukiwanie (+Kopia)
@@ -277,7 +283,7 @@ replying to this message failed because the content of this message seems to be 
 replyto	mail	pl	Odpowiedz
 report as ham	mail	pl	Zgłoś jako Ham
 report as spam	mail	pl	Zgłoś jako spam
-report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę wiadomość jako spam - rozwiązania antyspamowe, takie jak SpamTitan, nauczą się.
+report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę wiadomość jako spam - rozwiązania antyspamowe, takie jak SpamTitan, nauczą się
 report this email content as spam - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę treść wiadomości e-mail jako spam - rozwiązania antyspamowe, takie jak spamTitan, będą się uczyć
 required pear class mail/mimedecode.php not found.	mail	pl	Nie znaleziono wymaganej klasy PEAR Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pl	Wymagane do wyłączenia, jeśli używasz Dovecot z prywatnymi flagami widocznymi w folderze współdzielonym lub folderze użytkownika!
@@ -310,14 +316,14 @@ server supports special-use folders	mail	pl	Serwer obsługuje foldery specjalneg
 set flags	mail	pl	Oznacz e-mail jako
 set predefined values for compose...	mail	pl	Ustaw predefiniowane wartości dla komponowania ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	pl	Czy podpis powinien być wstawiany po (standardowo) lub przed odpowiedzią lub przesłaniem dalej oraz czy podpis powinien być widoczny i możliwy do zmiany podczas tworzenia.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	Pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	pl	Pokazywanie wszystkich folderów (subskrybowanych i niesubskrybowanych) w panelu folderów na ekranie głównym.
 show notification for new arriving mails	mail	pl	Wyświetlaj powiadomienia o nowych wiadomościach
 show test connection section and control the level of info displayed?	mail	pl	Pokazywać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
 show test connection section and control the level of info displayed??	mail	pl	Pokazać sekcję połączenia testowego i kontrolować poziom wyświetlanych informacji?
 show them this time only	mail	pl	Pokaż je tylko tym razem
-show vertical	mail	pl	Pokaż w pionie
+show vertical	mail	pl	Pokaż w pionie (widok 3-kolumnowy)
 show vertical with all columns	mail	pl	Pokaż w pionie ze wszystkimi kolumnami
-show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w widoku listy wiadomości
+show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w widoku listy wiadomości.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pl	Wyświetla tymczasowo widoczne powiadomienie zawierające adres, temat i fragment wiadomości e-mail.
 sieve	mail	pl	Sieve
 sieve script name	mail	pl	Nazwa skryptu Sieve
@@ -334,7 +340,7 @@ smime signed message	mail	pl	Komunikat podpisany S/MIME
 smtp	mail	pl	SMTP
 sneak preview in list	mail	pl	Podgląd wiadomości
 sort order	mail	pl	Porządek sortowania
-start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?
+start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy HTML?
 subject(a->z)	mail	pl	Temat (A->Z)
 subject(z->a)	mail	pl	Temat (Z->A)
 template folder	mail	pl	Katalog szablnów
@@ -343,10 +349,10 @@ text	mail	pl	Tekst
 text/plain	mail	pl	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	pl	Serwer IMAP musi spełniać określone wymagania ORAZ być odpowiednio skonfigurowany:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
-the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
+the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości.
 the rule with priority %1 successfully saved!	mail	pl	Reguła z priorytetem %1 została pomyślnie zapisana!
 then	mail	pl	WTEDY
-there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
+there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	pl	Nie ma już miejsca na przechowywanie skryptu sito, sprawdź opcję sieve_maxscriptsize w konfiguracji serwera pocztowego.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	pl	Ta wiadomość zawiera zewnętrzne obrazy obsługiwane przez niezabezpieczony protokół HTTP. Należy pamiętać, że wyświetlanie lub zezwalanie na nie może zagrozić bezpieczeństwu!
 this message is smime encrypted and password protected.	mail	pl	Ta wiadomość jest szyfrowana S/MIME i chroniona hasłem.
@@ -378,6 +384,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	pl	Aby wysłać tę wiadomość, należy wprowadzić hasło S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	pl	Musisz zainstalować wtyczkę Mailvelope dostępną dla Chrome i Firefox z %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	pl	Aby móc zapisać wiadomość w VFS, należy najpierw zapisać ją jako wersję roboczą.
+you need to select some folders first (by clicking on them)!	mail	pl	Musisz najpierw wybrać niektóre foldery (klikając na nie)!
 you will loose current message body, unless you save it to your clipboard!	mail	pl	Utracisz aktualną treść wiadomości, chyba że zapiszesz ją w schowku!
 you've got new mail	mail	pl	Masz nową pocztę
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	pl	Twój pozostały limit %1 jest zbyt niski, możesz nie być w stanie wysyłać/odbierać kolejnych wiadomości e-mail.<br>Chociaż wyczyszczenie wiadomości e-mail w koszu lub folderze śmieci może pomóc odzyskać trochę wolnego miejsca.<br>Jeśli to nie pomogło, poproś administratora o zwiększenie limitu.

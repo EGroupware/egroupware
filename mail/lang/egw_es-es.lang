@@ -16,7 +16,7 @@ account editable by user	mail	es-es	cuenta editable por el usuario
 acl rights retrieve failed, seems there are no rights set!	mail	es-es	La recuperación de los derechos de la lista de control de acceso falló, ¡parece que no hay derechos establecidos!
 acl rights retrieved successfully	mail	es-es	Derechos de la lista de control e acceso recuperados correctamente
 action	mail	es-es	Acción
-activating by date requires a start- and end-date!	mail	es-es	Activar por fecha requiere una fecha de inicio y otra de final
+activating by date requires a start- and end-date!	mail	es-es	Activar por fecha requiere una fecha de inicio y otra de final!
 add "%1" into blacklisted domains	mail	es-es	Añadir "%1" a los dominios en la lista negra
 add "%1" into blacklisted emails	mail	es-es	Añadir "%1" a los correos-e en la lista negra
 add "%1" into whiltelisted domains	mail	es-es	Añadir "%1" a los dominios en la lista blanca
@@ -38,15 +38,15 @@ all	mail	es-es	todos
 all adresses:	mail	es-es	Todas las direcciones:
 all available info	admin	es-es	Toda la información disponible
 all filtered	mail	es-es	todo lo filtrado
-all messages in the folder will be lost	mail	es-es	Se perderán todos los mensajes en la carpeta
+all messages in the folder will be lost	mail	es-es	Se perderán todos los mensajes en la carpeta.
 all my email addresses	mail	es-es	todas mis direcciones de correo-e
 all of	mail	es-es	todos los
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	es-es	Todas las subcarpetas también se eliminarán y todos los mensajes de todas las carpetas afectadas se perderán
 allow	mail	es-es	Permitir
 allow external images	mail	es-es	Permitir imágenes externas
 allow external images from listed domains	mail	es-es	Permitir imágenes externas de dominios listados
-allow images from external sources in html emails	mail	es-es	Permitir imágenes de origen externo en correos HTML
-allow images from listed domains in html emails	mail	es-es	Permitir imágenes de dominios listados en correos electrónicos HTML
+allow images from external sources in html emails	mail	es-es	Permitir imágenes de origen externo en correos HTML.
+allow images from listed domains in html emails	mail	es-es	Permitir imágenes de dominios listados en correos electrónicos HTML.
 allow users to create further identities	mail	es-es	Permitir a los usuarios crear nuevas identidades
 allways a new window	mail	es-es	Siempre una ventana nueva
 always	mail	es-es	Siempre
@@ -54,7 +54,7 @@ always allow external sources from %1	mail	es-es	Siempre permitir fuentes extern
 always respond / auto-responder	mail	es-es	Responder siempre / autoresponder
 always show html emails	mail	es-es	Mostrar siempre los correos HTML
 always show notifiction	mail	es-es	Mostrar siempre notificación
-an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (Autorizaciones de acceso) de la cuenta %1.
+an error happend while trying to remove acl rights from the account %1!	mail	es-es	Se ha producido un error al intentar eliminar los derechos ACL (Autorizaciones de acceso) de la cuenta %1!
 and the rule with priority %1, now got the priority %2	mail	es-es	Y la regla con prioridad %1, ahora tiene la prioridad %2
 answered	mail	es-es	Respondió
 any of	mail	es-es	Cualquiera de
@@ -68,7 +68,7 @@ are you sure you want to move folder %1 to folder %2?	mail	es-es	¿Está seguro 
 arrival	mail	es-es	Recibido
 ask for permission	mail	es-es	Solicitar permiso
 attach files	mail	es-es	Adjuntar archivos
-attach users vcard at compose to every new mail	mail	es-es	adjuntar vCard de los usuarios al componer a cada nuevo correo
+attach users vcard at compose to every new mail	mail	es-es	adjuntar vCard de los usuarios al componer a cada nuevo correo.
 attach vcard	mail	es-es	Adjuntar vCard
 attachment	mail	es-es	Adjunto
 attachment has been saved successfully.	mail	es-es	El archivo adjunto se ha guardado exitosamente.
@@ -76,7 +76,7 @@ attachments	mail	es-es	Adjuntos
 attachments, ...	mail	es-es	Adjuntos, ...
 authentication	mail	es-es	Autenticación
 available personal email-accounts/profiles	mail	es-es	Cuentas de correo-e/perfiles personales disponibles
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	es-es	Tenga en cuenta que al añadir todos los archivos seleccionados como modo %1, también cambiará todos los adjuntos existentes en la lista al modo %2. \¿Desea continuar?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	es-es	Tenga en cuenta que al añadir todos los archivos seleccionados como modo %1, también cambiará todos los adjuntos existentes en la lista al modo %2.<br>¿Desea continuar?
 be aware that all attachments will be sent as %1!	mail	es-es	¡Tenga en cuenta que todos los archivos adjuntos se enviarán como %1!
 before reply, visible during compose	mail	es-es	Antes de la respuesta, visible durante la composición
 blacklisted mails are marked as spam	mail	es-es	Los mensajes en la lista negra están marcados como spam
@@ -124,7 +124,7 @@ copy to	mail	es-es	Copiar a
 could not append message:	mail	es-es	No se pudo agregar el mensaje:
 could not save the acl because some names are empty	mail	es-es	No se pudo guardar la lista de control de acceso porque algunos nombres están vacíos
 create new account	mail	es-es	crear nueva cuenta
-cross account forward attachment is not allowed!	mail	es-es	No está permitido adjuntar cuentas cruzadas.
+cross account forward attachment is not allowed!	mail	es-es	No está permitido adjuntar cuentas cruzadas!
 current folder	mail	es-es	carpeta actual
 current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
@@ -139,10 +139,11 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	es-es	Define qué mostrar como etiqueta de identidad en la cabecera de la carpeta de correo.
 delete folder	mail	es-es	Suprimir carpeta
 delete folder %1 ?	mail	es-es	¿SUPRIMIR carpeta %1?
+delete selected folders	mail	es-es	Eliminar carpetas seleccionadas
 delete this acl	mail	es-es	Suprimir esta lista de control de acceso
 deleted	mail	es-es	suprimido
 deleted %1 messages in %2	mail	es-es	Suprimido %1 mensajes en %2.
-deleted!	mail	es-es	suprimido!
+deleted!	mail	es-es	¡suprimido!
 deleting %1 folders in progress ...	mail	es-es	Supreción de %1 carpetas en curso ...
 deleting folders	mail	es-es	Suprimiendo carpetas
 deny certain groups access to following features	mail	es-es	Denegar a determinados grupos el acceso a las funciones siguientes
@@ -177,7 +178,7 @@ do you want to prevent the editing/setup of notification by mail to other emaila
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	es-es	¿Desea prevenir la edición o configuración de la notificación de ausencia o vacaciones (incluso si Sieve está activado)?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	es-es	¿Desea prevenir la gestión de carpetas (creación, derechos de acceso Y suscripción)?
 does not contain	mail	es-es	No contiene
-does not exist on imap server.	mail	es-es	No existe en el servidor IMAP
+does not exist on imap server.	mail	es-es	No existe en el servidor IMAP.
 does not match	mail	es-es	No coincide con
 does not match regexp	mail	es-es	No coincide con la expresión
 don't use draft folder	mail	es-es	No usar la carpeta borradores
@@ -190,7 +191,7 @@ draft folder	mail	es-es	carpeta de borradores
 drafts	mail	es-es	Borradores
 drafts folder	mail	es-es	Carpeta de borradores
 edit account	mail	es-es	Editar cuenta
-edit account ...	mail	es-es	Editar cuenta...
+edit account ...	mail	es-es	Editar cuenta ...
 edit folder acl	mail	es-es	Editar la lista de control de acceso de la carpeta
 edit folder acl ...	mail	es-es	Editar la lista de control de acceso de la carpeta ...
 edit vacation settings	mail	es-es	Editar configuración de vacaciones
@@ -221,12 +222,13 @@ error: could not save acl	mail	es-es	Error: no se pudo guardar la lista de contr
 error: could not save message as draft	mail	es-es	Error: no se pudo salvar el mensaje como borrador
 error: could not save rule	mail	es-es	Error: no se pudo guardar la regla
 error: could not send message.	mail	es-es	Error: No se pudo enviar el mensaje.
-error: message could not be displayed.	mail	es-es	ERROR: No se pudo mostrar el mensaje
+error: message could not be displayed.	mail	es-es	ERROR: No se pudo mostrar el mensaje.
 esync will fail without a working email configuration!	mail	es-es	¡eSync fallará sin una configuración de eMail de trabajo!
 event details follow	mail	es-es	A continuación, los detalles del evento
 every %1. day	mail	es-es	Cada %1. día
 everyone	mail	es-es	Todos
 examine namespace to retrieve folders in others and shared	mail	es-es	Examinar espacio de nombres para recuperar carpetas en otros y compartidas
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	es-es	Excluir archivos adjuntos de tamaño superior a un tamaño dado del guardado automático como borrador (en MB)
 extended	mail	es-es	Extendido
 extra sent folders	mail	es-es	Carpetas adicionales enviadas
 failed to delete %1	mail	es-es	Falló al suprimir %1
@@ -276,7 +278,7 @@ from(z->a)	mail	es-es	De (Z-> A)
 general	admin	es-es	General
 general settings	mail	es-es	Opciones generales
 get acl rights failed from imap server!	mail	es-es	¡Falló obtener los derechos de la lista de control de acceso del servidor IMAP!
-greater than	mail	es-es	mayor que
+greater than	mail	es-es	Mayor que
 ham folder	mail	es-es	Carpeta Ham
 handling of external http images / mixed content in mails	mail	es-es	Tratamiento de imágenes http externas / contenido mixto en los correos
 header	mail	es-es	Encabezado
@@ -286,10 +288,10 @@ hold %1 to drag files to your computer	mail	es-es	Sostenga %1 para arrastrar arc
 home page folders	mail	es-es	carpetas de la página de inicio
 hostname or ip	mail	es-es	Nombre de host o IP
 how often to check with the server for new mail	mail	es-es	Con qué frecuencia se debe comprobar el nuevo correo en el servidor
-how should the available information on identities be displayed	admin	es-es	cómo se debe mostrar la información disponible sobre identidades
-how to forward messages	mail	es-es	cómo reenviar mensajes
+how should the available information on identities be displayed	admin	es-es	Cómo se debe mostrar la información disponible sobre identidades
+how to forward messages	mail	es-es	Cómo reenviar mensajes
 html	mail	es-es	HTML
-html mode	mail	es-es	modo HTML
+html mode	mail	es-es	Modo HTML
 ident name	mail	es-es	Nombre de identificación
 ident name email	mail	es-es	Nombre de Ident [Email]
 ident name organization email	mail	es-es	Ident name Organización [Email]
@@ -305,8 +307,8 @@ if mail body message type	mail	es-es	Si el tipo de mensaje del cuerpo del correo
 if mail header	mail	es-es	Si el encabezado
 if message size	mail	es-es	Si el tamaño del mensaje
 if shown, which folders should appear on the home page	mail	es-es	Si se muestran, qué carpetas deben aparecer en la página de inicio
-if subject contains:(*)	mail	es-es	Si el asunto contiene: (*)
-if to contains:(*)	mail	es-es	Si el destinatario contiene: (*)
+if subject contains:(*)	mail	es-es	Si el asunto contiene:(*)
+if to contains:(*)	mail	es-es	Si el destinatario contiene:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	es-es	Si desea ver una vista previa de un correo haciendo clic en el asunto, habilíte esto.
 if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	es-es	Si desea seleccionar varias carpetas en una acción, puede mantener presionada la tecla ctrl y luego seleccionar una carpeta como rango inicial y otra carpeta dentro del mismo nivel que el rango final, todas las carpetas entre ellas serán seleccionadas o desseleccionadas en función de su estado actual.
 imap	mail	es-es	IMAP
@@ -338,7 +340,7 @@ learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como h
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
 less than	mail	es-es	menor que
 limit mailing list results when searching for addresses	mail	es-es	Limitar los resultados de las listas de correo al buscar direcciones
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	es-es	Lista de acciones que deben activarse por defecto (por ejemplo, la acción Guardar como InfoLog de Mail composose)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	es-es	Lista de acciones que deben activarse por defecto (por ejemplo, la acción Guardar como InfoLog de Mail composose).
 mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
 mail filter	mail	es-es	Filtrar
@@ -354,11 +356,11 @@ mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messa
 mark all as read	mail	es-es	Marcar todo como leido
 mark all messages in folder as read	mail	es-es	Marcar todos los mensajes de la carpeta como leídos
 mark as deleted	mail	es-es	Marcar como borrado
-match:	mail	es-es	Coincidir
+match:	mail	es-es	Coincidir:
 matches	mail	es-es	coincide
 matches regexp	mail	es-es	coincide con la expresión
-mbstring.func_overload=0 is required for correct mail processing!	mail	es-es	mbstring.func_overload=0 es necesario para procesar correctamente el correo.
-message body	mail	es-es	cuerpo del mensaje
+mbstring.func_overload=0 is required for correct mail processing!	mail	es-es	¡mbstring.func_overload=0 es necesario para procesar correctamente el correo!
+message body	mail	es-es	Cuerpo del mensaje
 message learned as ham (not spam) and moved back to inbox	mail	es-es	Mensaje detectado como ham (no spam) y devuelto a la bandeja de entrada
 message learned as spam and moved to spam folder	mail	es-es	Mensaje aprendido como spam y movido a la carpeta de spam
 message preview area	mail	es-es	Área de previsualización de mensajes
@@ -508,7 +510,7 @@ required pear class mail/mimedecode.php not found.	mail	es-es	Requerido PEAR cla
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	es-es	¡Requerido para deshabilitar si usa Dovecot con banderas vistas privadas en carpeta compartida o de usuario!
 resend after how many days?	mail	es-es	¿Reenviar después de cuántos días?
 respond to mail sent to:	mail	es-es	Responder al correo enviado a:
-restrict acl management	admin	es-es	restringir gestión de lista de control de acceso
+restrict acl management	admin	es-es	Restringir gestión de lista de control de acceso
 rights	mail	es-es	Derechos
 row order style	mail	es-es	estilo de ordenar filas
 rule priority position	mail	es-es	Posición de prioridad de la regla
@@ -556,7 +558,7 @@ selected	mail	es-es	seleccionado
 selected date range (with quicksearch)	mail	es-es	Rango de fechas seleccionado (con búsqueda rápida)
 send a reject message:	mail	es-es	Enviar un mensaje de rechazo:
 send files as	mail	es-es	Enviar archivos como
-send message and move to send folder (if configured)	mail	es-es	enviar mensaje y mover a la carpeta de envío (si está configurado)
+send message and move to send folder (if configured)	mail	es-es	Enviar mensaje y mover a la carpeta de envío (si está configurado)
 send message pgp encrypted: requires keys from all recipients!	mail	es-es	Enviar mensaje encriptado PGP: ¡necesita claves de todos los destinatarios!
 send only a vacation notice, do not store message in inbox	mail	es-es	Enviar sólo un aviso de vacaciones, NO almacenar el mensaje en INBOX
 send vacation notice and store message in inbox	mail	es-es	Enviar aviso de vacaciones y guardar el mensaje en la bandeja de entrada
@@ -578,17 +580,17 @@ show all addresses	mail	es-es	Mostrar todas las direcciones
 show all attachments	mail	es-es	Mostrar todos los archivos adjuntos
 show all folders	mail	es-es	mostrar todas las carpetas
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	es-es	Mostrar todas las carpetas, (suscritas Y no suscritas) en el panel de carpetas de la pantalla principal.
-show horizontal	mail	es-es	mostrar horizontal
-show horizontal, hide if none selected	mail	es-es	mostrar horizontal, ocultar si no hay seleccionados
-show new messages on home page	mail	es-es	mostrar nuevos mensajes en la página principal
+show horizontal	mail	es-es	Mostrar horizontal
+show horizontal, hide if none selected	mail	es-es	Mostrar horizontal, ocultar si no hay seleccionados
+show new messages on home page	mail	es-es	Mostrar nuevos mensajes en la página principal
 show notification for new arriving mails	mail	es-es	Mostrar notificación de nuevos correos recibidos
 show test connection section and control the level of info displayed?	mail	es-es	¿Mostrar la sección de conexión de prueba y controlar el nivel de información mostrada?
 show test connection section and control the level of info displayed??	mail	es-es	¿Mostrar la sección de conexión de prueba y controlar el nivel de información mostrada?
 show them this time only	mail	es-es	Mostrar sólo esta vez
-show vertical	mail	es-es	mostrar vertical
+show vertical	mail	es-es	Mostrar vertical (vista de 3 columnas)
 show vertical with all columns	mail	es-es	Mostrar vertical con todas las columnas
 show/hide preview pane in mail list view	mail	es-es	Mostrar/ocultar el panel de vista previa en la vista de lista de correo
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	es-es	Muestra una notificación temporal visible que incluye la dirección del remitente, el asunto y un fragmento del correo
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	es-es	Muestra una notificación temporal visible que incluye la dirección del remitente, el asunto y un fragmento del correo.
 sieve	mail	es-es	Sieve
 sieve connection status	mail	es-es	Estado de la conexión Sieve
 sieve not activated	mail	es-es	Sieve no está activado
@@ -645,12 +647,12 @@ the folder %1 's acls saved	mail	es-es	Las ACL de la carpeta %1 guardadas
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	es-es	Se utilizará la carpeta <b>%1</b>, si no hay nada establecido aquí, y no se ha dado ninguna predefinición válida.
 the imap server need to meet certain requirements and be configured for it:	mail	es-es	El servidor IMAP debe cumplir ciertos requisitos Y estar configurado para ello:
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?
-the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje
-the rule with priority %1 successfully saved!	mail	es-es	La regla con prioridad %1 se ha guardado correctamente.
+the mimeparser can not parse this message.	mail	es-es	El intérprete mime no puede interpretar este mensaje.
+the rule with priority %1 successfully saved!	mail	es-es	¡La regla con prioridad %1 se ha guardado correctamente!
 then	mail	es-es	ENTONCES
 there is no imap server configured.	mail	es-es	No se ha configurado un servidor IMAP.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	es-es	No queda espacio para almacenar el script sieve, por favor compruebe la opción sieve_maxscriptsize en la configuración de su servidor de correo.
-this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	es-es	Este correo contiene imágenes externas servidas a través de un protocolo HTTP inseguro. Tenga en cuenta que mostrarlas o permitirlas puede comprometer su seguridad.
+this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	es-es	Este correo contiene imágenes externas servidas a través de un protocolo HTTP inseguro. ¡Tenga en cuenta que mostrarlas o permitirlas puede comprometer su seguridad!
 this message is smime encrypted and password protected.	mail	es-es	Este mensaje está encriptado S/MIME y protegido por contraseña.
 timeout on connections to your imap server	mail	es-es	Tiempo de espera en las conexiones a su servidor IMAP
 to do	mail	es-es	Por hacer
@@ -662,13 +664,13 @@ trust servers seen / unseen info	mail	es-es	servidores de confianza información
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	es-es	Confiar en el servidor al recuperar el estado de la carpeta. si selecciona no, buscaremos los mensajes NO VISTADOS y los contaremos nosotros mismos.
 trying to recover from session data	mail	es-es	Intentar recuperar los datos de la sesión
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	es-es	Desactivar la línea horizontal entre la firma y el mensaje compuesto (esto no está de acuerdo con RFC).<br>Si utiliza plantillas, esta opción sólo se aplica a la parte de texto del mensaje.
-unable to fetch vacation!	mail	es-es	No se pueden recuperar las vacaciones
+unable to fetch vacation!	mail	es-es	¡No se pueden recuperar las vacaciones!
 undelete	mail	es-es	Deshacer
 unflagged	mail	es-es	Sin marcar
 unread	mail	es-es	No leído
 unsubscribe folder	mail	es-es	Cancelar suscripción
 unsubscribe from folder %1	mail	es-es	Dessuscribirse de la carpeta %1
-upload files...	mail	es-es	Cargar archivos...
+upload files...	mail	es-es	Cargar archivos ...
 use default timeout (20 seconds)	mail	es-es	utilizar el tiempo de espera por defecto (20 segundos)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	es-es	Use expresiones regulares (consulte Wikipedia para obtener información sobre expresiones regulares POSIX)
 use source as displayed, if applicable	mail	es-es	utilizar la fuente mostrada, si procede
@@ -689,16 +691,16 @@ view full mail source	mail	es-es	Ver toda la fuente de correo
 view header lines	mail	es-es	Ver líneas del encabezado
 what do do with html email	mail	es-es	Qué hacer con el correo-e HTML
 what order the list columns are in	mail	es-es	En qué orden están las columnas de la lista
-what to do when you delete a message	mail	es-es	qué hacer cuando elimina un mensaje
-what to do when you send a message	mail	es-es	qué hacer cuando envía un mensaje
+what to do when you delete a message	mail	es-es	Qué hacer cuando elimina un mensaje
+what to do when you send a message	mail	es-es	Qué hacer cuando envía un mensaje
 when deleting messages	mail	es-es	Al borrar mensajes
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	es-es	Cuando se muestran mensajes en un pop-up, reutilizar el mismo pop-up para todos o abrir un nuevo pop-up para cada mensaje
-when saving messages as item of a different app	mail	es-es	al guardar mensajes como elemento de una aplicación diferente
-when sending messages	mail	es-es	al enviar mensajes
+when saving messages as item of a different app	mail	es-es	Al guardar mensajes como elemento de una aplicación diferente
+when sending messages	mail	es-es	Al enviar mensajes
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	mail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
 which method to use when forwarding a message	mail	es-es	Cuál método utilizar al reenviar un mensaje
-whitelisted mails are not marked as spam	mail	es-es	Los correos de la lista blanca no están marcados como spam.
+whitelisted mails are not marked as spam	mail	es-es	Los correos de la lista blanca no están marcados como spam
 whole message	mail	es-es	mensaje completo
 with message:	mail	es-es	Con el mensaje:
 wizard	mail	es-es	Asistente
@@ -718,6 +720,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	es-es	Debe introducir su frase de contraseña S/MIME para enviar este mensaje.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	es-es	Necesita instalar el plugin Mailvelope disponible para Chrome y Firefox desde %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	es-es	Debe guardar primero el mensaje como borrador para poder guardarlo en VFS
-you will loose current message body, unless you save it to your clipboard!	mail	es-es	Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
+you need to select some folders first (by clicking on them)!	mail	es-es	Primero debe seleccionar algunas carpetas (haciendo clic sobre ellas).
+you will loose current message body, unless you save it to your clipboard!	mail	es-es	¡Usted perderá el cuerpo del mensaje actual, a menos que lo guarde en su portapapeles!
 you've got new mail	mail	es-es	Tiene correo nuevo
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	es-es	Su cuota restante %1 es demasiado baja, es posible que no pueda enviar/recibir correos-e adicionales.<br>Aunque la limpieza de correos electrónicos en la papelera o en la carpeta basura podría ayudarle a recuperar el espacio libre.<br>Si eso no ayuda, solicite más cuota a su administrador.

@@ -68,8 +68,9 @@ class Mailer extends Horde_Mime_Mail
 	 * @param int|Mail\Account|boolean $account =null mail account to use, default use Mail\Account::get_default($smtp=true)
 	 *	false: no NOT initialise account and set other EGroupware specific headers, used to parse mails (not sending them!)
 	 *	initbasic: return $this
+	 * @param int|null $called_for account_id to use as sender, default $GLOBALS[egw_info][user][account_id]
 	 */
-	function __construct($account=null)
+	function __construct($account=null, int $called_for=null)
 	{
 		// Horde use locale for translation of error messages
 		Preferences::setlocale(LC_MESSAGES);
@@ -86,7 +87,7 @@ class Mailer extends Horde_Mime_Mail
 		{
 			$this->_headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['api']);
 
-			$this->setAccount($account);
+			$this->setAccount($account, $called_for);
 
 			$this->is_html = false;
 
@@ -111,25 +112,23 @@ class Mailer extends Horde_Mime_Mail
 	/**
 	 * Set mail account to use for sending
 	 *
-	 * @param int|Mail\Account $account =null mail account to use, default use Mail\Account::get_default($smtp=true)
+	 * @param int|Mail\Account|null $account =null mail account to use, default use Mail\Account::get_default($smtp=true)
+	 * @param int|null $called_for account_id to use as sender, default $GLOBALS[egw_info][user][account_id]
 	 * @throws Exception\NotFound if account was not found (or not valid for current user)
 	 */
-	function  setAccount($account=null)
+	function  setAccount($account=null, int $called_for=null)
 	{
 		if ($account instanceof Mail\Account)
 		{
 			$this->account = $account;
 		}
-		elseif ($account > 0)
-		{
-			$this->account = Mail\Account::read($account);
-		}
 		else
 		{
-			if (!($this->account = Mail\Account::get_default(true)))	// true = need an SMTP (not just IMAP) account
+			if (!($account > 0) && !($account = Mail\Account::get_default(true, true)))	// true = need an SMTP (not just IMAP) account
 			{
 				throw new Exception\NotFound('SMTP: '.lang('Account not found!'));
 			}
+			$this->account = Mail\Account::read($account, $called_for);
 		}
 
 		try

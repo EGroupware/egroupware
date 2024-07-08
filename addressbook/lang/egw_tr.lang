@@ -19,7 +19,6 @@ add to distribution list:	addressbook	tr	Dağıtım listesine ekle:
 add to to	addressbook	tr	Şuraya Ekle
 added	addressbook	tr	Eklendi
 address book	common	tr	Adres Defteri
-address book - vcard in	addressbook	tr	Adres Defteri - vCard
 address book - view	addressbook	tr	Adres Defteri - Görüntüle
 address line 2	addressbook	tr	Adres satırı 2
 address type	addressbook	tr	Adres tipi
@@ -62,13 +61,13 @@ csv-fieldname	addressbook	tr	CSV alan adı
 csv-filename	addressbook	tr	CSV dosya adı
 custom	addressbook	tr	Özel
 custom fields	addressbook	tr	Özel Alanlar
-debug output in browser	addressbook	tr	Tarayıcıda hata ayıklama çıktısı
 default	addressbook	tr	Varsayılan
 default action on double-click	addressbook	tr	Çift tıklamada varsayılan eylem
 default filter	addressbook	tr	Varsayılan filtre
 delete a single entry by passing the id.	addressbook	tr	ID'sini girerek bir girdiyi sil
 deleted	addressbook	tr	Silindi
 department	common	tr	Bölüm
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	tr	Ana Sayfa'da doğum günlerini gösterin.
 domestic	addressbook	tr	Ev
 download	addressbook	tr	İndir
 download export file (uncheck to debug output in browser)	addressbook	tr	Dışa aktarma dosyasını indirin. Çıktıyı tarayıcıda hata ayıklamak için işareti kaldırın.
@@ -106,6 +105,8 @@ global categories	addressbook	tr	Genel kategoriler
 grant addressbook access	common	tr	Adres defterine erişim izni verme
 hide accounts from addressbook	addressbook	tr	Kullanıcı hesaplarını gizleme
 hide all accounts	addressbook	tr	Tüm hesapları gizle
+hide all groups	addressbook	tr	Tüm grupları gizle
+hide groups without email address	addressbook	tr	E-posta adresi olmayan grupları gizle
 hide user groups as distribution lists	addressbook	tr	Kullanıcı gruplarını dağıtım listeleri olarak gizleme
 hides accounts completly from the adressbook.	addressbook	tr	Kullanıcı hesaplarını adres defterinden tamamen gizleyin.
 home city	addressbook	tr	Ev şehir
@@ -126,8 +127,8 @@ import from ldif, csv, or vcard	addressbook	tr	LDIF, CSV ya da vCard'tan ithal e
 import from outlook	addressbook	tr	Outlook'tan ithal et
 import multiple vcard	addressbook	tr	Birden fazla vCard'ı içe aktarma
 import next set	addressbook	tr	Sonraki seti içe aktar
-import_instructions	addressbook	tr	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in vCard format.
 importer's personal	addressbook	tr	İthalatçının kişisel
+include all groups	addressbook	tr	Tüm grupları dahil edin
 infolog	addressbook	tr	InfoLog İletişim
 infolog-organisation	addressbook	tr	InfoLog Organizasyon
 international	addressbook	tr	Uluslararası
@@ -176,8 +177,6 @@ repetition	addressbook	tr	Tekrarlama
 schedule a video conference	addressbook	tr	Bir video konferans planlayın
 search letter	addressbook	tr	Harf ara
 select all	addressbook	tr	Tümünü seçin
-select the type of conversion	addressbook	tr	Dönüştürme türünü seçin
-select the type of conversion:	addressbook	tr	Dönüştürme türünü seçin:
 share into addressbook	addressbook	tr	Adres defterinde paylaş
 share writable	addressbook	tr	Düzenlenebilir paylaş
 shared	addressbook	tr	paylaşılan

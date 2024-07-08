@@ -267,7 +267,8 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				"visualblocks visualchars image link media template fullscreen",
 				"codesample table charmap hr pagebreak nonbreaking anchor toc ",
 				"insertdatetime advlist lists textcolor wordcount imagetools ",
-				"colorpicker textpattern help paste code searchreplace tabfocus"
+				"colorpicker textpattern help paste code searchreplace tabfocus",
+				"noneditable"
 			],
 			toolbar: et2_htmlarea.TOOLBAR_SIMPLE,
 			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
@@ -280,7 +281,9 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 				"Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,"+
 				"monaco;Times New Roman=times new roman,times;Trebuchet "+
 				"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
-				"Wingdings=wingdings,zapf dingbats",
+				"Wingdings=wingdings,zapf dingbats;"+
+				"EGroupware=egroupware,arial,helvetica,sans-serif;"+
+				"EGroupware Bold=egroupware2,arial black,avant garde",
 			fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
 			content_css: egw.webserverUrl+'/api/tinymce.php?'+	// use the 3 prefs as cache-buster
 				btoa(egw.preference('rte_font', 'common')+'::'+

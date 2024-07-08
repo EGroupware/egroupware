@@ -1,4 +1,7 @@
+%1 attachments	mail	id	%1 lampiran
 %1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
+%1 mails selected	mail	id	%1 email yang dipilih
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	id	%1 memerlukan ekstensi Sieve %2, mungkin coba %1 atau jumlah hari yang lebih tinggi.
 (leave empty for no quota)	mail	id	(Biarkan kosong untuk tidak ada kuota)
 (no subject)	mail	id	(tanpa subyek)
 acl rights retrieve failed, seems there are no rights set!	mail	id	Pengambilan hak ACL gagal, tampaknya tidak ada hak yang ditetapkan!
@@ -19,11 +22,11 @@ answered	mail	id	Menjawab
 any of	mail	id	sembarang
 any status	mail	id	status apapun
 attach files	mail	id	Melampirkan file
-attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna saat menulis ke setiap email baru
+attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna saat menulis ke setiap email baru.
 attachment has been saved successfully.	mail	id	Lampiran telah berhasil disimpan.
 attachments	mail	id	Lampiran
 attachments, ...	mail	id	lampiran, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	id	Perlu diketahui bahwa dengan menambahkan semua file yang dipilih sebagai mode %1, ini juga akan mengubah semua lampiran yang ada dalam daftar menjadi mode %2. \n \n Apakah Anda ingin melanjutkan?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	id	Perlu diketahui bahwa dengan menambahkan semua file yang dipilih sebagai mode %1, ini juga akan mengubah semua lampiran yang ada dalam daftar menjadi mode %2.<br><br>Apakah Anda ingin melanjutkan?
 be aware that all attachments will be sent as %1!	mail	id	Ketahuilah bahwa semua lampiran akan dikirim sebagai %1!
 by date	mail	id	menurut tanggal
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	id	Secara default, 'http://' hanya diganti dengan 'https://'. Jangan ragu untuk mengonfigurasi 'https://proxy.egroupware.org/' untuk juga memuat gambar yang hanya tersedia melalui http.
@@ -50,8 +53,9 @@ default sorting order	mail	id	Pengurutan bawaan
 default toolbar actions shown in mail's html editor	mail	id	Fungsi yang diaktifkan di bilah alat editor HTML saat membuat email
 default value for remembering s/mime passphrase in minutes	mail	id	Nilai default untuk mengingat frasa sandi S/MIME dalam hitungan menit
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	id	Menentukan apa yang akan ditampilkan sebagai label kontak untuk kontak yang ditambahkan ke dalam Kepada/Salin/Tembusan saat membuat email. Nilai default adalah nama depan nama belakang dan kosong berarti menyertakan semua yang tersedia.
-defines what to show as identity label on mail folder header	common	id	Menentukan apa yang akan ditampilkan sebagai label identitas pada header folder email
+defines what to show as identity label on mail folder header	common	id	Menentukan apa yang akan ditampilkan sebagai label identitas pada header folder email.
 delete folder	mail	id	Hapus Folder
+delete selected folders	mail	id	Menghapus folder yang dipilih
 deleted	mail	id	terhapus
 disable	mail	id	Disable
 disable caching of flags	mail	id	Menonaktifkan penyimpanan bendera di cache
@@ -60,8 +64,8 @@ discard message	mail	id	buang pesan
 do you really want to toggle flag %1 for all messages in the current view?	mail	id	Apakah Anda benar-benar ingin mengganti bendera %1 untuk SEMUA pesan di tampilan saat ini?
 do you really want to toggle label %1 for all messages in the current view?	mail	id	Apakah Anda benar-benar ingin mengganti label %1 untuk SEMUA pesan di tampilan saat ini?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	id	Apakah Anda ingin dimintai konfirmasi sebelum melampirkan pesan yang dipilih ke email baru?
-draft folder	mail	id	draft folder
-drafts	mail	id	Drafts
+draft folder	mail	id	Folder Konsep
+drafts	mail	id	Draf
 edit account	mail	id	Edit akoun
 email address	mail	id	Alamat email
 emailaddress	admin	id	Alamat email
@@ -76,6 +80,7 @@ error:	mail	id	Error:
 event details follow	mail	id	Berikut adalah detil Kegiatan
 everyone	mail	id	Semua orang
 examine namespace to retrieve folders in others and shared	mail	id	Periksa ruang nama untuk mengambil folder di folder lain dan dibagikan
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	id	Mengecualikan lampiran yang lebih besar dari ukuran yang diberikan dari penyimpanan otomatis sebagai draf (dalam MB)
 extended	mail	id	Extended
 failed to subscribe folder %1!	mail	id	Gagal berlangganan folder %1!
 failed to unsubscribe folder %1!	mail	id	Gagal berhenti berlangganan folder %1!
@@ -84,7 +89,7 @@ file into:	mail	id	Pindah ke:
 filemanager	mail	id	Manajer berkas
 filemode has been switched to %1	mail	id	Mode file telah dialihkan ke: %1
 flagged	mail	id	ditandai
-flagged %1 messages as %2 in %3	mail	id	Menandai%1 pesan sebagai%2 di%3
+flagged %1 messages as %2 in %3	mail	id	Menandai %1 pesan sebagai %2 di %3
 flagged %1 messages as flagged in %2	mail	id	Menandai %1 pesan sebagai ditandai di %2
 flagged %1 messages as unflagged in %2	mail	id	Menandai %1 pesan sebagai tidak ditandai di %2
 folder	mail	id	Folder
@@ -99,10 +104,11 @@ from	mail	id	Dari
 from(a->z)	mail	id	Dari (A->Z)
 from(z->a)	mail	id	Dari (Z->A)
 general	admin	id	Umum
+general settings	mail	id	Pengaturan umum
 get acl rights failed from imap server!	mail	id	Dapatkan hak ACL gagal dari server IMAP!
 greater than	mail	id	lebih dari
 ham folder	mail	id	Folder ham
-handling of external http images / mixed content in mails	mail	id	Penanganan gambar http eksternal / konten campuran dalam email
+handling of external http images / mixed content in mails	mail	id	Penanganan gambar eksternal/konten campuran dalam email
 header lines	mail	id	Baris Header
 html	mail	id	HTML
 ident name	mail	id	Nama identitas
@@ -127,7 +133,7 @@ inbox	mail	id	Kotak masuk
 information to show on email tag	mail	id	Informasi untuk ditampilkan pada tag email
 initialization of mail failed. please use the wizard to cope with the problem.	mail	id	Inisialisasi modul email gagal. Silakan gunakan wizard konfigurasi untuk memperbaiki konfigurasi.
 inline	mail	id	Teruskan
-insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	id	Teruskan
+insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	id	masukkan tanda tangan di bagian atas pesan baru (atau balasan) saat membuka dialog tulis (Anda mungkin tidak dapat mengganti tanda tangan)
 job	mail	id	Bekerja
 junk	mail	id	Sampah
 junk folder	mail	id	Folder sampah
@@ -138,7 +144,7 @@ learning as ham (not spam) failed because of %1	mail	id	Belajar sebagai ham (buk
 learning as spam failed because of %1	mail	id	Belajar sebagai spam gagal karena %1
 less than	mail	id	kurang dari
 limit mailing list results when searching for addresses	mail	id	Membatasi hasil milis saat mencari alamat
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	id	Daftar tindakan yang akan diaktifkan/dialihkan secara default (misalnya, tindakan menulis surat simpan sebagai InfoLog)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	id	Daftar tindakan yang akan diaktifkan/dialihkan secara default (misalnya, tindakan menulis surat simpan sebagai InfoLog).
 mail	common	id	Surat
 mail acl	mail	id	Hak akses
 mail filter	mail	id	Filter surat
@@ -150,7 +156,7 @@ mailaccount	mail	id	Akun surat
 mailinglist	mail	id	Milis
 mails	common	id	Surat
 mails can be copied to that folder via context menu, if folder is configured.	mail	id	Pesan dapat disalin ke folder tersebut melalui menu konteks, jika folder dikonfigurasi.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	id	Mailserver melaporkan:\n%1 \nApakah Anda ingin melanjutkan dengan segera menghapus pesan yang dipilih (klik ok)?\nJika tidak, cobalah mengosongkan folder sampah sebelum melanjutkan. (klik batal)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	id	Mailserver melaporkan:<br><br>%1<br><br>Apakah Anda ingin melanjutkan dengan segera menghapus pesan yang dipilih (klik OK)?<br>Jika tidak, cobalah mengosongkan folder sampah sebelum melanjutkan. (klik batal)
 mark all as read	mail	id	Tandai semua sebagai telah dibaca
 mark all messages in folder as read	mail	id	Tandai semua pesan dalam folder sebagai telah dibaca
 mark as deleted	mail	id	Tandai sbg terhapus
@@ -203,7 +209,7 @@ post	mail	id	kirim
 predefined addresses for compose	mail	id	Alamat yang telah ditentukan sebelumnya untuk penulisan
 preview pane	mail	id	Tata letak jendela
 printing	mail	id	Pencetakan
-printview	mail	id	lihat cetakan
+printview	mail	id	Lihat cetakan
 processing of file %1 failed. failed to meet basic restrictions.	mail	id	Pemrosesan file %1 gagal. Gagal memenuhi batasan dasar.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	id	Memberikan teks liburan default, (digunakan pada pesan liburan baru ketika tidak ada pesan yang diatur sebelumnya)
 push notifications	mail	id	Pemberitahuan push
@@ -258,15 +264,15 @@ sent folder	mail	id	Sent Folder
 server supports special-use folders	mail	id	Server mendukung folder penggunaan khusus
 set predefined values for compose...	mail	id	Tetapkan nilai yang telah ditentukan sebelumnya untuk penulisan ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	id	Haruskah tanda tangan dimasukkan setelah (standar) atau sebelum balasan atau penerusan, dan haruskah tanda tangan terlihat dan dapat diubah selama penulisan.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	id	Tampilkan semua folder, (berlangganan DAN berhenti berlangganan) di panel folder layar utama
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	id	Tampilkan semua folder, (berlangganan DAN berhenti berlangganan) di panel folder layar utama.
 show notification for new arriving mails	mail	id	Tampilkan pemberitahuan untuk email baru yang masuk
 show test connection section and control the level of info displayed?	mail	id	Tampilkan bagian uji koneksi dan kendalikan tingkat info yang ditampilkan?
 show test connection section and control the level of info displayed??	mail	id	Tampilkan bagian uji koneksi dan kendalikan tingkat info yang ditampilkan?
 show them this time only	mail	id	Tampilkan saat ini saja
-show vertical	mail	id	Tampilkan vertikal
+show vertical	mail	id	Tampilkan vertikal (tampilan 3 kolom)
 show vertical with all columns	mail	id	Tampilkan vertikal dengan semua kolom
-show/hide preview pane in mail list view	mail	id	Menampilkan/menyembunyikan panel pratinjau dalam tampilan daftar surat
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	id	Menampilkan notifikasi yang terlihat sementara termasuk dari alamat, subjek, dan cuplikan email
+show/hide preview pane in mail list view	mail	id	Menampilkan/menyembunyikan panel pratinjau dalam tampilan daftar surat.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	id	Menampilkan notifikasi yang terlihat sementara termasuk dari alamat, subjek, dan cuplikan email.
 sign your message with smime certificate	mail	id	Tanda tangani pesan Anda dengan sertifikat S/MIME
 signature	mail	id	Tandatangan
 signature at top	mail	id	Tanda tangan di bagian atas
@@ -285,7 +291,7 @@ subject(z->a)	mail	id	Subyek (Z->A)
 template folder	mail	id	Folder Templat
 templates	mail	id	Templat
 text	mail	id	Text
-text/plain	mail	id	text/plain
+text/plain	mail	id	Teks
 the imap server need to meet certain requirements and be configured for it:	mail	id	Server IMAP harus memenuhi persyaratan tertentu DAN dikonfigurasi untuk itu:
 the rule with priority %1 successfully saved!	mail	id	Aturan dengan prioritas %1 berhasil disimpan!
 then	mail	id	THEN
@@ -298,13 +304,15 @@ toggle all folders view for %1	mail	id	Mengalihkan tampilan semua Folder untuk %
 toggled on actions	mail	id	Mengaktifkan tindakan
 trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
-unflagged	mail	id	tak ditandai
+unflagged	mail	id	Tak ditandai
 unread	mail	id	Tak dibaca
-vacation notice	mail	id	vacation notice
-write	mail	id	Tulis
+vacation notice	mail	id	Pemberitahuan liburan
+write	mail	id	tulis
 wrote	mail	id	menulis
+yes, offer copy option	mail	id	Ya, tawarkan opsi salin
 yes, only trigger connection reset	mail	id	ya, hanya memicu pengaturan ulang koneksi
 yes, show all debug information available for the user	mail	id	ya, tampilkan semua informasi debug yang tersedia untuk pengguna
+yes, show basic info only	mail	id	ya, tampilkan info dasar saja
 you can either choose to save as infolog or tracker, not both.	mail	id	Anda dapat memilih untuk menyimpan sebagai InfoLog ATAU tracker, tidak keduanya.
 you can select what info to be displayed on email tag	mail	id	Anda dapat memilih informasi yang akan ditampilkan pada tag email.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	id	Anda dapat menggunakan $$start$$ untuk tanggal mulai di atas dan $$end$$ untuk tanggal akhir.
@@ -312,6 +320,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	id	Anda harus memasukkan frasa sandi S/MIME Anda untuk mengirim pesan ini.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	id	Anda perlu menginstal plugin Mailvelope yang tersedia untuk Chrome dan Firefox dari %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	id	Anda harus menyimpan pesan sebagai draf terlebih dahulu agar dapat menyimpannya ke dalam VFS
+you need to select some folders first (by clicking on them)!	mail	id	Anda perlu memilih beberapa folder terlebih dahulu (dengan mengkliknya)!
 you will loose current message body, unless you save it to your clipboard!	mail	id	Anda akan kehilangan isi pesan saat ini, kecuali jika Anda menyimpannya ke clipboard Anda!
 you've got new mail	mail	id	Anda mendapat email baru
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	id	Sisa kuota %1 Anda terlalu rendah, Anda mungkin tidak dapat mengirim/menerima email lebih lanjut, meskipun membersihkan email di folder sampah atau junk dapat membantu Anda untuk mendapatkan ruang kosong kembali.

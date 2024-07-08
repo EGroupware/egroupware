@@ -149,6 +149,11 @@ interface ActiveFilters
  *                                          +--------------+-----------+-------+
  *                                          | header_right | favorites | count |
  *                                          +--------------+-----------+-------+
+ * then comes...
+ * +- nextmatch_header +
+ * +  header_row2      |
+ * +-------------------+
+ *
  * @augments et2_DOMWidget
  */
 export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2_IInput, et2_IPrint
@@ -175,13 +180,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		"header_right": {
 			"name": "Right custom template",
 			"type": "string",
-			"description": "Customise the nextmatch - right side.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
+			"description": "Customise the nextmatch - right side, before favorites and row count. Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
 		"header_row": {
 			"name": "Inline custom template",
 			"type": "string",
-			"description": "Customise the nextmatch - inline, after row count.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
+			"description": "Customise the nextmatch - inline, after search before category,filter,filter2,header_right,favorites,row count.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
+			"default": ""
+		},
+		"header_row2": {
+			"name": "Inline custom template",
+			"type": "string",
+			"description": "Customise the nextmatch - inline, after row count in new line.  Provided template becomes a child of nextmatch, and any input widgets are automatically bound to refresh the nextmatch on change.  Any inputs with an onChange attribute can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
 		"no_filter": {
@@ -2161,7 +2172,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			if(colName)
 			{
 				// Server side wants each cf listed as a seperate column
-				if(widget.instanceOf(et2_nextmatch_customfields))
+				if(widget.instanceOf(et2_nextmatch_customfields) && visibility[colMgr.columns[i].id].visible && visibility[colMgr.columns[i].id].enabled)
 				{
 					// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 					colName = widget.id;
@@ -2170,7 +2181,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						if(widget.options.fields[name]) custom_fields.push(et2_nextmatch_customfields.PREFIX + name);
 					}
 				}
-				if(visibility[colMgr.columns[i].id].visible)
+				if(visibility[colMgr.columns[i].id].visible && visibility[colMgr.columns[i].id].enabled)
 				{
 					colDisplay.push(colName);
 				}
@@ -2222,9 +2233,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 
 				// Just the ID for server side, not the whole nm name - some apps use it to skip custom fields
 				colName = widget.id;
+				let show_custom_fields = false;
 				if(column_list.indexOf(colName) !== -1)
 				{
-					visibility[columnMgr.columns[i].id].visible = true;
+					show_custom_fields = true;
 				}
 
 				const cf = this.columns[i].widget.options.customfields;
@@ -2242,6 +2254,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					visible[column_list[j].substring(1)] = true;
 				}
 				(<et2_nextmatch_customfields><unknown>widget).set_visible(visible);
+				visibility[columnMgr.columns[i].id].visible = show_custom_fields && Object.values(visible).filter(f => f).length > 0;
 			}
 			this.columns[i].visible = visibility[columnMgr.columns[i].id]?.visible;
 
@@ -2565,6 +2578,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	set_header_row(template : string)
 	{
 		this.header._build_header("row", template);
+	}
+
+	set_header_row2(template : string)
+	{
+		this.header._build_header("row2", template);
 	}
 
 	set_no_filter(bool, filter_name)
@@ -3397,7 +3415,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		this.headers = [
 			{id: this.nextmatch.options.header_left},
 			{id: this.nextmatch.options.header_right},
-			{id: this.nextmatch.options.header_row}
+			{id: this.nextmatch.options.header_row},
+			{id: this.nextmatch.options.header_row2}
 		];
 
 		// The rest of the header
@@ -3620,9 +3639,9 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 	 * @param {string} location One of left, right, or row
 	 * @param {string} template_name Name of the template to load into the location
 	 */
-	_build_header(location : "left" | "right" | "row", template_name : string)
+	_build_header(location : "left" | "right" | "row" | "row2", template_name : string)
 	{
-		const id = location == "left" ? 0 : (location == "right" ? 1 : 2);
+		const id = location == "left" ? 0 : (location == "right" ? 1 : (location == "row" ? 2 : 3) );
 		const existing = this.headers[id];
 		// @ts-ignore
 		if(existing && existing._type)
@@ -3659,8 +3678,23 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 						jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
 					}, 1);
 					break;
+				case 3:	// header_row2: below everything
+					window.setTimeout(function()
+					{	// otherwise we might end up after filters
+						jQuery(header.getDOMNode()).insertAfter(self.header_div);
+					}, 1);
+					break;
 			}
-			self._bindHeaderInput(header);
+			// Give child templates a chance to load before we bind inputs
+			let children = [];
+			header.iterateOver((_widget) =>
+			{
+				children.push(_widget.loading);
+			}, this, et2_template);
+			Promise.all(children).then(() =>
+			{
+				self._bindHeaderInput(header);
+			});
 		});
 	}
 

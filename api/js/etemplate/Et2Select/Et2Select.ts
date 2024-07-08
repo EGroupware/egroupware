@@ -546,7 +546,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.updateComplete.then(() => this.fix_bad_value());
 	}
 
-	/** @param {import('@lion/core').PropertyValues } changedProperties */
+	/** @param changedProperties */
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
@@ -1046,6 +1046,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     exportparts="form-control-label, prefix, tags, display-input, expand-icon, combobox, combobox:base, listbox, option"
                     label=${this.label}
                     placeholder=${this.placeholder || (this.multiple && this.emptyLabel ? this.emptyLabel : "")}
+					aria-label=${this.ariaLabel}
+                    aria-description=${this.ariaDesciption}
                     ?multiple=${this.multiple}
                     ?disabled=${this.disabled || this.readonly}
                     ?clearable=${this.clearable}

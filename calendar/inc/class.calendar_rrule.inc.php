@@ -68,10 +68,10 @@ class calendar_rrule implements Iterator
 	/**
 	 * RDATE: date or period (a list of dates, instead of a RRULE)
 	 */
-	const PERIOD = 9;
+	const RDATE = 9;
 
 	/**
-	 * Translate recure types to labels
+	 * Translate recurrence types to labels
 	 *
 	 * @var array
 	 */
@@ -82,11 +82,11 @@ class calendar_rrule implements Iterator
 		self::MONTHLY_WDAY => 'Monthly (by day)',
 		self::MONTHLY_MDAY => 'Monthly (by date)',
 		self::YEARLY       => 'Yearly',
-		self::PERIOD => 'By date or period'
+		self::RDATE        => 'Explicit recurrences',
 	);
 
 	/**
-	 * @var array $recur_egw2ical_2_0 converstaion of egw recur-type => ical FREQ
+	 * @var array $recur_egw2ical_2_0 conversation of egw recur-type => ical RULE;FREQ
 	 */
 	static private $recur_egw2ical_2_0 = array(
 		self::DAILY        => 'DAILY',
@@ -96,11 +96,11 @@ class calendar_rrule implements Iterator
 		self::YEARLY       => 'YEARLY',
 		self::HOURLY       => 'HOURLY',
 		self::MINUTELY     => 'MINUTELY',
-		self::PERIOD => 'PERIOD'
+		self::RDATE        => 'RDATE',
 	);
 
 	/**
-	 * @var array $recur_egw2ical_1_0 converstaion of egw recur-type => ical FREQ
+	 * @var array $recur_egw2ical_1_0 conversation of egw recur-type => ical FREQ
 	 */
 	static private $recur_egw2ical_1_0 = array(
 		self::DAILY        => 'D',
@@ -143,10 +143,10 @@ class calendar_rrule implements Iterator
 	public $monthly_bymonthday;
 
 	/**
-	 * Period list
-	 * @var
+	 * Recurrence dates
+	 * @var \DateTime[]
 	 */
-	public $period = [];
+	public $rdates = [];
 
 	/**
 	 * Enddate of recurring event or null, if not ending
@@ -276,7 +276,7 @@ class calendar_rrule implements Iterator
 		$this->time = $time instanceof Api\DateTime ? $time : new Api\DateTime($time);
 
 		if(!in_array($type, array(self::NONE, self::DAILY, self::WEEKLY, self::MONTHLY_MDAY, self::MONTHLY_WDAY,
-								  self::YEARLY, self::HOURLY, self::MINUTELY, self::PERIOD)))
+								  self::YEARLY, self::HOURLY, self::MINUTELY, self::RDATE)))
 		{
 			throw new Api\Exception\WrongParameter(__METHOD__."($time,$type,$interval,$enddate,$weekdays,...) type $type is NOT valid!");
 		}
@@ -316,18 +316,32 @@ class calendar_rrule implements Iterator
 		}
 		$this->interval = (int)$interval;
 
+		if ($exceptions)
+		{
+			foreach($exceptions as $exception)
+			{
+				$exception->setTimezone($this->time->getTimezone());
+				$this->exceptions[] = $exception->format('Ymd');
+			}
+			$this->exceptions_objs = $exceptions;
+		}
 		$this->enddate = $enddate;
-		if($type == self::PERIOD)
+		if($type == self::RDATE)
 		{
 			foreach($rdates as $rdate)
 			{
 				$rdate->setTimezone($this->time->getTimezone());
-				$this->period[] = $rdate;
+				$this->rdates[] = $rdate;
 			}
-			$enddate = clone(count($this->period) ? end($this->period) : $this->time);
+			// if startdate is neither in the rdates, nor the exceptions --> prepend it to rdates
+			if (!in_array($this->time, $this->rdates) && !in_array($this->time, $this->exceptions_objs))
+			{
+				array_unshift($this->rdates, clone($this->time));
+			}
+			$enddate = clone(count($this->rdates) ? end($this->rdates) : $this->time);
 			// Make sure to include the last date as valid
 			$enddate->modify('+1 second');
-			reset($this->period);
+			reset($this->rdates);
 		}
 		// no recurrence --> current date is enddate
 		if ($type == self::NONE)
@@ -352,15 +366,6 @@ class calendar_rrule implements Iterator
 		if (!($this->weekdays = (int)$weekdays) && ($type == self::WEEKLY || $type == self::MONTHLY_WDAY))
 		{
 			$this->weekdays = self::getWeekday($this->time);
-		}
-		if ($exceptions)
-		{
-			foreach($exceptions as $exception)
-			{
-				$exception->setTimezone($this->time->getTimezone());
-				$this->exceptions[] = $exception->format('Ymd');
-			}
-			$this->exceptions_objs = $exceptions;
 		}
 	}
 
@@ -497,8 +502,8 @@ class calendar_rrule implements Iterator
 			case self::MINUTELY:
 				$this->current->modify($this->interval.' minute');
 				break;
-			case self::PERIOD:
-				if (($next = next($this->period)))
+			case self::RDATE:
+				if (($next = next($this->rdates)))
 				{
 					$this->current->setDate($next->format('Y'), $next->format('m'), $next->format('d'));
 					$this->current->setTime($next->format('H'), $next->format('i'), $next->format('s'), 0);
@@ -596,9 +601,9 @@ class calendar_rrule implements Iterator
 	 */
 	public function rewind(): void
 	{
-		if ($this->type == self::PERIOD)
+		if ($this->type == self::RDATE)
 		{
-			$this->current = $this->period ? clone reset($this->period) : null;
+			$this->current = $this->rdates ? clone reset($this->rdates) : null;
 		}
 		else
 		{
@@ -691,13 +696,18 @@ class calendar_rrule implements Iterator
 						$str_extra[] = ($this->monthly_byday_num == -1 ? lang('last') : $this->monthly_byday_num.'.').' '.implode(', ',$repeat_days);
 					}
 					break;
-
+				case self::RDATE:
+					$str_extra = array_map(static function (DateTime $rdate)
+					{
+						return Api\DateTime::server2user($rdate, '');
+					}, $this->rdates);
+					break;
 			}
-			if($this->interval > 1)
+			if($this->interval > 1 && $this->type != self::RDATE)
 			{
 				$str_extra[] = lang('Interval').': '.$this->interval;
 			}
-			if ($this->enddate)
+			if ($this->enddate && $this->type != self::RDATE)
 			{
 				if ($this->enddate->getTimezone()->getName() != Api\DateTime::$user_timezone->getName())
 				{
@@ -728,7 +738,7 @@ class calendar_rrule implements Iterator
 		$repeat_days = array();
 		$rrule = array();
 
-		if ($this->type == self::NONE) return false;	// no recuring event
+		if ($this->type == self::NONE || $this->type == self::RDATE) return false;	// no recurring event (with RRULE)
 
 		if ($version == '1.0')
 		{
@@ -974,7 +984,7 @@ class calendar_rrule implements Iterator
 			'recur_enddate' => $this->enddate ? $this->enddate->format('ts') : null,
 			'recur_data' => $this->weekdays,
 			'recur_exception' => $this->exceptions,
-			'recur_rdates' => $this->period,
+			'recur_rdates' => $this->rdates,
 		);
 	}
 
@@ -982,7 +992,7 @@ class calendar_rrule implements Iterator
 	 * Shift a recurrence rule to a new timezone
 	 *
 	 * @param array $event			recurring event
-	 * @param DateTime/string		starttime of the event (in servertime)
+	 * @param DateTime|string $starttime of the event (in servertime)
 	 * @param string $to_tz			new timezone
 	 */
 	public static function rrule2tz(array &$event,$starttime,$to_tz)

@@ -989,7 +989,7 @@ class Backup
 			}
 			while((!empty($pk) || $lock_table !== false) && !($total % self::ROW_CHUNK) && $num_rows);
 
-			if (!$pk) $this->db->rollback_lock($table);
+			if (!$pk && $lock_table !== false) $this->db->rollback_lock($table);
 		}
 
 		// let apps know that backup is finished

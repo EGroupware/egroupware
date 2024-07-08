@@ -22,7 +22,6 @@ use EGroupware\Api;
  */
 class Customfields extends Transformer
 {
-
 	/**
 	 * Allowed types of customfields
 	 *
@@ -38,8 +37,8 @@ class Customfields extends Transformer
 		'int'      => 'Integer',
 		'float'    => 'Float',
 		'label'    => 'Label',
+		'header'   => 'Header',
 		'select'   => 'Selectbox',
-		'ajax_select' => 'Search',
 		'radio'    => 'Radiobutton',
 		'checkbox' => 'Checkbox',
 		'date'     => 'Date',
@@ -51,6 +50,7 @@ class Customfields extends Transformer
 		'url-phone'=> 'Phone number',
 		'htmlarea' => 'Formatted Text (HTML)',
 		'link-entry' => 'Select entry',         // should be last type, as the individual apps get added behind
+		'serial'   => 'Serial number',
 	);
 
 	/**
@@ -195,7 +195,7 @@ class Customfields extends Transformer
 				unset($fields[$key]);
 			}
 
-			// Rmove fields for none private cutomfields when name refers to a single custom field
+			// move fields for none private customfields when name refers to a single custom field
 			$matches = null;
 			if (($pos=strpos($form_name,$this->attrs['prefix'])) !== false &&
 			preg_match($preg = '/'.$this->attrs['prefix'].'([^\]]+)/',$form_name,$matches) && !isset($fields[$name=$matches[1]]))
@@ -208,21 +208,7 @@ class Customfields extends Transformer
 		switch($type = $this->type)
 		{
 			case 'customfields-types':
-				foreach(self::$cf_types as $lname => $label)
-				{
-					$sel_options[$lname] = lang($label);
-					$fields_with_vals[]=$lname;
-				}
-				$link_types = array_intersect_key(Api\Link::app_list('query'), Api\Link::app_list('title'));
-				// Explicitly add in filemanager, which does not support query or title
-				$link_types['filemanager'] = lang('filemanager');
-
-				ksort($link_types);
-				foreach($link_types as $lname => $label)
-				{
-					$sel_options[$lname] = '- '.$label;
-				}
-				self::$transformation['type'][$type]['sel_options'] = $sel_options;
+				self::$transformation['type'][$type]['sel_options'] = self::getCfTypes($fields_with_vals);
 				self::$transformation['type'][$type]['no_lang'] = true;
 				return parent::beforeSendToClient($cname, $expand);
 			case 'customfields-list':
@@ -258,7 +244,10 @@ class Customfields extends Transformer
 						['download' => $stat['mtime']]
 					);
 				}
-				Select::fix_encoded_options($data['values']);
+				if (is_array($data['values']))
+				{
+					Select::fix_encoded_options($data['values']);
+				}
 			}
 		}
 		if($fields != $customfields)
@@ -291,7 +280,33 @@ class Customfields extends Transformer
 	}
 
 	/**
-	 * Instanciate (server-side) widget used to implement custom-field, to run its beforeSendToClient or validate method
+	 * Get cf types for sel_options
+	 *
+	 * @param array|null $fields_with_vals
+	 * @return array
+	 */
+	public static function getCfTypes(?array &$fields_with_vals=null)
+	{
+		$sel_options = [];
+		foreach(self::$cf_types as $lname => $label)
+		{
+			$sel_options[$lname] = lang($label);
+			$fields_with_vals[]=$lname;
+		}
+		$link_types = array_intersect_key(Api\Link::app_list('query'), Api\Link::app_list('title'));
+		// Explicitly add in filemanager, which does not support query or title
+		$link_types['filemanager'] = lang('filemanager');
+
+		ksort($link_types);
+		foreach($link_types as $lname => $label)
+		{
+			$sel_options[$lname] = $label;
+		}
+		return $sel_options;
+	}
+
+	/**
+	 * Instantiate (server-side) widget used to implement custom-field, to run its beforeSendToClient or validate method
 	 *
 	 * @param string $fname custom field name
 	 * @param array $field custom field data
@@ -305,18 +320,14 @@ class Customfields extends Transformer
 			$link_types = Api\Link::app_list();
 		}
 
-		$type = $field['type'];
-		// Link-tos needs to change from appname to link-to
-		if(!empty($link_types[$field['type']]))
+		if (($type = $field['type']) === 'filemanager')
 		{
-			if($type == 'filemanager')
-			{
-				$type = 'vfs-upload';
-			}
-			else
-			{
-				$type = 'link-to';
-			}
+			$type = 'vfs-upload';
+		}
+		// Link-tos needs to change from appname to link-to
+		elseif(!empty($link_types[$type]))
+		{
+			$type = 'link-to';
 		}
 		$xml = '<' . $type . ' type="' . $type . '" id="' . self::$prefix . $fname . '" required="' . $field['needed'] . '"/>';
 		$widget = self::factory($type, $xml, self::$prefix . $fname);
@@ -344,7 +355,7 @@ class Customfields extends Transformer
 			case 'vfs-upload':
 				$widget->attrs['path'] = $field['app'] . ':' .
 					self::expand_name('$cont['.Api\Link::get_registry($field['app'],'view_id').']',0,0,0,0,self::$request->content).
-					':'.$field['label'];
+					':'.(preg_match('/^[a-z_]+:[^:]+:(.+)$/', $field['name'], $matches) ? $matches[1] : $field['name']);
 				break;
 
 			case 'link-to':
@@ -367,7 +378,10 @@ class Customfields extends Transformer
 				break;
 
 			default:
-				if (substr($type, 0, 7) !== 'select-' && $type != 'ajax_select') break;
+				if(substr($type, 0, 7) !== 'select-')
+				{
+					break;
+				}
 				// fall-through for all select-* widgets
 			case 'select':
 				$widget->attrs['multiple'] = $field['rows'] > 1;
@@ -482,9 +496,9 @@ class Customfields extends Transformer
 		{
 			foreach(array_keys($value_in) as $field)
 			{
-				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))];
+				$field_settings = $customfields[$fname = substr($field, strlen($this->attrs['prefix']))] ?? null;
 
-				if((string)$use_private !== '' &&    // are only (non-)private fields requested
+				if(!isset($field_settings) || (string)$use_private !== '' &&    // are only (non-)private fields requested
 					(boolean)$field_settings['private'] != ($use_private != '0'))
 				{
 					continue;
@@ -543,12 +557,43 @@ class Customfields extends Transformer
 				//error_log(__METHOD__."() $field_name: ".array2string($value).' --> '.array2string($valid));
 			}
 		}
-		elseif ($this->type == 'customfields-types')
+		if ($this->type == 'customfields-types')
 		{
 			// Transformation doesn't handle validation
 			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 			if (true) $valid = $value_in;
 			//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+		}
+		else
+		{
+			// serials do NOT return a value, as they are always readonly
+			foreach(array_filter($customfields, static function($field)
+			{
+				return $field['type'] === 'serial';
+			}) as $field)
+			{
+				if (!empty($this->attrs['exclude']) && in_array($field['name'],
+						explode(',', self::expand_name($this->attrs['exclude'], 0, 0, 0, 0, self::$request->content))))
+				{
+					continue;
+				}
+				// check if we have condition(s) beside the value, and they are NOT meet --> do NOT generate the serial
+				if (is_array($field['values']) && array_filter($field['values'], static function($val, $name) use ($content)
+					{
+						return $name === 'last' ? false : $val != $content[$name];
+					}, ARRAY_FILTER_USE_BOTH))
+				{
+					continue;
+				}
+				$valid =& self::get_array($validated, self::$prefix.$field['name'], true);
+				if (empty($valid = self::$request->content[self::$prefix.$field['name']]))
+				{
+					$content = self::$request->content;
+					$valid = $content[self::$prefix.$field['name']] = Api\Storage\Customfields::getSerial($field['id']);
+					self::$request->content = $content;
+				}
+			}
+
 		}
 	}
 }

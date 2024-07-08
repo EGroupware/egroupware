@@ -32,9 +32,11 @@ add current view as favorite	calendar	en	Add current view as favorite
 add new alarm	calendar	en	Add new alarm
 add new event	calendar	en	Add new appointment
 add new participants or resource	calendar	en	Add new participants or resource
+add recurrence	calendar	en	Add recurrence
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronization	calendar	en	Added by synchronization
+added recurrence on %1.	calendar	en	Added recurrence on %1.
 after	calendar	en	After
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date
@@ -60,6 +62,7 @@ allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 always use full edit dialog	calendar	en	Always use full edit dialog
 always use the full edit dialog, not this little dialog	calendar	en	Always use the full edit dialog, not this little dialog
+apply changes to (future) exceptions too?	calendar	en	Apply changes to (future) exceptions too?
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
 appointment settings	calendar	en	Appointment settings
@@ -247,7 +250,7 @@ exclude weekend	calendar	en	Exclude Weekend
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
-explicit dates	calendar	en	Explicit dates
+explicit recurrences	calendar	en	Explicit recurrences
 export definition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your calendar into a CSV file.
@@ -316,7 +319,7 @@ how much entries to skip	calendar	en	How much entries to skip?
 html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / RFC2445
-ical cannot change the owner of an existing event.  this applies to new events only.	calendar	en	iCal cannot change the owner of an existing event.  This applies to new events only.
+ical cannot change the owner of an existing event.  this applies to new events only.	calendar	en	iCal cannot change the owner of an existing event. This applies to new events only.
 ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
 ical import	calendar	en	iCal import
@@ -370,6 +373,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	en	Max.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting canceled	calendar	en	Meeting canceled
 meeting request	calendar	en	Meeting request
+meeting request additional recurrence(s)	calendar	en	Meeting request additional recurrence(s)
 meetingrequest to all participants	calendar	en	Meetingrequest to all participants
 merge document...	calendar	en	Merge document ...
 midnight	calendar	en	Midnight
@@ -448,6 +452,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	en	Open ToDo's:
 optional	calendar	en	Optional
 organizer	calendar	en	Organizer
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	en	Otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.
 output unit	calendar	en	Output unit
 overlap holiday	calendar	en	Overlap holiday
 owner too	calendar	en	Owner too
@@ -524,8 +529,6 @@ search string for the events	calendar	en	Search string for the events
 select a %1	calendar	en	Select a %1
 select a color for this calendar	calendar	en	Select a color for calendar
 select a time	calendar	en	Select a time
-select an action	calendar	en	Select an action
-select an action...	calendar	en	Select an action ...
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on. For externals we always reset participant status to unknown.
@@ -599,6 +602,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
 the extern organizer changed the event!	calendar	en	The extern organizer changed the event!
 the following document-types are supported:	calendar	en	The following document-types are supported:
+the organizer changed the event!	calendar	en	The organizer changed the event!
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already over-booked:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	en	The sender "%1" is NOT the extern organizer "%2", proceed with caution!
@@ -611,6 +615,7 @@ this entry is opened by user:	calendar	en	This entry was opened within the confi
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	en	This is a recurring event. Do you want to delete just this recurrence or the whole series?
+this is a single recurrence of a recurring event.	calendar	en	This is a single recurrence of a recurring event.
 this mail cancels a meeting	calendar	en	This mail cancels a meeting
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
 this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request
@@ -710,6 +715,7 @@ you are not allowed to book the resource selected:	calendar	en	You are not allow
 you are not invited to that event!	calendar	en	You are not invited to that event!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	en	You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the message below, but only see the meeting request attached.
 you can either set a year or a occurrence, not both !!!	calendar	en	You can either set a year or occurrence, not both!
+you can only notify other users, not yourself!	calendar	en	You can only notify other users, not yourself!
 you can only set a year or a occurrence !!!	calendar	en	You can only set a year or occurrence!
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have a meeting scheduled for %1	calendar	en	You have a meeting scheduled for %1

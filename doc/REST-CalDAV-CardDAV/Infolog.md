@@ -41,7 +41,7 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
 
 ### Supported request methods and examples
 
-* **GET** to collections with an ```Accept: application/json``` header return all resources (similar to WebDAV PROPFIND)
+#### **GET** to collections with an `Accept: application/json` header return all resources (similar to WebDAV PROPFIND)
 <details>
   <summary>Example: Getting all entries of a given users infolog collection</summary>
 
@@ -113,17 +113,23 @@ curl https://example.org/egroupware/groupdav.php/<username>/infolog/ -H "Accept:
 ```
 </details>
 
-following GET parameters are supported to customize the returned properties:
+The following GET parameters are supported to customize the returned properties:
 - props[]=<DAV-prop-name> eg. props[]=getetag to return only the ETAG (multiple DAV properties can be specified)
   Default for calendar collections is to only return calendar-data (JsEvent), other collections return all props.
 - sync-token=<token> to only request change since last sync-token, like rfc6578 sync-collection REPORT
 - nresults=N limit number of responses (only for sync-collection / given sync-token parameter!)
   this will return a "more-results"=true attribute and a new "sync-token" attribute to query for the next chunk
 
+The GET parameter `filters` allows to filter or search for a pattern in InfoLog entries:
+- `filters[search]=<pattern>` searches for `<pattern>` in the whole contact like the search in the GUI
+- `filters[search][%23<custom-field-name>]=<custom-field-value>` filters by a custom-field value
+- `filters[<database-column>]=<value>` filters by a DB-column name and value
+> Please note: filters use the database column-names, not JSTask property-names!
+
 Examples: see addressbook
 
 
-* **GET**  requests with an ```Accept: application/json``` header can be used to retrieve single resources / JsContact or JsCalendar schema
+#### **GET**  requests with an `Accept: application/json` header can be used to retrieve single resources / JsContact or JsCalendar schema
 <details>
    <summary>Example: GET request for a single resource</summary>
 
@@ -201,7 +207,7 @@ curl 'https://example.org/egroupware/groupdav.php/infolog/956' -H "Accept: appli
  ```
 </details>
 
-* **POST** requests to collection with a ```Content-Type: application/json``` header add new entries in infolog collections
+#### **POST** requests to collection with a `Content-Type: application/json` header add new entries in infolog collections
   (Location header in response gives URL of new resource)
 <details>
    <summary>Example: POST request to create a new resource and use "Prefer: return=representation" to get it fully expanded back</summary>
@@ -268,7 +274,7 @@ X-WebDAV-Status: 201 Created
 ```
 </details>
 
-* **PUT**  requests with  a ```Content-Type: application/json``` header allow modifying single resources (requires to specify all attributes!)
+#### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
 
 <details>
    <summary>Example: PUT request with UID to update an existing resource or create it, if not exists</summary>
@@ -297,7 +303,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/infolog/1234
 </details>
 
 
-* **PATCH** request with a ```Content-Type: application/json``` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
+#### **PATCH** request with a `Content-Type: application/json` header allow to modify a single resource by only specifying changed attributes as a [PatchObject](https://www.rfc-editor.org/rfc/rfc8984.html#type-PatchObject)
 
 <details>
    <summary>Example: PATCH request to modify an event with partial data</summary>
@@ -313,7 +319,7 @@ HTTP/1.1 204 No content
 ```
 </details>
 
-* **DELETE** requests delete single resources
+#### **DELETE** requests delete single resources
 <details>
    <summary>Example: Delete an existing event</summary>
 
@@ -326,4 +332,4 @@ HTTP/1.1 204 No Content
 ```
 </details>
 
-* one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON e.g. for debugging and exploring the API
+* one can use `Accept: application/pretty+json` to receive pretty-printed JSON e.g. for debugging and exploring the API

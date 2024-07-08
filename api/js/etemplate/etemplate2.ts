@@ -41,7 +41,7 @@ import './Et2Date/Et2DateDuration';
 import './Et2Date/Et2DateDurationReadonly';
 import './Et2Date/Et2DateRange';
 import './Et2Date/Et2DateReadonly';
-import './Et2Date/Et2DateSinceReadonly';
+import './Et2Date/Et2DateSince';
 import './Et2Date/Et2DateTime';
 import './Et2Date/Et2DateTimeOnly';
 import './Et2Date/Et2DateTimeOnlyReadonly';
@@ -49,11 +49,13 @@ import './Et2Date/Et2DateTimeReadonly';
 import './Et2Date/Et2DateTimeToday';
 import './Et2Description/Et2Description';
 import './Et2Dialog/Et2Dialog';
+import './Et2Dialog/Et2MergeDialog';
 import './Et2DropdownButton/Et2DropdownButton';
 import './Et2Email/Et2Email';
 import './Expose/Et2ImageExpose';
 import './Expose/Et2DescriptionExpose';
 import './Et2Favorites/Et2Favorites';
+import './Et2Favorites/Et2FavoritesMenu';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';
@@ -97,10 +99,18 @@ import './Et2Url/Et2UrlFaxReadonly';
 import "./Layout/Et2Split/Et2Split";
 import "./Layout/RowLimitedMixin";
 import "./Et2Vfs/Et2VfsMime";
+import "./Et2Vfs/Et2VfsPath";
+import "./Et2Vfs/Et2VfsSelectButton";
+import "./Et2Vfs/Et2VfsSelectDialog";
+import "./Et2Vfs/Et2VfsSelectRow";
 import "./Et2Vfs/Et2VfsUid";
+import "./Validators/EgwValidationFeedback";
 import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
-import "./Et2TreeWidget/Et2Tree";
+import "./Et2Tree/Et2Tree";
+import "./Et2Tree/Et2TreeDropdown";
+import "./Et2Tree/Et2TreeDropdownCategory";
+
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
 import './et2_widget_vfs'; // Vfs must be first (before et2_widget_file) due to import cycle
@@ -123,7 +133,6 @@ import './et2_widget_html';
 import './et2_widget_htmlarea';
 import './et2_widget_taglist';
 import './et2_widget_toolbar';
-import './et2_widget_tree';
 import './et2_widget_historylog';
 import './et2_widget_hrule';
 import './et2_widget_iframe';
@@ -141,7 +150,6 @@ import './et2_widget_script';
 import './et2_widget_countdown';
 import './et2_extension_nextmatch';
 import './et2_extension_customfields';
-import './vfsSelectUI';
 import {Et2Tabs} from "./Layout/Et2Tabs/Et2Tabs";
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 
@@ -701,6 +709,11 @@ export class etemplate2
 				etemplate2._byTemplate[_name].push(this);
 
 				// Read the XML structure of the requested template
+				if(etemplate2.templates[this.name].hasAttribute("slot"))
+				{
+					this.DOMContainer.setAttribute("slot", etemplate2.templates[this.name].getAttribute("slot"));
+				}
+
 				this._widgetContainer.loadFromXML(etemplate2.templates[this.name]);
 				console.timeEnd("loadFromXML");
 				console.time("deferred");
@@ -1636,7 +1649,7 @@ export class etemplate2
 				}
 				else
 				{
-					egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+					egw.debug("error", "Could not find target node %s", data.DOMNodeID);
 				}
 			}
 

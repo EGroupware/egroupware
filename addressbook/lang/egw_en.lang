@@ -14,7 +14,7 @@
 %s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 (empty = use global limit, no = no export at all)	admin	en	Empty = use global limit, no = no export at all
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>  Choose a conversion type from the list
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type <none> could be located.</b>Choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only available to admins!
 account id	addressbook	en	Account ID
 account repository	admin	en	Account repository
@@ -43,7 +43,6 @@ added by synchronisation	addressbook	en	Added by synchronisation
 added to distribution list	addressbook	en	Added to distribution list
 additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
 address book	common	en	Address Book
-address book - vcard in	addressbook	en	Address book - vCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address line 2
 address line 2 (private)	addressbook	en	Address line 2 (private)
@@ -136,7 +135,7 @@ contact fields:	addressbook	en	Contact fields:
 contact id	addressbook	en	Contact ID
 contact id cannot be changed by import	addressbook	en	Contact ID cannot be changed by import.
 contact maintenance	admin	en	Contact maintenance
-contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2 .
+contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2.
 contact not found!	addressbook	en	Contact not found!
 contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
@@ -168,7 +167,6 @@ custom	addressbook	en	Custom
 custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contact form
 custom fields	addressbook	en	Custom fields
 data exchange settings	addressbook	en	Data exchange settings
-debug output in browser	addressbook	en	Debug output in browser
 default	addressbook	en	Default
 default action on double-click	addressbook	en	Default action on double-click
 default address format	addressbook	en	Default address format
@@ -316,7 +314,6 @@ import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or vCard
 import from outlook	addressbook	en	Import from Outlook
 import multiple vcard	addressbook	en	Import multiple vCards
 import next set	addressbook	en	Import next set
-import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	en	Importer's personal
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. In the options tab you can choose separators.
 imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your address book from a vCard file.
@@ -343,7 +340,7 @@ line 2	addressbook	en	Line 2
 link title for contacts show	addressbook	en	Link title for contacts
 links	addressbook	en	Links
 links and attached files	addressbook	en	Links and attached files
-links to specified application.  example: {{links/infolog}}	addressbook	en	Links to specified application.  Example: {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	addressbook	en	Links to specified application. Example: {{links/infolog}}
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all custom fields
 list already exists!	addressbook	en	List already exists!
@@ -379,8 +376,7 @@ name for the distribution list	addressbook	en	Name for the distribution list
 name of current user, all other contact fields are valid too	addressbook	en	Name of current user, all other contact fields are valid too.
 name, address	addressbook	en	Name, Address
 name, email, phone	addressbook	en	Name, email, phone
-new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2 .
-new window opened to edit infolog for your selection	addressbook	en	New window opened to edit InfoLog.
+new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2.
 next date	addressbook	en	Next date
 no categories selected	addressbook	en	No categories selected
 no country selected	addressbook	en	No country selected
@@ -451,14 +447,10 @@ select a source address to be used in geolocation routing system	addressbook	en	
 select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select address book type
 select all	addressbook	en	Select all
-select an action or addressbook to move to	addressbook	en	Select an action or address book to move to
-select an action or addressbook to move to...	addressbook	en	Select an action or address book to move to...
 select an opened dialog	addressbook	en	Select an opened dialog
 select migration type	admin	en	Select migration type
 select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
 select phone number as prefered way of contact	addressbook	en	Select phone number as preferred way of contact
-select the type of conversion	addressbook	en	Select the type of conversion
-select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where contacts should be stored / retrieved
 selected contacts	addressbook	en	Selected contacts
 send emailcopy to receiver	addressbook	en	Send email copy to receiver
@@ -519,7 +511,7 @@ translation	addressbook	en	Translation
 two of: %1	addressbook	en	Two of: %1
 type	addressbook	en	Type
 un-delete	addressbook	en	Un-delete
-unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID.  Using plugin setting (%2) for owner.
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	en	Unable to convert "%1" to account ID. Using plugin setting (%2) for owner.
 unable to delete	addressbook	en	unable to delete
 unable to import into %1, using %2	addressbook	en	Unable to import into %1, using %2
 unique id (uid)	addressbook	en	Unique ID (UID)
@@ -549,7 +541,7 @@ vcards require a last name entry.	addressbook	en	vCards require a last name entr
 verification	addressbook	en	Verification
 video call	addressbook	en	Video Call
 view linked infolog entries	addressbook	en	View linked InfoLog entries
-warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	Address book links displayed in other applications. Empty values will be left out. You need to log in again, if you change this setting!

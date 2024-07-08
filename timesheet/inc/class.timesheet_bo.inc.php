@@ -137,6 +137,7 @@ class timesheet_bo extends Api\Storage
 		'ts_description' => 'Description',
 		'ts_start'       => 'Start',
 		'ts_duration'    => 'Duration',
+		'ts_paused'      => 'Paused',
 		'ts_quantity'    => 'Quantity',
 		'ts_unitprice'   => 'Unitprice',
 		'ts_owner'       => 'Owner',
@@ -513,7 +514,7 @@ class timesheet_bo extends Api\Storage
 			//_debug_array($ids);
 			if(empty($ids))
 			{
-				$this->summary = array('duration' => 0, 'price' => null, 'quantity' => 0);
+				$this->summary = array('duration' => 0, 'paused' => 0, 'price' => null, 'quantity' => 0);
 				return array();
 			}
 			unset($criteria);
@@ -527,6 +528,7 @@ class timesheet_bo extends Api\Storage
 		// is not joined, as the join causes a multiplication of the sum per customfield found
 		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
 		$cols = ['SUM(ts_duration) AS duration',
+				 'SUM(COALESCE(ts_paused,0)) AS paused',
 				 "SUM($total_sql) AS price",
 				 'MAX(ts_modified) AS max_modified'];
 		if($this->quantity_sum)
@@ -576,7 +578,7 @@ class timesheet_bo extends Api\Storage
 				parent::search($criteria,array(
 					(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',
 					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
-					'0','NULL','0','0','0','0','0','0',"SUM($total_sql) AS ts_total"
+					'0','NULL','0','0','0','0','0','0',"SUM(COALESCE(ts_paused,0)) AS ts_paused","SUM($total_sql) AS ts_total"
 				),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 				$sum_extra_cols[$type][0] = '0';
 			}
@@ -799,7 +801,7 @@ class timesheet_bo extends Api\Storage
 	{
 		if(!$ids)
 		{
-			return array('duration' => 0, 'quantity' => 0, 'price' => 0, 'max_modified' => null);
+			return array('duration' => 0, 'paused' => 0, 'quantity' => 0, 'price' => 0, 'max_modified' => null);
 		}
 		$filter = [];
 		if($ignore_acl)

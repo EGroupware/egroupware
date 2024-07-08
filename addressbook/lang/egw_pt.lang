@@ -1,13 +1,13 @@
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a %4 !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a %4!
 %1 contacts updated (%2 errors).	addressbook	pt	%1 contactos actualizados (%2 erros).
 %1 key(s) added to public keyserver "%2".	addressbook	pt	%1 chave(s) adicionada(s) ao servidor de chaves público "%2".
 %1 not implemented for %2!	addressbook	pt	% 1 não implementado para% 2!
 %1 public keys added.	addressbook	pt	%1 chaves públicas adicionadas.
-%1 records imported	addressbook	pt	%1 registos importados
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt	%1 registos lidos (ainda por importar: pode %2voltar%3 atrás e desmarcar a opção Importação de Teste)
+%1 records imported	addressbook	pt	%1 registos importados.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt	%1 registos lidos (ainda por importar: pode %2voltar%3 atrás e desmarcar a opção Importação de Teste).
 (e.g. 1969)	addressbook	pt	(ex: 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pt	<b>O tipo de conversão <Nenhum> não foi encontrado.</b> Por favor, escolha um tipo de conversão da lista
-@-eval() is only availible to admins!!!	addressbook	pt	@-eval() só está disponível para administradores!!!
+@-eval() is only availible to admins!!!	addressbook	pt	@-eval() só está disponível para administradores!
 actions	addressbook	pt	Acções
 add a single entry by passing the fields.	addressbook	pt	Adicionar um registo único passando os campos.
 add custom field	addressbook	pt	Adicionar campo personalizado
@@ -19,7 +19,6 @@ add to distribution list:	addressbook	pt	Adicionar à lista de distribuição:
 add to to	addressbook	pt	Adicionar a Para
 added	addressbook	pt	Adicionado
 address book	common	pt	Livro de Endereços
-address book - vcard in	addressbook	pt	Livro de endereços - vCard
 address book - view	addressbook	pt	Livro de endereços - Ver
 address line 2	addressbook	pt	Linha de endereço 2
 address type	addressbook	pt	Tipo de endereço
@@ -69,8 +68,8 @@ contact application	admin	pt	Aplicação de contactos
 contact saved	addressbook	pt	Contacto guardado
 contact settings	admin	pt	Preferências de contactos
 contains	addressbook	pt	Contém
-copied by %1, from record #%2.	addressbook	pt	Copiado do registo #%2, por %1
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt	Copia as suas alterações para a área de transferência, %recarrega o registo% e funde-os
+copied by %1, from record #%2.	addressbook	pt	Copiado do registo #%2, por %1.
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pt	Copia as suas alterações para a área de transferência, %recarrega o registo% e funde-os.
 country	common	pt	País
 create new links	addressbook	pt	Criar novas ligações
 created	addressbook	pt	Criado
@@ -81,7 +80,6 @@ csv-filename	addressbook	pt	CSV - Nome do ficheiro
 custom	addressbook	pt	Personalizar
 custom fields	addressbook	pt	Personalizar campos
 data exchange settings	addressbook	pt	Configurações de troca de dados
-debug output in browser	addressbook	pt	Fazer debug do resultado no navegador
 default	addressbook	pt	Por omissão
 default action on double-click	addressbook	pt	Ação predefinida ao fazer duplo clique
 default filter	addressbook	pt	Filtro padrão
@@ -91,14 +89,15 @@ deleted	addressbook	pt	eliminado/a
 department	common	pt	Departamento
 disable	addressbook	pt	Desativar
 disable last/next event column	addressbook	pt	Desativar a coluna Último/próximo evento
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	pt	Mostrar aniversários na Página inicial.
 distribution list renamed	addressbook	pt	Lista de distribuição renomeada
 distribution lists as groups	addressbook	pt	Listas de distribuição como grupos
 do your really want to delete this contact?	addressbook	pt	Deseja realmente eliminar este contacto?
 doesn't matter	addressbook	pt	Não interessa
 domestic	addressbook	pt	Doméstico
 download	addressbook	pt	Transferência
-download export file (uncheck to debug output in browser)	addressbook	pt	Transferir ficheiro de exportação (desmarque a opção "fazer debug do resultado no navegador")
-download this contact as vcard file	addressbook	pt	transferor este contacto como ficheiro vCard
+download export file (uncheck to debug output in browser)	addressbook	pt	Transferir ficheiro de exportação (desmarque a opção "fazer debug do resultado no navegador").
+download this contact as vcard file	addressbook	pt	Transferor este contacto como ficheiro vCard
 duplicate threshold	addressbook	pt	Duplicar o limiar
 duplicate warning	addressbook	pt	Duplicação do aviso
 duplicates	addressbook	pt	Duplicações
@@ -109,7 +108,7 @@ edit phonenumbers -	addressbook	pt	Editar números de telefone -
 email & internet	addressbook	pt	Correio Electrónico e Internet
 empty	admin	pt	Vazio
 empty addressbook before importing	addressbook	pt	Eliminar entradas do livro de endereços que não constam da lista CSV
-empty for all	addressbook	pt	vazio para todos
+empty for all	addressbook	pt	Vazio para todos
 end	addressbook	pt	Fim
 enter the path to the exported file here	addressbook	pt	Inserir o caminho para o ficheiro exportado aqui
 error: the entry has been updated since you opened it for editing!	addressbook	pt	Erro: o registo foi actualizado desde que começou a editar!
@@ -120,18 +119,18 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 existing links	addressbook	pt	Ligações existentes
 exists	addressbook	pt	Existe
 export contacts	addressbook	pt	Exportar contactos
-export definition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação NextMatch
-export definitition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação NextMatch
+export definition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação nextmatch
+export definitition to use for nextmatch export	addressbook	pt	Definição Exportar para usar para exportação nextmatch
 export file name	addressbook	pt	Exportar nome de ficheiro
 export from addressbook	addressbook	pt	Exportar do livro de endereços
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV.  CSV significa "Valores Separados por Vírgulas". No separador de opções, também pode escolher outros separadores.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 extra	addressbook	pt	Extra
 favorite phone	addressbook	pt	Telefone favorito
 favorites	addressbook	pt	Favoritos
 fax	addressbook	pt	Fax
 fax number	common	pt	Número de fax
-field %1 has been added !	addressbook	pt	Campo %1 foi adicionado !
-field %1 has been updated !	addressbook	pt	Campo %1 foi actualizado !
+field %1 has been added !	addressbook	pt	Campo %1 foi adicionado!
+field %1 has been updated !	addressbook	pt	Campo %1 foi actualizado!
 field name	addressbook	pt	Nome do campo
 fields to check for duplicates	addressbook	pt	Campos para verificação de duplicados
 fields to consider when looking for duplicate contacts.	addressbook	pt	Campos a considerar na procura de contactos duplicados.
@@ -151,6 +150,8 @@ grant addressbook access	common	pt	Permitir acesso ao livro de endereços
 h	addressbook	pt	h
 hide accounts from addressbook	addressbook	pt	Ocultar contas de utilizador
 hide all accounts	addressbook	pt	Ocultar todas as contas
+hide all groups	addressbook	pt	Ocultar todos os grupos
+hide groups without email address	addressbook	pt	Ocultar grupos sem endereço de correio eletrónico
 hide user groups as distribution lists	addressbook	pt	Ocultar grupos de utilizadores como listas de distribuição
 hides accounts completly from the adressbook.	addressbook	pt	Esconder completamente as contas de utilizador do livro de endereços.
 history logging	admin	pt	Logging História
@@ -175,8 +176,9 @@ import multiple vcard	addressbook	pt	Importar vários vCard
 import next set	addressbook	pt	Importar o conjunto seguinte
 import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado vCard.
 importer's personal	addressbook	pt	Pessoal do importador
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Importa contactos para o livro de endereços a partir de um ficheiro CSV. CSV significa "Comma Separated Values" (valores separados por vírgulas). No separador de opções, também pode escolher outros separadores.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Importa contactos para o livro de endereços a partir de um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 imports contacts into your addressbook from a vcard file.	addressbook	pt	Importa contactos para o seu livro de endereços a partir de um ficheiro vCard.
+include all groups	addressbook	pt	Incluir todos os grupos
 income	addressbook	pt	Entrada
 infolog	addressbook	pt	Contacto InfoLog
 infolog-organisation	addressbook	pt	Organização InfoLog
@@ -209,7 +211,7 @@ middle name	addressbook	pt	Nome do meio
 mobile	addressbook	pt	Telemóvel
 mobile phone	addressbook	pt	Telemóvel
 modem phone	addressbook	pt	Telefone de dados (Modem)
-more ...	addressbook	pt	Mais..
+more ...	addressbook	pt	Mais ...
 move to addressbook	addressbook	pt	Mover para o livro de endereços
 multiple vcard	addressbook	pt	Vários vCard
 name, email, phone	addressbook	pt	Nome, e-mail, telefone
@@ -230,11 +232,11 @@ other phone	addressbook	pt	Outro telefone
 pager	common	pt	Pager
 parcel	addressbook	pt	Parcel
 participants	addressbook	pt	Participantes
-permission denied !!!	addressbook	pt	Permissão negada !!!
+permission denied !!!	addressbook	pt	Permissão negada!
 pgp key	addressbook	pt	Chave PGP
 phone number	common	pt	Número de telefone
 phone numbers	common	pt	Números de telefone
-please enter a name for that field !	addressbook	pt	Por favor, atribua um nome ao campo !
+please enter a name for that field !	addressbook	pt	Por favor, atribua um nome ao campo!
 please select only one category	addressbook	pt	Por favor, seleccione apenas uma categoria
 postal	common	pt	Código postal
 pref	addressbook	pt	Pref
@@ -244,7 +246,7 @@ public sharing url	addressbook	pt	URL de partilha pública
 publish into groups:	addressbook	pt	Publicar nos grupos:
 read a list / search for entries.	addressbook	pt	Ler uma lista / pesquisar registos.
 read a list of entries.	addressbook	pt	Ler uma lista de registos.
-read a single entry by passing the id and fieldlist.	addressbook	pt	Ler um registo único passando a ID e a lista de campos
+read a single entry by passing the id and fieldlist.	addressbook	pt	Ler um registo único passando a ID e a lista de campos.
 record access	addressbook	pt	Acesso ao registo
 record owner	addressbook	pt	Dono do registo
 remove from distribution list	addressbook	pt	Remover da lista de distribuição
@@ -256,8 +258,6 @@ search letter	addressbook	pt	Pesquisar carta
 select all	addressbook	pt	Seleccionar tudo
 select an opened dialog	addressbook	pt	Selecionar um diálogo aberto
 select multiple contacts for a further action	addressbook	pt	Selecionar vários contatos para uma nova acção
-select the type of conversion	addressbook	pt	Seleccionar o tipo de conversão
-select the type of conversion:	addressbook	pt	Seleccionar o tipo de conversão:
 send fax via email by replacing fax number with an email address	addressbook	pt	Enviar fax por correio eletrónico, substituindo o número de fax por um endereço de correio eletrónico
 send succeeded to %1	common	pt	Enviar com êxito para %1
 share into addressbook	addressbook	pt	Partilhar em livro de endereços
@@ -280,13 +280,13 @@ suffix	addressbook	pt	Sufixo
 tag to mark positions for address labels	addressbook	pt	Tag para marcar posições para etiquetas de endereço
 tel home	addressbook	pt	Telefone de casa
 test import (show importable records <u>only</u> in browser)	addressbook	pt	Importação de Teste (exibir no navegador <u>apenas</u> os registos importáveis)
-that field name has been used already !	addressbook	pt	Esse nome do campo já existe !
+that field name has been used already !	addressbook	pt	Esse nome do campo já existe!
 the following document-types are supported:	addressbook	pt	Os seguintes tipos de documentos são suportados:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	pt	A extensão zip é necessária para inserir os dados dos contactos em documentos do LibreOffice ou do MS Office.
-this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Livro de Endereços
-this person's last name was not in the address book.	addressbook	pt	O apelido desta pessoa não foi encontrado no livro de endereços
+this person's first name was not in the address book.	addressbook	pt	O primeiro nome desta pessoa não estava no Livro de Endereços.
+this person's last name was not in the address book.	addressbook	pt	O apelido desta pessoa não foi encontrado no livro de endereços.
 title	addressbook	pt	Título do trabalho
-to many might exceed your execution-time-limit	addressbook	pt	Demasiados podem exceder o seu tempo limite de execução
+to many might exceed your execution-time-limit	addressbook	pt	Demasiados podem exceder o seu tempo limite de execução.
 today is %1's birthday!	common	pt	Hoje é o aniversário de %1.
 tomorrow is %1's birthday.	common	pt	Amanhã é o aniversário de %1.
 translation	addressbook	pt	Tradução
@@ -319,7 +319,7 @@ you are not permittet to view this contact	addressbook	pt	Não tem permissões p
 you can respond by visiting:	addressbook	pt	Você pode responder, visitando
 you must select a vcard. (*.vcf)	addressbook	pt	É necessário seleccionar um vCard. (*.vcf)
 you must select at least 1 column to display	addressbook	pt	É necessário seleccionar pelo menos uma coluna a apresentar
-you need to select some entries first	addressbook	pt	Você precisa selecionar algumas entradas em primeiro lugar.
+you need to select some entries first	addressbook	pt	Você precisa selecionar algumas entradas em primeiro lugar
 your new public key has been stored in accounts addressbook.	addressbook	pt	A sua nova chave pública foi guardada no livro de endereços das contas.
 zip code	common	pt	Código postal
 zip_note	addressbook	pt	<p><b>Nota:</b> O ficheiro pode ser um ficheiro .zip com uma colecção de ficheiros .csv, .vcf ou .ldif. No entanto, não misture os tipos de ficheiro por importação.

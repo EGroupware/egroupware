@@ -2830,3 +2830,15 @@ function calendar_upgrade21_1()
 {
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '23.1';
 }
+function calendar_upgrade23_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal_extra','cal_extra_name',array(
+		'type' => 'varchar',
+		'meta' => 'cfname',
+		'precision' => '64',
+		'nullable' => False
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '23.1.001';
+}
+

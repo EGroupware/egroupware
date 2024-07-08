@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	uk	%1 вимагає розширення Sieve %2, можливо, спробуйте %1 або більшу кількість днів.
 (leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
 acl rights retrieve failed, seems there are no rights set!	mail	uk	Не вдалося отримати права ACL, здається, не встановлено жодних прав!
 add all my aliases	mail	uk	Додати всі мої псевдоніми
@@ -13,10 +14,10 @@ always respond / auto-responder	mail	uk	Завжди відповідати / а
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
 attach files	mail	uk	Прикріплення файлів
-attach users vcard at compose to every new mail	mail	uk	Прикріплювати vCard користувача при створенні кожного нового листа
+attach users vcard at compose to every new mail	mail	uk	Прикріплювати vCard користувача при створенні кожного нового листа.
 attachment has been saved successfully.	mail	uk	Вкладення успішно збережено.
 attachments, ...	mail	uk	вкладення, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	uk	Майте на увазі, що додавання всіх вибраних файлів в режимі %1 також змінить всі існуючі вкладення в списку на режим %2. \n \n Бажаєте продовжити?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	uk	Майте на увазі, що додавання всіх вибраних файлів в режимі %1 також змінить всі існуючі вкладення в списку на режим %2.<br>Бажаєте продовжити?
 be aware that all attachments will be sent as %1!	mail	uk	Майте на увазі, що всі вкладення буде надіслано як %1!
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	uk	За замовчуванням 'http://' просто замінено на 'https://'. Ви можете налаштувати 'https://proxy.egroupware.org/', щоб також завантажувати зображення, доступні лише через http.
 caching of flags	mail	uk	Кешування прапорів
@@ -34,7 +35,8 @@ current subject	mail	uk	Поточна тема
 default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
 default value for remembering s/mime passphrase in minutes	mail	uk	Значення за замовчуванням для запам'ятовування S/MIME-пароля в хвилинах
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	uk	Визначає, що відображати в якості мітки контакту для додавання контакту в поле Кому/Копіювати/Сліпа копія при створенні імейлу. За замовчуванням - ім'я та прізвище, а порожнє значення означає, що виводитиметься все, що є в наявності.
-defines what to show as identity label on mail folder header	common	uk	Визначає, що показувати як мітку ідентифікації у заголовку поштової теки
+defines what to show as identity label on mail folder header	common	uk	Визначає, що показувати як мітку ідентифікації у заголовку поштової теки.
+delete selected folders	mail	uk	Видалити вибрані папки
 deleted	mail	uk	Видалено
 disable	mail	uk	Відключити
 disable caching of flags	mail	uk	Вимкнути кешування прапорів
@@ -53,6 +55,7 @@ event details follow	mail	uk	Подробиці події
 every %1. day	mail	uk	Кожного %1. дня
 everyone	mail	uk	Всі
 examine namespace to retrieve folders in others and shared	mail	uk	Вивчення простору імен для пошуку папок в інших та спільних теках
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	uk	Виключити вкладення, розмір яких перевищує заданий, з автоматичного збереження як чернетки (в МБ)
 extended	mail	uk	Розширений
 failed to delete %1	mail	uk	Не вдалося видалити %1
 failed to subscribe folder %1!	mail	uk	Не вдалося підписатися на папку %1!
@@ -62,7 +65,7 @@ file into:	mail	uk	Перейдіть до:
 filemode has been switched to %1	mail	uk	Перейдено до файлового режиму: %1
 flag / unflag	mail	uk	Встановити / зняти прапорець
 flagged %1 messages as %2 in %3	mail	uk	Позначити %1 повідомлення як %2 у %3
-flagged %1 messages as flagged in %2	mail	uk	Позначено %1 повідомлення як %2 у %2
+flagged %1 messages as flagged in %2	mail	uk	Позначити повідомлення %1 як такі, що позначені у %2
 flagged %1 messages as unflagged in %2	mail	uk	Позначено %1 повідомлення як такі, що не позначені у %2
 folder %1 %2 failed because of %3!	mail	uk	Теку %1 %2 не вдалося створити через %3!
 folder %1 has been created successfully, although the subscription failed because of %2	mail	uk	Теку %1 успішно створено, хоча підписку не вдалося виконати через %2
@@ -102,7 +105,7 @@ learning as ham (not spam) failed because of %1	mail	uk	Навчання як ш
 learning as spam failed because of %1	mail	uk	Навчання як спам не вдалося з причини %1
 less than	mail	uk	менше ніж
 limit mailing list results when searching for addresses	mail	uk	Обмежити результати списку розсилки при пошуку адрес
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	uk	Перелік дій, які вмикаються/вимикаються за замовчуванням (наприклад, дія "Скласти лист і зберегти як інфолог")
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	uk	Перелік дій, які вмикаються/вимикаються за замовчуванням (наприклад, дія "Скласти лист і зберегти як інфолог").
 mail	common	uk	Пошта
 mail acl	mail	uk	Права доступу
 mail filter	mail	uk	Поштовий фільтр
@@ -199,17 +202,17 @@ selected date range (with quicksearch)	mail	uk	Вибраний діапазон
 send message and move to send folder (if configured)	mail	uk	Надіслати повідомлення та перемістити до папки відправки (якщо налаштовано)
 send message pgp encrypted: requires keys from all recipients!	mail	uk	Надіслати повідомлення зашифроване PGP: потрібні ключі від усіх одержувачів!
 server supports special-use folders	mail	uk	Сервер підтримує папки спеціального призначення
-set predefined values for compose...	mail	uk	ВстаВстановити заздалегідь визначені значення для створення ...новити заздалегідь визначені значення для створення ...
+set predefined values for compose...	mail	uk	Встановити заздалегідь визначені значення для складання ...
 should signature be inserted after (standard) or before a reply or inline forward, and should signature be visible and changeable during compose.	mail	uk	Чи потрібно вставляти підпис після (стандартний) або перед відповіддю або пересиланням, а також чи повинен підпис бути видимим і змінюваним під час створення повідомлення.
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	uk	показувати всі папки (підписані і не підписані) в панелі папок на головному екрані
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	uk	показувати всі папки (підписані і не підписані) в панелі папок на головному екрані.
 show notification for new arriving mails	mail	uk	Показувати сповіщення про нові листи
 show test connection section and control the level of info displayed?	mail	uk	Показувати розділ тестового з'єднання і контролювати рівень інформації, що відображається?
 show test connection section and control the level of info displayed??	mail	uk	Показувати розділ тестового з'єднання і керувати рівнем інформації, що відображається?
 show them this time only	mail	uk	Показувати їх лише цього разу
-show vertical	mail	uk	Показати вертикаль
+show vertical	mail	uk	Показати вертикально (3-колоночний перегляд)
 show vertical with all columns	mail	uk	Показувати вертикаль з усіма стовпчиками
-show/hide preview pane in mail list view	mail	uk	Показати/приховати панель попереднього перегляду в списку листів
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	uk	Показувати тимчасове видиме сповіщення з адресою, темою та фрагментом листа
+show/hide preview pane in mail list view	mail	uk	Показати/приховати панель попереднього перегляду в списку листів.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	uk	Показувати тимчасове видиме сповіщення з адресою, темою та фрагментом листа.
 sign your message with smime certificate	mail	uk	Підписати повідомлення S/MIME сертифікатом
 signature	mail	uk	Підпис
 signature at top	mail	uk	підпис зверху
@@ -223,7 +226,7 @@ sneak preview in list	mail	uk	Попередній перегляд повідо
 text	mail	uk	Текст
 the imap server need to meet certain requirements and be configured for it:	mail	uk	Сервер IMAP повинен відповідати певним вимогам і бути налаштований для цього:
 the rule with priority %1 successfully saved!	mail	uk	Правило з пріоритетом %1 успішно збережено!
-there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	uk	Не залишилося місця для зберігання скрипту sieve, будь ласка, перевірте параметр sieve_maxscriptsize у конфігурації вашого поштового сервера.
+there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	uk	Не залишилося місця для зберігання скрипту Sieve, будь ласка, перевірте параметр sieve_maxscriptsize у конфігурації вашого поштового сервера.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	uk	Цей лист містить зовнішні зображення, передані через незахищений протокол HTTP. Майте на увазі, що їх показ або дозвіл може поставити під загрозу вашу безпеку!
 this message is smime encrypted and password protected.	mail	uk	Це повідомлення зашифровано у форматі S/MIME і захищено паролем.
 timeout on connections to your imap server	mail	uk	Таймаут з'єднання з вашим IMAP-сервером
@@ -241,7 +244,8 @@ you can use $$start$$ for the above start date and $$end$$ for the end date.	mai
 you may add this certificate into your contact, if you trust this signature.	mail	uk	Ви можете додати цей сертифікат до свого контакту, якщо ви довіряєте цьому підпису.
 you need to enter your s/mime passphrase to send this message.	mail	uk	Щоб надіслати це повідомлення, вам потрібно ввести парольну фразу S/MIME.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	uk	Вам потрібно встановити плагін Mailvelope, доступний для Chrome і Firefox з %1.
-you need to save the message as draft first before to be able to save it into vfs	mail	uk	Щоб зберегти повідомлення у VFS, вам потрібно спочатку зберегти його як чернетку.
+you need to save the message as draft first before to be able to save it into vfs	mail	uk	Щоб зберегти повідомлення у VFS, вам потрібно спочатку зберегти його як чернетку
+you need to select some folders first (by clicking on them)!	mail	uk	Вам потрібно спочатку вибрати деякі теки (натиснувши на них)!
 you will loose current message body, unless you save it to your clipboard!	mail	uk	Якщо ви не збережете його в буфер обміну, ви втратите тіло повідомлення!
 you've got new mail	mail	uk	Ви отримали новий лист
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	uk	Ваша залишкова квота %1 занадто мала, можливо, ви не зможете надсилати/отримувати подальші листи.<br>Хоча очищення листів у смітнику або папці небажаної пошти може допомогти вам повернути трохи вільного місця.<br>Якщо це не допомогло, зверніться до адміністратора за додатковою квотою.

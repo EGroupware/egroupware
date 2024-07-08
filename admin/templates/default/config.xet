@@ -32,7 +32,7 @@
 							<option value="account">{Username}@domain.com</option>
 							<option value="none">Do not generate EMail addresses</option>
 						</et2-select>
-						<et2-checkbox  label="Lowercase EMail addresses" id="newsettings[email_address_lowercase]" value="true"></et2-checkbox>
+						<et2-checkbox  label="Lowercase EMail addresses" id="newsettings[email_address_lowercase]"></et2-checkbox>
 					</et2-vbox>
 				</row>
 				<row>
@@ -77,7 +77,7 @@
 	<template id="admin.config.appearance" template="" lang="" group="0" version="18.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
-				<column width="70%"/>
+				<column width="50%"/>
 				<column/>
 			</columns>
 			<rows>
@@ -89,14 +89,16 @@
 					<et2-description  value="Upload your logo or enter the URL" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_logo_file]" width="100%" allowFreeEntries="true"></et2-select-thumbnail>
-						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()" width="100%" label="upload"/>
+						<file width="100%" label="upload" accept="svg,png,jpeg,jpg"
+							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
 					</et2-vbox>
 				</row>
 				<row>
 					<et2-description  value="Upload your header logo or enter the URL (leave it empty if it is the same as login logo)" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_logo_header]" width="100%" allowFreeEntries="true"></et2-select-thumbnail>
-						<file onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()" width="100%" label="upload"/>
+						<file width="100%" label="upload" accept="svg,png,jpeg,jpg"
+							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
 					</et2-vbox>
 				</row>
 				<row>
@@ -114,14 +116,15 @@
 					</et2-vbox>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[login_background_file]" width="100%" allowFreeEntries="true" multiple="true" placeholder="Upload your background image or enter the URL"></et2-select-thumbnail>
-						<file width="100%" label="upload" onchange="app.admin.login_background_update"/>
+						<file accept="svg,png,jpeg,jpg" width="100%" label="upload" onchange="app.admin.login_background_update"/>
 					</et2-vbox>
 				</row>
 				<row>
 					<et2-description  value="Upload your favicon or enter the URL" label="%s:"></et2-description>
 					<et2-vbox>
 						<et2-select-thumbnail  id="newsettings[favicon_file]" multiple="true"></et2-select-thumbnail>
-						<file width="100%" label="upload" onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+						<file accept="svg,png,ico" width="100%" label="upload"
+							onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
 					</et2-vbox>
 				</row>
 				<row>
@@ -142,6 +145,22 @@
 				<row>
 					<et2-description  value="Applications available on mobile devices" label="%s:"></et2-description>
 					<et2-select-app  id="newsettings[fw_mobile_app_list]" multiple="true" other=",enabled:home;groupdav;sitemgr-link;sitemgr;developer_tools;etemplate;stylite;archive;importexport;activesync;notifications;esyncpro;preferences;registration" width="100%"></et2-select-app>
+				</row>
+				<row>
+					<et2-description value="Custom EGroupware web font as woff2 file" label="%s:"></et2-description>
+					<et2-vbox>
+						<et2-url id="newsettings[font_face_url]" allowPath="true"></et2-url>
+						<file width="100%" label="upload" accept="woff2"
+							  onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+					</et2-vbox>
+				</row>
+				<row>
+					<et2-description value="Custom EGroupware Bold web font as woff2 file" label="%s:"></et2-description>
+					<et2-vbox>
+						<et2-url id="newsettings[font_face_url2]" allowPath="true"></et2-url>
+						<file width="100%" label="upload" accept="woff2"
+							  onchange="egw.json('admin.admin_config.ajax_upload_anon_images',[widget.get_value(), []], function(_data){widget._parent._children[0].set_value(_data)}).sendRequest()"/>
+					</et2-vbox>
 				</row>
 			</rows>
 		</grid>

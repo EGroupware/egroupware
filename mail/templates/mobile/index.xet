@@ -42,7 +42,7 @@
 		<et2-hbox  class="mail-index_quotabox"><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></et2-hbox>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target"/>
+		<et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target"/>
 		<html id="msg"/>
 		<et2-hbox  class="mail-index_vacation"><et2-vbox>
 			<et2-description  id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>

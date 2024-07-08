@@ -499,31 +499,6 @@ class JsCalendar extends JsBase
 		return $value;
 	}
 
-	const DATETIME_FORMAT = 'Y-m-d\TH:i:s';
-
-	/**
-	 * Return a date-time value in the given timezone
-	 *
-	 * @link https://datatracker.ietf.org/doc/html/rfc8984#name-localdatetime
-	 * @param null|string|\DateTime $date
-	 * @param string $timezone
-	 * @return string|null
-	 */
-	protected static function DateTime($date, $timezone)
-	{
-		static $timezones = [];
-		if (!isset($timezones[$timezone])) $timezones[$timezone] = new \DateTimeZone($timezone);
-
-		if (!isset($date))
-		{
-			return null;
-		}
-		$date = Api\DateTime::to($date, 'object');
-		$date->setTimezone($timezones[$timezone]);
-
-		return $date->format(self::DATETIME_FORMAT);
-	}
-
 	/**
 	 * Return a duration calculated from given start- and end-time or a duration in seconds (start=0)
 	 *
@@ -964,7 +939,7 @@ class JsCalendar extends JsBase
 	protected static function Recurrence(array $event, array $data, array $exceptions=[], ?array $rrule=null)
 	{
 		$overrides = [];
-		if (!empty($event['recur_type']) || isset($rrule))
+		if ((!empty($event['recur_type']) || isset($rrule)) && $event['recur_type'] != \calendar_rrule::RDATE)
 		{
 			if (!isset($rrule))
 			{
@@ -995,9 +970,24 @@ class JsCalendar extends JsBase
 			{
 				$rule['byMonthDay'] = [$rrule['BYMONTHDAY']];   // EGroupware supports only a single day!
 			}
+		}
+		elseif (!empty($event['recur_rdates']) && $event['recur_type'] == \calendar_rrule::RDATE)
+		{
+			foreach($event['recur_rdates'] as $rdate)
+			{
+				if ($rdate != $event['start'])
+				{
+					$overrides[self::DateTime($rdate, $event['tzid'])] = [
+						'start' => self::DateTime($rdate, $event['tzid']),
+					];
+				}
+			}
+		}
 
-			// adding excludes to the overrides
-			if (!empty($event['recur_exception']))
+		// adding excludes to the overrides
+		if (!empty($event['recur_type']) && !empty($event['recur_exception']))
+		{
+			foreach ($event['recur_exception'] as $timestamp)
 			{
 				foreach ($event['recur_exception'] as $timestamp)
 				{

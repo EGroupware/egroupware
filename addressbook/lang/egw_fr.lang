@@ -1,21 +1,21 @@
 %1 added	addressbook	fr	%1 ajouté
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !!!
-%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants).
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants) !
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
 %1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 autre(s) membre(s) de l'organisation a changé.
 %1 key(s) added to public keyserver "%2".	addressbook	fr	%1 clé(s) publique(s) ajoutée(s) au serveur de clés publiques "%2".
 %1 not implemented for %2!	addressbook	fr	%1 non implémenté pour %2 !
 %1 public keys added.	addressbook	fr	%1 clé(s) publique(s) ajoutée(s).
 %1 records imported	addressbook	fr	%1 enregistrements importés.
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation).
 %1 shared this contact on %2 with %3 %4	addressbook	fr	%1 a communiqué ce contact le %2 %3 %4
 %1 starts with '%2'	addressbook	fr	%1 débute avec '%2'
 %s please calculate the result	addressbook	fr	%s calculez s'il vous plait le résultat
 (e.g. 1969)	addressbook	fr	(e.g. 1969)
 (empty = use global limit, no = no export at all)	admin	fr	Vide = pas de limite globale, no = pas d'export du tout
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion <aucun> n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
-@-eval() is only availible to admins!!!	addressbook	fr	@-eval() est disponible uniquement pour les administrateurs!!!
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion <aucun> n'a pu être trouvé.</b> SVP choisissez un type de conversion depuis la liste
+@-eval() is only availible to admins!!!	addressbook	fr	@-eval() est disponible uniquement pour les administrateurs !
 account id	addressbook	fr	Compte ID
 account repository	admin	fr	Dépôt de comptes
 accounts	addressbook	fr	Comptes
@@ -26,11 +26,11 @@ add a customfield to link title	addressbook	fr	Ajouter un champ personnalisé au
 add a new contact	addressbook	fr	Ajouter un nouveau contact
 add a new infolog	addressbook	fr	Ajouter un nouvel InfoLog
 add a new list	addressbook	fr	Ajouter une nouvelle liste
-add a single entry by passing the fields.	addressbook	fr	Ajouter une seule entrée en passant les champs.
+add a single entry by passing the fields.	addressbook	fr	Ajouter une seule entrée en passant les champs
 add appointment	addressbook	fr	Ajouter un rendez-vous
-add business email of whole distribution list?	addressbook	fr	Ajouter l'email professionnel
+add business email of whole distribution list?	addressbook	fr	Ajouter l'email professionnel ?
 add custom field	addressbook	fr	Ajouter un champ personnalisé
-add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	fr	Ajouter un champ personnalisé aux liens vers le carnet d'adresses, affichés dans les autres applications.  La valeur par défaut est aucun.
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	fr	Ajouter un champ personnalisé aux liens vers le carnet d'adresses, affichés dans les autres applications. La valeur par défaut est aucun.
 add emails of whole distribution list?	addressbook	fr	Envoyez un email à toute la liste de diffusion ?
 add or delete categories	addressbook	fr	Ajouter ou modifier des catégories
 add to bcc	addressbook	fr	Ajouter en Bcc
@@ -43,7 +43,6 @@ added by synchronisation	addressbook	fr	ajouté par synchronisation
 added to distribution list	addressbook	fr	ajouté à la liste de diffusion
 additional information about using ldap as contact repository	admin	fr	Informations complémentaires pour utiliser LDAP comme dépôt de contacts
 address book	common	fr	Carnet d'adresses
-address book - vcard in	addressbook	fr	Carnet d'adresses - Entrée vCard
 address book - view	addressbook	fr	Carnet d'adresses - Voir
 address line 2	addressbook	fr	Adresse ligne 2
 address line 2 (private)	addressbook	fr	Adresse ligne 2 (privé)
@@ -72,10 +71,10 @@ allow for contacts only	addressbook	fr	Autoriser seulement sur les contacts
 allow members of following groups to edit contact-data of accounts	addressbook	fr	Autoriser les membres des groupes suivants à modifier les informations de contact des comptes
 allow users to maintain their own account-data	admin	fr	Permettre aux utilisateurs de maintenir les données de leur propre compte
 alt. csv import	addressbook	fr	Import CSV alternatif
-always	addressbook	fr	toujours
+always	addressbook	fr	Toujours
 apply changes to all members, whose fields have the same previous content	addressbook	fr	Appliquer les changements à tous les membres dont les champs ont le même contenu.
 apply the action on the whole query, not only the shown contacts!!!	addressbook	fr	Appliquer l'action sur la totalité des résultats de la requête et pas seulement sur les contacts affichés.
-are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr de vouloir supprimer ce contact?
+are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr de vouloir supprimer ce contact ?
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ ?
 assistent	addressbook	fr	Assistant(e)
 assistent phone	addressbook	fr	Téléphone assistant(e)
@@ -100,7 +99,7 @@ calendar fields:	addressbook	fr	Champ calendrier:
 calendar integration	addressbook	fr	Intégration du calendrier
 calendar uri	addressbook	fr	URI du calendrier
 can be changed via setup >> configuration	admin	fr	Peut être modifié via Setup >> Configuration
-can't create dn %1	addressbook	fr	Ne peut créer dn %1
+can't create dn %1	addressbook	fr	Ne peut créer DN %1
 car phone	addressbook	fr	Téléphone voiture
 categorie	addressbook	fr	Catégorie
 categorie added	addressbook	fr	Catégorie ajoutée.
@@ -134,7 +133,7 @@ contact deleted	addressbook	fr	Contact supprimé
 contact fields to show	addressbook	fr	Champs à afficher
 contact fields:	addressbook	fr	Champs du contact :
 contact id	addressbook	fr	ID (identificateur) du contact
-contact id cannot be changed by import	addressbook	fr	L'id du contact ne peut être modifié par l'import.
+contact id cannot be changed by import	addressbook	fr	L'ID du contact ne peut être modifié par l'import.
 contact maintenance	admin	fr	Maintenance des contacts.
 contact modified by %1 at %2	addressbook	fr	Contact modifiée par %1 à %2 .
 contact not found!	addressbook	fr	Contact introuvable !
@@ -176,7 +175,7 @@ default addressbook for adding contacts	addressbook	fr	Carnet d'adresses par dé
 default document to insert contacts	addressbook	fr	Document par défaut pour l'ajout de contacts
 default file as format	addressbook	fr	Format de fichier par défaut
 default filter	addressbook	fr	Filtre par défaut
-default format for fileas, eg. for new entries.	addressbook	fr	Format par défaut pour le nom complet (pour les nouvelles entrées)
+default format for fileas, eg. for new entries.	addressbook	fr	Format par défaut pour le nom complet (pour les nouvelles entrées).
 default geolocation source address	addressbook	fr	Adresse de géolocalisation par défaut
 default is to open email addresses in egroupware email application, if user has access to it.	addressbook	fr	Le comportement par défaut est d'ouvrir les adresses email dans l'application email EGroupware, si l'utilisateur y a accès.
 defines which email address (business or home) to use as the preferred one for distribution lists in mail.	addressbook	fr	Quelle adresse email est utilisée par défaut pour les listes de diffusion.
@@ -192,20 +191,20 @@ directory with documents to insert contacts	addressbook	fr	Répertoire avec les 
 disable	addressbook	fr	Désactiver
 disable last/next event column	addressbook	fr	Désaciver la colonne Dernier/Suivant
 display contact	addressbook	fr	Afficher le contact
-displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Affiche un rappel pour les anniversaires sur la page d'accueil (page qui s'affiche quand vous entrez dans EGroupware ou quand vous cliquez sur l'icône Accueil)
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	fr	Afficher les anniversaires sur la page d'accueil.
 distribution list deleted	addressbook	fr	La liste de diffusion est supprimée
 distribution list renamed	addressbook	fr	La liste de diffusion est renommée
 distribution lists	addressbook	fr	Listes de diffusion
 distribution lists as groups	addressbook	fr	Listes de diffusion comme des groupes
 distribution lists, ...	addressbook	fr	Listes de diffusion, ...
 do you really want to delete this contact?	addressbook	fr	Confirmez-vous la suppression de ce contact ?
-do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	fr	Voulez vous un carnet d'adresses privé qui ne pourra être vu par les autres utilisateurs sauf si vous modifiez les autorisations ?
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	fr	Voulez vous un carnet d'adresses privé qui ne pourra être vu par les autres utilisateurs sauf si vous modifiez les autorisations.
 do your really want to delete this contact?	addressbook	fr	Voulez vous vraiment supprimer ce contact ?
 doesn't matter	addressbook	fr	sans importance
 domestic	addressbook	fr	Domestique
 don't hide empty columns	addressbook	fr	Ne pas cacher les colonnes vides
 download	addressbook	fr	Télécharger
-download export file (uncheck to debug output in browser)	addressbook	fr	Télécharger le fichier d'exportation (Décocher pour deboguer la sortie dans le navigateur)
+download export file (uncheck to debug output in browser)	addressbook	fr	Télécharger le fichier d'exportation (Décocher pour deboguer la sortie dans le navigateur).
 download this contact as vcard file	addressbook	fr	Téléchargez ce contact comme un fichier vCard
 duplicate threshold	addressbook	fr	Seuil de doublon
 duplicate warning	addressbook	fr	Alerte au doublon
@@ -225,18 +224,18 @@ email (private)	addressbook	fr	email (privé)
 email addresses (comma separated) to send the contact data	addressbook	fr	Adresses email, séparées par des virgules, pour envoyer les données des contacts.
 empty	admin	fr	Vide
 empty addressbook before importing	addressbook	fr	Supprimer les entrées du carnet d'adresse NE SE TROUVANT PAS dans la liste csv
-empty for all	addressbook	fr	vide pour tous
+empty for all	addressbook	fr	Vide pour tous
 enable an extra private addressbook	addressbook	fr	Activer un carnet d'adresses privé supplémentaire
 enclosure	addressbook	fr	Pièce jointe
 end	addressbook	fr	Fin
 enter the path to the exported file here	addressbook	fr	Entrer ici le chemin vers le fichier exporté
-error deleting the contact !!!	addressbook	fr	Erreur lors de la suppresion du contact
-error saving the contact !!!	addressbook	fr	Erreur lors de la sauvegarde du contact
-error: the entry has been updated since you opened it for editing!	addressbook	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
+error deleting the contact !!!	addressbook	fr	Erreur lors de la suppresion du contact !
+error saving the contact !!!	addressbook	fr	Erreur lors de la sauvegarde du contact !
+error: the entry has been updated since you opened it for editing!	addressbook	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier !
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	fr	Exemple {{IF n_prefix~Mr~Bonjour Mr.~Bonjour Ms.}} - recherche "Mr" dans le champ "n_prefix", si trouvé, écrire Hello Mr., sinon écrire Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	fr	Exemple {{LETTERPREFIXCUSTOM n_prefixe titre n_famille}} - Exemple : M. Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	fr	Exemple {{NELF rôle}} - si le champ rôle n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ rôle
-example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	fr	Exemple {{nenvlf rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role.
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	fr	Exemple {{nenvlf rôle}} - si le champ role n'est pas vide, vous obtiendrez une nouvelle ligne avec la valeur du champ role
 existing links	addressbook	fr	Liens existants
 exists	addressbook	fr	Existe
 export as csv	addressbook	fr	Exporter au format CSV
@@ -249,12 +248,12 @@ export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
 export selection	addressbook	fr	Sélection pour l'exportation
 exported	addressbook	fr	exporté
 exports contacts from your addressbook into a csv file.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Exporter les contacts du carnet d'adresses vers un fichier CSV. Dans les options, vous pouvez choisir d'autres séparateurs.
 exports contacts from your addressbook into a vcard file.	addressbook	fr	Exporter les contacts de votre carnet d'adresses vers un fichier vCard.
 extra	addressbook	fr	Supplément
 extra encodings	addressbook	fr	Encodage supplémentairess
 extra private	addressbook	fr	Extra privé
-failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants).
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants) !
 favorite phone	addressbook	fr	Téléphone favoris
 favorites	addressbook	fr	Favoris
 fax	addressbook	fr	Fax
@@ -286,6 +285,8 @@ group %1	addressbook	fr	Groupe %1
 h	addressbook	fr	h
 hide accounts from addressbook	addressbook	fr	Cacher les comptes utilisateurs
 hide all accounts	addressbook	fr	Cacher tous les comptes
+hide all groups	addressbook	fr	Masquer tous les groupes
+hide groups without email address	addressbook	fr	Masquer les groupes sans adresse e-mail
 hide user groups as distribution lists	addressbook	fr	Cacher les groupes en tant que liste de distribution
 hides accounts completly from the adressbook.	addressbook	fr	Complètement cacher les comptes utilisateurs du carnet d'addesses
 history logging	admin	fr	Enregistrement de l'historique
@@ -314,17 +315,18 @@ import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou vCar
 import from outlook	addressbook	fr	Importer depuis Outlook
 import multiple vcard	addressbook	fr	Importation vCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
-import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules,  dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format vCard.
+import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules, dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format vCard.
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
-imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV.  CSV correspond à des valeurs séparées par des virgules.  Dans les options, vous pouvez choisir d'autres séparateurs.
+imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV. CSV correspond à des valeurs séparées par des virgules. Dans les options, vous pouvez choisir d'autres séparateurs.
 imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
 in %1 days (%2) is %3's birthday.	addressbook	fr	Dans %1 jours (%2) c'est l'anniversaire de %3.
+include all groups	addressbook	fr	Inclure tous les groupes
 income	addressbook	fr	Revenus
 infolog	addressbook	fr	Contact InfoLog
 infolog-organisation	addressbook	fr	Organisation InfoLog
 insert	addressbook	fr	Insérer
 insufficent rights to delete this list!	addressbook	fr	Autorisations insuffisantes pour supprimer cette liste !
-insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e!
+insufficent rights to edit this list!	addressbook	fr	Autorisations insuffisantes pour modifier cette list e !
 international	addressbook	fr	International
 internet	addressbook	fr	Internet
 invite to current call	addressbook	fr	Inviter à l'appel en cours
@@ -340,25 +342,25 @@ line 2	addressbook	fr	Ligne 2
 link title for contacts show	addressbook	fr	Le titre du lien pour les contacts montre
 links	addressbook	fr	Liens
 links and attached files	addressbook	fr	Liens et fichiers attachés
-links to specified application.  example: {{links/infolog}}	addressbook	fr	Liens vers les applications spécifiés. Exemple :  {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	addressbook	fr	Liens vers les applications spécifiés. Exemple : {{links/infolog}}
 list all categories	addressbook	fr	Lister toutes les catégories
 list all customfields	addressbook	fr	Lister tous les champs spécifiques
 list already exists!	addressbook	fr	La liste existe déjà !
 list created	addressbook	fr	Liste créée
-list creation failed, no rights!	addressbook	fr	La création de la liste a échoué, aucune autorisation!
+list creation failed, no rights!	addressbook	fr	La création de la liste a échoué, aucune autorisation !
 list of files linked to the current record	addressbook	fr	Listes des fichiers liés à l'enregistrement courant
 load custom fields in index, even if custom field column is off (eg. to display them in a specific index column)	addressbook	fr	Charger les champs personnalisé sur l'index, même si le champ personnalisé est vide (ie. pour les afficher dans une colonne spécifique)
 load vcard	addressbook	fr	Charger vCard
 location	addressbook	fr	Emplacement
 locations	addressbook	fr	localisations
-mail vcard	addressbook	fr	Email vCard
+mail vcard	addressbook	fr	Mail vCard
 main categories in their own field	addressbook	fr	Principales catégories dans leurs propre domaine/champ
 manage mapping	addressbook	fr	Gestion des correspondances
 mark records as private	addressbook	fr	Marquer l´enregistrement comme privé
 merge contacts	addressbook	fr	Fusionner les contacts
 merge duplicates	addressbook	fr	Fusionner les doublons
-merge into first or account, deletes all other!	addressbook	fr	Fusion avec le premier compte, efface tous les autres!
-merged	addressbook	fr	fusionné
+merge into first or account, deletes all other!	addressbook	fr	Fusion avec le premier compte, efface tous les autres !
+merged	addressbook	fr	Fusionné
 message after submitting the form	addressbook	fr	Message après la soumission du formulaire
 message phone	addressbook	fr	Message téléphonique
 middle name	addressbook	fr	Deuxième prénom
@@ -373,7 +375,7 @@ move to addressbook	addressbook	fr	Déplacer vers le carnet d'adresses
 moved	addressbook	fr	déplacé(s)
 multiple vcard	addressbook	fr	vCard multiples
 name for the distribution list	addressbook	fr	Nom de la liste de diffusino
-name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
+name of current user, all other contact fields are valid too	addressbook	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi.
 name, address	addressbook	fr	Nom, adresse
 name, email, phone	addressbook	fr	Nom, email, téléphone
 new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
@@ -415,7 +417,7 @@ postal	common	fr	Postal
 pref	addressbook	fr	pref
 preferred email address to use in distribution lists	addressbook	fr	Adresse email préférée
 preferred phone	addressbook	fr	Numéro de téléphone préféré
-preferred type of email address to add for distribution lists	addressbook	fr	Type d'adresse email préférée pour les listes de diffusion
+preferred type of email address to add for distribution lists	addressbook	fr	Type d'adresse email préférée pour les listes de diffusion.
 prefix	addressbook	fr	Préfixe
 prevent deleting of contacts	admin	fr	Empecher la suppression de contacts
 private address	addressbook	fr	Adresse privée
@@ -426,14 +428,14 @@ publish into groups:	addressbook	fr	Publié dans les groupes:
 read a list / search for entries.	addressbook	fr	Lire une liste / rechercher des entrées.
 read a list of entries.	addressbook	fr	Lire une liste d'entrées.
 read a single entry by passing the id and fieldlist.	addressbook	fr	Lire une seule entrée en passant l'ID et la liste des champs.
-read only	addressbook	fr	lecture seule
+read only	addressbook	fr	Lecture seule
 record access	addressbook	fr	Enregistrer l'accès
 record owner	addressbook	fr	Enregistrer le propriétaire
 recovered	addressbook	fr	Récupéré
 region	addressbook	fr	Région
 remove from distribution list	addressbook	fr	Supprimer de la liste de diffusion
 remove selected contacts from distribution list	addressbook	fr	Retirer les contacts sélectionnés de la liste de diffusion
-removed from distribution list	addressbook	fr	retiré de la liste de diffusion
+removed from distribution list	addressbook	fr	Retiré de la liste de diffusion.
 rename list	addressbook	fr	Renommer la liste
 rename selected distribution list	addressbook	fr	Renommer la liste de diffusion sélectionner
 repetition	addressbook	fr	Répétition
@@ -449,7 +451,7 @@ select a view	addressbook	fr	Sélectionnez une vue
 select addressbook type	addressbook	fr	Sélectionnez un type de carnet d'adresse
 select all	addressbook	fr	Sélectionner tout
 select an action or addressbook to move to	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer
-select an action or addressbook to move to...	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer...
+select an action or addressbook to move to...	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer ...
 select an opened dialog	addressbook	fr	Sélectionner une boîte de dialogue ouverte
 select migration type	admin	fr	Sélectionnez un type de migration
 select multiple contacts for a further action	addressbook	fr	Sélectionner plusieurs contacts pour une même action
@@ -462,7 +464,7 @@ send emailcopy to receiver	addressbook	fr	Envoyer une copie email au destinatair
 send fax via email by replacing fax number with an email address	addressbook	fr	Envoyer un fax par email en remplaçant le numéro de fax par une adresse email
 send succeeded to %1	common	fr	Succès de l'envoi vers %1
 seperator	addressbook	fr	Séparateur
-set full name and file as field in contacts of all users (either all or only empty values)	admin	fr	Remplir le nom complet et le "afficher comme" dans les fiches contact de tous les utilisateurs. Soit tous, soit seulement les valeurs vides.
+set full name and file as field in contacts of all users (either all or only empty values)	admin	fr	Remplir le nom complet et le "afficher comme" dans les fiches contact de tous les utilisateurs. Soit tous, soit seulement les valeurs vides
 set only full name	addressbook	fr	Définir seulement le nom complet
 share into addressbook	addressbook	fr	Partager dans le carnet d'adresses
 share writable	addressbook	fr	Partager en écriture
@@ -500,10 +502,10 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	fr	L'utilisateur anonyme doit avoir des droits d'ajout !
 the anonymous user needs read it!	addressbook	fr	L'utilisateur anonyme doit avoir des droits de lecture !
 the following document-types are supported:	addressbook	fr	Les documents types suivants sont supportés :
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fr	l'extension zip est nécessaire pour insérer des données de contact dans des documents LibreOffice ou MS Office
+the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	fr	l'extension zip est nécessaire pour insérer des données de contact dans des documents LibreOffice ou MS Office.
 there was an error saving your data :-(	addressbook	fr	ERREUR à l'enregistrement de données !
 this module displays a contactform, that stores direct into the addressbook.	addressbook	fr	Ce module affiche un formulaire de contact, qui stocke directement des informations dans le carnet d'adresses.
-this module displays block from a adddressbook group.	addressbook	fr	Ce module affiche un bloc de groupe du carnet d'adresses
+this module displays block from a adddressbook group.	addressbook	fr	Ce module affiche un bloc de groupe du carnet d'adresses.
 this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
 this person's last name was not in the address book.	addressbook	fr	Le nom de cette personne n'était pas dans le carnet d'adresses.
 timezone	addressbook	fr	Fuseau horaire
@@ -516,11 +518,11 @@ translation	addressbook	fr	Traduction
 two of: %1	addressbook	fr	Deux de : %1
 type	addressbook	fr	Type
 un-delete	addressbook	fr	Dé-supprimer
-unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	fr	Impossible de convertir "%1" vers un compte.  Utilisation du paramètre de plugin (%2) pour le propriétaire.
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	fr	Impossible de convertir "%1" vers un compte. Utilisation du paramètre de plugin (%2) pour le propriétaire.
 unable to delete	addressbook	fr	impossible de supprimer
 unable to import into %1, using %2	addressbook	fr	Impossible d'importer dans %1, utilisation de %2
 unique id (uid)	addressbook	fr	ID unique (UID)
-unique id<br />(to update existing records)	addressbook	fr	ID Unique<br />pour mettre à jour des enregistrements existants
+unique id<br />(to update existing records)	addressbook	fr	ID Unique<br>pour mettre à jour des enregistrements existants
 unknown type %1, imported as %2	addressbook	fr	Type %1 inconnu, importé comme %2
 unshare	addressbook	fr	Ne plus partager
 unshared	addressbook	fr	ne plus partager
@@ -542,7 +544,7 @@ user groups are automatically shown as distribution lists.	addressbook	fr	Les gr
 user preference	addressbook	fr	Préférences de l'utilisateur
 vcard	common	fr	vCard
 vcards require a first name entry.	addressbook	fr	Les vCards nécessitent une entrée prénom.
-vcards require a last name entry.	addressbook	fr	Les vcards nécessitent une entrée nom de famille.
+vcards require a last name entry.	addressbook	fr	Les vCards nécessitent une entrée nom de famille.
 verification	addressbook	fr	Vérification
 video call	addressbook	fr	Appel vidéo
 view linked infolog entries	addressbook	fr	Afficher les entrées liées à InfoLog
@@ -559,17 +561,17 @@ which charset should be used for the csv export. the system default is the chars
 which charset should be used for the vcard export.	addressbook	fr	Quel jeu de caractère utilisé pour les exports vCard
 which charset should be used for the vcard import and export.	addressbook	fr	Quel jeu de caractère utilisé pour les exports et imports vCard
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	fr	Quels champs doivent être exportés. Tous signifie que les champs personnalisés du carnet d'adresses sont inclus. Les adresses personnelles et professionelles contiennent seulement le nom la société et les adresses sélectionnées.
-whole query	addressbook	fr	requête entière
+whole query	addressbook	fr	Requête entière
 work email if given, else home email	addressbook	fr	Email pro si possible, sinon perso
 work phone	addressbook	fr	Téléphone (bureau)
 write (update or add) a single entry by passing the fields.	addressbook	fr	Ecrivez (modifiez ou ajoutez) une entrée unique en passant les champs.
-wrong - try again ...	addressbook	fr	Erreur, essayer à nouveau...
+wrong - try again ...	addressbook	fr	Erreur, essayer à nouveau ...
 yes, for the next three days	addressbook	fr	Oui, pour les trois prochains jours
 yes, for the next two weeks	addressbook	fr	Oui, pour les deux prochaines semaines
 yes, for the next week	addressbook	fr	Oui, pour la semaine prochaine
 yes, for today and tomorrow	addressbook	fr	Oui, pour aujourd'hui et demain
 yes, only admins can purge deleted items	admin	fr	Oui, les administrateurs seuls peuvent purger les éléménts supprimés
-yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs  peuvent purger leurs éléments supprimés
+yes, users can purge their deleted items	admin	fr	Oui, les utilisateurs peuvent purger leurs éléments supprimés
 you are not allowed to share into the addressbook of %1	addressbook	fr	Vous ne pouvez pas partager dans le carnet d'adresses de %1
 you are not permitted to delete contact %1	addressbook	fr	Vous n'êtes pas autorisés à supprimer le contact %1
 you are not permittet to delete this contact	addressbook	fr	Vous n'êtes pas autorisés à supprimer ce contact

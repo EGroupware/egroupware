@@ -17,9 +17,16 @@ import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
-import {nm_action} from "../etemplate/et2_extension_nextmatch_actions";
+import {fetchAll, nm_action} from "../etemplate/et2_extension_nextmatch_actions";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
+import {loadWebComponent} from "../etemplate/Et2Widget/Et2Widget";
+import type {EgwAction} from "../egw_action/EgwAction";
+import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
+import {EgwActionObject} from "../egw_action/EgwActionObject";
+import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
+import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
+import {AcSelect} from "../../../achelper/js/AcSelect/AcSelect";
 
 /**
  * Type for push-message
@@ -200,6 +207,20 @@ export abstract class EgwApp
 		{
 			EgwApp._instances.splice(index, 1);
 		}
+	}
+
+	changeButton()
+	{
+		const acSelect: AcSelect = window.document.querySelector("ac-select")
+		acSelect.disableLinkSearch = !acSelect.disableLinkSearch
+		acSelect.requestUpdate()
+		console.log("disableLinkSearch" + acSelect.disableLinkSearch)
+	}
+
+	doSomething(thing?:any)
+	{
+		console.log("doSomething\n"+thing);
+		return true;
 	}
 
 	/**
@@ -795,7 +816,7 @@ export abstract class EgwApp
 	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _selected
 	 */
-	merge(_action : egwAction, _selected : egwActionObject[])
+	async mergeAction(_action : egwAction, _selected : egwActionObject[])
 	{
 		// Find what we need
 		let nm = null;
@@ -809,15 +830,9 @@ export abstract class EgwApp
 			{
 				nm = action.data.nextmatch;
 			}
-			if(as_pdf === null && action.getActionById('as_pdf') !== null)
-			{
-				as_pdf = action.getActionById('as_pdf').checked;
-			}
 			action = action.parent;
 		}
 		let all = nm?.getSelection().all || false;
-
-		as_pdf = as_pdf || false;
 
 		// Get list of entry IDs
 		let ids = [];
@@ -826,14 +841,173 @@ export abstract class EgwApp
 			let split = _selected[i].id.split("::");
 			ids.push(split[1]);
 		}
+		let document = await this._getMergeDocument(nm?.getInstanceManager(), _action, _selected);
+		if(!document.documents || document.documents.length == 0)
+		{
+			return;
+		}
 
 		let vars = {
 			..._action.data.merge_data,
-			pdf: as_pdf,
+			options: document.options,
 			select_all: all,
-			id: JSON.stringify(ids)
+			id: ids
 		};
-		egw.open_link(egw.link('/index.php', vars), '_blank');
+		if(document.options.link)
+		{
+			vars.options.app = this.appname;
+		}
+		// Just one file, an email - merge & edit or merge & send
+		if(document.documents.length == 1 && document.documents[0].mime == "message/rfc822")
+		{
+			vars.document = document.documents[0].path;
+			return this._mergeEmail(_action.clone(), vars);
+		}
+		else
+		{
+			vars.document = document.documents.map(f => f.path);
+		}
+		if(document.documents.length == 1 && !document.options.individual)
+		{
+			// Only 1 document, we can open it
+			vars.id = JSON.stringify(ids);
+			this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
+		}
+		else
+		{
+			// Multiple files, or merging individually - will result in multiple documents that we can't just open
+			vars.menuaction = vars.menuaction.replace("merge_entries", "ajax_merge_multiple");
+			vars.menuaction += "&merge=" + vars.merge;
+			let mergedFiles = [];
+
+			// Check for an email template - all other files will be merged & attached
+			let email = document.documents.find(f => f.mime == "message/rfc822");
+
+			// Can we do this in one, or do we have to split it up for feedback?
+			if(!vars.options.individual && (!email || email && !all && ids.length == 1))
+			{
+				vars.options.open_email = !vars.options.download && typeof email != "undefined";
+
+				// Handle it all on the server in one request
+				this.egw.loading_prompt(vars.menuaction, true);
+				mergedFiles = await this.egw.request(vars.menuaction, [vars.id, vars.document, vars.options]);
+				this.egw.loading_prompt(vars.menuaction, false);
+
+				// One entry, email template selected - we can open that in the compose window
+				if(email)
+				{
+					debugger;
+				}
+				else
+				{
+					this.egw.message(mergedFiles, "success");
+				}
+			}
+			else
+			{
+				// Merging documents, merge email, attach to email, send.
+				// Handled like this here so we can give feedback, server could do it all in one request
+				let idGroup = await new Promise<string[]>((resolve) =>
+				{
+					if(all)
+					{
+						fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+					}
+					else
+					{
+						resolve(vars.options.individual ? ids : [ids])
+					}
+				});
+				Et2Dialog.long_task(null /*done*/, this.egw.lang("Merging"),
+					email ? this.egw.lang("Merging into %1 and sending", email.path) : this.egw.lang("Merging into %1", vars.document.join(", ")),
+					vars.menuaction,
+					idGroup.map((ids) => {return [Array.isArray(ids) ? ids : [ids], vars.document, vars.options];}), this.egw
+				);
+			}
+		}
+	}
+
+	/**
+	 * Ask the user for a target document to merge into
+	 *
+	 * @returns {Promise<{document : string, pdf : boolean, mime : string}>}
+	 * @protected
+	 */
+
+	protected _getMergeDocument(et2?, action? : EgwAction, selected? : EgwActionObject[]) : Promise<{
+		documents : { path : string; mime : string }[];
+		options : { [p : string] : string | boolean }
+	}>
+	{
+		let path = action?.data?.merge_data?.directory ?? "";
+		let dirPref = <string>this.egw.preference('document_dir', this.appname) ?? "";
+		let dirs = dirPref.split('/[,\s]+\//');
+		dirs.forEach((d, index) =>
+		{
+			if(index)
+			{
+				d = "/" + d;
+			}
+		});
+		let fileSelect = <Et2MergeDialog><unknown>loadWebComponent('et2-merge-dialog', {
+			application: this.appname,
+			path: dirs.pop() || ""
+		}, et2?.widgetContainer ?? null);
+		if(!et2)
+		{
+			document.body.append(fileSelect);
+		}
+		// Customize dialog
+		fileSelect.updateComplete.then(() =>
+		{
+			// Start details open when you have multiple selected
+			// @ts-ignore
+			(<Et2Details>fileSelect.shadowRoot.querySelector('et2-details')).open = selected.length > 1;
+
+			// Disable individual when only one entry is selected
+			// @ts-ignore
+			(<Et2Checkbox>fileSelect.shadowRoot.querySelector("et2-details > [id='individual']")).disabled = selected.length == 1;
+		});
+		// Remove when done
+		fileSelect.getComplete().then(() => {fileSelect.remove();});
+
+		return fileSelect.getComplete();
+	}
+
+	/**
+	 * Merge into an email, then open it in compose for a single, send directly for multiple
+	 *
+	 * @param {object} data
+	 * @protected
+	 */
+	protected _mergeEmail(action, data : object)
+	{
+		const ids = data['id'];
+		// egw.open() used if only 1 row selected
+		data['egw_open'] = 'edit-mail--';
+		data['target'] = 'compose_' + data.document;
+
+		// long_task runs menuaction once for each selected row
+		data['nm_action'] = 'long_task';
+		data['popup'] = this.egw.link_get_registry('mail', 'edit_popup');
+		data['message'] = this.egw.lang('insert in %1', data.document);
+
+		data['menuaction'] = 'mail.mail_compose.ajax_merge';
+		action.data = data;
+
+		if(data['select_all'] || ids.length > 1)
+		{
+			data['menuaction'] += "&document=" + data.document + "&merge=" + data.merge;
+			nm_action(action, null, data['target'], {all: data['select_all'], ids: ids});
+		}
+		else
+		{
+			this.egw.open(ids.pop(), 'mail', 'edit', {
+				from: 'merge',
+				document: data.document,
+				merge: data.merge
+			}, data['target']);
+		}
 	}
 
 	/**
@@ -1071,6 +1245,15 @@ export abstract class EgwApp
 					// Normal user - just save to preferences client side
 					this.egw.set_preference(this.appname, favorite_pref, favorite);
 				}
+
+				// Trigger event so widgets can update
+				document.dispatchEvent(new CustomEvent("preferenceChange", {
+					bubbles: true,
+					detail: {
+						application: this.appname,
+						preference: favorite_pref
+					}
+				}));
 
 				// Add to list immediately
 				if(this.sidebox)

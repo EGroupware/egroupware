@@ -8,8 +8,7 @@
  * @author Hadi Nategh
  */
 
-import {css, html} from "lit";
-import {SlotMixin} from "@lion/core";
+import {css, html, render} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import '../Et2Image/Et2Image';
 import {SlSwitch} from "@shoelace-style/shoelace";
@@ -21,7 +20,7 @@ import shoelace from "../Styles/shoelace";
  * Add "et2SlideSwitch" class to use an alternate UI with images.  Use CSS to set the images:
  *
  */
-export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
+export class Et2Switch extends Et2InputWidget(SlSwitch)
 {
 	static get styles()
 	{
@@ -104,17 +103,6 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			'': () =>
-			{
-				return this.labelTemplate();
-			}
-		}
-	}
-
 	constructor()
 	{
 		super();
@@ -125,6 +113,7 @@ export class Et2Switch extends Et2InputWidget(SlotMixin(SlSwitch))
 
 	updated(changedProperties)
 	{
+		render(this.labelTemplate(), this);
 		if(changedProperties.has("toggleOn") || changedProperties.has("toggleOff") || changedProperties.has("label"))
 		{
 			if(!this.toggleOn && !this.toggleOff && this._labelNode)

@@ -1,3 +1,6 @@
+%1 attachments	mail	et	%1 manused
+%1 mails selected	mail	et	%1 valitud e-kirjad
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	et	%1 nõuab sõela laiendust %2, võib-olla proovige %1 või suuremat arvu päevi.
 (leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
 acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
 add all my aliases	mail	et	Lisa kõik minu varjunimed
@@ -9,7 +12,14 @@ adding %1 to blacklisted email addresses failed because of %2	mail	et	%1 lisamin
 adding %1 to whiltelisted email addresses failed because of %2	mail	et	%1 lisamine valimisse kantud e-posti aadressidele ebaõnnestus %2 tõttu.
 after reply, visible during compose	mail	et	Pärast vastamist, nähtav koostamise ajal
 aliases+forwards	mail	et	Pseudonimed + Edasisaatmine
+all messages in the folder will be lost	mail	et	Kõik kaustas olevad sõnumid lähevad kaduma.
 all of	mail	et	kõik välja
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	et	Kõik alamkaustad kustutatakse samuti ja kõik sõnumid kõigis mõjutatud kaustades lähevad kaduma.
+allow external images	mail	et	Lubage väliseid pilte
+allow external images from listed domains	mail	et	Lubage väliseid pilte loetletud domeenidest
+allow images from external sources in html emails	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine.
+allow images from listed domains in html emails	mail	et	Lubage loetelus olevate domeenide pilte HTML-meilides.
+always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
 always respond / auto-responder	mail	et	Alati vastata / automaatne vastus
 always show html emails	mail	et	Alati näita HTML emaile
 always show notifiction	mail	et	Näita alati teavitust
@@ -17,6 +27,8 @@ answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
 attach files	mail	et	Failide lisamine
 attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
+attach vcard	mail	et	Kinnita vCard
+attachment	mail	et	Attachment
 attachment has been saved successfully.	mail	et	Lisa on edukalt salvestatud.
 attachments, ...	mail	et	manused, ...
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	et	Olge teadlik, et kui lisate kõik valitud failid %1 režiimi, muudab see ka kõik olemasolevad manused nimekirjas samuti %2 režiimi. \n \n Kas soovite jätkata?
@@ -29,11 +41,17 @@ certificate details	mail	et	Sertifikaadi üksikasjad
 certificate in text	mail	et	Sertifikaadi tekst
 certificate info for email %1	mail	et	Sertifikaadi info e-posti %1 jaoks
 certificate issued by	mail	et	Sertifikaadi on välja andnud
+change editor type	mail	et	Vahetage toimetaja HTML-režiimi
 changing subject failed because of %1	mail	et	Teema muutmine ebaõnnestus %1 tõttu
 changing subject failed folder %1 does not exist	mail	et	Teema muutmine ebaõnnestus kaust %1 ei ole olemas.
+check message against next rule also	mail	et	Kontrollida sõnumit ka järgmise reegli alusel
+check to save as calendar event on send	mail	et	Kontrollida nuppu, et luua sündmusena pärast saatmist
+check to save as infolog on send	mail	et	Märkige nupp, et luua pärast saatmist InfoLogina
+check to save as tracker entry on send	mail	et	Kontrollida nuppu, et luua piletina pärast saatmist
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
+copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 date(newest first)	mail	et	Kuupäev (uuemad enne)
 date(oldest first)	mail	et	Kuupäev (vanemad enne)
@@ -42,6 +60,7 @@ default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret
 default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	et	Definerer, hvad der skal vises som kontaktmærke for tilføjede kontaktpersoner i Til/Kopiere/Blind kopi, når du udarbejder en e-mail. Standard er fornavn efternavn og tom betyder, at alt tilgængeligt skal medtages.
 delete folder	mail	et	Kustuta kaust
+delete selected folders	mail	et	Valitud kaustade kustutamine
 deleted	mail	et	kustutatud
 disable	mail	et	Keela
 disable caching of flags	mail	et	Deaktiver caching af flag
@@ -51,6 +70,8 @@ display messages in multiple windows	mail	et	Näita kirju mitmes aknas
 display of html emails	mail	et	Näita HTML emaile
 display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
 displaying html messages is disabled	mail	et	html kirjade näitamine on välja lülitatud
+do you really want to delete folder %1 ?	mail	et	Kas te tõesti tahate kustutada kausta %1?
+do you really want to delete this rule	mail	et	Kas te tõesti soovite seda reeglit KUSTUTA?
 do you really want to toggle flag %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada lipukese %1 kõigi praeguses vaates olevate sõnumite jaoks?
 do you really want to toggle label %1 for all messages in the current view?	mail	et	Kas te tõesti tahate lülitada märgistuse %1 kõigi sõnumite jaoks praeguses vaates?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	et	Kas soovite, et enne valitud sõnumite lisamist uuele e-kirjale küsitaks kinnitust?
@@ -69,6 +90,7 @@ enabled	mail	et	Lubatud
 encrypt your message with smime certificate	mail	et	Krüpteerige oma sõnum S/MIME sertifikaadiga
 every %1. day	mail	et	Iga %1. päev
 examine namespace to retrieve folders in others and shared	mail	et	Uurige nimeruumi, et otsida kaustu teistes ja jagatud
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	et	Suuremate manuste väljajätmine antud suurusest suuremate manuste automaatsest salvestamisest eelnõuna (MB)
 extended	mail	et	Laiendatud
 failed to subscribe folder %1!	mail	et	Ei õnnestunud tellida kausta %1!
 failed to unsubscribe folder %1!	mail	et	Ebaõnnestus kausta %1 tühistamine!
@@ -263,6 +285,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	et	Selle sõnumi saatmiseks peate sisestama oma S/MIME parooli.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	et	Teil on vaja paigaldada Mailvelope'i plugin, mis on saadaval Chrome'ile ja Firefoxile alates %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	et	Te peate enne sõnumi VFS-i salvestamist salvestama selle eelnõuna.
+you need to select some folders first (by clicking on them)!	mail	et	Te peate esmalt valima mõned kaustad (klõpsates nendele)!
 you will loose current message body, unless you save it to your clipboard!	mail	et	Te kaotate praeguse sõnumi teksti, kui te ei salvesta seda lõikelauale!
 you've got new mail	mail	et	Teil on uus e-kiri
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	et	Teie järelejäänud kvoot %1 on liiga väike, te ei saa enam e-kirju saata/vastuvõtta.<br>Kuigi kirjade koristamine prügikastis või rämpskaustas võib aidata teil vaba ruumi tagasi saada.<br>Kui see ei aidanud, paluge administraatoril suurendada kvooti.

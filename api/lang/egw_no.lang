@@ -1,13 +1,21 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	no	%1 (%2 nye) meldinger skrevet for program '%3' og språk '%4'
+%1 active file(s) with same name as directory inactivated!	admin	no	%1 aktiv(e) fil(er) med samme navn som mappen er inaktivert!
+%1 copied - the copy can now be edited	common	no	%1 kopiert - kopien kan nå redigeres
+%1 directories %2 found!	admin	no	%1 kataloger %2 funnet!
 %1 email addresses inserted	common	no	%1 email adresser lagt til
 %1 email(s) added into %2	common	no	%1 e-post(er) lagt til i %2
-%1 etemplates deleted	common	no	%1 eMaler slettet
+%1 entries found, select one ...	common	no	%1 oppføringer funnet, velg en ...
+%1 etemplates deleted	common	no	%1 eMaler slettet.
 %1 etemplates for application '%2' dumped to '%3'	common	no	%1 eMaler for program '%2' overført til '%3'
-%1 etemplates found	common	no	%1 eMaler funnet
+%1 etemplates found	common	no	%1 eMaler funnet.
+%1 file	common	no	%1-fil
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener!
 %1 matches on search criteria	common	no	%1 treff for søkekriteria
 %1 more %2 selected ...	common	no	%1 flere %2 valgt ...
+%1 more...	common	no	%1 mer ...
 %1 new etemplates imported for application '%2'	common	no	%1 nye eMaler importert for program '%2'
+%1 not implemented for %2!	common	no	%1 ikke implementert for %2!
+%1 proxy of %2	common	no	%1 proxy av %2
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1EGroupware%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
 %s disabled	common	no	%s ikke aktivt
 %s needed	common	no	%s nødvendig
@@ -17,11 +25,14 @@
 '%1' copied to clipboard	common	no	'%1' kopiert til utklippstavlen
 '%1' has an invalid format	common	no	'%1' har et ugyldig format
 '%1' has an invalid format !!!	common	no	'%1' har feil format!
-'%1' is not a valid date !!!	common	no	'%1' er ikke en gyldig dato
-'%1' is not a valid floatingpoint number !!!	common	no	'%1' er ikke et gyldig flyttalls nummer
+'%1' is not a valid date !!!	common	no	'%1' er ikke en gyldig dato!
+'%1' is not a valid floatingpoint number !!!	common	no	'%1' er ikke et gyldig flyttalls nummer!
 '%1' is not a valid integer !!!	common	no	'%1' er ikke et gyldig heltall!
-'%1' is not a valid json file!	common	no	'%1' er ikke en gyldig JSON-fil.
+'%1' is not a valid json file!	common	no	'%1' er ikke en gyldig JSON-fil
 '%1' is not a valid timezone!	common	no	'%1' er ikke en gyldig tidssone!
+'%1' is not allowed ('%2')!	common	no	'%1' er IKKE tillatt ('%2')!
+'%1' is not allowed%2)!	common	no	'%1' er IKKE tillatt (%2)!
+(session restored in %1 seconds)	common	no	Økten gjenopprettes om %1 sekunder.
 00 (disable)	admin	no	00 (frakoblet)
 1 day	common	no	1 dag
 1 hour	common	no	1 time
@@ -40,31 +51,41 @@
 5 seconds	common	no	5 sekunder
 80 (http)	admin	no	80 (http)
 a pattern to be searched for	common	no	En streng å søke med
+abcdefghijklmnopqrstuvwxyz	common	no	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abort	common	no	Avbryt
 about	common	no	Om
 about %1	common	no	Om %1
+about egroupware	common	no	Om EGroupware
 access	common	no	Tilgang
 access not permitted	common	no	Ingen tilgang
-account has been created	common	no	Brukerkonto har blitt opprettet
-account has been deleted	common	no	Brukerkonto har blitt slettet
-account has been updated	common	no	Brukerkonto har blitt oppdatert
-account is expired	common	no	Brukerkonto har utløpt på dato
+accesskey	common	no	Tilgangsnøkkel
+account has been created	common	no	Brukerkonto har blitt opprettet.
+account has been deleted	common	no	Brukerkonto har blitt slettet.
+account has been updated	common	no	Brukerkonto har blitt oppdatert.
+account is expired	common	no	Brukerkonto har utløpt på dato.
+accounts	common	no	Kontoer
 acl	common	no	Tlgangskontroll
 action	common	no	Funksjon
 actions	common	no	Funksjoner
 active	common	no	Aktiv
 add	common	no	Legg til
+add %1	common	no	Legg til %1
 add %1 category for	common	no	Legg til %1 kategori for
 add a new column (after the existing ones)	common	no	Legg til en ny kolonne (etter den eksisterende)
+add a new contact	common	no	Legg til en ny kontakt
 add a new multi-column index	common	no	Legg til en ny multikolonne indeks
 add category	common	no	Legg til kategori
 add column	common	no	Legg til kolonne
+add current	common	no	Nåværende visning som favoritt
 add index	common	no	Legg til innholdsfortegnelse
 add sub	common	no	Legg til underkategori
 add table	common	no	Legg til tabell
+add to clipboard	common	no	Legg til i utklippstavlen
 add user to responsibles	groupdav	no	Legg til bruker i ansvarlige
 add user to responsibles, removing evtl. previous category user	groupdav	no	Legge til bruker i ansvarlig, eventuelt fjerne tidligere kategoribrukere
 add your domain as "%1" in options to list of email providers and enable api.	common	no	Legg til domenet ditt som "%1" i listen over e-postleverandører og aktiver API.
 addressbook	common	no	Adresseliste
+addressbooks to sync in addition to personal addressbook	groupdav	no	Adressebøker som skal synkroniseres i tillegg til den personlige adresseboken
 admin	common	no	Admin
 admin settings	common	no	Admin-innstillinger
 admin settings for %1	common	no	Administratorinnstillinger for %1
@@ -77,13 +98,16 @@ align	common	no	Juster
 all	common	no	Alle
 all days	common	no	Alle dager
 all fields	common	no	Alle felt
+all in one	groupdav	no	Alt i ett
 all languages	common	no	Alle språk
 all operations save the template!	common	no	Alle operasjoner lagrer malen!
 all users	common	no	Alle brukere
 allow editing the %1	common	no	Tillat redigering av %1
+allowed file type: %1	common	no	Tillatt filtype: %1
 alternate style-sheet:	common	no	Alternativt Style Sheet
 am	common	no	er
 american samoa	common	no	SAMOA
+an admin required that you must change your password upon login.	common	no	Administrator krever at du må endre passordet ditt ved innlogging.
 an indexed column speeds up querys using that column (cost space on the disk !!!)	common	no	En indeksert kolonne øker hastigheten på spørringer som benytter kolonnen(tar plass på disk!)
 and	common	no	Og
 andorra	common	no	ANDORRA
@@ -93,32 +117,38 @@ answering no will not ask you again for this browser.	common	no	Hvis du svarer n
 antarctica	common	no	ANTARKTIS
 antigua and barbuda	common	no	ANTIGUA OG BARBUDA
 api	common	no	EGroupware API
+api-accounts	common	no	Brukerkontoer
 application	common	no	Program
-application name needed to write a langfile or dump the etemplates !!!	common	no	Programnavnet må skrives til en språkfil eller fjern eMalene!
+application name needed to write a langfile or dump the etemplates !!!	common	no	Programnavnet må skrives til en språkfil eller fjern eTemplates!
 applications	common	no	Applikasjoner
 applies the changes made	common	no	Lagre utførte endringer
 applies the changes to the given version of the template	common	no	Lagre utførte endringer til en gitt versjon av malen
 apply	common	no	Utfør
 april	common	no	April
 are you sure you want to delete these entries ?	common	no	Er du sikkert på at du vil slette disse innslagene?
-are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette dette innslaget ?
+are you sure you want to delete this entry ?	common	no	Er du sikker du vil slette dette innslaget?
+are you sure you want to logout?	common	no	Er du sikker på at du vil logge ut?
+are you sure, you would like to delete the backup key?	common	no	Er du sikker på at du ønsker å slette sikkerhetskopinøkkelen?
 argentina	common	no	ARGENTINA
 armenia	common	no	ARMENIA
 aruba	common	no	ARUBA
 attach	common	no	Tilknytt
 attach file	common	no	Tilknytt fil
+attachment	common	no	Vedlegg
 august	common	no	August
 australia	common	no	AUSTRALIA
 austria	common	no	ØSTERRIKE
 author	common	no	Forfatter
-autohide sidebox menus	common	no	Gjem side-menyene automatisk
-automatically hide the sidebox menus?	common	no	Automatisk gjemme side-menyene?
-autosave default category	common	no	Autolagre standard kategori
+automatic update check failed, you need to check manually!	common	no	Automatisk oppdateringssjekk mislyktes, du må sjekke manuelt!
+autosave default category	common	no	Autolagre standard kategori.
 avatar	common	no	Avatar
 azerbaijan	common	no	AZERBADSJAN
 back	common	no	Tilbake
 back to user login	common	no	Tilbake til brukerpålogging
 background color:	common	no	Bakgrunnsfarge:
+backup key	common	no	Nøkkel for sikkerhetskopiering
+backup/restore	common	no	Sikkerhetskopiering/gjenoppretting
+backup/restore ...	common	no	Sikkerhetskopiering/gjenoppretting ...
 bad login or password	common	no	Ugyldig login eller passord
 bahamas	common	no	BAHAMAS
 bahrain	common	no	BAHRAIN
@@ -132,7 +162,7 @@ belize	common	no	BELIZE
 benin	common	no	BENIN
 bermuda	common	no	BERMUDA
 bhutan	common	no	BHUTAN
-blocked, too many attempts	common	no	Sperret, for mange forsøk
+blocked, too many attempts	common	no	Sperret, for mange forsøk.
 bold	common	no	Uthevet
 bolivia	common	no	BOLIVIA
 border	common	no	Rammebredde
@@ -141,21 +171,23 @@ botswana	common	no	BOTSWANA
 bottom	common	no	Bunn
 bouvet island	common	no	BOUVETØYA
 box	common	no	Boks
-box...	common	no	Boks..
+box...	common	no	Boks ...
 brazil	common	no	BRASIL
 british indian ocean territory	common	no	BRITISK INDISKE HAVTERRITORIUM
+broken link	common	no	Ødelagt lenke
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	no	Nettleser %1 %2 anbefales ikke. Du kan oppleve problemer og funksjoner som ikke fungerer. Bruk den nyeste versjonen av Chrome, Firefox eller Edge. Takk skal du ha!
 brunei darussalam	common	no	BRUNEI
 bulgaria	common	no	BULGARIA
 burkina faso	common	no	BURKINA FASO
 burundi	common	no	BURUNDI
 calendar	common	no	Kalender
+calendars to sync in addition to personal calendar	groupdav	no	Kalendere som skal synkroniseres i tillegg til den personlige kalenderen
 cambodia	common	no	KAMBODSJA
 cameroon	common	no	KAMERUN
-can not have special sql-value null	common	no	Kan ikke være reservert SQL-verdi NULL
+can not have special sql-value null	common	no	Kan ikke være reservert SQL-verdi NULL.
 canada	common	no	CANADA
 cancel	common	no	Kanseller
-cannot replace %1 because it is a directory	common	no	Kan ikke erstatte %1 fordi det er en mappe
+cannot replace %1 because it is a directory	common	no	Kan ikke erstatte %1 fordi det er en mappe.
 cape verde	common	no	KAPP VERDE
 caption	common	no	Overskrift
 categories	common	no	Kategorier
@@ -170,11 +202,12 @@ center	common	no	Sentrer
 central african republic	common	no	SENTRALAFRIKANSKE REPUBLIKK
 chad	common	no	CHAD
 change	common	no	Endre
+change owner	common	no	Endre eier
 changed	common	no	Endret
 charset	common	no	Tegnsett
 check all	common	no	Kontroller alle
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	no	Se etter tomme verdier i IF-setninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
-check if content should only be displayed but not altered (the content is not send back then!)	common	no	Kryss av dersom innholdet kun skal vises og ikke endres(innholdet sendes da ikke tilbake!)
+check if content should only be displayed but not altered (the content is not send back then!)	common	no	Kryss av dersom innholdet kun skal vises og ikke endres(innholdet sendes da ikke tilbake!).
 check if field has to be filled by user	common	no	Kryss av om feltet skal fylles ut av bruker
 check installation	common	no	Sjekk installasjon
 check now	common	no	Sjekk nå
@@ -193,17 +226,22 @@ click here to attach the file	common	no	Klikk her for å legge til filen
 click here to create the link	common	no	Klikk her for å lage lenke
 click here to start the search	common	no	Klikk her for å starte søket
 click here to upload the file	common	no	Klikk her for å laste opp filen
-click or mouse over to show menus	common	no	Klikk eller hold peker over for å vise menyene
-click or mouse over to show menus?	common	no	Klikk eller hold peker over for å vise menyene?
 click to order after that criteria	common	no	Klikk for å sortere etter disse kriteria
 clickable path	common	no	Klikkbar sti
+clipboard contents	common	no	Innhold i utklippstavlen
 close	common	no	Lukk
 closes the window without saving the changes	common	no	Lukker vinduet uten å lagre endringene
 cocos (keeling) islands	common	no	COCOS (KEELING) ØYENE
+code	common	no	Kode
+collection empty.	common	no	Samlingen er tom.
+collection listing	common	no	Liste over samlinger
 colombia	common	no	COLOMBIA
 column...	common	no	Kolonne ...
 columnname	common	no	Kolonnenavn
+columns to print	common	no	Kolonner som skal skrives ut
+command ⌘	common	no	Kommando ⌘
 comment	common	no	Kommentar
+common preferences	common	no	Vanlige preferanser
 comoros	common	no	COMOROS
 company	common	no	Firma
 confirm	common	no	Bekreft
@@ -242,38 +280,36 @@ december	common	no	Desember
 default	common	no	Standard
 default category	common	no	Standard kategori
 delete	common	no	Slett
-delete a single entry by passing the id.	common	no	Slette en enkel oppføring ved å skrive inn id.
+delete a single entry by passing the id.	common	no	Slette en enkel oppføring ved å skrive inn ID
 delete all selected etemplates, without further inquiry	common	no	Slett alle valgte eMaler UTEN videre advarsler
-delete and cut save the template!	common	no	Slett og lagre malen til utklippstavlen
+delete and cut save the template!	common	no	Slett og lagre malen til utklippstavlen!
 delete category	common	no	Slett kategori
 delete column	common	no	Slett kolonne
 delete index	common	no	Slett indeks
 delete row	common	no	Fjern rad
+delete selected entries?	common	no	Slette valgte oppføringer?
 delete the spezified etemplate	common	no	Slette den angitte eMalen
 delete this column	common	no	Slett denne kolonnen
 delete this entry	common	no	Slett dette forekomsten
 delete this etemplate	common	no	Slett denne eMalen
+delete this photo?	common	no	Slette dette bildet?
 delete this row	common	no	Slett denne raden
-delete whole column (can not be undone!!!)	common	no	Slett hele kolonnen (dette kan IKKE angres!)
-deletes the etemplate spez. above	common	no	Sletter eMalene spesifisert ovenfor
-deletes this column	common	no	Slett denne kolonnen
-deletes this index	common	no	Slett denne indeksen
+delete whole column (can not be undone!!!)	common	no	Slett hele kolonnen
+deletes the etemplate spez. above	common	no	Sletter eTemplate.
+deletes this column	common	no	Slett denne kolonnen.
+deletes this index	common	no	Slett denne indeksen.
 denmark	common	no	DANMARK
 description	common	no	Beskrivelse
 detail	common	no	Detalj
 details	common	no	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	no	Koble ut bugscriptfix for Internet Explorer 5.5 og høyere for å vise gjennomsiktige PNG-bilder?
 directory	common	no	Mappe
-disable internet explorer png-image-bugfix	common	no	Koble ut Internet Explorer png-bilde bugfix
-disable slider effects	common	no	Slå av skyve-effektene
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	no	Slå av de animerte skyver-effektene under visning eller skjuling av menyene på siden? Opera og Konqueror brukere bør sannsynligvis velge dette.
 disabled	common	no	Utkoblet
 discard changes	common	no	Opphev endringer
 djibouti	common	no	DJIBOUTI
 do you also want to delete all subcategories ?	common	no	Vil du slette alle underkategoriene?
 doctype:	common	no	Dok.type:
 document properties	common	no	Dokumentegenskaper
-document title:	common	no	Dokumenttittel
+document title:	common	no	Dokumenttittel:
 documentation	common	no	Dokumentasjon
 doesn't matter	common	no	Spiller ingen rolle
 domain	common	no	Domene
@@ -284,7 +320,7 @@ dominican republic	common	no	DOMINIKANSKE REPUBLIKK
 don't ask again!	common	no	Ikke spør igjen!
 done	common	no	Ferdig
 download	common	no	Last ned
-drop a table - this can not be undone	common	no	Slette en tabell - dette kan ikke gjøres om!
+drop a table - this can not be undone	common	no	Slette en tabell - dette kan ikke gjøres om
 drop table	common	no	Slett tabell
 duration	common	no	Varighet
 e-mail	common	no	E-Post
@@ -294,7 +330,7 @@ edit	common	no	Rediger
 edit %1 category for	common	no	Endre %1 kategori for
 edit categories	common	no	Endre kategorier
 edit category	common	no	Endre kategori
-edit the etemplate spez. above	common	no	Rediger eMal-spesifikasjonene ovenfor
+edit the etemplate spez. above	common	no	Rediger eTemplate
 edit...	common	no	Rediger ...
 editable templates - db-tools	common	no	Editerbare Maler - DB-Verktøy
 editable templates - delete template	common	no	Editerbare Maler - Slett mal
@@ -311,34 +347,38 @@ enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
 enter a search pattern	common	no	Registrer en søkestreng
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).<br> F.eks: https://egw.domain.com/egroupware   or   /egroupware<br><b>Ingen avsluttende skråstrek</b>
-entry has been deleted sucessfully	common	no	Innslaget ble slettet
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn EGroupwares Internett adresse (URL).<br> F.eks: https://egw.domain.com/egroupware or /egroupware<br><b>Ingen avsluttende skråstrek</b>
+entry has been deleted sucessfully	common	no	Innslaget ble slettet.
 entry saved	common	no	Registrering lagret
-entry updated sucessfully	common	no	Innslaget ble oppdatert
+entry updated sucessfully	common	no	Innslaget ble oppdatert.
 equatorial guinea	common	no	EKVATORIAL-GUINEA
 eritrea	common	no	ERITREA
 error	common	no	Feil
-error creating %1 %2 directory	common	no	Feil under opprettelse av %1 %2 mappe
-error deleting %1 %2 directory	common	no	Feil under sletting av %1 %2 mappe
-error renaming %1 %2 directory	common	no	Feil under omdøping av %1 %2 mappe
+error creating %1 %2 directory	common	no	Feil under opprettelse av %1 %2 mappe!
+error deleting %1 %2 directory	common	no	Feil under sletting av %1 %2 mappe!
+error deleting %1!	common	no	Feil ved sletting av %1!
+error enabling push	common	no	Feil ved sletting av %1!
+error renaming %1 %2 directory	common	no	Feil under omdøping av %1 %2 mappe!
+error uploading file!	filemanager	no	Feil ved opplasting av fil!
 error: template not found !!!	common	no	Feil: Malen ble ikke funnet!
 error: webserver is not allowed to write into '%1' !!!	common	no	Feil: Nettstedstjeneren kan ikke skrive til '%1'!
 error: while saving !!!	common	no	Feil: Under lagring!
 estonia	common	no	ESTLAND
 etemplate	common	no	eTemplate
-etemplate '%1' written to '%2'	common	no	eMal '%1' ble skrevet til '%2'
-etemplate editor	common	no	eMal tekstbehandler
-etemplate reference	common	no	eMal referanse
-etemplate tutorial	common	no	eMal opplæring
+etemplate '%1' written to '%2'	common	no	eTemplate '%1' ble skrevet til '%2'
+etemplate editor	common	no	eTemplate-editor
+etemplate reference	common	no	eTemplate referanse
+etemplate tutorial	common	no	eTemplate opplæring
 ethiopia	common	no	ETIOPIA
-exact	common	no	eksakt
+exact	common	no	Eksakt
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	no	Eksempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - søk i feltet "n_prefix", etter "Mr", hvis funnet, skriv Hello Mr., ellers skriv Hello Ms.
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom.
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom.
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle.
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom
+example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	no	Eksempel {{LETTERPREFIX}} - Gir et bokstavprefiks uten mellomrom, for eksempel hvis tittelen er tom
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	no	Eksempel {{NELF rolle}} - hvis feltet rolle ikke er tomt, får du en ny linje med verdien for feltet rolle
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	no	Eksempel {{nenvlf rolle}} - hvis feltet rolle ikke er tomt, settes en LF uten noen verdi for feltet
 exchange this row with the one above	common	no	Bytt om linjen med den ovenfor
 exchange this two columns	common	no	Bytt om disse to kolonnene
+expiration	common	no	Utløp
 export the loaded etemplate into a xml-file	common	no	Eksporter gjeldende emal til en XML-fil
 export xml	common	no	Eksporter XML
 extensions loaded:	common	no	Tillegg som er lastet:
@@ -352,8 +392,8 @@ fields	common	no	Felter
 fiji	common	no	FIJI
 file	common	no	Fil
 file a file	common	no	Lagre en fil
-file contains more than one etemplate, last one is shown !!!	common	no	Filen inneholder mer enn en eMal. Den siste vises !
-file writen	common	no	Fil skrevet
+file contains more than one etemplate, last one is shown !!!	common	no	Filen inneholder mer enn en eTemplate. Den siste vises!
+file writen	common	no	Fil skrevet.
 files	common	no	Filer
 fileupload	common	no	Fil lastet opp
 filter	common	no	Filter
@@ -405,9 +445,9 @@ grid column attributes	common	no	Kolonneatributter for rutenett
 grid row attributes	common	no	Linjeatrributter for rutenett
 group	common	no	Gruppe
 group access	common	no	Gruppetilgang
-group has been added	common	no	Gruppen ble lagt til
-group has been deleted	common	no	Gruppen ble slettet
-group has been updated	common	no	Gruppe har blitt oppdatert
+group has been added	common	no	Gruppen ble lagt til.
+group has been deleted	common	no	Gruppen ble slettet.
+group has been updated	common	no	Gruppe har blitt oppdatert.
 group name	common	no	gruppenavn
 group public	common	no	Gruppe Offentlig
 groupbox	common	no	Gruppeboks
@@ -442,18 +482,20 @@ hour	common	no	Time
 hours	common	no	timer
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	no	Hvor mange ikoner som skal vises på navigasjonslinjen (på toppen av siden). Ekstra ikoner vises i en rullegardinmeny ved å trykke på ikonet lengst til høyre på navigasjonslinjen.
 html	common	no	HTML
+html link to the current record	common	no	HTML-lenke til den aktuelle posten
 html links to any entries linked to the current record, excluding attached files	common	no	HTML-lenker til alle oppføringer som er knyttet til den aktuelle posten, unntatt vedlagte filer.
 hungary	common	no	UNGARN
 iceland	common	no	ISLAND
-id	common	no	Id
+id	common	no	ID
+if you use "2-factor-authentication", please enter the code here.	common	no	Hvis du bruker "2-faktor-autentisering", vennligst skriv inn koden her.
 image	common	no	Bilde
 image url	common	no	Bildets URL
 import	common	no	Importer
-import an etemplate from a xml-file	common	no	Importer en eMal fra en XML-fil
+import an etemplate from a xml-file	common	no	Importer en eTemplate fra en XML-fil
 import table-definitions from existing db-table	common	no	Importer en tabelldefinisjon fra en eksisterende tabell
 import xml	common	no	Importer XML
-increment version to not overwrite the existing template	common	no	Øk versjonsnummeret for ikke å overskrive en eksisterende mal
-indexed	common	no	Indeksert
+increment version to not overwrite the existing template	common	no	Øk versjonsnummeret for ikke å overskrive en eksisterende mal.
+indexed	common	no	Indeksert.
 indexoptions	common	no	Indeksmuligheter
 india	common	no	INDIA
 indonesia	common	no	INONESIA
@@ -474,15 +516,17 @@ install	common	no	Installer
 install egroupware as mail-handler?	common	no	Installere EGroupware som e-postbehandler?
 integer	common	no	Heltall
 international	common	no	Internasjonal
+invalid 2-factor authentication code	common	no	Ugyldig kode for 2-faktorautentisering
 invalid email	common	no	Ugyldig e-post
-invalid filename	common	no	Ugyldig filnavn
-invalid ip address	common	no	Ugyldig IP adresse
+invalid filename	common	no	Ugyldig filnavn.
+invalid ip address	common	no	Ugyldig IP adresse.
+invalid or expired 'remember me' token	common	no	Ugyldig eller utløpt "husk meg"-token
 invalid password	common	no	Ugyldig passord
 iran, islamic republic of	common	no	IRAN
 iraq	common	no	IRAK
 ireland	common	no	IRLAND
 israel	common	no	ISRAEL
-it has been more then %1 days since you changed your password	common	no	Det er mer enn %1 dager siden du endret passordet ditt
+it has been more then %1 days since you changed your password	common	no	Det er mer enn %1 dager siden du endret passordet ditt.
 it is recommended that you run setup to upgrade your tables to the current version	common	no	Det er anbefalt at du kjører setup for å oppgradere til den gjeldende versjonen.
 italic	common	no	Kursiv
 italy	common	no	ITALIA
@@ -547,7 +591,7 @@ luxembourg	common	no	LUXEMBURG
 macau	common	no	MACAO
 macedonia, the former yugoslav republic of	common	no	MAKEDONIA
 madagascar	common	no	MADAGASKAR
-mail domain, eg. "%1"	common	no	mail domene, f.eks: "%1"
+mail domain, eg. "%1"	common	no	Mail domene, f.eks: "%1"
 mailvelope addon installation failed! please try again.	common	no	Installasjon av Mailvelope-tillegg mislyktes! Vennligst prøv igjen.
 mailvelope addon installation succeded. now you may configure the options.	common	no	Installasjonen av Mailvelope-tillegget lyktes. Nå kan du konfigurere alternativene.
 main category	common	no	Hovedkategori
@@ -562,7 +606,6 @@ marshall islands	common	no	MARSHALL-ØYENE
 martinique	common	no	MARTINIQUE
 mauritania	common	no	MAURITANIA
 mauritius	common	no	MAURITIUS
-max number of icons in navbar	common	no	Maks antall ikoner på navigasjonslinje
 may	common	no	Mai
 mayotte	common	no	MAYOTTE
 medium	common	no	Medium
@@ -582,7 +625,10 @@ montserrat	common	no	MONTSERRAT
 more	common	no	Mer
 morocco	common	no	MAROKKO
 move	common	no	Flytt
+moved %1 children from directory fs_id=%2 to %3	admin	no	Flyttet %1 barn fra mappen fs_id=%2 til %3
+moved unconnected %1 %2 to %3.	admin	no	Flyttet %1 %2 til %3 uten tilkobling.
 mozambique	common	no	MOSAMBIK
+my account	common	no	Min konto
 myanmar	common	no	MYANMAR
 name	common	no	Navn
 name of table to add	common	no	Navn på tabell som skal legges til
@@ -595,7 +641,7 @@ netherlands antilles	common	no	NEDERLANDSKE ANTILLER
 never	common	no	Aldri
 new	common	no	Opprett
 new caledonia	common	no	NY KALEDONIA
-new entry added sucessfully	common	no	Ny innslag ble lagt til
+new entry added sucessfully	common	no	Ny innslag ble lagt til.
 new main category	common	no	Ny hovedkategori
 new search	common	no	Nytt søk
 new table created	common	no	Ny tabell opprettet
@@ -623,7 +669,7 @@ normal	common	no	Normal
 northern mariana islands	common	no	NORDRE MARIANA ØYENE
 norway	common	no	NORGE
 not	common	no	ikke
-not a user yet? register now	common	no	Ikke registrert bruker ennå?  Registrer nå
+not a user yet? register now	common	no	Ikke registrert bruker ennå? Registrer nå.
 not assigned	common	no	Ikke tildelt
 not null	common	no	Ikke NULL
 note	common	no	Notat
@@ -634,7 +680,7 @@ nothing in clipboard to paste !!!	common	no	Ingenting i utklippstavlen som kan l
 nothing matched search criteria !!!	common	no	Ingenting som passet med søkekriteriet!
 notifications	common	no	Bekjentgjørelser
 notify window	common	no	Meldingsvindu
-notify your administrator to correct this situation	common	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
+notify your administrator to correct this situation	common	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen.
 november	common	no	November
 october	common	no	Oktober
 of	common	no	av
@@ -674,8 +720,8 @@ parcel	common	no	Pakke
 parent category	common	no	Overordnet kategori
 parent is a '%1' !!!	common	no	Overordnet er en '%1'!
 password	common	no	Passord
-password could not be changed	common	no	Passord kunne ikke endres
-password has been updated	common	no	Passord har blitt oppdatert
+password could not be changed	common	no	Passord kunne ikke endres!
+password has been updated	common	no	Passord har blitt oppdatert.
 paste	common	no	Lim inn
 path	common	no	Sti
 path to user and group files has to be outside of the webservers document-root!!!	common	no	Sti til bruker- og gruppe-filer. MÅ VÆRE UTENFOR webserverens dokument-root!
@@ -692,16 +738,17 @@ pgp encryption installation	common	no	Installasjon av PGP-kryptering
 philippines	common	no	FILIPPINENE
 phone number	common	no	Telefonnummer
 pitcairn	common	no	PITCAIRN
+placeholders	common	no	Plassholdere
 play/pause	common	no	Spill av/Pause
 please %1 by hand	common	no	Vennligst %1 for hånd
 please enter a name	common	no	Vennligst tast inn et navn!
 please enter table-name first !!!	common	no	Vennligst registrer et tabellnavn først!
-please reload the egroupware desktop (f5 / cmd+r).	common	no	Last inn EGroupware-skrivebordet på nytt (F5 / Cmd + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	no	Last inn EGroupware-skrivebordet på nytt (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	no	Husk å bruke '%1' som brukernavn for lokal innlogging fra nå av!
 please run setup to become current	common	no	Vennligst kjør setup for å oppdatere til siste versjon
 please select	common	no	Velg
-please set your global preferences	common	no	Sett dine globale preferanser
-please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen
+please set your global preferences	common	no	Sett dine globale preferanser!
+please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen!
 please type %1 more characters	common	no	Vennligst skriv inn %1 tegn til
 please type 1 more character	common	no	Vennligst skriv inn 1 tegn til
 please wait...	common	no	Vennligst vent ...
@@ -728,8 +775,8 @@ qatar	common	no	QATAR
 radiobutton	common	no	Radioknapp
 read	common	no	Lese
 read a list of entries.	common	no	Les en liste av oppføringer.
-read a single entry by passing the id and fieldlist.	common	no	Les ett enkelt innslag ved å gi id og feltliste.
-read this list of methods.	common	no	Les metode-listen.
+read a single entry by passing the id and fieldlist.	common	no	Les ett enkelt innslag ved å gi ID og feltliste.
+read this list of methods.	common	no	Les metode-listen
 reading	common	no	Lesing
 readonly	common	no	Bare lese
 refresh	common	no	Oppfrisk
@@ -745,7 +792,7 @@ required	common	no	Nødvendig
 reset	common	no	Tilbakestill
 resources	common	no	Ressurser
 restore failed	common	no	Återställning misslyckades
-returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang.
 returns an array of todo items	common	no	Viser en tabell med gjøremål
 returns struct of users application access	common	no	Viser en struktur over brukeres tilgang til applikasjonene
 reunion	common	no	REUNION
@@ -767,8 +814,8 @@ saudi arabia	common	no	SAUDI-ARABIA
 save	common	no	Lagre
 save all	common	no	Lagre alle
 save the changes made and close the window	common	no	Lagre utførte endringer og så lukke vinduet
-saves changes to tables_current.inc.php	common	no	Lagre endringer til  tables_current.inc.php
-saves the template with given version number and closes the window	common	no	Lagre malen med gitt versjonsnummer og så lukke vinduet
+saves changes to tables_current.inc.php	common	no	Lagre endringer til tables_current.inc.php
+saves the template with given version number and closes the window	common	no	Lagre malen med gitt versjonsnummer og så lukke vinduet.
 scale	common	no	Skaler
 search	common	no	Søk
 search %1 '%2'	common	no	Søk %1 '%2'
@@ -814,7 +861,7 @@ selection	common	no	Valg
 send	common	no	Send
 senegal	common	no	SENEGAL
 september	common	no	September
-server %1 has been added	common	no	Tjener %1 ble lagt til
+server %1 has been added	common	no	Tjener %1 ble lagt til.
 server name	common	no	Tjenernavn
 session has been killed	common	no	Sesjonen ble avsluttet
 sets today as date	common	no	Sett dagen i dag som dato
@@ -825,9 +872,8 @@ show	common	no	Vis
 show (no save)	common	no	Vis (uten lagring)
 show all	common	no	Vis alle
 show all categorys	common	no	Vis alle kategorier
-show menu	common	no	Vis meny
 show page generation time	common	no	Vis sidegenereringstid
-show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden?
+show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden.
 show password	common	no	Vis passord
 show values	common	no	Vis verdier
 show/hide	common	no	Vis/skjul sidefelt
@@ -844,7 +890,7 @@ slovakia	common	no	SLOVAKIA
 slovenia	common	no	SLOVENIA
 solomon islands	common	no	SOLOMON ØYENE
 somalia	common	no	SOMALIA
-sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dato
+sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dato.
 south africa	common	no	SØR_AFRIKA
 south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
 spain	common	no	SPANIA
@@ -873,8 +919,8 @@ taiwan	common	no	TAIWAN/TAIPEI
 tajikistan	common	no	TADJIKISTAN
 tanzania, united republic of	common	no	TANZANIA
 template	common	no	Mal
-template deleted	common	no	Mal slettet
-template saved	common	no	Mal lagret
+template deleted	common	no	Mal slettet.
+template saved	common	no	Mal lagret.
 text	common	no	Tekst
 text color:	common	no	Tekstfarge:
 textarea	common	no	Tekstområde
@@ -890,7 +936,7 @@ title	common	no	Tittel
 to	common	no	Til
 to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
 to start the db-tools	common	no	Starte DB-verktøyene
-to start the etemplate editor	common	no	Starte eMal-tekstbehandleren
+to start the etemplate editor	common	no	Starte eTemplate-tekstbehandleren
 to start the search	common	no	Starte søket
 today	common	no	Idag
 todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
@@ -919,7 +965,7 @@ united states minor outlying islands	common	no	USA-ØYER
 unknown	common	no	Ukjent
 unlink	common	no	Fjern lenke
 update	common	no	Opprett
-update a single entry by passing the fields.	common	no	Oppdater ett enkelt innslag ved å legge inn felter.
+update a single entry by passing the fields.	common	no	Oppdater ett enkelt innslag ved å legge inn felter
 update from version '%s' to	common	no	Oppdater fra versjon '%s' til
 upload	common	no	Last opp
 url	common	no	URL
@@ -945,7 +991,7 @@ venezuela	common	no	VENEZUELA
 version	common	no	Versjon
 viet nam	common	no	VIETNAM
 view	common	no	Vis
-view this etemplate	common	no	Vis denne eMalen
+view this etemplate	common	no	Vis denne eTemplate
 view this linked entry in its application	common	no	Vis lenken i den egens applikasjon
 virgin islands, british	common	no	JOMFRUØYENE (BR.)
 virgin islands, u.s.	common	no	JOMFRUØYENE (USA)
@@ -974,22 +1020,22 @@ yes	common	no	Ja
 yes - delete	common	no	Ja - Slett
 yes - delete including sub-entries	common	no	Ja - Slett inklusiv underordnede
 you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
-you have been successfully logged out	login	no	Du har nå logget ut
-you have not entered a title	common	no	Du har ikke tastet inn en tittel
-you have not entered a valid date	common	no	Du har ikke tastet inn en gyldig dato
-you have not entered a valid time of day	common	no	Du har ikke tastet inn et gyldig tidspunkt
-you have not entered participants	common	no	Du har ikke tastet inn deltagere
-you have selected an invalid date	common	no	Du har valgt en ugyldig dato !
+you have been successfully logged out	login	no	Du har nå logget ut.
+you have not entered a title	common	no	Du har ikke tastet inn en tittel.
+you have not entered a valid date	common	no	Du har ikke tastet inn en gyldig dato.
+you have not entered a valid time of day	common	no	Du har ikke tastet inn et gyldig tidspunkt.
+you have not entered participants	common	no	Du har ikke tastet inn deltagere.
+you have selected an invalid date	common	no	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	no	Du har valgt en ugyldig hovedkategori!
-you have successfully logged out	common	no	Du har logget ut
+you have successfully logged out	common	no	Du har logget ut.
 you need to add the webserver user '%1' to the group '%2'.	common	no	Du må melde brukeren '%1' inn i '%2' gruppen på webtjener.
 your account has been updated with new data from your identity provider.	common	no	Kontoen din er oppdatert med nye data fra identitetsleverandøren din.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	no	Hvis nettleseren din ikke er oppdatert (JavaScript ES6-kompatibel), kan det hende at noen av funksjonene ikke fungerer.
 your key has been restored successfully.	common	no	Nøkkelen din har blitt gjenopprettet.
 your message could <b>not</b> be sent!<br>	common	no	Meldingen kunne <b>ikke</b> sendes!<br>
-your message has been sent	common	no	Din melding har blitt sent
+your message has been sent	common	no	Din melding har blitt sent.
 your search returned %1 matchs	common	no	Ditt søk gav %1 treff
 your search returned 1 match	common	no	Ditt søk gav 1 treff
-your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
+your settings have been updated	common	no	Dine innstillinger har blitt oppdatert.
 zambia	common	no	ZAMBIA
 zimbabwe	common	no	ZIMBABWE

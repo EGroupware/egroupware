@@ -1,6 +1,6 @@
-import {Required as LionRequired} from "@lion/form-core";
+import {Validator} from "./Validator";
 
-export class Required extends LionRequired
+export class Required extends Validator
 {
 	/**
 	 * Returns a Boolean.  True if the test fails

@@ -25,7 +25,10 @@ const allComponents = getAllComponents();
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
-fs.mkdirSync("_data");
+if (!fs.existsSync("_data"))
+{
+	fs.mkdirSync("_data");
+}
 fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
 
 // Put it here too, since addPassthroughCopy() ignores it
@@ -60,6 +63,7 @@ module.exports = function (eleventyConfig)
 	//
 	// General assets
 	eleventyConfig.addPassthroughCopy({"../../api/templates/default/images/logo.svg": "assets/images/logo.svg"});
+	eleventyConfig.addPassthroughCopy({"../../api/templates/default/etemplate2.css": "assets/styles/etemplate2.css"});
 	eleventyConfig.addPassthroughCopy({"../../pixelegg/css/monochrome.css": "assets/styles/monochrome.css"});
 
 	// vendor requirements

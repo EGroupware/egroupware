@@ -117,6 +117,34 @@ describe("Email widget basics", () =>
 		assert.sameMembers(element.value, [value], "Valid email was not accepted on blur");
 	});
 });
+describe("Properties", async() =>
+{
+	// Setup run before each test
+	beforeEach(before);
+
+	it("Allows placeholder", async() =>
+	{
+
+		const value = "{{placeholder}}";
+		element.allowPlaceholder = false;
+		await elementUpdated(element);
+
+
+		element.addAddress(value);
+
+		await elementUpdated(element);
+		assert.sameMembers(element.value, [], "Placeholder was accepted when not allowed");
+
+		element.allowPlaceholder = true;
+		await elementUpdated(element);
+
+		element.addAddress(value);
+
+		await elementUpdated(element);
+		assert.sameMembers(element.value, [value], "Placeholder was not accepted when allowed");
+	});
+});
+
 describe("Suggestions", () =>
 {	// Setup run before each test
 	beforeEach(before);
@@ -127,7 +155,6 @@ describe("Suggestions", () =>
 		// Start the search
 		element.focus();
 		element.startSearch();
-		debugger;
 		await waitForEvent(element, "sl-after-show");
 
 		// Click the first one
@@ -199,7 +226,6 @@ describe("Tags", () =>
 		assert.sameMembers(element.value, ["two@example.com"], "Removing tag did not remove value");
 		assert.equal(element._tags.length, 1, "Removed tag is still there");
 	});
-
 });
 
 inputBasicTests(async() =>

@@ -94,9 +94,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      */
     private _registerDefault =  (_node, _callback, _context)=> {
         const defaultHandler =  (e)=> {
-            // Prevent bubbling bound event on <a> tag, on touch devices
+            //allow bubbling of the expand folder event
+            //do not stop bubbling of events if the event is supposed to be handled by the et2-tree
+            if (window.egwIsMobile() && e.currentTarget.tagName == "SL-TREE-ITEM") return true;
             // a tag should be handled by default event
+            // Prevent bubbling bound event on <a> tag, on touch devices
             if (window.egwIsMobile() && e.target.tagName == "A") return true;
+
 
             if (typeof document["selection"] != "undefined" && typeof document["selection"].empty != "undefined") {
                 document["selection"].empty();
@@ -534,8 +538,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
                     for (const k in selected) {
-                        if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
-                    }
+						if(selected[k].id)
+						{
+							clipboard.selected.push({
+								id: selected[k].id,
+								data: {...(window.egw.dataGetUIDdata(selected[k].id)?.data ?? {}), ...selected[k].data}
+							});
+						}
+					}
 
                     // Save it in session
                     window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));
@@ -561,8 +571,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     // egwAction is a circular structure and can't be stringified so just take what we want
                     // Hopefully that's enough for the action handlers
                     for (const k in selected) {
-                        if (selected[k].id) clipboard.selected.push({id: selected[k].id, data: selected[k].data});
-                    }
+						if(selected[k].id)
+						{
+							clipboard.selected.push({
+								id: selected[k].id,
+								data: {...(window.egw.dataGetUIDdata(selected[k].id)?.data ?? {}), ...selected[k].data}
+							});
+						}
+					}
 
                     // Save it in session
                     window.egw.setSessionItem('phpgwapi', 'egw_clipboard', JSON.stringify(clipboard));

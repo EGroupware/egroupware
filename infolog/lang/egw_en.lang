@@ -31,7 +31,7 @@ a short subject for the entry	infolog	en	A short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	Accept
 action	infolog	en	Action
-actions...	infolog	en	Actions...
+actions...	infolog	en	Actions ...
 actual date and time	infolog	en	Actual date and time
 add	infolog	en	Add
 add / remove link	infolog	en	Add / remove link
@@ -183,6 +183,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	en
 edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
+editable fields for status 'archived'	admin	en	Editable fields for status 'archived'
 empty for all	infolog	en	Empty for all
 encrypt description	infolog	en	Encrypt description
 end	infolog	en	End
@@ -193,8 +194,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	e
 enter a textual description of the log-entry	infolog	en	Enter text description of the InfoLog entry
 enter the query pattern	infolog	en	Enter the query pattern
 entry and all files	infolog	en	Entry and all files
-entry can not be changed anymore, after status is set	infolog	en	Entry can NOT be changed anymore, after status is set
-entry can not be changed by anybody, but egroupware admins	infolog	en	Entry can NOT be changed by anybody, but EGroupware admins
+entry can not be changed anymore, after status is set	admin	en	Entry can NOT be changed anymore, after status is set
+entry can not be changed by anybody, but egroupware admins	admin	en	Entry can NOT be changed by anybody, but EGroupware admins
 error: importing the ical	infolog	en	Error: importing the iCal
 error: no mail (mailbox / uid) given!	infolog	en	Error: no mail (Mailbox / UID) given!
 error: saving the entry	infolog	en	Error saving the entry!
@@ -226,7 +227,7 @@ general fields:	infolog	en	General fields:
 general settings	infolog	en	General settings
 global categories	infolog	en	Global categories
 group owner for	infolog	en	Group owner for
-handling of status 'archived'	infolog	en	Handling of status 'archived'
+handling of status 'archived'	admin	en	Handling of status 'archived'
 high	infolog	en	High
 history	infolog	en	History
 history logging	infolog	en	History logging
@@ -243,7 +244,7 @@ if you specify a document (full vfs path) here, %1 displays an extra document ic
 if you specify an export definition, it will be used when you export	infolog	en	If you specify an export definition, it will be used when you export
 import next set	infolog	en	Import next set
 importance	infolog	en	Importance
-imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	en	Imports entries into the InfoLog from a CSV file. In the options tab you can also choose other separators.
 imports todos into infolog from an ical file.	infolog	en	Imports TODOs into InfoLog from an iCal file.
 info log	common	en	InfoLog
 infolog	common	en	InfoLog
@@ -289,7 +290,7 @@ linked to %1	infolog	en	Linked to %1
 links	infolog	en	Links
 links and attached files	infolog	en	Links and attached files
 links of this entry	infolog	en	Links of this entry
-links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application.  Example: {{links/infolog}}
+links to specified application.  example: {{links/infolog}}	infolog	en	Links to specified application. Example: {{links/infolog}}
 links wrapped in an href tag with download link	infolog	en	Links wrapped in an HREF tag with download link
 list all categories	infolog	en	List all categories
 list of files linked to the current record	infolog	en	List of files linked to the current record
@@ -317,7 +318,7 @@ no entries found, try again ...	infolog	en	No entries found, try again ...
 no filter	infolog	en	No filter
 no links or attachments	infolog	en	No links or attachments
 no project	infolog	en	No project
-no special handling	infolog	en	No special handling
+no special handling	admin	en	No special handling
 nonactive	infolog	en	Non active
 none	infolog	en	None
 normal	infolog	en	Normal
@@ -374,7 +375,7 @@ price	infolog	en	Price
 pricelist	infolog	en	Price list
 primary link	infolog	en	Primary link
 print this infolog	infolog	en	Print this InfoLog
-printing...	infolog	en	Printing...
+printing...	infolog	en	Printing ...
 priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
@@ -427,8 +428,6 @@ select a priority for this task	infolog	en	Select a priority
 select a project	infolog	en	Select a project
 select a responsible user: a person you want to delegate this task	infolog	en	Select a responsible user: a person you want to delegate this task
 select a typ to edit it's status-values or delete it	infolog	en	Select a type to edit it's status values or delete it
-select an action	infolog	en	Select an action
-select an action...	infolog	en	Select an action...
 select an app to search in	infolog	en	Select application to search in
 select an entry to link with	infolog	en	Select an entry to link with
 select multiple contacts for a further action	infolog	en	Select multiple contacts for a further action
@@ -482,7 +481,7 @@ tag to mark positions for address labels	infolog	en	Tag to mark positions for ad
 task	infolog	en	ToDo
 tasks of	infolog	en	Tasks of
 template	infolog	en	Template
-test import (show importable records <u>only</u> in browser)	infolog	en	Test import . Show importable records <u>only</u> in browser.
+test import (show importable records <u>only</u> in browser)	infolog	en	Test import. Show importable records <u>only</u> in browser.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	infolog	en	The document can contain placeholder like {{%1}}, to be replaced with the data.
 the following document-types are supported:	infolog	en	The following document-types are supported:
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	en	The name used internally,<= 10 chars, changing it makes existing data unavailable.
@@ -504,7 +503,7 @@ type ...	infolog	en	Type ...
 type of customfield	infolog	en	Type of custom field
 type of field	infolog	en	Type of field
 type of the log-entry: note, phonecall or todo	infolog	en	Type of the InfoLog entry
-unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	en	Unable to link to %3 by custom field "%1": "%4".  %2 matches.
+unable to link to %3 by custom field "%1": "%4".  %2 matches.	infolog	en	Unable to link to %3 by custom field "%1": "%4". %2 matches.
 unknown type: %1	infolog	en	Unknown type: %1
 unlink	infolog	en	Unlink
 unlinked from %1	infolog	en	Unlinked from %1

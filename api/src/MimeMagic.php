@@ -116,6 +116,25 @@ class MimeMagic
 	}
 
 	/**
+	 * Convert a MIME type to all known file extensions
+	 *
+	 * If we cannot map the type to any file extension, we return an empty array.
+	 *
+	 * @param string $_type  The MIME type to be mapped to a file extension.
+	 * @return array with possible file extensions
+	 */
+	public static function mime2extensions($_type)
+	{
+		$type = strtolower($_type);
+		if (isset(self::$mime_alias_map[$type])) $type = self::$mime_alias_map[$type];
+
+		return array_keys(array_filter(self::$mime_extension_map, static function($mime) use ($type)
+		{
+			return $mime == $type;
+		}));
+	}
+
+	/**
 	 * Fix old / aliased mime-types by returning valid/default mime-type
 	 *
 	 * @param string $_alias
@@ -230,7 +249,7 @@ class MimeMagic
 	 * @author skwashd
 	 * @author ralfbecker - convert to a static array ;-)
 	 *
-	 * @var array of extenstion to mime mappings
+	 * @var array of extention to mime mappings
 	 */
 	static $mime_extension_map = array(
 		'txt'				=> 'text/plain',	// should be first, so text/plain maps back to .txt

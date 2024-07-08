@@ -99,7 +99,7 @@ class timesheet_ui extends timesheet_bo
 			// are we supposed to add pending events, to a new or an existing timesheet
 			if (isset($_REQUEST['events']))
 			{
-				$pending = Events::getPending($_REQUEST['events'] === 'overall', $time);
+				$pending = Events::getPending($_REQUEST['events'] === 'overall', $time, $paused);
 				$this->data['events'] = array_merge($this->data['events'], array_values($pending));
 				$start = $this->data['events'][0]['tse_time'];
 				$this->data['ts_start'] = $start;
@@ -107,6 +107,7 @@ class timesheet_ui extends timesheet_bo
 				$this->data['end_time'] = '';
 				$this->data['ts_duration'] = (int)$this->data['ts_duration'] + round($time / 60); // minutes
 				$this->data['ts_quantity'] = (float)$this->data['ts_quantity'] + $this->data['ts_duration'] / 60.0; // hours
+				$this->data['ts_paused'] = $paused ? round($paused / 60.0) : null;
 				// check if any of the events contains an app::id to link the timesheet to
 				foreach($pending as $event)
 				{

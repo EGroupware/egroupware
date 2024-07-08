@@ -6,6 +6,9 @@
 {% set component = getComponent(component.tagName) %}
 
 {% block content %}
+  {# Avoid breaking if the component is not correct #}
+  {% if component and component.tagName %}
+
   {# Determine the badge variant #}
   {% if component.status == 'stable' %}
     {% set badgeVariant = 'primary' %}
@@ -29,7 +32,7 @@
 
     <div class="component-header__info">
       <sl-badge variant="neutral" pill>
-        Since {{component.since or '?' }}
+        Since {{component.since or '23.1' }}
       </sl-badge>
       <sl-badge variant="{{ badgeVariant }}" pill style="text-transform: capitalize;">
         {{ component.status }}
@@ -48,7 +51,9 @@
   </p>
 
   {# Markdown content #}
-  {{ content | safe }}
+  {% if component.content %}
+  {{ component.content | markdown | safe }}
+  {% endif %}
 
   {# Slots #}
   {% if component.slots.length %}
@@ -322,4 +327,7 @@
       {% endfor %}
     </ul>
   {% endif %}
+      {% else %}
+        This component is not correctly documented
+      {% endif %}
 {% endblock %}

@@ -1,3 +1,5 @@
+import {SearchResult} from "../Et2Widget/SearchMixin";
+
 /**
  * Interface for select options
  *
@@ -5,22 +7,8 @@
  * For option groups, value is the list of sub-options.
  *
  */
-export interface SelectOption
+export interface SelectOption extends SearchResult
 {
-	value : string | SelectOption[];
-	label : string;
-	// Hover help text
-	title? : string;
-	// Related image or icon
-	icon? : string;
-	// Class applied to node
-	class? : string;
-	// Show the option, but it is not selectable.
-	// If multiple=true and the option is in the value, it is not removable.
-	disabled? : boolean;
-	// If a search is in progress, does this option match.
-	// Automatically changed.
-	isMatch? : boolean;
 }
 
 /**

@@ -1,14 +1,14 @@
 %1 added	addressbook	uk	%1 додано
-%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося встановити через %4 !!!
+%1 contact(s) %2, %3 failed because of %4 !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося встановити через %4!
 %1 contacts updated (%2 errors).	addressbook	uk	Оновлено %1 контакт (%2 помилки).
 %1 key(s) added to public keyserver "%2".	addressbook	uk	%1 ключ(и) додано до сервера відкритих ключів "%2".
 %1 not implemented for %2!	addressbook	uk	%1 не реалізовано для %2!
 %1 public keys added.	addressbook	uk	Додано %1 публічних ключів.
-%1 records imported	addressbook	uk	%1 записів імпортовано
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	uk	%1 записів прочитано (ще не імпортовано, %2поверніться%3 та зніміть відмітку Тестувати Імпорт)
+%1 records imported	addressbook	uk	%1 записів імпортовано.
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	uk	%1 записів прочитано (ще не імпортовано, %2поверніться%3 та зніміть відмітку Тестувати Імпорт).
 (e.g. 1969)	addressbook	uk	(наприклад 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	uk	<b>Тип конверсії <немає> не існує.</b> Будь ласка виберіть тип конверсії зі списку
-@-eval() is only availible to admins!!!	addressbook	uk	@-eval() можуть використовувати тільки адміністратори
+@-eval() is only availible to admins!!!	addressbook	uk	@-eval() можуть використовувати тільки адміністратори!
 actions	addressbook	uk	Дії
 add a single entry by passing the fields.	addressbook	uk	Додати один запис шляхом заповнення полів
 add custom field	addressbook	uk	Додати власне поле
@@ -20,7 +20,6 @@ add to distribution list:	addressbook	uk	Додати до списку розс
 add to to	addressbook	uk	Додати до До
 added	addressbook	uk	Добавлено
 address book	common	uk	Адресна Книга
-address book - vcard in	addressbook	uk	Адресна Книга - vCard in
 address book - view	addressbook	uk	Адресна Книга - перегляд
 address line 2	addressbook	uk	Рядок 2
 address type	addressbook	uk	Тип адреси
@@ -71,16 +70,16 @@ csv-fieldname	addressbook	uk	Назва поля CSV
 csv-filename	addressbook	uk	Ім'я файлу CSV
 custom	addressbook	uk	Власне
 custom fields	addressbook	uk	Власні поля
-debug output in browser	addressbook	uk	Налагодження виводу у браузері
 default	addressbook	uk	По замовченню
 default action on double-click	addressbook	uk	Дія за замовчуванням при подвійному кліці
 default filter	addressbook	uk	Типовий фільтр
 default geolocation source address	addressbook	uk	Адреса джерела геолокації за замовчуванням
-delete a single entry by passing the id.	addressbook	uk	Видалити один запис по id.
+delete a single entry by passing the id.	addressbook	uk	Видалити один запис по ID.
 deleted	addressbook	uk	Видалено
 department	common	uk	Департамент
 disable	addressbook	uk	Вимкнути
 disable last/next event column	addressbook	uk	Вимкнути стовпчик Остання/Найближча подія
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	uk	Відображати дні народження на Головній.
 distribution list renamed	addressbook	uk	Перейменовано список розсилки
 distribution lists as groups	addressbook	uk	Списки розсилки як групи
 domestic	addressbook	uk	Місцевий
@@ -104,7 +103,7 @@ export definition to use for nextmatch export	addressbook	uk	Визначенн�
 export definitition to use for nextmatch export	addressbook	uk	Визначення експорту для використання для експорту наступного матчу
 export file name	addressbook	uk	Назва файлу експорту
 export from addressbook	addressbook	uk	Експорт з Адресної книги
-exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл.  CSV означає "Значення, розділені комами". На вкладці параметрів ви також можете вибрати інші роздільники.
+exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл. На вкладці параметрів ви також можете вибрати інші роздільники.
 extra	addressbook	uk	Додаткове
 favorite phone	addressbook	uk	Улюблений телефон
 favorites	addressbook	uk	Вибране
@@ -127,6 +126,8 @@ global categories	addressbook	uk	Глобальні категорії
 grant addressbook access	common	uk	Надати доступи до адресної книги
 hide accounts from addressbook	addressbook	uk	Приховати акаунти користувачів
 hide all accounts	addressbook	uk	Приховати всі облікові записи
+hide all groups	addressbook	uk	Приховати всі групи
+hide groups without email address	addressbook	uk	Приховати групи без адреси електронної пошти
 hide user groups as distribution lists	addressbook	uk	Приховати групи користувачів у вигляді списків розсилки
 hides accounts completly from the adressbook.	addressbook	uk	Повністю приховати облікові записи користувачів з адресної книги.
 home city	addressbook	uk	Місто
@@ -144,7 +145,6 @@ import file	addressbook	uk	Імпортувати файл
 import from ldif, csv, or vcard	addressbook	uk	Імпортувати LDIF, CSV або vCard
 import from outlook	addressbook	uk	Імпорт з Outlook
 import next set	addressbook	uk	Імпортувати наступний набір
-import_instructions	addressbook	uk	В Нетскейпі(Мозілі) відкрийте Адресну книгу та виберіть <b>Експорт</b> з меню <b>Файл</b>. Файл буде експортовано в форматі LDIF. <p>В Outlook зайдіть в закладку Контакти, виберіть <b>Імпорт та Експорт...</b> в меню <b>Файл</b> та експортуйте ваші контакти в CSV-файл.<p>В  Palm Desktop 4.0 або вище, зайдіть в Адресну книгу та виберіть <b>Експорт</b> в меню <b>Файл</b>. Файл буде експортовано в форматі vCard.
 importer's personal	addressbook	uk	Особистий імпортер
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Імпортує контакти в адресну книгу з файлу CSV. CSV означає "Значення, розділені комами". У вкладці параметрів ви також можете вибрати інші роздільники.
 imports contacts into your addressbook from a vcard file.	addressbook	uk	Імпортує контакти до адресної книги з файлу vCard.
@@ -190,7 +190,7 @@ permissiong denied! ask your administrator to allow regular uses to update their
 pgp key	addressbook	uk	Ключ PGP
 phone number	common	uk	Номер телефону
 phone numbers	common	uk	Телефонні номери
-please enter a name for that field !	addressbook	uk	Будь ласка введіть назву поля !
+please enter a name for that field !	addressbook	uk	Будь ласка введіть назву поля!
 postal	common	uk	Поштовий
 pref	addressbook	uk	ліпше
 prefix	addressbook	uk	Префікс
@@ -198,7 +198,7 @@ private address	addressbook	uk	Приватна адреса
 public key	addressbook	uk	Публічний ключ
 public sharing url	addressbook	uk	Загальнодоступна URL-адреса
 read a list of entries.	addressbook	uk	Прочитати перелік записів
-read a single entry by passing the id and fieldlist.	addressbook	uk	Прочитати один запис по id та переліку полів.
+read a single entry by passing the id and fieldlist.	addressbook	uk	Прочитати один запис по ID та переліку полів.
 record access	addressbook	uk	Доступи запису
 record owner	addressbook	uk	Власник запису
 remove from distribution list	addressbook	uk	Видалити зі списку розсилки
@@ -209,7 +209,6 @@ schedule a video conference	addressbook	uk	Запланувати відеоко
 search letter	addressbook	uk	Пошуковий лист
 select a source address to be used in geolocation routing system	addressbook	uk	Виберіть адресу джерела для використання в системі маршрутизації GeoLocation
 select an opened dialog	addressbook	uk	Виберіть відкрите діалогове вікно
-select the type of conversion	addressbook	uk	Виберіть тип конверсії
 send fax via email by replacing fax number with an email address	addressbook	uk	Надішліть факс електронною поштою, замінивши номер факсу на адресу електронної пошти
 send succeeded to %1	common	uk	Відправлення успішно виконано на %1
 share into addressbook	addressbook	uk	Поділитися в адресну книгу
@@ -257,7 +256,7 @@ video call	addressbook	uk	Відеодзвінок
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	uk	УВАГА!! LDAP можливий тільки якщо Ви НЕ використовуєте контакти для зберігання рахунків користувачів!
 when viewing a contact, show linked entries from the selected application	addressbook	uk	При перегляді контакту показувати пов'язані записи з вибраної програми
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	addressbook	uk	При об'єднанні записів в документи вони будуть зберігатися тут. Якщо каталог не вказано, вони будуть зберігатися у вашому домашньому каталозі (/home/...)
-which charset should be used for the vcard export.	addressbook	uk	Яку кодування використовувати для експорту vCard?
+which charset should be used for the vcard export.	addressbook	uk	Яку кодування використовувати для експорту vCard.
 which charset should be used for the vcard import and export.	addressbook	uk	Дозволяє вказати, яку кодування слід використовувати для імпорту та експорту vCard.
 work phone	addressbook	uk	Робочий телефон
 yes, only admins can purge deleted items	admin	uk	Так, тільки адміністратори можуть очищати видалені елементи

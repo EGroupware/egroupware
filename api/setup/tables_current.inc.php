@@ -210,7 +210,7 @@ $phpgw_baseline = array(
 			'n_fileas' => array('type' => 'varchar','precision' => '255','comment' => 'sort as'),
 			'contact_bday' => array('type' => 'varchar','precision' => '12','comment' => 'Birtday'),
 			'org_name' => array('type' => 'varchar','precision' => '128','comment' => 'Organisation'),
-			'org_unit' => array('type' => 'varchar','precision' => '64','comment' => 'Department'),
+			'org_unit' => array('type' => 'varchar','precision' => '128','comment' => 'Department'),
 			'contact_title' => array('type' => 'varchar','precision' => '64','comment' => 'jobtittle'),
 			'contact_role' => array('type' => 'varchar','precision' => '64','comment' => 'role'),
 			'contact_assistent' => array('type' => 'varchar','precision' => '64','comment' => 'Name of the Assistent (for phone number)'),
@@ -382,7 +382,8 @@ $phpgw_baseline = array(
 			'cf_private' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id'),
 			'cf_modifier' => array('type' => 'int','meta' => 'account','precision' => '4','comment' => 'last modifier'),
 			'cf_modified' => array('type' => 'timestamp','default' => 'current_timestamp','comment' => 'last modification time'),
-			'cf_tab' => array('type' => 'varchar','precision' => '64','comment' => 'tab customfield should be shown')
+			'cf_tab' => array('type' => 'varchar','precision' => '64','comment' => 'tab customfield should be shown'),
+			'cf_readonly' => array('type' => 'ascii','meta' => 'account-commasep','precision' => '2048','comment' => 'comma-separated account_id')
 		),
 		'pk' => array('cf_id'),
 		'fk' => array(),

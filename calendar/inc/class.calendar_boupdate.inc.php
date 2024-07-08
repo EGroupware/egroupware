@@ -302,7 +302,7 @@ class calendar_boupdate extends calendar_bo
 			$this->log2file($event2save,$event,$old_event);
 		}
 		// send notifications if the event is in the future
-		if(!$skip_notification && $event['end'] > $this->now_su)
+		if(!$skip_notification && $this->eventInFuture($event))
 		{
 			if ($new_event)
 			{
@@ -577,7 +577,8 @@ class calendar_boupdate extends calendar_bo
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
-		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location'] as $field)
+		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location',
+			'recur_exception','recur_rdates', 'recur_enddate'] as $field)
 		{
 			if($new_event[$field] !== $old_event[$field])
 			{
@@ -628,7 +629,7 @@ class calendar_boupdate extends calendar_bo
 	 * checks if $userid has requested (in $part_prefs) updates for $msg_type
 	 *
 	 * @param int $userid numerical user-id
-	 * @param array $part_prefs preferces of the user $userid
+	 * @param array $part_prefs preferences of the user $userid
 	 * @param int &$msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $old_event Event before the change
 	 * @param array $new_event Event after the change
@@ -701,7 +702,11 @@ class calendar_boupdate extends calendar_bo
 						$diff = max(abs(self::date2ts($old_event['start']??null)-self::date2ts($new_event['start']??null)),
 							abs(self::date2ts($old_event['end']??null)-self::date2ts($new_event['end']??null)));
 						$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
-						if ($msg_type == MSG_MODIFIED && $diff > $check)
+						if ($msg_type == MSG_MODIFIED && ($diff > $check ||
+							// also notify if recurrences where added or removed
+							$old_event['recur_exception'] != $new_event['recur_exception'] ||
+							$old_event['recur_rdates'] != $new_event['recur_rdates'] ||
+							$old_event['recur_enddate'] != $new_event['recur_enddate']))
 						{
 							++$want_update;
 						}
@@ -857,11 +862,28 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $new_event =null Event after the change
 	 * @param int|string $user =0 User/participant who started the notify, default current user
 	 * @param array $alarm =null values for "offset", "start", etc.
+	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
-	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null)
+	function send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, ?array $alarm=null, $ignore_prefs=false)
 	{
 		Api\Egw::on_shutdown([$this, '_send_update'], func_get_args());
+	}
+
+	/**
+	 * Check event is (ending) in the future
+	 *
+	 * @param array $event
+	 * @param int $grace_time
+	 * @return bool
+	 */
+	public function eventInFuture(array $event, int $grace_time=10) : bool
+	{
+		if ($event['recur_type'] != MCAL_RECUR_NONE)
+		{
+			return empty($event['recur_enddate']) || $event['recur_enddate'] > $this->now_su - $grace_time;
+		}
+		return $event['end'] > $this->now_su - $grace_time;
 	}
 
 	/**
@@ -876,436 +898,476 @@ class calendar_boupdate extends calendar_bo
 	 * @parqm boolean $ignore_prefs Ignore the user's preferences about when they want to be notified and send it
 	 * @return bool true/false
 	 */
-	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, array $alarm=null, $ignore_prefs = false)
+	function _send_update($msg_type, $to_notify, $old_event, $new_event=null, $user=0, ?array $alarm=null, $ignore_prefs = false)
 	{
-		//error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...)");
-		if (!is_array($to_notify))
-		{
-			$to_notify = array();
-		}
-		$notify_externals = $new_event ? ($new_event['##notify_externals']??null) : ($old_event['##notify_externals']??null);
-		$disinvited = $msg_type == MSG_DISINVITE ? array_keys($to_notify) : array();
-
-		$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
-		if($owner && !isset($to_notify[$owner]) && $msg_type != MSG_ALARM)
-		{
-			$to_notify[$owner] = 'OCHAIR';    // always include the event-owner
-		}
-
-		// ignore events in the past (give a tolerance of 10 seconds for the script)
-		if($new_event && $this->date2ts($new_event['start']) < ($this->now_su - 10) ||
-			!$new_event && $old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10)
-		)
-		{
-			error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...) --> ignoring event in the past: start=".
-				date('Y-m-d H:i:s', ($new_event ?: $old_event)['start'])." < ".date('Y-m-d H:i:s', $this->now_su-10));
-			return False;
-		}
-		// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
-		if($GLOBALS['egw_info']['server']['server_timezone'] && ($tz = date_default_timezone_get()) != $GLOBALS['egw_info']['server']['server_timezone'])
-		{
-			$restore_tz = $tz;
-			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
-		}
-		$temp_user = $GLOBALS['egw_info']['user'];    // save user-date of the enviroment to restore it after
-
-		if (!$user)
-		{
-			$user = $temp_user['account_id'];
-		}
-		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-		if ($GLOBALS['egw']->preferences->account_id != $user)
-		{
-			// Get correct preferences
-			$GLOBALS['egw']->preferences->__construct(is_numeric($user) ? $user : $temp_user['account_id']);
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-
-			// If target user/participant is not an account, try to get good notification message
-			if(!is_numeric($user))
+		try {
+			//error_log(__METHOD__."($msg_type, ".json_encode($to_notify).", ...,  ".json_encode($new_event).", ...)");
+			if (!is_array($to_notify))
 			{
-				$res_info = $this->resource_info($user);
-				$title = $res_info['name'] ?: Link::title($res_info['app'], $res_info['res_id']) ?: $res_info['res_id'] ?: $user;
-				$GLOBALS['egw']->preferences->values['fullname'] = $GLOBALS['egw']->preferences->values['lastname'] = $title;
-				$GLOBALS['egw']->preferences->values['firstname'] = '';
-				$msg = $GLOBALS['egw']->preferences->user['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->default['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->forced['calendar']['notifyResponse'];
-				$GLOBALS['egw_info']['user']['preferences']['calendar']['notifyResponse'] = $GLOBALS['egw']->preferences->parse_notify(
-					$msg
-				);
+				$to_notify = array();
+			}
+			$notify_externals = $new_event ? ($new_event['##notify_externals'] ?? null) : ($old_event['##notify_externals'] ?? null);
+			$disinvited = $msg_type == MSG_DISINVITE ? array_keys($to_notify) : array();
+
+			$owner = $old_event ? $old_event['owner'] : $new_event['owner'];
+			if ($owner && !isset($to_notify[$owner]) && $msg_type != MSG_ALARM)
+			{
+				$to_notify[$owner] = 'OCHAIR';    // always include the event-owner
 			}
 
-		}
-		$senderid = $this->user;
-		$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
-
-		// add all group-members to the notification, unless they are already participants
-		foreach($to_notify as $userid => $statusid)
-		{
-			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
-				($members = $GLOBALS['egw']->accounts->members($userid, true)))
+			// ignore events in the past (give a tolerance of 10 seconds for the script)
+			if ($new_event && !$this->eventInFuture($new_event) || !$new_event && $old_event && !$this->eventInFuture($old_event))
 			{
-				foreach($members as $member)
+				error_log(__METHOD__ . "($msg_type, " . json_encode($to_notify) . ", ...,  " . json_encode($new_event) . ", ...) --> ignoring event in the past: start=" .
+					date('Y-m-d H:i:s', ($new_event ?: $old_event)['start']) . " < " . date('Y-m-d H:i:s', $this->now_su - 10));
+				return False;
+			}
+			// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
+			if ($GLOBALS['egw_info']['server']['server_timezone'] && ($tz = date_default_timezone_get()) != $GLOBALS['egw_info']['server']['server_timezone'])
+			{
+				$restore_tz = $tz;
+				date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
+			}
+			$temp_user = $GLOBALS['egw_info']['user'];    // save user-date of the enviroment to restore it after
+
+			if (!$user)
+			{
+				$user = $temp_user['account_id'];
+			}
+			$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			if ($GLOBALS['egw']->preferences->account_id != $user)
+			{
+				// Get correct preferences
+				$GLOBALS['egw']->preferences->__construct(is_numeric($user) ? $user : $temp_user['account_id']);
+				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+
+				// If target user/participant is not an account, try to get good notification message
+				if (!is_numeric($user))
 				{
-					if (!isset($to_notify[$member]))
+					$res_info = $this->resource_info($user);
+					$title = $res_info['name'] ?: Link::title($res_info['app'], $res_info['res_id']) ?: $res_info['res_id'] ?: $user;
+					$GLOBALS['egw']->preferences->values['fullname'] = $GLOBALS['egw']->preferences->values['lastname'] = $title;
+					$GLOBALS['egw']->preferences->values['firstname'] = '';
+					$msg = $GLOBALS['egw']->preferences->user['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->default['calendar']['notifyResponse'] ?: $GLOBALS['egw']->preferences->forced['calendar']['notifyResponse'];
+					$GLOBALS['egw_info']['user']['preferences']['calendar']['notifyResponse'] = $GLOBALS['egw']->preferences->parse_notify(
+						$msg
+					);
+				}
+
+			}
+			$senderid = $this->user;
+			$event = $msg_type == MSG_ADDED || $msg_type == MSG_MODIFIED ? $new_event : $old_event;
+
+			// add all group-members to the notification, unless they are already participants
+			foreach ($to_notify as $userid => $statusid)
+			{
+				if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
+					($members = $GLOBALS['egw']->accounts->members($userid, true)))
+				{
+					foreach ($members as $member)
 					{
-						$to_notify[$member] = 'G';	// Group-invitation
+						if (!isset($to_notify[$member]))
+						{
+							$to_notify[$member] = 'G';    // Group-invitation
+						}
 					}
 				}
 			}
-		}
-		// unless we notify externals about everything aka 'responses'
-		// we will notify only an external chair, if only one exists
-		if (($notify_externals ?: $GLOBALS['egw_info']['user']['calendar']['notify_externals'] ?? null) !== 'responses')
-		{
-			// check if we have *only* an external chair
-			$chair = null;
-			foreach($to_notify as $userid => $statusid)
+			// unless we notify externals about everything aka 'responses'
+			// we will notify only an external chair, if only one exists
+			if (($notify_externals ?: $GLOBALS['egw_info']['user']['calendar']['notify_externals'] ?? null) !== 'responses')
+			{
+				// check if we have *only* an external chair
+				$chair = null;
+				foreach ($to_notify as $userid => $statusid)
+				{
+					$res_info = $quantity = $role = null;
+					calendar_so::split_status($statusid, $quantity, $role);
+					if ($role == 'CHAIR' && (empty($chair) || !is_numeric($chair)))
+					{
+						$chair = $userid;
+					}
+				}
+				// *only* an external chair --> do not notify anyone, but the external chair and the current user
+				if (!empty($chair) && !is_numeric($chair))
+				{
+					$to_notify = array($chair => $to_notify[$chair]) +
+						(isset($to_notify[$user]) ? array($user => $to_notify[$user]) : array());
+				}
+			}
+
+			// Event is passed in user time, make sure that's taken into account for date calculations
+			$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
+			$date = new Api\DateTime('now', new DateTimeZone($user_prefs['common']['tz']));
+			$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
+			$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
+			$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
+			if ($old_event) $olddate = new Api\DateTime($old_event['start'], new DateTimeZone($user_prefs['common']['tz']));
+			$rdates = array_map(static function ($rdate) use ($user_prefs) {
+				return new Api\DateTime($rdate, new DateTimeZone($user_prefs['common']['tz']));
+			}, $event['recur_rdates'] ?? []);
+			$recur_date = isset($event['recur_date']) ? new Api\DateTime($event['recur_date'], new DateTimeZone($user_prefs['common']['tz'])) : null;
+			$recurrence = isset($event['recurrence']) ? new Api\DateTime($event['recurrence'], new DateTimeZone($user_prefs['common']['tz'])) : null;
+
+			//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
+			$owner_prefs = $ics = null;
+			foreach ($to_notify as $userid => $statusid)
 			{
 				$res_info = $quantity = $role = null;
 				calendar_so::split_status($statusid, $quantity, $role);
-				if ($role == 'CHAIR' && (empty($chair) || !is_numeric($chair)))
+				if ($this->debug > 0) error_log(__METHOD__ . " trying to notify $userid, with $statusid ($role)");
+
+				// hack to add videoconference in event description, by always setting $cleared_event
+				// Can't re-load, if we're notifying of a cancelled recurrence we'll load the next event in the series
+				$cleared_event = $event;
+
+				if (!is_numeric($userid))
 				{
-					$chair = $userid;
-				}
-			}
-			// *only* an external chair --> do not notify anyone, but the external chair and the current user
-			if (!empty($chair) && !is_numeric($chair))
-			{
-				$to_notify = array($chair => $to_notify[$chair])+
-					(isset($to_notify[$user]) ? array($user => $to_notify[$user]) : array());
-			}
-		}
+					$res_info = $this->resource_info($userid);
 
-		// Event is passed in user time, make sure that's taken into account for date calculations
-		$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
-		$date = new Api\DateTime('now',new DateTimeZone($user_prefs['common']['tz']));
-		$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
-		$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
-		$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
-		if ($old_event) $olddate = new Api\DateTime($old_event['start'], new DateTimeZone($user_prefs['common']['tz']));
-
-		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".Api\DateTime::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
-		$owner_prefs = $ics = null;
-		foreach($to_notify as $userid => $statusid)
-		{
-			$res_info = $quantity = $role = null;
-			calendar_so::split_status($statusid, $quantity, $role);
-			if ($this->debug > 0) error_log(__METHOD__." trying to notify $userid, with $statusid ($role)");
-
-			// hack to add videoconference in event description, by always setting $cleared_event
-			// Can't re-load, if we're notifying of a cancelled recurrence we'll load the next event in the series
-			$cleared_event = $event;
-
-			if (!is_numeric($userid))
-			{
-				$res_info = $this->resource_info($userid);
-
-				// check if responsible for a resource has read rights on event (might be private!)
-				if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
-					!$this->check_perms(Acl::READ, $event, 0, 'ts', null, $res_info['responsible']))
-				{
-					// --> use only details from (private-)cleared event only containing resource ($userid)
-					// reading server timezone, to be able to use cleared event for iCal generation further down
-					//$cleared_event = $this->read($event['id'], null, true, 'server');
-					$this->clear_private_infos($cleared_event, array($userid));
-				}
-				$userid = $res_info['responsible'] ?? null;
-
-				if (empty($userid))	// no resource responsible: $userid===0
-				{
-					if (empty($res_info['email'])) continue;	// no way to notify
-					// check if event-owner wants non-EGroupware users notified
-					if (is_null($owner_prefs))
+					// check if responsible for a resource has read rights on event (might be private!)
+					if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
+						!$this->check_perms(Acl::READ, $event, 0, 'ts', null, $res_info['responsible']))
 					{
-						$preferences = new Api\Preferences($owner);
-						$owner_prefs = $preferences->read_repository();
-						if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
+						// --> use only details from (private-)cleared event only containing resource ($userid)
+						// reading server timezone, to be able to use cleared event for iCal generation further down
+						//$cleared_event = $this->read($event['id'], null, true, 'server');
+						$this->clear_private_infos($cleared_event, array($userid));
 					}
-					if ($role != 'CHAIR' &&		// always notify externals CHAIRs
-						(empty($owner_prefs['calendar']['notify_externals']) ||
-						$owner_prefs['calendar']['notify_externals'] == 'no'))
+					$userid = $res_info['responsible'] ?? null;
+
+					if (empty($userid))    // no resource responsible: $userid===0
 					{
+						if (empty($res_info['email'])) continue;    // no way to notify
+						// check if event-owner wants non-EGroupware users notified
+						if (is_null($owner_prefs))
+						{
+							$preferences = new Api\Preferences($owner);
+							$owner_prefs = $preferences->read_repository();
+							if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
+						}
+						if ($role != 'CHAIR' &&        // always notify externals CHAIRs
+							(empty($owner_prefs['calendar']['notify_externals']) ||
+								$owner_prefs['calendar']['notify_externals'] == 'no'))
+						{
+							continue;
+						}
+						$userid = $res_info['email'];
+					}
+				}
+
+				if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
+				{
+					continue;    // dont notify rejected participants or groups
+				}
+
+				if ($userid != $GLOBALS['egw_info']['user']['account_id'] ||
+					($userid == $GLOBALS['egw_info']['user']['account_id'] &&
+						$user_prefs['calendar']['receive_own_updates'] == 1) ||
+					$msg_type == MSG_ALARM)
+				{
+					$tfn = $tln = $lid = null; //cleanup of lastname and fullname (in case they are set in a previous loop)
+					if (is_numeric($userid))
+					{
+						$preferences = new Api\Preferences($userid);
+						$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
+						$fullname = Api\Accounts::username($userid);
+						$tfn = Api\Accounts::id2name($userid, 'account_firstname');
+						$tln = Api\Accounts::id2name($userid, 'account_lastname');
+					}
+					else    // external email address: use Api\Preferences of event-owner, plus some hardcoded settings (eg. ical notification)
+					{
+						if (is_null($owner_prefs))
+						{
+							$preferences = new Api\Preferences($owner);
+							$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
+							if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
+						}
+						$part_prefs = $owner_prefs;
+						$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
+						$part_prefs['calendar']['update_format'] = 'ical';    // use ical format
+						$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
+					}
+					$m_type = $msg_type;
+					if (!$ignore_prefs && !$this->update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
+							$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
+					{
+						//error_log("--> Update/notification NOT requested / ignored");
 						continue;
 					}
-					$userid = $res_info['email'];
-				}
-			}
+					$action = $notify_msg = null;
+					$method = $this->msg_type2ical_method($m_type, $action, $notify_msg, $user_prefs['calendar']);
 
-			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
-			{
-				continue;	// dont notify rejected participants or groups
-			}
-
-			if ($userid != $GLOBALS['egw_info']['user']['account_id'] ||
-				($userid == $GLOBALS['egw_info']['user']['account_id'] &&
-					$user_prefs['calendar']['receive_own_updates']==1) ||
-				$msg_type == MSG_ALARM)
-			{
-				$tfn = $tln = $lid = null; //cleanup of lastname and fullname (in case they are set in a previous loop)
-				if (is_numeric($userid))
-				{
-					$preferences = new Api\Preferences($userid);
-					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
-					$fullname = Api\Accounts::username($userid);
-					$tfn = Api\Accounts::id2name($userid,'account_firstname');
-					$tln = Api\Accounts::id2name($userid,'account_lastname');
-				}
-				else	// external email address: use Api\Preferences of event-owner, plus some hardcoded settings (eg. ical notification)
-				{
-					if (is_null($owner_prefs))
+					if ($lang !== $part_prefs['common']['lang'])
 					{
-						$preferences = new Api\Preferences($owner);
-						$GLOBALS['egw_info']['user']['preferences'] = $owner_prefs = $preferences->read_repository();
-						if (!empty($notify_externals)) $owner_prefs['calendar']['notify_externals'] = $notify_externals;
+						Api\Translation::init();
+						$lang = $part_prefs['common']['lang'];
 					}
-					$part_prefs = $owner_prefs;
-					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
-					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
-					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
-				}
-				$m_type = $msg_type;
-				if (!$ignore_prefs && !$this->update_requested($userid, $part_prefs, $m_type, $old_event, $new_event, $role,
-					$event['participants'][$GLOBALS['egw_info']['user']['account_id']]))
-				{
-					//error_log("--> Update/notification NOT requested / ignored");
-					continue;
-				}
-				$action = $notify_msg = null;
-				$method = $this->msg_type2ical_method($m_type, $action, $notify_msg, $user_prefs['calendar']);
 
-				if ($lang !== $part_prefs['common']['lang'])
-				{
-					Api\Translation::init();
-					$lang = $part_prefs['common']['lang'];
-				}
+					// Since we're running from cron, make sure notifications uses user's theme (for images)
+					$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 
-				// Since we're running from cron, make sure notifications uses user's theme (for images)
-				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+					$event_arr = null;
+					$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
+						$action, $event_arr, $disinvited);
+					$details['fullname'] = is_numeric($user) ? Api\Accounts::username($user) : $fullname;
+					$details['to-fullname'] = $fullname;
+					$details['to-firstname'] = isset($tfn) ? $tfn : '';
+					$details['to-lastname'] = isset($tln) ? $tln : '';
 
-				$event_arr = null;
-				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
-					$action, $event_arr, $disinvited);
-				$details['fullname'] = is_numeric($user) ? Api\Accounts::username($user) : $fullname;
-				$details['to-fullname'] = $fullname;
-				$details['to-firstname'] = isset($tfn)? $tfn: '';
-				$details['to-lastname'] = isset($tln)? $tln: '';
-
-				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
-				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
-				try
-				{
-					$timezone = new DateTimeZone($part_prefs['common']['tz']);
-				}
-				catch(Exception $e)
-				{
-					$timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
-				}
-				$timeformat = $part_prefs['common']['timeformat'];
-				switch($timeformat)
-				{
-			  		case '24':
-						$timeformat = 'H:i';
-						break;
-					case '12':
-						$timeformat = 'h:i a';
-						break;
-				}
-				$timeformat = $part_prefs['common']['dateformat'] . ', ' . $timeformat;
-
-				// Set dates:
-				// $details in "preference" format, $cleared_event as DateTime so calendar_ical->exportVCal() gets
-				// the times right, since it assumes a timestamp is in server time
-				$startdate->setTimezone($timezone);
-				$details['startdate'] = $startdate->format($timeformat);
-				$cleared_event['start'] = $startdate;
-
-				$enddate->setTimezone($timezone);
-				$details['enddate'] = $enddate->format($timeformat);
-				$cleared_event['end'] = $enddate;
-
-				$modified->setTimezone($timezone);
-				$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
-				$cleared_event['updated'] = $modified;
-
-				// Current date doesn't need to go into the cleared event, just for details
-				$date->setTimezone($timezone);
-				$details['date'] = $date->format($timeformat);
-
-				if ($old_event != False)
-				{
-					$olddate->setTimezone($timezone);
-					$details['olddate'] = $olddate->format($timeformat);
-				}
-				// generate a personal videoconference url, if we need one
-				if (!empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
-				{
-					$avatar = new Api\Contacts\Photo(is_numeric($userid) ? "account:$userid" :
-						(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid),
-						// disable sharing links currently, as sharing links from a different EGroupware user destroy the session
-						true);
-
-					$details['videoconference'] = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
-						'title' => $event['title'],
-						'name' => $fullname,
-						'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
-						'avatar' => (string)$avatar,
-						'account_id' => $userid,
-						'cal_id' => $details['id'],
-						'notify_only' => true
-					], ['participants' =>array_filter($event['participants'], function($key){return is_numeric($key);}, ARRAY_FILTER_USE_KEY)], $startdate, $enddate);
-					$event_arr['videoconference'] = [
-						'field' => lang('Video Conference'),
-						'data'  => $details['videoconference'],
-					];
-					// hack to add videoconference-url to ical, only if description was NOT cleared
-					if (isset($cleared_event['description']))
+					// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
+					if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
+					try
 					{
-						$cleared_event['description'] = lang('Video conference').': '.$details['videoconference']."\n\n".$event['description'];
+						$timezone = new DateTimeZone($part_prefs['common']['tz']);
+					} catch (Exception $e)
+					{
+						$timezone = new DateTimeZone($GLOBALS['egw_info']['server']['server_timezone']);
 					}
-				}
-				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
+					$timeformat = $part_prefs['common']['timeformat'];
+					switch ($timeformat)
+					{
+						case '24':
+							$timeformat = 'H:i';
+							break;
+						case '12':
+							$timeformat = 'h:i a';
+							break;
+					}
+					$timeformat = $part_prefs['common']['dateformat'] . ', ' . $timeformat;
 
-				list($subject,$notify_body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
-				// alarm is NOT an iCal method, therefore we have to use extened (no iCal)
-				switch($msg_type == MSG_ALARM ? 'extended' : $part_prefs['calendar']['update_format'])
-				{
-					case 'ical':
-						if (is_null($ics) || $m_type != $msg_type || $event['##videoconference'])	// need different ical for organizer notification or videoconference join urls
+					// Set dates:
+					// $details in "preference" format, $cleared_event as DateTime so calendar_ical->exportVCal() gets
+					// the times right, since it assumes a timestamp is in server time
+					$cleared_event['start'] = $startdate->setTimezone($timezone);
+					$details['startdate'] = $startdate->format($timeformat);
+
+					$cleared_event['end'] = $enddate->setTimezone($timezone);
+					$details['enddate'] = $enddate->format($timeformat);
+
+					$cleared_event['updated'] = $modified->setTimezone($timezone);
+					$details['updated'] = $modified->format($timeformat) . ', ' . Api\Accounts::username($event['modifier']);
+
+					// we also need to "fix" timezone for rdates, to not get wrong times!
+					$cleared_event['recur_rdates'] = array_map(static function ($rdate) use ($timezone) {
+						return $rdate->setTimezone($timezone);
+					}, $rdates);
+
+					if (isset($recur_date))
+					{
+						$cleared_event['recur_date'] = $recur_date->setTimezone($timezone);
+						$details['recur_date'] = $recur_date->format($timeformat);
+					}
+					if (isset($recurrence))
+					{
+						$cleared_event['recurrence'] = $recurrence->setTimezone($timezone);
+					}
+
+					// Current date doesn't need to go into the cleared event, just for details
+					$date->setTimezone($timezone);
+					$details['date'] = $date->format($timeformat);
+
+					if ($old_event != False)
+					{
+						$olddate->setTimezone($timezone);
+						$details['olddate'] = $olddate->format($timeformat);
+					}
+					// generate a personal videoconference url, if we need one
+					if (!empty($event['##videoconference']) && !calendar_hooks::isVideoconferenceDisabled())
+					{
+						$avatar = new Api\Contacts\Photo(is_numeric($userid) ? "account:$userid" :
+							(isset($res_info) && $res_info['type'] === 'c' ? $res_info['res_id'] : $userid),
+							// disable sharing links currently, as sharing links from a different EGroupware user destroy the session
+							true);
+
+						$details['videoconference'] = EGroupware\Status\Videoconference\Call::genMeetingUrl($event['##videoconference'], [
+							'title' => $event['title'],
+							'name' => $fullname,
+							'email' => is_numeric($userid) ? Api\Accounts::id2name($userid, 'account_email') : $userid,
+							'avatar' => (string)$avatar,
+							'account_id' => $userid,
+							'cal_id' => $details['id'],
+							'notify_only' => true
+						], ['participants' => array_filter($event['participants'], function ($key) {
+							return is_numeric($key);
+						}, ARRAY_FILTER_USE_KEY)], $startdate, $enddate);
+						$event_arr['videoconference'] = [
+							'field' => lang('Video Conference'),
+							'data' => $details['videoconference'],
+						];
+						// hack to add videoconference-url to ical, only if description was NOT cleared
+						if (isset($cleared_event['description']))
 						{
-							$calendar_ical = new calendar_ical();
-							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
-							// we need to pass $event[id] so iCal class reads event again,
-							// as event is in user TZ, but iCal class expects server TZ!
-							$ics = $calendar_ical->exportVCal([$cleared_event],
-								'2.0', $method, $cleared_event['recur_date'] ?? null,
-								'', 'utf-8', $method == 'REPLY' ? $user : 0
-							);
-							unset($calendar_ical);
+							$cleared_event['description'] = lang('Video conference') . ': ' . $details['videoconference'] . "\n\n" . $event['description'];
 						}
-						$attachment = array(
-							'string' => $ics,
-							'filename' => 'cal.ics',
-							'encoding' => '8bit',
-							'type' => 'text/calendar; method='.$method,
-						);
-						if ($m_type != $msg_type) unset($ics);
-						$subject = isset($cleared_event) ? $cleared_event['title'] : $event['title'];
-						// fall through
-					case 'extended':
+					}
+					//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
 
-						$details_body = lang('Event Details follow').":\n";
-						foreach($event_arr as $key => $val)
-						{
-							if(!empty($details[$key]))
+					list($subject, $notify_body) = explode("\n", $GLOBALS['egw']->preferences->parse_notify($notify_msg, $details), 2);
+					// alarm is NOT an iCal method, therefore we have to use extened (no iCal)
+					switch ($msg_type == MSG_ALARM ? 'extended' : $part_prefs['calendar']['update_format'])
+					{
+						case 'ical':
+							if (is_null($ics) || $m_type != $msg_type || $event['##videoconference'])    // need different ical for organizer notification or videoconference join urls
 							{
-								switch($key)
-								{
-							 		case 'access':
-									case 'priority':
-									case 'link':
-									case 'description':
-									case 'title':
-										break;
-									default:
-										$details_body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
-										break;
-							 	}
+								$calendar_ical = new calendar_ical();
+								$calendar_ical->setSupportedFields('full');    // full iCal fields+event TZ
+								// we need to pass $event[id] so iCal class reads event again,
+								// as event is in user TZ, but iCal class expects server TZ!
+								$ics = $calendar_ical->exportVCal([$cleared_event],
+									'2.0', $method, $cleared_event['recur_date'] ?? null,
+									'', 'utf-8', $method == 'REPLY' ? $user : 0
+								);
+								unset($calendar_ical);
 							}
-						}
-						break;
-				}
-				// send via notification_app
-				if($GLOBALS['egw_info']['apps']['notifications']['enabled'])
-				{
-					try {
-						//error_log(__METHOD__."() notifying $userid from $senderid: $subject");
-						$notification = new notifications();
-						$notification->set_receivers(array($userid));
-						$notification->set_sender($senderid);
-						$notification->set_subject($subject);
-						// as we want ical body to be just description, we can NOT set links, as they get appended to body
-						if ($part_prefs['calendar']['update_format'] != 'ical')
-						{
-							$notification->set_message($notify_body."\n\n".$details['description']."\n\n".$details_body);
-							$notification->set_links(array($details['link_arr']));
-						}
-						else
-						{
-							// iCal: description need to be separated from body by fancy separator
-							$notification->set_message($notify_body."\n\n".$details_body."\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description']);
-						}
-						// popup notifiactions: set subject, different message (without separator) and (always) links
-						$notification->set_popupsubject($subject);
+							$attachment = array(
+								'string' => $ics,
+								'filename' => 'cal.ics',
+								'encoding' => '8bit',
+								'type' => 'text/calendar; method=' . $method,
+							);
+							if ($m_type != $msg_type) unset($ics);
+							$subject = isset($cleared_event) ? $cleared_event['title'] : $event['title'];
+						// fall through
+						case 'extended':
 
-						if ($method == 'REQUEST')
+							$details_body = lang('Event Details follow') . ":\n";
+							foreach ($event_arr as $key => $val)
+							{
+								if (!empty($details[$key]))
+								{
+									switch ($key)
+									{
+										case 'access':
+										case 'priority':
+										case 'link':
+										case 'description':
+										case 'title':
+											break;
+										default:
+											$details_body .= sprintf("%-20s %s\n", $val['field'] . ':', $details[$key]);
+											break;
+									}
+								}
+							}
+							break;
+					}
+					// send via notification_app
+					if ($GLOBALS['egw_info']['apps']['notifications']['enabled'])
+					{
+						try
 						{
-							// Add ACCEPT|REJECT|TENTATIVE actions
-							$notification->set_popupdata('calendar', array(
-								'event_id' => $event['id'],
-								'user_id' => $userid,
-								'type' => $m_type,
-								'id' => $event['id'],
-								'app' => 'calendar',
-								'videoconference' => $details['videoconference'],
-							), $event['id']);
-						}
-						if ($m_type === MSG_ALARM)
-						{
-							$notification->set_popupdata('calendar',
-								array('egw_pr_notify' => 1,
+							//error_log(__METHOD__."() notifying $userid from $senderid: $subject");
+							$notification = new notifications();
+							$notification->set_receivers(array($userid));
+							$notification->set_sender($senderid);
+							$notification->set_subject($subject);
+							// as we want ical body to be just description, we can NOT set links, as they get appended to body
+							if ($part_prefs['calendar']['update_format'] != 'ical')
+							{
+								$notification->set_message($notify_body . "\n\n" . $details['description'] . "\n\n" . $details_body);
+								$notification->set_links(array($details['link_arr']));
+							}
+							else
+							{
+								// iCal: description need to be separated from body by fancy separator
+								$notification->set_message($notify_body . "\n\n" . $details_body . "\n*~*~*~*~*~*~*~*~*~*\n\n" . $details['description']);
+							}
+							// popup notifiactions: set subject, different message (without separator) and (always) links
+							$notification->set_popupsubject($subject);
+
+							if ($method == 'REQUEST')
+							{
+								// Add ACCEPT|REJECT|TENTATIVE actions
+								$notification->set_popupdata('calendar', array(
+									'event_id' => $event['id'],
+									'user_id' => $userid,
 									'type' => $m_type,
+									'id' => $event['id'],
+									'app' => 'calendar',
 									'videoconference' => $details['videoconference'],
-									'account_id' => $senderid,
-									'name' =>  Api\Accounts::username($senderid)
-								)
-								+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []), $event['id']);
-						}
-						$notification->set_popupmessage($subject."\n\n".$notify_body."\n\n".$details['description']."\n\n".$details_body."\n\n");
-						$notification->set_popuplinks(array($details['link_arr']+array('app'=>'calendar')));
+								), $event['id']);
+							}
+							if ($m_type === MSG_ALARM)
+							{
+								$notification->set_popupdata('calendar',
+									array('egw_pr_notify' => 1,
+										'type' => $m_type,
+										'videoconference' => $details['videoconference'],
+										'account_id' => $senderid,
+										'name' => Api\Accounts::username($senderid)
+									)
+									+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []), $event['id']);
+							}
+							$notification->set_popupmessage($subject . "\n\n" . $notify_body . "\n\n" . $details['description'] . "\n\n" . $details_body . "\n\n");
+							$notification->set_popuplinks(array($details['link_arr'] + array('app' => 'calendar')));
 
-						if(!empty($attachment)) { $notification->set_attachments(array($attachment)); }
-						$notification->send();
-						$errors = notifications::errors(true);
+							if (!empty($attachment))
+							{
+								$notification->set_attachments(array($attachment));
+							}
+							$notification->send();
+							$errors = notifications::errors(true);
+						} catch (Exception $exception)
+						{
+							$errors = [$exception->getMessage()];
+							continue;
+						}
 					}
-					catch (Exception $exception) {
-						$errors = [$exception->getMessage()];
-						continue;
+					else
+					{
+						$errors = [lang('Can not send any notifications because notifications app is not installed!')];
 					}
-				}
-				else
-				{
-					$errors = [lang('Can not send any notifications because notifications app is not installed!')];
-				}
-				foreach($errors as $error)
-				{
-					error_log(__METHOD__."() Error notifying $userid from $senderid: $subject: $error");
-					// send notification errors via push to current user (not session, as alarms send via async job have none!)
-					(new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']))->message(
-						lang('Error notifying %1', !is_numeric($userid) ? $userid :
-							Api\Accounts::id2name($userid, 'account_fullname').' <'.Api\Accounts::id2name($userid, 'account_email').'>').
-						"\n".$subject."\n".$error, 'error');
+					foreach ($errors as $error)
+					{
+						error_log(__METHOD__ . "() Error notifying $userid from $senderid: $subject: $error");
+						// send notification errors via push to current user (not session, as alarms send via async job have none!)
+						(new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']))->message(
+							lang('Error notifying %1', !is_numeric($userid) ? $userid :
+								Api\Accounts::id2name($userid, 'account_fullname') . ' <' . Api\Accounts::id2name($userid, 'account_email') . '>') .
+							"\n" . $subject . "\n" . $error, 'error');
+					}
 				}
 			}
+			// restore the enviroment (preferences->read_repository() sets the timezone!)
+			$GLOBALS['egw_info']['user'] = $temp_user;
+			if ($GLOBALS['egw']->preferences->account_id != $temp_user['account_id'])
+			{
+				$GLOBALS['egw']->preferences->__construct($temp_user['account_id']);
+				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+				//echo "<p>".__METHOD__."() restored enviroment of #$temp_user[account_id] $temp_user[account_fullname]: tz={$GLOBALS['egw_info']['user']['preferences']['common']['tz']}</p>\n";
+			}
+			else
+			{
+				// Loading other user's preferences can change current user's tz
+				$GLOBALS['egw']->preferences->check_set_tz_offset();
+			}
+			if ($lang !== $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
+			{
+				Api\Translation::init();
+			}
+			// restore timezone, in case we had to reset it to server-timezone
+			if (!empty($restore_tz)) date_default_timezone_set($restore_tz);
 		}
-		// restore the enviroment (preferences->read_repository() sets the timezone!)
-		$GLOBALS['egw_info']['user'] = $temp_user;
-		if ($GLOBALS['egw']->preferences->account_id != $temp_user['account_id'])
-		{
-			$GLOBALS['egw']->preferences->__construct($temp_user['account_id']);
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
-			//echo "<p>".__METHOD__."() restored enviroment of #$temp_user[account_id] $temp_user[account_fullname]: tz={$GLOBALS['egw_info']['user']['preferences']['common']['tz']}</p>\n";
-		}
-		else
-		{
-			// Loading other user's preferences can change current user's tz
-			$GLOBALS['egw']->preferences->check_set_tz_offset();
-		}
-		if ($lang !== $GLOBALS['egw_info']['user']['preferences']['common']['lang'])
-		{
-			Api\Translation::init();
-		}
-		// restore timezone, in case we had to reset it to server-timezone
-		if (!empty($restore_tz)) date_default_timezone_set($restore_tz);
+		catch (Throwable $e) {
+			// logging all exceptions and errors to the error_log AND pushing them to user
+			$message = null;
+			_egw_log_exception($e,$message);
+			$response = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
+			$message .= ($message ? "\n\n" : '').$e->getMessage();
 
+			$message .= "\n\n".$e->getFile().' ('.$e->getLine().')';
+			// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
+			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
+			{
+				$message .= "\n\n".$e->getTraceAsString();
+			}
+			$response->message($message, 'error');
+
+			// under PHP 8 the destructor is called to late and the response is not send
+			$GLOBALS['egw']->__destruct();
+			exit;
+		}
 		return true;
 	}
 
@@ -1404,7 +1466,7 @@ class calendar_boupdate extends calendar_bo
 		$this->check_reset_statuses($event, $old_event);
 
 		// set recur-enddate/range-end to real end-date of last recurrence
-		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::PERIOD) && $event['start'])
+		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::RDATE) && $event['start'])
 		{
 			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
 			$event['recur_enddate']->setTime(23,59,59);
@@ -1577,8 +1639,10 @@ class calendar_boupdate extends calendar_bo
 			$event['created'] = $save_event['created'] = $this->now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
-		$set_recurrences = $old_event ? abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 ||
-			count($old_event['recur_exception'] ?? []) != count($event['recur_exception'] ?? []) : false;
+		$set_recurrences = !$old_event ? false :
+			abs(Api\DateTime::to($event['recur_enddate'] ?? null, 'utc') - Api\DateTime::to($old_event['recur_enddate'] ?? null, 'utc')) > 1 ||
+			count($old_event['recur_exception'] ?? []) != count($event['recur_exception'] ?? []) ||
+			count($old_event['recur_rdates'] ?? []) != count($event['recur_rdates'] ?? []);
 		$set_recurrences_start = 0;
 		if (($cal_id = $this->so->save($event,$set_recurrences,$set_recurrences_start,0,$event['etag'])) && $set_recurrences && !empty($event['recur_type']))
 		{
@@ -1808,9 +1872,10 @@ class calendar_boupdate extends calendar_bo
 	 * DEPRECATED: we always (have to) update timestamp, as they are required for sync!
 	 * @param boolean|"NOPUSH" $skip_notification =false true: send NO notifications, default false = send them,
 	 *  "NOPUSH": also do NOT send push notifications / call Link::notifiy(), which still happens for true
+	 * @param ?string $comment Comment to send with notification to organizer (as iCal COMMENT)
 	 * @return int number of changed recurrences
 	 */
-	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false)
+	function set_status($event,$uid,$status,$recur_date=0,$ignore_acl=false,$updateTS=true,$skip_notification=false, ?string $comment=null)
 	{
 		unset($updateTS);
 
@@ -1857,6 +1922,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
 				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
+				if (!empty($comment)) $event['comment'] = $comment;
 				$user_id = is_numeric($uid) ? (int)$uid : $uid;
 				$this->send_update($status2msg[$status],$event['participants'],$event, null, $user_id);
 			}
@@ -2062,7 +2128,7 @@ class calendar_boupdate extends calendar_bo
 		$event_arr = $this->event2array($event);
 		foreach($event_arr as $key => $val)
 		{
-			if ($key == 'recur_type') $key = 'repetition';
+			if ($key == 'recur_type') $details['repetition'] = $val['data'];
 			$details[$key] = $val['data'];
 		}
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';

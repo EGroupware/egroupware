@@ -21,7 +21,9 @@
  */
 export interface EgwActionObjectInterface {
     //properties
+    id?:string
     _state: number;
+	handlers : { [type : string]? : [{ type : string, listener : Function }] };
     stateChangeCallback: Function;
     stateChangeContext: any;
     reconnectActionsCallback: Function;

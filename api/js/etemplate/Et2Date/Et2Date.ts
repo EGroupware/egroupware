@@ -9,20 +9,19 @@
  */
 
 
-import {css, html} from "lit";
+import {css, html, nothing} from "lit";
 import 'lit-flatpickr';
 import {dateStyles} from "./DateStyles";
 import type {Instance} from 'flatpickr/dist/types/instance';
 import {default as scrollPlugin} from "flatpickr/dist/plugins/scrollPlugin.js";
-import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr";
+import {default as ShortcutButtonsPlugin} from "shortcut-buttons-flatpickr/dist/shortcut-buttons-flatpickr.js";
 import flatpickr from "flatpickr";
 import {egw} from "../../jsapi/egw_global";
-import type {HTMLElementWithValue} from "@lion/form-core/types/FormControlMixinTypes";
 import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
-import {FormControlMixin} from "@lion/form-core";
 import {LitFlatpickr} from "lit-flatpickr";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import shoelace from "../Styles/shoelace";
+import {classMap} from "lit/directives/class-map.js";
 
 // list of existing localizations from node_modules/flatpicker/dist/l10n directory:
 const l10n = [
@@ -31,7 +30,7 @@ const l10n = [
 	'mn', 'ms', 'my', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'si', 'sk', 'sl', 'sq', 'sr-cyr', 'sr', 'sv', 'th', 'tr',
 	'uk', 'uz', 'uz_latn', 'vn', 'zh-tw', 'zh',
 ];
-const lang = egw ? <string>egw.preference('lang') || "" : "";
+const lang = egw && egw.preference ? <string>egw.preference('lang') || "" : "";
 // only load localization, if we have one
 if (l10n.indexOf(lang) >= 0)
 {
@@ -224,7 +223,7 @@ export function parseDateTime(dateTimeString)
  * Format dates according to user preference
  *
  * @param {Date} date
- * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available
+ * @param [options] Intl options are available
  * 	set 'dateFormat': "Y-m-d" to specify a particular format
  * @returns {string}
  */
@@ -261,7 +260,7 @@ export function formatDate(date : Date, options = {dateFormat: ""}) : string
  * Format dates according to user preference
  *
  * @param {Date} date
- * @param {import('@lion/localize/types/LocalizeMixinTypes').FormatDateOptions} [options] Intl options are available
+ * @param  [options] Intl options are available
  * 	set 'timeFormat': "12" to specify a particular format
  * @returns {string}
  */
@@ -305,8 +304,7 @@ export function formatDateTime(date : Date, options = {dateFormat: "", timeForma
 	return formatDate(date, options) + " " + formatTime(date, options);
 }
 
-// !!! ValidateMixin !!!
-export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
+export class Et2Date extends Et2InputWidget(LitFlatpickr)
 {
 	static get styles()
 	{
@@ -326,11 +324,12 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 
 			  /* Scroll buttons */
 
-			  .input-group__container {
+				.form-control-input {
 				position: relative;
+					display: flex;
 			  }
 
-			  .input-group__container:hover .et2-date-time__scrollbuttons {
+				.form-control-input:hover .et2-date-time__scrollbuttons {
 				display: flex;
 			  }
 
@@ -340,6 +339,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 				width: calc(var(--sl-input-height-medium) / 2);
 				position: absolute;
 				right: 0px;
+				  margin-inline-end: 0px;
 			  }
 
 			  .et2-date-time__scrollbuttons > * {
@@ -482,6 +482,26 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 			// initializeComponent() so this._inputNode is not available before this
 			this.findInputField().addEventListener('change', this._updateValueOnChange);
 			this.findInputField().addEventListener("input", this._handleInputChange);
+
+			// pass aria(Label|Description) to real input node
+			const input = this.getInputNode();
+			if (input)
+			{
+				input.ariaLabel = this.ariaLabel || this.placeholder;
+				input.ariaDescription = this.ariaDescription || this.statustext ||
+					this.egw().lang('Format')+' '+this.getOptions().altFormat.split('').map(c => {
+						switch(c)
+						{
+							case 'Y': return this.egw().lang('Year');
+							case 'm': return this.egw().lang('Month');
+							case 'd': return this.egw().lang('Day');
+							case 'h':
+							case 'H': return this.egw().lang('Hour');
+							case 'i': return this.egw().lang('Minute');
+							default: return c;
+						}
+					}).join(' ');
+			}
 		}
 	}
 
@@ -534,7 +554,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		options.onChange = this._updateValueOnChange;
 		options.onReady = this._onReady;
 
-		// Remove Lion's inert attribute so we can work in Et2Dialog
+		// Remove inert attribute so we can work in Et2Dialog
 		options.onOpen = [() =>
 		{
 			this._instance.calendarContainer?.removeAttribute("inert")
@@ -925,22 +945,40 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		return <HTMLInputElement>this._inputNode?.shadowRoot?.querySelector('input:not([type="hidden"])');
 	}
 
+	getInputNode()
+	{
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return super.getInputNode();
+		}
+		return this.findInputField();
+	}
+
+	focus()
+	{
+		if(!(typeof egwIsMobile == "function" && egwIsMobile()))
+		{
+			this.open();
+		}
+		this.getInputNode()?.focus();
+	}
+
 	/**
 	 * The interactive (form) element.
 	 * This is an et2-textbox, which causes some problems with flatpickr
 	 * @protected
 	 */
-	get _inputNode() : HTMLElementWithValue
+	get _inputNode() : Et2Textbox
 	{
-		return this.querySelector('[slot="input"]');
+		return this.shadowRoot?.querySelector('et2-textbox');
 	}
 
 	/**
 	 * The holder of value for flatpickr
 	 */
-	get _valueNode() : HTMLElementWithValue
+	get _valueNode() : Et2Textbox
 	{
-		return this.querySelector('et2-textbox');
+		return this.shadowRoot?.querySelector('et2-textbox');
 	}
 
 	/**
@@ -999,21 +1037,21 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		this.setDate(date, false, null);
 	}
 
-	render()
-	{
-		return html`
-            <div part="form-control" class="form-control">
-                <div class="form-field__group-one" part="form-control-label">${this._groupOneTemplate()}</div>
-                <div class="form-field__group-two" part="form-control-input">${this._groupTwoTemplate()}</div>
-            </div>
-		`;
-	}
 
-	protected _inputGroupInputTemplate()
+	protected _inputTemplate()
 	{
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			// Plain input for mobile
+			return html`<input type=${this._mobileInputType()}></input>`;
+		}
+		// This element gets hidden and used for value, but copied by flatpickr and used for input
 		return html`
-            <slot name="input"></slot>
-            ${this._incrementButtonTemplate()}
+            <slot name="prefix"></slot>
+            <et2-textbox type="text" placeholder=${this.placeholder} ?required=${this.required}>
+                ${this._incrementButtonTemplate()}
+            </et2-textbox>
+            <slot name="sufix"></slot>
 		`;
 	}
 
@@ -1026,7 +1064,7 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
 		}
 
 		return html`
-            <div class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
+            <div slot="suffix" class="et2-date-time__scrollbuttons" part="scrollbuttons" @click=${this.handleScroll}>
                 <et2-button-icon
                         noSubmit
                         image="chevron-up"
@@ -1040,6 +1078,32 @@ export class Et2Date extends Et2InputWidget(FormControlMixin(LitFlatpickr))
                 >↓
                 </et2-button-icon>
             </div>`;
+	}
+
+	render()
+	{
+
+		const labelTemplate = this._labelTemplate();
+		const helpTemplate = this._helpTextTemplate();
+
+		return html`
+            ${super.render()}
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--medium': true,
+                        'form-control--has-label': labelTemplate !== nothing,
+                        'form-control--has-help-text': helpTemplate !== nothing
+                    })}
+            >
+                ${labelTemplate}
+                <div part="form-control-input" class="form-control-input">
+                    ${this._inputTemplate()}
+                </div>
+                ${helpTemplate}
+            </div>
+		`;
 	}
 }
 

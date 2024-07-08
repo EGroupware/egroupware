@@ -109,8 +109,8 @@ services:
     # old API and eTemplate(1), required for upgrades from before 14.3
     #- EGW_EXTRA_APP_OLDAPI=https://github.com/EGroupware/phpgwapi.git https://github.com/EGroupware/etemplate.git
     #
-    # XDEBUG_REMOTE_HOST need to be set, if the host running the IDE is different from 172.17.0.1 (Mac can use docker.for.mac.localhost)
-    - XDEBUG_REMOTE_HOST=172.17.0.1
+    # XDEBUG_REMOTE_HOST need to be set, Docker Desktop can use host.docker.internal or Linux the docker0 interface 172.17.0.1
+    - XDEBUG_REMOTE_HOST=host.docker.internal
     restart: always
     depends_on:
     - db
@@ -140,7 +140,7 @@ services:
     - egroupware
     - push
     - collabora-key
-    - rocketchat
+    #- rocketchat
     container_name: egroupware-nginx
     restart: always
 
@@ -226,49 +226,56 @@ services:
       - $PWD/data/default/loolwsd:/tmp/coolwsd
 
   # Rocket.Chat server
-  rocketchat:
-    image: quay.io/egroupware/rocket.chat:latest
-    command: bash -c 'for i in `seq 1 30`; do node main.js && s=$$? && break || s=$$?; echo "Tried $$i times. Waiting 5 secs..."; sleep 5; done; (exit $$s)'
-    restart: unless-stopped
-    volumes:
-      - $PWD/data/default/rocketchat/uploads:/app/uploads
-    # if EGroupware uses a certificate from a private CA, OAuth authentication will fail, you need to:
-    # - have the CA certificate stored at /etc/egroupware-docker/private-ca.crt
-    # - uncomment the next 2 lines about the private CA:
-    # - /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
-    environment:
-      # - NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/private-ca.crt
-      # IMPORTANT: change ROOT_URL to your actual url eg. https://domain.com/rocketchat
-      - ROOT_URL=http://localhost/rocketchat
-      - PORT=3000
-      - MONGO_URL=mongodb://mongo:27017/rocketchat
-      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-    #     - HTTP_PROXY=http://proxy.domain.com
-    #     - HTTPS_PROXY=http://proxy.domain.com
-    depends_on:
-      - mongo
-    container_name: rocketchat
-    # set the ip-address of your docker host AND your official DNS name so Rocket.Chat
-    # can access EGroupware without the need to go over your firewall
-    #extra_hosts:
-    #- "my.host.name:ip-address"
+  #rocketchat:
+  #  image: quay.io/egroupware/rocket.chat:latest
+  #  command: >
+  #      sh -c
+  #        "while true; do
+  #          node main.js &&
+  #          s=$$? && break || s=$$?;
+  #          echo \"Could not reach MongoDB. Waiting 5 secs ...\";
+  #          sleep 5;
+  #        done; (exit $$s)"
+  #  restart: unless-stopped
+  #  volumes:
+  #    - $PWD/data/default/rocketchat/uploads:/app/uploads
+  #  # if EGroupware uses a certificate from a private CA, OAuth authentication will fail, you need to:
+  #  # - have the CA certificate stored at /etc/egroupware-docker/private-ca.crt
+  #  # - uncomment the next 2 lines about the private CA:
+  #  # - /etc/egroupware-docker/private-ca.crt:/usr/local/share/ca-certificates/private-ca.crt:ro
+  #  environment:
+  #    # - NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/private-ca.crt
+  #    # IMPORTANT: change ROOT_URL to your actual url eg. https://domain.com/rocketchat
+  #    - ROOT_URL=http://localhost/rocketchat
+  #    - PORT=3000
+  #    - MONGO_URL=mongodb://mongo:27017/rocketchat
+  #    - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+  #  #     - HTTP_PROXY=http://proxy.domain.com
+  #  #     - HTTPS_PROXY=http://proxy.domain.com
+  #  depends_on:
+  #    - mongo
+  #  container_name: rocketchat
+  #  # set the ip-address of your docker host AND your official DNS name so Rocket.Chat
+  #  # can access EGroupware without the need to go over your firewall
+  #  #extra_hosts:
+  #  #- "my.host.name:ip-address"
 
   # MongoDB for Rocket.Chat
-  mongo:
-    image: mongo:5.0
-    restart: unless-stopped
-    volumes:
-      - mongo:/data/db
-      - $PWD/data/default/rocketchat/dump:/dump
-    command: mongod --oplogSize 128 --replSet rs0
-    container_name: rocketchat-mongo
+  #mongo:
+  #  image: mongo:5.0
+  #  restart: unless-stopped
+  #  volumes:
+  #    - mongo:/data/db
+  #    - $PWD/data/default/rocketchat/dump:/dump
+  #  command: mongod --oplogSize 128 --replSet rs0
+  #  container_name: rocketchat-mongo
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
-  mongo-init-replica:
-    image: mongo:5.0
-    command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
-    depends_on:
-      - mongo
+  #mongo-init-replica:
+  #  image: mongo:5.0
+  #  command: 'bash -c "for i in `seq 1 30`; do mongo mongo/rocketchat --eval \"rs.initiate({ _id: ''rs0'', members: [ { _id: 0, host: ''localhost:27017'' } ]})\" && s=$$? && break || s=$$?; echo \"Tried $$i times. Waiting 5 secs...\"; sleep 5; done; (exit $$s)"'
+  #  depends_on:
+  #    - mongo
 
   # phpMyAdmin
   phpmyadmin:

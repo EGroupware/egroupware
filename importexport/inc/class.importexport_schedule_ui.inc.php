@@ -277,7 +277,7 @@ class importexport_schedule_ui
 		$definition_list = ((array)$definitions->get_definitions());
 
 		$id = 'importexport.'.$definition_list[0].'.'.$data['target'];
-		return $id;
+		return substr($id, 0, 64);
 	}
 
 	/**
@@ -407,7 +407,7 @@ class importexport_schedule_ui
 		$data['last_run'] = time();
 
 		// Lock job for an hour to prevent multiples overlapping
-	//	$data['lock'] = time() + 3600;
+		$data['lock'] = time() + 3600;
 		self::update_job($data, true);
 
 		// check file

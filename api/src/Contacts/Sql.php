@@ -464,7 +464,7 @@ class Sql extends Api\Storage
 	 * @param boolean|string|array $only_keys =true True returns only keys, False returns all cols. or
 	 *	comma seperated list or array of columns to return
 	 * @param string $order_by ='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string|array $extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string|array $_extra_cols ='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard ='' appended befor and after each criteria
 	 * @param boolean $empty =false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op ='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
@@ -476,8 +476,9 @@ class Sql extends Api\Storage
 	 * @param boolean $ignore_acl =false true: no acl check
 	 * @return boolean/array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false, $ignore_acl=false)
+	function &search($criteria,$only_keys=True,$order_by='',$_extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false, $ignore_acl=false)
 	{
+		$extra_cols = is_array($_extra_cols) ? $_extra_cols : ($_extra_cols ? explode(',',$_extra_cols) : []);
 		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter).",'$join')</p>\n";
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by', ".array2string($extra_cols).",'$wildcard','$empty','$op',$start,".array2string($filter).",'$join')");
 
@@ -627,7 +628,6 @@ class Sql extends Api\Storage
 			if (substr($this->db->Type, 0, 5) !== 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(,|$)/ui",
 				$order_by, $all_matches, PREG_SET_ORDER))
 			{
-				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				foreach($all_matches as $matches)
 				{
 					$table = '';
@@ -676,7 +676,6 @@ class Sql extends Api\Storage
 			}
 		}
 		// shared with column and filter
-		if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 		$shared_with = '(SELECT '.$this->db->group_concat('DISTINCT shared_with').' FROM '.self::SHARED_TABLE.
 			' WHERE '.self::SHARED_TABLE.'.contact_id='.$this->table_name.'.contact_id AND shared_deleted IS NULL)';
 		if (($key = array_search('shared_with', $extra_cols)) !== false)
@@ -940,10 +939,10 @@ class Sql extends Api\Storage
 		{
 			return true;	// no need to insert it, would give sql error
 		}
-		foreach($to_add as $contact)
+		foreach($to_add as $c)
 		{
 			$this->db->insert($this->ab2list_table,array(
-				'contact_id' => $contact,
+				'contact_id' => $c,
 				'list_id' => $list,
 				'list_added' => time(),
 				'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
@@ -1152,7 +1151,7 @@ class Sql extends Api\Storage
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
-	 * reimplented to also delete sharing info
+	 * reimplemented to also delete sharing info
 	 *
 	 * @param array|int $keys =null if given array with col => value pairs to characterise the rows to delete, or integer autoinc id
 	 * @param boolean $only_return_ids =false return $ids of delete call to db object, but not run it (can be used by extending classes!)

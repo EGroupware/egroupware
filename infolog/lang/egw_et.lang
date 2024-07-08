@@ -8,7 +8,7 @@
 %1 modified by %2 at %3	infolog	et	%1 modifitseeritud %2 poolt %3
 %1 records imported	infolog	et	%1 kirjed imporditud.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	et	%1 kirjed loetud. Ei ole veel imporditud, võite minna %2tagasi%3 ja tühistada märkuse Test import.
-%1 you are responsible for is due at %2	infolog	et	%1, mille eest te olete vastutav, on tingitud %2-st.
+%1 you are responsible for is due at %2	infolog	et	%1, mille eest te olete vastutav, on tingitud %2-st
 %1 you are responsible for is starting at %2	infolog	et	%1, mille eest te vastutate, algab kell %2
 %1 you delegated is due at %2	infolog	et	%1, mille te delegeerisite, tuleb täita kell %2
 %1 you delegated is starting at %2	infolog	et	%1, mille olete delegeerinud, algab kell %2
@@ -31,7 +31,7 @@ a short subject for the entry	infolog	et	Kande lühike teema
 abort without deleting	infolog	et	Loobu ilma kustutamatta
 accept	infolog	et	Kinnita
 action	infolog	et	Tegevus
-actions...	infolog	et	Tegevused...
+actions...	infolog	et	Tegevused ...
 actual date and time	infolog	et	Käesolev kuupäev ja kellaaeg
 add	infolog	et	Lisa
 add / remove link	infolog	et	Lisa / eemalda link
@@ -49,16 +49,20 @@ add:	infolog	et	Lisa:
 added	infolog	et	Lisatud
 addressbook placeholders available	infolog	et	Kättesaadavad aadressiraamatu paigutussätted
 all	infolog	et	Kõik
+all links and attachments	infolog	et	Kõik lingid ja manused
 all other %1 fields are valid	infolog	et	Kõik muud %1 väljad on kehtivad
 all projects	infolog	et	Kõik projektid
 allow to save entries with due date in the past	infolog	et	Luba salvestada kirjeid, mille tähtpäev on minevikus
 always show them	infolog	et	Näita neid alati
 application mail expected but got: %1	infolog	et	Taotluse e-kiri oodatud, kuid sai: %1
 apply the changes	infolog	et	Rakenda muudatused
+archive	infolog	et	Arhiiv
+archived too	infolog	et	Ka arhiveeritud
 are you shure you want to close this entry ?	infolog	et	Kas olete kindel, et soovite selle kirje sulgeda?
 are you shure you want to delete this entry ?	infolog	et	Kas soovid tõesti seda kirjet kustutada?
 attach a file	infolog	et	Kaasa fail
 attach file	infolog	et	Kaasa fail
+attention: no contact with address %1 found.	infolog	et	Tähelepanu: Ei leitud kontakti aadressiga %1.
 automatically check 'do not notify' for these types	infolog	et	Kontrollida automaatselt "Ära teavita" nende tüüpide puhul
 back to main list	infolog	et	Tagasi pealisti
 billed	infolog	et	Makstud
@@ -70,12 +74,15 @@ cancelled	infolog	et	Tühistatud
 categories	infolog	et	Kategooriad
 category	infolog	et	Kategooria
 change	infolog	et	Muuda
+change completed	infolog	et	Muudatus lõpetatud.
+change history	infolog	et	Muuda ajalugu
 change responsible	infolog	et	Muuda vastutavad
 change the status of an entry, eg. close it	infolog	et	Muuda kirje staatust, näiteks sule see
 click here to create the link	infolog	et	Vajuta siia tegemaks Link
 click here to start the search	infolog	et	Vajuta siia alustamaks otsingut
 close	infolog	et	Sule
 close all	infolog	et	Sule kõik
+close this entry and all listed sub-entries	infolog	et	Sulgege see kirje ja kõik loetletud alamkirjed
 closed	infolog	et	Suletud
 comment	infolog	et	Kommentaar
 completed	infolog	et	Lõpetatud
@@ -97,7 +104,7 @@ custom from	infolog	et	Custom from
 customfields	infolog	et	Kohandatud väljad
 data exchange settings	infolog	et	Andmevahetuse seaded
 date completed	infolog	et	Lõpetamise kuupäev
-date completed (leave it empty to have it automatic set if status is done or billed)	infolog	et	Lõpetamise kuupäev (jäta see tühjaks kui see on seatud automaatselt lõpetatud kui on valmis või makstud)
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	et	Lõpetamise kuupäev (jäta see tühjaks kui see on seatud automaatselt lõpetatud kui on valmis või makstud).
 datecreated	infolog	et	Kuupäev tehtud
 dates, status, access	infolog	et	Kuupäevad, Staatus, Ligipääs
 days	infolog	et	Päevi
@@ -142,6 +149,7 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	et
 edit status	infolog	et	Muuda staatust
 edit the entry	infolog	et	Muuda kirjet
 edit this entry	infolog	et	Muuda seda kirjet
+editable fields for status 'archived'	admin	et	Redigeeritavad väljad staatuse 'arhiveeritud' jaoks
 empty for all	infolog	et	Tühi kõigijaoks
 encrypt description	infolog	et	Krüpteeri kirjeldus
 end	infolog	et	Lõpp
@@ -149,8 +157,11 @@ enddate	infolog	et	Tähtaja kuupäev
 enddate can not be before startdate	infolog	et	Tähtaja kuupäev ei saa olle enne alustamise kuupäeva
 enter the query pattern	infolog	et	Sisestage päringumuster
 entry and all files	infolog	et	Kirje ja kõik failid
+entry can not be changed anymore, after status is set	admin	et	Kirjet EI saa enam muuta, kui staatus on määratud.
+entry can not be changed by anybody, but egroupware admins	admin	et	Kirjet EI saa muuta keegi, välja arvatud EGroupware administraatorid
 error: no mail (mailbox / uid) given!	infolog	et	Viga: posti (postkast / UID) ei ole antud!
-error: saving the entry	infolog	et	Viga: kirje salvestamisel
+error: saving the entry	infolog	et	Viga: kirje salvestamisel!
+error: the entry has been updated since you opened it for editing!	infolog	et	Viga: kannet on uuendatud pärast selle avamist redigeerimiseks!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	et	Näide {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - otsi väljal "n_prefix", et leida "Mr", kui leitakse, siis kirjuta Hello Mr., muidu kirjuta Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	et	Näide {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Näide: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
@@ -163,7 +174,7 @@ exports in ical format.	infolog	et	Ekspordib iCal-vormingus.
 exports infolog entries into a csv file.	infolog	et	Ekspordib InfoLogi kirjed CSV-faili.
 favorites	infolog	et	Lemmikud
 fax	infolog	et	Faks
-field must not be empty !!!	infolog	et	Väli ei tohi jääda tühjaks !!!
+field must not be empty !!!	infolog	et	Väli ei tohi jääda tühjaks!
 fields to exclude when copying an infolog:	infolog	et	Väljad, mis jäetakse välja InfoLogi kopeerimisel:
 fields to exclude when creating a sub-entry:	infolog	et	Väljad, mida välistada alamkande loomisel:
 fieldseparator	infolog	et	Väljaeraldaja
@@ -175,6 +186,7 @@ full list of placeholder names	infolog	et	Täielik loetelu paigutussalvestiste n
 general settings	infolog	et	Üldised seaded
 global categories	infolog	et	Globaalsed Kategooriad
 group owner for	infolog	et	Rühma omanik
+handling of status 'archived'	admin	et	Staatuse "arhiveeritud" käsitlemine
 high	infolog	et	Kõrge
 history	infolog	et	Ajalugu
 history logging	infolog	et	Ajaloo logimine
@@ -188,7 +200,7 @@ if a type has a group owner, all entries of that type will be owned by the given
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	et	Kui seda ei ole määratud, peidetakse otsingu ja filtritega rida vähemate kirjete puhul kui "max matching per page", mis on määratud teie üldistes eelistustes.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	infolog	et	Kui te määrate siin kausta (täielik VFS-tee), kuvab %1 iga dokumendi kohta toimingu. See tegevus võimaldab allalaadida määratud dokumenti koos sisestatud andmetega.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	infolog	et	Kui te määrate siin dokumendi (täielik VFS-tee), kuvab %1 iga kirje jaoks täiendava dokumendi ikooni. See ikoon võimaldab allalaadida määratud dokumenti koos sisestatud andmetega.
-if you specify an export definition, it will be used when you export	infolog	et	Kui määrate ekspordimääratluse, kasutatakse seda eksportimisel.
+if you specify an export definition, it will be used when you export	infolog	et	Kui määrate ekspordimääratluse, kasutatakse seda eksportimisel
 import next set	infolog	et	Järgmise komplekti importimine
 importance	infolog	et	Tähtsus
 imports entries into the infolog from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	infolog	et	Impordib kirjed InfoLogi CSV-failist. CSV tähendab "Comma Separated Values" (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
@@ -241,21 +253,25 @@ links to specified application.  example: {{links/infolog}}	infolog	et	Lingid m�
 links wrapped in an href tag with download link	infolog	et	Lingid, mis on ümbritsetud HREF-tähega koos allalaadimislingiga
 list all categories	infolog	et	Loetelu kõikidest kategooriatest
 list of files linked to the current record	infolog	et	Praeguse kirjega seotud failide loetelu
-load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	et	Laadige kohandatud väljad indeksisse, kui neid filtreeritakse valitud tüüpide järgi (nt nende kuvamiseks tüübispetsiifilises indeksimustris).
+load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)	infolog	et	Laadige kohandatud väljad indeksisse, kui neid filtreeritakse valitud tüüpide järgi (nt nende kuvamiseks tüübispetsiifilises indeksimustris)
 location	infolog	et	Asukoht
 low	infolog	et	Madal
 modifier	infolog	et	Modifikaator
 modifierer	infolog	et	Modifikaator
 name must not be empty !!!	infolog	et	Nimi eo tohi olla tühi!
+name of new type to create	infolog	et	Loodava uue tüübi nimi
 new %1	infolog	et	Uus %1
 new name	infolog	et	Uus nimi
 new search	infolog	et	Uus otsing
 no - cancel	infolog	et	Ei -Tühista
 no custom field "%1" for %2.	infolog	et	Puudub kohandatud väli "%1" %2 jaoks.
 no details	infolog	et	Mitte detailselt
+no entries found, try again ...	infolog	et	Kirjeid ei leitud, proovige uuesti ...
 no filter	infolog	et	Filtrita
+no special handling	admin	et	Erilist käsitlust ei toimu
 none	infolog	et	Puudub
 normal	infolog	et	Normaalne
+not assigned	infolog	et	Ei ole määratud
 not-started	infolog	et	Pole alustatud
 note	infolog	et	Märkus
 notification settings	infolog	et	Teavituse seaded
@@ -285,14 +301,14 @@ planned time	infolog	et	Kavandatud aeg
 prefix for sub-entries (default: re:)	infolog	et	Alamrubriikide eesliide (vaikimisi: Re:)
 price	infolog	et	Hind
 print this infolog	infolog	et	Trükkida see InfoLog
-printing...	infolog	et	Trükkimine...
+printing...	infolog	et	Trükkimine ...
 priority	infolog	et	Prioriteet
 private	infolog	et	Privaatne
 project	infolog	et	Projekt
 project id	infolog	et	Projekti ID
 project name	infolog	et	Projekti nimi
 project settings: price, times	infolog	et	Projekti seaded: hind, ajad
-receive notifications about due entries you are responsible for	infolog	et	Saate teateid selliste objektide kohta, mille omanikuks on rühmad, kuhu te kuulute.
+receive notifications about due entries you are responsible for	infolog	et	Saate teateid selliste objektide kohta, mille omanikuks on rühmad, kuhu te kuulute
 regular expression	infolog	et	Regulaaravaldis
 removed	infolog	et	Eemaldatud.
 removed category	infolog	et	eemaldatud kategooria
@@ -314,16 +330,16 @@ select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
 select an action	infolog	et	Valige tegevus
-select an action...	infolog	et	Valige tegevus...
+select an action...	infolog	et	Valige tegevus ...
 select new category	infolog	et	Valige uus kategooria
 select users or groups	infolog	et	Valige kasutajad või rühmad
 selected calendars	infolog	et	Valitud kalendrid
 selection cf	infolog	et	Valik CF
 sender	infolog	et	Saatja
 set status to done	infolog	et	Seadistage staatus valmis
-set status to done for all entries	infolog	et	Määrake kõigi kirjete staatuseks "valmis".
+set status to done for all entries	infolog	et	Määrake kõigi kirjete staatuseks "valmis"
 sets the status of this entry to done	infolog	et	Seadistab selle kirje staatuse valmis
-show a x if content equals this compare value, otherwise show nothing	infolog	et	Näita X, kui sisu on võrdne selle võrdlusväärtusega, muidu ei näita midagi.
+show a x if content equals this compare value, otherwise show nothing	infolog	et	Näita X, kui sisu on võrdne selle võrdlusväärtusega, muidu ei näita midagi
 show full usernames	infolog	et	Täielike kasutajanimede kuvamine
 show in the infolog list	infolog	et	Näita InfoLog listis
 show last modified	infolog	et	Näita viimati muudetud
@@ -336,6 +352,7 @@ startdate	infolog	et	Algus kuupäev
 startdate for new entries	infolog	et	Uute kannete alguskuupäev
 startdate must be before enddate!!!	infolog	et	Alguskuupäev peab olema enne tähtaega!
 starting %1	infolog	et	Algus %1
+startrecord	infolog	et	Algusrekord
 status	infolog	et	Staatus
 status ...	infolog	et	Staatus ...
 status, percent and date completed are always allowed.	infolog	et	Staatus, protsent ja lõpetamise kuupäev on alati lubatud.
@@ -377,6 +394,7 @@ yes, with larger fontsize	infolog	et	Jah, suurema kirjasuurusega
 yes, with purging of deleted items possible	infolog	et	Jah, kustutatud kirjete kustutamine võimalik
 you can choose a categorie to be preselected, when you create a new infolog entry	infolog	et	Uue InfoLogi kande loomisel saate valida eelvaliku kategooria.
 you can't delete one of the stock types !!!	infolog	et	Te ei saa kustutada ühte laotüüpi!
+you have entered an invalid ending date	infolog	et	Olete sisestanud vale tähtpäeva!
 you have to enter a name, to create a new type!	infolog	et	Uue tüübi loomiseks peate sisestama nime!
 you need to select an entry for linking.	infolog	et	Te peate valima kande linkimiseks.
 you need to select some entries first	infolog	et	Te peate kõigepealt valima mõned kirjed.

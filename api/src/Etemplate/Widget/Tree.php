@@ -18,8 +18,6 @@ use EGroupware\Api;
 /**
  * eTemplate tree widget
  *
- * @see http://docs.dhtmlx.com/doku.php?id=dhtmlxtree:syntax_templates Tree syntax
- *
  * Example initialisation of tree via $sel_options array:
  *
  *  use Api\Etemplate\Widget\Tree as tree;
@@ -131,7 +129,7 @@ class Tree extends Etemplate\Widget
 	/**
 	 * Parse and set extra attributes from xml in template object
 	 *
-	 * Reimplemented to parse our differnt attributes
+	 * Reimplemented to parse our different attributes
 	 *
 	 * @param string|\XMLReader $xml
 	 * @param boolean $cloned =true true: object does NOT need to be cloned, false: to set attribute, set them in cloned object
@@ -142,17 +140,24 @@ class Tree extends Etemplate\Widget
 		$this->attrs['type'] = $xml->localName;
 		parent::set_attrs($xml, $cloned);
 
-		// set attrs[multiple] from attrs[options]
-		if (isset($this->attrs['options']) && (int)$this->attrs['options'] > 1)
+		// adaption for <et2-tree(-cat)(-multiple) --> <tree(-cat) multiple="..."
+		$parts = explode('-', $this->type);
+		if (($key = array_search('multiple', $parts)))
 		{
-			self::setElementAttribute($this->id, 'multiple', true);
+			$this->attrs['multiple'] = true;
+			unset($parts[$key]);
 		}
+		if ($parts[0] === 'et2')
+		{
+			array_shift($parts);
+		}
+		$this->type = implode('-', $parts);
 	}
 
 	/**
 	 * Send data as json back to tree
 	 *
-	 * Basicly sends a Content-Type and echos json encoded $data and exit.
+	 * Basically sends a Content-Type and echos json encoded $data and exit.
 	 *
 	 * As text parameter accepts html in tree, we htmlencode it here!
 	 *
@@ -164,29 +169,9 @@ class Tree extends Etemplate\Widget
 		Api\Json\Request::isJSONRequest(false);
 
 		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode(self::htmlencode_node($data));
+		echo json_encode($data);
 
 		exit;
-	}
-
-	/**
-	 * HTML encoding of text and tooltip of node including all children
-	 *
-	 * @param array $item
-	 * @return array
-	 */
-	public static function htmlencode_node(array $item)
-	{
-		$item['text'] = Api\Html::htmlspecialchars($item['text']);
-
-		if (isset($item['item']) && is_array($item['item']))
-		{
-			foreach($item['item'] as &$child)
-			{
-				$child = self::htmlencode_node($child);
-			}
-		}
-		return $item;
 	}
 
 	/**
@@ -220,7 +205,9 @@ class Tree extends Etemplate\Widget
 	{
 		return (boolean)array_filter($cats, function($cat) use($id)
 		{
-			return $cat['id'] == $id;
+			return $cat['value'] == $id || (
+					!empty($cat['children']) && is_array($cat['children']) && static::in_cats($id, $cat['children'])
+				);
 		});
 	}
 
@@ -241,6 +228,8 @@ class Tree extends Etemplate\Widget
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
 		{
+			$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;
+			$unavailable_values = (array)self::$request->preserv[$unavailable_name];
 			$value = $value_in = self::get_array($content, $form_name);
 
 			// we can not validate if autoloading is enabled
@@ -250,12 +239,18 @@ class Tree extends Etemplate\Widget
 				$allowed += self::selOptions($form_name);
 				foreach((array) $value as $val)
 				{
+					if(in_array($val, $unavailable_values))
+					{
+						continue;
+					}
 					if ($this->type == 'tree-cat' && !($this->attrs['multiple'] && !$val) && !self::in_cats($val, $allowed) ||
 						$this->type == 'tree' && !self::in_tree($val, $allowed))
 					{
 						self::set_validation_error($form_name,lang("'%1' is NOT allowed%2)!", $val,
-							$this->type == 'tree-cat' ? " ('".implode("','",array_keys($allowed)).')' : ''), '');
-						$value = '';
+																   $this->type == 'tree-cat' ? " ('" . implode("','", array_column($allowed, 'value')) . ')' : ''
+						),                         ''
+						);
+						$val = '';
 						break;
 					}
 				}
@@ -264,7 +259,6 @@ class Tree extends Etemplate\Widget
 			if (is_array($value) && $this->type == 'tree-cat')
 			{
 				// unavailable cats need to be merged in again
-				$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
 				if (isset(self::$request->preserv[$unavailable_name]))
 				{
 					if ($this->attrs['multiple'])
@@ -447,6 +441,8 @@ class Tree extends Etemplate\Widget
 		$options = array();
 		switch ($widget_type)
 		{
+			case 'et2-tree-cat':
+			case 'et2-tree-cat-multiple':
 			case 'tree-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				if ($readonly)  // for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 				{
@@ -466,42 +462,17 @@ class Tree extends Etemplate\Widget
 					$categories = new Api\Categories('',$type3);
 				}
 				$cat2path=array();
-				foreach((array)$categories->return_sorted_array(0,False,'','','',!$type,0,true) as $cat)
-				{
-					$s = stripslashes($cat['name']);
 
-					if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
-					{
-						$s .= ' &#9830;';
-					}
-					$cat2path[$cat['id']] = $path = ($cat['parent'] ? $cat2path[$cat['parent']].'/' : '').(string)$cat['id'];
-
-					// 1D array
-					$options[] = $cat + array(
-						'text'	=>	$s,
-						'path'	=>	$path,
-
-						/*
-						These ones to play nice when a user puts a tree & a selectbox with the same
-						ID on the form (addressbook edit):
-						if tree overwrites selectbox options, selectbox will still work
-						*/
-						'label'	=>	$s,
-						'title'	=>	$cat['description']
-					);
-
-					// Tree in array
-					//$options[$cat['parent']][] = $cat;
-				}
+				static::processCategory(0, $options, $categories, !$type, $cat2path);
 				// change cat-ids to pathes and preserv unavailible cats (eg. private user-cats)
 				if ($value)
 				{
 					$pathes = $unavailable = array();
 					foreach(is_array($value) ? $value : explode(',',$value) as $cat)
 					{
-						if (isset($cat2path[$cat]))
+						if(in_array($cat, $cat2path))
 						{
-							$pathes[] = $cat2path[$cat];
+							$pathes[] = $cat;
 						}
 						else
 						{
@@ -515,7 +486,7 @@ class Tree extends Etemplate\Widget
 						$unavailable_name = $form_name.self::UNAVAILABLE_CAT_POSTFIX;
 						self::$request->preserv[$unavailable_name] = $unavailable;
 					}
-					$value = $rows ? $pathes : $pathes[0];
+					$value = $rows || substr($widget_type, -9) === '-multiple' ? $pathes : $pathes[0];
 				}
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				$no_lang = True;
@@ -524,5 +495,50 @@ class Tree extends Etemplate\Widget
 
 		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
+	}
+
+	protected static function processCategory($cat_id, &$options, &$categories, $globals, &$cat_id_list)
+	{
+		foreach((array)$categories->return_array($cat_id ? 'subs' : 'mains', 0, false, '', 'ASC', 'name', $globals, $cat_id) as $cat)
+		{
+			$category = static::formatCategory($cat, $categories);
+			$cat_id_list[] = $cat['id'];
+			if(!empty($cat['children']))
+			{
+				unset($category['children']);
+				static::processCategory($cat['id'], $category['children'], $categories, $globals, $cat_id_list);
+			}
+			$options[] = $category;
+		}
+	}
+
+
+	public static function formatCategory($cat, &$categories_object)
+	{
+		$s = stripslashes($cat['name']);
+
+		if($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
+		{
+			$s .= ' ♦';
+		}
+
+		// 1D array
+		$category = $cat + array(
+				// Legacy
+				'text'  => $s,
+				'path'  => $categories_object->id2name($cat['id'], 'path'),
+
+				//Client side search interface
+				'value' => $cat['id'],
+				'label' => $s,
+				'icon'  => $cat['data']['icon'] ?? '',
+				'title' => $cat['description'],
+				'class' => "cat_${cat['id']}"
+			);
+		if(!empty($cat['children']))
+		{
+			$category['hasChildren'] = true;
+		}
+		return $category;
 	}
 }

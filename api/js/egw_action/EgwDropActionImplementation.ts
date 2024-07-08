@@ -9,7 +9,7 @@
  */
 
 import {EgwActionImplementation} from "./EgwActionImplementation";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AI_DRAG_OVER, EGW_AO_EXEC_THIS} from "./egw_action_constants";
+import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_EXEC_THIS} from "./egw_action_constants";
 import {egw_getObjectManager} from "./egw_action";
 import {getPopupImplementation} from "./EgwPopupActionImplementation";
 
@@ -24,21 +24,17 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
         const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
         const self:EgwDropActionImplementation = this;
         if (node) {
-            node.classList.add('et2dropzone');
+			if(typeof _aoi.handlers == "undefined")
+			{
+				_aoi.handlers = {};
+			}
+			_aoi.handlers[this.type] = [];
+			node.classList.add('et2dropzone');
             const dragover = (event)=> {
                 if (event.preventDefault) {
                     event.preventDefault();
                 }
-                if (!this.getTheDraggedDOM()) return;
-
-                const data = {
-                    event: event,
-                    ui: this.getTheDraggedData()
-                };
-                _aoi.triggerEvent(EGW_AI_DRAG_OVER, data);
-
                 return true;
-
             };
 
             const dragenter = function (event) {
@@ -175,7 +171,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 // don't trigger dragleave if we are leaving the drag element
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
-                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == self.currentDropEl) return;
+                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this)) return;
 
                 const data = {
                     event: event,
@@ -192,24 +188,36 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
             // DND Event listeners
             node.addEventListener('dragover', dragover, false);
+			_aoi.handlers[this.type].push({type: 'dragover', listener: dragover});
 
             node.addEventListener('dragenter', dragenter, false);
+			_aoi.handlers[this.type].push({type: 'dragenter', listener: dragenter});
 
             node.addEventListener('drop', drop, false);
+			_aoi.handlers[this.type].push({type: 'drop', listener: drop});
 
             node.addEventListener('dragleave', dragleave, false);
+			_aoi.handlers[this.type].push({type: 'dragleave', listener: dragleave});
 
             return true;
         }
         return false;
     };
 
-    unregisterAction: (_actionObjectInterface: any) => boolean = function (_aoi) {
-        const node = _aoi.getDOMNode();
+	unregisterAction : (_actionObjectInterface : any) => boolean = function(_aoi)
+	{
+		const node = _aoi.getDOMNode();
 
-        if (node) {
-            node.classList.remove('et2dropzone');
-        }
+		if(node)
+		{
+			node.classList.remove('et2dropzone');
+		}
+		// Unregister handlers
+		if(_aoi.handlers)
+		{
+			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			delete _aoi.handlers[this.type];
+		}
         return true;
     };
 

@@ -304,7 +304,7 @@ class mail_ui
 		{
 			Framework::window_close('Missing acc_id!');
 		}
-		// Initial tree's options, the rest would be loaded dynamicaly by autoloading,
+		// Initial tree's options, the rest would be loaded dynamically by autoloading,
 		// triggered from client-side. Also, we keep this here as
 		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,true);
 
@@ -313,24 +313,22 @@ class mail_ui
 		// we can use it to get a comparison base for folders which
 		// got subscribed or unsubscribed by the user
 		try {
-			$subscribed = $this->mail_bo->icServer->listSubscribedMailboxes('',0,true);
+			$subscribed = array_keys($this->mail_bo->icServer->listSubscribedMailboxes('',0,true) ?: []);
 		} catch (Exception $ex) {
 			Framework::message($ex->getMessage());
 		}
 
 		if (!is_array($content))
 		{
-			$content['foldertree'] = array();
-
-			foreach ($subscribed as $folder)
+			$content['foldertree'] = array_map(static function($folder) use ($profileId)
 			{
-				$folderName = $profileId . self::$delimiter . $folder['MAILBOX'];
-				array_push($content['foldertree'], $folderName);
-			}
+				return $profileId.self::$delimiter.$folder;
+			}, $subscribed);
 		}
 		else
 		{
 			$button = @key($content['button']);
+			unset($content[$button]);
 			switch ($button)
 			{
 				case 'save':
@@ -342,22 +340,14 @@ class mail_ui
 					{
 						$namespace_roots[] = $profileId . self::$delimiter . str_replace($namespace['delimiter'], '', $namespace['prefix']);
 					}
-					$to_unsubscribe = $to_subscribe = array();
-					foreach ($content['foldertree'] as $path => $value)
+					$to_unsubscribe = array_diff($subscribed, $subs=array_map(static function($id)
 					{
-						list(,$node) = explode($profileId.self::$delimiter, $path);
-						if ($node)
-						{
-							if (is_array($subscribed) && $subscribed[$node] && !$value['value']) $to_unsubscribe []= $node;
-							if (is_array($subscribed) && !$subscribed[$node] && $value['value']) $to_subscribe [] = $node;
-							if ($value['value']) $cont[] = $path;
-						}
-
-					}
-					$content['foldertree'] = $cont;
+						return explode(self::$delimiter, $id)[1];
+					}, $content['foldertree']));
+					$to_subscribe = array_diff($subs, $subscribed);
 					// set foldertree options to basic node in order to avoid initial autoloading
 					// from client side, as no options would trigger that.
-					$sel_options['foldertree'] = array('id' => '0', 'item'=> array());
+					//$sel_options['foldertree'] = array('id' => '0', 'item'=> array());
 					foreach(array_merge($to_subscribe, $to_unsubscribe) as $mailbox)
 					{
 						if (in_array($profileId.self::$delimiter.$mailbox, $namespace_roots, true))
@@ -4083,7 +4073,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$this->changeProfile($icServerID);
 		}
 
-		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase']);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;
 
@@ -4120,16 +4110,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							if (Mail::$debug) error_log(__METHOD__,' ()'.$e->getMessage ());
 							continue;
 						}
-						if (in_array($fS['shortDisplayName'],Mail::$autoFolders)) $fS['shortDisplayName']=lang($fS['shortDisplayName']);
 						//error_log(__METHOD__.__LINE__.array2string($fS));
 						if ($fS['unseen'])
 						{
-							$oA[$_folderName] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
+							$oA[$_folderName] = ''.$fS['unseen'];
 						}
-						if ($fS['unseen']==0 && $fS['shortDisplayName'])
-						{
-							$oA[$_folderName] = $fS['shortDisplayName'];
-						}
+
 					}
 				}
 			}
@@ -4358,7 +4344,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
 					if ($fS['unseen'])
 					{
-						$oA[$_folderName]['desc'] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
+						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
+						$oA[$_folderName]['unseenCount'] = $fS['unseen'];
 
 					}
 					else

@@ -536,6 +536,7 @@ class calendar_ui
 	{
 		Etemplate::reset_request();
 		$sidebox = new Etemplate('calendar.sidebox');
+		$sidebox->set_dom_attributes(['slot' => 'left']);
 
 		$cont = $this->cal_prefs['saved_states'];
 		if (!is_array($cont)) $cont = array();

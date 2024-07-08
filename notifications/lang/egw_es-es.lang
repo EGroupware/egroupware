@@ -2,6 +2,7 @@
 account:	notifications	es-es	Conto:
 all possible notification backends	notifications	es-es	Todos los posibles backends de notificación
 are you sure you want to delete all notifications?	notifications	es-es	Sei sicuro di voler eliminare tutte le notifiche?
+automatic deleted notifications older than	admin	es-es	Notificaciones eliminadas automáticamente anteriores a
 browser	notifications	es-es	Browser
 browser is starting.	notifications	es-es	Il browser si sta avviando.
 cancal settings?	notifications	es-es	Annullare le impostazioni?
@@ -65,6 +66,7 @@ more info	notifications	es-es	Más Información
 notification	common	es-es	Notificaciones
 notifier	notifications	es-es	Notificador
 notify me by	notifications	es-es	Notificar por mí
+only used if no push server available!	admin	es-es	¡Solo se usa si no hay un servidor push disponible!
 open notified entry	notifications	es-es	Abrir entrada notificada
 optimize e-mails for external mail client	notifications	es-es	Optimizar correos electrónicos para cliente de correos externo
 page not found, please check serveraddress.	notifications	es-es	Página no encontrada, por favor compruebe la dirección del servidor.

@@ -26,7 +26,10 @@ $GLOBALS['egw_info'] = array(
 
 include '../header.inc.php';
 
-// release session, as we dont need it and it blocks parallel requests
+// Make sure we send the latest
+Api\Link::init_static(true);
+
+// release session, as we don't need it and it blocks parallel requests
 $GLOBALS['egw']->session->commit_session();
 
 // use an etag over config and link-registry

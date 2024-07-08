@@ -152,7 +152,7 @@ class filemanager_shares extends filemanager_ui
 			'delete' => array(
 				'caption' => lang('Delete'),
 				'group' => ++$group,
-				'confirm' => 'Delete these shares?',
+				'confirm' => lang('Delete these shares?'),
 			),
 		);
 		return $actions;

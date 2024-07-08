@@ -32,6 +32,10 @@ class Etemplate extends Etemplate\Widget\Template
 	public $sitemgr=false;
 
 	/**
+	 * @var array Additional attributes to set on the DOM (eg: slot)
+	 */
+	protected $dom_attributes = [];
+	/**
 	 * Tell egw framework it's ok to call this
 	 */
 	public $public_functions = array(
@@ -51,7 +55,10 @@ class Etemplate extends Etemplate\Widget\Template
 
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);
 
-		if ($name) $this->read($name,$template='default','default',0,'',$load_via);
+		if($name)
+		{
+			$this->read($name, null, 'default', 0, '', $load_via);
+		}
 
 		// generate new etemplate request object, if not already existing
 		if(!isset(self::$request)) self::$request = Etemplate\Request::read();
@@ -264,10 +271,16 @@ class Etemplate extends Etemplate\Widget\Template
 				}
 				else
 				{
-					$content = '<form target="egw_iframe_autocomplete_helper" action="'.$form_action.'" id="'.$dom_id.'" class="et2_container"></form>'."\n".
+					$content = '<form target="egw_iframe_autocomplete_helper" action="' . $form_action . '" id="' . $dom_id . '" class="et2_container"' .
+						array_reduce(array_keys($this->dom_attributes), function ($carry, $key)
+						{
+							return "$carry $key=\"" . htmlspecialchars($this->dom_attributes[$key]) . "\"";
+						},           '') .
+						'></form>' . "\n" .
 						'<iframe name="egw_iframe_autocomplete_helper" style="width:0;height:0;position: absolute;visibility:hidden;"></iframe>';
 				}
-				$GLOBALS['egw']->framework->response->generic("data", array($content));
+
+				$GLOBALS['egw']->framework->response->generic("data", $this->template_set == "kdots" ? $load_array : array($content));
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array+Framework::get_extra());
 				Framework::clear_extra();	// to not send/set it twice for multiple etemplates (eg. CRM view)
 
@@ -556,6 +569,10 @@ class Etemplate extends Etemplate\Widget\Template
 	public function read($name,$template_set=null,$lang='default',$group=0,$version='',$load_via='')
 	{
 
+		if($template_set == null && $GLOBALS['egw_info']['user']['preferences']['common']['template_set'])
+		{
+			$template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
+		}
 		// For mobile experience try to load custom mobile templates
 		if (Header\UserAgent::mobile())
 		{
@@ -580,6 +597,11 @@ class Etemplate extends Etemplate\Widget\Template
 	public function set_dom_id($new_id)
 	{
 		$this->dom_id = $new_id;
+	}
+
+	public function set_dom_attributes($dom_attributes)
+	{
+		$this->dom_attributes = array_merge($this->dom_attributes, $dom_attributes);
 	}
 
 	/**

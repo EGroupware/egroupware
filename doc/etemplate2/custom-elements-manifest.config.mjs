@@ -26,9 +26,9 @@ function replace(string, terms)
 }
 
 export default {
-	globs: ["api/js/etemplate/**/Et2*/*.ts"],
+	globs: ["api/js/etemplate/**/Et2*.ts","api/js/etemplate/Et2Nextmatch/**/*.ts"],
 	/** Globs to exclude */
-	exclude: [],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
+	exclude: ["api/js/etemplate/**/test/*","api/js/etemplate/**/Et2*Readonly.ts","api/js/etemplate/**/Et2*Mobile.ts"],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
 	dev: false,
 	litelement: true,
 	plugins: [

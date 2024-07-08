@@ -1,3 +1,4 @@
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ro	%1 necesită extensia Sieve %2, poate încercați %1 sau un număr mai mare de zile.
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
 acl rights retrieve failed, seems there are no rights set!	mail	ro	Recuperarea drepturilor ACL a eșuat, se pare că nu există drepturi setate!
 add all my aliases	mail	ro	Adăugați toate pseudonimele mele
@@ -16,9 +17,9 @@ attach files	mail	ro	Atașați fișiere
 attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului utilizatorului la fiecare e-mail nou în momentul compunerii.
 attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
 attachments, ...	mail	ro	atașamente, ...
-be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2. \n \n \n Doriți să continuați?
+be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	ro	Fiți atenți, prin adăugarea tuturor fișierelor selectate în modul %1, se vor schimba și toate atașamentele existente în listă în modul %2.<br>Doriți să continuați?
 be aware that all attachments will be sent as %1!	mail	ro	Rețineți că toate atașamentele vor fi trimise în modul %1!
-by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să
+by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	ro	În mod implicit, "http://" este înlocuit cu "https://". Nu ezitați să.
 caching of flags	mail	ro	Memorarea în cache a steagurilor
 can not resolve the winmail.dat attachment!	mail	ro	Nu se poate rezolva atașamentul winmail.dat!
 certificate details	mail	ro	Detalii certificat
@@ -34,7 +35,8 @@ current subject	mail	ro	Subiect curent
 default toolbar actions shown in mail's html editor	mail	ro	Funcții activate în bara de instrumente a editorului HTML atunci când se compune un e-mail
 default value for remembering s/mime passphrase in minutes	mail	ro	Valoarea implicită pentru memorarea frazei de trecere S/MIME în minute
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	ro	Definește ce să se afișeze ca etichetă de contact pentru contactul adăugat în Către/Copie/Copie oarbă atunci când compuneți un e-mail. Valoarea implicită este Firstname Lastname (nume, prenume, nume), iar empty (gol) înseamnă că include tot ce este disponibil.
-defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail
+defines what to show as identity label on mail folder header	common	ro	Definește ce să se afișeze ca etichetă de identitate în antetul dosarului de e-mail.
+delete selected folders	mail	ro	Ștergeți folderele selectate
 disable caching of flags	mail	ro	Dezactivarea memorării în cache a stegulețelor
 do you really want to toggle flag %1 for all messages in the current view?	mail	ro	Chiar doriți să activați indicatorul %1 pentru TOATE mesajele din vizualizarea curentă?
 do you really want to toggle label %1 for all messages in the current view?	mail	ro	Chiar doriți să comutați eticheta %1 pentru TOATE mesajele din vizualizarea curentă?
@@ -49,6 +51,7 @@ encrypt your message with smime certificate	mail	ro	Criptați mesajul cu certifi
 every %1. day	mail	ro	La fiecare %1. zi
 everyone	mail	ro	Toată lumea
 examine namespace to retrieve folders in others and shared	mail	ro	Examinați spațiul de nume pentru a prelua folderele din altele și partajate
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	ro	Excludeți atașamentele mai mari decât dimensiunea dată de la salvarea automată ca draft (în MB)
 failed to delete %1	mail	ro	Nu s-a reușit ștergerea lui %1
 failed to subscribe folder %1!	mail	ro	Nu s-a reușit abonarea folderului %1!
 failed to unsubscribe folder %1!	mail	ro	Nu s-a reușit să se dezaboneze folderul %1!
@@ -109,7 +112,7 @@ mailaccount	mail	ro	Contul de poștă
 mailinglist	mail	ro	Listă de corespondență
 mails	common	ro	Mesaje
 mails can be copied to that folder via context menu, if folder is configured.	mail	ro	Mesajele pot fi copiate în acest dosar prin intermediul meniului contextual, dacă dosarul este configurat.
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ro	Mailserver a raportat:\n%1 \nDoriți să continuați prin ștergerea imediată a mesajelor selectate (faceți clic pe ok)?\nDacă nu, încercați să goliți dosarul de gunoi înainte de a continua. (faceți clic pe anulare)
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ro	Mailserver a raportat:<br><br>%1<br><br>Doriți să continuați prin ștergerea imediată a mesajelor selectate (faceți clic pe OK)?<br>Dacă nu, încercați să goliți dosarul de gunoi înainte de a continua. (faceți clic pe anulare)
 mark all as read	mail	ro	Marcați toate ca fiind citite
 mark all messages in folder as read	mail	ro	Marcați toate mesajele din dosar ca fiind citite
 mark as deleted	mail	ro	Marcați ca fiind șterse
@@ -147,8 +150,8 @@ organization | real name email	mail	ro	Organizație | Nume real [Email]
 original message	mail	ro	Mesaj original
 outbox	mail	ro	Coșul de ieșire
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ro	Vă rugăm să vă configurați certificatul S/MIME în fila Criptare din fereastra de dialog Editare cont.
-please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă reguli de filtrare la nivelul serverului și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID:%2.
-please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă mesaje de vacanță pe server și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID:%2.
+please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă reguli de filtrare la nivelul serverului și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID: %2.
+please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ro	Vă rugăm să contactați administratorul dumneavoastră pentru a valida dacă serverul dumneavoastră acceptă mesaje de vacanță pe server și cum să le activați în EGroupware pentru contul dumneavoastră activ (%1) cu ID: %2.
 please enter password	mail	ro	Vă rugăm să introduceți parola
 please select a address	mail	ro	Vă rugăm să selectați o adresă
 post	mail	ro	trimiteți
@@ -197,12 +200,14 @@ should signature be inserted after (standard) or before a reply or inline forwar
 show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ro	Afișarea tuturor dosarelor, (abonate ȘI dezabonate) în panoul de dosare din ecranul principal
 show notification for new arriving mails	mail	ro	Afișare notificare pentru mesajele noi sosite
 show test connection section and control the level of info displayed?	mail	ro	Să se afișeze secțiunea de testare a conexiunii și să se controleze nivelul de informații afișate?
-show test connection section and control the level of info displayed??	mail	ro	Afișarea secțiunii de testare a conexiunii și controlul nivelului de informații afișate???
+show test connection section and control the level of info displayed??	mail	ro	Afișarea secțiunii de testare a conexiunii și controlul nivelului de informații afișate?
 show them this time only	mail	ro	Afișați-le numai de data aceasta
-show vertical	mail	ro	Afișați pe verticală
+show vertical	mail	ro	Afișare verticală (vizualizare pe 3 coloane)
 show vertical with all columns	mail	ro	Afișare verticală cu toate coloanele
 show/hide preview pane in mail list view	mail	ro	Afișați/ Ascundeți panoul de previzualizare în vizualizarea listei de mailuri
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ro	Afișează o notificare vizibilă temporar, inclusiv de la adresa, subiectul și un fragment din e-mail
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ro	Afișează o notificare vizibilă temporar, inclusiv de la adresa, subiectul și un fragment din e-mail.
+sieve	mail	ro	Sieve
+sieve server	mail	ro	Sitați serverul
 sign your message with smime certificate	mail	ro	Semnați mesajul dvs. cu certificat S/MIME
 signature	mail	ro	Semnătură
 signature at top	mail	ro	semnătură în partea de sus
@@ -232,6 +237,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	ro	Trebuie să introduceți fraza de trecere S/MIME pentru a trimite acest mesaj.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ro	Trebuie să instalezi Mailvelope plugin disponibil pentru Chrome și Firefox de la %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	ro	Trebuie să salvați mai întâi mesajul ca proiect înainte de a-l putea salva în VFS.
+you need to select some folders first (by clicking on them)!	mail	ro	Trebuie să selectați mai întâi unele dosare (făcând clic pe ele)!
 you will loose current message body, unless you save it to your clipboard!	mail	ro	Veți pierde corpul actual al mesajului, dacă nu îl salvați în clipboard!
 you've got new mail	mail	ro	Ați primit un mesaj nou
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ro	Cota rămasă de %1 este prea mică, este posibil să nu mai puteți trimite/recepționa alte e-mailuri.<br>Deși curățarea e-mailurilor din coșul de gunoi sau din dosarul nedorit vă poate ajuta să recuperați spațiu liber.<br>Dacă nu v-a ajutat, vă rugăm să cereți administratorului dvs. mai multă cotă.

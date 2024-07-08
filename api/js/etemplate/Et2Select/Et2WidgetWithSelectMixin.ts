@@ -12,10 +12,11 @@ import {html, LitElement, PropertyValues, TemplateResult} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_readAttrWithDefault} from "../et2_core_xml";
 import {cleanSelectOptions, find_select_options, SelectOption} from "./FindSelectOptions";
-import {SearchMixinInterface} from "./SearchMixin";
+
+import {SearchMixinInterface} from "../Et2Widget/SearchMixin";
 
 /**
- * Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
+ * @summary Base class for things that do selectbox type behaviour, to avoid putting too much or copying into read-only
  * selectboxes, also for common handling of properties for more special selectboxes.
  *
  * As with most other widgets that extend Shoelace components, do not override render() without good reason.
@@ -43,7 +44,6 @@ import {SearchMixinInterface} from "./SearchMixin";
  *
  * Optionally, you can override:
  * - _emptyLabelTemplate(): How to render the empty label
- * - slots(): Most Lion components have an input slot where the <input> tag is created.
  * You can specify something else, or return {} to do your own thing.  This is a little more complicated.  You should
  * also override _inputGroupInputTemplate() to do what you normally would in render().
  *
@@ -53,6 +53,12 @@ type Constructor<T = {}> = new (...args : any[]) => T;
 
 export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
+	/**
+	 * @summary Mixin for widgets where you can select from a pre-defined list of options
+	 *
+	 * Sample text
+	 *
+	 */
 	class Et2WidgetWithSelect extends Et2InputWidget(superclass)
 	{
 		/**
@@ -117,7 +123,6 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			return result;
 		}
 
-		/** @param {import('@lion/core').PropertyValues } changedProperties */
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
@@ -152,20 +157,26 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 *
 		 * @return SelectOption | null
 		 */
-		public optionSearch(value : string, options : SelectOption[] = null) : SelectOption | null
+		public optionSearch(value : string, options : SelectOption[] = null, searchKey : string = "value", childKey : string = "value") : SelectOption | null
 		{
+			let result = null;
 			let search = function(options, value)
 			{
 				return options.find((option) =>
 				{
-					if(Array.isArray(option.value))
+					if(!Array.isArray(option[searchKey]) && option[searchKey] == value)
 					{
-						return search(option.value, value);
+						result = option;
 					}
-					return option.value == value;
+					if(Array.isArray(option[childKey]))
+					{
+						return search(option[childKey], value);
+					}
+					return option[searchKey] == value;
 				});
 			}
-			return search(options ?? this.select_options, value);
+			search(options ?? this.select_options, value);
+			return result;
 		}
 
 		/**
@@ -310,8 +321,22 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			{
 				this.select_options = new_options;
 			}
+			let others = _node.querySelectorAll(":not(option)");
+			// Load the child nodes.
+			others.forEach((node) =>
+			{
+				let widgetType = node.nodeName.toLowerCase();
+
+				if(widgetType == "#comment" || widgetType == "#text")
+				{
+					return;
+				}
+
+				// Create the new element
+				this.createElementFromNode(node);
+			});
 		}
 	}
 
-	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & T;
+	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & LitElement & T;
 }

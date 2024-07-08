@@ -6,37 +6,38 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {css, html, LitElement, PropertyValues} from "lit";
-import {SlotMixin} from "@lion/core";
+import {css, html, LitElement, nothing} from "lit";
+import {classMap} from "lit/directives/class-map.js";
 import {Et2LinkAppSelect} from "./Et2LinkAppSelect";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {FormControlMixin} from "@lion/form-core";
 import {Et2LinkSearch} from "./Et2LinkSearch";
 import {Et2Link, LinkInfo} from "./Et2Link";
+import {HasSlotController} from "../Et2Widget/slot";
 
 /**
  * Find and select a single entry using the link system.
  *
  *
  */
-export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitElement)))
+export class Et2LinkEntry extends Et2InputWidget(LitElement)
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
-			  :host {
+				:host {
 				display: block;
-			  }
+				}
 
-			  :host(.hideApp) ::slotted([slot="app"]) {
+				:host(.hideApp) ::slotted([slot="app"]) {
 				display: none;
-			  }
+				}
 
-			  .input-group__input {
-				gap: 0.5rem;
-			  }
+				.form-control-input {
+					display: flex;
+					gap: 0.5rem;
+				}
 
 			`
 		];
@@ -83,52 +84,17 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			app: () =>
-			{
-				const app = <Et2LinkAppSelect>document.createElement("et2-link-apps")
-				if(this.__onlyApp)
-				{
-					app.onlyApp = this.__onlyApp;
-				}
-				else if(typeof this._value !== "undefined" && this._value.app)
-				{
-					app.value = this._value.app;
-				}
-				return app;
-			},
-			select: () =>
-			{
-				const select = <Et2LinkSearch><unknown>document.createElement("et2-link-search");
-				if(typeof this._value !== "undefined" && this._value.id)
-				{
-					if(this._value.title)
-					{
-						select.select_options = [{value: this._value.id, label: this._value.title}]
-					}
-					select.app = this._value.app;
-					select.value = this._value.id;
-				}
-				return select;
-			}
-		}
-	}
-
 	/**
 	 * We only care about this value until render.  After the sub-nodes are created,
 	 * we take their "live" values for our value.
 	 *
-	 * N.B.: Single underscore!  Otherwise we conflict with parent __value
-	 *
 	 * @type {LinkInfo}
 	 * @private
 	 */
-	private _value : LinkInfo;
+	private __value : LinkInfo = {app: "", id: ""};
 
 	protected __onlyApp : string;
+	protected readonly hasSlotController = new HasSlotController(this, 'help-text', 'label');
 
 	constructor()
 	{
@@ -139,18 +105,15 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	{
 		super.connectedCallback();
 
-		this._handleAppChange = this._handleAppChange.bind(this);
-		this._handleEntrySelect = this._handleEntrySelect.bind(this);
-		this._handleEntryClear = this._handleEntryClear.bind(this);
 		this._handleShow = this._handleShow.bind(this);
 		this._handleHide = this._handleHide.bind(this);
 
-		// Clear initial value
-		this._value = undefined;
-
 		if(!this.readonly)
 		{
-			this._bindListeners();
+			this.updateComplete.then(() =>
+			{
+				this._bindListeners();
+			});
 		}
 	}
 
@@ -160,41 +123,14 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 		this._unbindListeners();
 	}
 
-	updated(changedProperties : PropertyValues)
-	{
-		super.updated(changedProperties);
-		if(changedProperties.has("required"))
-		{
-			this._searchNode.required = this.required;
-		}
-		if(changedProperties.has("readonly"))
-		{
-			this._appNode.readonly = this._appNode.disabled = this.readonly;
-			this._searchNode.readonly = this.readonly;
-		}
-		// Pass some properties on to app selection
-		if(changedProperties.has("onlyApp"))
-		{
-			this._appNode.onlyApp = this.onlyApp;
-		}
-		if(changedProperties.has("applicationList"))
-		{
-			this._appNode.applicationList = this.applicationList;
-		}
-		if(changedProperties.has("appIcons"))
-		{
-			this._appNode.appIcons = this.appIcons;
-		}
-	}
-
 	set onlyApp(app)
 	{
 		this.__onlyApp = app || "";
 
 		// If initial value got set before onlyApp, it still needs app in pre-render value
-		if(this._value && app)
+		if(this.__value && app)
 		{
-			this._value.app = this.__onlyApp;
+			this.__value.app = this.__onlyApp;
 		}
 		if(app)
 		{
@@ -213,16 +149,33 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 
 	set app(app)
 	{
-		this.updateComplete.then(() =>
+		if(typeof this.__value !== "object" || this.__value == null)
 		{
-			this._appNode.value = app;
-			this._searchNode.app = app;
-		});
+			this.__value = <LinkInfo>{app: app}
+		}
+		else
+		{
+			this.__value.app = app;
+		}
+		this.requestUpdate("value");
 	}
 
 	get app()
 	{
-		return this._appNode?.value || "";
+		return this.__value?.app || "";
+	}
+
+	set searchOptions(options)
+	{
+		this.updateComplete.then(() =>
+		{
+			this._searchNode.searchOptions = options;
+		});
+	}
+
+	get searchOptions()
+	{
+		return this._searchNode?.searchOptions;
 	}
 
 	set searchOptions(options)
@@ -240,12 +193,12 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 
 	get _appNode() : Et2LinkAppSelect
 	{
-		return this.querySelector("[slot='app']");
+		return this.shadowRoot?.querySelector("et2-link-apps");
 	}
 
 	get _searchNode() : Et2LinkSearch
 	{
-		return this.querySelector("[slot='select']");
+		return <Et2LinkSearch>this.shadowRoot?.querySelector("et2-link-search");
 	}
 
 	get placeholder() : string
@@ -263,48 +216,32 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 
 	protected _bindListeners()
 	{
-		this._appNode.addEventListener("change", this._handleAppChange);
-		this._searchNode.addEventListener("change", this._handleEntrySelect);
-		this._searchNode.addEventListener("sl-clear", this._handleEntryClear);
 		this.addEventListener("sl-show", this._handleShow);
 		this.addEventListener("sl-hide", this._handleHide);
 	}
 
 	protected _unbindListeners()
 	{
-		this._appNode.removeEventListener("change", this._handleAppChange);
-		this.removeEventListener("sl-select", this._handleEntrySelect);
-		this.removeEventListener("sl-clear", this._handleEntryClear);
 		this.removeEventListener("sl-show", this._handleShow);
 		this.removeEventListener("sl-hide", this._handleHide);
 	}
 
-	/**
-	 * Update the search node's app & clear selected value when
-	 * selected app changes.
-	 * @param event
-	 * @protected
-	 */
-	protected _handleAppChange(event)
-	{
-		this._searchNode.app = this._appNode.value;
-		this._searchNode.value = "";
-		this._searchNode.clearSearch();
-		this._searchNode.focus();
-
-		this.requestUpdate('value');
-	}
 
 	/**
 	 * Hide app selection when there's an entry
 	 * @param event
 	 * @protected
 	 */
-	protected _handleEntrySelect(event)
+	protected handleEntrySelect(event)
 	{
 		event.stopPropagation();
+		this.value = <string>this._searchNode.value ?? "";
 		this.classList.toggle("hideApp", Boolean(typeof this.value == "object" ? this.value?.id : this.value));
-		this.dispatchEvent(new Event("change"));
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change"));
+		});
 		this.requestUpdate('value');
 
 		this.validate();
@@ -316,13 +253,17 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 	 * @param event
 	 * @protected
 	 */
-	protected _handleEntryClear(event)
+	protected handleEntryClear(event)
 	{
+		this.value = ""
 		this.classList.remove("hideApp")
 		this._searchNode.value = "";
 		this._searchNode.focus();
 
-		this.dispatchEvent(new Event("change"));
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change"));
+		});
 		this.requestUpdate('value');
 
 		this.validate();
@@ -362,16 +303,12 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 		{
 			return <string>this._searchNode?.value ?? "";
 		}
-		return this._searchNode ? <LinkInfo>{
-			id: this._searchNode.value,
-			app: this.app,
-			//search: this._searchNode...	// content of search field
-		} : this._value;
+		return this.__value;
 	}
 
 	set value(val : LinkInfo | string | number)
 	{
-		let value : LinkInfo = {app: this.onlyApp || this.app, id: ""};
+		let value : LinkInfo = {app: this.onlyApp || (this.app || this._appNode?.value), id: ""};
 
 		if(typeof val === 'string' && val.length > 0)
 		{
@@ -399,30 +336,79 @@ export class Et2LinkEntry extends Et2InputWidget(FormControlMixin(SlotMixin(LitE
 			value = (<LinkInfo>val);
 		}
 
-		// If the searchNode is not there yet, hold value.  We'll use these values when we create the
-		// slotted searchNode.
-		if(this._searchNode == null)
-		{
-			this._value = value;
-		}
-		else
-		{
-			this.app = this._searchNode.app = value.app;
-			this._searchNode.value = value.id;
-		}
-		this.classList.toggle("hideApp", Boolean(value.id));
+		const oldValue = this.__value;
+		this.__value = value;
+
+		this.classList.toggle("hideApp", Boolean(this.__value.id));
+		this.requestUpdate("value", oldValue);
 	}
 
+	protected handleLabelClick()
+	{
+		this._searchNode.focus();
+	}
+
+
 	/**
-	 * @return {TemplateResult}
+	 * Update the search node's app & clear selected value when
+	 * selected app changes.
+	 * @param event
 	 * @protected
 	 */
-	_inputGroupInputTemplate()
+	protected handleAppChange(e)
 	{
+		this.app = this._appNode.value;
+		this._searchNode.app = this._appNode.value;
+		this._searchNode.value = "";
+		this._searchNode.clearSearch();
+		this._searchNode.focus();
+
+		this.requestUpdate('value');
+	}
+
+
+	render()
+	{
+		const labelTemplate = this._labelTemplate();
+		const helpTemplate = this._helpTextTemplate();
+
 		return html`
-            <div class="input-group__input" part="control">
-                <slot name="app"></slot>
-                <slot name="select"></slot>
+            <div
+                    part="form-control"
+                    class=${classMap({
+                        'form-control': true,
+                        'form-control--medium': true,
+                        'form-control--has-label': labelTemplate !== nothing,
+                        'form-control--has-help-text': helpTemplate !== nothing
+                    })}
+            >
+                ${labelTemplate}
+                <div part="form-control-input" class="form-control-input">
+                    <et2-link-apps
+                            onlyApp=${this.onlyApp ? this.onlyApp : nothing}
+                            ?appIcons=${this.appIcons}
+                            ?applicationList=${this.applicationList}
+                            ?disabled=${this.disabled}
+                            ?readonly=${this.disabled}
+                            .value=${this.__value?.app ? this.__value.app : nothing}
+                            @change=${this.handleAppChange}
+                    ></et2-link-apps>
+                    <et2-link-search
+                            ?placeholder=${this.placeholder}
+                            ?required=${this.required}
+                            ?disabled=${this.disabled}
+                            ?readonly=${this.readonly}
+                            .app=${this.__value?.app || nothing}
+                            .value=${this.__value?.id || nothing}
+                            @change=${this.handleEntrySelect}
+                            @sl-clear=${this.handleEntryClear}
+                    >
+                        ${(this.__value?.title) ? html`
+                            <option value=${this.__value.id}>${this.__value.title}</option>
+                        ` : nothing}
+                    </et2-link-search>
+                </div>
+                ${helpTemplate}
             </div>
 		`;
 	}

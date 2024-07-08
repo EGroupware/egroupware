@@ -335,5 +335,4 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	}
 };
 
-// @ts-ignore TypeScript says there's something wrong with types
-customElements.define("et2-link-string", Et2LinkString, {extends: 'ul'});
+customElements.define("et2-link-string", Et2LinkString);

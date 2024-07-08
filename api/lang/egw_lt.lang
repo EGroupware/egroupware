@@ -2,8 +2,9 @@
 %1 active file(s) with same name as directory inactivated!	admin	lt	%1 aktyvus (-i) failas (-ai), kurio (-ių) pavadinimas toks pat kaip aplanko, neaktyvuotas (-i)!
 %1 copied - the copy can now be edited	common	lt	%1 nukopijuota - dabar kopiją galima redaguoti
 %1 directories %2 found!	admin	lt	Rastas %1 katalogas %2!
-%1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1
+%1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1.
 %1 email(s) added into %2	common	lt	%1 el. laiškas (-ai) įtrauktas (-i) į %2
+%1 entries found, select one ...	common	lt	Rasta %1 įrašų, pasirinkite vieną ...
 '%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
 '%1' is not a valid json file!	common	lt	'%1' nėra galiojantis JSON failas
 00 (disable)	admin	lt	00 (išjungti)
@@ -25,10 +26,10 @@
 80 (http)	admin	lt	80 (http)
 abort	common	lt	Abort
 about	common	lt	Apie
-about %1	common	lt	% - apie
+about %1	common	lt	%1 - apie
 about egroupware	common	lt	Apie EGroupware
 access	common	lt	Prieiga
-access not permitted	common	lt	Prieiga negalima
+access not permitted	common	lt	Prieiga negalima.
 add current	common	lt	Dabartinis vaizdas kaip mėgstamiausias
 add to clipboard	common	lt	Pridėti į iškarpinę
 add user to responsibles	groupdav	lt	Pridėti naudotoją prie atsakingų asmenų
@@ -69,7 +70,7 @@ belarus	common	lt	BALTARUSIJA
 belgium	common	lt	BELGIJA
 belize	common	lt	BELIZAS
 bhutan	common	lt	BUTANAS
-blocked, too many attempts	common	lt	Užblokuota, per daug bandymų
+blocked, too many attempts	common	lt	Užblokuota, per daug bandymų.
 bolivia	common	lt	BOLIVIJA
 border	common	lt	Rėmelis
 brazil	common	lt	BRAZILIJA
@@ -87,8 +88,15 @@ check for empty values in if statements.  example {{if url~empty~~website:}} - i
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 choose the default filename for merged documents.	preferences	lt	Pasirinkite numatytąjį sujungtų dokumentų failo pavadinimą.
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	lt	Klientams, kurie aiškiai nenurodo limito, suteikiama tik tiek dienų. Dėl per didelio limito kai kuriems klientams gali kilti problemų.
+clipboard contents	common	lt	Prisegtuko turinys
+code	common	lt	Kodas
+collection empty.	common	lt	Rinkinys tuščias.
+collection listing	common	lt	Kolekcijos sąrašas
 colombia	common	lt	KOLUMBIJA
 colour	common	lt	Spalva
+columns to print	common	lt	Spausdintini stulpeliai
+command ⌘	common	lt	Komanda ⌘
 copy	common	lt	Kopijuoti
 copy "%1"	common	lt	Kopijuoti "%1"
 copy of:	common	lt	Kopija:
@@ -167,7 +175,6 @@ history log	common	lt	Versijos istorija
 how many days to sync in the future (default %1)	groupdav	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
 how many days to sync in the past (default %1)	groupdav	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
 how many rows to print	common	lt	Kiek eilučių spausdinti
-how to show the general egroupware menu ?	common	lt	Kaip rodyti bendrąjį EGroupware meniu
 html links to any entries linked to the current record, excluding attached files	common	lt	HTML nuorodos į bet kokius su dabartiniu įrašu susietus įrašus, išskyrus pridėtus failus
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
@@ -224,8 +231,12 @@ minute	common	lt	minutė
 monaco	common	lt	MONAKAS
 monday	common	lt	Pirmadienis
 mongolia	common	lt	MONGOLIJA
+more	common	lt	Daugiau
 morocco	common	lt	MAROKAS
 move	common	lt	Perkelti
+moved %1 children from directory fs_id=%2 to %3	admin	lt	Perkelta %1 vaikų iš aplanko fs_id=%2 į %3
+moved unconnected %1 %2 to %3.	admin	lt	Perkeltas nesusijęs %1 %2 į %3.
+my account	common	lt	Mano paskyra
 namibia	common	lt	NAMIBIJA
 nepal	common	lt	NEPALAS
 netherlands	common	lt	OLANDIJA
@@ -236,7 +247,14 @@ next	common	lt	Kitas
 next page	common	lt	Kitas puslapis
 nicaragua	common	lt	NIKARAGVA
 no	common	lt	Ne
+no default set	common	lt	Nenustatytas numatytasis nustatymas
 no filters	common	lt	Nėra filtrų
+no key for recipient:	common	lt	Nėra gavėjo rakto:
+no matches found	common	lt	Nerasta jokių atitikmenų.
+no response from server: your data is probably not saved	common	lt	Nėra atsakymo iš serverio: jūsų duomenys tikriausiai NĖRA išsaugoti.
+no results match	common	lt	Rezultatai nesutampa
+no rights to export more than %1 entries!	common	lt	Nėra teisių eksportuoti daugiau nei %1 įrašų!
+no row to swap with !!!	common	lt	Nėra eilutės, su kuria būtų galima keistis!
 norway	common	lt	NORVEGIJA
 november	common	lt	Lapkritis
 october	common	lt	Spalis
@@ -263,7 +281,7 @@ phone number	common	lt	Telefono numeris
 placeholders	common	lt	Vietos ženklai
 play/pause	common	lt	Grojimas / pauzė
 please %1 by hand	common	lt	Prašome %1 ranka
-please reload the egroupware desktop (f5 / cmd+r).	common	lt	Perkraukite EGroupware darbalaukį (F5 / Cmd+r).
+please reload the egroupware desktop (f5 / cmd+r).	common	lt	Perkraukite EGroupware darbalaukį (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	lt	Prašome nepamiršti nuo šiol vietiniams prisijungimams kaip vartotojo vardą naudoti "%1"!
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
@@ -281,7 +299,6 @@ site configuration	common	lt	Programos konfigūracija
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
-transparant bg for the icons?	common	lt	Transparant bg for the icons
 yemen	common	lt	JEMENAS
 your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lt	Jūsų naršyklė nėra atnaujinta (suderinama su JavaScript ES6), gali būti, kad neveiks kai kurios funkcijos.

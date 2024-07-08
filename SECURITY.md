@@ -2,8 +2,8 @@
 
 ## Supported Versions
 * next release / master
-* latest released version: **21.1**
-* old released version: 20.1 (major security fixes only!)
+* latest released version: **23.1**
+* old released version: 21.1 (major security fixes only!)
 
 Please report security issues to <security@egroupware.org>
 

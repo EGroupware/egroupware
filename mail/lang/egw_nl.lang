@@ -1,6 +1,7 @@
 %1 attachments	mail	nl	%1 bijlagen
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	nl	%1 vereist Sieve-extensie %2, probeer misschien %1 of een hoger aantal dagen.
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
 (not connected)	mail	nl	(niet verbonden)
@@ -19,6 +20,7 @@ add folder	mail	nl	Voeg map toe
 add raw message, ignore mail attachments	mail	nl	Mail omzetten naar item, onbewerkt bericht toevoegen (mailbijlagen negeren)
 add this certificate into contact	mail	nl	Dit certificaat toevoegen aan contact
 add to addressbook	mail	nl	Aan adresboek toevoegen
+add your domain as "%1" in options to list of email providers and enable api.	mail	nl	Voeg je domein toe als "%1" in opties aan lijst met e-mailproviders en schakel API in.
 adding %1 to blacklisted email addresses failed because of %2	mail	nl	%1 toevoegen aan zwarte lijst e-mailadressen mislukt vanwege %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	nl	%1 toevoegen aan witte lijst e-mailadressen mislukt vanwege %2
 after reply, visible during compose	mail	nl	Na antwoord, zichtbaar tijdens samenstellen
@@ -27,15 +29,15 @@ all	mail	nl	Allemaal
 all adresses:	mail	nl	Alle adressen:
 all available info	admin	nl	Alle beschikbare informatie
 all filtered	mail	nl	Alle gefilterde
-all messages in the folder will be lost	mail	nl	<br>Alle berichten in de map zullen verloren gaan
+all messages in the folder will be lost	mail	nl	Alle berichten in de map zullen verloren gaan.
 all my email addresses	mail	nl	al mijn e-mailadressen
 all of	mail	nl	alles van
-all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	nl	Alle onderliggende mappen zullen ook worden verwijdert, en alle berichten in de betrokken folders zullen ook worden verwijdert.
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	nl	Alle onderliggende mappen zullen ook worden verwijdert, en alle berichten in de betrokken folders zullen ook worden verwijdert
 allow	mail	nl	Toestaan
 allow external images	mail	nl	Sta externe afbeeldingen toe
 allow external images from listed domains	mail	nl	Externe afbeeldingen van vermelde domeinen toestaan
-allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan
-allow images from listed domains in html emails	mail	nl	Afbeeldingen van vermelde domeinen toestaan in HTML e-mails
+allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan.
+allow images from listed domains in html emails	mail	nl	Afbeeldingen van vermelde domeinen toestaan in HTML e-mails.
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
 allways a new window	mail	nl	Altijd in een nieuw venster
 always	mail	nl	Altijd
@@ -43,15 +45,20 @@ always allow external sources from %1	mail	nl	Sta altijd externe bronnen toe van
 always respond / auto-responder	mail	nl	Direct antwoorden / Auto-Responder
 always show html emails	mail	nl	Altijd HTML-emails weergeven
 always show notifiction	mail	nl	Altijd melding tonen
+an error happend while trying to remove acl rights from the account %1!	mail	nl	Er is een fout opgetreden tijdens het verwijderen van ACL rechten van de account %1!
 and the rule with priority %1, now got the priority %2	mail	nl	Regel met pioriteit %1, heeft nu prioriteit %2
 answered	mail	nl	Beantwoord
 any of	mail	nl	iedere van
 any status	mail	nl	iedere status
 append	mail	nl	Voeg toe
+appended after reply before sending	mail	nl	Bijgevoegd na antwoord voor verzenden
+archive folder	mail	nl	Archief Map
 are you sure you want to delete all selected folders?	mail	nl	Weet u zeker dat u alle geselecteerde mappen wilt verwijderen?
 are you sure you want to move folder %1 to folder %2?	mail	nl	Weet u zeker dat u map %1 wilt verplaatsen naar map %2?
+arrival	mail	nl	Ontvangen
+ask for permission	mail	nl	Toestemming vragen
 attach files	mail	nl	Bestanden toevoegen
-attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij elke nieuwe mail
+attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij elke nieuwe mail.
 attach vcard	mail	nl	Sluit vCard bij
 attachment	mail	nl	Bijlage
 attachment has been saved successfully.	mail	nl	Bijlage is succesvol opgeslagen.
@@ -61,19 +68,22 @@ authentication	mail	nl	Authenticatie
 available personal email-accounts/profiles	mail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
 be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. would you like to proceed?	mail	nl	Let op: door alle geselecteerde bestanden toe te voegen in de %1 modus, worden ook alle bestaande bijlagen in de lijst gewijzigd in de %2 modus.<br>Wilt u doorgaan?
 be aware that all attachments will be sent as %1!	mail	nl	Houd er rekening mee dat alle bijlagen worden verzonden als %1!
+before reply, visible during compose	mail	nl	Voor antwoord, zichtbaar tijdens opstellen
+blacklisted mails are marked as spam	mail	nl	E-mails op de zwarte lijst worden gemarkeerd als spam
 but check shared folders	mail	nl	maar check gedeelde mappen
 by date	mail	nl	Op datum
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	nl	Standaard wordt 'http://' gewoon vervangen door 'https://'. Voel je vrij om 'https://proxy.egroupware.org/' te configureren om ook afbeeldingen te laden die alleen beschikbaar zijn via http.
 caching of flags	mail	nl	Cachen van vlaggen
 can not open imap connection	mail	nl	Kan IMAP verbinding niet openen
 can not resolve the winmail.dat attachment!	mail	nl	Kan de bijlage winmail.dat niet oplossen!
+canceled deletion due to user interaction	mail	nl	Verwijdering geannuleerd door interactie van gebruiker
 certificate details	mail	nl	Details certificaat
 certificate in text	mail	nl	Certificaat in tekst
 certificate info for email %1	mail	nl	Certificaatinfo voor e-mail %1
 certificate issued by	mail	nl	Certificaat uitgegeven door
 change editor type	mail	nl	Schakel editor naar HTML-modus
 changed profile	mail	nl	Veranderd Profiel
-changing subject failed because of %1	mail	nl	Houd er rekening mee dat alle bijlagen worden verzonden als %1!
+changing subject failed because of %1	mail	nl	Houd er rekening mee dat alle bijlagen worden verzonden als %1
 changing subject failed folder %1 does not exist	mail	nl	Onderwerp wijzigen mislukt map %1 bestaat niet
 check message against next rule also	mail	nl	Controleer het bercicht ook met de volgende regel
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	nl	Selecteer dit vakje, als u een melding wilt ontvangen als het bericht is gelezen (Let op : niet alle mail programma's ondersteunen of je een bevestiging kunt krijgen van de ontvanger dat hij of zij het bericht heeft gelezen)
@@ -105,6 +115,7 @@ could not append message:	mail	nl	Kon niet aan bericht toevoegen:
 could not save the acl because some names are empty	mail	nl	Kon de ACL niet opslaan omdat sommige namen leeg zijn
 create new account	mail	nl	Maak een nieuwe gebruiker aan
 cross account forward attachment is not allowed!	mail	nl	Cross account forward attachment is niet toegestaan!
+current folder	mail	nl	huidige map
 current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
 date(newest first)	mail	nl	Datum (meest recente eerst)
@@ -118,10 +129,15 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	nl	Definieert wat moet worden getoond als identiteitslabel in de header van de e-mailmap.
 delete folder	mail	nl	Verwijder map
 delete folder %1 ?	mail	nl	VERWIJDER Map %1?
+delete selected folders	mail	nl	Geselecteerde mappen verwijderen
+delete this acl	mail	nl	Deze ACL verwijderen
 deleted	mail	nl	verwijdert
 deleted %1 messages in %2	mail	nl	Verwijder %1 bericht(en) in %2
 deleted!	mail	nl	verwijdert!
+deleting %1 folders in progress ...	mail	nl	%1 mappen in uitvoering verwijderen ...
+deleting folders	mail	nl	Mappen verwijderen
 deny certain groups access to following features	mail	nl	Weiger bepaalde groepen toegang tot de volgende eigenschappen
+directories have to be shared.	mail	nl	Map moet worden gedeeld.
 disable	mail	nl	Zet uit
 disable caching of flags	mail	nl	Caching van vlaggen uitschakelen
 disable horizontal rule for separation of mail body from signature	mail	nl	Zet liniaal uit voor het scheiden in berichten van hoofdtekst en handtekening
@@ -132,18 +148,22 @@ display messages in multiple windows	mail	nl	berichten in meerdere vensters weer
 display of html emails	mail	nl	Weergave van HTML-emails
 display of identities	admin	nl	Toon identiteiten
 display only when no plain text is available	mail	nl	Alleen weergeven als platte tekst niet beschikbaar is.
-displaying html messages is disabled	mail	nl	weergeven van html berichten is uitgeschakeld
-displaying plain messages is disabled	mail	nl	Weergeven standaard vericht is uitgeschakeld
+displaying html messages is disabled	mail	nl	weergeven van HTML berichten is uitgeschakeld
+displaying plain messages is disabled	mail	nl	weergeven standaard vericht is uitgeschakeld
 do not auto create folders	mail	nl	Maak niet automatisch mappen aan
+do not forward	mail	nl	Niet doorsturen
 do you really want to apply %1 to all messages in the current view?	mail	nl	Wilt u werkelijk ALLE berichten %1 in het huidige overzicht?
 do you really want to delete folder %1 ?	mail	nl	Wilt u werkelijk map %1 verwijderen
+do you really want to delete this rule	mail	nl	Wil je deze regel echt WISSEN?
 do you really want to mark all messages as read in the current folder?	mail	nl	Wilt u werkelijk ALLE berichten markeren als gelezen in de huidige map?
+do you really want to remove all labels from all messages in the current folder?	mail	nl	Wil je echt ALLE labels verwijderen van ALLE berichten in de huidige map?
+do you really want to remove all rights from this account?	mail	nl	Wil je echt alle rechten van deze account verwijderen?
 do you really want to toggle flag %1 for all messages in the current view?	mail	nl	Wilt u echt vlag %1 aanzetten voor ALLE berichten in de huidige weergave?
 do you really want to toggle label %1 for all messages in the current view?	mail	nl	Wilt u echt het label %1 aanzetten voor ALLE berichten in de huidige weergave?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	nl	Wilt u om bevestiging gevraagd worden voordat u het geslecteerde bericht aan nieuwe berichten toevoegt?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	nl	Wilt u een bevestigingsvraag krijgen voordat de geselecteerde berichten naar een andere folder worden verplaatst?
 do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van filters op regels voorkomen (, zelfs als Sieve actief is)
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van meldingen van berichten van andere adressen voorkomen, als een bericht wordt ontvangen(, zelfs als Sieve actief is)
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van meldingen van berichten van andere adressen voorkomen, als een bericht wordt ontvangen(, zelfs als Sieve actief is)?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	nl	Wilt u het bewerken/aanmaken van niet aanwezig/vakantie berichten voorkomen (, zelfs als Sieve actief is)
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	nl	Wilt het beheren van mappen voorkomen (aanmaken, toegangsrechten en abonneren)?
 does not contain	mail	nl	bevat niet
@@ -156,7 +176,7 @@ don't use template folder	mail	nl	Sjablonen map niet gebruiken
 don't use trash	mail	nl	'Prullenmand' niet gebruiken
 download attachments	mail	nl	Bijlagen downloaden
 draft	mail	nl	Concept
-draft folder	mail	nl	concepten map
+draft folder	mail	nl	Concepten map
 drafts	mail	nl	Concepten
 drafts folder	mail	nl	Concept map
 edit account	mail	nl	Bewerk account
@@ -167,7 +187,7 @@ edit vacation settings	mail	nl	Bewerk afwezigheid instellingen
 effective only if server supports acl at all	admin	nl	Werkt alleen als server ACL ondersteund
 email address	mail	nl	Emailadres
 email notification successfully updated!	mail	nl	Bericht notificatie succesvol bijgewerkt
-email notification update failed	mail	nl	Bericht notificatiel  kon niet worden bijgewerkt
+email notification update failed	mail	nl	Bericht notificatiel kon niet worden bijgewerkt
 email notification update failed! you need to set an email address!	mail	nl	Bericht notificatie bijwerken mislukt! U moet een email adres invoeren!
 emailaddress	admin	nl	Emailadres
 emailadmin: profilemanagement	mail	nl	EmailAdmin: Profiel management
@@ -177,20 +197,22 @@ enable	mail	nl	Inschakelen
 enabled	mail	nl	Ingeschakeld
 enabled!	mail	nl	Geactiveerd!
 encrypt your message with smime certificate	mail	nl	Uw bericht versleutelen met S/MIME-certificaat
-enter the name for the new folder:	mail	nl	Voer de naam in voor de nieuwe map
-error saving %1!	mail	nl	Fout bij bewaren %1
+enter the name for the new folder:	mail	nl	Voer de naam in voor de nieuwe map:
+error saving %1!	mail	nl	Fout bij bewaren %1!
+error while setting acl for folder %1!	mail	nl	Fout bij instellen ACL voor map %1!
 error while setting folder	mail	nl	Fout bij instellen map
 error:	mail	nl	Fout:
 error: could not save acl	mail	nl	Fout: Kon ACL niet bewaren
 error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opgeslagen als Concept
 error: could not save rule	mail	nl	Fout: Kon regel niet bewaren
-error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden
-error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond
-esync will fail without a working email configuration!	mail	nl	eSync zal NIET WERKEN zonder een eMail configuratie
+error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden.
+error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond.
+esync will fail without a working email configuration!	mail	nl	eSync zal NIET WERKEN zonder een eMail configuratie!
 event details follow	mail	nl	Afspraak details volgen
 every %1. day	mail	nl	Elke %1. dag
 everyone	mail	nl	Ledereen
 examine namespace to retrieve folders in others and shared	mail	nl	Namenruimte onderzoeken om mappen in andere en gedeelde mappen op te halen
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	nl	Bijlagen groter dan opgegeven grootte uitsluiten van automatisch opslaan als klad (in MB)
 extended	mail	nl	Uitgebreid
 extra sent folders	mail	nl	Extra verzend mappen
 failed to delete %1	mail	nl	Het verwijderen van %1 is mislukt
@@ -242,6 +264,7 @@ handling of external http images / mixed content in mails	mail	nl	Omgaan met ext
 header	mail	nl	Kop
 header lines	mail	nl	Kop lijnen
 high	mail	nl	Hoog
+hold %1 to drag files to your computer	mail	nl	Houd %1 ingedrukt om bestanden naar je computer te slepen
 home page folders	mail	nl	Thuis mappen
 hostname or ip	mail	nl	Hostnaam of IP
 how often to check with the server for new mail	mail	nl	Hoe vaak moet de server controleren op nieuwe mail
@@ -274,15 +297,15 @@ imap administration	mail	nl	IMAP administratie
 imap server	mail	nl	IMAP server
 imap timeout	mail	nl	IMAP timeout
 import message	mail	nl	Importeer bericht
-import of message %1 failed. could not save message to folder %2 due to: %3	mail	nl	Importeren van bericht %1 mislukt. Kon het bericht niet opslaan in map %2 vanwege reden:%3
+import of message %1 failed. could not save message to folder %2 due to: %3	mail	nl	Importeren van bericht %1 mislukt. Kon het bericht niet opslaan in map %2 vanwege reden: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	nl	Importeren van bericht %1 mislukt. Opgegeven map %2 bestaat niet.
 import of message %1 failed. destination folder not set.	mail	nl	Importeren van bericht %1 mislukt. Geen map gekozen om bericht op te slaan.
 import of message %1 failed. no contacts to merge and send to specified.	mail	nl	Importeren van bericht %1 mislukt. Geen contacten gevonden om mee samen te voegen.
 importance	mail	nl	Mate van belang
 important	mail	nl	Belangrijk
-in mailbox: %1, with id: %2, and partid: %3	mail	nl	In Berichtenmap:  %1 met ID: %2 en PartID: %3
+in mailbox: %1, with id: %2, and partid: %3	mail	nl	In Berichtenmap: %1 met ID: %2 en PartID: %3
 in order to protect your privacy all external sources within this email are blocked.	mail	nl	Om je privacy te beschermen zijn alle externe bronnen in deze e-mail geblokkeerd.
-inbox	mail	nl	POSTVAK IN
+inbox	mail	nl	Postvak IN
 information to show on email tag	mail	nl	Informatie die op het e-maillabel moet worden weergegeven
 initialization of mail failed. please use the wizard to cope with the problem.	mail	nl	De initialisatie van de mailmodule is mislukt. Gebruik de configuratiewizard om de configuratie te corrigeren.
 inline	mail	nl	Inline
@@ -297,7 +320,7 @@ learning as ham (not spam) failed because of %1	mail	nl	Leren als ham (geen spam
 learning as spam failed because of %1	mail	nl	Leren als spam mislukt vanwege %1
 less than	mail	nl	minder dan
 limit mailing list results when searching for addresses	mail	nl	Resultaten van mailinglijsten beperken bij het zoeken naar adressen
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	nl	Lijst met acties die standaard ingeschakeld/geactiveerd moeten worden (bijv. Mail compose opslaan als InfoLog actie)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	nl	Lijst met acties die standaard ingeschakeld/geactiveerd moeten worden (bijv. Mail compose opslaan als InfoLog actie).
 mail	common	nl	Mail
 mail acl	mail	nl	Toegangsrechten
 mail filter	mail	nl	Berichten filter
@@ -320,13 +343,14 @@ mbstring.func_overload=0 is required for correct mail processing!	mail	nl	mbstri
 message body	mail	nl	Bericht Hoofdtekst
 message learned as spam and moved to spam folder	mail	nl	Bericht geleerd als spam en verplaatst naar spam folder
 message preview area	mail	nl	Berichten voorbeeld gebied
-message saved successfully.	mail	nl	Bericht succesvol bewaard
+message saved successfully.	mail	nl	Bericht succesvol bewaard.
 message send failed: %1	mail	nl	Bericht versturen mislukt : %1
-message send successfully.	mail	nl	Bericht succesvol verstuurd
+message send successfully.	mail	nl	Bericht succesvol verstuurd.
 message verified successfully but the signer’s certificate could not be verified.	mail	nl	Bericht met succes geverifieerd, maar het certificaat van de ondertekenaar kon niet worden geverifieerd.
 message verified successfully.	mail	nl	Bericht geverifieerd.
 modify subject	mail	nl	Onderwerp wijzigen
 modify subject of this message	mail	nl	Wijzig het onderwerp van dit bericht
+move selected mails to archive	mail	nl	Geselecteerde e-mails naar archief verplaatsen
 move selected to	mail	nl	Verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
 move to trash	mail	nl	Verplaatsen naar prullenmand
@@ -344,20 +368,21 @@ new message type	mail	nl	Nieuw berichten type
 new subject	mail	nl	Nieuw onderwerp
 no (valid) send folder set in preferences	mail	nl	Geen (geldige) Verzonden map in voorkeuren
 no access	mail	nl	geen toegang
-no action defined!	mail	nl	Geen aktie gedefineerd
+no action defined!	mail	nl	Geen aktie gedefineerd!
 no address to/cc/bcc supplied, and no folder to save message to provided.	mail	nl	Geen adres in AAN/CC/BCC opgegeven en geen map aangegeven waar bericht opgeslagen moet worden.
 no adress, to send this mail to, supplied	mail	nl	Geen adres opgegeven om dit bericht naar te versturen
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	nl	Geen map opgegeven om naar op te slaan, en geen map om het bericht te bewaren of andere manieren om het bericht te bewaren (bewaar naar InfoLog of Tracker) zijn opgegeven, maar is wel nodig.
 no folders	mail	nl	geen folders
 no message body supplied	mail	nl	Geen hoofdtekst in dit bericht
-no plain text part found	mail	nl	geen platte tekst onderdeel gevonden
+no plain text part found	mail	nl	Geen platte tekst onderdeel gevonden
 no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
 no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
 no signature	mail	nl	geen ondertekening
 no sneak preview in list	mail	nl	Geen voorbeeld van een bericht
 no subject given!	mail	nl	Geen onderwerp opgegeven!
 no subject supplied	mail	nl	Geen onderwerp opgegeven
-no text body supplied, check attachments for message text	mail	nl	Geen hoofd tekst opgegeven, controleer bijlages voor de berichten tekst.
+no text body supplied, check attachments for message text	mail	nl	Geen hoofd tekst opgegeven, controleer bijlages voor de berichten tekst
+no vacation notice text provided. please enter a message.	mail	nl	Geen waarschuwingstekst voor vakantie. Voer een bericht in.
 no valid %1 folder configured!	mail	nl	Geen geldige %1 map geconfigureerd!
 non	mail	nl	Geen
 none, create all	mail	nl	geen, maak ze allemaal
@@ -373,7 +398,7 @@ only email	mail	nl	Alleen e-mail
 only if currently in an other app	mail	nl	Alleen als momenteel in een andere app
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	nl	Heeft alleen zin als je het wachtwoord via een ander kanaal / buiten deze mail om naar ontvangers transporteert!
 only name	mail	nl	Alleen naam
-only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	nl	Alleen nodig voor sommige servers, die niet alle mappen retourneren op het rootniveau om alle mappen voor dat niveau op te halen.
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	nl	Alleen nodig voor sommige servers, die niet alle mappen retourneren op het rootniveau om alle mappen voor dat niveau op te halen
 only one window	mail	nl	uitsluitend één venster
 only send message, do not copy a version of the message to the configured sent folder	mail	nl	Verstuur alleen het bericht, sla geen kopie van dit bericht op in de toegewezen map verzonden
 only store message in inbox, do not send vacation notice	mail	nl	Alleen bericht opslaan in INBOX, GEEN vakantiebericht sturen
@@ -448,8 +473,10 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	nl	Rapporteer deze e-mail als spam - spamoplossingen zoals spamTitan zullen het leren
 required pear class mail/mimedecode.php not found.	mail	nl	PEAR benodigd, class MAIL/mimeDecode.php niet gevonden
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	nl	Verplicht uit te schakelen als je Dovecot gebruikt met private seen flags op gedeelde of gebruikersmappen!
+resend after how many days?	mail	nl	Opnieuw verzenden na hoeveel dagen?
 respond to mail sent to:	mail	nl	Antwoord op bericht verzonden aan:
 restrict acl management	admin	nl	Beperk ACL beheer
+rights	mail	nl	Rechten
 row order style	mail	nl	rijvolgorde stijl
 rule priority position	mail	nl	Regel prioriteit positie
 rule with priority	mail	nl	regels met prioriteit
@@ -457,10 +484,11 @@ rules	mail	nl	Regels
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	nl	S/MIME-codering mislukt omdat er geen certificaat is gevonden voor afzenderadres: %1
 save all	mail	nl	Bewaar alle
 save all attachments to filemanager	mail	nl	Alle bijlagen opslaan in bestandsbeheer
+save as calendar	mail	nl	Opslaan als kalender
 save as default	mail	nl	Bewaar als standaard
 save as draft	mail	nl	Bewaar als concept
 save as draft and print	mail	nl	Bewaar als concept en Afdruk
-save as infolog	mail	nl	Bewaar als Infolog
+save as infolog	mail	nl	Bewaar als InfoLog
 save as infolog on send	mail	nl	Bewaar als Infolog en verstuur
 save as ticket	mail	nl	Bewaar als ticket
 save as tracker on send	mail	nl	Bewaar als tracker en verstuur
@@ -474,7 +502,7 @@ save to disk	mail	nl	Bewaar op schijf
 save to filemanager	mail	nl	Bewaar naar bestandeberheer
 save:	mail	nl	Bewaar:
 saving of message %1 failed. destination folder %2 does not exist.	mail	nl	Bewaren van bericht %1 mislukt. De doelmap %2 bestaat niet.
-saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1. Controleer folder %2
+saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1. Controleer folder %2.
 saving the rule failed:	mail	nl	Bewaren voor de regel is mislukt:
 security	mail	nl	Beveiliging
 see attachments for content of the orignial mail	mail	nl	Zie bijlagen voor de inhoud van de oorspronkelijke e-mail
@@ -513,10 +541,10 @@ show notification for new arriving mails	mail	nl	Notificatie tonen voor nieuw bi
 show test connection section and control the level of info displayed?	mail	nl	Toon test connectie en controleer het niveau van informatie wat wordt getoond?
 show test connection section and control the level of info displayed??	mail	nl	Toon test connectie en controleer het niveau van informatie wat wordt getoond?
 show them this time only	mail	nl	Alleen deze keer tonen
-show vertical	mail	nl	Verticaal tonen
+show vertical	mail	nl	Verticaal weergeven (3-koloms weergave)
 show vertical with all columns	mail	nl	Verticaal tonen met alle kolommen
-show/hide preview pane in mail list view	mail	nl	Voorbeeldvenster in e-maillijstweergave tonen/verbergen
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	nl	Toont een tijdelijk zichtbare melding met vertrekadres, onderwerp en een fragment van de e-mail
+show/hide preview pane in mail list view	mail	nl	Voorbeeldvenster in e-maillijstweergave tonen/verbergen.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	nl	Toont een tijdelijk zichtbare melding met vertrekadres, onderwerp en een fragment van de e-mail.
 sieve	mail	nl	Sieve
 sieve connection status	mail	nl	Status Sieve connectie
 sieve not activated	mail	nl	Sieve niet geactiveerd
@@ -567,7 +595,7 @@ the message sender has requested a response to indicate that you have read this 
 the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
 the rule with priority %1 successfully saved!	mail	nl	De regel met prioriteit %1 is succesvol bewaard!
 then	mail	nl	DAN
-there is no imap server configured.	mail	nl	Er is geen IMAP server geconfigureerd
+there is no imap server configured.	mail	nl	Er is geen IMAP server geconfigureerd.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	nl	Er is geen ruimte meer om het sieve script op te slaan, controleer de sieve_maxscriptsize optie in de configuratie van je mailserver.
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	nl	Deze mail bevat externe afbeeldingen geserveerd via een onveilig HTTP-protocol. Het tonen of toestaan hiervan kan je beveiliging in gevaar brengen!
 this message is smime encrypted and password protected.	mail	nl	Dit bericht is S/MIME gecodeerd en beveiligd met een wachtwoord.
@@ -577,20 +605,20 @@ toggle all folders view for %1	mail	nl	Toogle alle mappen in overzicht %1
 toggled on actions	mail	nl	Acties inschakelen
 trash	mail	nl	Prullenbak
 trash folder	mail	nl	Prullenbak map
-trust servers seen / unseen info	mail	nl	Vertrouw GETOONDE / NIET GETOONDE  info van Servers
+trust servers seen / unseen info	mail	nl	Vertrouw GETOONDE / NIET GETOONDE info van Servers
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	nl	Vertrouw de server als de status van een map wordt opgehaald. Als u nee selecteert, zullen wij naar de nog niet bekeken berichten zoeken en deze zelf tellen.
-trying to recover from session data	mail	nl	Probeer  vanaf sessie data te herstellen.
+trying to recover from session data	mail	nl	Probeer vanaf sessie data te herstellen.
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	nl	Zet de horizontale liniaal uit tussen de handtekening en het geschreven bericht (Dit is niet volgens RFC).<br>Als u sjablonen gebruikt, is deze optie alleen van toepassing op het gedeelte van de tekst van het bericht.
-unable to fetch vacation!	mail	nl	Niet mogelijk afwezigheidsbericht te tonen.
+unable to fetch vacation!	mail	nl	Niet mogelijk afwezigheidsbericht te tonen!
 undelete	mail	nl	Verwijderen ongedaan maken
 unflagged	mail	nl	Niet gemarkeerd
 unread	mail	nl	ongelezen
 unsubscribe folder	mail	nl	Niet geabonneerde map
 use default timeout (20 seconds)	mail	nl	Gebruik standaard timeout (20 seconden)
-use regular expressions (see wikipedia for information on posix regular expressions)	mail	nl	Gebruik reguliere uitingen (Kijk op wikipedia voor informatie over POSIX  voor reguliere uitingen)
+use regular expressions (see wikipedia for information on posix regular expressions)	mail	nl	Gebruik reguliere uitingen (Kijk op wikipedia voor informatie over POSIX voor reguliere uitingen)
 use source as displayed, if applicable	mail	nl	Gebruik bron als getoond, wanneer van toepassing
 use username+password from current user	mail	nl	Gebruik gebruikersnaam en wachtwoord van de huidige gebruiker
-vacation messages with start and end date require an admin account to be set!	mail	nl	Voor vakantie berichten met een start en einddatum  is een account met admin rechten benodigd!
+vacation messages with start and end date require an admin account to be set!	mail	nl	Voor vakantie berichten met een start en einddatum is een account met admin rechten benodigd!
 vacation notice	mail	nl	Afwezigheid
 vacation notice is active	mail	nl	Afwezigheid is niet geactiveerd
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	nl	Afwezigheid is nog niet bewaard (Maar we hebben alle enige standaards ingevuld om de bovenstaande fouten te voorkomen. Corrigeer waar nodig, kijk uw ingave na en bewaar opnieuw.)
@@ -605,10 +633,10 @@ view full mail source	mail	nl	Bekijk de volledige bron van het bericht
 view header lines	mail	nl	Bekijk kopregels
 what do do with html email	mail	nl	Hoet HTML mail te behandelen
 what order the list columns are in	mail	nl	Welke volgorde voor de lijstvan kolommen
-what to do when you delete a message	mail	nl	Wat te doen wanneer u een bericht verwijdert
-what to do when you send a message	mail	nl	Wat te doen wanneer u een bericht verzend
+what to do when you delete a message	mail	nl	Wat te doen wanneer u een bericht verwijdert.
+what to do when you send a message	mail	nl	Wat te doen wanneer u een bericht verzend.
 when deleting messages	mail	nl	Wanneer berichten worden verwijdert
-when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	nl	Wanneer een bericht in een popup wordt getoond. gebruik dan dezelfde popup voor alle open berichten en voor elk bericht.
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	nl	Wanneer een bericht in een popup wordt getoond. gebruik dan dezelfde popup voor alle open berichten en voor elk bericht
 when saving messages as item of a different app	mail	nl	Als berichten bewaard worden als item van een andere applicatie
 when sending messages	mail	nl	Wanneer berichten worden verzonden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	nl	Welke mappen (behalve de Verzenden map) moeten getoond worden bij gebruik van het schema van de verzend mappen
@@ -631,6 +659,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	nl	U moet uw S/MIME wachtwoordzin invoeren om dit bericht te verzenden.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	nl	U moet de Mailvelope plugin installeren die beschikbaar is voor Chrome en Firefox vanaf %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	nl	U moet het bericht eerst opslaan als concept voordat u het kunt opslaan in VFS.
+you need to select some folders first (by clicking on them)!	mail	nl	Je moet eerst een aantal mappen selecteren (door erop te klikken)!
 you will loose current message body, unless you save it to your clipboard!	mail	nl	U verliest de huidige berichttekst, tenzij u deze opslaat op uw klembord!
 you've got new mail	mail	nl	Je hebt nieuwe mail
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	nl	Uw resterende quota %1 is te laag, het is mogelijk dat u geen e-mails meer kunt verzenden/ontvangen. Hoewel het opruimen van e-mails in de prullenbak of in de map met ongewenste e-mail u kan helpen om weer wat vrije ruimte te krijgen.Als dat niet heeft geholpen, vraag dan uw beheerder om meer quota.

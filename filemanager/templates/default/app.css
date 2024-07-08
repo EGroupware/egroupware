@@ -37,6 +37,12 @@ input#filemanager-index_path {
 /* Let path have more space */
 #filemanager-index_filemanager-index-header_row {
 	flex: 20 1 auto;
+	min-width: 24em;
+}
+
+#filemanager-index_nm_path {
+	flex-grow: 1;
+	min-width: 0;
 }
 
 /**

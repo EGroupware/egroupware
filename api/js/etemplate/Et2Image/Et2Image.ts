@@ -9,29 +9,29 @@
  */
 
 import {css, html, LitElement, render} from "lit";
-import {SlotMixin} from "@lion/core";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 
-export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_IDetachedDOM
+export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
-            :host {
-				display: inline-block;
-            }
-            ::slotted(img) {
-            	max-height: 100%;
-            	max-width: 100%;
-            }
-            :host([icon]) {
-            	height: 1.3rem;
-            }
-            `,
-		];
+				:host {
+					display: inline-block;
+				}
+
+				::slotted(img) {
+					max-height: 100%;
+					max-width: 100%;
+				}
+
+				:host([icon]) {
+					height: 1.3rem;
+				}
+			`];
 	}
 
 	static get properties()
@@ -42,7 +42,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			/**
 			 * The label of the image
 			 * Actually not used as label, but we put it as title
-			 * Added here as there's no Lion parent
 			 */
 			label: {
 				type: String
@@ -77,16 +76,6 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 			 * widthxheight, if popup should be used, eg. 640x480
 			 */
 			extraLinkPopup: {type: String},
-		}
-	}
-
-	get slots()
-	{
-		return {
-			'': () =>
-			{
-				return this._imageTemplate();
-			}
 		}
 	}
 
@@ -248,4 +237,4 @@ export class Et2Image extends Et2Widget(SlotMixin(LitElement)) implements et2_ID
 	}
 }
 
-customElements.define("et2-image", Et2Image, {extends: 'img'});
+customElements.define("et2-image", Et2Image)//, {extends: 'img'});

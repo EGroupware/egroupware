@@ -129,6 +129,30 @@ class Taglist extends Etemplate\Widget
 	}
 
 	/**
+	 * @param $search
+	 * @param array{application: string, globalCategories: boolean, num_rows: string} $options
+	 * @return void
+	 */
+	public static function ajax_category_search($search, $options)
+	{
+		$results = ['results' => []];
+		$start = 0;
+		$categories = new Api\Categories('', $options['application'] ?: '');
+		foreach($categories->return_sorted_array($start, (int)$options['num_rows'], $search, 'ASC', 'cat_name', (boolean)$options['globalCategories'], false) as $cat)
+		{
+			$results['results'][] = Tree::formatCategory($cat, $categories);
+		}
+		$results['total'] = $categories->total_records;
+
+		// switch regular JSON response handling off
+		Api\Json\Request::isJSONRequest(false);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($results);
+		exit;
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * @param string $cname current namespace

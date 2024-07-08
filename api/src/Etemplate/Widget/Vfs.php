@@ -39,7 +39,7 @@ class Vfs extends File
 	{
 		if ($this->type === 'vfs-upload' || !empty($this->attrs['type']) && $this->attrs['type'] === 'vfs-upload')
 		{
-			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont' => self::$request->content));
+			$form_name = self::form_name($cname, $this->id, $expand ?: array('cont' => self::$request->content));
 			if (!empty($this->attrs['path']))
 			{
 				$path = self::expand_name($this->attrs['path'], $expand['c'] ?? null, $expand['row'], $expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont']);
@@ -292,21 +292,21 @@ class Vfs extends File
 	{
 		$name = $_REQUEST['widget_id'];
 
-		// Find real path
-		if($path[0] != '/')
+		// Find real path, could be "$app:$id:$path"
+		if($path[0] !== '/')
 		{
 			$path = self::get_vfs_path($path);
 		}
 		$filename = $file['name'];
-		if ($path && substr($path,-1) != '/')
+		if ($path && substr($path,-1) !== '/')
 		{
-			// add extension to path
-			$parts = explode('.',$filename);
-			// check if path already contains a valid extension --> dont add an other one
-			$path_parts = explode('.', $path);
-			if (count($path_parts) > 2 && (!($extension = array_pop($path_parts)) || !Api\MimeMagic::ext2mime($extension)) &&
-				($extension = array_pop($parts)) && Api\MimeMagic::ext2mime($extension))       // really an extension --> add it to path
+			$parts = explode('.', $filename);
+			// check if path already contains a valid extension --> don't add another one
+			$path_parts = explode('.', Api\Vfs::basename($path));
+			if ((!($path_ext = array_pop($path_parts)) || Api\MimeMagic::ext2mime($path_ext) === 'application/octet-stream') &&
+				($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])))
 			{
+				// add extension to path
 				$path .= '.'.$extension;
 			}
 			$file['name'] = Api\Vfs::basename($path);
@@ -606,6 +606,160 @@ class Vfs extends File
 				'old_app' => $content['app']
 			)
 		));
+	}
+
+	/**
+	 * Get a list of files that match the given parameters
+	 *
+	 * Can also give a new path (like a link, not redirect), and a writable flag
+	 *
+	 * @param $search
+	 * @param $content
+	 * @return void
+	 * @throws Json\Exception
+	 */
+	public static function ajax_vfsSelectFiles($search, $content)
+	{
+		$response = ['results' => []];
+		$content['path'] = $content['path'] ?? '~';
+		if($content['path'] == '~')
+		{
+			$content['path'] = $response['path'] = Api\Vfs::get_home_dir();
+		}
+		if(!Api\Vfs::is_readable($content['path']))
+		{
+			if($content['path'] && str_contains($content['path'], ':') && $path = static::get_vfs_path($content['path']))
+			{
+				$content['path'] = $response['path'] = $path;
+			}
+		}
+		$response['writable'] = Api\Vfs::is_writable($content['path']);
+
+		// Filemanager favorites as directories
+		if(substr($content['path'], 0, strlen('/apps/favorites')) == '/apps/favorites')
+		{
+			$files = static::filesFromFavorites($search, $content);
+		}
+		else
+		{
+			$files = static::filesFromVfs($search, $content);
+			if(is_string($files))
+			{
+				$response['message'] = $files;
+				$files = [];
+			}
+		}
+		$response['total'] = $content['total'] ?? count($files);
+		foreach($files as $path)
+		{
+			if(is_string($path) && $path == $content['path'] || is_array($path) && $path['path'] == $content['path'])
+			{
+				// remove directory itself
+				$response['total']--;
+				continue;
+			}
+			$name = $path['name'] ?? Api\Vfs::basename($path);
+			$path = $path['path'] ?? $path;
+			$is_dir = $path['isDir'] ?? Api\Vfs::is_dir($path);
+			$mime = $path['mime'] ?? Api\Vfs::mime_content_type($path);
+			$download = $path['download_url'] ?? Api\Vfs::download_url($path);
+
+			$response['results'][] = array(
+				'name'  => $name,
+				'path'  => $path,
+				'mime'  => $mime,
+				'isDir'       => $is_dir,
+				'downloadUrl' => $download
+			);
+		}
+		Json\Response::get()->data($response);
+	}
+
+	private static function filesFromVfs($search, &$params)
+	{
+		$vfs_options = array(
+			'dirsontop' => true,
+			'order'     => 'name',
+			'sort'      => 'ASC',
+			'maxdepth'  => 1,
+		);
+		if($search)
+		{
+			$vfs_options['name_preg'] = '/' . str_replace(array('\\?', '\\*'),
+														  array('.{1}', '.*'),
+														  preg_quote($search)) . '/i';
+		}
+		$dirs = [];
+		if($params['mime'])
+		{
+			// Always get dirs
+			$vfs_options['type'] = 'd';
+			$dirs = Api\Vfs::find($params['path'], $vfs_options);
+			$vfs_options['type'] = 'f';
+			$vfs_options['mime'] = $params['mime'];
+		}
+		if($params['num_rows'])
+		{
+			$vfs_options['limit'] = (int)$params['num_rows'];
+		}
+		$files = Api\Vfs::find($params['path'], $vfs_options);
+		$params['total'] = Api\Vfs::$find_total;
+		return array_merge($dirs, $files);
+	}
+
+	/**
+	 * Get favorites as if they were folders
+	 *
+	 * @return array
+	 */
+	private static function filesFromFavorites($search, $params)
+	{
+
+		// Display favorites as if they were folders
+		$files = array();
+		$favorites = Api\Framework\Favorites::get_favorites('filemanager');
+
+		//check for recent paths and add them to the top of favorites list
+		if(is_array($params['recentPaths']))
+		{
+			foreach($params['recentPaths'] as $p)
+			{
+				$mime = Api\Vfs::mime_content_type($p);
+				$files[] = array(
+					'name'   => $p,
+					'path'   => $p,
+					'mime'   => $mime,
+					'is_dir' => true
+				);
+			}
+		}
+
+		foreach($favorites as $favorite)
+		{
+			$path = $favorite['state']['path'];
+			if(!$path)
+			{
+				continue;
+			}
+			// Search
+			if($search && !(str_contains($favorite['name'], $search) || str_contains($path, $search)))
+			{
+				continue;
+			}
+			if(!Api\Vfs::is_readable($path))
+			{
+				continue;
+			}
+
+			$mime = Api\Vfs::mime_content_type($path);
+			$files[] = array(
+				'name'  => $favorite['name'],
+				'path'  => $path,
+				'mime'  => $mime,
+				'isDir' => true
+			);
+		}
+		return $files;
 	}
 
 	/**

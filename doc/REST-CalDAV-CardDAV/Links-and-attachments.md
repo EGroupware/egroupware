@@ -10,19 +10,19 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 
 ### Following schema is used for JSON encoding of links and attachments
 
-* @type: `Link`
-* href: string URI to linked entry or attachments
-* title: string title of link
-* contentType: string `application/json` for links, content-type of attachments
-* size: size of attachments
-* egroupware.org-remark: string
-* egroupware.org-app: string application name of the linked entry
-* egroupware.org-id: string application ID of the linked entry
-* rel: string `egroupware.org-primary` to mark a primary link for InfoLog entries
+* `@type`: `Link`
+* `href`: string URI to linked entry or attachments
+* `title`: string title of link
+* `contentType`: string `application/json` for links, content-type of attachments
+* `size`: size of attachments
+* `egroupware.org-remark`: string
+* `egroupware.org-app`: string application name of the linked entry
+* `egroupware.org-id`: string application ID of the linked entry
+* `rel`: string `egroupware.org-primary` to mark a primary link for InfoLog entries
 
 ### Supported request methods and examples
 
-* **GET** to application entry collections to return all links and attachments
+#### **GET** to application entry collections to return all links and attachments
 <details>
   <summary>Example: Getting all links and attachments of a given application entry</summary>
   
@@ -62,7 +62,7 @@ Content-Type: application/json
 ```
 </details>
 
-* **POST** request to upload an attachment or link with another application entry
+#### **POST** request to upload an attachment or link with another application entry
 
 <details>
    <summary>Example: Adding a PDF as attachment to an application entry</summary>
@@ -104,7 +104,7 @@ Location: https://example.org/egroupware/groupdav.php/<username>/infolog/<id>/li
 > `<id>` is the numerical ID of the entry of application `<app>`, NOT the UUID some applications have!
 > `<2nd-app-id>` is also the numerical ID of `<2nd-app>`, not the UUID
 
-* **DELETE** request to remove a link or attachment
+#### **DELETE** request to remove a link or attachment
 
 <details>
     <summary>Example: deleting an attachment or link</summary>
@@ -116,4 +116,4 @@ HTTP/1.1 201 No Content
 ```
 </details>
 
-> one can use ```Accept: application/pretty+json``` to receive pretty-printed JSON eg. for debugging and exploring the API
+> one can use `Accept: application/pretty+json` to receive pretty-printed JSON eg. for debugging and exploring the API

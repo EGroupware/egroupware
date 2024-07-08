@@ -1,6 +1,6 @@
 import {Et2Portlet} from "../../api/js/etemplate/Et2Portlet/Et2Portlet";
 import shoelace from "../../api/js/etemplate/Styles/shoelace";
-import {css} from "@lion/core";
+import {css} from "lit";
 import {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 

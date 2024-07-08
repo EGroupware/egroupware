@@ -40,9 +40,10 @@ class ContentSecurityPolicy
 		'connect-src' => null,	// NOT array(), to call the hook
 		'frame-src'   => null,	// NOT array(), to call the hook
 		'manifest-src'=> ["'self'"],
-		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other then self / clickjacking protection
+		'frame-ancestors' => ["'self'"],	// does not allow to frame (embed in frameset) other than self / clickjacking protection
 		'media-src'   => ["data:"],
 		'img-src'     => ["data:", "https:", "blob:"],
+		'font-src'    => ["'self'"],
 		'default-src' => ["'none'"],	// disallows all not explicit set sources!
 	);
 

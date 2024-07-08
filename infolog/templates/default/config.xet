@@ -37,6 +37,10 @@
                         <option value="but_admins">Entry can NOT be changed by anybody, but EGroupware admins</option>
                     </et2-select>
                 </row>
+                <row>
+                    <et2-description value="Editable fields for status 'archived'"></et2-description>
+                    <et2-select id="archived_editable" multiple="true" placeholder="all"></et2-select>
+                </row>
                 <row class="th">
                     <et2-description value="Other configurations" span="all"></et2-description>
                 </row>

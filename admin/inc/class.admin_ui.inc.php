@@ -183,6 +183,17 @@ class admin_ui
 				$actions['add']['url'] .= ($actions['edit']['url'] ? '&' : '').$name.'='.$val;
 			}
 			++$group;
+			$config = Api\Config::read('admin');
+			$reset = new admin_passwordreset();
+			$actions['change'] = array(
+				'caption'         => 'Bulk changes',
+				'allowOnMultiple' => true,
+				'group'           => $group,
+				'nm_action'       => 'popup',
+				'url'             => 'menuaction=admin.admin_passwordreset.index&dialog=true&ids=$id&select_all=$select_all',
+				'width'           => 750,
+				'height'          => 600
+			);
 			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
 			$apps = array_unique(array_merge(array('admin'), Api\Hooks::implemented('edit_user')));
 			foreach($apps as $app)
@@ -385,6 +396,7 @@ class admin_ui
 		{
 			$params['account_id'] = (array)$query['account_id'];
 		}
+		Api\Cache::setSession('admin', 'account_list', $query);
 
 		$rows = array_values(self::$accounts->search($params));
 		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
@@ -559,14 +571,14 @@ class admin_ui
 					{
 						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
 						$matches = null;
-						if (preg_match_all('/(menuaction|load)=([^&]+)/', $data['link'], $matches))
+						if(preg_match_all('/(menuaction|load)=([^&\',]+)/', $data['link'], $matches))
 						{
 							$data[Tree::ID] .= $matches[2][(int)array_search('load', $matches[1])];
 						}
 					}
 					if (!empty($data['icon']))
 					{
-						$icon = Etemplate\Widget\Tree::imagePath($data['icon']);
+						$icon = $data['icon'];
 						if (!empty($data['child']) || !empty($data[Tree::CHILDREN]))
 						{
 							$data[Tree::IMAGE_FOLDER_OPEN] = $data[Tree::IMAGE_FOLDER_CLOSED] = $icon;
@@ -575,6 +587,10 @@ class admin_ui
 						{
 							$data[Tree::IMAGE_LEAF] = $icon;
 						}
+					}
+					else
+					{
+						$data[Tree::IMAGE_LEAF] = Api\Image::find('api', 'bullet');
 					}
 					unset($data['icon']);
 					$parent =& $tree[Tree::CHILDREN];
@@ -587,8 +603,12 @@ class admin_ui
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = Etemplate\Widget\Tree::imagePath($part == 'apps' ? Api\Image::find('api', 'home') :
-								(($i=Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav')));
+							$icon = $part == 'apps' ? Api\Image::find('api', 'home') :
+								(($i = Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav'));
+							if(!str_ends_with($icon, '.svg'))
+							{
+								$icon = Api\Image::find('api', 'navbar');
+							}
 							$parent[$path] = array(
 								Tree::ID => $path,
 								Tree::LABEL => $part == 'apps' ? lang('Applications') : lang($part),

@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	uk	Додано %1 імейл адрес
+%1 email addresses inserted	common	uk	Додано %1 імейл адрес.
 %1 email(s) added into %2	common	uk	%1 імейл(и) додано до %2
 %1 more %2 selected ...	common	uk	Вибрано ще %1 %2 ...
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
@@ -23,12 +23,12 @@
 80 (http)	admin	uk	80 (http)
 abort	common	uk	Перервати
 about	common	uk	Щодо
-about %1	common	uk	Щодо "%1"
+about %1	common	uk	Щодо %1
 access	common	uk	Доступ
-access not permitted	common	uk	Доступ не дозволено
-account has been created	common	uk	Рахунок створено
-account has been deleted	common	uk	Рахунок видалено
-account has been updated	common	uk	Рахунок змінено
+access not permitted	common	uk	Доступ не дозволено.
+account has been created	common	uk	Рахунок створено.
+account has been deleted	common	uk	Рахунок видалено.
+account has been updated	common	uk	Рахунок змінено.
 account is expired	common	uk	Термін дії рахунку вичерпано
 acl	common	uk	ACL
 action	common	uk	Дія
@@ -78,20 +78,19 @@ australia	common	uk	АВСТРАЛІЯ
 austria	common	uk	АВСТРІЯ
 authenticate	common	uk	Автентифікація
 author	common	uk	Автор
-autohide sidebox menu's	common	uk	Приховувати бокове меню
 autosave default category	common	uk	Автоматично зберегти категорію по замовченню
 avatar	common	uk	Аватар
 azerbaijan	common	uk	АЗЕРБАЙДЖАН
 back	common	uk	Повернутись
 back to user login	common	uk	Повернутись до входу в систему
-bad login or password	common	uk	Неправильне ім'я або пароль
+bad login or password	common	uk	Неправильне ім'я або пароль.
 bahrain	common	uk	БАХРЕЙН
 bangladesh	common	uk	БАНГЛАДЕШ
 barbados	common	uk	БАРБАДОС
 bcc	common	uk	Bcc
 belgium	common	uk	БЕЛЬГІЯ
 bermuda	common	uk	БЕРМУДА
-blocked, too many attempts	common	uk	Заблоковано, надто багато спроб
+blocked, too many attempts	common	uk	Заблоковано, надто багато спроб.
 bolivia	common	uk	БОЛІВІЯ
 botswana	common	uk	БОТСВАНА
 bottom	common	uk	низ
@@ -124,9 +123,16 @@ clear form	common	uk	Очистити форму
 click	common	uk	Натискати
 click here to create the link	common	uk	натисніть тут для створення Посилання
 click here to start the search	common	uk	натисніть тут щоб почати пошук
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	uk	Клієнти, які не вказали ліміт, обмежуються цією кількістю днів. Занадто високий ліміт може спричинити проблеми з деякими клієнтами.
+clipboard contents	common	uk	Вміст буфера обміну
 close	common	uk	Закрити
+code	common	uk	Код
+collection empty.	common	uk	Колекція порожня.
+collection listing	common	uk	Список колекцій
 colombia	common	uk	КОЛУМБІЯ
 colour	common	uk	Колір
+columns to print	common	uk	Стовпці для друку
+command ⌘	common	uk	Команда ⌘
 comment	common	uk	Коментувати
 company	common	uk	Компанія
 confirm	common	uk	Підтвердити
@@ -165,7 +171,7 @@ december	common	uk	Грудень
 default	common	uk	По замовченню
 default category	common	uk	Категорія по замовчуванню
 delete	common	uk	Видалити
-delete a single entry by passing the id.	common	uk	Видалити один запис по ID.
+delete a single entry by passing the id.	common	uk	Видалити один запис по ID
 delete category	common	uk	Видалити категорію
 delete this entry	common	uk	видалити цей запис
 denmark	common	uk	ДАНІЯ
@@ -188,20 +194,20 @@ edit	common	uk	Редагувати
 edit %1 category for	common	uk	Редагувати категорію %1 для
 edit categories	common	uk	Редагувати категорії
 edit category	common	uk	Редагувати категорію
-egroupware: login blocked for user '%1', ip %2	common	uk	EGroupware: вхід заборонено для '%1', IP %2
+egroupware: login blocked for user '%1', ip %2	common	uk	Заблоковано вхід для користувача '%1', IP %2
 egypt	common	uk	ЄГИПЕТ
 email	common	uk	E-Mail
 email-address of the user, eg. "%1"	common	uk	email адреса користувача, наприклад "%1".
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: https://egw.domain.com/egroupware   або   /egroupware<br><b>Без / в кінці</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	uk	Введіть URL EGroupware.<br>наприклад: https://egw.domain.com/egroupware або /egroupware<br><b>Без / в кінці</b>
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
-entry updated sucessfully	common	uk	Запис змінено успішно
+entry updated sucessfully	common	uk	Запис змінено успішно.
 error	common	uk	Помилка
-error creating %1 %2 directory	common	uk	Помилка створення %1 %2 каталогу
-error deleting %1 %2 directory	common	uk	Помилка видалення %1 %2 каталогу
-error renaming %1 %2 directory	common	uk	Помилка переіменування %1 %2 каталогу
+error creating %1 %2 directory	common	uk	Помилка створення %1 %2 каталогу!
+error deleting %1 %2 directory	common	uk	Помилка видалення %1 %2 каталогу!
+error renaming %1 %2 directory	common	uk	Помилка переіменування %1 %2 каталогу!
 estonia	common	uk	ЕСТОНІЯ
 ethiopia	common	uk	ЕФІОПІЯ
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	uk	Приклад {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - шукає поле "n_prefix", для "Mr", якщо знайдено, пише "Hello Mr.", інакше пише "Hello Ms.".
@@ -271,7 +277,6 @@ how many days to sync in the future (default %1)	groupdav	uk	Скільки дн
 how many days to sync in the past (default %1)	groupdav	uk	Скільки днів синхронізувати в минулому (за замовчуванням %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	uk	Скільки ікон показувати в навігаційній панелі. Додаткові ікони будуть в випадаючому меню в правій частині панелі.
 how many rows to print	common	uk	Скільки рядків друкувати
-how to show the general egroupware menu ?	common	uk	Як показати загальне меню EGroupware
 html	common	uk	HTML
 html links to any entries linked to the current record, excluding attached files	common	uk	HTML-посилання на будь-які записи, пов'язані з поточним записом, за винятком прикріплених файлів
 hungary	common	uk	УГОРЩИНА
@@ -289,14 +294,14 @@ install egroupware as mail-handler?	common	uk	Встановити EGroupware я
 international	common	uk	Міжнародний
 invalid 2-factor authentication code	common	uk	Невірний код 2-факторної автентифікації
 invalid email	common	uk	Неправильний імейл
-invalid filename	common	uk	невірне ім'я файлу
-invalid ip address	common	uk	Невірна IP адреса
+invalid filename	common	uk	невірне ім'я файлу.
+invalid ip address	common	uk	Невірна IP адреса.
 invalid or expired 'remember me' token	common	uk	Недійсний або прострочений токен "запам'ятати мене
-invalid password	common	uk	Невірний пароль
+invalid password	common	uk	Невірний пароль.
 iraq	common	uk	ІРАК
 ireland	common	uk	ІРЛАНДІЯ
 israel	common	uk	ІЗРАЇЛЬ
-it has been more then %1 days since you changed your password	common	uk	Пройшло більше %1 днів з часу зміни паролю
+it has been more then %1 days since you changed your password	common	uk	Пройшло більше %1 днів з часу зміни паролю.
 it is recommended that you run setup to upgrade your tables to the current version	common	uk	It is recommended that you run setup to upgrade your tables to the current version.
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	uk	Рекомендується зберігати ваш відкритий ключ в адресній книзі, щоб інші користувачі могли писати вам зашифровані листи.
 italy	common	uk	ІТАЛІЯ
@@ -347,7 +352,6 @@ malta	common	uk	МАЛЬТА
 march	common	uk	Березень
 mauritania	common	uk	МАВРІТАНІЯ
 mauritius	common	uk	МАВРІКІЙ
-max number of icons in navbar	common	uk	Максимальна кількість іконок в навігаційній панелі
 may	common	uk	Травень
 medium	common	uk	Середній
 menu	common	uk	Меню
@@ -358,9 +362,13 @@ minutes	common	uk	хвилини
 monday	common	uk	Понеділок
 mongolia	common	uk	МОНГОЛІЯ
 month	common	uk	Місяць
+more	common	uk	Більше
 morocco	common	uk	МАРОККО
 move	common	uk	Перемістити
+moved %1 children from directory fs_id=%2 to %3	admin	uk	Переміщено дочірні файли %1 з теки fs_id=%2 до теки %3
+moved unconnected %1 %2 to %3.	admin	uk	Переміщено непідключені %1 %2 до %3.
 mozambique	common	uk	МОЗАМБІК
+my account	common	uk	Мій обліковий запис
 name	common	uk	Ім'я
 name of the user, eg. "%1"	common	uk	Ім'я користувача, тобто "%1"
 namibia	common	uk	НАМІБІЯ
@@ -382,7 +390,7 @@ no entries found, try again ...	common	uk	Записів не знайдено, 
 no file	common	uk	файлу немає
 no filters	common	uk	Немає фільтрів
 no history for this record	common	uk	Немає історії для цього запису
-no matches found	common	uk	Відповідностей не знайдено
+no matches found	common	uk	Відповідностей не знайдено.
 no subject	common	uk	Немає теми
 none	common	uk	Немає
 normal	common	uk	Нормальний
@@ -416,8 +424,8 @@ paraguay	common	uk	ПАРАГВАЙ
 parcel	common	uk	Поштова скринька
 parent category	common	uk	Вищестояча Категорія
 password	common	uk	Пароль
-password could not be changed	common	uk	Пароль не може бути змінено
-password has been updated	common	uk	Пароль змінено
+password could not be changed	common	uk	Пароль не може бути змінено!
+password has been updated	common	uk	Пароль змінено.
 path to user and group files has to be outside of the webservers document-root!!!	common	uk	Шлях до файлів користувачів та груп МАЄ БУТИ ЗОВНІШНІМ відносно корню документів веб-сервера!
 permission denied!	common	uk	У дозволі відмовлено!
 permission denied! this is an administration only feature.	common	uk	У доступі відмовлено! Ця функція доступна лише для адміністрації.
@@ -435,7 +443,7 @@ placeholders	common	uk	Заповнювачі
 play/pause	common	uk	Відтворення/Пауза
 please %1 by hand	common	uk	Будь ласка, введіть %1 від руки
 please enter a name	common	uk	Будь ласка введіть ім'я
-please reload the egroupware desktop (f5 / cmd+r).	common	uk	Будь ласка, перезавантажте робочий стіл EGroupware (F5 / Cmd + R).
+please reload the egroupware desktop (f5 / cmd+r).	common	uk	Будь ласка, перезавантажте робочий стіл EGroupware (F5 / Ctrl+R).
 please remember to use '%1' as username for local login's from now on!	common	uk	Будь ласка, не забувайте використовувати '%1' як ім'я користувача для локального входу!
 please run setup to become current	common	uk	Будь ласка запустіть setup для оновлення версії
 please select	common	uk	Будь ласка виберіть
@@ -458,9 +466,9 @@ private	common	uk	Особисте
 project	common	uk	Проект
 public	common	uk	публічне
 read	common	uk	Читати
-read a list of entries.	common	uk	Прочитати перелік записів
-read a single entry by passing the id and fieldlist.	common	uk	Прочитати один запис по id та переліку полів.
-read this list of methods.	common	uk	Прочитати цей перелік методів.
+read a list of entries.	common	uk	Прочитати перелік записів.
+read a single entry by passing the id and fieldlist.	common	uk	Прочитати один запис по ID та переліку полів.
+read this list of methods.	common	uk	Прочитати цей перелік методів
 refresh	common	uk	Поновити
 reject	common	uk	Відмовити
 remove this link (not the entry itself)	common	uk	Видалити це посилання (не сам запис)
@@ -468,7 +476,7 @@ rename	common	uk	Перейменувати
 repeat password	common	uk	Повторити пароль
 reset	common	uk	Переввести
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	uk	Повертає повний перелік рахунків в системі. Це може бути дуже великим.
-returns an array of todo items	common	uk	Повертає масив завдань.
+returns an array of todo items	common	uk	Повертає масив завдань
 returns struct of users application access	common	uk	Повертає структуру доступу користувачів до приложень
 romania	common	uk	РУМУНІЯ
 russian federation	common	uk	РОСІЙСЬКА ФЕДЕРАЦІЯ
@@ -506,7 +514,7 @@ seychelles	common	uk	СЕЙШЕЛИ
 show all	common	uk	показати все
 show all categorys	common	uk	Показати всі категорії
 show page generation time	common	uk	Показувати час генерації сторінки
-show page generation time on the bottom of the page?	common	uk	Показувати час генерації сторінки в низу сторінки?
+show page generation time on the bottom of the page?	common	uk	Показувати час генерації сторінки в низу сторінки.
 show password	common	uk	Показати пароль
 show_more_apps	common	uk	Показати більше приложень
 showing %1	common	uk	видно %1
@@ -518,7 +526,7 @@ site configuration	common	uk	Конфігурація
 slovakia	common	uk	СЛОВАКІЯ
 slovenia	common	uk	СЛОВЕНІЯ
 somalia	common	uk	СОМАЛІ
-sorry, your login has expired	login	uk	Вибачте, Ваше право входу вичерпано
+sorry, your login has expired	login	uk	Вибачте, Ваше право входу вичерпано.
 spain	common	uk	ІСПАНІЯ
 sri lanka	common	uk	ШРІ ЛАНКА
 start a new search, cancel this link	common	uk	Розпочати новий пошук, покинути це посилання
@@ -596,19 +604,19 @@ yemen	common	uk	ЙЄМЕН
 yes	common	uk	Так
 yes - delete	common	uk	Так - Видалити
 you are required to change your password during your first login	common	uk	Необхідно змінити Ваш пароль на протязі Вашого першого входу.
-you have been successfully logged out	login	uk	Ви вийшли успішно
-you have not entered a title	common	uk	Ви не ввели назву
-you have not entered a valid date	common	uk	Ви не ввели вірну дату
-you have not entered a valid time of day	common	uk	Ви не ввели вірний час дня
-you have not entered participants	common	uk	Ви не ввели учасників
+you have been successfully logged out	login	uk	Ви вийшли успішно.
+you have not entered a title	common	uk	Ви не ввели назву.
+you have not entered a valid date	common	uk	Ви не ввели вірну дату.
+you have not entered a valid time of day	common	uk	Ви не ввели вірний час дня.
+you have not entered participants	common	uk	Ви не ввели учасників.
 you have selected an invalid date	common	uk	Ви вибрали невірну дату!
 you have selected an invalid main category	common	uk	Ви вибрали невірну основну категорію!
-you have successfully logged out	common	uk	Ви успішно вийшли
+you have successfully logged out	common	uk	Ви успішно вийшли.
 your account has been updated with new data from your identity provider.	common	uk	Ваш обліковий запис було оновлено новими даними від вашого постачальника ідентифікаційних даних.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	uk	Ваш браузер застарілий (не сумісний з JavaScript ES6), деякі функції можуть не працювати.
 your key has been restored successfully.	common	uk	Ваш ключ успішно відновлено.
 your message could <b>not</b> be sent!<br>	common	uk	Ваше повідомлення <b>не може</b> бути відіслано!<br>
-your message has been sent	common	uk	Ваше повідомлення відіслано
+your message has been sent	common	uk	Ваше повідомлення відіслано.
 your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	uk	Ваш пароль не має необхідної надійності %1 класів символів та мінімальної довжини %2 символів.
 your password does not have required strength:	common	uk	Ваш пароль не має необхідної надійності:
 your password failed the following criteria:	common	uk	Ваш пароль не відповідає наступним критеріям:

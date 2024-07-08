@@ -797,6 +797,11 @@ et2-dialog et2-button {
     max-width: 100ex;
 }
 
+td.et2_customfield_header et2-label {
+    font-size: 120%;
+    font-weight: bold;
+}
+
 /* Custom field list inside nextmatch rows gets an icon for each row */
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
     background-image: url('images/dialog_info.svg');
@@ -2107,7 +2112,7 @@ table.et2_grid tbody.ui-sortable:not(.ui-sortable-disabled) > tr:not(.th) {
  * Message styles
  */
 /* Style used for a generic message (such as success messages or validation errors) */
-div.message, lion-validation-feedback[type] {
+div.message, egw-validation-feedback[type] {
     display: block;
     border: 1px solid;
     border-color: var(--primary-color, gray);
@@ -2119,7 +2124,7 @@ div.message, lion-validation-feedback[type] {
     font-size: 12px;
 }
 
-div.message.floating, lion-validation-feedback[type] {
+div.message.floating, egw-validation-feedback[type] {
     position: absolute;
     margin: 0px;
     z-index: 1;
@@ -2127,14 +2132,14 @@ div.message.floating, lion-validation-feedback[type] {
     left: 0px;
 }
 
-lion-validation-feedback[type] {
+egw-validation-feedback[type] {
     top: initial;
     margin-top: calc(-0.2 * var(--sl-input-height-medium));
 	width: fit-content;
 	white-space: nowrap;
 }
 
-.message.validation_error, lion-validation-feedback[type="error"] {
+.message.validation_error, egw-validation-feedback[type="error"] {
     color: var(--error-color);
     border-color: var(--error-color);
     background-repeat: no-repeat;
@@ -2765,6 +2770,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 .long_task .message {
+	white-space: break-spaces;
     height: inherit;
     display: list-item;
     border: none;
@@ -4202,4 +4208,10 @@ button.shortcut-buttons-flatpickr-button {
 /* Fix tinemce toolbar z-index is way higher (safari only) */
 .tox .tox-editor-container .tox-editor-header {
 	z-index: auto;
+}
+
+/* Right-align "As PDF" checkbox in merge dialog */
+et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
+	order: 10;
+	margin-left: auto;
 }

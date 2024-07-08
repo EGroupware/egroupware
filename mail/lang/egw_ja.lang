@@ -5,6 +5,7 @@
 %1 has been removed from whiltelisted email addresses	mail	ja	ホワイトリストから %1 を削除しました
 %1 is not writable by you!	mail	ja	%1 に対する書き込み権限がありません!
 %1 mails selected	mail	ja	%1 件のメールが選択済み
+%1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ja	%1 には Sieve 拡張機能 %2 が必要です。%1 またはそれ以上の日数をお試しください。
 (*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	ja	(*) 転送先アドレス数が制限値を越える可能性があるため、複数宛先の転送は失敗する恐れがあります。多くのサーバーでは転送先は 4 個までに制限されています。詳細はサーバー管理者にお問い合わせ下さい。
 (leave empty for no quota)	mail	ja	（空欄にするとクォータ設定無し）
 (no subject)	mail	ja	(件名無し)
@@ -23,7 +24,7 @@ add "%1" into whitelisted emails	mail	ja	メール・アドレス "%1" をホワ
 add a new folder to %1:	mail	ja	新規フォルダを %1 に追加:
 add all my aliases	mail	ja	別名を全て追加
 add as new	mail	ja	新規追加
-add files as %1	mail	ja	ファイルを %1 として追加してください。
+add files as %1	mail	ja	ファイルを %1 として追加してください
 add folder	mail	ja	フォルダを追加
 add raw message, ignore mail attachments	mail	ja	メールをアイテムに変換し、生のメッセージを追加する（メールの添付ファイルは無視する）
 add this certificate into contact	mail	ja	アドレス帳に証明書を追加
@@ -40,12 +41,12 @@ all filtered	mail	ja	全フィルター適用済み
 all messages in the folder will be lost	mail	ja	フォルダ内の全メールが失われます
 all my email addresses	mail	ja	全メール・アドレス
 all of	mail	ja	全
-all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ja	全サブフォルダ、およびそれら内の全メールが失われます。
+all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	ja	全サブフォルダ、およびそれら内の全メールが失われます
 allow	mail	ja	許可
 allow external images	mail	ja	外部画像を許可
 allow external images from listed domains	mail	ja	指定ドメインからの外部画像を許可
-allow images from external sources in html emails	mail	ja	HTMLメールで外部ソースからの画像を許可
-allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可
+allow images from external sources in html emails	mail	ja	HTMLメールで外部ソースからの画像を許可。
+allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可。
 allow users to create further identities	mail	ja	追加名称の生成を許可
 allways a new window	mail	ja	常に新規ウィンドウを用いる
 always	mail	ja	常に
@@ -56,7 +57,7 @@ always show notifiction	mail	ja	常に通知を表示する
 an error happend while trying to remove acl rights from the account %1!	mail	ja	アカウント %1 の ACL 権限削除中にエラーが発生!
 and the rule with priority %1, now got the priority %2	mail	ja	優先順位 %1 でルールを追加しました（げないの優先順位は %2）
 answered	mail	ja	回答済み
-any of	mail	ja	いずれか:
+any of	mail	ja	いずれか
 any status	mail	ja	全状態
 append	mail	ja	追加
 appended after reply before sending	mail	ja	返信を送信する前に追加
@@ -67,7 +68,7 @@ are you sure you want to move folder %1 to folder %2?	mail	ja	%2?フォルダ %1
 arrival	mail	ja	受信
 ask for permission	mail	ja	権限を要求
 attach files	mail	ja	ファイルの添付
-attach users vcard at compose to every new mail	mail	ja	新規メール作成時vCardを常に添付
+attach users vcard at compose to every new mail	mail	ja	新規メール作成時vCardを常に添付。
 attach vcard	mail	ja	vCardを添付
 attachment	mail	ja	添付
 attachment has been saved successfully.	mail	ja	添付ファイルは正常に保存されました。
@@ -92,8 +93,8 @@ certificate info for email %1	mail	ja	メール %1 の証明書情報
 certificate issued by	mail	ja	発行者
 change editor type	mail	ja	エディタを HTML モードに切替える
 changed profile	mail	ja	プロフィール変更
-changing subject failed because of %1	mail	ja	件名の変更に失敗しました。
-changing subject failed folder %1 does not exist	mail	ja	フォルダ %1 が存在しないため、件名の変更に失敗しました。
+changing subject failed because of %1	mail	ja	件名の変更に失敗しました
+changing subject failed folder %1 does not exist	mail	ja	フォルダ %1 が存在しないため、件名の変更に失敗しました
 check message against next rule also	mail	ja	後続のルールを適用
 check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)	mail	ja	既読通知を受信（注:サポートするクライアントのみ。また受信者が許可しない場合もあります）
 check to save as calendar event on send	mail	ja	送信時にイベントとして保存
@@ -118,10 +119,10 @@ contains(*)	mail	ja	含む(*)
 convert mail to item and attach its attachments to this item (standard)	mail	ja	メール本文と添付ファイルを保存（標準）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ja	メール本文、添付ファイル、およびRFC822 (.eml)形式のメール・ソースを保存
 convert only mail to item (ignore possible attachments)	mail	ja	メール本文を保存（添付ファイルを無視）
-copied %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージが %2 から %3 にコピーされました。
+copied %1 message(s) from %2 to %3	mail	ja	%1 個のメッセージが %2 から %3 にコピーされました
 copy to	mail	ja	コピー先
 could not append message:	mail	ja	メッセージを追加できませんでした：
-could not save the acl because some names are empty	mail	ja	名前の一部が空欄のためACLを保存できませんでした。
+could not save the acl because some names are empty	mail	ja	名前の一部が空欄のためACLを保存できませんでした
 create new account	mail	ja	新規アカウントの作成
 cross account forward attachment is not allowed!	mail	ja	クロスアカウントでの転送添付ができない!
 current folder	mail	ja	現在のフォルダ
@@ -138,9 +139,10 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	ja	メールフォルダヘッダのIDラベルとして何を表示するかを定義します。
 delete folder	mail	ja	フォルダの削除
 delete folder %1 ?	mail	ja	フォルダ %1 を削除してよろしいですか?
+delete selected folders	mail	ja	選択したフォルダを削除する
 delete this acl	mail	ja	この ACL を削除する
 deleted	mail	ja	削除完了
-deleted %1 messages in %2	mail	ja	%2 内の %1 個のメッセージを削除しました
+deleted %1 messages in %2	mail	ja	%2 内の %1 個のメッセージを削除しました。
 deleted!	mail	ja	削除されました!
 deleting %1 folders in progress ...	mail	ja	%1 個のフォルダを削除しています ...
 deleting folders	mail	ja	フォルダの削除中
@@ -216,9 +218,9 @@ error saving %1!	mail	ja	%1 の保存でエラーが発生しました！
 error while setting acl for folder %1!	mail	ja	フォルダ %1 の ACL の設定中にエラー!
 error while setting folder	mail	ja	フォルダ設定中のエラー
 error:	mail	ja	エラー:
-error: could not save acl	mail	ja	エラー: ACL を保存できませんでした。
-error: could not save message as draft	mail	ja	エラー: メッセージを下書きとして保存できませんでした。
-error: could not save rule	mail	ja	エラー: ルールを保存できませんでした。
+error: could not save acl	mail	ja	エラー: ACL を保存できませんでした
+error: could not save message as draft	mail	ja	エラー: メッセージを下書きとして保存できませんでした
+error: could not save rule	mail	ja	エラー: ルールを保存できませんでした
 error: could not send message.	mail	ja	エラー: メッセージを送信できませんでした。
 error: message could not be displayed.	mail	ja	エラー: メッセージを表示できませんでした。
 esync will fail without a working email configuration!	mail	ja	有効なメール構成が無い場合 eSync は正常に動作しません!
@@ -226,6 +228,7 @@ event details follow	mail	ja	イベント詳細:
 every %1. day	mail	ja	毎日 %1.
 everyone	mail	ja	みんな
 examine namespace to retrieve folders in others and shared	mail	ja	名前空間を調べて、他人と共有のフォルダを取り出す
+exclude attachments greater than given size from automatic saving as draft (in mb)	admin	ja	指定したサイズ以上の添付ファイルを下書きとして自動保存から除外する(MB単位)
 extended	mail	ja	拡張
 extra sent folders	mail	ja	拡張送信済みフォルダ
 failed to delete %1	mail	ja	%1 の削除に失敗しました
@@ -237,7 +240,7 @@ failed to subscribe folder %1!	mail	ja	フォルダ %1 の購読に失敗しま�
 failed to unsubscribe folder %1!	mail	ja	フォルダ %1 の購読解除に失敗しました!
 file into	mail	ja	に移動します
 file into:	mail	ja	に移動します：
-file rejected, no %2. is:%1	mail	ja	ファイルは拒否されました, no %2. Is:%1
+file rejected, no %2. is:%1	mail	ja	ファイルは拒否されました, no %2. Is :%1
 filemanager	mail	ja	ファイル・マネージャ
 filemode has been switched to %1	mail	ja	ファイル・モードが %1
 files	mail	ja	ファイル
@@ -251,8 +254,8 @@ flagged / unflagged	mail	ja	フラグを立てる/外す
 folder	mail	ja	フォルダ
 folder %1 %2 failed because of %3!	mail	ja	フォルダ %1 %2 は %3 が原因で失敗しました！
 folder %1 %2 failed!	mail	ja	フォルダ %1 %2 が失敗しました！
-folder %1 has been created successfully, although the subscription failed because of %2	mail	ja	サブスクリプションは %2 で失敗しましたが、フォルダ %1 が正常に作成されました。
-folder %1 is moving to folder %2	mail	ja	フォルダ %1 はフォルダ %2 に移動します。
+folder %1 has been created successfully, although the subscription failed because of %2	mail	ja	サブスクリプションは %2 で失敗しましたが、フォルダ %1 が正常に作成されました
+folder %1 is moving to folder %2	mail	ja	フォルダ %1 はフォルダ %2 に移動します
 folder management	mail	ja	フォルダ管理
 folder management ...	mail	ja	フォルダ管理 ...
 folder settings	mail	ja	フォルダ設定
@@ -306,7 +309,7 @@ if message size	mail	ja	メッセージサイズ
 if shown, which folders should appear on the home page	mail	ja	表示されている場合、どのフォルダをホームページに表示するか
 if subject contains:(*)	mail	ja	件名に:(*)が含まれている場合
 if to contains:(*)	mail	ja	宛先に:(*)が含まれる場合
-if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ja	シングル・クリックでメールのプリビューを表示
+if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ja	シングル・クリックでメールのプリビューを表示。
 if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ja	複数のフォルダを一度に選択する場合、Ctrlキーを押しながら範囲を選択すると範囲内の全フォルダをまとめて選択することができます。
 imap	mail	ja	IMAP
 imap - incoming mail	mail	ja	IMAP - 受信メール
@@ -337,7 +340,7 @@ learning as ham (not spam) failed because of %1	mail	ja	ハム（スパムでな
 learning as spam failed because of %1	mail	ja	スパム学習に失敗しました（%1）
 less than	mail	ja	指定値よりサイズが小さい
 limit mailing list results when searching for addresses	mail	ja	アドレス検索時にメーリング・リストの結果を制限する
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ja	デフォルトでオン/オフにするアクションのリスト (例: メール作成時にInfoLogとして保存するアクション)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ja	デフォルトでオン/オフにするアクションのリスト (例: メール作成時にInfoLogとして保存するアクション)。
 mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
@@ -348,8 +351,8 @@ mail-address	mail	ja	メール・アドレス
 mailaccount	mail	ja	メール・アカウント
 mailinglist	mail	ja	メーリング・リスト
 mails	common	ja	メール
-mails can be copied to that folder via context menu, if folder is configured.	mail	ja	フォルダを構成した後、コンテキスト・メニューからメールのコピーが可能
-mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ja	サーバー応答:\n%1 \n選択されたメッセージを直ちに削除しますか？(OKを選択）\n削除しない場合は、ゴミ箱フォルダを空にしてから続けてください（キャンセルを選択）
+mails can be copied to that folder via context menu, if folder is configured.	mail	ja	フォルダを構成した後、コンテキスト・メニューからメールのコピーが可能。
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ja	サーバー応答:<br><br>%1<br><br>選択されたメッセージを直ちに削除しますか？(OKを選択）<br>削除しない場合は、ゴミ箱フォルダを空にしてから続けてください（キャンセルを選択）
 mark all as read	mail	ja	既読にする
 mark all messages in folder as read	mail	ja	選択されたメッセージを既読にする
 mark as deleted	mail	ja	削除済みとしてマーク
@@ -358,8 +361,8 @@ matches	mail	ja	一致する
 matches regexp	mail	ja	正規表現に一致する
 mbstring.func_overload=0 is required for correct mail processing!	mail	ja	メールを適切に処理するためには、mbstring.func_overload=0 に設定されている必要があります!
 message body	mail	ja	本文
-message learned as ham (not spam) and moved back to inbox	mail	ja	メッセージをハム（スパムでない）として学習し、INBOXに戻しました。
-message learned as spam and moved to spam folder	mail	ja	メッセージをスパムとして学習し、スパム・フォルダに移動しました。
+message learned as ham (not spam) and moved back to inbox	mail	ja	メッセージをハム（スパムでない）として学習し、INBOXに戻しました
+message learned as spam and moved to spam folder	mail	ja	メッセージをスパムとして学習し、スパム・フォルダに移動しました
 message preview area	mail	ja	メッセージ・プリビュー領域
 message saved successfully.	mail	ja	メッセージを保存しました。
 message send failed: %1	mail	ja	メッセージ送信失敗: %1
@@ -397,19 +400,19 @@ no adress, to send this mail to, supplied	mail	ja	送信先が指定されてい
 no folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.	mail	ja	対象フォルダ、保存先フォルダがしていされていません。代替保存先(インフォログ/トラッカー）も指定されていません。
 no folders	mail	ja	フォルダ無し
 no message body supplied	mail	ja	メッセージ本文がありません
-no plain text part found	mail	ja	プレーン・テキストのパートがありません。
+no plain text part found	mail	ja	プレーン・テキストのパートがありません
 no recipient address given!	mail	ja	送信先がありません!
 no send folder set in preferences	mail	ja	送信済みフォルダが設定されていません
 no signature	mail	ja	署名なし
 no sneak preview in list	mail	ja	スニークプリビュー無効
 no subject given!	mail	ja	件名がありません!
 no subject supplied	mail	ja	件名がありません
-no text body supplied, check attachments for message text	mail	ja	テキスト本体がありません。
+no text body supplied, check attachments for message text	mail	ja	テキスト本体がありません
 no vacation notice text provided. please enter a message.	mail	ja	不在通知テキストがありません。メッセージを入力してください。
 no valid %1 folder configured!	mail	ja	有効な %1 フォルダが構成されていません！
 non	mail	ja	無し
 none, create all	mail	ja	無し（全て作成）
-nothing to change.	mail	ja	変更無し
+nothing to change.	mail	ja	変更無し。
 notify about new mail in this folders	mail	ja	これらのフォルダの新着メールを通知する
 notify when new mails arrive in these folders	mail	ja	これらのフォルダに新着がある場合に通知
 on	mail	ja	オン
@@ -421,7 +424,7 @@ only email	mail	ja	メールのみ
 only if currently in an other app	mail	ja	他のアプリを使用中の場合のみ
 only makes sense, if you transport password through a different channel / outside of this mail to recipients!	mail	ja	このメールとは別のルートでパスワードを受信者に送る場合のみ意味があります！
 only name	mail	ja	名前のみ
-only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	ja	ルート・レベルのクエリですべてのフォルダを返さないサーバで、そのレベルのすべてのフォルダを取得する場合にのみ必要です。
+only needed for some servers, that do not return all folders on root level queries to retrieve all folders for that level	mail	ja	ルート・レベルのクエリですべてのフォルダを返さないサーバで、そのレベルのすべてのフォルダを取得する場合にのみ必要です
 only one window	mail	ja	単一ウィンドウのみ
 only send message, do not copy a version of the message to the configured sent folder	mail	ja	メッセージ送信のみ（送信済みフォルダにコピーしない）
 only store message in inbox, do not send vacation notice	mail	ja	INBOXにのみメッセージを保存し、休暇通知を送信しない
@@ -435,7 +438,7 @@ original message	mail	ja	オリジナルメッセージ
 outbox	mail	ja	送信ボックス
 password protect	mail	ja	パスワード保護
 permission denied	mail	ja	権限が拒否されました
-please configure access to an existing individual imap account.	mail	ja	個人用 IMAP アカウントを構成してください
+please configure access to an existing individual imap account.	mail	ja	個人用 IMAP アカウントを構成してください。
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ja	アカウント編集ダイアログの暗号タブでS/MIME証明書を構成してください。
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ja	サーバーがサーバー側フィルター・ルールに対応している場合は、アカウント %1（ID: %2）がフィルター機能をEGroupwaraから利用できるかどうか管理者にお問い合わせ下さい。
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ja	サーバーがサーバー側不在通知に対応している場合は、アカウント %1（ID: %2）が不在通知機能をEGroupwaraから利用できるかどうか管理者にお問い合わせ下さい。
@@ -455,7 +458,7 @@ primary profile	mail	ja	プライマリ・プロフィール
 printing	mail	ja	印刷中
 printview	mail	ja	印刷用表示
 processing of file %1 failed. failed to meet basic restrictions.	mail	ja	ファイル %1 の処理に失敗しました。基本的な制限値に抵触。
-provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ja	不在通知の内容の既定値を定義します。
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	ja	不在通知の内容の既定値を定義します
 push notifications	mail	ja	プッシュ通知
 quicksearch	mail	ja	クイック検索
 quicksearch (with cc)	mail	ja	クイック検索 (CCを含む)
@@ -472,7 +475,7 @@ reason!	mail	ja	理由!
 receive notification	mail	ja	受信通知
 recursively	mail	ja	再帰
 refresh time in minutes	mail	ja	更新間隔(分）
-refused to delete folder inbox	mail	ja	フォルダ  インボックス の削除を拒否されました
+refused to delete folder inbox	mail	ja	フォルダ インボックス の削除を拒否されました
 refused to delete folder with subfolders	mail	ja	フォルダ（サブフォルダを含む）の削除を拒否されました
 reject with	mail	ja	拒否:
 reloaded account %1	mail	ja	アカウント %1 をリロードしました
@@ -488,7 +491,7 @@ removed folder %1	mail	ja	フォルダ %1 を削除しました
 removing %1 from blacklisted email addresses failed because of %2	mail	ja	ブラックリストから %1 を削除できませんでした（%2）
 removing %1 from whiltelisted email addresses failed because of %2	mail	ja	ホワイトリストから %1 を削除できませんでした（%2）
 rename folder	mail	ja	フォルダの名前を変更
-rename folder %1 ?	mail	ja	フォルダ %1 の名称変更
+rename folder %1 ?	mail	ja	フォルダ %1 の名称変更?
 rename folder %1 to:	mail	ja	フォルダ %1 を次の名称に変更:
 renamed folder %1 to %2	mail	ja	フォルダ %1 を %2 に名称変更しました
 replace 'http://' in image urls with (trailing / required!)	mail	ja	画像URLの'http://'を(末尾/必須!)で置き換えてください。
@@ -505,7 +508,7 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	ja	このメールをスパムとして報告 - spamTitan 等のスパム処理機能の学習用
 required pear class mail/mimedecode.php not found.	mail	ja	必要な PEAR クラス Mail/mimeDecode.php が見つかりません。
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	ja	共有フォルダやユーザーフォルダでDovecotを使用し、private seenフラグを使用している場合は、無効にする必要があります！
-resend after how many days?	mail	ja	指定日数後に再送信
+resend after how many days?	mail	ja	指定日数後に再送信?
 respond to mail sent to:	mail	ja	送信されたメールに応答する：
 restrict acl management	admin	ja	ACL 管理を制限
 rights	mail	ja	権限
@@ -556,7 +559,7 @@ selected date range (with quicksearch)	mail	ja	日付範囲 (クイック検索)
 send a reject message:	mail	ja	拒否メッセージを送信します：
 send files as	mail	ja	形式を指定してファイルを送信:
 send message and move to send folder (if configured)	mail	ja	メッセージを送信後、送信済みフォルダに移動
-send message pgp encrypted: requires keys from all recipients!	mail	ja	PGP暗号化メッセージを送信（全ての宛先の暗号化キーが必要)
+send message pgp encrypted: requires keys from all recipients!	mail	ja	PGP暗号化メッセージを送信（全ての宛先の暗号化キーが必要)!
 send only a vacation notice, do not store message in inbox	mail	ja	休暇通知のみを送信し、メッセージをINBOXに保存しない
 send vacation notice and store message in inbox	mail	ja	休暇通知を送信し、インボックスにメッセージを保存する
 sender	mail	ja	差出人
@@ -576,7 +579,7 @@ show	mail	ja	表示
 show all addresses	mail	ja	全メール・アドレスを表示
 show all attachments	mail	ja	全添付を表示
 show all folders	mail	ja	全フォルダを表示
-show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ja	メイン画面で全フォルダを表示(購読と非購読)
+show all folders, (subscribed and unsubscribed) in main screen folder pane	mail	ja	メイン画面で全フォルダを表示(購読と非購読)。
 show horizontal	mail	ja	横並びに表示
 show horizontal, hide if none selected	mail	ja	縦並びに表示
 show new messages on home page	mail	ja	ホームページで新着メッセージを表示
@@ -584,9 +587,9 @@ show notification for new arriving mails	mail	ja	新着メールの通知を表�
 show test connection section and control the level of info displayed?	mail	ja	接続試験領域を表示し表示情報のレベルを制御しますか？
 show test connection section and control the level of info displayed??	mail	ja	接続試験領域を表示し表示情報のレベルを制御しますか？
 show them this time only	mail	ja	今回のみ表示
-show vertical	mail	ja	縦並びに表示
+show vertical	mail	ja	縦表示(3列表示)
 show vertical with all columns	mail	ja	すべてのカラムを縦に表示
-show/hide preview pane in mail list view	mail	ja	メール・リスト表示でプリビュー画面を表示/非表示
+show/hide preview pane in mail list view	mail	ja	メール・リスト表示でプリビュー画面を表示/非表示。
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ja	送信元アドレス、件名、メールの一部を含む一時的な通知を表示します。
 sieve	mail	ja	Sieve
 sieve connection status	mail	ja	Sieve 接続状態
@@ -625,8 +628,8 @@ subscribe folder	mail	ja	フォルダを購読
 subscribe folder ...	mail	ja	フォルダを購読 ...
 subscribe to folder %1	mail	ja	フォルダ %1 を購読
 subscription folders	mail	ja	購読フォルダー
-subscription successfully saved.	mail	ja	購読フォルダーを更新しました。
-succeeded on %1 folders, failed on %2	mail	ja	フォルダ %1 で成功しましたが、%2 で失敗しました。
+subscription successfully saved.	mail	ja	購読フォルダーを更新しました
+succeeded on %1 folders, failed on %2	mail	ja	フォルダ %1 で成功しましたが、%2 で失敗しました
 successfully connected	mail	ja	接続成功
 switch off encryption?	mail	ja	暗号化を解除しますか？
 template folder	mail	ja	テンプレート・フォルダ
@@ -636,11 +639,11 @@ test connection	mail	ja	接続テスト
 test connection and display basic information about the selected profile	mail	ja	選択されたプロフィールによる接続試験を実行し基本情報を表示
 text	mail	ja	テキスト
 text mode	mail	ja	テキスト・モード
-text/plain	mail	ja	text/plain
+text/plain	mail	ja	テキスト
 the %1 's acl removed from the %2	mail	ja	%2 から %1 の ACL を削除しました
-the %1 's acl, including its subfolders, removed from the %2	mail	ja	%1 の ACL(サブフォルダを含む)を %2 から削除しました。
+the %1 's acl, including its subfolders, removed from the %2	mail	ja	%1 の ACL(サブフォルダを含む)を %2 から削除しました
 the entered passphrase is not correct! please try again.	mail	ja	パスフレーズが不正です！再入力してください。
-the folder %1 's acls saved	mail	ja	フォルダ %1 の ACL を保存しました。
+the folder %1 's acls saved	mail	ja	フォルダ %1 の ACL を保存しました
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	mail	ja	この値が空で、かつ有効な既定値が存在しない場合は、フォルダ <b>%1</b> が使用されます。
 the imap server need to meet certain requirements and be configured for it:	mail	ja	IMAPサーバは特定の要件を満たし、そのために設定されている必要があります：
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	ja	送信元が既読確認を求めています。既読確認を送信しますか？
@@ -667,7 +670,7 @@ unflagged	mail	ja	フラグを外す
 unread	mail	ja	未読
 unsubscribe folder	mail	ja	フォルダの購読を解除
 unsubscribe from folder %1	mail	ja	フォルダ %1 の購読を解除
-upload files...	mail	ja	ファイル・アップロード...
+upload files...	mail	ja	ファイル・アップロード ...
 use default timeout (20 seconds)	mail	ja	既定のタイムアウト（20秒）を使う
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	ja	正規表現を使う（POSIX正規表現についてはウィキペディアを参照）
 use source as displayed, if applicable	mail	ja	もしあれば表示中のソースを使う
@@ -688,11 +691,11 @@ view full mail source	mail	ja	メールの全ソースを表示
 view header lines	mail	ja	メールのヘッダを表示
 what do do with html email	mail	ja	HTMLメール作成時の動作
 what order the list columns are in	mail	ja	項目リストの表示順
-what to do when you delete a message	mail	ja	メッセージ削除時の動作
-what to do when you send a message	mail	ja	メッセージ送信時の動作
+what to do when you delete a message	mail	ja	メッセージ削除時の動作。
+what to do when you send a message	mail	ja	メッセージ送信時の動作。
 when deleting messages	mail	ja	メッセージ削除時の動作
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	ja	メッセージをポップアップで表示する時、単一のポップアップを再利用するかメッセージ毎に新規ポップアップを開くか
-when saving messages as item of a different app	mail	ja	他のアプリケーションにメッセージ保存時の動作
+when saving messages as item of a different app	mail	ja	他のアプリケーションにメッセージ保存時の動作。
 when sending messages	mail	ja	メッセージ送信時の動作
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	ja	送信済みフォルダ表示スキーマで表示するフォルダ（送信済みフォルダに加えて）
 which folders - in general - should not be automatically created, if not existing	mail	ja	自動生成すべきでないフォルダ
@@ -717,6 +720,7 @@ you may add this certificate into your contact, if you trust this signature.	mai
 you need to enter your s/mime passphrase to send this message.	mail	ja	S/MIME パスフレーズを入力してメッセージを送信します。
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	ja	ChromeとFirefoxで利用可能なMailvelopeプラグインを%1からインストールする必要があります。
 you need to save the message as draft first before to be able to save it into vfs	mail	ja	VFSに保存するには、前もってメッセージを下書きとして保存する必要があります。
+you need to select some folders first (by clicking on them)!	mail	ja	最初にいくつかのフォルダを選択する必要があります！
 you will loose current message body, unless you save it to your clipboard!	mail	ja	クリップボードに保存しないと現在のメッセージが失われます!
 you've got new mail	mail	ja	メールが届きました!
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	ja	クォータ残量(%1）が不足しているため、今後メールの送受信が行なえません。<br>ゴミ箱、ジャンク・フォルダを整理すると残量を増やすことができます。<br>それでもなお不足する場合は管理者にお問い合わせください。

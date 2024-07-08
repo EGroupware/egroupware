@@ -822,6 +822,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		// for recurring events we have to add the exceptions
 		if ($this->client_shared_uid_exceptions && $event['recur_type'] && !empty($event['uid']))
 		{
+			// some clients (Apple, eMclient) do NOT understand RDATE, therefore we expand the recurrences
+			if ($event['recur_type'] == calendar_rrule::RDATE && in_array(Api\CalDAV\Handler::get_agent(), ['dataaccess', 'iphone', 'calendaragent', 'emclient']))
+			{
+				$expand = $readd_master = true;
+			}
 			if (is_array($expand))
 			{
 				if (isset($expand['start'])) $expand['start'] = $this->vCalendar->_parseDateTime($expand['start']);
@@ -831,6 +836,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			if ($expand || !isset($events))
 			{
 				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event, isset($json) ? 'object' : 'server');
+
+				if (!empty($readd_master))
+				{
+					array_unshift($events, $event);
+				}
 			}
 			// as alarm is now only on next recurrence, set alarm from original event on master
 			if ($event['alarm']) $events[0]['alarm'] = $event['alarm'];

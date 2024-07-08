@@ -13,8 +13,8 @@
 
 > Every other method (including a developer installation by cloning the repo) is way more complicated AND does not include all features, as part's of EGroupware are running in different containers, eg. the push-server!
 
-### Installing EGroupware 21.1 via Docker for non-Linux environments or not supported Linux distros:
-EGroupware 21.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in our [Wiki](https://github.com/EGroupware/egroupware/wiki/Docker-compose-installation) and in [doc/docker](https://github.com/EGroupware/egroupware/tree/21.1/doc/docker) subdirectory.
+### Installing EGroupware 23.1 via Docker for non-Linux environments or not supported Linux distros:
+EGroupware 23.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in our [Wiki](https://github.com/EGroupware/egroupware/wiki/Docker-compose-installation) and in [doc/docker](https://github.com/EGroupware/egroupware/tree/23.1/doc/docker) subdirectory.
 
 ### Installing EGroupware development version via Docker:
 * this is the prefered developer installation, as it contains eg. a push-server container
