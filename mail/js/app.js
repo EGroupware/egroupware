@@ -2002,7 +2002,7 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-					this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined'? "Reloaded Folder %1" : "Reloaded Account %1") ,
+				this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined' ? "Reloaded Folder %1" : "Reloaded Account %1"),
 					(typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') :
 							(_status[i].text ? _status[i].text.replace(this._unseen_regexp, '') : _status[i].id))), 'success');
 			}
@@ -3221,7 +3221,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	vfsSaveCallback: function (_data)
 	{
-		egw.message(_data.msg, _data.success ? "success": "error");
+		egw.message(_data.msg, _data.success ? "success" : "error");
 	},
 
 	/**
@@ -3872,7 +3872,7 @@ app.classes.mail = AppJS.extend(
 		var targetProfile = destination.id.split('::');
 		if (sourceProfile[0]!=targetProfile[0])
 		{
-			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'),'error');
+			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'), 'error');
 			return;
 		}
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
