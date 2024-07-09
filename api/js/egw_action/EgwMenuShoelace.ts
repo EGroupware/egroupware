@@ -41,16 +41,24 @@ export class EgwMenuShoelace extends LitElement
 	{
 		super();
 		this.structure = _structure;
+
+		this.handleDocumentClick = this.handleDocumentClick.bind(this);
+		this.handleKeypress = this.handleKeypress.bind(this);
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
+
+		document.addEventListener("click", this.handleDocumentClick);
+		document.addEventListener("keydown", this.handleKeypress);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
+		document.removeEventListener("click", this.handleDocumentClick);
+		document.removeEventListener("keydown", this.handleKeypress);
 		if(this.popup)
 		{
 			this.popup.remove();
@@ -102,7 +110,10 @@ export class EgwMenuShoelace extends LitElement
 
 	public hide()
 	{
-		this.popup.active = false;
+		if(this.popup)
+		{
+			this.popup.active = false;
+		}
 
 		// egw_menu always creates a new menu
 		this.remove();
@@ -128,6 +139,24 @@ export class EgwMenuShoelace extends LitElement
 				this.hide();
 				item.onClick.call(event.detail.item, item, event);
 			}
+		}
+	}
+
+	handleDocumentClick(event)
+	{
+		if(!event.composedPath().includes(this))
+		{
+			this.hide();
+		}
+	}
+
+	handleKeypress(event : KeyboardEvent)
+	{
+		if(event.key == "Escape")
+		{
+			event.preventDefault();
+			event.stopPropagation();
+			this.hide();
 		}
 	}
 
