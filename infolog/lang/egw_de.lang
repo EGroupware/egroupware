@@ -170,7 +170,6 @@ do you want a notification, if items you delegated are due?	infolog	de	Wollen Si
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML-Mail oder als Text-Mail empfangen.
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	infolog	de	geschlossen
-download	infolog	de	Datei speichern
 download url for links	infolog	de	Download Link für Verknüpfungen
 due %1	infolog	de	%1 fällig
 due date	infolog	de	Fällig am
