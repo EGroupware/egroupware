@@ -108,6 +108,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 			waitForEvent(this._dialog, "sl-after-show").then(async() =>
 			{
 				this.processDialogComplete(await this._dialog.getComplete());
+				this.dispatchEvent(new Event("close", {bubbles: true}));
 			});
 		}
 	}
