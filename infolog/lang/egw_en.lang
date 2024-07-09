@@ -170,7 +170,6 @@ do you want a notification, if items you delegated are due?	infolog	en	Get notif
 do you want to receive notifications as html-mails or plain text?	infolog	en	Receive notifications as HTML emails or plain text.
 don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	Done
-download	infolog	en	Save file
 download url for links	infolog	en	Download URL for links
 due %1	infolog	en	Due %1
 due date	infolog	en	Due date
