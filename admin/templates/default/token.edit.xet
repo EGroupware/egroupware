@@ -4,7 +4,7 @@
 	<template id="admin.token.edit" template="" lang="" group="0" version="19.1">
 		<grid width="100%">
 			<columns>
-				<column width="100"/>
+				<column width="140"/>
 				<column/>
 			</columns>
 			<rows>
