@@ -302,8 +302,21 @@ div.et2_nextmatch > div:not(:first-child) {
 }
 div.et2_nextmatch .egwGridView_outer {
   height: 100%;
+  border-collapse: collapse;
 }
-div.et2_nextmatch .egwGridView_outer thead tr th.optcol span.selectcols {
+div.et2_nextmatch .egwGridView_outer thead > tr {
+  background-color: var(--sl-color-neutral-50);
+  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th {
+  border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th div.innerContainer {
+  max-height: 10em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+div.et2_nextmatch .egwGridView_outer thead > tr th.optcol span.selectcols {
   height: 9px;
   padding: 4px 14px 0 2px;
   margin-top: 4px;
@@ -313,8 +326,17 @@ div.et2_nextmatch .egwGridView_outer thead tr th.optcol span.selectcols {
   display: inline-block;
   background-position: top;
 }
-.egwGridView_scrollarea {
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea {
   overflow-x: hidden;
   overflow-y: auto;
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table {
+  border-collapse: collapse;
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr {
+  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+}
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
+  background-color: var(--highlight-background-color);
 }
 /*** END WIDGETS ***/

@@ -352,24 +352,50 @@ div.et2_nextmatch {
 
   .egwGridView_outer {
 	height: 100%;
+	border-collapse: collapse;
 
-	thead tr th.optcol span.selectcols {
-	  height: 9px;
-	  padding: 4px 14px 0 2px;
-	  margin-top: 4px;
-	  background-image: url(../../../api/templates/default/images/selectcols.svg);
-	  background-repeat: no-repeat;
-	  background-size: 10px 10px;
-	  display: inline-block;
-	  background-position: top;
+	thead > tr {
+	  background-color: var(--sl-color-neutral-50);
+	  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+
+	  th {
+		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+
+		div.innerContainer {
+		  max-height: 10em;
+		  overflow-x: hidden;
+		  overflow-y: auto;
+		}
+	  }
+
+	  th.optcol span.selectcols {
+		height: 9px;
+		padding: 4px 14px 0 2px;
+		margin-top: 4px;
+		background-image: url(../../../api/templates/default/images/selectcols.svg);
+		background-repeat: no-repeat;
+		background-size: 10px 10px;
+		display: inline-block;
+		background-position: top;
+	  }
+	}
+
+	.egwGridView_scrollarea {
+	  overflow-x: hidden;
+	  overflow-y: auto;
+	  table {
+		border-collapse: collapse;
+		tr {
+		  border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
+		}
+		tr.selected {
+		  background-color: var(--highlight-background-color);
+		}
+	  }
 	}
   }
 }
 
 
-.egwGridView_scrollarea {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 
 /*** END WIDGETS ***/
