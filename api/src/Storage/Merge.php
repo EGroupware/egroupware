@@ -2561,17 +2561,22 @@ abstract class Merge
 					$converted = $document_merge->pdf_conversion($target);
 					$target = $converted;
 				}
-				$merged[] = $target;
-				$attach[] = Vfs::PREFIX . $target;
 
 				// Move to entry
 				if($link)
 				{
 					foreach((array)$ids as $id)
 					{
+						// Copy to entry
 						Api\Link::link($app, $id, Api\Link::VFS_APPNAME, Vfs::PREFIX . $target);
+						// Remove
+						Vfs::unlink($target);
+						$target = Api\Link::vfs_path($app, $id, Vfs::basename(Vfs::PREFIX . $target));
 					}
 				}
+
+				$merged[] = $target;
+				$attach[] = Vfs::PREFIX . $target;
 			}
 			// One email per id group
 			if($email && $mail_bo)
