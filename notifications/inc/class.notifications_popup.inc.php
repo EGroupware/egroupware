@@ -155,17 +155,18 @@ class notifications_popup implements notifications_iface
 		$db = $GLOBALS['egw']->db;
 
 		$result = [];
+		$cut_off_date = $db->quote(Api\DateTime::to(notifications_ajax::$cut_off_date, Api\DateTime::DATABASE));
 		if (($total =  $db->select(self::_notification_table, 'COUNT(*)', [
 				'account_id' => $_account_id,
 				'notify_type' => self::_type,
-				'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::$cut_off_date, Api\DateTime::DATABASE))),
+				'notify_created > '.$cut_off_date,
 				'notify_app_id IS NULL',
 			], __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()+
 			$db->select(
 				'('.$db->select(self::_notification_table, 'notify_app,notify_app_id', [
 					'account_id' => $_account_id,
 					'notify_type' => self::_type,
-					'notify_created > '.($cut_off=$db->quote(Api\DateTime::to(notifications_ajax::$cut_off_date, Api\DateTime::DATABASE))),
+					'notify_created > '.$cut_off_date,
 					'notify_app_id IS NOT NULL',
 				], false, false, false, 'GROUP BY notify_app,notify_app_id', self::_appname).') AS app_ids',
 				'COUNT(*)', false, __LINE__, __FILE__, false, '', self::_appname)->fetchColumn()
@@ -179,7 +180,7 @@ class notifications_popup implements notifications_iface
 				foreach ($rs=$db->select(self::_notification_table, '*', [
 					'account_id' => $_account_id,
 					'notify_type' => self::_type,
-					'notify_created > ' . $cut_off,
+					'notify_created > '.$cut_off_date,
 				], __LINE__, __FILE__, $n, 'ORDER BY notify_id DESC', self::_appname, $chunk_size) as $notification)
 				{
 					$actions = null;
@@ -219,9 +220,9 @@ class notifications_popup implements notifications_iface
 				}
 				$n += $chunk_size;
 			}
-			while(!$notification || count($result) < min($num_rows, $total));
+			while($notification && count($result) < min($num_rows, $total));
 
-			return ['rows' => array_values($result), 'total'=> $total];
+			return ['rows' => array_values($result), 'total' => $total];
 		}
 	}
 
