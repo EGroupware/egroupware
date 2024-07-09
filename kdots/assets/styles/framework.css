@@ -5,6 +5,21 @@ body {
   overflow: clip;
   padding: 0px;
   margin: 0px;
+  /** Messages **/
+  /** end messages **/
+}
+html .sl-toast-stack,
+body .sl-toast-stack {
+  top: auto;
+  bottom: 0px;
+}
+html .sl-toast-stack sl-alert et2-checkbox,
+body .sl-toast-stack sl-alert et2-checkbox {
+  padding-top: var(--sl-spacing-large);
+}
+html #egw_message,
+body #egw_message {
+  display: none;
 }
 .egw_menu::part(popup) {
   z-index: var(--sl-z-index-dropdown);

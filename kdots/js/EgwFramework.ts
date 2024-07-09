@@ -3,12 +3,13 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
+import {until} from "lit/directives/until.js";
 import "@shoelace-style/shoelace/dist/components/split-panel/split-panel.js";
 import styles from "./EgwFramework.styles";
 import {egw} from "../../api/js/jsapi/egw_global";
-import {SlDropdown, SlTab, SlTabGroup} from "@shoelace-style/shoelace";
+import {SlAlert, SlDropdown, SlTab, SlTabGroup} from "@shoelace-style/shoelace";
 import {EgwFrameworkApp} from "./EgwFrameworkApp";
-import {until} from "lit/directives/until.js";
+import {EgwFrameworkMessage} from "./EgwFrameworkMessage";
 
 /**
  * @summary Accessable, webComponent-based EGroupware framework
@@ -105,6 +106,9 @@ export class EgwFramework extends LitElement
 	// Keep track of open popups
 	private _popups : Window[] = [];
 
+	// Keep track of open messages
+	private _messages : SlAlert[] = [];
+
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
 	connectedCallback()
@@ -143,6 +147,18 @@ export class EgwFramework extends LitElement
 		// These need egw fully loaded
 		this.getEgwComplete().then(() =>
 		{
+			// Regisert the "message" plugin
+			this.egw.registerJSONPlugin((type, res, req) =>
+			{
+				//Check whether all needed parameters have been passed and call the alertHandler function
+				if((typeof res.data.message != 'undefined'))
+				{
+					this.message(res.data.message, res.data.type)
+					return true;
+				}
+				throw 'Invalid parameters';
+			}, null, 'message');
+
 			// Quick add
 			this.egw.link_quick_add('topmenu_info_quick_add');
 
@@ -491,6 +507,67 @@ export class EgwFramework extends LitElement
 	{
 		const app = this.loadApp(appname);
 		app.setSidebox(sideboxData, hash);
+	}
+
+	/**
+	 * Show a message, with an optional type
+	 *
+	 * @param {string} message
+	 * @param {"" | "help" | "info" | "error" | "warning" | "success"} type
+	 * @param {number} duration The length of time, seconds, the alert will show before closing itself.  Success
+	 * 	messages are shown for 5s, other messages require manual closing by the user.
+	 * @param {boolean} closable=true Message can be closed by the user
+	 * @param {string} _discardID unique string id (appname:id) in order to register
+	 * the message as discardable. Discardable messages offer a checkbox to never be shown again.
+	 * If no appname given, the id will be prefixed with current app. The discardID will be stored in local storage.
+	 * @returns {Promise<SlAlert>} SlAlert element
+	 */
+	public async message(message : string, type : "" | "help" | "info" | "error" | "warning" | "success" = "", duration : null | number = null, closable = true, _discardID : null | string = null)
+	{
+		if(message && !type)
+		{
+			const error_reg_exp = new RegExp('(error|' + egw.lang('error') + ')', 'i');
+			type = message.match(error_reg_exp) ? 'error' : 'success';
+		}
+
+		// Do not add a same message twice if it's still not dismissed
+		const hash = await this.egw.hashString(message);
+		if(typeof this._messages[hash] !== "undefined")
+		{
+			return this._messages[hash];
+		}
+
+		// Already discarded, just stop
+		if(_discardID && EgwFrameworkMessage.isDiscarded(_discardID))
+		{
+			return;
+		}
+
+		const attributes = {
+			type: type,
+			closable: closable,
+			duration: duration * 1000,
+			discard: _discardID,
+			message: message,
+			"data-hash": hash
+		}
+		if(!duration)
+		{
+			delete attributes.duration;
+		}
+
+		const alert = Object.assign(document.createElement("egw-message"), attributes);
+		alert.addEventListener("sl-hide", (e) =>
+		{
+			delete this._messages[e.target["data-hash"] ?? ""];
+		});
+		this._messages[hash] = alert;
+		document.body.append(alert);
+		await alert.updateComplete;
+
+		alert.toast();
+
+		return alert;
 	}
 
 	protected getBaseUrl() {return "";}

@@ -158,6 +158,7 @@ export default css`
 
 	.egw_fw_app__loading {
 		text-align: center;
+		margin: auto;
 
 		sl-spinner {
 			--track-width: 1rem;
