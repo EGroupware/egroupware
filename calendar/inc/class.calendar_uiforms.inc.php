@@ -2225,14 +2225,6 @@ class calendar_uiforms extends calendar_ui
 			// convert event from servertime returned by calendar_ical to user-time
 			$this->bo->server2usertime($event);
 
-			// Check if this is an exception
-			if($event['recur_type'] && count($event['recur_exception']) && !$event['recurrence'])
-			{
-				$diff = $event['recur_exception'][0] - $event['start'];
-				$event['start'] += $diff;
-				$event['end'] += $diff;
-			}
-
 			if (($existing_event = $this->bo->read($event['uid'], $event['recurrence'], false, 'ts', null, true))) // true = read the exception
 			{
 				// check if mail is from extern organizer
@@ -2251,6 +2243,20 @@ class calendar_uiforms extends calendar_ui
 				{
 					$master = $this->bo->read($event['uid']);
 				}
+				$all_participants = ($event['participants'] ?? []) + ($existing_event['participants'] ?? []);
+				$event['participantChanges'] = array_map(function($uid, $status) use ($existing_event, $event) {
+					return [
+						'changed' => !isset($event['participants'][$uid]) ? 'meetingRequestParticipantDeleted' :
+							(!isset($existing_event['participants'][$uid]) ? 'meetingRequestChanged' :
+								($status !== $existing_event['participants'][$uid] ? 'meetingRequestChangedStatus' : '')),
+						'label' => $this->bo->participant_name($uid),
+						'status' => lang($this->bo->verbose_status[calendar_so::split_status($status, $quantity, $role)]),
+						'role' => $role === 'REQ-PARTICIPANT' ? '' : lang($this->bo->roles[$role] ??
+							(substr($role,0,6) === 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0 ?
+								$GLOBALS['egw']->categories->id2name($cat_id) : str_replace('X-','',$role))),
+					];
+				}, array_keys($all_participants), $all_participants);
+
 				switch(strtolower($ical_method))
 				{
 					case 'reply':
@@ -2338,22 +2344,14 @@ class calendar_uiforms extends calendar_ui
 									$readonlys['button[reject]'] = $readonlys['button[cancel]'] = true;
 							}
 						}
-						$all_participants = ($event['participants'] ?? []) + ($existing_event['participants'] ?? []);
-						$event['participantChanges'] = array_map(function($uid, $status) use ($existing_event, $event) {
-							return [
-								'changed' => !isset($event['participants'][$uid]) ? 'meetingRequestParticipantDeleted' :
-									(!isset($existing_event['participants'][$uid]) ? 'meetingRequestChanged' :
-									($status !== $existing_event['participants'][$uid] ? 'meetingRequestChangedStatus' : '')),
-								'label' => $this->bo->participant_name($uid),
-								'status' => lang($this->bo->verbose_status[calendar_so::split_status($status, $quantity, $role)]),
-								'role' => $role === 'REQ-PARTICIPANT' ? '' : lang($this->bo->roles[$role] ??
-									(substr($role,0,6) === 'X-CAT-' && ($cat_id = (int)substr($role,6)) > 0 ?
-										$GLOBALS['egw']->categories->id2name($cat_id) : str_replace('X-','',$role))),
-							];
-						}, array_keys($all_participants), $all_participants);
 						break;
 					case 'cancel':
 						// first participant is the (external) organizer (our iCal parser adds owner first!)
+						$event['changed'] = [
+							'start' => 'meetingRequestChangedValue',
+							'end'   => 'meetingRequestChangedValue',
+							'participants' => 'meetingRequestParticipantDeleted',
+						];
 						$parts = $event['participants'] ?? [];
 						unset($parts[$existing_event['owner']]);
 						$event['ical_sender_uid'] = key($parts);
@@ -2598,6 +2596,18 @@ class calendar_uiforms extends calendar_ui
 		}))))
 		{
 			unset($changes['recure']);
+		}
+
+		// if start changed, make old start-time available to template
+		if (isset($changes['start']) && $_event['start'] != $changes['start'])
+		{
+			$_event['old_start'] = $changes['start'];
+		}
+		// if we have an explicit exception, always report that as a change from the regular recurrence
+		elseif (!empty($_event['recurrence']) && empty($_event['recur_type']) && $_event['recurrence'] != $_event['start'])
+		{
+			$_event['old_start'] = $changes['start'] = $_event['recurrence'];
+			$changes['end'] = $_event['recurrence'] + $_event['end']-$_event['start'];
 		}
 
 		return $changes;

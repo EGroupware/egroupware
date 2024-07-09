@@ -570,10 +570,10 @@ class calendar_boupdate extends calendar_bo
 	 *
 	 * @param array $new_event the updated event
 	 * @param array $old_event the event before the update
+	 * @param int $notify_max_recurrences notify only about this number of single recurrences at maximum
 	 */
-	function check4update($new_event,$old_event)
+	function check4update($new_event, $old_event, int $notify_max_recurrences=3)
 	{
-		//error_log(__METHOD__."($new_event[title])");
 		$modified = $added = $deleted = array();
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
@@ -582,6 +582,63 @@ class calendar_boupdate extends calendar_bo
 		{
 			if($new_event[$field] !== $old_event[$field])
 			{
+				$n = 0;
+				switch($field)
+				{
+					case 'recur_exception':
+						foreach ($added_exceptions=array_diff($new_event[$field]??[],$old_event[$field]??[]) as $key => $recurrence)
+						{
+							if ($this->read($new_event['uid'], $recurrence))
+							{
+								unset($added_exceptions[$key]);
+								continue;   // explicit exception --> no need to notify, already done for the exception itself
+							}
+							// send a cancel for each RECURRENCE-ID
+							$this->send_update(MSG_DELETED, $new_event['participants'], [
+									'recurrence' => $recurrence,
+									'start' => $recurrence,
+									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+								]+$new_event);
+							// limit number of notifications to the first N recurrences
+							if (++$n >= $notify_max_recurrences) break;
+						}
+						$n = 0;
+						foreach($removed_exceptions=array_diff($old_event[$field]??[],$new_event[$field]??[]) as $key => $recurrence)
+						{
+							if ($this->read($new_event['uid'], $recurrence))
+							{
+								unset($removed_exceptions[$key]);
+								continue;   // explicit exception --> no need to notify, already done for the exception itself
+							}
+							// send an add for each RECURRENCE-ID
+							$this->send_update(MSG_ADDED, $new_event['participants'], null, [
+									'recurrence' => $recurrence,
+									'start' => $recurrence,
+									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+								]+$new_event);
+							// limit number of notifications to the first N recurrences
+							if (++$n >= $notify_max_recurrences) break;
+						}
+						continue 2;
+
+					case 'recur_rdates':
+						foreach(array_diff($new_event[$field]??[],$old_event[$field]??[]) as $recurrence)
+						{
+							// send an add for each RECURRENCE-ID
+							$this->send_update(MSG_ADDED, $new_event['participants'], null, [
+									'recurrence' => $recurrence,
+									'start' => $recurrence,
+									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+								]+$new_event);
+							// limit number of notifications to the first N recurrences
+							if (++$n >= $notify_max_recurrences) break;
+						}
+						continue 2;
+
+					case 'recur_enddate':
+						if ($new_event['recur_type'] == MCAL_RECUR_RDATE) continue 2;   // already handled above
+						break;
+				}
 				$modified = $new_event['participants'];
 				break;
 			}
@@ -1288,7 +1345,7 @@ class calendar_boupdate extends calendar_bo
 									'videoconference' => $details['videoconference'],
 								), $event['id']);
 							}
-							if ($m_type === MSG_ALARM)
+							elseif ($m_type === MSG_ALARM)
 							{
 								$notification->set_popupdata('calendar',
 									array('egw_pr_notify' => 1,
@@ -1298,6 +1355,10 @@ class calendar_boupdate extends calendar_bo
 										'name' => Api\Accounts::username($senderid)
 									)
 									+ ($alarm ? ['alarm-offset' => (int)$alarm['offset']] : []), $event['id']);
+							}
+							else
+							{
+								$notification->set_popupdata('calendar', null, $event['id']);
 							}
 							$notification->set_popupmessage($subject . "\n\n" . $notify_body . "\n\n" . $details['description'] . "\n\n" . $details_body . "\n\n");
 							$notification->set_popuplinks(array($details['link_arr'] + array('app' => 'calendar')));

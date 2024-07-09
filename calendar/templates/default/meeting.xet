@@ -78,7 +78,7 @@
 					<et2-description  value="Title"></et2-description>
 					<et2-description  id="title" noLang="1" class="@changed[title]"></et2-description>
 				</row>
-				<row class="row" disabled="!$cont[location]$cont[##videoconference]">
+				<row class="row" disabled="!$cont[location]{$cont['##videoconference']}"> <!-- '##videoconference' must be in quotes because of #! -->
 					<et2-description  value="Location"></et2-description>
 					<et2-hbox>
 						<et2-description  id="location" noLang="1" class="@changed[location]"></et2-description>
@@ -90,6 +90,7 @@
 					<et2-description  value="Date"></et2-description>
 					<et2-hbox class="dates">
 						<et2-date-time  id="start" readonly="true" class="@changed[start]"></et2-date-time>
+						<et2-date-time id="old_start" readonly="true" class="meetingRequestChangedValue" disabled="!@old_start"></et2-date-time>
 						<et2-date-time  label="-" id="end" readonly="true" class="@changed[end]"></et2-date-time>
 					</et2-hbox>
 				</row>
@@ -111,7 +112,7 @@
 				</row>
 				<row class="row" valign="top">
 					<et2-description value="Participants"></et2-description>
-					<grid id="participantChanges" class="meetingRequestParticipants">
+					<grid id="participantChanges" class="meetingRequestParticipants $cont[changed][participants]">
 						<columns>
 							<column/>
 						</columns>
@@ -169,6 +170,7 @@
 			}
 			et2-hbox.dates {
 				padding-left: 5px;
+				width: fit-content;
 			}
 			.meetingWarning tr.th {
 				background-color: #dc2625;
@@ -176,7 +178,7 @@
 			.meetingWarning tr.row td {
 				font-size: 120% !important;
 			}
-			.meetingRequestError, .meetingRequestChanged, .meetingRequestChangedStatus et2-description[id$=status\]], .meetingRequestParticipantDeleted {
+			.meetingRequestError, .meetingRequestChanged, .meetingRequestChangedStatus et2-description[id$=status\]] {
 				font-style: italic;
 				color: red;
 			}
@@ -184,7 +186,8 @@
 				padding: 0 !important;
 				padding-left: 0 !important;
 			}
-			.meetingRequestParticipantDeleted {
+			.meetingRequestParticipantDeleted, .meetingRequestChangedValue {
+				font-style: italic;
 				text-decoration: line-through;
 			}
 		</styles>
