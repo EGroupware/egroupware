@@ -149,6 +149,12 @@ export function et2_dataview_rowAOI(_node)
 			this.checkBox.checked = selected;
 		}
 
+		// Node might not be set yet / anymore
+		if(!this.node || typeof this.node?.classList == "undefined")
+		{
+			return;
+		}
+
 		this.node.classList.toggle('focused', egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
 		this.node.classList.toggle('selected', selected);
 		this.node.classList.toggle('drag--moving', egwBitIsSet(_state, EGW_AO_STATE_DRAGGING));
