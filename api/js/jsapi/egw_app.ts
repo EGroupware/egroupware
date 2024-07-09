@@ -869,7 +869,7 @@ export abstract class EgwApp
 		{
 			vars.document = document.documents.map(f => f.path);
 		}
-		if(document.documents.length == 1 && !document.options.individual)
+		if(document.documents.length == 1 && !document.options.individual && !document.options.download)
 		{
 			// Only 1 document, we can open it
 			vars.id = JSON.stringify(ids);
