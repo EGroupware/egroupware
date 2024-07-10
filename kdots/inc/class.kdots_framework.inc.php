@@ -76,6 +76,9 @@ class kdots_framework extends Api\Framework\Ajax
 				case 'user_avatar':
 					$vars['topmenu_info_items'] .= "<sl-dropdown class=\"topmenu_info_item\" id=\"topmenu_info_{$id}\" aria-label='" . lang("User menu") . "' tabindex='0'><div slot='trigger'>$item</div> {$vars['topmenu_items']}</sl-dropdown>";
 					break;
+				case 'darkmode':
+					$vars['topmenu_info_items'] .= $item;
+					break;
 				default:
 					$vars['topmenu_info_items'] .= '<button class="topmenu_info_item"' .
 						(is_numeric($id) ? '' : ' id="topmenu_info_' . $id . '"') . '>' . $item . "</button>\n";
@@ -173,5 +176,18 @@ class kdots_framework extends Api\Framework\Ajax
 		";
 
 		return $ret;
+	}
+
+
+	/**
+	 * Returns darkmode menu
+	 *
+	 * @return string
+	 */
+	protected static function _darkmode_menu()
+	{
+		$mode = $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] == 1 ? 'dark' : 'light';
+		return '<egw-darkmode-toggle title="' . lang("%1 mode", $mode) . '" class="' .
+			($mode == 'dark' ? 'darkmode_on' : '') . '"' . ($mode == 'dark' ? 'darkmode' : '') . '> </egw-darkmode-toggle>';
 	}
 }

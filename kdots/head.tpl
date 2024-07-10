@@ -34,7 +34,7 @@
 {include_wz_tooltip}
 <!-- END head -->
 <!-- BEGIN framework -->
-<egw-framework id="egw_fw_basecontainer" class="sl-theme-light "
+<egw-framework id="egw_fw_basecontainer" class=" "
 			   application-list="{application-list}"
 >
 	<a slot="logo" href="{logo_url}" target="_blank"><img src="{logo_header}" title="{logo_title}" alt="Site logo"/></a>

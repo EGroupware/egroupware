@@ -1,0 +1,28 @@
+html[data-darkmode="true"] body {
+  background-color: black;
+  color: var(--sl-color-neutral-700);
+
+  /*** HEADER ***/
+  #egw_fw_topmenu_info_items {
+	#topmenu_info_timer:before {
+	  filter:initial;
+	}
+  }
+
+  /*** APPLICATION ***/
+
+  egw-app {
+	--application-header-text-color: var(--sl-color-neutral-700);
+  }
+
+  /*** End APPLICATION ***/
+
+  /*** WIDGETS ***/
+  /* This should mostly go away with webcomponents */
+
+  .nextmatch_sortheader {
+	color: #96bcd9;
+  }
+
+  /** End WIDGETS **/
+}

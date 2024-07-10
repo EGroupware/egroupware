@@ -1229,11 +1229,11 @@ abstract class Framework extends Framework\Extra
 		$topmenu_info_items = [
 			'user_avatar' => $this->_user_avatar_menu(),
 			'update' => ($update = Framework\Updates::notification()) ? $update : null,
-			'logout' => (Header\UserAgent::mobile()) ? self::_logout_menu() : null,
-			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? self::_get_notification_bell() : null,
+			'logout'        => (Header\UserAgent::mobile()) ? static::_logout_menu() : null,
+			'notifications' => ($GLOBALS['egw_info']['user']['apps']['notifications']) ? static::_get_notification_bell() : null,
 			'quick_add' => $vars['quick_add'],
 			'print_title' => $this->_print_menu(),
-			'darkmode' => self::_darkmode_menu()
+			'darkmode'      => static::_darkmode_menu()
 		];
 
 		// array of topmenu items (orders of the items matter)

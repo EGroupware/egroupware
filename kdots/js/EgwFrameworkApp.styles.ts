@@ -39,13 +39,13 @@ export default css`
 		max-height: 3em;
 
 		background-color: var(--application-color, --primary-background-color);
-		color: var(--application-header-text-color, white);
+		color: var(--application-header-text-color, var(--sl-color-neutral-0));
 		font-size: 1.8em;
 	}
 
 	.egw_fw_app__header sl-icon-button::part(base), .egw_fw_app__header et2-button-icon {
 		font-size: inherit;
-		color: var(--application-header-text-color, white);
+		color: var(--application-header-text-color, var(--sl-color-neutral-0));
 	}
 
 	.egw_fw_app__header et2-button-icon {
@@ -53,7 +53,7 @@ export default css`
 	}
 
 	.egw_fw_app__header sl-icon-button::part(base):hover, .egw_fw_app__header et2-button-icon::part(base):hover {
-		color: var(--application-header-text-color, white);
+		color: var(--application-header-text-color, var(--sl-color-neutral-0));
 		filter: brightness(70%);
 	}
 

@@ -111,6 +111,11 @@ export class EgwFramework extends LitElement
 
 	private get tabs() : SlTabGroup { return this.shadowRoot.querySelector("sl-tab-group");}
 
+	constructor()
+	{
+		super();
+		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
+	}
 	connectedCallback()
 	{
 		super.connectedCallback();
@@ -124,6 +129,15 @@ export class EgwFramework extends LitElement
 			// Override framework setSidebox, use arrow function to force context
 			this.egw.framework.setSidebox = (applicationName, sideboxData, hash?) => this.setSidebox(applicationName, sideboxData, hash);
 		}
+
+		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+
+		document.body.removeEventListener("egw-darkmode-change", this.handleDarkmodeChange);
 	}
 
 	protected firstUpdated(_changedProperties : PropertyValues)
@@ -572,6 +586,15 @@ export class EgwFramework extends LitElement
 
 	protected getBaseUrl() {return "";}
 
+	protected handleDarkmodeChange(event)
+	{
+		// Update CSS classes
+		this.classList.toggle("sl-theme-light", !event.target.darkmode);
+		this.classList.toggle("sl-theme-dark", event.target.darkmode);
+
+		// Update preference
+		this.egw.set_preference("common", "darkmode", (event.target.darkmode ? "1" : "0"));
+	}
 	/**
 	 * An application tab is chosen, show the app
 	 *

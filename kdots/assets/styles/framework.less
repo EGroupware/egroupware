@@ -1,3 +1,14 @@
+/**
+ * kDots main styles
+ *
+ * Note that light / dark colors should go in framework_light.less & framework_dark.less
+ */
+
+
+/** Theme customisations **/
+@import "./framework_dark.less";
+/** End theme customisations **/
+
 html, body {
   width: 100vw;
   height: 100vh;
@@ -6,7 +17,6 @@ html, body {
   margin: 0px;
 
   /** Messages **/
-
   .sl-toast-stack {
 	top: auto;
 	bottom: 0px;
@@ -140,6 +150,7 @@ egw-framework#egw_fw_basecontainer {
 	#topmenu_timer {
 	  display: block;
 	  width: 100%;
+	  z-index: 2;
 	}
 
 	&:hover {
@@ -395,7 +406,6 @@ div.et2_nextmatch {
 	}
   }
 }
-
 
 
 /*** END WIDGETS ***/
