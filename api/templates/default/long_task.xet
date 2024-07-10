@@ -10,6 +10,8 @@
 				<et2-label  id="totals"></et2-label>
 				<et2-vbox  class="log" id="log"></et2-vbox>
 			</et2-vbox>
+            <et2-button-copy slot="footer" align="right" from="_log" copy-label="Copy">
+            </et2-button-copy>
 		</et2-hbox>
 		<styles>
             #long_task > div {
