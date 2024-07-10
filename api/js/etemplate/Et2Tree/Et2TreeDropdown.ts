@@ -225,7 +225,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		super.startSearch();
 
 		// Show the dropdown, that's where the results will go
-		this.show();
+		this.open = true;
 
 		// Hide the tree
 		this.treeOrSearch = "search";
@@ -253,8 +253,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 		if(this.multiple && typeof this.value !== "undefined")
 		{
-			// Add in the new result(s)
-			(<string[]>this.value).splice(this.value.length, 0, ...this.selectedResults.map(el => el.value));
+			// Add in the new result(s), no duplicates
+			this.value = [...new Set([...this.value, ...this.selectedResults.map(el => el.value)])];
 		}
 		else if(typeof this.value !== "undefined")
 		{
@@ -351,12 +351,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
-		this.hide();
 
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
 
-		this._searchNode.setSelectionRange(this._searchNode.value.length, this._searchNode.value.length);
 	}
 
 	handleSearchKeyDown(event)
