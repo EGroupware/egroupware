@@ -31,6 +31,7 @@ import './Layout/Et2Tabs/Et2TabsMobile';
 import './Et2Avatar/Et2Avatar';
 import './Et2Avatar/Et2AvatarGroup';
 import './Et2Button/Et2Button';
+import './Et2Button/Et2ButtonCopy';
 import './Et2Button/Et2ButtonIcon';
 import './Et2Button/Et2ButtonScroll';
 import './Et2Button/Et2ButtonTimestamper';

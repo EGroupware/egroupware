@@ -834,10 +834,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this._template_widget.DOMContainer.setAttribute('id', this.__template.replace(/^(.*\/)?([^/]+?)(\.xet)?(\?.*)?$/, '$2').replace(/\./g, '-'));
 
 		// Look for buttons after load
-		this._contentNode.addEventListener("load", this._adoptTemplateButtons);
+		this._template_promise.then(() => {this._adoptTemplateButtons();});
 
 		// Default autofocus to first input if autofocus is not set
-		this._contentNode.addEventListener("load", this._setDefaultAutofocus);
+		this._template_promise.then(() => {this._setDefaultAutofocus();});
 
 		// Need to update to pick up changes
 		this.requestUpdate();
@@ -1333,6 +1333,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		let log = null;
 		let progressbar = null;
 		let cancel = false;
+		let skip_all = false;
 		let totals = {
 			success: 0,
 			skipped: 0,
@@ -1358,6 +1359,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					log.appendChild(div);
 
 					totals.failed++;
+					if(skip_all)
+					{
+						totals.skipped++;
+						break;
+					}
 
 					// Ask to retry / ignore / abort
 					let retry = new Et2Dialog(dialog.egw());
@@ -1372,7 +1378,11 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 									break;
 								case 'dialog[skip]':
 									totals.skipped++;
-									break
+									break;
+								case 'dialog[skip_all]':
+									totals.skipped++;
+									skip_all = true;
+									break;
 								default:
 									// Try again with previous index
 									retry_index = index - 1;
@@ -1384,7 +1394,8 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 							// These ones will use the callback, just like normal
 							{label: dialog.egw().lang("Abort"), id: 'dialog[cancel]'},
 							{label: dialog.egw().lang("Retry"), id: 'dialog[retry]'},
-							{label: dialog.egw().lang("Skip"), id: 'dialog[skip]', default: true}
+							{label: dialog.egw().lang("Skip"), id: 'dialog[skip]', default: true},
+							{label: dialog.egw().lang("Skip all"), id: 'dialog[skip_all]'}
 						],
 						dialog_type: Et2Dialog.ERROR_MESSAGE
 					});
