@@ -313,7 +313,7 @@ class Link extends Link\Storage
 					'list','list_popup',
 					'search',
 					'name','icon','query',
-					'mime','entry','entries','context_menu'
+					'mime','entry','entries'
 				)));
 			}
 		}
