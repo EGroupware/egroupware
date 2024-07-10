@@ -100,25 +100,6 @@ class Link extends Etemplate\Widget
 		}
 	}
 
-    /**
-     * return test Link entries
-     */
-    public static function ajax_test_link_search($app, $type, $pattern, $options = array())
-    {
-
-        $response = Api\Json\Response::get();
-        // convert associative array to a real array with value attribute, to preserve the order of numeric keys
-        $result = [
-            0 => ["label" => "name0", "value" => 0],
-            1=> ["label" => "name1", "value" => 1],
-            2=> ["label" => "name2", "value" => 2],
-            3=> ["label" => "name3", "value" => 3],
-            4=> ["label" => "name4", "value" => 4],
-        ];
-        $response->data($result);
-
-    }
-
 	/**
 	 * Find links that match the given parameters
 	 */

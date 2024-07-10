@@ -26,7 +26,6 @@ import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
 import {EgwActionObject} from "../egw_action/EgwActionObject";
 import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
-import {AcSelect} from "../../../achelper/js/AcSelect/AcSelect";
 
 /**
  * Type for push-message
@@ -207,20 +206,6 @@ export abstract class EgwApp
 		{
 			EgwApp._instances.splice(index, 1);
 		}
-	}
-
-	changeButton()
-	{
-		const acSelect: AcSelect = window.document.querySelector("ac-select")
-		acSelect.disableLinkSearch = !acSelect.disableLinkSearch
-		acSelect.requestUpdate()
-		console.log("disableLinkSearch" + acSelect.disableLinkSearch)
-	}
-
-	doSomething(thing?:any)
-	{
-		console.log("doSomething\n"+thing);
-		return true;
 	}
 
 	/**
