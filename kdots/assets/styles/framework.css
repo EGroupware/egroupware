@@ -4,7 +4,7 @@
  * Note that light / dark colors should go in framework_light.less & framework_dark.less
  */
 /** Theme customisations **/
-html[data-darkmode="true"] body {
+html[data-darkmode="1"] body {
   background-color: black;
   color: var(--sl-color-neutral-700);
   /*** HEADER ***/
@@ -14,13 +14,13 @@ html[data-darkmode="true"] body {
   /* This should mostly go away with webcomponents */
   /** End WIDGETS **/
 }
-html[data-darkmode="true"] body #egw_fw_topmenu_info_items #topmenu_info_timer:before {
+html[data-darkmode="1"] body #egw_fw_topmenu_info_items #topmenu_info_timer:before {
   filter: initial;
 }
-html[data-darkmode="true"] body egw-app {
+html[data-darkmode="1"] body egw-app {
   --application-header-text-color: var(--sl-color-neutral-700);
 }
-html[data-darkmode="true"] body .nextmatch_sortheader {
+html[data-darkmode="1"] body .nextmatch_sortheader {
   color: #96bcd9;
 }
 /** End theme customisations **/
