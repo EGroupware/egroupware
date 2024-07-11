@@ -55,12 +55,12 @@ export const cropperStyles = css`
 }
 
 .cropper-drag-box {
-	background-color: #fff;
+	background-color: var(--sl-color-neutral-1000);
 	opacity: 0;
 }
 
 .cropper-modal {
-	background-color: #000;
+	background-color: var(--sl-color-neutral-0);
 	opacity: 0.5;
 }
 
@@ -68,7 +68,7 @@ export const cropperStyles = css`
 	display: block;
 	height: 100%;
 	outline: 1px solid #39f;
-	outline-color: rgba(51, 153, 255, 0.75);
+	outline-color: var(--sl-color-primary-600);
 	overflow: hidden;
 	width: 100%;
 }
@@ -110,7 +110,7 @@ export const cropperStyles = css`
 
 .cropper-center::before,
 .cropper-center::after {
-	background-color: #eee;
+	background-color: var(--sl-color-neutral-100);
 	content: ' ';
 	display: block;
 	position: absolute;
@@ -141,13 +141,13 @@ export const cropperStyles = css`
 }
 
 .cropper-face {
-	background-color: #fff;
+	background-color: var(--sl-color-neutral-1000);
 	left: 0;
 	top: 0;
 }
 
 .cropper-line {
-	background-color: #39f;
+	background-color: var(--sl-color-primary-600);
 }
 
 .cropper-line.line-e {
@@ -179,7 +179,7 @@ export const cropperStyles = css`
 }
 
 .cropper-point {
-	background-color: #39f;
+	background-color: var(--sl-color-primary-600);
 	height: 5px;
 	opacity: 0.75;
 	width: 5px;
@@ -263,7 +263,7 @@ export const cropperStyles = css`
 }
 
 .cropper-point.point-se::before {
-	background-color: #39f;
+	background-color: var(--sl-color-primary-600);
 	bottom: -50%;
 	content: ' ';
 	display: block;

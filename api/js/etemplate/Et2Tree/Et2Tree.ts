@@ -249,21 +249,17 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 					text-overflow: ellipsis;
 				}
 
-				sl-tree-item {
-					background-color: white;
-				}
-
 				sl-tree-item.drop-hover {
-					background-color: #0a5ca5;
+					background-color: var(--primary-background-color);
 				}
 
 				sl-tree-item.drop-hover sl-tree-item {
-					background-color: white;
+					background-color: var(--sl-color-neutral-1000);
 				}
 
 				sl-badge::part(base) {
 
-					background-color: rgb(130, 130, 130);
+					background-color: var(--sl-color-neutral-500);
 					font-size: 0.75em;
 					font-weight: 700;
 					position: absolute;

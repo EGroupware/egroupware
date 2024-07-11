@@ -25,7 +25,7 @@ export class Et2UrlReadonly extends Et2Description
 			  
 			a {
 				cursor: pointer;
-				color: #26537c !important;
+				color: var(--primary-background-color) !important;
 			    text-decoration: none !important;
 			}`
 		];

@@ -206,10 +206,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 				width: fill-available;
 			  }
 
-			  :host([readonly][multiple][rows]) .hover__popup::part(popup) {
-				z-index: var(--sl-z-index-dropdown);
-				background-color: white;
-			  }
+				:host([readonly][multiple][rows]) .hover__popup::part(popup) {
+					z-index: var(--sl-z-index-dropdown);
+					background-color: var(--sl-color-neutral-0);
+				}
 
 			  :host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
 				display: flex;
