@@ -764,18 +764,30 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	//this.selectOptions = find_select_options(this)[1];
 	_optionTemplate(selectOption: TreeItemData): TemplateResult<1>
 	{
-		/*
-		if collapsed .. opended? leaf?
-		 */
-		let img : String = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
-		if (img)
-		{
-			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
-			img = img.endsWith(".png") ? img.replace(".png", ".svg") : img;
-		}
 
 		// Check to see if node is marked as open with no children.  If autoloadable, load the children
 		const expandState = (this.calculateExpandState(selectOption));
+
+		//mail sends multiple image options depending on folder state
+		let img: String;
+		if (selectOption.open) //if item is a folder and it is opened use im1
+		{
+			img = selectOption.im1;
+		} else if (selectOption.child || selectOption.item?.length > 0)// item is a folder and closed use im2
+		{
+			img = selectOption.im2;
+		} else// item is a leaf use im0
+		{
+			img = selectOption.im0;
+		}
+		//fallback to try and set icon if everything else failed
+		if (!img) img = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
+		if (img?.endsWith(".png"))
+		{
+			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
+			img = img.replace(".png", ".svg");
+		}
+
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
 		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
 		if(expandState && this.autoloading && lazy)
@@ -809,6 +821,23 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                             this.requestUpdate("_selectOptions")
                         })
 
+					}
+					}
+					@sl-expand=${event => {
+						if (event.target.id === selectOption.id)
+						{
+							selectOption.open = 1;
+
+							this.requestUpdate("_selectOptions")
+						}
+					}}
+					@sl-collapse=${event => {
+						if (event.target.id === selectOption.id)
+						{
+							selectOption.open = 0;
+
+							this.requestUpdate("_selectOptions")
+						}
                     }}
             >
 
@@ -1054,6 +1083,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return res
 	}
 
+	/**
+	 * checks whether item should be drawn open or closed
+	 * also sets selectOption.open if necessary
+	 * @param selectOption
+	 * @returns true iff item is in expanded state
+	 */
 	private calculateExpandState = (selectOption: TreeItemData) => {
 
 		if (selectOption.open)
@@ -1063,6 +1098,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		// TODO: Move this mail-specific stuff into mail
 		if(selectOption.id && (selectOption.id.endsWith("INBOX") || selectOption.id == window.egw.preference("ActiveProfileID", "mail")))
 		{
+			selectOption.open = 1
 			return true
 		}
 		return false;
