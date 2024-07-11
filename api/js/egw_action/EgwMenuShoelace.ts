@@ -14,17 +14,25 @@ export class EgwMenuShoelace extends LitElement
 			css`
 				:host {
 					display: block;
-
-					/* Fit in popup, scroll if not enough height */
-					max-height: var(--auto-size-available-height, auto);
-					overflow-y: auto;
 				}
 
 				.default-item::part(label) {
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
+				sl-menu-item::part(base) {
+					height: 1.6em;
+					line-height: var(--sl-line-height-dense);
+					align-items: center;
+					padding: 0;
+				}
+
+				sl-menu-item::part(prefix) {
+					min-width: var(--sl-spacing-2x-large);
+				}
+
 				et2-image {
+					line-height: normal;
 					width: 1.5em;
 				}
 			`
@@ -75,23 +83,26 @@ export class EgwMenuShoelace extends LitElement
 		this.removeCallback = _onHide;
 		if(this.popup == null)
 		{
-			this.popup = document.createElement("sl-popup");
-			this.popup.placement = "bottom";
-			this.popup.autoSize = "vertical";
-			this.popup.flip = true;
-			this.popup.shift = true;
-			this.popup.classList.add("egw_menu")
-			document.body.append(this.popup);
+			this.popup = Object.assign(document.createElement("sl-popup"), {
+				placement: "top",
+				autoSize: "vertical",
+				flip: true,
+				flipFallbackPlacements: "right bottom",
+				flipFallbackStrategy: "initial",
+				shift: true
+			});
 			this.popup.append(this);
+			this.popup.classList.add("egw_menu");
 		}
+		let menu = this;
 		this.popup.anchor = {
 			getBoundingClientRect()
 			{
 				return {
 					x: _x,
 					y: _y,
-					width: 0,
-					height: 0,
+					width: menu.clientWidth,
+					height: menu.clientHeight,
 					top: _y,
 					left: _x,
 					right: _x,
@@ -100,6 +111,7 @@ export class EgwMenuShoelace extends LitElement
 			}
 		};
 		this.popup.active = true;
+		document.body.append(this.popup);
 		Promise.all([this.updateComplete, this.popup.updateComplete]).then(() =>
 		{
 			// Causes scroll issues if we don't position
