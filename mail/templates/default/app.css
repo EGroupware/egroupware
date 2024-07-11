@@ -237,45 +237,6 @@ pre {
 	overflow: hidden;
 	overflow-y: auto;
 }
-.dtree {
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #666;
-	white-space: nowrap;
-}
-.dtree div {
-	width: 100%;
-}
-.dtree img {
-	border: 0px;
-	vertical-align: middle;
-}
-.dtree a {
-	color: #333;
-	text-decoration: none;
-}
-.dtree a.node, .dtree a.nodeSel {
-	white-space: nowrap;
-	padding: 1px 2px 1px 2px;
-}
-.dtree a.node:hover, .dtree a.nodeSel:hover {
-	color: #333;
-	text-decoration: underline;
-}
-.dtree a.nodeSel {
-	background-color: #c0d2ec;
-}
-.dtree .clip {
-	overflow: hidden;
-}
-.dtree table, .dtree tr, .dtree td {
-	border: none;
-}
-.dtree table {
-	overflow: hidden;
-	width: 100%;
-	display: table-row;
-}
 .useEllipsis {
 	text-overflow: ellipsis;
 	white-space: nowrap;

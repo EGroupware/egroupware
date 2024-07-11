@@ -151,9 +151,6 @@
     color: black;
     background-color: #FFFFFF;
   }
-  body .dtree div.containerTableStyle {
-    overflow: hidden;
-  }
   body #mail-compose .cke_chrome {
     border: none;
     box-shadow: none;

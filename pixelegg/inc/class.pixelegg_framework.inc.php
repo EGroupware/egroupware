@@ -149,8 +149,8 @@ class pixelegg_framework extends Api\Framework\Ajax
 				--sl-font-size-medium: {$textsize}px;
 			}
 			et2-lavatar, et2-avatar {font-size: 12px}
-			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon,
-			 .dtree img{
+			#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon
+			{
 				width: {$iconSize}px !important;
 				height: {$iconSize}px !important;
 			}
