@@ -525,8 +525,8 @@ class AdminApp extends EgwApp
 	group(_action, _senders)
 	{
 		// Tree IDs look like /groups/ID, nm uses admin::ID
-		var from_nm = _senders[0].id.indexOf('::') > 0;
-		var account_id = _senders[0].id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
+		const from_nm = _senders[0].id.indexOf('::') > 0;
+		const account_id = _senders[0].id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
 
 		switch(_action.id)
 		{
@@ -543,7 +543,7 @@ class AdminApp extends EgwApp
 					alert('Missing url in action '+_action.id+'!');
 					break;
 				}
-				var url = unescape(_action.data.url).replace('$id', account_id);
+				let url = unescape(_action.data.url).replace('$id', account_id);
 				if (url[0] != '/' && url.substr(0, 4) != 'http')
 				{
 					url = this.egw.link('/index.php', url);
@@ -568,11 +568,14 @@ class AdminApp extends EgwApp
 	 */
 	group_run_rights(_action : EgwAction, _senders : EgwActionObject[])
 	{
+		// Tree IDs look like /groups/ID, nm uses admin::ID
+		const from_nm = _senders[0].id.indexOf('::') > 0;
 		let ids = [];
 		let row_ids = []
 		_senders.forEach((sender) => {
-			row_ids.push(sender.id);
-			ids.push(sender.id.split("::").pop());
+			const account_id = sender.id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
+			row_ids.push('admin::'+account_id);
+			ids.push(account_id);
 		})
 		const dialog = new Et2Dialog(this.egw);
 		let attrs = {
