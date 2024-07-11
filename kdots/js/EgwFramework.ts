@@ -161,7 +161,7 @@ export class EgwFramework extends LitElement
 		// These need egw fully loaded
 		this.getEgwComplete().then(() =>
 		{
-			// Regisert the "message" plugin
+			// Register the "message" plugin
 			this.egw.registerJSONPlugin((type, res, req) =>
 			{
 				//Check whether all needed parameters have been passed and call the alertHandler function
@@ -175,6 +175,16 @@ export class EgwFramework extends LitElement
 
 			// Quick add
 			this.egw.link_quick_add('topmenu_info_quick_add');
+
+			// Ask about timer before logout
+			const logout = this.querySelector('#topmenu_logout');
+			logout.addEventListener('click', async(e) =>
+			{
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				await this.egw.onLogout_timer();
+				this.egw.open_link(e.target.value);
+			});
 
 			// Deal with bug where avatar menu does not position correctly
 			(<SlDropdown>this.querySelector("#topmenu_info_user_avatar"))?.popup?.dispatchEvent(new Event("slotchange"));
@@ -376,19 +386,15 @@ export class EgwFramework extends LitElement
 			}
 			this.loadApp(app.name, true, _link);
 		}
-		else
+		else if(typeof _app == 'string')
 		{
 			//Display some error messages to have visible feedback
-			if(typeof _app == 'string')
-			{
-				egw_alertHandler('Application "' + _app + '" not found.',
-					'The application "' + _app + '" the link "' + _link + '" points to is not registered.');
-			}
-			else
-			{
-				egw_alertHandler("No appropriate target application has been found.",
-					"Target link: " + _link);
-			}
+			egw_alertHandler('Application "' + _app + '" not found.',
+				'The application "' + _app + '" the link "' + _link + '" points to is not registered.');
+		}
+		else
+		{
+			this.egw.window.location.replace(_link);
 		}
 	}
 
