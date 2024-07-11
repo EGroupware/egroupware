@@ -17,6 +17,9 @@ if (PHP_SAPI !== 'cli')
 {
 	die('This script can only be run from the command line.');
 }
+
+set_exception_handler('http_exception_handler');
+
 $base_url = 'https://egw.example.org/egroupware/groupdav.php';
 $authorization[parse_url($base_url, PHP_URL_HOST)] = 'Authorization: Basic '.base64_encode('sysop:secret');
 
@@ -155,7 +158,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 	$response_header = [];
 	if (($response = curl_exec($curl)) === false)
 	{
-		throw new Exception(curl_error($curl), 0);
+		throw new HttpException(curl_error($curl), 0, $method, $url, $body);
 	}
     do {
 	    [$rheader, $response] = explode("\r\n\r\n", $response, 2);
@@ -177,11 +180,91 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 
 	if ($http_status[0] !== '2')
 	{
-		throw new Exception("Unexpected HTTP status code $http_status: $response", (int)$http_status);
+		throw new HttpException("Unexpected HTTP status code $http_status: ".
+			($response_header['www-authenticate'] ?? ''), (int)$http_status,
+			$method, $url, $body, $response_header, $response);
 	}
 	if ($response !== '' && preg_match('#^application/([^+; ]+\+)?json(;|$)#', $response_header['content-type']))
 	{
 		return json_decode($response, true, 512, JSON_THROW_ON_ERROR);
 	}
 	return $response;
+}
+
+/**
+ * @property-read string $method
+ * @property-read string $request_uri
+ * @property-read string|resource $request_body send
+ * @property-read array $response_headers lowercased header-name => value pairs
+ * @property-read string $response
+ */
+class HttpException extends Exception
+{
+	public readonly string $method;
+	public readonly string $request_uri;
+	public readonly string $request_body;
+	public readonly array $response_headers;
+	public readonly string $response;
+
+	public function __construct(string $message, int $code, string $method, string $uri, $body, ?array $response_headers=null, ?string $response=null)
+	{
+		parent::__construct($message, $code);
+
+		$this->method = strtoupper($method);
+		$this->request_uri = $uri;
+		if (!in_array($this->method, ['GET', 'DELETE']))
+		{
+			$this->request_body = is_array($body) ? json_encode($body) : (is_resource($body) ? (string)$body : $body);
+		}
+		else
+		{
+			$this->request_body = '';
+		}
+		$this->response_headers = $response_headers;
+		$this->response = $response;
+	}
+}
+
+/**
+ * HttpException handler dumping a failed HTTP request
+ *
+ * To be used as:
+ * - set_exception_handler('http_exception_handler')
+ * - set_exception_handler(static function($ex) { http_exception_handler($ex, $trace, $exit); })
+ *
+ * @param Throwable $exception
+ * @param bool $trace true: show a trace
+ * @param bool $exit true: exit with $exception->code, false: don't exit
+ */
+function http_exception_handler(Throwable $exception, bool $trace=true, bool $exit=true)
+{
+	echo $exception->getMessage()."\n\n";
+	if ($exception instanceof HTTPException)
+	{
+		echo $exception->method.' '.$exception->request_uri."\n";
+		if (is_string($exception->request_body))
+		{
+			echo $exception->request_body."\n";
+		}
+		if (isset($exception->response_headers))
+		{
+			echo "\n".implode("\n", array_map(static function($name, $value)
+			{
+				return (is_int($name) ? '' :
+					implode('-', array_map('ucfirst', explode('-', $name))).': ').$value;
+			}, array_keys($exception->response_headers), $exception->response_headers))."\n\n";
+			if (!empty($exception->response))
+			{
+				echo $exception->response."\n\n";
+			}
+		}
+	}
+	if ($trace)
+	{
+		echo $exception->getTraceAsString()."\n";
+	}
+	if ($exit)
+	{
+		exit($exception->getCode() ?: 500);
+	}
 }
