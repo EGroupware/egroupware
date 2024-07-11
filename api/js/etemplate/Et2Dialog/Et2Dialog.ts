@@ -210,7 +210,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				}
 				.dialog__panel {
 					border: 1px solid silver;
-					box-shadow: -2px 1px 9px 3px #b4b4b4;
+					box-shadow: -2px 1px 9px 3px var(--sl-color-gray-400);
 					min-width: 250px;
 					touch-action: none;
 				}
@@ -223,7 +223,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					user-select: none;
 				}
 				.dialog__close {
-					background-color: #f3f3f3;
+					background-color: var(--sl-color-gray-100);
 					padding: 0;
 					order: 99;
 				}
@@ -234,7 +234,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					justify-content: flex-start;
 					align-items: stretch;
 					gap: 5px;
-					border-top: 1px solid silver;
+					border-top: 1px solid var(--sl-color-gray-400);
 					margin-top: 0.5em;
 				}
 

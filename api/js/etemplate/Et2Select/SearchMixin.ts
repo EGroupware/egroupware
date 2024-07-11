@@ -172,7 +172,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					margin-left: 0px;
 					height: var(--sl-input-height-medium);
 					width: 100%;
-					background-color: white;
+					  background-color: var(--sl-color-neutral-0);
 					z-index: var(--sl-z-index-dropdown);
 				  }
 

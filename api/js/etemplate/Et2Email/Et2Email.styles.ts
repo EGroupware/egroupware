@@ -195,7 +195,7 @@ export default css`
 
 	:host([readonly][rows]) .hover__popup::part(popup) {
 		z-index: var(--sl-z-index-dropdown);
-		background-color: white;
+		background-color: var(--sl-color-neutral-0);
 		display: flex;
 		flex-wrap: wrap;
 

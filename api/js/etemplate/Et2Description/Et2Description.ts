@@ -45,7 +45,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 				}
 			::slotted(a) {
 				cursor: pointer;
-				color: #26537c;
+				color: var(--sl-color-primary-700);
 				text-decoration: none;
 			  	display: inherit;
 			}`
