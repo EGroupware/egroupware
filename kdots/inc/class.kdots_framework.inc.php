@@ -35,6 +35,10 @@ class kdots_framework extends Api\Framework\Ajax
 			return [];
 		}
 		$data = parent::_get_header($extra);
+
+		$data['theme'] .= $data['darkmode'] ? 'data-darkmode="1" class="sl-theme-dark"' : '';
+		unset($data['darkmode']);
+
 		if($extra['navbar-apps'])
 		{
 			// Fix wrong icon type

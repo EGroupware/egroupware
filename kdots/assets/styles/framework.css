@@ -20,6 +20,13 @@ html[data-darkmode="1"] body #egw_fw_topmenu_info_items #topmenu_info_timer:befo
 html[data-darkmode="1"] body egw-app {
   --application-header-text-color: var(--sl-color-neutral-700);
 }
+html[data-darkmode="1"] body .et2_container {
+  background-color: initial;
+}
+html[data-darkmode="1"] body .dialogFooterToolbar et2-button::part(base):not(:hover),
+html[data-darkmode="1"] body et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
+  background-color: var(--sl-input-background-color);
+}
 html[data-darkmode="1"] body .nextmatch_sortheader {
   color: #96bcd9;
 }

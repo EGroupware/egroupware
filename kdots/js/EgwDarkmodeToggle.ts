@@ -57,7 +57,7 @@ export class EgwDarkmodeToggle extends LitElement
 	{
 		if(force == null)
 		{
-			force = !(document.documentElement.getAttribute("data-darkmode") == "true");
+			force = !(document.documentElement.getAttribute("data-darkmode") == "1");
 		}
 		this.darkmode = force;
 		if(force)

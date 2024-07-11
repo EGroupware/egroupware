@@ -20,6 +20,13 @@ html[data-darkmode="1"] body {
   /*** WIDGETS ***/
   /* This should mostly go away with webcomponents */
 
+  .et2_container {
+	background-color: initial;
+  }
+
+  .dialogFooterToolbar et2-button::part(base):not(:hover), et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
+	background-color: var(--sl-input-background-color);
+  }
   .nextmatch_sortheader {
 	color: #96bcd9;
   }
