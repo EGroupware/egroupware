@@ -1237,15 +1237,16 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 	 *
 	 * Reimplemented to account for static LDAP ACL and accounts (owner=0)
 	 *
-	 * @return array user-id => EGW_ACL_ADD|EGW_ACL_READ|EGW_ACL_EDIT|EGW_ACL_DELETE pairs
+	 * @param ?string $user the user whose grants for the current user are requested, or null for all
+	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants()
+	public function get_grants(string $user=null)
 	{
 		$grants = $this->bo->get_grants($this->bo->user);
 
 		// remove add and delete grants for accounts (for admins too)
-		// as accounts can not be created as contacts, they eg. need further data
-		// and admins might not recognice they delete an account incl. its data
+		// as accounts can not be created as contacts, they e.g. need further data
+		// and admins might not recognize they delete an account incl. its data
 		if (isset($grants[0])) $grants[0] &= ~(EGW_ACL_ADD|EGW_ACL_DELETE);
 
 		return $grants;

@@ -531,17 +531,18 @@ abstract class Handler
 	/**
 	 * Get grants of current user and app
 	 *
+	 * @param ?string $user the user whose grants for the current user are requested, or null for all
 	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants()
+	public function get_grants(string $user=null)
 	{
 		return $this->acl->get_grants($this->app, $this->app != 'addressbook');
 	}
 
 	/**
-	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 * Return privileges for current user, default is read and read-current-user-privilege-set
 	 *
-	 * Priviledges are for the collection, not the resources / entries!
+	 * Privileges are for the collection, not the resources / entries!
 	 *
 	 * @param string $path path of collection
 	 * @param int $user =null owner of the collection, default current user
@@ -551,7 +552,7 @@ abstract class Handler
 	{
 		unset($path);	// not used, but required by function signature
 
-		$grants = $this->get_grants();
+		$grants = $this->get_grants($user);
 		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
 
 		if (is_null($user) || $grants[$user] & Api\Acl::READ)
