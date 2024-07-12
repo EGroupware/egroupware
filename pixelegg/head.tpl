@@ -27,7 +27,6 @@
 		{java_script}
 	</head>
 	<body {body_tags}>
-		{include_wz_tooltip}
 		<div id="divAppboxHeader" class="onlyPrint">{app_header}</div>
 <!-- END head -->
 <!-- BEGIN framework -->

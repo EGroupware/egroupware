@@ -17,8 +17,6 @@
 	<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-theme-slide.css">
 	<link rel="stylesheet" href="{webserver_url}/api/js/offline/themes/offline-language-{lang_code}.css">
 	<script src="{webserver_url}/api/js/offline/offline.min.js"></script>
-	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/light.css"/>
-	<link rel="stylesheet" href="{webserver_url}/node_modules/@shoelace-style/shoelace/dist/themes/dark.css"/>
 	<link rel="stylesheet" href="{webserver_url}/kdots/assets/styles/framework.css">
     {css_file}
 	<style type="text/css">

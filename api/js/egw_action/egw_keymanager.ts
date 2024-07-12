@@ -119,13 +119,6 @@ ready(() => {//waits for DOM ready
 				if (!"#egw_fw_sidemenu" || target.matches("#egw_fw_sidemenu")) return;
 			}
 
-			// If a context menu is open, give the keyboard to it
-			if (typeof _egw_active_menu !== undefined && _egw_active_menu &&
-				_egw_active_menu.keyHandler(keyCode, keyboardEvent.shiftKey, keyboardEvent.ctrlKey || keyboardEvent.metaKey, keyboardEvent.altKey))
-			{
-				keyboardEvent.preventDefault();
-				return;
-			}
 			// Check whether the event came from an input field - if yes, only
 			// allow function keys (like F1) to be captured by our code
 			const inInput = _egw_nodeIsInInput(keyboardEvent.target);
@@ -307,5 +300,3 @@ export function egw_keyHandler(_keyCode, _shift, _ctrl, _alt)
 
 	return false;
 }
-
-

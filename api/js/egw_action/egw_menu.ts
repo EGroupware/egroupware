@@ -8,7 +8,6 @@
  * @package egw_action
  *
  */
-import {egwMenuImpl} from './egw_menu_dhtmlx';
 import {EgwMenuShoelace} from "./EgwMenuShoelace";
 import {egw_registeredShortcuts, egw_shortcutIdx} from './egw_keymanager';
 import {
@@ -19,7 +18,6 @@ import {
 	EGW_KEY_ENTER,
 	EGW_KEY_ESCAPE
 } from "./egw_action_constants";
-import {EgwFramework} from "../../../kdots/js/EgwFramework";
 
 //Global variable which is used to store the currently active menu so that it
 //may be closed when another menu opens
@@ -141,8 +139,7 @@ function trigger(selector, eventType)
  * so-called menu implementations. Those are activated by simply including the JS file
  * of such an implementation.
  *
- * The currently available implementation is the "egwDhtmlxMenu.js" which is based
- * upon the dhtmlxmenu component.
+ * The current use implementation is "EgwShoelaceMenu.js" which is based on Shoelace.
  */
 export class egwMenu
 {
@@ -151,7 +148,7 @@ export class egwMenu
 
 	//The "instance" variable contains the currently opened instance. There may
 	//only be one instance opened at a time.
-	instance: egwMenuImpl = null; // This is equivalent to iface in other classes and holds an egwMenuImpl
+	instance: EgwMenuShoelace = null; // This is equivalent to iface in other classes and holds an egwMenuImpl
 	constructor()
 	{
 	}
@@ -213,14 +210,7 @@ export class egwMenu
 		if (this.instance == null && this._checkImpl)
 		{
 			//Obtain a new egwMenuImpl object and pass this instance to it
-			if(window.framework instanceof EgwFramework)
-			{
-				this.instance = new EgwMenuShoelace(this.children);
-			}
-			else
-			{
-				this.instance = new egwMenuImpl(this.children);
-			}
+			this.instance = new EgwMenuShoelace(this.children);
 
 			_egw_active_menu = this;
 
@@ -232,108 +222,6 @@ export class egwMenu
 		}
 
 		return false;
-	}
-
-	/**
-	 * Key handler to allow keyboard navigation of menu
-	 * TODO does not work
-	 *
-	 * @return {boolean} true if we dealt with the keypress
-	 */
-	public keyHandler(_keyCode, _shift, _ctrl, _alt)
-	{
-		// Let main key-handler deal with shortcuts
-		const idx = egw_shortcutIdx(_keyCode, _shift, _ctrl, _alt);
-		if (typeof egw_registeredShortcuts[idx] !== "undefined")
-		{
-			return false;
-		}
-
-		// Shoelace does its own keyboard navigation
-		if(!this.instance.dhtmlxmenu)
-		{
-			return false;
-		}
-
-		//TODO change with shoelace
-		let current = this.instance.dhtmlxmenu.menuSelected;
-		if (current !== -1)
-		{
-			let find_func = function (child) {
-				if (child.id === current.replace(this.instance.dhtmlxmenu.idPrefix, ""))
-				{
-					return child;
-				} else if (child.children)
-				{
-					for (let i = 0; i < child.children.length; i++)
-					{
-						const result = find_func(child.children[i]);
-						if (result) return result;
-					}
-				}
-				return null;
-			}.bind(this);
-			current = find_func(this);
-		} else
-		{
-			current = this.children[0];
-			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "mouseover");
-			return true;
-		}
-
-		switch (_keyCode)
-		{
-			case EGW_KEY_ENTER:
-				trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "click");
-				return true;
-			case EGW_KEY_ESCAPE:
-				this.hide();
-				return true;
-			case EGW_KEY_ARROW_RIGHT:
-				if (current.children)
-				{
-					current = current.children[0];
-				}
-				break;
-			case EGW_KEY_ARROW_LEFT:
-				if (current.parent && current.parent !== this)
-				{
-					current = current.parent;
-				}
-				break;
-			case EGW_KEY_ARROW_UP:
-			case EGW_KEY_ARROW_DOWN:
-				const direction = _keyCode === EGW_KEY_ARROW_DOWN ? 1 : -1;
-				let parent = current.parent;
-				let index = parent.children.indexOf(current);
-				let cont = false;
-
-				// Don't run off ends, skip disabled
-				do
-				{
-					index += direction;
-					cont = !parent.children[index] || !parent.children[index].enabled || !parent.children[index].id;
-				} while (cont && index + direction < parent.children.length && index + direction >= 0);
-				if (index > parent.children.length - 1)
-				{
-					index = parent.children.length - 1;
-				}
-				if (index < 0)
-				{
-					index = 0;
-				}
-				current = parent.children[index];
-				break;
-			default:
-				return false;
-		}
-
-		if (current)
-		{
-			trigger("#" + this.instance.dhtmlxmenu.idPrefix + current.id, "mouseover");
-			this.instance.dhtmlxmenu._redistribSubLevelSelection(this.instance.dhtmlxmenu.idPrefix + current.id, this.instance.dhtmlxmenu.idPrefix + (current.parent ? current.parent.id : this.instance.dhtmlxmenu.topId));
-		}
-		return true;
 	}
 
 	/**
@@ -548,4 +436,3 @@ export class egwMenuItem
 }
 
 }
-

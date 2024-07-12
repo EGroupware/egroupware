@@ -20,5 +20,4 @@
 		{java_script}
 	</head>
 	<body {body_tags}>
-		{include_wz_tooltip}
 <!-- END head -->
