@@ -121,13 +121,20 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	/**
 	 * Get grants of current user and app
 	 *
-	 * Overwritten to return rights modified for certain user-agents (eg. Outlook CalDAV Synchroniser) in the consturctor.
+	 * Overwritten to request rights for non-users ($user is NOT numeric) via calendars resource API.
 	 *
+	 * @param ?string $user the user whose grants for the current user are requested, or null for all
 	 * @return array user-id => Api\Acl::ADD|Api\Acl::READ|Api\Acl::EDIT|Api\Acl::DELETE pairs
 	 */
-	public function get_grants()
+	public function get_grants(string $user=null)
 	{
-		return $this->bo->grants;
+		// grants from all regular users
+		$grants = $this->bo->grants;
+		if (!(int)$user && ($info = $this->bo->resource_info($user)))
+		{
+			$grants[$user] = $info['rights'] ?? 0;
+		}
+		return $grants;
 	}
 
 /**
