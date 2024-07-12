@@ -984,6 +984,10 @@ abstract class Framework extends Framework\Extra
 			//$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 			if (/*!$debug_minify &&*/ file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{
+				// include Shoelace CSS
+				self::includeCSS('/node_modules/@shoelace-style/shoelace/dist/themes/light.css');
+				self::includeCSS('/node_modules/@shoelace-style/shoelace/dist/themes/dark.css');
+
 				//error_log(__METHOD__."() Framework\CssIncludes::get()=".array2string(Framework\CssIncludes::get()));
 				self::includeCSS($theme_min_css);
 
@@ -1069,11 +1073,6 @@ abstract class Framework extends Framework\Extra
 					$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id'])),
 			));
 		}
-		// manually load old legacy javascript dhtmlx & jQuery-UI via script tag
-		self::includeJS('/api/js/dhtmlxMenu/codebase/dhtmlxcommon.js');
-		self::includeJS('/api/js/dhtmlxMenu/sources/dhtmlxmenu.js');
-		self::includeJS('/api/js/dhtmlxMenu/sources/ext/dhtmlxmenu_ext.js');
-
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$map = null;
 		$extra['include'] = array_map(static function($str){

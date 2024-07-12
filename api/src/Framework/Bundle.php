@@ -244,16 +244,13 @@ class Bundle
 		$inc_mgr->include_js_file('/api/js/jsapi/jsapi.js');
 		$inc_mgr->include_js_file('/api/js/egw_json.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/egw.js');
-		// dhtmlxTree (dhtmlxMenu get loaded via dependency in egw_menu_dhtmlx.js)
-		$inc_mgr->include_js_file('/api/js/dhtmlxMenu/codebase/dhtmlxcommon.js');
 		// actions
         //TODO there are more and different files that need to be included
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action_constants');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_action');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_keymanager');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_dragdrop_dhtmlx_tree.ts');
 		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu');
-		$inc_mgr->include_js_file('/api/js/egw_action/egw_menu_dhtmlx');
+		$inc_mgr->include_js_file('/api/js/egw_action/EgwMenuShoelace');
 		// include choosen in api, as old eTemplate uses it and fail if it pulls in half of et2
 		$inc_mgr->include_js_file('/api/js/jquery/chosen/chosen.jquery.js');
 		$bundles['api'] = $inc_mgr->get_included_files();
