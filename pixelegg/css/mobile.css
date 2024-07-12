@@ -95,9 +95,6 @@
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;
   }
-  html[data-darkmode='1'] .dtree img {
-    filter: invert(0) hue-rotate(180deg) !important;
-  }
   html[data-darkmode='1'] #blueimp-gallery video,
   html[data-darkmode='1'] #blueimp-gallery .video-content {
     filter: invert(0) hue-rotate(180deg) !important;

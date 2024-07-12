@@ -61,9 +61,6 @@
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;
   }
-  html[data-darkmode='1'] .dtree img {
-    filter: invert(0) hue-rotate(180deg) !important;
-  }
   html[data-darkmode='1'] #blueimp-gallery video,
   html[data-darkmode='1'] #blueimp-gallery .video-content {
     filter: invert(0) hue-rotate(180deg) !important;
@@ -8927,20 +8924,6 @@ table.egwGridView_grid img.et2_appicon {
   }
   body .et2_nextmatch .egwGridView_outer td img {
     border: none;
-  }
-  body .dtree img {
-    width: 24px !important;
-    height: 24px !important;
-  }
-  body .dtree table,
-  body .dtree tr,
-  body .dtree td {
-    padding: 2px;
-    padding-left: 0;
-    padding-right: 0px;
-  }
-  body .dtree .containerTableStyle {
-    overflow: auto;
   }
   body .et2_details .et2_details_toggle:after {
     width: 30px;
