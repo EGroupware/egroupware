@@ -20,11 +20,6 @@ $GLOBALS['egw_info']['template']['kdots']['maintainer'] = array(
 $GLOBALS['egw_info']['template']['kdots']['description'] = "WIP framework of EGroupware.";
 $GLOBALS['egw_info']['template']['kdots']['windowed'] = true;
 
-// specify (different) labels for default themes
-$GLOBALS['egw_info']['template']['kdots']['themes'] = array(
-	'default' => 'Standard'
-);
-
 // Dependencies for this template to work
 $GLOBALS['egw_info']['template']['kdots']['depends'][] = array(
 	'appname'  => 'api',

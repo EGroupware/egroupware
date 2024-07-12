@@ -28,6 +28,8 @@ class kdots_framework extends Api\Framework\Ajax
 	 */
 	protected function _get_header(array $extra = array())
 	{
+		self::includeCSS('/kdots/assets/styles/kdots.css');
+
 		// Skip making a mess for iframe apps, they're on their own
 		if($extra['check-framework'] == true)
 		{
@@ -36,7 +38,7 @@ class kdots_framework extends Api\Framework\Ajax
 		}
 		$data = parent::_get_header($extra);
 
-		$data['theme'] .= $data['darkmode'] ? 'data-darkmode="1" class="sl-theme-dark"' : '';
+		$data['theme'] .= $GLOBALS['egw_info']['user']['preferences']['common']['darkmode'] ? 'data-darkmode="1" class="sl-theme-dark"' : '';
 		unset($data['darkmode']);
 
 		if($extra['navbar-apps'])

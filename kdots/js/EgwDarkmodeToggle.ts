@@ -69,7 +69,6 @@ export class EgwDarkmodeToggle extends LitElement
 			document.documentElement.setAttribute("data-darkmode", "0");
 		}
 		// Set class for Shoelace
-		document.documentElement.classList.toggle("sl-theme-dark", this.darkmode);
 		this.requestUpdate("darkmode")
 		this.updateComplete.then(() =>
 		{

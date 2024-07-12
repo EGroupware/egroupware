@@ -1,0 +1,47 @@
+html[data-darkmode="1"], .sl-theme-dark {
+  background-color: black;
+  color: var(--sl-color-neutral-700);
+
+  --sl-color-primary-950: hsl(from var(--primary-color) h s calc(l + 18));
+  --sl-color-primary-900: hsl(from var(--primary-color) h s calc(l + 16));
+  --sl-color-primary-800: hsl(from var(--primary-color) h s calc(l + 12));
+  --sl-color-primary-700: hsl(from var(--primary-color) h s calc(l + 8));
+  --sl-color-primary-600: hsl(from var(--primary-color) h s calc(l + 4));
+  --sl-color-primary-500: var(--primary-color);
+  --sl-color-primary-400: hsl(from var(--primary-color) h s calc(l - 4));
+  --sl-color-primary-300: hsl(from var(--primary-color) h s calc(l - 8));
+  --sl-color-primary-200: hsl(from var(--primary-color) h s calc(l - 12));
+  --sl-color-primary-100: hsl(from var(--primary-color) h s calc(l - 16));
+  --sl-color-primary-50: hsl(from var(--primary-color) h s calc(l - 18));
+
+  /*** HEADER ***/
+  #egw_fw_topmenu_info_items {
+	#topmenu_info_timer:before {
+	  filter:initial;
+	}
+  }
+
+  /*** APPLICATION ***/
+
+  egw-app {
+	--application-header-text-color: var(--sl-color-neutral-700);
+  }
+
+  /*** End APPLICATION ***/
+
+  /*** WIDGETS ***/
+  /* This should mostly go away with webcomponents */
+
+  .et2_container {
+	background-color: initial;
+  }
+
+  .dialogFooterToolbar et2-button::part(base):not(:hover), et2-dialog et2-button[variant='default'][slot='footer']::part(base):not(:hover) {
+	background-color: var(--sl-input-background-color);
+  }
+  .nextmatch_sortheader {
+	color: #96bcd9;
+  }
+
+  /** End WIDGETS **/
+}

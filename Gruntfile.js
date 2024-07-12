@@ -40,28 +40,14 @@ module.exports = function (grunt) {
 			pixelegg: {
 				files: {
 					"pixelegg/css/pixelegg.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
 					],
 					"pixelegg/css/mobile.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/mobile.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/mobile.min.css"
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
@@ -76,28 +62,44 @@ module.exports = function (grunt) {
 						"pixelegg/print.css"
 					],
 					"pixelegg/css/monochrome.min.css": [
-						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
-						"api/templates/default/etemplate2.css",
-						"pixelegg/css/monochrome.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/monochrome.min.css"
 					],
 					"pixelegg/css/modern.min.css": [
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
+					],
+					"pixelegg/css/0.min.css": [
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
+					],
+					"pixelegg/css/1.min.css": [
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
+					],
+					"pixelegg/css/2.min.css": [
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
+					],
+					"pixelegg/css/3.min.css": [
+						"node_modules/@shoelace-style/shoelace/dist/themes/light.css",
+						"node_modules/@shoelace-style/shoelace/dist/themes/dark.css",
+						"pixelegg/css/pixelegg.min.css"
+					]
+				}
+			},
+			kdots: {
+				files: {
+					"kdots/css/kdots.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/egw_action/test/skins/dhtmlxmenu_egw.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
-						"vendor/bower-asset/cropper/dist/cropper.min.css",
-						"api/templates/default/css/flags.css",
-						"api/templates/default/css/htmlarea.css",
 						"api/templates/default/etemplate2.css",
-						"pixelegg/css/pixelegg.css",
-						"api/templates/default/print.css",
-						"pixelegg/print.css"
+						"kdots/css/kdots.css",
+						"api/templates/default/print.css"
 					]
 				}
 			}
@@ -108,7 +110,8 @@ module.exports = function (grunt) {
 					"*/Gruntfile.js"
 				]
 			}
-		}
+		},
+		terser: null
 	});
 	// Load plugin for css minification
 	grunt.loadNpmTasks("grunt-contrib-cssmin");

@@ -78,7 +78,7 @@ foreach(Bundle::all() as $name => $files)
 $cssmin =& $config['cssmin'];
 $GLOBALS['egw_info']['flags']['currentapp'] = '*grunt*';	// to not find any app.css files
 $GLOBALS['egw_info']['server']['debug_minify'] = 'True';	// otherwise we would only get minified file
-foreach(array('pixelegg','jdots')/*array_keys(Framework::list_templates())*/ as $template)
+foreach(array('pixelegg', 'jdots', 'kdots')/*array_keys(Framework::list_templates())*/ as $template)
 {
 	$GLOBALS['egw_info']['server']['template_set'] = $template;
 	$tpl = Framework::factory();

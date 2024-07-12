@@ -1,12 +1,13 @@
 /**
  * kDots main styles
  *
- * Note that light / dark colors should go in framework_light.less & framework_dark.less
+ * Note that light / dark colors should go in kdots_light.less & kdots_dark.less
  */
 
 
 /** Theme customisations **/
-@import "./framework_dark.less";
+@import "./less/light.less";
+@import "./less/dark.less";
 /** End theme customisations **/
 
 html, body {
@@ -164,7 +165,7 @@ egw-framework#egw_fw_basecontainer {
 	  left: 0;
 	  width: 100%;
 	  height: 100%;
-	  background-image: url(../../../timesheet/templates/default/images/navbar.svg);
+	  background-image: url(../../timesheet/templates/default/images/navbar.svg);
 	  background-repeat: no-repeat;
 	  background-size: 32px;
 	  background-position: center center;
@@ -177,7 +178,7 @@ egw-framework#egw_fw_basecontainer {
 
 	span#quick_add {
 	  display: block;
-	  background-image: url(../../../api/templates/default/images/add.svg);
+	  background-image: url(../../api/templates/default/images/add.svg);
 	  background-repeat: no-repeat;
 	  background-size: 24px;
 	  background-position: center;
@@ -236,7 +237,7 @@ egw-framework#egw_fw_basecontainer {
 	}
   }
   button#topmenu_info_search {
-	background-image: url(../../../api/templates/default/images/topmenu_items/search.svg);
+	background-image: url(../../api/templates/default/images/topmenu_items/search.svg);
   }
 }
 
@@ -383,7 +384,7 @@ div.et2_nextmatch {
 		height: 9px;
 		padding: 4px 14px 0 2px;
 		margin-top: 4px;
-		background-image: url(../../../api/templates/default/images/selectcols.svg);
+		background-image: url(../../api/templates/default/images/selectcols.svg);
 		background-repeat: no-repeat;
 		background-size: 10px 10px;
 		display: inline-block;
