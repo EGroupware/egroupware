@@ -84,7 +84,7 @@ class Content
 				UserAgent::type() == 'safari' && UserAgent::mobile() && UserAgent::version() >= 9537)	// iOS 7
 			{
 				// forbid to execute any javascript (to be precise anything but images and styles)
-				ContentSecurityPolicy::header("image-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; default-src 'none'");
+				ContentSecurityPolicy::header("img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; default-src 'none'");
 			}
 			else	// everything else get's a Content-dispostion: attachment, to be on save side
 			{
