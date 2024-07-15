@@ -203,8 +203,8 @@ class HttpException extends Exception
 	public readonly string $method;
 	public readonly string $request_uri;
 	public readonly string $request_body;
-	public readonly array $response_headers;
-	public readonly string $response;
+	public readonly ?array $response_headers;
+	public readonly ?string $response;
 
 	public function __construct(string $message, int $code, string $method, string $uri, $body, ?array $response_headers=null, ?string $response=null)
 	{
