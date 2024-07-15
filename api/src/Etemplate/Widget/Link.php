@@ -416,9 +416,9 @@ class Link extends Etemplate\Widget
 			}
 			// Link widgets can share IDs, make sure to preserve values from others
 			$already = self::get_array($validated, $form_name, false, true);
-			if($already != null)
+			if(!empty($already) && $already != $value)
 			{
-				$value = array_merge((array)$value, $already);
+				$value = array_merge((array)$value, (array)$already);
 			}
 			// Automatically do link if user selected entry but didn't click 'Link' button
 			$link = self::get_array($content, self::form_name($cname, $this->id . '_link_entry'));
