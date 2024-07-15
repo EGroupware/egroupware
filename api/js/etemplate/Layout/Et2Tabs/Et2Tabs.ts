@@ -272,6 +272,8 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				tabData.push({
 					"id": index_name,
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
+					"onclick": et2_readAttrWithDefault(node, "onclick", ''),
+					"ondblclick": et2_readAttrWithDefault(node, "ondblclick", ''),
 					"widget": null,
 					"widget_options": widget_options,
 					"contentDiv": null,
@@ -347,7 +349,9 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				slot: "nav",
 				panel: tab.id,
 				active: index == this._selectedIndex,
-				hidden: tab.hidden
+				hidden: tab.hidden,
+				onclick: tab.onclick,
+				ondblclick: tab.ondblclick
 			}, this);
 
 			// Set tab label

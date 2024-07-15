@@ -2,6 +2,7 @@ import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTab} from "@shoelace-style/shoelace";
 import shoelace from "../../Styles/shoelace";
 import {css} from "lit";
+import {property} from "lit/decorators/property.js";
 
 export class Et2Tab extends Et2Widget(SlTab)
 {
@@ -20,19 +21,30 @@ export class Et2Tab extends Et2Widget(SlTab)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-
-			hidden: {type: Boolean, reflect: true}
-		}
-	}
+	@property({type: Function})
+	ondblclick;
 
 	constructor()
 	{
 		super();
 		this.hidden = false;
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+
+		if(this.ondblclick)
+		{
+			this.addEventListener("dblclick", this.ondblclick);
+		}
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback()
+
+		this.removeEventListener("dblclick", this.ondblclick);
 	}
 }
 
