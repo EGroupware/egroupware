@@ -468,7 +468,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 
 	getDomNode(_id): SlTreeItem|null
 	{
-		return this.shadowRoot.querySelector("sl-tree-item[id='" + _id + "'");
+		return this.shadowRoot.querySelector('sl-tree-item[id="' + _id.replace(/"/g, '\\"') + '"');
 	}
 
 
