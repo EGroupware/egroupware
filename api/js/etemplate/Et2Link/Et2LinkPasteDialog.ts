@@ -29,17 +29,6 @@ export class Et2LinkPasteDialog extends Et2VfsSelectDialog
 		this._appList = [];
 	}
 
-	/**
-	 * Override double-click on directory, can't go into it
-	 *
-	 * @param {MouseEvent} event
-	 */
-	handleFileDoubleClick(event : MouseEvent)
-	{
-		// just select it
-		this.handleFileClick(event);
-	}
-
 	protected async localSearch<DataType extends SearchResult>(search : string, searchOptions : object, localOptions : DataType[] = []) : Promise<DataType[]>
 	{
 		const files = await getClipboardFiles();

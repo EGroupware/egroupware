@@ -93,7 +93,10 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 	/** Programmatically trigger the dialog */
 	public click()
 	{
-		this.handleClick(new Event("click"));
+		this.updateComplete.then(() =>
+		{
+			this.handleClick(new Event("click"));
+		})
 	}
 
 	protected handleClick(event)
