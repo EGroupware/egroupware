@@ -208,7 +208,9 @@ export class Et2VfsSelectDialog
 
 		if(this.path == "")
 		{
-			this.path = <string>this.egw()?.preference("startfolder", "filemanager") || "~";
+			this.path = this.egw().getLocalStorageItem(this.egw().appName, this.constructor.name + "Path") ||
+				<string>this.egw()?.preference("startfolder", "filemanager") ||
+				"~";
 		}
 	}
 
@@ -443,6 +445,9 @@ export class Et2VfsSelectDialog
 				}
 				break;
 		}
+
+		// Save path for next time
+		this.egw().setLocalStorageItem(this.egw().appName, this.constructor.name + "Path", this.path);
 		this.dispatchEvent(new Event("change", {bubbles: true}));
 	}
 
@@ -600,8 +605,9 @@ export class Et2VfsSelectDialog
 		if(file && !file.disabled)
 		{
 			// Can't select a directory normally
-			if(file.value.isDir && this.mode != "select-dir")
+			if(file.value.isDir)
 			{
+				this.setPath(file.value.path);
 				event.preventDefault();
 				event.stopPropagation();
 				return;
@@ -617,30 +623,6 @@ export class Et2VfsSelectDialog
 			}
 			// Set focus after updating so the value is announced by screen readers
 			//this.updateComplete.then(() => this.displayInput.focus({ preventScroll: true }));
-		}
-	}
-
-	handleFileDoubleClick(event : MouseEvent)
-	{
-		const target = event.target as HTMLElement;
-		const file : Et2VfsSelectRow = target.closest('et2-vfs-select-row');
-
-		if(file.value.isDir)
-		{
-			this.toggleResultSelection(file, false);
-			const oldPath = this.path;
-			this.setPath(file.value.path);
-		}
-		else
-		{
-			// Not a dir, just select it
-			this.handleFileClick(event);
-
-			// If we only want one, we've got it.  Close by clicking the primary button
-			if(!this.multiple)
-			{
-				this.shadowRoot.querySelector('et2-button[variant="primary"]')?.click();
-			}
 		}
 	}
 
@@ -701,7 +683,7 @@ export class Et2VfsSelectDialog
 		}
 		else if(["Enter"].includes(event.key) && this.currentResult && !this.currentResult.disabled)
 		{
-			return this.handleFileDoubleClick(event);
+			return this.handleFileClick(event);
 		}
 		else if(["Escape"].includes(event.key))
 		{
@@ -799,7 +781,6 @@ export class Et2VfsSelectDialog
                     .selected=${this.value.includes(file.path)}
                     .value=${file}
                     @mouseup=${this.handleFileClick}
-                    @dblclick=${this.handleFileDoubleClick}
             ></et2-vfs-select-row>`;
 	}
 

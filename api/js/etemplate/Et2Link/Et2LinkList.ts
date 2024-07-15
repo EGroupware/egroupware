@@ -17,8 +17,8 @@ import {egw} from "../../jsapi/egw_global";
 import {Et2LinkString} from "./Et2LinkString";
 import {egwMenu} from "../../egw_action/egw_menu";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
-import {et2_vfsSelect} from "../et2_widget_vfs";
-import {et2_createWidget} from "../et2_core_widget";
+import {loadWebComponent} from "../Et2Widget/Et2Widget";
+import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 
 /**
  * Display a list of entries in a comma separated list
@@ -478,7 +478,7 @@ export class Et2LinkList extends Et2LinkString
 		});
 
 		// Only allow this option if the entry has been saved, and has a real ID
-		if(this.to_id && typeof this.to_id != 'object')
+		if(this.to_id && typeof this.to_id != 'object' || this.entryId && this.application)
 		{
 			this.context.addItem("copy_to", this.egw().lang("Copy to"), this.egw().image('copy'), () =>
 			{
@@ -488,19 +488,19 @@ export class Et2LinkList extends Et2LinkString
 				// Get target
 				let select_attrs : any = {
 					mode: "select-dir",
-					button_caption: '',
-					button_icon: 'copy',
-					button_label: egw.lang("copy"),
+					image: 'copy',
+					buttonLabel: egw.lang("copy"),
 					//extra_buttons: [{text: egw.lang("link"),	id:"link", image: "link"}],
 					dialog_title: egw.lang('Copy to'),
 					method: "EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_copy_to",
-					method_id: this.context.data
 				};
-				let vfs_select = <et2_vfsSelect>et2_createWidget("vfs-select", select_attrs, self);
+				let vfs_select = <Et2VfsSelectButton>loadWebComponent("et2-vfs-select", select_attrs, this);
+				vfs_select.methodId = this.context.data;
+				document.body.append(vfs_select);
 
 				// No button, just open it
-				vfs_select.button.hide();
-				vfs_select.click(null);
+				vfs_select.click();
+				vfs_select.addEventListener("change", (e) => {vfs_select.remove()});
 			});
 		}
 		this.context.addItem("-", "-");
