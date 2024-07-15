@@ -804,13 +804,6 @@ class calendar_rrule implements Iterator
 					$rrule['BYDAY'] = $this->monthly_byday_num .
 						strtoupper(substr($this->time->format('l'),0,2));
 					break;
-				case self::PERIOD:
-					$period = [];
-					foreach($this->period as $date)
-					{
-						$period[] = $date->format("Ymd\THms\Z");
-					}
-					$rrule['PERIOD'] = implode(',', $period);
 			}
 			if ($this->interval > 1)
 			{
