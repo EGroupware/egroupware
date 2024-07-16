@@ -13,7 +13,7 @@
 				<et2-checkbox  statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to sign the message on send" id="smime_sign" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to encrypt the message on send" id="smime_encrypt" selectedValue="on" unselectedValue="off" ></et2-checkbox>
-				<et2-textbox  id="appendix_data"></et2-textbox>
+                <et2-textbox id="appendix_data" autocomplete="off"></et2-textbox>
 				<et2-password  id="smime_passphrase"></et2-password>
 				<et2-select  id="to_integrate_ids" multiple="true" allowFreeEntries="true" editModeEnabled="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"></et2-select>
 				<et2-select  id="priority"></et2-select>
