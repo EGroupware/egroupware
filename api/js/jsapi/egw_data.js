@@ -112,17 +112,22 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 			// Actual cached data
 			else if (key.indexOf(_prefix) == 0)
 			{
-				var cached = JSON.parse(window.localStorage.getItem(key));
-				if(cached.timestamp)
-				{
-					indexes.push({
-						key: key,
-						lastModification: cached.timestamp
-					});
+				try {
+					let cached = JSON.parse(window.localStorage.getItem(key));
+					if(cached.timestamp)
+					{
+						indexes.push({
+							key: key,
+							lastModification: cached.timestamp
+						});
+					}
+					else
+					{
+						// No way to know how old it is, just remove it
+						window.localStorage.removeItem(key);
+					}
 				}
-				else
-				{
-					// No way to know how old it is, just remove it
+				catch (e) {
 					window.localStorage.removeItem(key);
 				}
 			}
