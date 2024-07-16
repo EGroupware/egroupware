@@ -855,6 +855,7 @@ class Nextmatch extends Etemplate\Widget
 	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
 	 * - boolean 'postSubmit' eg. downloads need a submit via POST request not our regular Ajax submit, only works with nm_action=submit!
 	 * - string 'hint' tooltip on menu item
+	 * - string 'color' color of the caption e.g. "red" or "#ff0000"
 	 *
 	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name ='' name of the template, used as default for app name of images

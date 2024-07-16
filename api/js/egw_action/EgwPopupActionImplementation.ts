@@ -442,7 +442,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     firstElem = false;
 
                     const item:egwMenuItem = _menu.addItem(link.actionObj.id, link.actionObj.caption,
-                        link.actionObj.iconUrl);
+                        link.actionObj.iconUrl, undefined, link.actionObj.color);
                     item.default= link.actionObj["default"];
 
                     // As this code is also used when a drag-drop popup menu is built,

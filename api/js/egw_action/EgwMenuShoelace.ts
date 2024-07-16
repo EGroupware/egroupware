@@ -21,8 +21,8 @@ export class EgwMenuShoelace extends LitElement
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
-				sl-menu {
-					box-shadow: var(--sl-shadow-x-large);
+				.custom-color::part(label) {
+					--color: var(--color);
 				}
 
 				sl-menu-item::part(base) {
@@ -117,9 +117,17 @@ export class EgwMenuShoelace extends LitElement
 		if(this.popup == null)
 		{
 			this.popup = Object.assign(document.createElement("sl-popup"), {
+<<<<<<< HEAD
 				placement: "right-start",
 				autoSize: "vertical",
 				flip: true,
+=======
+				placement: "bottom-start",
+				autoSize: "vertical",
+				flip: true,
+				flipFallbackPlacements: "top-start",
+				flipFallbackStrategy: "initial",
+>>>>>>> b26c7815b1 (implement new action attribute color, to specify a color for the caption, instead of the default color)
 				shift: true
 			});
 			this.popup.append(this);
@@ -132,8 +140,13 @@ export class EgwMenuShoelace extends LitElement
 				return {
 					x: _x,
 					y: _y,
+<<<<<<< HEAD
 					width: 0,	// placement="right-start" only works well with 0, not menu.clientWidth,
 					height: menu.clientHeight,
+=======
+					width: 0, //menu.clientWidth,
+					height: 0, //menu.clientHeight,
+>>>>>>> b26c7815b1 (implement new action attribute color, to specify a color for the caption, instead of the default color)
 					top: _y,
 					left: _x,
 					right: _x,

@@ -23,6 +23,7 @@ export class EgwPopupAction extends EgwAction {
     shortcut = null;
     singleClick = false;
     private isChecked: EgwFnct;
+    color = null;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
         super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
@@ -110,6 +111,10 @@ export class EgwPopupAction extends EgwAction {
         }
     };
 
+    set_color (_value)
+    {
+        this.color = _value;
+    }
 }
 
 /**
