@@ -68,6 +68,11 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	private $addressbook;
 
 	/**
+	 * Default in days, if no cutoff-date or preference for it is given
+	 */
+	const PAST_LIMIT = 365;
+
+	/**
 	 * Constructor
 	 *
 	 * @param activesync_backend $backend
@@ -187,11 +192,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		$type = $user = null;
 		$this->backend->splitID($id,$type,$user);
 
-		if (!$cutoffdate) $cutoffdate = time() - 365*24*3600;	// limit all to 1 year (-30 breaks all sync recurrences)
+		if (!$cutoffdate)	// limit all to 1 year (-30 breaks all sync recurrences)
+		{
+			$cutoffdate = time() - abs($GLOBALS['egw_info']['user']['preferences']['activesync']['calendar-maximumSyncRange'] ?? self::PAST_LIMIT)*24*3600;
+		}
 
 		$filter = array(
 			'users' => $user,
-			'start' => $cutoffdate,	// default one month back -30 breaks all sync recurrences
+			'start' => $cutoffdate,
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
@@ -1673,6 +1681,14 @@ END:VTIMEZONE
 			'help'   => 'Not all devices support additonal calendars. Your personal calendar is always synchronised.',
 			'name'   => 'calendar-cals',
 			'values' => $cals,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		$settings['calendar-maximumSyncRange'] = array(
+			'type'   => 'integer',
+			'label'  => lang('How many days to sync in the past when client does not specify a date-range (default %1)', self::PAST_LIMIT),
+			'name'   => 'calendar-maximumSyncRange',
+			'help'   => 'if the client sets no sync range, you may override the setting (preventing client crash that may be caused by too many mails/too much data). If you want to sync way-back into the past: set a large number',
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
