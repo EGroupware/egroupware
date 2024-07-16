@@ -48,6 +48,126 @@ export declare class Et2InputWidgetInterface
 	public isValid(messages : string[]) : boolean;
 }
 
+/**
+ * Massively simplified validate, as compared to what ValidatorMixin gives us, since ValidatorMixin extends
+ * FormControlMixin which breaks SlSelect's render()
+ *
+ * We take all validators for the widget, and if there's a value (or field is required) we check the value
+ * with each validator.  For array values we check each element with each validator.  If the value does not
+ * pass the validator, we collect the message and display feedback to the user.
+ *
+ * We handle validation errors from the server with ManualMessages, which always "fail".
+ * If the value is empty, we only validate if the field is required.
+ *
+ * @param skipManual Do not run any manual validators, used during submit check.  We don't want manual validators to block submit.
+ */
+export async function validate(widget,skipManual = false)
+{
+	if(widget.readonly || widget.disabled)
+	{
+		// Don't validate if the widget is read-only, there's nothing the user can do about it
+		return Promise.resolve();
+	}
+	let validators = [...(widget.validators || []), ...(widget.defaultValidators || [])];
+	let fieldName = widget.id;
+	let feedbackData = [];
+	let resultPromises = [];
+	(<EgwValidationFeedback>widget.querySelector("egw-validation-feedback"))?.remove();
+
+	// Collect message of a (failing) validator
+	const doValidate = async function(validator, value)
+	{
+		if(validator.config.fieldName)
+		{
+			fieldName = await validator.config.fieldName;
+		}
+		// @ts-ignore [allow-protected]
+		return validator._getMessage({
+			modelValue: value,
+			formControl: widget,
+			fieldName,
+		}).then((message) =>
+		{
+			feedbackData.push({message, type: validator.type, validator});
+		});
+	}.bind(widget);
+
+	// Check if a validator fails
+	const doCheck = async(value, validator) =>
+	{
+		const result = validator.execute(value, validator.param, {node: widget});
+		if(result === true)
+		{
+			resultPromises.push(doValidate(validator, value));
+		}
+		else if(result !== false && typeof result.then === 'function')
+		{
+			result.then(doValidate(validator, value));
+			resultPromises.push(result);
+		}
+	};
+
+	validators.map(async validator =>
+	{
+		let values = widget.getValue();
+		if(!Array.isArray(values))
+		{
+			values = [values];
+		}
+		if(!values.length)
+		{
+			values = [''];
+		}	// so required validation works
+
+		// Run manual validation messages just once, doesn't usually matter what the value is
+		if(validator instanceof ManualMessage)
+		{
+			if(!skipManual)
+			{
+				doCheck(values, validator);
+			}
+		}
+			// Only validate if field is required, or not required and has a value
+		// Don't bother to validate empty fields
+		else if(widget.required || !widget.required && widget.getValue() != '' && widget.getValue() !== null)
+		{
+			// Validate each individual item
+			values.forEach((value) => doCheck(value, validator));
+		}
+	});
+	widget.validateComplete = Promise.all(resultPromises);
+
+	// Wait until all validation is finished, then update UI
+	widget.validateComplete.then(() =>
+	{
+		// Show feedback from all failing validators
+		if(feedbackData.length > 0)
+		{
+			let feedback = document.createElement("egw-validation-feedback");
+			feedback.feedbackData = feedbackData;
+			feedback.slot = "help-text";
+			widget.append(feedback);
+			if(widget.shadowRoot.querySelector("slot[name='feedback']"))
+			{
+				feedback.slot = "feedback";
+			}
+			else if(<HTMLElement>widget.shadowRoot.querySelector("#help-text"))
+			{
+				// Not always visible?
+				(<HTMLElement>widget.shadowRoot.querySelector("#help-text")).style.display = "initial";
+			}
+			else
+			{
+				// No place to show the validation error.  That's a widget problem, but we'll show it as message
+				widget.egw().message(feedback.textContent, "error");
+			}
+		}
+	});
+
+	return widget.validateComplete;
+}
+
+
 type Constructor<T = {}> = new (...args : any[]) => T;
 const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) =>
 {
@@ -578,108 +698,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		async validate(skipManual = false)
 		{
-			if(this.readonly || this.disabled)
-			{
-				// Don't validate if the widget is read-only, there's nothing the user can do about it
-				return Promise.resolve();
-			}
-			let validators = [...(this.validators || []), ...(this.defaultValidators || [])];
-			let fieldName = this.id;
-			let feedbackData = [];
-			let resultPromises = [];
-			(<EgwValidationFeedback>this.querySelector("egw-validation-feedback"))?.remove();
-
-			// Collect message of a (failing) validator
-			const doValidate = async function(validator, value)
-			{
-				if(validator.config.fieldName)
-				{
-					fieldName = await validator.config.fieldName;
-				}
-				// @ts-ignore [allow-protected]
-				return validator._getMessage({
-					modelValue: value,
-					formControl: this,
-					fieldName,
-				}).then((message) =>
-				{
-					feedbackData.push({message, type: validator.type, validator});
-				});
-			}.bind(this);
-
-			// Check if a validator fails
-			const doCheck = async(value, validator) =>
-			{
-				const result = validator.execute(value, validator.param, {node: this});
-				if(result === true)
-				{
-					resultPromises.push(doValidate(validator, value));
-				}
-				else if(result !== false && typeof result.then === 'function')
-				{
-					result.then(doValidate(validator, value));
-					resultPromises.push(result);
-				}
-			};
-
-			validators.map(async validator =>
-			{
-				let values = this.getValue();
-				if(values !== null && !Array.isArray(values))
-				{
-					values = [values];
-				}
-				if(values !== null && !values.length)
-				{
-					values = [''];
-				}	// so required validation works
-
-				// Run manual validation messages just once, doesn't usually matter what the value is
-				if(validator instanceof ManualMessage)
-				{
-					if(!skipManual)
-					{
-						doCheck(values, validator);
-					}
-				}
-					// Only validate if field is required, or not required and has a value
-				// Don't bother to validate empty fields
-				else if(this.required || !this.required && this.getValue() != '' && this.getValue() !== null)
-				{
-					// Validate each individual item
-					values.forEach((value) => doCheck(value, validator));
-				}
-			});
-			this.validateComplete = Promise.all(resultPromises);
-
-			// Wait until all validation is finished, then update UI
-			this.validateComplete.then(() =>
-			{
-				// Show feedback from all failing validators
-				if(feedbackData.length > 0)
-				{
-					let feedback = document.createElement("egw-validation-feedback");
-					feedback.feedbackData = feedbackData;
-					feedback.slot = "help-text";
-					this.append(feedback);
-					if(this.shadowRoot.querySelector("slot[name='feedback']"))
-					{
-						feedback.slot = "feedback";
-					}
-					else if(<HTMLElement>this.shadowRoot.querySelector("#help-text"))
-					{
-						// Not always visible?
-						(<HTMLElement>this.shadowRoot.querySelector("#help-text")).style.display = "initial";
-					}
-					else
-					{
-						// No place to show the validation error.  That's a widget problem, but we'll show it as message
-						this.egw().message(feedback.textContent, "error");
-					}
-				}
-			});
-
-			return this.validateComplete;
+			return validate(this,skipManual)
 		}
 
 		set_validation_error(err : string | false)
