@@ -24,22 +24,6 @@ import {
 export var _egw_active_menu: egwMenu = null;
 
 /**
- * Internal function which generates a menu item with the given parameters as used
- * in e.g. the egwMenu.addItem function.
- */
-//TODO Icons: write PHP GD script which is capable of generating the menu icons in various states (disabled, highlighted)
-function _egwGenMenuItem(_parent = null, _id = "", _caption = "", _iconUrl = "", _onClick = null)
-{
-	//Create a menu item with no parent (null) and set the given parameters
-	const item: egwMenuItem = new egwMenuItem(_parent, _id);
-	item.set_caption(_caption);
-	item.set_iconUrl(_iconUrl);
-	item.set_onClick(_onClick);
-
-	return item;
-}
-
-/**
  * Internal function which parses the given menu tree in _elements and adds the
  * elements to the given parent.
  */
@@ -237,13 +221,14 @@ export class egwMenu
 	 * 	menu item. It may be false, null or "" if you don't want an icon to be displayed.
 	 * @param {function} _onClick is the JS function which is being executed when the
 	 * 	menu item is clicked.
+	 * @param {string|null} _color color
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
 	 * 	menu item list.
 	 */
-	public addItem(_id, _caption, _iconUrl, _onClick): egwMenuItem
+	public addItem(_id, _caption, _iconUrl, _onClick, _color): egwMenuItem
 	{
 		//Append the item to the list
-		const item: egwMenuItem = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick);
+		const item: egwMenuItem = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color);
 		this.children.push(item);
 
 		return item;
@@ -281,9 +266,10 @@ export class egwMenu
 	 * Applies the given onClick handler to all menu items which don't have a clicked
 	 * handler assigned yet.
 	 */
-	setGlobalOnClick(_onClick) {
-	_egwSetMenuOnClick(this.children, _onClick);
-}
+	setGlobalOnClick(_onClick)
+	{
+		_egwSetMenuOnClick(this.children, _onClick);
+	}
 }
 
 
@@ -294,6 +280,7 @@ export class egwMenu
 export class egwMenuItem
 {
 	id: string;
+	color: string;
 
 	set_id(_value)
 	{
@@ -346,13 +333,14 @@ export class egwMenuItem
 	//hint might get set somewhere
 	hint: string = "";
 
-	constructor(_parent, _id, _caption="", _iconUrl="", onClick=null)
+	constructor(_parent, _id, _caption="", _iconUrl="", onClick=null, _color=null)
 	{
 		this.parent = _parent;
 		this.id = _id;
 		this.caption = _caption;
 		this.iconUrl = _iconUrl;
 		this.onClick = onClick;
+		this.color = _color;
 	}
 
 	/**
@@ -392,47 +380,54 @@ export class egwMenuItem
 	 * @returns {egwMenuItem} the newly generated menu item, which had been appended to the
 	 * 	menu item list.
 	 */
-	addItem(_id: string, _caption: string, _iconUrl: string, _onClick: any)
+	addItem(_id: string, _caption: string, _iconUrl: string, _onClick: any, _color: string)
 	{
 		//Append the item to the list
-		const item = _egwGenMenuItem(this, _id, _caption, _iconUrl, _onClick);
+		const item = new egwMenuItem(this, _id, _caption, _iconUrl, _onClick, _color);
 		this.children.push(item);
 
 		return item;
 	}
 
-	set_groupIndex(_value) {
-	//If groupIndex is greater than 0 and the element is a checkbox, it is
-	//treated like a radio box
-	this.groupIndex = _value;
-}
+	set_groupIndex(_value)
+	{
+		//If groupIndex is greater than 0 and the element is a checkbox, it is
+		//treated like a radio box
+		this.groupIndex = _value;
+	}
 
-	set_enabled (_value) {
-	this.enabled = _value;
-}
+	set_enabled (_value)
+	{
+		this.enabled = _value;
+	}
 
-	set_onClick (_value) {
-	this.onClick = _value;
-}
+	set_onClick (_value)
+	{
+		this.onClick = _value;
+	}
 
-	set_iconUrl (_value) {
-	this.iconUrl = _value;
-}
+	set_iconUrl (_value)
+	{
+		this.iconUrl = _value;
+	}
 
-	set_default (_value) {
-	this["default"] = _value;
-}
+	set_default (_value)
+	{
+		this["default"] = _value;
+	}
 
-	set_data (_value) {
-	this.data = _value;
-}
+	set_data (_value)
+	{
+		this.data = _value;
+	}
 
-	set_hint (_value) {
-	this.hint = _value;
-}
+	set_hint (_value)
+	{
+		this.hint = _value;
+	}
 
-	set_shortcutCaption (_value) {
-	this.shortcutCaption = _value;
-}
-
+	set_shortcutCaption (_value)
+	{
+		this.shortcutCaption = _value;
+	}
 }

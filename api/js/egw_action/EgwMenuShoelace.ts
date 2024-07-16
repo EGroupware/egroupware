@@ -20,6 +20,10 @@ export class EgwMenuShoelace extends LitElement
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
+				.custom-color::part(label) {
+					--color: var(--color);
+				}
+
 				sl-menu-item::part(base) {
 					height: 1.6em;
 					line-height: var(--sl-line-height-dense);
@@ -33,7 +37,7 @@ export class EgwMenuShoelace extends LitElement
 
 				et2-image {
 					line-height: normal;
-					width: 1.5em;
+					width: 1.3em;
 				}
 			`
 		]
@@ -84,10 +88,10 @@ export class EgwMenuShoelace extends LitElement
 		if(this.popup == null)
 		{
 			this.popup = Object.assign(document.createElement("sl-popup"), {
-				placement: "top",
+				placement: "bottom-start",
 				autoSize: "vertical",
 				flip: true,
-				flipFallbackPlacements: "right bottom",
+				flipFallbackPlacements: "top-start",
 				flipFallbackStrategy: "initial",
 				shift: true
 			});
@@ -101,8 +105,8 @@ export class EgwMenuShoelace extends LitElement
 				return {
 					x: _x,
 					y: _y,
-					width: menu.clientWidth,
-					height: menu.clientHeight,
+					width: 0, //menu.clientWidth,
+					height: 0, //menu.clientHeight,
 					top: _y,
 					left: _x,
 					right: _x,
@@ -193,7 +197,7 @@ export class EgwMenuShoelace extends LitElement
             >
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
-                ${item.caption}
+				<span style="color: ${item.color || nothing}">${item.caption}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix"
                                                     class="keyboard_shortcut">
 					${item.shortcutCaption}
