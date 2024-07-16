@@ -20,12 +20,8 @@ export class EgwMenuShoelace extends LitElement
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
-				.custom-color::part(label) {
-					--color: var(--color);
-				}
-
 				sl-menu-item::part(base) {
-					height: 1.6em;
+					height: 1.7em;
 					line-height: var(--sl-line-height-dense);
 					align-items: center;
 					padding: 0;
@@ -88,10 +84,10 @@ export class EgwMenuShoelace extends LitElement
 		if(this.popup == null)
 		{
 			this.popup = Object.assign(document.createElement("sl-popup"), {
-				placement: "bottom-start",
+				placement: "right-start",
 				autoSize: "vertical",
 				flip: true,
-				flipFallbackPlacements: "top-start",
+				flipFallbackPlacements: "right-end",
 				flipFallbackStrategy: "initial",
 				shift: true
 			});
@@ -105,8 +101,8 @@ export class EgwMenuShoelace extends LitElement
 				return {
 					x: _x,
 					y: _y,
-					width: 0, //menu.clientWidth,
-					height: 0, //menu.clientHeight,
+					width: 0,	//menu.clientWidth,
+					height: menu.clientHeight,
 					top: _y,
 					left: _x,
 					right: _x,
