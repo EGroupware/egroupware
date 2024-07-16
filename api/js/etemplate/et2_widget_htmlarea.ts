@@ -17,13 +17,14 @@
 
 import {et2_editableWidget} from "./et2_core_editableWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
+import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_IResizeable} from "./et2_core_interfaces";
 import {et2_no_init} from "./et2_core_common";
 import {egw} from "../jsapi/egw_global";
-import {et2_vfsSelect} from "./et2_widget_vfs";
 import "../../../vendor/tinymce/tinymce/tinymce.min.js";
 import {etemplate2} from "./etemplate2";
+import {loadWebComponent} from "./Et2Widget/Et2Widget";
+import {Et2VfsSelectDialog} from "./Et2Vfs/Et2VfsSelectDialog";
 
 /**
  * @augments et2_inputWidget
@@ -404,22 +405,23 @@ export class et2_htmlarea extends et2_editableWidget implements et2_IResizeable
 		{
 			et2 = app[egw(window).app_name()].et2;
 		}
-
-		let vfsSelect = <et2_vfsSelect>et2_createWidget('vfs-select', {
-			id:'upload',
+		const dialog = <Et2VfsSelectDialog><unknown>loadWebComponent("et2-vfs-select-dialog", {
+			id: 'upload',
 			mode: 'open',
-			name: '',
-			button_caption:"Link",
-			button_label:"Link",
-			dialog_title: "Link file",
-			method: "download"
-		}, et2);
-		jQuery(vfsSelect.getDOMNode()).on('change', function (){
-			callback(vfsSelect.get_value(), {alt:vfsSelect.get_value()});
+			multiple: false,
+			buttonLabel: "Link",
+			title: "Link file",
+			open: true
+		}, this);
+
+		dialog.addEventListener('change', function()
+		{
+			const file = dialog.fileInfo(Array.isArray(dialog.value) ? dialog.value[0] : dialog.value);
+			callback(egw.webserverUrl + file.downloadUrl, {alt: file.name});
 		});
 
 		// start the file selector dialog
-		vfsSelect.click();
+		document.body.append(dialog);
 	}
 
 	/**
