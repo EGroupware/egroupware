@@ -205,9 +205,9 @@ class Tree extends Etemplate\Widget
 	{
 		return (boolean)array_filter($cats, function($cat) use($id)
 		{
-			return $cat['value'] == $id || (
+			return is_array($cat) && ($cat['value'] == $id || (
 					!empty($cat['children']) && is_array($cat['children']) && static::in_cats($id, $cat['children'])
-				);
+				));
 		});
 	}
 
@@ -235,7 +235,11 @@ class Tree extends Etemplate\Widget
 			// we can not validate if autoloading is enabled
 			if (!$this->attrs['autoloading'])
 			{
-				$allowed = $this->attrs['multiple'] ? array() : array('' => $this->attrs['options']);
+				$options = empty($this->attrs['options']) ? [] : explode(',', $this->attrs['options']);
+				$allowed = $this->attrs['multiple'] || empty($options[0]) || is_numeric($options[0]) ? [] : [[
+					'id' => '',
+					'label' => $options[0],
+				]];
 				$allowed += self::selOptions($form_name);
 				foreach((array) $value as $val)
 				{
