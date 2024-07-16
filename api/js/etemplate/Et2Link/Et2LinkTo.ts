@@ -98,7 +98,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		};
 	}
 
-	private get pasteButton() { return this.shadowRoot?.querySelector("#paste"); }
+	private get pasteButton() : Et2VfsSelectButton { return this.shadowRoot?.querySelector("#paste"); }
 
 	private get pasteDialog() { return this.pasteButton?.querySelector("et2-link-paste-dialog"); }
 
@@ -148,8 +148,10 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 			method = 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing';
 			method_id = this.value.to_app + ':' + this.value.to_id;
 
-			let clipboard_files = getClipboardFiles();
-			pasteEnabled = clipboard_files.length > 0;
+			getClipboardFiles().then((files) =>
+			{
+				this.pasteButton.disabled = files.length == 0;
+			});
 		}
 
 		return html`
@@ -177,7 +179,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     image="linkpaste" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}
                     ?readonly=${this.readonly}
-                    ?disabled=${!pasteEnabled}
+                    disabled
                     multiple
                     @click=${async(e) =>
                             {
