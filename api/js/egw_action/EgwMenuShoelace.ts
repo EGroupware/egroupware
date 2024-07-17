@@ -20,6 +20,10 @@ export class EgwMenuShoelace extends LitElement
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
+				sl-menu {
+					box-shadow: var(--sl-shadow-x-large);
+				}
+
 				sl-menu-item::part(base) {
 					height: 1.7em;
 					line-height: var(--sl-line-height-dense);
@@ -133,7 +137,8 @@ export class EgwMenuShoelace extends LitElement
 
 	handleSelect(event)
 	{
-		if(!this.popup)
+		// If not open or from a sub-menu, skip
+		if(!this.popup || event.target !== this.menu)
 		{
 			return;
 		}
