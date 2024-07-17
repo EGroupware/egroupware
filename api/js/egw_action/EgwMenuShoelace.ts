@@ -21,8 +21,8 @@ export class EgwMenuShoelace extends LitElement
 					font-weight: var(--sl-font-weight-bold, bold);
 				}
 
-				.custom-color::part(label) {
-					--color: var(--color);
+				sl-menu {
+					box-shadow: var(--sl-shadow-x-large);
 				}
 
 				sl-menu-item::part(base) {
