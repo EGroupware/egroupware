@@ -218,6 +218,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
+custom attribute	setup	de	Benutzerdefiniertes Attribute
 custom handler: %1	setup	de	Eigener Sitzunghandler: %1
 custom oid	setup	de	Benutzerdefinierte OID
 custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
@@ -486,6 +487,7 @@ multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name for service provider	setup	de	Name des Service Provider / Dienstes
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den EGroupware verwendet
+name of jwt payload attribute for username	setup	de	Name des JWT Nutzdaten Attributes für den Benutzername
 needs extra configuration on dc and webserver!	setup	de	Benötigt extra Konfiguration auf Domain Controller und Webserver!
 never	setup	de	Niemals
 new	setup	de	Neu
@@ -540,6 +542,7 @@ path to user and group files has to be outside of the webservers document-root!!
 path to various directories: have to exist and be writeable by the webserver	setup	de	Pfade zu verschiedenen Verzeichnissen: Diese müssen vorhanden sein und vom Webserver beschreibbar
 pem certificate	setup	de	PEM Zertifikat
 periodic import from ads or ldap into egroupware database	setup	de	Periodischer Import von ADS oder LDAP in die EGroupware Datenbank
+perl regular expression to extract username	setup	de	Perl Regulärer Ausdruck um Benutzernamen to extrahieren
 persistent connections	setup	de	Permanente Verbindungen
 php client	setup	de	PHP Client
 php proxy	setup	de	PHP Proxy

@@ -493,6 +493,22 @@
      <td>{lang_Client_secret}:</td>
      <td><input type="password" name="newsettings[oic_client_secret]" value="{value_oic_client_secret}" size="40" /></td>
    </tr>
+   <tr class="row_on">
+      <td>{lang_Name_of_JWT_payload_attribute_for_username}:</td>
+      <td>
+        <select name="newsettings[oic_username_attribute]">
+          <option value="sub"{selected_oic_username_sub}>sub ({lang_default})</option>
+          <option value="prefered_username"{selected_oic_username_prefered_username}>prefered_username</option>
+          <option value="email"{selected_oic_username_email}>email</option>
+          <option value="custom"{selected_oic_username_custom}>{lang_custom_attribute}</option>
+        </select>
+        <input name="newsettings[oic_username_custom]" value="{value_oic_username_custom}" size="40" placeholder="{lang_custom_attribute}"/>
+      </td>
+   </tr>
+   <tr class="row_off">
+      <td>{lang_Perl_regular_expression_to_extract_username}</td>
+      <td><input name="newsettings[oic_username_preg]" value="{value_oic_username_preg}" size="40" placeholder="/^(.*)$/"/></td>
+   </tr>
 
    <tr class="row_off">
     <td colspan="2">&nbsp;</td>

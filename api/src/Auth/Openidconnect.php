@@ -44,32 +44,51 @@ class Openidconnect implements BackendSSO
 			//error_log(__METHOD__."() session_status()=".session_status().", _SESSION=".json_encode($_SESSION));
 			$this->client->authenticate();
 
-			$account_lid = $this->client->getVerifiedClaims('sub');
+			// use configured payload attribute / claim, defaulting to "sub"
+			$attribute = ($GLOBALS['egw_info']['server']['oic_username_attribute'] ?? 'sub');
+			if ($attribute === 'custom' && !empty($GLOBALS['egw_info']['server']['oic_username_custom']))
+			{
+				$attribute = $GLOBALS['egw_info']['server']['oic_username_custom'];
+			}
+			$account_lid = $this->client->getVerifiedClaims($attribute);
+			// extract username with regular expression, if configured and matching
+			if (!empty($GLOBALS['egw_info']['server']['oic_username_preg']) && preg_match($GLOBALS['egw_info']['server']['oic_username_preg'], $account_lid))
+			{
+				$account_lid = preg_replace($GLOBALS['egw_info']['server']['oic_username_preg'], '$1', $account_lid);
+			}
 			$accounts = Api\Accounts::getInstance();
 			if (!$accounts->name2id($account_lid, 'account_lid', 'u'))
 			{
-				// fail if auto-creation of authenticated users is NOT configured
-				if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
+				// for attribute="email" check, if we have user with given email
+				if ($attribute === 'email' && ($account_id = $accounts->name2id($account_lid, 'account_email', 'u')))
 				{
-					error_log(__METHOD__."() OpenIDConnect login successful, but user '$account_lid' does NOT exist in EGroupware, AND automatic user creating is disabled!");
-					$_GET['cd'] = lang("OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!", $account_lid);
-					return null;
+					$account_lid = Api\Accounts::id2name($account_id);
 				}
-				try {
-					$user_info = $this->client->requestUserInfo();
-					$GLOBALS['auto_create_acct'] = [
-						'firstname' => $user_info->given_name,
-						'lastname' => $user_info->family_name,
-						'email' => $user_info->email,
-						// not (yet) used supported keys
-						//'primary_group' => '',
-						//'add_group' => '',
-						//'account_id' => 0,
-					];
-				}
-				catch (OpenIDConnectClientException $e) {
-					// do NOT fail, if IdP does not support user-info
-					_egw_log_exception($e);
+				else
+				{
+					// fail if auto-creation of authenticated users is NOT configured
+					if (empty($GLOBALS['egw_info']['server']['auto_create_acct']))
+					{
+						error_log(__METHOD__."() OpenIDConnect login successful, but user '$account_lid' does NOT exist in EGroupware, AND automatic user creating is disabled!");
+						$_GET['cd'] = lang("OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!", $account_lid);
+						return null;
+					}
+					try {
+						$user_info = $this->client->requestUserInfo();
+						$GLOBALS['auto_create_acct'] = [
+							'firstname' => $user_info->given_name,
+							'lastname' => $user_info->family_name,
+							'email' => $user_info->email,
+							// not (yet) used supported keys
+							//'primary_group' => '',
+							//'add_group' => '',
+							//'account_id' => 0,
+						];
+					}
+					catch (OpenIDConnectClientException $e) {
+						// do NOT fail, if IdP does not support user-info
+						_egw_log_exception($e);
+					}
 				}
 			}
 			// return user session
