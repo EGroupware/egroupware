@@ -218,6 +218,7 @@ current system-charset	setup	en	Current system charset
 current system-charset is %1.	setup	en	Current system charset is %1.
 current version	setup	en	Current version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1<br>
+custom attribute	setup	en	custom attribute
 custom handler: %1	setup	en	Custom handler: %1
 custom oid	setup	en	custom OID
 custom set via %1	setup	en	Custom set via %1
@@ -486,6 +487,7 @@ multi-language support setup	setup	en	Multi language support setup
 name for service provider	setup	en	Name for Service Provider
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user EGroupware uses to connect
+name of jwt payload attribute for username	setup	en	Name of JWT payload attribute for username
 needs extra configuration on dc and webserver!	setup	en	Needs extra configuration on DC and webserver!
 never	setup	en	Never
 new	setup	en	New
@@ -519,6 +521,7 @@ one month	setup	en	One month
 one week	setup	en	One week
 only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
 only add new phrases	setup	en	Only add new phrases
+openidconnect login	setup	en	OpenIDConnect Login
 optional, if only authentication and anonymous search is enabled	setup	en	optional, if only authentication AND anonymous search is enabled
 or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
@@ -540,6 +543,7 @@ path to user and group files has to be outside of the webservers document-root!!
 path to various directories: have to exist and be writeable by the webserver	setup	en	Path to various directories: have to exist and be writable by the web server
 pem certificate	setup	en	PEM certificate
 periodic import from ads or ldap into egroupware database	setup	en	Periodic import from ADS or LDAP into EGroupware database
+perl regular expression to extract username	setup	en	Perl regular expression to extract username
 persistent connections	setup	en	Persistent connections
 php client	setup	en	PHP client
 php proxy	setup	en	PHP proxy
