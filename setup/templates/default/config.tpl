@@ -497,10 +497,10 @@
       <td>{lang_Name_of_JWT_payload_attribute_for_username}:</td>
       <td>
         <select name="newsettings[oic_username_attribute]">
-          <option value="sub"{selected_oic_username_sub}>sub ({lang_default})</option>
-          <option value="prefered_username"{selected_oic_username_prefered_username}>prefered_username</option>
-          <option value="email"{selected_oic_username_email}>email</option>
-          <option value="custom"{selected_oic_username_custom}>{lang_custom_attribute}</option>
+          <option value="sub"{selected_oic_username_attribute_sub}>sub ({lang_default})</option>
+          <option value="preferred_username"{selected_oic_username_attribute_preferred_username}>preferred_username</option>
+          <option value="email"{selected_oic_username_attribute_email}>email</option>
+          <option value="custom"{selected_oic_username_attribute_custom}>{lang_custom_attribute}</option>
         </select>
         <input name="newsettings[oic_username_custom]" value="{value_oic_username_custom}" size="40" placeholder="{lang_custom_attribute}"/>
       </td>

@@ -183,6 +183,11 @@ foreach($vars as $value)
 			$newvals = explode(' ',$newval);
 			$setting = array_pop($newvals);
 			$config = implode('_',$newvals);
+			if (!isset($current_config[$config]))
+			{
+				$setting = array_pop($newvals).'_'.$setting;
+				$config = implode('_', $newvals);
+			}
 			/* echo $config . '=' . $current_config[$config]; */
 			if($current_config[$config] == $setting)
 			{
