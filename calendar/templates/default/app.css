@@ -1353,8 +1353,13 @@ Hide subsequent headers in week view with non-consolidated owners
 }
 /**
  * Calendar Drag and Drop
- * Class for div to show forbiden drop
  */
+.calendar_d-n-d_helper
+{
+	position: absolute;
+	z-index:initial;
+}
+ /* Class for div to show forbiden drop */
 .calendar_d-n-d_timeCounter > span {
 	position: absolute;
 	background-color: #808080;
@@ -1391,6 +1396,7 @@ Hide subsequent headers in week view with non-consolidated owners
 	font-size: 1.1em;
 	font-weight: bold;
 	text-align: center;
+	min-width: 10em;
 }
 .calendar_d-n-d_timeCounter .loading
 {
