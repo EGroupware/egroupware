@@ -38,10 +38,13 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
             };
 
             const dragenter = function (event) {
-                event.stopImmediatePropagation();
-                // don't trigger dragenter if we are entering the drag element
+				// don't trigger dragenter if we are entering the drag element
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
                 if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == self.currentDropEl) return;
+
+				// stop the event from being fired for its children
+				event.stopPropagation();
+				event.preventDefault();
 
                 self.currentDropEl = event.currentTarget;
                 event.dataTransfer.dropEffect = 'link';
@@ -60,8 +63,6 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 this.classList.add('drop-hover');
 
-                // stop the event from being fired for its children
-                event.preventDefault();
                 return false;
             };
 

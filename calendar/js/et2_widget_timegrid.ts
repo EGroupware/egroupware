@@ -287,6 +287,10 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				 */
 				onstart: function(event)
 				{
+					if(event.type == "resizestart")
+					{
+						event.target.removeAttribute("draggable");
+					}
 					if(timegrid.drag_create.start)
 					{
 						// Abort drag to create, we're dragging to resize
@@ -341,13 +345,14 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				 */
 				onmove: function(event)
 				{
+					event.preventDefault();
+					event.stopPropagation();
 					event.target.style.height = event.rect.height + "px";
 					// Add a bit for better understanding - it will show _to_ the start,
 					// covering the 'actual' target
 					timegrid._get_time_from_position(event.target.getBoundingClientRect().left, event.target.getBoundingClientRect().bottom + 5);
-					timegrid.gridHover.hide();
 					var drop = timegrid._drag_helper(this, event.target);
-					if(drop && !drop.is(':visible'))
+					if(drop && !jQuery(drop).is(':visible'))
 					{
 						drop.get(0).scrollIntoView(false);
 					}
@@ -357,20 +362,33 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 
 		// Customize and override some draggable settings
 		this.div
-			.on('dragstart', '.calendar_calEvent', function(event)
-			{
-				// Cancel drag to create, we're dragging an existing event
-				timegrid.drag_create.start = null;
-				timegrid._drag_create_end();
-				timegrid._get_time_from_position(event.clientX, event.clientY);
-			})
+
 			.on("dragend", () =>
 			{
 				timegrid.div.off("drag.timegrid");
+
+				// Remove helper
+				document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
 			})
 			.on('dragover', function(event)
 			{
+				egw.tooltipDestroy();
+				// Allow drop to work
+				event.preventDefault();
+
 				timegrid._get_time_from_position(event.clientX, event.clientY);
+
+				// Need to hide the hover marker or it will interfere with drop
+				timegrid.gridHover.addClass("hideme");
+
+				const helper = document.body.querySelector(".calendar_d-n-d_helper");
+				if(helper)
+				{
+					timegrid._drag_helper(helper, helper, null);
+					helper.style.top = event.clientY + "px";
+					helper.style.left = (event.clientX + 20) + "px";
+				}
+
 			})
 			.on('mousemove', function(event)
 			{
@@ -380,7 +398,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			{
 				if(timegrid.div.has(event.relatedTarget).length === 0)
 				{
-					timegrid.gridHover.hide();
+					timegrid.gridHover.addClass("hideme");
 				}
 			});
 
@@ -408,10 +426,11 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		if(!element) return;
 
 		element.dropEnd = this.gridHover;
+		element.style.zIndex = '';
 
 		if(element.dropEnd.length)
 		{
-			this._drop_data = jQuery.extend({},element.dropEnd[0].dataset || {});
+			this._drop_data = {...element.dropEnd[0].dataset};
 		}
 
 		if (typeof element.dropEnd != 'undefined' && element.dropEnd.length)
@@ -444,7 +463,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				// @ts-ignore
 				time = formatTime(parseTime(element.dropEnd.attr('data-hour') + ":" + element.dropEnd.attr('data-minute')));
 			}
-			element.innerHTML = '<div style="font-size: 1.1em; text-align:center; font-weight: bold; height:100%;"><span class="calendar_timeDemo" >'+time+'</span></div>';
+			element.innerHTML = '<div class="calendar_d-n-d_timeCounter"><span class="calendar_timeDemo" >' + time + '</span></div>';
 		}
 		else
 		{
@@ -1312,25 +1331,31 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					}
 					else
 					{
-						jQuery(_data.ui.helper).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+						drag_listener(event);
 					}
 
 					break;
 
 				// Triggered once, when something is dragged out of the timegrid
 				case EGW_AI_DRAG_OUT:
-					// Stop listening
-					jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
-					// Remove highlighted time square
-					var timegrid = aoi.getWidget();
-					timegrid.gridHover.hide();
-					timegrid.scrolling.scrollTop(timegrid._top_time);
-
-					// Out triggers after the over, count to not accidentally remove
-					time.data('count', time.data('count') - 1);
-					if(time.length && time.data('count') <= 0)
+					const timegrid = aoi.getWidget();
+					if(!event.composedPath().includes(timegrid.getDOMNode()))
 					{
-						time.remove();
+						// Remove our custom helper
+						document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
+
+						// Stop listening
+						//jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
+						// Remove highlighted time square
+						timegrid.gridHover.addClass("hideme");
+						timegrid.scrolling.scrollTop(timegrid._top_time);
+
+						// Out triggers after the over, count to not accidentally remove
+						time.data('count', time.data('count') - 1);
+						if(time.length && time.data('count') <= 0)
+						{
+							time.remove();
+						}
 					}
 					break;
 				default:
@@ -1584,11 +1609,14 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		{
 			// Create drag action that allows linking
 			drag_action = mgr.addAction('drag', 'egw_link_drag', egw.lang('link'), 'link', function(action, selected) {
-				// Drag helper - list titles.
-				// As we wanted to have a general defaul helper interface, we return null here and not using customize helper for links
-				// TODO: Need to decide if we need to create a customized helper interface for links anyway
-				//return helper;
-				return null;
+				// Calendar drag helper - we update with time
+				const helper = selected[0].iface.getWidget().getDOMNode().cloneNode();
+				helper.classList.add("calendar_d-n-d_helper");
+				self._drag_helper(helper, selected[0].iface.getDOMNode(), null);
+				document.body.append(helper);
+
+				// System drag helper - empty span so we can update with the target time
+				return document.createElement("span");
 			},true);
 		}
 		// The timegrid itself is not draggable, so don't add a link.
@@ -2278,19 +2306,19 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 		}
 
-		if(!day)
-		{
-			return [];
-		}
-		this.gridHover
-			.show()
-			.css("position", "absolute")
-			.appendTo(day);
+
 		if(time)
 		{
 			this.gridHover
 				.height(this.rowHeight)
 				.css("top", time.offsetTop + "px");
+		}
+		if(day)
+		{
+			this.gridHover
+				.css("position", "absolute")
+				.appendTo(day);
+			this.gridHover.removeClass("hideme");
 		}
 		this.gridHover.css('left','');
 		return this.gridHover;

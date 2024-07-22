@@ -1352,6 +1352,7 @@ Hide subsequent headers in week view with non-consolidated owners
   font-size: 1.1em;
   font-weight: bold;
   text-align: center;
+  min-width: 10em;
 }
 .calendar_d-n-d_timeCounter .loading {
   width: 16px;
