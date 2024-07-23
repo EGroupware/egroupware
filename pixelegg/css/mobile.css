@@ -7146,6 +7146,7 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.co
 }
 body > .egw_menu egw-menu-shoelace {
   box-shadow: 0px 0px 2px 2px var(--sl-color-neutral-500);
+  --sl-shadow-x-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.3);
 }
 .egwGridView_scrollarea tr.row_category > td:first-child,
 .select-cat li {
