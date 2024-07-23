@@ -150,7 +150,7 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 		{
 			var event = event.iface.getWidget();
 			const row = target.iface.getWidget() || false;
-			if(event === row || !event || !row ||
+			if(event === row || !event || !row || !row.node ||
 				!event.options || !event.options.value.participants
 			)
 			{
@@ -162,7 +162,7 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 
 			for (let id in event.options.value.participants)
 			{
-				owner_match = owner_match || row.node.dataset.participants === '' + id;
+				owner_match = owner_match || (row.node.dataset?.participants ?? false) === '' + id;
 			}
 
 			const enabled = !owner_match &&
@@ -195,14 +195,18 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 			*/
 			if(event.type === 'drop' && widget_object.getActionLink('egw_link_drop').enabled)
 			{
-				this.getWidget().getParent()._event_drop.call(
-					jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0],
-					this.getWidget().getParent(), event, _data.ui,
+				const helper = document.body.querySelector(".calendar_d-n-d_helper");
+				const planner = this.getWidget().getParent();
+				planner._event_drop.call(
+					helper,
+					planner, event, _data.ui,
 					this.getWidget()
 				);
+				planner._drop_data = false;
 			}
 			const drag_listener = function(_event)
 			{
+				_event.preventDefault();
 				let position = {};
 				if(planner.options.group_by === 'month')
 				{
@@ -212,11 +216,10 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 				{
 					let style = getComputedStyle(_data.ui.helper);
 					position = {
-						top: parseInt(style.top),
+						top: parseInt(style.top || "0"),
 						left: _event.clientX - jQuery(this).parent().offset().left
 					}
 				}
-				aoi.getWidget().getParent()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], position, 0);
 
 				var event = _data.ui.selected[0];
 				if(!event || event.id && event.id.indexOf('calendar') !== 0)
@@ -232,17 +235,23 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 					);
 				}
 			};
-			const time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable);
+			const time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
 				case EGW_AI_DRAG_ENTER:
 					// Listen to the drag and update the helper with the time
 					// This part lets us drag between different timegrids
-					jQuery(_data.ui.draggable).on('drag.et2_timegrid_row' + widget_object.id, drag_listener);
-					jQuery(_data.ui.draggable).on('dragend.et2_timegrid_row' + widget_object.id, function()
+					planner.div.on('dragover.et2_timegrid_row' + widget_object.id, drag_listener);
+					planner.div.on('dragend.et2_timegrid_row' + widget_object.id, function()
 					{
 						jQuery(_data.ui.draggable).off('drag.et2_timegrid_row' + widget_object.id);
+
+
+						planner.div.removeClass(["drop-hover", "et2-dropzone"]);
+
+						// Remove helper
+						document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
 					});
 					widget_object.iface.getWidget().div.addClass('drop-hover');
 
@@ -265,11 +274,6 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 						// The out will trigger after the over, so we count
 						time.data('count',time.data('count')+1);
 					}
-					else
-					{
-						jQuery(_data.ui.draggable).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
-					}
-
 
 					break;
 

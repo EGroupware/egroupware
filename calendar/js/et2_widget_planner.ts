@@ -214,6 +214,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				 */
 				onstart: function(event : InteractEvent)
 				{
+					if(event.type == "resizestart")
+					{
+						event.target.removeAttribute("draggable");
+					}
+					egw.tooltipDestroy();
 					if(planner.drag_create.start)
 					{
 						// Abort drag to create, we're dragging to resize
@@ -358,6 +363,13 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			{
 				// Cancel drag to create, we're dragging an existing event
 				planner._drag_create_end();
+			})
+			.on("dragend", () =>
+			{
+				this.div.removeClass(["drop-hover", "et2-dropzone"]);
+
+				// Remove helper
+				document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
 			});
 		return true;
 	}
@@ -1488,6 +1500,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 		aoi.doTriggerEvent = function(_event, _data)
 		{
+			egw.tooltipDestroy();
 
 			// Determine target node
 			var event = _data.event || false;
@@ -1506,17 +1519,26 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 			*/
 			if(event.type === 'drop')
 			{
-				this.getWidget()._event_drop.call(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], this.getWidget(), event, _data.ui);
+				this.getWidget()._event_drop.call(_data.ui.draggable, this.getWidget(), event, _data.ui);
 			}
 			var drag_listener = function(event)
 			{
+				event.preventDefault();
+
+				const helper = document.body.querySelector(".calendar_d-n-d_helper");
+				if(helper)
+				{
+					helper.style.top = (event.clientY + 20) + "px";
+					helper.style.left = (event.clientX - (helper.clientWidth / 2)) + "px";
+				}
+
 				let style = getComputedStyle(_data.ui.helper);
-				aoi.getWidget()._drag_helper(jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable)[0], {
-					top: parseInt(style.top),
+				aoi.getWidget()._drag_helper(helper, {
+					top: Number.isNaN(style.top) ? event.clientY : parseInt(style.top),
 					left: event.clientX - jQuery(this).parent().offset().left
 				}, 0);
 			};
-			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.draggable);
+			var time = jQuery('.calendar_d-n-d_timeCounter', _data.ui.helper);
 			switch(_event)
 			{
 				// Triggered once, when something is dragged into the timegrid's div
@@ -1527,6 +1549,11 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					jQuery(_data.ui.draggable).on('dragend.et2_timegrid' + widget_object.id, function()
 					{
 						jQuery(_data.ui.draggable).off('drag.et2_timegrid' + widget_object.id);
+
+						aoi.getWidget().div.removeClass(["drop-hover", "et2-dropzone"]);
+
+						// Remove helper
+						document.body.querySelectorAll(".calendar_d-n-d_helper").forEach(n => n.remove());
 					});
 					if(time.length)
 					{
@@ -1535,7 +1562,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 					}
 					else
 					{
-						jQuery(_data.ui.draggable).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
+						jQuery(_data.ui.helper).prepend('<div class="calendar_d-n-d_timeCounter" data-count="1"><span></span></div>');
 					}
 
 					break;
@@ -1639,6 +1666,24 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				for(var i = 0; i < source.length; i++)
 				{
 					if(!source[i].id) continue;
+
+					if(source[i].manager === dropped.manager)
+					{
+						// Find the planner, could have dropped on an event
+						let planner = dropped.iface.getWidget();
+						while(planner.getParent() && planner.instanceOf && !planner.instanceOf(et2_calendar_planner))
+						{
+							planner = planner.getParent();
+						}
+
+						if(planner && planner._drop_data)
+						{
+							planner._event_drop.call(source[i].iface.getDOMNode(), planner, null, action.ui);
+						}
+						planner._drop_data = false;
+						// Ok, stop.
+						return false;
+					}
 					id = source[i].id.split('::');
 					links.push({app: id[0] == 'filemanager' ? 'link' : id[0], id: id[1]});
 				}
@@ -1753,10 +1798,15 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		{
 			// Create drag action that allows linking
 			drag_action = mgr.addAction('drag', 'egw_link_drag', egw.lang('link'), 'link', function(action, selected) {
-				// As we wanted to have a general defaul helper interface, we return null here and not using customize helper for links
-				// TODO: Need to decide if we need to create a customized helper interface for links anyway
-				//return helper;
-				return null;
+				const helper = selected[0].iface.getWidget().getDOMNode().cloneNode();
+				helper.classList.add("calendar_d-n-d_helper");
+				let position = selected[0].iface.getDOMNode().getBoundingClientRect();
+
+				self._drag_helper(helper, position, position.height);
+				document.body.append(helper);
+
+				// System drag helper - empty span so we can update with the target time
+				return document.createElement("span");
 			},true);
 		}
 		// The planner itself is not draggable, the action is there for the children
@@ -1809,11 +1859,24 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 	 */
 	_drag_helper(element, position ,height)
 	{
+		if(!element)
+		{
+			return;
+		}
+		if(position.height)
+		{
+			element.style.height = position.height + "px";
+		}
 		let time = this._get_time_from_position(position.left, position.top);
 		element.dropEnd = time;
+		if(time)
+		{
+			this._drop_data = {...element.dataset};
+		}
 		let formatted_time = formatTime(time);
 
 		element.innerHTML = '<div class="calendar_d-n-d_timeCounter"><span class="calendar_timeDemo" >'+formatted_time+'</span></div>';
+		element.querySelector('.calendar_d-n-d_timeCounter').dropEnd = time;
 
 		//jQuery(element).width(jQuery(helper).width());
 	}
@@ -1833,6 +1896,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		if(typeof this.dropEnd != 'undefined' && this.dropEnd)
 		{
 			var drop_date = this.dropEnd.toJSON() || false;
+			this.dropEnd = undefined;
 
 			var event_data = planner._get_event_info(ui.draggable);
 			var event_widget = planner.getWidgetById(event_data.widget_id);
