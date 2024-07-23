@@ -480,7 +480,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	{
 		if(_id == undefined){debugger;}
 		// TODO: Look into this._search(), find out why it doesn't always succeed
-		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'value', 'children')
+		return this._search(_id, this._selectOptions) ?? this.optionSearch(_id, this._selectOptions, 'id', 'item')
 	}
 
 	/**
@@ -557,7 +557,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			this.refreshItem(_id, null)
 		} else*/
 		{
-			let item = this.getNode(_id)
+			let item = this.getNode(_id);
 			return this.handleLazyLoading(item).then((result) => {
 				item.item = [...result.item]
 				this.requestUpdate("_selectOptions")
