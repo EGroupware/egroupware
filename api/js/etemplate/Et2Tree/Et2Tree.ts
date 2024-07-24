@@ -558,6 +558,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		} else*/
 		{
 			let item = this.getNode(_id);
+			// if the item does not exist in the tree yet no need to refresh
+			if(item == null) return
 			return this.handleLazyLoading(item).then((result) => {
 				item.item = [...result.item]
 				this.requestUpdate("_selectOptions")
