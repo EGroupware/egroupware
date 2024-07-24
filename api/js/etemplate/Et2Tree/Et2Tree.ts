@@ -254,7 +254,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				}
 
 				sl-tree-item.drop-hover sl-tree-item {
-					background-color: var(--sl-color-neutral-1000);
+					background-color: var(--sl-color-neutral-0);
 				}
 
 				sl-badge::part(base) {
