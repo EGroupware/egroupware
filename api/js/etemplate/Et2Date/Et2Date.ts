@@ -385,29 +385,6 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 	}
 
-	get slots()
-	{
-		return {
-			...super.slots,
-			input: () =>
-			{
-				if(typeof egwIsMobile == "function" && egwIsMobile())
-				{
-					// Plain input for mobile
-					const text = document.createElement('input');
-					text.type = this._mobileInputType();
-					return text;
-				}
-				// This element gets hidden and used for value, but copied by flatpicr and used for input
-				const text = <Et2Textbox>document.createElement('et2-textbox');
-				text.type = "text";
-				text.placeholder = this.placeholder;
-				text.required = this.required;
-				return text;
-			}
-		}
-	}
-
 	constructor()
 	{
 		super();
@@ -626,6 +603,10 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			value = "";
 			this.clear();
+			if(typeof egwIsMobile == "function" && egwIsMobile() && this._inputNode)
+			{
+				this._inputNode.value = '';
+			}
 			return;
 		}
 		let date;
@@ -968,9 +949,16 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	 * This is an et2-textbox, which causes some problems with flatpickr
 	 * @protected
 	 */
-	get _inputNode() : Et2Textbox
+	get _inputNode() : Et2Textbox | HTMLInputElement
 	{
-		return this.shadowRoot?.querySelector('et2-textbox');
+		if(typeof egwIsMobile == "function" && egwIsMobile())
+		{
+			return this.shadowRoot?.querySelector("input[type='" + this._mobileInputType() + "']");
+		}
+		else
+		{
+			return this.shadowRoot?.querySelector('et2-textbox');
+		}
 	}
 
 	/**
@@ -1087,7 +1075,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		const helpTemplate = this._helpTextTemplate();
 
 		return html`
-            ${super.render()}
+            ${(typeof egwIsMobile != "function" || !egwIsMobile()) ? super.render() : nothing}
             <div
                     part="form-control"
                     class=${classMap({
