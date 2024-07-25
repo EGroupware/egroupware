@@ -134,9 +134,10 @@ export class EgwAction {
      * @param {string} _iconUrl
      * @param {(string|function)} _onExecute
      * @param {boolean} _allowOnMultiple
-     * @returns {EgwAction}
+     * @returns EgwAction
      **/
-    constructor(_parent: EgwAction, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true) {
+    constructor(_parent: EgwAction, _id: string, _caption: string = "", _iconUrl: string = "", _onExecute: string | Function = null, _allowOnMultiple: boolean = true)
+    {
         if (_parent && (typeof _id != "string" || !_id) && _parent.type !== "actionManager") {
             throw "EgwAction _id must be a non-empty string!";
         }
@@ -294,9 +295,11 @@ export class EgwAction {
                         if (typeof elem.icon == "undefined") elem.icon = this.defaultIcons[elem.id]; // only works if default Icon is available
                         if (typeof elem.icon != "undefined") {
                             elem.iconUrl = localEgw.image(elem.icon);
-                        }
+                        } else //elem.icon and elem.iconUrl is still undefined
+                        {
                         //if there is no icon and none can be found remove icon tag from the object
                         delete elem.icon;
+                        }
                     }
 
                     // always add shortcut for delete
