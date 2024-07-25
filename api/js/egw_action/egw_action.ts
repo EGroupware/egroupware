@@ -266,16 +266,17 @@ export class egwActionObjectInterface implements EgwActionObjectInterface {
     stateChangeContext = null;
     reconnectActionsCallback = null;
     reconnectActionsContext = null;
+    handlers = {};
 
     doGetDOMNode() {
         return null;
     };
-
     // or not.
+
     doSetState(_state) {
     };
-
     // or EGW_AI_DRAG_OUT
+
     doTriggerEvent(_event, _data) {
         return false;
     };
