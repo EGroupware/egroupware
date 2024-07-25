@@ -258,6 +258,7 @@ chad	common	en	CHAD
 change	common	en	Change
 change owner	common	en	Change Owner
 changed	common	en	Changed
+changes that you made may not be saved.	common	en	Changes that you made may not be saved.
 charset	common	en	Charset
 check all	common	en	Check all
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	en	Check for empty values in IF statements. Example {{IF url~EMPTY~~Website:}} - If url is not empty, writes "Website:"

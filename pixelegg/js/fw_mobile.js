@@ -277,11 +277,44 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 		 * @param {type} _idx remove the given popup index from the popups array
 		 * @returns {undefined}
 		 */
-		close: function (_idx)
+		close: async function (_idx)
 		{
-			this.$container.detach();
-			//Remove the closed popup from popups array
-			window.framework.popups.splice(_idx,1);
+			let stop = false;
+			// Trigger template beforeunload since iframe doesn't, and ask directly
+			this.$iFrame.get(0).contentDocument.body.querySelectorAll(".et2_container").forEach(t =>
+			{
+				const template = this.$iFrame.get(0).contentWindow.etemplate2.getById(t.id);
+				if (template && template.close_prompt)
+				{
+					let e = new Event("beforeunload", {bubbles: true, cancelable: true});
+					template.DOMContainer.dispatchEvent(e);
+					stop = stop || e.defaultPrevented;
+				}
+			});
+			if (stop)
+			{
+				// Dirty dialog, ask to close
+				const dialog = Et2Dialog.show_dialog(
+					null,
+					egw.lang("Changes that you made may not be saved."),
+					egw.lang("Discard changes"),
+					{}, Et2Dialog.BUTTONS_OK_CANCEL, Et2Dialog.WARNING_MESSAGE
+				);
+				// Set dialog z-index since framework uses 999 instead of variable
+				dialog.style.setProperty('--sl-z-index-dialog', parseInt(getComputedStyle(this.$container.get(0)).zIndex) + 1);
+
+				stop = await dialog.getComplete().then(([button, value]) =>
+				{
+					return button != Et2Dialog.OK_BUTTON;
+				})
+			}
+
+			if (!stop)
+			{
+				this.$container.detach();
+				//Remove the closed popup from popups array
+				window.framework.popups.splice(_idx, 1);
+			}
 		},
 
 		/**
