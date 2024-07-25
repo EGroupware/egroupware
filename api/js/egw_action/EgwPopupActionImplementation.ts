@@ -17,20 +17,46 @@ import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwPopupAction} from "./EgwPopupAction";
 import {egw} from "../jsapi/egw_global";
+import {Et2Tree} from "../etemplate/Et2Tree/Et2Tree";
+import {FindActionTarget} from "../etemplate/FindActionTarget";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
     type = "popup";
     auto_paste = true;
+    parent?: FindActionTarget //currently only implemented by Et2Tree
 
     registerAction = (_aoi, _callback, _context) => {
+        const parent = _aoi.tree; // maybe expand this to aoi.?? for other actionObjectInterfaces
+        let isNew = parent?.findActionTarget != null
         const node = _aoi.getDOMNode();
+        if (node == this.parent) return true //Event Listener already bound on parent
+        if (isNew)
+        {
+            if (this.parent && this.parent == parent)
+            {
+                return true // already added Event Listener on parent no need to register on children
+            } else
+            {
 
-        if (node) {
-            this._registerDefault(node, _callback, _context);
-            this._registerContext(node, _callback, _context);
-            return true;
+                this.parent = parent // this only exists for the EgwDragDropShoelaceTree ActionObjectInterface atm
+
+                //if a parent is available the context menu Event-listener will only be bound once on the parent
+                this._registerDefault(parent, _callback, _context);
+                this._registerContext(parent, _callback, _context);
+
+                return true;
+            }
+        } else
+        {
+
+            if (node)
+            {
+                this._registerDefault(node, _callback, _context);
+                this._registerContext(node, _callback, _context);
+                return true;
+            }
+            return false;
         }
-        return false;
     };
 
     unregisterAction = function (_aoi) {
@@ -94,12 +120,24 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      */
     private _registerDefault =  (_node, _callback, _context)=> {
         const defaultHandler =  (e)=> {
+            const x = _node
+            //use different node and context for callback if event happens on parent
+            let nodeToUse;
+            let contextToUse;
+            if (x.findActionTarget)
+            {
+                const y = x.findActionTarget(e);
+                nodeToUse = y?.target;
+                contextToUse = y?.action;
+                e.originalEvent = e;
+
+            }
             //allow bubbling of the expand folder event
             //do not stop bubbling of events if the event is supposed to be handled by the et2-tree
-            if (window.egwIsMobile() && e.currentTarget.tagName == "SL-TREE-ITEM") return true;
+            if (window.egwIsMobile() && (nodeToUse || e.currentTarget).tagName == "SL-TREE-ITEM") return true;
             // a tag should be handled by default event
             // Prevent bubbling bound event on <a> tag, on touch devices
-            if (window.egwIsMobile() && e.target.tagName == "A") return true;
+            if (window.egwIsMobile() && (nodeToUse || e.target).tagName == "A") return true;
 
 
             if (typeof document["selection"] != "undefined" && typeof document["selection"].empty != "undefined") {
@@ -109,9 +147,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 sel.removeAllRanges();
             }
 
-            if (!(_context.manager.getActionsByAttr('singleClick', true).length > 0 &&
-                e.target.classList.contains('et2_clickable'))) {
-                _callback.call(_context, "default", this);
+            if (!
+                ((contextToUse || _context).manager.getActionsByAttr('singleClick', true).length > 0 &&
+                    (nodeToUse || e.target).classList.contains('et2_clickable')
+                )
+            )
+            {
+                _callback.call(contextToUse || _context, "default", this);
             }
 
             // Stop action from bubbling up to parents
@@ -240,8 +282,19 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @returns {boolean}
      */
     private _registerContext = (_node, _callback, _context) => {
-        const contextHandler = (e) => {
 
+        const contextHandler = (e) => {
+            const x = _node
+            //use different node and context for callback if event happens on parent
+            let nodeToUse;
+            let contextToUse;
+            if (x.findActionTarget)
+            {
+                const y = x.findActionTarget(e);
+                nodeToUse = y?.target;
+                contextToUse = y?.action;
+                e.originalEvent = e;
+            }
             //Obtain the event object, this should not happen at any point
             if (!e) {
                 e = window.event;
@@ -250,25 +303,35 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			// Close any open tooltip so they don't get in the way
 			egw(window).tooltipCancel();
 
-            if (_egw_active_menu) {
+            if (_egw_active_menu)
+            {
                 _egw_active_menu.hide();
             } else if (!e.ctrlKey && e.which == 3 || e.which === 0 || e.type === 'tapandhold') // tap event indicates by 0
             {
                 const _xy = this._getPageXY(e);
-                const _implContext = {event: e, posx: _xy.posx, posy: _xy.posy};
-                _callback.call(_context, _implContext, this);
+                const _implContext = {
+                    event: e, posx: _xy.posx,
+                    posy: _xy.posy,
+                    innerText: nodeToUse.innerText || _node.innerText,//nodeToUse only exists on widgets that define findActionTarget
+                    target: nodeToUse.target || _node,
+                };
+                _callback.call(contextToUse || _context, _implContext, this);
             }
 
             e.cancelBubble = !e.ctrlKey || e.which == 1;
             if (e.stopPropagation && e.cancelBubble) {
                 e.stopPropagation();
+                e.preventDefault()
             }
             return !e.cancelBubble;
         };
         // Safari still needs the taphold to trigger contextmenu
         // Chrome has default event on touch and hold which acts like right click
         this._handleTapHold(_node, contextHandler);
-        if (!window.egwIsMobile()) jQuery(_node).on('contextmenu', contextHandler);
+        if (!window.egwIsMobile())
+        {
+            _node.addEventListener('contextmenu', contextHandler);
+        }
     };
 
     /**
@@ -512,7 +575,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             offset: {top: 0, left: 0}
         };
         if (this._context.event) {
-            const event = this._context.event.originalEvent;
+            const event = this._context.event.originalEvent || this._context.event;
             ui.position = {top: event.pageY, left: event.pageX};
             ui.offset = {top: event.offsetY, left: event.offsetX};
         }
@@ -598,9 +661,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
             let os_clipboard_caption = "";
             if (this._context.event) {
-                os_clipboard_caption = this._context.event.originalEvent.target.innerText.trim();
+                os_clipboard_caption = this._context.innerText.trim();
                 clipboard_action.set_caption(window.egw.lang('Copy "%1"', os_clipboard_caption.length > 20 ? os_clipboard_caption.substring(0, 20) + '...' : os_clipboard_caption));
-                clipboard_action.data.target = this._context.event.originalEvent.target;
+                clipboard_action.data.target = this._context.target;
             }
             jQuery(clipboard_action.data.target).off('copy').on('copy', function (event) {
                 try {

@@ -12,6 +12,7 @@ import {et2_action_object_impl} from "../et2_core_DOMWidget";
 import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
+import {FindActionTarget} from "../FindActionTarget";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -73,7 +74,7 @@ export const composedPathContains = (_ev: any, tag?: string, className?: string)
  * //TODO add for other events
  * @since 23.1.x
  */
-export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
+export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements FindActionTarget
 {
 	//does not work because it would need to be run on the shadow root
 	//@query("sl-tree-item[selected]") selected: SlTreeItem;
@@ -131,6 +132,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	selectedNodes: SlTreeItem[]
 
 	private _actionManager: EgwAction;
+	widget_object: EgwActionObject;
 
 	private get _tree() { return this.shadowRoot.querySelector('sl-tree') ?? null};
 
@@ -462,7 +464,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		return this._currentSlTreeItem
 	}
 
-	getDomNode(_id): SlTreeItem|null
+	getDomNode(_id: string): SlTreeItem | null
 	{
 		return this.shadowRoot.querySelector('sl-tree-item[id="' + _id.replace(/"/g, '\\"') + '"');
 	}
@@ -576,7 +578,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	}
 
 	/**
-	 * getTreeNodeOpenItems TODO
+	 * getTreeNodeOpenItems
 	 *
 	 * @param {string} _nodeID the nodeID where to start from (initial node) 0 means for all items
 	 * @param {string} mode the mode to run in: "forced" fakes the initial node openState to be open
@@ -584,9 +586,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 	 */
 	getTreeNodeOpenItems(_nodeID: string | 0, mode?: string)
 	{
-
-
-		//let z:string[] = this.input.getSubItems(_nodeID).split(this.input.dlmtr);
 		let subItems =
 			(_nodeID == 0) ?
 				this._selectOptions.map(option => this.getDomNode(option.id)) ://NodeID == 0 means that we want all tree Items
@@ -595,7 +594,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		let PoS: 0 | 1 | -1;
 		let rv: string[];
 		let returnValue = (_nodeID == 0) ? [] : [_nodeID]; // do not keep 0 in the return value...
-		// it is not needed and only throws a php warning later TODO check with ralf what happens in mail_ui.inc.php with ajax_setFolderStatus
 		let modetorun = "none";
 		if (mode)
 		{
@@ -817,6 +815,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
                             const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
                             parentNode.item = [...result.item]
                             this.requestUpdate("_selectOptions")
+							this._link_actions(this.actions)
                         })
 
 					}
@@ -933,7 +932,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 								{
 									this.onopenend(event.detail.id, this, -1)
 								}
-								this._link_actions(this.actions)
+								
 
                             }
                     }
@@ -976,12 +975,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		}
 		// Get the top level element for the tree
 		let objectManager = egw_getAppObjectManager(true);
-		let widget_object = objectManager.getObjectById(this.id);
-		if (widget_object == null)
+		this.widget_object = objectManager.getObjectById(this.id);
+		if (this.widget_object == null)
 		{
 			// Add a new container to the object manager which will hold the widget
 			// objects
-			widget_object = objectManager.insertObject(false, new EgwActionObject(
+			this.widget_object = objectManager.insertObject(false, new EgwActionObject(
 				//@ts-ignore
 				this.id, objectManager, (new et2_action_object_impl(this, this)).getAOI(),
 				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
@@ -989,12 +988,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 		} else
 		{
 			// @ts-ignore
-			widget_object.setAOI((new et2_action_object_impl(this, this)).getAOI());
+			this.widget_object.setAOI((new et2_action_object_impl(this, this)).getAOI());
 		}
 
 		// Delete all old objects
-		widget_object.clear();
-		widget_object.unregisterActions();
+		this.widget_object.clear();
+		this.widget_object.unregisterActions();
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
@@ -1006,7 +1005,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			// Iterate over the options (leaves) and add action to each one
 			let apply_actions = function (treeObj: EgwActionObject, option: TreeItemData) {
 				// Add a new action object to the object manager
-				let id = option.value ?? (typeof option.value == 'number' ? String(option.id) : option.id);
+				let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
 				// @ts-ignore
 				let obj : EgwActionObject = treeObj.addObject(id, new EgwDragDropShoelaceTree(self, id));
 				obj.updateActionLinks(action_links);
@@ -1020,12 +1019,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 			for (const selectOption of this._selectOptions)
 			{
 
-				apply_actions.call(this, widget_object, selectOption)
+				apply_actions.call(this, this.widget_object, selectOption)
 			}
 		}
 
 
-		widget_object.updateActionLinks(action_links);
+		this.widget_object.updateActionLinks(action_links);
 	}
 
 	/**
@@ -1115,6 +1114,23 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement)
 				this._deleteItem(_id, value.item)
 			}
 		}
+	}
+
+	/**
+	 * returns the closest SlItem to the click position, and the corresponding EgwActionObject
+	 * @param _event the click event
+	 * @returns { target:SlTreeItem, action:EgwActionObject }
+	 */
+	findActionTarget(_event): { target: SlTreeItem, action: EgwActionObject }
+	{
+		let e = _event.composedPath ? _event : _event.originalEvent;
+		let target = e.composedPath().find(element => {
+			return element.tagName == "SL-TREE-ITEM"
+		})
+		let action: EgwActionObject = this.widget_object.children.find(elem => {
+			return elem.id == target.id
+		})
+		return {target: target, action: action}
 	}
 }
 
