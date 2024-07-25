@@ -18,31 +18,28 @@ import {
     EGW_AO_STATE_SELECTED
 } from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
+import {SlTreeItem} from "@shoelace-style/shoelace";
 
 
-function dhtmlxTree_getNode(_tree: Et2Tree, _itemId: string)
-{
-    const node = _tree.getDomNode(_itemId);
-    if (node != null)
-    {
-        return node
-    }
-}
 
 export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 1000
 
-export class EgwDragDropShoelaceTree {
-    constructor(_tree:Et2Tree, _itemId) {
+export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
+    node: SlTreeItem;
+    id: string;
+    tree: Et2Tree;
+    constructor(_tree:Et2Tree, _itemId: string) {
 
-        const aoi = new egwActionObjectInterface();
-        aoi.node = _tree.getDomNode(_itemId);
-        aoi.id = _itemId
-        aoi.doGetDOMNode = function () {
-            return aoi.node;
+        super();
+        this.node = _tree.getDomNode(_itemId);
+        this.id = _itemId
+        this.tree = _tree
+        this.doGetDOMNode = function () {
+            return this.node;
         }
         let timeout: NodeJS.Timeout;
 
-        aoi.doTriggerEvent = function (_event) {
+        this.doTriggerEvent = function (_event) {
             if (_event == EGW_AI_DRAG_ENTER)
             {
 
@@ -62,7 +59,7 @@ export class EgwDragDropShoelaceTree {
             return true
         }
 
-        aoi.doSetState = function (_state) {
+        this.doSetState = function (_state) {
             if (!_tree || !_tree.focusItem) return;
 
             // Update the "focused" flag
@@ -75,7 +72,5 @@ export class EgwDragDropShoelaceTree {
                // _tree.selectItem(this.id, false);	// false = do not trigger onSelect
             }
         }
-
-        return aoi;
     }
 }
