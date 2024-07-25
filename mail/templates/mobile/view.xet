@@ -2,7 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="mail.view" template="" lang="" group="0" version="1.9.001" height="100%">
-		<et2-vbox  width="100%" height="100%">
+        <et2-vbox width="100%">
 			<et2-hbox  class="dialogHeadbar">
 				<et2-hbox>
 					<toolbar id="toolbar"  class="et2_head_toolbar" width="100%" view_range="1" flat_list="true"/>
@@ -91,7 +91,7 @@
 					</et2-details>
 				</et2-vbox>
 			</et2-hbox>
-			<et2-box  height="100%">
+            <et2-box class="mailContent">
 				<iframe id="iframe" width="100%" height="100%" scrolling="auto"/>
 			</et2-box>
 		</et2-vbox>

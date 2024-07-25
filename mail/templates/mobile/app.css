@@ -127,9 +127,16 @@
   }
   body #popupMainDiv div#mail-view {
     height: 100%;
+    box-sizing: border-box;
+  }
+  body #popupMainDiv div#mail-view div > et2-vbox {
+    height: 100%;
   }
   body #popupMainDiv div#mail-view #mail-view_subject {
     font-size: 12pt;
+  }
+  body #popupMainDiv div#mail-view .mailContent {
+    flex-grow: 1;
   }
   body #popupMainDiv #mail-view_toaddressdetails {
     color: #26537c;
@@ -354,4 +361,3 @@
     position: inherit;
   }
 }
-/*# sourceMappingURL=app.css.map */
