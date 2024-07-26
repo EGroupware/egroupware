@@ -5,7 +5,7 @@ export class Validator
 	 * @param {?} [param]
 	 * @param {Object.<string,?>} [config]
 	 */
-	constructor(param, config)
+	constructor(param?, config?)
 	{
 
 		/** @type {?} */

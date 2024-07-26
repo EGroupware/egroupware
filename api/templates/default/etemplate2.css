@@ -2015,6 +2015,7 @@ img.vfsMimeIcon[src*="/etemplate/thumbnail.php"] {
     /* selects */
 [required]:not(.hasValue)::part(control) {
     background-color: #ffffd0;
+	--sl-input-background-color: #ffffd0;
 }
 
 td.et2_required {
