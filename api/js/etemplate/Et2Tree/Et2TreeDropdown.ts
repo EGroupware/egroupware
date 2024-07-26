@@ -1,4 +1,4 @@
-import {LitElement, nothing, TemplateResult} from "lit";
+import {LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
 import {Et2Tree, TreeItemData, TreeSearchResult} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
@@ -13,6 +13,7 @@ import styles from "./Et2TreeDropdown.styles";
 import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
 import {SearchMixin, SearchResult, SearchResultsInterface} from "../Et2Widget/SearchMixin";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
+import {Required} from "../Validators/Required";
 
 
 interface TreeSearchResults extends SearchResultsInterface<TreeSearchResult>
@@ -113,11 +114,37 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		document.removeEventListener("click", this.handleDocumentClick);
 	}
 
-	updated()
+	updated(changedProperties : PropertyValues)
 	{
+		super.updated(changedProperties);
+
+		// required changed, add / remove validator
+		if(changedProperties.has('required'))
+		{
+			// Remove all existing Required validators (avoids duplicates)
+			this.validators = (this.validators || []).filter((validator) => !(validator instanceof Required))
+			if(this.required)
+			{
+				this.validators.push(new Required());
+			}
+		}
+
+		if(changedProperties.has("value"))
+		{
+			// Base off this.value, not this.getValue(), to ignore readonly
+			this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+		}
+
+		// pass aria-attributes to our input node
+		if(changedProperties.has('ariaLabel') || changedProperties.has('ariaDescription'))
+		{
+			this._setAriaAttributes();
+		}
+
 		// @ts-ignore Popup sometimes loses the anchor which breaks the sizing
 		this._popup.handleAnchorChange();
 	}
+
 	/** Selected tree leaves */
 	@property()
 	set value(new_value : string | string[])
@@ -610,7 +637,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                             ?disabled=${this.disabled}
                     >
                         <div
-                                part="combobox"
+                                part="combobox control"
                                 class="tree-dropdown__combobox"
                                 slot="anchor"
                                 @keydown=${this.handleComboboxKeyDown}
