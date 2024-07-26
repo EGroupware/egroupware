@@ -72,7 +72,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 			/**
 			 * Set the height for tabs
-			 * Leave unset to size automatically
+			 * Leave unset to size automatically from either parent height attribute, or height of first tabpanel
 			 */
 			tabHeight: {type: String},
 
@@ -215,6 +215,36 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 		// Create the tab DOM-Nodes
 		this.createTabs(tabData);
+
+		// Use the height of the first tab if height not set
+		if(!this.tabHeight && tabData.length > 0)
+		{
+			const firstTab = tabData[0].contentDiv;
+			firstTab.updateComplete.then(async() =>
+			{
+				// Wait for children to load
+				let wait = [];
+				let walk = (widget) =>
+				{
+					if(widget.loading)
+					{
+						wait.push(widget.loading);
+					}
+					wait.push(widget.updateComplete);
+					widget.getChildren().forEach(child => walk(child));
+				}
+				walk(firstTab);
+				await Promise.all(wait);
+
+				const initial = firstTab.hasAttribute("active");
+				firstTab.setAttribute("active", '');
+				this.tabHeight = getComputedStyle(firstTab).height;
+				if(!initial)
+				{
+					firstTab.removeAttribute("active");
+				}
+			})
+		}
 	}
 
 	_readTabs(tabData, tabs)
