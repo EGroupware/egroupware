@@ -77,6 +77,10 @@ export default css`
 		box-shadow: 0 0 0 var(--sl-focus-ring-width) var(--sl-input-focus-ring-color);
 	}
 
+	:host([required]) .tree-dropdown__combobox {
+		background-color: var(--background-required);
+	}
+
 	/* Trigger */
 
 	.tree-dropdown__expand-icon {
