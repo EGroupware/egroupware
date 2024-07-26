@@ -61,7 +61,7 @@ class mail_tree
 		'folderNoSelectOpen' => "folderNoSelectOpen",
 		'folderOpen' => "folderOpen",
 		'folderClosed' => "MailFolderClosed",
-		'folderLeaf' => "MailFolderPlain",
+		'folderLeaf' => "MailFolderClosed",
 		'folderHome' => "kfm_home",
 		'folderAccount' => "thunderbird",
 	);
@@ -394,9 +394,9 @@ class mail_tree
 					$item = array(
 						'id' => $parent.$component,
 						'text' => $component,
-						'im0' => self::$leafImages["folderNoSelectClosed"],
-						'im1' => self::$leafImages["folderNoSelectOpen"],
-						'im2' => self::$leafImages["folderNoSelectClosed"],
+						'im0' => self::$leafImages["folderClosed"],
+						'im1' => self::$leafImages["folderOpen"],
+						'im2' => self::$leafImages["folderClosed"],
 						'tooltip' => lang('no access')
 					);
 					$insert['item'][] =& $item;
