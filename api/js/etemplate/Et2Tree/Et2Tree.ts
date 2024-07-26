@@ -252,12 +252,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				}
 
 				sl-tree-item.drop-hover {
-					background-color: var(--primary-background-color);
+					background-color: var(--highlight-background-color);
 				}
 
 				sl-tree-item.drop-hover sl-tree-item {
 					background-color: var(--sl-color-neutral-0);
 				}
+				//TODO color of selected marker in front should be #006699 same as border top color
 
 				sl-badge::part(base) {
 
