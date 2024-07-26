@@ -312,7 +312,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 const _implContext = {
                     event: e, posx: _xy.posx,
                     posy: _xy.posy,
-                    innerText: nodeToUse.innerText || _node.innerText,//nodeToUse only exists on widgets that define findActionTarget
+                    innerText: nodeToUse.title || _node.innerText,//nodeToUse only exists on widgets that define findActionTarget
                     target: nodeToUse.target || _node,
                 };
                 _callback.call(contextToUse || _context, _implContext, this);
