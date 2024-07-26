@@ -260,7 +260,7 @@ class Ldap
 			'assistent'		=> 'assistantname',
 			'n_fileas'		=> 'fileas',
 			'tel_fax_home'	=> 'homefacsimiletelephonenumber',
-			'freebusy_uri'	=> 'freeBusyuri',
+			'freebusy_uri'	=> 'freebusyuri',
 			'calendar_uri'	=> 'calendaruri',
 			'tel_other'		=> 'otherphone',
 			'tel_cell_private' => 'callbackphone',	// not the best choice, but better then nothing
