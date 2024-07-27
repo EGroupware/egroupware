@@ -218,71 +218,86 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			// @ts-ignore
 			...super.styles,
 			css`
-				:host {
-					--sl-spacing-large: 1rem;
+                :host {
+                    --sl-spacing-large: 1rem;
+                }
+
+                ::part(expand-button) {
+                    rotate: none;
+                    padding: 0 0.2em 0 5em;
+                    margin-left: -5em;
+
+                }
+
+                /* Stop icon from shrinking if there's not enough space */
+                /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
+
+                sl-tree-item sl-icon {
+                    flex: 0 0 1em;
+                    font-size: calc(100% + 2px);
+                }
+
+                ::part(label) {
+                    overflow: hidden;
+                }
+
+                ::part(label):hover {
+                    text-decoration: underline;
+                }
+
+                .tree-item__label {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                sl-tree-item.drop-hover {
+                    background-color: var(--highlight-background-color);
+                }
+				
+				/*Mail specific style TODO move it out of the component*/
+                sl-tree-item.unread > .tree-item__label {
+                        font-weight: bold;
+                    }
+				
+                sl-tree-item.mailAccount > .tree-item__label {
+                    font-weight: bold;
+                }
+				sl-tree > sl-tree-item:nth-of-type(n+2){
+					margin-top: 2px;
 				}
+				/* End Mail specific style*/
 
-				::part(expand-button) {
-					rotate: none;
-					padding: 0 0.2em 0 5em;
-					margin-left: -5em;
+                sl-tree-item.drop-hover sl-tree-item {
+                    background-color: var(--sl-color-neutral-0);
+                }
 
-				}
+                /*TODO color of selected marker in front should be #006699 same as border top color*/
 
-				/* Stop icon from shrinking if there's not enough space */
-				/* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
+                sl-badge::part(base) {
 
-				sl-tree-item sl-icon {
-					flex: 0 0 1em;
-					font-size: calc(100% + 2px);
-				}
-
-				::part(label) {
-					overflow: hidden;
-				}
-
-				::part(label):hover {
-					text-decoration: underline;
-				}
-
-				.tree-item__label {
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
-
-				sl-tree-item.drop-hover {
-					background-color: var(--highlight-background-color);
-				}
-
-				sl-tree-item.drop-hover sl-tree-item {
-					background-color: var(--sl-color-neutral-0);
-				}
-				/*TODO color of selected marker in front should be #006699 same as border top color*/
-
-				sl-badge::part(base) {
-
-					background-color: var(--sl-color-neutral-500);
-					font-size: 0.75em;
-					font-weight: 700;
-					position: absolute;
-					top: 0;
-					right: 0.5em;
-				}
+                    background-color: var(--badge-color); /* This is the same color as app color mail */
+                    font-size: 1em;
+                    font-weight: 900;
+                    position: absolute;
+                    top: 0;
+                    right: 0.5em;
+                    line-height: 60%;
+                }
 
 
-				@media only screen and (max-device-width: 768px) {
-					:host {
-						--sl-font-size-medium: 1.2rem;
-					}
+                @media only screen and (max-device-width: 768px) {
+                    :host {
+                        --sl-font-size-medium: 1.2rem;
+                    }
 
-					sl-tree-item {
-						padding: 0.1em;
-					}
+                    sl-tree-item {
+                        padding: 0.1em;
+                    }
 
 
-				}
-			`
+                }
+            `
 
 
 		]
@@ -576,6 +591,46 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const temp = this.getDomNode(_id).defaultSlot;
 		if (!temp) return 0;
 			temp.setAttribute("style", _style);
+	}
+
+	/**
+	 * manipulate the classes of a tree item
+	 * this sets the class property of the item (just like php might set it).
+	 * This triggers the class attribute of the sl-tree-item to be set
+	 * mode "=" remove all classes and set only the given one
+	 * mode "+" add the given class
+	 * mode "-" remove the given class
+	 * @param _id
+	 * @param _className
+	 * @param _mode
+	 */
+	setClass(_id: string, _className: string, _mode: '=' | '+' | '-')
+	{
+		const item = this.getNode(_id);
+		if (item == null) return;
+		if (!item.class) item.class = "";
+		switch (_mode)
+		{
+			case "=":
+				item.class = _className
+				break;
+			case "-":
+				item.class = item.class.replace(_className, "")
+				break;
+			case "+":
+				if (!item.class.includes(_className))
+				{
+					if (item.class == "")
+					{
+						item.class = _className;
+					} else
+					{
+						item.class += " " + _className;
+					}
+				}
+				break;
+		}
+		if (item.class.trim() === "") item.class = undefined;
 	}
 
 	/**

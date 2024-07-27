@@ -108,6 +108,11 @@ class Tree extends Etemplate\Widget
 	 */
 	const NOCHECKBOX = 'nocheckbox';
 
+    /**
+     * key to add a custum class to the tree item
+     */
+    const CLASS_LIST = 'class';
+
 	/**
 	 * Constructor
 	 *

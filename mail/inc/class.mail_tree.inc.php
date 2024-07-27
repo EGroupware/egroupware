@@ -189,7 +189,7 @@ class mail_tree
 	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false, $_checkSubscribed = true)
 	{
 		//Init mail folders
-		$tree = array(Tree::ID=> $_parent?$_parent:0,Tree::CHILDREN => array());
+        $tree = array(Tree::ID => $_parent ? $_parent : 0, Tree::CHILDREN => array(), 'class' => 'mailAccount');
 		if (!isset($this->ui->mail_bo)) throw new Api\Exception\WrongUserinput(lang('Initialization of mail failed. Please use the Wizard to cope with the problem'));
 		$hDelimiter = $this->ui->mail_bo->getHierarchyDelimiter();
 
@@ -225,7 +225,7 @@ class mail_tree
 						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($node),
 						Tree::CHILDREN =>array(),
 						Tree::LABEL => $nodeData['text'],
-						Tree::TOOLTIP => $nodeData['tooltip'],
+                        Tree::TOOLTIP => $nodeData['tooltip'] != $nodeData['text'] ? $nodeData['tooltip'] : '',
 						Tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 						Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
 						Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
@@ -274,7 +274,6 @@ class mail_tree
 						Tree::CHILDREN =>array(),
 						Tree::LABEL =>lang($folder['MAILBOX']),
 						Tree::OPEN => self::getNodeLevel($folder['MAILBOX'], $folder['delimiter']) <= $_openTopLevel?1:0,
-						Tree::TOOLTIP => lang($folder['MAILBOX']),
 						Tree::CHECKED => $_checkSubscribed?$folder['SUBSCRIBED']:false,
 						Tree::NOCHECKBOX => 0,
 						'parent' => $parent?$_profileID.self::DELIMITER.implode($folder['delimiter'], $parent):$_profileID,
@@ -506,8 +505,9 @@ class mail_tree
 						'spamfolder'=> $accObj->imapServer()->acc_folder_junk&&(strtolower($accObj->imapServer()->acc_folder_junk)!='none')?true:false,
 						'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false
 					),
-					Tree::NOCHECKBOX  => $_noCheckbox
-				);
+                    Tree::NOCHECKBOX => $_noCheckbox,
+                    Tree::CLASS_LIST => 'mailAccount',
+                );
 			}
 			catch (\Exception $ex) {
 				$baseNode = array(

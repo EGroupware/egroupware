@@ -47,6 +47,11 @@
     --warning-color: rgba(255, 204, 0, .5);
     --error-color: rgba(204, 0, 51, .5);
 
+    /*default color of tree badges
+     this is the same as mail app color
+    */
+    --badge-color: #006699;
+
 }
 
 /**
