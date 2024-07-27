@@ -322,7 +322,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	bg	Имп�
 in %1 days (%2) is %3's birthday.	addressbook	bg	Рожденият ден на %3 е след %1 дни (%2).
 include all groups	addressbook	bg	Включете всички групи
 income	addressbook	bg	Доход
-infolog	addressbook	bg	Контакт с InfoLog
+infolog-contact	addressbook	bg	Контакт с InfoLog
 infolog-organisation	addressbook	bg	Организация на InfoLog
 insert	addressbook	bg	Въвеждане
 insufficent rights to delete this list!	addressbook	bg	Недостатъчни права за изтриване на списъка!

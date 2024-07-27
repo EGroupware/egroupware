@@ -165,7 +165,7 @@ import next set	addressbook	da	Impoter næste
 import_instructions	addressbook	da	I Netscape, åben Adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i LDIF formatet.<p>Eller i Outlook, vælg din kontakt mappe, vælg <b>Import and Export...</b> fra b>File</b> menuen og eksporter dine kontakt personer til en komma separeret fil (CSV). <p>Eller, i Palm Desktop 4.0 eller nyere, brug adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i VCard formatet
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Importerer kontakter til adressebogen fra en CSV-fil. CSV betyder 'kommaseparerede værdier'. I indstillingsfanen kan du også vælge andre separatorer.
 include all groups	addressbook	da	Inkluder alle grupper
-infolog	addressbook	da	InfoLog Kontakt
+infolog-contact	addressbook	da	InfoLog Kontakt
 infolog-organisation	addressbook	da	InfoLog Organisation
 insufficent rights to edit this list!	addressbook	da	Utilstrækkelige rettigheder til at redigere denne liste!
 international	addressbook	da	International

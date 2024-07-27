@@ -58,7 +58,7 @@ importer's personal	addressbook	lt	Asmeninė importuotojo informacija
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Importuoja kontaktus į adresinę iš CSV failo. Parinkčių skirtuke taip pat galite pasirinkti kitus skirtukus.
 imports contacts into your addressbook from a vcard file.	addressbook	lt	Importuokite kontaktus į adresinę iš vCard failo.
 include all groups	addressbook	lt	Įtraukti visas grupes
-infolog	addressbook	lt	InfoLog kontaktai
+infolog-contact	addressbook	lt	InfoLog kontaktai
 infolog-organisation	addressbook	lt	InfoLog organizacija
 insufficent rights to delete this list!	addressbook	lt	Nepakankamos teisės šiam sąrašui ištrinti!
 insufficent rights to edit this list!	addressbook	lt	Nepakankamos teisės redaguoti šį sąrašą!

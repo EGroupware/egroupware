@@ -320,7 +320,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	cs	Importu
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 include all groups	addressbook	cs	Zahrnout všechny skupiny
 income	addressbook	cs	Hospodářský výsledek
-infolog	addressbook	cs	InfoLog Kontakt
+infolog-contact	addressbook	cs	InfoLog Kontakt
 infolog-organisation	addressbook	cs	Organizace InfoLog
 insert	addressbook	cs	Vložit
 insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!

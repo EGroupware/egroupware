@@ -256,7 +256,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	hu	Import�
 in %1 days (%2) is %3's birthday.	addressbook	hu	%3 születésnapja %1 napon belül eljön (%2).
 include all groups	addressbook	hu	Minden csoport felvétele
 income	addressbook	hu	Jövedelem
-infolog	addressbook	hu	InfoLog Kapcsolat
+infolog-contact	addressbook	hu	InfoLog Kapcsolat
 infolog-organisation	addressbook	hu	InfoLog szervezet
 insufficent rights to delete this list!	addressbook	hu	Nincs elegendő jog a lista törléséhez!
 insufficent rights to edit this list!	addressbook	hu	Nem elegendő jog a lista szerkesztéséhez!

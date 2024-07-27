@@ -322,7 +322,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	el	Εισ�
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
 include all groups	addressbook	el	Συμπεριλάβετε όλες τις ομάδες
 income	addressbook	el	Εισόδημα
-infolog	addressbook	el	InfoLog Επικοινωνία
+infolog-contact	addressbook	el	InfoLog Επικοινωνία
 infolog-organisation	addressbook	el	Οργάνωση InfoLog
 insert	addressbook	el	Εισαγωγή
 insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικαιώματα για διαγραφή αυτής της λίστας!

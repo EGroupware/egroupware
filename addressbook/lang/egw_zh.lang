@@ -263,7 +263,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	zh	从 vCa
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 include all groups	addressbook	zh	包括所有群组
 income	addressbook	zh	收入
-infolog	addressbook	zh	信息记录仪联系方式
+infolog-contact	addressbook	zh	信息记录仪联系方式
 infolog-organisation	addressbook	zh	信息记录组织
 insufficent rights to delete this list!	addressbook	zh	没有删除这个列表的权限！
 insufficent rights to edit this list!	addressbook	zh	编辑此列表的权限不足！

@@ -322,7 +322,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard �
 in %1 days (%2) is %3's birthday.	addressbook	ja	%1 日後（%2）は %3 さんの誕生日です。
 include all groups	addressbook	ja	すべてのグループを含める
 income	addressbook	ja	収入
-infolog	addressbook	ja	InfoLogお問い合わせ先
+infolog-contact	addressbook	ja	InfoLogお問い合わせ先
 infolog-organisation	addressbook	ja	InfoLogの組織
 insert	addressbook	ja	挿入
 insufficent rights to delete this list!	addressbook	ja	このリストを削除する権限が不足しています!

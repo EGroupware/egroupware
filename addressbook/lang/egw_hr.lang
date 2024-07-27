@@ -95,7 +95,7 @@ import from ldif, csv, or vcard	addressbook	hr	Uvezi iz LDIF, CSV, ili VCard
 import from outlook	addressbook	hr	Uvezi iz Outlook
 import next set	addressbook	hr	Uvezi slijedeći set
 import_instructions	addressbook	hr	U Netscape, otvori Adresar i izaberi <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti će u LDIF formatu.<p>Ili, u Outlook, izaberite vaš Contacts mapu, izaberite <b>Import and Export...</b> iz <b>File</b> menija i izvezite vaše kontakte u tekst razmaknut zarezom (comma separated text (CSV)) datoteku.  <p>Ili, u Palm Desktop 4.0 ili više, izaberite vaš adresar i izaberite <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti će u VCard formatu.
-infolog	addressbook	hr	InfoLog
+infolog-contact	addressbook	hr	InfoLog
 international	addressbook	hr	Međunarodni
 label	addressbook	hr	LAbela
 last modified	addressbook	hr	Zadnja izmjena

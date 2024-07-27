@@ -320,7 +320,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	es-es	Impo
 in %1 days (%2) is %3's birthday.	addressbook	es-es	En %1 días (%2) es el cumpleaños de %3.
 include all groups	addressbook	es-es	Incluir todos los grupos
 income	addressbook	es-es	Ingresos
-infolog	addressbook	es-es	Registro de tareas
+infolog-contact	addressbook	es-es	Registro de tareas
 infolog-organisation	addressbook	es-es	Organización de InfoLog
 insert	addressbook	es-es	Insertar
 insufficent rights to delete this list!	addressbook	es-es	No tiene privilegios suficientes para borrar esta lista

@@ -320,7 +320,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	sk	Naimpor
 in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude mať narodeniny %3.
 include all groups	addressbook	sk	Zahrnúť všetky skupiny
 income	addressbook	sk	Príjem
-infolog	addressbook	sk	Záznamník
+infolog-contact	addressbook	sk	Záznamník
 infolog-organisation	addressbook	sk	Otvoriť CRM pohľad Záznamníka pre túto organizáciu
 insert	addressbook	sk	Vložiť
 insufficent rights to delete this list!	addressbook	sk	Nemáte dostatočné práva k odstráneniu tohto zoznamu!

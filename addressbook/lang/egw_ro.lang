@@ -59,7 +59,7 @@ importer's personal	addressbook	ro	Personal al importatorului
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Importă contactele în agendă dintr-un fișier CSV. În fila de opțiuni puteți alege și alți separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	ro	Importă contacte în agendă dintr-un fișier vCard.
 include all groups	addressbook	ro	Includeți toate grupurile
-infolog	addressbook	ro	InfoLog Contact
+infolog-contact	addressbook	ro	InfoLog Contact
 infolog-organisation	addressbook	ro	Organizația InfoLog
 insert	addressbook	ro	Introduceți
 insufficent rights to delete this list!	addressbook	ro	Drepturi insuficiente pentru a șterge această listă!

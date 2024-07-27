@@ -150,7 +150,7 @@ import next set	addressbook	eu	Inportatu hurrengo taldea
 import_instructions	addressbook	eu	Netscape erabiliz gero, helbide liburua aukeratu eta klikatu <b>Exportatu</b>, <b>fitxategi</b> menuan. Exportaturiko fitxategia LDIF formatuan egongo da.<p>Edo, Microsoft  outlookarekin, hautatu zure kontaktu karpeta eta ondoren hautatu <b>Inportatu eta Exportatu</b>, <b>Fitxategia</b> menutik eta exportatu kontaktuak komas separaturiko testu fitxategi batetara (CVS). <p>Edo, Palm Desktop 4.0 edo berriagoan, helbide liburura sartu eta hautatu <b>Exportatu</b>, <b>Fitxategia</b> menuan. Exportaturiko fitxategia VCard formatuan egongo da.
 in %1 days (%2) is %3's birthday.	addressbook	eu	%1 egunetan (%2) %3ren urtebetzea izango da
 income	addressbook	eu	Sarrerak
-infolog	addressbook	eu	Egitekoak
+infolog-contact	addressbook	eu	Egitekoak
 international	addressbook	eu	Internazionala
 label	addressbook	eu	Etiketa
 last modified	addressbook	eu	azken aldaketa

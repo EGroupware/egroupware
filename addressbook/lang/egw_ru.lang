@@ -311,7 +311,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	ru	Имп�
 in %1 days (%2) is %3's birthday.	addressbook	ru	Через %1 день/дней (%2) наступит День рождения %3
 include all groups	addressbook	ru	Скрыть группы без адреса электронной почты
 income	addressbook	ru	Входящие
-infolog	addressbook	ru	Контакт InfoLog
+infolog-contact	addressbook	ru	Контакт InfoLog
 infolog-organisation	addressbook	ru	Организация InfoLog
 insert	addressbook	ru	Вставить
 insufficent rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!

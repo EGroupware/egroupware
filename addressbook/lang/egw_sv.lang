@@ -231,7 +231,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	sv	Importe
 in %1 days (%2) is %3's birthday.	addressbook	sv	Om %1 dagar (%2) fyller %3 år.
 include all groups	addressbook	sv	Inkludera alla grupper
 income	addressbook	sv	Inkomst
-infolog	addressbook	sv	InfoLog Kontakt
+infolog-contact	addressbook	sv	InfoLog Kontakt
 infolog-organisation	addressbook	sv	InfoLog Organisation
 insert	addressbook	sv	Infoga
 insufficent rights to delete this list!	addressbook	sv	Otillräckliga rättigheter för att radera denna lista!

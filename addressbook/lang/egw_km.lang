@@ -319,7 +319,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានរបស់អ្នកពីឯកសារ vCard ។
 in %1 days (%2) is %3's birthday.	addressbook	km	ក្នុង %1 ថ្ងៃ (%2) គឺជាថ្ងៃកំណើតរបស់ %3 ។
 income	addressbook	km	ចំណូល
-infolog	addressbook	km	ទំនាក់ទំនង InfoLog
+infolog-contact	addressbook	km	ទំនាក់ទំនង InfoLog
 infolog-organisation	addressbook	km	អង្គការ InfoLog
 insert	addressbook	km	បញ្ចូល
 insufficent rights to delete this list!	addressbook	km	សិទ្ធិមិនគ្រប់គ្រាន់ក្នុងការលុបបញ្ជីនេះ!

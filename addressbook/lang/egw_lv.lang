@@ -160,7 +160,7 @@ import next set	addressbook	lv	Importēt nākošo porciju
 importer's personal	addressbook	lv	Importētāja personīgā
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Importē kontaktus adrešu grāmatiņā no CSV faila. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē varat izvēlēties arī citus atdalītājus.
 imports contacts into your addressbook from a vcard file.	addressbook	lv	Importē kontaktus no vCard faila jūsu adrešu grāmatiņā.
-infolog	addressbook	lv	InfoLog Kontaktpersona
+infolog-contact	addressbook	lv	InfoLog Kontaktpersona
 infolog-organisation	addressbook	lv	InfoLog organizācija
 insufficent rights to delete this list!	addressbook	lv	Nepietiekamas tiesības dzēst šo sarakstu!
 insufficent rights to edit this list!	addressbook	lv	Nepietiekamas tiesības rediģēt šo sarakstu!

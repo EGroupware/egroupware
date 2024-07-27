@@ -258,7 +258,7 @@ importer's personal	addressbook	id	Pribadi pengimpor
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	id	Mengimpor kontak ke dalam buku alamat dari File CSV. Pada tab opsi, Anda juga dapat memilih pemisah lainnya.
 imports contacts into your addressbook from a vcard file.	addressbook	id	Mengimpor kontak ke dalam Buku Alamat Anda dari File vCard.
 in %1 days (%2) is %3's birthday.	addressbook	id	Tinggal %1 hari (%2) adalah HUT %3.
-infolog	addressbook	id	Kontak InfoLog
+infolog-contact	addressbook	id	Kontak InfoLog
 infolog-organisation	addressbook	id	Organisasi InfoLog
 insufficent rights to delete this list!	addressbook	id	Hak yang tidak memadai untuk menghapus daftar ini!
 insufficent rights to edit this list!	addressbook	id	Hak yang tidak memadai untuk mengedit daftar ini!

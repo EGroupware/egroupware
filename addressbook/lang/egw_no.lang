@@ -164,7 +164,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma separat
 imports contacts into your addressbook from a vcard file.	addressbook	no	Importerer kontakter til adresseboken fra en vCard-fil.
 include all groups	addressbook	no	Inkluder alle grupper
 income	addressbook	no	Inntekt
-infolog	addressbook	no	Infolog
+infolog-contact	addressbook	no	Infolog
 infolog-organisation	addressbook	no	InfoLog-organisasjon
 insufficent rights to delete this list!	addressbook	no	Utilstrekkelige rettigheter til å slette denne listen!
 insufficent rights to edit this list!	addressbook	no	Utilstrekkelige rettigheter til å redigere denne listen!
