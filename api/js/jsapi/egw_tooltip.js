@@ -178,7 +178,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			var options = {...optionsDefault, ...(_options||{})};
 
 			_elem = jQuery(_elem);
-			if (_html != '')
+			if (_html && !egwIsMobile())
 			{
 				_elem.bind('mouseenter.tooltip', function(e) {
 					if (_elem != current_elem)
@@ -264,4 +264,3 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	};
 
 });
-

@@ -37,7 +37,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	{
 		this._value = val;
 		const split = splitEmail(this._value);
-		super.statustext = split.name ? split.email : "";
+		super.statustext = !egwIsMobile() && split.name ? split.email : "";
 		formatEmailAddress(val, !this.emailDisplay ? "email" :
 			(this.emailDisplay === 'preference' ? null : this.emailDisplay)).then(
 				(value) => super.value = value);
