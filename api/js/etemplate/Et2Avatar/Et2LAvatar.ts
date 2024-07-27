@@ -84,7 +84,7 @@ export class Et2LAvatar extends Et2Avatar
 				let label = (this.egw().preference("account_display", "common") || "firstname").includes("first") || !this.lname || !this.fname ?
 							this.fname + " " + this.lname :
 							this.lname + ", " + this.fname;
-				if(label != this.statustext)
+				if(label != this.statustext && !egwIsMobile())
 				{
 					this.statustext = label.trim();
 				}
