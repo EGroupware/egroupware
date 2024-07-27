@@ -165,7 +165,7 @@ importer's personal	addressbook	ko	가져온 사람의 개인
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	CSV 파일에서 주소록으로 연락처를 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 imports contacts into your addressbook from a vcard file.	addressbook	ko	vCard 파일에서 주소록으로 연락처를 가져옵니다.
 include all groups	addressbook	ko	모든 그룹 포함
-infolog	addressbook	ko	인포로그
+infolog-contact	addressbook	ko	인포로그
 infolog-organisation	addressbook	ko	정보 로그 조직
 insufficent rights to delete this list!	addressbook	ko	이 목록을 삭제할 권한이 없습니다!
 insufficent rights to edit this list!	addressbook	ko	이 목록을 편집할 수 있는 권한이 없습니다!

@@ -322,7 +322,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	nl	Importe
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 include all groups	addressbook	nl	Alle groepen opnemen
 income	addressbook	nl	Inkomend
-infolog	addressbook	nl	InfoLog Contact
+infolog-contact	addressbook	nl	InfoLog Contact
 infolog-organisation	addressbook	nl	InfoLog Organisatie
 insert	addressbook	nl	Voeg toe
 insufficent rights to delete this list!	addressbook	nl	Niet genoeg rechten om deze lijst te verwijderen!

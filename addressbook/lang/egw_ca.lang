@@ -189,7 +189,7 @@ import next set	addressbook	ca	Importar següent registre
 import_instructions	addressbook	ca	Si useu Mozilla o Netscape, obriu la llibreta d'adreces i seleccioneu <b>Exportar</b> des del menú <b>Arxiu</b>. L'arxiu exportat estarà en format LDIF.<p>O bé, en Outlook, seleccioneu la vostra carpeta de contactes, després, al menú <b>Arxiu</b>, <b>Importar i Exportar...</b> per desar-los en un arxiu separat per comes (CSV).<p>O també, en Palm Desktop 4.0 o superior, visiteu la vostra llibreta d'adreces i seleccioneu <b>Exportar</b> al menú <b>Arxiu</b>. L'arxiu exportat estarà en format VCard.
 in %1 days (%2) is %3's birthday.	addressbook	ca	En %1 dies (%2) es l'aniversari de %3.
 income	addressbook	ca	Entrada
-infolog	addressbook	ca	Tasques i Notes
+infolog-contact	addressbook	ca	Tasques i Notes
 insufficent rights to delete this list!	addressbook	ca	Insuficients drets per esborrar aquesta llista!
 international	addressbook	ca	Internacional
 label	addressbook	ca	Etiqueta

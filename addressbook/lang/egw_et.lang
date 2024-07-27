@@ -87,7 +87,7 @@ importer's personal	addressbook	et	Importija isiklik
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Impordib kontaktid aadressiraamatusse CSV-failist. CSV tähendab "komadega eraldatud väärtusi". Valikute vahekaardil saate valida ka teisi eraldajaid.
 imports contacts into your addressbook from a vcard file.	addressbook	et	Impordib kontaktid oma aadressiraamatusse vCard-failist.
 include all groups	addressbook	et	Kaasa kõik rühmad
-infolog	addressbook	et	InfoLog Kontakt
+infolog-contact	addressbook	et	InfoLog Kontakt
 infolog-organisation	addressbook	et	InfoLogi korraldus
 invite to current call	addressbook	et	Kutsuda jooksvale kõnele
 last modified	addressbook	et	Viimati muudetud

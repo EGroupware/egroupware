@@ -148,7 +148,7 @@ import next set	addressbook	uk	Імпортувати наступний наб�
 importer's personal	addressbook	uk	Особистий імпортер
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Імпортує контакти в адресну книгу з файлу CSV. CSV означає "Значення, розділені комами". У вкладці параметрів ви також можете вибрати інші роздільники.
 imports contacts into your addressbook from a vcard file.	addressbook	uk	Імпортує контакти до адресної книги з файлу vCard.
-infolog	addressbook	uk	Контакти InfoLog
+infolog-contact	addressbook	uk	Контакти InfoLog
 infolog-organisation	addressbook	uk	Організація InfoLog
 insufficent rights to delete this list!	addressbook	uk	Недостатньо прав для видалення цього списку!
 insufficent rights to edit this list!	addressbook	uk	Недостатньо прав для редагування цього списку!

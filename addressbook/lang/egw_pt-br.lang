@@ -287,7 +287,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	pt-br	Impo
 in %1 days (%2) is %3's birthday.	addressbook	pt-br	Em %1 dia(s) (%2) será aniversário de %3
 include all groups	addressbook	pt-br	Incluir todos os grupos
 income	addressbook	pt-br	Renda
-infolog	addressbook	pt-br	Contato tarefas
+infolog-contact	addressbook	pt-br	Contato tarefas
 infolog-organisation	addressbook	pt-br	Organização tarefas
 insert	addressbook	pt-br	Inserir
 insufficent rights to delete this list!	addressbook	pt-br	Direitos insuficientes para remover esta lista!

@@ -297,7 +297,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	pl	Importu
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 include all groups	addressbook	pl	Uwzględnij wszystkie grupy
 income	addressbook	pl	Dochód
-infolog	addressbook	pl	InfoLog Kontakt
+infolog-contact	addressbook	pl	InfoLog Kontakt
 infolog-organisation	addressbook	pl	Organizacja InfoLog
 insert	addressbook	pl	Wstaw
 insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!

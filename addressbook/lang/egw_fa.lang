@@ -115,7 +115,7 @@ import multiple vcard	addressbook	fa	وارد کردن چند VCard
 import next set	addressbook	fa	وارد کردن سری بعدی
 import_instructions	addressbook	fa	مراحل وارد کردن
 income	addressbook	fa	ورودی
-infolog	addressbook	fa	کارها
+infolog-contact	addressbook	fa	کارها
 international	addressbook	fa	بین المللی
 label	addressbook	fa	برچسب
 last modified	addressbook	fa	آخرین تغییرات

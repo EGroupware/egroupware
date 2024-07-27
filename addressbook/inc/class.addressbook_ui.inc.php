@@ -443,7 +443,7 @@ class addressbook_ui extends addressbook_bo
 			foreach($crm_apps as $app)
 			{
 				$actions['view']['children']["view-$app"] = array(
-					'caption' => $app,
+					'caption' => $app == 'infolog' ? lang('Infolog-Contact') : $app,
 					'icon' => $app == 'infolog-organisation' ? "infolog/navbar" : "$app/navbar"
 				);
 			}

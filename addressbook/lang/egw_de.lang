@@ -322,7 +322,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	de	Importi
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 include all groups	addressbook	de	Alle Gruppen verwenden
 income	addressbook	de	Einkommen
-infolog	addressbook	de	InfoLog Kontakt
+infolog-contact	addressbook	de	InfoLog Kontakt
 infolog-organisation	addressbook	de	InfoLog Organisation
 insert	addressbook	de	Einfügen
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!

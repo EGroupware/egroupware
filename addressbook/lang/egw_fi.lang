@@ -309,7 +309,7 @@ imports contacts into your addressbook from a vcard file.	addressbook	fi	Tuo yht
 in %1 days (%2) is %3's birthday.	addressbook	fi	%1:n päivän kuluttua (%2) on syntymäpäivä henkilöllä %3.
 include all groups	addressbook	fi	Sisällytä kaikki ryhmät
 income	addressbook	fi	Tulo
-infolog	addressbook	fi	InfoLog Yhteystiedot
+infolog-contact	addressbook	fi	InfoLog Yhteystiedot
 infolog-organisation	addressbook	fi	InfoLog Organisaatio
 insert	addressbook	fi	Syötä
 insufficent rights to delete this list!	addressbook	fi	Puuttelliset ACL-oikeudet listan poistamiseksi!

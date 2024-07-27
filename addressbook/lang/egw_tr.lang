@@ -129,7 +129,7 @@ import multiple vcard	addressbook	tr	Birden fazla vCard'ı içe aktarma
 import next set	addressbook	tr	Sonraki seti içe aktar
 importer's personal	addressbook	tr	İthalatçının kişisel
 include all groups	addressbook	tr	Tüm grupları dahil edin
-infolog	addressbook	tr	InfoLog İletişim
+infolog-contact	addressbook	tr	InfoLog İletişim
 infolog-organisation	addressbook	tr	InfoLog Organizasyon
 international	addressbook	tr	Uluslararası
 invite to current call	addressbook	tr	Geçerli çağrıya davet et
