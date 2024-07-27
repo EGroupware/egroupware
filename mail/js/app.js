@@ -1930,9 +1930,9 @@ app.classes.mail = AppJS.extend(
 			// display folder-name bold for unseen mails
 			if(_status[folderId])
 			{
-				ftree.setStyle(folderId, 'font-weight: bold !important');
+				ftree.setClass(folderId, 'unread','+');
 			}else if(!_status[folderId] || _status[folderId] ===0 || _status[folderId] ==="0") {
-				ftree.setStyle(folderId, 'font-weight: normal');
+				ftree.setClass(folderId, 'unread','-');
 			}
 			ftree.set_badge(folderId,_status[folderId]);
 			//alert(i +'->'+_status[i]);
@@ -2161,7 +2161,7 @@ app.classes.mail = AppJS.extend(
 			if (newcounter === 0)
 			{
 				newcounter = null;
-				ftree.setStyle(_foldernode.id, 'font-weight: normal');
+				ftree.setClass(_foldernode.id, 'unread','-');
 			}
 			ftree.set_badge(_foldernode.id, newcounter?.toString());
 		}
