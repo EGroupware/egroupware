@@ -68,7 +68,7 @@ class JsCalendar extends JsBase
 			'priority' => self::Priority($event['priority']),
 			'categories' => self::categories($event['category']),
 			'privacy' => $event['public'] ? 'public' : 'private',
-			'egroupware.org:customfields' => self::customfields($event),
+			'egroupware.org:customfields' => self::customfields($event, null, $event['tzid']),
 		] + self::Locations($event);
 
 		if (!empty($event['recur_type']) || $exceptions)
@@ -113,12 +113,12 @@ class JsCalendar extends JsBase
 				}))
 			{
 				// apply patch on JsEvent
-				$data = self::patch($data, $old ? self::getJsCalendar($old, false) : [], !$old || !$strict);
+				$data = self::patch($data, $old ? self::JsEvent($old, false) : [], !$old || !$strict);
 			}
 
 			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
 
-			$event = [];
+			$event = $old ? ['id' => $old['id']] : [];
 			foreach ($data as $name => $value)
 			{
 				switch ($name)
@@ -181,7 +181,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$event = array_merge($event, self::parseCustomfields($value, $strict));
+						$event = array_merge($event, self::parseCustomfields($value, 'calendar', $data['timeZone']));
 						break;
 
 					case 'prodId':
@@ -256,7 +256,7 @@ class JsCalendar extends JsBase
 				'egroupware.org:completed' => $entry['info_datecomplete'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
 			] + self::Locations(['location' => $entry['info_location'] ?? null]) + self::relatedToParent($entry['info_id_parent']) + [
-				'egroupware.org:customfields' => self::customfields($entry, 'infolog'),
+				'egroupware.org:customfields' => self::customfields($entry, 'infolog', Api\DateTime::$user_timezone->getName()),
 			];
 
 		if (!empty($entry['##RRULE']))
@@ -301,12 +301,12 @@ class JsCalendar extends JsBase
 				}))
 			{
 				// apply patch on JsEvent
-				$data = self::patch($data, $old ? self::getJsTask($old, false) : [], !$old || !$strict);
+				$data = self::patch($data, $old ? self::JsTask($old, false) : [], !$old || !$strict);
 			}
 
 			if (!isset($data['uid'])) $data['uid'] = null;  // to fail below, if it does not exist
 
-			$event = [];
+			$event = $old ? ['info_id' => $old['info_id']] : [];
 			foreach ($data as $name => $value)
 			{
 				switch ($name)
@@ -368,7 +368,7 @@ class JsCalendar extends JsBase
 						break;
 
 					case 'egroupware.org:customfields':
-						$event = array_merge($event, self::parseCustomfields($value, 'infolog'));
+						$event = array_merge($event, self::parseCustomfields($value, 'infolog', $data['timeZone']));
 						break;
 
 					case 'egroupware.org:type':

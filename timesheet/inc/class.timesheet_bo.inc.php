@@ -52,14 +52,6 @@ class timesheet_bo extends Api\Storage
 	 */
 	var $user;
 	/**
-	 * Timestaps that need to be adjusted to user-time on reading or saving
-	 *
-	 * @var array
-	 */
-	var $timestamps = array(
-		'ts_start','ts_created', 'ts_modified'
-	);
-	/**
 	 * Start of today in user-time
 	 *
 	 * @var int
@@ -169,6 +161,8 @@ class timesheet_bo extends Api\Storage
 	function __construct()
 	{
 		parent::__construct(TIMESHEET_APP,self::TABLE,self::EXTRA_TABLE,'','ts_extra_name','ts_extra_value','ts_id');
+
+		$this->convert_all_timestamps();
 
 		$this->config_data = Api\Config::read(TIMESHEET_APP);
 		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
@@ -1069,7 +1063,7 @@ class timesheet_bo extends Api\Storage
 		{
 			$data =& $this->data;
 		}
-		// allways store ts_project to be able to search for it, even if no custom project is set
+		// always store ts_project to be able to search for it, even if no custom project is set
 		if (empty($data['ts_project']) && !is_null($data['ts_project']))
 		{
 			$data['ts_project'] = $data['pm_id'] ? Link::title('projectmanager', $data['pm_id']) : '';

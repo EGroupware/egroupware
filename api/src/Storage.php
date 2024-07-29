@@ -173,6 +173,27 @@ class Storage extends Storage\Base
 	}
 
 	/**
+	 * Add all CFs of type date-time to $this->timestamps to get automatically converted to and from usertime
+	 */
+	function convert_all_timestamps()
+	{
+		parent::convert_all_timestamps();
+
+		$this->add_cf_timestamps();
+	}
+
+	function add_cf_timestamps()
+	{
+		foreach($this->customfields ?? [] as $name => $cf)
+		{
+			if ($cf['type'] === 'date-time' && !in_array($field=$this->get_cf_field($name), $this->timestamps))
+			{
+				$this->timestamps[] = $field;
+			}
+		}
+	}
+
+	/**
 	 * Read all customfields of the given id's
 	 *
 	 * @param int|array $ids one ore more id's
@@ -203,6 +224,12 @@ class Storage extends Storage\Base
 			{
 				$entry[$field][] = $row[$this->extra_value];
 			}
+			// old date-time CFs are stored in user-time, new ones in UTC with "Z" suffix, we always return them now as DateTime objects
+			elseif (($this->customfields[$row[$this->extra_key]]['type']??null) === 'date-time' &&
+				empty($this->customfields[$row[$this->extra_key]]['values']['format']))  // but only if they have no format specified
+			{
+				$entry[$field] = new DateTime($row[$this->extra_value], DateTime::$user_timezone);
+			}
 			else
 			{
 				$entry[$field] = $row[$this->extra_value];
@@ -224,7 +251,7 @@ class Storage extends Storage\Base
 
 		Customfields::handle_files($this->app, $id, $data, $this->customfields);
 
-		foreach (array_keys((array)$this->customfields) as $name)
+		foreach ((array)$this->customfields as $name => $cf)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
@@ -240,10 +267,17 @@ class Storage extends Storage\Base
 				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
 				if (empty($data[$field])) continue;	// nothing else to do for empty values
 			}
-			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) :
+			foreach($is_multiple && is_string($data[$field]) ? explode(',',$data[$field]) :
 				// regular custom fields (!$is_multiple) eg. addressbook store multiple values comma-separated
-				(array)(!$is_multiple && is_array($data[$field]) ? implode(',', $data[$field]) : $data[$field]) as $value)
+				[!$is_multiple && is_array($data[$field]) ? implode(',', $data[$field]) : $data[$field]] as $value)
 			{
+				// store type date-time in UTC with "Z" suffix, to be able to distinguish them from old date-time stored in user-time!
+				if ($cf['type'] === 'date-time' && empty($cf['values']['format']))  // but only if they have no format specified
+				{
+					$time = new DateTime($value, DateTime::$server_timezone);
+					$time->setTimezone(new \DateTimeZone('UTC'));
+					$value = $time->format('Y-m-d H:i:s').'Z';
+				}
 				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value)+$extra_cols,$where,__LINE__,__FILE__,$this->app))
 				{
 					return $this->db->Errno;
@@ -320,7 +354,17 @@ class Storage extends Storage\Base
 
 		if ($ret == 0 && $this->customfields)
 		{
-			$this->save_customfields($this->data);
+			// if we have date-time custom-fields, we have to convert them from user-time
+			if ($this->timestamps && $this->is_cf(end($this->timestamps)))
+			{
+				$this->data2db();   // save has already reverted timezone of timestamps again back to user-time
+				$this->save_customfields($this->data);
+				$this->db2data();
+			}
+			else
+			{
+				$this->save_customfields($this->data);
+			}
 		}
 		return $ret;
 	}

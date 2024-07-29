@@ -1018,11 +1018,11 @@ class calendar_bo
 				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','recur_date','deleted');
 			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach ($timestamps as $ts)
+			foreach (array_merge($timestamps, $this->getCfTtimestamps()) as $ts)
 			{
 				if (!empty($event[$ts]))
 				{
-					$event[$ts] = $this->date2usertime((int)$event[$ts],$date_format);
+					$event[$ts] = $this->date2usertime($event[$ts], $date_format);
 				}
 			}
 			// same with the recur exceptions and rdates
@@ -1052,6 +1052,22 @@ class calendar_bo
 				}
 			}
 		}
+	}
+
+	public function getCfTtimestamps()
+	{
+		static $cf_timestamps=null;
+		if (!isset($cf_timestamps))
+		{
+			$cf_timestamps = array_map(static function($name)
+			{
+				return '#' . $name;
+			}, array_keys(array_filter($this->customfields?:[], static function ($cf)
+			{
+				return $cf['type'] === 'date-time';
+			})));
+		}
+		return $cf_timestamps;
 	}
 
 	/**

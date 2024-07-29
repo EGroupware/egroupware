@@ -133,6 +133,8 @@ class calendar_so
 	 */
 	protected static $tz_cache = array();
 
+	protected $customfields;
+
 	/**
 	 * Constructor of the socal class
 	 */
@@ -147,6 +149,7 @@ class calendar_so
 			$vname = $name.'_table';
 			$this->all_tables[] = $this->$vname = $this->cal_table.'_'.$name;
 		}
+		$this->customfields = Api\Storage\Customfields::get('calendar');
 	}
 
 	/**
@@ -512,7 +515,16 @@ class calendar_so
 		// custom fields
 		foreach($this->db->select($this->extra_table,'*',array('cal_id'=>$ids),__LINE__,__FILE__,false,'','calendar') as $row)
 		{
-			$events[$row['cal_id']]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
+			// old date-time CFs are stored in user-time, new ones in UTC with "Z" suffix, we always return them now as DateTime objects
+			if (($this->customfields[$row['cal_extra_name']]['type']??null) === 'date-time' &&
+				empty($this->customfields[$row['cal_extra_name']]['values']['format']))  // but only if they have no format specified)
+			{
+				$events[$row['cal_id']]['#'.$row['cal_extra_name']] = new Api\DateTime($row['cal_extra_value'], Api\DateTime::$user_timezone);
+			}
+			else
+			{
+				$events[$row['cal_id']]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
+			}
 		}
 
 		// alarms
@@ -1507,7 +1519,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$event['cal_category'] = implode(',',$categories);
 
-		// make sure recurring events never reference to an other recurrent event
+		// make sure recurring events never reference to another recurrent event
 		if (!empty($event['recur_type'])) $event['cal_reference'] = 0;
 
 		if ($cal_id)
@@ -1611,7 +1623,7 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 			}
 		}
-		else // write information about recuring event, if recur_type is present in the array
+		else // write information about recurring event, if recur_type is present in the array
 		{
 			// fetch information about the currently saved (old) event
 			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
@@ -1763,6 +1775,14 @@ ORDER BY cal_user_type, cal_usre_id
 				}
 				if ($value)
 				{
+					// store type date-time in UTC with "Z" suffix, to be able to distinguish them from old date-time stored in user-time!
+					if (($this->customfields[substr($name, 1)]['type']??null) === 'date-time' &&
+						empty($this->customfields[substr($name, 1)]['values']['format']))  // but only if they have no format specified)
+					{
+						$time = new Api\DateTime($value, Api\DateTime::$server_timezone);
+						$time->setTimezone(new DateTimeZone('UTC'));
+						$value = $time->format('Y-m-d H:i:s').'Z';
+					}
 					$this->db->insert($this->extra_table,array(
 						'cal_extra_value'	=> is_array($value) ? implode(',',$value) : $value,
 					),array(

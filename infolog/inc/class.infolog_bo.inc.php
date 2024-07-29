@@ -141,7 +141,7 @@ class infolog_bo
 	var $tracking;
 	/**
 	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
-	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
+	 * Longer lines / bigger number of these chars are truncated to that max. number or chars.
 	 *
 	 * @var int
 	 */
@@ -269,6 +269,11 @@ class infolog_bo
 						unset($field['typ']);
 						$this->customfields[$name] = $field;
 						$save_config = true;
+					}
+					// add date-time CFs to timestamps to ensure TZ conversation
+					if ($field['type'] === 'date-time')
+					{
+						$this->timestamps[] = '#'.$field['name'];
 					}
 				}
 				if (!empty($save_config)) Api\Config::save_value('customfields',$this->customfields,'infolog');
@@ -554,9 +559,6 @@ class infolog_bo
 	 */
 	 function time2time(&$values, $fromTZId=false, $toTZId=null, $type='ts')
 	 {
-
-		if ($fromTZId === $toTZId) return;
-
 		$tz = Api\DateTime::$server_timezone;
 
 	 	if ($fromTZId)
@@ -634,9 +636,9 @@ class infolog_bo
 	 *
 	 * @param int|array $info_id integer id or array with id's or array with column=>value pairs of the entry to read
 	 * @param boolean $run_link_id2from = true should link_id2from run, default yes,
-	 *	need to be set to false if called from link-title to prevent an infinit recursion
+	 *	need to be set to false if called from link-title to prevent an infinite recursion
 	 * @param string $date_format = 'ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
-	 * 	'array'=array or string with date-format
+	 * 	'array'=array or string with date-format, 'object' DateTime objects
 	 * @param boolean $ignore_acl = false if true, do NOT check access, default false
 	 *
 	 * @return array|boolean infolog entry, null if not found or false if no permission to read it

@@ -273,8 +273,9 @@ class Storage
 				$this->contact_repository = 'sql-ldap';
 			}
 			$this->somain = new Sql($db);
+			$this->somain->add_cf_timestamps();
 
-			// remove some columns, absolutly not necessary to search in sql
+			// remove some columns, absolutely not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
 		}
 		$this->grants = $this->get_grants($this->user,$contact_app);

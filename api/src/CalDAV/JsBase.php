@@ -149,9 +149,10 @@ class JsBase
 	 *
 	 * @param array $contact
 	 * @param ?string $app default self::APP
+	 * @param ?string $timezone optional timezone-name to use für date-time types, default UTC
 	 * @return array
 	 */
-	protected static function customfields(array $contact, ?string $app=null)
+	protected static function customfields(array $contact, ?string $app=null, ?string $timezone=null)
 	{
 		$fields = [];
 		foreach(Api\Storage\Customfields::get($app ?? static::APP) as $name => $data)
@@ -162,7 +163,7 @@ class JsBase
 				switch($data['type'])
 				{
 					case 'date-time':
-						$value = Api\DateTime::to($value, Api\DateTime::RFC3339);
+						$value = empty($timezone) ? self::UTCDateTime($value) : self::DateTime($value, $timezone);
 						break;
 					case 'float':
 						$value = (double)$value;
@@ -193,9 +194,10 @@ class JsBase
 	 *
 	 * @param array $cfs name => object with attribute data and optional type, label, values
 	 * @param ?string $app default self::APP
+	 * @param ?string $timeZone timezone-name given in JSON data
 	 * @return array
 	 */
-	protected static function parseCustomfields(array $cfs, ?string $app=null)
+	protected static function parseCustomfields(array $cfs, ?string $app=null, ?string $timeZone=null)
 	{
 		$contact = [];
 		$definitions = Api\Storage\Customfields::get($app ?? static::APP);
@@ -216,7 +218,7 @@ class JsBase
 				switch($definition['type'])
 				{
 					case 'date-time':
-						$data['value'] = Api\DateTime::to($data['value'], 'object');
+						$data['value'] = self::parseDateTime($data['value'], $timeZone);
 						break;
 					case 'float':
 						$data['value'] = (double)$data['value'];
