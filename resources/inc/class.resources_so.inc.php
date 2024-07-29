@@ -24,6 +24,7 @@ class resources_so extends Api\Storage
 	{
 		parent::__construct('resources','egw_resources', 'egw_resources_extra', '',
 			'extra_name', 'extra_value', 'extra_id' );
+		$this->convert_all_timestamps();
 
 		$this->columns_to_search = array('name','short_description','inventory_number','long_description','location');
 	}
