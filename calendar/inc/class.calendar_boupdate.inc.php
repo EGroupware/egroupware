@@ -1601,7 +1601,7 @@ class calendar_boupdate extends calendar_bo
 			$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
 		}
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
-		foreach($timestamps as $ts)
+		foreach(array_merge($timestamps, $this->getCfTtimestamps()) as $ts)
 		{
 			// we convert here from user-time to timestamps in server-time!
 			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;

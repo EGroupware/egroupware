@@ -69,6 +69,10 @@ class infolog_so
 	 * @var int
 	 */
 	 var $tz_offset;
+	/**
+	 * @var array $customfields if defined
+	 */
+	 protected array $customfields;
 
 	/**
 	 * Constructor
@@ -84,6 +88,8 @@ class infolog_so
 		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+
+		$this->customfields = Api\Storage\Customfields::get('infolog');
 	}
 
 	/**
@@ -448,7 +454,16 @@ class infolog_so
 		$this->data['info_id_parent'] = (int)$this->data['info_id_parent'];
 		foreach($this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__) as $row)
 		{
-			$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
+			// old date-time CFs are stored in user-time, new ones in UTC with "Z" suffix, we always return them now as DateTime objects
+			if (($this->customfields[$row['info_extra_name']]['type']??null) === 'date-time' &&
+				empty($this->customfields[$row['info_extra_name']]['values']['format']))  // but only if they have no format specified)
+			{
+				$this->data['#'.$row['info_extra_name']] = new Api\DateTime($row['info_extra_value'], Api\DateTime::$user_timezone);
+			}
+			else
+			{
+				$this->data['#'.$row['info_extra_name']] = $row['info_extra_value'];
+			}
 		}
 		//error_log(__METHOD__.'('.array2string($where).') returning '.array2string($this->data));
 		return $this->data;
@@ -663,6 +678,14 @@ class infolog_so
 
 			if ($val)
 			{
+				// store type date-time in UTC with "Z" suffix, to be able to distinguish them from old date-time stored in user-time!
+				if (($this->customfields[substr($key, 1)]['type']??null) === 'date-time' &&
+					empty($this->customfields[substr($key, 1)]['values']['format']))  // but only if they have no format specified)
+				{
+					$time = new Api\DateTime($val, Api\DateTime::$server_timezone);
+					$time->setTimezone(new DateTimeZone('UTC'));
+					$val = $time->format('Y-m-d H:i:s').'Z';
+				}
 				$this->db->insert($this->extra_table,array(
 						// store multivalued CalDAV properties as serialized array, everything else get comma-separated
 						'info_extra_value'	=> is_array($val) ? ($key[1] == '#' ? json_encode($val) : implode(',',$val)) : $val,
@@ -1054,7 +1077,16 @@ class infolog_so
 				}
 				foreach($this->db->select($this->extra_table,'*',$where,__LINE__,__FILE__) as $row)
 				{
-					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					// old date-time CFs are stored in user-time, new ones in UTC with "Z" suffix, we always return them now as DateTime objects
+					if (($this->customfields[$row['info_extra_name']]['type']??null) === 'date-time' &&
+						empty($this->customfields[$row['info_extra_name']]['values']['format']))  // but only if they have no format specified)
+					{
+						$ids[$row['info_id']]['#'.$row['info_extra_name']] = new Api\DateTime($row['info_extra_value'], Api\DateTime::$user_timezone);
+					}
+					else
+					{
+						$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+					}
 				}
 			}
 		}

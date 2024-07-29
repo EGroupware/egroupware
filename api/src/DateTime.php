@@ -33,7 +33,7 @@ use DateInterval;
  * - Api\DateTime::user2server($time,$type=null)
  * (Replacing in 1.6 and previous used adding of tz_offset, which is only correct for current time)
  *
- * An other static method allows to format any time in several ways: Api\DateTime::to($time,$type) (exceed date($type,$time)).
+ * Another static method allows to format any time in several ways: Api\DateTime::to($time,$type) (exceed date($type,$time)).
  *
  * The constructor of Api\DateTime understand - in addition to DateTime - integer timestamps, array with values for
  * keys: ('year', 'month', 'day') or 'full' plus 'hour', 'minute' and optional 'second' or a DateTime object as parameter.
@@ -122,7 +122,7 @@ class DateTime extends \DateTime
 						break;
 					}
 					catch(Exception $e) {
-						// if string is nummeric, ignore the exception and treat string as timestamp
+						// if string is numeric, ignore the exception and treat string as timestamp
 						if (!is_numeric($time)) throw $e;
 					}
 				}

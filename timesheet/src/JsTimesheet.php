@@ -123,7 +123,7 @@ class JsTimesheet extends Api\CalDAV\JsBase
 						break;
 
 					case 'start':
-						$timesheet['ts_start'] = Api\DateTime::server2user($value, 'ts');
+						$timesheet['ts_start'] = self::parseDateTime($value);
 						break;
 
 					case 'duration':

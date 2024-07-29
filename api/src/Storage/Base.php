@@ -121,14 +121,14 @@ class Base
 	 * Possible values:
 	 * - 'ts'|'integer' convert every timestamp to an integer unix timestamp
 	 * - 'string' convert every timestamp to a 'Y-m-d H:i:s' string
-	 * - 'object' convert every timestamp to a Api\DateTime object
+	 * - 'object' convert every timestamp to an Api\DateTime object
 	 *
 	 * @var string
 	 */
 	public $timestamp_type;
 	/**
-	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time
-	 * or substracted from a user-time to get the server-time
+	 * Offset in seconds between user and server-time,	it need to be add to a server-time to get the user-time
+	 * or subtracted from a user-time to get the server-time
 	 *
 	 * @var int
 	 * @deprecated use Api\DateTime methods instead, as the offset between user and server time is only valid for current time
