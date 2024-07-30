@@ -2313,32 +2313,18 @@ class mail_compose
 		//_debug_array($bodyParts);
 		$styles = Mail::getStyles($bodyParts);
 
-		$fromAddress = implode(', ', $headers['FROM']);
-
-		$toAddressA = array();
-		$toAddress = '';
-		foreach ($headers['TO'] as $mailheader) {
-			$toAddressA[] =  $mailheader;
-		}
-		if (count($toAddressA)>0)
+		$fromAddress = $toAddress = $ccAddress = '';
+		foreach(['FROM' => 'fromAddress', 'TO' => 'toAddress', 'CC' => 'ccAddress'] as $header => $var)
 		{
-			$toAddress = implode(', ', $toAddressA);
-			$toAddress = htmlspecialchars(lang("to").": ".$toAddress).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
-		}
-		$ccAddressA = array();
-		$ccAddress = '';
-		foreach ($headers['CC'] as $mailheader) {
-			$ccAddressA[] =  $mailheader;
-		}
-		if (count($ccAddressA)>0)
-		{
-			$ccAddress = implode(', ', $ccAddressA);
-			$ccAddress = htmlspecialchars(lang("cc").": ".$ccAddress).($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
+			if (!empty($headers[$header]))
+			{
+				$$var = htmlspecialchars(lang($header).": ".implode(', ', (array)$headers[$header])).
+					($bodyParts['0']['mimeType'] == 'text/html' ? "<br>" : "\r\n");
+			}
 		}
 		// create original message header in users preferred font and -size
 		$this->sessionData['body']	= self::wrapBlockWithPreferredFont(
-			htmlspecialchars(lang("from").": ".$fromAddress)."<br>".
-			$toAddress.$ccAddress.
+			$fromAddress.$toAddress.$ccAddress.
 			htmlspecialchars(lang("date").": ".Mail::_strtotime($headers['DATE'],'r',true),ENT_QUOTES | ENT_IGNORE, Mail::$displayCharset, false),
 			lang("original message"), 'originalMessage');
 
