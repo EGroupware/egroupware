@@ -18,6 +18,7 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
   * `completed` (InfoLog `done`)
   * `cancelled`
   * `egroupware.org:<infolog-status>` (all other status supported by InfoLog use a `egroupware.org:` prefix)
+* `percentComplete` integer value between 0 and 100
 * `participants` contains task-owner (role `owner`), responsible users (role `attendee`) and CC'ed (role `informational`)
   * participants is an object with either the numerical user-id or the email address as attribute-name and an object with the following attributes:
   * `name` of owner, responsible or CC'ed
