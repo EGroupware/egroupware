@@ -351,6 +351,15 @@ class JsCalendar extends JsBase
 						$event['info_priority'] = self::parsePriority($value, true);
 						break;
 
+					case 'progress':
+						$event['info_status'] = self::parseProgress($value, $event['info_type'] ??
+							(isset($data['egroupware.org:type']) ? self::parseInfoType($data['egroupware.org:type']) : 'task'));
+						break;
+
+					case 'percentComplete':
+						$event['info_percent'] = self::parseInt($value);
+						break;
+
 					case 'privacy':
 						$event['info_access'] = self::parsePrivacy($value);
 						break;
@@ -432,9 +441,10 @@ class JsCalendar extends JsBase
 	{
 		if (!($status = array_search($progress, self::$status2progress)))
 		{
-			if (!str_starts_with('egroupware.org:', $progress) ||
-				($status = substr($progress, strlen('egroupware.org:'))) &&
-					isset($info_type) && !isset(self::getInfolog()->status[$info_type][$status]))
+			if (!str_starts_with($progress, 'egroupware.org:') ||
+				($status = substr($progress, strlen('egroupware.org:'))) && !(
+					isset(self::$status2progress[$status]) ||
+					isset($info_type) && isset(self::getInfolog()->status[$info_type][$status])))
 			{
 				$status = 'not-started';
 			}
