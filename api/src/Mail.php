@@ -952,8 +952,9 @@ class Mail
 		}
 		catch (\Exception $e)
 		{
-			error_log(__METHOD__.' ('.__LINE__.') '."->open connection for Server with profileID:".$_icServerID." trying to examine ($mailbox) failed!".$e->getMessage());
-			throw new Exception(__METHOD__." failed to ".__METHOD__." on Profile to $_icServerID while trying to examine $mailbox:".$e->getMessage());
+			_egw_log_exception($e);
+			throw new Exception(__METHOD__." failed to open connection on Profile to $_icServerID while trying to examine $mailbox: ".$e->getMessage().
+				(!empty($e->details) ? ': '.$e->details : ''), 100, $e);
 		}
 		if (self::$debugTimes) self::logRunTimes($starttime,null,'ProfileID:'.$_icServerID,__METHOD__.' ('.__LINE__.') ');
 	}
