@@ -41,7 +41,13 @@ changed event-data applied	calendar	ro	S-a aplicat modificarea datelor de evenim
 date range	calendar	ro	Intervalul de date
 email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
+every user can invite other users and groups	admin	ro	Fiecare utilizator poate invita alți utilizatori și grupuri
+exception created - you can now edit or delete it	calendar	ro	Excepție creată - acum o puteți edita sau șterge.
 exclude weekend	calendar	ro	Excludeți Weekend
+explicit dates	calendar	ro	Evenimente explicite
+exports events from your calendar in ical format.	calendar	ro	Exportează evenimente din calendar în format iCal.
+exports events from your calendar into a csv file.	calendar	ro	Exportează evenimentele din calendar într-un fișier CSV.
+favorites	calendar	ro	Favorite
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
 how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)

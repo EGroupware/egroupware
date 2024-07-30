@@ -138,14 +138,19 @@ event deleted	calendar	zh	事件已删除
 event details follow	calendar	zh	事件细节
 event saved	calendar	zh	事件已保存
 event will occupy the whole day	calendar	zh	事件将占用整天时间
+every user can invite other users and groups	admin	zh	每个用户都可以邀请其他用户和组
 exception	calendar	zh	例外
 exception created - you can now edit or delete it	calendar	zh	例外已建立 - 现在您可以编辑或删除它
 exceptions	calendar	zh	例外
 exclude weekend	calendar	zh	不包括周末
 execute a further action for this entry	calendar	zh	为这一输入执行进一步的操作
 existing links	calendar	zh	已存在链接
+explicit dates	calendar	zh	明确事件
+exports events from your calendar in ical format.	calendar	zh	以 iCal 格式导出日历中的事件。
+exports events from your calendar into a csv file.	calendar	zh	将日历中的事件导出为 CSV 文件。
 extended	calendar	zh	扩展
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zh	扩展更新总是含完整的事件细节，iCal 格式可以被其它日历应用软件读取。
+favorites	calendar	zh	收藏夹
 fieldseparator	calendar	zh	字段分隔符
 filemanager	calendar	zh	文件管理器
 filename	calendar	zh	字段名

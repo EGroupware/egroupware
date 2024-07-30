@@ -41,7 +41,6 @@ access by	admin	fr	Accès par
 access control	admin	fr	Contrôle d'accès
 access to %1 data by others	admin	fr	Accès aux données de %1 par d'autres
 access token revoked.	admin	fr	Token d'accès révoqué.
-accesslog and bruteforce defense	admin	fr	Protection contre les attaques par accès aux logs et force brute
 account	admin	fr	Compte
 account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a pas d'adresse email --> pas notifié !
 account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe au format texte !
@@ -133,7 +132,6 @@ anonymous user	admin	fr	Utilisateur anonyme
 anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions).
 anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
 anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
-anonymous user. not shown in list sessions.	admin	fr	Utilisateur anonyme. Non affiché dans la liste des sessions.
 any application	admin	fr	Toutes les applications
 any group	admin	fr	Tous les groupes
 any user	admin	fr	Tous les utilisateurs
@@ -165,10 +163,6 @@ async services last executed	admin	fr	Dernière exécution des services asynchro
 asynchronous timed services	admin	fr	Services asynchrones
 asyncservices not yet installed or other error (%1) !!!	admin	fr	services asynchrones pas encore installés ou autre erreur (%1) !
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fr	Tentative d'utiliser le type MIME correct pour ftp à la place de celui par défaut 'application/octet-stream'.
-attribute accountstatus explained	admin	fr	Ceci modifie l'attribut <b><i>accountStatus</i></b> (Status du compte) pour le schéma de QMAIL.
-attribute mail explained	admin	fr	Ceci modifie l'attribut <b><i>-mail-</b></i> du schéma QMAIL. Cet attribut doit toujours être renseigné, c'est aussi le champ de l'adresse de courriel interne de EGw.
-attribute mailalternateaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailAlternateAddress-</i></b> (adresse de messagerie alternative) du schéma QMAIL. Cela peut être utilisé comme un alias ou un adressage virtuel.
-attribute mailforwardingaddress explained	admin	fr	Ceci modifie l'attribut <b><i>-mailForwardingAddress-</i></b> (adresse de routage de messagerie) du schéma QMAIL. En cas d'utilisation de cette valeur, elle ne peut être vide.
 attributes	admin	fr	Attributs
 authentication	admin	fr	Authentication
 authentication / accounts	admin	fr	Authentification / Comptes
@@ -274,10 +268,10 @@ custom egroupware web font as woff2 file	admin	fr	Police web Custom EGroupware e
 custom fields	admin	fr	Champs personnalisés
 custom fields tab	admin	fr	Onglet Champs personnalisés
 custom translation	admin	fr	Traduction personnalisées
-customfield '%1' added	admin	fr	Champ personnalisé '%1' ajouté
-customfield '%1' deleted	admin	fr	Champ personnalisé '%1' supprimé
-customfield '%1' modified	admin	fr	Champ personnalisé '%1' modifié
-customfield deleted	admin	fr	Champ personnalisé supprimé
+customfield '%1' added	admin	fr	Champ personnalisé '%1' ajouté.
+customfield '%1' deleted	admin	fr	Champ personnalisé '%1' supprimé.
+customfield '%1' modified	admin	fr	Champ personnalisé '%1' modifié.
+customfield deleted	admin	fr	Champ personnalisé supprimé.
 customfield saved.	admin	fr	Champ personnalisé enregistré.
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
 cyrus imap server administration	admin	fr	Administration du serveur Cyrus IMAP
@@ -345,7 +339,6 @@ disable "auto completion" of the login form	admin	fr	Désactiver l'auto-complét
 disable all	admin	fr	Tout désactiver
 disable minifying of javascript and css files	admin	fr	Désactiver la minification du code JavaScript et CSS
 disable pgp encryption (mailvelope)	admin	fr	Désactiver le chiffrement PGP (Mailvelope)
-disable wysiwyg-editor	admin	fr	Désactiver l'éditeur WYSIWYG
 disabled	admin	fr	Désactivé
 disabled (not recomended)	admin	fr	Désactivé (pas recommandé)
 disabled, do not show on login page	admin	fr	Désactivé, ne pas montrer sur la page de connexion
@@ -402,11 +395,7 @@ enable cyrus imap server administration	admin	fr	Activer la gestion du serveur C
 enable debug-messages	admin	fr	Activer les messages de déboguage.
 enable sieve	admin	fr	Activer Sieve
 enable spellcheck in rich text editor	admin	fr	Activer la vérification d'orthographe dans l'éditeur de texte riche
-enable the soap service	admin	fr	Activer le service SOAP.
-enable the xmlrpc service	admin	fr	Activer le service XML-RPC.
 enabled	admin	fr	Activé
-enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
-enabled - popup window	admin	fr	Activé - Fenêtre popup
 encrypted connection	admin	fr	Connexion chiffrée
 encryption	admin	fr	Chiffrement
 encryption settings	admin	fr	Paramètres de chiffrement
@@ -428,7 +417,6 @@ enter the title for your site	admin	fr	Entrez le titre pour votre site
 enter the title of your logo	admin	fr	Entrez le titre de votre logo
 enter the url where your logo should link to	admin	fr	Entrez l'URL vers laquelle votre logo doit rediriger
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	fr	Entre le chemin VFS où les images, icônes et logos additionnels peuvent être placés et trouvé par les applications d'EGroupware.<p>Le chemin DOIT commencer par / et être lisible par tous les utilisateurs
-enter your default ftp server	admin	fr	Entrez votre serveur FTP par défaut
 enter your default mail domain ( from: user@domain )	admin	fr	Entrez votre domaine de messagerie par défaut (De: utilisateur@domaine)
 enter your default mail domain (from: user@domain)	admin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
 enter your http proxy server	admin	fr	Entrez votre serveur proxy HTTP
@@ -459,7 +447,6 @@ event details follow	admin	fr	Les détails de l'événement suivent
 exists	admin	fr	Existe
 expired	admin	fr	Expiré
 expires	admin	fr	Expire
-explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Courier-IMAP et nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldap du répertoire ADMIN.
 export certificate as p12	admin	fr	Exporter le certificat en p12
 exports groups into a csv file.	admin	fr	Exporter les groupes dans un fichier CSV.
 exports permission settings into a csv file.	admin	fr	Exporter les permissions dans un fichier CSV.
@@ -499,9 +486,6 @@ git clone	admin	fr	Git clone
 global categories	common	fr	Catégories globales
 global options	admin	fr	Options globales
 go directly to admin menu, returning here the next time you click on administration.	admin	fr	Aller directement au menu admin, revenir ici la prochaine fois que vous cliquer sur administration.
-google recaptcha	admin	fr	Recaptcha Google
-google recaptcha secret key	admin	fr	Clé secrète Recaptcha Google
-google recaptcha site key	admin	fr	Clé de site Recaptcha Google
 governmental: incl. state or municipal authorities or services	admin	fr	Gouvernemental: incluant les autorités et services d'état ou de municipalité
 grant	admin	fr	Accorder
 group #%1 must have negative sign!	admin	fr	Le groupe #%1 doit avoir un signe négatif !
@@ -534,7 +518,7 @@ how username get constructed	admin	fr	Comment les codes utiliateurs sont constru
 html/plaintext	admin	fr	HTML/text
 icon	admin	fr	Icône
 identity	admin	fr	Identité
-identity deleted	admin	fr	Identité supprimée
+identity deleted	admin	fr	Identité supprimée.
 identity saved.	admin	fr	Identité enregistrée.
 idle	admin	fr	Disponible
 if different from email address	admin	fr	Si différent de l'adresse mail
@@ -646,7 +630,6 @@ mail settings	admin	fr	Paramètres de messagerie
 main email-address	admin	fr	Adresse email principale
 main screen message	admin	fr	Message sur l'écran principal
 manage mapping	admin	fr	Gestion des correspondances
-manage stationery templates	admin	fr	Gérer les modèles
 manager	admin	fr	Gestionnaire
 manual entry	admin	fr	Entrée manuelle
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
@@ -757,8 +740,6 @@ plesk imap server (courier)	admin	fr	Serveur IMAP Plesk (Courier)
 plesk mail script '%1' not found !!!	admin	fr	Le script email Plesk '%1' introuvable!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	fr	Plesk requiert des mots de passe d'au moins 5 caractères qui ne comprennent pas le nom du compte --> le mot de passe n'est PAS fixé!
 plesk smtp-server (qmail)	admin	fr	Serveur SMTP Plesk (Qmail)
-pop3 server hostname or ip address	admin	fr	Nom d'hôte ou adresse IP du serveur POP3
-pop3 server port	admin	fr	Port du serveur POP3
 port	admin	fr	Port
 postfix with ldap	admin	fr	Postfix avec support LDAP
 postpone for	admin	fr	Reporter à
@@ -794,7 +775,6 @@ revoke	admin	fr	Révoquer
 revoke this token	admin	fr	Révoquer ce token
 revoked	admin	fr	Révoqué
 rights	admin	fr	Droits
-route all mails to	admin	fr	Livrer tous les emails à
 rows	admin	fr	Lignes
 rpm or debian package	admin	fr	Paquet RPM ou deb
 run	admin	fr	exécuter
@@ -851,7 +831,6 @@ set preference values.	admin	fr	Régler les valeurs des préférences.
 settings	admin	fr	Réglages
 should exceptions contain a trace (including function arguments)	admin	fr	Les exceptions doivent-elles contenir une trace, y compris les arguments des fonctions.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fr	Est-ce que la page de login doit inclure une zone de sélection linguistique (utile aussi pour les sites de démonstration) ?
-show 'powered by' logo on	admin	fr	Montrer le logo 'Powered by' sur
 show access log	admin	fr	Montrer les journaux d'accès
 show as optional, but required once user has it setup	admin	fr	Montrer comme facultatif, mais requis une fois que l'utilisateur l'a configuré
 show as required, but only once user has it setup	admin	fr	Afficher selon les besoins, mais seulement une fois que l'utilisateur l'a configuré
@@ -883,7 +862,6 @@ ssl	admin	fr	SSL
 standard	admin	fr	Standard
 standard identity	admin	fr	Identité standard
 standard imap server	admin	fr	Serveur IMAP standard
-standard pop3 server	admin	fr	Serveur POP3 standard
 standard smtp-server	admin	fr	Serveur SMTP standard
 start	admin	fr	Début
 start testjob!	admin	fr	Démarrer le Travail de test!
@@ -896,7 +874,6 @@ submit statistic information	admin	fr	Envoyer les informations statistiques
 submit the search string	admin	fr	Soumettre la chaîne de recherche
 submit to egroupware.org	admin	fr	Soumettre à egroupware.org
 subtype	admin	fr	Sous-type
-subversion checkout	admin	fr	Check out subversion
 success	admin	fr	Réussi
 successful connected to %1 server%2.	admin	fr	Connexion réussie sur %1 serveur%2.
 successfull, but no refresh-token received!	admin	fr	Réussi, mais AUCUN refresh-token reçu !
@@ -937,7 +914,6 @@ this is a mail account for all users!	admin	fr	Ceci est un compte mail pour TOUS
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!<br>Le compte sera supprimé pour TOUS les utilisateurs!<br>Vous êtes vraiment sûr de vouloir faire ça ?
 this key used in the html code your site serves to users.	admin	fr	Cette clé est utilisée dans le code HTML que votre site sert aux utilisateurs.
 this php has no imap support compiled in!!	admin	fr	Ce PHP n'est pas compilé avec le support de l'IMAP !
-this secret key used for communication between your site and google. be sure to keep it a secret.	admin	fr	Cette clé secrète est utilisée pour la communication entre votre site et Google. Veillez à ce qu'elle reste secrète.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)
 times	admin	fr	Heures
@@ -962,9 +938,6 @@ type '%1' already exists !!!	admin	fr	Le type '%1' existe déjà !
 type of customfield	admin	fr	Type de champ personnalisé
 type of field	admin	fr	Type de champ
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fr	Sous windows vous devez installer les services asynchrones %1manuellement%2 ou utiliser le mode "fallback". "Fallback" veut dire que les travaux ne sont vérifiés qu'après chaque affichage de page!
-unexpected response from server to authenticate command.	admin	fr	Réponse inattendue du serveur à la commande AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	fr	Réponse inattendue du serveur à la réponse Digest-MD5.
-unexpected response from server to login command.	admin	fr	Réponse inattendue du serveur à la commande LOGIN.
 unknown account: %1 !!!	admin	fr	Compte inconnu: %1 !
 unknown command %1!	admin	fr	Commande inconnue %1 !
 unknown imap response from the server. server responded: %s	admin	fr	Réponse IMAP inconnue du serveur. Le serveur a répondu: %s

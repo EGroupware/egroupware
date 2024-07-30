@@ -247,6 +247,7 @@ exclude weekend	calendar	bg	Изключване на уикенда
 execute a further action for this entry	calendar	bg	Изпълни допълнително за това събитие
 existing links	calendar	bg	Съществуващи връзки
 exists	calendar	bg	Съществува
+explicit dates	calendar	bg	Изрични събития
 export definition to use for nextmatch export	calendar	bg	Определение за експорт, което да се използва за nextmatch export
 exports events from your calendar in ical format.	calendar	bg	Експортира събития от вашия календар в iCal формат.
 exports events from your calendar into a csv file.	calendar	bg	Експортира събития от вашия календар в CSV файл.
@@ -521,8 +522,6 @@ search string for the events	calendar	bg	Редица за търсене на �
 select a %1	calendar	bg	Изберете %1
 select a color for this calendar	calendar	bg	Изберете цвят за календара
 select a time	calendar	bg	Изберете време
-select an action	calendar	bg	Изберете действие
-select an action...	calendar	bg	Изберете действие ...
 select multiple contacts for a further action	calendar	bg	Избор на множество контакти
 select resources	calendar	bg	Изберете ресурси
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	bg	Изберете дали статуса на участника да се възстанови до "непознат"(unknown), ако събитието бъде изместено за по-късно. За външни лица винаги се връща статуса на участника до "непознат".

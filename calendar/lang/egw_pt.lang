@@ -142,13 +142,18 @@ event deleted	calendar	pt	Evento eliminado
 event details follow	calendar	pt	Seguem detalhes do evento
 event saved	calendar	pt	Evento guardado
 event will occupy the whole day	calendar	pt	Evento de dia inteiro
+every user can invite other users and groups	admin	pt	Cada utilizador pode convidar outros utilizadores e grupos
 exception	calendar	pt	Excepção
+exception created - you can now edit or delete it	calendar	pt	Exceção criada - pode agora editá-la ou eliminá-la.
 exceptions	calendar	pt	Excepções
 exclude weekend	calendar	pt	Excluir fim de semana
 execute a further action for this entry	calendar	pt	Executar uma ação adicional para esta entrada
 existing links	calendar	pt	Ligações existentes
 exists	calendar	pt	Existe
+explicit dates	calendar	pt	Eventos explícitos
 export definition to use for nextmatch export	calendar	pt	Definição Exportar para usar para exportação nextmatch
+exports events from your calendar in ical format.	calendar	pt	Exporta eventos do seu calendário no formato iCal.
+exports events from your calendar into a csv file.	calendar	pt	Exporta eventos do seu calendário para um ficheiro CSV.
 extended	calendar	pt	Avançado
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
 favorites	calendar	pt	Favoritos
@@ -322,8 +327,6 @@ saves the event ignoring the conflict	calendar	pt	Guarda o evento ignorando o co
 scheduling conflict	calendar	pt	Conflito de agendamento
 select a %1	calendar	pt	Seleccionar um %1
 select a time	calendar	pt	Seleccionar uma hora
-select an action	calendar	pt	Selecione uma ação
-select an action...	calendar	pt	Selecione uma ação ...
 select multiple contacts for a further action	calendar	pt	Selecionar vários contatos para uma nova acção
 select resources	calendar	pt	Seleccionar fontes
 select who should get the alarm	calendar	pt	Seleccionar quem deve ser avisado

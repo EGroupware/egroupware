@@ -173,6 +173,7 @@ event deleted	calendar	sv	Händelsen raderad.
 event details follow	calendar	sv	Händelse detaljer följer
 event saved	calendar	sv	Händelsen sparad.
 event will occupy the whole day	calendar	sv	Heldags aktivitet
+events	common	sv	Händelser
 every user can invite other users and groups	admin	sv	Varje användare kan bjuda an andra användare och grupper
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	sv	Exempel {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - sök i fältet "n_prefix", efter "Mr", om det hittas, skriv Hello Mr., annars skriv Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	sv	Exempel {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exempel: Herr Dr. James Miller
@@ -185,8 +186,12 @@ exclude weekend	calendar	sv	Uteslut helg
 execute a further action for this entry	calendar	sv	Utför fler åtgärder för posten
 existing links	calendar	sv	Nuvarande länkar
 exists	calendar	sv	Existerar
+explicit dates	calendar	sv	Explicita händelser
+exports events from your calendar in ical format.	calendar	sv	Exporterar händelser från din kalender i iCal-format.
+exports events from your calendar into a csv file.	calendar	sv	Exporterar händelser från din kalender till en CSV-fil.
 extended	calendar	sv	Utökad
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sv	Utökade uppdateringar inkluderar alltid all händelse info. iCal kan importeras av vissa andra applikationer.
+favorites	calendar	sv	Favoriter
 fieldseparator	calendar	sv	Fältavskiljare
 filemanager	calendar	sv	Filhanterare
 filename	calendar	sv	Filnamn
@@ -376,7 +381,6 @@ saves the event ignoring the conflict	calendar	sv	Spara händelsen och ignorera 
 scheduling conflict	calendar	sv	Schema konflikt
 select a %1	calendar	sv	Välj %1
 select a time	calendar	sv	Välj en tid
-select an action	calendar	sv	Välj en aktion
 select multiple contacts for a further action	calendar	sv	Välj flera kontakter för åtgärd
 select resources	calendar	sv	Välj resurser
 select who should get the alarm	calendar	sv	Välja mottagare av larm

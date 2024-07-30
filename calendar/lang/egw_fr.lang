@@ -247,6 +247,7 @@ exclude weekend	calendar	fr	Exclure le week-end
 execute a further action for this entry	calendar	fr	Exécuter une action supplémentaire pour cette entrée
 existing links	calendar	fr	Liens existants
 exists	calendar	fr	Existe
+explicit dates	calendar	fr	Événements explicites
 export definition to use for nextmatch export	calendar	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports events from your calendar in ical format.	calendar	fr	Exporter les événements de votre calendrier au format iCal
 exports events from your calendar into a csv file.	calendar	fr	Exporter les événements de votre calendrier au format CSV
@@ -523,8 +524,6 @@ search string for the events	calendar	fr	Chaîne de recherche sur les événemen
 select a %1	calendar	fr	Sélectionnez un %1
 select a color for this calendar	calendar	fr	Sélectionner une couleur pour le calendrier
 select a time	calendar	fr	Sélectionnez une heure
-select an action	calendar	fr	Sélectionner une action
-select an action...	calendar	fr	Sélectionner une action ...
 select multiple contacts for a further action	calendar	fr	Sélectionner plusieurs contacts pour une même action
 select resources	calendar	fr	Sélectionner les ressources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fr	Sélectionner si vous souhaitez le statut du participant remis à "Pas de réponse", si un événement est déplacé plus tard
@@ -666,7 +665,7 @@ use weekday start	calendar	fr	Utiliser le début de semaine
 user or group	calendar	fr	Utilisateur ou groupe
 user selectable css file for the calendar setup	calendar	fr	Fichier css sélectionnable pour le setup du calendrier
 users + groups: inviting both always requires an invite grant	admin	fr	Utilisateurs + groupes : inviter les deux nécessite une autorisation d'invitation
-using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur
+using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur.
 utilities	calendar	fr	Utilitaires
 view exception	calendar	fr	Voir l'exception
 view series	calendar	fr	Voir la série

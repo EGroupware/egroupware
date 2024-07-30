@@ -120,12 +120,18 @@ error: the entry has been updated since you opened it for editing!	calendar	ko	�
 event deleted	calendar	ko	이벤트 삭제됨
 event details follow	calendar	ko	** 다음은 이벤트-설명
 event saved	calendar	ko	이벤트 저장됨
+every user can invite other users and groups	admin	ko	모든 사용자가 다른 사용자 및 그룹을 초대할 수 있습니다.
 exception	calendar	ko	예외
+exception created - you can now edit or delete it	calendar	ko	예외 생성 - 이제 예외를 편집하거나 삭제할 수 있습니다.
 exceptions	calendar	ko	예외
 exclude weekend	calendar	ko	주말 제외
 existing links	calendar	ko	기존링크
+explicit dates	calendar	ko	명시적 이벤트
+exports events from your calendar in ical format.	calendar	ko	캘린더에서 이벤트를 iCal 형식으로 내보냅니다.
+exports events from your calendar into a csv file.	calendar	ko	캘린더의 이벤트를 CSV 파일로 내보냅니다.
 extended	calendar	ko	확장
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ko	완전한 이벤트-설명을 항상 포함하는 확장. iCal은 특정 다른 일정 응용프로그램으로 가져오기를 할수 있습니다.
+favorites	calendar	ko	즐겨찾기
 fieldseparator	calendar	ko	필드구분자
 filename	calendar	ko	파일명
 filename of the download	calendar	ko	내려받을 파일명

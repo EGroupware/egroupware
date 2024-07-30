@@ -36,15 +36,23 @@
 access token revoked.	admin	lt	Prieigos žetonas atšauktas.
 account	admin	lt	Paskyra
 acl csv export	admin	lt	ACL CSV eksportas
+copy of	admin	lt	Kopija
 custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
+custom egroupware bold web font as woff2 file	admin	lt	Custom EGroupware Bold žiniatinklio šriftas kaip woff2 failas
+custom egroupware web font as woff2 file	admin	lt	Custom EGroupware žiniatinklio šriftas kaip woff2 failas
+custom fields tab	admin	lt	Pasirinktinių laukų skirtukas
+displayed length of input field (set rows=1 to limit length)	admin	lt	Rodomas įvesties lauko ilgis (jei norite apriboti ilgį, nustatykite rows=1)
+internal name max. 64 chars	admin	lt	Vidinis pavadinimas maks. 64 ženklai
+invalid format, must end in a group of digits e.g. %1 or %2	admin	lt	Netinkamas formatas, turi baigtis skaitmenų grupe, pvz., %1 arba %2
 last %1 logins	admin	lt	Paskutiniai %1 prisijungimai
 last %1 logins for %2	admin	lt	Paskutiniai %1 prisijungimai prie %2
 last time read	admin	lt	Paskutinį kartą perskaitytas
 last updated	admin	lt	Paskutinį kartą atnaujinta
 leave empty for no quota	admin	lt	Palikite tuščią, jei kvotos nėra
 leave empty to use oauth, if supported	admin	lt	Palikite tuščią, jei norite naudoti OAuth, jei palaikoma
+name of tab to create and show field in	admin	lt	Skirtuko, kuriame kuriamas ir rodomas laukas, pavadinimas
 oauth authentiction	admin	lt	OAuth autentiškumo nustatymas
 offer to installing egroupware as mail-handler	admin	lt	Pasiūlymas įdiegti EGroupware kaip pašto tvarkytuvą
 one day	admin	lt	Vieną dieną
@@ -55,5 +63,10 @@ other security configuration	admin	lt	Kita saugumo konfigūracija
 own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
+select accounts for which the custom field should be readonly	admin	lt	Pasirinkite sąskaitas, kurių pasirinktinis laukas turėtų būti tik skaitymui
+select accounts for which the custom field should be visible	admin	lt	Pasirinkite sąskaitas, kuriose pasirinktinis laukas turėtų būti matomas
+serial number	admin	lt	Serijinis numeris
 total records	admin	lt	Iš viso įrašų
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	lt	naudokite šias parinktis:\nnoVfsSelect=1\nmime=application/pdf arba /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 user-agent	admin	lt	User-Agent
+you can set an initial value, which gets incremented every time a new serial get generated	admin	lt	galite nustatyti pradinę vertę, kuri didinama kiekvieną kartą, kai generuojama nauja serija

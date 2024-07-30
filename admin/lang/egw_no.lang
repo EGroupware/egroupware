@@ -28,10 +28,9 @@
 (default no, leave it off if you dont use it)	admin	no	Standard nei, la den være av dersom du ikke bruker den
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	no	(imapclass må støtte denne funksjonen ved å spørre etter den tilsvarende konfigurasjonsverdien og sende den som standardkvote til IMAP-serveren)
 (no subject)	admin	no	(uten emne)
-(stored password will not be shown here)	admin	no	(Lagret passord blir ikke vist her)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	no	For å installere nye applikasjoner, bruk <br><a href="setup/" target="setup">Oppsett</a> [Behandle applikasjoner]
+(stored password will not be shown here)	admin	no	Lagret passord blir ikke vist her!
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	no	For å installere nye applikasjoner, bruk <br><a href="setup/" target="setup">Oppsett</a> [Behandle applikasjoner]!
 access token revoked.	admin	no	Tilgangstoken tilbakekalt.
-accesslog and bruteforce defense	admin	no	AccessLog og BruteForce forsvar
 account	admin	no	Konto
 account active	admin	no	Aktiv konto
 account has been created	common	no	Konto er opprettet
@@ -40,6 +39,7 @@ account has been updated	common	no	Konto er oppdatert
 account list	admin	no	Kontoliste
 account permissions	admin	no	Kontotillatelser
 account preferences	admin	no	Kontopreferanser
+account saved.	admin	no	Konto lagret.
 acl csv export	admin	no	ACL CSV-eksport
 acl manager	admin	no	ACL leder
 acl rights	common	no	ACL rettigheter
@@ -63,6 +63,8 @@ add new application	admin	no	Legg til ny applikasjon
 add peer server	admin	no	Legg til Peer Tjener
 add profile	admin	no	Legg til profil
 add sub-category	admin	no	Legg til underkategori
+add user	admin	no	Legg til bruker
+add user or group	admin	no	Legg til bruker eller gruppe
 admin dn	admin	no	Admin DN
 admin email	admin	no	Admin E-post
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	no	Admin e-post adresser (komma-separert) som blir varslet om blokkering (ingen varsler hvis tom)
@@ -72,7 +74,8 @@ admin username	admin	no	Admin brukernavn
 administration	admin	no	Administrasjon
 admins	admin	no	Administratorer
 advanced options	admin	no	Avanserte valg
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en IP blir sperret (standard 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	no	Etter hvor mange mislykkede påloggingsforsøk en konto skal blokkeres. Standard = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	no	Etter hvor mange mislykkede forsøk på å logge inn en IP blir sperret. Standard = 3
 aliases	admin	no	Alias
 all applications	admin	no	Samtlige programmer
 all categories	admin	no	Alle kategorier
@@ -85,11 +88,15 @@ anonymous user (not shown in list sessions)	admin	no	Anonym Bruker (vises ikke i
 appearance	admin	no	Visning
 application	admin	no	Applikasjon
 application name	admin	no	Applikasjonsnavn
+application passwords	admin	no	Applikasjonspassord
 application title	admin	no	Applikasjonstittel
 applications	admin	no	Applikasjoner
+applications available on mobile devices	admin	no	Programmer som er tilgjengelige på mobile enheter
 applications list	admin	no	Applikasjoneliste
+applies the changes	admin	no	Bruker endringene
 apply the changes	admin	no	Oppdater endringene
-are you sure you want to delete the application %1 ?	admin	no	Er du sikker på at du vil slette applikasjon %1 ?
+archive: zip or tar	admin	no	Arkiv: ZIP eller tar
+are you sure you want to delete the application %1 ?	admin	no	Er du sikker på at du vil slette applikasjon %1?
 are you sure you want to delete this account ?	admin	no	Er du sikker på at du vil slette denne kontoen?
 are you sure you want to delete this application ?	admin	no	Er du sikker på at du vil slette denne applikasjonen?
 are you sure you want to delete this category ?	common	no	Er du sikker på at du vil slette denne kategorien?
@@ -100,27 +107,40 @@ are you sure you want to kill this session ?	admin	no	Er du sikker på at du vil
 async services last executed	admin	no	Asynkron tjeneste sist utført
 asynchronous timed services	admin	no	Asynkrone tidsinnstilte tjenester
 asyncservices not yet installed or other error (%1) !!!	admin	no	Asynkrone tjenester er ikke installert, eller annen feil er oppstått (%1)!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	no	Forsøk å bruke korrekt MIMEtype for FTP istedenfor standard 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	no	Forsøk å bruke korrekt MIMEtype for FTP istedenfor standard 'application/octet-stream'.
 authentication / accounts	admin	no	Autorisasjon / Kontoer
 auto create account records for authenticated users	admin	no	Opprett kontoer for autoriserte brukere automatisk
+available placeholders	admin	no	Tilgjengelige plassholdere
 back to the list	admin	no	Tilbake til listen
+bad login name or password.	admin	no	Feil påloggingsnavn eller passord.
 bi-dir passthrough	admin	no	bi-mappe gjennomgang
 bi-directional	admin	no	bi-direksjon
 bottom	admin	no	Bunn
 calculate next run	admin	no	Kalkuler neste gjennomgang
 can change password	admin	no	Kan endre passord
+cancel changes	admin	no	Avbryt endringer
 cancel testjob!	admin	no	Avbryt TestJob!
 categories list	admin	no	Kategoriliste
 category %1 has been saved !	admin	no	Kategori %1 er lagret
+category '%1' deleted	admin	no	Kategori '%1' slettet
+category deleted.	admin	no	Kategori slettet.
 category list	admin	no	Kategoriliste
+category saved.	admin	no	Kategori lagret.
+certificate	admin	no	Sertifikat
+certificate details	admin	no	Sertifikatdetaljer
+certificate validation in days	admin	no	Sertifikatvalidering i dager
 change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
 change login screen message	admin	no	Endre melding på hovedside
+change owner	admin	no	Endre eier
 check ip address of all sessions	admin	no	Sjekk alle sesjoners IP-adresse
 check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b> til %2 for %3
 click to select a color	admin	no	Trykk for å velge farge
 color	admin	no	Farge
+configuration	admin	no	Konfigurasjon
+configuration saved.	admin	no	Konfigurasjonen er lagret.
 continue	admin	no	Fortsette
+copy of	admin	no	Kopi av
 country	admin	no	Land
 country selection	admin	no	Velg land
 create group	admin	no	Lag Gruppe
@@ -130,9 +150,12 @@ crontab only (recomended)	admin	no	Kun crontab (anbefalt)
 custom 1	admin	no	Egendefinert 1
 custom 2	admin	no	Egendefinert 2
 custom 3	admin	no	Egendefinert 3
+custom egroupware bold web font as woff2 file	admin	no	Egendefinert EGroupware Bold-nettfont som woff2-fil
+custom egroupware web font as woff2 file	admin	no	Tilpasset EGroupware-nettfont som woff2-fil
 custom fields	admin	no	Egendefinerte Felter
+custom fields tab	admin	no	Fanen Egendefinerte felt
+custom translation	admin	no	Egendefinerte oversettelser
 cyrus imap server	admin	no	Cyrus IMAP tjener
-cyrus imap server administration	admin	no	Cyrys IMAP tjeneradministrasjon
 data	admin	no	Data
 day	admin	no	Dag
 day of week<br>(0-6, 0=sun)	admin	no	Ukedag<br>(0-6, 0=Søn)
@@ -175,12 +198,12 @@ description can not exceed 255 characters in length !	admin	no	Beskrivelse kan i
 determines the order the fields are displayed	admin	no	Avgjør rekkefølge feltene vises i
 disable	admin	no	Deaktiver
 disable "auto completion" of the login form	admin	no	Deaktiver "autofullfør" i login vindu
-disable wysiwyg-editor	admin	no	Deaktiver WYSIWYG-editor
 disabled (not recomended)	admin	no	Deaktivert (ikke anbefalt)
 display	admin	no	Vis
+displayed length of input field (set rows=1 to limit length)	admin	no	Vist lengde på inndatafelt (sett rader=1 for å begrense lengden)
 do not delete the category and return back to the list	admin	no	IKKE slett denne kategorien og returner til listen
 do you also want to delete all global subcategories ?	admin	no	Vil du også slette alle globale kategorier?
-do you really want to delete this profile	admin	no	Ønsker du virkelig å slette denne profilen
+do you really want to delete this profile	admin	no	Ønsker du virkelig å slette denne profilen?
 do you want to delete all global subcategories ?	admin	no	Vil du slette alle globale underkategorier?
 do you want to move all global subcategories one level down ?	admin	no	Vil du flytte alle globale underkategorier ett steg ned?
 domainname	admin	no	Domenenavn
@@ -202,28 +225,22 @@ edit user account	admin	no	Rediger brukerkonto
 email account active	admin	no	E-mailkonto aktiv
 email address	admin	no	E-mailadresse
 enable	admin	no	Muliggjør
-enable cyrus imap server administration	admin	no	Tillat Cyrus IMAP-tjener administrasjon
 enable debug-messages	admin	no	Aktiver debug-meldinger
 enable sieve	admin	no	Tillat Sieve
-enable the soap service	admin	no	Aktiver SOAP-service
-enable the xmlrpc service	admin	no	Aktiver XML-RPC-service
-enabled - hidden from navbar	admin	no	Aktivisert - Gjemt fra navigasjonslinje
-enabled - popup window	admin	no	Aktivisert - popup vindu
 enter a description for the category	admin	no	Angi en beskrivelse for kategorien
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	no	Angi noe tilfeldig tekst for app_session <br>kryptering (krever mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	no	Angi noe tilfeldig tekst for app_session<br>kryptering (krever mcrypt)
 enter the background color for the login page	admin	no	Angi bakrunnsfarge for loginside
 enter the background color for the site title	admin	no	Angi bakgrunnsfarge for sidetittel
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	no	Angi full sti for midlertidige filer. <br>Eksempler: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	no	Angi full sti for bruker- og gruppefiler. <br>Eksempler: /filer, E:\FILER
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	no	Angi full sti for midlertidige filer.<br>Eksempler: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	no	Angi full sti for bruker- og gruppefiler.<br>Eksempler: /filer, E:\FILER
 enter the hostname of the machine on which this server is running	admin	no	Angi maskinnavnet til maskinen denne serveren kjører på
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Angi URL'en for EGroupware. <br>Eksempel: https://egw.domene.com/egroupware   eller   /egroupware<br><b>Ingen avsluttende skråstrek</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Angi URL'en for EGroupware.<br>Eksempel: https://egw.domene.com/egroupware eller /egroupware<br><b>Ingen avsluttende skråstrek</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	no	Skriv inn søkestrengen. For å vise alle innlegg, tøm dette feltet og trykk på SEND knappen igjen
 enter the site password for peer servers	admin	no	Skriv inn site passord for peer tjenere
 enter the site username for peer servers	admin	no	Skriv inn sitens brukernavn for peer tjenere
 enter the title for your site	admin	no	Skriv inn sitens tittel
 enter the title of your logo	admin	no	Skriv inn logoens tittel
 enter the url where your logo should link to	admin	no	Skriv inn URL'en logoen skal linke til
-enter your default ftp server	admin	no	Skriv inn standard FTP server
 enter your default mail domain ( from: user@domain )	admin	no	Skriv inn ditt standard epost domene ( Fra: bruker@domene )
 enter your default mail domain (from: user@domain)	admin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
 enter your http proxy server	admin	no	Skriv inn HTTP proxy tjener
@@ -237,14 +254,14 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	no	Feil: Fant ikke %1, eller annen feil
 event details follow	admin	no	Hendelses Detaljer Følger
 expires	admin	no	Går ut
-explanation of ldapman	admin	no	Denne modulen er så langt testet med POSTFIX, LDAP, Courier.IMAP og trenger skjemaene CORE og QMAIL (OID7914).  Flere detaljer om bruk og konfigurasjon av system finner du i README.ldapman som er plassert i dok.mappen på Admin.
+exports users into a csv file.	admin	no	Eksporterer brukere til en CSV-fil.
 failed to change password.	admin	no	Passordet kunne ikke endres.
-fallback (after each pageview)	admin	no	Tilbakefall (etter hver sidevisning)
+fallback (after each pageview)	admin	no	Tilbakefall (etter hver sidevisning).
 false	admin	no	Falsk
 file space	admin	no	Filstørrelse
 file space must be an integer	admin	no	Filstørrelse på være en integer
 for the times above	admin	no	for tiden over
-for the times below (empty values count as '*', all empty = every minute)	admin	no	For tiden under (tomme verdier teller som '*', alle tomme = hvert minutt)
+for the times below (empty values count as '*', all empty = every minute)	admin	no	For tiden under (tomme verdier teller som '*', alle tomme = hvert minutt).
 force selectbox	admin	no	Tving frem selectbox
 forward also to	admin	no	Videresend også til
 forward email's to	admin	no	Videresend e-mailer til
@@ -253,9 +270,9 @@ full name	admin	no	Fullt Navn
 general	admin	no	Generell
 global categories	common	no	Globale kategorier
 group ?	admin	no	Gruppe?
-group has been added	common	no	Gruppen er lagt til
-group has been deleted	common	no	Gruppen er slettet
-group has been updated	common	no	Gruppen er oppdatert
+group has been added	common	no	Gruppen er lagt til.
+group has been deleted	common	no	Gruppen er slettet.
+group has been updated	common	no	Gruppen er oppdatert.
 group list	admin	no	Gruppeliste
 group manager	admin	no	Gruppeleder
 group name	admin	no	Gruppe Navn
@@ -264,25 +281,25 @@ home directory	admin	no	Startmappe
 home screen message	admin	no	Melding på hovedside
 host information	admin	no	Vertsinformasjon
 hour<br>(0-23)	admin	no	Time <br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	no	Hvor mange dager skal innhold være i tilgangsloggen før de blir slettet (standard 90)?
-how many minutes should an account or ip be blocked (default 1) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	no	Hvor mange dager skal innhold være i tilgangsloggen før de blir slettet (standard 90)
+how many minutes should an account or ip be blocked (default 1) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)
 icon	admin	no	Ikon
 idle	admin	no	Idle
 if no acl records for user or any group the user is a member of	admin	no	Dersom ingen ACL post for bruker eller noen gruppe bruker medlem av
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	no	Om LDAP används, vill du hantera attribut för hemktalog och programskal?
 imap admin password	admin	no	IMAP Administrasjonspassord
 imap admin user	admin	no	IMAP Administrasjonsbruker
-imap c-client version < 2001	admin	no	IMAP C-klient versjon < 2001
 imap server	admin	no	IMAP Tjener
 imap server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for IMAP tjener
 imap server logintyp	admin	no	IMAP Tjener påloggingstype
 imap server port	admin	no	IMAP Tjenerport
-imap/pop3 server name	admin	no	IMAP/POP3 tjenernavn
 in mbyte	admin	no	i MByte
 install crontab	admin	no	Installer crontab
 installed applications	common	no	Installerte program
 installed crontab	admin	no	Installert crontab
 interface	admin	no	Brukergrensesnitt
+internal name max. 64 chars	admin	no	Internt navn maks. 64 tegn
+invalid format, must end in a group of digits e.g. %1 or %2	admin	no	Ugyldig format, må ende på en sifferkombinasjon, f.eks. %1 eller %2
 ip	admin	no	IP
 jobs	admin	no	Jobber
 kill	admin	no	Avslutt
@@ -296,7 +313,7 @@ last updated	admin	no	Sist oppdatert
 ldap accounts context	admin	no	LDAP konto kontekst
 ldap basedn	admin	no	LDAP base DN
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	no	LDAP Prefiks for standard hjemmekatalog (f.eks /home for /home/username)
-ldap default shell (e.g. /bin/bash)	admin	no	LDAP Standard skall (f.eks.  /bin/bash)
+ldap default shell (e.g. /bin/bash)	admin	no	LDAP Standard skall (f.eks. /bin/bash)
 ldap encryption type	admin	no	LDAP krypteringstype
 ldap groups context	admin	no	LDAP gruppe kontekst
 ldap host	admin	no	LDAP vert
@@ -310,8 +327,8 @@ ldap server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for LDAP
 ldap settings	admin	no	LDAP Instillinger
 leave empty for no quota	admin	no	La stå tomt for ingen begrensning.
 leave empty to use oauth, if supported	admin	no	La det stå tomt for å bruke OAuth, hvis dette støttes
-leave the category untouched and return back to the list	admin	no	Forlat kategorien uberørt og returner tilbake til listen
-leave the group untouched and return back to the list	admin	no	Forlat gruppen uberørt og returner tilbake til listen
+leave the category untouched and return back to the list	admin	no	Forlat kategorien uberørt og returner tilbake til listen.
+leave the group untouched and return back to the list	admin	no	Forlat gruppen uberørt og returner tilbake til listen.
 leave without saveing the entry	admin	no	Avslutt uten å lagre innslaget
 leaves without saveing	admin	no	Avslutt uten å lagre
 length<br>rows	admin	no	Lengde<br>Kolonner
@@ -331,27 +348,28 @@ maximum account id (e.g. 65535 or 1000000)	admin	no	Maksimal kontoID (f.eks. 655
 members	admin	no	Medlemmer
 message has been updated	admin	no	Meldingen er oppdatert
 method	admin	no	Metode
-minimum account id (e.g. 500 or 100, etc.)	admin	no	Minimum kontoident (f.eks. 100, 500 osv.)
+minimum account id (e.g. 500 or 100, etc.)	admin	no	Minimum kontoident (f.eks. 1000, 500 osv.)
 minute	admin	no	Minutt
 mode	admin	no	Modus
 modified	admin	no	Endret
 month	admin	no	Måned
 name must not be empty !!!	admin	no	Navn kan ikke være tomt!
 name of organisation	admin	no	Navn på organisasjon
+name of tab to create and show field in	admin	no	Navn på fanen som feltet skal opprettes og vises i
 new group name	admin	no	Nytt gruppe navn
 new name	admin	no	Nytt navn
-new password [ leave blank for no change ]	admin	no	Nytt passord [ Ingenting hvis ingen forandring ]
+new password [ leave blank for no change ]	admin	no	Nytt passord (Ingenting hvis ingen forandring)
 next run	admin	no	Neste kjøring
-no algorithms available	admin	no	Ingen algoritmer tilgjengelig
+no algorithms available	admin	no	Ingen algoritmer tilgjengelig!
 no alternate email address	admin	no	Ingen alternativ e-mailadresse
 no forwarding email address	admin	no	Ingen e-mailadresse for videresending
-no jobs in the database !!!	admin	no	Ingen jobber i databasen
-no login history exists for this user	admin	no	Ingen login historikk for denne brukeren
-no matches found	admin	no	Ingen treff funnet
-no modes available	admin	no	Ingen modus tilgjengelig
-no permission to add groups	admin	no	Ikke tilgang til å legge til grupper
-no permission to add users	admin	no	Ikke tilgang til å legge til brukere
-no permission to create groups	admin	no	Ikke tilgang til å opprette grupper
+no jobs in the database !!!	admin	no	Ingen jobber i databasen!
+no login history exists for this user	admin	no	Ingen login historikk for denne brukeren!
+no matches found	admin	no	Ingen treff funnet!
+no modes available	admin	no	Ingen modus tilgjengelig!
+no permission to add groups	admin	no	Ikke tilgang til å legge til grupper!
+no permission to add users	admin	no	Ikke tilgang til å legge til brukere!
+no permission to create groups	admin	no	Ikke tilgang til å opprette grupper!
 note: ssl available only if php is compiled with curl support	admin	no	Note: SSL tilgjengelig bare dersom PHP er kompilert med Curl-support.
 number of row for a multiline inputfield or line of a multi-select-box	admin	no	Antall rekker i multi-linje felter eller linjer i multi-valg bokser
 one month	admin	no	En måned
@@ -364,7 +382,6 @@ path information	admin	no	Sti informasjon
 peer server list	admin	no	Peer tjenerliste
 peer servers	admin	no	Peer tjenere
 percent of users that logged out	admin	no	Prosent av brukere som logget ut
-percent this user has logged out	admin	no	Prosent denne brukeren har logget ut
 permission denied	admin	no	Ingen tilgang
 permission denied !!!	admin	no	Adgang nektet!
 permission denied!!!	admin	no	Adgang nektes!
@@ -375,8 +392,6 @@ please enter a name	admin	no	Vennligst angi en navn
 please enter a name for that server !	admin	no	Vennligst angi et navn for den tjeneren!
 please run setup to become current	admin	no	Vennligst kjør setup for å bli oppdatert
 please select	admin	no	Vennligst velg
-pop3 server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for POP3 tjener
-pop3 server port	admin	no	POP3 Tjenerport
 postfix with ldap	admin	no	Postfix med LDAP
 preferences	admin	no	Preferanser
 primary group	admin	no	Primærgruppe
@@ -389,11 +404,12 @@ re-enter password	admin	no	Skriv inn passord igjen
 read this list of methods.	admin	no	Les denne listen av metoder.
 register application hooks	admin	no	Registrer program hooks
 remove	admin	no	Fjern
-remove all users from this group	admin	no	Fjern alle brukere fra denne gruppen
-remove all users from this group ?	admin	no	Fjerne alle brukere fra denne gruppen?
-route all mails to	admin	no	Send alle mail til
+rights	admin	no	Rettigheter
 rows	admin	no	Rader
+rpm or debian package	admin	no	RPM- eller deb-pakke
 run asynchronous services	admin	no	Kjør asonkrone serviser
+save as default	admin	no	Lagre som standard
+save changes	admin	no	Lagre endringer
 save the category	admin	no	Lagre kategorien
 save the category and return back to the list	admin	no	Lagre kategorien og returner til listen
 saves the changes made and leaves	admin	no	Lagrer endringene og lukker
@@ -403,16 +419,18 @@ search categories	admin	no	Søk kategorier
 search groups	admin	no	Søk grupper
 search peer servers	admin	no	Søk peer servere
 security	admin	no	Sikkerhet
+select accounts for which the custom field should be readonly	admin	no	Velg kontoer som det egendefinerte feltet skal være skrivebeskyttet for
+select accounts for which the custom field should be visible	admin	no	Velg kontoer som det egendefinerte feltet skal være synlig for
 select group managers	admin	no	Velg gruppeleder
 select permissions this group will have	admin	no	Velg tillatelser for denne gruppen
-select the parent category. if this is a main category select no category	admin	no	Velg overordnet kategori.  Dersom dette er hovedkategori velg NO CATEGORY
-select type of imap/pop3 server	admin	no	Velg type for IMAP/POP3 Tjener
+select the parent category. if this is a main category select no category	admin	no	Velg overordnet kategori. Dersom dette er hovedkategori velg NO CATEGORY.
 select type of smtp server	admin	no	Velg type SMTP Tjener
 select users for inclusion	admin	no	Velg brukere som skal inkluderes
 select where you want to store/retrieve filesystem information	admin	no	Velg hvor du ønsker å lagre / hente informasjon om filsystemet.
 select where you want to store/retrieve user accounts	admin	no	Velg hvor du ønsker å lagre / hente brukerkonti.
-select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	no	Velg hvilken plass dette prorgrammet skal ha på navigeringslinje, lavest til høyest (fra venstre)
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	no	Velg hvilken plass dette prorgrammet skal ha på navigeringslinje, lavest til høyest (fra venstre).
 selectbox	admin	no	Valgboks
+serial number	admin	no	Serienummer
 server %1 has been updated	admin	no	Server %1 ble oppdatert
 server list	admin	no	Server liste
 server password	admin	no	Server passord
@@ -421,7 +439,6 @@ server url	admin	no	Tjener URL
 server username	admin	no	Tjener brukernavn
 set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
-show 'powered by' logo on	admin	no	Vis 'Powered by' logo på
 show access log	admin	no	Vis aksesslogg
 show current action	admin	no	Vis gjeldende aksjon
 show error log	admin	no	Vis feillogg
@@ -436,14 +453,13 @@ smtp settings	admin	no	SMTP innstillinger
 smtp-server hostname or ip address	admin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
 smtp-server port	admin	no	SMTP Tjenerport
 soap	admin	no	SOAP
-sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavnet er allerede i bruk
-sorry, the above users are still a member of the group %1	admin	no	Beklager, ovenstående bruker er fortsatt medlem av gruppe %1
-sorry, the follow users are still a member of the group %1	admin	no	Beklager, følgende brukere er fortsatt medlemmer av gruppe %1
+sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavnet er allerede i bruk.
+sorry, the above users are still a member of the group %1	admin	no	Beklager, ovenstående bruker er fortsatt medlem av gruppe %1.
+sorry, the follow users are still a member of the group %1	admin	no	Beklager, følgende brukere er fortsatt medlemmer av gruppe %1.
 sort the entries	admin	no	Sorter forekomstene
 ssl	admin	no	SSL
 standard	admin	no	Standard
 standard imap server	admin	no	Standard IMAP tjener
-standard pop3 server	admin	no	Standard POP3 tjener
 standard smtp-server	admin	no	Standard SMTP tjener
 start	admin	no	Start
 start testjob!	admin	no	Start testjobb!
@@ -451,27 +467,27 @@ submit changes	admin	no	Bekreft endringene
 submit the search string	admin	no	Bekreft søkestrengen
 template selection	admin	no	Valg av mal
 text entry	admin	no	Tekstfelt
-that application name already exists.	admin	no	Programnavnet er allerede i bruk
-that application order must be a number.	admin	no	Programrekkefølgen må være et nummer
-that loginid has already been taken	admin	no	Den loginID er opptatt
-that name has been used already	admin	no	Det navnet er allerede benyttet
+that application name already exists.	admin	no	Programnavnet er allerede i bruk.
+that application order must be a number.	admin	no	Programrekkefølgen må være et nummer.
+that loginid has already been taken	admin	no	Den loginID er opptatt.
+that name has been used already	admin	no	Det navnet er allerede benyttet.
 that server name has been used already !	admin	no	Det tjenernavnet er allerede benyttet!
 the api is current	admin	no	API er gjeldende
 the api requires an upgrade	admin	no	API trenger en oppgradering
-the groups must include the primary group	admin	no	Gruppen må inkludere primærgruppen
-the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme
-the loginid can not be more then 8 characters	admin	no	Brukernavn kan ikke være mer enn 8 karakterer
+the groups must include the primary group	admin	no	Gruppen må inkludere primærgruppen.
+the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme.
+the loginid can not be more then 8 characters	admin	no	Brukernavn kan ikke være mer enn 8 karakterer.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
 the testjob sends you a mail everytime it is called.	admin	no	Testjobben sender deg en mail hver gang den kalles.
 the text displayed to the user	admin	no	Teksten som vises til bruker
 the two passwords are not the same	admin	no	Passordene er ikke de sammme
 the users bellow are still members of group %1	admin	no	Brukerne nedenfor er fortsatt medlemmer av gruppe %1
-there already is a group with this name. userid's can not have the same name as a groupid	admin	no	Det er allerede en gruppe med dette navnet.  Brukerident kan ikke ha samme navn som en gruppeident.
-they must be removed before you can continue	admin	no	Disse må fjernes før du kan fortsette
-this application is current	admin	no	Programmet er gjeldende
-this application requires an upgrade	admin	no	Dette programmet trenger en oppdatering
+there already is a group with this name. userid's can not have the same name as a groupid	admin	no	Det er allerede en gruppe med dette navnet. Brukerident kan ikke ha samme navn som en gruppeident.
+they must be removed before you can continue	admin	no	Disse må fjernes før du kan fortsette.
+this application is current	admin	no	Programmet er gjeldende.
+this application requires an upgrade	admin	no	Dette programmet trenger en oppdatering.
 this category is currently being used by applications as a parent category	admin	no	Denne kategorien benyttes nå av programmer som en overordnet kategori.
-this php has no imap support compiled in!!	admin	no	PHP versjonen har ingen IMAP-støtte kompilert inn
+this php has no imap support compiled in!!	admin	no	PHP versjonen har ingen IMAP-støtte kompilert inn!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	no	Utløpstid for program session data i sekunder (standrad 86400 = 1 dag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	no	Utløpstid for sessions i sekunder (standard 14400 = 4 timer)
 times	admin	no	Ant. ganger
@@ -489,12 +505,13 @@ use default	admin	no	Bruk standard
 use ldap defaults	admin	no	Bruk LDAP standaroppsett
 use pure html compliant code (not fully working yet)	admin	no	Bruke ren HTML standard kode (ennå ikke helt funksjonelt)
 use smtp auth	admin	no	Bruk SMTP autentisering
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	no	bruk følgende alternativer:\nnoVfsSelect=1\nmime=application/pdf eller /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	no	Bruk tema
 use tls authentication	admin	no	Bruk TLS autentisering
 use tls encryption	admin	no	Bruk TLS kryptering
 user accounts	admin	no	Brukerkontoer
 user data	common	no	Brukerdata
-user for smtp-authentication (leave it empty if no auth required)	admin	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
+user for smtp-authentication (leave it empty if no auth required)	admin	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig).
 user groups	admin	no	Brukergrupper
 user-agent	admin	no	User-Agent
 userdata	admin	no	Brukerdata
@@ -509,21 +526,18 @@ view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
 virtual mail manager	admin	no	Virtuell Mail Manager
 who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
-would you like egroupware to cache the egw info array ?	admin	no	Ønsker du at EGroupware skal mellomlagre EGw infostreng ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	no	Ønsker du at EGroupware skal kontrollere for en ny versjon<br>når admin logges på?
-would you like egroupware to check for new application versions when admins login ?	admin	no	Ønsker du at EGroupware skal kontrollere for nye program når admin logger inn?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	no	Ønsker du automatisk å laste inn nye språkfiler (ved pålogging)?
-would you like to show each application's upgrade status ?	admin	no	Ønsker du å se hvert programs oppdateringsstatus?
 xml-rpc	admin	no	XML-RPC
-you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato?
-you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen.
-you must enter a group name.	admin	no	Du må registrere et gruppenavn
-you must enter a lastname	admin	no	Du må registrere et etternavn
-you must enter a loginid	admin	no	Du må registrere et påloggingsident
-you must enter an application name and title.	admin	no	Du må registrere programnavn og tittel
-you must enter an application name.	admin	no	Du må registrere et programnavn
-you must enter an application title.	admin	no	Du må registrere et programtittel
-you must select a file type	admin	no	Du må velge en filtype
+you can set an initial value, which gets incremented every time a new serial get generated	admin	no	kan du angi en startverdi, som økes hver gang en ny serie genereres
+you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato!
+you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen!
+you must enter a group name.	admin	no	Du må registrere et gruppenavn.
+you must enter a lastname	admin	no	Du må registrere et etternavn.
+you must enter a loginid	admin	no	Du må registrere et påloggingsident.
+you must enter an application name and title.	admin	no	Du må registrere programnavn og tittel.
+you must enter an application name.	admin	no	Du må registrere et programnavn.
+you must enter an application title.	admin	no	Du må registrere et programtittel.
+you must select a file type	admin	no	Du må velge en filtype.
 you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!
+your message to  %1 was displayed.	admin	no	Meldingen din til %1 ble vist.
 your name	admin	no	Ditt navn
-your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes
+your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes.

@@ -142,7 +142,6 @@ extended access control list	filemanager	fr	Droits d'accès (ACL) étendus
 extended acl	filemanager	fr	ACL étendus
 failed to change permissions of %1!	filemanager	fr	Echec du changement des droits sur %1 !
 failed to create directory!	filemanager	fr	Echec de la création du répertoire !
-favorites	filemanager	fr	Favoris
 file	common	fr	Fichier
 file %1 already exists	filemanager	fr	Le fichier %1 existe déjà
 file %1 could not be created.	filemanager	fr	Le fichier %1 n'a pas pu être créé.

@@ -247,6 +247,7 @@ exclude weekend	calendar	it	Escludere il fine settimana
 execute a further action for this entry	calendar	it	Esegui ancora una azione per questo inserimento
 existing links	calendar	it	Collegamenti esistenti
 exists	calendar	it	Esiste
+explicit dates	calendar	it	Eventi espliciti
 export definition to use for nextmatch export	calendar	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 exports events from your calendar in ical format.	calendar	it	Esporta eventi dalla tua Agenda in formato iCal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
@@ -523,8 +524,6 @@ search string for the events	calendar	it	Cerca stringa di testo negli eventi
 select a %1	calendar	it	Seleziona %1
 select a color for this calendar	calendar	it	Seleziona un colore per questa agenda
 select a time	calendar	it	Seleziona un'orario
-select an action	calendar	it	Seleziona una azione
-select an action...	calendar	it	Seleziona una azione
 select multiple contacts for a further action	calendar	it	Seleziona contatti multipli per azioni ulteriori
 select resources	calendar	it	Seleziona risorse
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi

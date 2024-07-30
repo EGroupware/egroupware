@@ -146,12 +146,18 @@ event deleted	calendar	no	Hendelse slettet
 event details follow	calendar	no	Hendelses Detaljer Følger
 event saved	calendar	no	Hendelse lagret
 event will occupy the whole day	calendar	no	Hendelse opptar hele dagen
+every user can invite other users and groups	admin	no	Alle brukere kan invitere andre brukere og grupper
 exception	calendar	no	Unntak
+exception created - you can now edit or delete it	calendar	no	Unntak opprettet - du kan nå redigere eller slette det.
 exceptions	calendar	no	Unntak
 exclude weekend	calendar	no	Ekskluder helg
 existing links	calendar	no	Eksisterende lenker
+explicit dates	calendar	no	Eksplisitte hendelser
+exports events from your calendar in ical format.	calendar	no	Eksporterer hendelser fra kalenderen din i iCal-format.
+exports events from your calendar into a csv file.	calendar	no	Eksporterer hendelser fra kalenderen din til en CSV-fil.
 extended	calendar	no	Forlenget
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	no	Forlengelses-endringer inkluderer alltid komplette hendelses-detaljer. iCal filer kan importeres i fler andre kalender programmer.
+favorites	calendar	no	Favoritter
 fieldseparator	calendar	no	Feltseperator
 filemanager	calendar	no	Filhåndterer
 filename	calendar	no	Filnavn

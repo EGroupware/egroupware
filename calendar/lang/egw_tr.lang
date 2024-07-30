@@ -88,10 +88,16 @@ enddate	calendar	tr	Bitiş tarihi
 ends	calendar	tr	Bitiyor
 error notifying %1	calendar	tr	%1 bildirilirken hata oluştu
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
+every user can invite other users and groups	admin	tr	Her kullanıcı diğer kullanıcıları ve grupları davet edebilir
+exception created - you can now edit or delete it	calendar	tr	İstisna oluşturuldu - artık düzenleyebilir veya silebilirsiniz.
 exceptions	calendar	tr	İstisnalar
 exclude weekend	calendar	tr	Hafta Sonu Hariç
+explicit dates	calendar	tr	Açık olaylar
+exports events from your calendar in ical format.	calendar	tr	Takviminizdeki etkinlikleri iCal biçiminde dışa aktarır.
+exports events from your calendar into a csv file.	calendar	tr	Takviminizdeki etkinlikleri bir CSV dosyasına aktarır.
 extended	calendar	tr	Genişletilmiş
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	tr	Genişletilmiş güncellemeler daima etkinlik detaylarının tamamını içerir. iCal bir çok takvim uygulaması tarafından ithal edilebilen bir formatdır.
+favorites	calendar	tr	Sık Kullanılanlar
 fieldseparator	calendar	tr	Alan Ayracı
 firstname of person to notify	calendar	tr	Uyarılacak kişinin ilk adı
 format of event updates	calendar	tr	Etkinlik güncellemelerinin formatı

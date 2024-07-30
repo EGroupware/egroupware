@@ -227,6 +227,7 @@ exclude weekend	calendar	fi	Viikonlopun poissulkeminen
 execute a further action for this entry	calendar	fi	Estä muutoksien tekeminen tähän tapahtumaan
 existing links	calendar	fi	Olemassaolevat linkit
 exists	calendar	fi	Olemassaoleva
+explicit dates	calendar	fi	Eksplisiittiset tapahtumat
 export definition to use for nextmatch export	calendar	fi	Vienti asetukset 'nextmatch' vientiin
 exports events from your calendar in ical format.	calendar	fi	Vie kalenteritapahtumia iCal muotoon
 exports events from your calendar into a csv file.	calendar	fi	Vie kalenteritapahtumia CSV muotoon
@@ -471,8 +472,6 @@ search string for the events	calendar	fi	Haun merkkijono tapahtumille
 select a %1	calendar	fi	Valitse %1
 select a color for this calendar	calendar	fi	Valitse kalenterin väri
 select a time	calendar	fi	Valitse aika
-select an action	calendar	fi	Valitse toiminto
-select an action...	calendar	fi	Valitse toiminto ...
 select multiple contacts for a further action	calendar	fi	Valitse useampi yhteystieto jatkaaksesi
 select resources	calendar	fi	Valitse resurssit
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fi	Asetetaanko osallistujien Tilaksi "Ei vastausta", jos tapahtumaa siirretään?

@@ -1180,7 +1180,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
-save as PDF	common	en	Save as PDF
+save as pdf	common	en	Save as PDF
 save as zip	common	en	Save as ZIP
 save selected columns as default preference for all users.	common	en	Save columns as default preference for all users.
 save the changes made and close the window	common	en	Save changes and close
@@ -1388,7 +1388,7 @@ textarea	common	en	Text area
 th	common	en	Th
 thailand	common	en	THAILAND
 the backup key has been deleted.	common	en	The backup key has been deleted.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.<br>If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up. If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	en	The document can contain placeholder like {{%3}}, to be replaced with the data. %1Full list of placeholder names%2.
 the following applications require upgrades	common	en	The following applications require upgrades
 the following document-types are supported:	preferences	en	The following document types are supported:

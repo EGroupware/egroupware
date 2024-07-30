@@ -84,12 +84,19 @@ enddate	calendar	uk	Число закінчення
 ends	calendar	uk	закінчується
 error notifying %1	calendar	uk	Повідомлення про помилку %1
 event details follow	calendar	uk	Подробиці події
+every user can invite other users and groups	admin	uk	Кожен користувач може запрошувати інших користувачів та групи
+exception created - you can now edit or delete it	calendar	uk	Виняток створено - тепер ви можете редагувати або видалити його.
 exceptions	calendar	uk	Виключення
 exclude weekend	calendar	uk	Виключити вихідні
 existing links	calendar	uk	Існуючі посилання
+explicit dates	calendar	uk	Явні події
+exports events from your calendar in ical format.	calendar	uk	Експортує події з календаря у формат iCal.
+exports events from your calendar into a csv file.	calendar	uk	Експортувати події з календаря у файл CSV.
 extended	calendar	uk	Розширений
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	uk	Розширені зміни завжди включають всі подробиці події. iCal формат може бути імпортовано іншими програмами ведення Календарю.
+favorites	calendar	uk	Вибране
 fieldseparator	calendar	uk	Розділитель полів
+find free timeslots where the selected participants are available for the given timespan	calendar	uk	Пошук вільних часових проміжків, де вибрані учасники доступні в заданий проміжок часу.
 firstname of person to notify	calendar	uk	Ім'я людини для повідомлення
 format of event updates	calendar	uk	Формат змін події
 fri	calendar	uk	Пт

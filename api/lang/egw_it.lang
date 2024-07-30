@@ -410,7 +410,6 @@ denmark	common	it	DANIMARCA
 description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
-direction left to right	common	it	Direzione da sinistra a destra
 directory	common	it	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	it	La directory non esiste, non è leggibile dal server o non è relativa alla base dei documenti (docroot)!
 directory for storing merged documents	preferences	it	Cartella per la memorizzazione dei documenti uniti
@@ -669,7 +668,6 @@ how many days to sync in the past (default %1)	groupdav	it	Quanti giorni nel pas
 how many entries should the list show	common	it	Quante voci deve mostrare l'elenco
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many rows to print	common	it	Quante righe stampare
-how to show the general egroupware menu ?	common	it	Come mostrare il menù generale di EGroupware
 html	common	it	HTML
 html link to the current record	common	it	Collegamento HTML al record attuale
 html links to any entries linked to the current record, excluding attached files	common	it	Collegamenti HTML a tutte le voci collegate al record corrente, esclusi i file allegati
@@ -677,7 +675,6 @@ hungary	common	it	UNGHERIA
 iceland	common	it	ISLANDA
 id	common	it	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	it	If field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
-if the clock is enabled would you like it to update it every second or every minute?	common	it	Se l'orologio è abilitato, vuoi che si aggiorni ogni secondo oppure ogni minuto.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	it	Se l'errore persiste, contattare il proprio amministratore e chiedere di controllare il registro degli errori del server web.
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	it	Se verrà specificata una directory (percorso VFS completo) %1 mostra una azione per ogni documento. Quella azione permette di scaricare il documento specificato con la data inserita.
@@ -711,7 +708,6 @@ insert column after	common	it	Inserisci colonna dopo
 insert column before	common	it	Inserisci colonna prima
 insert in %1	common	it	Inserisci in %1
 insert in document	common	it	Inserisci in documento
-insert in dokument	common	it	Inserisci nel documento
 insert new column behind this one	common	it	Inserire una nuova colonna dopo
 insert new column in front of all	common	it	Inserire una nuova colonna prima di tutte
 insert new row after this one	common	it	Inserire una nuova riga dopo
@@ -841,7 +837,6 @@ marshall islands	common	it	ISOLE MARSHALL
 martinique	common	it	MARTINICA
 mauritania	common	it	MAURITANIA
 mauritius	common	it	MAURITIUS
-max number of icons in navbar	common	it	Numero massimo di icone della barra di navigazione
 maximum size for uploads	filemanager	it	Dimensione massima upload
 may	common	it	Maggio
 maybe	common	it	Forse
@@ -1273,13 +1268,7 @@ show (no save)	common	it	Mostra (non salva)
 show all	common	it	Visualizza tutto
 show all / cancel filter	common	it	Mostra tutto / annulla il filtro
 show all categorys	common	it	Visualizza tutte le categorie
-show as topmenu	common	it	Mostra come menù in cima
-show in sidebox	common	it	Mostra nel menù laterale
 show log of following device	groupdav	it	Mostra il registro del seguente dispositivo
-show logo's on the desktop.	common	it	Mostra logo sul desktop.
-show menu	common	it	Visualizza menu
-show next login	common	it	Mostra al prossimo login
-show now	common	it	Mostra adesso
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina.
 show page generation time?	common	it	Mostrare tempo generazione pagina
@@ -1367,7 +1356,7 @@ textarea	common	it	Area di Testo
 th	common	it	Th
 thailand	common	it	TAILANDIA
 the backup key has been deleted.	common	it	La chiave di backup è stata eliminata.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	it	Il blocco dei popup del browser è attivo. Cliccare su OK per visualizzarlo.<br>Per evitare la visualizzione in futuro di questo messaggio, permettere la apertura di popup nel browser da %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	it	Il blocco dei popup del browser è attivo. Cliccare su OK per visualizzarlo.<br>Per evitare la visualizzione in futuro di questo messaggio, permettere la apertura di popup nel browser da %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
 the following document-types are supported:	preferences	it	I seguenti tipi di documenti sono supportati:
@@ -1523,7 +1512,6 @@ yes - delete including sub-entries	common	it	Sì - Cancella includendo voci seco
 yes and allow non-admin users to do that too (recommended)	common	it	Sì e permetti anche agli utenti non amministratori di farlo (raccomandato)
 you are not allowed to export more than %1 entries!	common	it	Non puoi esportare più di %1 voci!
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
-you can customize how many icons and toolbars the editor shows.	common	it	Quante icone e barre degli strumenti mostra l'editor.
 you can not choose more then %1 item(s)!	common	it	Non puoi selezionare più di %1 elementi!
 you can respond by visiting:	common	it	Puoi rispondere visitando
 you have been successfully logged out	login	it	L'uscita è stata effettuata correttamente.

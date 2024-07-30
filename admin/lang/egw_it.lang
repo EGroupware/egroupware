@@ -41,7 +41,6 @@ access by	admin	it	Accesso da
 access control	admin	it	Controllo di accesso
 access to %1 data by others	admin	it	Accesso ai dati di %1 da parte degli altri
 access token revoked.	admin	it	Token di accesso revocato.
-accesslog and bruteforce defense	admin	it	Registro degli Accessi e difesa BruteForce
 account	admin	it	Account
 account "%1" has no email address --> not notified!	admin	it	L'account "%1" non ha un indirizzo email address --> nessuna notifica inviata!
 account "%1" has no plaintext password!	admin	it	L'account "%1" NON ha una password in testo semplice!
@@ -133,7 +132,6 @@ anonymous user	admin	it	Utente anonimo
 anonymous user (not shown in list sessions)	admin	it	Utente Anonimo (non visualizzato nella lista delle sessioni).
 anonymous user does not exist!	admin	it	L'Utente Anonimo NON esiste!
 anonymous user has no run-rights for the application!	admin	it	L'Utente Anonimo NON ha diritti di esecuzione per l'applicazione!
-anonymous user. not shown in list sessions.	admin	it	Utente anonimo. Non visualizzato nella lista delle sessioni attive.
 any application	admin	it	Ogni applicazione
 any group	admin	it	Ogni gruppo
 any user	admin	it	Qualsiasi utente
@@ -165,10 +163,6 @@ async services last executed	admin	it	Ultima esecuzione dello Schedulatore
 asynchronous timed services	admin	it	Schedulatore
 asyncservices not yet installed or other error (%1) !!!	admin	it	Schedulatore non ancora installato o altro errore (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	it	Cerca di usare il mimetype corretto per l'FTP invece di quello di predefinito 'application/octet-stream'.
-attribute accountstatus explained	admin	it	Questo gestisce l'attributo <b><i>-accountStatus-</i></b> dallo schema QMAIL.
-attribute mail explained	admin	it	Questo gestisce l'attributo <b><i>-mail-</i></b> dallo schema QMAIL e non deve mai essere vuoto. Esso è anche il campo interno di email di EGw.
-attribute mailalternateaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailAlternateAddress-</i></b> dallo schema QMAIL e può essere gestito come mappe virtuali o alias.
-attribute mailforwardingaddress explained	admin	it	Questo gestisce l'attributo <b><i>-mailForwardingAddress-</i></b> dallo schema QMAIL e non deve essere vuoto se assegnato.
 attributes	admin	it	Attributi
 authentication	admin	it	Autenticazione
 authentication / accounts	admin	it	Autenticazione / Account
@@ -274,10 +268,10 @@ custom egroupware web font as woff2 file	admin	it	Font web EGroupware personaliz
 custom fields	admin	it	Campi Personalizzati
 custom fields tab	admin	it	Scheda Campi personalizzati
 custom translation	admin	it	Traduzioni personalizzate
-customfield '%1' added	admin	it	Personalizzato '%1' aggiunto
-customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso
-customfield '%1' modified	admin	it	Personalizzato '%1' modificato
-customfield deleted	admin	it	Personalizzato eliminato
+customfield '%1' added	admin	it	Personalizzato '%1' aggiunto.
+customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso.
+customfield '%1' modified	admin	it	Personalizzato '%1' modificato.
+customfield deleted	admin	it	Personalizzato eliminato.
 customfield saved.	admin	it	Personalizzato salvato.
 cyrus imap server	admin	it	Server IMAP Cyrus
 cyrus imap server administration	admin	it	Amministrazione Server IMAP Cyrus
@@ -345,7 +339,6 @@ disable "auto completion" of the login form	admin	it	Disabilita l' "auto complet
 disable all	admin	it	Disabilitare tutto
 disable minifying of javascript and css files	admin	it	Disabilita la compressione di file JavaScript e CSS
 disable pgp encryption (mailvelope)	admin	it	Disabilita codifica PGP (Mailvelope)
-disable wysiwyg-editor	admin	it	Disabilita editor WYSIWYG
 disabled	admin	it	Disattivato
 disabled (not recomended)	admin	it	Disabilitato (non consigliato)
 disabled, do not show on login page	admin	it	Disabilitato, non mostrare nella pagina di accesso
@@ -402,11 +395,7 @@ enable cyrus imap server administration	admin	it	Abilita amministrazione Server 
 enable debug-messages	admin	it	Attiva i messaggi di debug.
 enable sieve	admin	it	Abilita Sieve
 enable spellcheck in rich text editor	admin	it	Abilita il controllo ortografico nell'editor di testo
-enable the soap service	admin	it	Attiva servizio SOAP.
-enable the xmlrpc service	admin	it	Attiva servizio XML-RPC.
 enabled	admin	it	Abilitato
-enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
-enabled - popup window	admin	it	Attivo - Finestra Popup
 encrypted connection	admin	it	Connessione criptata
 encryption	admin	it	Codifica
 encryption settings	admin	it	Impostazioni cifratura
@@ -428,7 +417,6 @@ enter the title for your site	admin	it	Inserisci il titolo per il tuo sito
 enter the title of your logo	admin	it	Inserisci il titolo del tuo logo
 enter the url where your logo should link to	admin	it	Inserisci l'url a cui punterà il tuo logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	it	Inserisci il percorso VFS dove immagini, icone e logo aggiuntivi potranno essere memorizzati e localizzati dalle applicazioni di EGroupware.<br>Il percorso DEVE iniziare con / ed essere leggibile da parte di tutti gli utenti
-enter your default ftp server	admin	it	Inserire il server FTP predefinito
 enter your default mail domain ( from: user@domain )	admin	it	Inserisci il dominio predefinito per l'email (Da: utente@dominio )
 enter your default mail domain (from: user@domain)	admin	it	Inserisci il tuo dominio di posta predefinito (da: utente@dominio)
 enter your http proxy server	admin	it	Inserire il proxy HTTP
@@ -459,7 +447,6 @@ event details follow	admin	it	Errore, manca il nome utente
 exists	admin	it	Esiste
 expired	admin	it	Scaduto
 expires	admin	it	Scade
-explanation of ldapman	admin	it	Questo modulo è stato testato fino ad oggi per POSTFIX, LDAP, Courier-IMAP e necessita degli schemi CORE e QMAIL(OID7914). Ulteriori dettagli riguardo l'uso e la configurazione di questo sistema possono essere trovati in README.ldap nella cartella documenti di ADMIN.
 export certificate as p12	admin	it	salva come certificato p12
 exports groups into a csv file.	admin	it	Esporta gruppi in un file CSV.
 exports permission settings into a csv file.	admin	it	Esporta permessi in un file CSV.
@@ -499,9 +486,6 @@ git clone	admin	it	Git Clone
 global categories	common	it	Categorie Globali
 global options	admin	it	Opzioni globali
 go directly to admin menu, returning here the next time you click on administration.	admin	it	Vai direttamentte al menù di amministrazione, tornando qui la prossima volta che fai click su "Amministra".
-google recaptcha	admin	it	Google recaptcha
-google recaptcha secret key	admin	it	Chive segreta di Google recaptcha
-google recaptcha site key	admin	it	Google recaptcha chiave per il sito
 governmental: incl. state or municipal authorities or services	admin	it	Governativo: incluse autorità o servizi municipali
 grant	admin	it	Consenti
 group #%1 must have negative sign!	admin	it	Il gruppo #%1 deve avere segno negativo!
@@ -534,7 +518,7 @@ how username get constructed	admin	it	Come viene costruito il nome utente
 html/plaintext	admin	it	HTML/testo
 icon	admin	it	Icona
 identity	admin	it	Identità
-identity deleted	admin	it	Identità cancellata
+identity deleted	admin	it	Identità cancellata.
 identity saved.	admin	it	Identità salvata.
 idle	admin	it	Inattivo
 if different from email address	admin	it	se diverso dall'indirizzo email
@@ -646,7 +630,6 @@ mail settings	admin	it	Impostazioni Posta
 main email-address	admin	it	Indirizzo email Principale
 main screen message	admin	it	Messaggio della schermata principale
 manage mapping	admin	it	Gestisci la mappatura
-manage stationery templates	admin	it	Amministra i modelli
 manager	admin	it	Manager
 manual entry	admin	it	Inserimento manuale
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
@@ -757,8 +740,6 @@ plesk imap server (courier)	admin	it	IMAP server Plesk (Courier)
 plesk mail script '%1' not found !!!	admin	it	Script Plesk '%1' non trovato
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	it	Plesk richiede password con almeno 5 caratteri e che non deve contenere il nome account --> password NON impostata!
 plesk smtp-server (qmail)	admin	it	Server SMTP Plesk (Qmail)
-pop3 server hostname or ip address	admin	it	Nome host o IP server POP3
-pop3 server port	admin	it	Porta server POP3
 port	admin	it	Porta
 postfix with ldap	admin	it	Postfix con LDAP
 postpone for	admin	it	Rimanda per
@@ -794,7 +775,6 @@ revoke	admin	it	Revocare
 revoke this token	admin	it	Revoca questo token
 revoked	admin	it	Revocato
 rights	admin	it	Diritti
-route all mails to	admin	it	Indirizza tutte le mail a
 rows	admin	it	Righe
 rpm or debian package	admin	it	Pacchetto RPM o deb
 run	admin	it	esegui
@@ -851,7 +831,6 @@ set preference values.	admin	it	Imposta i valori delle preferenze.
 settings	admin	it	Impostazioni
 should exceptions contain a trace (including function arguments)	admin	it	Le eccezioni dovrebbero contenere tracce, inclusi gli argomenti delle funzioni.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo)?
-show 'powered by' logo on	admin	it	Visualizza il logo 'Powered by'
 show access log	admin	it	Visualizza i log di accesso
 show as optional, but required once user has it setup	admin	it	Mostra come facoltativa, ma è necessaria una volta che l'utente l'ha configurata
 show as required, but only once user has it setup	admin	it	Mostra come obbligatorio, ma solo una volta che l'utente l'ha configurato
@@ -883,7 +862,6 @@ ssl	admin	it	SSL
 standard	admin	it	Standard
 standard identity	admin	it	Identità di base
 standard imap server	admin	it	Server IMAP standard
-standard pop3 server	admin	it	Server POP3 standard
 standard smtp-server	admin	it	Server SMTP standard
 start	admin	it	Avvio
 start testjob!	admin	it	Inizia il Lavoro di Test
@@ -896,7 +874,6 @@ submit statistic information	admin	it	Invia le informazioni statistiche
 submit the search string	admin	it	Invia la stringa di ricerca
 submit to egroupware.org	admin	it	Invia a egroupware.org
 subtype	admin	it	Sottotipo
-subversion checkout	admin	it	Checkout di sottoversione
 success	admin	it	Successo
 successful connected to %1 server%2.	admin	it	Connessione avvenuta con success a %1 server %2.
 successfull, but no refresh-token received!	admin	it	Successo, ma nessun refresh-token ricevuto!
@@ -937,7 +914,6 @@ this is a mail account for all users!	admin	it	Questo è un account di posta per
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	it	Questo non è un account personale di email!<br>L'account verrà cancellato per TUTTI gli utenti!<br>Confermi?
 this key used in the html code your site serves to users.	admin	it	Questa chiave viene utilizzata nel codice HTML che il sito serve agli utenti.
 this php has no imap support compiled in!!	admin	it	PHP non è stato compilato con supporto IMAP!
-this secret key used for communication between your site and google. be sure to keep it a secret.	admin	it	Questa chiave segreta utilizzata per la comunicazione tra il vostro sito e Google. Assicuratevi di mantenerla segreta.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	it	Timeout per i dati della sessione di un'applicazione in secondi (predefinito 86400 = 1 giorno)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	it	Timeout per la sessione in secondi (predefinito 14400 = 4 ore)
 times	admin	it	Tempi
@@ -962,9 +938,6 @@ type '%1' already exists !!!	admin	it	Il tipo '%1' esiste già!
 type of customfield	admin	it	Tipo di campo personalizzato
 type of field	admin	it	Tipo di campo
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows devi installare lo schedulatore %1manualmente%2 o usare la modalità fallback. Fallback significa che i lavori vengono controllati solo dopo ogni vista pagina!
-unexpected response from server to authenticate command.	admin	it	Risposta inaspettata dal server al comando AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	it	Risposta inaspettata dal server alla risposta Digest-MD5.
-unexpected response from server to login command.	admin	it	Risposta inaspettata dal server al comando LOGIN.
 unknown account: %1 !!!	admin	it	Account ignoto: %1!
 unknown command %1!	admin	it	Comando %1 ignoto!
 unknown imap response from the server. server responded: %s	admin	it	Riposta non riconosciuta dal server IMAP %s

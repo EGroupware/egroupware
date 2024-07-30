@@ -29,7 +29,13 @@ changed event-data applied	calendar	lt	Taikomi pakeisti įvykio duomenys
 date range	calendar	lt	Datų intervalas
 email address migration	calendar	lt	El. pašto adreso perkėlimas
 error notifying %1	calendar	lt	Klaida pranešant %1
+every user can invite other users and groups	admin	lt	Kiekvienas naudotojas gali pakviesti kitus naudotojus ir grupes
+exception created - you can now edit or delete it	calendar	lt	Sukurta išimtis - dabar galite ją redaguoti arba ištrinti.
 exclude weekend	calendar	lt	Neįtraukti savaitgalio
+explicit dates	calendar	lt	Aiškūs įvykiai
+exports events from your calendar in ical format.	calendar	lt	Eksportuokite įvykius iš savo kalendoriaus iCal formatu.
+exports events from your calendar into a csv file.	calendar	lt	Eksportuoja įvykius iš jūsų kalendoriaus į CSV failą.
+favorites	calendar	lt	Mėgstamiausi
 how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
 how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
 how many days to sync in the future (default %1)	calendar	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)

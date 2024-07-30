@@ -167,7 +167,6 @@ custom	addressbook	el	Προσαρμογή
 custom etemplate for the contactform	addressbook	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
 custom fields	addressbook	el	Προσαρμοσμένα πεδία
 data exchange settings	addressbook	el	Ρυθμίσεις ανταλλαγής δεδομένων
-debug output in browser	addressbook	el	Αποσφαλμάτωση εξαγωγής στο φυλλομετρητή
 default	addressbook	el	προκαθορισμένο
 default action on double-click	addressbook	el	Προεπιλεγμένη ενέργεια διπλού κλικ
 default address format	addressbook	el	Προκαθορισμένη μορφή διευθύνσεων
@@ -255,7 +254,6 @@ extra encodings	addressbook	el	Επιπλέον κωδικοποιήσεις
 extra private	addressbook	el	Επιπλέων προσωπικά
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	el	Απέτυχε η αλλαγή του-των μέλους(η) του %1 οργανισμού (ανεπαρκή δικαιώματα)!
 favorite phone	addressbook	el	Αγαπημένο τηλέφωνο
-favorites	addressbook	el	Αγαπημένα
 fax	addressbook	el	Fax
 fax (private)	addressbook	el	fax (προσ.)
 fax number	common	el	Αριθμός Fax
@@ -315,7 +313,6 @@ import from ldif, csv, or vcard	addressbook	el	Εισαγωγή από LDIF, CSV
 import from outlook	addressbook	el	Εισαγωγή από το Outlook
 import multiple vcard	addressbook	el	Εισαγωγή πολλαπλών vCard
 import next set	addressbook	el	Εισαγωγή επόμενου σετ
-import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε vCard μορφή.
 importer's personal	addressbook	el	Προσωπικά του εισαγωγέα
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων από ένα αρχείο CSV ( 'Comma Separated Values'). Στις σχετικές ρυθμίσεις μπορείτε να επιλέξετε και χαρακτήρα διαχωρισμού.
 imports contacts into your addressbook from a vcard file.	addressbook	el	Εισαγάγει επαφές στο βιβλίο διευθύνσεων σας από ένα αρχείο vCard.
@@ -379,7 +376,6 @@ name of current user, all other contact fields are valid too	addressbook	el	Όν
 name, address	addressbook	el	Όνομα, Διεύθυνση
 name, email, phone	addressbook	el	Όνομα, email, τηλέφωνο
 new contact submitted by %1 at %2	addressbook	el	Νέα επαφή υπεβλήθει από %1 στις %2
-new window opened to edit infolog for your selection	addressbook	el	Νέο παράθυρο για την επεξεργασία του InfoLog.
 next date	addressbook	el	Επόμενη ημερομηνία
 no categories selected	addressbook	el	Δεν έχουν επιλεγεί κατηγορίες
 no country selected	addressbook	el	Δεν έχει επιλεγεί χώρα
@@ -450,14 +446,10 @@ select a source address to be used in geolocation routing system	addressbook	el	
 select a view	addressbook	el	Επιλέξτε μία προβολή
 select addressbook type	addressbook	el	Επιλέξτε τύπο βιβλίου διευθύνσεων
 select all	addressbook	el	Επιλογή όλων
-select an action or addressbook to move to	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό
-select an action or addressbook to move to...	addressbook	el	Επιλέξτε μία ενέργεια ή ένα βιβλίο διευθύνσεων για μετακίνηση σε αυτό ...
 select an opened dialog	addressbook	el	Επιλέξτε ένα ανοικτό παράθυρο
 select migration type	admin	el	Επιλέξτε τύπο μετανάστευσης
 select multiple contacts for a further action	addressbook	el	Επιλέξτε πολλαπλές επαφές για περαιτέρω ενέργειες
 select phone number as prefered way of contact	addressbook	el	επιλέξτε τον αριθμό τηλεφώνου ως προτιμότερο τρόπο επικοινωνίας
-select the type of conversion	addressbook	el	Επιλέξτε τύπο μετατροπής
-select the type of conversion:	addressbook	el	Επιλέξτε τύπο μετατροπής:
 select where you want to store / retrieve contacts	admin	el	Επιλέξτε που θέλετε να αποθηκεύετε/ανακτάτε τις επαφές
 selected contacts	addressbook	el	επιλεγμένες επαφές
 send emailcopy to receiver	addressbook	el	Αποστολή αντιγράφου στον παραλήπτη

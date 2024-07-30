@@ -167,7 +167,6 @@ custom	addressbook	fr	Personnalisé
 custom etemplate for the contactform	addressbook	fr	eTemplate personnalisé pour le formulaire contact
 custom fields	addressbook	fr	Champs personnalisés
 data exchange settings	addressbook	fr	Paramètres d'échange de données
-debug output in browser	addressbook	fr	Deboguer la sortie dans le navigateur
 default	addressbook	fr	Défaut
 default action on double-click	addressbook	fr	Action par défaut du double-clic
 default address format	addressbook	fr	Format de l'adresse par défaut
@@ -255,7 +254,6 @@ extra encodings	addressbook	fr	Encodage supplémentairess
 extra private	addressbook	fr	Extra privé
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fr	Echec du changement des membres de l'organisation %1 (droits insufisants) !
 favorite phone	addressbook	fr	Téléphone favoris
-favorites	addressbook	fr	Favoris
 fax	addressbook	fr	Fax
 fax (private)	addressbook	fr	fax (privé)
 fax number	common	fr	Numéro de Fax
@@ -315,7 +313,6 @@ import from ldif, csv, or vcard	addressbook	fr	Importer depuis LDIF, CSV ou vCar
 import from outlook	addressbook	fr	Importer depuis Outlook
 import multiple vcard	addressbook	fr	Importation vCard Multiple
 import next set	addressbook	fr	Importer l'élément suivant
-import_instructions	addressbook	fr	Dans Netscape, ouvrir le carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format LDIF.<p>Ou, dans Outlook, sélectionner votre dossier des contacts, sélectionner <b>Importer et Exporter...</b> depuis le menu <b>Fichier</b> et exporter vos contacts, séparés par des virgules, dans un fichier texte (CSV). <p>Ou, dans Palm Desktop 4.0 ou supérieur, consulter votre carnet d´adresses et sélectionner <b>Exporter</b> depuis le menu <b>Fichier</b>. Le fichier exporté sera au format vCard.
 importer's personal	addressbook	fr	répertoire personnel de l'importeur
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fr	Importer les contacts depuis un fichier CSV. CSV correspond à des valeurs séparées par des virgules. Dans les options, vous pouvez choisir d'autres séparateurs.
 imports contacts into your addressbook from a vcard file.	addressbook	fr	Importer les contacts vers votre carnet d'adresses depuis un fichier vCard.
@@ -379,7 +376,6 @@ name of current user, all other contact fields are valid too	addressbook	fr	Nom 
 name, address	addressbook	fr	Nom, adresse
 name, email, phone	addressbook	fr	Nom, email, téléphone
 new contact submitted by %1 at %2	addressbook	fr	Nouveau contact soumis par %1 à %2.
-new window opened to edit infolog for your selection	addressbook	fr	Nouvelle fenêtre ouverte pour modifier un InfoLog.
 next date	addressbook	fr	Date de prochain contact
 no categories selected	addressbook	fr	Aucune catégorie sélectionnée
 no country selected	addressbook	fr	Aucun pays sélectionné
@@ -450,14 +446,10 @@ select a source address to be used in geolocation routing system	addressbook	fr	
 select a view	addressbook	fr	Sélectionnez une vue
 select addressbook type	addressbook	fr	Sélectionnez un type de carnet d'adresse
 select all	addressbook	fr	Sélectionner tout
-select an action or addressbook to move to	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer
-select an action or addressbook to move to...	addressbook	fr	Sélectionnez une action ou un carnet d'adresses à déplacer ...
 select an opened dialog	addressbook	fr	Sélectionner une boîte de dialogue ouverte
 select migration type	admin	fr	Sélectionnez un type de migration
 select multiple contacts for a further action	addressbook	fr	Sélectionner plusieurs contacts pour une même action
 select phone number as prefered way of contact	addressbook	fr	sélectionner le téléphone comme moyen de contact préféré
-select the type of conversion	addressbook	fr	Sélectionner le type de convertion
-select the type of conversion:	addressbook	fr	Sélectionner le type de convertion:
 select where you want to store / retrieve contacts	admin	fr	Sélectionnez où vous voulez stocker / récupérer les contacts
 selected contacts	addressbook	fr	contacts choisis
 send emailcopy to receiver	addressbook	fr	Envoyer une copie email au destinataire

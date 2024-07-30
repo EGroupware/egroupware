@@ -415,7 +415,6 @@ denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
-direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
 directory for storing merged documents	preferences	fr	Dossier des documents fusionnés
@@ -678,7 +677,6 @@ how many days to sync in the past (default %1)	groupdav	fr	Combien de jours à s
 how many entries should the list show	common	fr	combien d'entrées la liste doit-elle afficher
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être affichées sur la barre de navigation (haut de page). Les icônes suplémentaires seront placées dans une liste que l'on appellera via une icône à droite de la barre de navigation.
 how many rows to print	common	fr	Combien de lignes sont à imprimer
-how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'EGroupware ?
 html	common	fr	HTML
 html link to the current record	common	fr	Lien HTML vers l'enregistrement courant
 html links to any entries linked to the current record, excluding attached files	common	fr	Liens HTML vers toutes les entrées liées à l'enregistrement actuel, à l'exclusion des fichiers joints
@@ -686,7 +684,6 @@ hungary	common	fr	HONGRIE
 iceland	common	fr	ISLANDE
 id	common	fr	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	fr	Si le champ est désactivé, une cellule de table vide est affiché pour suppression (temporaire) d'un champ/cellule
-if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	fr	Si le problème persiste, contacter votre administrateur et demander de vérifier les journaux d'erreurs sur le serveur.
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fr	Si vous spécifiez un répertoire (chemin VFS complet), %1 affiche une action pour chaque document. Cette action autorise le téléchargement du document spécifié avec les données insérées.
@@ -721,7 +718,6 @@ insert column after	common	fr	Insérer  une colonne après
 insert column before	common	fr	Insérer une colonne avant
 insert in %1	common	fr	Insérer en %1
 insert in document	common	fr	Insérer dans un document
-insert in dokument	common	fr	Insérer dans le document
 insert new column behind this one	common	fr	Insérer une nouvelle colonne après celle-ci
 insert new column in front of all	common	fr	Insérer une nouvelle colonne devant toutes les autres
 insert new row after this one	common	fr	Insérer une nouvelle ligne après celle-ci
@@ -852,7 +848,6 @@ marshall islands	common	fr	ILES MARSHALL
 martinique	common	fr	MARTINIQUE
 mauritania	common	fr	MAURITANIE
 mauritius	common	fr	ILES MAURICE
-max number of icons in navbar	common	fr	Nombre maximum d'icônes dans la barre de navigation
 maximum size for uploads	filemanager	fr	Taille maximale d'un upload
 may	common	fr	Mai
 maybe	common	fr	Peut-être
@@ -1288,13 +1283,7 @@ show (no save)	common	fr	Montrer (pas de sauvegarde)
 show all	common	fr	Afficher tous les éléments
 show all / cancel filter	common	fr	Montrer tout / annuler les filtres
 show all categorys	common	fr	Afficher toutes les catégories
-show as topmenu	common	fr	Afficher en tant que menu supérieur
-show in sidebox	common	fr	Afficher dans la barre de menu latérale
 show log of following device	groupdav	fr	Montrer les logs de l'appareil
-show logo's on the desktop.	common	fr	Afficher le logo sur le bureau.
-show menu	common	fr	Afficher le menu
-show next login	common	fr	Afficher à la prochaine connexion
-show now	common	fr	Afficher maintenant
 show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page ?
 show page generation time?	common	fr	Afficher le temps de génération de la page
@@ -1383,7 +1372,7 @@ textarea	common	fr	ChampTexte
 th	common	fr	Je
 thailand	common	fr	THAILANDE
 the backup key has been deleted.	common	fr	La sauvegarde a été supprimée.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	fr	Le bloqueur de popup est activé. Veuillez cliquer sur OK pour voir la pop-up. \n\nSi vous ne souhaitez plus voir ce message, autoriser votre navigateur à ouvrir les pop-up de ce site %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	fr	Le bloqueur de popup est activé. Veuillez cliquer sur OK pour voir la pop-up. Si vous ne souhaitez plus voir ce message, autoriser votre navigateur à ouvrir les pop-up de ce site %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	fr	Le document peut contenir des balises comme {{%3}} , pour être remplacé avec les données. %1Listes completes des mots-clés%2.
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 the following document-types are supported:	preferences	fr	Les types de documents suivant sont autorisés :
@@ -1539,7 +1528,6 @@ yes - delete including sub-entries	common	fr	Oui - Supprimer y compris les sous-
 yes and allow non-admin users to do that too (recommended)	common	fr	Oui et autoriser les non-administrateurs à faire cela aussi (recommandé)
 you are not allowed to export more than %1 entries!	common	fr	Vous n'êtes pas autorisé à exporter plus que %1 éléments !
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
-you can customize how many icons and toolbars the editor shows.	common	fr	Combien d'icônes et de barres d'outils l'éditeur doit-il afficher.
 you can not choose more then %1 item(s)!	common	fr	Vous ne pouvez séléctionner plus que %1 élément(s) !
 you can respond by visiting:	common	fr	Pour le voir, visitez:
 you have been successfully logged out	login	fr	Déconnexion réussie.

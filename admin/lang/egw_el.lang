@@ -28,7 +28,7 @@
 (default no, leave it off if you dont use it)	admin	el	(προεπιλεγμένο Νο, να μείνει απενεργοποιημένο αν δεν χρησιμοποιείται)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	el	(η imapclass πρέπει να υποστηρίζει αυτό το χαρακτηριστικό, ζητώντας την αντίστοιχη τιμή παραμέτρων και μεταβιβάζοντάς την ως defaultquota στον διακομιστή IMAP)
 (no subject)	admin	el	(κανένα θέμα)
-(stored password will not be shown here)	admin	el	(Τα αποθηκευμένα password δεν θα εμφανίζονται εδω)
+(stored password will not be shown here)	admin	el	Τα αποθηκευμένα password δεν θα εμφανίζονται εδω
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	el	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !)
 -  type	admin	el	- τύπος
 1 year	admin	el	1 έτος
@@ -45,9 +45,9 @@ account '%1' deleted.	admin	el	Ο λογαριασμός '%1' διαγράφηκ
 account '%1' not found !!!	admin	el	Ο λογαριασμός '%1' δεν βρέθηκε!
 account active	admin	el	Λογαριασμός ενεργός
 account deleted.	admin	el	Διαγραφή λογαριασμού.
-account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί
-account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
-account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
+account has been created	common	el	Ο λογαριασμός έχει δημιουργηθεί.
+account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί.
+account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί.
 account list	admin	el	Λίστα λογαριασμών
 account permissions	admin	el	Δικαιώματα λογαριασμού
 account preferences	admin	el	Ιδιότητες λογαριασμού
@@ -77,7 +77,7 @@ add sub-category	admin	el	Πρόσθεσε υποκατάλογο
 add user	admin	el	Προσθήκη χρήστη
 add user or group	admin	el	Προσθήκη χρήστη ή ομάδας
 admin email	admin	el	Email διαχειριστή
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Ηλεκτρονική διεύθυνση (email) διαχειριστή (διαχωρισμένο με κόμμα) ο οποίος θα ειδοποιηθεί για το κλείδωμα (κενό για να μην ειδοποιηθεί)
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Ηλεκτρονική διεύθυνση (email) διαχειριστή (διαχωρισμένο με κόμμα) ο οποίος θα ειδοποιηθεί για το κλείδωμα (κενό για να μην ειδοποιηθεί).
 admin name	admin	el	Ονομα διαχειρηστή
 admin password	admin	el	Κωδικός πρόσβασης διαχειριστή
 administration	admin	el	Διαχείρηση
@@ -194,7 +194,7 @@ deny access to phpinfo	admin	el	Αρνηση πρόσβασης στο phpinfo
 deny access to site configuration	admin	el	Αρνηση πρόσβασης στην διαμόρφωση της ιστιοσελίδας
 deny access to user accounts	admin	el	Αρνηση πρόσβασης στους λογαριασμούς του χρήστη
 deny all users access to grant other users access to their entries ?	admin	el	Άρνηση πρόσβασης όλων των χρηστών στην μεταβίβαση της πρόσβασης άλλων χρηστών στις εισόδους τους
-description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος
+description can not exceed 255 characters in length !	admin	el	Η περιγραφή δεν πρέπει να υπερβαίνει τους 255 χαρακτήρες σε μήκος!
 determines the order the fields are displayed	admin	el	καθορίζει τη σειρά εμφάνισης των πεδίων
 disable	admin	el	Απενεργοποίηση
 disable "auto completion" of the login form	admin	el	Απενεργοποίηση "αυτόματης συμπλήρωσης" της φόρμας εισαγωγής
@@ -243,7 +243,7 @@ enter the background color for the site title	admin	el	Εισάγετε χρώμ
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	el	Πληκτρολογήστε ολόκληρο το μονοπάτι για τα προσωρινά αρχεία. <br>Παραδείγματα: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	el	Πληκτρολογίστε ολόκληρο το μονοπάτι για τα αρχεία χρηστών ομάδων. <br>Παραδείγματα: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	el	Εισάγετε το όνομα κομβου του μηχανήματος στο οποίο τρέχει ο server
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του EGroupware's URL.<br>Παράδειγμα: https://egw.domain.com/egroupware   ή   /egroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	el	Εισάγετε την τοποθεσία του EGroupware's URL.<br>Παράδειγμα: https://egw.domain.com/egroupware ή /egroupware<br><b>Χωρίς να ακολουθείται απο κάθετο</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	el	Εισάγετε το αλφαριθμητικό εύρεσης. Για εμφάνηση όλων των εισόδων, άδεισε αυτό το πεδίο και πάτα το κουμπί ΥΠΟΒΟΛΗ πάλι
 enter the site password for peer servers	admin	el	Εισήγαγε το συνθηματικό της ιστιοσελίδας για ισότιμους server
 enter the site username for peer servers	admin	el	Εισήγαγε το όνομα χρήστη της ιστιοσελίδας για ισότιμους server
@@ -255,11 +255,11 @@ enter your http proxy server	admin	el	Εισήγαγε τον HTTP proxy server
 enter your http proxy server port	admin	el	Εισήγαγε το port του HTTP proxy server
 enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
 enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
-error canceling timer, maybe there's none set !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, ισως να μην εχει ρυθμηστεί κανένας
+error canceling timer, maybe there's none set !!!	admin	el	Λάθος ακυρώνωντας χρονομέτρη, ισως να μην εχει ρυθμηστεί κανένας!
 error connecting to imap server. %s : %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	el	Λάθος ακυρώνοντας χρονομέτρη, λάθος σύνταξη ή ίσως ήδη τρέχει ένας!
-error! no appname found	admin	el	Σφάλμα!Δεν βρέθηκε το όνομα εφαρμ
+error! no appname found	admin	el	Σφάλμα!Δεν βρέθηκε το όνομα εφαρμ!
 error: %1 not found or other error !!!	admin	el	Λάθος: %1 δεν βρέθηκε ή άλλο λάθος!
 event details follow	admin	el	Ακολουθούν λεπτομέρειες γεγονότων
 expires	admin	el	Λήγει
@@ -296,8 +296,10 @@ hour<br>(0-23)	admin	el	Ωρα<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	el	Πόσες ημέρες πρέπει οι εισαγωγές να μένουν στην καταγραφή πρόσβασης, πρίν σβυστούν(προκαθορισμένο 90)
 how many minutes should an account or ip be blocked (default 1) ?	admin	el	Πόσα λεπτά πρέπει ένας λογαριασμός ή IP να μπλοκαρίζεται (προκαθορισμένο 30)
 how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι διευθύνσεις Email για τους νεόυς χρήστες να κατασκευάζονται
-html/plaintext	admin	el	HTML/text
+html/plaintext	admin	el	HTML/Text
 icon	admin	el	Εικόνα
+identity deleted	admin	el	Διαγραφή ταυτότητας.
+identity saved.	admin	el	Ταυτότητα αποθηκεύτηκε.
 idle	admin	el	Aδρανής
 if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής;
@@ -352,7 +354,7 @@ loginid	admin	el	ID εισόδου
 mail settings	admin	el	Ρυθμίσεις μηνυμάτων
 main email-address	admin	el	Κύρια Διεύθυνση Email
 manager	admin	el	Διαχειριστής
-maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
+maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός ID λογαριασμών (π.χ. 65535 ή 1000000)
 maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
 message has been updated	admin	el	το μήνυμα έχει ενημερωθεί
 method	admin	el	Μέθοδος
@@ -459,7 +461,7 @@ sieve settings	admin	el	Ρυθμίσεις Sieve
 site	admin	el	Ιστιοσελίδα
 smtp settings	admin	el	Ρυθμίσεις SMTP
 soap	admin	el	SOAP
-sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη
+sorry, that group name has already been taken.	admin	el	Συγνώμη, αυτό το όνομα ομάδας υπάρχει ήδη.
 sorry, the above users are still a member of the group %1	admin	el	Συγνώμη, οι παραπάνω χρήστες είναι ακόμα μέλοι της ομάδας %1.
 sorry, the follow users are still a member of the group %1	admin	el	Συγνώμη, οι ακόλουθοι χρήστες είναι ακόμα μέλοι της ομάδας %1.
 sort the entries	admin	el	ταξινόμηση των εισόδων
@@ -509,7 +511,7 @@ trust relationship	admin	el	Σχέση εμπιστοσύνης
 two weeks	admin	el	δύο εβδομάδες
 type '%1' already exists !!!	admin	el	ο τύπος '%1" υπάρχει ήδη!
 type of customfield	admin	el	Τύπος συνήθους πεδίου
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας!
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των Windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας!
 unknown imap response from the server. server responded: %s	admin	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server: %s
 up	admin	el	πάνω
 updated	admin	el	Ενημερώθηκε

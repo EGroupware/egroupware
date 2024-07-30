@@ -86,10 +86,16 @@ end date/time	calendar	lv	Beigu datums/laiks
 enddate	calendar	lv	Beigu datums
 ends	calendar	lv	Beidzas
 error notifying %1	calendar	lv	Kļūda, paziņojot %1
+every user can invite other users and groups	admin	lv	Katrs lietotājs var uzaicināt citus lietotājus un grupas
+exception created - you can now edit or delete it	calendar	lv	Izņēmums izveidots - tagad to var rediģēt vai dzēst.
 exceptions	calendar	lv	Izņēmumi
 exclude weekend	calendar	lv	Izslēgt nedēļas nogali
 existing links	calendar	lv	Eksistējošas saites
+explicit dates	calendar	lv	Skaidri notikumi
+exports events from your calendar in ical format.	calendar	lv	Eksportē notikumus no kalendāra iCal formātā.
+exports events from your calendar into a csv file.	calendar	lv	Eksportē notikumus no kalendāra CSV failā.
 extended	calendar	lv	Paplašinats
+favorites	calendar	lv	Izlase
 fieldseparator	calendar	lv	Lauka atdalītājs
 filemanager	calendar	lv	Datņu pārvaldnieks
 filename	calendar	lv	Faila nosaukums

@@ -121,7 +121,6 @@ extended access control list	filemanager	pt-br	Lista de controle de acesso ampli
 extended acl	filemanager	pt-br	ACL ampliada
 failed to change permissions of %1!	filemanager	pt-br	Falha ao alterar as permissões de% 1!
 failed to create directory!	filemanager	pt-br	Falha ao criar diretório!
-favorites	filemanager	pt-br	Favoritos
 file	common	pt-br	Arquivo
 file %1 already exists	filemanager	pt-br	Arquivo% 1 já existe
 file %1 could not be created.	filemanager	pt-br	Arquivo %1 não pôde ser criado.

@@ -142,7 +142,6 @@ extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
 failed to create directory!	filemanager	en	Failed to create folder!
-favorites	filemanager	en	Favorites
 file	common	en	File
 file %1 already exists	filemanager	en	File %1 already exists
 file %1 could not be created.	filemanager	en	File %1 could not be created.

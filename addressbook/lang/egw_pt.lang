@@ -126,7 +126,6 @@ export from addressbook	addressbook	pt	Exportar do livro de endereços
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Exporta os contactos do livro de endereços para um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 extra	addressbook	pt	Extra
 favorite phone	addressbook	pt	Telefone favorito
-favorites	addressbook	pt	Favoritos
 fax	addressbook	pt	Fax
 fax number	common	pt	Número de fax
 field %1 has been added !	addressbook	pt	Campo %1 foi adicionado!
@@ -174,7 +173,6 @@ import from ldif, csv, or vcard	addressbook	pt	Importar de LDIF, CSV, ou vCard
 import from outlook	addressbook	pt	Importar do Outlook
 import multiple vcard	addressbook	pt	Importar vários vCard
 import next set	addressbook	pt	Importar o conjunto seguinte
-import_instructions	addressbook	pt	No Netscape, abra o Livro de endereços e seleccione <b>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formato LDIF.<p>No Outlook, seleccione a sua pasta de contactos, seleccione <br>Importar e Exportar...</b> do menu <b>Ficheiro</b> e exporte os seus contactos, separados por vírgulas, num ficheiro de texto (CSV).<br>No Palm Desktop 4.0 ou superior, visite o seu livro de endereços e seleccione <br>Exportar</b> do menu <b>Ficheiro</b>. O ficheiro exportado estará em formado vCard.
 importer's personal	addressbook	pt	Pessoal do importador
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt	Importa contactos para o livro de endereços a partir de um ficheiro CSV. No separador de opções, também pode escolher outros separadores.
 imports contacts into your addressbook from a vcard file.	addressbook	pt	Importa contactos para o seu livro de endereços a partir de um ficheiro vCard.

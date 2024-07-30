@@ -242,6 +242,7 @@ exclude weekend	calendar	ja	週末を除く
 execute a further action for this entry	calendar	ja	このイベントで更にアクションを実行
 existing links	calendar	ja	定義済みリンク
 exists	calendar	ja	存在
+explicit dates	calendar	ja	明示的イベント
 export definition to use for nextmatch export	calendar	ja	エクスポートで用いる設定ファイル
 exports events from your calendar in ical format.	calendar	ja	iCal フォーマットでカレンダー・イベントをエクスポート
 exports events from your calendar into a csv file.	calendar	ja	CSV 形式でカレンダー・イベントをエクスポート
@@ -510,8 +511,6 @@ search string for the events	calendar	ja	イベントを検索
 select a %1	calendar	ja	Select a %1
 select a color for this calendar	calendar	ja	カレンダー表示色を選択
 select a time	calendar	ja	時間を選択
-select an action	calendar	ja	アクションを選択
-select an action...	calendar	ja	アクションを選択...
 select multiple contacts for a further action	calendar	ja	アクションを実行するコンタクトを選択
 select resources	calendar	ja	リソースを選択
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	ja	イベントのスケジュールが変更された場合に、参加者の参加可否回答をリセットするか否か、さらにリセットする場合はその条件を指定してください。

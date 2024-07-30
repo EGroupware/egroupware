@@ -55,6 +55,7 @@ account list	admin	id	Daftar Akoun
 account not found!	common	id	Akun tidak ditemukan!
 account permissions	admin	id	Ijin-ijin Akoun
 account preferences	admin	id	Kesukaan Akoun
+account saved.	admin	id	Akun disimpan.
 acl added.	admin	id	ACL ditambakan.
 acl csv export	admin	id	Ekspor ACL CSV
 acl deleted.	admin	id	ACL dihapus.
@@ -80,18 +81,24 @@ add new email address:	admin	id	Tambah alamat email baru:
 add peer server	admin	id	Tambah Peer Server
 add profile	admin	id	Tambah Profil
 add sub-category	admin	id	Tambah sub-kategori
+add user	admin	id	Tambahkan pengguna
+add user or group	admin	id	Menambahkan pengguna atau grup
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	id	Alamat email admin, dipisahkan dengan koma, untuk diberitahukan tentang akun dan IP pengguna yang diblokir. Kosong = tidak ada pemberitahuan.
 admin name	admin	id	Nama Admin
 admin password	admin	id	Kata sandi admin
 admin username	admin	id	Nama Admin
 administration	admin	id	Administrasi
 admins	admin	id	Admins
 advanced options	admin	id	Opsi Canggih
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	id	Setelah berapa kali gagal masuk, sebuah akun harus diblokir. Default = 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	id	Setelah berapa kali percobaan login yang gagal, sebuah IP akan diblokir. Default = 15
 aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
 all categories	admin	id	Semua kategori
 all users	admin	id	Semua pengguna
+allow user to set 'remember me' token	admin	id	Izinkan pengguna untuk menyetel token 'Ingat saya'
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
 any application	admin	id	Semua aplikasi
@@ -101,26 +108,35 @@ appearance	admin	id	Penampakan
 application	admin	id	Aplikasi
 application '%1' not found (maybe not installed or misspelled)!	admin	id	Aplikasi '%1' tidak ditemukan (mungkin belum diinstal atau salah ketik)!
 application name	admin	id	Nama Aplikasi
+application passwords	admin	id	Kata sandi aplikasi
 application title	admin	id	Judul Aplikasi
 applications	admin	id	Aplikasi
 applications list	admin	id	Daftar Aplikasi
 applies the changes	admin	id	Terapkan perubahan
 apply the changes	admin	id	Terapkan perubahan
+archive: zip or tar	admin	id	Arsip: ZIP atau tar
+are you sure you want to delete this account ?	admin	id	Apakah Anda yakin ingin menghapus akun ini?
+are you sure you want to delete this application ?	admin	id	Apakah Anda yakin ingin menghapus aplikasi ini?
 are you sure you want to delete this category ?	common	id	Anda yakin ingin menghapus kategori ini?
+are you sure you want to delete this group ?	admin	id	Apakah Anda yakin ingin menghapus grup ini?
 asynchronous timed services	admin	id	Asynchronous timed services
 authentication / accounts	admin	id	Otentikasi / Akoun
+available placeholders	admin	id	Penampung yang tersedia
 back to admin/grouplist	admin	id	Kembali ke Admin/Daftar Kelompok
 back to admin/userlist	admin	id	Kembali ke Admin/Daftar pengguna
 back to the list	admin	id	Kembali ke daftar
+backup directory %1 mounted as %2	admin	id	Direktori cadangan %1 dipasang sebagai %2
 bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
+blocking after wrong password	admin	id	Memblokir setelah kata sandi salah
 bottom	admin	id	Bawah
 calculate next run	admin	id	Calculate next run
 can change password	admin	id	Dapat mengubah kata sandi
 cancel testjob!	admin	id	Batalkan TestJob!
 categories list	admin	id	Daftar Kategori
 category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
+category '%1' deleted	admin	id	Kategori '%1' dihapus
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
@@ -128,10 +144,16 @@ change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
 change login screen message	admin	id	Ubah pesan pada layar utama
+change password for %1	admin	id	Ubah kata sandi untuk %1
+changelog	admin	id	Changelog
+changelog and versions	admin	id	Changelog dan versi
 children	admin	id	Anak
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
+configuration	admin	id	Konfigurasi
+configuration saved.	admin	id	Konfigurasi disimpan.
 continue	admin	id	Lanjutkan
+copy of	admin	id	Salinan dari
 could not open secure connection to the imap server. %s : %s.	admin	id	Tidak dapat membuka koneksi aman ke server IMAP. %s : %s.
 country	admin	id	Negara
 country selection	admin	id	Pemilihan Negara
@@ -144,15 +166,27 @@ crontab only (recomended)	admin	id	Hanya crontab (rekomendasi)
 custom 1	admin	id	Kustom 1
 custom 2	admin	id	Kustom 2
 custom 3	admin	id	Kustom 3
+custom egroupware bold web font as woff2 file	admin	id	Font web EGroupware Bold khusus sebagai file woff2
+custom egroupware web font as woff2 file	admin	id	Font web EGroupware kustom sebagai file woff2
 custom fields	admin	id	Bidang khusus
+custom fields tab	admin	id	Tab bidang khusus
+custom translation	admin	id	Terjemahan khusus
+customfield '%1' added	admin	id	Bidang khusus '%1' ditambahkan.
+customfield '%1' deleted	admin	id	Bidang khusus '%1' dihapus.
+customfield '%1' modified	admin	id	Kolom khusus '%1' dimodifikasi.
+customfield deleted	admin	id	Bidang khusus dihapus.
+customfield saved.	admin	id	Bidang khusus disimpan.
 cyrus imap server	admin	id	Server Cyrus IMAP
 cyrus imap server administration	admin	id	Administrasi server Cyrus IMAP
 data	admin	id	Data
+data from	admin	id	Data dari
 day	admin	id	Hari
 day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
+db backup and restore	admin	id	Pencadangan dan pemulihan DB
 default	admin	id	Bawaan
 deinstall crontab	admin	id	Deinstall crontab
 delete account	admin	id	Hapus akoun
+delete account %1	admin	id	Hapus akun %1
 delete account %s	admin	id	Hapus akoun %s
 delete all records	admin	id	Hapus semua Rekaman
 delete application	admin	id	Hapus aplikasi
@@ -169,16 +203,22 @@ delete this user	admin	id	Hapus pengguna ini
 deleted	admin	id	terhapus
 deletes this field	admin	id	Hapus field ini
 deliver extern	admin	id	Pengiriman eksternal
-deny access	admin	id	Deny Access
+deny access	admin	id	Menolak akses
+deny access to access log	admin	id	Menolak akses ke log akses
+deny access to db backup and restore	admin	id	Menolak akses ke pencadangan dan pemulihan DB
+deny all users access to create and manage private categories ?	admin	id	Menolak akses semua pengguna untuk membuat dan mengelola kategori pribadi
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	Menentukan urutan field ditampilkan
 disable	admin	id	Nonaktifkan
-disable wysiwyg-editor	admin	id	Nonaktifkan editor WYSIWYG
+disable pgp encryption (mailvelope)	admin	id	Menonaktifkan enkripsi PGP (Mailvelope)
+disabled	admin	id	Dinonaktifkan
 disabled (not recomended)	admin	id	Dinonaktifkan (tidak disarankan)
 display	admin	id	Tampilan
+displayed length of input field (set rows=1 to limit length)	admin	id	Menampilkan panjang bidang input yang ditampilkan (setel baris = 1 untuk membatasi panjang)
 document root (default)	admin	id	Document root (default)
 domainname	admin	id	Nama Domain
 down	admin	id	Turun
+download csv	admin	id	Unduh CSV
 edit account	admin	id	Edit akoun
 edit application	admin	id	Edit aplikasi
 edit email settings	admin	id	Edit pengaturan email
@@ -208,13 +248,16 @@ encrypted connection	admin	id	Koneksi ter-enkripsi
 encryption settings	admin	id	Pengaturan Enkripsi
 enter your default mail domain (from: user@domain)	admin	id	Berikan nama domain email anda (dari: pengguna@domain)
 entry saved	admin	id	Entri disimpan
-error saving	admin	id	Error menyimpan
+error saving	admin	id	Error menyimpan!
 error saving account!	admin	id	Error menyimpan akoun!
 error saving the entry!!!	admin	id	Kesalahan menyimpan entri!
 event details follow	admin	id	Berikut adalah detil Kegiatan
 expires	admin	id	Kadaluarsa
+failed to change password for account "%1"!	admin	id	Gagal mengubah kata sandi untuk akun "%1"!
 failed to change password.	admin	id	Gagal mengubah password.
+failed to mount backup directory!	admin	id	Gagal memasang direktori Cadangan!
 false	admin	id	Salah
+field '%1' already exists !!!	admin	id	Bidang '%1' sudah ada!
 file space	admin	id	Ruang file
 filtered by account	admin	id	Saringan menurut Akoun
 filtered by group	admin	id	Saringan menurut Kelompok
@@ -223,10 +266,11 @@ full name	admin	id	Nama Lengkap
 general	admin	id	Umum
 global categories	common	id	Kategori Global
 global options	admin	id	Opsi Global
+group '%1' deleted.	admin	id	Grup '%1' dihapus.
 group ?	admin	id	Kelompok?
-group has been added	common	id	Kelompok telah dibuat
-group has been deleted	common	id	Kelompok telah dihapus
-group has been updated	common	id	Kelompok telah dikinikan
+group has been added	common	id	Kelompok telah dibuat.
+group has been deleted	common	id	Kelompok telah dihapus.
+group has been updated	common	id	Grup telah diperbarui.
 group list	admin	id	Daftar Kelompok
 group manager	admin	id	Manajer Kelompok
 group name	admin	id	Nama Kelompok
@@ -236,6 +280,7 @@ home directory	admin	id	Direktori rumah
 home screen message	admin	id	Pesan layar utama
 host information	admin	id	Informasi host
 hour<br>(0-23)	admin	id	Jam<br>(0-23)
+html/plaintext	admin	id	HTML/Teks
 icon	admin	id	Ikon
 idle	admin	id	Menganggur
 imap admin password	admin	id	Password admin IMAP
@@ -254,6 +299,8 @@ installed applications	common	id	Aplikasi terpasang
 installed crontab	admin	id	Crontab yang sudah diinstal
 instance	admin	id	Contoh
 interface	admin	id	Antarmuka
+internal name max. 64 chars	admin	id	Nama internal maks. 64 karakter
+invalid format, must end in a group of digits e.g. %1 or %2	admin	id	Format tidak valid, harus diakhiri dengan sekelompok digit, misalnya %1 atau %2
 ip	admin	id	IP
 jobs	admin	id	Jobs
 kill	admin	id	Kill
@@ -288,6 +335,7 @@ login message	admin	id	Login message
 login screen	admin	id	Login screen
 login shell	admin	id	Login shell
 login time	admin	id	Login Time
+login-id	admin	id	Login ID
 login-status	admin	id	Login-Status
 loginid	admin	id	Login ID
 logintime	admin	id	Waktu masuk
@@ -304,6 +352,7 @@ modified	admin	id	Diubah
 month	admin	id	Bulan
 more secure	admin	id	Lebih aman
 name of organisation	admin	id	Nama Organisasi
+name of tab to create and show field in	admin	id	Nama tab untuk membuat dan menampilkan field
 new group name	admin	id	Nama kelompok baru
 new name	admin	id	Nama baru
 next run	admin	id	Jalankan berikutnya
@@ -329,7 +378,7 @@ own install id	admin	id	ID penginstalan sendiri
 own install id:	admin	id	Memiliki ID penginstalan sendiri:
 passthrough	admin	id	Passthrough
 password for smtp-authentication	admin	id	Password for SMTP-authentication
-password updated	admin	id	Password updated
+password updated	admin	id	Password updated.
 path information	admin	id	Path information
 peer server list	admin	id	Peer server list
 peer servers	admin	id	Peer servers
@@ -358,24 +407,26 @@ requested	admin	id	Diminta
 reset filter	admin	id	Ulangi penyaringan
 rights	admin	id	Hak
 rows	admin	id	Rows
-save the category	admin	id	Simpan kategori ini
-saves the changes made and leaves	admin	id	Simpan perubahan dan tinggalkan
+save the category	admin	id	Simpan kategori ini.
+saves the changes made and leaves	admin	id	Simpan perubahan dan tinggalkan.
 saves this entry	admin	id	Simpan entri ini
 search accounts	admin	id	Cari akoun
 search categories	admin	id	Cari kategori
 search groups	admin	id	Cari kelompok
 search peer servers	admin	id	Cari peer servers
 security	admin	id	Kemanan
+select accounts for which the custom field should be visible	admin	id	Pilih akun yang bidang kustomnya hanya boleh dibaca
 select group managers	admin	id	Pilih Manajer Kelompok
 select type of imap server	admin	id	Pilih tipe Server IMAP
 select type of imap/pop3 server	admin	id	Pilih tipe Server IMAP/POP3
 select type of smtp server	admin	id	Pilih tipe Server SMTP
 selectbox	admin	id	Pilih kotak
 send using this email-address	admin	id	Kirim menggunakan alamat eMail ini
+serial number	admin	id	Nomor seri
 server list	admin	id	Server List
 server password	admin	id	Server Password
 server settings	admin	id	Pengaturan Server
-server type(mode)	admin	id	Server Type(mode)
+server type(mode)	admin	id	Server Type (mode)
 server url	admin	id	Server URL
 server username	admin	id	Server Username
 set preference values.	admin	id	Set preference values.
@@ -405,11 +456,10 @@ start testjob!	admin	id	Mulai pekerjaan tes!
 starts with	admin	id	Diawali dengan
 stationery	admin	id	Stationery
 submit changes	admin	id	Submit Changes
-submit displayed information?	admin	id	Submit displayed information?
+submit displayed information?	admin	id	Submit displayed information
 submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
-subversion checkout	admin	id	Subversion checkout
 success	admin	id	Sukses
 template selection	admin	id	Pemilihan Templat
 templates	admin	id	Templat
@@ -429,7 +479,6 @@ two hours	admin	id	Dua jam
 two months	admin	id	Dua bulan
 two weeks	admin	id	Dua minggu
 type of customfield	admin	id	Jenis bidang khusus
-unexpected response from server to login command.	admin	id	Respons yang tidak diharapkan dari server terhadap perintah LOGIN.
 unknown account: %1 !!!	admin	id	Akoun takdikenal: %1!
 unknown command %1!	admin	id	Perintah %1 tak dikenal!
 unknown option %1	admin	id	Opsi %1 tak dikenal
@@ -437,6 +486,7 @@ up	admin	id	Naik
 update current email address:	admin	id	Memperbarui alamat email saat ini:
 updated	admin	id	Dikinikan
 use default	admin	id	Gunakan bawaan
+use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	id	gunakan opsi berikut:\nnoVfsSelect=1\nmime=application/pdf atau /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	id	Gunakan tema
 user accounts	admin	id	Akoun pengguna
 user data	common	id	Data Pengguna
@@ -456,5 +506,6 @@ view this user	admin	id	lihat pengguna ini
 view user account	admin	id	Lihat akoun pengguna
 virtual mail manager	admin	id	Virtual MAIL ManaGeR
 xml-rpc	admin	id	XML-RPC
+you can set an initial value, which gets incremented every time a new serial get generated	admin	id	Anda dapat menetapkan nilai awal, yang akan bertambah setiap kali serial baru dibuat
 your name	admin	id	Nama Anda
 your session could not be verified.	admin	id	Sesi anda tidak dapat diperiksa.

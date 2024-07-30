@@ -41,7 +41,6 @@ access by	admin	es-es	Acceso por
 access control	admin	es-es	Control de acceso
 access to %1 data by others	admin	es-es	Acceso a datos %1 por otros
 access token revoked.	admin	es-es	Token de acceso revocado.
-accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
 account	admin	es-es	Cuenta
 account "%1" has no email address --> not notified!	admin	es-es	La cuenta "%1" no tiene correo --> ¡no se notifica!
 account "%1" has no plaintext password!	admin	es-es	¡La cuenta "%1" NO tiene la contraseña en texto claro!
@@ -133,7 +132,6 @@ anonymous user	admin	es-es	Usuario anónimo
 anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en la lista de sesiones).
 anonymous user does not exist!	admin	es-es	¡El usuario anónimo no existe!
 anonymous user has no run-rights for the application!	admin	es-es	¡El usuario anónimo NO tiene derecho de ejecución para la aplicación!
-anonymous user. not shown in list sessions.	admin	es-es	Usuario anónimo. No se muestra en la lista de sesiones.
 any application	admin	es-es	Cualquier aplicación
 any group	admin	es-es	Cualquier grupo
 any user	admin	es-es	Calquier usuario
@@ -165,10 +163,6 @@ async services last executed	admin	es-es	Últimos servicios asíncronos ejecutad
 asynchronous timed services	admin	es-es	Servicios asíncronos programados
 asyncservices not yet installed or other error (%1) !!!	admin	es-es	¡Los servicios asíncronos todavía no están instalados, u otro error (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	es-es	Intentar usar el tipo MIME correcto para FTP en vez de 'application/octet-stream'.
-attribute accountstatus explained	admin	es-es	Esto maneja el atributo <b><i>-accountStatus-</i></b> del esquema de QMAIL.
-attribute mail explained	admin	es-es	Esto maneja el atributo <b><i>-mail-</i></b> del esquema de QMAIL y no debe estar vacío. También es el campo para correo electrónico interno de EGw.
-attribute mailalternateaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailAlternateAddress-</i></b> del esquema de QMAIL y puede manejarse como mapas virtuales o alias.
-attribute mailforwardingaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailForwardingAddress-</i></b> del esquema de QMAIL y no debe estar vacío si está asignado.
 attributes	admin	es-es	Atributos Atributos
 authentication	admin	es-es	Autenticación
 authentication / accounts	admin	es-es	Identificación | Cuentas
@@ -274,10 +268,10 @@ custom egroupware web font as woff2 file	admin	es-es	Tipografía web EGroupware 
 custom fields	admin	es-es	Campos personalizados
 custom fields tab	admin	es-es	pestaña de campos personalizados
 custom translation	admin	es-es	Traducción personalizadas
-customfield '%1' added	admin	es-es	Se agregó el campo personalizado '%1'
-customfield '%1' deleted	admin	es-es	Se suprimió el campo personalizado '%1'
-customfield '%1' modified	admin	es-es	Se modificó el campo personalizado '%1'
-customfield deleted	admin	es-es	Campo personalizado suprimido
+customfield '%1' added	admin	es-es	Se agregó el campo personalizado '%1'.
+customfield '%1' deleted	admin	es-es	Se suprimió el campo personalizado '%1'.
+customfield '%1' modified	admin	es-es	Se modificó el campo personalizado '%1'.
+customfield deleted	admin	es-es	Campo personalizado suprimido.
 customfield saved.	admin	es-es	Campo personalizado grabado.
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
 cyrus imap server administration	admin	es-es	Administración del servidor IMAP Cyrus
@@ -345,7 +339,6 @@ disable "auto completion" of the login form	admin	es-es	Deshabilitar completado 
 disable all	admin	es-es	Deshabilitar todo
 disable minifying of javascript and css files	admin	es-es	Deshabilitar la reducción de archivos JavaScript y CSS
 disable pgp encryption (mailvelope)	admin	es-es	Deshabilitar el cifrado PGP (Mailvelope)
-disable wysiwyg-editor	admin	es-es	Deshabilitar editor WYSIWYG
 disabled	admin	es-es	Deshabilitado
 disabled (not recomended)	admin	es-es	Deshabilitado (no se recomienda)
 disabled, do not show on login page	admin	es-es	deshabilitado, no se muestra en la página de inicio de sesión
@@ -402,11 +395,7 @@ enable cyrus imap server administration	admin	es-es	Activar administración del 
 enable debug-messages	admin	es-es	Activar mensajes de depuración.
 enable sieve	admin	es-es	Activar Sieve
 enable spellcheck in rich text editor	admin	es-es	Activar el corrector ortográfico en el editor de texto enriquecido
-enable the soap service	admin	es-es	Activar el servicio SOAP.
-enable the xmlrpc service	admin	es-es	Activar el servicio XML-RPC.
 enabled	admin	es-es	Activado
-enabled - hidden from navbar	admin	es-es	Activado - Esconder de la barra de navegación
-enabled - popup window	admin	es-es	Activado - Ventana emergente
 encrypted connection	admin	es-es	Conexión cifrada
 encryption	admin	es-es	Cifrado
 encryption settings	admin	es-es	Configuración del cifrado
@@ -428,7 +417,6 @@ enter the title for your site	admin	es-es	Introduzca el título para su sitio
 enter the title of your logo	admin	es-es	Introduzca el título de su logo
 enter the url where your logo should link to	admin	es-es	Introduzca la url a donde apunte el logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	es-es	Introduzca la ruta VFS donde están las imágenes, iconos o logos adicionales (encontrados por las aplicaciones EGroupware).<br>La ruta DEBE comenzar con / y tener permiso de lectura para todos los usuarios
-enter your default ftp server	admin	es-es	Introduzca su servidor FTP predeterminado
 enter your default mail domain ( from: user@domain )	admin	es-es	Introduzca su dominio de correo predeterminado ( De: usuario@dominio )
 enter your default mail domain (from: user@domain)	admin	es-es	Introduzca el dominio predeterminado (de usuario@dominio)
 enter your http proxy server	admin	es-es	Introduzca su servidor proxy HTTP
@@ -459,7 +447,6 @@ event details follow	admin	es-es	A continuación, los detalles del evento
 exists	admin	es-es	Existe
 expired	admin	es-es	Expirado
 expires	admin	es-es	Expira
-explanation of ldapman	admin	es-es	Este módulo ha sido probado en POSTFIX, LDAP, Courier-IMAP y necesita los esquemas CORE y QMAIL (OID7914). Más detalles sobre el uso y configuración de este sistema puede encontrarse en el fichero README.ldapman en el directorio doc de ADMIN.
 export certificate as p12	admin	es-es	Exportar certificado como p12
 exports groups into a csv file.	admin	es-es	Exporta los grupos a un archivo CSV.
 exports permission settings into a csv file.	admin	es-es	Exporta la configuración de permisos a un archivo CSV.
@@ -499,9 +486,6 @@ git clone	admin	es-es	Clon de git
 global categories	common	es-es	Categorías globales
 global options	admin	es-es	Opciones globales
 go directly to admin menu, returning here the next time you click on administration.	admin	es-es	Ir directamente al menú de administración, volviendo aquí la próxima vez que pulse en administración.
-google recaptcha	admin	es-es	Google recaptcha
-google recaptcha secret key	admin	es-es	Clave secreta de Google recaptcha
-google recaptcha site key	admin	es-es	Clave del sitio de Google recaptcha
 governmental: incl. state or municipal authorities or services	admin	es-es	Gubernamental: incluye estado o autoridades municipales o servicios
 grant	admin	es-es	Conceder acceso
 group #%1 must have negative sign!	admin	es-es	¡El grupo nº %1 debe tener un signo negativo!
@@ -534,7 +518,7 @@ how username get constructed	admin	es-es	Cómo se construye el nombre de usuario
 html/plaintext	admin	es-es	HTML/Texto
 icon	admin	es-es	Icono
 identity	admin	es-es	Identidad
-identity deleted	admin	es-es	Identidad suprimida
+identity deleted	admin	es-es	Identidad suprimida.
 identity saved.	admin	es-es	Identidad grabada.
 idle	admin	es-es	Inactivo
 if different from email address	admin	es-es	si es diferente de la dirección de correo-e
@@ -646,7 +630,6 @@ mail settings	admin	es-es	Configuración del correo.
 main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
 manage mapping	admin	es-es	Gestión de mapeos
-manage stationery templates	admin	es-es	Gestionar plantillas preimpresas
 manager	admin	es-es	Administrador
 manual entry	admin	es-es	Entrada manual
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	ID máximo de cuenta (ej. 65535 o 1000000)
@@ -757,8 +740,6 @@ plesk imap server (courier)	admin	es-es	Servidor IMAP Plesk (Courier)
 plesk mail script '%1' not found !!!	admin	es-es	¡No se encontró el script de correo de Plesk '%1'!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	es-es	Plesk requiere que las contraseñas tengan al menos 5 caracteres y no contengan el nombre de la cuenta --> ¡NO se establece la contraseña!
 plesk smtp-server (qmail)	admin	es-es	Servidor SMTP de Plesk (Qmail)
-pop3 server hostname or ip address	admin	es-es	Nombre del servidor POP3 o dirección IP
-pop3 server port	admin	es-es	Puerto del servidor POP3
 port	admin	es-es	Puerto
 postfix with ldap	admin	es-es	Postfix con LDAP
 postpone for	admin	es-es	Posponer durante
@@ -794,7 +775,6 @@ revoke	admin	es-es	Revocar
 revoke this token	admin	es-es	Revocar este token
 revoked	admin	es-es	Revocado
 rights	admin	es-es	Derechos
-route all mails to	admin	es-es	Dirigir todos los correos a
 rows	admin	es-es	Filas
 rpm or debian package	admin	es-es	Paquete RPM o deb
 run	admin	es-es	ejecutar
@@ -851,7 +831,6 @@ set preference values.	admin	es-es	Establecer valores para las preferencias.
 settings	admin	es-es	Configuraciones
 should exceptions contain a trace (including function arguments)	admin	es-es	Las excepciones deben contener una traza (incluyendo argumentos de funciones).
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
-show 'powered by' logo on	admin	es-es	Mostrar logo de 'Powered by' en
 show access log	admin	es-es	Mostrar registro de acceso
 show as optional, but required once user has it setup	admin	es-es	Se muestra como opcional, pero se requiere una vez que el usuario lo tiene configurado
 show as required, but only once user has it setup	admin	es-es	Mostrar según sea necesario, pero solo una vez que el usuario lo tiene configurado
@@ -883,7 +862,6 @@ ssl	admin	es-es	SSL
 standard	admin	es-es	Estándar
 standard identity	admin	es-es	Identidad estándar
 standard imap server	admin	es-es	Servidor IMAP estándar
-standard pop3 server	admin	es-es	Servidor POP3 estándar
 standard smtp-server	admin	es-es	Servidor SMTP estándar
 start	admin	es-es	Inicio
 start testjob!	admin	es-es	¡Iniciar el trabajo de prueba!
@@ -896,7 +874,6 @@ submit statistic information	admin	es-es	Enviar información estadística
 submit the search string	admin	es-es	Enviar la cadena de búsqueda
 submit to egroupware.org	admin	es-es	Enviar a egroupware.org
 subtype	admin	es-es	Subtipo
-subversion checkout	admin	es-es	Checkout de subversion
 success	admin	es-es	Correcto
 successful connected to %1 server%2.	admin	es-es	Conectado correctamente al %1 servidor %2.
 successfull, but no refresh-token received!	admin	es-es	Con éxito, ¡pero NO se ha recibido ningún refresh-token!
@@ -937,7 +914,6 @@ this is a mail account for all users!	admin	es-es	¡Esta es una cuenta de correo
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	es-es	Esta NO es una cuenta de correo personal!<br>La cuenta será eliminada para TODOS los usuarios!<br>¿Estás realmente seguro de que quieres hacer eso?
 this key used in the html code your site serves to users.	admin	es-es	Esta clave se utiliza en el código HTML que su sitio sirve a los usuarios.
 this php has no imap support compiled in!!	admin	es-es	¡Esta instalación de PHP no tiene soporte IMAP!
-this secret key used for communication between your site and google. be sure to keep it a secret.	admin	es-es	Esta clave secreta utilizada para la comunicación entre su sitio y Google. Asegúrese de mantenerla en secreto.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	es-es	Tiempo límite para los datos de la sesión de la aplicación en segundos (por defecto 86400 = 1 día)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	es-es	Tiempo límite para las sesiones en segundos (por defecto 14400 = 4 horas)
 times	admin	es-es	Horas
@@ -962,9 +938,6 @@ type '%1' already exists !!!	admin	es-es	¡El tipo '%1' ya existe!
 type of customfield	admin	es-es	Tipo de campo personalizado
 type of field	admin	es-es	Tipo de campo
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En MS Windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
-unexpected response from server to authenticate command.	admin	es-es	Respuesta inesperada del servidor al comando AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	es-es	Respuesta inesperada del servidor a la respuesta Digest-MD5.
-unexpected response from server to login command.	admin	es-es	Respuesta inesperada del servidor al comando LOGIN.
 unknown account: %1 !!!	admin	es-es	¡La cuenta es desconocida: %1!
 unknown command %1!	admin	es-es	¡Comando desconocido: %1!
 unknown imap response from the server. server responded: %s	admin	es-es	Respuesta IMAP desconocida del servidor. El servidor respondió: %s

@@ -140,12 +140,18 @@ event deleted	calendar	da	Aftale slettet
 event details follow	calendar	da	Hændelses detajler følger
 event saved	calendar	da	Aftale gemt
 event will occupy the whole day	calendar	da	Aftale vil vare hele dagen
+every user can invite other users and groups	admin	da	Alle brugere kan invitere andre brugere og grupper
 exception	calendar	da	Undtagelse
+exception created - you can now edit or delete it	calendar	da	Undtagelse oprettet - du kan nu redigere eller slette den.
 exceptions	calendar	da	Undtagelser
 exclude weekend	calendar	da	Ekskluder weekenden
 existing links	calendar	da	Eksisterende links
+explicit dates	calendar	da	Eksplicitte begivenheder
+exports events from your calendar in ical format.	calendar	da	Eksporterer begivenheder fra din kalender i iCal-format.
+exports events from your calendar into a csv file.	calendar	da	Eksporterer begivenheder fra din kalender til en CSV-fil.
 extended	calendar	da	Udvidet
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	da	Udvidet updateringer indeholder alle hændelses detaljerne. iCal's kan importeres af visse andre kalendersystemer.
+favorites	calendar	da	Favoritter
 fieldseparator	calendar	da	Felt separator
 filemanager	calendar	da	Filhåndtering
 filename	calendar	da	Filnavn
@@ -304,7 +310,6 @@ saves the event ignoring the conflict	calendar	da	Ignorér konflikt og gem aftal
 scheduling conflict	calendar	da	Aftale konflikt
 select a %1	calendar	da	Vælg en %1
 select a time	calendar	da	Vælg et tidspunkt
-select an action...	calendar	da	Vælg en handling ...
 select resources	calendar	da	Vælg ressourcer
 select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
 send notifications	calendar	da	Send notifikationer

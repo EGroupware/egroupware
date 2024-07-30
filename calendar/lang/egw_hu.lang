@@ -159,12 +159,16 @@ event deleted	calendar	hu	Esemény törölve.
 event details follow	calendar	hu	Esemény jellemzőinek követése
 event saved	calendar	hu	Esemény elmentve
 event will occupy the whole day	calendar	hu	Az esemény az egész napot lefoglalja
+every user can invite other users and groups	admin	hu	Minden felhasználó meghívhat más felhasználókat és csoportokat
 exception	calendar	hu	Kivétel
 exception created - you can now edit or delete it	calendar	hu	Kivétel létrehozva - most lehetősége van szerkeszteni vagy törölni.
 exceptions	calendar	hu	Kivételek
 exclude weekend	calendar	hu	Hétvége kizárása
 execute a further action for this entry	calendar	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	calendar	hu	Meglévő hivatkozások
+explicit dates	calendar	hu	Kifejezett események
+exports events from your calendar in ical format.	calendar	hu	Események exportálása a naptárból iCal formátumban.
+exports events from your calendar into a csv file.	calendar	hu	Események exportálása a naptárából CSV fájlba.
 extended	calendar	hu	Kibővített
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hu	Kibővített frissítések mindig tartalmazzák a komplett esemény-jellemzőket.
 favorites	calendar	hu	Kedvencek

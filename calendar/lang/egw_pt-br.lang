@@ -201,6 +201,7 @@ event details follow	calendar	pt-br	Seguem detalhes do evento
 event has been deleted by organizer!	calendar	pt-br	O evento foi excluído pelo organizador!
 event saved	calendar	pt-br	Evento salvo
 event will occupy the whole day	calendar	pt-br	Evento irá ocupar todo o dia
+events	common	pt-br	Eventos
 every user can invite other users and groups	admin	pt-br	Cada usuário pode convidar outros usuários e grupos
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	pt-br	Exemplo {{IF n_prefixo~Sr~Olá Sr.~Olá Sra.}} - pesquise no campo "n_prefixo", por "Sr.", se encontrado, escreva Olá Sr., caso contrário, escreva Olá Sra.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	pt-br	Exemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Exemplo: Sr. Dr. James Miller
@@ -213,6 +214,7 @@ exclude weekend	calendar	pt-br	Excluir fim de semana
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
 exists	calendar	pt-br	Existe
+explicit dates	calendar	pt-br	Eventos explícitos
 export definition to use for nextmatch export	calendar	pt-br	Definição Exportar para usar para exportação nextmatch
 exports events from your calendar in ical format.	calendar	pt-br	Exportações eventos do Calendário em formato iCal.
 exports events from your calendar into a csv file.	calendar	pt-br	Exportações eventos de seu calendário em um arquivo CSV.

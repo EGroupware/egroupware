@@ -247,6 +247,7 @@ exclude weekend	calendar	ru	Исключить выходные дни
 execute a further action for this entry	calendar	ru	Выполнить дальнейшее действие для этой записи
 existing links	calendar	ru	Существующие ссылки
 exists	calendar	ru	Существует
+explicit dates	calendar	ru	Явные события
 export definition to use for nextmatch export	calendar	ru	Определение экспорта для последующего использования
 exports events from your calendar in ical format.	calendar	ru	Экспортированные события из вашего Календаря в формате iCal
 exports events from your calendar into a csv file.	calendar	ru	Экспортированные события из вашего Календаря в CVS файл.
@@ -523,8 +524,6 @@ search string for the events	calendar	ru	Строка поиска для соб
 select a %1	calendar	ru	Выбрать %1
 select a color for this calendar	calendar	ru	Выбрать цвет для Календаря
 select a time	calendar	ru	Выбрать время
-select an action	calendar	ru	Выбор действия
-select an action...	calendar	ru	Выбор действия ...
 select multiple contacts for a further action	calendar	ru	Выбрать несколько контактов для дальнейших действий
 select resources	calendar	ru	Выбрать ресурсы
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	ru	Выберите, хотите ли Вы отменять статус участников, если событие переносится в Календаре по более позднее время.

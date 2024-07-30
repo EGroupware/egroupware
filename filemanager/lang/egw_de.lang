@@ -142,7 +142,6 @@ extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Ordner nicht anlegen!
-favorites	filemanager	de	Favoriten
 file	common	de	Datei
 file %1 already exists	filemanager	de	Es gibt schon eine Datei %1
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden

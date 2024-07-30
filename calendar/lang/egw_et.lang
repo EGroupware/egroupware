@@ -112,12 +112,17 @@ error: starttime has to be before the endtime !!!	calendar	et	Viga: Startimisaeg
 event deleted	calendar	et	Sündmus kustutatud
 event saved	calendar	et	Sündmus salvestatud
 event will occupy the whole day	calendar	et	Sündmus hõlmab tervet päeva
+every user can invite other users and groups	admin	et	Iga kasutaja saab kutsuda teisi kasutajaid ja gruppe
 exception	calendar	et	Erand
 exception created - you can now edit or delete it	calendar	et	Erand tehtud - võid nüüd muuta või kustutada seda
 exceptions	calendar	et	Erandid
 exclude weekend	calendar	et	Välja arvatud nädalavahetus
 existing links	calendar	et	Eksisteerivad lingid
+explicit dates	calendar	et	Selged sündmused
+exports events from your calendar in ical format.	calendar	et	Ekspordib sündmused oma kalendrist iCal-vormingus.
+exports events from your calendar into a csv file.	calendar	et	Ekspordib sündmused oma kalendrist CSV-faili.
 extended	calendar	et	Laiendatud
+favorites	calendar	et	Lemmikud
 fieldseparator	calendar	et	Väljaeraldaja
 filename	calendar	et	Failinimi
 firstname of person to notify	calendar	et	Eesnimi persoonist kedllele teatatakse

@@ -167,7 +167,6 @@ custom	addressbook	it	Personalizzato
 custom etemplate for the contactform	addressbook	it	Template personalizzato per il modulo di contatto
 custom fields	addressbook	it	Campi Personalizzati
 data exchange settings	addressbook	it	Impostazioni di scambio dati
-debug output in browser	addressbook	it	Visualizza nel browser
 default	addressbook	it	Predefinito
 default action on double-click	addressbook	it	Azione predefinita al doppio click
 default address format	addressbook	it	Formato indirizzo predefinito
@@ -255,7 +254,6 @@ extra encodings	addressbook	it	Codifiche extra
 extra private	addressbook	it	Extra privato
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	it	Permessi insufficenti per modificare %1 membri dell'organizzazione!
 favorite phone	addressbook	it	Telefono preferito
-favorites	addressbook	it	Preferiti
 fax	addressbook	it	Fax
 fax (private)	addressbook	it	Fax (privato)
 fax number	common	it	Numero Fax
@@ -315,7 +313,6 @@ import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or vCard
 import from outlook	addressbook	it	Importa da Outlook
 import multiple vcard	addressbook	it	Importa Molteplici vCard
 import next set	addressbook	it	Import il prossimo set
-import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>. Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV). <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>. Il file verrà esportato in formato vCard.
 importer's personal	addressbook	it	Personale dell'account importatore
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	it	Importa i contatti da file CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni sarà possibile selezionare anche altri separatori.
 imports contacts into your addressbook from a vcard file.	addressbook	it	Importa contatti nella tua rubrica da un file vCard.
@@ -379,7 +376,6 @@ name of current user, all other contact fields are valid too	addressbook	it	Nome
 name, address	addressbook	it	Nome, Indirizzo
 name, email, phone	addressbook	it	Nome, e-mail, telefono
 new contact submitted by %1 at %2	addressbook	it	Nuovo contatto inviato da %1 alle %2
-new window opened to edit infolog for your selection	addressbook	it	Nuova finestra aperta per modificare la scheda di Attività
 next date	addressbook	it	Prossima data
 no categories selected	addressbook	it	Nessuna categoria selezionata
 no country selected	addressbook	it	Nessun paese selezionato
@@ -450,14 +446,10 @@ select a source address to be used in geolocation routing system	addressbook	it	
 select a view	addressbook	it	Seleziona una vista
 select addressbook type	addressbook	it	Seleziona il tipo di rubrica
 select all	addressbook	it	Seleziona tutto
-select an action or addressbook to move to	addressbook	it	Seleziona una azione o una rubrica per lo spostamento
-select an action or addressbook to move to...	addressbook	it	Seleziona una azione o una rubrica per lo spostamento ...
 select an opened dialog	addressbook	it	Seleziona una finestra di dialogo aperta
 select migration type	admin	it	Seleziona tipo di migrazione
 select multiple contacts for a further action	addressbook	it	Seleziona contatti multipli per azioni ulteriori
 select phone number as prefered way of contact	addressbook	it	Seleziona il numero di telefono come modalità di contatto preferita
-select the type of conversion	addressbook	it	Seleziona il tipo di conversione
-select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store / retrieve contacts	admin	it	Seleziona dove vuoi registrare / recuperare i contatti
 selected contacts	addressbook	it	Contatti selezionati
 send emailcopy to receiver	addressbook	it	Invia copia al destinatario

@@ -247,6 +247,7 @@ exclude weekend	calendar	sk	Vylúčiť víkend
 execute a further action for this entry	calendar	sk	Vykonať ďalšiu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 exists	calendar	sk	Existuje
+explicit dates	calendar	sk	Explicitné udalosti
 export definition to use for nextmatch export	calendar	sk	Exportná definícia pre použitie v exporte
 exports events from your calendar in ical format.	calendar	sk	Exportuje udalosti z vášho Kalendára vo formáte iCal.
 exports events from your calendar into a csv file.	calendar	sk	Exportuje udalosti z vášho Kalendára do súboru CSV.
@@ -523,8 +524,6 @@ search string for the events	calendar	sk	Hľadať reťazec pre udalosti
 select a %1	calendar	sk	Vybrať %1
 select a color for this calendar	calendar	sk	Vyberte farbu pre kalendár
 select a time	calendar	sk	Vybrať čas
-select an action	calendar	sk	Vyberte akciu
-select an action...	calendar	sk	Vyberte akciu ...
 select multiple contacts for a further action	calendar	sk	Vyberte viacero kontaktov pre budúcu akciu
 select resources	calendar	sk	Vybrať zdroje
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	sk	Vyberte si, či sa pri posune udalosti má vynulovať stanovisko účastníkov na neznáme.

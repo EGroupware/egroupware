@@ -60,7 +60,6 @@ extended access control list	filemanager	pt	Lista de controlo de acesso alargada
 extended acl	filemanager	pt	ACL alargada
 failed to change permissions of %1!	filemanager	pt	Falha ao alterar as permissões de %1!
 failed to create directory!	filemanager	pt	Falha ao criar pasta!
-favorites	filemanager	pt	Favoritos
 file	common	pt	Ficheiro
 file %1 already exists	filemanager	pt	O ficheiro %1 já existe
 file %1 could not be created.	filemanager	pt	O ficheiro %1 não pôde ser criado.
