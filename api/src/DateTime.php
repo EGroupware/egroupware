@@ -377,7 +377,15 @@ class DateTime extends \DateTime
 			case 'integer':
 			case 'ts':
 				// EGroupware's integer timestamp is NOT the usual UTC timestamp, but has a timezone offset applied!
-				return mktime(parent::format('H'),parent::format('i'),parent::format('s'),parent::format('m'),parent::format('d'),parent::format('Y'));
+				// calendar_ical unfortunately sets different timezones, breaking all sorts of things, if we're not setting the TZ back to our server-timezone
+				if (date_default_timezone_get() !== self::$server_timezone->getName())
+				{
+					$tz_backup = date_default_timezone_get();
+					date_default_timezone_set(self::$server_timezone->getName());
+				}
+				$ret = mktime(parent::format('H'),parent::format('i'),parent::format('s'),parent::format('m'),parent::format('d'),parent::format('Y'));
+				if (isset($tz_backup)) date_default_timezone_set($tz_backup);
+				return $ret;
 			case 'utc':	// alias for "U" / timestamp in UTC
 				return $this->getTimestamp();
 			case 'object':

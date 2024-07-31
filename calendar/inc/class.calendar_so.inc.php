@@ -59,15 +59,15 @@ if (!defined('WEEK_s')) define('WEEK_s',7*DAY_s);
  * Class to store all calendar data (storage object)
  *
  * Tables used by calendar_so:
- *	- egw_cal: general calendar data: cal_id, title, describtion, locations, range-start and -end dates
- *	- egw_cal_dates: start- and enddates (multiple entry per cal_id for recuring events!), recur_exception flag
+ *	- egw_cal: general calendar data: cal_id, title, description, locations, range-start and -end dates
+ *	- egw_cal_dates: start- and enddates (multiple entry per cal_id for recurring events!), recur_exception flag
  *	- egw_cal_user: participant info including status (multiple entries per cal_id AND startdate for recuring events)
  * 	- egw_cal_repeats: recur-data: type, interval, days etc.
  *  - egw_cal_extra: custom fields (multiple entries per cal_id possible)
  *
  * The new UI, BO and SO classes have a strict definition, in which timezone they operate:
  *  UI only operates in user-time, so there have to be no conversation at all !!!
- *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
+ *  BO's functions take and return user-time only (!), they convert internally everything to servertime, because
  *  SO operates only on server-time
  *
  * DB-model uses egw_cal_user.cal_status='X' for participants who got deleted. They never get returned by
@@ -79,19 +79,23 @@ if (!defined('WEEK_s')) define('WEEK_s',7*DAY_s);
  * All update methods now take care to update modification time of (evtl. existing) series master too,
  * to force an etag, ctag and sync-token change! Methods not doing that are private to this class.
  *
- * range_start/_end in main-table contains start and end of whole event series (range_end is NULL for unlimited recuring events),
- * saving the need to always join dates table, to query non-enumerating recuring events (like CalDAV or ActiveSync does).
- * This effectivly stores MIN(cal_start) and MAX(cal_end) permanently as column in main-table and improves speed tremendiously
- * (few milisecs instead of more then 2 minutes on huge installations)!
+ * range_start/_end in main-table contains start and end of whole event series (range_end is NULL for unlimited recurring events),
+ * saving the need to always join dates table, to query non-enumerating recurring events (like CalDAV or ActiveSync does).
+ * This effectively stores MIN(cal_start) and MAX(cal_end) permanently as column in main-table and improves speed tremendously
+ * (few millisecond instead of more than 2 minutes on huge installations)!
  * It's set in calendar_so::save from start and end or recur_enddate, so nothing changes for higher level classes.
  *
- * egw_cal_user.cal_user_id contains since 14.3.001 only an md5-hash of a lowercased raw email address (not rfc822 address!).
+ * egw_cal_user.cal_user_id contains since 14.3.001 only a md5-hash of a lowercased raw email address (not rfc822 address!).
  * Real email address and other possible attendee information for iCal or CalDAV are stored in cal_user_attendee.
  * This allows a short 32byte ascii cal_user_id and also storing attendee information for accounts and contacts.
  * Outside of this class uid for email address is still "e$cn <$email>" or "e$email".
  * We use calendar_so::split_user($uid, &$user_type, &$user_id, $md5_email=false) with last param true to generate
  * egw_cal_user.cal_user_id for DB and calendar_so::combine_user($user_type, $user_id, $user_attendee) to generate
  * uid used outside of this class. Both methods are unchanged when using with their default parameters.
+ *
+ * Whole-day-events are stored with a start-time of 00:00:00 and an end-time of 23:59:59 in the server-timezone.
+ * They are logically understood as floating-date events, so in whatever timezone they occur the whole day!
+ * There is NO flag in the schema for whole-day events, they are detected by having the above start- and end-times.
  *
  * @ToDo drop egw_cal_repeats table in favor of a rrule colum in main table (saves always used left join and allows to store all sorts of rrules)
  */
@@ -480,7 +484,7 @@ class calendar_so
 			}
 		}
 
-		// check if we have a real recurance, if not set $recur_date=0
+		// check if we have a real recurrence, if not set $recur_date=0
 		if (is_array($ids) || empty($events[(int)$ids]['recur_type']))
 		{
 			$recur_date = 0;
@@ -3053,7 +3057,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Check if the event is the whole day
 	 *
 	 * @param array $event event (all timestamps in servertime)
-	 * @return boolean true if whole day event within its timezone, false othwerwise
+	 * @return boolean true if whole day event within its timezone, false otherwise
 	 */
 	function isWholeDay($event)
 	{
@@ -3072,27 +3076,27 @@ ORDER BY cal_user_type, cal_usre_id
 			$timezone = self::$tz_cache[$event['tzid']];
 		}
 		$start_time = new Api\DateTime($event['start'],Api\DateTime::$server_timezone);
-		$start_time->setTimezone($timezone);
 		$end_time = new Api\DateTime($event['end'],Api\DateTime::$server_timezone);
+		// by our schema-definition whole-day means 00:00-23:59 in server-timezone
+		if ($start_time->format('H:i') === '00:00' && $end_time->format('H:i') === '23:59')
+		{
+			return true;
+		}
+		// as current code used the event-timezone, lets check that too
+		$start_time->setTimezone($timezone);
 		$end_time->setTimezone($timezone);
-		//error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-		//	'(): ' . $start . '-' . $end);
-		$start = Api\DateTime::to($start_time,'array');
-		$end = Api\DateTime::to($end_time,'array');
-
-
-		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
+		return $start_time->format('H:i') === '00:00' && $end_time->format('H:i') === '23:59';
 	}
 
 	/**
 	 * Moves a datetime to the beginning of the day within timezone
 	 *
 	 * @param Api\DateTime	$time	the datetime entry
-	 * @param string tz_id		timezone
+	 * @param ?string $tz_id		timezone
 	 *
 	 * @return DateTime
 	 */
-	function &startOfDay(Api\DateTime $time, $tz_id=null)
+	function startOfDay(Api\DateTime $time, $tz_id=null)
 	{
 		if (empty($tz_id))
 		{

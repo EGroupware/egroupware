@@ -1559,15 +1559,8 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (!empty($event['end']))
 			{
-				$time = new Api\DateTime($event['end'], Api\DateTime::$user_timezone);
-
-				// Check to see if switching timezones changes the date, we'll need to adjust for that
-				$end_event_timezone = clone $time;
-				$time->setServer();
-				$delta = (int)$end_event_timezone->format('z') - (int)$time->format('z');
-				$time->add("$delta days");
-
-				$time->setTime(23, 59, 59);
+				$time = $this->so->startOfDay(new Api\DateTime($event['end'], Api\DateTime::$user_timezone));
+				$time->add('-1second');
 				$event['end'] = Api\DateTime::to($time, 'ts');
 				$save_event['end'] = $time;
 			}
@@ -1619,8 +1612,8 @@ class calendar_boupdate extends calendar_bo
 			{
 				if ($event['whole_day'])
 				{
-					$time = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone));
-					$date = Api\DateTime::to($time, 'ts');
+					// we use so->startOfDay(new Api\DateTime($time, Api\DateTime::$user_time)) as we not yet converted to server-time!
+					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->format('server');
 				}
 				else
 				{
@@ -1642,7 +1635,7 @@ class calendar_boupdate extends calendar_bo
 					$alarm['time'] = $this->date2ts($alarm['time'], true);    // user to server-time
 				}
 
-				// remove alarms belonging to not longer existing or rejected participants
+				// remove alarms belonging to no longer existing or rejected participants
 				if (!empty($alarm['owner']) && isset($expanded['participants']))
 				{
 					// Don't auto-delete alarm if for all users
