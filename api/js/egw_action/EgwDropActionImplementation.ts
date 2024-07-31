@@ -12,6 +12,7 @@ import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_EXEC_THIS} from "./egw_action_constants";
 import {egw_getObjectManager} from "./egw_action";
 import {getPopupImplementation} from "./EgwPopupActionImplementation";
+import {EgwActionObject} from "./EgwActionObject";
 
 export class EgwDropActionImplementation implements EgwActionImplementation {
     type: string = "drop";
@@ -20,10 +21,27 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
     private currentDropEl = null
 
 
-    registerAction: (_actionObjectInterface: any, _triggerCallback: Function, _context: object) => boolean =  (_aoi, _callback, _context)=> {
-        const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
-        const self:EgwDropActionImplementation = this;
-        if (node) {
+	registerAction : (_actionObjectInterface : any, _triggerCallback : Function, _context : EgwActionObject) => boolean = (_aoi, _callback, _context) =>
+	{
+		let parentNode = null;
+		let parentAO = null;
+		let isNew = false;
+		let node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+		const self : EgwDropActionImplementation = this;
+
+		// Is there a parent that handles action targets?
+		if(typeof _context.findActionTargetHandler !== "undefined" && typeof _context.findActionTargetHandler?.iface?.getWidget == "function")
+		{
+			parentAO = _context.findActionTargetHandler;
+			parentNode = parentAO.iface.getWidget();
+		}
+		if(!_aoi.findActionTargetHandler && parentNode && typeof parentNode.findActionTarget == "function")
+		{
+			_aoi.findActionTargetHandler = parentNode;
+		}
+
+		if(node)
+		{
 			if(typeof _aoi.handlers == "undefined")
 			{
 				_aoi.handlers = {};
@@ -46,7 +64,17 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 				event.stopPropagation();
 				event.preventDefault();
 
-                self.currentDropEl = event.currentTarget;
+				if(_aoi.findActionTargetHandler && typeof _aoi.findActionTargetHandler.findActionTarget === "function")
+				{
+					// Bubbling up to parent
+					const parentData = _aoi.findActionTargetHandler.findActionTarget(event);
+					self.currentDropEl = parentData.target ?? event.currentTarget;
+					_aoi = parentData.action.iface ?? _aoi;
+				}
+				else
+				{
+					self.currentDropEl = event.currentTarget;
+				}
                 event.dataTransfer.dropEffect = 'link';
 
                 const data = {
@@ -71,8 +99,15 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
                 if (!self.getTheDraggedDOM()) return;
 
+				let dropActionObject = _context;
+
                 // remove the hover class
                 this.classList.remove('drop-hover');
+
+				if(this.findActionTarget)
+				{
+					dropActionObject = this.findActionTarget(event).action ?? _context;
+				}
 
                 const helper = self.getHelperDOM();
                 let ui = self.getTheDraggedData();
@@ -82,7 +117,8 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 let data = JSON.parse(event.dataTransfer.getData('application/json'));
 
-                if (!self.isAccepted(data, _context, _callback,undefined) || self.isTheDraggedDOM(this)) {
+				if(!self.isAccepted(data, dropActionObject, _callback, undefined) || self.isTheDraggedDOM(this))
+				{
                     // clean up the helper dom
                     if (helper) helper.remove();
                     return;
@@ -93,7 +129,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 });
 
                 //links is an Object of DropActions bound to their names
-                const links = _callback.call(_context, "links", self, EGW_AO_EXEC_THIS);
+				const links = _callback.call(dropActionObject, "links", self, EGW_AO_EXEC_THIS);
 
                 // Disable all links which only accept types which are not
                 // inside ddTypes
@@ -133,7 +169,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                 if (cnt == 1) {
                     window.setTimeout(function () {
-                        lnk.actionObj.execute(selected, _context);
+						lnk.actionObj.execute(selected, dropActionObject);
                     }, 0);
                 }
 
@@ -152,7 +188,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
                     window.setTimeout(function () {
                         popup.executeImplementation(pos, selected, links,
-                            _context);
+							dropActionObject);
                         // Reset, popup is reused
                         popup.auto_paste = true;
                     }, 0); // Timeout is needed to have it working in IE
@@ -174,7 +210,14 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
                 if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this)) return;
 
-                const data = {
+				if(_aoi.findActionTargetHandler && typeof _aoi.findActionTargetHandler.findActionTarget === "function")
+				{
+					// Bubbling up to parent
+					const parentData = _aoi.getWidget().findActionTarget(event);
+					_aoi = parentData?.action?.iface ?? _aoi;
+				}
+
+				const data = {
                     event: event,
                     ui: self.getTheDraggedData()
                 };
@@ -187,18 +230,38 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 return false;
             };
 
-            // DND Event listeners
-            node.addEventListener('dragover', dragover, false);
-			_aoi.handlers[this.type].push({type: 'dragover', listener: dragover});
+			// Bind events on parent, if provided, instead of individual node
+			if(_aoi.findActionTargetHandler)
+			{
+				// But only bind once
+				if(parentAO && !parentAO.iface.handlers[this.type])
+				{
+					parentAO.iface.handlers[this.type] = parentAO.iface.handlers[this.type] ?? [];
+					// Swap objects, bind down below
+					_aoi = parentAO.iface;
+					node = parentAO.iface.getDOMNode();
+				}
+				else
+				{
+					return true;
+				}
+			}
 
-            node.addEventListener('dragenter', dragenter, false);
-			_aoi.handlers[this.type].push({type: 'dragenter', listener: dragenter});
+			if(_aoi.handlers[this.type].length == 0)
+			{
+				// DND Event listeners
+				node.addEventListener('dragenter', dragenter, false);
+				_aoi.handlers[this.type].push({type: 'dragenter', listener: dragenter});
 
-            node.addEventListener('drop', drop, false);
-			_aoi.handlers[this.type].push({type: 'drop', listener: drop});
+				node.addEventListener('dragleave', dragleave, false);
+				_aoi.handlers[this.type].push({type: 'dragleave', listener: dragleave});
 
-            node.addEventListener('dragleave', dragleave, false);
-			_aoi.handlers[this.type].push({type: 'dragleave', listener: dragleave});
+				node.addEventListener('dragover', dragover, false);
+				_aoi.handlers[this.type].push({type: 'dragover', listener: dragover});
+
+				node.addEventListener('drop', drop, false);
+				_aoi.handlers[this.type].push({type: 'drop', listener: drop});
+			}
 
             return true;
         }

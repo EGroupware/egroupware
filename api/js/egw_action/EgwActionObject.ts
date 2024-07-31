@@ -65,6 +65,13 @@ export class EgwActionObject {
     private readonly onBeforeTrigger: Function = undefined
     _context: any = undefined
 
+	/**
+	 * Some widgets handle DOM events for child objects, so we only bind one DOM event listener.
+	 * Set this in the child action object, pointing to the parent that will listen for the DOM events.
+	 * findActionTargetHandler must have an implementation of ActionTargetHandler
+	 */
+	public findActionTargetHandler : EgwActionObject
+
 
     constructor(_id: string, _parent, _interface:EgwActionObjectInterface, _manager?, _flags: number=0) {
         if (typeof _manager == "undefined" && typeof _parent == "object" && _parent) _manager = _parent.manager;

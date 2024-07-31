@@ -17,7 +17,6 @@ import {EgwActionImplementation} from "./EgwActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
 import {EgwPopupAction} from "./EgwPopupAction";
 import {egw} from "../jsapi/egw_global";
-import {Et2Tree} from "../etemplate/Et2Tree/Et2Tree";
 import {FindActionTarget} from "../etemplate/FindActionTarget";
 
 export class EgwPopupActionImplementation implements EgwActionImplementation {
@@ -26,38 +25,40 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     parent?: FindActionTarget //currently only implemented by Et2Tree
 
     registerAction = (_aoi, _callback, _context) => {
-        const parent = _aoi.tree; // maybe expand this to aoi.?? for other actionObjectInterfaces
-        let isNew = parent?.findActionTarget != null
         const node = _aoi.getDOMNode();
-        if (node == this.parent) return true //Event Listener already bound on parent
-        if (isNew)
+		let parentNode = null;
+		let parentAO = null;
+		let isNew = false;
+
+		// Is there a parent that handles action targets?
+		if(typeof _context.findActionTargetHandler !== "undefined" && typeof _context.findActionTargetHandler?.iface?.getWidget == "function")
+		{
+			parentAO = _context.findActionTargetHandler;
+			parentNode = parentAO.iface.getWidget();
+		}
+		if(!_aoi.findActionTargetHandler && parentNode && typeof parentNode.findActionTarget == "function")
+		{
+			_aoi.findActionTargetHandler = parentNode;
+			isNew = true;
+		}
+
+		if(isNew)
         {
-            if (this.parent && this.parent == parent)
-            {
-                return true // already added Event Listener on parent no need to register on children
-            } else
-            {
+			//if a parent is available the context menu Event-listener will only be bound once on the parent
+			this._registerDefault(parentNode, _callback, parentAO);
+			this._registerContext(parentNode, _callback, parentAO);
 
-                this.parent = parent // this only exists for the EgwDragDropShoelaceTree ActionObjectInterface atm
+			return true;
+		}
+		else if(node && !parentNode)
+		{
+			this._registerDefault(node, _callback, _context);
+			this._registerContext(node, _callback, _context);
+			return true;
+		}
+		return false;
 
-                //if a parent is available the context menu Event-listener will only be bound once on the parent
-                this._registerDefault(parent, _callback, _context);
-                this._registerContext(parent, _callback, _context);
-
-                return true;
-            }
-        } else
-        {
-
-            if (node)
-            {
-                this._registerDefault(node, _callback, _context);
-                this._registerContext(node, _callback, _context);
-                return true;
-            }
-            return false;
-        }
-    };
+	};
 
     unregisterAction = function (_aoi) {
         const node = _aoi.getDOMNode();
