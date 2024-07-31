@@ -337,6 +337,8 @@ class Vfs extends File
 		return $path;
 	}
 
+	const VFS_NAME_REGEXP = '#^[^/\\\\]+$#';
+
 	/**
 	 * Validate input
 	 * Merge any already uploaded files into the content array
@@ -361,7 +363,7 @@ class Vfs extends File
 		{
 			case 'vfs-upload':
 				if(!is_array($value)) $value = array();
-				/* Check & skip files that made it asyncronously
+				/* Check & skip files that made it asynchronously
 				list($app,$id,$relpath) = explode(':',$this->id,3);
 				//...
 				foreach($value as $tmp => $file)
@@ -369,6 +371,14 @@ class Vfs extends File
 					if(Api\Vfs::file_exists(self::get_vfs_path($id) . $relpath)) {}
 				}*/
 				parent::validate($cname, $expand, $content, $validated);
+				break;
+			case 'vfs-name':
+			case 'et2-vfs-name':
+				if (!preg_match(self::VFS_NAME_REGEXP, $value))
+				{
+					self::set_validation_error($form_name, lang("'%1' must not contain (back)slashes!", $value));
+					return;
+				}
 				break;
 		}
 		if (!empty($this->id)) $valid = $value;

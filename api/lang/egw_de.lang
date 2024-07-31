@@ -36,6 +36,7 @@
 '%1' is not a valid timezone!	common	de	'%1' ist keine gültige Zeitzone!
 '%1' is not allowed ('%2')!	common	de	'%1' ist NICHT erlaubt ('%2')!
 '%1' is not allowed%2)!	common	de	'%1' ist NICHT erlaubt '%2'!
+'%1' must not contain (back)slashes!	common	de	'%1' darf keine Schrägstriche enthalten!
 (session restored in %1 seconds)	common	de	Sitzung in %1 Sekunden wiederhergestellt.
 00 (disable)	admin	de	00 (deaktiviert)
 1 day	common	de	1 Tag
@@ -1304,12 +1305,12 @@ show page generation time?	common	de	Erstellungszeit der Seite anzeigen
 show password	common	de	Zeige Passwort
 show values	common	de	Werte anzeigen
 show/hide	common	de	Anzeigen/ausblenden Seitenleiste
-show_more_apps	common	de	Mehr Applikationen anzeigen
 showing	common	de	zeigt
 showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 shows / allows you to enter values into the etemplate for testing	common	de	Zeigt den Inhalt / Werte an und erlaubt welche zum Testen des eTemplates einzugeben
 shows/displays etemplate for testing, does not save it before	common	de	Zeigt eTemplate zum Testen an, speichert es NICHT davor
+show_more_apps	common	de	Mehr Applikationen anzeigen
 sierra leone	common	de	SIERRA LEONE
 sign up	common	de	Registrieren
 simple	common	de	Einfach
