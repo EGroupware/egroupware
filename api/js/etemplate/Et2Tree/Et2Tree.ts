@@ -13,6 +13,7 @@ import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 import {FindActionTarget} from "../FindActionTarget";
+import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../egw_action/egw_action_constants";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -805,6 +806,37 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 
 	/**
+	 * Handle drag events from inside the shadowRoot
+	 *
+	 * events get re-targeted to the tree as they bubble, and action can't tell the difference between leaves
+	 * inside the shadowRoot
+	 *
+	 * @param event
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected async handleDragEvent(event)
+	{
+		await this.updateComplete;
+		let option = event.composedPath().find(element =>
+		{
+			return element.tagName == "SL-TREE-ITEM"
+		});
+		if(!option)
+		{
+			return;
+		}
+		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
+		console.log(event.type, id);
+
+		const typeMap = {
+			dragenter: EGW_AI_DRAG_ENTER,
+			dragleave: EGW_AI_DRAG_OUT
+		}
+		this.widget_object.getObjectById(id).iface.triggerEvent(typeMap[event.type], event);
+	}
+
+	/**
 	 * Overridable, add style
 	 * @returns {TemplateResult<1>}
 	 */
@@ -992,7 +1024,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
                             }
                     }
-
+                    @dragenter=${(event) => {this.handleDragEvent(event);}}
+                    @dragleave=${(event) => {this.handleDragEvent(event);}}
             >
 				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
 				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
@@ -1014,6 +1047,27 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		return result
 			.then((results) => {
 				_item = results;
+
+				// Add actions
+				const itemAO = this.widget_object.getObjectById(_item.id);
+				let parentAO = null;
+				if(itemAO && itemAO.parent)
+				{
+					// Remove previous, if it exists
+					parentAO = itemAO.parent;
+					itemAO.remove();
+				}
+
+				// Need the DOM nodes to actually link the actions
+				this.updateComplete.then(() =>
+				{
+					this.linkLeafActions(
+						parentAO ?? this.widget_object,
+						_item,
+						this._get_action_links(this.actions)
+					);
+				});
+
 				return results;
 			});
 	}
@@ -1054,33 +1108,42 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
+		this.widget_object.updateActionLinks(action_links);
 		//Drop target enabeling
 		if (typeof this._selectOptions != 'undefined')
 		{
 			let self: Et2Tree = this
 			// Iterate over the options (leaves) and add action to each one
-			let apply_actions = function (treeObj: EgwActionObject, option: TreeItemData) {
-				// Add a new action object to the object manager
-				let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-				// @ts-ignore
-				let obj : EgwActionObject = treeObj.addObject(id, new EgwDragDropShoelaceTree(self, id));
-				obj.updateActionLinks(action_links);
-
-				const children = option.children ?? option.item ?? [];
-				for(let i = 0; i < children.length; i++)
-				{
-					apply_actions.call(this, treeObj, children[i]);
-				}
-			};
 			for (const selectOption of this._selectOptions)
 			{
-
-				apply_actions.call(this, this.widget_object, selectOption)
+				this.linkLeafActions(this.widget_object, selectOption, action_links)
 			}
 		}
+	}
 
+	/**
+	 * Add actions on a leaf
+	 *
+	 * @param {EgwActionObject} parentActionObject
+	 * @param {TreeItemData} option
+	 * @param {string[]} action_links
+	 * @protected
+	 */
+	protected linkLeafActions(parentActionObject : EgwActionObject, option : TreeItemData, action_links : string[])
+	{
+		// Add a new action object to the object manager
+		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
 
-		this.widget_object.updateActionLinks(action_links);
+		// @ts-ignore
+		let obj : EgwActionObject = parentActionObject.addObject(id, new EgwDragDropShoelaceTree(this, id));
+		obj.findActionTargetHandler = this;
+		obj.updateActionLinks(action_links);
+
+		const children = <TreeItemData[]><unknown>(option.children ?? option.item) ?? [];
+		for(let i = 0; i < children.length; i++)
+		{
+			this.linkLeafActions(obj, children[i], action_links);
+		}
 	}
 
 	/**
@@ -1182,11 +1245,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		let e = _event.composedPath ? _event : _event.originalEvent;
 		let target = e.composedPath().find(element => {
 			return element.tagName == "SL-TREE-ITEM"
-		})
-		let action: EgwActionObject = this.widget_object.children.find(elem => {
-			return elem.id == target.id
-		})
-		return {target: target, action: action}
+		});
+		let action : EgwActionObject = this.widget_object.getObjectById(target.id);
+		return {target: target, action: action};
 	}
 }
 
