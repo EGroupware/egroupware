@@ -1465,7 +1465,10 @@ class calendar_ical extends calendar_boupdate
 					calendar_rrule::rrule2tz($event, $event_info['stored_event']['start'],
 						$event_info['stored_event']['tzid']);
 
-					$event['tzid'] = $event_info['stored_event']['tzid'];
+					if (empty($event['tzid']) && !empty($event_info['stored_event']['tzid']))
+					{
+						$event['tzid'] = $event_info['stored_event']['tzid'];
+					}
 					// avoid that iCal changes the organizer, which is not allowed
 					$event['owner'] = $event_info['stored_event']['owner'];
 				}
@@ -2625,13 +2628,13 @@ class calendar_ical extends calendar_boupdate
 					if (isset($attributes['params']['VALUE'])
 							&& $attributes['params']['VALUE'] == 'DATE')
 					{
-						$isDate = true;
+						$event['whole_day'] = $isDate = true;
 					}
 					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 					$vcardData['start']	= $dtstart_ts;
 
 					// set event timezone from dtstart, if specified there
-					if (!empty($attributes['params']['TZID']))
+					if (!empty($attributes['params']['TZID']) && !$isDate)
 					{
 						// import TZID, if PHP understands it (we only care about TZID of starttime,
 						// as we store only a TZID for the whole event)
@@ -2681,7 +2684,7 @@ class calendar_ical extends calendar_boupdate
 
 				case 'DTEND':
 					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-					if (date('H:i:s',$dtend_ts) == '00:00:00')
+					if (date('H:i:s',$dtend_ts) == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
 					{
 						$dtend_ts -= 1;
 					}
