@@ -36,6 +36,7 @@
 '%1' is not a valid timezone!	common	en	'%1' is not a valid timezone!
 '%1' is not allowed ('%2')!	common	en	'%1' is NOT allowed ('%2')!
 '%1' is not allowed%2)!	common	en	'%1' is NOT allowed (%2)!
+'%1' must not contain (back)slashes!	common	en	'%1' must not contain (back)slashes!
 (session restored in %1 seconds)	common	en	Session restored in %1 seconds.
 00 (disable)	admin	en	00 (disable)
 1 day	common	en	1 day
@@ -1305,12 +1306,12 @@ show page generation time?	common	en	Show page generation time
 show password	common	en	Show password
 show values	common	en	Show values
 show/hide	common	en	Show/hide sidebar
-show_more_apps	common	en	Show_more_apps
 showing	common	en	Showing
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 shows / allows you to enter values into the etemplate for testing	common	en	Shows / allows to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	en	Shows / displays eTemplate for testing, does NOT save it
+show_more_apps	common	en	Show more apps
 sierra leone	common	en	SIERRA LEONE
 sign up	common	en	Sign up
 simple	common	en	Simple

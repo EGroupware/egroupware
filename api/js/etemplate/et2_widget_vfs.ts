@@ -21,7 +21,6 @@
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
-import {et2_textbox, et2_textbox_ro} from "./et2_widget_textbox";
 import {et2_description} from "./et2_widget_description";
 import {et2_file} from "./et2_widget_file";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
@@ -32,6 +31,7 @@ import {EGW_KEY_ENTER} from '../egw_action/egw_action_constants';
 import {Et2Dialog} from "./Et2Dialog/Et2Dialog";
 import type {Et2VfsMime} from "./Vfs/Et2VfsMime";
 import type {Et2VfsGid, Et2VfsUid} from "./Et2Vfs/Et2VfsUid";
+import {Et2VfsName, Et2VfsNameReadonly} from "./Et2Vfs/Et2VfsName";
 
 /**
  * Class which implements the "vfs" XET-Tag
@@ -240,91 +240,14 @@ export class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
 et2_register_widget(et2_vfs, ["vfs"]);
 
 /**
-* vfs-name
-* filename automatically urlencoded on return (urldecoded on display to user)
-*
-* @augments et2_textbox
+* @deprecated use Et2VfsName
 */
-export class et2_vfsName extends et2_textbox
-{
-	/**
-	 * Constructor
-	 *
-	 * @memberOf et2_vfsName
-	 */
-	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
-	{
-		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_vfsName._attributes, _child || {}));
-		this.input.addClass("et2_vfs");
-	}
-	set_value(_value)
-	{
-		if(_value.path)
-		{
-			_value = _value.path;
-		}
-		try
-		{
-			_value = egw.decodePath(_value);
-		} catch (e)
-		{
-			_value = 'Error! ' + _value;
-		}
-		super.set_value(_value);
-	}
-
-	getValue()
-	{
-		return egw.encodePath(super.getValue() || '');
-	}
-}
-et2_register_widget(et2_vfsName, ["vfs-name"]);
+export type et2_vfsName = Et2VfsName;
 
 /**
-* vfs-name
-* filename automatically urlencoded on return (urldecoded on display to user)
-*
-* @augments et2_textbox_ro
-*/
-export class et2_vfsName_ro extends et2_textbox_ro
-{
-	/**
-	 * Constructor
-	 *
-	 * @memberOf et2_vfsName_ro
-	 */
-	/**
-	 * Constructor
-	 */
-	constructor(_parent, _attrs? : WidgetConfig, _child? : object)
-	{
-		// Call the inherited constructor
-		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_vfsName_ro._attributes, _child || {}));
-	}
-
-	set_value(_value)
-	{
-		if(_value.path)
-		{
-			_value = _value.path;
-		}
-		try
-		{
-			_value = egw.decodePath(_value);
-		} catch (e)
-		{
-			_value = 'Error! ' + _value;
-		}
-		super.set_value(_value);
-	}
-
-	getValue()
-	{
-		return egw.encodePath(super.getValue() || '');
-	}
-}
-et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
+ * @deprecated use Et2VfsName_ro
+ */
+export type et2_vfsName_ro = Et2VfsNameReadonly;
 
 /**
  * vfs-mime: icon for mimetype of file, or thumbnail
