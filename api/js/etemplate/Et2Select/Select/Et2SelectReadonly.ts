@@ -227,6 +227,15 @@ li {
 		return this.__select_options;
 	}
 
+	get innerText() : string
+	{
+		return typeof this.value == "string" ? this.select_options.find(o => o.value == this.value) :
+			   this.select_options
+				   .filter(o => this.value.includes("" + o.value))
+				   .map(o => o.label)
+				   .join(", ");
+	}
+
 	render()
 	{
 		const value = this.getValueAsArray();
