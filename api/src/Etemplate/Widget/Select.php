@@ -984,8 +984,8 @@ class Select extends Etemplate\Widget
 	 * Get available apps as options
 	 *
 	 * @param string $type2 ='installed[:home;groupdav; ...]' 'user'=apps of current user,
-	 * 'enabled', 'installed' (default), 'all' = not installed ones too. In order to
-	 * exclude apps explicitly we can list them (app name separator is ';') in front of the type.
+	 * 'enabled', 'installed' (default), 'all' = not installed ones too, 'all+setup'.
+	 * In order to exclude apps explicitly we can list them (app name separator is ';') in front of the type.
 	 *
 	 * @return array app => label pairs sorted by label
 	 */
@@ -1007,15 +1007,15 @@ class Select extends Etemplate\Widget
 				$apps[$app] = lang($app);
 			}
 		}
-		if ($type2 == 'all')
+		if ($type2 == 'all' || $type2 === 'all+setup')
 		{
 			$dir = opendir(EGW_SERVER_ROOT);
-			while ($file = readdir($dir))
+			while ($app = readdir($dir))
 			{
-				if (@is_dir(EGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
-				!isset($apps[$app = basename($file)]))
+				if (is_dir(EGW_SERVER_ROOT."/$app/setup") && $app[0] != '.' && !isset($apps[$app]) ||
+					$app === 'setup' && $type2 === 'all+setup')
 				{
-					$apps[$app] = $app . ' (*)';
+					$apps[$app] = lang($app);
 				}
 			}
 			closedir($dir);

@@ -15,6 +15,7 @@ import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {Et2StaticSelectMixin, StaticOptions, StaticOptions as so} from "../StaticOptions";
 import {cleanSelectOptions, find_select_options, SelectOption} from "../FindSelectOptions";
 import {SelectAccountMixin} from "../SelectAccountMixin";
+import {property} from "lit/decorators/property.js";
 
 /**
  * This is a stripped-down read-only widget used in nextmatch
@@ -22,6 +23,17 @@ import {SelectAccountMixin} from "../SelectAccountMixin";
  */
 export class Et2SelectReadonly extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
+	@property({type: String})
+	set emptyLabel(_label: string)
+	{
+		this.__emptyLabel = _label;
+		this.select_options = this.__select_options;
+	}
+	get emptyLabel()
+	{
+		return this.__emptyLabel;
+	}
+
 	static get styles()
 	{
 		return [
@@ -192,6 +204,11 @@ li {
 			return;
 		}
 		this.__select_options = new_options;
+
+		if (this.emptyLabel)
+		{
+			this.__select_options.unshift({value: '', label: this.emptyLabel});
+		}
 	}
 
 	/**
@@ -241,7 +258,7 @@ li {
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "value", "class", "statustext");
+		attrs.push("id", "value", "class", "statustext", "emptyLabel");
 	}
 
 	getDetachedNodes() : HTMLElement[]
@@ -277,6 +294,12 @@ customElements.define("et2-select-account_ro", Et2SelectAccountReadonly);
 
 export class Et2SelectAppReadonly extends Et2StaticSelectMixin(Et2SelectReadonly)
 {
+	/**
+	 * Which apps to show: 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too, 'all+setup'
+	 */
+	@property({type: String})
+	apps : 'user' | 'enabled' | 'installed' | 'all' | 'all+setup' = 'installed';
+
 	protected find_select_options(_attrs)
 	{
 		this.fetchComplete = so.app(this, _attrs).then((options) =>
