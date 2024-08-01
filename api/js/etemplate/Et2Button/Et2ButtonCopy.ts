@@ -14,7 +14,7 @@ import {SlCopyButton} from "@shoelace-style/shoelace";
 import {customElement} from "lit/decorators/custom-element.js";
 
 @customElement('et2-button-copy')
-export class Et2Button extends Et2Widget(SlCopyButton)
+export class Et2ButtonCopy extends Et2Widget(SlCopyButton)
 {
 
 }
