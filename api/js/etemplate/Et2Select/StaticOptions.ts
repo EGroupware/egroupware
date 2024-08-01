@@ -375,7 +375,8 @@ export const StaticOptions = new class StaticOptionsType
 
 	app(widget : Et2SelectWidgets | Et2Select, attrs) : Promise<SelectOption[]>
 	{
-		var options = ',' + (attrs.other || []).join(',');
+		const options = widget.apps ? ',,'+widget.apps : widget.options || '';
+
 		return this.cached_server_side(widget, 'select-app', options, true);
 	}
 

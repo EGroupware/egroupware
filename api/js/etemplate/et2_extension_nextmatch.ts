@@ -3746,13 +3746,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				this.egw().debug('warn', 'Nextmatch filter options in a weird place - "%s".  Should be in sel_options[%s].', row_id, name);
 			}
 		}
-		// Legacy: Add in 'All' option for cat_id, if not provided.
-		if(name == 'cat_id' && (options == null || options != null && (typeof options[''] == 'undefined' && typeof options[0] != 'undefined' && options[0].value != ''))
-			// Not mail, since it needs to be different
-			&& !['mail'].includes(this.getInstanceManager().app))
-		{
-			widget_options.emptyLabel = this.egw().lang('All categories');
-		}
 
 		// Create widget
 		const select = <Et2Select>loadWebComponent(type, widget_options, this);
@@ -3807,6 +3800,12 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		select.updateComplete.then(async() =>
 		{
 			await select.updateComplete;
+			// Legacy: Add in 'All' option for cat_id, if not provided.
+			if (name == 'cat_id' && !['mail'].includes(this.getInstanceManager().app) &&
+				!select.select_options.filter(options => option.value === '').length)
+			{
+				select.emptyLabel = this.egw().lang('All categories');
+			}
 			select.requestUpdate("value");
 		})
 		return select;
