@@ -52,6 +52,11 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		this.requestUpdate("value", old_value);
 	}
 
+	get innerText() : string
+	{
+		return this.shadowRoot.querySelector('span').innerText;
+	}
+
 	render()
 	{
 		let parsed = this.__value;

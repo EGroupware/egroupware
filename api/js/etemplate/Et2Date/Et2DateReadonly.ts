@@ -50,6 +50,12 @@ export class Et2DateReadonly extends Et2Widget(LitElement) implements et2_IDetac
 		this.value = value;
 	}
 
+	get innerText() : string
+	{
+		let parsed : Date | Boolean = this.value ? this.parser(this.value, this.dataFormat) : false
+		return this.value ? this.formatter(<Date>parsed) : '';
+	}
+
 	render()
 	{
 		let parsed : Date | Boolean = this.value ? this.parser(this.value, this.dataFormat) : false
