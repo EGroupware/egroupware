@@ -9,6 +9,7 @@
  */
 
 import {Et2TextboxReadonly} from "./Et2TextboxReadonly";
+import {formatNumber} from "./Et2Number";
 
 export class Et2NumberReadonly extends Et2TextboxReadonly
 {
@@ -31,22 +32,11 @@ export class Et2NumberReadonly extends Et2TextboxReadonly
 		}
 		else if("" + val !== "")
 		{
-			if(typeof this.precision !== 'undefined')
-			{
-				val = parseFloat(val).toFixed(this.precision);
-			}
-			else
-			{
-				val = parseFloat(val);
-			}
+			// use decimal separator from user prefs
+			const format = this.egw().preference('number_format') ?? ".";
+			val = formatNumber(parseFloat(val), format[0], format[1]);
 		}
-		// use decimal separator from user prefs
-		const format = this.egw().preference('number_format');
-		const sep = format ? format[0] : '.';
-		if(typeof val === 'string' && format && sep && sep !== '.')
-		{
-			val = val.replace('.', sep);
-		}
+
 		// can not call super.set_value(), as it does not call the setter for value
 		super.value = val;
 	}

@@ -65,6 +65,14 @@ describe("Number widget", () =>
 		assert.equal(element.value, "1", "Wrong number of decimals");
 	})
 
+	it("Min limit", () =>
+	{
+		element.value = 0;
+		element.min = 2;
+		element.value = "1.234";
+		assert.equal(element.value, "2", "Value allowed below minimum");
+	});
+
 	describe("Check number preferences", () =>
 	{
 
