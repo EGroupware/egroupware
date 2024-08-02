@@ -1559,7 +1559,9 @@ class calendar_boupdate extends calendar_bo
 			}
 			if (!empty($event['end']))
 			{
-				$time = $this->so->startOfDay(new Api\DateTime($event['end'], Api\DateTime::$user_timezone));
+				// as EGroupware end of whole-day events is 1sec (or sometimes 60sec) shorter, we have to add 60sec,
+				// before calling startOfDay to NOT lose one day
+				$time = $this->so->startOfDay((new Api\DateTime($event['end'], Api\DateTime::$user_timezone))->add('60seconds'));
 				$time->add('-1second');
 				$event['end'] = Api\DateTime::to($time, 'ts');
 				$save_event['end'] = $time;

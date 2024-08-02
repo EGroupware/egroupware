@@ -193,6 +193,7 @@ class DateTime extends \DateTime
 	 * Like DateTime::add, but additional allow to use a string run through DateInterval::createFromDateString
 	 *
 	 * @param DateInterval|string $interval eg. '1 day', '-2 weeks'
+	 * @returns DateTime the modified object to allow chaning
 	 */
 	public function add($interval) : \DateTime
 	{
