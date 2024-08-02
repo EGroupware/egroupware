@@ -753,7 +753,7 @@ class Db
 	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
 	* @param int $fetchmode =self::FETCH_BOTH self::FETCH_BOTH (default), self::FETCH_ASSOC or self::FETCH_NUM
 	* @param boolean $reconnect =true true: try reconnecting if server closes connection, false: dont (mysql only!)
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	*/
@@ -822,15 +822,18 @@ class Db
 				if (in_array($e->getCode(), [
 					1064,   // You have an error in your SQL syntax
 					1062,   // Duplicate entry
-					1054,   // Unknown column 'X' in 'field list'
+					1054,   // Unknown column 'X' in ...
 				]))
 				{
-					throw new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
+					$e = new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
 				}
 				else
 				{
-					throw new Db\Exception($e->getMessage(), $e->getCode(), $e);
+					$e = new Db\Exception($e->getMessage(), $e->getCode(), $e);
 				}
+				// make SQL available in logging
+				$e->details = $Query_String;
+				throw $e;
 			}
 			$this->Errno  = 2006;
 			$this->Error  = $e->getMessage();
@@ -875,7 +878,7 @@ class Db
 	* @param string $file the file method was called from - use __FILE__
 	* @param int $num_rows number of rows to return (optional), default -1 = all, 0 will use $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']
 	* @param array|boolean $inputarr array for binding variables to parameters or false (default)
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function limit_query($Query_String, $offset, $line = '', $file = '', $num_rows = -1,$inputarr=false)
 	{
@@ -1944,7 +1947,7 @@ class Db
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
 	* @throws Exception\WrongParameter use $where together with multiple data rows in $data
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
 	{
@@ -2063,7 +2066,7 @@ class Db
 	* @param array|bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
 	{
@@ -2164,7 +2167,7 @@ class Db
 	* @param int|null $limit limit delete to given number of rows
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception e.g. 1205: Lock timeout exceeded, if deleting rows took to long, you can use $limit to delete in multiple calls
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function delete($table, $where, $line, $file, $app=False, $table_def=False, int $limit=null)
 	{
@@ -2259,7 +2262,7 @@ class Db
 	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False,$fetchmode=self::FETCH_ASSOC)
 	{
@@ -2309,7 +2312,7 @@ class Db
 	* @param int $fetchmode =self::FETCH_ASSOC self::FETCH_ASSOC (default), self::FETCH_BOTH or self::FETCH_NUM
 	* @throws Db\Exception\InvalidSql for SQL syntax errors
 	* @throws Db\Exception with $this->Link_ID->ErrorNo() as code for all other errors
-	* @return ADORecordSet or false, if the query fails
+	* @return \ADORecordSet or false, if the query fails
 	*/
 	function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0,$fetchmode=self::FETCH_ASSOC)
 	{
