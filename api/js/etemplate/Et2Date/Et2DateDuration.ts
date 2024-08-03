@@ -15,6 +15,8 @@ import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {sprintf} from "../../egw_action/egw_action_common";
 import {dateStyles} from "./DateStyles";
 import shoelace from "../Styles/shoelace";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 
 export interface formatOptions
 {
@@ -24,7 +26,7 @@ export interface formatOptions
 	hoursPerDay : number;
 	emptyNot0 : boolean;
 	number_format? : string;
-};
+}
 
 /**
  * Format a number as a time duration
@@ -111,6 +113,7 @@ export function formatDuration(value : number | string, options : formatOptions)
  * If not specified, the time is in assumed to be minutes and will be displayed with a calculated unit
  * but this can be specified with the properties.
  */
+@customElement("et2-date-duration")
 export class Et2DateDuration extends Et2InputWidget(LitElement)
 {
 	static get styles()
@@ -170,93 +173,96 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		];
 	}
 
-	static get properties()
+	/**
+	 * Data format
+	 *
+	 * Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int).
+	 */
+	@property({type: String, reflect: true})
+	dataFormat = "m";
+	/**
+	 * Display format
+	 *
+	 * Permitted units for displaying the data.
+	 * 'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.
+	 * Default is 'dhm' = days or hours with selectbox.
+	 */
+	@property({type: String, reflect: true})
+	set displayFormat(value : string)
 	{
-		return {
-			...super.properties,
-
-			/**
-			 * Data format
-			 *
-			 * Units to read/store the data.  'd' = days (float), 'h' = hours (float), 'm' = minutes (int), 's' = seconds (int).
-			 */
-			dataFormat: {
-				reflect: true,
-				type: String
-			},
-			/**
-			 * Display format
-			 *
-			 * Permitted units for displaying the data.
-			 * 'd' = days, 'h' = hours, 'm' = minutes, 's' = seconds.  Use combinations to give a choice.
-			 * Default is 'dh' = days or hours with selectbox.
-			 */
-			displayFormat: {
-				reflect: true,
-				type: String
-			},
-
-			/**
-			 * Select unit or input per unit
-			 *
-			 * Display a unit-selection for multiple units, or an input field per unit.
-			 * Default is true
-			 */
-			selectUnit: {
-				reflect: true,
-				type: Boolean
-			},
-
-			/**
-			 * Percent allowed
-			 *
-			 * Allows to enter a percentage instead of numbers
-			 */
-			percentAllowed: {
-				type: Boolean
-			},
-
-			/**
-			 * Hours per day
-			 *
-			 * Number of hours in a day, used for converting between hours and (working) days.
-			 * Default 8
-			 */
-			hoursPerDay: {
-				reflect: true,
-				type: Number
-			},
-
-			/**
-			 * 0 or empty
-			 *
-			 * Should the widget differ between 0 and empty, which get then returned as NULL
-			 * Default false, empty is considered as 0
-			 */
-			emptyNot0: {
-				reflect: true,
-				type: Boolean
-			},
-
-			/**
-			 * Short labels
-			 *
-			 * use d/h/m instead of day/hour/minute
-			 */
-			shortLabels: {
-				reflect: true,
-				type: Boolean
-			},
-
-			/**
-			 * Step limit
-			 *
-			 * Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set.
-			 */
-			step: {
-				type: String
+		this.__displayFormat = "";
+		if(!value)
+		{
+			// Don't allow an empty value, but don't throw a real error
+			console.warn("Invalid displayFormat ", value, this);
+			value = "dhm";
+		}
+		// Display format must be in decreasing size order (dhms) or the calculations
+		// don't work out nicely
+		for(let f of Object.keys(Et2DateDuration.time_formats))
+		{
+			if(value.indexOf(f) !== -1)
+			{
+				this.__displayFormat += f;
 			}
 		}
+	}
+
+	get displayFormat()
+	{
+		return this.__displayFormat;
+	}
+
+	/**
+	 * Select unit or input per unit
+	 *
+	 * Display a unit-selection for multiple units, or an input field per unit.
+	 * Default is true
+	 */
+	@property({type: Boolean, reflect: true})
+	selectUnit = true;
+
+	/**
+	 * Percent allowed
+	 *
+	 * Allows to enter a percentage instead of numbers
+	 */
+	@property({type: Boolean})
+	percentAllowed = false;
+
+	/**
+	 * Hours per day
+	 *
+	 * Number of hours in a day, used for converting between hours and (working) days.
+	 * Default 8
+	 */
+	@property({type: Number, reflect: true})
+	hoursPerDay = 8;
+
+	/**
+	 * 0 or empty
+	 *
+	 * Should the widget differ between 0 and empty, which get then returned as NULL
+	 * Default false, empty is considered as 0
+	 */
+	@property({type: Boolean, reflect: true})
+	emptyNot0 = false;
+
+	/**
+	 * Short labels
+	 *
+	 * use d/h/m instead of day/hour/minute
+	 */
+	@property({type: Boolean, reflect: true})
+	shortLabels = false;
+
+	/**
+	 * Step limit
+	 *
+	 * Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set.
+	 */
+	step: {
+		type: String
 	}
 
 	protected static time_formats = {d: "d", h: "h", m: "m", s: "s"};
@@ -267,13 +273,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		super();
 
 		// Property defaults
-		this.dataFormat = "m";
 		this.displayFormat = "dhm";
-		this.selectUnit = true;
-		this.percentAllowed = false;
-		this.hoursPerDay = 8;
-		this.emptyNot0 = false;
-		this.shortLabels = false;
 
 		this.formatter = formatDuration;
 	}
@@ -364,37 +364,6 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		this._display = this._convert_to_display(this.emptyNot0 && ""+_value === "" ? '' : parseFloat(_value));
 		this.requestUpdate();
 	}
-
-	/**
-	 * Set the format for displaying the duration
-	 *
-	 * @param {string} value
-	 */
-	set displayFormat(value : string)
-	{
-		this.__displayFormat = "";
-		if(!value)
-		{
-			// Don't allow an empty value, but don't throw a real error
-			console.warn("Invalid displayFormat ", value, this);
-			value = "dhm";
-		}
-		// Display format must be in decreasing size order (dhms) or the calculations
-		// don't work out nicely
-		for(let f of Object.keys(Et2DateDuration.time_formats))
-		{
-			if(value.indexOf(f) !== -1)
-			{
-				this.__displayFormat += f;
-			}
-		}
-	}
-
-	get displayFormat()
-	{
-		return this.__displayFormat;
-	}
-
 
 	render()
 	{
@@ -603,7 +572,10 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
                     <et2-number part="${"duration__" + input.name}" class="duration__input"
                                 exportparts="scroll:scroll,scrollbutton:scrollbutton"
                                 name=${input.name}
-                                min=${input.min} max=${input.max} precision=${input.precision} title=${input.title}
+                                min=${typeof input.min === "number" ? input.min : nothing}                                
+								max=${typeof input.max === "number" ? input.max : nothing}
+								precision=${typeof input.precision === "number" ? input.precision : nothing} 
+								title=${input.title || nothing}
                                 value=${input.value}
                                 @sl-change=${this.handleInputChange}
                     ></et2-number>`
@@ -666,6 +638,3 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		return this.shadowRoot ? this.shadowRoot.querySelector("sl-select") : null;
 	}
 }
-
-// @ts-ignore TypeScript is not recognizing that this is a LitElement
-customElements.define("et2-date-duration", Et2DateDuration);
