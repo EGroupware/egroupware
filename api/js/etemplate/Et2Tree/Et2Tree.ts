@@ -113,7 +113,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	@property({type: Function})
 	onopenend   //description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
 	@property({type: String})
-	imagePath: String = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
+	imagePath: string = egw().webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
 	@property()
 	value = []
@@ -870,6 +870,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
 			img = img.replace(".png", ".svg");
+		}
+		//append image path if it was not set by the server already
+		if (!img.startsWith(this.imagePath))
+		{
+			img = this.imagePath + img;
 		}
 
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
