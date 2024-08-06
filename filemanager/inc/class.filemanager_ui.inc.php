@@ -1104,6 +1104,9 @@ class filemanager_ui
 			{
 				$row[$date_field] = Api\DateTime::server2user($row[$date_field]);
 			}
+			// do NOT send URL to client-side, it can contain passwords
+			unset($row['url']);
+
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
 		}
@@ -1234,6 +1237,8 @@ class filemanager_ui
 			else
 			{
 				$content = $stat;
+				// do NOT send URL to client-side, it can contain passwords
+				unset($content['url']);
 				$content['name'] = $content['itempicker_merge']['name'] = Vfs::basename($path);
 				$content['dir'] = $content['itempicker_merge']['dir'] = ($dir = Vfs::dirname($path)) ? Vfs::decodePath($dir) : '';
 				$content['path'] = $path;
