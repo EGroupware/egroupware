@@ -82,7 +82,7 @@
   "dependencies": {
     "@bundled-es-modules/pdfjs-dist": "^2.5.207-rc1",
     "@rollup/plugin-commonjs": "^24.0.1",
-    "@shoelace-style/shoelace": "2.15.1",
+    "@shoelace-style/shoelace": "2.16.0",
     "@types/jquery": "^3.5.29",
     "blueimp-gallery": "^3.4.0",
     "bootstrap-icons": "^1.11.3",
