@@ -60,6 +60,10 @@ export class Et2Number extends Et2Textbox
 					max-width: 7em;
 				}
 
+				.input__control {
+					text-align: right;
+				}
+
 			`,
 		];
 	}
@@ -293,7 +297,8 @@ export class Et2Number extends Et2Textbox
 			// The initial options need to match an actual number
 			radix: this.decimalSeparator,
 			thousandsSeparator: this.thousandsSeparator,
-			mask: Number
+			mask: this.mask ?? Number,
+			lazy: false
 		}
 		if(typeof this.precision != "undefined")
 		{
