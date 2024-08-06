@@ -298,7 +298,8 @@ export class Et2Number extends Et2Textbox
 			radix: this.decimalSeparator,
 			thousandsSeparator: this.thousandsSeparator,
 			mask: this.mask ?? Number,
-			lazy: false
+			lazy: false,
+			padFractionalZeros: (typeof this.precision !== "undefined")
 		}
 		if(typeof this.precision != "undefined")
 		{
@@ -322,18 +323,11 @@ export class Et2Number extends Et2Textbox
 		{
 			// Number mask sometimes gets lost with different decimal characters
 			this._mask.unmaskedValue = ("" + this.value);
-
-			// Fill decimals to precision
-			if(this.precision && ("" + this.value).includes("."))
-			{
-				this._mask.unmaskedValue = this._mask.unmaskedValue.padEnd(("" + this.value).length + this.precision, "0");
-			}
 		}
-		else if(this.precision && ("" + this.value).includes("."))
+
+		if(this.value !== "")
 		{
-			// Fill decimals to precision
-			let v = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator);
-			this._mask.value = v.padEnd(v.length + this.precision, "0");
+			this._mask.value = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator, this.precision);
 		}
 		this._mask.updateValue();
 	}
@@ -407,11 +401,15 @@ export class Et2Number extends Et2Textbox
  * @param {number} value
  * @returns {string}
  */
-export function formatNumber(value : number, decimalSeparator : string = ".", thousandsSeparator : string = "") : string
+export function formatNumber(value : number, decimalSeparator : string = ".", thousandsSeparator : string = "", decimalPlaces = undefined) : string
 {
 	// Split by . because value is a number, so . is decimal separator
 	let parts = ("" + value).split(".");
 
-	parts[0] = parts[0].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+	parts[0] = parts[0].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandsSeparator) || "0";
+	if(typeof decimalPlaces != "undefined")
+	{
+		parts[1] = (parts[1] ?? "").padEnd(decimalPlaces, "0").substr(0, decimalPlaces);
+	}
 	return parts.join(decimalSeparator);
 }

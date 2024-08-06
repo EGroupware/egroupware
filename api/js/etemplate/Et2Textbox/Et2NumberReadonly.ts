@@ -34,7 +34,7 @@ export class Et2NumberReadonly extends Et2TextboxReadonly
 		{
 			// use decimal separator from user prefs
 			const format = this.egw().preference('number_format') ?? ".";
-			val = formatNumber(parseFloat(val), format[0], format[1]);
+			val = formatNumber(parseFloat(val), format[0], format[1], this.precision);
 		}
 
 		// can not call super.set_value(), as it does not call the setter for value
