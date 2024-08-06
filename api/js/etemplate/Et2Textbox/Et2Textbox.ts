@@ -90,7 +90,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		return this.__validator;
 	}
 
-	set validator(value)
+	set validator(value : string | RegExp)
 	{
 		if(typeof value == 'string')
 		{
@@ -104,6 +104,11 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 			parts.shift();
 			this.__validator = new RegExp(parts.join('/'), flags);
 
+			this.requestUpdate("validator");
+		}
+		else if(value instanceof RegExp)
+		{
+			this.__validator = value;
 			this.requestUpdate("validator");
 		}
 	}
