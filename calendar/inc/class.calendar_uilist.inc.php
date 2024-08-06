@@ -1045,6 +1045,8 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=calendar&action_id=$id',
+				'onExecute' => 'javaScript:app.calendar.action_open',
+				'open' => '{"app": "infolog", "type": "add", "extra": "type=task&action=$app&action_id=$app_id"}',
 				'popup' => Link::get_registry('infolog', 'add_popup'),
 				// Limit infolog convert to only the apps that support it (some entries may be other apps via integration)
 				'enabled' => 'javaScript:app.calendar.action_convert_enabled_check',
