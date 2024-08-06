@@ -380,6 +380,13 @@ class calendar_boupdate extends calendar_bo
 		$checked = 0;
 		$start = microtime(true);
 		$duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts');
+		// as floating, whole-day events are defined as whole-day in user timezone (in fact in every TZ!), but they are
+		// always stored in server-timezone, we have to account for the difference, to not miss conflicts!
+		$start_tz_diff = Api\DateTime::$server_timezone->getOffset(new Api\DateTime($event['start'])) -
+			Api\DateTime::$user_timezone->getOffset(new Api\DateTime($event['start']));
+		// might be different from $start_tz_diff, if TZ transition is during the event
+		$end_tz_diff = Api\DateTime::$server_timezone->getOffset(new Api\DateTime($event['end'])) -
+			Api\DateTime::$user_timezone->getOffset(new Api\DateTime($event['end']));
 		foreach($recurences as $date)
 		{
 			$startts = $date->format('ts');
@@ -402,8 +409,8 @@ class calendar_boupdate extends calendar_bo
 				break;
 			}
 			$overlapping_events =& $this->search(array(
-				'start' => $startts,
-				'end'   => $startts+$duration,
+				'start' => $startts-abs($start_tz_diff),
+				'end'   => $startts+$duration+abs($end_tz_diff),
 				'users' => $users,
 				'ignore_acl' => true,	// otherwise we get only events readable by the user
 				'enum_groups' => true,	// otherwise group-events would not block time
@@ -421,6 +428,11 @@ class calendar_boupdate extends calendar_bo
 				if ($overlap['id'] == $event['id'] ||	// that's the event itself
 					$overlap['id'] == $event['reference'] ||	// event is an exception of overlap
 					$overlap['non_blocking'])			// that's a non_blocking event
+				{
+					continue;
+				}
+				// check if event is really blocking, as whole-day events use floating time and might NOT block in user's timezone
+				if ($overlap['end'] <= $startts || $overlap['start'] >= $startts+$duration)
 				{
 					continue;
 				}
