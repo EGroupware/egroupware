@@ -2328,7 +2328,7 @@ class infolog_ui
 
 		if(is_array($pm_links))
 		{
-			$old_pm_id = $content['pm_id'] && in_array($content['pm_id'], $pm_links) ? $content['pm_id'] : array_shift($pm_links);
+			$old_pm_id = ($content['pm_id'] && in_array($content['pm_id'], $pm_links) ? $content['pm_id'] : array_shift($pm_links)) ?? "";
 		}
 		else
 		{

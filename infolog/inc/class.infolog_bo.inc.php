@@ -1045,7 +1045,7 @@ class infolog_bo
 		if ($values['info_id'] && $info_id)
 		{
 			$this->write_check_links($to_write);
-			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'])
+			if(!$values['info_link_id'] || $values['info_link_id'] != $to_write['info_link_id'] || $old['info_from'] != $to_write['info_from'])
 			{
 				// Just got a link ID, need to save it
 				unset($to_write['info_etag']);  // we must not increment it again
