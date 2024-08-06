@@ -1820,6 +1820,11 @@ export class CalendarApp extends EgwApp
 		{
 			app = data.data.app;
 			app_id = data.data.app_id;
+			if (app === 'calendar' && app_id.indexOf(':'))
+			{
+				let parts = app_id.split(':');
+				app_id = parts[0];
+			}
 			id = data.data.id;
 		}
 		else

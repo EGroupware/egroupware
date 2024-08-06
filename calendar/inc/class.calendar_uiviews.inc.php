@@ -961,11 +961,6 @@ class calendar_uiviews extends calendar_ui
 			$actions['filemanager']['url'] = '/index.php?'. $actions['filemanager']['url'];
 			$actions['filemanager']['onExecute'] = 'javaScript:app.calendar.action_open';
 		}
-		if ($actions['infolog_app'])
-		{
-			$actions['infolog_app']['open'] = '{"app": "infolog", "type": "add", "extra": "type=task&action=$app&action_id=$id"}';
-			$actions['infolog_app']['onExecute'] = 'javaScript:app.calendar.action_open';
-		}
 		$actions['ical']['onExecute'] = 'javaScript:app.calendar.ical';
 
 		$actions['delete']['onExecute'] = 'javaScript:app.calendar.delete';
