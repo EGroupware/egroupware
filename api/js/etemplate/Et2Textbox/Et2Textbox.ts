@@ -72,7 +72,7 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 	onkeypress;
 
 	private __validator : any;
-	private _mask : InputMask;
+	protected _mask : InputMask;
 	protected _value : string = "";
 
 	inputMode = "text";

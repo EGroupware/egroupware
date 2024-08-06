@@ -240,7 +240,7 @@ export class Et2Number extends Et2Textbox
 
 	get valueAsNumber() : number
 	{
-		let formattedValue = this._mask?.unmaskedValue ?? this.value;
+		let formattedValue = (this.mask && this._mask?.value ? this.stripFormat(this._mask.value) : this._mask?.unmaskedValue) ?? this.value;
 		if(typeof this.precision !== 'undefined')
 		{
 			formattedValue = parseFloat(parseFloat(<string>formattedValue).toFixed(this.precision));
@@ -318,7 +318,23 @@ export class Et2Number extends Et2Textbox
 	updateMaskValue()
 	{
 		this._mask.updateValue();
-		this._mask.unmaskedValue = "" + this.value;
+		if(!this.mask)
+		{
+			// Number mask sometimes gets lost with different decimal characters
+			this._mask.unmaskedValue = ("" + this.value);
+
+			// Fill decimals to precision
+			if(this.precision && ("" + this.value).includes("."))
+			{
+				this._mask.unmaskedValue = this._mask.unmaskedValue.padEnd(("" + this.value).length + this.precision, "0");
+			}
+		}
+		else if(this.precision && ("" + this.value).includes("."))
+		{
+			// Fill decimals to precision
+			let v = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator);
+			this._mask.value = v.padEnd(v.length + this.precision, "0");
+		}
 		this._mask.updateValue();
 	}
 
