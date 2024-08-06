@@ -615,11 +615,11 @@ class calendar_ical extends calendar_boupdate
 								$event['end'] = new Api\DateTime($event['end'], self::$tz_cache[$event['tzid']]);
 							}
 							$event['end-nextday'] = clone $event['end'];
-							$event['end-nextday']->add("1 day");	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
+							$event['end-nextday']->add("60 sec");	// we need the date of the next day, as DTEND is non-inclusive (= exclusive) in rfc2445
 							foreach (array('start' => 'DTSTART','end-nextday' => 'DTEND') as $f => $t)
 							{
-								$time = new Api\DateTime($event[$f], self::$tz_cache[$event['tzid']]);
-								$arr = Api\DateTime::to($time,'array');
+								// we need to convert whole-day events to user-timezone, as only there they start at midnight
+								$arr = Api\DateTime::server2user($event[$f],'array');
 								$vevent->setAttribute($t, array('year' => $arr['year'],'month' => $arr['month'],'mday' => $arr['day']),
 									array('VALUE' => 'DATE'));
 							}
