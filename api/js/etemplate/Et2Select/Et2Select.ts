@@ -345,7 +345,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			this.select?.popup?.handleAnchorChange();
 
 			// requestUpdate("value") above means we need to check tags again
-			this.select.updateComplete.then(() => {this.checkTagOverflow(); });
+			this.select?.updateComplete.then(() => {this.checkTagOverflow(); });
 		});
 	}
 
