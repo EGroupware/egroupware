@@ -872,7 +872,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			img = img.replace(".png", ".svg");
 		}
 		//append image path, if img is only relative (does not start with / or https://)
-		if (!img.match(/^(\/|https?:\/\/)/))
+		if (img && typeof img === "string" && !img.match(/^(\/|https?:\/\/)/))
 		{
 			img = this.imagePath + img;
 		}
