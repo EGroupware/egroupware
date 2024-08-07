@@ -3802,7 +3802,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 			await select.updateComplete;
 			// Legacy: Add in 'All' option for cat_id, if not provided.
 			if (name == 'cat_id' && !['mail'].includes(this.getInstanceManager().app) &&
-				!select.select_options.filter(options => option.value === '').length)
+				!select.select_options.filter(option => option.value === '').length)
 			{
 				select.emptyLabel = this.egw().lang('All categories');
 			}
