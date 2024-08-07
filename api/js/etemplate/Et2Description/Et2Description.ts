@@ -206,7 +206,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		{
 			render = html`${this.value}`;
 		}
-		return render;
+		return html`<span part="content" class="description--content">${render}</span>`;
 	}
 
 	render()

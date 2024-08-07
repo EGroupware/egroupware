@@ -10,19 +10,30 @@
 
 import {Et2TextboxReadonly} from "./Et2TextboxReadonly";
 import {formatNumber} from "./Et2Number";
+import {property} from "lit/decorators/property.js";
+import {css} from "lit";
 
 export class Et2NumberReadonly extends Et2TextboxReadonly
 {
-	static get properties()
+	static get styles()
 	{
-		return {
-			...super.properties,
-			/**
-			 * Precision of float number or 0 for integer
-			 */
-			precision: Number,
-		}
+		return [
+			...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+			css`
+				::slotted(*) {
+					flex: 1 1 auto;
+					text-align: right;
+					padding-right: var(--sl-spacing-small);
+				}
+			`,
+		];
 	}
+
+	/**
+	 * Precision of float number or 0 for integer
+	 */
+	@property({type: Number})
+	precision;
 
 	set_value(val)
 	{
