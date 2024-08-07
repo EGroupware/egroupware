@@ -68,12 +68,13 @@ class Checkbox extends Etemplate\Widget
 			// defaults for set and unset values
 			$selected_value = true;
 			$unselected_value = false;
-			if(array_key_exists($value_attr, $this->attrs) || array_key_exists('unselectedValue', $this->attrs) || array_key_exists('unselected_value', $this->attrs))
+			if (array_key_exists($value_attr, $this->attrs) || array_key_exists('unselectedValue', $this->attrs) ||
+				array_key_exists('unselected_value', $this->attrs) || array_key_exists('selected_value', $this->attrs))
 			{
-				if(array_key_exists($value_attr, $this->attrs))
+				if (array_key_exists($value_attr, $this->attrs) || array_key_exists('selected_value', $this->attrs))
 				{
 					// Expand any content stuff
-					$selected_value = self::expand_name($this->attrs[$value_attr], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+					$selected_value = self::expand_name($this->attrs[$value_attr] ?? $this->attrs['selected_value'], $expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
 				}
 				if(array_key_exists('unselectedValue', $this->attrs) || array_key_exists('unselected_value', $this->attrs))
 				{
