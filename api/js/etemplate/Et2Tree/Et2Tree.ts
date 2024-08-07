@@ -871,8 +871,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
 			img = img.replace(".png", ".svg");
 		}
-		//append image path if it was not set by the server already
-		if (!img.startsWith(this.imagePath))
+		//append image path, if img is only relative (does not start with / or https://)
+		if (!img.match(/^(\/|https?:\/\/)/))
 		{
 			img = this.imagePath + img;
 		}
