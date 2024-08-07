@@ -1,5 +1,5 @@
-import {css, html, LitElement, nothing} from "lit";
-import {SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
+import {css, html, LitElement, nothing, PropertyValues} from "lit";
+import {SlIcon, SlMenu, SlMenuItem} from "@shoelace-style/shoelace";
 import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
@@ -33,6 +33,16 @@ export class EgwMenuShoelace extends LitElement
 
 				sl-menu-item::part(prefix) {
 					min-width: var(--sl-spacing-2x-large);
+				}
+
+				/* Customise checkbox menuitem */
+
+				sl-menu-item[type="checkbox"]::part(checked-icon) {
+					visibility: visible;
+				}
+
+				sl-menu-item[type="checkbox"]:not([checked])::part(checked-icon) {
+					color: var(--sl-color-neutral-300);
 				}
 
 				et2-image {
@@ -80,6 +90,24 @@ export class EgwMenuShoelace extends LitElement
 		{
 			this.removeCallback.call();
 		}
+	}
+
+	protected updated(_changedProperties : PropertyValues)
+	{
+		super.updated(_changedProperties);
+
+		// Checkbox indicators
+		this.shadowRoot.querySelectorAll("sl-menu-item[type=checkbox]").forEach(async(item : SlMenuItem) =>
+		{
+			await item.updateComplete;
+			const icon : SlIcon = item.shadowRoot.querySelector("[part=\"checked-icon\"] sl-icon");
+			if(!icon)
+			{
+				return;
+			}
+			icon.name = item.checked ? "check-square" : "square";
+			icon.library = "default";
+		})
 	}
 
 	public showAt(_x, _y, _onHide)
@@ -148,7 +176,12 @@ export class EgwMenuShoelace extends LitElement
 			const item = <egwMenuItem>event.detail.item.value;
 			if(item.checkbox)
 			{
-				item.checked = event.detail.item.checked;
+				// Update our internal data
+				item.data.checked = item.checked = event.detail.item.checked;
+
+				// Update icon since updated won't fire
+				const icon : SlIcon = event.detail.item.shadowRoot.querySelector("[part=\"checked-icon\"] sl-icon");
+				icon.name = item.checked ? "check-square" : "square";
 				return;
 			}
 			if(typeof item.onClick == "function")
@@ -157,6 +190,27 @@ export class EgwMenuShoelace extends LitElement
 				item.onClick.call(event.detail.item, item, event);
 			}
 		}
+	}
+
+	handleCheckboxClick(event)
+	{
+		const check = event.target.closest("sl-menu-item");
+		if(!check || check.parentElement == this)
+		{
+			return;
+		}
+
+		// Make sure sub-menu does not close
+		event.stopPropagation();
+
+		// Normal select event
+		check.checked = !check.checked;
+		check.dispatchEvent(new CustomEvent("sl-select", {
+			bubbles: true,
+			cancelable: false,
+			composed: true,
+			detail: {item: check}
+		}));
 	}
 
 	handleDocumentClick(event)
@@ -195,6 +249,7 @@ export class EgwMenuShoelace extends LitElement
                     ?checked=${item.checkbox && item.checked}
                     ?disabled=${!item.enabled}
                     .value=${item}
+                    @click=${item.checkbox ? this.handleCheckboxClick : nothing}
             >
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
