@@ -61,9 +61,9 @@ export class Et2Checkbox extends Et2InputWidget(SlCheckbox)
 	}
 
 	@property({type: String})
-	selectedValue = 'true';
+	selectedValue = true;
 	@property({type: String})
-	unselectedValue = '';
+	unselectedValue = false;
 
 	constructor()
 	{
