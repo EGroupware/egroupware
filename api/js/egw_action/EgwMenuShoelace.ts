@@ -137,8 +137,8 @@ export class EgwMenuShoelace extends LitElement
 
 	handleSelect(event)
 	{
-		// If not open or from a sub-menu, skip
-		if(!this.popup || event.target !== this.menu)
+		// If not open, skip
+		if(!this.popup)
 		{
 			return;
 		}
