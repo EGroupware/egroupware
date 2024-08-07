@@ -90,7 +90,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
     			width: 16px !important;
 			}
             ::slotted(et2-image) {
-            	width: 20px;
+            	height: 20px;
                 max-width: 20px;
                 display: flex;
             }
@@ -193,7 +193,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
-		if(new_image.indexOf("http") >= 0 || new_image.indexOf(this.egw().webserverUrl) >= 0)
+		if(new_image.startsWith("http") || new_image.startsWith(this.egw().webserverUrl))
 		{
 			this.__image = new_image
 		}

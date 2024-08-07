@@ -20,6 +20,20 @@ namespace EGroupware\Api;
 class Image
 {
 	/**
+	 * Global lookup table mapping logic image-names to selected bootstrap icons or existing icons:
+	 * - edit --> pencil-fill
+	 * - save --> api/save as bootstrap's save does not match, but shadows api/save, if not remapped here
+	 *
+	 * @var string[]
+	 */
+	static $global2bootstrap = [
+		'edit' => 'pencil-fill',
+		'save' => 'api/save',   // as bootstrap's save would shadow api/save and is not fitting
+		'apply' => 'floppy',
+		'cancel' => 'x-square',
+		'delete' => 'trash3',
+	];
+	/**
 	 * Searches a appname, template and maybe language and type-specific image
 	 *
 	 * @param string $app
@@ -49,7 +63,7 @@ class Image
 
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 
-		// instance specific images have highest precedence
+		// instance specific images have the highest precedence
 		if (isset($image_map['vfs'][$image.$extension]))
 		{
 			$url = $webserver_url.$image_map['vfs'][$image.$extension];
@@ -58,6 +72,20 @@ class Image
 		elseif(isset($image_map[$app][$image.$extension]))
 		{
 			$url = $webserver_url.$image_map[$app][$image.$extension];
+		}
+		// then our globals lookup table $img2bootstrap
+		elseif(isset($image_map['global'][$image]))
+		{
+			$image = $image_map['global'][$image];
+		}
+		if (isset($url))
+		{
+			// keep it
+		}
+		// then bootstrap icons
+		elseif(isset($image_map['bootstrap'][$image]))
+		{
+			$url = $webserver_url.$image_map['bootstrap'][$image];
 		}
 		// then api
 		elseif(isset($image_map['api'][$image.$extension]))
@@ -78,7 +106,7 @@ class Image
 			return $url;
 		}
 
-		// if image not found, check if it has an extension and try withoug
+		// if image not found, check if it has an extension and try without
 		if (strpos($image, '.') !== false)
 		{
 			$name = null;
@@ -133,15 +161,18 @@ class Image
 		// priority: : SVG->PNG->JPG->GIF->ICO
 		$img_types = array('svg','png','jpg','gif','ico');
 
-		$map = array();
+		$map = ['global' => self::$global2bootstrap];
 		foreach(scandir(EGW_SERVER_ROOT) as $app)
 		{
-			if ($app[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) || !file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates')) continue;
-
+			if ($app[0] === '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app) ||
+				!file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates') && $app !== 'node_modules')
+			{
+				continue;
+			}
 			$app_map =& $map[$app];
 			if (true) $app_map = array();
 			$imagedirs = array();
-			if (Header\UserAgent::mobile())
+			if (Header\UserAgent::mobile() && $app !== 'node_modules')
 			{
 				$imagedirs[] = '/'.$app.'/templates/mobile/images';
 			}
@@ -149,12 +180,21 @@ class Image
 			{
 				$imagedirs[] = $GLOBALS['egw']->framework->template_dir.'/images';
 			}
+			elseif ($app === 'node_modules')
+			{
+				unset($map[$app]);
+				$app_map =& $map[$app='bootstrap'];
+				$imagedirs[] = '/node_modules/bootstrap-icons/icons';
+			}
 			else
 			{
 				$imagedirs[] = '/'.$app.'/templates/'.$template_set.'/images';
 			}
-			if ($template_set != 'idots') $imagedirs[] = '/'.$app.'/templates/idots/images';
-			$imagedirs[] = '/'.$app.'/templates/default/images';
+			if ($app !== 'bootstrap')
+			{
+				if ($template_set != 'idots') $imagedirs[] = '/'.$app.'/templates/idots/images';
+				$imagedirs[] = '/'.$app.'/templates/default/images';
+			}
 
 			foreach($imagedirs as $imagedir)
 			{

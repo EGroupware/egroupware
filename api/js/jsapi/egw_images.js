@@ -87,7 +87,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				}
 			}
 
-			// own instance specific images in vfs have highest precedence
+			// own instance specific images in vfs have the highest precedence
 			tries['vfs']=_name;
 			if (typeof images['vfs'] != 'undefined' && typeof images['vfs'][_name] == 'string')
 			{
@@ -97,6 +97,16 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')
 			{
 				return this.webserverUrl+images[_app][_name];
+			}
+			tries['global'] = _name;
+			if (typeof images['global'] !== 'undefined' && typeof images['global'][_name] === 'string')
+			{
+				return this.image(images['global'][_name], _app);
+			}
+			tries['bootstrap'] = _name;
+			if (typeof images['bootstrap'] !== 'undefined' && typeof images['bootstrap'][_name] == 'string')
+			{
+				return this.webserverUrl+images['bootstrap'][_name];
 			}
 			tries['api'] = _name;
 			if (typeof images['api'] != 'undefined' && typeof images['api'][_name] == 'string')
@@ -190,4 +200,3 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		}
 	};
 });
-
