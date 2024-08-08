@@ -8,7 +8,7 @@
  */
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {SlTag} from "@shoelace-style/shoelace";
-import {css, html, TemplateResult} from "lit";
+import {css, html, nothing, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import shoelace from "../../Styles/shoelace";
 import {state} from "lit/decorators/state.js";
@@ -81,7 +81,6 @@ export class Et2Tag extends Et2Widget(SlTag)
 	{
 		super(...args);
 		this.pill = false;
-		this.removable = true;
 
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -123,7 +122,7 @@ export class Et2Tag extends Et2Widget(SlTag)
                                 tabindex="-1"
                         ></sl-icon-button>
                     `
-              : ''}
+              : nothing}
 			`;
 		}
 		return html`
