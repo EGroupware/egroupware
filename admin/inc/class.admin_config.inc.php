@@ -270,6 +270,7 @@ class admin_config
 			'tabs2' => $_content['tabs2'] ?: $_GET['tab'] ?? '',
 			'template' => $appname.'.config',
 			'newsettings' => array(),
+			'need_tab' => strpos(file_get_contents(EGW_SERVER_ROOT.'/'.$appname.'/templates/default/config.xet'), '<tabpanels>') === false,
 		);
 
 		// $app.config is looping eg. <select onchange="1"
