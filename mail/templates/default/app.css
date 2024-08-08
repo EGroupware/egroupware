@@ -1024,7 +1024,7 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 
 .previewWrapper .firstColumnTitle {
 	max-width: 7em;
-	text-align: end;
+	justify-content: flex-end;
 	min-width: 7em;
 	color: darkgrey;
 }
