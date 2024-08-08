@@ -342,6 +342,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					if(!no_skip) continue;
 				}
 				this.rows[id] = cf[0];
+				let labelWidget = null;
 
 				if(this.getType() == 'customfields-list') {
 					// No label, custom widget
@@ -364,7 +365,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					{
 						label_td.attr('colspan', 2).addClass('et2_customfield_'+(attrs.type || field.type));
 					}
-					et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
+					labelWidget = et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
 				}
 
 				const type = attrs.type ? attrs.type : field.type;
@@ -398,24 +399,36 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				// Create widget
 				if(window.customElements.get('et2-' + type))
 				{
-					if (typeof attrs.needed !== 'undefined')
+					if(typeof attrs.needed !== 'undefined')
 					{
 						attrs.required = attrs.needed;
 						delete attrs.needed;
 					}
-					if (typeof attrs.size !== 'undefined' && ['small', 'medium', 'large'].indexOf(attrs.size) === -1)
+					if(typeof attrs.size !== 'undefined' && ['small', 'medium', 'large'].indexOf(attrs.size) === -1)
 					{
-						if (attrs.size > 0) attrs.width = attrs.size+'em';
+						if(attrs.size > 0)
+						{
+							attrs.width = attrs.size + 'em';
+						}
 						delete attrs.size;
 					}
-					//this.widgets[field_name] = loadWebComponent('et2-' + type, attrs, null);
-					// et2_extension_customfields.getDOMNode() needs webcomponent to have ID before it can put it in
-					let wc = <LitElement>loadWebComponent('et2-' + type, attrs, this);
-					wc.setParent(this);
-					wc.updateComplete.then(() =>
+					if(['label', 'header'].indexOf(attrs.type || field.type) !== -1 && labelWidget)
 					{
-						this.widgets[field_name] = wc;
-					})
+						// Re-use label, don't create new
+						delete attrs.id;
+						Object.assign(labelWidget, {for: undefined, ...attrs});
+					}
+					else
+					{
+						//this.widgets[field_name] = loadWebComponent('et2-' + type, attrs, null);
+						// et2_extension_customfields.getDOMNode() needs webcomponent to have ID before it can put it in
+						let wc = <LitElement>loadWebComponent('et2-' + type, attrs, this);
+						wc.setParent(this);
+						wc.updateComplete.then(() =>
+						{
+							this.widgets[field_name] = wc;
+						})
+					}
 				}
 				else if(typeof et2_registry[type] !== 'undefined')
 				{
