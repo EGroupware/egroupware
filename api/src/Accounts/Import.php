@@ -91,7 +91,7 @@ class Import
 			];
 		}
 		catch (\Exception $e) {
-			$this->logger('Error: '.$e->getMessage(), 'fatal');
+			$this->logger('Error: '.$e->getMessage().' ('.$e->getCode().')', 'fatal');
 			throw $e;
 		}
 	}
@@ -273,7 +273,6 @@ class Import
 			$start = ['', 500, &$cookie]; // cookie must be a reference!
 			do
 			{
-				$contact = $reconnected = null;
 				foreach ($this->contacts->search('', false, '', ['account_lid', 'jpegphoto'], '', '', 'AND', $start, $filter) as $contact)
 				{
 					// if we have a regexp to filter the DN, continue on non-match
@@ -580,15 +579,8 @@ class Import
 					// remember the users we imported, to be able to delete the ones we dont
 					unset($sql_users[$account_id]);
 				}
-				/* check if connection was somehow lost / timed out and reconnect
-				if ($initial_import && !isset($contact) && ldap_errno($this->contacts->ds) === -1)
-				{
-					$this->contacts->ds = $this->accounts->ldap_connection(true);
-					$reconnected = true;
-					$this->logger("Reconnected to LDAP server", 'info');
-				}*/
 			}
-			while ($reconnected || $start[2] !== '');
+			while ($start[2] !== '');
 
 			if ($set_members)
 			{
@@ -668,7 +660,8 @@ class Import
 			}
 		}
 		catch(\Exception $e) {
-			$this->logger($e->getMessage(), 'fatal');
+			_egw_log_exception($e);
+			$this->logger($e->getMessage().' ('.$e->getCode().')', 'fatal');
 			$GLOBALS['egw']->accounts = $frontend;
 			throw $e;
 		}
@@ -898,7 +891,7 @@ class Import
 			}
 		}
 		catch (\Exception $e) {
-			$this->logger("Error deleting no longer existing $type '$account_lid' (#$account_id): ".$e->getMessage(), 'error');
+			$this->logger("Error deleting no longer existing $type '$account_lid' (#$account_id): ".$e->getMessage().' ('.$e->getCode().')', 'error');
 		}
 		$GLOBALS['egw']->accounts = $backup_accounts;
 
@@ -1001,11 +994,11 @@ class Import
 			_egw_log_exception($e);
 			// disable async job, something is not configured correct
 			self::installAsyncJob();
-			$import->logger('Async job for periodic import canceled', 'fatal');
+			$import->logger('Async job for periodic import canceled: '.$e->getMessage().' ('.$e->getCode().')', 'fatal');
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
-			$import->logger('Error: '.$e->getMessage(), 'fatal');
+			$import->logger('Error: '.$e->getMessage().' ('.$e->getCode().')', 'fatal');
 		}
 	}
 
