@@ -4,6 +4,7 @@ import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
+import {state} from "lit/decorators/state.js";
 
 @customElement("egw-menu-shoelace")
 export class EgwMenuShoelace extends LitElement
@@ -38,7 +39,7 @@ export class EgwMenuShoelace extends LitElement
 				/* Customise checkbox menuitem */
 
 				sl-menu-item[type="checkbox"]::part(checked-icon) {
-					visibility: visible;
+					visibility: hidden;
 				}
 
 				sl-menu-item[type="checkbox"]:not([checked])::part(checked-icon) {
@@ -179,9 +180,9 @@ export class EgwMenuShoelace extends LitElement
 				// Update our internal data
 				item.data.checked = item.checked = event.detail.item.checked;
 
-				// Update icon since updated won't fire
-				const icon : SlIcon = event.detail.item.shadowRoot.querySelector("[part=\"checked-icon\"] sl-icon");
-				icon.name = item.checked ? "check-square" : "square";
+				// Update image of a checkbox item to be toggle on or off
+				// this happens by requesting an update because item.checked has changed
+				this.requestUpdate("structure")
 				return;
 			}
 			if(typeof item.onClick == "function")
@@ -237,6 +238,12 @@ export class EgwMenuShoelace extends LitElement
 		{
 			return html`
                 <sl-divider></sl-divider>`;
+		}
+
+		//if we have a checkbox, change the icon to be a toggle slider. Either on or off
+		if (item.checkbox)
+		{
+			item.iconUrl = item.checked ? "toggle-on" : "toggle-off";
 		}
 
 		return html`
