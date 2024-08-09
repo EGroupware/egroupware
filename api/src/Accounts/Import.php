@@ -1128,8 +1128,8 @@ class Import
 			}
 
 			// removing no longer set members
-			if (($sql_members = $this->accounts_sql->members($sql_group_id)) &&
-				($removed = array_diff($sql_members, $members)))
+			if (($sql_members = array_map(self::class.'::strtolower', $this->accounts_sql->members($sql_group_id))) &&
+				($removed = array_diff($sql_members, array_map(self::class.'::strtolower', $members))))
 			{
 				foreach($removed as $sql_account_id => $sql_account_lid)
 				{

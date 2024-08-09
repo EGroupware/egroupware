@@ -1300,6 +1300,7 @@ class Ldap
 				}
 				throw new \Exception(ldap_error($this->ds) ?: 'Unable to retrieve LDAP result', ldap_errno($this->ds));
 			}
+			break;
 		}
 		$this->total += $entries['count'];
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");

@@ -484,6 +484,35 @@ class Ldap
 	}
 
 	/**
+	 * Run ldap_search($this->ds, $context, $filter, $attributes) and retry once, if connection is lost
+	 *
+	 * @param string $context
+	 * @param string $filter
+	 * @param array $attributes
+	 * @return array|false false if not found or error, or array with data from ldap_get_entries
+	 * @throws Api\Exception\AssertionFailed
+	 * @throws Api\Exception\NoPermission
+	 */
+	protected function _ldap_search($context, $filter, array $attributes)
+	{
+		for($retry=1; $retry >= 0; --$retry)
+		{
+			if (!($sri = ldap_search($this->ds, $context, $filter, $attributes)) &&
+				$retry >= 0 && in_array(ldap_errno($this->ds), [91, -1]))
+			{
+				$this->ds = $this->ldap_connection(true);
+				continue;
+			}
+			break;
+		}
+		if (!$sri || !($ldap_data = ldap_get_entries($this->ds, $sri)) || !$ldap_data['count'])
+		{
+			return false;    // entry not found
+		}
+		return Api\Translation::convert($ldap_data[0],'utf-8');
+	}
+
+	/**
 	 * Reads the data of one group
 	 *
 	 * @internal
@@ -505,15 +534,11 @@ class Ldap
 				break;
 			}
 		}
-		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
-			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid', 'description'));
-
-		$ldap_data = ldap_get_entries($this->ds, $sri);
-		if (!$ldap_data['count'])
+		if (!($data = $this->_ldap_search($this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
+			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid', 'description'))))
 		{
 			return false;	// group not found
 		}
-		$data = Api\Translation::convert($ldap_data[0],'utf-8');
 		unset($data['objectclass']['count']);
 
 		$group += array(
@@ -558,16 +583,12 @@ class Ldap
 		// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
 		$account_filter = str_replace(array('%user', '%domain'), array('*', $GLOBALS['egw_info']['user']['domain']), $this->account_filter);
 
-		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.")$account_filter)",
+		if (!($data = $this->_ldap_search($this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.")$account_filter)",
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn',static::MAIL_ATTR,'userpassword','telephonenumber',
-				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'));
-
-		$ldap_data = ldap_get_entries($this->ds, $sri);
-		if (!$ldap_data['count'])
+				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'))))
 		{
 			return false;	// user not found
 		}
-		$data = Api\Translation::convert($ldap_data[0],'utf-8');
 
 		$utc_diff = date('Z');
 		$user = array(
