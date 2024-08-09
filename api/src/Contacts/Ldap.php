@@ -392,29 +392,35 @@ class Ldap
 	}
 
 	/**
+	 * @var bool $admin parameter of last call to connect, to be able to reconnect
+	 */
+	protected bool $admin_connection;
+
+	/**
 	 * connect to LDAP server
 	 *
 	 * @param boolean $admin =false true (re-)connect with admin not user credentials, eg. to modify accounts
 	 */
-	function connect($admin = false)
+	function connect($admin = false, $reconnect=false)
 	{
-		if ($admin)
+		if (($this->admin_connection = $admin))
 		{
-			$this->ds = Api\Ldap::factory();
+			$this->ds = Api\Ldap::factory(true, '', '', '', $reconnect);
 		}
 		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
 		elseif (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{
 			$this->ldap_config['ldap_contact_host'] = $this->ldap_config['ldap_host'];
 			$this->allContactsDN = $this->ldap_config['ldap_context'];
-			$this->ds = Api\Ldap::factory();
+			$this->ds = Api\Ldap::factory(true, '', '', '', $reconnect);
 		}
 		else
 		{
 			$this->ds = Api\Ldap::factory(true,
 				$this->ldap_config['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
-				$GLOBALS['egw_info']['user']['passwd']
+				$GLOBALS['egw_info']['user']['passwd'],
+				$reconnect
 			);
 		}
 	}
@@ -1273,17 +1279,27 @@ class Ldap
 			$this->total = 0;
 		}
 
-		if($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
+		// retry, if connection to LDAP is lost
+		for($retry=1; $retry >= 0; --$retry)
 		{
-			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
-		}
-		else
-		{
-			$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
-		}
-		if(!$result || ($entries = ldap_get_entries($this->ds, $result)) === false)
-		{
-			throw new \Exception(ldap_error($this->ds) ?: 'Unable to retrieve LDAP result', ldap_errno($this->ds));
+			if ($_addressbooktype == self::ALL || $_ldapContext == $this->allContactsDN)
+			{
+				$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
+			}
+			else
+			{
+				$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, null, null, null, null, $control);
+			}
+			if (!$result || ($entries = ldap_get_entries($this->ds, $result)) === false)
+			{
+				// retry after reconnect, if connection to LDAP server is lost
+				if ($retry >= 0 && in_array(ldap_errno($this->ds), [91, -1], true))
+				{
+					$this->connect($this->admin_connection, true);
+					continue;
+				}
+				throw new \Exception(ldap_error($this->ds) ?: 'Unable to retrieve LDAP result', ldap_errno($this->ds));
+			}
 		}
 		$this->total += $entries['count'];
 		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");
