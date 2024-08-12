@@ -271,6 +271,13 @@ class admin_ui
 				'group' => 2,
 				'allowOnMultiple' => false
 			),
+			'change_access' => array(
+				'onExecute'       => 'javaScript:app.admin.group_change_access',
+				'caption'         => 'Change access',
+				'icon'            => 'lock',
+				'group'           => 2,
+				'allowOnMultiple' => true
+			),
 			'run_rights' => array(
 				'onExecute'       => 'javaScript:app.admin.group_run_rights',
 				'caption'         => 'Run rights for applications',
