@@ -535,7 +535,7 @@ class Ldap
 			}
 		}
 		if (!($data = $this->_ldap_search($this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
-			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid', 'description'))))
+			array('dn', 'gidnumber', 'cn', 'objectclass', static::MAIL_ATTR, 'memberuid', 'description', 'entryuuid'))))
 		{
 			return false;	// group not found
 		}
@@ -543,6 +543,7 @@ class Ldap
 
 		$group += array(
 			'account_dn'        => $data['dn'],
+			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => -$data['gidnumber'][0],
 			'account_lid'       => $data['cn'][0],
 			'account_type'      => 'g',
@@ -585,7 +586,7 @@ class Ldap
 
 		if (!($data = $this->_ldap_search($this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.")$account_filter)",
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn',static::MAIL_ATTR,'userpassword','telephonenumber',
-				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp'))))
+				'shadowexpire','shadowlastchange','homedirectory','loginshell','createtimestamp','modifytimestamp','entryuuid'))))
 		{
 			return false;	// user not found
 		}
@@ -593,6 +594,7 @@ class Ldap
 		$utc_diff = date('Z');
 		$user = array(
 			'account_dn'        => $data['dn'],
+			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => (int)$data['uidnumber'][0],
 			'account_lid'       => $data['uid'][0],
 			'account_type'      => 'u',
@@ -893,7 +895,7 @@ class Ldap
 				{
 					$allValues = $this->vlvSortQuery($this->user_context, $filter,
 						['uid', 'uidNumber', 'givenname', 'sn', static::MAIL_ATTR, 'shadowExpire', 'createtimestamp',
-							'modifytimestamp', 'objectclass', 'gidNumber', 'jpegphoto'],
+							'modifytimestamp', 'objectclass', 'gidNumber', 'jpegphoto', 'entryuuid'],
 						$order_by, $start, $offset, $totalcount);
 
 					$utc_diff = date('Z');
@@ -904,6 +906,7 @@ class Ldap
 						{
 							$account = array(
 								'account_dn' => $allVals['dn'],
+								'account_uuid' => $allVals['entryuuid'][0],
 								'account_id' => $allVals['uidnumber'][0],
 								'account_lid' => Api\Translation::convert($allVals['uid'][0], 'utf-8'),
 								'account_type' => 'u',
@@ -963,7 +966,7 @@ class Ldap
 					$filter .= "(modifytimestamp>=".gmdate('YmdHis', $param['modified']).".0Z)";
 				}
 				$filter .= ')';
-				$allValues = $this->vlvSortQuery($this->group_context, $filter, ['cn', 'gidNumber'], $order_by, $start, $offset, $group_total);
+				$allValues = $this->vlvSortQuery($this->group_context, $filter, ['cn', 'gidNumber', 'entryuuid'], $order_by, $start, $offset, $group_total);
 				$totalcount += $group_total;
 				foreach($allValues ?: [] as $allVals)
 				{
@@ -972,6 +975,7 @@ class Ldap
 					{
 						$accounts[(string)-$allVals['gidnumber'][0]] = Array(
 							'account_dn'        => $allVals['dn'],
+							'account_uuid'      => $allVals['entryuuid'][0],
 							'account_id'        => -$allVals['gidnumber'][0],
 							'account_lid'       => Api\Translation::convert($allVals['cn'][0],'utf-8'),
 							'account_type'      => 'g',
@@ -1085,32 +1089,38 @@ class Ldap
 	{
 		$name = Api\Ldap::quote(Api\Translation::convert($_name,Api\Translation::charset(),'utf-8'));
 
-		if (in_array($which, array('account_lid','account_email')) && $account_type !== 'u') // groups only support account_(lid|email)
+		$to_ldap = [
+			'account_lid'   => 'cn',
+			'account_email' => static::MAIL_ATTR,
+			'account_uuid'  => 'entryuuid',
+			'account_dn'    => 'dn',
+		];
+		if (isset($to_ldap[$which]) && $account_type !== 'u') // groups only support account_(lid|email)
 		{
 			$attr = $which == 'account_lid' ? 'cn' : static::MAIL_ATTR;
 
-			if (($sri = ldap_search($this->ds, $this->group_context, '(&('.$attr.'=' . $name . ")(objectclass=posixgroup)$this->group_filter)", array('gidNumber'))) &&
-				($allValues = ldap_get_entries($this->ds, $sri)) &&
-				!empty($allValues[0]['gidnumber'][0]))
+			if (($data = ldap_search($this->group_context, '(&('.$attr.'=' . $name . ")(objectclass=posixgroup)$this->group_filter)", ['gidNumber'])) &&
+				!empty($data['gidnumber'][0]))
 			{
-				return -$allValues[0]['gidnumber'][0];
+				return -$data['gidnumber'][0];
 			}
 		}
-		$to_ldap = array(
+		$to_ldap = [
 			'account_lid'   => 'uid',
 			'account_email' => static::MAIL_ATTR,
 			'account_fullname' => 'cn',
-		);
+			'account_uuid'  => 'entryuuid',
+			'account_dn'    => 'dn',
+		];
 		if (!isset($to_ldap[$which]) || $account_type === 'g')
 		{
 		    return False;
 		}
 
-		if (($sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'))) &&
-			($allValues = ldap_get_entries($this->ds, $sri)) &&
-			!empty($allValues[0]['uidnumber'][0]))
+		if (($data = $this->_ldap_search($this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'))) &&
+			!empty($data['uidNumber'][0]))
 		{
-			return (int)$allValues[0]['uidnumber'][0];
+			return (int)$data['uidnumber'][0];
 		}
 		return False;
 	}
@@ -1181,15 +1191,14 @@ class Ldap
 
 		$gid = abs($_gid);	// our gid is negative!
 
-		$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(gidnumber=$gid))",array('memberuid'));
-		$group = ldap_get_entries($this->ds, $sri);
+		$group = $this->_ldap_search($this->group_context,"(&(objectClass=posixGroup)(gidnumber=$gid))", ['memberuid']);
 
 		$members = array();
-		if (isset($group[0]['memberuid']))
+		if ($group && isset($group['memberuid']))
 		{
-			unset($group[0]['memberuid']['count']);
+			unset($group['memberuid']['count']);
 
-			foreach($group[0]['memberuid'] as $lid)
+			foreach($group['memberuid'] as $lid)
 			{
 				if (($id = $this->name2id($lid, 'account_lid')))	// also return groups!
 				{

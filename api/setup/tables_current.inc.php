@@ -64,7 +64,9 @@ $phpgw_baseline = array(
 			'account_expires' => array('type' => 'int','precision' => '4'),
 			'account_type' => array('type' => 'char','precision' => '1'),
 			'account_primary_group' => array('type' => 'int','meta' => 'group','precision' => '4','nullable' => False,'default' => '0'),
-			'account_description' => array('type' => 'varchar','precision' => '255','comment' => 'group description')
+			'account_description' => array('type' => 'varchar','precision' => '255','comment' => 'group description'),
+			'account_uuid' => array('type' => 'ascii','precision' => '64','comment' => 'UUID of synced (LDAP) entries'),
+			'account_dn' => array('type' => 'varchar','precision' => '255','comment' => 'DN or container')
 		),
 		'pk' => array('account_id'),
 		'fk' => array(),
