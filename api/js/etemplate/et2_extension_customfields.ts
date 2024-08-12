@@ -343,6 +343,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				}
 				this.rows[id] = cf[0];
 				let labelWidget = null;
+				let useLabelWidget = false;
 
 				if(this.getType() == 'customfields-list') {
 					// No label, custom widget
@@ -363,6 +364,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					const label_td = jQuery(document.createElement("td")).prependTo(row);
 					if (['label','header'].indexOf(attrs.type || field.type) !== -1)
 					{
+						useLabelWidget = true;
 						label_td.attr('colspan', 2).addClass('et2_customfield_'+(attrs.type || field.type));
 					}
 					labelWidget = et2_createWidget("label", {id: id + "_label", value: label.trim(), for: id}, this);
@@ -374,7 +376,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					setup_function !== '_setup_link_entry' && !jQuery.isEmptyObject(field.values))
 				{
 					const w = et2_registry[type];
-					const wc = window.customElements.get('et2-' + type);
+					const wc = useLabelWidget && labelWidget ? window.customElements.get("et2-label") : window.customElements.get('et2-' + type);
 					if(wc)
 					{
 						for(let attr_name in field.values)
@@ -397,7 +399,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					}
 				}
 				// Create widget
-				if(window.customElements.get('et2-' + type))
+				if(window.customElements.get('et2-' + type) || useLabelWidget)
 				{
 					if(typeof attrs.needed !== 'undefined')
 					{
