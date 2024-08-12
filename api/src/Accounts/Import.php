@@ -325,7 +325,8 @@ class Import
 					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
 					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
-					if (!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
+					if (!($account_id = $this->accounts_sql->name2id($account['account_uuid'], 'account_uuid')) &&
+						!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
 						$sql_account = $account;
 						// if only users are imported set primary group as configured
@@ -702,10 +703,14 @@ class Import
 		$local_groups = in_array('local', explode('+', $GLOBALS['egw_info']['server']['account_import_type']));
 
 		// query all groups in SQL
-		$sql_groups = $groups = $set_members = [];
-		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
+		$sql_groups = $uuid2account_id = $groups = $set_members = [];
+		foreach($GLOBALS['egw']->db->select(Sql::TABLE, 'account_id,account_lid,account_uuid', ['account_type' => 'g'], __LINE__, __FILE__) as $row)
 		{
 			$sql_groups[-$row['account_id']] = self::strtolower($row['account_lid']);
+			if (!empty($row['account_uuid']))
+			{
+				$uuid2account_id[$row['account_uuid']] = -$row['account_id'];
+			}
 		}
 		// fill groups with existing ones, for incremental sync, but only if we have NO local groups, otherwise we need to query them all
 		$filter = ['type' => 'groups'];
@@ -733,7 +738,13 @@ class Import
 			}
 			$this->logger(++$num.'. Group: '.json_encode($group, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES), 'debug');
 
-			if (!($sql_id = array_search(self::strtolower($group['account_lid']), $sql_groups)))
+			$sql_id = null;
+			// found group by uuid
+			if ($uuid2account_id && ($sql_id = $uuid2account_id[$group['account_uuid']] ?? false))
+			{
+
+			}
+			if (!$sql_id && !($sql_id = array_search(self::strtolower($group['account_lid']), $sql_groups)))
 			{
 				if ($this->accounts_sql->name2id($group['account_lid']) > 0)
 				{
@@ -754,7 +765,7 @@ class Import
 				}
 				if (($sql_id = $group['account_id'] = $this->accounts_sql->save($group, true)) < 0)
 				{
-					// run addgroup hook to create eg. home-directory or mail account
+					// run addgroup hook to create e.g. home-directory or mail account
 					Api\Hooks::process($group+array(
 							'location' => 'addgroup'
 						),False,True);	// called for every app now, not only enabled ones)

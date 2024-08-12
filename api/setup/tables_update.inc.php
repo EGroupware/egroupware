@@ -977,3 +977,19 @@ function api_upgrade23_1_006()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.007';
 }
+
+function api_upgrade23_1_007()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_accounts','account_uuid',array(
+		'type' => 'ascii',
+		'precision' => '64',
+		'comment' => 'UUID of synced (LDAP) entries'
+	));
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_accounts','account_dn',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'comment' => 'DN or container'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.008';
+}

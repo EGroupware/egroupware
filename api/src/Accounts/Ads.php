@@ -113,7 +113,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $default_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname',
+		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
 	);
 
 	/**
@@ -122,7 +122,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $user_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname',
+		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
 		'primarygroupid', 'givenname', 'sn', 'mail', 'displayname', 'telephonenumber',
 		'objectguid', 'useraccountcontrol', 'accountexpires', 'pwdlastset', 'whencreated', 'whenchanged', 'lastlogon',
 		'jpegphoto',
@@ -134,7 +134,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $group_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname',
+		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
 		'objectguid', 'mail', 'whencreated', 'whenchanged', 'description',
 	);
 
@@ -565,6 +565,7 @@ class Ads
 
 		$group = array(
 			'account_dn'        => $data['dn'],
+			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => $account_id,
 			'account_sid'       => $sid,
 			'account_guid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
@@ -644,6 +645,7 @@ class Ads
 
 		$user = array(
 			'account_dn'        => $data['dn'],
+			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => $account_id,
 			'account_sid'       => $sid,
 			'account_guid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
@@ -1327,6 +1329,8 @@ class Ads
 			'account_fullname' => 'cn',
 			'account_sid'   => 'objectsid',
 			'account_guid'  => 'objectguid',
+			'account_uuid'  => 'entryuuid',
+			'account_dn'    => 'dn',
 		);
 		$ret = false;
 		if (isset($to_ldap[$which]))
