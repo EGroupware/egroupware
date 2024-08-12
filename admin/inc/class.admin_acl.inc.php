@@ -365,7 +365,12 @@ class admin_acl
 						'owner' => $location,
 					), $app);
 				}
+				$remove = false;
 				$current = (int)$acl->get_specific_rights_for_account($account_id,$location,$app);
+				if($rights < 0)
+				{
+					$rights = $current & ~abs($rights);
+				}
 				foreach(array_keys((array)$right_list) as $right)
 				{
 					$have_it = !!($current & $right);
@@ -414,6 +419,16 @@ class admin_acl
 		catch (Exception $e) {
 			Api\Json\Response::get()->call('egw.message', $e->getMessage(), 'error');
 		}
+	}
+
+	public static function ajax_get_rights($account_id)
+	{
+		$acl_rights = Api\Hooks::process(array(
+											 'location' => 'acl_rights',
+											 'owner'    => $account_id,
+										 ), array(), true);
+
+		Api\Json\Response::get()->data($acl_rights);
 	}
 
 	/**

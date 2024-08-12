@@ -15,7 +15,7 @@
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {egw} from "../../api/js/jsapi/egw_global.js";
+import {egw, framework} from "../../api/js/jsapi/egw_global.js";
 import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
@@ -619,6 +619,65 @@ class AdminApp extends EgwApp
 	}
 
 	/**
+	 * Opens a dialog to add / remove access to one or more applications for one or more groups
+	 *
+	 * @param {EgwAction} _action
+	 * @param {EgwActionObject[]} _senders
+	 */
+	group_change_access(_action : EgwAction, _senders : EgwActionObject[])
+	{
+		// Tree IDs look like /groups/ID, nm uses admin::ID
+		const from_nm = _senders[0].id.indexOf('::') > 0;
+		let ids = [];
+		let row_ids = []
+		_senders.forEach((sender) =>
+		{
+			const account_id = sender.id.split(from_nm ? '::' : '/')[from_nm ? 1 : 2];
+			row_ids.push('admin::' + account_id);
+			ids.push(account_id);
+		})
+		// Load application ACL settings
+		const setChangeAccessCustomisation = async() =>
+		{
+			const buttons = [
+				{label: egw.lang("Add"), id: "add", default: true, image: "add"},
+				{label: egw.lang("Remove"), id: "remove", image: "minus"},
+				{label: egw.lang("Cancel"), id: Et2Dialog.CANCEL_BUTTON, image: "cancel", align: "right"}
+			];
+			if(this.acl_dialog.buttons.length != buttons.length)
+			{
+				this.acl_dialog.buttons = buttons;
+
+				// This should NOT be called, but Et2Dialog doesn't support changing buttons after
+				this.acl_dialog.firstUpdated();
+			}
+
+			await this.acl_dialog.updateComplete;
+
+			const account = this.acl_dialog.querySelector("#_acl_account");
+			// Set account as multiple
+			account.multiple = true;
+			account.requestUpdate("multiple");
+			// Set account as hidden
+			account.parentNode.parentNode.classList.add('hideme');
+		};
+
+		// Dialog gets recreated several times, customise it each time
+		document.body.addEventListener("open", setChangeAccessCustomisation);
+		this._acl_dialog({acl_account: ids}, {}, this.et2).then(async() =>
+		{
+			await this.acl_dialog.updateComplete
+			document.body.addEventListener("close", (event) =>
+			{
+				if(event.target instanceof Et2Dialog)
+				{
+					document.body.removeEventListener("open", setChangeAccessCustomisation);
+				}
+			});
+		})
+	}
+
+	/**
 	 * Modify an ACL entry
 	 *
 	 * @param {object} _action egwAction
@@ -713,7 +772,7 @@ class AdminApp extends EgwApp
 	 * @param {string} app Name of app
 	 * @param {function} callback
 	 */
-	_acl_dialog(content, sel_options?, etemplate?, app?, callback? : Function)
+	async _acl_dialog(content, sel_options?, etemplate?, app?, callback? : Function)
 	{
 		if(typeof content == 'undefined')
 		{
@@ -746,12 +805,13 @@ class AdminApp extends EgwApp
 		if(et2 && et2.getWidgetById('nm'))
 		{
 			// This is which checkboxes are available for each app
-			acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights') || {};
+			acl_rights = et2.getWidgetById('nm').getArrayMgr('content').getEntry('acl_rights') ||
+				await this.egw.request(className + '::ajax_get_rights', [content.acl_account]);
 
 			if(!content.acl_appname)
 			{
 				// Pre-set appname to currently selected
-				content.acl_appname = et2.getWidgetById('filter2').getValue()||"";
+				content.acl_appname = et2.getWidgetById('filter2').getValue() || "";
 			}
 			if(!content.acl_account)
 			{
@@ -782,7 +842,8 @@ class AdminApp extends EgwApp
 					sel_options.acl_appname.push({value: app, label: app});
 				}
 				// Sort list
-				sel_options.acl_appname.sort(function(a,b) {
+				sel_options.acl_appname.sort(function(a, b)
+				{
 					if(a.label > b.label) return 1;
 					if(a.label < b.label) return -1;
 					return 0;
@@ -794,12 +855,12 @@ class AdminApp extends EgwApp
 		{
 			// Load checkboxes & their values
 			content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
-			jQuery.extend(content, {acl:[],right:[],label:[]});
+			jQuery.extend(content, {acl: [], right: [], label: []});
 
 			// Use this to make sure we get correct app translations
 			let app_egw = egw(content.acl_appname, window);
 
-			for( var right in acl_rights[content.acl_appname])
+			for(var right in acl_rights[content.acl_appname])
 			{
 				// only user himself is allowed to grant private (16) rights
 				if(right == '16' && content['acl_account'] != egw.user('account_id'))
@@ -826,17 +887,22 @@ class AdminApp extends EgwApp
 		}
 
 		// Make sure new accounts are in the list, client side cache won't have them
-		wait.push(this.egw.link_title('api-accounts', content.acl_account, true).then(title =>
+		let accounts = Array.isArray(content.acl_account) ? content.acl_account : [content.acl_account];
+		accounts.forEach(account =>
 		{
-			sel_options.acl_account.push({value: content.acl_account, label: title});
-			sel_options.acl_location.push({value: content.acl_account, label: title});
-		}));
+			wait.push(this.egw.link_title('api-accounts', account, true).then(title =>
+			{
+				sel_options.acl_account.push({value: account, label: title});
+				sel_options.acl_location.push({value: account, label: title});
+			}));
+		})
+
 
 		var dialog_options = {
 			callback: (_button_id, _value) =>
 			{
 				this.acl_dialog = null;
-				if(_button_id != Et2Dialog.OK_BUTTON)
+				if(_button_id == Et2Dialog.CANCEL_BUTTON || !_button_id)
 				{
 					return;
 				}
@@ -856,23 +922,27 @@ class AdminApp extends EgwApp
 				// Only send the request if they entered everything (or selected no apps)
 				if(_value.acl_account && (_value.acl_appname && _value.acl_location || typeof _value.apps != 'undefined'))
 				{
-					var id : any = [];
-					if(_value.acl_appname && _value.acl_account && _value.acl_location)
+					let id : any = [];
+					let account = Array.isArray(_value.acl_account) ? _value.acl_account : [_value.acl_account];
+					if(_value.acl_appname && account.length && _value.acl_location)
 					{
-						id = _value.acl_appname+':'+_value.acl_account+':'+_value.acl_location;
-						if(content && content.id && id != content.id)
+						account.forEach(account =>
 						{
-							// Changed the account or location, remove previous or we
-							// get a new line instead of an edit
-							this.egw.json(className+'::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null,this,false,this)
-								.sendRequest();
-						}
-						id = [id];
+							const acl_id = _value.acl_appname + ':' + account + ':' + _value.acl_location;
+							if(content && content.id && acl_id != content.id)
+							{
+								// Changed the account or location, remove previous or we
+								// get a new line instead of an edit
+								this.egw.json(className + '::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null, this, false, this)
+									.sendRequest();
+							}
+							id.push(acl_id);
+						});
 					}
 					var rights = 0;
 					for(var i in _value.acl)
 					{
-						rights += parseInt(_value.acl[i]);
+						rights += parseInt(_value.acl[i]) * (_button_id == "remove" ? -1 : 1);
 					}
 					if(typeof _value.apps != 'undefined' && !_value.acl_appname)
 					{
@@ -883,13 +953,16 @@ class AdminApp extends EgwApp
 						for(var idx in sel_options.filter2)
 						{
 							var app = sel_options.filter2[idx].value || false;
-							if (!app) continue;
-							var run_id = app+":"+_value.acl_account+":run";
+							if(!app)
+							{
+								continue;
+							}
+							var run_id = app + ":" + _value.acl_account + ":run";
 							if(_value.apps.indexOf(app) < 0 && (content.apps.indexOf(app) >= 0 || content.apps.length == 0))
 							{
 								removed.push(run_id);
 							}
-							else if (_value.apps.indexOf(app) >= 0 && content.apps.indexOf(app) < 0)
+							else if(_value.apps.indexOf(app) >= 0 && content.apps.indexOf(app) < 0)
 							{
 								id.push(run_id);
 							}
@@ -913,7 +986,7 @@ class AdminApp extends EgwApp
 				// @todo: we need to investigate more on et2_widget_selectbox type of apps
 				// where the sel options are not ready while setting its content. Therefore,
 				// the explicit apps should be removed after fixing it on the widget side.
-				sel_options: jQuery.extend(sel_options, {apps: sel_options.filter2}),
+				sel_options: sel_options,// {...sel_options, apps: sel_options.filter2},
 				modifications: modifications,
 				readonlys: readonlys
 			},
@@ -925,21 +998,22 @@ class AdminApp extends EgwApp
 		{
 			dialog_options['width'] = 550;
 			dialog_options['height'] = 450,
-			modifications.tabs = {
-				add_tabs: true,
-				tabs: [{
-					label: egw.lang('Documentation'),
-					template: 'policy.admin_cmd',
-					prepend: false
-				}]
-			};
+				modifications.tabs = {
+					add_tabs: true,
+					tabs: [{
+						label: egw.lang('Documentation'),
+						template: 'policy.admin_cmd',
+						prepend: false
+					}]
+				};
 		}
 
 		// Create the dialog
-		Promise.all(wait).then(() =>
+		return Promise.all(wait).then(() =>
 		{
 			this.acl_dialog = new Et2Dialog(app);
 			this.acl_dialog.transformAttributes(dialog_options);
+			this.acl_dialog.et2 = etemplate;
 
 			document.body.appendChild(<LitElement><unknown>this.acl_dialog);
 		});
@@ -954,7 +1028,9 @@ class AdminApp extends EgwApp
 	 */
 	acl_reopen_dialog(input, widget)
 	{
-		var content = {};
+		let content = {};
+		let et2 = undefined;
+		let callback = undefined;
 		if(this.acl_dialog != null)
 		{
 			content = this.acl_dialog.get_value() || {};
@@ -962,12 +1038,15 @@ class AdminApp extends EgwApp
 			// @todo: maybe this should be investigated further in et2Tabs widget
 			delete(content.tabs);
 
+			et2 = this.acl_dialog.et2 ?? undefined;
+			callback = this.acl_dialog.callback ?? undefined;
+
 			// Destroy the dialog
 			this.acl_dialog.destroy();
 			this.acl_dialog = null;
 		}
 		// Re-open the dialog
-		this._acl_dialog(content);
+		this._acl_dialog(content, {}, et2, callback);
 	}
 
 	/**
@@ -994,8 +1073,15 @@ class AdminApp extends EgwApp
 		// Avoid the window / framework / app and just refresh the etemplate
 		// Framework will try to refresh the opener
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate2.getById('admin-acl').widgetContainer;
-		et2.getInstanceManager().refresh(_data.msg, this.appname,_data.ids,_data.type);
+		const et2 = etemplate2.getById('admin-acl')?.widgetContainer;
+		if(et2)
+		{
+			et2.getInstanceManager().refresh(_data.msg, this.appname, _data.ids, _data.type);
+		}
+		else if(_data.msg)
+		{
+			this.egw.message(_data.msg);
+		}
 	}
 
 	/**
