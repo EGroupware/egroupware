@@ -639,6 +639,7 @@ class AdminApp extends EgwApp
 		// Load application ACL settings
 		const setChangeAccessCustomisation = async() =>
 		{
+			this.acl_dialog.width = 700;
 			const buttons = [
 				{label: egw.lang("Add"), id: "add", default: true, image: "add"},
 				{label: egw.lang("Remove"), id: "remove", image: "minus"},
@@ -658,8 +659,14 @@ class AdminApp extends EgwApp
 			// Set account as multiple
 			account.multiple = true;
 			account.requestUpdate("multiple");
+
 			// Set account as hidden
 			account.parentNode.parentNode.classList.add('hideme');
+
+			// Set location as multiple
+			const location = this.acl_dialog.querySelector("#_acl_location");
+			location.multiple = true;
+			location.requestUpdate("multiple");
 		};
 
 		// Dialog gets recreated several times, customise it each time
@@ -878,13 +885,6 @@ class AdminApp extends EgwApp
 			readonlys.acl_account = true;
 		}
 		let wait = []
-		if(content.acl_location)
-		{
-			wait.push(this.egw.link_title('api-accounts', content.acl_location, true).then(title =>
-			{
-				sel_options.acl_location.push({value: content.acl_location, label: title});
-			}));
-		}
 
 		// Make sure new accounts are in the list, client side cache won't have them
 		let accounts = Array.isArray(content.acl_account) ? content.acl_account : [content.acl_account];
@@ -924,19 +924,23 @@ class AdminApp extends EgwApp
 				{
 					let id : any = [];
 					let account = Array.isArray(_value.acl_account) ? _value.acl_account : [_value.acl_account];
-					if(_value.acl_appname && account.length && _value.acl_location)
+					let location = Array.isArray(_value.acl_location) ? _value.acl_location : [_value.acl_location];
+					if(_value.acl_appname && account.length && location.length)
 					{
 						account.forEach(account =>
 						{
-							const acl_id = _value.acl_appname + ':' + account + ':' + _value.acl_location;
-							if(content && content.id && acl_id != content.id)
+							location.forEach(location =>
 							{
-								// Changed the account or location, remove previous or we
-								// get a new line instead of an edit
-								this.egw.json(className + '::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null, this, false, this)
-									.sendRequest();
-							}
+								const acl_id = _value.acl_appname + ':' + account + ':' + location;
+								if(content && content.id && acl_id != content.id)
+								{
+									// Changed the account or location, remove previous or we
+									// get a new line instead of an edit
+									this.egw.json(className + '::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null, this, false, this)
+										.sendRequest();
+								}
 							id.push(acl_id);
+							});
 						});
 					}
 					var rights = 0;
