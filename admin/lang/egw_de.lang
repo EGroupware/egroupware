@@ -94,8 +94,8 @@ add new application	admin	de	Neue Anwendung hinzufügen
 add new email address:	admin	de	Neue E-Mail-Adresse hinzufügen:
 add peer server	admin	de	Server zu Serververbund hinzufügen
 add profile	admin	de	Profil hinzufügen
-add to group	admin	de	Zu Gruppe hinzufügen
 add sub-category	admin	de	Unterkategorie hinzufügen
+add to group	admin	de	Zu Gruppe hinzufügen
 add user	admin	de	Neuen Benutzer erstellen
 add user or group	admin	de	Benutzer oder Gruppen eingeben
 added	admin	de	Hinzugefügt
@@ -190,6 +190,7 @@ calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholu
 can be used by application	admin	de	Kann von folgender Anwendung verwendet werden
 can be used by group	admin	de	Kann von folgender Gruppe verwendet werden
 can be used by user	admin	de	Kann von folgendem Benutzer verwendet werden
+can be used to show groups by container, if enabled	admin	de	Kann benutzt werden um Gruppen in Containern anzuzeigen, wenn eingeschaltet
 can change password	admin	de	Darf Passwort ändern
 can not change users into groups, same sign required!	admin	de	Das Ändern von Benutzern in Gruppen ist nicht möglich. Gleiches Kennzeichen wird benötigt!
 cancel changes	admin	de	Änderungen abbrechen
@@ -237,6 +238,7 @@ configuration	admin	de	Konfiguration
 configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann z. B. Ihr Passwort lesen.
+container	admin	de	Container
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain<br>(Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden).
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad. Ermöglicht mehrere EGroupware-Sitzungen mit unterschiedlichen Verzeichnissen..
@@ -404,10 +406,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session<br>Verschlüsselung (benötigt mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.<br>Beispiel: https://egw.domain.com/egroupware or /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal
@@ -498,6 +500,7 @@ group excepted from above export limit (admins are always excepted)	admin	de	Gru
 group has been added	common	de	Gruppe wurde hinzugefügt.
 group has been deleted	common	de	Gruppe wurde gelöscht.
 group has been updated	common	de	Gruppe wurde aktualisiert.
+group hierarchy	admin	de	Gruppen Hierarchie
 group list	admin	de	Liste der Gruppen
 group manager	admin	de	Gruppenmanager
 group name	admin	de	Gruppenname
@@ -754,6 +757,7 @@ quota size in mbyte	admin	de	Quota-Größe in MByte
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen.
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
+regular expression to find part to use as container	admin	de	Regulärer Ausdruck um den Teil zu finden, der als Container verwendet wird
 reject passwords containing part of username or full name (3 or more characters long)	admin	de	Passwörter zurückweisen die einen Teil des Benutzernamen oder vollständigen Namens beinhalten (3 oder mehr Zeichen lang)
 relay access checked	admin	de	Nicht angemeldetes Senden überprüft
 remark	admin	de	Bemerkung
@@ -833,6 +837,7 @@ show as optional, but required once user has it setup	admin	de	Als optional anze
 show as required, but only once user has it setup	admin	de	Als benötigt anzeigen, aber nur benötigt, wenn Benutzer sie eingerichtet hat
 show current action	admin	de	Aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
+show groups in container based on	admin	de	Zeige Gruppen in Container basierend auf
 show members	admin	de	Mitglieder dieser Gruppe anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen

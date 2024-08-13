@@ -53,14 +53,26 @@
 						<option value="disabled">{No}</option>
 					</et2-select>
 				</row>
-				<!-- remove currently not supported/necessary development option debug_minify
 				<row>
-					<et2-description  value="Disable minifying of javascript and CSS files" label="%s:"></et2-description>
-					<et2-select  id="newsettings[debug_minify]">
+					<et2-description  value="Group hierarchy" span="all" class="subHeader"></et2-description>
+				</row>
+				<row>
+					<et2-description  value="Show groups in container based on" label="%s:"></et2-description>
+					<et2-select  id="newsettings[group_container_attribute]">
 						<option value="">{No} - {Default}</option>
-						<option value="True">Yes</option>
+						<option value="account_lid">{Group name}: /^([^ ]+) / --> $1</option>
+						<option value="account_dn">LDAP DN: /,CN=([^,]+),/ --> $1</option>
 					</et2-select>
-				</row -->
+				</row>
+				<row>
+					<et2-description  value="Regular expression to find part to use as container" label="%s:"></et2-description>
+					<et2-hbox>
+						<et2-textbox id="newsettings[group_container_regexp]" placeholder="/,CN=([^,]+),/"></et2-textbox>
+						<et2-description value="-->" style="position: relative; top: .5em"></et2-description>
+						<et2-textbox id="newsettings[group_container_replace]" placeholder="$1" width="100px"></et2-textbox>
+					</et2-hbox>
+				</row>
+
 				<row>
 					<et2-description  value="Encryption" span="all" class="subHeader"></et2-description>
 				</row>
@@ -390,7 +402,7 @@
 		</grid>
 	</template>
 	<template id="admin.config" template="" lang="" group="0" version="18.1">
-		<et2-tabbox  id="tabs" width="100%">
+		<et2-tabbox  id="tabs" width="100%" tabHeight="700">
 			<tabs>
 				<tab id="general" label="General"/>
 				<tab id="appearance" label="Appearance"/>

@@ -14,7 +14,7 @@
 					<template template="@template" width="99%"/>
 				</row>
 				<row disabled="!@need_tab">
-					<et2-tabbox  id="tabs2" width="100%">
+					<et2-tabbox  id="tabs2" width="100%" tabHeight="700">
 						<tabs>
 							<tab id="config" label="Configuration"/>
 						</tabs>

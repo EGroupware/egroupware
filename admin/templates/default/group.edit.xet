@@ -43,6 +43,10 @@
                     <et2-description  value="Filesystem quota"></et2-description>
                     <et2-textbox  id="quota" disabled="!@epl" placeholder="@default_quota"></et2-textbox>
                 </row>
+				<row>
+					<et2-description value="Container" for="account_dn"></et2-description>
+					<et2-textbox id="account_dn" maxlength="255" disabled="@disable_dn" statustext="Can be used to show groups by container, if enabled"></et2-textbox>
+				</row>
             </rows>
 		</grid>
 		<et2-tabbox  id="tabs" class="et2_nowrap" span="all" width="100%" tabHeight="250px">

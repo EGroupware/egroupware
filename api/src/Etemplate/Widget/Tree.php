@@ -20,28 +20,28 @@ use EGroupware\Api;
  *
  * Example initialisation of tree via $sel_options array:
  *
- *  use Api\Etemplate\Widget\Tree as tree;
+ *  use Api\Etemplate\Widget\Tree;
  *
  * 	$sel_options['tree'] = array(
- * 		tree::ID => 0, tree::CHILDREN => array(	// ID of root has to be 0!
+ * 		Tree::ID => 0, Tree::CHILDREN => array(	// ID of root has to be 0!
  * 			array(
- *				tree::ID => '/INBOX',
- *				tree::LABEL => 'INBOX', tree::TOOLTIP => 'Your inbox',
- *				tree::OPEN => 1, tree::IMAGE_FOLDER_OPEN => 'kfm_home.png', tree::IMAGE_FOLDER_CLOSED => 'kfm_home.png',
- *				tree::CHILDREN => array(
- *					array(tree::ID => '/INBOX/sub', tree::LABEL => 'sub', tree::IMAGE_LEAF => 'folderClosed.gif'),
- *					array(tree::ID => '/INBOX/sub2', tree::LABEL => 'sub2', tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *				Tree::ID => '/INBOX',
+ *				Tree::LABEL => 'INBOX', Tree::TOOLTIP => 'Your inbox',
+ *				Tree::OPEN => 1, Tree::IMAGE_FOLDER_OPEN => 'kfm_home.png', Tree::IMAGE_FOLDER_CLOSED => 'kfm_home.png',
+ *				Tree::CHILDREN => array(
+ *					array(Tree::ID => '/INBOX/sub', Tree::LABEL => 'sub', Tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *					array(Tree::ID => '/INBOX/sub2', Tree::LABEL => 'sub2', Tree::IMAGE_LEAF => 'folderClosed.gif'),
  *				),
- *				tree::CHECKED => true,
+ *				Tree::CHECKED => true,
  * 			),
  * 			array(
- *				tree::ID => '/user',
- *				tree::LABEL => 'user',
- *				tree::CHILDREN => array(
- *	 				array(tree::ID => '/user/birgit', tree::LABEL => 'birgit', tree::IMAGE_LEAF => 'folderClosed.gif'),
- *					array(tree::ID => '/user/ralf', tree::LABEL => 'ralf', tree::AUTOLOAD_CHILDREN => 1),
+ *				Tree::ID => '/user',
+ *				Tree::LABEL => 'user',
+ *				Tree::CHILDREN => array(
+ *	 				array(Tree::ID => '/user/birgit', Tree::LABEL => 'birgit', Tree::IMAGE_LEAF => 'folderClosed.gif'),
+ *					array(Tree::ID => '/user/ralf', Tree::LABEL => 'ralf', Tree::AUTOLOAD_CHILDREN => 1),
  *				),
- *				tree::NOCHECKBOX => true
+ *				Tree::NOCHECKBOX => true
  * 			),
  * 	));
  *
@@ -549,5 +549,114 @@ class Tree extends Etemplate\Widget
 			$category['hasChildren'] = true;
 		}
 		return $category;
+	}
+
+	/**
+	 * Fix userdata as understood by tree
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	public static function fixUserdata(array $data)
+	{
+		// store link as userdata, maybe we should store everything not directly understood by tree this way ...
+		foreach(array_diff_key($data, array_flip([
+			self::ID, self::LABEL, self::TOOLTIP, self::IMAGE_LEAF, self::IMAGE_FOLDER_OPEN, self::IMAGE_FOLDER_CLOSED,
+			'item', self::AUTOLOAD_CHILDREN, 'select', self::OPEN, 'call',
+		])) as $name => $content)
+		{
+			$data['userdata'][] = array(
+				'name' => $name,
+				'content' => $content,
+			);
+			unset($data[$name]);
+		}
+		return $data;
+	}
+
+
+	/**
+	 * Get list of all groups as tree, taking container into account, if enabled
+	 *
+	 * @param string $root root for building tree-IDs, "" for just using IDs, no path
+	 * @return array[] with tree-children, groups have IDs $root/$account_id (independent of container!), while container use $root/md5($container_name)
+	 */
+	public static function groups(string $root='/groups')
+	{
+		if ($root) $root = rtrim($root, '/').'/';
+		$group_container_attr = $GLOBALS['egw_info']['server']['group_container_attribute'] ?? '';
+		static $default_regexp = [
+			'account_lid' => '/^([^ ]+) /',
+			'account_dn'  => '/,CN=([^,]+),/i',
+		];
+		$group_container_regexp = $GLOBALS['egw_info']['server']['group_container_regexp'] ?? $default_regexp[$group_container_attr] ?? null;
+		$group_container_replace = $GLOBALS['egw_info']['server']['group_container_replace'] ?? '$1';
+
+		$children = [];
+		foreach(Api\Accounts::getInstance()->search(array(
+			'type' => 'groups',
+			'order' => 'account_lid',
+			'sort' => 'ASC',
+			'start' => false,   // to NOT limit number of returned groups
+		)) as $group)
+		{
+			if ($group_container_attr && !empty($group[$group_container_attr]) &&
+				preg_match($group_container_regexp, $group[$group_container_attr], $matches) &&
+				($container_name = ucfirst($matches[substr($group_container_replace, 1)] ?? '')))
+			{
+				foreach($children as &$container)
+				{
+					if ($container[Tree::LABEL] === $container_name) break;
+				}
+				if ($container[Tree::LABEL] !== $container_name)
+				{
+					$children[] = self::fixUserdata([
+						Tree::LABEL => $container_name,
+						Tree::ID => $root.md5($container_name),
+						Tree::IMAGE_FOLDER_OPEN => Api\Image::find('api', 'dhtmlxtree/folderOpen'),
+						Tree::IMAGE_FOLDER_CLOSED => Api\Image::find('api', 'dhtmlxtree/folderClosed'),
+						Tree::CHILDREN => [],
+					]);
+					$container =& $children[count($children)-1];
+				}
+				$container[Tree::CHILDREN][] = self::fixUserdata([
+					Tree::LABEL => $group['account_lid'],
+					Tree::TOOLTIP => $group['account_description'],
+					Tree::ID => $root.$group['account_id'],
+					Tree::IMAGE_LEAF => Api\Image::find('addressbook', 'group'),
+				]);
+			}
+			else
+			{
+				$children[] = self::fixUserdata([
+					Tree::LABEL => $group['account_lid'],
+					Tree::TOOLTIP => $group['account_description'],
+					Tree::ID => $root.$group['account_id'],
+					Tree::IMAGE_LEAF => Api\Image::find('addressbook', 'group'),
+				]);
+			}
+		}
+		// we need to sort (again), otherwise the containers would not be alphabetic sorted (Groups are already)
+		uasort($children, static function ($a, $b) {
+			return strnatcasecmp($a[Tree::LABEL], $b[Tree::LABEL]);
+		});
+		return $children;
+	}
+
+	/**
+	 * Attribute Tree::Children='item' has to be an array (keys: 0, 1, ...), not object/associate array
+	 *
+	 * @param array $items
+	 */
+	public static function stripChildrenKeys(array &$items)
+	{
+		$items = array_values($items);
+		foreach($items as &$item)
+		{
+			if (is_array($item) && isset($item[self::CHILDREN]))
+			{
+				self::stripChildrenKeys($item[self::CHILDREN]);
+			}
+		}
 	}
 }

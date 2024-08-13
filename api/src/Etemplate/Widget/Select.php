@@ -448,9 +448,9 @@ class Select extends Etemplate\Widget
 	}
 
 	/**
-	 * Fix already html-encoded options, eg. "&nbps" AND optinal re-index array to keep order
+	 * Fix already html-encoded options, e.g. "&nbps;" AND optional re-index array to keep order
 	 *
-	 * Get run automatic for everything in $sel_options by etemplate_new::exec / etemplate_new::fix_sel_options
+	 * Get run automatic for everything in $sel_options by Api\Etemplate::exec / Api\Etemplate::fix_sel_options
 	 *
 	 * @param array $options
 	 * @param boolean $use_array_of_objects Re-indexes options, making everything more complicated
@@ -1103,6 +1103,44 @@ class Select extends Etemplate\Widget
 		self::fix_encoded_options($options,true);
 		$response = Api\Json\Response::get();
 		$response->data($options);
+	}
+
+	/**
+	 * Get groups including container, if enabled
+	 *
+	 * Internally using Tree::groups() to not implement container logic again.
+	 *
+	 * @param array|null $tree
+	 * @param string $prefix to use container as prefix instead of not working opt-groups
+	 * @return array[]
+	 * @todo fix options here or select-widget to understand and show opt-groups, incl. icons
+	 */
+	public static function groups(?array $tree=null, $prefix='')
+	{
+		if (!isset($tree)) $tree = Tree::groups('');
+		$options = [];
+		foreach($tree as $group)
+		{
+			if (isset($group[Tree::CHILDREN]))
+			{
+				$options[/*$group[Tree::LABEL]*/] = [
+					'value' => $group[Tree::LABEL],
+					'label' => self::groups($group[Tree::CHILDREN], $group[Tree::LABEL]),
+					'title' => $group[Tree::TOOLTIP] ?? null,
+					'icon'  => $group[Tree::IMAGE_FOLDER_CLOSED],
+				];
+			}
+			else
+			{
+				$options[/*$group[Tree::ID]*/] = [
+					'value' => $group[Tree::ID],
+					'label' => ($prefix ? $prefix.': ' : '').$group[Tree::LABEL],
+					'title' => $group[Tree::TOOLTIP],
+					'icon'  => $group[Tree::IMAGE_LEAF],
+				];
+			}
+		}
+		return $options;
 	}
 }
 
