@@ -1593,6 +1593,43 @@ class Accounts
 	}
 
 	/**
+	 * Get group-container attributes incl. default values
+	 *
+	 * @return array with values [$group_container_attribute, $group_container_regexp, $group_container_replace]
+	 */
+	public static function groupContainerAttributs()
+	{
+		$group_container_attribute = $GLOBALS['egw_info']['server']['group_container_attribute'] ?? '';
+		static $default_regexp = [
+			'account_lid' => '/^([^ ]+) /',
+			'account_dn'  => '/,CN=([^,]+),/i',
+		];
+		$group_container_regexp = $GLOBALS['egw_info']['server']['group_container_regexp'] ?? $default_regexp[$group_container_attribute] ?? null;
+		$group_container_replace = $GLOBALS['egw_info']['server']['group_container_replace'] ?? '$1';
+
+		return [$group_container_attribute, $group_container_regexp, $group_container_replace];
+	}
+
+	/**
+	 * Get container-name of a group, if configured
+	 *
+	 * @param array $group values for keys "account_dn" and "account_lid"
+	 * @return string|null container-name or NULL
+	 */
+	public static function container(array $group) : ?string
+	{
+		[$group_container_attribute, $group_container_regexp, $group_container_replace] = self::groupContainerAttributs();
+
+		if ($group_container_attribute && !empty($group[$group_container_attribute]) &&
+			preg_match($group_container_regexp, $group[$group_container_attribute], $matches) &&
+			($container_name = ucfirst($matches[substr($group_container_replace, 1)] ?? '')))
+		{
+			return $container_name;
+		}
+		return null;
+	}
+
+	/**
 	 * Internal functions not meant to use outside this class!!!
 	 */
 
