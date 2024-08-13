@@ -1099,7 +1099,7 @@ class Ldap
 		{
 			$attr = $which == 'account_lid' ? 'cn' : static::MAIL_ATTR;
 
-			if (($data = ldap_search($this->group_context, '(&('.$attr.'=' . $name . ")(objectclass=posixgroup)$this->group_filter)", ['gidNumber'])) &&
+			if (($data = $this->_ldap_search($this->group_context, '(&('.$attr.'=' . $name . ")(objectclass=posixgroup)$this->group_filter)", ['gidNumber'])) &&
 				!empty($data['gidnumber'][0]))
 			{
 				return -$data['gidnumber'][0];
