@@ -250,6 +250,9 @@ class Groups
 		{
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		}
+		// disable DN for LDAP, AD or synced groups were the real DN is stored here
+		$content['disable_dn'] = $GLOBALS['egw_info']['server']['account_repository'] !== 'sql' ||
+			!empty($GLOBALS['egw_info']['server']['account_import_source']) && $GLOBALS['egw_info']['server']['account_import_type'] !== 'users';
 
 		$tpl->exec('admin.'.self::class.'.edit', $content, $sel_options, $readonlys, $content, 2);
 	}

@@ -77,19 +77,7 @@ class admin_ui
 		);
 
 		$sel_options['tree'] = $this->tree_data();
-		$sel_options['filter'] = array('' => lang('All groups'));
-		foreach(self::$accounts->search(array(
-			'type' => 'groups',
-			'start' => false,
-			'order' => 'account_lid',
-			'sort' => 'ASC',
-		)) as $data)
-		{
-			$sel_options['filter'][$data['account_id']] = empty($data['account_description']) ? $data['account_lid'] : array(
-				'label' => $data['account_lid'],
-				'title' => $data['account_description'],
-			);
-		}
+		$sel_options['filter'] = array_merge([['value' => '', 'label' => lang('All groups')]], Etemplate\Widget\Select::groups());
 
 		$sel_options['filter2'] = array(
 			''            => 'All',
@@ -103,7 +91,7 @@ class admin_ui
 		$tpl->setElementAttribute('tree', 'actions', self::tree_actions());
 
 		// switching between iframe and nm/accounts-list depending on load parameter
-		// important for first time load eg. from an other application calling it's site configuration
+		// important for first time load e.g. from another application calling it's site configuration
 		$tpl->setElementAttribute('iframe', 'disabled', empty($_GET['load']));
 		$content['iframe'] = 'about:blank';	// we show accounts-list be default now
 		if (!empty($_GET['load']))
@@ -633,71 +621,17 @@ class admin_ui
 					if (!empty($data['tooltip'])) $data['tooltip'] = lang($data['tooltip']);
 					// make sure keys are unique, as we overwrite tree entries otherwise
 					if (isset($parent[$data[Tree::ID]])) $data[Tree::ID] .= md5($data['link']);
-					$parent[$data[Tree::ID]] = self::fix_userdata($data);
+					$parent[$data[Tree::ID]] = Tree::fixUserdata($data);
 				}
 			}
 		}
 		elseif ($root == '/groups')
 		{
-			foreach($GLOBALS['egw']->accounts->search(array(
-				'type' => 'groups',
-				'order' => 'account_lid',
-				'sort' => 'ASC',
-			)) as $group)
-			{
-				$tree[Tree::CHILDREN][] = self::fix_userdata(array(
-					Tree::LABEL => $group['account_lid'],
-					Tree::TOOLTIP => $group['account_description'],
-					Tree::ID => $root.'/'.$group['account_id'],
-				));
-			}
+			$tree[Tree::CHILDREN] = Tree::groups($root);
 		}
-		self::strip_item_keys($tree[Tree::CHILDREN]);
+		Tree::stripChildrenKeys($tree[Tree::CHILDREN]);
 		//_debug_array($tree); exit;
 		return $tree;
-	}
-
-	/**
-	 * Fix userdata as understood by tree
-	 *
-	 * @param array $data
-	 * @return array
-	 */
-	private static function fix_userdata(array $data)
-	{
-		if(!$data[Tree::LABEL])
-		{
-			$data[Tree::LABEL] = $data['text'];
-		}
-		// store link as userdata, maybe we should store everything not directly understood by tree this way ...
-		foreach(array_diff_key($data, array_flip(array(
-			Tree::ID,Tree::LABEL,Tree::TOOLTIP,'im0','im1','im2','item','child','select','open','call',
-		))) as $name => $content)
-		{
-			$data['userdata'][] = array(
-				'name' => $name,
-				'content' => $content,
-			);
-			unset($data[$name]);
-		}
-		return $data;
-	}
-
-	/**
-	 * Attribute 'item' has to be an array
-	 *
-	 * @param array $items
-	 */
-	private static function strip_item_keys(array &$items)
-	{
-		$items = array_values($items);
-		foreach($items as &$item)
-		{
-			if (is_array($item) && isset($item['item']))
-			{
-				self::strip_item_keys($item['item']);
-			}
-		}
 	}
 
 	public static $hook_data = array();

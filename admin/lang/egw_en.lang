@@ -190,6 +190,7 @@ calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence
 can be used by application	admin	en	Can be used by application
 can be used by group	admin	en	Can be used by group
 can be used by user	admin	en	Can be used by user
+can be used to show groups by container, if enabled	admin	en	Can be used to show groups by container, if enabled
 can change password	admin	en	Can change password
 can not change users into groups, same sign required!	admin	en	Can NOT change users into groups, same sign required!
 cancel changes	admin	en	Cancel changes
@@ -238,6 +239,7 @@ configuration	admin	en	Configuration
 configuration saved.	admin	en	Configuration saved.
 connection dropped by imap server.	admin	en	Connection dropped by IMAP server.
 connection is not secure! everyone can read eg. your credentials.	admin	en	Connection is NOT secure! Everyone can read eg. your credentials.
+container	admin	en	Container
 continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
@@ -409,10 +411,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session <br>encryption, requires mcrypt
 enter the background color for the login page	admin	en	Enter the background colour for the login page
 enter the background color for the site title	admin	en	Enter the background colour for the site title
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.<br>Examples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.<br>Examples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the host name of the machine on which this server is running
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.<br>Example: https://egw.domain.com/egroupware or /egroupware<br><b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
@@ -503,6 +505,7 @@ group excepted from above export limit (admins are always excepted)	admin	en	Gro
 group has been added	common	en	Group has been added.
 group has been deleted	common	en	Group has been deleted.
 group has been updated	common	en	Group has been updated.
+group hierarchy	admin	en	Group hierarchy
 group list	admin	en	Group list
 group manager	admin	en	Group manager
 group name	admin	en	Group name
@@ -763,6 +766,7 @@ quota size in mbyte	admin	en	Quota size in MByte
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
+regular expression to find part to use as container	admin	en	Regular expression to find part to use as container
 reject passwords containing part of username or full name (3 or more characters long)	admin	en	Reject passwords containing part of username or full name (3 or more characters long)
 relay access checked	admin	en	Relay access checked
 remark	admin	en	Remark
@@ -844,6 +848,7 @@ show as optional, but required once user has it setup	admin	en	Show as optional,
 show as required, but only once user has it setup	admin	en	Show as required, but only once user has it setup
 show current action	admin	en	Show current action
 show error log	admin	en	Show error log
+show groups in container based on	admin	en	Show groups in container based on
 show members	admin	en	Show members
 show phpinfo()	admin	en	Show phpinfo()
 show session ip address	admin	en	Show session IP address

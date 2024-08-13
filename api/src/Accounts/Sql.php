@@ -565,7 +565,7 @@ class Sql
 		foreach($this->contacts->search($criteria,
 			array_merge(array(1,'n_given','n_family','id','created','modified','files',$this->table.'.account_id AS account_id'),$email_cols),
 			$order, "account_lid,account_type,account_status,account_expires,account_primary_group,account_description".
-			",account_lastlogin,account_lastloginfrom,account_lastpwd_change",
+			",account_lastlogin,account_lastloginfrom,account_lastpwd_change,account_uuid,account_dn",
 			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',
 			!empty($param['offset']) ? array($param['start'], $param['offset']) : $param['start'] ?? false,
 			$filter,$join) ?? [] as $contact)
@@ -575,6 +575,8 @@ class Sql
 				$account_id = ($contact['account_type'] == 'g' ? -1 : 1) * $contact['account_id'];
 				$accounts[$account_id] = array(
 					'account_id'        => $account_id,
+					'account_dn'        => $contact['account_dn'],
+					'account_uuid'      => $contact['account_uuid'],
 					'account_lid'       => $contact['account_lid'],
 					'account_type'      => $contact['account_type'],
 					'account_firstname' => $contact['n_given'],

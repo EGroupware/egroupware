@@ -401,8 +401,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.config" template="" lang="" group="0" version="18.1">
-        <et2-tabbox id="tabs">
+        	<et2-tabbox id="tabs">
 			<tabs>
 				<tab id="general" label="General"/>
 				<tab id="appearance" label="Appearance"/>
