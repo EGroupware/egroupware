@@ -245,6 +245,22 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				}
 			})
 		}
+
+		// Load any additional child nodes
+		for(let i = 0; i < _node.childNodes.length; i++)
+		{
+			let node = _node.childNodes[i];
+			let widgetType = node.nodeName.toLowerCase();
+
+			// Skip text & already handled nodes
+			if(["#comment", "#text", "tabs", "tabpanels"].includes(widgetType))
+			{
+				continue;
+			}
+
+			// Create the new element
+			this.createElementFromNode(node);
+		}
 	}
 
 	_readTabs(tabData, tabs)
@@ -308,6 +324,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 					"widget_options": widget_options,
 					"contentDiv": null,
 					"flagDiv": null,
+					"tabNode": node,
 					"hidden": hide,
 					"XMLNode": null,
 					"promise": null
@@ -386,6 +403,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 			// Set tab label
 			tab.flagDiv.appendChild(document.createTextNode(tab.label));
+
+			if(tab.tabNode && tab.tabNode.children.length)
+			{
+				tab.flagDiv.loadFromXML(tab.tabNode);
+			}
 		});
 		tabData.forEach((tab, index) =>
 		{
