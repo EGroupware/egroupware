@@ -507,7 +507,9 @@ class admin_ui
 			{
 				$group['members'] = $GLOBALS['egw']->accounts->members($group['account_id'],true);
 			}
-			$rows[] = $group;
+			$rows[] = $group+[
+				'container' => Api\Accounts::container($group) ?? lang('None'),
+			];
 		}
 		$rows['is_huge'] = $is_huge;
 		return $GLOBALS['egw']->accounts->total;

@@ -648,7 +648,7 @@ class Sql extends Api\Storage
 					}
 					$extra_cols[] = $table.$column.' '.$matches[2];
 					//_debug_array($matches);
-					if (!empty($order_by) && $table) // postgres requires explizit order by
+					if (!empty($order_by) && $table) // postgres requires explicit order by
 					{
 						$order_by = str_replace($matches[0],$table.$column.' '.$matches[2].' '.$matches[3].$matches[4],$order_by);
 					}
@@ -699,6 +699,21 @@ class Sql extends Api\Storage
 				break;
 		}
 		unset($filter['shared_with']);
+
+		// if we have regular expression based container-name AND use MariaDB/MySQL sort by it instead of account_dn
+		if (preg_match('/(^|,| )account_dn( |,)/', $order_by) && in_array("account_type='g'", $filter) &&
+			!empty($GLOBALS['egw_info']['server']['group_container_attribute']) && $this->db->Type === 'mysql' &&
+			in_array($group_container_attribute=$GLOBALS['egw_info']['server']['group_container_attribute'], ['account_dn', 'account_lid']))
+		{
+			[, $group_container_regexp, $group_container_replace] = Api\Accounts::groupContainerAttributs();
+			[,$regexp,] = explode('/', $group_container_regexp);
+			if ($regexp[0] !== '^') $regexp = ($regexp[0] === ',' ? '^[^,]+' : '^.*').$regexp;
+			if (substr($regexp, -1) !== '$') $regexp .= '.*$';
+			$order = "COALESCE(REGEXP_REPLACE($group_container_attribute,".$this->db->quote($regexp).','.
+				$this->db->quote(str_replace('$', '\\', $group_container_replace))."), account_lid)";
+			$order_by = str_replace('account_dn', $order, $order_by);
+			$this->sanitize_order_by = false;
+		}
 
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 

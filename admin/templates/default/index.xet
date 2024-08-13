@@ -65,6 +65,7 @@
 					<et2-vbox>
 						<nextmatch-sortheader label="Group name" id="account_lid"/>
 						<nextmatch-sortheader label="Description" id="account_description"/>
+						<nextmatch-sortheader label="{Container} &amp; {Group name}" id="account_dn"/>
 					</et2-vbox>
 					<nextmatch-sortheader label="EMail" id="email"/>
 					<nextmatch-header label="Members" id="account_members"/>
@@ -74,6 +75,7 @@
 					<et2-vbox>
 						<et2-description  id="${row}[account_lid]" noLang="1"></et2-description>
 						<et2-description  id="${row}[account_description]" noLang="1"></et2-description>
+						<et2-description  id="${row}[container]" statustext="$row_cont[account_dn]" noLang="1"></et2-description>
 					</et2-vbox>
 					<et2-url-email  id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis" noLang="1"></et2-url-email>
 					<et2-select-account  id="${row}[members]" readonly="true" noLang="1"></et2-select-account>

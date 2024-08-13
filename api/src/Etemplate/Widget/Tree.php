@@ -584,13 +584,6 @@ class Tree extends Etemplate\Widget
 	public static function groups(string $root='/groups')
 	{
 		if ($root) $root = rtrim($root, '/').'/';
-		$group_container_attr = $GLOBALS['egw_info']['server']['group_container_attribute'] ?? '';
-		static $default_regexp = [
-			'account_lid' => '/^([^ ]+) /',
-			'account_dn'  => '/,CN=([^,]+),/i',
-		];
-		$group_container_regexp = $GLOBALS['egw_info']['server']['group_container_regexp'] ?? $default_regexp[$group_container_attr] ?? null;
-		$group_container_replace = $GLOBALS['egw_info']['server']['group_container_replace'] ?? '$1';
 
 		$children = [];
 		foreach(Api\Accounts::getInstance()->search(array(
@@ -600,9 +593,7 @@ class Tree extends Etemplate\Widget
 			'start' => false,   // to NOT limit number of returned groups
 		)) as $group)
 		{
-			if ($group_container_attr && !empty($group[$group_container_attr]) &&
-				preg_match($group_container_regexp, $group[$group_container_attr], $matches) &&
-				($container_name = ucfirst($matches[substr($group_container_replace, 1)] ?? '')))
+			if (($container_name = Api\Accounts::container($group)))
 			{
 				foreach($children as &$container)
 				{
