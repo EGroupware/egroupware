@@ -26,7 +26,7 @@ export class EgwMenuShoelace extends LitElement
 				}
 
 				sl-menu-item::part(base) {
-					height: 1.6em;
+					height: 1.7em;
 					line-height: var(--sl-line-height-dense);
 					align-items: center;
 					padding: 0;
@@ -48,7 +48,7 @@ export class EgwMenuShoelace extends LitElement
 
 				et2-image {
 					line-height: normal;
-					width: 1.5em;
+					width: 1.3em;
 				}
 			`
 		]
@@ -117,11 +117,9 @@ export class EgwMenuShoelace extends LitElement
 		if(this.popup == null)
 		{
 			this.popup = Object.assign(document.createElement("sl-popup"), {
-				placement: "top",
+				placement: "right-start",
 				autoSize: "vertical",
 				flip: true,
-				flipFallbackPlacements: "right bottom",
-				flipFallbackStrategy: "initial",
 				shift: true
 			});
 			this.popup.append(this);
@@ -134,7 +132,7 @@ export class EgwMenuShoelace extends LitElement
 				return {
 					x: _x,
 					y: _y,
-					width: menu.clientWidth,
+					width: 0,	// placement="right-start" only works well with 0, not menu.clientWidth,
 					height: menu.clientHeight,
 					top: _y,
 					left: _x,
@@ -260,7 +258,7 @@ export class EgwMenuShoelace extends LitElement
             >
                 ${item.iconUrl ? html`
                     <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
-                ${item.caption}
+				<span style="color: ${item.color || nothing}">${item.caption}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix"
                                                     class="keyboard_shortcut">
 					${item.shortcutCaption}
