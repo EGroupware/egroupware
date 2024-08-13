@@ -527,10 +527,12 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	// Need to wait for Overlay
 	async getUpdateComplete()
 	{
-		await super.getUpdateComplete();
+		let result = await super.getUpdateComplete();
 
 		// Wait for template to finish loading
 		await this._template_promise;
+
+		return result;
 	}
 
 	getComplete() : Promise<[number, Object]>
@@ -553,7 +555,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		});
 
 		// Now consumers can listen for "open" event, though getUpdateComplete().then(...) also works
-		this.dispatchEvent(new Event('open'));
+		this.dispatchEvent(new Event('open', {bubbles: true}));
 
 		Promise.all([this._template_promise, this.updateComplete])
 			.then(() => this._setupMoveResize());
@@ -570,7 +572,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 
-		this.dispatchEvent(new Event('close'));
+		this.dispatchEvent(new Event('close', {bubbles: true}));
 
 		waitForEvent(this, 'sl-after-hide').then(() =>
 		{
