@@ -120,8 +120,6 @@ export class EgwMenuShoelace extends LitElement
 				placement: "right-start",
 				autoSize: "vertical",
 				flip: true,
-				flipFallbackPlacements: "right-end",
-				flipFallbackStrategy: "initial",
 				shift: true
 			});
 			this.popup.append(this);
@@ -134,7 +132,7 @@ export class EgwMenuShoelace extends LitElement
 				return {
 					x: _x,
 					y: _y,
-					width: 0,	//menu.clientWidth,
+					width: 0,	// placement="right-start" only works well with 0, not menu.clientWidth,
 					height: menu.clientHeight,
 					top: _y,
 					left: _x,
