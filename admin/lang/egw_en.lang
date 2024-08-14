@@ -204,6 +204,7 @@ category saved.	admin	en	Category saved.
 certificate	admin	en	Certificate
 certificate details	admin	en	Certificate details
 certificate validation in days	admin	en	Certificate validation in days
+change access	admin	en	Change access control
 change account_id	admin	en	Change account ID
 change acl rights	admin	en	Change ACL rights
 change config settings	admin	en	Change config settings

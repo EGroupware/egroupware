@@ -210,6 +210,7 @@ category saved.	admin	de	Kategorie gespeichert.
 certificate	admin	de	Zertifikat
 certificate details	admin	de	Details des Zertifikat
 certificate validation in days	admin	de	Gültigkeit des Zertifikats in Tagen
+change access	admin	de	Zugriffsrechte ändern
 change account_id	admin	de	Änderung der Konto-ID
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
