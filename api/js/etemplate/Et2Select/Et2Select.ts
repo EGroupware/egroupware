@@ -531,7 +531,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			const missing = filterBySelectOptions(value, this.select_options);
 			if(missing.length > 0)
 			{
-				debugger;
 				console.warn("Invalid option '" + missing.join(", ") + "' removed from " + this.id, this);
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
