@@ -6810,6 +6810,23 @@ table.egwGridView_grid img.et2_appicon {
   filter: initial;
   /* IE 6-9 */
 }
+:root,
+:host,
+.sl-theme-light {
+  --sl-font-sans: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --sl-button-font-size-medium: var(--sl-font-size-medium);
+  --sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
+  --sl-spacing-small: 0.1rem;
+  --sl-spacing-medium: 0.5rem;
+  --sl-input-border-radius-small: 2px;
+  --sl-input-border-radius-medium: 3px;
+  --sl-input-border-color-focus: #E6E6E6;
+  --indicator-color: #696969;
+  --sl-input-focus-ring-color: #26537C;
+  --sl-focus-ring-width: 2px;
+  --sl-color-gray-150: hsl(240, 4.9%, 92.5%);
+  --track-width: 3px;
+}
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 51, 102, 0.3);
   border-left: 4px solid #003366 !important;

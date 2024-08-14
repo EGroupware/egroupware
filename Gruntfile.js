@@ -39,6 +39,17 @@ module.exports = function (grunt) {
 			},
 			pixelegg: {
 				files: {
+					"pixelegg/css/fancy.min.css": [
+						"node_modules/flatpickr/dist/themes/light.css",
+						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"vendor/bower-asset/cropper/dist/cropper.min.css",
+						"api/templates/default/css/flags.css",
+						"api/templates/default/css/htmlarea.css",
+						"api/templates/default/etemplate2.css",
+						"pixelegg/css/fancy.css",
+						"api/templates/default/print.css",
+						"pixelegg/print.css"
+					],
 					"pixelegg/css/pixelegg.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
 						"vendor/bower-asset/diff2html/dist/diff2html.css",

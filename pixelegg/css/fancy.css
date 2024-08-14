@@ -1,4 +1,11 @@
 /**
+ * EGroupware: "fancy" theme
+ *
+ * @link https://www.egroupware.org
+ * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package pixelegg
+ */
+/**
  * EGroupware: pixelegg standard theme
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
@@ -7184,4 +7191,10 @@ img.et2_button_icon[src*="svg"]:hover {
 }
 ::-ms-input-placeholder {
   color: #666666;
+}
+:root,
+:host,
+.sl-theme-light {
+  --sl-border-radius-medium: 20px;
+  --sl-input-border-radius-medium: var(--sl-border-radius-medium);
 }

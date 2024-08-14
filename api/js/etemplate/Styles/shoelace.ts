@@ -38,30 +38,12 @@ if(typeof egw !== "undefined" && typeof egw.image == "function")
  * External CSS & widget styles will override this
  */
 export default [css`
-  :root,
-  :host,
-  .sl-theme-light {
-	  --sl-font-sans: egroupware, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-	  --sl-button-font-size-medium: var(--sl-font-size-medium);
-	  --sl-input-help-text-font-size-medium: var(--sl-font-size-medium);
-	  --sl-spacing-small: 0.1rem;
-	  --sl-spacing-medium: 0.5rem;
-
-	  --sl-input-border-radius-small: 2px;
-	  --sl-input-border-radius-medium: 3px;
-	  --sl-input-border-color-focus: #E6E6E6;
-	  --indicator-color: #696969;
-	  --sl-input-focus-ring-color: #26537C;
-	  --sl-focus-ring-width: 2px;
-	  --sl-color-gray-150: hsl(240, 4.9%, 92.5%);
-  }
-
 	.tab-group--top .tab-group__tabs {
-      --track-width: 3px;
-  }
-  .form-control--has-label .form-control__label {
-    display: inline-block;
-    color: var(--sl-input-label-color);
-    margin-right: var(--sl-spacing-medium);
-  }
-  `];
+		--track-width: var(--track-width);
+	}
+	.form-control--has-label .form-control__label {
+		display: inline-block;
+		color: var(--sl-input-label-color);
+		margin-right: var(--sl-spacing-medium);
+	}
+`];
