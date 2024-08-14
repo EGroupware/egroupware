@@ -8,10 +8,13 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, render} from "lit";
+import {css, html, LitElement, render, nothing} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
+@customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 	static get styles()
@@ -34,60 +37,66 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			`];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * The label of the image
+	 * Actually not used as label, but we put it as title
+	 */
+	@property({type: String})
+	label = "";
 
-			/**
-			 * The label of the image
-			 * Actually not used as label, but we put it as title
-			 */
-			label: {
-				type: String
-			},
+	/**
+	 * Image
+	 * Displayed image
+	 */
+	@property({type: String})
+	src = "";
 
-			/**
-			 * Image
-			 * Displayed image
-			 */
-			src: {type: String},
+	/**
+	 * Default image
+	 * Image to use if src is not found
+	 */
+	@property({type: String})
+	defaultSrc = "";
 
-			/**
-			 * Default image
-			 * Image to use if src is not found
-			 */
-			defaultSrc: {type: String},
+	/**
+	 * Link Target
+	 * Link URL, empty if you don't wan't to display a link.
+	 */
+	@property({type: String})
+	href = "";
 
-			/**
-			 * Link Target
-			 * Link URL, empty if you don't wan't to display a link.
-			 */
-			href: {type: String},
+	/**
+	 * Link target
+	 * Link target descriptor
+	 */
+	@property({type: String})
+	extraLinkTarget = "_self";
 
-			/**
-			 * Link target
-			 * Link target descriptor
-			 */
-			extraLinkTarget: {type: String},
+	/**
+	 * Popup
+	 * widthxheight, if popup should be used, eg. 640x480
+	 */
+	@property({type: String})
+	extraLinkPopup = "";
 
-			/**
-			 * Popup
-			 * widthxheight, if popup should be used, eg. 640x480
-			 */
-			extraLinkPopup: {type: String},
-		}
-	}
+	/**
+	 * Width of image
+	 */
+	@property({type: String})
+	width;
+
+	/**
+	 * Height of image
+	 */
+	@property({type: String})
+	height;
+
+	@property({type: String})
+	style;
 
 	constructor()
 	{
 		super();
-		this.src = "";
-		this.defaultSrc = "";
-		this.href = "";
-		this.label = "";
-		this.extraLinkTarget = "_self";
-		this.extraLinkPopup = "";
 
 		this._handleClick = this._handleClick.bind(this);
 	}
@@ -97,28 +106,34 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		super.connectedCallback();
 	}
 
-	_imageTemplate()
+	render()
 	{
 		let src = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
 		if(!src)
 		{
 			// Hide if no valid image
-			return '';
+			return html``;
 		}
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${src}"
                  alt="${this.label}"
+				 width="${this.width || nothing}"
+                 height="${this.height || nothing}"
+                 style="${this.style || nothing}"
                  part="image"
                  loading="lazy"
                  title="${this.statustext || this.label}"
             >`;
 	}
 
-	render()
+	/**
+	 * Puts the rendered content / img-tag in light DOM
+	 * @link https://lit.dev/docs/components/shadow-dom/#implementing-createrenderroot
+	 */
+	protected createRenderRoot()
 	{
-		return html`
-            <slot></slot>`;
+		return this;
 	}
 
 	protected parse_href(img_href : string) : string
@@ -236,5 +251,3 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 }
-
-customElements.define("et2-image", Et2Image)//, {extends: 'img'});
