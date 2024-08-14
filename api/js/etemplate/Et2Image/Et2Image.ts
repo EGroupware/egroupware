@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, render, nothing} from "lit";
+import {css, html, LitElement, nothing, render} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
