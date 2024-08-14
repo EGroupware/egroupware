@@ -60,6 +60,10 @@ class Image
 			//error_log(__METHOD__."('$app', ".array2string($image).", '$extension') NONE found!");
 			return null;
 		}
+		if (!is_string($image))
+		{
+			return null;
+		}
 
 		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
 
