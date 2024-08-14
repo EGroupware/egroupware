@@ -349,7 +349,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		{
 			// Find the tab by DOM heritage
 			// @ts-ignore
-			if(tabbox.tabData[i].contentDiv?.contains(this.div[0] || this))
+			if(tabbox.tabData[i].contentDiv?.contains(this.getDOMNode() || this))
 			{
 				return tabbox.tabData[i];
 			}
@@ -363,7 +363,9 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		} while (template !== tabbox && template.getType() !== 'template');
 		for (var i = tabbox.tabData.length - 1; i >= 0; i--)
 		{
-			if (template && template.id && template.id === tabbox.tabData[i].id)
+			if(template && template.id &&
+				(template.id === tabbox.tabData[i].id || tabbox.tabData[i].contentDiv?.getWidgetById(template.id) !== null)
+			)
 			{
 				return tabbox.tabData[i];
 			}
