@@ -476,7 +476,6 @@ class infolog_ui
 		// query all links and sub counts in one go
 		if($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
 		{
-			$links = Link::get_links_multiple('infolog', array_keys($infos), true, '', 'link_lastmod DESC', true);    // true=incl. deleted
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$rows = array();
@@ -505,7 +504,6 @@ class infolog_ui
 		{
 			if(!$query['csv_export'] || !is_array($query['csv_export']))
 			{
-				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
 				$info = $this->get_info($info, $readonlys, null, null, false, $details);
 			}
