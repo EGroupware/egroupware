@@ -148,12 +148,25 @@ span#admin-mailaccount_acc_id {
 /**
  * new et2 site configuration
  */
-#admin-site-config > div > .subHeader {
+#admin-site-config > div > et2-vbox > .subHeader {
     border-bottom: 3px solid #696969;
     padding-left: 3px;
     padding-bottom: 3px;
     display: block;
     margin-bottom: 5px;
+}
+
+#admin-site-config > div > et2-vbox {
+	height: 100%;
+}
+
+#admin-site-config .mainContent, #admin-site-config .mainContent et2-tabbox {
+	flex-grow: 1;
+}
+
+#admin-site-config .mainContent > div {
+	display: flex;
+	flex-direction: column;
 }
 
 #admin-index_ajax_target > form[id$="-config"] tr.th > td,
