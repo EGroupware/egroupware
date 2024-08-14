@@ -21,27 +21,27 @@
 ==========================================================
 -->
 
-<!ENTITY % Widgets "template|grid|groupbox|caption|entry|contact-value|contact-account|contact-template|infolog-value
+<!ENTITY % Widgets "template|grid|caption|entry|contact-value|contact-account|contact-template|infolog-value
                     |tracker-value|records-value|hidden|radio|radiogroup|diff|styles|customfields|customfields-list|html
-                    |htmlarea|toolbar|historylog|hrule|file|progress|vfs|vfs-name|vfs-size|vfs-mode|vfs-upload|video
-                    |audio|barcode|itempicker|script|countdown|customfields-types|nextmatch|nextmatch-header
+                    |htmlarea|toolbar|historylog|hrule|file|progress|vfs|vfs-size|vfs-mode|vfs-upload|video|audio
+                    |barcode|itempicker|script|countdown|customfields-types|nextmatch|nextmatch-header
                     |nextmatch-customfields|nextmatch-sortheader|et2-nextmatch-header-account|et2-appicon|et2-avatar
-                    |et2-avatar-group|et2-box|et2-button|et2-button-icon|et2-button-scroll|et2-button-timestamp
-                    |et2-category-tag|et2-checkbox|et2-colorpicker|et2-nextmatch-columnselection
+                    |et2-avatar-group|et2-box|et2-button|et2-button-copy|et2-button-icon|et2-button-scroll
+                    |et2-button-timestamp|et2-category-tag|et2-checkbox|et2-colorpicker|et2-nextmatch-columnselection
                     |et2-nextmatch-header-custom|et2-date|et2-date-duration|et2-date-range|et2-date-since|et2-date-time
                     |et2-date-timeonly|et2-date-time-today|et2-description|et2-description-expose|et2-details|et2-dialog
                     |et2-dropdown-button|et2-email|et2-email-tag|et2-nextmatch-header-entry|et2-favorites
-                    |et2-favorites-menu|et2-nextmatch-header-filter|et2-hbox|et2-iframe|et2-image|et2-image-expose
-                    |et2-lavatar|et2-label|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list
-                    |et2-link-paste-dialog|et2-link-search|et2-link-string|et2-link-to|et2-listbox|et2-merge-dialog
-                    |et2-number|et2-password|et2-portlet|et2-searchbox|et2-select|et2-select-access|et2-select-account
-                    |et2-select-app|et2-select-bitwise|et2-select-bool|et2-select-cat|et2-select-country|et2-select-day
-                    |et2-select-dow|et2-select-hour|et2-select-lang|et2-select-month|et2-select-number
-                    |et2-select-percent|et2-select-priority|et2-select-state|et2-select-tab|et2-select-thumbnail
-                    |et2-select-timezone|et2-select-year|et2-spinner|et2-split|et2-switch|et2-tabbox|et2-tag
-                    |et2-textarea|et2-textbox|et2-thumbnail-tag|et2-tree|et2-tree-dropdown|et2-tree-cat|et2-url
-                    |et2-url-email|et2-url-fax|et2-url-phone|et2-vbox|et2-vfs-gid|et2-vfs-mime|et2-vfs-path
-                    |et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid">
+                    |et2-favorites-menu|et2-nextmatch-header-filter|et2-groupbox|et2-hbox|et2-iframe|et2-image
+                    |et2-image-expose|et2-lavatar|et2-label|et2-link|et2-link-add|et2-link-apps|et2-link-entry
+                    |et2-link-list|et2-link-paste-dialog|et2-link-search|et2-link-string|et2-link-to|et2-listbox
+                    |et2-merge-dialog|et2-number|et2-password|et2-portlet|et2-searchbox|et2-select|et2-select-access
+                    |et2-select-account|et2-select-app|et2-select-bitwise|et2-select-bool|et2-select-cat
+                    |et2-select-country|et2-select-day|et2-select-dow|et2-select-hour|et2-select-lang|et2-select-month
+                    |et2-select-number|et2-select-percent|et2-select-priority|et2-select-state|et2-select-tab
+                    |et2-select-thumbnail|et2-select-timezone|et2-select-year|et2-spinner|et2-split|et2-switch
+                    |et2-tabbox|et2-tag|et2-textarea|et2-textbox|et2-thumbnail-tag|et2-tree|et2-tree-dropdown
+                    |et2-tree-cat|et2-url|et2-url-email|et2-url-fax|et2-url-phone|et2-vbox|et2-vfs-gid|et2-vfs-mime
+                    |et2-vfs-name|et2-vfs-path|et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid">
 
 <!ELEMENT overlay (template)*>
 
@@ -110,31 +110,6 @@
     sortable_cancel CDATA #IMPLIED
     sortable_recieveCallback CDATA #IMPLIED
     sortable_startCallback CDATA #IMPLIED
-    disabled (false|true|1) 'false'
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    class CDATA #IMPLIED
-    overflow CDATA #IMPLIED
-    parent_node CDATA #IMPLIED
-    actions CDATA #IMPLIED
-    default_execute CDATA #IMPLIED
-    resize_ratio CDATA #IMPLIED
-    data CDATA #IMPLIED
-    background CDATA #IMPLIED
-    id CDATA #IMPLIED
-    no_lang (false|true|1) 'false'
-    span CDATA #IMPLIED
-    type CDATA #IMPLIED
-    readonly CDATA #IMPLIED
-    attributes CDATA #IMPLIED>
-
-<!ELEMENT groupbox (%Widgets;)*>
-
-<!ATTLIST groupbox
-    statustext CDATA #IMPLIED
-    statustext_html (false|true|1) 'false'
-    align CDATA 'left'
-    onclick CDATA #IMPLIED
     disabled (false|true|1) 'false'
     width CDATA #IMPLIED
     height CDATA #IMPLIED
@@ -919,46 +894,6 @@
     readonly CDATA #IMPLIED
     attributes CDATA #IMPLIED>
 
-<!ELEMENT vfs-name EMPTY>
-
-<!ATTLIST vfs-name
-    multiline (false|true|1) 'false'
-    size CDATA #IMPLIED
-    maxlength CDATA #IMPLIED
-    blur CDATA #IMPLIED
-    rows CDATA #IMPLIED
-    cols CDATA #IMPLIED
-    validator CDATA #IMPLIED
-    onkeypress CDATA #IMPLIED
-    needed (false|true|1) 'false'
-    onchange CDATA #IMPLIED
-    onfocus CDATA #IMPLIED
-    validation_error CDATA #IMPLIED
-    tabindex CDATA #IMPLIED
-    readonly (false|true|1) 'false'
-    label CDATA #IMPLIED
-    value CDATA #IMPLIED
-    statustext CDATA #IMPLIED
-    statustext_html (false|true|1) 'false'
-    align CDATA 'left'
-    onclick CDATA #IMPLIED
-    disabled (false|true|1) 'false'
-    width CDATA #IMPLIED
-    height CDATA #IMPLIED
-    class CDATA #IMPLIED
-    overflow CDATA #IMPLIED
-    parent_node CDATA #IMPLIED
-    actions CDATA #IMPLIED
-    default_execute CDATA #IMPLIED
-    resize_ratio CDATA #IMPLIED
-    data CDATA #IMPLIED
-    background CDATA #IMPLIED
-    id CDATA #IMPLIED
-    no_lang (false|true|1) 'false'
-    span CDATA #IMPLIED
-    type CDATA #IMPLIED
-    attributes CDATA #IMPLIED>
-
 <!ELEMENT vfs-size EMPTY>
 
 <!ATTLIST vfs-size
@@ -1504,6 +1439,35 @@
     variant (default|primary|success|neutral|warning|danger|text) #IMPLIED
     width CDATA #IMPLIED>
 
+<!ELEMENT et2-button-copy EMPTY>
+
+<!ATTLIST et2-button-copy
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    class CDATA #IMPLIED
+    copy-label CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    error-label CDATA #IMPLIED
+    feedback-duration CDATA #IMPLIED
+    from CDATA #IMPLIED
+    height CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    hoist (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    onclick CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    style CDATA #IMPLIED
+    success-label CDATA #IMPLIED
+    tooltip-placement (top|right|bottom|left) #IMPLIED
+    value CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
 <!ELEMENT et2-button-icon EMPTY>
 
 <!ATTLIST et2-button-icon
@@ -1667,7 +1631,7 @@
     parentId CDATA #IMPLIED
     readonly (false|true|1) #IMPLIED
     required (false|true|1) #IMPLIED
-    selectedValue CDATA #IMPLIED
+    selectedValue (false|true|1) #IMPLIED
     size (small|medium|large) #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
@@ -1675,7 +1639,7 @@
     style CDATA #IMPLIED
     tabindex CDATA #IMPLIED
     title CDATA #IMPLIED
-    unselectedValue CDATA #IMPLIED
+    unselectedValue (false|true|1) #IMPLIED
     value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
@@ -1855,7 +1819,6 @@
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
     statustext CDATA #IMPLIED
-    step CDATA #IMPLIED
     style CDATA #IMPLIED
     tabindex CDATA #IMPLIED
     width CDATA #IMPLIED>
@@ -2360,6 +2323,33 @@
     style CDATA #IMPLIED
     tabindex CDATA #IMPLIED
     value CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
+<!ELEMENT et2-groupbox (%Widgets;)+>
+
+<!ATTLIST et2-groupbox
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    class CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    height CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    hoist (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    onclick CDATA #IMPLIED
+    open (false|true|1) #IMPLIED
+    overlaySummaryOnOpen (false|true|1) #IMPLIED
+    parentId CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    style CDATA #IMPLIED
+    summary CDATA #IMPLIED
+    toggleAlign CDATA #IMPLIED
+    toggleOnHover (false|true|1) #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-hbox (%Widgets;)+>
@@ -2908,6 +2898,7 @@
     class CDATA #IMPLIED
     clearable (false|true|1) #IMPLIED
     data CDATA #IMPLIED
+    decimalSeparator CDATA #IMPLIED
     disabled (false|true|1) #IMPLIED
     enterkeyhint (enter|done|go|next|previous|search|send) #IMPLIED
     filled (false|true|1) #IMPLIED
@@ -2919,6 +2910,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -2936,6 +2928,7 @@
     pill (false|true|1) #IMPLIED
     placeholder CDATA #IMPLIED
     precision CDATA #IMPLIED
+    prefix CDATA #IMPLIED
     readonly (false|true|1) #IMPLIED
     required (false|true|1) #IMPLIED
     size (small|medium|large) #IMPLIED
@@ -2945,7 +2938,9 @@
     statustext CDATA #IMPLIED
     step CDATA #IMPLIED
     style CDATA #IMPLIED
+    suffix CDATA #IMPLIED
     tabindex CDATA #IMPLIED
+    thousandsSeparator CDATA #IMPLIED
     title CDATA #IMPLIED
     type CDATA #IMPLIED
     validator CDATA #IMPLIED
@@ -2977,6 +2972,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -3063,6 +3059,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -3226,6 +3223,7 @@
     accesskey CDATA #IMPLIED
     align CDATA #IMPLIED
     allowFreeEntries (false|true|1) #IMPLIED
+    apps CDATA #IMPLIED
     ariaDescription CDATA #IMPLIED
     ariaLabel CDATA #IMPLIED
     autocomplete CDATA #IMPLIED
@@ -3814,6 +3812,7 @@
     accesskey CDATA #IMPLIED
     align CDATA #IMPLIED
     allowFreeEntries (false|true|1) #IMPLIED
+    apps CDATA #IMPLIED
     ariaDescription CDATA #IMPLIED
     ariaLabel CDATA #IMPLIED
     autocomplete CDATA #IMPLIED
@@ -4208,6 +4207,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -4413,6 +4413,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -4472,6 +4473,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -4529,6 +4531,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -4586,6 +4589,7 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    mask CDATA #IMPLIED
     max CDATA #IMPLIED
     maxlength CDATA #IMPLIED
     min CDATA #IMPLIED
@@ -4676,6 +4680,64 @@
     statustext CDATA #IMPLIED
     style CDATA #IMPLIED
     symlink (false|true|1) #IMPLIED
+    value CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
+<!ELEMENT et2-vfs-name EMPTY>
+
+<!ATTLIST et2-vfs-name
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    ariaLabel CDATA #IMPLIED
+    autocapitalize (off|none|on|sentences|words|characters) #IMPLIED
+    autocomplete CDATA #IMPLIED
+    autocorrect (off|on) #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    class CDATA #IMPLIED
+    clearable (false|true|1) #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    enterkeyhint (enter|done|go|next|previous|search|send) #IMPLIED
+    filled (false|true|1) #IMPLIED
+    form CDATA #IMPLIED
+    height CDATA #IMPLIED
+    help-text CDATA #IMPLIED
+    helpText CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
+    label CDATA #IMPLIED
+    mask CDATA #IMPLIED
+    max CDATA #IMPLIED
+    maxlength CDATA #IMPLIED
+    min CDATA #IMPLIED
+    minlength CDATA #IMPLIED
+    name CDATA #IMPLIED
+    no-spin-buttons (false|true|1) #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    onchange CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    onkeypress CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    password-toggle (false|true|1) #IMPLIED
+    password-visible (false|true|1) #IMPLIED
+    pattern CDATA #IMPLIED
+    pill (false|true|1) #IMPLIED
+    placeholder CDATA #IMPLIED
+    readonly (false|true|1) #IMPLIED
+    required (false|true|1) #IMPLIED
+    size (small|medium|large) #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    spellcheck (false|true|1) #IMPLIED
+    statustext CDATA #IMPLIED
+    step CDATA #IMPLIED
+    style CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    title CDATA #IMPLIED
+    type CDATA #IMPLIED
+    validator CDATA #IMPLIED
     value CDATA #IMPLIED
     width CDATA #IMPLIED>
 

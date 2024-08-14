@@ -198,6 +198,19 @@ function send_template()
 			return "<et2-details" . stringAttrs($attrs) . '>' . $matches[2] . "</et2-details>";
 		}, $str);
 
+		// Change groupbox <caption label="..."/> --> summary attribute
+		$str = preg_replace_callback('#<groupbox([^>]*?)>(.*?)</groupbox>#su', static function ($matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+
+			if (preg_match('#^\n?\s*<caption([^>]*?)/?>(.*?)(</caption>)?#su', $matches[2], $caption))
+			{
+				$attrs['summary'] = parseAttrs($caption[1])['label'];
+				$matches[2] = str_replace($caption[0], '', $matches[2]);
+			}
+			return "<et2-groupbox" . stringAttrs($attrs) . '>' . $matches[2] . "</et2-groupbox>";
+		}, $str);
+
 		// Change splitter dockside -> primary + vertical
 		$str = preg_replace_callback('#<split([^>]*?)>(.*?)</split>#su', static function ($matches)
 		{

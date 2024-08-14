@@ -94,6 +94,9 @@ $overwrites = [
 	'et2-details' => [
 		'.children' => 'Widgets',
 	],
+	'et2-groupbox' => [
+		'.children' => 'Widgets',
+	],
 	'et2-split' => [
 		'.children' => 'Widgets',
 	],
