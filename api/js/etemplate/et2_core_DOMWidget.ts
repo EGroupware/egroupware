@@ -349,7 +349,7 @@ export abstract class et2_DOMWidget extends et2_widget implements et2_IDOMNode
 		{
 			// Find the tab by DOM heritage
 			// @ts-ignore
-			if(tabbox.tabData[i].contentDiv?.contains(this.getDOMNode() || this))
+			if(tabbox.tabData[i].contentDiv?.contains(this.getDOMNode(this) || this))
 			{
 				return tabbox.tabData[i];
 			}
