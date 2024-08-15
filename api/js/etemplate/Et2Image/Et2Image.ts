@@ -81,19 +81,22 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	extraLinkPopup = "";
 
 	/**
-	 * Width of image
+	 * Width of image:
+	 * - either number of px (e.g. 32) or
+	 * - string incl. CSS unit (e.g. "32px") or
+	 * - even CSS functions like e.g. "calc(1rem + 2px)"
 	 */
 	@property({type: String})
 	width;
 
 	/**
-	 * Height of image
+	 * Height of image:
+	 * - either number of px (e.g. 32) or
+	 * - string incl. CSS unit (e.g. "32px") or
+	 * - even CSS functions like e.g. "calc(1rem + 2px)"
 	 */
 	@property({type: String})
 	height;
-
-	@property({type: String})
-	style;
 
 	constructor()
 	{
@@ -125,9 +128,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${src}"
                  alt="${this.label}"
-				 width="${this.width || (this.height ? nothing : '100%')}"
-                 height="${this.height || nothing}"
-                 style="${this.style || nothing}"
+				 style="${this.height ? 'height: '+this.height+(isNaN(this.height)?'':'px')+'; ' : ''}width: ${this.width ? this.width+(isNaN(this.width)?'':'px') : (this.height ? 'auto' : '100%')};"
                  part="image"
                  loading="lazy"
                  title="${this.statustext || this.label}"
