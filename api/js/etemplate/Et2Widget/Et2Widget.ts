@@ -709,7 +709,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					if(node.data.replace(/^\s+|\s+$/g, ''))
 					{
-						this.innerText = node.data;
+						this.appendChild(node.cloneNode());
 					}
 					continue;
 				}
@@ -778,6 +778,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			if(_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
 			{
 				_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
+			}
+
+			// If using type attribute instead of nodeName makes things invalid, don't
+			// Some widgets use their type attribute
+			if(_node.hasAttribute("type") && !window.customElements.get(_nodeName) && typeof et2_registry[_nodeName] === "undefined" && window.customElements.get(_node.nodeName.toLowerCase()))
+			{
+				_nodeName = _node.nodeName.toLowerCase();
 			}
 
 			let widget;
