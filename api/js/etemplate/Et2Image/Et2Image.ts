@@ -50,8 +50,31 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 * Displayed image
 	 */
 	@property({type: String})
-	src = "";
-
+	set src(_src)
+	{
+		this.__src = _src;
+		let url = this.parse_href(_src) || this.parse_href(this.defaultSrc);
+		if(!url)
+		{
+			// Hide if no valid image
+			if (this._img) this._img.src = '';
+			this.className = '';
+			return;
+		}
+		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+		if (bootstrap && !this._img)
+		{
+			this.className = 'bi-'+bootstrap[1];
+			return;
+		}
+		// change between bootstrap and regular img
+		this.requestUpdate();
+	}
+	get src()
+	{
+		return this.__src;
+	}
+	private __src: string;
 	/**
 	 * Default image
 	 * Image to use if src is not found
@@ -87,7 +110,17 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 * - even CSS functions like e.g. "calc(1rem + 2px)"
 	 */
 	@property({type: String})
-	width;
+	set width(_width : string)
+	{
+		if (this.style)
+		{
+			this.style.width = isNaN(_width) ? _width : _width+'px';
+		}
+	}
+	get width()
+	{
+		return this.style?.width;
+	}
 
 	/**
 	 * Height of image:
@@ -96,7 +129,15 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	 * - even CSS functions like e.g. "calc(1rem + 2px)"
 	 */
 	@property({type: String})
-	height;
+	set height(_height)
+	{
+		if (this.style)
+		this.style.height = isNaN(_height) ? _height : _height+'px';
+	}
+	get height()
+	{
+		return this.style.height;
+	}
 
 	constructor()
 	{
@@ -112,23 +153,24 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 	render()
 	{
-		let src = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
-		if(!src)
+		let url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
+		if(!url)
 		{
 			// Hide if no valid image
 			return html``;
 		}
-		const bootstrap = src.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap)
 		{
-			this.classList.add('bi-'+bootstrap[1]);
+			this.className = 'bi-'+bootstrap[1];
 			return html``;
 		}
+		this.className = '';
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
-                 src="${src}"
+                 src="${url}"
                  alt="${this.label}"
-				 style="${this.height ? 'height: '+this.height+(isNaN(this.height)?'':'px')+'; ' : ''}width: ${this.width ? this.width+(isNaN(this.width)?'':'px') : (this.height ? 'auto' : '100%')};"
+				 style="${this.height ? 'height: 100%' : 'width: 100%'}"
                  part="image"
                  loading="lazy"
                  title="${this.statustext || this.label}"
@@ -185,14 +227,6 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		super.updated(changedProperties);
 
-		if(changedProperties.has("src") && !this._img)
-		{
-			render(this._imageTemplate(), this);
-		}
-		if(changedProperties.has("src") && this._img)
-		{
-			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.defaultSrc));
-		}
 		// if there's an href or onclick, make it look clickable
 		if(changedProperties.has("href") || typeof this.onclick !== "undefined")
 		{

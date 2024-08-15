@@ -4,7 +4,7 @@ import {egwMenuItem} from "./egw_menu";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
 import {classMap} from "lit/directives/class-map.js";
-import {state} from "lit/decorators/state.js";
+import bootstrapIcons from "../etemplate/Styles/bootstrap-icons";
 
 @customElement("egw-menu-shoelace")
 export class EgwMenuShoelace extends LitElement
@@ -12,6 +12,7 @@ export class EgwMenuShoelace extends LitElement
 	static get styles()
 	{
 		return [
+			bootstrapIcons,
 			css`
 				:host {
 					display: block;
@@ -93,23 +94,6 @@ export class EgwMenuShoelace extends LitElement
 		}
 	}
 
-	protected updated(_changedProperties : PropertyValues)
-	{
-		super.updated(_changedProperties);
-
-		// Checkbox indicators
-		this.shadowRoot.querySelectorAll("sl-menu-item[type=checkbox]").forEach(async(item : SlMenuItem) =>
-		{
-			await item.updateComplete;
-			const icon : SlIcon = item.shadowRoot.querySelector("[part=\"checked-icon\"] sl-icon");
-			if(!icon)
-			{
-				return;
-			}
-			icon.name = item.checked ? "check-square" : "square";
-			icon.library = "default";
-		})
-	}
 
 	public showAt(_x, _y, _onHide)
 	{
@@ -180,7 +164,7 @@ export class EgwMenuShoelace extends LitElement
 
 				// Update image of a checkbox item to be toggle on or off
 				// this happens by requesting an update because item.checked has changed
-				this.requestUpdate("structure")
+				event.detail.item.querySelector('et2-image').src = item.checked ? "toggle-on" : "toggle-off";
 				return;
 			}
 			if(typeof item.onClick == "function")
