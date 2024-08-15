@@ -38,9 +38,6 @@ if(typeof egw !== "undefined" && typeof egw.image == "function")
  * External CSS & widget styles will override this
  */
 export default [css`
-	.tab-group--top .tab-group__tabs {
-		--track-width: var(--track-width);
-	}
 	.form-control--has-label .form-control__label {
 		display: inline-block;
 		color: var(--sl-input-label-color);
