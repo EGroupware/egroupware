@@ -33,6 +33,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 				:host([icon]) {
 					height: 1.3rem;
+					font-size: 1.3rem !important;
 				}
 			`];
 	}
@@ -114,11 +115,17 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			// Hide if no valid image
 			return html``;
 		}
+		const bootstrap = src.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+		if (bootstrap)
+		{
+			this.classList.add('bi-'+bootstrap[1]);
+			return html``;
+		}
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${src}"
                  alt="${this.label}"
-				 width="${this.width || nothing}"
+				 width="${this.width || (this.height ? nothing : '100%')}"
                  height="${this.height || nothing}"
                  style="${this.style || nothing}"
                  part="image"

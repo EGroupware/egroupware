@@ -93,6 +93,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
             	height: 20px;
                 max-width: 20px;
                 display: flex;
+				font-size: 20px !important;
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;

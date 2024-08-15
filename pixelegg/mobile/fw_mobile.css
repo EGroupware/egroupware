@@ -20,6 +20,7 @@
  * @package pixelegg
  * @version $Id$
  */
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 @media (prefers-color-scheme: dark) {
   html[data-darkmode='2'] {
     background: #000;
