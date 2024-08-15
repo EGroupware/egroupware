@@ -14,6 +14,7 @@ import {css, html, LitElement, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import shoelace from "../Styles/shoelace";
+import {ifDefined} from "lit/directives/if-defined.js";
 
 /**
  * A split button - a button with a dropdown list
@@ -121,6 +122,7 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                     </slot>
                     <sl-menu @sl-select=${this._handleSelect} part="menu">
                         ${(this.select_options || []).map((option : SelectOption) => this._optionTemplate(option))}
+                        <slot></slot>
                     </sl-menu>
                 </sl-dropdown>
             </sl-button-group>
@@ -133,7 +135,11 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
 
 		return html`
-            <sl-menu-item value="${option.value}">
+            <sl-menu-item
+                    value="${option.value}"
+                    type="${ifDefined(option.checkbox)}checkbox"
+                    ?checked=${option.checked}
+            >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;

@@ -74,6 +74,7 @@ import './Et2Nextmatch/Headers/AccountFilterHeader';
 import './Et2Nextmatch/Headers/CustomFilterHeader';
 import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
+import './Et2MenuItem/Et2MenuItem';
 import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
 import './Et2Select/SelectTypes';
