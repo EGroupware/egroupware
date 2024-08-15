@@ -321,7 +321,7 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 			{
 				this.select_options = new_options;
 			}
-			let others = _node.querySelectorAll(":not(option)");
+			let others = _node.querySelectorAll(":scope > :not(option)");
 			// Load the child nodes.
 			others.forEach((node) =>
 			{
