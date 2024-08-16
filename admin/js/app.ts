@@ -190,7 +190,7 @@ class AdminApp extends EgwApp
 					jQuery(this.ajax_target.getDOMNode()).empty();
 				}
 				this.egw.json(
-					framework.activeApp.getMenuaction('ajax_exec', _url),
+					window.framework.activeApp.getMenuaction('ajax_exec', _url),
 					// It's important that the context is null, or etemplate2
 					// won't load the template properly
 					[_url], this._ajax_load_callback,null, true, this
