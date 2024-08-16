@@ -146,7 +146,6 @@ function read_thumbnail($src)
 			Api\Image::find($app, $icon), 2);
 		$src = EGW_SERVER_ROOT.$path;
 		$stat = false;
-		$maxsize = $height = $width = $minsize = $maxh = $minh = $maxw = $minw = 16;
 	}
 	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
@@ -336,7 +335,27 @@ function gd_image_load($file,$maxw,$maxh)
 				return imagecreatefromwbmp($file);
 			case 'svg+xml':
 				Api\Header\Content::type(Vfs::basename($file), $mime);
-				readfile($file);
+				$svg = file_get_contents($file);
+				preg_match('/(\s+width)="([^"]+)"/', $svg, $svg_width);
+				preg_match('/(\s+height)="([^"]+)"/', $svg, $svg_height);
+				if (isset($svg_width) && isset($svg_height))
+				{
+					if ((float)$svg_width[2] > (float)$svg_height[2])
+					{
+						$width = $maxw;
+						$height = (float)$svg_height[2]*$maxw/(float)$svg_width[2];
+					}
+					else
+					{
+						$height = $maxh;
+						$width = (float)$svg_width[2]*$maxh/(float)$svg_height[2];;
+					}
+					$svg = strtr($svg, [
+						$svg_width[0] => $svg_width[1].'="'.$width.'px"',
+						$svg_height[0] => $svg_height[1].'="'.$height.'px"',
+					]);
+				}
+				echo $svg;
 				exit;
 		}
 	}
