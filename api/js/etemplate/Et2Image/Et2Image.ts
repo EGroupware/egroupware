@@ -132,7 +132,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	set height(_height)
 	{
 		if (this.style)
-		this.style.height = isNaN(_height) ? _height : _height+'px';
+		{
+			this.style.height = isNaN(_height) ? _height : _height+'px';
+		}
 	}
 	get height()
 	{
@@ -170,7 +172,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${url}"
                  alt="${this.label}"
-				 style="${this.height ? 'height: 100%' : 'width: 100%'}"
+				 style="${this.height ? 'height: 100%; width: auto' : (this.width ? 'width: 100%; height: auto' : 'max-width: 100%; height: auto')}"
                  part="image"
                  loading="lazy"
                  title="${this.statustext || this.label}"
