@@ -269,6 +269,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		let selected = "";
 		this._selectedIndex = -1;
 		let hidden = {};
+
 		if(this.id)
 		{
 			// Set the value for this element
@@ -297,17 +298,13 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			if(nodeName == "tab")
 			{
 				const index_name = et2_readAttrWithDefault(node, "id", '');
-				var hide = false;
+				const hide = et2_readAttrWithDefault(node, "hidden", hidden[index_name]);
 				var widget_options = {};
 				if(index_name)
 				{
 					if(selected == index_name)
 					{
 						this.selected_index = i;
-					}
-					if(hidden[index_name])
-					{
-						hide = true;
 					}
 					// Get the class attribute and add it as widget_options
 					const classAttr = et2_readAttrWithDefault(node, "class", '');
@@ -326,7 +323,8 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 					"contentDiv": null,
 					"flagDiv": null,
 					"tabNode": node,
-					"hidden": hide,
+					"hidden": et2_readAttrWithDefault(node, "hidden", hidden[index_name] ?? false),
+					"disabled": et2_readAttrWithDefault(node, "disabled", false),
 					"XMLNode": null,
 					"promise": null
 				});
@@ -398,6 +396,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				panel: tab.id,
 				active: index == this._selectedIndex,
 				hidden: tab.hidden,
+				disabled: tab.disabled,
 				onclick: tab.onclick,
 				ondblclick: tab.ondblclick
 			}, this);
