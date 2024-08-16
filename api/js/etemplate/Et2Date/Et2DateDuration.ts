@@ -159,10 +159,6 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 				margin-right: -2px;
 			  }
 
-			  .duration__input::part(input) {
-				padding-right: 0px;
-			  }
-
 			  .duration__input:not(:last-child)::part(base) {
 				border-right: none;
 				border-top-right-radius: 0px;
