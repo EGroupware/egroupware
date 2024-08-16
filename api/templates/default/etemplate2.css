@@ -4222,3 +4222,15 @@ et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
 	order: 10;
 	margin-left: auto;
 }
+
+et2-vfs-mime {
+    position: relative;
+}
+et2-vfs-mime img.overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 16px;
+    width: 16px;
+    z-index: 1;
+}

@@ -48,7 +48,7 @@
 			<et2-hbox>
 				<et2-image  label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-image>
 			</et2-hbox>
-			<vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
+			<et2-vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
 			<file label="" statustext="Select file to upload in current directory" class="plus_button" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
 		</et2-hbox>
 	</template>
