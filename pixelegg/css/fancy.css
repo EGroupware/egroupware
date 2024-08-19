@@ -7202,3 +7202,14 @@ img.et2_button_icon[src*="svg"]:hover {
   --sl-border-radius-medium: 20px;
   --sl-input-border-radius-medium: var(--sl-border-radius-medium);
 }
+:root et2-tabbox,
+:host et2-tabbox,
+.sl-theme-light et2-tabbox {
+  --track-width: 0px;
+}
+:root et2-tabbox et2-tab[active]::part(base),
+:host et2-tabbox et2-tab[active]::part(base),
+.sl-theme-light et2-tabbox et2-tab[active]::part(base) {
+  border: 1px solid;
+  border-radius: var(--sl-border-radius-pill);
+}

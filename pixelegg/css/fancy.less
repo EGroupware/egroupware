@@ -9,6 +9,18 @@
 
 // overwriting pixelegg.less and Shoelace light theme
 :root, :host, .sl-theme-light {
-	--sl-border-radius-medium: 20px;
-	--sl-input-border-radius-medium: var(--sl-border-radius-medium);
+  --sl-border-radius-medium: 20px;
+  --sl-input-border-radius-medium: var(--sl-border-radius-medium);
+
+
+  et2-tabbox {
+	--track-width: 0px;
+
+	et2-tab[active] {
+	  &::part(base) {
+		border: 1px solid;
+		border-radius: var(--sl-border-radius-pill);
+	  }
+	}
+  }
 }
