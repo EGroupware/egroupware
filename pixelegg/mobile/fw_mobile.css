@@ -6106,6 +6106,9 @@ table.egwGridView_grid {
 table.egwGridView_grid img {
   height: 16px;
 }
+table.egwGridView_grid et2-image {
+  width: 16px;
+}
 table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;
   /*padding: 2px 3px 2px 4px;*/
@@ -8879,6 +8882,9 @@ table.egwGridView_grid img.et2_appicon {
   }
   body .et2_nextmatch table.egwGridView_grid tr img {
     height: 12px;
+  }
+  body .et2_nextmatch table.egwGridView_grid tr et2-image {
+    width: 12px;
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr.focused {
     background-image: none;
