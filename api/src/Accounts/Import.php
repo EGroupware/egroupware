@@ -839,8 +839,9 @@ class Import
 			}
 			else
 			{
-				$set_members[$sql_id] = $this->accounts->members($group['account_id']);
+				$set_members[$sql_id] = $this->accounts->members($account_id);
 			}
+			$this->logger("Group '$group[account_lid]' members: ".json_encode($set_members[$sql_id]), 'debug');
 		}
 
 		// delete the groups not returned from LDAP, groups can NOT be deactivated, we just delete them in the DB
