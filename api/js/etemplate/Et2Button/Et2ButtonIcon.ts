@@ -32,9 +32,11 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 		];
 	}
 
+	private __image;
+
 	set image(new_image : string)
 	{
-		let oldValue = this.__src;
+		let oldValue = this.__image;
 		if(new_image.indexOf("http") >= 0 || new_image.indexOf(this.egw().webserverUrl) >= 0)
 		{
 			this.src = new_image
@@ -43,6 +45,7 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 		{
 			this.src = this.egw().image(new_image);
 		}
+		this.__image = new_image;
 
 		// For some reason setting it directly does not show the image
 		this.updateComplete.then(() =>
@@ -63,7 +66,7 @@ export class Et2ButtonIcon extends ButtonMixin(Et2InputWidget(SlIconButton))
 
 	get image()
 	{
-		return this.src || this.name;
+		return this.__image || this.name;
 	}
 }
 
