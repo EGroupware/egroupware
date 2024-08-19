@@ -12,6 +12,7 @@ import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
+import bootstrapIcons from "../Styles/bootstrap-icons";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -106,6 +107,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		{
 			return [
 				...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+				bootstrapIcons,
 				css`
 					:host([disabled]) {
 						display: none;
