@@ -1118,7 +1118,7 @@ class Ldap
 		}
 
 		if (($data = $this->_ldap_search($this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'))) &&
-			!empty($data['uidNumber'][0]))
+			!empty($data['uidnumber'][0]))
 		{
 			return (int)$data['uidnumber'][0];
 		}
