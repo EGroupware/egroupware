@@ -150,15 +150,16 @@ class Ads extends Ldap
 	}
 
 	/**
-	 * connect to LDAP server
+	 * Connect to LDAP server
 	 *
-	 * @param boolean $admin =false true (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $admin =false true: (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $reconnect =false true: force a reconnect
 	 */
-	function connect($admin=false)
+	function connect($admin = false, $reconnect=false)
 	{
 		unset($admin);	// not used, but required by function signature
 
-		$this->ds = $this->accounts_ads->ldap_connection();
+		$this->ds = $this->accounts_ads->ldap_connection($reconnect);
 	}
 
 	/**
