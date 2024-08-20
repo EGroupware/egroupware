@@ -113,7 +113,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $default_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
+		'objectsid', 'samaccounttype', 'samaccountname', 'objectguid',
 	);
 
 	/**
@@ -122,7 +122,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $user_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
+		'objectsid', 'samaccounttype', 'samaccountname',
 		'primarygroupid', 'givenname', 'sn', 'mail', 'displayname', 'telephonenumber',
 		'objectguid', 'useraccountcontrol', 'accountexpires', 'pwdlastset', 'whencreated', 'whenchanged', 'lastlogon',
 		'jpegphoto',
@@ -134,7 +134,7 @@ class Ads
 	 * @var array
 	 */
 	protected static $group_attributes = array(
-		'objectsid', 'samaccounttype', 'samaccountname', 'entryuuid',
+		'objectsid', 'samaccounttype', 'samaccountname',
 		'objectguid', 'mail', 'whencreated', 'whenchanged', 'description',
 	);
 
@@ -158,6 +158,13 @@ class Ads
 	public static $debug = false;
 
 	/**
+	 * ADS is Samba4 (true), otherwise false
+	 *
+	 * @var boolean
+	 */
+	public bool $is_samba4 = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
@@ -170,6 +177,7 @@ class Ads
 		$this->adldap = self::get_adldap($this->frontend->config);
 
 		$this->serverinfo = ServerInfo::get($this->ldap_connection(), $this->frontend->config['ads_host']);
+		$this->is_samba4 = $this->serverinfo->serverType == Api\Ldap\ServerInfo::SAMBA4;
 	}
 
 	/**
@@ -463,7 +471,7 @@ class Ads
 	 * Convert a string GUID to hex string used in filter
 	 *
 	 * @param string $strGUID
-	 * @return int
+	 * @return string
 	 */
 	public function objectguid2hex($strGUID)
 	{
@@ -565,10 +573,9 @@ class Ads
 
 		$group = array(
 			'account_dn'        => $data['dn'],
-			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => $account_id,
 			'account_sid'       => $sid,
-			'account_guid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
+			'account_uuid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
 			'account_lid'       => $data['samaccountname'][0],
 			'account_type'      => 'g',
 			'account_firstname' => $data['samaccountname'][0],
@@ -645,10 +652,9 @@ class Ads
 
 		$user = array(
 			'account_dn'        => $data['dn'],
-			'account_uuid'      => $data['entryuuid'][0],
 			'account_id'        => $account_id,
 			'account_sid'       => $sid,
-			'account_guid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
+			'account_uuid'      => $this->adldap->utilities()->decodeGuid($data['objectguid'][0]),
 			'account_lid'       => $data['samaccountname'][0],
 			'account_type'      => 'u',
 			'account_primary_group' => (string)-$data['primarygroupid'][0],
@@ -676,7 +682,7 @@ class Ads
 		{
 			$user['account_status'] = false;
 		}
-		$user['person_id'] = $user['account_guid'];	// id of contact
+		$user['person_id'] = $user['account_uuid'];	// id of contact
 		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($user));
 		return $user;
 	}
@@ -1285,6 +1291,10 @@ class Ads
 			{
 				foreach($attr_filter as $attr => $value)
 				{
+					if ($attr === 'objectguid' && !$this->is_samba4)
+					{
+						$value = $this->objectguid2hex($value);
+					}
 					$filter .= '('.$attr.'='.$this->adldap->utilities()->ldapSlashes($value).')';
 				}
 			}
@@ -1328,8 +1338,7 @@ class Ads
 			'account_email' => 'mail',
 			'account_fullname' => 'cn',
 			'account_sid'   => 'objectsid',
-			'account_guid'  => 'objectguid',
-			'account_uuid'  => 'entryuuid',
+			'account_uuid'  => 'objectguid',
 			'account_dn'    => 'dn',
 		);
 		$ret = false;
