@@ -400,9 +400,10 @@ class Ldap
 	protected bool $admin_connection;
 
 	/**
-	 * connect to LDAP server
+	 * Connect to LDAP server
 	 *
-	 * @param boolean $admin =false true (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $admin =false true: (re-)connect with admin not user credentials, eg. to modify accounts
+	 * @param boolean $reconnect =false true: force a reconnect
 	 */
 	function connect($admin = false, $reconnect=false)
 	{
