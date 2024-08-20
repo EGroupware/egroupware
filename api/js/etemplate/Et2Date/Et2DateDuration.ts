@@ -154,8 +154,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 
 			  .duration__input {
 				flex: 1 1 auto;
-				max-width: 4.5em;
-				  min-width: 3em;
+				  width: min-content;
+				  min-width: 5em;
 				margin-right: -2px;
 			  }
 
@@ -257,9 +257,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	 *
 	 * Works with the min and max attributes to limit the increments at which a numeric or date-time value can be set.
 	 */
-	step: {
-		type: String
-	}
+	@property({type: Number, reflect: true})
+	step = 1;
 
 	protected static time_formats = {d: "d", h: "h", m: "m", s: "s"};
 	protected _display = {value: "", unit: ""};
@@ -570,6 +569,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
                                 name=${input.name}
                                 min=${typeof input.min === "number" ? input.min : nothing}                                
 								max=${typeof input.max === "number" ? input.max : nothing}
+                                step=${this.step}
 								precision=${typeof input.precision === "number" ? input.precision : nothing} 
 								title=${input.title || nothing}
                                 value=${input.value}

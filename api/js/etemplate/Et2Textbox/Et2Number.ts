@@ -9,10 +9,9 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
-import {css, html, nothing} from "lit";
+import {css, html, nothing, render} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
-import {number} from "prop-types";
 
 
 /**
@@ -44,15 +43,20 @@ export class Et2Number extends Et2Textbox
 			css`
 			  /* Scroll buttons */
 
-				:host(:hover) et2-button-scroll {
+				:host(:hover) ::slotted(et2-button-scroll) {
 					visibility: visible;
 				}
 
-				et2-button-scroll {
+				::slotted(et2-button-scroll) {
 					visibility: hidden;
 					padding: 0px;
 					margin: 0px;
 					margin-left: var(--sl-spacing-small);
+					margin-inline-end: 0px;
+				}
+
+				:host([step]) .input--medium .input__control {
+					padding-right: 0px;
 				}
 
 				.form-control-input {
@@ -143,6 +147,9 @@ export class Et2Number extends Et2Textbox
 		const thousands = numberFormat ? numberFormat[1] : '';
 		this.decimalSeparator = this.decimalSeparator || decimal || ".";
 		this.thousandsSeparator = this.thousandsSeparator || thousands || "";
+
+		// Add spinners
+		render(this._incrementButtonTemplate(), this);
 	}
 
 	firstUpdated()
@@ -201,14 +208,10 @@ export class Et2Number extends Et2Textbox
 	{
 		if("" + val !== "")
 		{
-			// use decimal separator from user prefs
-			const format = this.egw().preference('number_format');
-			const sep = format ? format[0] : '.';
-
 			// Remove separator so parseFloat works
 			if(typeof val === 'string')
 			{
-				val = val.replace(",", '.');
+				val = val.replace(this.thousandsSeparator, "").replace(",", '.');
 			}
 
 			if(typeof this.precision !== 'undefined')
@@ -220,7 +223,21 @@ export class Et2Number extends Et2Textbox
 				val = parseFloat(val);
 			}
 		}
-		super.value = val;
+		if(isNaN(val))
+		{
+			super.value = val;
+			return;
+		}
+		if(this.max && val > this.max)
+		{
+			val = this.max;
+		}
+		if(this.min && val < this.min)
+		{
+			val = this.min;
+		}
+		super.value = formatNumber(val, this.decimalSeparator, this.thousandsSeparator, this.precision);
+		this.updateMaskValue();
 	}
 
 	get value() : string
@@ -240,7 +257,12 @@ export class Et2Number extends Et2Textbox
 
 	get valueAsNumber() : number
 	{
-		let formattedValue = (this.mask && this._mask?.value ? this.stripFormat(this._mask.value) : this._mask?.unmaskedValue) ?? this.value;
+		this.updateMaskValue();
+		let formattedValue = (this._mask?.value ? this.stripFormat(this._mask.value) : this._mask?.unmaskedValue) ?? this.value;
+		if(formattedValue == "")
+		{
+			return 0;
+		}
 		if(typeof this.precision !== 'undefined')
 		{
 			formattedValue = parseFloat(parseFloat(<string>formattedValue).toFixed(this.precision));
@@ -294,12 +316,19 @@ export class Et2Number extends Et2Textbox
 		let options = {
 			...super.maskOptions,
 			skipInvalid: true,
+			scale: 5,
 			// The initial options need to match an actual number
 			radix: this.decimalSeparator,
 			thousandsSeparator: this.thousandsSeparator,
 			mask: this.mask ?? Number,
 			lazy: false,
-			padFractionalZeros: (typeof this.precision !== "undefined")
+			padFractionalZeros: (typeof this.precision !== "undefined"),
+			definitions: {
+				'#': {
+					mask: RegExp("[-\\d\\" + this.thousandsSeparator + "\\" + this.decimalSeparator + "]")
+					//RegExp("-?[\\d\\" + this.thousandsSeparator + "]+" + (this.precision ? "\\" + this.decimalSeparator + "\\d{" + this.precision + "}" : ''))
+				}
+			}
 		}
 		if(typeof this.precision != "undefined")
 		{
@@ -318,18 +347,18 @@ export class Et2Number extends Et2Textbox
 
 	updateMaskValue()
 	{
-		this._mask.updateValue();
-		if(!this.mask)
+		this._mask?.updateValue();
+		if(!this.mask && this._mask)
 		{
 			// Number mask sometimes gets lost with different decimal characters
 			this._mask.unmaskedValue = ("" + this.value);
 		}
 
-		if(this.value !== "")
+		if(this.value !== "" && this._mask)
 		{
 			this._mask.value = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator, this.precision);
 		}
-		this._mask.updateValue();
+		this._mask?.updateValue();
 	}
 
 
@@ -347,7 +376,10 @@ export class Et2Number extends Et2Textbox
 		{
 			max = Number.MAX_SAFE_INTEGER;
 		}
-		this.value = "" + Math.min(Math.max(this.valueAsNumber + e.detail * (parseFloat(this.step) || 1), min), max);
+		this.value = formatNumber(
+			Math.min(Math.max((isNaN(this.valueAsNumber) ? 0 : this.valueAsNumber) + e.detail * (parseFloat(this.step) || 1), min), max),
+			this.decimalSeparator, this.thousandsSeparator, this.precision
+		);
 		this.dispatchEvent(new CustomEvent("sl-change", {bubbles: true}));
 		this.requestUpdate("value", old_value);
 	}
@@ -370,30 +402,6 @@ export class Et2Number extends Et2Textbox
                                part="scroll"
                                @et2-scroll=${this.handleScroll}></et2-button-scroll>`;
 	}
-
-	_inputTemplate()
-	{
-		return html`
-            <sl-input
-                    part="input"
-                    max=${this.max || nothing}
-                    min=${this.min || nothing}
-                    placeholder=${this.placeholder || nothing}
-                    inputmode="numeric"
-                    ?disabled=${this.disabled}
-                    ?readonly=${this.readonly}
-                    ?required=${this.required}
-                    .value=${this.formattedValue}
-                    @blur=${this.handleBlur}
-            >
-                <slot name="prefix" slot="prefix"></slot>
-                ${this.prefix ? html`<span slot="prefix">${this.prefix}</span>` : nothing}
-                ${this.suffix ? html`<span slot="suffix">${this.suffix}</span>` : nothing}
-                <slot name="suffix" slot="suffix"></slot>
-                ${this._incrementButtonTemplate()}
-            </sl-input>
-		`;
-	}
 }
 
 /**
@@ -407,7 +415,7 @@ export function formatNumber(value : number, decimalSeparator : string = ".", th
 	let parts = ("" + value).split(".");
 
 	parts[0] = parts[0].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandsSeparator) || "0";
-	if(typeof decimalPlaces != "undefined")
+	if(typeof decimalPlaces != "undefined" && decimalPlaces != 0)
 	{
 		parts[1] = (parts[1] ?? "").padEnd(decimalPlaces, "0").substr(0, decimalPlaces);
 	}

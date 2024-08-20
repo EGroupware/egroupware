@@ -1,5 +1,13 @@
 ## Examples ##
 
+### Spinners ###
+
+To add up / down arrow buttons to change the value, set `step`.
+
+```html:preview
+<et2-number label="0.5 step" step="0.5"></et2-number>
+```
+
 ### Precision ###
 
 To enforce a certain number of decimal places, set `precision`.

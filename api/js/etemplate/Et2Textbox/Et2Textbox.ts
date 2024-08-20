@@ -9,7 +9,7 @@
  */
 
 
-import {css, html, nothing, PropertyValues} from "lit";
+import {css, PropertyValues} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {Regex} from "../Validators/Regex";
@@ -173,6 +173,12 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 
 	protected updateMask()
 	{
+		// Skip if there's no mask desired
+		if(!this.maskOptions.mask)
+		{
+			return;
+		}
+
 		const input = this.shadowRoot.querySelector("input")
 		if(!this._mask)
 		{
@@ -211,56 +217,4 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 			//	this._mask.updateValue();
 		}
 	}
-
-	protected _inputTemplate()
-	{
-		return html`
-            <sl-input
-                    part="input"
-                    placeholder=${this.placeholder || nothing}
-                    inputmode="${this.inputMode}"
-                    ?disabled=${this.disabled}
-                    ?readonly=${this.readonly}
-                    ?required=${this.required}
-                    .value=${this.value}
-                    @input=${(e) =>
-		{
-			if(this.__mask)
-			{
-				this.__mask.updateCursor(this.__mask.cursorPos)
-			}
-		}}
-            >
-                <slot name="prefix" slot="prefix"></slot>
-                <slot name="suffix" slot="suffix"></slot>
-            </sl-input>
-		`;
-	}
-
-	/*
-		render()
-		{
-			const labelTemplate = this._labelTemplate();
-			const helpTemplate = this._helpTextTemplate();
-
-			return html`
-				<div
-						part="form-control"
-						class=${classMap({
-							'form-control': true,
-							'form-control--medium': true,
-							'form-control--has-label': labelTemplate !== nothing,
-							'form-control--has-help-text': helpTemplate !== nothing
-						})}
-				>
-					${labelTemplate}
-					<div part="form-control-input" class="form-control-input">
-						${this._inputTemplate()}
-					</div>
-					${helpTemplate}
-				</div>
-			`;
-		}
-
-	 */
 }

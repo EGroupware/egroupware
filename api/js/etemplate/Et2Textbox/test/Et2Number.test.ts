@@ -44,25 +44,25 @@ describe("Number widget", () =>
 
 	it("handles precision", () =>
 	{
-		window.egw.preference = () => ".";
+		element.decimalSeparator = ".";
 		element.precision = 2;
 		element.value = "1.234";
-		assert.equal(element.value, "1.23", "Wrong number of decimals");
+		assert.equal(element.value, "1.23", "Wrong number of decimals (. separator");
 		element.precision = 0;
 		element.value = "1.234";
-		assert.equal(element.value, "1", "Wrong number of decimals");
+		assert.equal(element.value, "1", "Wrong number of decimals (. separator");
 
 
 		// Now do it with comma decimal separator
-		window.egw.preference = () => ",";
+		element.decimalSeparator = ","
 		element.precision = 2;
 		element.value = "1.234";
-		assert.equal(element.value, "1,23", "Wrong number of decimals");
+		assert.equal(element.value, "1,23", "Wrong number of decimals ( . -> , separator)");
 		element.value = "1,234";
-		assert.equal(element.value, "1,23", "Wrong number of decimals");
+		assert.equal(element.value, "1,23", "Wrong number of decimals (, separator)");
 		element.precision = 0;
 		element.value = "1,234";
-		assert.equal(element.value, "1", "Wrong number of decimals");
+		assert.equal(element.value, "1", "Wrong number of decimals (, separator)");
 	})
 
 	it("Min limit", () =>
