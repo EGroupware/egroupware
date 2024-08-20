@@ -325,7 +325,7 @@ class Import
 					$hide_binary = ['jpegphoto' => $contact['jpegphoto'] ? bytes($contact['jpegphoto']).' bytes binary data' : null];
 					$this->logger(++$num.'. User: '.json_encode($hide_binary + $contact + $account, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE), 'debug');
 					// check if account exists in sql
-					if (!($account_id = $this->accounts_sql->name2id($account['account_uuid'], 'account_uuid')) &&
+					if (!($account_id = !empty($account['account_uuid']) ? $this->accounts_sql->name2id($account['account_uuid'], 'account_uuid') : false) &&
 						!($account_id = $this->accounts_sql->name2id($account['account_lid'])))
 					{
 						$sql_account = $account;
