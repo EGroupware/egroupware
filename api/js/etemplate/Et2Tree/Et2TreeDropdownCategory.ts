@@ -41,6 +41,8 @@ export class Et2TreeDropdownCategory extends Et2TreeDropdown
 	 */
 	@property({type: Boolean}) globalCategories = true;
 
+
+
 	private keep_import : Et2CategoryTag
 
 	connectedCallback()

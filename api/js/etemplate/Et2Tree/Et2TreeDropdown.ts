@@ -149,6 +149,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	@property()
 	set value(new_value : string | string[])
 	{
+		if(!new_value)new_value="";
+		if(typeof new_value === 'number'){new_value += ""}
 		if(typeof new_value === "string")
 		{
 			new_value = new_value.split(",")
