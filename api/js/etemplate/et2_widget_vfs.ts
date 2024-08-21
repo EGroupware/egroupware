@@ -672,6 +672,7 @@ export class et2_vfsUpload extends et2_file
 			.addClass('title')
 			.appendTo(row);
 		let mime = <Et2VfsMime>et2_createWidget('vfs-mime', {value: file_data}, this);
+		mime._parent_node = this.getDOMNode(mime);
 
 		// Trigger expose on click, if supported
 		let vfs_attrs = {value: file_data, onclick: undefined};
@@ -685,7 +686,7 @@ export class et2_vfsUpload extends et2_file
 				{
 					ev.stopPropagation();
 					// Pass it off to the associated vfsMime widget
-					jQuery('img', this.parentNode.parentNode).trigger("click");
+					this.parentNode.parentNode.querySelector("et2-vfs-mime")?.dispatchEvent(new Event("click"));
 					return false;
 				};
 			}
