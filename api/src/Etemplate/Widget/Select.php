@@ -717,43 +717,35 @@ class Select extends Etemplate\Widget
 				{
 					$categories = $GLOBALS['egw']->categories;
 				}
-				else    // we need to instanciate a new cat object for the correct application
+				else    // we need to instantiate a new cat object for the correct application
 				{
 					$categories = new Api\Categories($type5, $application);
 				}
 				// Allow text for global
 				$globalCategories = ($globalCategories && strlen($globalCategories) > 1 ? $globalCategories : !$globalCategories);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) as $cat)
+				$cats = $categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) ?: [];
+				$cat2option = static function(array $cat) use (&$cat2option, $globalCategories, $categories)
 				{
-					$s = str_repeat('&nbsp;', $cat['level']) . stripslashes($cat['name']);
-
-					if(Api\Categories::is_global($cat))
-					{
-						$s .= Api\Categories::$global_marker;
-					}
-					$options[$cat['id']] = array(
-						'label'    => $s,
-						'title'    => $cat['description'],
-						// These are extra info for easy dealing with categories
-						// client side, without extra loading
-						'main'     => (int)$cat['main'],
-						'children' => $cat['children'] ?? null,
-						//add different class per level to allow different styling for each category level:
-						'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}"
-					);
-					// Send data too
-					if(is_array($cat['data']))
-					{
-						$options[$cat['id']] += $cat['data'];
-						if($cat['data']['icon'])
-						{
-							$options[$cat['id']]['icon'] = \admin_categories::icon_url($cat['data']['icon']);
-						}
-					}
-				}
+					return array_filter([
+							'value'    => $cat['id'],
+							'label'    => stripslashes($cat['name']).(Api\Categories::is_global($cat) ? Api\Categories::$global_marker : ''),
+							'title'    => $cat['description'],
+							// These are extra info for easy dealing with categories
+							// client side, without extra loading
+							'main'     => (int)$cat['main'],
+							// if we have children, fetch and return them
+							'children' => empty($cat['children']) ? null :
+								array_map($cat2option, $categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$cat['id'], true)?:[]),
+							//add different class per level to allow different styling for each category level:
+							'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}",
+							'icon'     => !empty($cat['data']['icon']) ? \admin_categories::icon_url($cat['data']['icon']) : null,
+							// send cat-date too
+						]+(is_array($cat['data']) ? $cat['data'] : []));
+				};
+				$options = array_map($cat2option, $cats);
 				// preserve unavailable cats (eg. private user-cats)
-				if (isset(self::$request) && $value && ($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
+				if (isset(self::$request) && $value && ($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),array_keys($cats))))
 				{
 					// unavailable cats need to be merged in again
 					$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;
