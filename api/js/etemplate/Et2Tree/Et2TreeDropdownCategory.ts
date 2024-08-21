@@ -8,11 +8,12 @@ import {property} from "lit/decorators/property.js";
 import {css, PropertyValues, unsafeCSS} from "lit";
 import {Et2TreeDropdown} from "./Et2TreeDropdown";
 import {Et2CategoryTag} from "../Et2Select/Tag/Et2CategoryTag";
+import {Et2StaticSelectMixin, StaticOptions as so} from "../Et2Select/StaticOptions";
 
 /**
  * @since 23.1.x
  */
-export class Et2TreeDropdownCategory extends Et2TreeDropdown
+export class Et2TreeDropdownCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 {
 
 	static get styles()
@@ -58,11 +59,36 @@ export class Et2TreeDropdownCategory extends Et2TreeDropdown
 		// Set the search options from our properties
 		this.searchOptions.application = this.application;
 		this.searchOptions.globalCategories = this.globalCategories;
+
+		this.fetchComplete = so.cat(this).then(options => {
+			this.select_options = options;
+			this.requestUpdate("select_options");
+
+			if (this._tree)
+			{
+				this._tree._selectOptions = options
+				this._tree.requestUpdate();
+			}
+		});
 	}
 
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
+
+		if (changedProperties.has("globalCategories") ||
+			changedProperties.has("application") || changedProperties.has("parentCat"))
+		{
+			this.fetchComplete = so.cat(this).then(options => {
+				this.select_options = options;
+				this.requestUpdate("select_options");
+
+				// Shoelace select has rejected our value due to missing option by now, so re-set it
+				// this.updateComplete.then(() => {
+				// 	this.value = this.value;
+				// });
+			});
+		}
 
 		if(changedProperties.has('application'))
 		{
@@ -91,7 +117,10 @@ export class Et2TreeDropdownCategory extends Et2TreeDropdown
 		{
 			css += ".cat_" + option.value + " {--category-color: " + (option.data?.color || "transparent") + ";}\n";
 
-			option.children?.forEach((option) => catColor(option))
+			if (typeof option.children === 'object')
+			{
+				option.children?.forEach((option) => catColor(option))
+			}
 		}
 		this.select_options.forEach((option => catColor(option)));
 		// @formatter:off
