@@ -20,12 +20,13 @@ export type TreeItemData = SelectOption & {
 	// Has children, but they may not be provided in item
 	child: Boolean | 1,
 	data?: Object,//{sieve:true,...} or {acl:true} or other
-	id: string,
+	//this is coming from SelectOption
+	value: string,
 	im0: String,
 	im1: String,
 	im2: String,
 	// Child items
-	item: TreeItemData[],
+	children: TreeItemData[],
 	checked?: Boolean,
 	nocheckbox: number | Boolean,
 	open: 0 | 1,
@@ -96,6 +97,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	openIcon: String;
 	@property({type: Function})
 	onclick;// 	description: "JS code which gets executed when clicks on text of a node"
+	@property({type:String})
+	selection = "single"
 
 
 	//onselect and oncheck only appear in multiselectTree
@@ -413,7 +416,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
 	{
-		this._tree.focus();
+		this._tree?.focus();
 	}
 
 	/** Removes focus from the control. */
@@ -892,7 +895,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             <sl-tree-item
                     part="item"
                     exportparts="checkbox, label, item:item-item"
-                    id=${selectOption.id}
+                    id=${value}
                     title=${selectOption.tooltip || nothing}
                     class=${selectOption.class || nothing}
                     ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
@@ -952,7 +955,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             ${this.styleTemplate()}
             <sl-tree
                     part="tree"
-                    .selection=${/* implement unlinked multiple: this.multiple ? "multiple" :*/ "single"}
+                    .selection=${this.leafOnly?"leaf":"single"}
                     @sl-selection-change=${
                             (event: any) => {
                                 this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);

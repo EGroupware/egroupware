@@ -80,7 +80,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	 */
 	@property({type: Object}) actions = {};
 
-	@state() currentTag : Et2Tag;
+	@state() currentTag: Et2Tag;
 
 	// We show search results in the same dropdown
 	@state() treeOrSearch : "tree" | "search" = "tree";
@@ -167,6 +167,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			this.__value?.length ? this.__value[0] : ""
 		);
 	}
+
+
 
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
@@ -446,11 +448,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		// For single value, we can just grab selected from the tree.  For multiple, we need to manage it.
 		if(!this.multiple)
 		{
-			this.value = event?.detail?.selection?.map(i => i.id) ?? []
+			this.value = event?.detail?.selection?.map(i => i.id || i.value) ?? []
 		}
 		else
 		{
-			const id = event?.detail?.selection?.map(i => i.id).pop();
+			const id = event?.detail?.selection?.map(i => i.id || i.value).pop();
 			if(id && !this.value.includes(id))
 			{
 				// Copy so LitElement knows it changed
