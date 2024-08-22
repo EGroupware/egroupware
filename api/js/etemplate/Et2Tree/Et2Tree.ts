@@ -98,7 +98,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	@property({type: Function})
 	onclick;// 	description: "JS code which gets executed when clicks on text of a node"
 	@property({type:String})
-	selection = "single"
+	leafOnly = false
 
 
 	//onselect and oncheck only appear in multiselectTree

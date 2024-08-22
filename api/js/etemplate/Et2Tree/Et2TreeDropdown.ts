@@ -81,15 +81,34 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	@property({type: Object}) actions = {};
 
 	@property()
-	leafOnly:Boolean;
+	set leafOnly(_leafOnly: boolean)
+	{
+		this.updateComplete.then(() => {
+			const tree = this._tree
+				if (tree)
+				{
+					tree.leafOnly = _leafOnly;
+					tree.requestUpdate("leafOnly")
+
+				}
+			}
+		)
+	}
 
 	@state() currentTag: Et2Tag;
 
 	// We show search results in the same dropdown
 	@state() treeOrSearch : "tree" | "search" = "tree";
 
-	private get _popup() : SlPopup { return this.shadowRoot.querySelector("sl-popup")}
-	private get _tree() : Et2Tree { return this.shadowRoot.querySelector("et2-tree")}
+	private get _popup(): SlPopup
+	{
+		return this.shadowRoot?.querySelector("sl-popup")
+	}
+
+	private get _tree(): Et2Tree
+	{
+		return this.shadowRoot?.querySelector("et2-tree")
+	}
 
 	private get _tags() : Et2Tag[] { return Array.from(this.shadowRoot.querySelectorAll("et2-tag"));}
 
