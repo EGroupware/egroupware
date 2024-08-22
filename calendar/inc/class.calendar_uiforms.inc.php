@@ -604,7 +604,7 @@ class calendar_uiforms extends calendar_ui
 								{
 									//echo "<p>$uid: status changed '$data[old_status]' --> '$status<'/p>\n";
 									$new_status = calendar_so::combine_status($status, $quantity, $role);
-									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']))
+									if ($this->bo->set_status($event['id'],$uid,$new_status,isset($content['edit_single']) ? $content['participants']['status_date'] : 0, false, true, $content['no_notifications']??false))
 									{
 										// Update main window
 										$d = new Api\DateTime($content['edit_single'], Api\DateTime::$user_timezone);
