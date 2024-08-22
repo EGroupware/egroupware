@@ -671,6 +671,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                             ?active=${this.open}
                             placement=${this.placement || "bottom"}
                             stay-open-on-select
+							strategy="fixed"
                             ?disabled=${this.disabled}
                     >
                         <div
