@@ -97,7 +97,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	openIcon: String;
 	@property({type: Function})
 	onclick;// 	description: "JS code which gets executed when clicks on text of a node"
-	@property({type:String})
+	/**
+	 * If true, only leafs (NOT folders) are selectable
+	 */
+	@property({type:Boolean})
 	leafOnly = false
 
 

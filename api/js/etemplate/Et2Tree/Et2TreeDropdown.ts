@@ -47,7 +47,6 @@ type Constructor<T = {}> = new (...args : any[]) => T;
 
 export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeSearchResult, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
 {
-
 	static get styles()
 	{
 		return [
@@ -65,8 +64,9 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	/** The component's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = "";
 
+	/** "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id" */
 	@property({type: String})
-	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+	autoloading: string = "";
 
 	/**
 	 * Indicates whether the dropdown is open. You can toggle this attribute to show and hide the tree, or you can
@@ -80,6 +80,9 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	 */
 	@property({type: Object}) actions = {};
 
+	/**
+	 * If true, only leafs (NOT folders) are selectable
+	 */
 	@property()
 	set leafOnly(_leafOnly: boolean)
 	{
@@ -93,6 +96,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 				}
 			}
 		)
+	}
+	get leafOnly()
+	{
+		return this._tree?.leafOnly;
 	}
 
 	@state() currentTag: Et2Tag;

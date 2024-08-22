@@ -297,7 +297,9 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 */
 		public searchMatch<DataType extends SearchResult>(search : string, searchOptions : Object, option : DataType) : boolean
 		{
-			if(!option || !option.value)
+			if(!option || !option.value ||
+				// do NOT return folders, if leafOnly is set
+				this.leafOnly && typeof option.children !== 'undefined')
 			{
 				return false;
 			}
