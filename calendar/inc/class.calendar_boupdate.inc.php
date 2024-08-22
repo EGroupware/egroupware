@@ -1954,7 +1954,7 @@ class calendar_boupdate extends calendar_bo
 			return false;
 		}
 		// make sure to not set a recur_date for a non-recurring event (as recur_date has to be 0, for non-recurring events!)
-		if ($recur_date && ($event = $event || $this->read($cal_id, null, $ignore_acl)) && empty($event['recur_type']))
+		if ($recur_date && (is_array($event) || ($event=$this->read($cal_id, null, $ignore_acl))) && empty($event['recur_type']))
 		{
 			$recur_date = 0;
 		}
