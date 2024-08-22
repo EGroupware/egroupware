@@ -243,7 +243,7 @@ class Select extends Etemplate\Widget
 						break;
 
 					case 'select-timezone':
-						if (!calendar_timezones::tz2id($val))
+						if (!calendar_timezones::tz2id($val) && !in_array($val, $allowed))
 						{
 							self::set_validation_error($form_name, lang("'%1' is NOT a valid timezone!", $val));
 						}

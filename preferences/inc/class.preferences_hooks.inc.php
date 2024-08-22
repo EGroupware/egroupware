@@ -54,8 +54,9 @@ class preferences_hooks
 				if(is_array($value))
 				{
 					$value = [
-						'label' => $key,
-						'value' => array_map($format, array_keys($value), array_values($value))
+						'label' => $key ?: '',
+						'value' => $key ?: '',
+						'children' => array_map($format, array_keys($value), array_values($value))
 					];
 				}
 				else
@@ -369,7 +370,7 @@ class preferences_hooks
 				)
 			),
 			'tz' => array(
-				'type'   => 'select',
+				'type'   => 'et2-tree-dropdown',
 				'label'  => 'Time zone',
 				'name'   => 'tz',
 				'values' => $tzs,
@@ -378,11 +379,12 @@ class preferences_hooks
 				'admin'  => False,
 				'default'=> date_default_timezone_get(),
 				'attributes' => array(
-					'search' => true
+					'search' => true,
+					'leafOnly' => true, // don't allow to select continents
 				)
 			),
 			'tz_selection' => array(
-				'type'   => 'multiselect',
+				'type'   => 'et2-tree-dropdown',
 				'label'  => 'Permanent time zone selection',
 				'name'   => 'tz_selection',
 				'values' => $tzs,
@@ -391,7 +393,9 @@ class preferences_hooks
 				'admin'  => False,
 				'forced' => date_default_timezone_get(),
 				'attributes' => array(
-					'search' => true
+					'search' => true,
+					'multiple' => true,
+					'leafOnly' => true,
 				)
 			),
 			'dateformat' => array(

@@ -320,20 +320,6 @@ class Tree extends Etemplate\Widget
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
 			}
 		}
-
-		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
-		foreach(self::$request->sel_options[$form_name] as &$label)
-		{
-			if(!is_array($label))
-			{
-				$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
-			}
-			elseif(!empty($label['label']))
-			{
-				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
-			}
-		}
-
 	}
 
 	/**
