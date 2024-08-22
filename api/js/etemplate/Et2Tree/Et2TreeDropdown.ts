@@ -80,6 +80,9 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	 */
 	@property({type: Object}) actions = {};
 
+	@property()
+	leafOnly:Boolean;
+
 	@state() currentTag: Et2Tag;
 
 	// We show search results in the same dropdown
@@ -670,6 +673,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 .actions=${this.actions}
                                 .styleTemplate=${() => this.styleTemplate()}
 								.autoloading="${this.autoloading}"
+								?leafOnly = ${this.leafOnly}
 
                                 @sl-selection-change=${this.handleTreeChange}
                         >
