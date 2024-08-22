@@ -1,13 +1,13 @@
 import {LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
-import {Et2Tree, TreeItemData, TreeSearchResult} from "./Et2Tree";
+import {Et2Tree, TreeItemData} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import {map} from "lit/directives/map.js";
-import {SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
+import {SlPopup, SlRemoveEvent, SlTreeItem} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2TreeDropdown.styles";
 import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
@@ -16,7 +16,7 @@ import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {Required} from "../Validators/Required";
 
 
-interface TreeSearchResults extends SearchResultsInterface<TreeSearchResult>
+interface TreeSearchResults extends SearchResultsInterface<TreeItemData>
 {
 }
 
@@ -45,7 +45,7 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @since 23.1.x
  */
 
-export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeSearchResult, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
+export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeItemData, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
 {
 	static get styles()
 	{
@@ -179,7 +179,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	set value(new_value : string | string[])
 	{
 		if(!new_value)new_value="";
-		if(typeof new_value === 'number'){new_value += ""}
+		// @ts-ignore handling invalid number type gracefully
+		if(typeof new_value === 'number')
+		{
+			new_value = ""+new_value;
+		}
 		if(typeof new_value === "string")
 		{
 			new_value = new_value.split(",")
@@ -452,7 +456,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.requestUpdate("value", oldValue);
 		// TODO: Clean up this scope violation
 		// sl-tree-item is not getting its selected attribute updated
-		Array.from(this._tree._tree.querySelectorAll('sl-tree-item')).forEach(e =>
+		Array.from(this._tree._tree.querySelectorAll('sl-tree-item')).forEach((e : SlTreeItem) =>
 		{
 			if(this.value.includes(e.id))
 			{
@@ -607,8 +611,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
-                    .value=${option.id}
-                    @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, option.id)}
+                    .value=${option.value || option.id}
+                    @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, option.value || option.id)}
                     @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
                     @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
