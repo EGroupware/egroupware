@@ -14,6 +14,7 @@ export class Et2Tab extends Et2Widget(SlTab)
 			css`
 				.tab {
 					font-size: var(--sl-size-x-small);
+					gap: var(--sl-spacing-small);
 				}
 				.tab.tab--active:not(.tab--disabled) {color:var(--sl-color-gray-800)}
 				.tab:hover:not(.tab--disabled) {color:var(--sl-color-gray-800)}		
