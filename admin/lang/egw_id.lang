@@ -60,7 +60,6 @@ acl deleted.	admin	id	ACL dihapus.
 acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
 activate	admin	id	Aktifkan
-activate wysiwyg-editor	admin	id	Mengaktifkan WYSIWYG-editor
 active templates	admin	id	Templat yang aktif
 add a category	admin	id	Tambah kategori
 add a group	admin	id	Tambah kelompok
@@ -77,9 +76,6 @@ add new email address:	admin	id	Tambah alamat email baru:
 add peer server	admin	id	Tambah Peer Server
 add profile	admin	id	Tambah Profil
 add sub-category	admin	id	Tambah sub-kategori
-add to group	admin	id	Tambahkan ke grup
-add user	admin	id	Tambahkan pengguna
-add user or group	admin	id	Menambahkan pengguna atau grup
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
 admin name	admin	id	Nama Admin
@@ -113,8 +109,6 @@ bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
 bottom	admin	id	Bawah
-bulk changes	admin	id	Perubahan massal
-bulk password reset	admin	id	Pengaturan ulang kata sandi massal
 calculate next run	admin	id	Calculate next run
 can change password	admin	id	Dapat mengubah kata sandi
 cancel testjob!	admin	id	Batalkan TestJob!
@@ -123,9 +117,6 @@ category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
-certificate	admin	id	Sertifikat
-certificate details	admin	id	Detail sertifikat
-certificate validation in days	admin	id	Validasi sertifikat dalam hitungan hari
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
@@ -174,7 +165,6 @@ deny access	admin	id	Deny Access
 description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
 determines the order the fields are displayed	admin	id	Menentukan urutan field ditampilkan
 disable	admin	id	Nonaktifkan
-disable wysiwyg-editor	admin	id	Nonaktifkan editor WYSIWYG
 disabled (not recomended)	admin	id	Dinonaktifkan (tidak disarankan)
 display	admin	id	Tampilan
 document root (default)	admin	id	Document root (default)
@@ -406,7 +396,6 @@ submit displayed information?	admin	id	Submit displayed information?
 submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
-subversion checkout	admin	id	Subversion checkout
 success	admin	id	Sukses
 template selection	admin	id	Pemilihan Templat
 templates	admin	id	Templat
@@ -426,7 +415,6 @@ two hours	admin	id	Dua jam
 two months	admin	id	Dua bulan
 two weeks	admin	id	Dua minggu
 type of customfield	admin	id	Jenis bidang khusus
-unexpected response from server to login command.	admin	id	Respons yang tidak diharapkan dari server terhadap perintah LOGIN.
 unknown account: %1 !!!	admin	id	Akoun takdikenal: %1!
 unknown command %1!	admin	id	Perintah %1 tak dikenal!
 unknown option %1	admin	id	Opsi %1 tak dikenal

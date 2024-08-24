@@ -22,7 +22,6 @@
 (default no, leave it off if you dont use it)	admin	sl	(privzeto Ne. Če ne uporabljate, pustite Ne)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sl	(imapclass mora to funkcijo podpreti tako, da poizveduje ustrezno vrednost konfiguracije in ga prenese kot privzeto na sliko imaprežnika)
 (no subject)	admin	sl	(brez zadeve)
-(stored password will not be shown here)	admin	sl	(Shranjeno geslo tu ne bo vidno)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
 -  type	admin	sl	- vrsta
 1 year	admin	sl	1 leto
@@ -35,7 +34,6 @@ access by	admin	sl	Dostop do
 access control	admin	sl	Nadzor dostopa
 access to %1 data by others	admin	sl	Dostop do podatkov %1 drugim
 access token revoked.	admin	sl	Odvzem žetona za dostop.
-accesslog and bruteforce defense	admin	sl	Beleženje dostopov in BruteForce obramba
 account	admin	sl	račun
 account "%1" has no email address --> not notified!	admin	sl	Račun "%1" nima e-poštnega naslova -> ni obveščen!
 account "%1" has no plaintext password!	admin	sl	Račun "%1" nima nobenega gesla z navadnim besedilom!
@@ -85,7 +83,6 @@ add new email address:	admin	sl	Dodaj nov e-naslov:
 add peer server	admin	sl	Dodaj vzporedni strežnik
 add profile	admin	sl	Dodaj profil
 add sub-category	admin	sl	Dodaj podkategorijo
-add to group	admin	sl	Dodaj v skupino
 add user	admin	sl	Dodaj uporabnika
 add user or group	admin	sl	Dodaj uporabnika ali skupino
 admin dn	admin	sl	Oskrbnikov dn
@@ -141,10 +138,6 @@ async services last executed	admin	sl	Zadnja izvedena asinhrona storitev
 asynchronous timed services	admin	sl	Asinhrono regulirane storitve
 asyncservices not yet installed or other error (%1) !!!	admin	sl	asinhrona storitev še ni nameščena ali druga napaka (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sl	Poskušaj uporabiti pravilen MIME tip za FTP, namesto privzetega 'application/octet-stream'
-attribute accountstatus explained	admin	sl	To določa atribut <b><i>-accountStatus-</i></b> za QMAIL shemo.
-attribute mail explained	admin	sl	To določa atribut <b><i>-mail-</i></b> za QMAIL shemo in naj ne bo nikoli prazen.
-attribute mailalternateaddress explained	admin	sl	To določa atribut <b><i>-mailAlternateAddress-</i></b> za QMAIL shemo. Določa tudi navidezne povezave in psevdonime.
-attribute mailforwardingaddress explained	admin	sl	To določa atribut <b><i>-mailForwardingAddress-</i></b> za QMAIL shemo. Ne sme biti prazen če je posredovanje določeno.
 attributes	admin	sl	Lastnosti
 authentication / accounts	admin	sl	Avtentikacija / Računi
 auto create account records for authenticated users	admin	sl	Samodejno ustvari zapise računa za uspešno prijavljene uporabnike
@@ -158,9 +151,7 @@ bad or malformed request. server responded: %s	admin	sl	Napačna ali napačno ob
 bad request: %s	admin	sl	Napačna zahteva: %s
 bi-dir passthrough	admin	sl	Dvosmeren prehod
 bi-directional	admin	sl	Dvosmeren
-blocking after wrong password	admin	sl	Blokiranje po napačnem geslu
 bottom	admin	sl	Dno
-bulk changes	admin	sl	Množične spremembe
 bulk password reset	admin	sl	Ponastavitev množičnega gesla
 calculate next run	admin	sl	Izračunaj naslednji zagon
 calendar recurrence horizont in days (default 1000)	admin	sl	Obdobje ponovitve koledarja v dneh. Privzeto = 1000.
@@ -229,7 +220,6 @@ custom 3	admin	sl	Po meri 3
 custom fields	admin	sl	Polja po meri
 custom translation	admin	sl	Prevod po meri
 cyrus imap server	admin	sl	Cyrus IMAP strežnik
-cyrus imap server administration	admin	sl	Upravljanje Cyrus IMAP strežnika
 data	admin	sl	Podatki
 data from	admin	sl	Podatki iz
 day	admin	sl	Dan
@@ -289,8 +279,6 @@ disable	admin	sl	Onemogoči
 disable "auto completion" of the login form	admin	sl	Prepreči samodejno izpolnjevanje prijavne forme
 disable all	admin	sl	Onemogoči vse
 disable minifying of javascript and css files	admin	sl	Onemogoči minifiranje datotek javascripta in CSS
-disable wysiwyg-editor	admin	sl	Onemogoči WYSIWYG urejevalnik
-disable pgp encryption (mailvelope)	admin	sl	Onemogočite šifriranje PGP (Mailvelope)
 disabled	admin	sl	Onemogočeno
 disabled (not recomended)	admin	sl	Onemogočeno (ni priporočeno)
 display	admin	sl	Prikaži
@@ -339,25 +327,20 @@ emailadmin: group assigned profile	common	sl	eMailAdmin: profil, dodeljen skupin
 emailadmin: user assigned profile	common	sl	eMailAdmin: profil, dodeljen uprabniku
 empty to not change	admin	sl	prazna, da se NE spremeni
 enable	admin	sl	Omogoči
-enable cyrus imap server administration	admin	sl	Omogoči upravljanje Cyrus IMAP strežnika
 enable debug-messages	admin	sl	Omogoči sporočila za iskanje napak
 enable sieve	admin	sl	Omogoči Sieve
 enable spellcheck in rich text editor	admin	sl	Omogočite črkovanje v bogatem urejevalniku besedil
-enable the soap service	admin	sl	Omogoči servis SOAP
-enable the xmlrpc service	admin	sl	Omogoči servis XMLRPC
 enabled	admin	sl	Omogočeno
-enabled - hidden from navbar	admin	sl	Omogočeno - skrito z navigacijske vrstice
-enabled - popup window	admin	sl	Omogočeno - pojavna okna
 encrypted connection	admin	sl	Kodirana povezava
 encryption settings	admin	sl	Nastavitve šifriranja
 enter a description for the category	admin	sl	Vnesite opis kategorije
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sl	Vnesi neko naključno besedilo za <br> kodiranje app_session (zahteva mcrypt)
 enter the background color for the login page	admin	sl	Vnesite barvo ozadja prijavne strani
 enter the background color for the site title	admin	sl	Vnesite barvo ozadja naslova strežnika
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime računalnika, na katerem teče strežnik.
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL EGroupware strežnika.<br>Primer: http://www.domena.si/egw   ali   /egw<br><b>Brez končne poševnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Pošlji.
@@ -367,14 +350,12 @@ enter the title for your site	admin	sl	Vnesite naziv strežnika
 enter the title of your logo	admin	sl	Vnesite naziv vašega logotipa
 enter the url where your logo should link to	admin	sl	Vnesite URL, na katerega naj kaže vaš logotip
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	sl	Vnesite pot VFS, kjer lahko aplikacije EGRwareware postavijo dodatne slike, ikone ali logotipe. <br> Pot se mora začeti z / in biti berljivi za vse uporabnike
-enter your default ftp server	admin	sl	Vnesite privzeti FTP strežnik
 enter your default mail domain ( from: user@domain )	admin	sl	Vnesite privzeto poštno domeno (Od: uporabnik@domena)
 enter your default mail domain (from: user@domain)	admin	sl	Vnesite privzeto domeno (oblika: uporabnik@domena)
 enter your http proxy server	admin	sl	Vnesite privzet strežnik s HTTP proxy-em
 enter your http proxy server port	admin	sl	Vnesite privzeta vrata strežnika s HTTP proxy-em
 enter your smtp server hostname or ip address	admin	sl	Vnesite ime SMTP strežnika ali IP naslov
 enter your smtp server port	admin	sl	Vnesite vrata SMTP strežnika (25)
-entries	admin	sl	Vnosi
 entry saved	admin	sl	Vnos shranjen
 error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju kronometra: morda ni nastavljen!
 error changing the password for %1 !!!	admin	sl	Napaka pri spremembi gesla za %1!
@@ -395,7 +376,6 @@ event details follow	admin	sl	Sledijo podrobnosti dogodka
 exists	admin	sl	Obstaja
 expired	admin	sl	Poteklo
 expires	admin	sl	Preteče
-explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
 exports groups into a csv file.	admin	sl	Izvozi skupine v datoteko CSV.
 exports permission settings into a csv file.	admin	sl	Izvozi nastavitve dovoljenja v datoteko CSV.
 exports users into a csv file.	admin	sl	Izvozi uporabnike v datoteko CSV.
@@ -472,7 +452,6 @@ if you ignore that error as admin, you should check "%1"!	admin	sl	Če to napako
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	sl	če določite vrata 5190 s sieve strežnika, izvršite ssl za sito (strežnik mora to podpreti)
 imap admin password	admin	sl	Geslo oskrbnika IMAPa
 imap admin user	admin	sl	Uporabniško ime oskrbnika IMAP-a
-imap c-client version < 2001	admin	sl	IMAP C-klient različica pred 2001
 imap server	admin	sl	Strežnik IMAP
 imap server closed the connection.	admin	sl	Strežnik IMAP je prekinil povezavo.
 imap server closed the connection. server responded: %s	admin	sl	Strežnik IMAP je prekinil povezavo. Odgovor strežnika: %s
@@ -480,7 +459,6 @@ imap server hostname or ip address	admin	sl	Ime ali IP strežnika IMAP
 imap server logintyp	admin	sl	Način prijave strežnik IMAP
 imap server name	admin	sl	Ime strežnika IMAP
 imap server port	admin	sl	Vrata strežnika IMAP
-imap/pop3 server name	admin	sl	Ime strežnika IMAP/POP3
 importance	admin	sl	pomembnost
 in mbyte	admin	sl	v MB
 inactive	admin	sl	Neaktivno
@@ -560,7 +538,6 @@ mail account	admin	sl	E-poštni račun
 mail settings	admin	sl	Nastavitve E-pošte
 main email-address	admin	sl	Glavni E-naslov
 manage mapping	admin	sl	Upravljaj mapiranje
-manage stationery templates	admin	sl	Upravljajte pisalne predloge
 manager	admin	sl	Upravitelj
 manual entry	admin	sl	Ročni vnos
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
@@ -569,7 +546,7 @@ mb used	admin	sl	Uporabljeno MB
 members	admin	sl	Člani
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
 method	admin	sl	Postopek
-minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 1000 ali 500)
+minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 100 ali 500)
 minute	admin	sl	Minute
 mode	admin	sl	Način
 modified	admin	sl	Spremenjeno
@@ -642,7 +619,6 @@ path information	admin	sl	Podatki o poti
 peer server list	admin	sl	Seznam vzporednih strežnikov
 peer servers	admin	sl	Vzporedni strežniki
 percent of users that logged out	admin	sl	Delež uporabnikov, ki so se odjavili
-percent this user has logged out	admin	sl	Delež odjav tega uporabnika
 permission denied	admin	sl	Dostop zavrnjen
 permission denied !!!	admin	sl	Dostop zavrnjen!
 permission denied!!!	admin	sl	Dovoljenje zavrnjeno!!!
@@ -663,8 +639,6 @@ plesk imap server (courier)	admin	sl	Strežnik Plesk IMAP (Courier)
 plesk mail script '%1' not found !!!	admin	sl	Poštni skript Plesk '%1' ni bil najden!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	sl	Plesk zahteva geslo, dolga najmanj 5 znakov in ne sme vsebovati imena računa --> geslo ni bilo nastavljeno!
 plesk smtp-server (qmail)	admin	sl	Strežnik Plesk IMAP (Qmail)
-pop3 server hostname or ip address	admin	sl	Ime ali IP POP3 strežnika
-pop3 server port	admin	sl	Vrata POP3 strežnika
 port	admin	sl	Vrata
 postfix with ldap	admin	sl	Končnica pri LDAP
 postpone for	admin	sl	Postpone for
@@ -687,15 +661,12 @@ remote administration instances	admin	sl	Oddaljena skrbnikova instanca
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	sl	V oddaljenem skrbništvu mora biti omogočeno oddaljeno upravljanje v razdelku Admin> Konfiguracija spletnega mesta!
 remote instance saved	admin	sl	Oddaljena instanca shranjena
 remove	admin	sl	Odstrani
-remove all users from this group	admin	sl	Odstranite vse uporabnike iz te skupine
-remove all users from this group ?	admin	sl	Odstranim vse uporabnike iz te skupine?
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	sl	Odstranjevanje dostopa za skupine lahko povzroči težave za podatke v tej kategoriji. Ali si prepričan? Uporabniki v teh skupinah morda ne bodo več imeli dostopa:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	sl	Preimenovanje uporabnika "anonimni" bo kršil izmenjavo datotek in Collabora Online Office!
 requested	admin	sl	Zahtevano
 required pear class mail/mimedecode.php not found.	admin	sl	Zahtevani PEAR razred Pošta / mimeDecode.php ni mogoče najti.
 reset filter	admin	sl	Ponastavi filter
 rights	admin	sl	Pravice
-route all mails to	admin	sl	Preusmeri vso pošto na
 rows	admin	sl	Vrstice
 rpm or debian package	admin	sl	RPM ali paket Debian
 run	admin	sl	zagon
@@ -717,7 +688,6 @@ select group managers	admin	sl	Izberite oskrbnike skupin
 select permissions this group will have	admin	sl	Izberite dovoljenja te skupine
 select the parent category. if this is a main category select no category	admin	sl	Izberite nadrejeno kategorijo. Če kategorija nima nadrejene kategorije, izberite "BREZ KATEGORIJE"
 select type of imap server	admin	sl	Izberite vrsto strežnika IMAP
-select type of imap/pop3 server	admin	sl	Izberite tip IMAP/POP3 strežnika
 select type of smtp server	admin	sl	Izberite tip SMTP strežnika
 select users	admin	sl	Izberite uporabnike
 select users for inclusion	admin	sl	Izberite uporabnike za vključitev
@@ -736,10 +706,8 @@ server username	admin	sl	Uporabniško ime strežnika
 sessions last 30 days	admin	sl	Seje zadnjih 30 dni
 set a random password	admin	sl	Nastavite naključno geslo.
 set preference values.	admin	sl	Vnesite vrednosti nastavitev.
-settings	admin	sl	Nastavitve
 should exceptions contain a trace (including function arguments)	admin	sl	Če izjeme vsebujejo sled, vključno z argumenti funkcij.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?
-show 'powered by' logo on	admin	sl	Pokaži 'teče na' logotip na
 show access log	admin	sl	Pokaži evidenco dostopov
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
@@ -769,7 +737,6 @@ ssl	admin	sl	SSL
 standard	admin	sl	Standarden
 standard identity	admin	sl	Standardna identiteta
 standard imap server	admin	sl	Standardni IMAP strežnik
-standard pop3 server	admin	sl	Standardni POP3 strežnik
 standard smtp-server	admin	sl	Standardni SMTP strežnik
 start	admin	sl	Začetek
 start testjob!	admin	sl	Poženi testno nalogo (TestJob)!
@@ -781,7 +748,6 @@ submit statistic information	admin	sl	Pošljite statistične podatke
 submit the search string	admin	sl	Pošlji iskalni niz
 submit to egroupware.org	admin	sl	Pošlji na egroupware.org
 subtype	admin	sl	Podtip
-subversion checkout	admin	sl	Preveri podverzije
 success	admin	sl	Uspeh
 successful connected to %1 server%2.	admin	sl	Uspešno priključen na %1 strežnik %2.
 switch back to standard identity to save account.	admin	sl	Preklopite nazaj na standardno identiteto, da shranite račun.
@@ -821,7 +787,6 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	sl
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sl	Čas preteka seje v sekundah (privzeto 14400 = 4 ure).
 times	admin	sl	Časi
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	sl	Da bi nam omogočili spremljanje rasti posamezne namestitve, uporabite ta ID, sicer jo izbrišite:
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	sl	Če želite uporabljati povezavo TLS, morate imeti nameščeno različico PHP 5.1.0 ali višjo.
 top	admin	sl	Vrh
 total of %1 id's changed.	admin	sl	Skupno število %1 id je spremenjeno.
 total records	admin	sl	Skupno vseh zapisov
@@ -837,9 +802,6 @@ type '%1' already exists !!!	admin	sl	Vrsta '%1' že obstaja!
 type of customfield	admin	sl	Vrsta polja po meri
 type of field	admin	sl	Tip polja
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windowsi morate asinhrone storitve namestiti %1ročno%2.
-unexpected response from server to authenticate command.	admin	sl	Nepričakovan odgovor strežnika na ukaz AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	sl	Nepričakovan odgovor strežnika na odgovor Digest-MD5.
-unexpected response from server to login command.	admin	sl	Nepričakovan odgovor strežnika na ukaz LOGIN.
 unknown account: %1 !!!	admin	sl	Neznan račun: %1!
 unknown command %1!	admin	sl	Neznan ukaz %1!
 unknown imap response from the server. server responded: %s	admin	sl	Neznan odgovor IMAP s strani strežnika. Odgovor strežnika: %s
@@ -852,7 +814,6 @@ updated	admin	sl	Podosodobljeno
 upload your background image or enter the url	admin	sl	Naložite sliko ozadja ali vnesite URL
 upload your certificate .p12/.pfx file	admin	sl	Naložite svojo potrditveno datoteko .p12 / .pfx
 upload your favicon or enter the url	admin	sl	Naložite svoj favicon ali vnesite URL
-upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	sl	Naložite logotip glave ali vnesite URL (pustite ga praznega, če je enak logotipu za prijavo)
 upload your logo or enter the url	admin	sl	Naložite svoj logotip ali vnesite URL
 uppercase, lowercase, number, special char	admin	sl	Zgornja, mala, številčna, posebna oznaka
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	sl	URL namestitve EGroupware, npr. http://domain.com/egroupware
@@ -870,7 +831,6 @@ use tls encryption	admin	sl	Uporabi TLS enkripcijo
 use users email-address (as seen in useraccount)	admin	sl	Uporabite e-poštni naslov uporabnikov, kot je določeno v uporabniškem računu
 user accounts	admin	sl	Uporabniški računi
 user can edit forwarding address	admin	sl	Uporabnik lahko določa posredovalni naslov
-user choice	admin	sl	Izbira uporabnika
 user csv export	admin	sl	Uporabniški CSV izvoz
 user csv import	admin	sl	Uvoz uporabnika CSV
 user data	common	sl	Podatki o uporabniku
@@ -905,11 +865,6 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	sl	Informacije se zahtevajo le, da dobite pregled o uporabi EGroupware po vsem svetu.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	sl	Ne shranjujemo podatkov o vaši identiteti.
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
-would you like egroupware to cache the egw info array ?	admin	sl	Želite, da EGroupware shrani informacije v predpomnilnik kot niz egw_info?
-would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da EGroupware preveri veljavnost različice ob oskrbnikovi prijavi?
-would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da EGroupware preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali želite samodejno naložiti nove jezike (ob prijavi)?
-would you like to show each application's upgrade status ?	admin	sl	Ali želite prikazati status različice vsake aplikacije?
 wrong account type: %1 is no %2 !!!	admin	sl	Napačna vrsta računa: %1 je NO %2!
 wrong admin-account or -password !!!	admin	sl	Napačen skrbniški račun ali geslo!
 xml-rpc	admin	sl	XML-RPC

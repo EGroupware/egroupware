@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	pl	(standardowo nie, pozostaw wyłączone, jeśli nie używasz)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pl	(imapclass musi obsługiwać tę funkcję poprzez zapytanie o odpowiednią wartość konfiguracyjną i przekazanie jej jako defaultquota do serwera IMAP)
 (no subject)	admin	pl	(bez tematu)
-(stored password will not be shown here)	admin	pl	(Przechowywane hasło nie bdzie tutaj wyświetlane)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pl	(Aby zainstalować nowe aplikacje, użyj<br><a href="setup/" target="setup">Setup</a> [Zarządzaj aplikacjami]!)
 -  type	admin	pl	- typ
 1 year	admin	pl	1 rok
@@ -37,9 +36,7 @@
 2-factor-authentication for interactive login	admin	pl	2-Factor-Authentication dla interaktywnego logowania
 3 month	admin	pl	3 miesiące
 6 month	admin	pl	6 miesięcy
-access to %1 data by others	admin	pl	Dostęp do %1 danych przez inne osoby
 access token revoked.	admin	pl	Token dostępu został cofnięty.
-accesslog and bruteforce defense	admin	pl	Dziennik dostępu oraz ochrona przed atakiem typu BruteForce
 account	admin	pl	Konto
 account %1 %2	admin	pl	Konto %1 %2
 account '%1' deleted.	admin	pl	Konto '%1' usunięte
@@ -62,7 +59,7 @@ activate	admin	pl	Aktywuj
 active templates	admin	pl	Aktywne szablony
 add a category	admin	pl	Dodaj kategorie
 add a group	admin	pl	Dodaj grupę użytkowników
-add a new account.	admin	pl	Dodaj nowe konto
+add a new account.	admin	pl	Dodaj nowe konto.
 add a new remote instance	admin	pl	Dodaj nową zdalną instancję
 add a subcategory	admin	pl	Dodaj podkategorie
 add a user	admin	pl	Dodaj użytkownika
@@ -78,9 +75,6 @@ add new email address:	admin	pl	Dodaj nowy adres poczty elektronicznej:
 add peer server	admin	pl	Dodaj serwer równorzędny
 add profile	admin	pl	Dodaj profil
 add sub-category	admin	pl	Dodaj podkategorię
-add to group	admin	pl	Dodaj do grupy
-add user	admin	pl	Dodaj użytkownika
-add user or group	admin	pl	Dodaj użytkownika lub grupę
 admin dn	admin	pl	DN (nazwa wyróżniająca) administratora
 admin email	admin	pl	e-mail administratora
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pl	Lista adresów pocztowych administratorów (oddzielonych przecinkiem), których należy zawiadamiać o blokowaniu kont/adresów (zawiadomienia są wyłączone, jeżeli pole jest puste)
@@ -92,14 +86,10 @@ advanced options	admin	pl	Ustawienia zaawansowane
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania się do systemu blokować dostęp z tego adresu IP (domyślnie 3)?
 aliases	admin	pl	Aliasy
 all applications	admin	pl	Wszystkie aplikacje
-all categories	admin	pl	Wszystkie kategorie
 all records and account information will be lost!	admin	pl	Wszystkie rekordy i informacje konta zostaną usunięte!
 all users	admin	pl	Wszyscy użytkownicy
 allow anonymous access to this app	admin	pl	Pozwól na dostęp anonimowy do tej aplikacji
 allow remote administration from following install id's (comma separated)	admin	pl	Zezwól na zdalną administrację z tych ID instalacji (rozdzielone przecinkiem)
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pl	Po ilu nieudanych próbach logowania konto powinno zostać zablokowane. Domyślnie = 3
-all groups	admin	pl	Wszystkie grupy
-allow user to set 'remember me' token	admin	pl	Zezwól użytkownikowi na ustawienie tokena "Zapamiętaj mnie"
 alternate email address	admin	pl	Alternatywny adres email
 anonymous user	admin	pl	Użytkownik anonimowy
 anonymous user (not shown in list sessions)	admin	pl	Użytkownik anonimowy (nie pojawia się w wykazie sesji)
@@ -116,7 +106,6 @@ application title	admin	pl	Tytuł aplikacji
 applications	admin	pl	Aplikacje
 applications list	admin	pl	Lista aplikacji
 applications run rights updated.	admin	pl	Prawa do aplikacji zaktualizowane.
-applications this group can use	admin	pl	Aplikacje, których może używać ta grupa
 applies the changes	admin	pl	Zapisuje zmiany
 apply the changes	admin	pl	Zastosuj zmiany
 archive: zip or tar	admin	pl	Archiwum: ZIP lub tar
@@ -132,10 +121,6 @@ async services last executed	admin	pl	Ostatnie wykonanie usług asynchronicznych
 asynchronous timed services	admin	pl	Usługi wykonywane asynchronicznie
 asyncservices not yet installed or other error (%1) !!!	admin	pl	Asyncservices nie są zainstalowane lub wystąpił inny błąd (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pl	Spróbuj wykryć typ pliku dla FTP zamiast standardowego 'application/octet-stream'
-attribute accountstatus explained	admin	pl	To korzysta z atrybutu <b><i>-accountStatus-</i></b> ze schematu QMAIL.
-attribute mail explained	admin	pl	To korzysta z atrybutu <b><i>-mail-</i></b> ze schamatu QMAIL i niepowinno nigdy być puste. Jest to też wewnętrzna wartość pola email dla EGw.
-attribute mailalternateaddress explained	admin	pl	To korzysta z atrybutu <b><i>-mailAlternateAddress-</i></b> ze schematu QMAIL i może być wykorzystane jako mapa wirtualnych adresów mailowych.
-attribute mailforwardingaddress explained	admin	pl	To korzysta z atrybutu <b><i>-mailForwardingAddress-</i></b> ze schematu QMAIL i nie powinno być puste jeśli ma być wykorzystane.
 authentication / accounts	admin	pl	Uwierzytelnianie / Konta
 auto create account records for authenticated users	admin	pl	Automatycznie stwórz zapisy kont dla uwierzytelnionych użytkowników
 back to admin/grouplist	admin	pl	Powrót do konta administratora/ listy grup
@@ -146,10 +131,7 @@ bad or malformed request. server responded: %s	admin	pl	Nieprawidłowe lub źle 
 bad request: %s	admin	pl	Nieprawidłowe żądanie: %s
 bi-dir passthrough	admin	pl	Przepływ dwukierunkowy
 bi-directional	admin	pl	Dwukierunkowy
-blocking after wrong password	admin	pl	Blokowanie po błędnym haśle
 bottom	admin	pl	Na dole
-bulk changes	admin	pl	Zmiany zbiorcze
-bulk password reset	admin	pl	Zbiorcze resetowanie hasła
 calculate next run	admin	pl	Oblicz następny start
 can be used by application	admin	pl	Może być używane przez aplikację
 can be used by group	admin	pl	Może byc używane przez grupę
@@ -163,9 +145,6 @@ category deleted.	admin	pl	Kategoria usunięta.
 category list	admin	pl	Lista kategorii
 category saved.	admin	pl	Kategoria zapisana.
 change account_id	admin	pl	Zmień account_ID
-certificate	admin	pl	Certyfikat
-certificate details	admin	pl	Szczegóły certyfikatu
-certificate validation in days	admin	pl	Walidacja certyfikatu w ciągu kilku dni
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
 change config settings	admin	pl	Zmiana ustawień
 change login screen message	admin	pl	Zmiana komunikatu na stronie głównej
@@ -193,7 +172,6 @@ created	admin	pl	Utworzony
 created with id #%1	admin	pl	Utworzono z ID #%1
 creates a new field	admin	pl	Utwórz nowe pole
 crontab only (recomended)	admin	pl	Wyłącznie crontab (zalecane!)
-current certificate	admin	pl	Aktualny certyfikat
 custom 1	admin	pl	Niestandardowe 1
 custom 2	admin	pl	Niestandardowe 2
 custom 3	admin	pl	Niestandardowe 3
@@ -244,7 +222,6 @@ description can not exceed 255 characters in length !	admin	pl	Opis nie może pr
 determines the order the fields are displayed	admin	pl	Decyduje o kolejności, w jakiej pola zostaną pokazane
 disable	admin	pl	Wyłącz
 disable "auto completion" of the login form	admin	pl	Wyłacz funkcję automatycznego wypełniania formularzy w przeglądarce (auto completion)
-disable wysiwyg-editor	admin	pl	Wyłącz edytor WYSIWYG
 disabled (not recomended)	admin	pl	Wyłączone (nie zalecane)
 display	admin	pl	Wyświetl
 displaying html messages is disabled	admin	pl	Wyświetlanie wiadomości w HTML jest wyłączone
@@ -258,7 +235,6 @@ do you want to move all global subcategories one level down ?	admin	pl	Czy przen
 document root (default)	admin	pl	Katalog główny serwera WWW (domyślnie)
 domainname	admin	pl	Nazwa domeny
 down	admin	pl	W dół
-download csv	admin	pl	Pobierz CSV
 edit account	admin	pl	Edytuj konto użytkownika
 edit application	admin	pl	Edycja aplikacji
 edit email settings	admin	pl	Edytuj ustawienia poczty elektronicznej
@@ -284,14 +260,9 @@ emailadmin	admin	pl	Poczta Elektroniczna - Administracja
 emailadmin: group assigned profile	common	pl	Administrator Poczty: Grupa przypisana do profilu
 emailadmin: user assigned profile	common	pl	Administrator Poczty: użytkownik przypisany do profilu
 enable	admin	pl	Włącz
-enable cyrus imap server administration	admin	pl	Aktywuj administrację serwerem IMAP Cyrus
 enable debug-messages	admin	pl	Wyświetlaj komunikaty trybu debug
 enable sieve	admin	pl	Aktywuj sito (Sieve)
 enable spellcheck in rich text editor	admin	pl	Włączyć sprawdzanie pisowni w edytorze tekstowym ?
-enable the soap service	admin	pl	Włącz serwis SOAP
-enable the xmlrpc service	admin	pl	Włącz serwis XML-RPC
-enabled - hidden from navbar	admin	pl	Aktywna - ukryta w menu
-enabled - popup window	admin	pl	Aktywna - Okno Popup
 encrypted connection	admin	pl	Połączenie szyfrowane
 encryption settings	admin	pl	Ustawienia szyfrowania
 enter a description for the category	admin	pl	Wpisz opis tej kategorii
@@ -309,7 +280,6 @@ enter the title for your site	admin	pl	Nazwa Twojego portalu
 enter the title of your logo	admin	pl	Wpisz nazwę Twojego logo
 enter the url where your logo should link to	admin	pl	Wpisz URL z którym zlinkować Twoje logo
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	pl	Wprowadź ścieżkę przechowywania dodatkowych obrazków, ikon, logotypów. Ścieżka musi zaczynać się od / i muszą do niej mieć prawa wszyscy użytkownicy.
-enter your default ftp server	admin	pl	Domyślny serwer FTP
 enter your default mail domain ( from: user@domain )	admin	pl	Podaj nazwę swojej domeny (uzytkownik@domena)
 enter your default mail domain (from: user@domain)	admin	pl	Wprowadź domyślną domenę pocztową (z użytkownik@domena)
 enter your http proxy server	admin	pl	Domyślny serwer HTTP proxy
@@ -333,11 +303,6 @@ error: %1 not found or other error !!!	admin	pl	Błąd: %1 nie znaleziony lub in
 event details follow	admin	pl	Detale Wydarzenia Następują
 exists	admin	pl	Istnieje
 expires	admin	pl	Ważne do
-explanation of ldapman	admin	pl	Ten moduł został przetestowany na Postfix+LDAP+Cyrus-IMAP i potrzebuje schematów CORE i QMAIL (OID7914). Więcej na temat konfiguracji takiego systemu można znaleźć w README.ldapman w katalogu doc ADMIN'a.
-export certificate as p12	admin	pl	Eksport certyfikatu jako p12
-exports groups into a csv file.	admin	pl	Eksportuje grupy do pliku CSV.
-exports permission settings into a csv file.	admin	pl	Eksportuje ustawienia uprawnień do pliku CSV.
-exports users into a csv file.	admin	pl	Eksportuje użytkowników do pliku CSV.
 failed to change password.	admin	pl	Zmiana hasła nieudana.
 fallback (after each pageview)	admin	pl	Powrót (po każdym pokazaniu strony)
 false	admin	pl	Fałsz
@@ -356,7 +321,6 @@ forward emails to	admin	pl	prześlij maile dalej do
 forward only	admin	pl	Prześlij tylko
 full name	admin	pl	Pełna nazwa
 general	admin	pl	Główne
-git clone	admin	pl	Git clone
 global categories	common	pl	Kategorie globalne
 global options	admin	pl	Ustawienia globalne
 go directly to admin menu, returning here the next time you click on administration.	admin	pl	Przy powrocie do storny administracji przejdź bezpośrednio do menu administracyjnego.
@@ -366,8 +330,6 @@ group ?	admin	pl	Grupa?
 group has been added	common	pl	Dodano grupę
 group has been deleted	common	pl	Usunięto grupę
 group has been updated	common	pl	Zaktualizowano grupę
-group csv export	admin	pl	Grupowy eksport CSV
-group csv import	admin	pl	Grupowy import CSV
 group list	admin	pl	Lista grup
 group manager	admin	pl	Menedżer grup
 group name	admin	pl	Nazwa grupy
@@ -376,7 +338,6 @@ hide php information	admin	pl	Ukryj informacje o PHP
 home directory	admin	pl	Katalog domowy
 home screen message	admin	pl	Wiadomość na stronie gwnej
 host information	admin	pl	Informacja o stacji roboczej
-hostname or ip	admin	pl	Hostname lub IP
 hour<br>(0-23)	admin	pl	Godzina<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	pl	Jak duże powinny być miniatury linkowanych obrazków (w pikselach) ?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pl	Ile dni wpisy powinny pozostawać w dzienniku dostępu, zanim zostaną wykasowane (domyślnie 90)?
@@ -384,12 +345,10 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	pl	Na ile minut powinno być blokowane konto użytkownika lub adres IP stacji roboczej (domyślnie 30)?
 how should email addresses for new users be constructed?	admin	pl	Jak tworzyć adresy mailowe dla nowych użytkowników?
 icon	admin	pl	Ikonka
-identity	admin	pl	Tożsamość
 idle	admin	pl	Czas jałowy
 if no acl records for user or any group the user is a member of	admin	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	Jeżeli używasz LDAP, czy chciałbyś administrować katalogiem domowym i atrybutami powłoki?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pl	Jeżeli korzystasz z SSL lub TLS, musisz zapewnić obsługę OpenSSL w PHP.
-if you wish to have randomly selected images you may upload multiple images.	admin	pl	Jeśli chcesz mieć losowo wybrane obrazy, możesz przesłać wiele obrazów.
 imap admin password	admin	pl	Hasło administratora IMAP
 imap admin user	admin	pl	Login administratora IMAP
 imap server	admin	pl	Serwer IMAP
@@ -425,7 +384,6 @@ last %1 logins	admin	pl	Ostanie %1 logowań
 last %1 logins for %2	admin	pl	Ostatnie %1 logowań %2
 last login	admin	pl	Ostatnie logowanie
 last login from	admin	pl	Ostatnie logowanie z
-last password change	admin	pl	Ostatnia zmiana hasła
 last submission:	admin	pl	Ostatni wpis:
 last time read	admin	pl	Data ostatniego odczytu
 last updated	admin	pl	Ostatnia aktualizacja
@@ -467,14 +425,13 @@ logoutime	admin	pl	Czas wylogowania
 mail settings	admin	pl	Ustawienia poczty elektronicznej
 main email-address	admin	pl	Główny adres mailowy
 manage mapping	admin	pl	Zarządzaj mapowaniem
-manage stationery templates	admin	pl	Zarządzaj szablonami stacjonarnymi
 manager	admin	pl	Menedżer
 maximum account id (e.g. 65535 or 1000000)	admin	pl	Maksymalny ID konta (np: 65535 lub 100000)
 maximum entries in click path history	admin	pl	Maksymlna ilość zapamiętanych kliknięć
 members	admin	pl	Członkowie
 message has been updated	admin	pl	Zaktualizowano wiadomość
 method	admin	pl	Metoda
-minimum account id (e.g. 500 or 100, etc.)	admin	pl	Minimalny ID konta (np:500 lub 1000)
+minimum account id (e.g. 500 or 100, etc.)	admin	pl	Minimalny ID konta (np:500 lub 100 )
 minute	admin	pl	Minuta
 mode	admin	pl	Tryb
 modified	admin	pl	Zmodyfikowany
@@ -485,7 +442,6 @@ name of organisation	admin	pl	Nazwa lub organizacja
 name of the egroupware instance, eg. default	admin	pl	Nazwa instancji EGroupware, np. default
 new group name	admin	pl	Nowa nazwa grupy
 new name	admin	pl	Nowa nazwa
-new password	admin	pl	Nowe hasło
 new password [ leave blank for no change ]	admin	pl	Nowe hasło (zostaw puste jeżeli bez zmian)
 next run	admin	pl	Termin następnego wykonania
 no algorithms available	admin	pl	Nie jest dostępny żaden algorytm
@@ -527,14 +483,10 @@ own install id:	admin	pl	Własny ID instalacji:
 passthrough	admin	pl	Przepływ
 password for smtp-authentication	admin	pl	Hasło do autentyfikacji SMTP
 password updated	admin	pl	Hasło zatkalizowane
-passwords	admin	pl	Hasła
-passwords requires this number of different character classes	admin	pl	Hasła wymagają takiej liczby różnych klas znaków
 path information	admin	pl	Informacja o ścieżce
 peer server list	admin	pl	Lista serwerów równorzędnych (peer servers)
 peer servers	admin	pl	Serwery równorzędne (peer servers)
 percent of users that logged out	admin	pl	Procent wylogowanych użytkowników
-percent this user has logged out	admin	pl	Procent wylogowań tego użytkownika
-periodic	admin	pl	Okresowy
 permission denied	admin	pl	Dostęp zabroniony
 permission denied !!!	admin	pl	Dostęp wzbroniony!
 permission denied!!!	admin	pl	Dostęp zabroniony!
@@ -548,12 +500,10 @@ please enter a name for that server !	admin	pl	Proszę podać nazwę dla tego se
 please run setup to become current	admin	pl	Uruchom instalację (setup) aby uaktualnić konfigurację
 please select	admin	pl	Proszę wybrać
 plesk can't rename users --> request ignored	admin	pl	Plesk nie może zmienić nazwy użytkowników --> prośba odrzucona
-plesk imap server (courier)	admin	pl	Plesk IMAP Serwea (Courier)
+plesk imap server (courier)	admin	pl	Plesk IMAP Serwea (Kurier)
 plesk mail script '%1' not found !!!	admin	pl	Skrypt %1 mail Plesk nie został znaleziony!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	pl	Plesk wymaga hasła składającego się z przynajmniej pięciu znaków i nie zawierającego nazwy konta --> hasło nie ustalone!
 plesk smtp-server (qmail)	admin	pl	Plesk Serwera SMTP (Qmail)
-pop3 server hostname or ip address	admin	pl	Nazwa hosta lub IP serwera POP3
-pop3 server port	admin	pl	Port serwera POP3
 port	admin	pl	Port
 postfix with ldap	admin	pl	Postfix z LDAP
 postpone for	admin	pl	Odrocz na
@@ -574,13 +524,9 @@ remote administration instances	admin	pl	Instancje zdalnej administracji
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pl	Zdalne zarządzanie musi być włączone w systemie zdalnym w zakładce Administracja > Konfiguracja serwisu
 remote instance saved	admin	pl	Zdalna instancja zapisana
 remove	admin	pl	Usuń
-remove all users from this group	admin	pl	Usuwanie wszystkich użytkowników z grupy
-remove all users from this group ?	admin	pl	Usuń wszystkich użytkownikw z grupy?
-renaming user 'anonymous' will break file sharing and collabora online office!	admin	pl	Zmiana nazwy użytkownika na "anonimowy" spowoduje przerwanie udostępniania plików i Collabora Online!
 requested	admin	pl	Żądany
 reset filter	admin	pl	Resetuj filtr
 rights	admin	pl	Prawa
-route all mails to	admin	pl	Przesyłaj maile do
 rows	admin	pl	Wiersze
 rpm or debian package	admin	pl	Paczka RPM albo deb
 run asynchronous services	admin	pl	Uruchom usługi asynchroniczne
@@ -616,9 +562,6 @@ sessions last 30 days	admin	pl	Sesje w ostatnich 30 dniach
 set preference values.	admin	pl	Ustaw wartości preferencji
 should exceptions contain a trace (including function arguments)	admin	pl	Czy wyjątki powinny zawierać dane śledzenia wykonania (razem z argumentami funkcji)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem języka (przydatne dla serwerów demo) ?
-show 'powered by' logo on	admin	pl	Wyświetl logo 'powered by'
-set a random password	admin	pl	Ustaw losowe hasło.
-settings	admin	pl	Ustawienia
 show access log	admin	pl	Wyświetl dziennik dostępów
 show current action	admin	pl	Pokaż bieżącą akcję
 show error log	admin	pl	Wśywietl dziennik błędów
@@ -628,11 +571,8 @@ sieve server hostname or ip address	admin	pl	Adres IP lub nazwa Sieve
 sieve server port	admin	pl	Port serwera Sieve
 sieve settings	admin	pl	Ustawienia Sieve
 site	admin	pl	Serwis
-skip imap	admin	pl	Pomiń IMAP
-skipping imap configuration!	admin	pl	Pomijanie konfiguracji IMAP!
 smtp authentication	admin	pl	Autentykacja SMTP
 smtp options	admin	pl	Opcje SMTP
-smtp server	admin	pl	Serwer SMTP
 smtp server name	admin	pl	Nazwa serwera SMTP
 smtp settings	admin	pl	Ustawienia SMTP
 smtp-server hostname or ip address	admin	pl	Nazwa hosta lub IP serwera SMTP
@@ -645,7 +585,6 @@ sort the entries	admin	pl	Sortuj wiersze
 ssl	admin	pl	SSL
 standard	admin	pl	Standard
 standard imap server	admin	pl	Standardowy serwer IMAP
-standard pop3 server	admin	pl	Standardowy serwer POP3
 standard smtp-server	admin	pl	Standardowy serwer SMTP
 start	admin	pl	Początek
 start testjob!	admin	pl	Uruchom Testjob
@@ -656,7 +595,6 @@ submit statistic information	admin	pl	Prześlij informacje statystyczne
 submit the search string	admin	pl	Wyślij tekst zapytania
 submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
-subversion checkout	admin	pl	Checkout Subversion
 success	admin	pl	Sukces
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
 template selection	admin	pl	Wybór szablonu
@@ -691,7 +629,6 @@ timeout for application session data in seconds (default 86400 = 1 day)	admin	pl
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pl	Czas wygasnięcia sesji w sekundach (domyślnie 14400 = 4 godziny)
 times	admin	pl	Razy
 to allow us to track the growth of your individual installation use this submit id, otherwise delete it:	admin	pl	Aby zezwolić na śledzenie rozwoju Twojej instalacji użyj tego ID, w przeciwnym wypadku usuń je:
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	pl	Aby skorzystać z połączenia TLS, musisz posiadać wersję PHP 5.1.0 lub wyższą.
 top	admin	pl	Na górze
 total of %1 id's changed.	admin	pl	Zmieniono %1 id.
 total records	admin	pl	Wszystkich rekordów
@@ -706,9 +643,6 @@ two weeks	admin	pl	Dwa tygodnie
 type '%1' already exists !!!	admin	pl	Typ '%1' już istnieje!
 type of customfield	admin	pl	Typ pola użytkownika
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pl	Pod Windows musisz zainstalować asyncservice %1ręcznie%2 albo używać trybu 'powrotu'. 'Powrót' oznacza sprawdzanie i - jeśli konieczne startowanie - czynności po każdym pokazaniu strony.
-unexpected response from server to authenticate command.	admin	pl	Niespodziewana odpowiedź serwera na polecenie AUTHENTICATE.
-unexpected response from server to digest-md5 response.	admin	pl	Niespodziewana odpowiedź serwera na zapytanie Digest-MD5
-unexpected response from server to login command.	admin	pl	Niespodziewana odpowiedź serwera na polecenie LOGIN.
 unknown account: %1 !!!	admin	pl	Nieznane konto: %1 !
 unknown command %1!	admin	pl	Nieznane polecenie %1 !
 unknown imap response from the server. server responded: %s	admin	pl	Nieznana odpowiedź z serwera IMAP. Serwer przesłał: %s
@@ -717,11 +651,6 @@ unsupported action '%1' !!!	admin	pl	Operacja nieobsługiwana '%1'!
 up	admin	pl	W górę
 update current email address:	admin	pl	Uaktualnij bieżący adres pocztowy
 updated	admin	pl	Uaktualniony
-upload your background image or enter the url	admin	pl	Prześlij obraz tła lub wprowadź adres URL
-upload your certificate .p12/.pfx file	admin	pl	Prześlij plik certyfikatu .p12/.pfx
-upload your favicon or enter the url	admin	pl	Prześlij ikonę favicon lub wprowadź adres URL
-upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	pl	Prześlij logo nagłówka lub wprowadź adres URL (pozostaw puste, jeśli jest takie samo jak logo logowania).
-upload your logo or enter the url	admin	pl	Prześlij swoje logo lub wprowadź adres URL
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	pl	URL instalacji EGroupware, np. https://egw.domena.pl/egroupware
 usage	admin	pl	Użytkowanie
 use cookies to pass sessionid	admin	pl	Używaj ciasteczek do przekazywania identyfikatora sesji
@@ -736,9 +665,6 @@ use tls encryption	admin	pl	Skorzystaj z szyfrowania TLS
 use users email-address (as seen in useraccount)	admin	pl	Użyj adresu użytkownika (taki jak widoczny w opcjach konta)
 user accounts	admin	pl	Konta użytkowników
 user can edit forwarding address	admin	pl	Użytkownik może zmieniać adres przekazywania
-user choice	admin	pl	Wybór użytkownika
-user csv export	admin	pl	Eksport CSV użytkownika
-user csv import	admin	pl	Import CSV użytkownika
 user data	common	pl	Dane użytkownika
 user for smtp-authentication (leave it empty if no auth required)	admin	pl	Użytkownik dla logowania SMTP (pozostaw puste jeśli nie jest wymagane)
 user groups	admin	pl	Grupy użytkownikw
@@ -764,11 +690,6 @@ virtual mail manager	admin	pl	Wirtualny Serwer Pocztowy - zarządca
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	pl	Prosimy o te dane, aby poprawić nasz profil w prasie oraz lepiej zrozumieć bazę użytkowników egroupware i jej potrzeby.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	pl	Mamy nadzieję, że rozumiesz potrzebę wprowadzenia tej dobrowolnej statystyki i nie wyłączysz jej jeśli nie musisz.
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przejąć wszystkie rekordy usuwanego użytkownika?
-would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywać tablicę informacyjną EGroupware w pamięci ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	pl	Chcesz sprawdza czy s nowe wersje<br>gdy zaloguje si administrator?
-would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy EGroupware powinien sprawdzać czy pojawiły się nowe wersję aplikacji<br>przy każdym logowaniu administratorów ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	pl	Czy przy logowaniu automatycznie ładować nowe wersje plików językowych do bazy ?
-would you like to show each application's upgrade status ?	admin	pl	Chcesz wyświetlać status aktualizacji dla każdej aplikacji?
 wrong account type: %1 is no %2 !!!	admin	pl	Zły typ konta: %1 to nie %2 !
 wrong admin-account or -password !!!	admin	pl	Niepoprawne konto administratora lub hasło!
 xml-rpc	admin	pl	XML-RPC
@@ -789,6 +710,5 @@ you must select at least one group member.	admin	pl	Musisz wybrać przynajmniej 
 you need to enter install id and password!	admin	pl	Musisz podać ID instalacji i hasło!
 you will need to remove the subcategories before you can delete this category	admin	pl	Należy usunąć kategorie podrzędne przed skasowaniem tej kategorii!
 your last submission was less then %1 days ago!	admin	pl	Swój ostatni wpis przesłałeś mniej niż %1 dni temu!
-your message to  %1 was displayed.	admin	pl	Wiadomość do %1 została wyświetlona.
 your name	admin	pl	Twoje Imę
 your session could not be verified.	admin	pl	Nie można zweryfikować sesji.

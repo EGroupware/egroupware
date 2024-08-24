@@ -54,7 +54,6 @@ add new application	admin	et	Lisa uus rakendus
 add new email address:	admin	et	Lisa uus email aadress:
 add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
-add to group	admin	et	Lisa gruppi
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
 admin password	admin	et	Admin parool
@@ -81,15 +80,9 @@ are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kust
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
 authentication / accounts	admin	et	Autentimine / Kontod
 bad login name or password.	admin	et	Vale kasutajanimi või parool.
-blocking after wrong password	admin	et	Blokeerimine pärast vale salasõna kasutamist
-bulk changes	admin	et	Massilised muudatused
-bulk password reset	admin	et	Paroolide massiline lähtestamine
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
-certificate	admin	et	Sertifikaat
-certificate details	admin	et	Sertifikaadi andmed
-certificate validation in days	admin	et	Sertifikaadi valideerimine päevade jooksul
 change acl rights	admin	et	Muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi

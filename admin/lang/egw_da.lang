@@ -58,7 +58,6 @@ add new application	admin	da	Tilføj ny applikation
 add peer server	admin	da	Tilføj Peer Server
 add profile	admin	da	Tilføj Profil
 add sub-category	admin	da	Tilføj underkategori
-add to group	admin	da	Tilføj til gruppe
 add user	admin	da	Tilføj bruger
 add user or group	admin	da	Tilføj bruger eller gruppe
 admin dn	admin	da	Admin DN
@@ -101,17 +100,12 @@ available placeholders	admin	da	Tilgængelige pladsholdere
 back to the list	admin	da	Tilbage til listen
 bi-directional	admin	da	bi-directional
 bottom	admin	da	Bunden
-bulk changes	admin	da	Masseændringer
-bulk password reset	admin	da	Nulstilling af adgangskode
 calculate next run	admin	da	Beregn næste kørsel
 can change password	admin	da	Kan ændre adgangskode
 cancel testjob!	admin	da	Annuller testjob
 categories list	admin	da	Vis kategorier
 category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
-certificate	admin	da	Certifikat
-certificate details	admin	da	Detaljer om certifikatet
-certificate validation in days	admin	da	Certifikatvalidering om dage
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change login screen message	admin	da	Ændre startside besked
@@ -204,10 +198,10 @@ enter a description for the category	admin	da	Indtast en beskrivelse for kategor
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	da	Indtast noget forskelligt tekst til app_session<br>kryptering (kræver mcrypt)
 enter the background color for the login page	admin	da	Indtast baggrundsfarven for login siden
 enter the background color for the site title	admin	da	Indtast baggrundsfarven for side titlen
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
 enter the hostname of the machine on which this server is running	admin	da	Indtast hostnavnet for computeren på hvor denne serveren kører
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af EGroupware's URL.<br>Eksempel: http://www.domæne.dk/egroupware eller /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	da	Indtast søg streng. For at vise alt, tøm dette felt og tryk SEND knappen igen

@@ -61,7 +61,6 @@ acl deleted.	admin	fi	Käyttöoikeus poistettu.
 acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL -oikeudet
 activate	admin	fi	Aktivoi
-activate wysiwyg-editor	admin	fi	Käytä WYSIWYG-toimitinta
 active templates	admin	fi	Aktiiviset mallipohjat
 add a category	admin	fi	Lisää kategoria
 add a group	admin	fi	Lisää ryhmä
@@ -80,9 +79,6 @@ add new email address:	admin	fi	Lisää uusi sähköpostiosoite:
 add peer server	admin	fi	Lisää rinnakkaispalvelin
 add profile	admin	fi	Lisää profiili
 add sub-category	admin	fi	Lisää alikaterogia
-add to group	admin	fi	Lisää ryhmään
-add user	admin	fi	Lisää käyttäjä
-add user or group	admin	fi	Lisää käyttäjä tai ryhmä
 admin dn	admin	fi	Ylläpitäjän DN
 admin email	admin	fi	Sähköpostin hallinta
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Ylläpitäjän sähköpostiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (jätä tyhjäksi, jos ei ilmoiteta)
@@ -140,9 +136,7 @@ bad or malformed request. server responded: %s	admin	fi	Väärä tai viallinen p
 bad request: %s	admin	fi	Väärä pyyntö: %s
 bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
-blocking after wrong password	admin	fi	Estäminen väärän salasanan jälkeen
 bottom	admin	fi	Alas
-bulk changes	admin	fi	Joukkomuutokset
 bulk password reset	admin	fi	Salasanojen hallinta
 calculate next run	admin	fi	Laske seuraava suoritusaika
 calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvien tapahtumien takaraja päivinä (oletus 1000)
@@ -158,9 +152,6 @@ category '%1' deleted	admin	fi	Luokka '%1' poistettu
 category deleted.	admin	fi	Kategoria poistettu.
 category list	admin	fi	Kategorialuettelo
 category saved.	admin	fi	Kategoria tallennettu.
-certificate	admin	fi	Varmenne
-certificate details	admin	fi	Varmenteen tiedot
-certificate validation in days	admin	fi	Varmenteen validointi päivinä
 change account_id	admin	fi	Vaihda account_ID
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
@@ -298,10 +289,10 @@ enter a description for the category	admin	fi	Anna kategorian kuvaus
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkejä alustaaksesi app_session <br>salauksen (vaatii mcrypt)
 enter the background color for the login page	admin	fi	Anna kirjautumisnäytön taustaväri
 enter the background color for the site title	admin	fi	Anna sivuston otsikon taustaväri
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen isäntänimi (hostname)
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupware:n URL.<br>Esimerkiksi: https://egw.domain.com/egroupware tai /egroupware<br><b>Ei kauttaviivaa loppuun</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	fi	Anna haettava merkkijono. Nähdäksesi kaikki kohteet, tyhjennä kenttä ja napsauta hakupainiketta uudelleen

@@ -27,7 +27,6 @@
 (de)activate mail accounts	admin	uk	(де)Активувати поштові облікові записи
 (default no, leave it off if you dont use it)	admin	uk	За замовчуванням = Ні, вимкніть, якщо не використовуєте
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	uk	(imapclass має підтримувати цю можливість, запитуючи відповідне значення конфігурації і передаючи його як defaultquota на сервер IMAP)
-(stored password will not be shown here)	admin	uk	(збережений пароль не буде тут показуватись)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	uk	(Для встановлення нових приложень використайте<br><a href="setup/" target="setup">Setup</a> [Керування приложеннями]!)
 1 year	admin	uk	1 рік
 2 month	admin	uk	2 місяці
@@ -36,7 +35,6 @@
 3 month	admin	uk	3 місяці
 6 month	admin	uk	6 місяців
 access token revoked.	admin	uk	Токен доступу відкликано.
-accesslog and bruteforce defense	admin	uk	Протоколи доступу та захист BruteForce
 account	admin	uk	Обліковий запис
 account active	admin	uk	Рахунок активний
 account has been created	common	uk	Рахунок створено
@@ -48,8 +46,6 @@ account preferences	admin	uk	Параметри рахунку
 acl csv export	admin	uk	Експорт ACL CSV
 acl manager	admin	uk	Керування ACL
 acl rights	common	uk	Права ACL
-action	admin	uk	Дія
-actions	admin	uk	Дії
 add a category	admin	uk	Додати категорію
 add a group	admin	uk	Додати групу
 add a new account.	admin	uk	Створити новий рахунок
@@ -68,7 +64,6 @@ add sub-category	admin	uk	Додати підкатегорію
 admin email	admin	uk	email адміністратора
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	uk	email адреси адміністраторів (розділені комою), які будуть сповіщатися про випадки блокування (залиште порожнім, якщо сповіщень не треба)
 admin name	admin	uk	Ім'я адміністратора
-administration	admin	uk	Адміністрація
 admins	admin	uk	Адміністратори
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	uk	Після якої кількості неуспішних спроб входу IP має бути заблоковано (по замовченню 3) ?
 all records and account information will be lost!	admin	uk	Всі записи та інформація рахунку будуть втрачені!
@@ -176,7 +171,6 @@ edit user	admin	uk	Редагувати користувача
 edit user account	admin	uk	Редагувати рахунок користувача
 enable	admin	uk	Включити
 enable debug-messages	admin	uk	Дозволити відладочні повідомлення
-enabled - hidden from navbar	admin	uk	Включено - Сховано з навігаційної панелі
 enter a description for the category	admin	uk	введіть опис категорії
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	uk	Введіть якийсь випадковий текст для app_session<br>шифрації (вимагає mcrypt)
 enter the background color for the login page	admin	uk	Введіть колір фону для вхідного екрану
@@ -191,7 +185,6 @@ enter the site username for peer servers	admin	uk	Введіть ім'я кор�
 enter the title for your site	admin	uk	Введіть найменування Вашого сайту
 enter the title of your logo	admin	uk	Введіть найменування Вашого логотипу
 enter the url where your logo should link to	admin	uk	Введіть url, на який має вказувати логотип
-enter your default ftp server	admin	uk	Введіть Ваш типовий FTP сервер
 enter your http proxy server	admin	uk	Введіть Ваш HTTP проксі сервер
 enter your http proxy server port	admin	uk	Введіть порт Вашого HTTP проксі серверу
 error canceling timer, maybe there's none set !!!	admin	uk	Помилка зупинення таймеру, можливо, що жоден не встановлено!
@@ -299,7 +292,6 @@ path information	admin	uk	Інформація шляху
 peer server list	admin	uk	Перелік peer серверів
 peer servers	admin	uk	Peer сервери
 percent of users that logged out	admin	uk	Процент користувачів, що вийшли нормально
-percent this user has logged out	admin	uk	Процент нормальних виходів користувача
 permission denied	admin	uk	Заборонено
 permissions	admin	uk	Дозволи
 permissions this group has	admin	uk	Ця група має дозволи
@@ -313,14 +305,11 @@ primary group	admin	uk	первинна група
 re-enter password	admin	uk	Перевведіть пароль
 read this list of methods.	admin	uk	Прочитати цей перелік методів
 remove	admin	uk	Видалити
-remove all users from this group	admin	uk	Видалити всіх користувачів з цієї групи
-remove all users from this group ?	admin	uk	Видалити всіх користувачів з цієї групи?
 run asynchronous services	admin	uk	Виконувати асинхронні сервіси
 save the category	admin	uk	зберегти категорію
 save the category and return back to the list	admin	uk	зберегти категорію та повернутись до переліку
 saves the changes made and leaves	admin	uk	зберігає зроблені зміни та виходить
 saves this entry	admin	uk	Зберігає цей запис
-search accounts	admin	uk	Шукати рахунки
 search categories	admin	uk	Шукати категорії
 search groups	admin	uk	Шукати групи
 search peer servers	admin	uk	Шукати peer сервери
@@ -340,7 +329,6 @@ server type(mode)	admin	uk	Тип серверу (режим)
 server url	admin	uk	URL серверу
 server username	admin	uk	ім'я користувача на сервері
 set preference values.	admin	uk	Встановити значення параметрів.
-show 'powered by' logo on	admin	uk	Показувати логотип 'Powered by'
 show access log	admin	uk	Показати протокол доступу
 show current action	admin	uk	Показати поточні дії
 show error log	admin	uk	Показати протокол помилок
@@ -402,11 +390,6 @@ view sessions	admin	uk	Перегляд сесій
 view this user	admin	uk	переглянути цього користувача
 view user account	admin	uk	Перегляд рахунку користувача
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
-would you like egroupware to cache the egw info array ?	admin	uk	Чи хотіли б Ви, щоб EGroupware утримувало в кеші інформаційний масив egw?
-would you like egroupware to check for a new version<br>when admins login ?	admin	uk	Чи перевіряти на нові версіі при вході адміністратора?
-would you like egroupware to check for new application versions when admins login ?	admin	uk	Чи перевіряти на нові версіі приложень при вході адміністратора?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	uk	Чи потрібно автоматично загружати нові мовні файли під час входу?
-would you like to show each application's upgrade status ?	admin	uk	Чи показувати стан поновлення кожного приложення?
 xml-rpc	admin	uk	XML-RPC
 you have entered an invalid expiration date	admin	uk	Ви ввели невірну дату припинення
 you must add at least 1 permission or group to this account	admin	uk	Необхідно надати рахунку хоча б один дозвіл чи групу.

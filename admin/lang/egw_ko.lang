@@ -28,10 +28,8 @@
 (default no, leave it off if you dont use it)	admin	ko	기본값 = 아니요, 사용하지 않을 경우 그대로 둡니다.
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ko	(imap클래스가 해당 구성 값을 쿼리하여 이 기능을 지원해야 하며 이를 IMAP 서버에 기본 할당량으로 전달해야 합니다.)
 (no subject)	admin	ko	(제목 없음)
-(stored password will not be shown here)	admin	ko	(저장된 패스워드는 여기에 보이지 않습니다)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ko	새 응용프로그램을 설치하기 위해서 <br><a href="setup/" target="setup">설정</a>[응용프로그램 관리]!!!)
 access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
-accesslog and bruteforce defense	admin	ko	접근 로그와 브루탈포스 방어
 account	admin	ko	계정
 account active	admin	ko	계정 활정화
 account has been created	common	ko	계정이 생성되었습니다
@@ -43,9 +41,6 @@ account preferences	admin	ko	계정 환경설정
 acl csv export	admin	ko	ACL CSV 내보내기
 acl manager	admin	ko	ACL 메니저
 acl rights	common	ko	ACL 권한
-action	admin	ko	액션
-actions	admin	ko	액션
-activate wysiwyg-editor	admin	ko	위지웍-편집기 활성화
 add a category	admin	ko	카테고리 추가
 add a group	admin	ko	그룹 추가
 add a new account.	admin	ko	새 계정 추가
@@ -65,12 +60,9 @@ admin email	admin	ko	관리자 이메일
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ko	블럭되면 알림 메일 발송될 관리자 이메일 주소들 (컴마구분,비어있으면 안알림)
 admin name	admin	ko	관리자 이름
 admin password	admin	ko	관리자 암호
-admin username	admin	ko	관리사용자 이름
-administration	admin	ko	관리자
 admins	admin	ko	관리자
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	ko	접속 시도할때 몇번 실패하면 IP를 막겠습니까? ( 기본 3번 )
 all applications	admin	ko	모든 응용프로그램
-all categories	admin	ko	모든 카테고리
 all records and account information will be lost!	admin	ko	이 계정의 자료와 정보가 삭제됩니다.
 all users	admin	ko	모든 사용자
 allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연결 허용
@@ -163,7 +155,6 @@ deny access to user accounts	admin	ko	거부된 접근을 사용자 계정으로
 deny all users access to grant other users access to their entries ?	admin	ko	허락된 다른 사용자들이 자신의 항목에 접근하는 것 이외에 다른 모든 사용자의 접근을 막는다
 description can not exceed 255 characters in length !	admin	ko	설명은 255 글자길이를 초과 할수 없습니다!
 disable "auto completion" of the login form	admin	ko	접속시 "자동완성" 기능 비활성화
-disable wysiwyg-editor	admin	ko	위지웍-편집기 비활성화
 disabled (not recomended)	admin	ko	비활성화 됨 (추천)
 display	admin	ko	표시
 do not delete the category and return back to the list	admin	ko	카테고리를 삭제하지 않고 목록으로 되돌아 감
@@ -184,8 +175,6 @@ edit this user	admin	ko	이 유저를 편집
 edit user	admin	ko	사용자 편집
 edit user account	admin	ko	사용자 계정을 편집
 enable debug-messages	admin	ko	디버그-메세지를 활성화
-enabled - hidden from navbar	admin	ko	활성화 - 네비게이션바에서 숨김
-enabled - popup window	admin	ko	활성화 - 팝업창
 enter a description for the category	admin	ko	카테고리의 설명을 입력하세요
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	ko	응용프로그램의 세션 암호화에 사용할 텍스트 입력<br>(mcrypt 필요)
 enter the background color for the login page	admin	ko	접속 페이지의 배경색 입력
@@ -200,7 +189,6 @@ enter the site username for peer servers	admin	ko	피어서버의 사이트 사�
 enter the title for your site	admin	ko	귀하의 사이트 제목을 입력
 enter the title of your logo	admin	ko	귀하의 로고의 제목을 입력
 enter the url where your logo should link to	admin	ko	귀하의 로고가 링크될 URL 을 입력
-enter your default ftp server	admin	ko	기본 FTP 서버주소 입력
 enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )
 enter your http proxy server	admin	ko	HTTP 프록시 서버주소 입력
 enter your http proxy server port	admin	ko	HTTP 프록시 서버 포트 입력
@@ -312,7 +300,6 @@ path information	admin	ko	경로 정보
 peer server list	admin	ko	피어서버 목록
 peer servers	admin	ko	피어 서버
 percent of users that logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
-percent this user has logged out	admin	ko	퍼센트의 사용자가 접속해지 하였습니다.
 permission denied	admin	ko	접근권한이 없습니다
 permissions	admin	ko	권한
 permissions this group has	admin	ko	이 그룹이 가진 권한
@@ -327,15 +314,12 @@ re-enter password	admin	ko	비밀번호 재입력
 read this list of methods.	admin	ko	이 메소드 목록 읽기
 register application hooks	admin	ko	응용프로그램 훅(hooks) 등록
 remove	admin	ko	삭제
-remove all users from this group	admin	ko	이 그룹의 모든 사용자를 삭제
-remove all users from this group ?	admin	ko	이 그룹의 모든 사용자를 삭제?
 rows	admin	ko	줄
 run asynchronous services	admin	ko	비동기 서비스 실행
 save the category	admin	ko	카테고리 저장
 save the category and return back to the list	admin	ko	카테고리를 저장하고 목록으로 돌아가기
 saves the changes made and leaves	admin	ko	저장하고 나가기
 saves this entry	admin	ko	이 엔트리를 저장함
-search accounts	admin	ko	계정 찾기
 search categories	admin	ko	카테고리 찾기
 search groups	admin	ko	그룹 찾기
 search peer servers	admin	ko	피어 서버 찾기
@@ -356,7 +340,6 @@ server url	admin	ko	서버 URL
 server username	admin	ko	서버 사용자이름
 set preference values.	admin	ko	환경설정 값을 결정
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ko	접속 페이지에서 언어 선택박스를 포함할까요 (데모사이트에서 유용) ?
-show 'powered by' logo on	admin	ko	'Powered by' 로고를 보임
 show access log	admin	ko	접근 기록을 보임
 show current action	admin	ko	현재 액션을 보임
 show error log	admin	ko	에러 기록을 보임
@@ -425,11 +408,6 @@ view sessions	admin	ko	세션 보기
 view this user	admin	ko	이 사용자를보기
 view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
-would you like egroupware to cache the egw info array ?	admin	ko	EGroupware가 info 배열을 캐쉬하도록 하겠습니까?
-would you like egroupware to check for a new version<br>when admins login ?	admin	ko	관리자가 접속 할때<br>EGroupware가 새버전을 확인하겠습니까?
-would you like egroupware to check for new application versions when admins login ?	admin	ko	관리자가 접속 할때 EGroupware가 새 응용프로그램 버전을 확인하시겠습니까?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	ko	새로운 언어 파일을 자동적으로 읽겠습니까? (접속 할때)
-would you like to show each application's upgrade status ?	admin	ko	각 응용프로그램의 업그레이드 상태를 보시겠습니까?
 xml-rpc	admin	ko	XML-RPC
 you have entered an invalid expiration date	admin	ko	부적절한 만료 날짜를 입력하셨습니다
 you must add at least 1 permission or group to this account	admin	ko	이 계정에 최소한 하나의 권한이나 그룹을 추가하셔야 합니다

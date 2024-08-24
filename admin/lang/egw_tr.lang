@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	tr	(imapclass, ilgili yapılandırma değerini sorgulayarak bu özelliği desteklemeli ve IMAP sunucusuna defaultquota olarak aktarmalıdır)
 (no subject)	admin	tr	(konu yok)
-(stored password will not be shown here)	admin	tr	(Kayıtlı şifreler burada görüntülenmeyecektir.)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	tr	(Yeni uygulama yüklemek için <br><a href="setup/" target="setup">Kurulum</a>u kullanınız. !!!)
 1 year	admin	tr	1 yıl
 2 month	admin	tr	2 ay
@@ -40,9 +39,8 @@ access by	admin	tr	Tarafından erişim
 access control	admin	tr	Erişim kontrolü
 access to %1 data by others	admin	tr	Başkaları tarafından %1 verisine erişim
 access token revoked.	admin	tr	Erişim Belirteci iptal edildi.
-accesslog and bruteforce defense	admin	tr	Erişim kayıtları ve BruteForce Koruması
 account	admin	tr	Hesap
-account "%1" has no email address --> not notified!	admin	tr	"%1" hesabının e-posta adresi yok --> bildirilmedi!
+account "%1" has no email address --> not notified!	admin	tr	%1 hesabının e-posta adresi yok --> bildirilmedi!
 account active	admin	tr	Hesap aktif
 account deleted.	admin	tr	Hesap silindi.
 account has been created	common	tr	Hesap oluşturuldu
@@ -55,9 +53,6 @@ acl added.	admin	tr	ACL eklendi.
 acl csv export	admin	tr	ACL CSV dışa aktarma
 acl manager	admin	tr	ACL Yöneticisi
 acl rights	common	tr	ACL Hakları
-action	admin	tr	Eylem
-actions	admin	tr	Eylemler
-activate wysiwyg-editor	admin	tr	WYSIWYG editörünü etkinleştir
 add a category	admin	tr	Kategori ekle
 add a group	admin	tr	Grup ekle
 add a new account.	admin	tr	Yeni hesap oluştur
@@ -79,7 +74,6 @@ admin email	admin	tr	Yönetici e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	tr	Engelleme işlemi hakkında yönetici e-mail adresleri (virgülle ayrılmış) haberdar edilecektir.
 admin name	admin	tr	Yönetici İsmi
 admin password	admin	tr	Yönetici şifresi
-administration	admin	tr	Yönetim
 admins	admin	tr	Yöneticiler
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	tr	Kaç tane başarısız sistem girişinden sonra bir hesap engellenecektir (varsayılan 3) ?
 all records and account information will be lost!	admin	tr	Bütün kayıtlar ve hesap bilgileri kaybedilecektir!
@@ -172,7 +166,6 @@ deny all users access to grant other users access to their entries ?	admin	tr	B�
 description can not exceed 255 characters in length !	admin	tr	Açıklama en fazla 255 karakter olabilir!
 disable	admin	tr	Engelle
 disable "auto completion" of the login form	admin	tr	Sistem girişi "Otomatik tamamla" özelliğini kullanma
-disable wysiwyg-editor	admin	tr	WYSIWYG editör kullanma
 disabled (not recomended)	admin	tr	Kullanılmıyor (Önerilmiyor)
 display	admin	tr	Görüntüle
 do not delete the category and return back to the list	admin	tr	Kategoriyi <b>silme</b> ve listeye geri dön
@@ -194,8 +187,6 @@ edit user	admin	tr	Kullanıcı düzenle
 edit user account	admin	tr	Kullanıcı hesabı düzenle
 enable	admin	tr	Etkinleştir
 enable debug-messages	admin	tr	Hata ayıklama mesajlarını etkinleştir
-enabled - hidden from navbar	admin	tr	Etkin - Gezgin çubuğunda görünmez
-enabled - popup window	admin	tr	Etkin - Pop pencere
 enter a description for the category	admin	tr	Kategori için açıklama giriniz
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	tr	app_session için gerekli rastgele bir metin giriniz. (mcrypt için gerekli)
 enter the background color for the login page	admin	tr	Sistem giriş ekranı arkaplan rengi giriniz
@@ -210,7 +201,6 @@ enter the site username for peer servers	admin	tr	Peer sunucular için site kull
 enter the title for your site	admin	tr	Site başlığını giriniz
 enter the title of your logo	admin	tr	Logonuzun başlığını giriniz
 enter the url where your logo should link to	admin	tr	Logonuz için link giriniz
-enter your default ftp server	admin	tr	Varsayılan FTP sunucusunu giriniz
 enter your default mail domain ( from: user@domain )	admin	tr	Varsayılan mail domain'ini giriniz ( From: kullanıcı@domain )
 enter your http proxy server	admin	tr	HTTP Proxy sunucunuzu giriniz
 enter your http proxy server port	admin	tr	HTTP Proxy sunucu portunuzu giriniz
@@ -327,7 +317,6 @@ path information	admin	tr	Yol bilgisi
 peer server list	admin	tr	Peer sunucu listesi
 peer servers	admin	tr	Peer sunucuları
 percent of users that logged out	admin	tr	Sistemden çıkış yapan kullanıcı yüzdesi
-percent this user has logged out	admin	tr	Bu kullanıcının sistemden çıkış yüzdesi
 permission denied	admin	tr	İzin verilmedi
 permissions	admin	tr	Ayarlar
 permissions this group has	admin	tr	Bu grubun sahip olduğu haklar
@@ -342,12 +331,9 @@ re-enter password	admin	tr	Şifreyi yeniden giriniz
 read this list of methods.	admin	tr	Method listesini oku
 register application hooks	admin	tr	Uygulama bağlantılarını kaydet
 remove	admin	tr	Kaldır
-remove all users from this group	admin	tr	Bu gruptaki tüm kullanıcıları kaldır
-remove all users from this group ?	admin	tr	Bu gruptaki tüm kullanıcıları kaldır?
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
 save the category	admin	tr	Kategoriyi kaydet
 save the category and return back to the list	admin	tr	Kategoriyi kaydet ve listeye geri dön
-search accounts	admin	tr	Hesapları ara
 search categories	admin	tr	Kategorileri ara
 search groups	admin	tr	Grupları ara
 search peer servers	admin	tr	Peer sunucuları ara
@@ -370,7 +356,6 @@ server username	admin	tr	Sunucu kullanıcı adı
 sessions last 30 days	admin	tr	Son 30 günlük oturumlar
 set preference values.	admin	tr	Ayar değerini giriniz
 should the login page include a language selectbox (useful for demo-sites) ?	admin	tr	Sistem giriş sayfası dil seçim kutusu içerecek mi?
-show 'powered by' logo on	admin	tr	'Powered by' logosunun gösterileceği yer
 show access log	admin	tr	Erişim kütüğünü göster
 show current action	admin	tr	Şu anki eylemi göster
 show error log	admin	tr	Hata kütüğünü göster
@@ -435,11 +420,6 @@ view sessions	admin	tr	Oturumları görüntüle
 view this user	admin	tr	Bu kullanıcıyı görüntüle
 view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
-would you like egroupware to cache the egw info array ?	admin	tr	EGroupware bilgi dizisini önbelleğe alır.
-would you like egroupware to check for a new version<br>when admins login ?	admin	tr	Yöneticiler oturum açtığında sürüm güncellemelerini kontrol edin.
-would you like egroupware to check for new application versions when admins login ?	admin	tr	Yöneticiler oturum açtığında uygulama güncellemelerini kontrol edin.
-would you like to automaticaly load new langfiles (at login-time) ?	admin	tr	Yeni dil dosyalarını otomatik olarak yüklemek ister misiniz (sistem giriş anında)?
-would you like to show each application's upgrade status ?	admin	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
 xml-rpc	admin	tr	XML-RPC
 you have entered an invalid expiration date	admin	tr	Geçersiz bir zaman aşım tarihi girdiniz
 you must add at least 1 permission or group to this account	admin	tr	Bu hesaba en az 1 izin ya da grup tanımlaması yapmalısınız

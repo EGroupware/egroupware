@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	sv	%1 autentiseringsuppgifter för e-post borttagna
 %1 not found or not executable !!!	admin	sv	Kunde inte hitta %1 eller så är den inte körbar!
 %1 phrases saved.	admin	sv	%1 fraser sparade.
-%1 rights for %2 and applications %3	admin	sv	%1 rättigheter för %2 och applikation(er) %3.
+%1 rights for %2 and applications %3	admin	sv	%1 rättigheter för %2 och applikation(er) %3 .
 %1 run rights for applications	admin	sv	%1 kör rättigheter för applikationer
 %1 sessions killed	admin	sv	%1 sessioner dödade.
 %1 successful	admin	sv	%1 framgångsrik
@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	sv	(standard Nej, lämna tom om du inte använder det)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sv	(imapclass måste stödja denna funktion genom att fråga efter motsvarande konfigurationsvärde och skicka det som defaultquota till IMAP-servern)
 (no subject)	admin	sv	(ingen rubrik)
-(stored password will not be shown here)	admin	sv	(lagrade lösenord visas ej här)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sv	(För att installera nya applikationer används<br><a href="setup/" target="setup">Installationen</a> [Hantera Applikationer]!
 -  type	admin	sv	- typ
 1 year	admin	sv	1 år
@@ -38,7 +37,6 @@
 3 month	admin	sv	3 månader
 6 month	admin	sv	6 månader
 access token revoked.	admin	sv	Åtkomsttoken återkallad.
-accesslog and bruteforce defense	admin	sv	Accesslogg- och BruteForce försvar
 account	admin	sv	Konto
 account active	admin	sv	Kontot är aktivt
 account has been created	common	sv	Kontot har skapats
@@ -64,13 +62,9 @@ add global category for %1	admin	sv	Lägg till global kategori för %1
 add group	admin	sv	Lägg till grupp
 add new account	admin	sv	Lägg till nytt konto
 add new application	admin	sv	Lägg till ny application
-add new email address:	admin	sv	Lägg till ny e-postadress:
 add peer server	admin	sv	Lägg till Peer Server
 add profile	admin	sv	Skapa profil
 add sub-category	admin	sv	Lägg till underkategori
-add to group	admin	sv	Lägg till i grupp
-add user	admin	sv	Lägg till användare
-add user or group	admin	sv	Lägg till användare eller grupp
 admin dn	admin	sv	Admin DN
 admin email	admin	sv	Admin e-postadress
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sv	Administrativa e-postadresser (komma-separerad) som skall notifieras om blockeringen. (lämna tom om ingen notifiering skall ske)
@@ -81,7 +75,6 @@ advanced options	admin	sv	Avanserade alternativ
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en IP adress blockeras (standard 3)?
 aliases	admin	sv	Alias
 all applications	admin	sv	Samtliga applikationer
-all groups	admin	sv	Alla grupper
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
@@ -96,7 +89,6 @@ application name	admin	sv	Applikationens namn
 application title	admin	sv	Applikationens titel
 applications	admin	sv	Applikationer
 applications list	admin	sv	Applikationslista
-applications this group can use	admin	sv	Applikationer som denna grupp kan använda
 applies the changes	admin	sv	Sparar ändringar
 apply the changes	admin	sv	Spara ändringar
 are you sure you want to delete the application %1 ?	admin	sv	Vill du verkligen radera applikationen %1 ?
@@ -111,10 +103,6 @@ async services last executed	admin	sv	Asynkrona tjänster senast körda
 asynchronous timed services	admin	sv	Asynkrona tidsbundna tjänster
 asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjänster är inte installerade ännu eller annat fel (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sv	Försök att använda korrekt mime-typ istället för standard 'application/octet-stream'
-attribute accountstatus explained	admin	sv	Detta hanterar attributet <b><i>-accountStatus-</i></b> från QMAIL schemat
-attribute mail explained	admin	sv	Detta hanterar attributet <b><i>-mail-</i></b> från QMAIL schemat och bör aldrig vara tomt. Det är också EGw intern e-postfält
-attribute mailalternateaddress explained	admin	sv	Detta hanterar attributet<b><i>-mailAlternateAddress-</i></b> från QMAIL schemat och kan hanteras som virtuella kopplingar eller alias.
-attribute mailforwardingaddress explained	admin	sv	Detta hanterar attributet <b><i>-mailForwardingAddress-</i></b> från QMAIL schemat och får inte vara tomt om vidarebefodran används.
 authentication / accounts	admin	sv	Autentisering / Konton
 auto create account records for authenticated users	admin	sv	Skapa kontoposter automatiskt för autentiserade användare
 back to the list	admin	sv	Tillbaks till listan
@@ -124,19 +112,12 @@ bad request: %s	admin	sv	Ogiltig förfrågan: %s
 bi-dir passthrough	admin	sv	dubbelriktad genomströmmning
 bi-directional	admin	sv	dubbelriktad
 bottom	admin	sv	Nederst
-bulk changes	admin	sv	Massändringar
-bulk password reset	admin	sv	Återställning av lösenord i bulk
 calculate next run	admin	sv	Beräkna nästa körtid
 can change password	admin	sv	Kan byta lösenord
 cancel testjob!	admin	sv	Avbryt testkörning
 categories list	admin	sv	Kategorilista
 category %1 has been saved !	admin	sv	Kategori %1 har sparats
-category deleted.	admin	sv	Kategori raderad.
 category list	admin	sv	Kategorilista
-category saved.	admin	sv	Kategori sparad.
-certificate	admin	sv	Certifikat
-certificate details	admin	sv	Detaljer om certifikatet
-certificate validation in days	admin	sv	Certifikatsvalidering inom några dagar
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
 change login screen message	admin	sv	Ändra Startsidans meddelande
@@ -145,8 +126,6 @@ check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1<
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
 connection dropped by imap server.	admin	sv	Anslutningen stängd av IMAP server
-configuration	admin	sv	Konfiguration
-configuration saved.	admin	sv	Konfiguration sparad.
 continue	admin	sv	Fortsätt
 could not complete request. reason given: %s	admin	sv	Kunde inte fullfölja förfrågan. Svaret: %s
 could not open secure connection to the imap server. %s : %s.	admin	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
@@ -162,13 +141,10 @@ custom 2	admin	sv	Anpassad 2
 custom 3	admin	sv	Anpassad 3
 custom fields	admin	sv	Anpassade fält
 cyrus imap server	admin	sv	Cyrus IMAP Server
-cyrus imap server administration	admin	sv	Cyrus IMAP server administration
 data	admin	sv	Data
 day	admin	sv	Dag
 day of week<br>(0-6, 0=sun)	admin	sv	Veckodag<br>(0-6, 0=Sön)
 db backup and restore	admin	sv	Backup och återställning av databas
-deactivate	admin	sv	Avaktivera
-deactivated	admin	sv	avaktiverad
 default	admin	sv	Standard
 default file system space per user	admin	sv	Standardstorlek på lagringsutrymme per användare
 default file system space per user/group ?	admin	sv	Standardstorlek på lagringsutrymme per användare/grupp
@@ -181,8 +157,6 @@ delete group	admin	sv	Radera grupp
 delete peer server	admin	sv	Radera peer server
 delete the category	admin	sv	Radera kategorin
 delete the group	admin	sv	Radera gruppen
-delete the selected entries	admin	sv	Ta bort de valda posterna
-delete this account	admin	sv	Ta bort detta konto
 delete this category	admin	sv	Radera denna kategori
 delete this group	admin	sv	Radera denna grupp
 delete this user	admin	sv	Radera denna användare
@@ -209,14 +183,10 @@ description can not exceed 255 characters in length !	admin	sv	Beskrivning får 
 determines the order the fields are displayed	admin	sv	Avgör sorteringen av visade fält
 disable	admin	sv	Inaktivera
 disable "auto completion" of the login form	admin	sv	Inaktivera "automatisk ifyllnad" av inloggningsformuläret
-disable wysiwyg-editor	admin	sv	Inaktivera WYSIWYG-editorn
-disable pgp encryption (mailvelope)	admin	sv	Avaktivera PGP-kryptering (Mailvelope)
 disabled (not recomended)	admin	sv	Inaktiverad (rekommenderas ej)
-disabled, do not show on login page	admin	sv	inaktiverad, visas inte på inloggningssidan
 display	admin	sv	Visa
 displaying html messages is disabled	admin	sv	Cisa HTML meddelanden är inaktiverat
 do not delete the category and return back to the list	admin	sv	Ta EJ bort kategorin och gå tillbaka till listan
-do not generate email addresses	admin	sv	Generera inte e-postadresser
 do not validate certificate	admin	sv	Validera inte certifikat
 do you also want to delete all global subcategories ?	admin	sv	Vill du samtidigt radera alla globala underkategorier?
 do you really want to delete this profile	admin	sv	Vill du verkligen radera profilen?
@@ -241,22 +211,17 @@ edit user account	admin	sv	Ändra användarkonto
 email account active	admin	sv	Aktivt e-post konto
 email address	admin	sv	E-post adress
 enable	admin	sv	Aktivera
-enable cyrus imap server administration	admin	sv	Aktivera Cyrus IMAP server administration
 enable debug-messages	admin	sv	Aktivera felsöknings meddelanden
 enable sieve	admin	sv	Aktivera Sieve
-enable the soap service	admin	sv	Aktivera SOAP tjänsten
-enable the xmlrpc service	admin	sv	Aktivera XML-RPC tjänsten
-enabled - hidden from navbar	admin	sv	Aktiv - Gömd på navigationslisten
-enabled - popup window	admin	sv	Aktiv - Popup fönster
 encrypted connection	admin	sv	Krypterad anslutning
 enter a description for the category	admin	sv	Skriv en kategoribeskrivning
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sv	Skriv slumpmässig text för<br>kryptering av app_session (kräver mcrypt)
 enter the background color for the login page	admin	sv	Ange bakgrundsfärg för loginformuläret
 enter the background color for the site title	admin	sv	Ange bakgrundsfärg för sajtens rubtik
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sv	Ange fullständig sökväg för temporära filer <br> t ex: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	sv	Ange fullständig sökväg för användar- och gruppfiler <br> t ex: /files, D:\FILES
 enter the hostname of the machine on which this server is running	admin	sv	Ange värdnamn för datorn som kör denna tjänst
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange URL för EGroupware<br> t ex: http://www.domain.com/egroupware eller /egroupware<br><b>ingen avslutande slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sv	Ange söksträng. För att visa alla poster, töm fältet och tryck på Skicka
@@ -265,7 +230,6 @@ enter the site username for peer servers	admin	sv	Ange användarnamn för peer s
 enter the title for your site	admin	sv	Namnge din sajt
 enter the title of your logo	admin	sv	Namnge sajtens logotyp
 enter the url where your logo should link to	admin	sv	Ange vilken URL sajtens logotyp skall länka till
-enter your default ftp server	admin	sv	Ange standard FTP server
 enter your default mail domain ( from: user@domain )	admin	sv	Ange standard e-postdomän (Från: user@domän)
 enter your default mail domain (from: user@domain)	admin	sv	Standard e-post domän (från: user@domain)
 enter your http proxy server	admin	sv	Ange adress till din HTTP proxy
@@ -276,27 +240,12 @@ entry saved	admin	sv	Post sparad
 error canceling timer, maybe there's none set !!!	admin	sv	Fel vid avbrytande av timer, är det någon inställd?
 error connecting to imap server. %s : %s.	admin	sv	Kunde inte ansluta till IMAP server %s : %s
 error connecting to imap server: [%s] %s.	admin	sv	Kunde inte ansluta till IMAP server [%s] %s
-entries	admin	sv	Ingångar
-entries owned by the user:	admin	sv	Poster som ägs av användaren:
-entry saved	admin	sv	Post sparad
-error changing the password for %1 !!!	admin	sv	Fel vid ändring av lösenordet för %1!
-error deleting entry!	admin	sv	Fel vid radering av post!
-error deleting log entry!	admin	sv	Fel vid borttagning av loggpost!
-error saving	admin	sv	Fel vid sparande!
-error saving account!	admin	sv	Fel sparande konto!
 error saving the entry!!!	admin	sv	Fel uppstod vid sparandet av posten!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sv	Fel vid inställning av timer, fel syntax eller det kanske redan körs en?
 error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!
 event details follow	admin	sv	Händelse detaljer följer
-expired	admin	sv	Utgått
 expires	admin	sv	Förfaller
-explanation of ldapman	admin	sv	Denna modul har hittils testats för POSTFIX, LDAP, Courier-IMAP och behöver schema för Core och QMAIL (OID7914). Ytterligare detaljer gällande användning och konfiguration av detta system kan du finna i README.ldapman i dokumentkatalogen under ADMIN.
-export certificate as p12	admin	sv	Exportera certifikat som p12
-exports groups into a csv file.	admin	sv	Exporterar grupper till en CSV-fil.
-exports permission settings into a csv file.	admin	sv	Exporterar behörighetsinställningar till en CSV-fil.
-exports users into a csv file.	admin	sv	Exporterar användare till en CSV-fil.
-failed to change password for account "%1"!	admin	sv	Misslyckades med att ändra lösenord för konto "%1"!
 failed to change password.	admin	sv	Kunde inte ändra lösenordet.
 fallback (after each pageview)	admin	sv	fallback (efter varje sidvisning)
 false	admin	sv	Falskt
@@ -320,7 +269,7 @@ group has been updated	common	sv	Grupp har uppdaterats
 group list	admin	sv	Grupplista
 group manager	admin	sv	Gruppansvarig
 group name	admin	sv	Gruppnamn
-hide php information	admin	sv	Dölj PHP information
+hide php information	admin	sv	Dölj phpinformation
 home directory	admin	sv	Hemkatalog
 home screen message	admin	sv	Meddelande på Startsidan
 host information	admin	sv	Värdinformation
@@ -335,14 +284,12 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
 imap admin password	admin	sv	IMAP admin lösenord
 imap admin user	admin	sv	IMAP admin användare
-imap c-client version < 2001	admin	sv	IMAP C-Client version < 2001
 imap server	admin	sv	IMAP Server
 imap server closed the connection.	admin	sv	IMAP server stängde anslutningen
 imap server closed the connection. server responded: %s	admin	sv	IMAP server stängde anslutningen. Serverna svarade: %s
 imap server hostname or ip address	admin	sv	IMAP server hostnamn eller IP adress
 imap server logintyp	admin	sv	IMAP server inloggnings typ
 imap server port	admin	sv	IMAP server port
-imap/pop3 server name	admin	sv	IMAP/POP3 server namn
 in mbyte	admin	sv	i MByte
 inbound	admin	sv	inkommande
 initial	admin	sv	Inledande
@@ -445,7 +392,6 @@ path information	admin	sv	Sökvägsinformation
 peer server list	admin	sv	Peer serverlista
 peer servers	admin	sv	Peer servrar
 percent of users that logged out	admin	sv	Procent av användare som loggat ut
-percent this user has logged out	admin	sv	Procent denna användare loggat ut
 permission denied	admin	sv	Åtkomst nekad
 permission denied !!!	admin	sv	Åtkomst nekas
 permission denied!!!	admin	sv	Åtkomst nekad!
@@ -456,8 +402,6 @@ please enter a name	admin	sv	Ange ett namn
 please enter a name for that server !	admin	sv	Ange ett namn för servern
 please run setup to become current	admin	sv	Kör installationen för att uppdatera
 please select	admin	sv	Vänligen välj
-pop3 server hostname or ip address	admin	sv	POP3 server hostnamn eller IP adress
-pop3 server port	admin	sv	POP3 server port
 port	admin	sv	Port
 postfix with ldap	admin	sv	Postfix med LDAP
 preferences	admin	sv	Alternativ
@@ -471,10 +415,7 @@ re-enter password	admin	sv	Skriv in lösenord igen
 read this list of methods.	admin	sv	Läst denna lista över metoder
 register application hooks	admin	sv	Registera applikationskopplingar
 remove	admin	sv	Radera
-remove all users from this group	admin	sv	Radera alla användare från gruppen
-remove all users from this group ?	admin	sv	Radera alla användare från gruppen
 requested	admin	sv	Begärt
-route all mails to	admin	sv	Länka all e-post till
 rows	admin	sv	Rader
 run asynchronous services	admin	sv	Kör asynkrona tjänster
 save the category	admin	sv	Spara kategorin
@@ -488,7 +429,6 @@ security	admin	sv	Säkerhet
 select group managers	admin	sv	Välj gruppansvariga
 select permissions this group will have	admin	sv	Välj behörigheter denna grupp skall ha
 select the parent category. if this is a main category select no category	admin	sv	Välj kategoriförälder. Om detta är en huvudkategori, välj INGEN KATEGORI
-select type of imap/pop3 server	admin	sv	Välj typ av IMAP/POP3 server
 select type of smtp server	admin	sv	Välj typ av SMTP Server
 select users for inclusion	admin	sv	Välj gruppmedlemmar
 select where you want to store/retrieve filesystem information	admin	sv	Välj var vill du lagra/återfinna filsystemsinformation
@@ -503,7 +443,6 @@ server url	admin	sv	URL för servern
 server username	admin	sv	Användarnamn för servern
 set preference values.	admin	sv	Gör inställningar
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sv	Skall inloginsidan ha en valruta för språk (praktisk vid demosajter)?
-show 'powered by' logo on	admin	sv	Visa "Powered by" logga
 show access log	admin	sv	Visa Accesslogg
 show current action	admin	sv	Visa nuvarande aktivitet
 show error log	admin	sv	Visa fellogg
@@ -525,7 +464,6 @@ sort the entries	admin	sv	Sortera posterna
 ssl	admin	sv	SSL
 standard	admin	sv	Standard
 standard imap server	admin	sv	Standard IMAP server
-standard pop3 server	admin	sv	Standard POP3 server
 standard smtp-server	admin	sv	Standard SMTP server
 start	admin	sv	Start
 start testjob!	admin	sv	Starta testjobb!
@@ -560,7 +498,6 @@ this php has no imap support compiled in!!	admin	sv	Denna installation har inte 
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sv	Paus för applikationens sessionsdata i sekunder (standard 86400 = 1 dygn))
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sv	Paus för sessioner i sekunder (standard 14400 = 4 timmar)
 times	admin	sv	Tider
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	admin	sv	För att använda TLS anslutning måste du ha PHP version 5.1.0 eller högre
 top	admin	sv	Överst
 total records	admin	sv	Fullständig förteckning
 translation	admin	sv	Översättning
@@ -571,9 +508,6 @@ two weeks	admin	sv	Två veckor
 type '%1' already exists !!!	admin	sv	Typ '%1'  existerar redan!
 type of customfield	admin	sv	Typ av anpassat fält
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sv	På Windowsplattform måste du installera asynkrontjänsten %1manuellt%2 eller använda fallbackläge. Fallbackläge betyder att jobbet kontrolleras efter varje sidvisning.
-unexpected response from server to authenticate command.	admin	sv	Oväntat svar från servern på AUTENTISERINGS kommandot
-unexpected response from server to digest-md5 response.	admin	sv	Oväntat svar från servern på Digest-MD5
-unexpected response from server to login command.	admin	sv	Oväntat svar från servern på INLOGGINGS kommandot
 unknown imap response from the server. server responded: %s	admin	sv	Okänt IMAP svar från server. Svarade: %s
 up	admin	sv	Upp
 updated	admin	sv	Uppdaterad
@@ -602,14 +536,8 @@ view this user	admin	sv	Visa användaren
 view user account	admin	sv	Visa användarkontot
 virtual mail manager	admin	sv	Virtuell E-post administration
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
-would you like egroupware to cache the egw info array ?	admin	sv	Vill du att EGroupware skall buffra egw info array?
-would you like egroupware to check for a new version<br>when admins login ?	admin	sv	Vill du att EGroupware skall kontrollera om det finns en ny version när administratörer loggar in?
-would you like egroupware to check for new application versions when admins login ?	admin	sv	Vill du att EGroupware skall kontrollera om applikationerna finns i ny version när administratörer loggar in?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	sv	Vill du automatiskt ladda nya språkfiler (vid inloggning)?
-would you like to show each application's upgrade status ?	admin	sv	Vill du visa uppgraderings status för alla applikationer?
 xml-rpc	admin	sv	XML-RPC
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
-you can set an initial value, which gets incremented every time a new serial get generated	admin	sv	kan du ställa in ett initialt värde som ökas varje gång en ny serie genereras
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!
 you have to enter a name, to create a new type!	admin	sv	Du måste ange ett namn för att skapa ny typ!
 you must add at least 1 permission or group to this account	admin	sv	Du måste ange minst en behörighet eller grupp till detta konto

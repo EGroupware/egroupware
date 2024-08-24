@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	pt	Por omissão: Não, mantenha-o assim se não o utilizar
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt	(a classe imap tem de suportar esta funcionalidade consultando o valor de configuração correspondente e passando-o como quota predefinida para o servidor IMAP)
 (no subject)	admin	pt	(sem assunto)
-(stored password will not be shown here)	admin	pt	(Senha guardada não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão]!
 -  type	admin	pt	- tipo
 1 year	admin	pt	1 ano
@@ -38,7 +37,6 @@
 3 month	admin	pt	3 meses
 6 month	admin	pt	6 meses
 access token revoked.	admin	pt	Token de acesso revogado.
-accesslog and bruteforce defense	admin	pt	Registo de acesso e defesa de ataque de força bruta
 account	admin	pt	Conta
 account active	admin	pt	Conta activa
 account has been created	common	pt	A conta foi criada
@@ -64,13 +62,9 @@ add global category for %1	admin	pt	Adicionar categoria geral para %1
 add group	admin	pt	Adicionar grupos
 add new account	admin	pt	Adicionar nova conta
 add new application	admin	pt	Adicionar nova aplicação
-add new email address:	admin	pt	Adicionar novo endereço de correio eletrónico:
 add peer server	admin	pt	Adicionar servidor remoto
 add profile	admin	pt	Adicionar perfil
 add sub-category	admin	pt	Adicionar subcategorias
-add to group	admin	pt	Adicionar ao grupo
-add user	admin	pt	Adicionar utilizador
-add user or group	admin	pt	Adicionar utilizador ou grupo
 admin dn	admin	pt	DN do administrador
 admin email	admin	pt	Endereço de correio electrónico do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt	Endereços de correio electrónico de administradores (separados por vírgula) a avisar sobre o bloqueamento (deixar vazio para não avisar)
@@ -111,18 +105,12 @@ async services last executed	admin	pt	Últimos serviços assíncronos executados
 asynchronous timed services	admin	pt	Serviços assíncronos agendados
 asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assíncronos por instalar ou outro erro (%1)!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt	Tentativa de utilizar o mimetype correcto para FTP em vez da 'aplicação/octet-stream' por omissão
-attribute accountstatus explained	admin	pt	Isto gere o atributo <b><i>-accountStatus-</i></b> a partir do QMAIL schema.
-attribute mail explained	admin	pt	Isto gere o atributo <b><i>-mail-</i></b> a partir do QMAIL schema e nunca deve estar vazio. É também o campo do correio electrónico interno do EGroupware
-attribute mailalternateaddress explained	admin	pt	Isto gere o atrabitu <b><i>-mailAlternateAddress-</i></b> a partir do QMAIL schema e pode ser gerido como um mapa virtual ou aliases.
-attribute mailforwardingaddress explained	admin	pt	Isto gere o atributo <b><i>-mailForwardingAddress-</i></b> a partir do QMAIL schema e não pode estar vazio se subscrito.
 authentication / accounts	admin	pt	Autenticação/Contas
 auto create account records for authenticated users	admin	pt	Criar automaticamente registos da conta para utilizadores autenticados
 back to the list	admin	pt	Voltar à lista
 bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
 bottom	admin	pt	Fundo
-bulk changes	admin	pt	Alterações em massa
-bulk password reset	admin	pt	Reposição da palavra-passe em massa
 calculate next run	admin	pt	Calcular execução seguinte
 can be used by application	admin	pt	Pode ser utilizado pela aplicação
 can be used by group	admin	pt	Pode ser utilizado pelo grupo
@@ -130,23 +118,14 @@ can change password	admin	pt	Não é possível alterar a senha
 cancel testjob!	admin	pt	Cancelar trabalho de teste
 categories list	admin	pt	Lista de categorias
 category %1 has been saved !	admin	pt	A categoria %1 foi guardada!
-category '%1' deleted	admin	pt	Categoria “%1” eliminada.
-category deleted.	admin	pt	Categoria eliminada.
 category list	admin	pt	Lista de categorias
-category saved.	admin	pt	Categoria guardada.
-certificate	admin	pt	Certificado
-certificate details	admin	pt	Detalhes do certificado
-certificate validation in days	admin	pt	Validação do certificado em dias
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
 change login screen message	admin	pt	Alterar mensagem da página inicial
-change password for %1	admin	pt	Alterar a palavra-passe para %1
 check ip address of all sessions	admin	pt	Verificar endereço IP de todas as sessões
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
-configuration	admin	pt	Configurações
-configuration saved.	admin	pt	Configuração guardada.
 continue	admin	pt	Continuar
 could not append message:	admin	pt	Não foi possível anexar Mensagem:
 country	admin	pt	País
@@ -160,12 +139,6 @@ custom 1	admin	pt	Personalizado 1
 custom 2	admin	pt	Personalizado 2
 custom 3	admin	pt	Personalizado 3
 custom fields	admin	pt	Campos personalizados
-custom fields tab	admin	pt	Separador de campos personalizados
-customfield '%1' added	admin	pt	Campo personalizado '%1' adicionado.
-customfield '%1' deleted	admin	pt	Campo personalizado “%1” eliminado.
-customfield '%1' modified	admin	pt	Campo personalizado '%1' modificado.
-customfield deleted	admin	pt	Campo personalizado eliminado.
-customfield saved.	admin	pt	Campo personalizado guardado.
 cyrus imap server	admin	pt	Servidor IMAP Cyrus
 data	admin	pt	Dados
 day	admin	pt	Dia
@@ -176,14 +149,11 @@ default file system space per user	admin	pt	Espaço em disco por utilizador (por
 default file system space per user/group ?	admin	pt	Espaço em disco por utilizador/grupo por omissão?
 deinstall crontab	admin	pt	Desinstalar crontab
 delete account	admin	pt	Eliminar conta
-delete account %1	admin	pt	Eliminar conta %1
-delete account %s	admin	pt	Eliminar conta %s
 delete all records	admin	pt	Eliminar todos os registos
 delete application	admin	pt	Eliminar aplicações
 delete category	admin	pt	Eliminar categorias
 delete group	admin	pt	Eliminar grupos
 delete peer server	admin	pt	Eliminar servidor remoto
-delete selected entries	admin	pt	Eliminar entradas selecionadas
 delete the category	admin	pt	Eliminar a categoria
 delete the group	admin	pt	Eliminar o grupo
 delete this category	admin	pt	Eliminar esta categoria
@@ -212,8 +182,6 @@ description can not exceed 255 characters in length !	admin	pt	A descrição nã
 determines the order the fields are displayed	admin	pt	Determina a ordem de apresentação dos campos
 disable	admin	pt	Desactivar
 disable "auto completion" of the login form	admin	pt	Desactivar a funcionalidade de "informação de formulários guardada" no formulário de acesso
-disable wysiwyg-editor	admin	pt	Desactivar o editor do WYSIWYG
-disable all	admin	pt	Desativar tudo
 disabled (not recomended)	admin	pt	Desactivado (não recomendado)
 display	admin	pt	Visualizar
 displaying html messages is disabled	admin	pt	exibir mensagens em HTML é desativada
@@ -225,7 +193,6 @@ do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas 
 do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo?
 domainname	admin	pt	Nome de domínio
 down	admin	pt	baixo
-download csv	admin	pt	Descarregar CSV
 edit account	admin	pt	Editar conta
 edit application	admin	pt	Editar aplicações
 edit email settings	admin	pt	Editar configurações do correio electrónico
@@ -240,20 +207,13 @@ edit this group	admin	pt	Editar este grupo
 edit this user	admin	pt	Editar este utilizador
 edit user	admin	pt	Editar utilizador
 edit user account	admin	pt	Editar conta de utilizador
-egroupware version	admin	pt	Versão do EGroupware
 email account active	admin	pt	Conta de correio electrónico activa
 email address	admin	pt	Endereço de correio electrónico
 enable	admin	pt	Activar
-enable cyrus imap server administration	admin	pt	Activar administração do servidor IMAP Cyrus
 enable debug-messages	admin	pt	Activar mensagens de debug
 enable sieve	admin	pt	Activar Sieve
-enable the soap service	admin	pt	Activar o serviço SOAP
-enable the xmlrpc service	admin	pt	Activar o serviço XML-RPC
-enabled - hidden from navbar	admin	pt	Activo - Escondido da barra de navegação
-enabled - popup window	admin	pt	Activo - Janela Popup
 encryption settings	admin	pt	Definições de cifragem
 enter a description for the category	admin	pt	Insira uma descrição para a categoria
-enter a passphrase if you would like to protect your private key by password.	admin	pt	Introduza uma frase-chave se pretender proteger a sua chave privada com uma palavra-passe.
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt	Insira algum texto aleatório para a encriptação <br>da sessão da aplicação (requer mcrypt)
 enter the background color for the login page	admin	pt	Escolha uma cor de fundo para a página de acesso
 enter the background color for the site title	admin	pt	Escolha uma cor de fundo para o título do sítio
@@ -267,7 +227,6 @@ enter the site username for peer servers	admin	pt	Insira o nome de utilizador do
 enter the title for your site	admin	pt	Insira o título para o seu sítio
 enter the title of your logo	admin	pt	Insira o título do seu logótipo
 enter the url where your logo should link to	admin	pt	Insira a url a que o seu logótipo deve estar ligado
-enter your default ftp server	admin	pt	Insira o seu servidor FTP por omissão
 enter your default mail domain ( from: user@domain )	admin	pt	Insira o seu domínio de correio electrónico por omissão ( De: utilizador@domínio )
 enter your default mail domain (from: user@domain)	admin	pt	Insira o seu domínio de correio electrónico por omissão (de: utilizador@domínio)
 enter your http proxy server	admin	pt	Insira o endereço do seu servidor proxy HTTP
@@ -283,8 +242,6 @@ error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outr
 event details follow	admin	pt	Seguem detalhes do evento
 exists	admin	pt	Existe
 expires	admin	pt	Expira
-export certificate as p12	admin	pt	Exportar certificado como p12
-exports users into a csv file.	admin	pt	Exporta os utilizadores para um ficheiro CSV.
 failed to change password.	admin	pt	Não foi possível alterar a senha.
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
 false	admin	pt	Falso
@@ -303,7 +260,6 @@ full name	admin	pt	Nome completo
 general	admin	pt	Geral
 global categories	common	pt	Categorias gerais
 global options	admin	pt	Opções gerais
-group '%1' deleted.	admin	pt	Grupo “%1” eliminado.
 group ?	admin	pt	Grupo?
 group has been added	common	pt	O grupo foi  adicionado
 group has been deleted	common	pt	O grupo foi eliminado
@@ -319,8 +275,6 @@ hostname or ip	admin	pt	Nome do host ou IP
 hour<br>(0-23)	admin	pt	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt	Os registos devem ser permanecer no registo de acessos quantos dias até serem eliminados (por omissão 90) ?
 how many minutes should an account or ip be blocked (default 1) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30) ?
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt	Os registos devem ser permanecer no registo de acessos quantos dias até serem eliminados (por omissão 90)
-how many minutes should an account or ip be blocked (default 1) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30)
 icon	admin	pt	Ícone
 idle	admin	pt	Ocioso
 if different from email address	admin	pt	se for diferente do endereço de email
@@ -329,10 +283,8 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 imap admin password	admin	pt	Senha do administrador IMAP
 imap admin user	admin	pt	Utilizador do administrador IMAP
 imap server	admin	pt	Servidor IMAP
-imap server closed the connection.	admin	pt	O servidor IMAP fechou a ligação.
 imap server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor IMAP
 imap server logintyp	admin	pt	Tipo de acesso do servidor IMAP
-imap server name	admin	pt	Nome do servidor IMAP
 imap server port	admin	pt	Porto do servidor IMAP
 importance	admin	pt	Importância
 in mbyte	admin	pt	em MBytes
@@ -370,7 +322,6 @@ leave empty for no quota	admin	pt	Deixar vazio para quota sem limites
 leave empty to use oauth, if supported	admin	pt	Deixar vazio para usar OAuth, se suportado
 leave the category untouched and return back to the list	admin	pt	Deixa a categoria e volta para a lista
 leave the group untouched and return back to the list	admin	pt	Deixa o grupo e volta para a lista
-leave unchanged	admin	pt	Deixar inalterado
 leave without saveing the entry	admin	pt	Continua sem guardar o registo
 leaves without saveing	admin	pt	Continua sem guardar
 length<br>rows	admin	pt	Altura<br>Linhas
@@ -392,7 +343,7 @@ maximum entries in click path history	admin	pt	Número máximo de registos ao cl
 members	admin	pt	Membros
 message has been updated	admin	pt	Mensagem foi atualizada
 method	admin	pt	Método
-minimum account id (e.g. 500 or 100, etc.)	admin	pt	ID mínimo para contas (Exemplo: 500 ou 1000, etc.)
+minimum account id (e.g. 500 or 100, etc.)	admin	pt	ID mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt	Minuto
 mode	admin	pt	Modo
 modified	admin	pt	Modificado
@@ -414,7 +365,6 @@ no permission to add groups	admin	pt	Sem permissão para adicionar grupos
 no permission to add users	admin	pt	Sem permissão para adicionar utilizadores
 no permission to create groups	admin	pt	Sem permissão para criar grupos
 no plain text part found	admin	pt	Nenhuma parte de texto simples encontrado
-no supported imap authentication method could be found.	admin	pt	Não foi possível encontrar nenhum método de autenticação IMAP suportado.
 note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte Curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 oauth authentiction	admin	pt	Autenticação OAuth
@@ -432,29 +382,20 @@ own install id	admin	pt	ID de instalação própria
 own install id:	admin	pt	ID de instalação própria:
 passthrough	admin	pt	Atravessar
 password for smtp-authentication	admin	pt	Senha para autenticação SMTP
-password to unlock encrypted p12	admin	pt	Palavra-passe para desbloquear a p12 encriptada
-password updated	admin	pt	Palavra-passe actualizada.
-passwords	admin	pt	Palavras-passe
 path information	admin	pt	Informação de Path
 peer server list	admin	pt	Lista de servidores remotos
 peer servers	admin	pt	Servidores remotos
 percent of users that logged out	admin	pt	Percentagem de utilizadores que saíram
-percent this user has logged out	admin	pt	Percentagem das saídas deste utilizador
-periodic	admin	pt	Periódico
 permission denied	admin	pt	Permissão negada
 permission denied !!!	admin	pt	Permissão negada!
 permission denied!!!	admin	pt	Permissão negada!
 permissions	admin	pt	Permissões
 permissions this group has	admin	pt	Permissões do grupo
-php version	admin	pt	Versão PHP
 phpinfo	admin	pt	Informações do PHP
 please enter a name	admin	pt	Por favor, insira um nome
 please enter a name for that server !	admin	pt	Por favor, insira um nome para esse servidor!
 please run setup to become current	admin	pt	Por favor, execute a configuração para actualizar o sistema
 please select	admin	pt	Por favor, seleccione
-pop3 server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor POP3
-pop3 server port	admin	pt	Porto de servidor POP3
-port	admin	pt	Porta
 postfix with ldap	admin	pt	Postfix com LDAP
 preferences	admin	pt	Preferências
 primary group	admin	pt	Grupo principal
@@ -468,10 +409,7 @@ re-enter password	admin	pt	Re-insira a senha
 read this list of methods.	admin	pt	Ler esta lista de métodos
 register application hooks	admin	pt	Registar pontos de entrada de aplicações
 remove	admin	pt	Remover
-remove all users from this group	admin	pt	Remover todos os utilizadores deste grupo
-remove all users from this group ?	admin	pt	Deseja remover todos os utilizadores deste grupo?
 required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
-route all mails to	admin	pt	Encaminhar todas as mensagens para
 rows	admin	pt	Linhas
 run asynchronous services	admin	pt	Executar serviços assíncronos
 save the category	admin	pt	Guardar a categoria
@@ -483,11 +421,8 @@ search groups	admin	pt	Pesquisar grupos
 search peer servers	admin	pt	Pesquisar servidores remotos
 security	admin	pt	Segurança
 select group managers	admin	pt	Seleccionar gestores de grupos
-select multiple	admin	pt	Selecionar vários
-select owner	admin	pt	Selecionar proprietário
 select permissions this group will have	admin	pt	Seleccione as permissões concedidas a este grupo
 select the parent category. if this is a main category select no category	admin	pt	Seleccione a categoria principal. Se esta é a categoria principal, não seleccione nenhuma categoria.
-select type of imap server	admin	pt	Selecionar o tipo de servidor IMAP
 select type of smtp server	admin	pt	Seleccionar tipo de servidor SMTP
 select users for inclusion	admin	pt	Seleccione utilizadores para inclusão
 select where you want to store/retrieve filesystem information	admin	pt	Seleccione onde você deseja guardar as informações de sistema de arquivos
@@ -503,7 +438,6 @@ server url	admin	pt	URL do servidor
 server username	admin	pt	Utilizador do servidor
 set preference values.	admin	pt	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt	A página de acesso deve incluir uma caixa de selecção de idioma (útil para sítios de demonstração)?
-show 'powered by' logo on	admin	pt	Área para exibição da logomarca do EGroupware
 show access log	admin	pt	Exibir registo de acesso
 show current action	admin	pt	Exibir acção actual
 show error log	admin	pt	Exibir registo de erro
@@ -513,8 +447,6 @@ sieve server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do
 sieve server port	admin	pt	Porto do servidor Sieve
 sieve settings	admin	pt	Configurações do Sieve
 site	admin	pt	Sítio
-skip imap	admin	pt	Saltar IMAP
-skipping imap configuration!	admin	pt	Saltar a configuração IMAP!
 smtp authentication	admin	pt	Autenticação SMTP
 smtp options	admin	pt	Opções do SMTP
 smtp server name	admin	pt	Nome do servidor SMTP
@@ -529,7 +461,6 @@ sort the entries	admin	pt	Apresentar os registos
 ssl	admin	pt	SSL
 standard	admin	pt	Por omissão
 standard imap server	admin	pt	Servidor IMAP por omissão
-standard pop3 server	admin	pt	Servidor POP3 por omissão
 standard smtp-server	admin	pt	Servidor SMTP por omissão
 start	admin	pt	Início
 start testjob!	admin	pt	Iniciar trabalho de teste!
@@ -564,19 +495,12 @@ this php has no imap support compiled in!!	admin	pt	O PHP não tem suporte de IM
 timeout for application session data in seconds (default 86400 = 1 day)	admin	pt	Os dados da sessão da aplicação expiram em segundos (por omissão 86400 = 1 dia)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt	As sessões expiram em segundos (por omissão 14400 = 4 horas)
 times	admin	pt	Tempo
-token created.	admin	pt	Token criado.
-token not found!	admin	pt	Token não encontrado!
-token revoked.	admin	pt	Token revogado.
-token saved.	admin	pt	Token guardado.
 top	admin	pt	Topo
 total records	admin	pt	Total de registos
 translation	admin	pt	Tradução
 true	admin	pt	Verdadeiro
 trust level	admin	pt	Nível de confiança
 trust relationship	admin	pt	Relação de confiança
-two days	admin	pt	Dois dias
-two hours	admin	pt	Duas horas
-two months	admin	pt	Dois meses
 two weeks	admin	pt	Duas semanas
 type '%1' already exists !!!	admin	pt	O tipo '%1' já existe!
 type of customfield	admin	pt	Tipo de campo personalizado
@@ -593,8 +517,6 @@ use tls authentication	admin	pt	Utilizar autenticação TLS
 use tls encryption	admin	pt	Utilizar cifra TLS
 user accounts	admin	pt	Contas de utilizadores
 user can edit forwarding address	admin	pt	O utilizador pode editar endereços reencaminhados
-user csv export	admin	pt	Exportação CSV do utilizador
-user csv import	admin	pt	Importação de CSV de utilizador
 user data	common	pt	Dados de utilizadores
 user for smtp-authentication (leave it empty if no auth required)	admin	pt	Utilizador para autenticação SMTP (deixar vazio se a autenticação não for necessária)
 user groups	admin	pt	Grupos de utilizadores
@@ -604,7 +526,6 @@ username (standard)	admin	pt	Nome de utilizador (por omissão)
 username@domainname (virtual mail manager)	admin	pt	utilizador@dominio (Gestor virtual de correio electrónico)
 users can define their own emailaccounts	admin	pt	Os utilizadores podem definir as suas contas de correio electrónico
 users choice	admin	pt	Personalizar...
-valid for	admin	pt	Válido para
 view access log	admin	pt	Ver registo de acessos
 view account	admin	pt	Ver conta
 view category	admin	pt	Ver categorias
@@ -614,11 +535,6 @@ view this user	admin	pt	Ver este utilizador
 view user account	admin	pt	Ver conta do utilizador
 virtual mail manager	admin	pt	Gestor virtual de correio electrónico
 who would you like to transfer all records owned by the deleted user to?	admin	pt	Para quem deseja transferir TODOS os registos do utilizador eliminado ?
-would you like egroupware to cache the egw info array ?	admin	pt	Deseja que o EGroupware faça cache do vector de informações egw ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	pt	Deseja que o EGroupware verifique a existência de uma nova versão<br>quando os administradores acederem ?
-would you like egroupware to check for new application versions when admins login ?	admin	pt	Deseja que o EGroupware verifique a existência de novas versões de aplicações quando os administradores acederem ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	pt	Deseja carregar os novos ficheiros de idioma automaticamente (quando aceder) ?
-would you like to show each application's upgrade status ?	admin	pt	Deseja exibir o estado da actualização de cada aplicação ?
 xml-rpc	admin	pt	XML-RPC
 you have entered an invalid expiration date	admin	pt	Inseriu uma data de expiração inválida
 you have to enter a name, to create a new field!!!	admin	pt	É necessário inserir um nome para criar um novo campo!
@@ -632,6 +548,5 @@ you must enter an application name.	admin	pt	É necessário atribuir um nome à 
 you must enter an application title.	admin	pt	É necessário atribuir um título à aplicação.
 you must select a file type	admin	pt	É necessário seleccionar um tipo de ficheiro
 you will need to remove the subcategories before you can delete this category	admin	pt	É necessário remover as subcategorias para poder eliminar esta categoria !
-your message to  %1 was displayed.	admin	pt	A sua mensagem para %1 foi apresentada.
 your name	admin	pt	O seu nome
 your session could not be verified.	admin	pt	A sua sessão expirou

@@ -3,7 +3,7 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	fa	%1 اطلاعات حقوق دسترسی حسابهائی که دیگر موجود نیستند حذف شد
 %1 not found or not executable !!!	admin	fa	%1 یافت نشد یا اجرائی نبود !!!
 (default no, leave it off if you dont use it)	admin	fa	پیش فرض نه است. خالی بگذارید اگر استفاده نمی کنید
-(stored password will not be shown here)	admin	fa	گذرواژه های ذخیره شده اینجا نمایش داده نمی شوند.
+(no subject)	admin	fa	(بدون عنوان)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fa	برای برپا سازی کاربردهای جدید از <br><a href="setup/" target="setup">برپاسازی</a> استفاده کنید. [مدیریت کاربردها]
 -  type	admin	fa	نوع -
 account active	admin	fa	حساب فعال
@@ -15,10 +15,7 @@ account permissions	admin	fa	مجوزهای حساب
 account preferences	admin	fa	تنظیمات حساب
 acl manager	admin	fa	مدیریت حقوق دسترسی
 acl rights	common	fa	حقوق دسترسی
-action	admin	fa	عمل
-actions	admin	fa	اعمال
 activate	admin	fa	فعال سازی
-activate wysiwyg-editor	admin	fa	فعالسازی ویرایشگر WYSIWYG
 add a category	admin	fa	افزودن دسته
 add a group	admin	fa	افزودن گروه
 add a new account.	admin	fa	افزودن حساب جدید
@@ -33,26 +30,28 @@ add group	admin	fa	افزودن گروه
 add new account	admin	fa	افزودن حساب جدید
 add new application	admin	fa	افزودن کاربرد جدید
 add peer server	admin	fa	افزودن کارگزار کمکی
+add profile	admin	fa	افزودن مجموعه تنظیمات
 add sub-category	admin	fa	افزودن زیر مجموعه
+admin dn	admin	fa	dn مدیر
 admin email	admin	fa	رایانامه مدیر
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fa	نشانیهای رایانامه مدیر-با ویرگول جدا کنید- برای تذکر قفل شدن(خالی بگذارید برای تذکر ندادن)
 admin name	admin	fa	نام مدیر
-administration	admin	fa	مدیریت
+admin password	admin	fa	گذرواژه مدیر
 admins	admin	fa	مدیران
-advanced options	admin	fa	گزینه های پیشرفته
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	fa	بعد از چند تلاش ناموفق باید حساب کاربر قفل شود؟(پیش فرض 3 است)
+advanced options	admin	fa	تنظیمات پیشرفته
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fa	بعد از چند تلاش ناموفق باید نشانی IP کاربر قفل شود؟(پیش فرض 3 است)
 aliases	admin	fa	نامهای مستعار
 all applications	admin	fa	همه کاربردها
-all categories	admin	fa	همه دسته ها
 all records and account information will be lost!	admin	fa	تمام اطلاعات و حسابها از بین می روند!
 all users	admin	fa	همه کاربران
 allow anonymous access to this app	admin	fa	دسترسی بی نام به این کاربرد فعال شود
-alternate email address	admin	fa	نشانی رایانامه دیگر
+alternate email address	admin	fa	نشانی پست الکترونیکی دیگر
 anonymous user	admin	fa	کاربر بی نام
 anonymous user (not shown in list sessions)	admin	fa	کاربر بی نام (در فهرست نشستها دیده نمی شود)
 anonymous user does not exist!	admin	fa	کاربر بی نام موجود نیست!
 anonymous user has no run-rights for the application!	admin	fa	کاربر بی نام اجازه اجرای این کاربرد را ندارد!
+any application	admin	fa	همه کاربردها
+any group	admin	fa	همه گروهها
 appearance	admin	fa	ظاهر
 application	admin	fa	کاربرد
 application name	admin	fa	نام کاربرد
@@ -79,6 +78,8 @@ back to the list	admin	fa	بازگشت به فهرست
 bi-directional	admin	fa	دوجهته
 bottom	admin	fa	پائین
 calculate next run	admin	fa	اجرای بعدی محاسبه شود
+can be used by application	admin	fa	استفاده شود توسط کاربرد
+can be used by group	admin	fa	استفاده شود توسط گروه
 can change password	admin	fa	توانائی تغییر گذرواژه
 cancel testjob!	admin	fa	لغو کارآزمایشی!
 categories list	admin	fa	فهرست دسته ها
@@ -91,6 +92,7 @@ check ip address of all sessions	admin	fa	بازرسی نشانی IP  تمام �
 check items to <b>%1</b> to %2 for %3	admin	fa	بررسی موارد در <b>%1</b> به %2 برای %3
 click to select a color	admin	fa	برای انتخاب رنگ کلیک کنید
 color	admin	fa	رنگ
+continue	admin	fa	ادامه
 country	admin	fa	کشور
 country selection	admin	fa	انتخاب کشور
 create group	admin	fa	ایجاد گروه
@@ -119,7 +121,7 @@ delete this group	admin	fa	حذف این گروه
 delete this user	admin	fa	حذف این کاربر
 deleted	admin	fa	حذف شد
 deletes this field	admin	fa	حذف این فیلد
-deliver extern	admin	fa	حمل خارجی
+deliver extern	admin	fa	حمل بیرونی
 deny access	admin	fa	دسترسی ممنوع
 deny access to access log	admin	fa	ممنوعیت دسترسی به ثبت دسترسی
 deny access to application registery	admin	fa	ممنوعیت  دسترسی به ثبات کاربرد
@@ -140,17 +142,18 @@ description can not exceed 255 characters in length !	admin	fa	توضیحات ن
 determines the order the fields are displayed	admin	fa	تشخیص ترتیب نمایش فیلدها
 disable	admin	fa	غیر فعال
 disable "auto completion" of the login form	admin	fa	غیرفعال کردن تکمیل خودکار در صفحه ورود
-disable wysiwyg-editor	admin	fa	غیر فعال کردن ویرایشگر WYSIWYG
 disabled (not recomended)	admin	fa	غیر فعال (پیشنهاد نمی شود)
 display	admin	fa	نمایش
 do not delete the category and return back to the list	admin	fa	دسته را حذف نکن و به فهرست برگرد
 do you also want to delete all global subcategories ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را حذف کنید؟
+do you really want to delete this profile	admin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
 do you want to delete all global subcategories ?	admin	fa	آیا میخواهید همه زیر دسته های عمومی را هم حذف کنید؟
 do you want to move all global subcategories one level down ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را تا یک سطح پایینترحذف کنید؟
+domainname	admin	fa	نام حوزه
 down	admin	fa	پائین
 edit account	admin	fa	ویراستن حساب
 edit application	admin	fa	ویراستن کاربرد
-edit email settings	admin	fa	ویراستن تنظیمات رایانامه
+edit email settings	admin	fa	ویرایش تنظیمات نامه الکترونیکی
 edit global category	admin	fa	ویراستن دسته عمومی
 edit global category for %1	admin	fa	ویراستن دسته عمومی برای %1
 edit group	admin	fa	ویراستن گروه
@@ -162,14 +165,13 @@ edit this group	admin	fa	ویراستن این گروه
 edit this user	admin	fa	ویراستن این کاربر
 edit user	admin	fa	ویراستن کاربر
 edit user account	admin	fa	ویراستن حساب کاربری
-email account active	admin	fa	حساب رایانامه فعال
-email address	admin	fa	نشانی رایانامه
+email account active	admin	fa	حساب نامه الکترونیکی فعال
+email address	admin	fa	نشانی الکترونیکی
+emailadmin	admin	fa	مدیر رایانامه
 enable	admin	fa	فعال
 enable debug-messages	admin	fa	پیامهای اشکالزدائی فعال
-enable the soap service	admin	fa	خدمات soap فعال
-enable the xmlrpc service	admin	fa	خدمات xmlrpc فعال
-enabled - hidden from navbar	admin	fa	فعال - مخفی از نوار ناوبری
-enabled - popup window	admin	fa	فعال - پنجره جداگانه
+enable sieve	admin	fa	فعالسازی Sieve
+encryption settings	admin	fa	تنظیمات رمز نگاری
 enter a description for the category	admin	fa	یک توصیف برای این دسته وارد کنید
 enter the background color for the login page	admin	fa	رنگ زمینه برای صفحه ورود را وارد کنید
 enter the background color for the site title	admin	fa	رنگ زمینه برای عنوان سایت را وارد کنید
@@ -179,16 +181,18 @@ enter the site password for peer servers	admin	fa	گذرواژه سایت برا
 enter the site username for peer servers	admin	fa	نام کاربری سایت برای کارگزار کمکی را وارد کنید
 enter the title for your site	admin	fa	عنوان برای سایتتان وارد کنید
 enter the title of your logo	admin	fa	عنوان برای لوگو تان وارد کنید
-enter the url or filename (in api/templates/default/images) of your logo	admin	fa	نام یا مسیر کامل لوگو را وارد کنید
 enter the url where your logo should link to	admin	fa	نشانی جائی که باید لوگو به آنجا پیوند شود وارد کنید
-enter your default ftp server	admin	fa	کارگزار پیش فرض قاپ را وارد کنید
 enter your default mail domain ( from: user@domain )	admin	fa	حوزه پیش فرض رایانامه را وارد کنید:مثلا: user@domain
+enter your default mail domain (from: user@domain)	admin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
 enter your http proxy server	admin	fa	کارگزار پیشکار شبکه را وارد کنید
 enter your http proxy server port	admin	fa	درگاه کارگزار پیشکار شبکه را وارد کنید
 enter your smtp server hostname or ip address	admin	fa	نشانی IP یا نام میزبان کارگزار رایانامه ‌SMTP را وارد کنید
 enter your smtp server port	admin	fa	درگاه کارگزار رایانامه ‌SMTP را وارد کنید
+entry saved	admin	fa	ورودی ذخیره شد
+error saving the entry!!!	admin	fa	خطای ذخیره ورودی!!!
 error! no appname found	admin	fa	خطا! نام کاربرد پیدا نشد
 error: %1 not found or other error !!!	admin	fa	خطا!!!: %1 پیدا نشد یا خطائی دیگر
+event details follow	admin	fa	پیگیری جزئیات رویداد
 expires	admin	fa	انقضاء
 failed to change password.	admin	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
 fallback (after each pageview)	admin	fa	بازگشتنی(پس از نمایش هر صفحه)
@@ -199,12 +203,14 @@ file space must be an integer	admin	fa	فضای پرونده باید عدد ص�
 for the times above	admin	fa	برای زمانهای فوق
 for the times below (empty values count as '*', all empty = every minute)	admin	fa	برای زمانهای ذیل(مقادیر خالی بعنوان '*' و خالی بودن همه به معنی هر دقیقه است)
 force selectbox	admin	fa	جعبه انتخاب اجباری
-forward also to	admin	fa	پیش سو به
+forward also to	admin	fa	همچنین ارسال به
+forward email's to	admin	fa	ارسال نامه ها به
 forward emails to	admin	fa	پیش سوی رایانامه به
-forward only	admin	fa	فقط پیش سو
+forward only	admin	fa	فقط ارسال به
 full name	admin	fa	نام کامل
 general	admin	fa	عمومی
 global categories	common	fa	دسته های عمومی
+global options	admin	fa	گزینه های عمومی
 group ?	admin	fa	گروه؟
 group has been added	common	fa	گروه اضافه شد
 group has been deleted	common	fa	گروه حذف شد
@@ -214,6 +220,7 @@ group manager	admin	fa	مدیر گروه
 group name	admin	fa	نام گروه
 hide php information	admin	fa	پنهان سازی اطلاعات php
 home directory	admin	fa	پوشه خانه
+home screen message	admin	fa	پیام صفحه اصلی
 host information	admin	fa	اطلاعات میزبان
 hour<br>(0-23)	admin	fa	ساعت <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fa	اطلاعات چند روز قبل از حذف ثبت دسترسی باید نگهداری شوند:(پیش فرض ۹۰)؟
@@ -222,6 +229,12 @@ icon	admin	fa	نمایه
 idle	admin	fa	بیکار
 if no acl records for user or any group the user is a member of	admin	fa	اگر هیچ لیست حق دسترسی برای کاربر یا هیچ گروهی نباشد کابر عضوی خواهد بود از
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fa	اگر از LDAP  استفاده می کنید ، آیا می خواهید مشخصات پوشه خانه و پوسته ورود را تنظیم نمائید؟
+imap admin password	admin	fa	گذرواژه مدیر IMAP
+imap admin user	admin	fa	کاربر مدیر IMAP
+imap server	admin	fa	کارگزار آی مپ
+imap server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP
+imap server logintyp	admin	fa	نوع ورود کارگزار IMAP
+imap server port	admin	fa	درگاه کارگزار IMAP
 in mbyte	admin	fa	به مگابایت
 inbound	admin	fa	داخلی
 install crontab	admin	fa	برپاسازی crontab
@@ -245,7 +258,7 @@ ldap groups context	admin	fa	موقعیت گروههای LDAP
 ldap host	admin	fa	میزبان LDAP
 ldap root password	admin	fa	گذرواژه کاربر ارشد (root)  برای LDAP
 ldap rootdn	admin	fa	LDAP rootdn
-leave empty for no quota	admin	fa	خالی برای بی سهمیه
+leave empty for no quota	admin	fa	برای بدون سهمیه بودن، خالی بگذارید
 leave the category untouched and return back to the list	admin	fa	دسته ، دست نخورده رها شود به به فهرست برگردد
 leave the group untouched and return back to the list	admin	fa	گروه را دست نخورده بگذار و به فهرست برگرد
 leave without saveing the entry	admin	fa	بدون ذخیره کردن ورودی رها کنید
@@ -260,9 +273,8 @@ login screen	admin	fa	صفحه ورود
 login shell	admin	fa	پوسته ورود
 login time	admin	fa	زمان ورود
 loginid	admin	fa	شناسه ورود
-mail settings	admin	fa	تنظیمات رایانامه
+mail settings	admin	fa	تنظیمات نامه
 main email-address	admin	fa	نشانی رایانامه اصلی
-home screen message	admin	fa	پیام صفحه اصلی
 manager	admin	fa	مدیر
 maximum account id (e.g. 65535 or 1000000)	admin	fa	حداکثر شناسه حساب (مثلا:65535 یا 1000000)
 maximum entries in click path history	admin	fa	حداکثر ورودیها در مسیر تاریخچه
@@ -275,12 +287,14 @@ mode	admin	fa	سبک
 modified	admin	fa	تغییر یافته
 month	admin	fa	ماه
 name must not be empty !!!	admin	fa	نام نباید خالی باشد!!!
+name of organisation	admin	fa	نام سازمان
 new group name	admin	fa	نام گروه جدید
 new name	admin	fa	نام جدید
 new password [ leave blank for no change ]	admin	fa	گذرواژه جدید(برای تغییر نکردن خالی بگذارید)
 next run	admin	fa	اجرای بعدی
 no algorithms available	admin	fa	الگوریتمی موجود نیست
-no alternate email address	admin	fa	نشانی رایانامه دیگر موجود نیست
+no alternate email address	admin	fa	بدون نشانی نامه الکترونیکی دیگر
+no forwarding email address	admin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
 no jobs in the database !!!	admin	fa	کاری در پایگاه داده نیست!!!
 no login history exists for this user	admin	fa	تاریخچه ورودی برای این کاربر نیست
 no matches found	admin	fa	هیچ موردی یافت نشد
@@ -292,13 +306,13 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	fa	
 one month	admin	fa	یک ماه
 one week	admin	fa	یک هفته
 order	admin	fa	ترتیب
+organisation	admin	fa	سازمان
 outbound	admin	fa	خارجی
 password for smtp-authentication	admin	fa	گذرواژه برای تصدیق SMTP
 path information	admin	fa	اطلاعات مسیر
 peer server list	admin	fa	فهرست کارگزار کمکی
 peer servers	admin	fa	کارگزاران کمکی
 percent of users that logged out	admin	fa	درصد کاربرانی که خارج شده اند
-percent this user has logged out	admin	fa	درصدی که این کاربر خارج شده
 permission denied	admin	fa	دسترسی ممنوع
 permission denied !!!	admin	fa	دسترسی غیر ممکن!!!
 permission denied!!!	admin	fa	دسترسی ممنوع!!!
@@ -311,23 +325,21 @@ please run setup to become current	admin	fa	لطفا برپاسازی را اج�
 please select	admin	fa	لطفا انتخاب کنید
 preferences	admin	fa	تنظیمات
 primary group	admin	fa	گروه اولیه
+profile access rights	admin	fa	حقوق دسترسی مجموعه تنظیمات
+profile list	admin	fa	لیست مجموعه تنظیمات
+profile name	admin	fa	نام مجموعه تنظیمات
 quota settings	admin	fa	تنظیمات سهمیه
 quota size in mbyte	admin	fa	سهمیه به مگابایت
 re-enter password	admin	fa	ورود مجدد گذرواژه
 read this list of methods.	admin	fa	خواندن این فهرست از روشها
 register application hooks	admin	fa	ثبت گیرهای کاربرد
 remove	admin	fa	حذف
-remove all users from this group	admin	fa	حذف همه کاربران از این گروه
-remove all users from this group ?	admin	fa	همه کاربران از این گروه حذف شوند؟
-return to view account	admin	fa	بازگشت برای دیدن حساب
-route all mails to	admin	fa	همه رایانامه ها را مسیر دهی کن به
 rows	admin	fa	سطور
 run asynchronous services	admin	fa	اجرای خدمات ناهماهنگ
 save the category	admin	fa	ذخیره دسته
 save the category and return back to the list	admin	fa	ذخیره دسته و بازگشت به فهرست
 saves the changes made and leaves	admin	fa	تغییرات را ذخیره کرده و خارج می شود
 saves this entry	admin	fa	این ورودی را ذخیره می کند
-search accounts	admin	fa	جستجوی حسابها
 search categories	admin	fa	جستجوی دسته ها
 search groups	admin	fa	جستجوی گروهها
 search peer servers	admin	fa	جستجوی کارگزاران کمکی
@@ -335,6 +347,7 @@ security	admin	fa	امنیت
 select group managers	admin	fa	انتخاب مدیران گروه
 select permissions this group will have	admin	fa	انتخاب مجوزهایی که این گروه باید داشته باشد
 select the parent category. if this is a main category select no category	admin	fa	دسته والد را انتخاب کنید. اگر این دسته والد است، هیچکدام را انتخاب کنید
+select type of smtp server	admin	fa	نوع کارگزار SMTP را انتخاب کنید
 select users for inclusion	admin	fa	انتخاب کاربران برای شامل شدن
 select where you want to store/retrieve filesystem information	admin	fa	انتخاب کنید که شما میخواهید کجا اطلاعات سیستم پرونده ذخیره و بازیابی شوند
 select where you want to store/retrieve user accounts	admin	fa	انتخاب کنید که شما میخواهید کجا حسابهای کاربری ذخیره و بازیابی شوند
@@ -342,25 +355,32 @@ selectbox	admin	fa	جعبه انتخاب
 server %1 has been updated	admin	fa	کارگزار %1 بهنگام شد
 server list	admin	fa	فهرست کارگزار
 server password	admin	fa	گذرواژه کارگزار
+server settings	admin	fa	تنظیمات کارگزار
 server type(mode)	admin	fa	نوع کارگزار(سبک)
 server url	admin	fa	نشانی کارگزار
 server username	admin	fa	نام کاربری کارگزار
 set preference values.	admin	fa	تنظیم مقدار پیش فرضها
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fa	آیا صفحه ورود باید یک جعبه انتخاب برای زبان داشته باشد(این برای سایتهای نمایشی خوب است)؟
-show 'powered by' logo on	admin	fa	نمایش «پشتیبانی بوسیله» در
 show access log	admin	fa	نمایش ثبت دسترسی
 show current action	admin	fa	نمایش فعالیت جاری
 show error log	admin	fa	نمایش ثبت خطا
 show phpinfo()	admin	fa	نمایش اطلاعات php
 show session ip address	admin	fa	نمایش نشانی IP نشست
+sieve server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار Sieve
+sieve server port	admin	fa	درگاه کارگزار Sieve
+sieve settings	admin	fa	تنظیمات Sieve
 site	admin	fa	سایت
+smtp authentication	admin	fa	تصدیق smtp
+smtp server name	admin	fa	نام کارگزار SMTP
+smtp settings	admin	fa	تنظیمات smtp
+smtp-server hostname or ip address	admin	fa	نشانی IP یا نام میزبان SMTP
+smtp-server port	admin	fa	درگاه کارگزار SMTP
 sorry, that group name has already been taken.	admin	fa	متأسفم، قبلا این نام برای گروه دیگری گرفته شده است
 sorry, the above users are still a member of the group %1	admin	fa	متأسفم، کاربران فوق هنوز عضو گروه %1 هستند
 sorry, the follow users are still a member of the group %1	admin	fa	متأسفم، کاربران ذیل هنوز عضو گروه %1 هستند
 sort the entries	admin	fa	ورودیها مرتب شوند
 standard	admin	fa	استاندارد
 standard imap server	admin	fa	کارگزار استاندارد IMAP
-standard pop3 server	admin	fa	کارگزار استاندارد POP3
 standard smtp-server	admin	fa	کارگزار استاندارد SMTP
 start	admin	fa	شروع
 start testjob!	admin	fa	شروع کار آزمایشی!
@@ -379,6 +399,7 @@ the api requires an upgrade	admin	fa	API بهنگام سازی لازم دارد
 the groups must include the primary group	admin	fa	گروهها باید شامل گروه اولیه باشند
 the login and password can not be the same	admin	fa	شناسه ورود و گذرواژه نمی توانند مثل هم باشند
 the loginid can not be more then 8 characters	admin	fa	شناسه ورود نمی تواند بیشتر از 8 حرف باشد
+the mimeparser can not parse this message.	admin	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fa	نامی که داخلی استفاده می شود(کمتر از ۲۰ کاراکتر)، تغییر آن ممکن است باعث شود که اطلاعات غیر قابل دسترس شون
 the testjob sends you a mail everytime it is called.	admin	fa	کارآزمایشی برای شما نامه می فرستد هروقت که فراخوانی شود
 the text displayed to the user	admin	fa	متنی که به کاربر نمایش داده می شود
@@ -389,6 +410,7 @@ they must be removed before you can continue	admin	fa	آنها باید حذف �
 this application is current	admin	fa	این کاربرد بهنگام است
 this application requires an upgrade	admin	fa	این کاربرد بهنگام سازی می خواهد
 this category is currently being used by applications as a parent category	admin	fa	این دسته بعنوان دسته والد توسط کاربردها در حال استفاده است
+this php has no imap support compiled in!!	admin	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fa	زمان برای اطلاعات نشست کاربرد به ثانیه (پیش فرض ۸۶۴۰۰=۱ روز است)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fa	حداکثر زمان نشست بیکار(پیش فرض ۱۴۴۰۰=۴ ساعت است)
 times	admin	fa	زمانها
@@ -404,13 +426,17 @@ type of customfield	admin	fa	نوع فیلد سفارشی
 up	admin	fa	بالا
 updated	admin	fa	بهنگام شد
 use cookies to pass sessionid	admin	fa	از کوکی برای ارسال شناسه نشست استفاده شود
+use default	admin	fa	استفاده از پیش فرض
+use ldap defaults	admin	fa	از پیش فرضهای LDAP استفاده شود
 use pure html compliant code (not fully working yet)	admin	fa	استفاده از کدهای HTML خالص(هنوز کامل کار نمی کند)
+use smtp auth	admin	fa	استفاده از تصدیق در SMTP
 use theme	admin	fa	استفاده از تم
 user accounts	admin	fa	حسابهای کاربری
 user data	common	fa	اطلاعات کاربر
 user for smtp-authentication (leave it empty if no auth required)	admin	fa	کاربر برای تصدیق SMTP(اگر تصدیق لازم نیستخالی بگذارید)
 user groups	admin	fa	گروههای کاربری
 userdata	admin	fa	اطلاعات کاربر
+users can define their own emailaccounts	admin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
 users choice	admin	fa	انتخاب کاربران
 view access log	admin	fa	نمایش ثبت دسترسی
 view account	admin	fa	نمایش حساب
@@ -420,11 +446,6 @@ view sessions	admin	fa	نمایش نشستها
 view this user	admin	fa	دیدن این کاربر
 view user account	admin	fa	دیدن حساب کاربر
 who would you like to transfer all records owned by the deleted user to?	admin	fa	آیا می خواهید همه رکوردهائی که مالکیت آنها در اختیار کاربر است به کاربر دیگری انتقال یابد؟
-would you like egroupware to cache the egw info array ?	admin	fa	آیا میخواهید که گروه افزار آرایه های خود را در نهانگاه نگهداری کند؟
-would you like egroupware to check for a new version<br>when admins login ?	admin	fa	آیا میخواهید گروه افزار برای نسخه های جدید در زمان ورود بررسی انجام دهد؟
-would you like egroupware to check for new application versions when admins login ?	admin	fa	آیا میخواهید که گروه افزار برای نسخه های جدید کاربردها در زمان ورود مدیر بررسی انجام دهد؟
-would you like to automaticaly load new langfiles (at login-time) ?	admin	fa	آیا میخواهید در زمان ورود فایلهای زبانی جدید بارگذاری شوند؟
-would you like to show each application's upgrade status ?	admin	fa	آیا میخواهید وضعیت به روز رسانی هر کاربرد نمایش داده شود؟
 you have entered an invalid expiration date	admin	fa	شما تاریخ انقضای غیر معتبر وارد کردید
 you have to enter a name, to create a new field!!!	admin	fa	شما باید یک نام برای ساختن فیلد جدید وارد کنید!!!
 you have to enter a name, to create a new type!	admin	fa	شما باید یک نام برای ساختن نوع جدید وارد کنید!
@@ -437,78 +458,4 @@ you must enter an application name.	admin	fa	شما باید یک نام کار�
 you must enter an application title.	admin	fa	شما باید یک عنوان کاربرد وارد کنید
 you must select a file type	admin	fa	شما باید یک نوع پرونده انتخاب کنید
 you will need to remove the subcategories before you can delete this category	admin	fa	شما باید قبل از حذف این دسته، زیر مجموعه ها را حذف کنید!
-(no subject)	admin	fa	(بدون عنوان)
-add profile	admin	fa	افزودن مجموعه تنظیمات
-admin dn	admin	fa	dn مدیر
-admin password	admin	fa	گذرواژه مدیر
-admin username	admin	fa	نام کاربری مدیر
-advanced options	admin	fa	تنظیمات پیشرفته
-alternate email address	admin	fa	نشانی پست الکترونیکی دیگر
-any application	admin	fa	همه کاربردها
-any group	admin	fa	همه گروهها
-can be used by application	admin	fa	استفاده شود توسط کاربرد
-can be used by group	admin	fa	استفاده شود توسط گروه
-continue	admin	fa	ادامه
-default	admin	fa	پیش فرض
-deliver extern	admin	fa	حمل بیرونی
-do you really want to delete this profile	admin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
-domainname	admin	fa	نام حوزه
-edit email settings	admin	fa	ویرایش تنظیمات نامه الکترونیکی
-email account active	admin	fa	حساب نامه الکترونیکی فعال
-email address	admin	fa	نشانی الکترونیکی
-emailadmin	admin	fa	مدیر رایانامه
-enable sieve	admin	fa	فعالسازی Sieve
-encryption settings	admin	fa	تنظیمات رمز نگاری
-enter your default mail domain (from: user@domain)	admin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
-entry saved	admin	fa	ورودی ذخیره شد
-error saving the entry!!!	admin	fa	خطای ذخیره ورودی!!!
-event details follow	admin	fa	پیگیری جزئیات رویداد
-forward also to	admin	fa	همچنین ارسال به
-forward email's to	admin	fa	ارسال نامه ها به
-forward only	admin	fa	فقط ارسال به
-global options	admin	fa	گزینه های عمومی
-imap admin password	admin	fa	گذرواژه مدیر IMAP
-imap admin user	admin	fa	کاربر مدیر IMAP
-imap server	admin	fa	کارگزار آی مپ
-imap server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP
-imap server logintyp	admin	fa	نوع ورود کارگزار IMAP
-imap server port	admin	fa	درگاه کارگزار IMAP
-imap/pop3 server name	admin	fa	نام کارگزار IMAP/POP3
-in mbyte	admin	fa	به مگابایت
-leave empty for no quota	admin	fa	برای بدون سهمیه بودن، خالی بگذارید
-mail settings	admin	fa	تنظیمات نامه
-name of organisation	admin	fa	نام سازمان
-no alternate email address	admin	fa	بدون نشانی نامه الکترونیکی دیگر
-no forwarding email address	admin	fa	بدون نشانی نامه الکترونیکی ارسال به دیگری
-order	admin	fa	ترتیب
-organisation	admin	fa	سازمان
-pop3 server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار POP3
-pop3 server port	admin	fa	درگاه کارگزار POP3
-profile access rights	admin	fa	حقوق دسترسی مجموعه تنظیمات
-profile list	admin	fa	لیست مجموعه تنظیمات
-profile name	admin	fa	نام مجموعه تنظیمات
-quota settings	admin	fa	تنظیمات سهمیه
-quota size in mbyte	admin	fa	سهمیه به مگابایت
-remove	admin	fa	حذف
-select type of imap/pop3 server	admin	fa	نوع کارگزار IMAP/POP3 را انتخاب کنید
-select type of smtp server	admin	fa	نوع کارگزار SMTP را انتخاب کنید
-server settings	admin	fa	تنظیمات کارگزار
-sieve server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار Sieve
-sieve server port	admin	fa	درگاه کارگزار Sieve
-sieve settings	admin	fa	تنظیمات Sieve
-smtp authentication	admin	fa	تصدیق smtp
-smtp server name	admin	fa	نام کارگزار SMTP
-smtp settings	admin	fa	تنظیمات smtp
-smtp-server hostname or ip address	admin	fa	نشانی IP یا نام میزبان SMTP
-smtp-server port	admin	fa	درگاه کارگزار SMTP
-standard	admin	fa	استاندارد
-standard imap server	admin	fa	کارگزار استاندارد IMAP
-standard pop3 server	admin	fa	کارگزار استاندارد POP3
-standard smtp-server	admin	fa	کارگزار استاندارد SMTP
-the mimeparser can not parse this message.	admin	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
-this php has no imap support compiled in!!	admin	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
-use default	admin	fa	استفاده از پیش فرض
-use ldap defaults	admin	fa	از پیش فرضهای LDAP استفاده شود
-use smtp auth	admin	fa	استفاده از تصدیق در SMTP
-users can define their own emailaccounts	admin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
 your name	admin	fa	نام شما

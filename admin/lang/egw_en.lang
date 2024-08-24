@@ -266,13 +266,12 @@ custom egroupware web font as woff2 file	admin	en	Custom EGroupware web font as 
 custom fields	admin	en	Custom fields
 custom fields tab	admin	en	Custom fields tab
 custom translation	admin	en	Custom translations
-customfield '%1' added	admin	en	Customfield '%1' added
-customfield '%1' deleted	admin	en	Customfield '%1' deleted
-customfield '%1' modified	admin	en	Customfield '%1' modified
-customfield deleted	admin	en	Customfield deleted
+customfield '%1' added	admin	en	Customfield '%1' added.
+customfield '%1' deleted	admin	en	Customfield '%1' deleted.
+customfield '%1' modified	admin	en	Customfield '%1' modified.
+customfield deleted	admin	en	Customfield deleted.
 customfield saved.	admin	en	Customfield saved.
 cyrus imap server	admin	en	Cyrus IMAP server
-cyrus imap server administration	admin	en	Cyrus IMAP server administration
 data	admin	en	Data
 data from	admin	en	Data from
 day	admin	en	Day
@@ -389,13 +388,10 @@ emailadmin: group assigned profile	common	en	EmailAdmin: Group assigned profile
 emailadmin: user assigned profile	common	en	EmailAdmin: User assigned profile
 empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
-enable cyrus imap server administration	admin	en	Enable Cyrus IMAP server administration
 enable debug-messages	admin	en	Enable debug messages.
 enable sieve	admin	en	Enable Sieve
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
 enabled	admin	en	Enabled
-enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
-enabled - popup window	admin	en	Enabled - Popup window
 encrypted connection	admin	en	Encrypted connection
 encryption	admin	en	Encryption
 encryption settings	admin	en	Encryption settings
@@ -416,7 +412,7 @@ enter the site username for peer servers	admin	en	Enter the site username for pe
 enter the title for your site	admin	en	Enter the title for site
 enter the title of your logo	admin	en	Enter the title of logo
 enter the url where your logo should link to	admin	en	Enter the URL where the logo should link to
-enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.\nThe path MUST start with / and be readable by all users
+enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	en	Enter the VFS path where additional images, icons or logos can be placed and found by EGroupware's applications.<br>The path MUST start with / and be readable by all users
 enter your default mail domain ( from: user@domain )	admin	en	Enter your default mail domain (from: user@domain)
 enter your default mail domain (from: user@domain)	admin	en	Enter your default mail domain from: user@domain
 enter your http proxy server	admin	en	Enter your HTTP proxy server
@@ -519,7 +515,7 @@ how username get constructed	admin	en	How username get constructed
 html/plaintext	admin	en	HTML/Text
 icon	admin	en	Icon
 identity	admin	en	Identity
-identity deleted	admin	en	Identity deleted
+identity deleted	admin	en	Identity deleted.
 identity saved.	admin	en	Identity saved.
 idle	admin	en	Idle
 if different from email address	admin	en	if different from email address
@@ -533,7 +529,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	en	If you wish to have randomly selected images you may upload multiple images.
 imap admin password	admin	en	IMAP admin password
 imap admin user	admin	en	IMAP admin user
-imap c-client version < 2001	admin	en	IMAP C-Client Version < 2001
 imap server	admin	en	IMAP server
 imap server closed the connection.	admin	en	IMAP server closed the connection.
 imap server closed the connection. server responded: %s	admin	en	IMAP Server closed the connection. Server Responded: %s
@@ -541,7 +536,6 @@ imap server hostname or ip address	admin	en	IMAP server hostname or IP address
 imap server logintyp	admin	en	IMAP server login type
 imap server name	admin	en	IMAP server name
 imap server port	admin	en	IMAP server port
-imap/pop3 server name	admin	en	IMAP/POP3 server name
 importance	admin	en	importance
 in mbyte	admin	en	in MByte
 inactive	admin	en	Inactive
@@ -639,7 +633,7 @@ mb used	admin	en	MB used
 members	admin	en	Members
 message has been updated	admin	en	Message has been updated
 method	admin	en	Method
-minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account ID, e.g. 500 or 100
+minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account ID, e.g. 500 or 1000
 minute	admin	en	Minute
 mode	admin	en	Mode
 modified	admin	en	Modified
@@ -741,8 +735,6 @@ plesk imap server (courier)	admin	en	Plesk IMAP Server (Courier)
 plesk mail script '%1' not found !!!	admin	en	Plesk mail script '%1' not found!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	en	Plesk requires passwords to have at least 5 characters and not contain the account name --> password NOT set!
 plesk smtp-server (qmail)	admin	en	Plesk SMTP-Server (Qmail)
-pop3 server hostname or ip address	admin	en	POP3 server hostname or IP address
-pop3 server port	admin	en	POP3 server port
 port	admin	en	Port
 postfix with ldap	admin	en	Postfix with LDAP
 postpone for	admin	en	Postpone for
@@ -800,8 +792,8 @@ search peer servers	admin	en	Search peer servers
 secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
 secure connection	admin	en	Secure connection
 security	admin	en	Security
-select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for.
 select accounts for which the custom field should be readonly	admin	en	Select accounts for which the custom field should be readonly
+select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for
 select group managers	admin	en	Select group managers
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	en	Select language to define language based message. Language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.
 select multiple	admin	en	Select multiple
@@ -810,7 +802,6 @@ select permissions this group will have	admin	en	Select permissions for this gro
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	en	Select the applications you want the token to be limited to, or leave the default of all applications.
 select the parent category. if this is a main category select no category	admin	en	Select the parent category. If this is a main category select NO CATEGORY.
 select type of imap server	admin	en	Select type of IMAP server
-select type of imap/pop3 server	admin	en	Select type of IMAP/POP3 server
 select type of smtp server	admin	en	Select type of SMTP server
 select users	admin	en	Select users
 select users for inclusion	admin	en	Select users for inclusion
@@ -834,7 +825,6 @@ set preference values.	admin	en	Set preference values.
 settings	admin	en	Settings
 should exceptions contain a trace (including function arguments)	admin	en	Should exceptions contain a trace, including function arguments.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page?
-show 'powered by' logo on	admin	en	Show 'Powered by' logo on
 show access log	admin	en	Show access log
 show as optional, but required once user has it setup	admin	en	Show as optional, but required once user has it setup
 show as required, but only once user has it setup	admin	en	Show as required, but only once user has it setup
@@ -867,7 +857,6 @@ ssl	admin	en	SSL
 standard	admin	en	Standard
 standard identity	admin	en	Standard identity
 standard imap server	admin	en	Standard IMAP server
-standard pop3 server	admin	en	Standard POP3 server
 standard smtp-server	admin	en	Standard SMTP server
 start	admin	en	Start
 start testjob!	admin	en	Start test job!
