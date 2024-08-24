@@ -1,4 +1,4 @@
---> enter new name	timesheet	pt-br	--> informe o novo nome
+--> enter new name	admin	pt-br	--> informe o novo nome
 2 month ago	timesheet	pt-br	2 meses atrás
 2 years ago	timesheet	pt-br	2 anos atrás
 3 years ago	timesheet	pt-br	3 anos atrás
@@ -14,13 +14,13 @@ creates a new field	timesheet	pt-br	criar um novo campo
 creating new entry	timesheet	pt-br	criando novo registro
 custom fields	timesheet	pt-br	Campos personalizados
 default document to insert entries	timesheet	pt-br	Documento padrão para inserir entradas
-delete this status	timesheet	pt-br	Remover este status
+delete this status	admin	pt-br	Remover este status
 deleted	timesheet	pt-br	removido
 deletes this field	timesheet	pt-br	Remover este campo
 determines the order the fields are displayed	timesheet	pt-br	determinar a ordem de exibição dos campos
 directory with documents to insert entries	timesheet	pt-br	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt-br	cada valor é uma linha como <id>[=<label>]
-edit status	timesheet	pt-br	Editar o Status
+edit status	common	pt-br	Editar o Status
 edit this entry	timesheet	pt-br	Editar este registro
 empty if identical to duration	timesheet	pt-br	vazio se idêntico à duração
 end	timesheet	pt-br	Fim
@@ -65,7 +65,7 @@ none: use only free project-names	admin	pt-br	Nenhum: usar apenas nomes de proje
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
 or endtime	timesheet	pt-br	or horário final
 order	timesheet	pt-br	Ordem
-parent	timesheet	pt-br	Pai
+parent	admin	pt-br	Pai
 permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos

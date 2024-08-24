@@ -170,7 +170,6 @@ do you want a notification, if items you delegated are due?	infolog	es-es	¿Dese
 do you want to receive notifications as html-mails or plain text?	infolog	es-es	¿Desea recibir las notifaciones como correo en HTML o texto sencillo?
 don't show infolog	infolog	es-es	NO mostrar el Registro de notas y tareas
 done	infolog	es-es	Hecho
-download	infolog	es-es	Guardar fichero
 download url for links	infolog	es-es	Descargar URL para enlaces
 due %1	infolog	es-es	Vencido %1
 due date	infolog	es-es	Fecha de vencimiento
@@ -210,7 +209,6 @@ exists	infolog	es-es	Existe
 export definition to use for nextmatch export	infolog	es-es	Exportar la definición a usar para exportar nextmatch
 exports in ical format.	infolog	es-es	Exporta en formato iCal.
 exports infolog entries into a csv file.	infolog	es-es	Exporta entradas en un fichero CSV.
-favorites	infolog	es-es	Favoritos
 fax	infolog	es-es	Fax
 field must not be empty !!!	infolog	es-es	¡El campo no debe estar vacío!
 fields to exclude when copying an infolog:	infolog	es-es	Campos a excluir al copiar un InfoLog:
@@ -428,8 +426,6 @@ select a priority for this task	infolog	es-es	Seleccionar una prioridad para est
 select a project	infolog	es-es	Seleccionar un proyecto
 select a responsible user: a person you want to delegate this task	infolog	es-es	Seleccionar un usuario responsable: una persona en la que se quiere delegar la tarea
 select a typ to edit it's status-values or delete it	infolog	es-es	Seleccionar un tipo para editar sus valores de estado o eliminarlo
-select an action	infolog	es-es	Seleccionar una acción
-select an action...	infolog	es-es	Seleccionar una acción ...
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
 select multiple contacts for a further action	infolog	es-es	Seleccionar múltiples contactos para una acción posterior

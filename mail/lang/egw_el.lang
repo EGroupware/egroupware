@@ -13,7 +13,6 @@
 account editable by user	mail	el	ο λογαριασμός είναι επεξεργάσιμος από τον χρήστη
 acl rights retrieve failed, seems there are no rights set!	mail	el	Η λήψη των δικαιωμάτων ACL απέτυχε, φαίνεται πως δεν έχουν οριστεί δικαιώματα!
 acl rights retrieved successfully	mail	el	Οι ορισμοί δικαιώματων (ACL) ελήφθησαν επιτυχώς
-action	mail	el	Ενέργεια
 activating by date requires a start- and end-date!	mail	el	Η ενεργοποίηση με βάση την ημερομηνία απαιτεί ημερομηνία έναρξης και λήξης!
 add "%1" into blacklisted domains	mail	el	Προσθήκη "%1" στη μαύρη λίστα (blacklist) των domains
 add "%1" into blacklisted emails	mail	el	Προσθήκη "%1" στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
@@ -27,7 +26,6 @@ add folder	mail	el	Προσθήκη φακέλου
 add raw message, ignore mail attachments	mail	el	Μετατροπή αλληλογραφίας σε αντικείμενο, προσθήκη ακατέργαστου μηνύματος (αγνοήστε τα συνημμένα της αλληλογραφίας)
 add this certificate into contact	mail	el	Προσθήκη αυτού του πιστοποιητικού στην επαφή
 add to addressbook	mail	el	προσθήκη στο βιβλίο διευθύνσεων
-add your domain as "%1" in options to list of email providers and enable api.	mail	el	Προσθήκη του domain σας ως "%1" στις ρυθμίσεις για να εμφανιστεί στην λίστα με τους παρόχους ηλεκτρονικού ταχυδρομείου και να ενεργοποιηθεί το API.
 adding %1 to blacklisted email addresses failed because of %2	mail	el	Απέτυχε η προσθήκη "%1" στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου λόγω %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	el	Απέτυχε η προσθήκη "%1" στη λευκή λίστα (whitelist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου λόγω %2
 after reply, visible during compose	mail	el	Μετά την απάντηση. Θα εμφανίζεται κατά την διάρκεια της σύνταξης του μηνύματος
@@ -46,7 +44,6 @@ allow external images from listed domains	mail	el	Να επιτρέπονται 
 allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails.
 allow images from listed domains in html emails	mail	el	Να επιτρέπονται οι εικόνες από τα αναφερόμενα domains σε μηνύματα τύπου HTML.
 allow users to create further identities	mail	el	να επιτρέπεται στους χρήστες να δημιουργούν πρόσθετες ταυτότητες
-allways a new window	mail	el	πάντα νέο παράθυρο
 always	mail	el	Πάντα
 always allow external sources from %1	mail	el	Να επιτρέπονται πάντα εξωτερικές πηγές από %1
 always respond / auto-responder	mail	el	Πάντα να απαντάτε / αυτόματος αναμεταδότης
@@ -153,7 +150,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	el	Απενεργ
 disabled!	mail	el	απενεργοποιημένο!
 discard	mail	el	απόρριψη
 discard message	mail	el	απόρριψη μηνύματων
-display messages in multiple windows	mail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
 display of html emails	mail	el	προβολή των HTML emails
 display of identities	admin	el	εμφάνιση ταυτοτήτων
 display only when no plain text is available	mail	el	προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
@@ -262,8 +258,6 @@ forward to	mail	el	προώθηση σε
 forward to address (*):	mail	el	Προώθηση στην διέυθυνση (*):
 forwards	mail	el	Προώθηση σε
 from	mail	el	Από
-from(a->z)	mail	el	Από (Α->Ω)
-from(z->a)	mail	el	Από (Ω->Α)
 general	admin	el	Γενικά
 general settings	mail	el	Γενικές ρυθμίσεις
 get acl rights failed from imap server!	mail	el	Αποτυχία λήψης δικαιωμάτων ACL από το διακομιστή IMAP!
@@ -297,7 +291,6 @@ if message size	mail	el	αν το μέγεθος του μηνύματος
 if subject contains:(*)	mail	el	Εάν το θέμα περιλαμβάνει: (*)
 if to contains:(*)	mail	el	Εάν το πεδίο προς (to) περιλαμβάνει: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	el	Αν θέλετε να βλέπετε μια προεπισκόπηση ενός μηνύματος κάνοντας ένα απλό κλικ στο θέμα, ενεργοποιήστε το.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	el	Αν θέλετε να επιλέξετε πολλούς φακέλους με μία ενέργεια, μπορείτε να κρατήσετε πατημένο το πλήκτρο ctrl και στη συνέχεια να επιλέξετε έναν φάκελο ως εύρος έναρξης και έναν άλλο φάκελο στο ίδιο επίπεδο ως εύρος λήξης, όλοι οι φάκελοι που βρίσκονται ενδιάμεσα θα επιλεγούν ή θα αποεπιλεγούν ανάλογα με την τρέχουσα κατάστασή τους.
 imap	mail	el	IMAP
 imap - incoming mail	mail	el	IMAP - εισερχόμενα μηνύματα
 imap administration	mail	el	IMAP διαχείριση
@@ -562,8 +555,6 @@ signature	mail	el	Υπογραφή
 signature at top	mail	el	υπογραφή στο πάνω μέρος
 signature position and visibility	mail	el	Θέση υπογραφής και κατάσταση εμφάνισης
 signed by	mail	el	Υπογραφή από
-size(...->0)	mail	el	Μέγεθος (...->0)
-size(0->...)	mail	el	Μέγεθος (0->...)
 small view	mail	el	μικρή προβολή
 smime encrypted message	mail	el	Κρυπτογραφημένο μήνυμα S/MIME
 smime signed message	mail	el	Υπογεγραμμένο μήνυμα S/MIME
@@ -579,8 +570,6 @@ step 2: folder	mail	el	Βήμα 2: Φάκελοι
 step 3: sieve - server side mail filtering	mail	el	Βήμα 3: Sieve
 step 4: smtp - outgoing mail	mail	el	Βήμα 4: SMTP - εξερχόμενα μηνύματα
 store to folder	mail	el	Αποθήκευση στον φάκελο
-subject(a->z)	mail	el	Θέμα (Α->Ω)
-subject(z->a)	mail	el	Θέμα (Ω->Α)
 subscribe folder	mail	el	Συνδρομή στον φάκελο
 subscribe folder ...	mail	el	Συνδρομή στον φάκελο ...
 subscribe to folder %1	mail	el	Συνδρομή στον φάκελο %1

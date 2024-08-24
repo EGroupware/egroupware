@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	id	Default = Tidak, biarkan saja jika Anda tidak menggunakannya
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	id	(imapclass harus mendukung fitur ini dengan meminta nilai konfigurasi yang sesuai dan meneruskannya sebagai defaultquota ke server IMAP)
 (no subject)	admin	id	(tanpa subyek)
-(stored password will not be shown here)	admin	id	Kata sandi yang tersimpan tidak akan ditampilkan di sini!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	id	Untuk menginstal aplikasi baru, gunakan<br><a href="setup/" target="setup">Setup</a> [Kelola Aplikasi]!
 -  type	admin	id	- tipe
 1 year	admin	id	1 tahun
@@ -60,8 +59,6 @@ acl csv export	admin	id	Ekspor ACL CSV
 acl deleted.	admin	id	ACL dihapus.
 acl manager	admin	id	Manajer ACL
 acl rights	common	id	Hak-hak ACL
-action	admin	id	Tindakan
-actions	admin	id	Tindakan
 activate	admin	id	Aktifkan
 activate wysiwyg-editor	admin	id	Mengaktifkan WYSIWYG-editor
 active templates	admin	id	Templat yang aktif
@@ -80,17 +77,17 @@ add new email address:	admin	id	Tambah alamat email baru:
 add peer server	admin	id	Tambah Peer Server
 add profile	admin	id	Tambah Profil
 add sub-category	admin	id	Tambah sub-kategori
+add to group	admin	id	Tambahkan ke grup
+add user	admin	id	Tambahkan pengguna
+add user or group	admin	id	Menambahkan pengguna atau grup
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
 admin name	admin	id	Nama Admin
 admin password	admin	id	Kata sandi admin
-admin username	admin	id	Nama Admin
-administration	admin	id	Administrasi
 admins	admin	id	Admins
 advanced options	admin	id	Opsi Canggih
 aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
-all categories	admin	id	Semua kategori
 all users	admin	id	Semua pengguna
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
@@ -116,6 +113,8 @@ bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
 bottom	admin	id	Bawah
+bulk changes	admin	id	Perubahan massal
+bulk password reset	admin	id	Pengaturan ulang kata sandi massal
 calculate next run	admin	id	Calculate next run
 can change password	admin	id	Dapat mengubah kata sandi
 cancel testjob!	admin	id	Batalkan TestJob!
@@ -124,6 +123,9 @@ category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
+certificate	admin	id	Sertifikat
+certificate details	admin	id	Detail sertifikat
+certificate validation in days	admin	id	Validasi sertifikat dalam hitungan hari
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
@@ -146,7 +148,6 @@ custom 2	admin	id	Kustom 2
 custom 3	admin	id	Kustom 3
 custom fields	admin	id	Bidang khusus
 cyrus imap server	admin	id	Server Cyrus IMAP
-cyrus imap server administration	admin	id	Administrasi server Cyrus IMAP
 data	admin	id	Data
 day	admin	id	Hari
 day of week<br>(0-6, 0=sun)	admin	id	Hari-hari<br>(0-6, 0=Min)
@@ -240,7 +241,6 @@ icon	admin	id	Ikon
 idle	admin	id	Menganggur
 imap admin password	admin	id	Password admin IMAP
 imap admin user	admin	id	Admin IMAP
-imap c-client version < 2001	admin	id	IMAP C-Client Version < 2001
 imap server	admin	id	IMAP Server
 importance	admin	id	Importance
 in mbyte	admin	id	dalam MByte
@@ -361,14 +361,12 @@ rows	admin	id	Rows
 save the category	admin	id	Simpan kategori ini
 saves the changes made and leaves	admin	id	Simpan perubahan dan tinggalkan
 saves this entry	admin	id	Simpan entri ini
-search accounts	admin	id	Cari akoun
 search categories	admin	id	Cari kategori
 search groups	admin	id	Cari kelompok
 search peer servers	admin	id	Cari peer servers
 security	admin	id	Kemanan
 select group managers	admin	id	Pilih Manajer Kelompok
 select type of imap server	admin	id	Pilih tipe Server IMAP
-select type of imap/pop3 server	admin	id	Pilih tipe Server IMAP/POP3
 select type of smtp server	admin	id	Pilih tipe Server SMTP
 selectbox	admin	id	Pilih kotak
 send using this email-address	admin	id	Kirim menggunakan alamat eMail ini
@@ -398,7 +396,6 @@ sort the entries	admin	id	Urutkan entri
 ssl	admin	id	SSL
 standard	admin	id	Standar
 standard imap server	admin	id	Server IMAP Standar
-standard pop3 server	admin	id	Server POP3 Standar
 standard smtp-server	admin	id	Server SMTP Standar
 start	admin	id	Mulai
 start testjob!	admin	id	Mulai pekerjaan tes!

@@ -170,7 +170,6 @@ do you want a notification, if items you delegated are due?	infolog	it	Inviare n
 do you want to receive notifications as html-mails or plain text?	infolog	it	Ricevi le notifiche come HTML o testo.
 don't show infolog	infolog	it	NON mostrare Attività
 done	infolog	it	Eseguita
-download	infolog	it	Salvare il file
 download url for links	infolog	it	URL di scaricamento per i collegamenti
 due %1	infolog	it	In scadenza %1
 due date	infolog	it	Data di scadenza
@@ -210,7 +209,6 @@ exists	infolog	it	Esiste
 export definition to use for nextmatch export	infolog	it	Definizione di esportazione da usare per il "nextmatch" (corrispondenza successiva)
 exports in ical format.	infolog	it	Esporta in formato iCal
 exports infolog entries into a csv file.	infolog	it	Esporta le schede Attività in un file CSV.
-favorites	infolog	it	Preferiti
 fax	infolog	it	Fax
 field must not be empty !!!	infolog	it	Il campo non può essere vuoto!
 fields to exclude when copying an infolog:	infolog	it	Campi da escludere quando si copia in Attività:
@@ -428,8 +426,6 @@ select a priority for this task	infolog	it	Seleziona una priorità per questo To
 select a project	infolog	it	Seleziona un progetto
 select a responsible user: a person you want to delegate this task	infolog	it	Seleziona un utente responsabile: una persona a cui vuoi delegare questa attività
 select a typ to edit it's status-values or delete it	infolog	it	Seleziona un tipo per modificare il suo stato o cancellarlo
-select an action	infolog	it	Seleziona una azione
-select an action...	infolog	it	Seleziona una azione ...
 select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
 select an entry to link with	infolog	it	Seleziona una voce da linkare con
 select multiple contacts for a further action	infolog	it	Seleziona contatti multipli per azioni ulteriori

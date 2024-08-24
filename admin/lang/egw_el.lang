@@ -55,8 +55,6 @@ acl manager	admin	el	Διαχειριστής ACL
 acl rights	common	el	Δικαιώματα ACL
 acl updated	admin	el	Ενημέρωση ACL
 acl updated.	admin	el	Ενημέρωση ACL.
-action	admin	el	Ενέργεια
-actions	admin	el	Ενέργειες
 activate	admin	el	Ενεργοποίηση
 activate wysiwyg-editor	admin	el	Eνεργοποίηση WYSIWYG
 add a category	admin	el	πρόσθεσε μία κατηγορία
@@ -74,19 +72,18 @@ add new account	admin	el	Πρόσθεσε νέο λογαριασμό
 add new application	admin	el	Πρόσθεσε νέα εγαρμογή
 add peer server	admin	el	Πρόσθεσε ομότιμο server
 add sub-category	admin	el	Πρόσθεσε υποκατάλογο
+add to group	admin	el	Προσθήκη σε ομάδα
 add user	admin	el	Προσθήκη χρήστη
 add user or group	admin	el	Προσθήκη χρήστη ή ομάδας
 admin email	admin	el	Email διαχειριστή
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	el	Ηλεκτρονική διεύθυνση (email) διαχειριστή (διαχωρισμένο με κόμμα) ο οποίος θα ειδοποιηθεί για το κλείδωμα (κενό για να μην ειδοποιηθεί)
 admin name	admin	el	Ονομα διαχειρηστή
 admin password	admin	el	Κωδικός πρόσβασης διαχειριστή
-administration	admin	el	Διαχείρηση
 admins	admin	el	Διαχειριστές
 advanced options	admin	el	επιλογές για προχωρημένους
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	el	Μετά από πόσες ανεπιτυχείς προσπάθειες σύνδεσης ένας λογαριασμός θα πρέπει να μπλοκαριστεί. Προεπιλογή = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	el	Μετά από πόσες αποτυχημένες προσπάθειες για εισαγωγή, ένα IP θα έπρεπε να μπλοκαριστεί (προκαθορισμένο 3)
 aliases	admin	el	Ψευδώνυμα
-all categories	admin	el	Όλες οι κατηγορίες
 all records and account information will be lost!	admin	el	Ολες οι εγγραφές και οι πληροφορίες λογαριασμών θα χαθούν!
 all users	admin	el	Ολοι οι χρήστες
 allow anonymous access to this app	admin	el	Επιτρέπεται ανώνυμη πρόσβαση σε αυτή την εφαρμογή
@@ -125,13 +122,19 @@ bad login name or password.	admin	el	Λάθος όνομα ή κωδικός π�
 bad request: %s	admin	el	Άκυρη απαίτηση: %s
 bi-dir passthrough	admin	el	ημη-κατευθυντικό πέρασμα
 bi-directional	admin	el	ημη-κατευθυντικός
+blocking after wrong password	admin	el	Αποκλεισμός μετά από λάθος κωδικό πρόσβασης
 bottom	admin	el	βάση
+bulk changes	admin	el	Μαζικές αλλαγές
+bulk password reset	admin	el	Μαζική επαναφορά κωδικού πρόσβασης
 calculate next run	admin	el	Υπολόγησε επόμενη ενέργεια
 can change password	admin	el	Επιτρέπεται η αλλαγή συνθηματικού
 cancel testjob!	admin	el	Διέκοψε την δοκιμαστική ενέργεια!
 categories list	admin	el	Λίστα κατηγοριών
 category %1 has been saved !	admin	el	Κατηγορία %1 έχει σωθεί!
 category list	admin	el	Λίστα κατηγοριών
+certificate	admin	el	Πιστοποιητικό
+certificate details	admin	el	Λεπτομέρειες πιστοποιητικού
+certificate validation in days	admin	el	Επικύρωση πιστοποιητικού σε ημέρες
 change acl rights	admin	el	αλλαγή ACL δικαιομάτων
 change config settings	admin	el	Αλλαγή ρυθμήσεων διαμόρφωσης
 change login screen message	admin	el	Αλλαγή μηνύματος κύριας οθόνης
@@ -233,8 +236,6 @@ email settings	common	el	Ρυθμίσεις ηλεκτρονικού ταχυδ�
 enable	admin	el	Eνεργοποίηση
 enable debug-messages	admin	el	Εμφάνιση μηνυμάτων-αποσφαλμάτωσης
 enable sieve	admin	el	Ενεργοποίηση Sieve
-enabled - hidden from navbar	admin	el	Εμφάνιση - Απόκρυψη απο μπάρα πλοήγησης
-enabled - popup window	admin	el	Ενεργοποίηση - Εμφνιζόμενο Παράθυρο
 encrypted connection	admin	el	αποκρυπτογραφημένη σύνδεση
 enter a description for the category	admin	el	Εισήγαγε μια περιγραφή για την κατηγορία
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	el	Εισήγαγε λιγο τυχαίο κείμενο για περίοδο εφαρμογής<br>encryption (απαιτήται mcrypt)
@@ -426,7 +427,6 @@ save the category	admin	el	σώστε την κατηγορία.
 save the category and return back to the list	admin	el	σώστε την κατηγορία και επιστρέψτε πίσω στη λίστα.
 saves the changes made and leaves	admin	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί.
 saves this entry	admin	el	Αποθηκεύει την καταχώρηση
-search accounts	admin	el	Ψάξιμο λογαριασμών
 search categories	admin	el	Ψάξιμο κατηγοριών
 search groups	admin	el	Ψάξιμο ομάδων
 search peer servers	admin	el	Ψάξιμο ισότιμων server
@@ -449,7 +449,6 @@ server url	admin	el	Server URL
 server username	admin	el	Ονομα Χρήστη Server
 set preference values.	admin	el	Καθορισμός τιμών προτιμίσεων
 should the login page include a language selectbox (useful for demo-sites) ?	admin	el	Θα έπρεπε η σελίδα εισόδου να περιέχει ένα κουτί επιλογής (χρήσιμο για demo-sites);
-show 'powered by' logo on	admin	el	Εμφάνηση λογότυπου 'Powered by'
 show access log	admin	el	Εμφάνηση καταγραφής συνδέσεων
 show current action	admin	el	Εμφάνηση τρέχουσας ενέργειας
 show error log	admin	el	Εμφάνηση καταγραφή λαθών
@@ -466,7 +465,6 @@ sort the entries	admin	el	ταξινόμηση των εισόδων
 ssl	admin	el	SSL
 standard	admin	el	συνήθης
 standard imap server	admin	el	συνήθης IMAP server
-standard pop3 server	admin	el	συνήθης POP3 server
 standard smtp-server	admin	el	συνήθης SMTP server
 start	admin	el	Έναρξη
 start testjob!	admin	el	Εναρξη Δοκιμαστικής Εργασίας!

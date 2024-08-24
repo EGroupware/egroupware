@@ -19,7 +19,6 @@ all of	mail	fi	kaikki
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allow images from listed domains in html emails	mail	fi	Salli listattujen verkkotunnusten kuvat HTML-sähköposteissa.
-allways a new window	mail	fi	Aina uusi ikkuna
 always allow external sources from %1	mail	fi	Salli aina ulkoiset lähteet osoitteesta %1
 always respond / auto-responder	mail	fi	Vastaa aina / automaattinen vastaus
 always show html emails	mail	fi	Näytä aina HTML sähköpostit
@@ -75,7 +74,6 @@ disable	mail	fi	Ota pois käytöstä
 disable caching of flags	mail	fi	Poista lippujen välimuistitallennus käytöstä
 discard	mail	fi	Hylkää
 discard message	mail	fi	Hylkää viesti
-display messages in multiple windows	mail	fi	Näytä viesti uudessa ikkunassa
 display of html emails	mail	fi	HTML sähköpostien näkymä
 display only when no plain text is available	mail	fi	Näytä vain kun "pelkkä teksti" ei ole saatavilla
 displaying html messages is disabled	mail	fi	HTML viestien näyttäminen on estetty
@@ -138,8 +136,6 @@ forward as attachment	mail	fi	Liitteenä
 forward inline	mail	fi	Viestiin sisällytettynä
 forward to	mail	fi	Välitä:
 from	mail	fi	Mistä
-from(a->z)	mail	fi	A:sta Z:taan
-from(z->a)	mail	fi	Z:sta A:han
 general	admin	fi	Yleinen
 get acl rights failed from imap server!	mail	fi	ACL-oikeuksien hakeminen epäonnistui IMAP-palvelimelta!
 greater than	mail	fi	Suurempi kuin
@@ -157,7 +153,6 @@ if	mail	fi	JOS
 if mail header	mail	fi	Jos postin ylätunniste
 if message size	mail	fi	Jos viestin koko
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	fi	Jos haluat nähdä sähköpostin esikatselun napsauttamalla aiheen kohdalla, ota tämä käyttöön.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	fi	Jos haluat valita useita kansioita yhdellä toiminnolla, voit pitää ctrl-näppäintä painettuna ja valita kansio aloitusalueeksi ja toinen kansio samalla tasolla loppualueeksi, jolloin kaikki välissä olevat kansiot valitaan tai poistetaan valinnasta niiden nykyisen tilan mukaan.
 imap	mail	fi	IMAP
 imap server	mail	fi	IMAP -palvelin
 import message	mail	fi	Tuo sähköpostiviesti
@@ -337,8 +332,6 @@ signature	mail	fi	Allekirjoitus
 signature at top	mail	fi	allekirjoitus ylhäällä
 signature position and visibility	mail	fi	Allekirjoituksen sijainti ja näkyvyys
 signed by	mail	fi	Allekirjoittanut
-size(...->0)	mail	fi	Koko (...->0)
-size(0->...)	mail	fi	Koko (0->...)
 small view	mail	fi	Pieni näkymä
 smime encrypted message	mail	fi	S/MIME-salattu viesti
 smime signed message	mail	fi	S/MIME-allekirjoitettu viesti
@@ -346,8 +339,6 @@ smtp	mail	fi	SMTP
 sneak preview in list	mail	fi	Viestin esikatselu
 sort order	mail	fi	Lajittelujärjestys
 start new messages with mime type plain/text or html?	mail	fi	Haluatko aloitaa uudet viestit pelkkänä tekstinä vai HTML:nä?
-subject(a->z)	mail	fi	Aiheet A > Z
-subject(z->a)	mail	fi	Aiheet Z > A
 template folder	mail	fi	Mallipohjat -kansio
 templates	mail	fi	Mallipohjat
 text	mail	fi	Teksti

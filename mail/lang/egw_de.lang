@@ -15,7 +15,6 @@
 account editable by user	mail	de	Benutzer kann dieses Konto bearbeiten
 acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsrechte konnten nicht gelesen werden!
 acl rights retrieved successfully	mail	de	Zugriffsrechte erfolgreich gelesen
-action	mail	de	Aktion
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
 add "%1" into blacklisted domains	mail	de	Domain "%1" zu Blacklist hinzufügen
 add "%1" into blacklisted emails	mail	de	E-Mail-Adresse "%1" zu Blacklist hinzufügen
@@ -29,7 +28,6 @@ add folder	mail	de	Ordner hinzufügen
 add raw message, ignore mail attachments	mail	de	Konvertiere E-Mail zum Eintrag und füge die original E-Mail an (aber keine Anhänge)
 add this certificate into contact	mail	de	Dieses Zertifikat dem Kontakt hinzufügen
 add to addressbook	mail	de	Zum Adressbuch hinzufügen
-add your domain as "%1" in options to list of email providers and enable api.	mail	de	Fügen Sie Ihre Domain als "%1" in Optionen zu der Liste der E-Mail-Anbieter hinzu und schalten sie API ein.
 adding %1 to blacklisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Blacklist ist fehlgeschlagen, da %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	de	Hinzufügen von %1 als E-Mail-Adresse zur Whitelist ist fehlgeschlagen, da %2
 after reply, visible during compose	mail	de	Unter dem zitierten Text, sichtbar während der Bearbeitung
@@ -45,10 +43,9 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow	mail	de	Erlauben
 allow external images	mail	de	Erlaube externe Bildquellen
 allow external images from listed domains	mail	de	Erlaube externe Inhalte der folgenden Domains
-allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Bildquellen in HTML-E-Mails.
-allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Bildquellen der folgenden Domains in HTML-E-Mails.
+allow images from external sources in html emails	mail	de	Erlaube Bilder von externen Quellen in HTML-E-Mails.
+allow images from listed domains in html emails	mail	de	Erlaube Bilder von externen Quellen der folgenden Domains in HTML-E-Mails.
 allow users to create further identities	mail	de	Benutzer dürfen weitere Identitäten anlegen
-allways a new window	mail	de	Immer in einem neuen Fenster
 always	mail	de	Immer
 always allow external sources from %1	mail	de	Erlaube externe Bildquellen von %1
 always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
@@ -156,7 +153,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	de	Variablen Zeil
 disabled!	mail	de	deaktiviert
 discard	mail	de	verwerfen
 discard message	mail	de	Nachricht verwerfen
-display messages in multiple windows	mail	de	Nachrichten in mehreren Fenstern anzeigen
 display of html emails	mail	de	HTML-E-Mails anzeigen
 display of identities	admin	de	Anzeigeformat der verfügbaren Identitätsinformationen
 display only when no plain text is available	mail	de	Nur anzeigen wenn kein Plain-Text vorhanden ist
@@ -248,7 +244,7 @@ files	mail	de	Anhang
 flag / unflag	mail	de	Markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	Markiert
-flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als %2 in %3 markiert
+flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als "%2" in %3 markiert
 flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 flagged / unflagged	mail	de	Markierung
@@ -260,8 +256,6 @@ folder %1 is moving to folder %2	mail	de	Ordner %1 wird in den Ordner %2 verscho
 folder management	mail	de	Ordner-Verwaltung
 folder management ...	mail	de	Ordner-Verwaltung ...
 folder settings	mail	de	Ordner-Einstellungen
-for e.g.: mpeg	mail	de	z.B. mpeg
-for eg.: mpeg	mail	de	z.B. für mpeg
 force html	mail	de	Erzwinge HTML
 force plain text	mail	de	Erzwinge Text
 forward	mail	de	Weiterleiten als
@@ -274,8 +268,6 @@ forward to address (*):	mail	de	Weiterleiten an Adresse (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	de	Die Weiterleitung dieser Nachricht ist fehlgeschlagen, weil der Inhalt dieser Nachricht verschlüsselt zu sein scheint und nicht richtig entschlüsselt werden kann. Wenn Sie dennoch den Inhalt dieser verschlüsselten Nachricht weiterleiten möchten, können Sie versuchen, statt dessen Weiterleitung als Anhang zu verwenden.
 forwards	mail	de	weiterleiten an
 from	mail	de	Von
-from(a->z)	mail	de	Von (A->Z)
-from(z->a)	mail	de	Von (Z->A)
 general	admin	de	Allgemein
 general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffsrechte konnten auf dem IMAP Server nicht gelesen werden!
@@ -340,7 +332,7 @@ learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein 
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
 less than	mail	de	kleiner als
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
-list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern)
+list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern).
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter
@@ -381,7 +373,7 @@ move to	mail	de	Verschieben
 move to archive	mail	de	Verschiebe in Archivordner
 move to trash	mail	de	Verschiebe in Papierkorb
 moved %1 message(s) from %2 to %3	mail	de	%1 Nachrichten wurden von %2 nach %3 verschoben
-moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt
+moving folders from one mailaccount to another is not supported	mail	de	Verschieben von Ordnern von einem Mailkonto zu einem anderen wird nicht unterstützt.
 name and domain	mail	de	Name und Domain
 name and email	mail	de	Name und E-Mail
 name of account	mail	de	Konten-Bezeichnung
@@ -494,7 +486,7 @@ removing %1 from whiltelisted email addresses failed because of %2	mail	de	Lösc
 rename folder	mail	de	Umbenennen
 rename folder %1 ?	mail	de	Ordner %1 umbenennen?
 rename folder %1 to:	mail	de	Ordner %1 umbenennen in:
-renamed folder %1 to %2	mail	de	Ordner %1 umbenannt in %2
+renamed folder %1 to %2	mail	de	Ordner %1 umbenannt in %2.
 replace 'http://' in image urls with (trailing / required!)	mail	de	Ersetze 'http://' in Bild Adressen (URLs) mit (muss in einem / enden!)
 replied	mail	de	beantwortet
 reply	mail	de	Antworten
@@ -591,7 +583,7 @@ show them this time only	mail	de	Einmalig externe Inhalte anzeigen
 show vertical	mail	de	Vertikal anzeigen (3-Spalten-Ansicht)
 show vertical with all columns	mail	de	Vertikal mit Einzelspalten anzeigen
 show/hide preview pane in mail list view	mail	de	Definiert das Fensterlaout bzw. die Vorschau einer ausgewählten E-Mail.<br><br><b>Vertikal anzeigen (3-Spalten-Ansicht):</b><br>Mailkonten (Seitenleiste), E-Mail-Kopfzeilen und die Vorschau werden in 3 Spalten vertikal nebeneinander angezeigt.<br><b>Vertikal mit Einzelspalten anzeigen:</b><br>3-Spalte-Ansicht, jedoch mit allen Spalten in der Kopfzeilen-Spalte. Benötigt deutlich mehr horizontalen Platz!<br><b>Horizontal anzeigen:</b><br>Die Vorschau wird unter der Kopfzeilen-Liste angezeigt.<br><b>Horizontal anzeigen, ausblenden wenn nichts ausgewählt:</b><br>Horizontale Anzeige, jedoch wird das Vorschaufenster ausgeblendet wenn keine E-Mail ausgewählt ist.<br>Macht die Anzeige unruhiger, zeigt aber mehr Zeilen an.<br><b>Nie anzeigen:</b><br>Eine Vorschau wird niemals angezeigt. Eine E-Mail muss zum Lesen in einem neuen Fenster geöffnet werden.
-shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt eine kurze Zeit sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
+shows a temporary visible notification including from address, subject and a snippet of the mail	mail	de	Zeigt für kurze Zeit eine sichtbare Benachrichtigung einschließlich Absender, Betreff und Kurzvorschau der E-Mail.
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
@@ -621,8 +613,6 @@ step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige E-Mail-Filterung (Sieve) einrichten
 step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten
 store to folder	mail	de	Importordner
-subject(a->z)	mail	de	Betreff (A->Z)
-subject(z->a)	mail	de	Betreff (Z->A)
 subscribe folder	mail	de	Abonnieren
 subscribe folder ...	mail	de	Ordner abonnieren ...
 subscribe to folder %1	mail	de	Ordner %1 abonieren
@@ -688,7 +678,7 @@ validate addresses on submit:	mail	de	Adresse beim Speichern überprüfen:
 validate selected addresses on submit:	mail	de	Überprüfe die ausgewählten Adressen beim Senden des Formulars:
 view full mail source	mail	de	Quelltext anzeigen
 view header lines	mail	de	Kopfzeilen anzeigen
-what do do with html email	mail	de	Wie sollen E-Mails im HTML-Format angezeigt werden
+what do do with html email	mail	de	Wie sollen E-Mails im HTML-Format angezeigt werden.
 what order the list columns are in	mail	de	Wählen Sie die Spaltenanordnung in der E-Mail Liste aus
 what to do when you delete a message	mail	de	Wählen Sie die Methode aus, wenn Sie eine Nachricht löschen. Diese kann entweder direkt gelöscht werden, oder in den Papierkorb verschoben werden.
 what to do when you send a message	mail	de	Wählen Sie die Aktion aus, wenn eine Nachricht versendet wird. EGroupware kann z. B. die Nachricht in den Gesendet-Ordner kopieren.

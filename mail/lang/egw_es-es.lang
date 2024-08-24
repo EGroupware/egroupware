@@ -15,7 +15,6 @@
 account editable by user	mail	es-es	cuenta editable por el usuario
 acl rights retrieve failed, seems there are no rights set!	mail	es-es	La recuperación de los derechos de la lista de control de acceso falló, ¡parece que no hay derechos establecidos!
 acl rights retrieved successfully	mail	es-es	Derechos de la lista de control e acceso recuperados correctamente
-action	mail	es-es	Acción
 activating by date requires a start- and end-date!	mail	es-es	Activar por fecha requiere una fecha de inicio y otra de final!
 add "%1" into blacklisted domains	mail	es-es	Añadir "%1" a los dominios en la lista negra
 add "%1" into blacklisted emails	mail	es-es	Añadir "%1" a los correos-e en la lista negra
@@ -29,7 +28,6 @@ add folder	mail	es-es	Añadir carpeta
 add raw message, ignore mail attachments	mail	es-es	Convertir correo en elemento, añadir mensaje sin procesar (ignorar adjuntos de correo)
 add this certificate into contact	mail	es-es	Añadir este certificado en contacto
 add to addressbook	mail	es-es	Añadir a la libreta de direcciones
-add your domain as "%1" in options to list of email providers and enable api.	mail	es-es	Añada su dominio como "%1" en las opciones para listar los proveedores de correo electrónico y habilite la API.
 adding %1 to blacklisted email addresses failed because of %2	mail	es-es	La adición de %1 a las direcciones de correo-e en la lista negra ha fallado debido a %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	es-es	La adición de %1 a las direcciones de correo-e en la lista blanca ha fallado debido a %2
 after reply, visible during compose	mail	es-es	Después de la respuesta, visible durante la composición
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	es-es	Permitir imágenes externas
 allow images from external sources in html emails	mail	es-es	Permitir imágenes de origen externo en correos HTML.
 allow images from listed domains in html emails	mail	es-es	Permitir imágenes de dominios listados en correos electrónicos HTML.
 allow users to create further identities	mail	es-es	Permitir a los usuarios crear nuevas identidades
-allways a new window	mail	es-es	Siempre una ventana nueva
 always	mail	es-es	Siempre
 always allow external sources from %1	mail	es-es	Siempre permitir fuentes externas desde %1
 always respond / auto-responder	mail	es-es	Responder siempre / autoresponder
@@ -155,7 +152,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	es-es	Deshabilita
 disabled!	mail	es-es	desactivado!
 discard	mail	es-es	descargar
 discard message	mail	es-es	Descartar mensaje
-display messages in multiple windows	mail	es-es	mostrar los mensajes en múltiples ventanas
 display of html emails	mail	es-es	mostrar los mensajes HTML
 display of identities	admin	es-es	exhibición de identidades
 display only when no plain text is available	mail	es-es	Mostrar sólo cuando no hay texto simple disponible
@@ -259,8 +255,6 @@ folder %1 is moving to folder %2	mail	es-es	La carpeta %1 se mueve a la carpeta 
 folder management	mail	es-es	Gestión de carpeta
 folder management ...	mail	es-es	Gestión de carpeta ...
 folder settings	mail	es-es	Opciones de la carpeta
-for e.g.: mpeg	mail	es-es	e.g. mpeg
-for eg.: mpeg	mail	es-es	e.g. mpeg
 force html	mail	es-es	Forzar HTML
 force plain text	mail	es-es	Forzar texto sin formato
 forward	mail	es-es	Reenviar
@@ -273,8 +267,6 @@ forward to address (*):	mail	es-es	Reenviar a la dirección (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	es-es	El reenvío de este mensaje ha fallado porque el contenido del mensaje parece estar encriptado y no se puede desencriptar correctamente. Si aún desea reenviar el contenido de este mensaje cifrado, puede intentar reenviarlo como archivo adjunto.
 forwards	mail	es-es	Reenvíos
 from	mail	es-es	De
-from(a->z)	mail	es-es	De (A-> Z)
-from(z->a)	mail	es-es	De (Z-> A)
 general	admin	es-es	General
 general settings	mail	es-es	Opciones generales
 get acl rights failed from imap server!	mail	es-es	¡Falló obtener los derechos de la lista de control de acceso del servidor IMAP!
@@ -310,7 +302,6 @@ if shown, which folders should appear on the home page	mail	es-es	Si se muestran
 if subject contains:(*)	mail	es-es	Si el asunto contiene:(*)
 if to contains:(*)	mail	es-es	Si el destinatario contiene:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	es-es	Si desea ver una vista previa de un correo haciendo clic en el asunto, habilíte esto.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	es-es	Si desea seleccionar varias carpetas en una acción, puede mantener presionada la tecla ctrl y luego seleccionar una carpeta como rango inicial y otra carpeta dentro del mismo nivel que el rango final, todas las carpetas entre ellas serán seleccionadas o desseleccionadas en función de su estado actual.
 imap	mail	es-es	IMAP
 imap - incoming mail	mail	es-es	IMAP - correo entrante
 imap administration	mail	es-es	Administración de IMAP
@@ -602,8 +593,6 @@ signature	mail	es-es	Firma
 signature at top	mail	es-es	firma en la parte superior
 signature position and visibility	mail	es-es	Posición y visibilidad de la firma
 signed by	mail	es-es	Firmado por
-size(...->0)	mail	es-es	Tamaño (...->0)
-size(0->...)	mail	es-es	Tamaño (0->...)
 small view	mail	es-es	Vista reducida
 smime encrypted message	mail	es-es	Mensaje cifrado S/MIME
 smime signed message	mail	es-es	Mensaje firmado S/MIME
@@ -622,8 +611,6 @@ step 2: folder	mail	es-es	Paso 2: Carpeta
 step 3: sieve - server side mail filtering	mail	es-es	Paso 3: Sieve - filtro de correo del lado del servidor
 step 4: smtp - outgoing mail	mail	es-es	Paso 4: SMTP - correo saliente
 store to folder	mail	es-es	Guardar en la carpeta
-subject(a->z)	mail	es-es	Asunto (A->Z)
-subject(z->a)	mail	es-es	Asunto (Z->A)
 subscribe folder	mail	es-es	Suscribir carpeta
 subscribe folder ...	mail	es-es	Suscribir carpeta ...
 subscribe to folder %1	mail	es-es	Suscribirse a la carpeta %1

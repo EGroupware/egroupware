@@ -15,7 +15,6 @@
 account editable by user	mail	en	Account editable by user
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
-action	mail	en	Action
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
 add "%1" into blacklisted domains	mail	en	Add "%1" into blacklisted domains
 add "%1" into blacklisted emails	mail	en	Add "%1" into blacklisted emails
@@ -29,7 +28,6 @@ add folder	mail	en	Add folder
 add raw message, ignore mail attachments	mail	en	Convert email to item, add raw message text (ignore email attachments)
 add this certificate into contact	mail	en	Add this certificate into contact
 add to addressbook	mail	en	Add to addressbook
-add your domain as "%1" in options to list of email providers and enable api.	mail	en	Add your domain as "%1" in options to list of email providers and enable API.
 adding %1 to blacklisted email addresses failed because of %2	mail	en	Adding %1 to blacklisted email addresses failed because of %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	en	Adding %1 to whiltelisted email addresses failed because of %2
 after reply, visible during compose	mail	en	After reply, visible during compose
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	en	Allow external images from lis
 allow images from external sources in html emails	mail	en	Allow images from external sources in HTML emails.
 allow images from listed domains in html emails	mail	en	Allow images from listed domains in HTML emails.
 allow users to create further identities	mail	en	Allow users to create further identities
-allways a new window	mail	en	Allways a new window
 always	mail	en	Always
 always allow external sources from %1	mail	en	Always allow external sources from %1
 always respond / auto-responder	mail	en	Always respond / auto-responder
@@ -156,7 +153,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	en	Disable use of
 disabled!	mail	en	disabled!
 discard	mail	en	discard
 discard message	mail	en	Discard message
-display messages in multiple windows	mail	en	display messages in multiple windows
 display of html emails	mail	en	Display of HTML emails
 display of identities	admin	en	display identities
 display only when no plain text is available	mail	en	Display only when no plain text is available
@@ -241,16 +237,16 @@ failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
 failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!
 file into	mail	en	Move to
 file into:	mail	en	Move to:
-file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is:%1
+file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is: %1
 filemanager	mail	en	Filemanager
 filemode has been switched to %1	mail	en	Filemode has been switched to: %1
 files	mail	en	Files
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or unflag a email
-flagged	mail	en	flagged
-flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as %2 in %3
-flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2
-flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2
+flagged	mail	en	Flagged
+flagged %1 messages as %2 in %3	mail	en	Flagged %1 message(s) as "%2" in %3.
+flagged %1 messages as flagged in %2	mail	en	Flagged %1 message(s) as flagged in %2.
+flagged %1 messages as unflagged in %2	mail	en	Flagged %1 message(s) as unflagged in %2.
 flagged / unflagged	mail	en	Flagged / Unflagged
 folder	mail	en	Folder
 folder %1 %2 failed because of %3!	mail	en	Folder %1 %2 failed because of %3!
@@ -260,8 +256,6 @@ folder %1 is moving to folder %2	mail	en	Folder %1 is moving to folder %2
 folder management	mail	en	Folder Management
 folder management ...	mail	en	Folder Management ...
 folder settings	mail	en	Folder settings
-for e.g.: mpeg	mail	en	for e.g.: mpeg
-for eg.: mpeg	mail	en	for eg.: mpeg
 force html	mail	en	Force HTML
 force plain text	mail	en	Force text
 forward	mail	en	forward
@@ -274,8 +268,6 @@ forward to address (*):	mail	en	Forward to address (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	en	Forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. If you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.
 forwards	mail	en	forwards
 from	mail	en	From
-from(a->z)	mail	en	from(A->Z)
-from(z->a)	mail	en	from(Z->A)
 general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
@@ -381,7 +373,7 @@ move to	mail	en	Move to
 move to archive	mail	en	Move to archive folder
 move to trash	mail	en	Move to trash
 moved %1 message(s) from %2 to %3	mail	en	Moved %1 message(s) from %2 to %3
-moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported
+moving folders from one mailaccount to another is not supported	mail	en	Moving folders from one email account to another is not supported.
 name and domain	mail	en	Name and domain
 name and email	mail	en	Name and email
 name of account	mail	en	Name of account
@@ -494,7 +486,7 @@ removing %1 from whiltelisted email addresses failed because of %2	mail	en	Remov
 rename folder	mail	en	Rename folder
 rename folder %1 ?	mail	en	Rename folder %1?
 rename folder %1 to:	mail	en	Rename folder %1 to:
-renamed folder %1 to %2	mail	en	Renamed folder %1 to %2
+renamed folder %1 to %2	mail	en	Renamed folder %1 to %2.
 replace 'http://' in image urls with (trailing / required!)	mail	en	Replace 'http://' in image urls with (trailing / required!)
 replied	mail	en	replied
 reply	mail	en	Reply
@@ -621,8 +613,6 @@ step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side email filtering
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email
 store to folder	mail	en	Store to folder
-subject(a->z)	mail	en	subject(A->Z)
-subject(z->a)	mail	en	subject(Z->A)
 subscribe folder	mail	en	Subscribe folder
 subscribe folder ...	mail	en	Subscribe folder ...
 subscribe to folder %1	mail	en	Subscribe to folder %1
@@ -688,7 +678,7 @@ validate addresses on submit:	mail	en	Validate addresses on submit:
 validate selected addresses on submit:	mail	en	Validate selected addresses on submit:
 view full mail source	mail	en	View full email source
 view header lines	mail	en	View header lines
-what do do with html email	mail	en	What do do with HTML email
+what do do with html email	mail	en	What to do with HTML email.
 what order the list columns are in	mail	en	What order the list columns are in
 what to do when you delete a message	mail	en	What to do when you delete a message.
 what to do when you send a message	mail	en	What to do when you send a message.

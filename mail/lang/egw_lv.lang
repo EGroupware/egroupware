@@ -89,8 +89,6 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder settings	mail	lv	Mapes uzstādījumi
 forward	mail	lv	Pārsūtīt
 from	mail	lv	No
-from(a->z)	mail	lv	No (A->Z)
-from(z->a)	mail	lv	No (Z->A)
 general	admin	lv	Vispārējs
 get acl rights failed from imap server!	mail	lv	ACL tiesību iegūšana no IMAP servera neizdevās!
 greater than	mail	lv	lielāks nekā
@@ -104,7 +102,6 @@ ident name organization email	mail	lv	Identitātes nosaukums Organizācija [E-pa
 identity label	mail	lv	Identitātes etiķete
 if	mail	lv	Ja
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lv	Ja vēlaties skatīt e-pasta priekšskatījumu, vienreiz noklikšķinot uz temata, iespējojiet šo funkciju.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	lv	Ja vēlaties vienā darbībā atlasīt vairākas mapes, varat turēt ctrl taustiņu un pēc tam atlasīt mapi kā sākuma diapazonu un citu mapi tajā pašā līmenī kā beigu diapazonu, un visas starp tām esošās mapes tiks atlasītas vai atceltas atkarībā no to pašreizējā statusa.
 imap	mail	lv	IMAP
 imap server	mail	lv	IMAP serveris
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	lv	Ziņojuma %1 importēšana neizdevās. Nevarēja saglabāt ziņojumu mapē %2, jo: %3
@@ -256,16 +253,12 @@ signature	mail	lv	Paraksts
 signature at top	mail	lv	Paraksts augšpusē
 signature position and visibility	mail	lv	Paraksta pozīcija un redzamība
 signed by	mail	lv	Parakstījis
-size(...->0)	mail	lv	Izmērs (...->0)
-size(0->...)	mail	lv	Izmērs (0->...)
 small view	mail	lv	mazais skats
 smime encrypted message	mail	lv	S/MIME šifrēta ziņa
 smime signed message	mail	lv	S/MIME parakstīts ziņojums
 smtp	mail	lv	SMTP
 sneak preview in list	mail	lv	Ziņu priekšskatījums
 sort order	mail	lv	Vieta pēc kārtas
-subject(a->z)	mail	lv	Tēma (A->Z)
-subject(z->a)	mail	lv	Tēma (Z->A)
 text	mail	lv	Teksts
 the imap server need to meet certain requirements and be configured for it:	mail	lv	IMAP serverim ir jāatbilst noteiktām prasībām UN tas ir jākonfigurē:
 the rule with priority %1 successfully saved!	mail	lv	Noteikums ar prioritāti %1 veiksmīgi saglabāts!

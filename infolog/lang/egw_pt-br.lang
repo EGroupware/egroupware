@@ -168,7 +168,6 @@ do you want a notification, if items you delegated are due?	infolog	pt-br	Você 
 do you want to receive notifications as html-mails or plain text?	infolog	pt-br	Você quer receber notificações em HTML ou texto puro.
 don't show infolog	infolog	pt-br	Não exibir Tarefas
 done	infolog	pt-br	Encerrado
-download	infolog	pt-br	Salvar arquivo
 download url for links	infolog	pt-br	URL de download para links
 due %1	infolog	pt-br	Vencimento %1
 due date	infolog	pt-br	Data de vencimento
@@ -208,7 +207,6 @@ exists	infolog	pt-br	Existe
 export definition to use for nextmatch export	infolog	pt-br	Definição Exportar para usar para exportação nextmatch
 exports in ical format.	infolog	pt-br	Exporta no formato iCal.
 exports infolog entries into a csv file.	infolog	pt-br	Exporta entradas do InfoLog em um arquivo CSV.
-favorites	infolog	pt-br	Favoritos
 fax	infolog	pt-br	Fax
 field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!
 fields to exclude when copying an infolog:	infolog	pt-br	Campos a serem excluídos ao copiar um InfoLog:

@@ -18,7 +18,7 @@
 %1 mail credentials deleted	admin	sv	%1 autentiseringsuppgifter för e-post borttagna
 %1 not found or not executable !!!	admin	sv	Kunde inte hitta %1 eller så är den inte körbar!
 %1 phrases saved.	admin	sv	%1 fraser sparade.
-%1 rights for %2 and applications %3	admin	sv	%1 rättigheter för %2 och applikation(er) %3 .
+%1 rights for %2 and applications %3	admin	sv	%1 rättigheter för %2 och applikation(er) %3.
 %1 run rights for applications	admin	sv	%1 kör rättigheter för applikationer
 %1 sessions killed	admin	sv	%1 sessioner dödade.
 %1 successful	admin	sv	%1 framgångsrik
@@ -50,10 +50,7 @@ account preferences	admin	sv	Konto alternativ
 acl csv export	admin	sv	CSV-export av ACL
 acl manager	admin	sv	ACL hantering
 acl rights	common	sv	ACL behörigheter
-action	admin	sv	Åtgärd
-actions	admin	sv	Åtgärder
 activate	admin	sv	Aktivera
-activate wysiwyg-editor	admin	sv	Aktivera WYSIWYG-editor
 add a category	admin	sv	Lägg till kategori
 add a group	admin	sv	Lägg till grupp
 add a new account.	admin	sv	Lägg till nytt konto.
@@ -67,22 +64,24 @@ add global category for %1	admin	sv	Lägg till global kategori för %1
 add group	admin	sv	Lägg till grupp
 add new account	admin	sv	Lägg till nytt konto
 add new application	admin	sv	Lägg till ny application
+add new email address:	admin	sv	Lägg till ny e-postadress:
 add peer server	admin	sv	Lägg till Peer Server
 add profile	admin	sv	Skapa profil
 add sub-category	admin	sv	Lägg till underkategori
+add to group	admin	sv	Lägg till i grupp
+add user	admin	sv	Lägg till användare
+add user or group	admin	sv	Lägg till användare eller grupp
 admin dn	admin	sv	Admin DN
 admin email	admin	sv	Admin e-postadress
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sv	Administrativa e-postadresser (komma-separerad) som skall notifieras om blockeringen. (lämna tom om ingen notifiering skall ske)
 admin name	admin	sv	Admin namn
 admin password	admin	sv	Admin lösenord
-admin username	admin	sv	Admin användare
-administration	admin	sv	Administration
 admins	admin	sv	Administratörer
 advanced options	admin	sv	Avanserade alternativ
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sv	Efter hur många misslyckade försök att logga in skall en IP adress blockeras (standard 3)?
 aliases	admin	sv	Alias
 all applications	admin	sv	Samtliga applikationer
-all categories	admin	sv	Samtliga kategorier
+all groups	admin	sv	Alla grupper
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
@@ -97,6 +96,7 @@ application name	admin	sv	Applikationens namn
 application title	admin	sv	Applikationens titel
 applications	admin	sv	Applikationer
 applications list	admin	sv	Applikationslista
+applications this group can use	admin	sv	Applikationer som denna grupp kan använda
 applies the changes	admin	sv	Sparar ändringar
 apply the changes	admin	sv	Spara ändringar
 are you sure you want to delete the application %1 ?	admin	sv	Vill du verkligen radera applikationen %1 ?
@@ -124,12 +124,19 @@ bad request: %s	admin	sv	Ogiltig förfrågan: %s
 bi-dir passthrough	admin	sv	dubbelriktad genomströmmning
 bi-directional	admin	sv	dubbelriktad
 bottom	admin	sv	Nederst
+bulk changes	admin	sv	Massändringar
+bulk password reset	admin	sv	Återställning av lösenord i bulk
 calculate next run	admin	sv	Beräkna nästa körtid
 can change password	admin	sv	Kan byta lösenord
 cancel testjob!	admin	sv	Avbryt testkörning
 categories list	admin	sv	Kategorilista
 category %1 has been saved !	admin	sv	Kategori %1 har sparats
+category deleted.	admin	sv	Kategori raderad.
 category list	admin	sv	Kategorilista
+category saved.	admin	sv	Kategori sparad.
+certificate	admin	sv	Certifikat
+certificate details	admin	sv	Detaljer om certifikatet
+certificate validation in days	admin	sv	Certifikatsvalidering inom några dagar
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
 change login screen message	admin	sv	Ändra Startsidans meddelande
@@ -138,6 +145,8 @@ check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1<
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
 connection dropped by imap server.	admin	sv	Anslutningen stängd av IMAP server
+configuration	admin	sv	Konfiguration
+configuration saved.	admin	sv	Konfiguration sparad.
 continue	admin	sv	Fortsätt
 could not complete request. reason given: %s	admin	sv	Kunde inte fullfölja förfrågan. Svaret: %s
 could not open secure connection to the imap server. %s : %s.	admin	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
@@ -158,6 +167,8 @@ data	admin	sv	Data
 day	admin	sv	Dag
 day of week<br>(0-6, 0=sun)	admin	sv	Veckodag<br>(0-6, 0=Sön)
 db backup and restore	admin	sv	Backup och återställning av databas
+deactivate	admin	sv	Avaktivera
+deactivated	admin	sv	avaktiverad
 default	admin	sv	Standard
 default file system space per user	admin	sv	Standardstorlek på lagringsutrymme per användare
 default file system space per user/group ?	admin	sv	Standardstorlek på lagringsutrymme per användare/grupp
@@ -170,6 +181,8 @@ delete group	admin	sv	Radera grupp
 delete peer server	admin	sv	Radera peer server
 delete the category	admin	sv	Radera kategorin
 delete the group	admin	sv	Radera gruppen
+delete the selected entries	admin	sv	Ta bort de valda posterna
+delete this account	admin	sv	Ta bort detta konto
 delete this category	admin	sv	Radera denna kategori
 delete this group	admin	sv	Radera denna grupp
 delete this user	admin	sv	Radera denna användare
@@ -197,10 +210,13 @@ determines the order the fields are displayed	admin	sv	Avgör sorteringen av vis
 disable	admin	sv	Inaktivera
 disable "auto completion" of the login form	admin	sv	Inaktivera "automatisk ifyllnad" av inloggningsformuläret
 disable wysiwyg-editor	admin	sv	Inaktivera WYSIWYG-editorn
+disable pgp encryption (mailvelope)	admin	sv	Avaktivera PGP-kryptering (Mailvelope)
 disabled (not recomended)	admin	sv	Inaktiverad (rekommenderas ej)
+disabled, do not show on login page	admin	sv	inaktiverad, visas inte på inloggningssidan
 display	admin	sv	Visa
 displaying html messages is disabled	admin	sv	Cisa HTML meddelanden är inaktiverat
 do not delete the category and return back to the list	admin	sv	Ta EJ bort kategorin och gå tillbaka till listan
+do not generate email addresses	admin	sv	Generera inte e-postadresser
 do not validate certificate	admin	sv	Validera inte certifikat
 do you also want to delete all global subcategories ?	admin	sv	Vill du samtidigt radera alla globala underkategorier?
 do you really want to delete this profile	admin	sv	Vill du verkligen radera profilen?
@@ -260,13 +276,27 @@ entry saved	admin	sv	Post sparad
 error canceling timer, maybe there's none set !!!	admin	sv	Fel vid avbrytande av timer, är det någon inställd?
 error connecting to imap server. %s : %s.	admin	sv	Kunde inte ansluta till IMAP server %s : %s
 error connecting to imap server: [%s] %s.	admin	sv	Kunde inte ansluta till IMAP server [%s] %s
+entries	admin	sv	Ingångar
+entries owned by the user:	admin	sv	Poster som ägs av användaren:
+entry saved	admin	sv	Post sparad
+error changing the password for %1 !!!	admin	sv	Fel vid ändring av lösenordet för %1!
+error deleting entry!	admin	sv	Fel vid radering av post!
+error deleting log entry!	admin	sv	Fel vid borttagning av loggpost!
+error saving	admin	sv	Fel vid sparande!
+error saving account!	admin	sv	Fel sparande konto!
 error saving the entry!!!	admin	sv	Fel uppstod vid sparandet av posten!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sv	Fel vid inställning av timer, fel syntax eller det kanske redan körs en?
 error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!
 event details follow	admin	sv	Händelse detaljer följer
+expired	admin	sv	Utgått
 expires	admin	sv	Förfaller
 explanation of ldapman	admin	sv	Denna modul har hittils testats för POSTFIX, LDAP, Courier-IMAP och behöver schema för Core och QMAIL (OID7914). Ytterligare detaljer gällande användning och konfiguration av detta system kan du finna i README.ldapman i dokumentkatalogen under ADMIN.
+export certificate as p12	admin	sv	Exportera certifikat som p12
+exports groups into a csv file.	admin	sv	Exporterar grupper till en CSV-fil.
+exports permission settings into a csv file.	admin	sv	Exporterar behörighetsinställningar till en CSV-fil.
+exports users into a csv file.	admin	sv	Exporterar användare till en CSV-fil.
+failed to change password for account "%1"!	admin	sv	Misslyckades med att ändra lösenord för konto "%1"!
 failed to change password.	admin	sv	Kunde inte ändra lösenordet.
 fallback (after each pageview)	admin	sv	fallback (efter varje sidvisning)
 false	admin	sv	Falskt
@@ -290,7 +320,7 @@ group has been updated	common	sv	Grupp har uppdaterats
 group list	admin	sv	Grupplista
 group manager	admin	sv	Gruppansvarig
 group name	admin	sv	Gruppnamn
-hide php information	admin	sv	Dölj phpinformation
+hide php information	admin	sv	Dölj PHP information
 home directory	admin	sv	Hemkatalog
 home screen message	admin	sv	Meddelande på Startsidan
 host information	admin	sv	Värdinformation
@@ -451,7 +481,6 @@ save the category	admin	sv	Spara kategorin
 save the category and return back to the list	admin	sv	Spara kategorin och återgå till listan
 saves the changes made and leaves	admin	sv	Sparar ändringar och avslutar
 saves this entry	admin	sv	Spara post
-search accounts	admin	sv	Sök konton
 search categories	admin	sv	Sök kategorier
 search groups	admin	sv	Sök grupper
 search peer servers	admin	sv	Sök peer servers
@@ -580,6 +609,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	sv	Vil
 would you like to show each application's upgrade status ?	admin	sv	Vill du visa uppgraderings status för alla applikationer?
 xml-rpc	admin	sv	XML-RPC
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
+you can set an initial value, which gets incremented every time a new serial get generated	admin	sv	kan du ställa in ett initialt värde som ökas varje gång en ny serie genereras
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!
 you have to enter a name, to create a new type!	admin	sv	Du måste ange ett namn för att skapa ny typ!
 you must add at least 1 permission or group to this account	admin	sv	Du måste ange minst en behörighet eller grupp till detta konto

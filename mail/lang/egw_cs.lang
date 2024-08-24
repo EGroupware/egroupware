@@ -11,7 +11,6 @@
 account editable by user	mail	cs	Účet může být upraven uživatelem
 acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
 acl rights retrieved successfully	mail	cs	ACL práva byla získána úspěšně
-action	mail	cs	Akce
 activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
 add a new folder to %1:	mail	cs	Přidat novou složku do %1:
 add all my aliases	mail	cs	Přidat všechny mé aliasy
@@ -21,7 +20,6 @@ add folder	mail	cs	Přidat složku
 add raw message, ignore mail attachments	mail	cs	Převést poštu na položku, přidat nezpracovanou zprávu (ignorovat přílohy pošty)
 add this certificate into contact	mail	cs	Přidat tento certifikát do kontaktu
 add to addressbook	mail	cs	Přidat do adresáře
-add your domain as "%1" in options to list of email providers and enable api.	mail	cs	Přidat vaši doménu jako "%1" v možnostech pro zobrazení poskytovatelů e-mailu a povolení API.
 adding %1 to blacklisted email addresses failed because of %2	mail	cs	Přidání %1 na černou listinu e-mailových adres se nezdařilo kvůli %2.
 adding %1 to whiltelisted email addresses failed because of %2	mail	cs	Přidání %1 do e-mailových adres na whiltelistu se nezdařilo kvůli %2.
 after reply, visible during compose	mail	cs	Po odpovědi, viditelné při sestavování
@@ -40,7 +38,6 @@ allow external images from listed domains	mail	cs	Povolit externí obrázky z uv
 allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech.
 allow images from listed domains in html emails	mail	cs	Povolit obrázky z uvedených domén v e-mailech HTML.
 allow users to create further identities	mail	cs	Dovolit uživatelům vytvářet další identity
-allways a new window	mail	cs	Vždy nové okno
 always	mail	cs	Vždy
 always allow external sources from %1	mail	cs	Vždy povolit externí zdroje z %1
 always respond / auto-responder	mail	cs	Vždy odpovědět / automatická odpověď
@@ -91,6 +88,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	cs	Zaškrtněte pro uložení jako události po odeslání
 check to save as infolog on send	mail	cs	Zaškrtněte pro uložení jako záznamu v InfoLogu po odeslání
 check to save as tracker entry on send	mail	cs	Zaškrtněte pro uložení jako záznamu sledovacího systému po odeslání
+checking admin credentials failed	mail	cs	Kontrola pověření správce selhala
 choose file	mail	cs	Vyberte soubor
 common acl	mail	cs	Běžná práva ACL
 compose	mail	cs	Nová zpráva
@@ -146,7 +144,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	cs	Zakázat použ
 disabled!	mail	cs	Zakázáno!
 discard	mail	cs	zahodit
 discard message	mail	cs	Zahodit zprávu
-display messages in multiple windows	mail	cs	Zobrazovat zprávy ve více oknech
 display of html emails	mail	cs	Zobrazování HTML zpráv
 display of identities	admin	cs	Zobrazení identit
 display only when no plain text is available	mail	cs	Zobrazovat jen pokud není k dispozici prostý text
@@ -237,10 +234,10 @@ filemode has been switched to %1	mail	cs	Souborový režim byl přepnut na: %1
 files	mail	cs	Soubory
 flag / unflag	mail	cs	Označení / Odznačení
 flag or unflag a mail	mail	cs	Označení nebo neoznačení zprávy
-flagged	mail	cs	označeno
-flagged %1 messages as %2 in %3	mail	cs	Označeno %1 zpráv jako %2 ve složce %3
-flagged %1 messages as flagged in %2	mail	cs	Označeno %1 zpráv ve složce %2
-flagged %1 messages as unflagged in %2	mail	cs	Odznačeno %1 zpráv ve složce %2
+flagged	mail	cs	Označeno
+flagged %1 messages as %2 in %3	mail	cs	Označeno %1 zpráv jako "%2" ve složce %3.
+flagged %1 messages as flagged in %2	mail	cs	Označeno %1 zpráv ve složce %2.
+flagged %1 messages as unflagged in %2	mail	cs	Odznačeno %1 zpráv ve složce %2.
 flagged / unflagged	mail	cs	Označeno / Odznačeno
 folder	mail	cs	Složka
 folder %1 %2 failed because of %3!	mail	cs	Složka %1 %2 selhala kvůli %3!
@@ -250,8 +247,6 @@ folder %1 is moving to folder %2	mail	cs	Složka %1 se přesouvá do složky %2
 folder management	mail	cs	Správa složek
 folder management ...	mail	cs	Správa složek ...
 folder settings	mail	cs	Nastavení složky
-for e.g.: mpeg	mail	cs	pro např.: mpeg
-for eg.: mpeg	mail	cs	pro např.: mpeg
 force html	mail	cs	Vynutit HTML
 force plain text	mail	cs	Vynutit čistý text
 forward	mail	cs	Přeposlat
@@ -264,8 +259,6 @@ forward to address (*):	mail	cs	Přeposlat zprávu na adresu (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	cs	Přeposlání této zprávy se nezdařilo, protože obsah této zprávy je zřejmě zašifrován a nelze jej správně dešifrovat. Pokud si přesto přejete přeposlat obsah této šifrované zprávy, můžete místo toho zkusit použít předání jako přílohu.
 forwards	mail	cs	Přeposlat
 from	mail	cs	Od
-from(a->z)	mail	cs	Od (A->Z)
-from(z->a)	mail	cs	Od (Z->A)
 general	admin	cs	Obecné
 general settings	mail	cs	Obecné nastavení
 get acl rights failed from imap server!	mail	cs	Získání práv ACL ze serveru IMAP se nezdařilo!
@@ -301,7 +294,6 @@ if shown, which folders should appear on the home page	mail	cs	Pokud bude zobraz
 if subject contains:(*)	mail	cs	Pokud pole PŘEDMĚT obsahuje:(*)
 if to contains:(*)	mail	cs	Pokud pole KOMU obsahuje:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	cs	Povolte, pokud chcete zobrazit náhled zprávy jedním kliknutím na předmět zprávy.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	cs	Pokud pro jednu akci chcete vybrat více složek, stiskněte a držte klávesu Ctrl a poté vyberte složku, kterou bude výběr začínat a poté vyberte jinou složku, kterou bude výběr končit (na stejné úrovni) - všechny složky mezi těmito dvěma vybranými složkami budou do výběru zahrnuty.
 imap	mail	cs	IMAP
 imap - incoming mail	mail	cs	IMAP - Příchozí e-mail
 imap administration	mail	cs	Správa IMAP
@@ -336,6 +328,7 @@ mail	common	cs	E-mail
 mail acl	mail	cs	ACL práva e-mailu
 mail filter	mail	cs	Filtrovací pravidla
 mail filter rule	mail	cs	Pravidlo poštovního filtru
+mail probably has no text-body	mail	cs	Mail pravděpodobně nemá textové tělo
 mail settings	mail	cs	Nastavení pošty
 mail source	mail	cs	Zdroj e-mailu
 mail-address	mail	cs	E-mailová adresa
@@ -589,8 +582,6 @@ signature	mail	cs	Podpis
 signature at top	mail	cs	Podpis nahoře
 signature position and visibility	mail	cs	Pozice a viditelnost podpisu
 signed by	mail	cs	Podepsáno
-size(...->0)	mail	cs	Velikost (...->0)
-size(0->...)	mail	cs	Velikost (0->...)
 small view	mail	cs	malé zobrazení
 smime encrypted message	mail	cs	Šifrovaná zpráva S/MIME
 smime signed message	mail	cs	Zpráva podepsaná protokolem S/MIME
@@ -609,8 +600,6 @@ step 2: folder	mail	cs	Krok 2: Složka
 step 3: sieve - server side mail filtering	mail	cs	Krok 3: Sieve - filtrovací pravidla na straně serveru
 step 4: smtp - outgoing mail	mail	cs	Krok 4: SMTP - odchozí e-mail
 store to folder	mail	cs	Uložit do složky
-subject(a->z)	mail	cs	Předmět (A->Z)
-subject(z->a)	mail	cs	Předmět (Z->A)
 subscribe folder	mail	cs	Přihlásit složku k odběru
 subscribe folder ...	mail	cs	Odebírání nebo přidávání složek ...
 subscribe to folder %1	mail	cs	Přihlásit složku %1 k odběru

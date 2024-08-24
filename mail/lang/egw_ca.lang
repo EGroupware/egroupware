@@ -1,7 +1,6 @@
 (no subject)	mail	ca	(Sense assumpte)
 add to addressbook	mail	ca	Afegir a la llibreta d'adreces
 all of	mail	ca	tots
-allways a new window	mail	ca	sempre en una finestra nova
 always show html emails	mail	ca	Mostra sempre els correus HTML
 any of	mail	ca	algun
 attachments	mail	ca	Adjunts
@@ -18,7 +17,6 @@ delete folder	mail	ca	Esborrar carpeta
 deleted	mail	ca	eliminat
 disable	mail	ca	Deshabilitar
 discard message	mail	ca	elimina el missatge
-display messages in multiple windows	mail	ca	mostra missatges en múltiples pantalles
 display of html emails	mail	ca	Mostrar els missatges HTML
 display only when no plain text is available	mail	ca	Mostrar només quan no hi ha text simple disponible
 does not contain	mail	ca	No conté
@@ -40,8 +38,6 @@ folder	mail	ca	Carpeta
 folder settings	mail	ca	Opcions de la carpeta
 forward	mail	ca	Reenviar
 from	mail	ca	De
-from(a->z)	mail	ca	De (A-> Z)
-from(z->a)	mail	ca	De (Z-> A)
 general	admin	ca	General
 greater than	mail	ca	major que
 header lines	mail	ca	Línies de Capçalera
@@ -86,12 +82,8 @@ save all	mail	ca	Desar tot
 select all	mail	ca	Seleccionar tot
 sent folder	mail	ca	Carpeta d'enviats
 signature	mail	ca	Signatura
-size(...->0)	mail	ca	Mida (...->0)
-size(0->...)	mail	ca	Mida (0->...)
 small view	mail	ca	Vista reduïda
 sort order	mail	ca	Forma de ordenación
-subject(a->z)	mail	ca	Assumpte (A->Z)
-subject(z->a)	mail	ca	Assumpte (Z->A)
 text	mail	ca	Texto
 then	mail	ca	ALESHORES
 trash folder	mail	ca	Carpeta Paperera

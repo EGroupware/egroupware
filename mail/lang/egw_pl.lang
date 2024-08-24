@@ -17,7 +17,6 @@ after reply, visible during compose	mail	pl	Po odpowiedzi, widoczne podczas komp
 aliases+forwards	mail	pl	Aliasy+Przekazy
 all of	mail	pl	wszystkie z
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
-allways a new window	mail	pl	Zawsze w nowym oknie
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
 always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
@@ -66,7 +65,6 @@ disable	mail	pl	Wyłącz
 disable caching of flags	mail	pl	Wyłączenie buforowania flag
 discard	mail	pl	odrzuć
 discard message	mail	pl	Odrzuć wiadomość
-display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach
 display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
 display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
 displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
@@ -133,8 +131,6 @@ forward as attachment	mail	pl	Prześlij dalej jako załącznik
 forward inline	mail	pl	Prześlij dalej w wiadomości
 forward to	mail	pl	Prześlij do
 from	mail	pl	Z
-from(a->z)	mail	pl	Od (A->Z)
-from(z->a)	mail	pl	Od (Z->A)
 general	admin	pl	Główne
 get acl rights failed from imap server!	mail	pl	Pobieranie uprawnień ACL z serwera IMAP nie powiodło się!
 greater than	mail	pl	Większe niż
@@ -153,7 +149,6 @@ if	mail	pl	JEŻELI
 if mail header	mail	pl	jeżeli nagłówek wiadomości
 if message size	mail	pl	jeżeli rozmiar wiadomości
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pl	Jeśli chcesz zobaczyć podgląd wiadomości po pojedynczym kliknięciu tematu, włącz tę opcję.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pl	Jeśli chcesz wybrać wiele folderów w jednej akcji, możesz przytrzymać klawisz Ctrl, a następnie wybrać folder jako zakres początkowy i inny folder na tym samym poziomie jako zakres końcowy, wszystkie foldery pomiędzy nimi zostaną wybrane lub odznaczone na podstawie ich bieżącego stanu.
 imap	mail	pl	IMAP
 imap server	mail	pl	Serwer IMAP
 import message	mail	pl	Importuj wiadomość
@@ -332,8 +327,6 @@ signature	mail	pl	Sygnaturka
 signature at top	mail	pl	podpis na górze
 signature position and visibility	mail	pl	Pozycja i widoczność podpisu
 signed by	mail	pl	Podpisany przez
-size(...->0)	mail	pl	Rozmiar (...->0)
-size(0->...)	mail	pl	Rozmiar (0->...)
 small view	mail	pl	widok uproszczony
 smime encrypted message	mail	pl	Komunikat zaszyfrowany S/MIME
 smime signed message	mail	pl	Komunikat podpisany S/MIME
@@ -341,8 +334,6 @@ smtp	mail	pl	SMTP
 sneak preview in list	mail	pl	Podgląd wiadomości
 sort order	mail	pl	Porządek sortowania
 start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy HTML?
-subject(a->z)	mail	pl	Temat (A->Z)
-subject(z->a)	mail	pl	Temat (Z->A)
 template folder	mail	pl	Katalog szablnów
 templates	mail	pl	Szablony
 text	mail	pl	Tekst

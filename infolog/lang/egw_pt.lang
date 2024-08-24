@@ -169,7 +169,6 @@ do you want a notification, if items you delegated are due?	infolog	pt	Ser notif
 do you want to receive notifications as html-mails or plain text?	infolog	pt	Receber notificações como mensagens de correio eletrónico HTML ou texto simples.
 don't show infolog	infolog	pt	NÃO exibir acesso à informação
 done	infolog	pt	Concluído
-download	infolog	pt	Guardar ficheiro
 download url for links	infolog	pt	Baixe url para links
 due %1	infolog	pt	Devido 1%
 due date	infolog	pt	Data de vencimento
@@ -206,7 +205,6 @@ exists	infolog	pt	Existe
 export definition to use for nextmatch export	infolog	pt	Definição Exportar para usar para exportação nextmatch
 exports in ical format.	infolog	pt	Exportações em formato iCal.
 exports infolog entries into a csv file.	infolog	pt	Exportações InfoLog entradas para um arquivo CSV.
-favorites	infolog	pt	Favoritos
 fax	infolog	pt	Fax
 field must not be empty !!!	infolog	pt	O campo não pode estar vazio!
 fields to exclude when copying an infolog:	infolog	pt	Os campos a serem excluídos ao copiar um InfoLog:
@@ -422,8 +420,6 @@ select a priority for this task	infolog	pt	Seleccionar uma prioridade para esta 
 select a project	infolog	pt	Seleccionar um projecto
 select a responsible user: a person you want to delegate this task	infolog	pt	Seleccionar um utilizador responsável: uma pessoa a quem deseja delegar esta tarefa
 select a typ to edit it's status-values or delete it	infolog	pt	Seleccionar um tipo para editar os seus valores de estado ou para o eliminar
-select an action	infolog	pt	Selecione uma ação
-select an action...	infolog	pt	Selecione uma ação ...
 select an app to search in	infolog	pt	Seleccionar uma aplicação para pesquisa
 select an entry to link with	infolog	pt	Seleccionar um registo para ligar
 select multiple contacts for a further action	infolog	pt	Selecionar vários contatos para uma nova acção

@@ -15,7 +15,6 @@
 account editable by user	mail	ja	ユーザによるアカウント編集可能
 acl rights retrieve failed, seems there are no rights set!	mail	ja	ACL 権限の取得に失敗しました（権限不足の可能性）!
 acl rights retrieved successfully	mail	ja	ACL 権限を取得しました
-action	mail	ja	アクション
 activating by date requires a start- and end-date!	mail	ja	日付による有効化を利用するには開始日と終了日の指定が必要!
 add "%1" into blacklisted domains	mail	ja	ドメイン "%1" をブラックリストに追加
 add "%1" into blacklisted emails	mail	ja	メール・アドレス "%1" をブラックリストに追加
@@ -29,7 +28,6 @@ add folder	mail	ja	フォルダを追加
 add raw message, ignore mail attachments	mail	ja	メールをアイテムに変換し、生のメッセージを追加する（メールの添付ファイルは無視する）
 add this certificate into contact	mail	ja	アドレス帳に証明書を追加
 add to addressbook	mail	ja	アドレス帳に追加
-add your domain as "%1" in options to list of email providers and enable api.	mail	ja	あなたのドメイン名を "%1" の形式でメール・プロバイダ・オプションに追加し、APIを有効化してください。
 adding %1 to blacklisted email addresses failed because of %2	mail	ja	ブラックリストに %1 を追加できません（%2）
 adding %1 to whiltelisted email addresses failed because of %2	mail	ja	ホワイトリストに %1 を追加できません（%2）
 after reply, visible during compose	mail	ja	返信後（メール作成中は表示）
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	ja	指定ドメインからの外
 allow images from external sources in html emails	mail	ja	HTMLメールで外部ソースからの画像を許可。
 allow images from listed domains in html emails	mail	ja	HTMLメールで指定ドメインからの画像を許可。
 allow users to create further identities	mail	ja	追加名称の生成を許可
-allways a new window	mail	ja	常に新規ウィンドウを用いる
 always	mail	ja	常に
 always allow external sources from %1	mail	ja	%1からの外部ソースを常に許可
 always respond / auto-responder	mail	ja	常に応答/自動応答
@@ -155,7 +152,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	ja	プレーン�
 disabled!	mail	ja	無効化されました!
 discard	mail	ja	破棄
 discard message	mail	ja	メッセージを破棄
-display messages in multiple windows	mail	ja	複数ウィンドウでメッセージを表示
 display of html emails	mail	ja	HTMLメールの表示
 display of identities	admin	ja	名称の表示
 display only when no plain text is available	mail	ja	プレーン・テキストが存在しない場合に限り表示
@@ -259,8 +255,6 @@ folder %1 is moving to folder %2	mail	ja	フォルダ %1 はフォルダ %2 に�
 folder management	mail	ja	フォルダ管理
 folder management ...	mail	ja	フォルダ管理 ...
 folder settings	mail	ja	フォルダ設定
-for e.g.: mpeg	mail	ja	例: mpeg
-for eg.: mpeg	mail	ja	例えば: mpeg
 force html	mail	ja	HTML を強制
 force plain text	mail	ja	プレーン・テキストを強制
 forward	mail	ja	転送
@@ -273,8 +267,6 @@ forward to address (*):	mail	ja	転送先 (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	ja	元メールが暗号化されていて復号できないため、メールの転送に失敗しました。「添付として転送」で送信してください。
 forwards	mail	ja	転送
 from	mail	ja	差出人
-from(a->z)	mail	ja	差出人(A->Z)
-from(z->a)	mail	ja	差出人(Z->A)
 general	admin	ja	一般
 general settings	mail	ja	一般設定
 get acl rights failed from imap server!	mail	ja	IMAP サーバーから ACL 権限を取得できませんでした!
@@ -310,7 +302,6 @@ if shown, which folders should appear on the home page	mail	ja	表示されて�
 if subject contains:(*)	mail	ja	件名に:(*)が含まれている場合
 if to contains:(*)	mail	ja	宛先に:(*)が含まれる場合
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ja	シングル・クリックでメールのプリビューを表示。
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ja	複数のフォルダを一度に選択する場合、Ctrlキーを押しながら範囲を選択すると範囲内の全フォルダをまとめて選択することができます。
 imap	mail	ja	IMAP
 imap - incoming mail	mail	ja	IMAP - 受信メール
 imap administration	mail	ja	IMAP 管理
@@ -602,8 +593,6 @@ signature	mail	ja	署名
 signature at top	mail	ja	署名を上部に表示
 signature position and visibility	mail	ja	署名の表示位置
 signed by	mail	ja	署名者
-size(...->0)	mail	ja	サイズ(降順)
-size(0->...)	mail	ja	サイズ(昇順)
 small view	mail	ja	スモール・ビュー
 smime encrypted message	mail	ja	S/MIME暗号化メッセージ
 smime signed message	mail	ja	S/MIME署名付きメッセージ
@@ -622,8 +611,6 @@ step 2: folder	mail	ja	ステップ 2: フォルダ
 step 3: sieve - server side mail filtering	mail	ja	ステップ 3: Sieve - サーバー・サイドフィルタリング
 step 4: smtp - outgoing mail	mail	ja	ステップ 4: SMTP - 送信メール
 store to folder	mail	ja	格納先フォルダ
-subject(a->z)	mail	ja	件名(A->Z)
-subject(z->a)	mail	ja	件名(Z->A)
 subscribe folder	mail	ja	フォルダを購読
 subscribe folder ...	mail	ja	フォルダを購読 ...
 subscribe to folder %1	mail	ja	フォルダ %1 を購読

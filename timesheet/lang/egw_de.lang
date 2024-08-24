@@ -55,7 +55,6 @@ export definition to use for nextmatch export	timesheet	de	Exportdefinition für
 export to openoffice spreadsheet	timesheet	de	Zu Office exportieren
 exports entries from your timesheet into a csv file.	timesheet	de	Exportiert Einträge der Stundenzettel-App in eine CSV-Datei.
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV-Datei. CSV bedeutet, Komma getrennte Werte. In dem Optionen-Tab können Sie andere Trennzeichen festlegen.
-favorites	timesheet	de	Favoriten
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	de	Für den Seriendruck, wählen die diesen Platzhalter. Fügen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Platzhaltern ein.
 forgot to switch off working time?	common	de	Haben Sie vergessen Ihre Arbeitszeit zu beenden?

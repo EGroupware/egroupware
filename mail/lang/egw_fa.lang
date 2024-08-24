@@ -1,7 +1,6 @@
 (no subject)	mail	fa	(بدون عنوان)
 add to addressbook	mail	fa	افزودن به دفترچه آدرس
 all of	mail	fa	همه
-allways a new window	mail	fa	همیشه پنجره جدید
 always show html emails	mail	fa	همیشه رایانامه های زنگام را نمایش بده
 any of	mail	fa	هرکدام از
 attachments	mail	fa	پیوندها
@@ -17,7 +16,6 @@ delete folder	mail	fa	حذف پوشه
 deleted	mail	fa	حذف شد
 disable	mail	fa	غیر فعال
 discard message	mail	fa	نادیده گرفتن پیام
-display messages in multiple windows	mail	fa	نمایش پیامها در چند پنجره
 display of html emails	mail	fa	نمایش رایانامه های زنگام
 display only when no plain text is available	mail	fa	نمایش فقط وقتی که متن معمولی موجود نیست
 does not contain	mail	fa	شامل نیست
@@ -39,8 +37,6 @@ folder	mail	fa	پوشه
 folder settings	mail	fa	تنظیمات پوشه
 forward	mail	fa	پیش سو
 from	mail	fa	از
-from(a->z)	mail	fa	از(A->Z)
-from(z->a)	mail	fa	از (Z->A)
 general	admin	fa	عمومی
 greater than	mail	fa	بزرگتر از
 header lines	mail	fa	خطوط سرآیند
@@ -85,12 +81,8 @@ save all	mail	fa	ذخیره کردن همه
 select all	mail	fa	انتخاب همه
 sent folder	mail	fa	پوشه ارسال شده
 signature	mail	fa	امضاء
-size(...->0)	mail	fa	اندازه (...->0)
-size(0->...)	mail	fa	اندازه (0->...)
 small view	mail	fa	نمای کوچک
 sort order	mail	fa	ترتیب مرتب سازی
-subject(a->z)	mail	fa	موضوع (A->Z)
-subject(z->a)	mail	fa	موضوع (Z->A)
 text	mail	fa	متن
 the mimeparser can not parse this message.	mail	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
 then	mail	fa	سپس

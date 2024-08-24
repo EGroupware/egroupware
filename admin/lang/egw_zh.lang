@@ -16,7 +16,6 @@
 %1 user %2	admin	zh	%1 用户 %2
 (default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
 (no subject)	admin	zh	(无主题)
-(stored password will not be shown here)	admin	zh	(已储存密码将不在这里显示)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<a href="setup/" target="setup">[管理应用程序]</a>来安装新的应用程序！)
 -  type	admin	zh	- 类型
 1 year	admin	zh	1年
@@ -43,8 +42,6 @@ account-id's have to be integers!	admin	zh	帐户 ID 必须是整数！
 acl csv export	admin	zh	导出 ACL CSV
 acl manager	admin	zh	ACL管理器
 acl rights	common	zh	ACL权限
-action	admin	zh	操作
-actions	admin	zh	操作
 activate	admin	zh	激活
 activate wysiwyg-editor	admin	zh	激活所见即所得编辑器
 add a category	admin	zh	添加类别
@@ -64,20 +61,18 @@ add new email address:	admin	zh	添加新邮箱地址：
 add peer server	admin	zh	添加对等服务器
 add profile	admin	zh	添加 profile
 add sub-category	admin	zh	添加子类别
+add to group	admin	zh	添加到组
 admin dn	admin	zh	管理 DN
 admin email	admin	zh	管理员邮箱
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	管理员电子邮件地址 (逗号分隔) 以便通知有关故障等 (留空将不通知任何人)
 admin name	admin	zh	管理员名称
 admin password	admin	zh	管理密码
 admin queue and history	admin	zh	管理队列和历史纪录
-admin username	admin	zh	管理帐户
-administration	admin	zh	系统管理
 admins	admin	zh	管理员
 advanced options	admin	zh	高级选项
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	zh	尝试登录失败多少次后，IP 将被阻止。默认 = 15
 aliases	admin	zh	别名
 all applications	admin	zh	所有应用程序
-all categories	admin	zh	所有类别
 all records and account information will be lost!	admin	zh	所有的记录和账户信息都将丢失！
 all users	admin	zh	所有用户
 allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
@@ -124,6 +119,8 @@ bad request: %s	admin	zh	错误请求：%s
 bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
 bi-directional	admin	zh	bi-directional(双向)
 bottom	admin	zh	底部
+bulk changes	admin	zh	批量更改
+bulk password reset	admin	zh	批量重置密码
 calculate next run	admin	zh	计划下次运行
 can be used by application	admin	zh	可用于应用程序
 can be used by group	admin	zh	可用于群组
@@ -502,7 +499,6 @@ save the category and return back to the list	admin	zh	保存类别并返回列�
 saves the changes made and leaves	admin	zh	保存修改并离开
 saves this entry	admin	zh	保存该条目
 scheduled	admin	zh	计划
-search accounts	admin	zh	搜索账户
 search categories	admin	zh	搜索类别
 search groups	admin	zh	搜索组
 search peer servers	admin	zh	搜索对等服务器

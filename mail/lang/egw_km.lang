@@ -14,7 +14,6 @@
 account editable by user	mail	km	គណនីដែលអាចកែសម្រួលបានដោយអ្នកប្រើប្រាស់
 acl rights retrieve failed, seems there are no rights set!	mail	km	ការទាញយកសិទ្ធិ ACL បានបរាជ័យ ហាក់ដូចជាមិនមានសិទ្ធិកំណត់ទេ!
 acl rights retrieved successfully	mail	km	ទទួលបានសិទ្ធិ ACL ដោយជោគជ័យ
-action	mail	km	សកម្មភាព
 activating by date requires a start- and end-date!	mail	km	ការធ្វើឱ្យសកម្មតាមកាលបរិច្ឆេទតម្រូវឱ្យមានការចាប់ផ្តើម-កាលបរិច្ឆេទបញ្ចប់!
 add "%1" into blacklisted domains	mail	km	បន្ថែម "%1" ទៅក្នុងបញ្ជីខ្មៅនៃដែន
 add "%1" into blacklisted emails	mail	km	បន្ថែម "%1" ទៅក្នុងបញ្ជីខ្មៅអុីមែល
@@ -28,7 +27,6 @@ add folder	mail	km	បន្ថែមថត
 add raw message, ignore mail attachments	mail	km	បំប្លែងសំបុត្រទៅជាធាតុ បន្ថែមសារឆៅ (មិនអើពើឯកសារភ្ជាប់សំបុត្រ)
 add this certificate into contact	mail	km	បន្ថែមវិញ្ញាបនបត្រនេះទៅក្នុងទំនាក់ទំនង
 add to addressbook	mail	km	បន្ថែមទៅសៀវភៅអាសយដ្ឋាន
-add your domain as "%1" in options to list of email providers and enable api.	mail	km	បន្ថែមដែនរបស់អ្នកជា "%1" នៅក្នុងជម្រើសទៅក្នុងបញ្ជីអ្នកផ្តល់អុីមែល និងបើក API ។
 adding %1 to blacklisted email addresses failed because of %2	mail	km	ការបន្ថែម %1 ទៅក្នុងបញ្ជីខ្មៅអាស័យដ្ឋានអុីមែលបានបរាជ័យដោយសារតែ %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	km	ការបន្ថែម %1 ទៅអាសយដ្ឋានអុីមែលដែលជាប់ក្នុងបញ្ជីមិនបានការបានបរាជ័យដោយសារតែ %2
 after reply, visible during compose	mail	km	បន្ទាប់​ពី​ការ​ឆ្លើយ​តប អាច​មើល​ឃើញ​កំឡុង​ពេល​តែង
@@ -47,7 +45,6 @@ allow external images from listed domains	mail	km	អនុញ្ញាតឱ្
 allow images from external sources in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីប្រភពខាងក្រៅនៅក្នុងអុីមែល HTML
 allow images from listed domains in html emails	mail	km	អនុញ្ញាតឱ្យរូបភាពពីដែនដែលបានរាយក្នុងអុីមែល HTML
 allow users to create further identities	mail	km	អនុញ្ញាតឱ្យអ្នកប្រើប្រាស់បង្កើតអត្តសញ្ញាណបន្ថែម
-allways a new window	mail	km	បង្អួចថ្មីជានិច្ច
 always	mail	km	ជានិច្ច
 always allow external sources from %1	mail	km	តែងតែអនុញ្ញាតប្រភពខាងក្រៅពី%1
 always show html emails	mail	km	តែងតែបង្ហាញអុីមែល HTML
@@ -149,7 +146,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	km	បិទ​�
 disabled!	mail	km	ពិការ!
 discard	mail	km	បោះបង់
 discard message	mail	km	បោះបង់សារ
-display messages in multiple windows	mail	km	បង្ហាញសារនៅក្នុងបង្អួចច្រើន។
 display of html emails	mail	km	ការបង្ហាញអុីមែល HTML
 display of identities	admin	km	បង្ហាញអត្តសញ្ញាណ
 display only when no plain text is available	mail	km	បង្ហាញតែនៅពេលដែលគ្មានអត្ថបទធម្មតាទេ។
@@ -250,8 +246,6 @@ folder %1 is moving to folder %2	mail	km	ថត%1 កំពុងផ្លាស
 folder management	mail	km	ការគ្រប់គ្រងថតឯកសារ
 folder management ...	mail	km	ការគ្រប់គ្រងថតឯកសារ...
 folder settings	mail	km	ការកំណត់ថត
-for e.g.: mpeg	mail	km	ឧទាហរណ៍៖ mpeg
-for eg.: mpeg	mail	km	ឧទាហរណ៍៖ mpeg
 force html	mail	km	បង្ខំ HTML
 force plain text	mail	km	បង្ខំអត្ថបទធម្មតា។
 forward	mail	km	ទៅមុខ
@@ -264,8 +258,6 @@ forward to address (*):	mail	km	បញ្ជូនបន្តទៅអាសយ
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	km	ការបញ្ជូនបន្តសារនេះបរាជ័យ ដោយសារខ្លឹមសារនៃសារនេះហាក់ដូចជាត្រូវបានអ៊ិនគ្រីប និងមិនអាចឌិគ្រីបបានត្រឹមត្រូវ។ ប្រសិនបើអ្នកនៅតែចង់បញ្ជូនបន្តខ្លឹមសារនៃសារដែលបានអ៊ិនគ្រីបនេះ អ្នកអាចព្យាយាមប្រើការបញ្ជូនបន្តជាឯកសារភ្ជាប់ជំនួសវិញ។
 forwards	mail	km	ទៅមុខ
 from	mail	km	ពី
-from(a->z)	mail	km	ពី (A->Z)
-from(z->a)	mail	km	ពី (Z-> A)
 general	admin	km	ទូទៅ
 general settings	mail	km	ការកំណត់​ទូទៅ
 get acl rights failed from imap server!	mail	km	ទទួលបានសិទ្ធិ ACL បានបរាជ័យពីម៉ាស៊ីនមេ IMAP!
@@ -301,7 +293,6 @@ if shown, which folders should appear on the home page	mail	km	ប្រសិ�
 if subject contains:(*)	mail	km	ប្រសិនបើប្រធានបទមាន៖ (*)
 if to contains:(*)	mail	km	ប្រសិនបើមាន: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	km	ប្រសិនបើអ្នកចង់ឃើញការមើលជាមុននៃសំបុត្រដោយចុចតែម្តងទៅលើប្រធានបទនោះ សូមបើកដំណើរការនេះ។
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	km	ប្រសិនបើអ្នកចង់ជ្រើសរើសថតច្រើនក្នុងសកម្មភាពមួយ អ្នកអាចសង្កត់គ្រាប់ចុច ctrl បន្ទាប់មកជ្រើសរើសថតជាជួរចាប់ផ្តើម និងថតផ្សេងទៀតក្នុងកម្រិតដូចគ្នាជាមួយជួរបញ្ចប់ ថតទាំងអស់នៅចន្លោះនឹងត្រូវបានជ្រើសរើស ឬមិនជ្រើសរើសដោយផ្អែកលើស្ថានភាពបច្ចុប្បន្នរបស់វា។
 imap	mail	km	IMAP
 imap - incoming mail	mail	km	IMAP - សំបុត្រចូល
 imap administration	mail	km	ការគ្រប់គ្រង IMAP
@@ -580,8 +571,6 @@ sign your message with smime certificate	mail	km	ចុះហត្ថលេខ�
 signature	mail	km	ហត្ថលេខា
 signature at top	mail	km	ហត្ថលេខានៅខាងលើ
 signature position and visibility	mail	km	ទីតាំងហត្ថលេខា និងការមើលឃើញ
-size(...->0)	mail	km	ទំហំ (...-> 0)
-size(0->...)	mail	km	ទំហំ (0->...)
 small view	mail	km	ទិដ្ឋភាពតូច
 smtp	mail	km	SMTP
 sneak preview in list	mail	km	លួចមើលជាមុននៅក្នុងបញ្ជី
@@ -598,8 +587,6 @@ step 2: folder	mail	km	ជំហានទី 2: ថតឯកសារ
 step 3: sieve - server side mail filtering	mail	km	ជំហានទី 3: Sieve - ត្រងអុីមែលចំហៀងម៉ាស៊ីនមេ
 step 4: smtp - outgoing mail	mail	km	ជំហានទី 4: SMTP - សំបុត្រចេញ
 store to folder	mail	km	រក្សាទុកទៅថតឯកសារ
-subject(a->z)	mail	km	ប្រធានបទ (A->Z)
-subject(z->a)	mail	km	ប្រធានបទ (Z-> A)
 subscribe folder	mail	km	ថតជាវ
 subscribe folder ...	mail	km	ជាវថត ...
 subscribe to folder %1	mail	km	ជាវទៅថត%1

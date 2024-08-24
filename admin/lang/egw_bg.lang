@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, остави го изключен, ако не се ползва
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	bg	(imapclass трябва да поддържа тази функция чрез запитване за съответната стойност на конфигурацията и да я предаде като квота по подразбиране на IMAP сървъра)
 (no subject)	admin	bg	(без тема)
-(stored password will not be shown here)	admin	bg	Съхранената парола няма да бъде показана тук!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	bg	За инсталиране на нови приложения използвайте <br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	bg	- вид
 1 year	admin	bg	1 година
@@ -68,8 +67,6 @@ acl manager	admin	bg	ACL мениджър
 acl rights	common	bg	ACL права
 acl updated	admin	bg	ACL е актуализиран
 acl updated.	admin	bg	ACL е актуализиран.
-action	admin	bg	Действие
-actions	admin	bg	Действия
 activate	admin	bg	Активиране
 activate wysiwyg-editor	admin	bg	Активиране на WYSIWYG-редактор
 activated	admin	bg	Активиран
@@ -93,6 +90,7 @@ add new email address:	admin	bg	Добавяне на нов имейл адре
 add peer server	admin	bg	Добавете Peer Server
 add profile	admin	bg	Добавете профил
 add sub-category	admin	bg	Добавете Подкатегория
+add to group	admin	bg	Добавяне към група
 add user	admin	bg	Добавяне на потребител
 add user or group	admin	bg	Добавяне на потребител или група
 added	admin	bg	Добавено
@@ -101,16 +99,19 @@ admin email	admin	bg	Имейл на Администратор
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	bg	Имейл адреси на администратори, разделени на запетаи, които да бъдат уведомявани за блокираните потребителски акаунти и IP. Празен = няма известие.
 admin name	admin	bg	Име на администратора
 admin password	admin	bg	Парола на администратора
-admin username	admin	bg	Потребителско име на администратора
-administration	admin	bg	Администрация
 admins	admin	bg	Администратори
 advanced options	admin	bg	Разширени опции
 aliases	admin	bg	Псевдоними
-all categories	admin	bg	Всички категории
 application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
 bad login name or password.	admin	bg	Лошо име за вход или парола.
+blocking after wrong password	admin	bg	Блокиране след грешна парола
+bulk changes	admin	bg	Групови промени
+bulk password reset	admin	bg	Групова промяна на паролата
+certificate	admin	bg	Сертификат
+certificate details	admin	bg	Подробности за сертификата
+certificate validation in days	admin	bg	Валидиране на сертификата в дни
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
 copy of	admin	bg	Копие на
 country	admin	bg	Държава

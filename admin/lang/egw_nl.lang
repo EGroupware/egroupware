@@ -57,10 +57,7 @@ acl csv export	admin	nl	ACL CSV export
 acl deleted.	admin	nl	ACL verwijderd.
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
-action	admin	nl	Actie
-actions	admin	nl	Acties
 activate	admin	nl	Activeren
-activate wysiwyg-editor	admin	nl	WYSIWYG-editor inschakelen
 add a category	admin	nl	Een categorie toevoegen
 add a group	admin	nl	Een goep toevoegen
 add a new account.	admin	nl	Een nieuw gebruikersaccount toevoegen
@@ -79,20 +76,23 @@ add new email address:	admin	nl	Voeg nieuw emailadres toe:
 add peer server	admin	nl	Peer-server toevoegen
 add profile	admin	nl	Profiel toevoegen
 add sub-category	admin	nl	Subcategorieën toevoegen
+add to group	admin	nl	Toevoegen aan groep
+add user	admin	nl	Gebruiker toevoegen
+add user or group	admin	nl	Gebruiker of groep toevoegen
+added	admin	nl	toegevoegd
 admin dn	admin	nl	Admin DN
 admin email	admin	nl	Emailadres beheerder
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	nl	Emailadressen beheerder (gescheiden door komma's) om gewaarschuwd te worden blokkeringen (laat leeg om geen notificaties te sturen)
 admin name	admin	nl	Naam beheerder
 admin password	admin	nl	Admin wachtwoord
 admin queue and history	admin	nl	Beheerders wachtrij en historie
-admin username	admin	nl	Admin gebruikersnaam
-administration	admin	nl	Beheer
 admins	admin	nl	Beheerders
 advanced options	admin	nl	Geavanceerde opties
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	nl	Na hoeveel onsuccesvolle inlogpogingen moet een IP-adres geblokkeerd worden (standaard 3)?
 aliases	admin	nl	Aliassen
 all applications	admin	nl	Alle toepassingen
 all categories	admin	nl	Alle categorieën
+all groups	admin	nl	Alle groepen
 all records and account information will be lost!	admin	nl	Alle records en gebruikersinformatie zal verloren gaan!
 all users	admin	nl	Alle gebruikers
 allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot deze toepassing
@@ -131,6 +131,7 @@ attribute accountstatus explained	admin	nl	Dit behandelt het attribuut <b><i>-ac
 attribute mail explained	admin	nl	Dit behandelt het attribuut <b><i>-mail-</i></b> uit het QMAIL schema en mag nooit leeg zijn. Het is tevens het eGW interne email veld.
 attribute mailalternateaddress explained	admin	nl	Dit behandelt het attribuut <b><i>-mailAlternateAddress-</i></b> uit het QMAIL schema en kan gehanteerd worden als virtuele folders of aliassen.
 attribute mailforwardingaddress explained	admin	nl	Dit behandelt het attribuut <b><i>-mailForwardingAddress-</i></b> uit het QMAIL Schema en mag niet leeg zijn.
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	nl	Het juiste MIME-type proberen te gebruiken in plaats van de standaard 'application/octet-stream'.
 authentication / accounts	admin	nl	Authenticatie / Accounts
 auto create account records for authenticated users	admin	nl	Automatisch accounts aanmaken for geauthenticeerde gebruikers
 back to admin/grouplist	admin	nl	Terug naar Beheer/Groepslijst
@@ -142,7 +143,10 @@ bad request: %s	admin	nl	Slechte vraag: %s
 bi-dir passthrough	admin	nl	bi-directionele doorgave
 bi-directional	admin	nl	bi-directioneel
 bottom	admin	nl	Onderaan
+bulk changes	admin	nl	Bulk wijzigingen
+bulk password reset	admin	nl	Wachtwoord in bulk opnieuw instellen
 calculate next run	admin	nl	Volgende uitvoer berekenen
+calendar recurrence horizont in days (default 1000)	admin	nl	Kalender herhalingstermijn in dagen. Standaard = 1000.
 can be used by application	admin	nl	Kan gebruikt worden door toepassing
 can be used by group	admin	nl	Kan gebruikt worden door groep
 can be used by user	admin	nl	Kan door gebruiker gebruikt worden
@@ -158,19 +162,22 @@ change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
 change login screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 change password for %1	admin	nl	Wijzig wachtwoord voor %1
-check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts
+check acl for entries of not (longer) existing accounts	admin	nl	Controle ACL voor records van niet (meer) bestaande accounts.
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
 click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
 command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd te worden
 connection dropped by imap server.	admin	nl	Verbinding viel uit door IMAP server
+configuration	admin	nl	Configuratie
+configuration saved.	admin	nl	Configuratie opgeslagen.
+connection is not secure! everyone can read eg. your credentials.	admin	nl	Verbinding is NIET veilig! Iedereen kan bijvoorbeeld uw referenties lezen.
 continue	admin	nl	Doorgaan
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	nl	Cook domein (standaard leeg wat betekent dat de volledige domeinnaam gebruikt wordt. Voorbeeld: ".domein.nl" maakt het mogelijk om hetzelfde cookie te gebruiken voor verschillende subdomeinen als egw.domein.nl en www.domein.nl.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	nl	Cookie pad (maakt het mogelijk om meerdere EGroupware sessies in verschillende directories te gebruiken. Dit geeft problemen met SiteMgr!
 could not append message:	admin	nl	Kon niet aan bericht toevoegen:
 could not complete request. reason given: %s	admin	nl	Kan verzoek niet afmaken. Opgegeven reden: %s
-could not open secure connection to the imap server. %s : %s.	admin	nl	Kon geen veilige verbinding openen met de IMAP server. %s : %s
+could not open secure connection to the imap server. %s : %s.	admin	nl	Kon geen veilige verbinding openen met de IMAP server. %s : %s.
 could not remote execute the command	admin	nl	Kon het commando op afstand niet uivoeren
 country	admin	nl	Land
 country selection	admin	nl	Landenselectie
@@ -200,6 +207,7 @@ delete account %s	admin	nl	Account %s verwijderen
 delete all records	admin	nl	Alle records verwijderen
 delete application	admin	nl	Toepassing verwijderen
 delete category	admin	nl	Categorie verwijderen
+delete certificate	admin	nl	Certificaat verwijderen
 delete group	admin	nl	Groep verwijderen
 delete peer server	admin	nl	Peer-server verwijderen
 delete the category	admin	nl	De categorie verwijderen
@@ -245,6 +253,7 @@ do you want to move all global subcategories one level down ?	admin	nl	Wilt u al
 document root (default)	admin	nl	Document root (standaard)
 domainname	admin	nl	Domeinnaam
 down	admin	nl	Omlaag
+download csv	admin	nl	CSV downloaden
 edit account	admin	nl	Account bewerken
 edit application	admin	nl	Toepassing bewerken
 edit email settings	admin	nl	Wijzig emailinstellingen
@@ -260,6 +269,7 @@ edit this user	admin	nl	Deze gebruiker bewerken
 edit user	admin	nl	Gebruiker bewerken
 edit user account	admin	nl	Gebruikersaccount bewerken
 egroupware directory	admin	nl	EGroupware directory
+egroupware version	admin	nl	EGroupware versie
 either install id and config password needed or the remote hash!	admin	nl	Of installatie ID met configuratie wachtwoord is nodig of het remote hash!
 email account active	admin	nl	Emailaccount actief
 email address	admin	nl	Emailadres
@@ -340,6 +350,8 @@ global categories	common	nl	Algemene Categorieën
 global options	admin	nl	Algemene opties
 grant	admin	nl	Sta toe
 group ?	admin	nl	Groep?
+group csv export	admin	nl	Groep CSV export
+group csv import	admin	nl	Groep CSV importeren
 group has been added	common	nl	Groep is toegevoegd.
 group has been deleted	common	nl	Groep is verwijderd.
 group has been updated	common	nl	Groep is bijgewerkt.
@@ -393,6 +405,7 @@ kill	admin	nl	Beëindigen
 kill session	admin	nl	Sessie beëindigen
 last %1 logins	admin	nl	Laatste %1 logins
 last %1 logins for %2	admin	nl	Laatste %1 logins voor %2
+last ip	admin	nl	Laatste IP
 last login	admin	nl	Laatste login
 last login from	admin	nl	Laatste login vanaf
 last time read	admin	nl	Laatste keer gelezen
@@ -536,7 +549,6 @@ save the category and return back to the list	admin	nl	De categorie opslaan en t
 saves the changes made and leaves	admin	nl	Bewaart de gemaakte wijzigingen en verlaat
 saves this entry	admin	nl	Slaat deze InfoLog op
 saving of message %1 failed. destination folder %2 does not exist.	admin	nl	Bewaren van bericht %1 mislukt. De doelmap %2 bestaat niet.
-search accounts	admin	nl	Doorzoek de accounts
 search categories	admin	nl	Doorzoek de categorieën
 search groups	admin	nl	Doorzoek de groepen
 search peer servers	admin	nl	Doorzoek de peer-servers
@@ -547,6 +559,7 @@ select the parent category. if this is a main category select no category	admin	
 select type of imap server	admin	nl	Selecteer IMAP servertype
 select type of imap/pop3 server	admin	nl	Selecteer IMAP/POP3-servertype
 select type of smtp server	admin	nl	Selecteer SMTP-servertype
+select users	admin	nl	Selecteer gebruikers
 select users for inclusion	admin	nl	Selecteer gebruikers om toe te voegen
 select where you want to store/retrieve filesystem information	admin	nl	Selecteer waar u uw bestandssysteeminformatie wilt opslaan/verkrijgen
 select where you want to store/retrieve user accounts	admin	nl	Selecteer waar u uw gebruikersaccounts wilt opslaan/verkrijgen
@@ -563,17 +576,23 @@ set preference values.	admin	nl	Stel waarden van voorkeuren in
 should exceptions contain a trace (including function arguments)	admin	nl	Moeten excepties een fout trace bevatten (inclusief functie argumenten)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites) ?
 show 'powered by' logo on	admin	nl	''Powered by'-logo weergeven op
+set a random password	admin	nl	Stel een willekeurig wachtwoord in.
+should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites)?
 show access log	admin	nl	Toegangslogboek weergeven
 show current action	admin	nl	Huidige actie weergeven
 show error log	admin	nl	Foutenlogboek weergeven
+show members	admin	nl	Toon leden
 show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven
 show session ip address	admin	nl	Geef  Sessie IP-adres weer
 sieve server hostname or ip address	admin	nl	Sieve-serverhostnaam of IP-adres
 sieve server port	admin	nl	Sieve-serverpoort
 sieve settings	admin	nl	Sieve instellingen
 site	admin	nl	Site
+skip imap	admin	nl	IMAP overslaan
+skipping imap configuration!	admin	nl	IMAP-configuratie overslaan!
 smtp authentication	admin	nl	SMTP authenticatie
 smtp options	admin	nl	SMTP opties
+smtp server	admin	nl	SMTP server
 smtp server name	admin	nl	SMTP-servernaam
 smtp settings	admin	nl	SMTP instellingen
 smtp-server hostname or ip address	admin	nl	SMTP-serverhostnaam of IP-adres
@@ -581,7 +600,7 @@ smtp-server port	admin	nl	SMTP-serverpoort
 soap	admin	nl	SOAP
 sorry, that group name has already been taken.	admin	nl	Sorry, die groepsnaam bestaat al.
 sorry, the above users are still a member of the group %1	admin	nl	Excuses, de bovenstaande gebruikers zijn nog steeds lid van de groep %1.
-sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1
+sorry, the follow users are still a member of the group %1	admin	nl	Sorry, de volgende gebruikers zijn nog lid van groep %1.
 sort the entries	admin	nl	Sorteer de records
 ssl	admin	nl	SSL
 standard	admin	nl	Standaard

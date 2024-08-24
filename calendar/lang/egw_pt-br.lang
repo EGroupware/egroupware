@@ -218,7 +218,6 @@ exports events from your calendar in ical format.	calendar	pt-br	Exportações e
 exports events from your calendar into a csv file.	calendar	pt-br	Exportações eventos de seu calendário em um arquivo CSV.
 extended	calendar	pt-br	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt-br	Atualizações extendidas sempre incluem os detalhes completos do evento. iCals podem ser importados por certos aplicativos de calendários.
-favorites	calendar	pt-br	Favoritos
 fieldseparator	calendar	pt-br	Separador de campos
 filemanager	calendar	pt-br	Gerenciador de Arquivos
 filename	calendar	pt-br	Nome do arquivo

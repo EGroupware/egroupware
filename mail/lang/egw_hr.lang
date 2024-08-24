@@ -32,8 +32,6 @@ folder	mail	hr	Mapa
 folder settings	mail	hr	Postavke mape
 forward	mail	hr	Proslijedi
 from	mail	hr	From
-from(a->z)	mail	hr	po pošaljitelju (silazno A->Z)
-from(z->a)	mail	hr	po pošaljitelju (uzlazno Z->A)
 header lines	mail	hr	Linije zaglavlja
 html	mail	hr	Html
 if	mail	hr	AKO
@@ -65,11 +63,7 @@ save all	mail	hr	Spremi sve
 select all	mail	hr	Označi Sve
 sent folder	mail	hr	Mapa poslano
 signature	mail	hr	Potpis
-size(...->0)	mail	hr	po veličini (silazno ...->0)
-size(0->...)	mail	hr	po veličini (uzlazno 0->...)
 small view	mail	hr	smanji pogled
-subject(a->z)	mail	hr	po temi (silazno A->Z)
-subject(z->a)	mail	hr	po temi (uzlazno Z->A)
 text	mail	hr	Text
 then	mail	hr	TADA
 trash folder	mail	hr	Mapa Smeće

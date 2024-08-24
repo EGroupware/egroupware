@@ -66,7 +66,6 @@ disable	mail	et	Keela
 disable caching of flags	mail	et	Deaktiver caching af flag
 discard	mail	et	unusta
 discard message	mail	et	unusta kirjad
-display messages in multiple windows	mail	et	Näita kirju mitmes aknas
 display of html emails	mail	et	Näita HTML emaile
 display only when no plain text is available	mail	et	Näita ainult kui plain tekst pole saadaval
 displaying html messages is disabled	mail	et	html kirjade näitamine on välja lülitatud
@@ -115,7 +114,6 @@ ident name organization email	mail	et	Ident name Organisatsioon [Email]
 identity label	mail	et	Identiteedi silt
 if	mail	et	KUI
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	et	Kui soovite näha e-kirja eelvaadet, kui klõpsate ainsa klõpsuga teemale, siis lubage see.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	et	Kui soovite valida mitu kausta ühe toiminguga, võite hoida all ctrl-klahvi ja valida algusväliks ühe kausta ja lõppvahemikuks teise samal tasemel oleva kausta, kõik vahepealsed kaustad valitakse või tühistatakse vastavalt nende praegusele olekule.
 imap	mail	et	IMAP
 imap server	mail	et	IMAP Server
 import of message %1 failed. destination folder not set.	mail	et	Sõnumi %1 importimine ebaõnnestus. Sihtkaust ei ole määratud.
@@ -255,8 +253,6 @@ signature	mail	et	Allkiri
 signature at top	mail	et	allkiri üleval
 signature position and visibility	mail	et	Allkirja asukoht ja nähtavus
 signed by	mail	et	Allkirjastanud
-size(...->0)	mail	et	Suurus (...->0)
-size(0->...)	mail	et	Suurus (0->...)
 small view	mail	et	väike vaade
 smime encrypted message	mail	et	S/MIME krüpteeritud sõnum
 smime signed message	mail	et	S/MIME allkirjastatud sõnum

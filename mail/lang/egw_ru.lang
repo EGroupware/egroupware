@@ -21,7 +21,6 @@ all available info	admin	ru	Вся доступная информация
 all of	mail	ru	Все из
 allow external images	mail	ru	Разрешить внешние изображения
 allow images from external sources in html emails	mail	ru	Разрешать изображения из внешних источников в письмах формата HTML.
-allways a new window	mail	ru	Всегда новое окно
 always respond / auto-responder	mail	ru	Всегда отвечать / автоответчик
 always show html emails	mail	ru	Всегда показывать письма формата HTML
 always show notifiction	mail	ru	Всегда показывать уведомление
@@ -86,7 +85,6 @@ disable caching of flags	mail	ru	Отключить кэширование фл�
 disable horizontal rule for separation of mail body from signature	mail	ru	Отключить правила разделения текста письма и подписи. Если используются шаблоны, эта опция применяется только к текстовой части сообщения
 discard	mail	ru	Отклонить
 discard message	mail	ru	Отклонить сообщение
-display messages in multiple windows	mail	ru	Показать сообщения в нескольких окнах
 display of html emails	mail	ru	Показывать письма в формате HTML
 display of identities	admin	ru	Отображать идентификаторы
 display only when no plain text is available	mail	ru	Показывать только если не доступен обычный текст
@@ -163,8 +161,6 @@ forward as attachment	mail	ru	Переслать как вложение
 forward inline	mail	ru	Переслать как есть
 forward to	mail	ru	Переслать
 from	mail	ru	От
-from(a->z)	mail	ru	От (А->Я)
-from(z->a)	mail	ru	От (Я->А)
 general	admin	ru	Общие
 general settings	mail	ru	Основные установки
 get acl rights failed from imap server!	mail	ru	Не удалось получить права ACL с сервера IMAP!
@@ -187,7 +183,6 @@ if mail header	mail	ru	Если заголовок письма
 if message size	mail	ru	Если размер сообщения
 if shown, which folders should appear on the home page	mail	ru	Если указано, какие каталоги отображать на домашней странице
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	ru	Если вы хотите видеть предварительный просмотр письма при однократном щелчке на теме, включите эту функцию.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	ru	Если вы хотите выбрать несколько папок одним действием, удерживая клавишу Ctrl, выберите папку в качестве начального диапазона, а другую папку на том же уровне - в качестве конечного диапазона, все папки между ними будут выбраны или не выбраны в зависимости от их текущего состояния.
 imap	mail	ru	IMAP
 imap server	mail	ru	Сервер IMAP
 imap timeout	mail	ru	Тайм-аут IMAP
@@ -392,8 +387,6 @@ signature	mail	ru	Подпись
 signature at top	mail	ru	Подпись сверху
 signature position and visibility	mail	ru	Положение и видимость подписи
 signed by	mail	ru	Подписано
-size(...->0)	mail	ru	Размер (...->0)
-size(0->...)	mail	ru	Размер (0->...)
 small view	mail	ru	Просмотр в небольшом окне
 smime encrypted message	mail	ru	Зашифрованное сообщение S/MIME
 smime signed message	mail	ru	S/MIME подписанное сообщение
@@ -404,8 +397,6 @@ source	mail	ru	Исходный код
 sources	mail	ru	Исходные коды
 start new messages with mime type plain/text or html?	mail	ru	новые сообщения начинать как текст или HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ru	Создать ответ на сообщение как текст (или HTML), или использовать формат сообщения по умолчанию?
-subject(a->z)	mail	ru	Тема (А->Я)
-subject(z->a)	mail	ru	Тема (Я->А)
 successfully connected	mail	ru	Соединено успешно
 template folder	mail	ru	Папка шаблонов
 templates	mail	ru	Шаблоны

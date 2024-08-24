@@ -69,7 +69,6 @@ ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
 ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
 identity label	mail	lt	Tapatybės ženklas
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	lt	Jei vienu veiksmu norite pasirinkti kelis aplankus, galite laikyti paspaudę klavišą ctrl, tada pasirinkti aplanką kaip pradžios diapazoną, o kitą to paties lygio aplanką - kaip pabaigos diapazoną; visi tarp jų esantys aplankai bus pasirinkti arba nepasirinkti atsižvelgiant į jų dabartinę būseną.
 imap	mail	lt	IMAP
 imap server	mail	lt	IMAP Server
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	lt	Pranešimo %1 importas nepavyko. Nepavyko išsaugoti pranešimo į aplanką %2 dėl: %3
@@ -154,7 +153,7 @@ preview pane	mail	lt	Langų išdėstymas
 printing	mail	lt	Spausdinimas
 processing of file %1 failed. failed to meet basic restrictions.	mail	lt	Nepavyko apdoroti %1 failo. Nepavyko įvykdyti pagrindinių apribojimų.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	lt	Pateikite numatytąjį atostogų tekstą (naudojamas naujuose atostogų pranešimuose, kai anksčiau nebuvo nustatytas joks pranešimas)
-push notifications	mail	lt	"Push" pranešimai
+push notifications	mail	lt	Push pranešimai
 quicksearch	mail	lt	Greita paieška
 quicksearch (with cc)	mail	lt	Greita paieška (+ kopijavimas)
 real name	mail	lt	Tikrasis vardas

@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	cs	Výchozí hodnota = Ne, pokud ji nepoužíváte, nechte ji vypnutou
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	cs	(imapclass musí tuto funkci podporovat dotazem na příslušnou hodnotu konfigurace a předat ji jako výchozí kvótu serveru IMAP).
 (no subject)	admin	cs	(žádný předmět)
-(stored password will not be shown here)	admin	cs	Uložená hesla zde nebudou zobrazena!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	cs	Pro instalaci nových aplikací použijte<br><a href="setup/" target="setup">Setup</a> [Spravovat aplikace]!
 -  type	admin	cs	- typ
 1 year	admin	cs	1 rok
@@ -57,8 +56,6 @@ acl added.	admin	cs	ACL byly přidány.
 acl deleted.	admin	cs	ACL byly smazány.
 acl manager	admin	cs	Správce ACL
 acl rights	common	cs	ACL práva
-action	admin	cs	Akce
-actions	admin	cs	Akce
 activate	admin	cs	Aktivovat
 activate wysiwyg-editor	admin	cs	Aktivovat WYSIWYG editor
 active templates	admin	cs	Aktivní šablony
@@ -80,6 +77,7 @@ add new email address:	admin	cs	Přidat novou e-mailovou adresu:
 add peer server	admin	cs	Přidat peer server
 add profile	admin	cs	Přidat profil
 add sub-category	admin	cs	Přidat podkategorii
+add to group	admin	cs	Přidat do skupiny
 add user	admin	cs	Přidat uživatele
 add user or group	admin	cs	Přidání uživatele nebo skupiny
 admin dn	admin	cs	DN (distiguished name) administrátora
@@ -88,15 +86,12 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	cs	Jméno administrátora
 admin password	admin	cs	Heslo administrátora
 admin queue and history	admin	cs	Fronta a historie administrátora
-admin username	admin	cs	Uživatelské jméno administrátora
-administration	admin	cs	Administrace
 admins	admin	cs	Administrátoři
 advanced options	admin	cs	Rozšířené volby
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být účet zablokován. Výchozí hodnota = 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být IP zablokována (výchozí 3)?
 aliases	admin	cs	Aliasy
 all applications	admin	cs	Všechny aplikace
-all categories	admin	cs	Všechny kategorie
 all groups	admin	cs	Všechny skupiny
 all records and account information will be lost!	admin	cs	Všechny záznamy a informace o účtu budou ztraceny!
 all users	admin	cs	Všichni uživatelé
@@ -156,6 +151,8 @@ bi-dir passthrough	admin	cs	průchozí v obou směrech
 bi-directional	admin	cs	obousměrné
 blocking after wrong password	admin	cs	Blokování po zadání nesprávného hesla
 bottom	admin	cs	Dolní okraj
+bulk changes	admin	cs	Hromadné změny
+bulk password reset	admin	cs	Hromadná změna hesla
 calculate next run	admin	cs	Vypočítat další spuštění
 can be used by application	admin	cs	Může být použit aplikací
 can be used by group	admin	cs	Může být použit skupinou
@@ -170,6 +167,9 @@ category '%1' deleted	admin	cs	Kategorie '%1' odstraněna
 category deleted.	admin	cs	Kategorie byla smazána.
 category list	admin	cs	Seznam kategorie
 category saved.	admin	cs	Kategorie byla uložena.
+certificate	admin	cs	Certifikát
+certificate details	admin	cs	Podrobnosti o certifikátu
+certificate validation in days	admin	cs	Ověření platnosti certifikátu ve dnech
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení
@@ -214,7 +214,6 @@ customfield '%1' modified	admin	cs	Vlastní pole "%1" upraveno
 customfield deleted	admin	cs	Vlastní pole odstraněno
 customfield saved.	admin	cs	Vlastní pole uloženo.
 cyrus imap server	admin	cs	Cyrus IMAP Server
-cyrus imap server administration	admin	cs	Administrace Cyrus IMAP serveru
 data	admin	cs	Data
 data from	admin	cs	Data z
 day	admin	cs	Den
@@ -303,7 +302,6 @@ emailadmin	admin	cs	Administrátor pošty
 emailadmin: group assigned profile	common	cs	Administrátor pošty: profil přidělený skupině
 emailadmin: user assigned profile	common	cs	Administrátor pošty: profil přidělený uživateli
 enable	admin	cs	Povolit
-enable cyrus imap server administration	admin	cs	Povolit administraci Cyrus IMAP serveru
 enable debug-messages	admin	cs	Povolit debugovací zprávy.
 enable sieve	admin	cs	Povolit Sieve
 enable spellcheck in rich text editor	admin	cs	Povolit kontrolu pravopisu v richtext editoru
@@ -397,7 +395,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	cs	Pokud chcete používat SSL nebo TLS, musíte mít nahráno openssl rozšíření PHP.
 imap admin password	admin	cs	Heslo IMAP administrátora
 imap admin user	admin	cs	Uživatelský účet IMAP administrátora
-imap c-client version < 2001	admin	cs	IMAP C-klient verze < 2001
 imap server	admin	cs	IMAP Server
 imap server closed the connection.	admin	cs	IMAP server ukončil spojení.
 imap server closed the connection. server responded: %s	admin	cs	IMAP server ukončil spojení. Server odpověděl: %s
@@ -405,7 +402,6 @@ imap server hostname or ip address	admin	cs	DNS jméno nebo IP adresa IMAP serve
 imap server logintyp	admin	cs	Typ přihlášení na IMAP server
 imap server name	admin	cs	Název IMAP serveru
 imap server port	admin	cs	Port IMAP serveru
-imap/pop3 server name	admin	cs	Název IMAP/POP3 serveru
 importance	admin	cs	Důležitost
 in mbyte	admin	cs	v MByte
 inactive	admin	cs	Neaktivní
@@ -599,7 +595,6 @@ save the category and return back to the list	admin	cs	Uložit kategorii a vrát
 saves the changes made and leaves	admin	cs	Uloží provedené změny a ukončí.
 saves this entry	admin	cs	Uloží tento záznam
 scheduled	admin	cs	Naplánováno
-search accounts	admin	cs	Prohledat účty
 search categories	admin	cs	Prohledat kategorie
 search groups	admin	cs	Prohledat skupiny
 search peer servers	admin	cs	Prohledat peer servery
@@ -610,7 +605,6 @@ select group managers	admin	cs	Vybrat skupinové správce
 select permissions this group will have	admin	cs	Vybrat oprávnění pro tuto skupinu
 select the parent category. if this is a main category select no category	admin	cs	Vyberte rodičovskou kategorii. Pokud se jedná o hlavní kategorii, zvolte NO CATEGORY.
 select type of imap server	admin	cs	Vyberte typ IMAP serveru
-select type of imap/pop3 server	admin	cs	Vyberte typ IMAP/POP3 serveru
 select type of smtp server	admin	cs	Vyberte typ SMTP serveru
 select users for inclusion	admin	cs	Vyberte uživatele k zařazení
 select where you want to store/retrieve filesystem information	admin	cs	Vyberte kam/odkud chcete ukládat/načítat informace o souborovém systému.

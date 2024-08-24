@@ -151,7 +151,6 @@ exists	calendar	pt	Existe
 export definition to use for nextmatch export	calendar	pt	Definição Exportar para usar para exportação nextmatch
 extended	calendar	pt	Avançado
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
-favorites	calendar	pt	Favoritos
 fieldseparator	calendar	pt	Separador de campos
 filemanager	calendar	pt	Gestor de ficheiros
 filename	calendar	pt	Nome de ficheiro

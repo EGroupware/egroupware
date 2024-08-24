@@ -826,7 +826,6 @@ you must save and run an inital import, before the periodic import will start	se
 you need to add at least one egroupware domain / database instance.	setup	de	Sie müssen mindestens eine EGroupware Domain / Datenbank Instanz hinzufügen.
 you need to configure egroupware:	setup	de	Sie müssen EGroupware konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
-you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you need to specify a password!	setup	de	Sie müssen ein Passwort angeben!
 you should %1log out%2 and in again, to update your current session!	setup	de	Sie sollten sich %1ausloggen%2 und erneut einloggen, um ihre Sitzung zu aktualisieren!
 you should either install the sources or uninstall it, to get rid of the tables	setup	de	Sie sollten entweder die Quellen installieren oder die Anwendung deinstallieren, um die Tabellen los zu werden.

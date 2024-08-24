@@ -252,7 +252,6 @@ exports events from your calendar in ical format.	calendar	es-es	Exporta eventos
 exports events from your calendar into a csv file.	calendar	es-es	Exporta eventos de su calendario a un archivo CSV.
 extended	calendar	es-es	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	es-es	Las actualizaciones extendidas incluyen todos los detalles de los eventos. Los de tipo iCal pueden importarse mediante otras aplicaciones de tipo calendario.
-favorites	calendar	es-es	Favoritos
 fieldseparator	calendar	es-es	Separador de campos
 filemanager	calendar	es-es	Administrador de archivos
 filename	calendar	es-es	Nombre de fichero

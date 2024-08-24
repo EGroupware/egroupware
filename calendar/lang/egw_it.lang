@@ -252,7 +252,6 @@ exports events from your calendar in ical format.	calendar	it	Esporta eventi dal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
 extended	calendar	it	Esteso
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	it	Gli update estesi contengono tutti i dettagli degli eventi. Gli iCal possono essere importanti da certe applicazioni.
-favorites	calendar	it	Preferiti
 fieldseparator	calendar	it	Separatore
 filemanager	calendar	it	Filemanager
 filename	calendar	it	Nome file
