@@ -11,7 +11,6 @@
 account editable by user	mail	pt	onta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
 acl rights retrieved successfully	mail	pt	Direitos ACL retrieved com sucesso
-action	mail	pt	Ação
 activating by date requires a start- and end-date!	mail	pt	Ativação por data requer um começo e final-date!
 add a new folder to %1:	mail	pt	Adicionar uma nova pasta para %1:
 add all my aliases	mail	pt	Adicionar todos os meus aliases
@@ -21,7 +20,6 @@ add folder	mail	pt	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt	Converter correio em item, adicionar mensagem em bruto (ignorar anexos de correio)
 add this certificate into contact	mail	pt	Adicionar este certificado ao contacto
 add to addressbook	mail	pt	Adicionar ao livro de endereços
-add your domain as "%1" in options to list of email providers and enable api.	mail	pt	Adicione o seu domínio como "%1" nas opções da lista de fornecedores de correio eletrónico e active a API.
 adding %1 to blacklisted email addresses failed because of %2	mail	pt	A adição de %1 a endereços de correio eletrónico na lista negra falhou devido a %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	pt	A adição de %1 aos endereços de correio eletrónico incluídos na lista negra falhou devido a %2
 after reply, visible during compose	mail	pt	Após resposta, visível durante a composição
@@ -38,7 +36,6 @@ allow external images from listed domains	mail	pt	Permitir imagens externas de d
 allow images from external sources in html emails	mail	pt	Permitir imagens de fontes externas em HTML e-mails.
 allow images from listed domains in html emails	mail	pt	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt	permitir aos usuários criar novas identidades
-allways a new window	mail	pt	Sempre numa nova janela
 always allow external sources from %1	mail	pt	Permitir sempre fontes externas a partir de %1
 always respond / auto-responder	mail	pt	Responder sempre / resposta automática
 always show html emails	mail	pt	Exibir sempre mensagens HTML
@@ -122,7 +119,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	pt	Desativar a ut
 disabled!	mail	pt	desativado!
 discard	mail	pt	descartar
 discard message	mail	pt	Descarte mensagem
-display messages in multiple windows	mail	pt	Apresentar mensagens
 display of html emails	mail	pt	Apresentar mensagens em HTML
 display of identities	admin	pt	exibição de identidades
 display only when no plain text is available	mail	pt	Apresentar apenas quando a versão de texto não estiver disponível
@@ -213,8 +209,6 @@ folder %1 is moving to folder %2	mail	pt	A pasta %1 está a ser movida para a pa
 folder management	mail	pt	Gestão de pastas
 folder management ...	mail	pt	Gestão de pastas ...
 folder settings	mail	pt	Definições das pastas
-for e.g.: mpeg	mail	pt	por exemplo: mpeg
-for eg.: mpeg	mail	pt	por exemplo:. mpeg
 force html	mail	pt	Força HTML
 force plain text	mail	pt	Forçar texto
 forward	mail	pt	Para a frente
@@ -226,8 +220,6 @@ forward to	mail	pt	Encaminhar à
 forward to address (*):	mail	pt	Reencaminhar para o endereço (*):
 forwards	mail	pt	Forwards
 from	mail	pt	De
-from(a->z)	mail	pt	De (A->Z)
-from(z->a)	mail	pt	De (Z->A)
 general	admin	pt	Geral
 general settings	mail	pt	Definições gerais
 get acl rights failed from imap server!	mail	pt	Seja direitos ACL com falha do servidor IMAP!
@@ -259,7 +251,6 @@ if message size	mail	pt	Se o tamanho da mensagem
 if subject contains:(*)	mail	pt	Se assunto contém: (*)
 if to contains:(*)	mail	pt	Se a contém: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt	Se pretender ver uma pré-visualização de um e-mail clicando uma vez no assunto, active esta opção.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pt	Se pretender selecionar várias pastas numa só ação, pode manter premida a tecla ctrl e selecionar uma pasta como intervalo inicial e outra pasta dentro do mesmo nível como intervalo final.
 imap	mail	pt	IMAP
 imap - incoming mail	mail	pt	IMAP - de entrada de correio
 imap administration	mail	pt	Administração IMAP
@@ -515,8 +506,6 @@ signature	mail	pt	Assinatura
 signature at top	mail	pt	assinatura no topo
 signature position and visibility	mail	pt	Posição da assinatura e visibilidade
 signed by	mail	pt	Assinado por
-size(...->0)	mail	pt	Tamanho (...->0)
-size(0->...)	mail	pt	Tamanho (0->...)
 small view	mail	pt	Sumário
 smime encrypted message	mail	pt	Mensagem encriptada S/MIME
 smime signed message	mail	pt	Mensagem assinada S/MIME
@@ -530,8 +519,6 @@ step 2: folder	mail	pt	Passo 2: Pasta
 step 3: sieve - server side mail filtering	mail	pt	Passo 3: Sieve - filtragem de correio do lado do servidor
 step 4: smtp - outgoing mail	mail	pt	Passo 4: SMTP - saída correio
 store to folder	mail	pt	Guarde a pasta
-subject(a->z)	mail	pt	Assunto (A->Z)
-subject(z->a)	mail	pt	Assunto (Z-->A)
 subscribe folder	mail	pt	Assinar pasta
 subscribe folder ...	mail	pt	Assinar pasta ...
 subscription folders	mail	pt	Pastas de Subscrição

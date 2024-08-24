@@ -8,7 +8,6 @@ add to addressbook	mail	no	Legg til i adressebok
 adding %1 to blacklisted email addresses failed because of %2	mail	no	Legge til %1 til svartelistede e-postadresser mislyktes på grunn av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til %1 til e-postadresser på hvilliste mislyktes på grunn av %2
 all of	mail	no	alle av
-allways a new window	mail	no	Altid et nytt vindu
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
@@ -85,8 +84,6 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder settings	mail	no	Mappeinnstillinger
 forward	mail	no	Videresend
 from	mail	no	Fra
-from(a->z)	mail	no	Fra (A -> Å)
-from(z->a)	mail	no	Fra (Å -> A)
 general	admin	no	Generell
 get acl rights failed from imap server!	mail	no	Få ACL-rettigheter mislyktes fra IMAP-serveren!
 greater than	mail	no	Større enn
@@ -103,7 +100,6 @@ if	mail	no	Dersom
 if mail header	mail	no	dersom meldingshodet
 if message size	mail	no	dersom meldingsstørrelse
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	no	Hvis du vil se en forhåndsvisning av en e-post ved å klikke på emnet, kan du aktivere dette.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	no	Hvis du vil velge flere mapper i én handling, kan du holde nede ctrl-tasten og deretter velge en mappe som startområde og en annen mappe på samme nivå som sluttområde. Alle mapper i mellom blir valgt eller fravalgt basert på gjeldende status.
 imap	mail	no	IMAP
 imap server	mail	no	IMAP Tjener
 import of message %1 failed. destination folder not set.	mail	no	Import av melding %1 mislyktes. Målmappe ikke angitt.
@@ -225,12 +221,8 @@ shows a temporary visible notification including from address, subject and a sni
 sign your message with smime certificate	mail	no	Signer meldingen med S/MIME-sertifikat
 signature	mail	no	Signatur
 signed by	mail	no	Signert av
-size(...->0)	mail	no	Størrelse (...->0)
-size(0->...)	mail	no	Størrelse (0->...)
 small view	mail	no	liten visning
 sort order	mail	no	Sortering
-subject(a->z)	mail	no	Emne (A->Å)
-subject(z->a)	mail	no	Emne (Å->A)
 text	mail	no	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
 the rule with priority %1 successfully saved!	mail	no	Regelen med prioritet %1 ble lagret!

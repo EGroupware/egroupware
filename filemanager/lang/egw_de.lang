@@ -32,8 +32,6 @@
 accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht
-actions	filemanager	de	Befehle
-add to clipboard	filemanager	de	In die Zwischenablage hinzufügen
 administrators	filemanager	de	Administratoren
 all files	filemanager	de	Alle Dateien
 all subdirectories	filemanager	de	Alle Unterordner

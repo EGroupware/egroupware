@@ -87,7 +87,6 @@ admin name	admin	pt-br	Nome do Administrador
 admin password	admin	pt-br	Senha do administrador
 admin queue and history	admin	pt-br	Lista de administradores e histórico
 admin username	admin	pt-br	Nome de usuário do administrador
-administration	admin	pt-br	Administração
 admins	admin	pt-br	Administradores
 advanced options	admin	pt-br	Opções avançadas
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)
@@ -198,7 +197,6 @@ custom egroupware web font as woff2 file	admin	pt-br	Fonte da web Custom EGroupw
 custom fields	admin	pt-br	Campos personalizados
 custom fields tab	admin	pt-br	Guia Campos personalizados
 cyrus imap server	admin	pt-br	Servidor Cyrus IMAP
-cyrus imap server administration	admin	pt-br	Administração do Servidor Cyrus IMAP
 data	admin	pt-br	Dados
 day	admin	pt-br	Dia
 day of week<br>(0-6, 0=sun)	admin	pt-br	Dia da Semana<br>(0-6, 0=Dom)
@@ -284,7 +282,6 @@ emailadmin	admin	pt-br	Administração do E-Mail
 emailadmin: group assigned profile	common	pt-br	Administração de eMail: Perfil de Grupo
 emailadmin: user assigned profile	common	pt-br	Administração de eMail: Perfil de Usuário
 enable	admin	pt-br	Habilitado
-enable cyrus imap server administration	admin	pt-br	Habilitar administração do Servidor Cyrus IMAP
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração.
 enable sieve	admin	pt-br	Habilitar Sieve
 enable spellcheck in rich text editor	admin	pt-br	Habilitar o verificador ortográfico no editor de texto
@@ -381,7 +378,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pt-br	Se estiver usando SSL ou TLS, você deverá ter a extensão PHP 'openssl' carretada.
 imap admin password	admin	pt-br	Senha do administrador IMAP
 imap admin user	admin	pt-br	Usuário administrador do IMAP
-imap c-client version < 2001	admin	pt-br	IMAP C-Cliente Versão < 2001
 imap server	admin	pt-br	Servidor IMAP
 imap server closed the connection.	admin	pt-br	O servidor IMAP fechou a conexão.
 imap server closed the connection. server responded: %s	admin	pt-br	O servidor IMAP fechou a conexão. Resposta do servidor: %s
@@ -389,7 +385,6 @@ imap server hostname or ip address	admin	pt-br	Nome ou IP do servidor IMAP
 imap server logintyp	admin	pt-br	Tipo de login do servidor IMAP
 imap server name	admin	pt-br	Nome do servidor imap
 imap server port	admin	pt-br	Porta do servidor IMAP
-imap/pop3 server name	admin	pt-br	Nome do servidor IMAP/POP3
 importance	admin	pt-br	importância
 in mbyte	admin	pt-br	em Mbytes
 inactive	admin	pt-br	Inativo
@@ -560,7 +555,6 @@ select group managers	admin	pt-br	Selecione Manutenção de Grupos
 select permissions this group will have	admin	pt-br	Selecione as permissões que este grupo terá
 select the parent category. if this is a main category select no category	admin	pt-br	Selecione a categoria pai. Caso seja um categoria pai selecione SEM CATEGORIA.
 select type of imap server	admin	pt-br	Selecione o tipo de servidor IMAP
-select type of imap/pop3 server	admin	pt-br	Selecione o tipo de servidor IMAP/POP3
 select type of smtp server	admin	pt-br	Selecione o tipo de servidor SMTP
 select users for inclusion	admin	pt-br	Selecione usuários para inclusão
 select where you want to store/retrieve filesystem information	admin	pt-br	Selecione onde você deseja guardar as informações do sistema de arquivos.

@@ -16,7 +16,6 @@ after reply, visible during compose	mail	hu	Válasz után, látható az összeá
 aliases+forwards	mail	hu	Aliasok+Továbbítás
 all of	mail	hu	összes innnen
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
-allways a new window	mail	hu	Mindig új ablak
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
 always show notifiction	mail	hu	Mindig megjeleníti az értesítést
@@ -65,7 +64,6 @@ disable	mail	hu	Letilt
 disable caching of flags	mail	hu	A zászlók gyorsítótárazásának letiltása
 discard	mail	hu	elvet
 discard message	mail	hu	Üzenet elvetése
-display messages in multiple windows	mail	hu	üzenetek megjelenítése több ablakban
 display of html emails	mail	hu	HTML email-ek megjelenítése
 display only when no plain text is available	mail	hu	Csak akkor jelenítse meg, ha nincs egyszerű szöveg
 displaying html messages is disabled	mail	hu	HTML levelek megjelenítése tiltva
@@ -131,8 +129,6 @@ forward as attachment	mail	hu	Továbbítás mellékletként
 forward inline	mail	hu	Továbbítás beágyazva
 forward to	mail	hu	Továbbítás ide
 from	mail	hu	Tól:
-from(a->z)	mail	hu	Feladó (A->Z)
-from(z->a)	mail	hu	Feladó (Z->A)
 general	admin	hu	Általános
 get acl rights failed from imap server!	mail	hu	Az ACL-jogok lekérdezése sikertelen az IMAP-kiszolgálóról!
 greater than	mail	hu	Nagyobb mint
@@ -150,7 +146,6 @@ if	mail	hu	HA
 if mail header	mail	hu	ha a levél fejléce
 if message size	mail	hu	ha a levél mérete
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	hu	Ha a tárgyra kattintva előnézetet szeretne látni a levélről, engedélyezze ezt.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	hu	Ha több mappát szeretne egy műveletben kiválasztani, akkor tartsa lenyomva a ctrl billentyűt, majd válasszon ki egy mappát kezdő tartományként, és egy másik mappát ugyanazon a szinten belül végtartományként, a közte lévő összes mappa az aktuális állapotuk alapján lesz kiválasztva vagy kijelölve.
 imap	mail	hu	IMAP
 imap server	mail	hu	IMAP szerver
 import of message %1 failed. destination folder not set.	mail	hu	A %1 üzenet importálása sikertelen. A célmappa nincs beállítva.
@@ -322,16 +317,12 @@ signature	mail	hu	Aláírás
 signature at top	mail	hu	aláírás a tetején
 signature position and visibility	mail	hu	Aláírás pozíciója és láthatósága
 signed by	mail	hu	Aláírta
-size(...->0)	mail	hu	Méret (...->0)
-size(0->...)	mail	hu	Méret (0->...)
 small view	mail	hu	tömör nézet
 smime encrypted message	mail	hu	S/MIME titkosított üzenet
 smime signed message	mail	hu	S/MIME aláírással ellátott üzenet
 smtp	mail	hu	SMTP
 sneak preview in list	mail	hu	Üzenet előnézet
 start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy HTML-ként?
-subject(a->z)	mail	hu	Tárgy (A->Z)
-subject(z->a)	mail	hu	Tárgy (Z->A)
 template folder	mail	hu	Sablonok mappa
 templates	mail	hu	Sablonok
 text	mail	hu	Szöveg

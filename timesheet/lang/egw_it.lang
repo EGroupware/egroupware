@@ -1,6 +1,6 @@
 %1 timesheets(s) %2	timesheet	it	%1 fogli ore %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	it	%1 fogli ore %2, %3 falliti a causa di permessi insufficienti
---> enter new name	timesheet	it	->> inserisci nuovo nome
+--> enter new name	admin	it	->> inserisci nuovo nome
 2 month ago	timesheet	it	2 mesi fa
 2 years ago	timesheet	it	2 anni fa
 3 years ago	timesheet	it	3 anni fa
@@ -21,13 +21,13 @@ creates a new field	timesheet	it	Crea un nuovo campo
 creating new entry	timesheet	it	creazione di una nuova voce
 custom fields	timesheet	it	Campi Personalizzati
 default document to insert entries	timesheet	it	Documento predefinito per l'inserimento
-delete this status	timesheet	it	Cancella questo stato
+delete this status	admin	it	Cancella questo stato
 deleted	timesheet	it	cancellato
 deletes this field	timesheet	it	Cancella questo campo
 determines the order the fields are displayed	timesheet	it	Determina l'ordine di visualizzazione dei campi
 directory with documents to insert entries	timesheet	it	Cartella con documenti per l'inserimento
 each value is a line like <id>[=<label>]	timesheet	it	ogni valore è una linea come <id>[=<label>]
-edit status	timesheet	it	Modifica lo Stato
+edit status	common	it	Modifica lo Stato
 edit this entry	timesheet	it	Modifica questa voce
 empty if identical to duration	timesheet	it	vuoto se identico a durata
 end	timesheet	it	Fine
@@ -45,7 +45,6 @@ export definition to use for nextmatch export	timesheet	it	Definizione di esport
 export to openoffice spreadsheet	timesheet	it	Esporta in openoffice calc
 exports entries from your timesheet into a csv file.	timesheet	it	Esporta fogli ore in CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
-favorites	timesheet	it	Preferiti
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
@@ -86,11 +85,11 @@ no project	timesheet	it	Non mostrare progetto
 no status	timesheet	it	Non mostrare stato
 none: use only free project-names	admin	it	Nessuno: usa solo nomi progetto liberi
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	it	Numero di righe per un campo di testo oppure un campo di selezione multipla
-only admin	timesheet	it	Solo amministratori
-only admin can edit this status	timesheet	it	Solo gli amministratori possono modificare fogli ore con stato
+only admin	admin	it	Solo amministratori
+only admin can edit this status	admin	it	Solo gli amministratori possono modificare fogli ore con stato
 or endtime	timesheet	it	o OraFine
 order	timesheet	it	Ordine
-parent	timesheet	it	Superiore
+parent	admin	it	Superiore
 permission denied!!!	timesheet	it	Permesso negato!!!
 permissions error - %1 could not %2	timesheet	it	Errore di permessi - %1 non può %2
 prevent deleting	admin	it	Prevenzione eliminazioni

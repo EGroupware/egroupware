@@ -170,7 +170,6 @@ do you want a notification, if items you delegated are due?	infolog	cs	Chcete do
 do you want to receive notifications as html-mails or plain text?	infolog	cs	Chcete dostávat upozornění jako HTML e-maily nebo jako prostý text.
 don't show infolog	infolog	cs	NEzobrazovat InfoLog
 done	infolog	cs	Hotovo
-download	infolog	cs	Uložit soubor
 download url for links	infolog	cs	Stáhnout URL propojení
 due %1	infolog	cs	Do %1
 due date	infolog	cs	Datum splatnosti
@@ -210,7 +209,6 @@ exists	infolog	cs	Stávající
 export definition to use for nextmatch export	infolog	cs	Export definic pro použití v dalších exportech
 exports in ical format.	infolog	cs	Export událostí do formátu iCal.
 exports infolog entries into a csv file.	infolog	cs	Export událostí do formátu CSV.
-favorites	infolog	cs	Oblíbené
 fax	infolog	cs	Fax
 field must not be empty !!!	infolog	cs	Položka nesmí být prázdná!
 fields to exclude when copying an infolog:	infolog	cs	Pole, která se při kopírování úkolu nemají kopírovat:
@@ -428,8 +426,6 @@ select a priority for this task	infolog	cs	Vybrat prioritu pro tento úkol
 select a project	infolog	cs	Vybrat projekt
 select a responsible user: a person you want to delegate this task	infolog	cs	Vybrat odpovědného uživatele: osobu, které chcete delegovat tento úkol
 select a typ to edit it's status-values or delete it	infolog	cs	Vyberte typ pro editaci jeho stavu, hodnot nebo pro smazání
-select an action	infolog	cs	Vyberte akci
-select an action...	infolog	cs	Vyberte akci ...
 select an app to search in	infolog	cs	Vybrat aplikaci k prohledání
 select an entry to link with	infolog	cs	Vybrat záznam, na který se má odkazovat
 select multiple contacts for a further action	infolog	cs	Vybrat více kontaktů pro další akci

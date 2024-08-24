@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	fr	Défaut = Non, laissez-le désactivé si vous ne l'utilisez pas
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	fr	(imapclass doit supporter cette fonctionnalité en interrogeant la valeur de configuration correspondante et la passer comme defaultquota au serveur IMAP)
 (no subject)	admin	fr	Pas de sujet
-(stored password will not be shown here)	admin	fr	Le mot de passe enregistré ne sera pas montré ici !
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !
 -  type	admin	fr	- type
 1 year	admin	fr	1 an
@@ -68,8 +67,6 @@ acl manager	admin	fr	Gestionnaire des droits d'accès (ACL)
 acl rights	common	fr	Droits d'accès
 acl updated	admin	fr	ACL mis à jour
 acl updated.	admin	fr	ACL mis à jour.
-action	admin	fr	Action
-actions	admin	fr	Actions
 activate	admin	fr	Activer
 activate wysiwyg-editor	admin	fr	Activer l'éditeur WYSIWYG
 activated	admin	fr	activé
@@ -95,6 +92,7 @@ add new email address:	admin	fr	Ajouter une nouvelle adresse email:
 add peer server	admin	fr	Ajouter un Serveur Pair
 add profile	admin	fr	Ajouter un profil
 add sub-category	admin	fr	Ajouter une sous-catégorie
+add to group	admin	fr	Aggiungi al gruppo
 add user	admin	fr	Ajouter un utilisateur
 add user or group	admin	fr	Ajouter un utilisateur ou un groupe
 added	admin	fr	ajouté
@@ -104,8 +102,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	fr	Nom de l'administrateur
 admin password	admin	fr	Mot de passe administrateur
 admin queue and history	admin	fr	Adminstration des files et historiques
-admin username	admin	fr	Nom d'utilisateur de l'administrateur
-administration	admin	fr	Administration
 admins	admin	fr	Administrateurs
 advanced options	admin	fr	Options avancées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué. (3 par défaut)
@@ -115,7 +111,6 @@ all accounts	admin	fr	Tous les comptes
 all acls	admin	fr	Tous les ACLs
 all applications	admin	fr	Toutes les applications
 all applications of the user	admin	fr	Toutes les applications de l'utilisateur
-all categories	admin	fr	Toutes les catégories
 all groups	admin	fr	Tous les groupes
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
@@ -180,6 +175,7 @@ bi-dir passthrough	admin	fr	passage bidirectionnel
 bi-directional	admin	fr	bidirectionnel
 blocking after wrong password	admin	fr	Blocage après mauvais mot de passe
 bottom	admin	fr	Bas
+bulk changes	admin	fr	Modifiche in blocco
 bulk password reset	admin	fr	Reset des mots de passe
 by	admin	fr	Par
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	fr	En sélectionnant un utilisateur ou un groupe, vous effacez le compte mail pour tous les autres utilisateurs!<br>Êtes-vous sûrs de vouloir le faire ?
@@ -274,7 +270,6 @@ customfield '%1' modified	admin	fr	Champ personnalisé '%1' modifié.
 customfield deleted	admin	fr	Champ personnalisé supprimé.
 customfield saved.	admin	fr	Champ personnalisé enregistré.
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
-cyrus imap server administration	admin	fr	Administration du serveur Cyrus IMAP
 data	admin	fr	Données
 data from	admin	fr	Données de
 day	admin	fr	Jour
@@ -391,7 +386,6 @@ emailadmin: group assigned profile	common	fr	eMailAdmin : profil assigné par gr
 emailadmin: user assigned profile	common	fr	eMailAdmin : profil assigné par utilisateur
 empty to not change	admin	fr	laisser vide pour ne RIEN changer
 enable	admin	fr	Activer
-enable cyrus imap server administration	admin	fr	Activer la gestion du serveur Cyrus IMAP
 enable debug-messages	admin	fr	Activer les messages de déboguage.
 enable sieve	admin	fr	Activer Sieve
 enable spellcheck in rich text editor	admin	fr	Activer la vérification d'orthographe dans l'éditeur de texte riche
@@ -532,7 +526,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	fr	Si vous souhaitez avoir des images sélectionnées au hasard, vous pouvez télécharger plusieurs images.
 imap admin password	admin	fr	Mot de passe de l'administrateur IMAP
 imap admin user	admin	fr	ID administrateur IMAP
-imap c-client version < 2001	admin	fr	IMAP C-Client Version < 2001
 imap server	admin	fr	Serveur IMAP
 imap server closed the connection.	admin	fr	Le serveur IMAP a interrompu la connexion.
 imap server closed the connection. server responded: %s	admin	fr	Le serveur IMAP a interrompu la connexion. Réponse du serveur: %s.
@@ -540,7 +533,6 @@ imap server hostname or ip address	admin	fr	Nom du serveur IMAP ou adresse IP
 imap server logintyp	admin	fr	Type d'authentification IMAP
 imap server name	admin	fr	Nom du serveur IMAP
 imap server port	admin	fr	Port IMAP
-imap/pop3 server name	admin	fr	Nom du serveur IMAP/POP3
 importance	admin	fr	Importance
 in mbyte	admin	fr	en Mo
 inactive	admin	fr	Inactif
@@ -790,7 +782,6 @@ saves the changes made and leaves	admin	fr	Enregistrer les modifications et quit
 saves this entry	admin	fr	Enregistre cet entrée
 saving of message %1 failed. destination folder %2 does not exist.	admin	fr	L'enregistrement du message %1 a échoué. Le dossier de destination %2 n'existe pas.
 scheduled	admin	fr	Programmé
-search accounts	admin	fr	Chercher des comptes
 search categories	admin	fr	Chercher des catégories
 search groups	admin	fr	Chercher des groupes
 search peer servers	admin	fr	Chercher des serveurs Pairs
@@ -807,7 +798,6 @@ select permissions this group will have	admin	fr	Choisissez les permissions que 
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	fr	Sélectionnez les applications pour lesquelles vous voulez accéder grâce au token, ou laissez par défaut pour toutes les applications.
 select the parent category. if this is a main category select no category	admin	fr	Choisissez la catégorie parente. Si ceci est une catégorie principale choisissez PAS DE CATEGORIE.
 select type of imap server	admin	fr	Sélectionner le type de serveur IMAP
-select type of imap/pop3 server	admin	fr	Sélectionner le type de serveur IMAP/POP3
 select type of smtp server	admin	fr	Sélectionner le type de serveur SMTP
 select users	admin	fr	Sélectionner les utilisateurs
 select users for inclusion	admin	fr	Choisissez les utilisateurs à inclure

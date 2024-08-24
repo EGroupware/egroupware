@@ -79,7 +79,6 @@ ident name email	mail	tr	Kimlik adı [E-posta]
 ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
 identity label	mail	tr	Kimlik etiketi
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	tr	Tek bir işlemde birden fazla klasör seçmek isterseniz, ctrl tuşunu basılı tutup başlangıç aralığı olarak bir klasör ve bitiş aralığı olarak aynı seviyedeki başka bir klasör seçebilirsiniz, aradaki tüm klasörler mevcut durumlarına göre seçilecek veya seçilmeyecektir.
 imap	mail	tr	IMAP
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	tr	%1 mesajının içe aktarımı başarısız oldu. Nedeniyle mesaj %2 klasörüne kaydedilemedi: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	tr	%1 iletisinin içe aktarımı başarısız oldu. Hedef Klasör %2 mevcut değil.

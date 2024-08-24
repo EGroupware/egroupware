@@ -15,7 +15,6 @@ after reply, visible during compose	mail	zh	回复后，在撰写过程中可见
 aliases+forwards	mail	zh	别名+转发
 all of	mail	zh	所有的
 allow images from external sources in html emails	mail	zh	在HTML邮件中允许外部图片来源
-allways a new window	mail	zh	允许新窗口
 always respond / auto-responder	mail	zh	始终回复/自动回复
 always show html emails	mail	zh	总是显示HTML邮件
 always show notifiction	mail	zh	总是显示通知
@@ -61,7 +60,6 @@ disable	mail	zh	禁用
 disable caching of flags	mail	zh	禁用标志的缓存
 discard	mail	zh	取消
 discard message	mail	zh	取消邮件
-display messages in multiple windows	mail	zh	在多窗口显示邮件
 display of html emails	mail	zh	显示HTML邮件
 display only when no plain text is available	mail	zh	仅当邮件非纯文本时显示
 displaying html messages is disabled	mail	zh	显示HTML邮件被禁用
@@ -108,8 +106,6 @@ folder settings	mail	zh	邮件夹设置
 forward	mail	zh	转发
 forward to	mail	zh	转发到
 from	mail	zh	从
-from(a->z)	mail	zh	从 (A->Z)
-from(z->a)	mail	zh	从 (Z->A)
 general	admin	zh	通用
 get acl rights failed from imap server!	mail	zh	从 IMAP 服务器获取 ACL 权限失败！
 greater than	mail	zh	大于
@@ -126,7 +122,6 @@ if	mail	zh	如果
 if mail header	mail	zh	如果邮件头
 if message size	mail	zh	如果邮件大小
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	zh	如果你想单击邮件主题查看邮件预览，请启用此功能。
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	zh	如果想在一次操作中选择多个文件夹，可以按住 ctrl 键，然后选择一个文件夹作为起始范围，选择同级别的另一个文件夹作为结束范围。
 imap	mail	zh	IMAP
 imap server	mail	zh	IMAP 服务器
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	zh	导入邮件 %1 失败。由于以下原因，无法将邮件保存到 %2 文件夹： %3
@@ -289,16 +284,12 @@ signature	mail	zh	签名
 signature at top	mail	zh	签名在顶部
 signature position and visibility	mail	zh	签名的位置和可见性
 signed by	mail	zh	签名者
-size(...->0)	mail	zh	大小 (...->0)
-size(0->...)	mail	zh	大小(0->...)
 small view	mail	zh	小视图
 smime encrypted message	mail	zh	S/MIME加密的信息
 smime signed message	mail	zh	S/MIME签名信息
 smtp	mail	zh	SMTP
 sneak preview in list	mail	zh	信息预览
 sort order	mail	zh	分类排序
-subject(a->z)	mail	zh	主题 (A->Z)
-subject(z->a)	mail	zh	主题 (Z->A)
 text	mail	zh	文字
 the imap server need to meet certain requirements and be configured for it:	mail	zh	IMAP 服务器需要满足某些要求并为此进行配置：
 the mimeparser can not parse this message.	mail	zh	MIME 解析器不能解析这个邮件。

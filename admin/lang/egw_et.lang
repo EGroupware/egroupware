@@ -36,7 +36,6 @@ account preferences	admin	et	Konto eelistused
 acl csv export	admin	et	ACL CSV eksport
 acl manager	admin	et	ACL Manageerija
 acl rights	common	et	ACL Õigused
-actions	admin	et	Tegevused
 activate	admin	et	Aktiveeri
 activated again	admin	et	uuesti aktiveeritud
 active this token again	admin	et	Aktiveerige see sümbol uuesti
@@ -55,12 +54,11 @@ add new application	admin	et	Lisa uus rakendus
 add new email address:	admin	et	Lisa uus email aadress:
 add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
+add to group	admin	et	Lisa gruppi
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
 admin password	admin	et	Admin parool
-admin username	admin	et	Admin kasutajanimi
 all applications	admin	et	Kõik rakendused
-all categories	admin	et	Kõik kategooriad
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
 alternate email address	admin	et	Alternatiivne email aadress
@@ -83,9 +81,15 @@ are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kust
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
 authentication / accounts	admin	et	Autentimine / Kontod
 bad login name or password.	admin	et	Vale kasutajanimi või parool.
+blocking after wrong password	admin	et	Blokeerimine pärast vale salasõna kasutamist
+bulk changes	admin	et	Massilised muudatused
+bulk password reset	admin	et	Paroolide massiline lähtestamine
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
+certificate	admin	et	Sertifikaat
+certificate details	admin	et	Sertifikaadi andmed
+certificate validation in days	admin	et	Sertifikaadi valideerimine päevade jooksul
 change acl rights	admin	et	Muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
@@ -104,7 +108,6 @@ custom egroupware bold web font as woff2 file	admin	et	Kohandatud EGroupware Bol
 custom egroupware web font as woff2 file	admin	et	Kohandatud EGroupware veebifont woff2 failina
 custom fields tab	admin	et	Kohandatud väljade vahekaart
 cyrus imap server	admin	et	Cyrus IMAP Server
-cyrus imap server administration	admin	et	Cyrus IMAP server administreerimine
 day	admin	et	Päev
 db backup and restore	admin	et	DB tagavara ja taastamine
 default	admin	et	Vaikimisi
@@ -158,11 +161,9 @@ email account active	admin	et	Email konto aktiivne
 email address	admin	et	Email aadress
 email settings	common	et	Email setingud
 enable	admin	et	Luba
-enabled - popup window	admin	et	Lubatud - Hüpikaknad
 encrypted connection	admin	et	Krüpteeritud ühendus
 encryption settings	admin	et	Krüpteerimise setingud
 enter the hostname of the machine on which this server is running	admin	et	Sisesta hostinimi kus see server töötab
-enter your default ftp server	admin	et	Sisesta oma vaikimisi FTP server
 enter your default mail domain (from: user@domain)	admin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
 enter your http proxy server	admin	et	Sisesta oma HTTP proksi server
 enter your http proxy server port	admin	et	Sisesta oma HTTP proksi serveri port
@@ -190,13 +191,11 @@ how should email addresses for new users be constructed?	admin	et	Kuidas EMail a
 icon	admin	et	Ikoon
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja
-imap c-client version < 2001	admin	et	IMAP C-Client Versioon < 2001
 imap server	admin	et	IMAP Server
 imap server closed the connection.	admin	et	IMAP server sulges ühenduse.
 imap server closed the connection. server responded: %s	admin	et	IMAP Server sulges ühenduse. Server Vastas: %s
 imap server name	admin	et	IMAP serveri nimi
 imap server port	admin	et	IMAP serveri port
-imap/pop3 server name	admin	et	IMAP/POP3 server nimi
 installed applications	common	et	Installeeritud rakendused
 internal name max. 64 chars	admin	et	Sisemine nimi max. 64 tähemärki
 invalid format, must end in a group of digits e.g. %1 or %2	admin	et	Invaliidne vorming, peab lõppema numbrite grupiga, nt %1 või %2.
@@ -258,18 +257,15 @@ permissions	admin	et	Õigused
 phpinfo	admin	et	PHP informatsioon
 please enter a name	admin	et	Palun sisesta nimi
 please select	admin	et	Palun Vali
-pop3 server port	admin	et	POP3 serveri port
 port	admin	et	Port
 primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
 remove	admin	et	Eemalda
-search accounts	admin	et	Otsi kontosid
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus
 select accounts for which the custom field should be readonly	admin	et	Valige kontod, mille jaoks kohandatud väli peaks olema ainult lugemiseks mõeldud
 select type of imap server	admin	et	Vali IMAP serveri tüüp
-select type of imap/pop3 server	admin	et	Vali IMAP/POP3 serveri tüüp
 select type of smtp server	admin	et	Vali SMTP serveri tüüp
 select where you want to store/retrieve filesystem information	admin	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni.
 select where you want to store/retrieve user accounts	admin	et	Vali kuhu sa tahad salvestada kasutaja kontosid.

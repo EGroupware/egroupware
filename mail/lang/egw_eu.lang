@@ -1,7 +1,6 @@
 (no subject)	mail	eu	(gai gabe)
 add to addressbook	mail	eu	gehitu kontaktu agendara
 all of	mail	eu	guztiak
-allways a new window	mail	eu	beti leiho berri bat
 always show html emails	mail	eu	Betik erakutsi HTML  formatuan emailak
 any of	mail	eu	batekin
 attachments	mail	eu	Atxikiak
@@ -40,8 +39,6 @@ folder settings	mail	eu	Karpeta ezarpenak
 forward	mail	eu	Birbidali
 forward to	mail	eu	Birbidali hona
 from	mail	eu	Norena
-from(a->z)	mail	eu	Nork (A->Z)
-from(z->a)	mail	eu	Nork (Z->A)
 general	admin	eu	Orokorra
 header lines	mail	eu	Goiburua
 html	mail	eu	Html
@@ -78,11 +75,7 @@ save all	mail	eu	Gorde dena
 select all	mail	eu	Guztiak hautatu
 sent folder	mail	eu	Bidalitakoen karpeta
 signature	mail	eu	Sinadura
-size(...->0)	mail	eu	Tamainua (...->0)
-size(0->...)	mail	eu	Tamainua (0->...)
 small view	mail	eu	ikuspegi txikia
-subject(a->z)	mail	eu	Gaia (A->Z)
-subject(z->a)	mail	eu	Gaia (Z->A)
 then	mail	eu	ORDUAN
 trash folder	mail	eu	Zakar karpeta
 unflagged	mail	eu	bandera gabea

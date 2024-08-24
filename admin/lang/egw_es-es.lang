@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	es-es	Por defecto, No, desactivar si no se usa
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	es-es	(imapclass debe admitir esta característica al consultar el valor de configuración correspondiente y pasarlo como cuota predeterminada al imapserver)
 (no subject)	admin	es-es	(Sin asunto)
-(stored password will not be shown here)	admin	es-es	¡Las claves guardadas no se mostrarán aquí!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones]
 -  type	admin	es-es	- tipo
 1 year	admin	es-es	1 año
@@ -68,8 +67,6 @@ acl manager	admin	es-es	Manejo de ACL
 acl rights	common	es-es	Permisos de ACL
 acl updated	admin	es-es	Se ha actualizado la ACL
 acl updated.	admin	es-es	Se ha actualizado la ACL.
-action	admin	es-es	Acción
-actions	admin	es-es	Acciones
 activate	admin	es-es	Activar
 activate wysiwyg-editor	admin	es-es	Activar editor WYSIWYG
 activated	admin	es-es	activado
@@ -95,6 +92,7 @@ add new email address:	admin	es-es	Añadir nueva dirección de correo:
 add peer server	admin	es-es	Añadir servidor 'peer'
 add profile	admin	es-es	Añadir perfil
 add sub-category	admin	es-es	Añadir subcategoría
+add to group	admin	es-es	Añadir al grupo
 add user	admin	es-es	Añadir usuario
 add user or group	admin	es-es	Añadir usuario o grupo
 added	admin	es-es	añadido
@@ -104,8 +102,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	es-es	Nombre del administrador
 admin password	admin	es-es	Contraseña del administrador
 admin queue and history	admin	es-es	Cola de administración e historial
-admin username	admin	es-es	Usuario del administrador
-administration	admin	es-es	Administración
 admins	admin	es-es	Administradores
 advanced options	admin	es-es	Opciones avanzadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es-es	Después de cuántos intentos fallidos de iniciar sesión en una cuenta se debe bloquear. Predeterminado = 3
@@ -115,7 +111,6 @@ all accounts	admin	es-es	Todas las cuentas
 all acls	admin	es-es	Todos los ACLs
 all applications	admin	es-es	Todas las aplicaciones
 all applications of the user	admin	es-es	Todas las aplicaciones del usuario
-all categories	admin	es-es	Todas las categorías
 all groups	admin	es-es	Todos los grupos
 all records and account information will be lost!	admin	es-es	¡Se perderán todos los registros y la información de las cuentas!
 all users	admin	es-es	Todos los usuarios
@@ -180,6 +175,7 @@ bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 blocking after wrong password	admin	es-es	Bloqueo después de una contraseña incorrecta
 bottom	admin	es-es	Parte inferior
+bulk changes	admin	es-es	Cambios masivos
 bulk password reset	admin	es-es	Restablecimiento de contraseña en bruto
 by	admin	es-es	En
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	es-es	Seleccionando un usuario o grupo se elimina la cuenta de correo de todos los demás usuarios<br>¿Está seguro de querer hacer eso?
@@ -274,7 +270,6 @@ customfield '%1' modified	admin	es-es	Se modificó el campo personalizado '%1'.
 customfield deleted	admin	es-es	Campo personalizado suprimido.
 customfield saved.	admin	es-es	Campo personalizado grabado.
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
-cyrus imap server administration	admin	es-es	Administración del servidor IMAP Cyrus
 data	admin	es-es	Datos
 data from	admin	es-es	Datos de
 day	admin	es-es	Día
@@ -391,7 +386,6 @@ emailadmin: group assigned profile	common	es-es	EmailAdmin: perfil asignado al g
 emailadmin: user assigned profile	common	es-es	EmailAdmin: perfil asignado al usuario
 empty to not change	admin	es-es	en blanco para NO cambiar
 enable	admin	es-es	Activar
-enable cyrus imap server administration	admin	es-es	Activar administración del servidor Cyrus IMAP
 enable debug-messages	admin	es-es	Activar mensajes de depuración.
 enable sieve	admin	es-es	Activar Sieve
 enable spellcheck in rich text editor	admin	es-es	Activar el corrector ortográfico en el editor de texto enriquecido
@@ -532,7 +526,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	es-es	Si desea tener imágenes seleccionadas al azar, puede cargar varias imágenes.
 imap admin password	admin	es-es	Contraseña del administrador IMAP
 imap admin user	admin	es-es	Usuario administrador IMAP
-imap c-client version < 2001	admin	es-es	Versión C-Cliente IMAP < 2001
 imap server	admin	es-es	Servidor IMAP
 imap server closed the connection.	admin	es-es	El servidor IMAP cerró la conexión.
 imap server closed the connection. server responded: %s	admin	es-es	El servidor IMAP cerró la conexión. El servidor respondió: %s
@@ -540,7 +533,6 @@ imap server hostname or ip address	admin	es-es	Servidor IMAP o dirección IP
 imap server logintyp	admin	es-es	Tipo de sesión del servidor IMAP
 imap server name	admin	es-es	Nombre del servidor IMAP
 imap server port	admin	es-es	Puerto del servidor IMAP
-imap/pop3 server name	admin	es-es	Nombre del servidor POP/IMAP
 importance	admin	es-es	Importancia
 in mbyte	admin	es-es	en MBytes
 inactive	admin	es-es	Inactivo
@@ -790,7 +782,6 @@ saves the changes made and leaves	admin	es-es	Guarda los cambios y sale.
 saves this entry	admin	es-es	Guarda esta entrada
 saving of message %1 failed. destination folder %2 does not exist.	admin	es-es	Error al guardar el mensaje %1. La carpeta de destino %2 no existe.
 scheduled	admin	es-es	Programada
-search accounts	admin	es-es	Buscar cuentas
 search categories	admin	es-es	Buscar categorías
 search groups	admin	es-es	Buscar grupos
 search peer servers	admin	es-es	Buscar servidores 'peer'
@@ -807,7 +798,6 @@ select permissions this group will have	admin	es-es	Seleccione los permisos que 
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	es-es	Seleccione las aplicaciones a las que desea limitar el token, o deje el valor predeterminado de todas las aplicaciones.
 select the parent category. if this is a main category select no category	admin	es-es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA.
 select type of imap server	admin	es-es	Seleccione el tipo de servidor IMAP
-select type of imap/pop3 server	admin	es-es	Seleccione el tipo de servidor IMAP/POP3
 select type of smtp server	admin	es-es	Seleccione el tipo de servidor SMTP
 select users	admin	es-es	Seleccionar usuarios
 select users for inclusion	admin	es-es	Seleccionar usuarios para inclusión

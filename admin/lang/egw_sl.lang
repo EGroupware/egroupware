@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	sl	privzeto Ne. Če ne uporabljate, pustite Ne.
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sl	(imapclass mora to funkcijo podpreti tako, da poizveduje ustrezno vrednost konfiguracije in ga prenese kot privzeto na sliko imaprežnika)
 (no subject)	admin	sl	(brez zadeve)
-(stored password will not be shown here)	admin	sl	Shranjeno geslo tu ne bo vidno!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
 -  type	admin	sl	- vrsta
 1 year	admin	sl	1 leto
@@ -68,10 +67,7 @@ acl manager	admin	sl	Upravljalec ACL
 acl rights	common	sl	Pravice ACL
 acl updated	admin	sl	ACL posodobljen
 acl updated.	admin	sl	ACL posodobljen.
-action	admin	sl	Dejanje
-actions	admin	sl	Dejanja
 activate	admin	sl	Aktiviraj
-activate wysiwyg-editor	admin	sl	Aktiviraj WYSIWYG urejevalnik
 activated	admin	sl	aktivirano
 active mail accounts	admin	sl	Aktivni e-poštni računi
 active templates	admin	sl	Aktivne predloge
@@ -93,6 +89,7 @@ add new email address:	admin	sl	Dodaj nov e-naslov:
 add peer server	admin	sl	Dodaj vzporedni strežnik
 add profile	admin	sl	Dodaj profil
 add sub-category	admin	sl	Dodaj podkategorijo
+add to group	admin	sl	Dodaj v skupino
 add user	admin	sl	Dodaj uporabnika
 add user or group	admin	sl	Dodaj uporabnika ali skupino
 admin dn	admin	sl	Oskrbnikov dn
@@ -101,8 +98,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	sl	Ime oskrbnika
 admin password	admin	sl	Oskrbnikovo geslo
 admin queue and history	admin	sl	Čakalna vrsta in zgodovina
-admin username	admin	sl	Oskrbnikovo uporabniško ime
-administration	admin	sl	Upravljanje
 admins	admin	sl	Oskrbniki
 advanced options	admin	sl	Napredne izbire
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po koliko neuspešnih poskusih prijave je treba račun blokirati. Privzeto = 3
@@ -110,7 +105,6 @@ after how many unsuccessful attempts to login, an ip should be blocked (default 
 aliases	admin	sl	Psevdonimi
 all acls	admin	sl	Vse ACL s
 all applications	admin	sl	Vse aplikacije
-all categories	admin	sl	Vse kategorije
 all groups	admin	sl	Vse skupine
 all records and account information will be lost!	admin	sl	Vsi podatki o računih bodo izgubljeni!
 all users	admin	sl	Vsi uporabniki
@@ -168,7 +162,9 @@ bad or malformed request. server responded: %s	admin	sl	Napačna ali napačno ob
 bad request: %s	admin	sl	Napačna zahteva: %s
 bi-dir passthrough	admin	sl	Dvosmeren prehod
 bi-directional	admin	sl	Dvosmeren
+blocking after wrong password	admin	sl	Blokiranje po napačnem geslu
 bottom	admin	sl	Dno
+bulk changes	admin	sl	Množične spremembe
 bulk password reset	admin	sl	Ponastavitev množičnega gesla
 calculate next run	admin	sl	Izračunaj naslednji zagon
 calendar recurrence horizont in days (default 1000)	admin	sl	Obdobje ponovitve koledarja v dneh. Privzeto = 1000.
@@ -315,6 +311,7 @@ disable	admin	sl	Onemogoči
 disable "auto completion" of the login form	admin	sl	Prepreči samodejno izpolnjevanje prijavne forme
 disable all	admin	sl	Onemogoči vse
 disable minifying of javascript and css files	admin	sl	Onemogoči minifiranje datotek JavaScripta in CSS
+disable pgp encryption (mailvelope)	admin	sl	Onemogočite šifriranje PGP (Mailvelope)
 disabled	admin	sl	Onemogočeno
 disabled (not recomended)	admin	sl	Onemogočeno (ni priporočeno)
 disabled, do not show on login page	admin	sl	onemogočeno, se ne prikaže na prijavni strani
@@ -395,6 +392,7 @@ enter your http proxy server	admin	sl	Vnesite privzet strežnik s HTTP proxy-em
 enter your http proxy server port	admin	sl	Vnesite privzeta vrata strežnika s HTTP proxy-em
 enter your smtp server hostname or ip address	admin	sl	Vnesite ime SMTP strežnika ali IP naslov
 enter your smtp server port	admin	sl	Vnesite vrata SMTP strežnika (25)
+entries	admin	sl	Vnosi
 entry saved	admin	sl	Vnos shranjen
 error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju kronometra: morda ni nastavljen!
 error changing the password for %1 !!!	admin	sl	Napaka pri spremembi gesla za %1!
@@ -594,7 +592,7 @@ mb used	admin	sl	Uporabljeno MB
 members	admin	sl	Člani
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
 method	admin	sl	Postopek
-minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 100 ali 500)
+minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 1000 ali 500)
 minute	admin	sl	Minute
 mode	admin	sl	Način
 modified	admin	sl	Spremenjeno
@@ -723,6 +721,7 @@ rpm or debian package	admin	sl	RPM ali paket deb
 run	admin	sl	zagon
 run asynchronous services	admin	sl	Poženi asinhrone storitve
 run rights for applications	admin	sl	Pravice za zagon aplikacij
+save as default	admin	sl	Shrani kot privzeto
 save changes	admin	sl	Shranjevanje sprememb
 save of message %1 failed. could not save message to folder %2 due to: %3	admin	sl	Shranjevanje sporočila %1 ni uspelo. Sporočila ni bilo mogoče shraniti v mapo %2 zaradi: %3
 save the category	admin	sl	Shrani to kategorijo.
@@ -731,7 +730,6 @@ saves the changes made and leaves	admin	sl	Shrani narejene spremembe in zapusti 
 saves this entry	admin	sl	Shrani ta zapis
 saving of message %1 failed. destination folder %2 does not exist.	admin	sl	Shranjevanje sporočila %1 ni uspelo. Ciljna mapa %2 ne obstaja.
 scheduled	admin	sl	Načrtovan
-search accounts	admin	sl	Išči po računih
 search categories	admin	sl	Išči po kategorijah
 search groups	admin	sl	Išči skupine
 search peer servers	admin	sl	Išči po vzporednih strežnikih
@@ -740,6 +738,7 @@ security	admin	sl	Varnost
 select accounts for which the custom field should be readonly	admin	sl	Izberite račune, za katere naj bo polje po meri samo za branje
 select accounts for which the custom field should be visible	admin	sl	Izberite račune, za katere je treba videti polje po meri
 select group managers	admin	sl	Izberite oskrbnike skupin
+select multiple	admin	sl	Izberite več
 select owner	admin	sl	Izberite lastnika
 select permissions this group will have	admin	sl	Izberite dovoljenja te skupine
 select the parent category. if this is a main category select no category	admin	sl	Izberite nadrejeno kategorijo. Če kategorija nima nadrejene kategorije, izberite "BREZ KATEGORIJE".
@@ -763,6 +762,7 @@ server username	admin	sl	Uporabniško ime strežnika
 sessions last 30 days	admin	sl	Seje zadnjih 30 dni
 set a random password	admin	sl	Nastavite naključno geslo.
 set preference values.	admin	sl	Vnesite vrednosti nastavitev.
+settings	admin	sl	Nastavitve
 should exceptions contain a trace (including function arguments)	admin	sl	Če izjeme vsebujejo sled, vključno z argumenti funkcij.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani)?
 show access log	admin	sl	Pokaži evidenco dostopov
@@ -873,6 +873,7 @@ updated	admin	sl	Podosodobljeno
 upload your background image or enter the url	admin	sl	Naložite sliko ozadja ali vnesite URL
 upload your certificate .p12/.pfx file	admin	sl	Naložite svojo potrditveno datoteko .p12 / .pfx
 upload your favicon or enter the url	admin	sl	Naložite svoj favicon ali vnesite URL
+upload your header logo or enter the url (leave it empty if it is the same as login logo)	admin	sl	Naložite logotip glave ali vnesite URL (pustite ga praznega, če je enak logotipu za prijavo)
 upload your logo or enter the url	admin	sl	Naložite svoj logotip ali vnesite URL
 uppercase, lowercase, number, special char	admin	sl	Zgornja, mala, številčna, posebna oznaka
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	sl	URL namestitve EGroupware, npr. http://domain.com/egroupware
@@ -891,6 +892,7 @@ use tls encryption	admin	sl	Uporabi TLS enkripcijo
 use users email-address (as seen in useraccount)	admin	sl	Uporabite e-poštni naslov uporabnikov, kot je določeno v uporabniškem računu
 user accounts	admin	sl	Uporabniški računi
 user can edit forwarding address	admin	sl	Uporabnik lahko določa posredovalni naslov
+user choice	admin	sl	Izbira uporabnika
 user csv export	admin	sl	Uporabniški CSV izvoz
 user csv import	admin	sl	Uvoz uporabnika CSV
 user data	common	sl	Podatki o uporabniku

@@ -247,13 +247,11 @@ exclude weekend	calendar	cs	Vyloučit víkend
 execute a further action for this entry	calendar	cs	Spustit další akci pro tento záznam
 existing links	calendar	cs	Stávající odkazy
 exists	calendar	cs	Stávající
-explicit dates	calendar	cs	Explicitní události
 export definition to use for nextmatch export	calendar	cs	Export definic pro použití v dalších exportech
 exports events from your calendar in ical format.	calendar	cs	Export událostí z vašeho kalendáře do formátu iCal
 exports events from your calendar into a csv file.	calendar	cs	Export událostí z vašeho kalendáře do formátu CSV
 extended	calendar	cs	Rozšířený
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	cs	Rozšířené aktualizace vždy zahrnují kompletní detaily události. iCal soubory lze importovat do jiných kalendářů.
-favorites	calendar	cs	Oblíbené
 fieldseparator	calendar	cs	Oddělovač položek
 filemanager	calendar	cs	Správce souborů
 filename	calendar	cs	Jméno souboru

@@ -12,14 +12,12 @@ add folder	mail	sv	Lägg till mapp
 add raw message, ignore mail attachments	mail	sv	Konvertera e-post till objekt, lägg till obearbetat meddelande (ignorera bifogade filer)
 add this certificate into contact	mail	sv	Lägg till detta certifikat i kontakt
 add to addressbook	mail	sv	Lägg till i Adressbok
-add your domain as "%1" in options to list of email providers and enable api.	mail	sv	Lägg till din domän som ”%1” i alternativen för att lista e-postleverantörer och aktivera API.
 adding %1 to blacklisted email addresses failed because of %2	mail	sv	Att lägga till %1 till svartlistade e-postadresser misslyckades på grund av %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sv	Lägga till %1 till whiltelisted e-postadresser misslyckades på grund av %2
 after reply, visible during compose	mail	sv	Efter svar, synlig under sammansättning
 aliases+forwards	mail	sv	Alias+Framåt
 all of	mail	sv	Alla
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sv	Alla undermappar raderas också och alla meddelanden i alla berörda mappar går förlorade
-allways a new window	mail	sv	Alltid nytt fönster
 always show html emails	mail	sv	Visa alltid HTML e-post
 always show notifiction	mail	sv	Visar alltid meddelande
 answered	mail	sv	Svarat
@@ -77,7 +75,6 @@ disable	mail	sv	Inaktivera
 disable caching of flags	mail	sv	Inaktivera caching av flaggor
 discard	mail	sv	Ignorera
 discard message	mail	sv	Ignorera meddelande
-display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster
 display of html emails	mail	sv	Visning av HTML e-post
 display only when no plain text is available	mail	sv	Visa endast när textformat inte är tillgängligt
 displaying html messages is disabled	mail	sv	Cisa HTML meddelanden är inaktiverat
@@ -135,8 +132,6 @@ folder settings	mail	sv	Katalog alternativ
 forward	mail	sv	Vidarebefodra
 forward to	mail	sv	Vidarebefodra till
 from	mail	sv	Från
-from(a->z)	mail	sv	Från (A->Ö)
-from(z->a)	mail	sv	Från (Ö->A)
 general	admin	sv	Allmänt
 get acl rights failed from imap server!	mail	sv	Få ACL-rättigheter misslyckades från IMAP-server!
 greater than	mail	sv	Större än
@@ -154,7 +149,6 @@ if	mail	sv	OM
 if mail header	mail	sv	om brevhuvud
 if message size	mail	sv	om meddelande storlek
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sv	Om du vill se en förhandsgranskning av ett e-postmeddelande genom att klicka på ämnet ska du aktivera detta.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	sv	Om du vill välja flera mappar i en åtgärd kan du hålla ned ctrl-tangenten och sedan välja en mapp som startintervall och en annan mapp inom samma nivå som slutintervall, alla mappar däremellan kommer att väljas eller avmarkeras baserat på deras aktuella status.
 imap	mail	sv	IMAP
 imap - incoming mail	mail	sv	IMAP - inkommande e-post
 imap server	mail	sv	IMAP Server
@@ -335,8 +329,6 @@ sign your message with smime certificate	mail	sv	Signera ditt meddelande med S/M
 signature	mail	sv	Signatur
 signature at top	mail	sv	Signatur högst upp
 signature position and visibility	mail	sv	Signaturens position och synlighet
-size(...->0)	mail	sv	Storlek (...->0)
-size(0->...)	mail	sv	Storlek (0->...)
 small view	mail	sv	Liten vy
 smime encrypted message	mail	sv	S/MIME-krypterat meddelande
 smime signed message	mail	sv	S/MIME-signerat meddelande
@@ -345,8 +337,6 @@ sneak preview in list	mail	sv	Förhandsgranskning av meddelande
 spamtitan api url	mail	sv	SpamTitan API URL
 spamtitan integration requires epl version	mail	sv	SpamTitan-integration kräver EPL-version
 start new messages with mime type plain/text or html?	mail	sv	Starta nya meddelanden med Text eller HTML?
-subject(a->z)	mail	sv	Ämne (A->Ö)
-subject(z->a)	mail	sv	Ämne (Ö->A)
 text	mail	sv	Text
 text mode	mail	sv	Textläge
 text/plain	mail	sv	Text

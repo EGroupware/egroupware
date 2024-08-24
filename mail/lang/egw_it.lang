@@ -15,7 +15,6 @@
 account editable by user	mail	it	Account modificabile dall'utente
 acl rights retrieve failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
 acl rights retrieved successfully	mail	it	Diritti ACL recuperati con successo
-action	mail	it	Azione
 activating by date requires a start- and end-date!	mail	it	L'attivazione per data richiede una data di inizio e una di fine!
 add "%1" into blacklisted domains	mail	it	Aggiungi "%1" alla blacklist dei domini
 add "%1" into blacklisted emails	mail	it	Aggiungi "%1" alla blacklist degli indirizzi email
@@ -29,7 +28,6 @@ add folder	mail	it	Aggiungi cartella
 add raw message, ignore mail attachments	mail	it	Convertire la posta in oggetto, aggiungere il messaggio grezzo (ignorare gli allegati della posta)
 add this certificate into contact	mail	it	Aggiungi questo certificato nel contatto
 add to addressbook	mail	it	Aggiungi alla rubrica
-add your domain as "%1" in options to list of email providers and enable api.	mail	it	Aggiungere il dominio come "%1" nelle opzioni di elenco dei gestori di servizi di posta elettronica e abilitare l'API.
 adding %1 to blacklisted email addresses failed because of %2	mail	it	L'inserimento di %1 alla blacklist è fallito a causa di %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	it	L'inserimento di %1 alla whitelist è fallito a causa di %2
 after reply, visible during compose	mail	it	Dopo la risposta, visibile durante la composizione
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	it	Permetti immagini remote dai s
 allow images from external sources in html emails	mail	it	Permetti immagini da sorgenti esterne nei messaggi HTML
 allow images from listed domains in html emails	mail	it	permetti immagini remote dai domini seguenti nei messaggi HTML
 allow users to create further identities	mail	it	Permetti agli utenti di creare identità ulteriori
-allways a new window	mail	it	Sempre in una nuova finestra
 always	mail	it	Sempre
 always allow external sources from %1	mail	it	Permetti sempre sorgenti esterne/remote da %1
 always respond / auto-responder	mail	it	Rispondere sempre / autorisponditore
@@ -155,7 +152,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	it	Disabilitare l
 disabled!	mail	it	diabilitato!
 discard	mail	it	scarta
 discard message	mail	it	Scarta messaggio
-display messages in multiple windows	mail	it	mostra i messaggi in finestre multiple
 display of html emails	mail	it	visualizzazione delle e-mail HTML
 display of identities	admin	it	visualizzazione delle identià
 display only when no plain text is available	mail	it	Visualizza solo quando non disponibile il testo normale
@@ -259,8 +255,6 @@ folder %1 is moving to folder %2	mail	it	La cartella %1 viene spostata nella %2
 folder management	mail	it	Gestiome cartelle
 folder management ...	mail	it	Gestione cartelle ...
 folder settings	mail	it	Impostazioni Cartelle
-for e.g.: mpeg	mail	it	p.es.: mpeg
-for eg.: mpeg	mail	it	p.es.: mpeg
 force html	mail	it	Forza HTML
 force plain text	mail	it	Forza testo semplica
 forward	mail	it	Inoltra
@@ -273,8 +267,6 @@ forward to address (*):	mail	it	Inoltra all'indirizzo (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	it	L'inoltro di questo messaggio non è riuscito perché il suo contenuto sembra essere crittografato e non può essere decrittografato correttamente. Se desideri comunque inoltrare il contenuto di questo messaggio crittografato, puoi provare a inoltrarlo come allegato.
 forwards	mail	it	Inoltri
 from	mail	it	Da
-from(a->z)	mail	it	Da (A->Z)
-from(z->a)	mail	it	Da (Z->A)
 general	admin	it	Generale
 general settings	mail	it	Impostazioni generali
 get acl rights failed from imap server!	mail	it	Impossibile rilevare i permessi ACL per il server IMAP
@@ -310,7 +302,6 @@ if shown, which folders should appear on the home page	mail	it	Se mostrate, qual
 if subject contains:(*)	mail	it	Se l'oggetto contiene:(*)
 if to contains:(*)	mail	it	Se il campo "A" contiene:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	it	Se vuoi vedere l'anteprima di un messaggio cliccando una volta sull'oggetto, abilita questa opzione.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	it	Se volessi selezionare più cartelle con una azione, è possibile tenere premuto il tasto ctrl e poi selezionare una cartella come iniziale e un'altra come finale, così tutte le cartelle in mezzo verranno selezionate o deselezionate in base al loro stato corrente.
 imap	mail	it	IMAP
 imap - incoming mail	mail	it	IMAP - posta in arrivo
 imap administration	mail	it	Amministrazione IMAP
@@ -602,8 +593,6 @@ signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 signature position and visibility	mail	it	Posizione e visibilità della firma
 signed by	mail	it	Firmato da
-size(...->0)	mail	it	Dimensione (...->0)
-size(0->...)	mail	it	Dimensione (0->...)
 small view	mail	it	visualizzazione ridotta
 smime encrypted message	mail	it	Messaggio criptato S/MIME
 smime signed message	mail	it	Messaggio firmato S/MIME
@@ -622,8 +611,6 @@ step 2: folder	mail	it	Secondo passo: Cartella
 step 3: sieve - server side mail filtering	mail	it	Terzo passo: Sieve - filtri email a livello server
 step 4: smtp - outgoing mail	mail	it	Quarto passo: SMTP - server posta in uscita
 store to folder	mail	it	Salva nella cartella
-subject(a->z)	mail	it	Oggetto (A->Z)
-subject(z->a)	mail	it	Oggetto (Z->A)
 subscribe folder	mail	it	Sottoscrivi cartella
 subscribe folder ...	mail	it	Sottoscrivi cartella ...
 subscribe to folder %1	mail	it	Sottoscrivi cartella %1

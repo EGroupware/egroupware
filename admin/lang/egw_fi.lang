@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, jätä tyhjäksi jollet halua käyttää sitä)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	fi	(imapclassin on tuettava tätä ominaisuutta kysymällä vastaavaa konfiguraatioarvoa ja välitettävä se oletuskiintiönä IMAP-palvelimelle).
 (no subject)	admin	fi	Ei aihetta
-(stored password will not be shown here)	admin	fi	Tallennettua salasanaa ei näytetä!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(Käytä <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia!)
 -  type	admin	fi	- muoto
 1 year	admin	fi	1 vuosi
@@ -61,8 +60,6 @@ acl added.	admin	fi	Käyttöoikeus lisätty.
 acl deleted.	admin	fi	Käyttöoikeus poistettu.
 acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL -oikeudet
-action	admin	fi	Toimenpide
-actions	admin	fi	Toimenpiteet
 activate	admin	fi	Aktivoi
 activate wysiwyg-editor	admin	fi	Käytä WYSIWYG-toimitinta
 active templates	admin	fi	Aktiiviset mallipohjat
@@ -83,20 +80,20 @@ add new email address:	admin	fi	Lisää uusi sähköpostiosoite:
 add peer server	admin	fi	Lisää rinnakkaispalvelin
 add profile	admin	fi	Lisää profiili
 add sub-category	admin	fi	Lisää alikaterogia
+add to group	admin	fi	Lisää ryhmään
+add user	admin	fi	Lisää käyttäjä
+add user or group	admin	fi	Lisää käyttäjä tai ryhmä
 admin dn	admin	fi	Ylläpitäjän DN
 admin email	admin	fi	Sähköpostin hallinta
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Ylläpitäjän sähköpostiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (jätä tyhjäksi, jos ei ilmoiteta)
 admin name	admin	fi	Ylläpitäjän nimi
 admin password	admin	fi	Ylläpitäjän salasana
 admin queue and history	admin	fi	Admin Queue ja historia
-admin username	admin	fi	Ylläpitäjän käyttäjätunnus
-administration	admin	fi	Ylläpito
 admins	admin	fi	Ylläpitäjät
 advanced options	admin	fi	Lisäasetukset
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)
 aliases	admin	fi	Aliakset
 all applications	admin	fi	Kaikki sovellukset
-all categories	admin	fi	Kaikki kategoriat
 all records and account information will be lost!	admin	fi	Kaikki tietueet ja tunnuksen tiedot poistetaan!
 all users	admin	fi	Kaikki käyttäjät
 allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
@@ -143,7 +140,9 @@ bad or malformed request. server responded: %s	admin	fi	Väärä tai viallinen p
 bad request: %s	admin	fi	Väärä pyyntö: %s
 bi-dir passthrough	admin	fi	Kaksisuuntainen läpäisy
 bi-directional	admin	fi	Kaksisuuntainen
+blocking after wrong password	admin	fi	Estäminen väärän salasanan jälkeen
 bottom	admin	fi	Alas
+bulk changes	admin	fi	Joukkomuutokset
 bulk password reset	admin	fi	Salasanojen hallinta
 calculate next run	admin	fi	Laske seuraava suoritusaika
 calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvien tapahtumien takaraja päivinä (oletus 1000)
@@ -159,6 +158,9 @@ category '%1' deleted	admin	fi	Luokka '%1' poistettu
 category deleted.	admin	fi	Kategoria poistettu.
 category list	admin	fi	Kategorialuettelo
 category saved.	admin	fi	Kategoria tallennettu.
+certificate	admin	fi	Varmenne
+certificate details	admin	fi	Varmenteen tiedot
+certificate validation in days	admin	fi	Varmenteen validointi päivinä
 change account_id	admin	fi	Vaihda account_ID
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
@@ -200,7 +202,6 @@ custom fields	admin	fi	Lisäkentät
 custom fields tab	admin	fi	Mukautetut kentät-välilehti
 custom translation	admin	fi	Omat käännökset
 cyrus imap server	admin	fi	Cyrus IMAP -palvelin
-cyrus imap server administration	admin	fi	Cyrus IMAP -palvelimen hallinta
 data	admin	fi	Tieto
 day	admin	fi	Päivä
 day of week<br>(0-6, 0=sun)	admin	fi	Viikonpäivä
@@ -249,7 +250,6 @@ description can not exceed 255 characters in length !	admin	fi	Kuvaus ei voi yli
 determines the order the fields are displayed	admin	fi	Määrittelee järjestyksen, jossa kentät näytetään
 disable	admin	fi	Ota pois käytöstä
 disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen täyttö" ei käytössä
-disable wysiwyg-editor	admin	fi	Älä käytä WYSIWYG-toimitinta
 disabled (not recomended)	admin	fi	Ei käytössä (ei suositella)
 display	admin	fi	Näytä
 displayed length of input field (set rows=1 to limit length)	admin	fi	Näytetty syöttökentän pituus (rajoittaa pituutta asettamalla rivit=1)
@@ -289,12 +289,9 @@ emailadmin	admin	fi	Sähköpostin ylläpito
 emailadmin: group assigned profile	common	fi	Sähköpostin ylläpito: Ryhmälle suunnattu profiili
 emailadmin: user assigned profile	common	fi	Sähköpostin ylläpito: Käyttäjälle suunnattu profiili
 enable	admin	fi	Ota käyttöön
-enable cyrus imap server administration	admin	fi	Ota Cyrus IMAP -palvelimen hallinta käyttöön
 enable debug-messages	admin	fi	Näytä virheenjäljitysviestit.
 enable sieve	admin	fi	Ota Sieve käyttöön
 enable spellcheck in rich text editor	admin	fi	Salli oikolukuohjelma Rich text editorissa.
-enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
-enabled - popup window	admin	fi	Käytössä - Ponnahdusikkuna
 encrypted connection	admin	fi	Yhteyden suojaus
 encryption settings	admin	fi	Yhteyden suojausasetukset
 enter a description for the category	admin	fi	Anna kategorian kuvaus
@@ -314,7 +311,6 @@ enter the title for your site	admin	fi	Anna palvelun nimi
 enter the title of your logo	admin	fi	Anna logolle selite (näkyy kun hiirtä pitää hetken logon päällä)
 enter the url where your logo should link to	admin	fi	Anna URL, johon logon napsauttaminen vie
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	fi	Anna VFS-polku lisäkuville, kuvakkeille, logoille. (Kaikkilla sovelluksilla ja käyttäjillä täytyy olla pääsy tähän kansioon) Polun tulee alkaa /-merkillä
-enter your default ftp server	admin	fi	Anna oletuksena käytettävä FTP-palvelin
 enter your default mail domain ( from: user@domain )	admin	fi	Anna postin verkkotunnus (domain) (Lähettäjä: mina@verkkotunnus.fi)
 enter your default mail domain (from: user@domain)	admin	fi	Anna oletusverkkotunnus (käyttäjä@verkkotunnus)
 enter your http proxy server	admin	fi	Anna HTTP-välityspalvelin
@@ -392,7 +388,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
 imap admin password	admin	fi	IMAP admin salasana
 imap admin user	admin	fi	IMAP admin käyttäjätunnus
-imap c-client version < 2001	admin	fi	IMAP C-Client versio < 2001
 imap server	admin	fi	IMAP -palvelin
 imap server closed the connection.	admin	fi	IMAP palvelin katkaisi yhteyden.
 imap server closed the connection. server responded: %s	admin	fi	IMAP palvelin katkaisi yhteyden. %s
@@ -400,7 +395,6 @@ imap server hostname or ip address	admin	fi	IMAP -palvelimen nimi tai IP-osoite
 imap server logintyp	admin	fi	IMAP -palvelimen käyttäjätunnistus
 imap server name	admin	fi	IMAP -palvelimen nimi
 imap server port	admin	fi	IMAP -palvelimen portti
-imap/pop3 server name	admin	fi	IMAP / POP3 -palvelimen nimi
 importance	admin	fi	Tärkeys
 in mbyte	admin	fi	Megatavua
 inactive	admin	fi	Ei käytössä
@@ -474,7 +468,6 @@ logoutime	admin	fi	Uloskirjautumisaika
 mail settings	admin	fi	Sähköpostin asetukset
 main email-address	admin	fi	Pääsähköpostiosoite
 manage mapping	admin	fi	Valitse kentät
-manage stationery templates	admin	fi	Hallitse sähköpostin taustakuvamallipohjia
 manager	admin	fi	Hallinnoija
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian maksimikoko
@@ -567,8 +560,6 @@ plesk imap server (courier)	admin	fi	Plesk IMAP palvelin (Courier)
 plesk mail script '%1' not found !!!	admin	fi	Plesk sähköpostiskriptiä '%1' ei löydy!
 plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	admin	fi	Plesk:n salasanassa pitää olla vähintään 5 merkkiä, eikä se saa olla käyttäjätilin nimi --> salasanaa EI ole asetettu!
 plesk smtp-server (qmail)	admin	fi	Plesk SMTP-palvelin (Qmail)
-pop3 server hostname or ip address	admin	fi	POP3 -palvelimen nimi tai IP-osoite
-pop3 server port	admin	fi	POP3 -palvelimen portti
 port	admin	fi	Portti
 postfix with ldap	admin	fi	Postfix ja LDAP
 postpone for	admin	fi	Siirrä eteenpäin
@@ -597,7 +588,6 @@ save the category and return back to the list	admin	fi	Tallenna kategoria ja pal
 saves the changes made and leaves	admin	fi	Tallenna muutokset ja poistu.
 saves this entry	admin	fi	Tallenna tietue
 scheduled	admin	fi	Ajastettu toiminto
-search accounts	admin	fi	Etsi tunnuksia
 search categories	admin	fi	Etsi kategoroita
 search groups	admin	fi	Etsi ryhmiä
 search peer servers	admin	fi	Etsi rinnakkaispalvelimia
@@ -608,7 +598,6 @@ select group managers	admin	fi	Valitse ryhmien ylläpitäjät
 select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
 select the parent category. if this is a main category select no category	admin	fi	Valitse pääkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA.
 select type of imap server	admin	fi	Valitse IMAP -palvelimen tyyppi
-select type of imap/pop3 server	admin	fi	Valitse IMAP / POP3 -palvelimen tyyppi
 select type of smtp server	admin	fi	Valitse SMTP -palvelimen tyyppi
 select users	admin	fi	Valitse käyttäjät
 select users for inclusion	admin	fi	Valitse mukaan otettavat käyttäjät
@@ -629,7 +618,6 @@ sessions last 30 days	admin	fi	Istunnot viimeisen kuukauden ajalta
 set a random password	admin	fi	Aseta satunnainen salasana.
 set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	Näytetäänkö kirjautumisnäytöllä kielien valintalista (käytännöllinen esittelyjä varten)?
-show 'powered by' logo on	admin	fi	'Powered by' -logon paikka
 show access log	admin	fi	Näytä käyttöloki
 show current action	admin	fi	Näytä viimeisin toimi
 show error log	admin	fi	Näytä virheloki
@@ -653,7 +641,6 @@ sort the entries	admin	fi	Lajittele kohteet
 ssl	admin	fi	SSL
 standard	admin	fi	Vakio
 standard imap server	admin	fi	Vakio IMAP -palvelin
-standard pop3 server	admin	fi	Vakio POP3 -palvelin
 standard smtp-server	admin	fi	Vakio SMTP -palvelin
 start	admin	fi	Aloita
 start testjob!	admin	fi	Käynnistä TestiTyö
@@ -712,9 +699,6 @@ two weeks	admin	fi	Kaksi viikkoa
 type '%1' already exists !!!	admin	fi	Tyyppi '%1' on jo olemassa!
 type of customfield	admin	fi	Lisäkentän tyyppi
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fi	Windows -ympäristössä ylläpitäjän on asennettava asyncservice %1käsin%2 tai käytettävä fallback -tilaa. Tällöin töiden suoritustarve tarkistetaan vain kun EGroupware käytetään.
-unexpected response from server to authenticate command.	admin	fi	Odottamaton vastaus palvelimen AUTHENTICATE komennolta.
-unexpected response from server to digest-md5 response.	admin	fi	Odottamaton vastaus palvelimen Digest-MD5 vastauksesta.
-unexpected response from server to login command.	admin	fi	Odottamaton vastaus palvelimen LOGIN komennolta.
 unknown account: %1 !!!	admin	fi	Tuntematon käyttäjätili: %1!
 unknown command %1!	admin	fi	Tuntematon komento: %1!
 unknown imap response from the server. server responded: %s	admin	fi	Tuntematon IMAP vastaus palvelimelta. Palvelin vastasi: %s

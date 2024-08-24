@@ -15,7 +15,6 @@
 account editable by user	mail	sl	Račun, ki ga lahko uredi uporabnik
 acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
 acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene
-action	mail	sl	Ukrep
 activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
 add "%1" into blacklisted domains	mail	sl	Dodajte "%1" v domene na črno listo
 add "%1" into blacklisted emails	mail	sl	Dodajte "%1" v e-poštna sporočila na črno listo
@@ -29,7 +28,6 @@ add folder	mail	sl	Dodaj mapo
 add raw message, ignore mail attachments	mail	sl	Pretvori pošto v element, dodaj neobdelano sporočilo (ne upoštevaj priponk)
 add this certificate into contact	mail	sl	Dodajte to potrdilo v stik
 add to addressbook	mail	sl	Dodaj v adresar
-add your domain as "%1" in options to list of email providers and enable api.	mail	sl	Dodajte svojo domeno kot "%1" v možnosti na seznam ponudnikov e-pošte in omogočite API.
 adding %1 to blacklisted email addresses failed because of %2	mail	sl	Dodajanje %1 na e-poštne naslove, ki so na seznamu, ni uspelo zaradi %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sl	Dodajanje %1 v privzete e-poštne naslove ni uspelo zaradi %2
 after reply, visible during compose	mail	sl	Po odgovoru, viden med sestavljanjem
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	sl	Dovoli zunanje fotografije iz 
 allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML.
 allow images from listed domains in html emails	mail	sl	Omogočite slike iz zunanjih virov v HTML e-poštnih sporočilih.
 allow users to create further identities	mail	sl	Uporabnikom omogočajo ustvarjanje nadaljnjih identitet
-allways a new window	mail	sl	Vedno novo okno
 always	mail	sl	Vedno
 always allow external sources from %1	mail	sl	Vedno dovoli zunanje vire iz %1
 always respond / auto-responder	mail	sl	Vedno odgovori / samodejni odzivnik
@@ -155,7 +152,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	sl	Onemogočite u
 disabled!	mail	sl	onemogočeno!
 discard	mail	sl	Zavrzi
 discard message	mail	sl	Zavrzi sporočilo
-display messages in multiple windows	mail	sl	Prikaži sporočila v več oknih
 display of html emails	mail	sl	Prikazovanje HTML sporočil
 display of identities	admin	sl	prikaz identitete
 display only when no plain text is available	mail	sl	Prikaži le, ko ni na voljo navadnega besedila
@@ -259,8 +255,6 @@ folder %1 is moving to folder %2	mail	sl	Mapa %1 se premakne v mapo %2
 folder management	mail	sl	Upravljanje map
 folder management ...	mail	sl	Upravljanje map ...
 folder settings	mail	sl	Nastavitve mape
-for e.g.: mpeg	mail	sl	npr e.g: mpeg
-for eg.: mpeg	mail	sl	npr eg.: mpeg
 force html	mail	sl	Vsili HTML
 force plain text	mail	sl	Vsili navadnega besedila
 forward	mail	sl	Posreduj
@@ -273,8 +267,6 @@ forward to address (*):	mail	sl	Posreduj na naslov (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	sl	Posredovanje tega sporočila ni uspelo, ker je vsebina tega sporočila šifrirana in je ni mogoče pravilno dešifrirati. Če še vedno želite posredovati vsebino tega šifriranega sporočila, lahko poskusite uporabiti naprej kot pripono.
 forwards	mail	sl	Napredovanje
 from	mail	sl	Od
-from(a->z)	mail	sl	Pošiljatelj (A->Z)
-from(z->a)	mail	sl	Pošiljatelj (Z->A)
 general	admin	sl	Splošno
 general settings	mail	sl	Splošne nastavitve
 get acl rights failed from imap server!	mail	sl	Pridobite ACL pravice iz strežnika IMAP!
@@ -310,7 +302,6 @@ if shown, which folders should appear on the home page	mail	sl	če je prikazano,
 if subject contains:(*)	mail	sl	če predmet vsebuje: (*)
 if to contains:(*)	mail	sl	če vsebuje: (*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sl	Če želite ogledati predogled pošte z enim klikom na zadevo, to omogočite.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	sl	Če želite izbrati več map v enem dejanju, lahko držite tipko Ctrl, nato pa izberete mapo kot začetni obseg in drugo mapo na isti ravni kot končni razpon, bodo vse mape med njimi izbrane ali neizbrisane glede na njihovo trenutno stanje.
 imap	mail	sl	IMAP
 imap - incoming mail	mail	sl	IMAP - dohodna pošta
 imap administration	mail	sl	Upravljanje IMAP
@@ -602,8 +593,6 @@ signature	mail	sl	Podpis
 signature at top	mail	sl	podpis na vrhu
 signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
 signed by	mail	sl	Podpisal
-size(...->0)	mail	sl	Velikost (...->0)
-size(0->...)	mail	sl	Velikost (0->...)
 small view	mail	sl	Skrčen pogled
 smime encrypted message	mail	sl	Šifrirano sporočilo S/MIME
 smime signed message	mail	sl	Podpisano sporočilo S/MIME
@@ -622,8 +611,6 @@ step 2: folder	mail	sl	Korak 2: Mapa
 step 3: sieve - server side mail filtering	mail	sl	Korak 3: Sieve - filtriranje strani na strani strežnika
 step 4: smtp - outgoing mail	mail	sl	Korak 4: SMTP - odhodna pošta
 store to folder	mail	sl	Shranite v mapo
-subject(a->z)	mail	sl	Zadeva (A->Z)
-subject(z->a)	mail	sl	Zadeva (Z->A)
 subscribe folder	mail	sl	Naroči mapo
 subscribe folder ...	mail	sl	Naroči mapo ...
 subscribe to folder %1	mail	sl	Naročite se na mapo %1

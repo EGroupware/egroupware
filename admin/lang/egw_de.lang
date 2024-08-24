@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe = Nein. Ausgeschaltet lassen, wenn nicht benutzt)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfigurationswert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 (no subject)	admin	de	(Kein Betreff)
-(stored password will not be shown here)	admin	de	Gespeichertes Passwort wird hier nicht angezeigt!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten]!)
 -  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
@@ -68,8 +67,6 @@ acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
 acl updated	admin	de	ACL aktualisiert
 acl updated.	admin	de	ACL aktualisiert.
-action	admin	de	Befehl
-actions	admin	de	Befehle
 activate	admin	de	Aktivieren
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 activated	admin	de	Aktiviert
@@ -105,9 +102,7 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	de	Name des Administrators
 admin password	admin	de	Admin Passwort
 admin queue and history	admin	de	Admin Queue und Historie
-admin username	admin	de	Administrator Benutzername
-administration	admin	de	Administration
-admins	admin	de	Administratoren
+admins	admin	de	Admins
 advanced options	admin	de	Erweiterte Einstellungen
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	de	Nach wie vielen erfolglosen Anmeldeversuchen soll eine IP-Adresse gesperrt werden (Vorgabe 15)?
@@ -116,7 +111,6 @@ all accounts	admin	de	Alle Konten
 all acls	admin	de	Alle ACLs
 all applications	admin	de	Alle Anwendungen
 all applications of the user	admin	de	Alle Anwendungen des Benutzers
-all categories	admin	de	Alle Kategorien
 all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
@@ -333,7 +327,7 @@ deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendu
 deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
 deny all users access to create and manage private categories ?	admin	de	Allen Benutzern verbieten, private Kategorien anzulegen und zu verwalten
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten, anderen Benutzern Zugriff zu ihren Daten zu gewähren
-deny all users access to preferences ?	admin	de	Allen Benutzer Zugriff auf die Einstellungen verbieten
+deny all users access to preferences ?	admin	de	Allen Benutzern Zugriff auf die Einstellungen verbieten
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
 destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	de	Zielkonto #%1 besteht und wurde nicht umbenannt. Konten wurden nicht zusammengeführt, da die eindeutige Kennzeichnung gestört würde. Alternativ sollten Sie löschen mit übertragen des Inhalts anwählen.
 determines the order the fields are displayed	admin	de	Bestimmt die Reihenfolge der angezeigten Felder
@@ -793,7 +787,6 @@ saves the changes made and leaves	admin	de	Beendet und speichert die Änderungen
 saves this entry	admin	de	Speichert diesen Eintrag
 saving of message %1 failed. destination folder %2 does not exist.	admin	de	Das Speichern der Nachricht %1 ist fehlgeschlagen. Der Ordner %2 ist nicht vorhanden.
 scheduled	admin	de	Geplant
-search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen

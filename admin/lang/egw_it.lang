@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	it	Predefinito = No, lascialo così se non lo usi
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	it	(imapclass deve supportare questa funzionalità interrogando il valore corrispondente in configurazione e passandolo come defaultquota al server IMAP)
 (no subject)	admin	it	(nessun oggetto)
-(stored password will not be shown here)	admin	it	La password memorizzata non verrà mostrata qui!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestione Applicazioni]!)
 -  type	admin	it	- tipo
 1 year	admin	it	1 anno
@@ -68,8 +67,6 @@ acl manager	admin	it	Gestione ACL
 acl rights	common	it	Diritti ACL
 acl updated	admin	it	ACL aggiornata
 acl updated.	admin	it	ACL aggiornata.
-action	admin	it	Azione
-actions	admin	it	Azioni
 activate	admin	it	Attiva
 activate wysiwyg-editor	admin	it	Attiva editor WYSIWYG
 activated	admin	it	attivato
@@ -95,6 +92,7 @@ add new email address:	admin	it	Aggiungi un nuovo indirizzo di posta elettronica
 add peer server	admin	it	Aggiungi Peer Server
 add profile	admin	it	Aggiungi Profilo
 add sub-category	admin	it	Aggiungi sotto-categoria
+add to group	admin	it	Aggiungi al gruppo
 add user	admin	it	Aggiungi utente
 add user or group	admin	it	Aggiungi utente o gruppo
 added	admin	it	aggiunto
@@ -104,8 +102,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	it	Nome amministratore
 admin password	admin	it	Password amministratore
 admin queue and history	admin	it	Coda e storico di amminstrazione
-admin username	admin	it	Username amministratore
-administration	admin	it	Amministrazione
 admins	admin	it	Amministratori
 advanced options	admin	it	Opzioni avanzate
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di accesso dovrebbe essere bloccato un account. Predefinito = 3
@@ -115,7 +111,6 @@ all accounts	admin	it	Tutti gli account
 all acls	admin	it	Tutte le ACL
 all applications	admin	it	Tutte le applicazioni
 all applications of the user	admin	it	Tutte le applicazioni dell'utente
-all categories	admin	it	Tutte le categorie
 all groups	admin	it	Tutti i gruppi
 all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
 all users	admin	it	Tutti gli utenti
@@ -180,6 +175,7 @@ bi-dir passthrough	admin	it	passthrough bidirezionale
 bi-directional	admin	it	bidirezionale
 blocking after wrong password	admin	it	Blocca dopo password errata
 bottom	admin	it	In fondo
+bulk changes	admin	it	Modifiche in blocco
 bulk password reset	admin	it	Reimpostazione massiva password
 by	admin	it	Da
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	it	Selezionando un utente o un gruppo si elimina di fatto l'account di posta di tutti gli altri utenti!<br>Si è davvero sicuri di volerlo fare?
@@ -274,7 +270,6 @@ customfield '%1' modified	admin	it	Personalizzato '%1' modificato.
 customfield deleted	admin	it	Personalizzato eliminato.
 customfield saved.	admin	it	Personalizzato salvato.
 cyrus imap server	admin	it	Server IMAP Cyrus
-cyrus imap server administration	admin	it	Amministrazione Server IMAP Cyrus
 data	admin	it	Dati
 data from	admin	it	Dati da
 day	admin	it	Giorno
@@ -391,7 +386,6 @@ emailadmin: group assigned profile	common	it	eMailAdmin: Profilo assegnato al gr
 emailadmin: user assigned profile	common	it	eMailAdmin: Profilo assegnato all'utente
 empty to not change	admin	it	vuota da NON modificare
 enable	admin	it	Abilita
-enable cyrus imap server administration	admin	it	Abilita amministrazione Server IMAP Cyrus
 enable debug-messages	admin	it	Attiva i messaggi di debug.
 enable sieve	admin	it	Abilita Sieve
 enable spellcheck in rich text editor	admin	it	Abilita il controllo ortografico nell'editor di testo
@@ -532,7 +526,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	it	Se vuoi utilizzare immagini selezionate casualmente, puoi caricare più di un'immagine.
 imap admin password	admin	it	Password amministratore IMAP
 imap admin user	admin	it	User amministratore IMAP
-imap c-client version < 2001	admin	it	Versione C-Cliente < 2001
 imap server	admin	it	Server IMAP
 imap server closed the connection.	admin	it	Il server IMAP ha chiuso la connessione.
 imap server closed the connection. server responded: %s	admin	it	Il server IMAP ha chiuso la connessione. Risposta del server: %s
@@ -540,7 +533,6 @@ imap server hostname or ip address	admin	it	Nome Host o IP del server IMAP
 imap server logintyp	admin	it	Tipo login server IMAP
 imap server name	admin	it	Nome del server IMAP
 imap server port	admin	it	Porta server IMAP
-imap/pop3 server name	admin	it	Nome server IMAP/POP3
 importance	admin	it	importanza
 in mbyte	admin	it	in MByte
 inactive	admin	it	Inattivo
@@ -790,7 +782,6 @@ saves the changes made and leaves	admin	it	Salva le modifiche fatte ed esce.
 saves this entry	admin	it	Salva questa voce
 saving of message %1 failed. destination folder %2 does not exist.	admin	it	Salvataggio del messaggio %1 fallito. La cartella di destinazione %2 non esiste.
 scheduled	admin	it	Programmato
-search accounts	admin	it	Cerca account
 search categories	admin	it	Cerca categorie
 search groups	admin	it	Cerca gruppi
 search peer servers	admin	it	Cerca peer servers
@@ -807,7 +798,6 @@ select permissions this group will have	admin	it	Seleziona i permessi che possie
 select the applications you want the token to be limited to, or leave the default of all applications.	admin	it	Selezionare le applicazioni a cui si desidera limitare il token, oppure lasciare l'impostazione predefinita di tutte le applicazioni.
 select the parent category. if this is a main category select no category	admin	it	Seleziona la categoria superiore. Se questa è una categoria principale seleziona NESSUNA CATEGORIA.
 select type of imap server	admin	it	Seleziona il tipo di server IMAP
-select type of imap/pop3 server	admin	it	Seleziona il tipo si server IMAP/POP3
 select type of smtp server	admin	it	Seleziona il tipo di server SMTP
 select users	admin	it	Seleziona utenti
 select users for inclusion	admin	it	Seleziona utenti per l'inclusione

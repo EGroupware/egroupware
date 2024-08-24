@@ -11,7 +11,6 @@
 account editable by user	mail	pt-br	conta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt-br	A recuperação de direitos de ACL falhou, parece que não há direitos definidos!
 acl rights retrieved successfully	mail	pt-br	Direitos ACL retrieved com sucesso
-action	mail	pt-br	Ação
 activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
 add a new folder to %1:	mail	pt-br	Adicionar uma nova pasta para% 1:
 add all my aliases	mail	pt-br	Adicionar todos os meus aliases
@@ -21,7 +20,6 @@ add folder	mail	pt-br	Adicionar pasta
 add raw message, ignore mail attachments	mail	pt-br	Converter correio em item, adicionar mensagem bruta (ignorar anexos de correio)
 add this certificate into contact	mail	pt-br	Adicionar este certificado ao contato
 add to addressbook	mail	pt-br	Adicionar aos Contatos
-add your domain as "%1" in options to list of email providers and enable api.	mail	pt-br	Adicione seu domínio como "%1" nas opções da lista de provedores de e-mail e ative a API.
 adding %1 to blacklisted email addresses failed because of %2	mail	pt-br	Adicionar arquivos como %1
 adding %1 to whiltelisted email addresses failed because of %2	mail	pt-br	A adição de %1 aos endereços de e-mail da lista negra falhou devido a %2
 after reply, visible during compose	mail	pt-br	Após a resposta, visível durante a composição
@@ -35,7 +33,6 @@ allow external images from listed domains	mail	pt-br	Permitir imagens externas d
 allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
 allow images from listed domains in html emails	mail	pt-br	Permitir imagens de domínios listados em e-mails HTML.
 allow users to create further identities	mail	pt-br	Permitir aos usuários criar novas identidades
-allways a new window	mail	pt-br	Sempre uma nova janela
 always allow external sources from %1	mail	pt-br	Sempre permitir fontes externas de %1
 always respond / auto-responder	mail	pt-br	Sempre responder / resposta automática
 always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
@@ -123,7 +120,6 @@ disable caching of flags	mail	pt-br	Desativar o cache de bandeiras
 disabled!	mail	pt-br	disabled!
 discard	mail	pt-br	descartar
 discard message	mail	pt-br	Descarte mensagem
-display messages in multiple windows	mail	pt-br	Exibir mensagens em múltiplas janelas
 display of html emails	mail	pt-br	Exibir e-mails em HTML
 display of identities	admin	pt-br	exibição de identidades
 display only when no plain text is available	mail	pt-br	Exibir somente quando não possuir versão em texto plano disponível
@@ -211,8 +207,6 @@ forward as attachment	mail	pt-br	Encaminhar como anexo
 forward inline	mail	pt-br	Encaminhar no corpo da mensagem
 forward to	mail	pt-br	Encaminhar para
 from	mail	pt-br	De
-from(a->z)	mail	pt-br	de (A->Z)
-from(z->a)	mail	pt-br	de (Z->A)
 general	admin	pt-br	Geral
 general settings	mail	pt-br	Definições gerais
 get acl rights failed from imap server!	mail	pt-br	Falha na obtenção de direitos de ACL do servidor IMAP!
@@ -236,7 +230,6 @@ if different from email address	mail	pt-br	Se for diferente do endereço de e-ma
 if mail header	mail	pt-br	Se cabeçalho de e-mail
 if message size	mail	pt-br	Se tamanho da mensagem
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	pt-br	Se quiser ver uma visualização prévia de um e-mail clicando uma vez no assunto, ative essa opção.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	pt-br	Se quiser selecionar várias pastas em uma ação, mantenha pressionada a tecla ctrl e selecione uma pasta como intervalo inicial e outra pasta dentro do mesmo nível como intervalo final; todas as pastas intermediárias serão selecionadas ou desmarcadas com base em seu status atual.
 imap	mail	pt-br	IMAP
 imap server	mail	pt-br	Servidor IMAP
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	pt-br	A importação da mensagem %1 falhou. Não foi possível salvar a mensagem na pasta %2 devido a: %3
@@ -417,8 +410,6 @@ signature	mail	pt-br	Assinatura
 signature at top	mail	pt-br	assinatura no topo
 signature position and visibility	mail	pt-br	Posição da assinatura e visibilidade
 signed by	mail	pt-br	Assinado por
-size(...->0)	mail	pt-br	Tamanho (...->0)
-size(0->...)	mail	pt-br	Tamanho (0->...)
 small view	mail	pt-br	Visão resumida
 smime encrypted message	mail	pt-br	S/MIME mensagem criptografada
 smime signed message	mail	pt-br	Mensagem assinada S/MIME
@@ -427,8 +418,6 @@ sneak preview in list	mail	pt-br	Pré-visualização da mensagem
 sort order	mail	pt-br	Ordem de classificação
 spamtitan api url	mail	pt-br	SpamTitan API URL
 start new messages with mime type plain/text or html?	mail	pt-br	Iniciar novas mensagens com mime type plain/text ou HTML?
-subject(a->z)	mail	pt-br	Assunto (A->Z)
-subject(z->a)	mail	pt-br	Assunto (Z->A)
 template folder	mail	pt-br	Pasta Modelos
 templates	mail	pt-br	Modelos
 text	mail	pt-br	Texto

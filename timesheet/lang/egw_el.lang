@@ -8,7 +8,7 @@ deleted	timesheet	el	διεγράφη
 deletes this field	timesheet	el	διαγράφει αυτό το πεδίο
 determines the order the fields are displayed	timesheet	el	καθορίζει τη σειρά εμφάνισης των πεδίων
 each value is a line like <id>[=<label>]	timesheet	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
-edit status	timesheet	el	Επιμέλεια κατάστασης
+edit status	common	el	Επιμέλεια κατάστασης
 edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
 end	timesheet	el	Τέλος
 existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
@@ -27,7 +27,7 @@ modified	timesheet	el	Τροποποιήθηκε
 no details	timesheet	el	συνοπτικά
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
 order	timesheet	el	Ταξινόμηση
-parent	timesheet	el	Μητρική
+parent	admin	el	Μητρική
 price	timesheet	el	Τιμή
 quantity	timesheet	el	Ποσότητα
 saves the changes made	timesheet	el	αποθηκεύει τις αλλαγές που έγιναν

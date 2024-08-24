@@ -30,7 +30,6 @@
 a short subject for the entry	infolog	de	Einen kurzen Titel für diesen Eintrag
 abort without deleting	infolog	de	Abbruch ohne zu Löschen
 accept	infolog	de	Bei Annahme
-action	infolog	de	Befehle
 actions...	infolog	de	Befehle ...
 actual date and time	infolog	de	Aktuelles Datum und Uhrzeit
 add	infolog	de	Hinzufügen
@@ -209,7 +208,6 @@ exists	infolog	de	Besteht
 export definition to use for nextmatch export	infolog	de	Export-Definition für Listenexport
 exports in ical format.	infolog	de	Export im iCal Format
 exports infolog entries into a csv file.	infolog	de	Exportiert InfoLog-Einträge in eine CSV-Datei
-favorites	infolog	de	Favoriten
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein!
 fields to exclude when copying an infolog:	infolog	de	Felder die ausgeschlossen werden beim Kopieren eines InfoLogs:

@@ -101,8 +101,6 @@ forward as attachment	mail	id	Teruskan sebagai lampiran
 forward inline	mail	id	Teruskan
 forward to	mail	id	Teruskan ke
 from	mail	id	Dari
-from(a->z)	mail	id	Dari (A->Z)
-from(z->a)	mail	id	Dari (Z->A)
 general	admin	id	Umum
 general settings	mail	id	Pengaturan umum
 get acl rights failed from imap server!	mail	id	Dapatkan hak ACL gagal dari server IMAP!
@@ -118,7 +116,6 @@ identity	mail	id	Identitas
 identity label	mail	id	Label identitas
 if	mail	id	IF
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	id	Jika Anda ingin melihat pratinjau email dengan sekali klik pada subjek, aktifkan ini.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	id	Jika Anda ingin memilih beberapa folder dalam satu tindakan, Anda dapat menahan tombol ctrl lalu memilih folder sebagai rentang awal dan folder lain dalam level yang sama sebagai rentang akhir, semua folder di antaranya akan dipilih atau tidak dipilih berdasarkan status saat ini.
 imap	mail	id	IMAP
 imap server	mail	id	IMAP Server
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	id	Impor pesan %1 gagal. Tidak dapat menyimpan pesan ke folder %2 karena: %3
@@ -278,16 +275,12 @@ signature	mail	id	Tandatangan
 signature at top	mail	id	Tanda tangan di bagian atas
 signature position and visibility	mail	id	Posisi dan visibilitas tanda tangan
 signed by	mail	id	Ditandatangani oleh
-size(...->0)	mail	id	Ukuran (...->0)
-size(0->...)	mail	id	Ukuran (0->...)
 small view	mail	id	small view
 smime encrypted message	mail	id	Pesan terenkripsi S/MIME
 smime signed message	mail	id	Pesan yang ditandatangani S/MIME
 smtp	mail	id	SMTP
 sneak preview in list	mail	id	Pratinjau pesan
 sort order	mail	id	Sort Order
-subject(a->z)	mail	id	Subyek (A->Z)
-subject(z->a)	mail	id	Subyek (Z->A)
 template folder	mail	id	Folder Templat
 templates	mail	id	Templat
 text	mail	id	Text

@@ -15,7 +15,6 @@
 account editable by user	mail	sk	používateľ môže upraviť účet
 acl rights retrieve failed, seems there are no rights set!	mail	sk	Zlyhalo prevzatie ACL práv, zdá sa že žiadne práva nie sú nastavené!
 acl rights retrieved successfully	mail	sk	ACL práva boli úspešne prevzaté
-action	mail	sk	Akcia
 activating by date requires a start- and end-date!	mail	sk	Aktivácia dátumom vyžaduje dátum začiatku AJ konca!
 add "%1" into blacklisted domains	mail	sk	Pridať doménu "%1" na čiernu listinu
 add "%1" into blacklisted emails	mail	sk	Pridať e-mail "%1" na čiernu listinu
@@ -29,7 +28,6 @@ add folder	mail	sk	Pridať priečinok
 add raw message, ignore mail attachments	mail	sk	Previesť poštu na položku, pridať nespracovanú správu (ignorovať prílohy pošty)
 add this certificate into contact	mail	sk	Pridať tento certifikát do kontaktu
 add to addressbook	mail	sk	Pridať do adresára
-add your domain as "%1" in options to list of email providers and enable api.	mail	sk	Pridajte vašu doménu v predvoľbách ako "%1" pre zoznam poskytovateľov e-mailu a povoľte API.
 adding %1 to blacklisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na čiernu listinu zlyhalo z dôvodu: %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	sk	Pridanie e-mailu %1 na bielu listinu zlyhalo z dôvodu: %2
 after reply, visible during compose	mail	sk	Za odpoveďou, viditeľne počas písania
@@ -48,7 +46,6 @@ allow external images from listed domains	mail	sk	Povoliť externé obrázky z d
 allow images from external sources in html emails	mail	sk	Povoliť v HTML E-mailoch obrázky z externých zdrojov.
 allow images from listed domains in html emails	mail	sk	Povoliť pre HTML e-maily obrázky z domén na zozname.
 allow users to create further identities	mail	sk	Povoliť používateľom vytváranie ďalších identít
-allways a new window	mail	sk	Vždy nové okno
 always	mail	sk	Vždy
 always allow external sources from %1	mail	sk	Vždy povoliť externé zdroje od %1
 always respond / auto-responder	mail	sk	Vždy odpovedať / automatický odpovedník
@@ -155,7 +152,6 @@ disable use of flowed lines in plain text mails (rfc3676)	mail	sk	Zakázať pou�
 disabled!	mail	sk	vypnuté!
 discard	mail	sk	Zahodiť
 discard message	mail	sk	Zahodiť správu
-display messages in multiple windows	mail	sk	Zobraziť správy vo viacerých oknách
 display of html emails	mail	sk	Zobrazovanie HTML správ
 display of identities	admin	sk	Zobrazenie identít
 display only when no plain text is available	mail	sk	Zobraziť iba keď nie je poruke čistý neformátovaný text
@@ -259,8 +255,6 @@ folder %1 is moving to folder %2	mail	sk	Priečinok %1 sa presúva do priečinka
 folder management	mail	sk	Správa priečinkov
 folder management ...	mail	sk	Správa priečinkov ...
 folder settings	mail	sk	Nastavenia priečinku
-for e.g.: mpeg	mail	sk	napr. pre: mpeg
-for eg.: mpeg	mail	sk	napr. pre: mpeg
 force html	mail	sk	Vždy HTML
 force plain text	mail	sk	Vždy čistý text
 forward	mail	sk	Odoslať ďalej
@@ -273,8 +267,6 @@ forward to address (*):	mail	sk	Odoslať ďalej na adresu (*):
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	sk	Odoslanie tejto správy ďalej zlyhalo, pretože obsah správy je asi šifrovaný a nedá sa správne dešifrovať. Ak napriek tomu chcete správu odoslať ďalej, skúste ju "Odoslať ako prílohu".
 forwards	mail	sk	Odoslané ďalej
 from	mail	sk	Od
-from(a->z)	mail	sk	Od (A->Z)
-from(z->a)	mail	sk	Od (Z->A)
 general	admin	sk	Všeobecné
 general settings	mail	sk	Všeobecné nastavenia
 get acl rights failed from imap server!	mail	sk	Získanie ACL práv zlyalo pre IMAP server!
@@ -310,7 +302,6 @@ if shown, which folders should appear on the home page	mail	sk	ak sa zobrazí, k
 if subject contains:(*)	mail	sk	Ak predmet obsahue:(*)
 if to contains:(*)	mail	sk	Ak KOMU obsahuje:(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	sk	Ak chcete zobraziť náhľad správy jednoduchýmkliknutím na predmet, povoľte to.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	sk	Ak chcete označiť viacero priečinkov jedným krokom, môžete podržať klávesu Ctrl a zároveň vyberať jeden priečinok ako začiatok výberu a druhý priečinok na tej istej úrovni ako koniec výberu, všetky priečinky medzi nimi sa označia (alebo odznačia, v závislosti od ich aktuálneho stavu).
 imap	mail	sk	IMAP
 imap - incoming mail	mail	sk	IMAP - príchodzia pošta
 imap administration	mail	sk	IMAP administrácia
@@ -602,8 +593,6 @@ signature	mail	sk	Podpis
 signature at top	mail	sk	Podpis navrchu
 signature position and visibility	mail	sk	Umiestnenie a viditeľnosť podpisu
 signed by	mail	sk	Podpísaný
-size(...->0)	mail	sk	Veľkosť (...->0)
-size(0->...)	mail	sk	Veľkosť (0->...)
 small view	mail	sk	Zmenšený pohľad
 smime encrypted message	mail	sk	Šifrovaná správa S/MIME
 smime signed message	mail	sk	S/MIME podpísaná správa
@@ -622,8 +611,6 @@ step 2: folder	mail	sk	Krok 2: Priečinok
 step 3: sieve - server side mail filtering	mail	sk	Krok 3: Sieve - filtrovanie na strane servra
 step 4: smtp - outgoing mail	mail	sk	Krok 4: SMTP - odoslaná pošta
 store to folder	mail	sk	Uložiť do priečinku
-subject(a->z)	mail	sk	Predmet (A->Z)
-subject(z->a)	mail	sk	Predmet (Z->A)
 subscribe folder	mail	sk	Prihlásiť priečinok
 subscribe folder ...	mail	sk	Prihlásiť priečinok ...
 subscribe to folder %1	mail	sk	Prihlásiť priečinok %1

@@ -250,20 +250,12 @@ exclude weekend	calendar	de	Wochenende ausschließen
 execute a further action for this entry	calendar	de	Führt einen weiteren Befehl für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 exists	calendar	de	Existiert
-<<<<<<< HEAD
 explicit recurrences	calendar	de	Explizite Wiederholungen
-export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht  (Disketten Symbol)
-exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format
-exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format
-=======
-explicit dates	calendar	de	Explizite Termine
 export definition to use for nextmatch export	calendar	de	Export Profil der Listenansicht
 exports events from your calendar in ical format.	calendar	de	Exportiert Termine im iCal-Format.
 exports events from your calendar into a csv file.	calendar	de	Exportiert Termine im CSV-Format.
->>>>>>> pending translations from our translation server
 extended	calendar	de	Erweitert
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	de	Erweiterte Benachrichtigungen enthalten immer die kompletten Termindetails. iCal's können von vielen anderen Kalenderprogrammen importiert werden.
-favorites	calendar	de	Favoriten
 fieldseparator	calendar	de	Feldtrenner
 filemanager	calendar	de	Dateimanager
 filename	calendar	de	Dateiname

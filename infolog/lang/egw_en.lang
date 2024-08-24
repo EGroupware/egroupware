@@ -30,10 +30,7 @@
 a short subject for the entry	infolog	en	A short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	Accept
-action	infolog	en	Action
-actions...	infolog	en	Actions ...
 actual date and time	infolog	en	Actual date and time
-add	infolog	en	Add
 add / remove link	infolog	en	Add / remove link
 add a file	infolog	en	Add a file
 add a new entry	infolog	en	Add a new entry
@@ -209,7 +206,6 @@ exists	infolog	en	Exists
 export definition to use for nextmatch export	infolog	en	Export definition to use for nextmatch export
 exports in ical format.	infolog	en	Exports in iCal format.
 exports infolog entries into a csv file.	infolog	en	Exports InfoLog entries into a CSV file.
-favorites	infolog	en	Favorites
 fax	infolog	en	Fax
 field must not be empty !!!	infolog	en	Field must not be empty!
 fields to exclude when copying an infolog:	infolog	en	Fields to exclude when copying an InfoLog:

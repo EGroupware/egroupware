@@ -2,7 +2,6 @@
 add to addressbook	mail	zh-tw	加入通訊錄
 all of	mail	zh-tw	所有的
 allow images from external sources in html emails	mail	zh-tw	在 HTML 郵件中允許來自外部的圖片
-allways a new window	mail	zh-tw	都開啟一個新視窗
 always show html emails	mail	zh-tw	都用HTML顯示郵件
 any of	mail	zh-tw	任意的
 any status	mail	zh-tw	任意狀態
@@ -22,7 +21,6 @@ deleted	mail	zh-tw	刪除了
 disable	mail	zh-tw	停用
 discard	mail	zh-tw	取消
 discard message	mail	zh-tw	取消郵件
-display messages in multiple windows	mail	zh-tw	開啟多個視窗顯示訊息
 display of html emails	mail	zh-tw	顯示HTML郵件
 display only when no plain text is available	mail	zh-tw	只有在不包含存文字時顯示
 displaying html messages is disabled	mail	zh-tw	顯示 html 信件的功能停用中
@@ -49,8 +47,6 @@ folder settings	mail	zh-tw	資料夾設定
 forward	mail	zh-tw	轉寄
 forward to	mail	zh-tw	轉寄給
 from	mail	zh-tw	從
-from(a->z)	mail	zh-tw	從 (A->Z)
-from(z->a)	mail	zh-tw	從 (Z->A)
 general	admin	zh-tw	一般
 greater than	mail	zh-tw	大於
 header lines	mail	zh-tw	頭條新聞
@@ -105,12 +101,8 @@ select all	mail	zh-tw	選擇全部
 sent folder	mail	zh-tw	寄件備份
 sieve script name	mail	zh-tw	sieve 程式名稱
 signature	mail	zh-tw	簽名檔
-size(...->0)	mail	zh-tw	大小 (...->0)
-size(0->...)	mail	zh-tw	大小(0->...)
 small view	mail	zh-tw	縮小
 sort order	mail	zh-tw	排序方式
-subject(a->z)	mail	zh-tw	標題(A->Z)
-subject(z->a)	mail	zh-tw	標題(Z->A)
 text	mail	zh-tw	文字
 the mimeparser can not parse this message.	mail	zh-tw	mime 解析程式無法處理這封郵件
 then	mail	zh-tw	然後

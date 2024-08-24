@@ -247,13 +247,11 @@ exclude weekend	calendar	it	Escludere il fine settimana
 execute a further action for this entry	calendar	it	Esegui ancora una azione per questo inserimento
 existing links	calendar	it	Collegamenti esistenti
 exists	calendar	it	Esiste
-explicit dates	calendar	it	Eventi espliciti
 export definition to use for nextmatch export	calendar	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 exports events from your calendar in ical format.	calendar	it	Esporta eventi dalla tua Agenda in formato iCal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
 extended	calendar	it	Esteso
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	it	Gli update estesi contengono tutti i dettagli degli eventi. Gli iCal possono essere importanti da certe applicazioni.
-favorites	calendar	it	Preferiti
 fieldseparator	calendar	it	Separatore
 filemanager	calendar	it	Filemanager
 filename	calendar	it	Nome file

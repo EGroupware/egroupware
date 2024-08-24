@@ -24,8 +24,6 @@ accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1!
 access to calendar of %1 denied!	calendar	en	Access to calendar of %1 denied!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
-actions	calendar	en	Actions
-actions...	calendar	en	Actions ...
 add alarm	calendar	en	Add alarm
 add appointments via shortened dialog or complete edit window	calendar	en	Add appointments via shortened dialog or complete edit window
 add current view as favorite	calendar	en	Add current view as favorite
@@ -48,7 +46,6 @@ alarm deleted	calendar	en	Alarm deleted.
 alarm for %1 at %2 in %3	calendar	en	Alarm for %1 at %2 in %3
 alarm management	calendar	en	Alarm management
 alarms	calendar	en	Alarms
-all categories	calendar	en	All categories
 all day	calendar	en	All day
 all events	calendar	en	All events
 all exceptions are converted into single events.	calendar	en	All exceptions are converted into single events.
@@ -256,7 +253,6 @@ exports events from your calendar in ical format.	calendar	en	Exports events fro
 exports events from your calendar into a csv file.	calendar	en	Exports events from your calendar into a CSV file.
 extended	calendar	en	Extended.
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	en	Extended updates always include the complete event-details. iCal's can be imported by certain other calendar-applications.
-favorites	calendar	en	Favorites
 fieldseparator	calendar	en	Field separator
 filemanager	calendar	en	Filemanager
 filename	calendar	en	File name

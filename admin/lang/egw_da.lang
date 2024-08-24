@@ -17,7 +17,6 @@
 (de)activate mail accounts	admin	da	(de)Aktiver mailkonti
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	da	(imapclass skal understøtte denne funktion ved at forespørge den tilsvarende konfigurationsværdi og videregive den som defaultquota til IMAP-serveren)
 (no subject)	admin	da	(ingen emne)
-(stored password will not be shown here)	admin	da	Gemte adgangskoder vil ikke blive vist her!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	da	(For at installere nye applikationer brug <br><a href="setup/" target="setup">Setup</a> [Administrere Applikationer]!)
 1 year	admin	da	1 år
 2 month	admin	da	2 måneder
@@ -42,8 +41,6 @@ account saved.	admin	da	Konto gemt.
 acl csv export	admin	da	ACL CSV-eksport
 acl manager	admin	da	ACL Håndtering
 acl rights	common	da	ACL rettigheder
-action	admin	da	Handling
-actions	admin	da	Handling
 activate	admin	da	Aktivere
 add a category	admin	da	Tilføj en kategori
 add a group	admin	da	Tilføj en gruppe
@@ -61,6 +58,7 @@ add new application	admin	da	Tilføj ny applikation
 add peer server	admin	da	Tilføj Peer Server
 add profile	admin	da	Tilføj Profil
 add sub-category	admin	da	Tilføj underkategori
+add to group	admin	da	Tilføj til gruppe
 add user	admin	da	Tilføj bruger
 add user or group	admin	da	Tilføj bruger eller gruppe
 admin dn	admin	da	Admin DN
@@ -68,12 +66,9 @@ admin email	admin	da	Administrator e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	da	Administrator e-mail adresser (komma separeret) som skal have besked omkring blokeringen (tom for ingen).
 admin name	admin	da	Administrator navn
 admin password	admin	da	Admin adgangskode
-admin username	admin	da	Admin brugernavn
-administration	admin	da	Administration
 admins	admin	da	Administratore
 advanced options	admin	da	Avanceret indstillinger
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
-all categories	admin	da	Alle kategorier
 all groups	admin	da	Alle grupper
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
@@ -106,12 +101,17 @@ available placeholders	admin	da	Tilgængelige pladsholdere
 back to the list	admin	da	Tilbage til listen
 bi-directional	admin	da	bi-directional
 bottom	admin	da	Bunden
+bulk changes	admin	da	Masseændringer
+bulk password reset	admin	da	Nulstilling af adgangskode
 calculate next run	admin	da	Beregn næste kørsel
 can change password	admin	da	Kan ændre adgangskode
 cancel testjob!	admin	da	Annuller testjob
 categories list	admin	da	Vis kategorier
 category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
+certificate	admin	da	Certifikat
+certificate details	admin	da	Detaljer om certifikatet
+certificate validation in days	admin	da	Certifikatvalidering om dage
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change login screen message	admin	da	Ændre startside besked
@@ -133,7 +133,6 @@ custom egroupware web font as woff2 file	admin	da	Brugerdefineret EGroupware web
 custom fields	admin	da	Valgfri felter
 custom fields tab	admin	da	Fanen brugerdefinerede felter
 cyrus imap server	admin	da	Cyrus IMAP Server
-cyrus imap server administration	admin	da	Cyrus IMAP server administration
 data	admin	da	Data
 day	admin	da	Dag
 day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
@@ -199,11 +198,8 @@ edit user account	admin	da	Redigér bruger konto
 email account active	admin	da	E-mail konto aktiv
 email address	admin	da	E-mail adresse
 enable	admin	da	Aktivere
-enable cyrus imap server administration	admin	da	Aktivere Cyrus IMAP server administration
 enable debug-messages	admin	da	Aktivere debug-beskeder.
 enable sieve	admin	da	Aktiver Sieve
-enabled - hidden from navbar	admin	da	Aktiveret - Gemt fra navigationsbjælken
-enabled - popup window	admin	da	Aktiveret - Popup vindue
 enter a description for the category	admin	da	Indtast en beskrivelse for kategorien
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	da	Indtast noget forskelligt tekst til app_session<br>kryptering (kræver mcrypt)
 enter the background color for the login page	admin	da	Indtast baggrundsfarven for login siden
@@ -220,7 +216,6 @@ enter the site username for peer servers	admin	da	Indtast site brugernavnet for 
 enter the title for your site	admin	da	Indtast titlen for dit site
 enter the title of your logo	admin	da	Indtast title for dit logo
 enter the url where your logo should link to	admin	da	Indtast stien hvor dit logo skal linke til
-enter your default ftp server	admin	da	Indtast din standard FTP server
 enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)
 enter your default mail domain (from: user@domain)	admin	da	Indtast dit standart post domæne (fra: bruger@domæne)
 enter your http proxy server	admin	da	Indtast din HTTP proxy server
@@ -263,12 +258,10 @@ if no acl records for user or any group the user is a member of	admin	da	Hvis in
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
 imap admin password	admin	da	IMAP admin adgangskode
 imap admin user	admin	da	IMAP admin bruger
-imap c-client version < 2001	admin	da	IMAP C-Klient Version < 2001
 imap server	admin	da	IMAP Server
 imap server hostname or ip address	admin	da	IMAP server domænenavn eller IP adresse
 imap server logintyp	admin	da	IMAP server login type
 imap server port	admin	da	IMAP server port
-imap/pop3 server name	admin	da	IMAP/POP3 server navn
 in mbyte	admin	da	i Megabytes
 inbound	admin	da	indkommende
 install crontab	admin	da	Installere crontab
@@ -375,8 +368,6 @@ please enter a name	admin	da	Indtast venligst et navn
 please enter a name for that server !	admin	da	Indtast venligst et navn for den server!
 please run setup to become current	admin	da	Kør venligst setup for at opdatere
 please select	admin	da	Vlæg venligst
-pop3 server hostname or ip address	admin	da	POP3 server domænenavn eller IP adresse
-pop3 server port	admin	da	POP server port
 postfix with ldap	admin	da	Postfix med LDAP
 preferences	admin	da	Præferencer
 primary group	admin	da	Primær gruppe
@@ -393,7 +384,6 @@ save the category	admin	da	Gem kategorien.
 save the category and return back to the list	admin	da	Gem kategorien og vend tilbage til listen.
 saves the changes made and leaves	admin	da	Gem ændringerne og afslut.
 saves this entry	admin	da	Gem denne postering
-search accounts	admin	da	Søg kontoer
 search categories	admin	da	Søg kategorier
 search groups	admin	da	Søg grupper
 search peer servers	admin	da	Søg peer servere
@@ -402,7 +392,6 @@ select accounts for which the custom field should be readonly	admin	da	Vælg kon
 select group managers	admin	da	Vælg gruppe håndtering
 select permissions this group will have	admin	da	Vælg rettigheder denne gruppe skal have
 select the parent category. if this is a main category select no category	admin	da	Vælg overstående kategori. Hvis det er en hovedkategori vælg INGEN KATEGORI.
-select type of imap/pop3 server	admin	da	Vælg type IMAP/POP3 server
 select type of smtp server	admin	da	Vælg time POP3 server
 select users for inclusion	admin	da	Brugere der skal inkluderes
 select where you want to store/retrieve filesystem information	admin	da	Vælg hvor du vil gemme/modtage filsystem informationer.
@@ -420,7 +409,6 @@ server username	admin	da	Server brugernavn
 set preference values.	admin	da	Sæt præference værdierne.
 settings	admin	da	Indstillinger
 should the login page include a language selectbox (useful for demo-sites) ?	admin	da	Skal loginsiden inkludere et sprog selectboks (brugbar på demo-sider)?
-show 'powered by' logo on	admin	da	Vis 'Powered by' logo i
 show access log	admin	da	Vis adgangslog
 show current action	admin	da	Vis nuværende handling
 show error log	admin	da	Vis fejllog
@@ -445,7 +433,6 @@ sort the entries	admin	da	Sorter resultaterne
 ssl	admin	da	SSL
 standard	admin	da	Standart
 standard imap server	admin	da	Standart IMAP server
-standard pop3 server	admin	da	Standart POP3 server
 standard smtp-server	admin	da	Standart SMTP server
 start	admin	da	Start
 start testjob!	admin	da	Start testjob

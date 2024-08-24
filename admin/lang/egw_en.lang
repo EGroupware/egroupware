@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the IMAP server)
 (no subject)	admin	en	(no subject)
-(stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	en	- type
 1 year	admin	en	1 year
@@ -68,10 +67,7 @@ acl manager	admin	en	ACL manager
 acl rights	common	en	ACL rights
 acl updated	admin	en	ACL updated
 acl updated.	admin	en	ACL updated.
-action	admin	en	Action
-actions	admin	en	Actions
 activate	admin	en	Activate
-activate wysiwyg-editor	admin	en	Activate WYSIWYG-editor
 activated	admin	en	activated
 activated again	admin	en	activated again
 active mail accounts	admin	en	Active Mail Accounts
@@ -105,8 +101,6 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	en	Admin name
 admin password	admin	en	Admin password
 admin queue and history	admin	en	Admin queue and history
-admin username	admin	en	Admin user name
-administration	admin	en	Administration
 admins	admin	en	Admins
 advanced options	admin	en	Advanced options
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	en	After how many unsuccessful attempts to login an account should be blocked. Default = 3
@@ -116,7 +110,6 @@ all accounts	admin	en	All accounts
 all acls	admin	en	All ACLs
 all applications	admin	en	All applications
 all applications of the user	admin	en	All applications of the user
-all categories	admin	en	All categories
 all groups	admin	en	All groups
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
@@ -452,7 +445,7 @@ expired	admin	en	Expired
 expires	admin	en	Expires
 export certificate as p12	admin	en	Export certificate as p12
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
-exports permission settings into a csv file.	admin	en	Exports permission settings into a CSV File.
+exports permission settings into a csv file.	admin	en	Exports permission settings into a CSV file.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
 failed	admin	en	failed
 failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
@@ -519,7 +512,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	en	How many minutes should an account or IP be blocked. Default = 30
 how should email addresses for new users be constructed?	admin	en	Select default email address format for new user accounts
 how username get constructed	admin	en	How username get constructed
-html/plaintext	admin	en	HTML/text
+html/plaintext	admin	en	HTML/Text
 icon	admin	en	Icon
 identity	admin	en	Identity
 identity deleted	admin	en	Identity deleted.
@@ -793,7 +786,6 @@ saves the changes made and leaves	admin	en	Saves the changes made and leaves.
 saves this entry	admin	en	Saves this entry
 saving of message %1 failed. destination folder %2 does not exist.	admin	en	Saving of message %1 failed. Destination Folder %2 does not exist.
 scheduled	admin	en	Scheduled
-search accounts	admin	en	Search accounts
 search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers

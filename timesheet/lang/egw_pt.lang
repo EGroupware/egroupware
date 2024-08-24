@@ -16,7 +16,7 @@ deletes this field	timesheet	pt	eliminar este campo
 determines the order the fields are displayed	timesheet	pt	determina a ordem de apresentação dos campos
 directory with documents to insert entries	timesheet	pt	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt	cada valor é uma linha como <id>[=<etiqueta>]
-edit status	timesheet	pt	Editar estado
+edit status	common	pt	Editar estado
 edit this entry	timesheet	pt	Editar este registo
 empty if identical to duration	timesheet	pt	vazio se for igual à duração
 end	timesheet	pt	Fim
@@ -27,7 +27,6 @@ error saving the entry!!!	timesheet	pt	Erro ao guardar o registo!!!
 existing links	timesheet	pt	Ligações existentes
 exists	timesheet	pt	Existe
 export definition to use for nextmatch export	timesheet	pt	Definição Exportar para usar para exportação NextMatch
-favorites	timesheet	pt	Favoritos
 field must not be empty !!!	timesheet	pt	O campo não pode estar vazio !!!
 general fields:	timesheet	pt	Campos gerais:
 global categories	timesheet	pt	Categorias gerais
@@ -52,7 +51,7 @@ no details	timesheet	pt	Sem detalhes
 no project	timesheet	pt	Nenhum projeto
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 order	timesheet	pt	Ordenar
-parent	timesheet	pt	Principal
+parent	admin	pt	Principal
 permission denied!!!	timesheet	pt	Permissão negada!!!
 permissions error - %1 could not %2	timesheet	pt	Erro de permissões -% 1 não pôde% 2
 price	timesheet	pt	Preço

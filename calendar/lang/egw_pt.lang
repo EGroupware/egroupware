@@ -150,13 +150,11 @@ exclude weekend	calendar	pt	Excluir fim de semana
 execute a further action for this entry	calendar	pt	Executar uma ação adicional para esta entrada
 existing links	calendar	pt	Ligações existentes
 exists	calendar	pt	Existe
-explicit dates	calendar	pt	Eventos explícitos
 export definition to use for nextmatch export	calendar	pt	Definição Exportar para usar para exportação nextmatch
 exports events from your calendar in ical format.	calendar	pt	Exporta eventos do seu calendário no formato iCal.
 exports events from your calendar into a csv file.	calendar	pt	Exporta eventos do seu calendário para um ficheiro CSV.
 extended	calendar	pt	Avançado
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
-favorites	calendar	pt	Favoritos
 fieldseparator	calendar	pt	Separador de campos
 filemanager	calendar	pt	Gestor de ficheiros
 filename	calendar	pt	Nome de ficheiro

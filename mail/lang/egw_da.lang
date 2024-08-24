@@ -12,7 +12,6 @@ add folder	mail	da	Tilføj mappe
 add raw message, ignore mail attachments	mail	da	Konverter mail til emne, tilføj rå besked (ignorer vedhæftede filer)
 add this certificate into contact	mail	da	Tilføj dette certifikat til kontakt
 add to addressbook	mail	da	tilføj til adressebog
-add your domain as "%1" in options to list of email providers and enable api.	mail	da	Tilføj dit domæne som "%1" i indstillinger til listen over e-mailudbydere, og aktiver API.
 adding %1 to blacklisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til sortlistede e-mailadresser mislykkedes på grund af %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	da	Tilføjelse af %1 til whiltelisted e-mail-adresser mislykkedes på grund af %2
 after reply, visible during compose	mail	da	Efter svar, synlig under sammensætning
@@ -118,8 +117,6 @@ folder %1 has been created successfully, although the subscription failed becaus
 folder settings	mail	da	Mappe indstillinger
 forward	mail	da	Vidersend
 from	mail	da	Fra
-from(a->z)	mail	da	Fra (A->Z)
-from(z->a)	mail	da	Fra (Z->A)
 general	admin	da	Generelt
 get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
 ham folder	mail	da	Ham-mappe
@@ -131,7 +128,6 @@ ident name organization email	mail	da	Identnavn Organisation [E-mail]
 identity label	mail	da	Identitetsmærke
 if	mail	da	HVIS
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	da	Hvis du vil se en forhåndsvisning af en mail ved at klikke på emnet, skal du aktivere dette.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	da	Hvis du vil vælge flere mapper i én handling, kan du holde ctrl-tasten nede og vælge en mappe som startområde og en anden mappe på samme niveau som slutområde. Alle mapper derimellem vil blive valgt eller fravalgt baseret på deres aktuelle status.
 imap	mail	da	IMAP
 imap server	mail	da	IMAP Server
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	da	Import af besked %1 mislykkedes. Kunne ikke gemme beskeden i mappen %2 pga: %3
@@ -285,16 +281,12 @@ signature	mail	da	Signatur
 signature at top	mail	da	signatur øverst
 signature position and visibility	mail	da	Signaturens placering og synlighed
 signed by	mail	da	Signeret af
-size(...->0)	mail	da	Størrelse (...->0)
-size(0->...)	mail	da	Størrelse (0->...)
 small view	mail	da	Lille overblik
 smime encrypted message	mail	da	S/MIME-krypteret meddelelse
 smime signed message	mail	da	S/MIME-signeret meddelelse
 smtp	mail	da	SMTP
 sneak preview in list	mail	da	Visning af besked
 sort order	mail	da	Soterings rækkefølge
-subject(a->z)	mail	da	Emne (A->Z)
-subject(z->a)	mail	da	Emne (Z->A)
 text	mail	da	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	da	IMAP-serveren skal opfylde visse krav OG være konfigureret til det:
 the rule with priority %1 successfully saved!	mail	da	Reglen med prioritet %1 er gemt med succes!

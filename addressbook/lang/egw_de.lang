@@ -14,13 +14,9 @@
 %s please calculate the result	addressbook	de	%s Bitte berechnen Sie das Ergebnis
 (e.g. 1969)	addressbook	de	(z.B. 1969)
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste aus.
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur für Administratoren verfügbar!
 account id	addressbook	de	Benutzerkonten-ID
 account repository	admin	de	Speicherort für Benutzerkonten
-accounts	addressbook	de	Benutzerkonten
-actions	addressbook	de	Befehle
-add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a customfield to link title	addressbook	de	Benutzerdefiniertes Feld zu Link-Titel hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
@@ -61,7 +57,6 @@ addressbook vcard export	addressbook	de	Adressbuch im vCard-Format exportieren
 addressbook vcard import	addressbook	de	Adressbuch im vCard-Format importieren
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	vCard hinzufügen
-advanced search	addressbook	de	Erweiterte Suche
 all addressbooks	addressbook	de	Alle Adressbücher
 all contacts	addressbook	de	Alle Kontakte
 all in one field	addressbook	de	Alle Kategorien in einem Feld ausgeben

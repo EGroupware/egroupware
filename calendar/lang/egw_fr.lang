@@ -247,13 +247,11 @@ exclude weekend	calendar	fr	Exclure le week-end
 execute a further action for this entry	calendar	fr	Exécuter une action supplémentaire pour cette entrée
 existing links	calendar	fr	Liens existants
 exists	calendar	fr	Existe
-explicit dates	calendar	fr	Événements explicites
 export definition to use for nextmatch export	calendar	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports events from your calendar in ical format.	calendar	fr	Exporter les événements de votre calendrier au format iCal
 exports events from your calendar into a csv file.	calendar	fr	Exporter les événements de votre calendrier au format CSV
 extended	calendar	fr	Etendu.
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	fr	Les mises à jour étendues incluent toujours les détails complets de l'événement. Les iCals peuvent être importés par certaines autres applications de calendrier.
-favorites	calendar	fr	Favoris
 fieldseparator	calendar	fr	Séparateur de champs
 filemanager	calendar	fr	Gestionnaire de fichiers
 filename	calendar	fr	Nom du fichier

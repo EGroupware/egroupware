@@ -10,7 +10,6 @@
 account editable by user	mail	nl	Account door gebruiker te wijzigen
 acl rights retrieve failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend!
 acl rights retrieved successfully	mail	nl	ACL rechten succesvol opgehaald
-action	mail	nl	Actie
 activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
 add a new folder to %1:	mail	nl	Voeg een neiuwe map toe %1:
 add all my aliases	mail	nl	Voeg al mijn aliassen toe
@@ -20,7 +19,6 @@ add folder	mail	nl	Voeg map toe
 add raw message, ignore mail attachments	mail	nl	Mail omzetten naar item, onbewerkt bericht toevoegen (mailbijlagen negeren)
 add this certificate into contact	mail	nl	Dit certificaat toevoegen aan contact
 add to addressbook	mail	nl	Aan adresboek toevoegen
-add your domain as "%1" in options to list of email providers and enable api.	mail	nl	Voeg je domein toe als "%1" in opties aan lijst met e-mailproviders en schakel API in.
 adding %1 to blacklisted email addresses failed because of %2	mail	nl	%1 toevoegen aan zwarte lijst e-mailadressen mislukt vanwege %2
 adding %1 to whiltelisted email addresses failed because of %2	mail	nl	%1 toevoegen aan witte lijst e-mailadressen mislukt vanwege %2
 after reply, visible during compose	mail	nl	Na antwoord, zichtbaar tijdens samenstellen
@@ -39,7 +37,6 @@ allow external images from listed domains	mail	nl	Externe afbeeldingen van verme
 allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan.
 allow images from listed domains in html emails	mail	nl	Afbeeldingen van vermelde domeinen toestaan in HTML e-mails.
 allow users to create further identities	mail	nl	Sta gebruikers toe meer identitietien aan te maken
-allways a new window	mail	nl	Altijd in een nieuw venster
 always	mail	nl	Altijd
 always allow external sources from %1	mail	nl	Sta altijd externe bronnen toe van %1
 always respond / auto-responder	mail	nl	Direct antwoorden / Auto-Responder
@@ -144,7 +141,6 @@ disable horizontal rule for separation of mail body from signature	mail	nl	Zet l
 disabled!	mail	nl	Niet actief!
 discard	mail	nl	negeer
 discard message	mail	nl	Negeer bericht
-display messages in multiple windows	mail	nl	berichten in meerdere vensters weergeven
 display of html emails	mail	nl	Weergave van HTML-emails
 display of identities	admin	nl	Toon identiteiten
 display only when no plain text is available	mail	nl	Alleen weergeven als platte tekst niet beschikbaar is.
@@ -240,8 +236,6 @@ folder %1 %2 failed because of %3!	mail	nl	Map %1 %2 mislukt vanwege %3!
 folder %1 %2 failed!	mail	nl	Map %1 %2 mislukt
 folder %1 has been created successfully, although the subscription failed because of %2	mail	nl	Map %1 is succesvol aangemaakt, hoewel de inschrijving is mislukt vanwege %2
 folder settings	mail	nl	Map instellingen
-for e.g.: mpeg	mail	nl	Bijvoorbeeld: mpeg
-for eg.: mpeg	mail	nl	Bijvoorbeeld: mpeg
 force html	mail	nl	Forceer HTML
 force plain text	mail	nl	Forceer platte tekst
 forward	mail	nl	Doorsturen
@@ -253,8 +247,6 @@ forward to	mail	nl	Doorsturen naar
 forwarding of this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to forward content of this encrypted message, you may try to use forward as attachment instead.	mail	nl	Het doorsturen van dit bericht is mislukt omdat de inhoud van dit bericht versleuteld lijkt te zijn en niet goed ontsleuteld kan worden. Als u de inhoud van dit gecodeerde bericht toch wilt doorsturen, kunt u in plaats daarvan doorsturen als bijlage gebruiken.
 forwards	mail	nl	Doorgestuurd
 from	mail	nl	Van
-from(a->z)	mail	nl	Van (A->Z)
-from(z->a)	mail	nl	Van (Z->A)
 general	admin	nl	Algemeen
 general settings	mail	nl	Algemene instellingen
 get acl rights failed from imap server!	mail	nl	Ophalen ACL rechten van IMAP server mislukt!
@@ -290,7 +282,6 @@ if shown, which folders should appear on the home page	mail	nl	als getoond, welk
 if subject contains:(*)	mail	nl	als onderwerp (*) becvat:
 if to contains:(*)	mail	nl	als naar bevat :(*)
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	nl	Als u een voorbeeld wilt zien van het bericht door middel van een enkele klik, activeer dit dan.
-if you would like to select multiple folders in one action, you can hold ctrl key then select a folder as start range and another folder within a same level as end range, all folders in between will be selected or unselected based on their current status.	mail	nl	Als je meerdere mappen in één actie wilt selecteren, kun je de ctrl-toets ingedrukt houden en vervolgens een map selecteren als startbereik en een andere map binnen hetzelfde niveau als eindbereik. Alle mappen ertussenin zullen worden geselecteerd of gedeselecteerd op basis van hun huidige status.
 imap	mail	nl	IMAP
 imap - incoming mail	mail	nl	IMAP - inkomende berichten
 imap administration	mail	nl	IMAP administratie
@@ -556,8 +547,6 @@ signature	mail	nl	Handtekening
 signature at top	mail	nl	Ondertekeing bovenaan
 signature position and visibility	mail	nl	Positie en zichtbaarheid handtekening
 signed by	mail	nl	Ondertekend door
-size(...->0)	mail	nl	Grootte (...->0)
-size(0->...)	mail	nl	Grootte (0->...)
 small view	mail	nl	kleine weergave
 smime encrypted message	mail	nl	S/MIME gecodeerd bericht
 smime signed message	mail	nl	S/MIME ondertekend bericht
@@ -573,8 +562,6 @@ step 2: folder	mail	nl	Stap 2: Map
 step 3: sieve - server side mail filtering	mail	nl	Stap 3: Sieve - Filter bericihten van de server
 step 4: smtp - outgoing mail	mail	nl	Stap 4: SMTP - Uitgaande berichten
 store to folder	mail	nl	Sla in map op
-subject(a->z)	mail	nl	Onderwerp (A->Z)
-subject(z->a)	mail	nl	Onderwerp (Z->A)
 subscribe folder	mail	nl	Abonneer op map
 subscribe folder ...	mail	nl	Abonneer op map ...
 subscription folders	mail	nl	Gabonneerde mappen
