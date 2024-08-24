@@ -365,7 +365,10 @@ function send_template()
 		}, $str);
 
 		// use et2-email instead of et2-select-email
-		$str = preg_replace('#<et2-select-email\s(.*?")\s*></et2-select-email>#s', '<et2-email $1></et2-email>', $str);
+		$str = preg_replace('#<et2-select-email\s(.*?")\s*/?>(</et2-select-email>)?#s', '<et2-email $1></et2-email>', $str);
+
+		// use et2-select-cat instead of et2-tree-cat
+		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
 		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)
