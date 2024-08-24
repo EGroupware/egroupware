@@ -42,7 +42,6 @@ acl csv export	admin	zh	导出 ACL CSV
 acl manager	admin	zh	ACL管理器
 acl rights	common	zh	ACL权限
 activate	admin	zh	激活
-activate wysiwyg-editor	admin	zh	激活所见即所得编辑器
 add a category	admin	zh	添加类别
 add a group	admin	zh	添加组
 add a new account.	admin	zh	添加新帐户。
@@ -60,7 +59,6 @@ add new email address:	admin	zh	添加新邮箱地址：
 add peer server	admin	zh	添加对等服务器
 add profile	admin	zh	添加 profile
 add sub-category	admin	zh	添加子类别
-add to group	admin	zh	添加到组
 admin dn	admin	zh	管理 DN
 admin email	admin	zh	管理员邮箱
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	管理员电子邮件地址 (逗号分隔) 以便通知有关故障等 (留空将不通知任何人)
@@ -114,8 +112,6 @@ bad request: %s	admin	zh	错误请求：%s
 bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
 bi-directional	admin	zh	bi-directional(双向)
 bottom	admin	zh	底部
-bulk changes	admin	zh	批量更改
-bulk password reset	admin	zh	批量重置密码
 calculate next run	admin	zh	计划下次运行
 can be used by application	admin	zh	可用于应用程序
 can be used by group	admin	zh	可用于群组
@@ -141,7 +137,6 @@ connection dropped by imap server.	admin	zh	连接被 IMAP 服务器中断。
 continue	admin	zh	继续
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh	Cookie 域 (默认为空表示使用完整域名，对于 SiteMgr 等 ".domain.com" 允许 egw.domain.com 与 www.domain.com 使用同一个 cookie)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 EGroupware 会话使用不同的目录，与 SiteMgr 会有问题！)
-copy of	admin	zh	复制
 could not complete request. reason given: %s	admin	zh	无法完成请求。原因是：%s
 could not open secure connection to the imap server. %s : %s.	admin	zh	无法打开到 IMAP 服务器的安全连接。%s:%s。
 could not remote execute the command	admin	zh	不能远程执行命令
@@ -156,11 +151,7 @@ crontab only (recomended)	admin	zh	仅 Crontab (推荐命令)
 custom 1	admin	zh	自定义 1
 custom 2	admin	zh	自定义 2
 custom 3	admin	zh	自定义 3
-custom egroupware bold web font as woff2 file	admin	zh	自定义 EGroupware 粗体网页字体，作为 woff2 文件
-custom egroupware web font as woff2 file	admin	zh	作为 woff2 文件的定制 EGroupware 网页字体
 custom fields	admin	zh	自定义字段
-custom fields tab	admin	zh	自定义字段选项卡
-custom translation	admin	zh	自定义翻译
 cyrus imap server	admin	zh	Cyrus IMAP 服务器
 data	admin	zh	数据
 day	admin	zh	日
@@ -208,7 +199,6 @@ disable	admin	zh	禁用
 disable "auto completion" of the login form	admin	zh	禁用登录表单的“自动完成”
 disabled (not recomended)	admin	zh	禁用 (不推荐)
 display	admin	zh	显示
-displayed length of input field (set rows=1 to limit length)	admin	zh	显示输入字段的长度（设置行数=1 以限制长度）
 displaying html messages is disabled	admin	zh	显示HTML邮件被禁用
 do not delete the category and return back to the list	admin	zh	不要删除类别和返回其列表
 do not validate certificate	admin	zh	不确认证书
@@ -248,10 +238,10 @@ enter a description for the category	admin	zh	输入对类别的描述
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh	为加密 APP-SESSION 输入一些随机文字<br>(需要 Mcrypt 支持)
 enter the background color for the login page	admin	zh	登录页面的背景颜色
 enter the background color for the site title	admin	zh	站点名称的背景颜色
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	请输入临时文件的完整路径。<br>例如：/tmp、C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh	请输入临时文件的完整路径。<br>例如：/tmp、C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh	请输入临时文件的完整路径。<br>例如：/tmp、C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh	请输入用户和组文件的完整路径。<br>例如: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	zh	请输入服务器所在主机的名称
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh	请输入EGroupware的网址。<br>例如：https://egw.domain.com/egroupware   或者   /egroupware<br><b>不能以/结尾</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zh	请输入要查找的字符串。要显示所有条目，此处留空并点击提交按钮
@@ -340,8 +330,6 @@ installed applications	common	zh	已安装的应用程序
 installed crontab	admin	zh	已安装的 crontab
 instance	admin	zh	实例
 interface	admin	zh	界面
-internal name max. 64 chars	admin	zh	内部名称（最多 64 个字符 64 个字符
-invalid format, must end in a group of digits e.g. %1 or %2	admin	zh	无效格式，必须以一组数字结尾，如 %1 或 %2
 invalid formated date "%1"!	admin	zh	无效日期格式“%1”!
 invalid remote id or name "%1"!	admin	zh	无效远程ID或名称"%1"！
 invalid value "%1" use yes or no!	admin	zh	值"%1"使用 yes 或 no 无效！
@@ -403,7 +391,6 @@ month	admin	zh	月
 more secure	admin	zh	更安全
 name must not be empty !!!	admin	zh	名称不能为空！
 name of organisation	admin	zh	组织名称
-name of tab to create and show field in	admin	zh	要创建和显示字段的选项卡名称
 new group name	admin	zh	新建组名称
 new name	admin	zh	新名称
 new password	admin	zh	新密码
@@ -490,8 +477,6 @@ search categories	admin	zh	搜索类别
 search groups	admin	zh	搜索组
 search peer servers	admin	zh	搜索对等服务器
 security	admin	zh	安全
-select accounts for which the custom field should be readonly	admin	zh	选择自定义字段应为只读的账户
-select accounts for which the custom field should be visible	admin	zh	选择自定义字段应可见的账户
 select group managers	admin	zh	选择组管理器
 select permissions this group will have	admin	zh	选择该组权限
 select the parent category. if this is a main category select no category	admin	zh	选择父类别。如果当前是一个主要类别，则选择<b>无类别</b>
@@ -502,7 +487,6 @@ select where you want to store/retrieve filesystem information	admin	zh	选择�
 select where you want to store/retrieve user accounts	admin	zh	选择您想要存储或检索用户帐户的位置
 select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	zh	指定该应用程序在导航栏上的排列位置，从最低 (左) 到最高 (右)
 selectbox	admin	zh	选择框
-serial number	admin	zh	序列号
 server %1 has been updated	admin	zh	服务器%1已经更新
 server list	admin	zh	服务器列表
 server password	admin	zh	服务器密码
@@ -594,7 +578,6 @@ use default	admin	zh	使用默认值
 use ldap defaults	admin	zh	使用 LDAP 默认值
 use pure html compliant code (not fully working yet)	admin	zh	是否使用纯 HTML 兼容代码 (目前尚未完全可用)
 use smtp auth	admin	zh	使用 SMTP 认证
-use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	zh	使用以下选项：\nnoVfsSelect=1\nmime=application/pdf or /^image\/i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	zh	使用主题
 use tls authentication	admin	zh	使用TLS 认证
 use tls encryption	admin	zh	使用TLS 加密
@@ -622,7 +605,6 @@ who would you like to transfer all records owned by the deleted user to?	admin	z
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！
 wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码！
 xml-rpc	admin	zh	XML-RPC
-you can set an initial value, which gets incremented every time a new serial get generated	admin	zh	您可以设置一个初始值，该值在每次生成新序列时递增
 you have entered an invalid expiration date	admin	zh	输入的有效期限无效
 you have to enter a name, to create a new field!!!	admin	zh	为创建一新字段域，您需要输入一个新字段名！
 you have to enter a name, to create a new type!	admin	zh	您必须输入名称来创建新类型！
@@ -637,6 +619,5 @@ you must select a file type	admin	zh	必须选择文件类型
 you must select at least one group member.	admin	zh	您必须至少选择一个组成员。
 you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！
-your message to  %1 was displayed.	admin	zh	显示了您发送给 %1 的信息。
 your name	admin	zh	您的名字
 your session could not be verified.	admin	zh	本次会话无法校验。

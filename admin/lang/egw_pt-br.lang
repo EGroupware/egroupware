@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim se você não o usa)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt-br	(a classe imap deve oferecer suporte a esse recurso consultando o valor de configuração correspondente e passando-o como cota padrão para o servidor IMAP)
 (no subject)	admin	pt-br	(sem assunto)
-(stored password will not be shown here)	admin	pt-br	Senha salva não será exibida aqui!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos]!)
 -  type	admin	pt-br	- tipo
 1 year	admin	pt-br	1 ano
@@ -58,10 +57,7 @@ acl csv export	admin	pt-br	Exportação de ACL CSV
 acl deleted.	admin	pt-br	ACL removida.
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
-action	admin	pt-br	Ação
-actions	admin	pt-br	Ações
 activate	admin	pt-br	Ativar
-activate wysiwyg-editor	admin	pt-br	Ativar editor WYSIWYG
 active templates	admin	pt-br	Modelos de Ativos
 add a category	admin	pt-br	Adicionar uma categoria
 add a group	admin	pt-br	Adicionar um grupo
@@ -86,13 +82,11 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	pt-br	Nome do Administrador
 admin password	admin	pt-br	Senha do administrador
 admin queue and history	admin	pt-br	Lista de administradores e histórico
-admin username	admin	pt-br	Nome de usuário do administrador
 admins	admin	pt-br	Administradores
 advanced options	admin	pt-br	Opções avançadas
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)
 aliases	admin	pt-br	Apelidos
 all applications	admin	pt-br	Todos aplicativos
-all categories	admin	pt-br	Todas as categorias
 all records and account information will be lost!	admin	pt-br	Todos registros e informações de contas serão perdidos!
 all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
@@ -291,10 +285,10 @@ enter a description for the category	admin	pt-br	Digite uma descrição para a c
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt-br	Digite um texto aleatório para a encriptação de sessão (requer mcrypt)
 enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a página de login
 enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o título do site
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do EGroupware.<br>Exemplo: https://egw.domain.com/egroupware ou /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
@@ -544,7 +538,6 @@ save the category	admin	pt-br	Salvar a categoria.
 save the category and return back to the list	admin	pt-br	Salvar a categoria e retornar à lista.
 saves the changes made and leaves	admin	pt-br	Salvar as alterações feitas e sair.
 saves this entry	admin	pt-br	Salvar este registro
-search accounts	admin	pt-br	Pesquisar contas
 search categories	admin	pt-br	Pesquisar categorias
 search groups	admin	pt-br	Pesquisar grupos
 search peer servers	admin	pt-br	Pesquisar servidores parceiros

@@ -68,7 +68,6 @@ acl rights	common	it	Diritti ACL
 acl updated	admin	it	ACL aggiornata
 acl updated.	admin	it	ACL aggiornata.
 activate	admin	it	Attiva
-activate wysiwyg-editor	admin	it	Attiva editor WYSIWYG
 activated	admin	it	attivato
 activated again	admin	it	attivato di nuovo
 active mail accounts	admin	it	Account email attivo
@@ -92,7 +91,6 @@ add new email address:	admin	it	Aggiungi un nuovo indirizzo di posta elettronica
 add peer server	admin	it	Aggiungi Peer Server
 add profile	admin	it	Aggiungi Profilo
 add sub-category	admin	it	Aggiungi sotto-categoria
-add to group	admin	it	Aggiungi al gruppo
 add user	admin	it	Aggiungi utente
 add user or group	admin	it	Aggiungi utente o gruppo
 added	admin	it	aggiunto
@@ -175,7 +173,6 @@ bi-dir passthrough	admin	it	passthrough bidirezionale
 bi-directional	admin	it	bidirezionale
 blocking after wrong password	admin	it	Blocca dopo password errata
 bottom	admin	it	In fondo
-bulk changes	admin	it	Modifiche in blocco
 bulk password reset	admin	it	Reimpostazione massiva password
 by	admin	it	Da
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	it	Selezionando un utente o un gruppo si elimina di fatto l'account di posta di tutti gli altri utenti!<br>Si è davvero sicuri di volerlo fare?
@@ -264,10 +261,10 @@ custom egroupware web font as woff2 file	admin	it	Font web EGroupware personaliz
 custom fields	admin	it	Campi Personalizzati
 custom fields tab	admin	it	Scheda Campi personalizzati
 custom translation	admin	it	Traduzioni personalizzate
-customfield '%1' added	admin	it	Personalizzato '%1' aggiunto.
-customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso.
-customfield '%1' modified	admin	it	Personalizzato '%1' modificato.
-customfield deleted	admin	it	Personalizzato eliminato.
+customfield '%1' added	admin	it	Personalizzato '%1' aggiunto
+customfield '%1' deleted	admin	it	Personalizzato '%1' rimosso
+customfield '%1' modified	admin	it	Personalizzato '%1' modificato
+customfield deleted	admin	it	Personalizzato eliminato
 customfield saved.	admin	it	Personalizzato salvato.
 cyrus imap server	admin	it	Server IMAP Cyrus
 data	admin	it	Dati
@@ -398,10 +395,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	it	Inserisci del testo casuale per la cifratura di app_session (richiede mcrypt)
 enter the background color for the login page	admin	it	Inserisci il colore di background per la pagina di login
 enter the background color for the site title	admin	it	Inserisci il colore di background per il titolo del sito
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	it	Inserisci il percorso completo per i file temporanei.<br>Esempio: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	it	Inserisci il percorso completo per i file di utenti e gruppi.<br>Esempio: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	it	Inserisci l'hostname della macchina su cui sta girando questo server
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci la locazione dell'URL di EGroupware.<br>Esempio: https://egw.domain.com/egroupware o /egroupware<br><b>senza slash finale</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	it	Inserisci la stringa di ricerca. Per vedere tutta la lista, svuota il campo e premi ancora il pulsante INVIA
@@ -512,7 +509,7 @@ how username get constructed	admin	it	Come viene costruito il nome utente
 html/plaintext	admin	it	HTML/testo
 icon	admin	it	Icona
 identity	admin	it	Identità
-identity deleted	admin	it	Identità cancellata.
+identity deleted	admin	it	Identità cancellata
 identity saved.	admin	it	Identità salvata.
 idle	admin	it	Inattivo
 if different from email address	admin	it	se diverso dall'indirizzo email

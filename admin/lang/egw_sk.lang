@@ -68,7 +68,6 @@ acl rights	common	sk	Prístupové práva (ACL)
 acl updated	admin	sk	ACL boli aktualizované
 acl updated.	admin	sk	ACL boli aktualizované.
 activate	admin	sk	Aktivovať
-activate wysiwyg-editor	admin	sk	Zapni WYSIWYG-editor
 activated	admin	sk	aktivované
 activated again	admin	sk	znovu aktivovaný
 active mail accounts	admin	sk	Aktívne poštové účty
@@ -92,25 +91,23 @@ add new email address:	admin	sk	Pridať novú E-mailovú adresu:
 add peer server	admin	sk	Pridať peer server
 add profile	admin	sk	Pridať profil
 add sub-category	admin	sk	Pridať podkategóriu
-add to group	admin	sk	Pridať do skupiny
 add user	admin	sk	Pridať používateľa
 add user or group	admin	sk	Pridať používateľa alebo skupinu
 added	admin	sk	pridané
 admin dn	admin	sk	Správcov DN
 admin email	admin	sk	Správcova E-mailová adresa
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	E-mailové adresy správcov (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia).
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sk	E-mailové adresy správcov (oddelené čiarkou), kde sa má zasielať upozornenie o blokovaní (ponechajte prázdne, ak nechcete zasielať upozornenia)
 admin name	admin	sk	Meno správcu
 admin password	admin	sk	Heslo správcu
 admin queue and history	admin	sk	Správcova fronta a história
 admins	admin	sk	Správcovia
 advanced options	admin	sk	Pokročilé možnosti
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má zablokovať účet. Predvolené = 3
-after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má IP zablokovať (predvolené: 15)
+after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má IP zablokovať (predvolené: 3)
 aliases	admin	sk	Aliasy
 all accounts	admin	sk	Všetky účty
 all acls	admin	sk	Všetky prístupové oprávnenia ACL
 all applications	admin	sk	Všetky aplikácie
-all applications of the user	admin	sk	Všetky aplikácie používateľa
 all groups	admin	sk	Všetky skupiny
 all records and account information will be lost!	admin	sk	Všetky záznamy a informácie o účtoch sa stratia!
 all users	admin	sk	Všetci používatelia
@@ -174,7 +171,6 @@ bi-dir passthrough	admin	sk	obojsmerné prepojenie
 bi-directional	admin	sk	obojsmerné
 blocking after wrong password	admin	sk	Blokované kvôli chybnému heslu
 bottom	admin	sk	Naspodku
-bulk changes	admin	sk	Hromadné zmeny
 bulk password reset	admin	sk	Reset hesla
 calculate next run	admin	sk	Vypočítať ďalší prechod
 calendar recurrence horizont in days (default 1000)	admin	sk	Horizont opakovania v kalendári (predvolené: 1000)
@@ -259,10 +255,10 @@ custom egroupware web font as woff2 file	admin	sk	Vlastné webové písmo EGroup
 custom fields	admin	sk	Vlastné polia
 custom fields tab	admin	sk	Karta Vlastné polia
 custom translation	admin	sk	Vlastný preklad
-customfield '%1' added	admin	sk	Vlastné pole '%1' pridané.
-customfield '%1' deleted	admin	sk	Vlastné pole '%1' odstránené.
-customfield '%1' modified	admin	sk	Vlastné pole '%1' upravené.
-customfield deleted	admin	sk	Vlastné pole odstránené.
+customfield '%1' added	admin	sk	Vlastné pole '%1' pridané
+customfield '%1' deleted	admin	sk	Vlastné pole '%1' odstránené
+customfield '%1' modified	admin	sk	Vlastné pole '%1' upravené
+customfield deleted	admin	sk	Vlastné pole odstránené
 customfield saved.	admin	sk	Vlastné pole uložené.
 cyrus imap server	admin	sk	Cyrus IMAP Server
 data	admin	sk	Údaje
@@ -392,10 +388,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk	Zadajte náhodný text pre app_session <br>kryptovanie (vyžaduje mcrypt)
 enter the background color for the login page	admin	sk	Zadajte farbu pozadia prihlasovacej stránky
 enter the background color for the site title	admin	sk	Zadajte farbu pozadia nadpisu stránky
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre dočasné súbory.<br>Príklady: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory používateľov a skupiny.<br>Príklady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sk	Zadajte názov stroja (hostname) na ktorom beží tento server
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte URL adresu pre EGroupware.<br>Príklad: https://egw.domain.com/egroupware alebo /egroupware<br><b>Bez ukončovacieho lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sk	Zadajte reťazec pre vyhľadávanie. Pre zobrazenie všetkých záznamov, vyčistite toto pole a stlačte znovu tlačítko ODOSLAŤ
@@ -470,7 +466,6 @@ full name	admin	sk	Plné meno
 general	admin	sk	Všeobecné
 generate certificate	admin	sk	Vygenerovať certifikát
 generate new token and display it once after saving	admin	sk	Vytvoriť nový token a jednorázovo ho zobraziť po uložení
-git clone	admin	sk	Klonovanie Git
 global categories	common	sk	Globálne kategórie
 global options	admin	sk	Globálne možnosti
 go directly to admin menu, returning here the next time you click on administration.	admin	sk	Choďte priamo do správcovskej ponuky, vrátite sa sem ďalším kliknutím na Správu.
@@ -503,10 +498,10 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	sk	Koľko minút má trvať zablokovanie účtu alebo IP. (predvolené: 30)
 how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvárať E-mailové adresy pre nových používateľov
 how username get constructed	admin	sk	Z čoho sa skladá používateľské meno
-html/plaintext	admin	sk	HTML/Text
+html/plaintext	admin	sk	HTML/text
 icon	admin	sk	Ikona
 identity	admin	sk	Identita
-identity deleted	admin	sk	Identita bola odstránená.
+identity deleted	admin	sk	Identita bola odstránená
 identity saved.	admin	sk	Identita bola uložená.
 idle	admin	sk	Nečinné
 if different from email address	admin	sk	ak sa líši od e-mailovej adresy
@@ -623,7 +618,7 @@ mb used	admin	sk	Použitých MB
 members	admin	sk	Členovia
 message has been updated	admin	sk	Správa bola upravená
 method	admin	sk	Metóda
-minimum account id (e.g. 500 or 100, etc.)	admin	sk	Najmenšie ID účtu (napr. 500 alebo 1000, atď.)
+minimum account id (e.g. 500 or 100, etc.)	admin	sk	Najmenšie ID účtu (napr. 500 alebo 100, atď.)
 minute	admin	sk	Minúta
 mode	admin	sk	Režim
 modified	admin	sk	Zmenený
@@ -666,7 +661,7 @@ notification mail	admin	sk	Upozorňovacia správa
 notify user by email	admin	sk	Upozorniť používateľa emailom
 notifying account "%1" %2 failed!	admin	sk	Upozornenie účtu "%1" %2 zlyhalo!
 number applications serially	admin	sk	Očíslovať aplikácie zaradom
-number of active users	admin	sk	Počet aktívnych používateľov
+number of active users	admin	sk	počet aktívnych používateľov
 number of row for a multiline inputfield or line of a multi-select-box	admin	sk	Počet riadkov vo viacriadkovom vstupnom poli alebo v ponuke pre výber
 number of sessions / egroupware logins in the last 30 days	admin	sk	Počet relácií / prihlásení do EGroupware za ostatných 30 dní
 number of users	admin	sk	Počet používateľov
@@ -735,7 +730,7 @@ profile access rights	admin	sk	Prístupové práva profilu
 profile is active	admin	sk	Profil je aktívny
 profile list	admin	sk	Zoznam profilov
 profile name	admin	sk	Názov profilu
-qmaildotmode	admin	sk	qmaildotmode
+qmaildotmode	admin	sk	qmail bodkový režim
 quota settings	admin	sk	Nastavenia kvóty
 quota size in mbyte	admin	sk	Veľkosť kvóty v Megabajtoch
 re-enter password	admin	sk	Zadajte heslo znovu
@@ -781,7 +776,7 @@ secret deleted, two factor authentication disabled.	admin	sk	Tajomstvo odstráne
 secure connection	admin	sk	Bezpečné pripojenie
 security	admin	sk	Zabezpečenie
 select accounts for which the custom field should be readonly	admin	sk	Vyberte účty, pre ktoré má byť vlastné pole len na čítanie
-select accounts for which the custom field should be visible	admin	sk	Vyberte účty, pre ktoré bude vlastné pole viditeľné
+select accounts for which the custom field should be visible	admin	sk	Vyberte účty, pre ktoré bude vlastné pole viditeľné.
 select group managers	admin	sk	Vybrať správcov skupín
 select language to define language based message. language 'english' is default page for all languages therefore for setting a general message across all languages you only need to set the 'english' page.	admin	sk	Vyberte jazyk pre definíciu jazykovo-založenej správy. Anglický jazyk je predvolenou stránkou pre všetky jazyky, preto všeobecný text pre všetky jazyky vám stačí nastaviť pre stránku v anglickej verzii.
 select multiple	admin	sk	Vybrať viacero
@@ -893,7 +888,7 @@ this application requires an upgrade	admin	sk	Táto aplikácia vyžaduje aktuali
 this category is currently being used by applications as a parent category	admin	sk	Táto kategória je práve používaná aplikáciami ako rodičovská.
 this controls exports and merging.	admin	sk	Týmto sa riadia exporty a hromadné tlače.
 this is a mail account for all users!	admin	sk	Toto je poštové konto pre VŠETKÝCH používateľov!
-this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	sk	Toto NIE je osobný poštový účet!<br>Účet bude ostránený pre VŠETKÝCH používateľov!<br>Ste si istí že to chcete urobiť?
+this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	sk	Toto NIE je osobný poštový účet!\n\nÚčet bude ostránený pre VŠETKÝCH používateľov!\n\nSte si istí že to chcete urobiť?
 this key used in the html code your site serves to users.	admin	sk	Tento kľúč sa používa v HTML kóde, ktorý vaša stránka poskytuje používateľom.
 this php has no imap support compiled in!!	admin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Čas vypršania údajov o relácii aplikácie, v sekundách (predvolené: 86400 = 1 deň)

@@ -1,9 +1,8 @@
 %1 - %2 of %3 user accounts	admin	eu	%1 - %2 %3tik erabiltzaile kontuak
 %1 - %2 of %3 user groups	admin	eu	%1 - %2 %3tik erabiltzaile taldeak
 %1 not found or not executable !!!	admin	eu	%1 ez da aurkitu edo ez da exekutagarria
-(stored password will not be shown here)	admin	eu	(Gordetako gakoak ez dira hemen erakutsiko)
+(no subject)	admin	eu	(gai gabe)
 -  type	admin	eu	-mota
-accesslog and bruteforce defense	admin	eu	Erregistro sarrerako defentsa eta indarra
 account active	admin	eu	Kontu aktibatua
 account has been created	common	eu	Kontua sortua izan da
 account has been deleted	common	eu	Kontua ezabatua izan da
@@ -13,10 +12,7 @@ account permissions	admin	eu	Kontuaren baimenak
 account preferences	admin	eu	Kontuaren hobespenak
 acl manager	admin	eu	ACL administratzailea
 acl rights	common	eu	ACL sarbidea
-action	admin	eu	Ekin
-actions	admin	eu	Ekintzak
 activate	admin	eu	Aktibatu
-activate wysiwyg-editor	admin	eu	WYSIWYG editorea aktibatu
 add a category	admin	eu	kategoria bat gehitu
 add a group	admin	eu	talde bat gehitu
 add a new account.	admin	eu	Kontu berri bat gehitu
@@ -33,10 +29,8 @@ add peer server	admin	eu	Peer zerbitzaria gehitu
 add sub-category	admin	eu	Azpikategoria gehitu
 admin email	admin	eu	Administratzailearen posta elektronikoa
 admin name	admin	eu	Administratzailearen izena
-administration	admin	eu	Administrazioa
 admins	admin	eu	Administratzaileak
 advanced options	admin	eu	Aukera aurreratuak
-all categories	admin	eu	Kategoria guztiak
 all users	admin	eu	Erabiltzaile guztiak
 allow anonymous access to this app	admin	eu	Sarrera anonimoa baimendu aplikazio honi
 alternate email address	admin	eu	Helbide elektroniko alternatiboa
@@ -62,6 +56,7 @@ async services last executed	admin	eu	Azken zerbitzu asinkronoak exekutatuak
 asynchronous timed services	admin	eu	Zerbitzu asinkronoak programatuak
 authentication / accounts	admin	eu	Identitatea/Kontuak
 back to the list	admin	eu	zerrendara itzuli
+bad login name or password.	admin	eu	Izen edo pasahitz okerra
 bottom	admin	eu	azpialdea
 calculate next run	admin	eu	Hurrengo exekuzioa kalkulatu
 can change password	admin	eu	Pasahitza aldatu dezakezu
@@ -115,7 +110,6 @@ deny access to site configuration	admin	eu	Baimena ukatu lekuaren konfigurazioar
 deny access to user accounts	admin	eu	Baimena ukatu erabiltzaile kontuetara
 description can not exceed 255 characters in length !	admin	eu	Deskribapenak ezin ditu 255 karaktere baino gehiago izan.
 disable	admin	eu	Ezgaitu
-disable wysiwyg-editor	admin	eu	WYSIWYG editorea desaktibatu
 disabled (not recomended)	admin	eu	desaktibatua (ez da gomendatzen)
 display	admin	eu	Erakutsi
 do not delete the category and return back to the list	admin	eu	EZ ezabatu kategoria eta itzuli zerrendera
@@ -138,7 +132,7 @@ edit user account	admin	eu	Erabiltzaile kontua editatu
 email address	admin	eu	Helbide elektronikoa
 enable	admin	eu	indarrean jarri
 enable debug-messages	admin	eu	Arazketa mezuak aktibatu
-enabled - hidden from navbar	admin	eu	Gaitua- nabigazio barra izkutatu
+encrypted connection	admin	eu	konexioa enkriptatua
 enter a description for the category	admin	eu	sar ezazu deskribapen bat kategoria honentzat
 enter the background color for the login page	admin	eu	Sar ezazu atzekoplanoko kolera bat hasierako pantailarako
 enter the background color for the site title	admin	eu	Sar ezaz atzekoplanoko kolore bat leku honen izenbururako
@@ -146,13 +140,15 @@ enter the site password for peer servers	admin	eu	Sar ezazu lekuaren pasahitza p
 enter the site username for peer servers	admin	eu	Sar ezazu lekuaren erabiltzailea peer zerbitzarirako
 enter the title for your site	admin	eu	Sar ezazu izenburu bat zure lekurako
 enter the title of your logo	admin	eu	Sar ezazu zure logoaren izenburua
-enter your default ftp server	admin	eu	Sar ezazu zure FTP zerbitzari lehenetsia
 enter your default mail domain ( from: user@domain )	admin	eu	Sartu zure oinarrizko posta domeinua (From: erabiltzailea@domeinua)
 enter your http proxy server	admin	eu	Sar ezazu zure HTTP proxi zerbitzaria
 enter your http proxy server port	admin	eu	Sar ezazu zure HTTP proxi zerbitzariaren ataka
 enter your smtp server hostname or ip address	admin	eu	Sartu zure SMTP zerbitzariaren ostalari-izena (hostname) edo IP helbidea
 enter your smtp server port	admin	eu	Sar ezazu SMTP zerbitzariaren ataka
+entry saved	admin	eu	Sarrera gordeta
+error saving the entry!!!	admin	eu	Errorea sarrera gordetzerakoan
 error: %1 not found or other error !!!	admin	eu	Errorea: ez da %1 aurkitu edo beste errore bat
+event details follow	admin	eu	Gertakariaren detaileak
 failed to change password.	admin	eu	Akatsa pasahitza aldatzerakoan.
 fallback (after each pageview)	admin	eu	Atzerapena (orri bakoitza ikusi ondoren)
 file space	admin	eu	Fitxategiaren espazioa
@@ -171,10 +167,13 @@ group manager	admin	eu	Taldeen administratzailea
 group name	admin	eu	Taldearen izena
 hide php information	admin	eu	PHP informazioa ezkutatu
 home directory	admin	eu	Direktorio pertsonala
+home screen message	admin	eu	Pantaila nagusiko mezua
 host information	admin	eu	Ostalariaren informazioa
 hour<br>(0-23)	admin	eu	Ordua<br>(0-23)
 icon	admin	eu	Ikonoa
 idle	admin	eu	Inaktibo
+imap server	admin	eu	IMAP Zerbitzaria
+imap server closed the connection.	admin	eu	IMAP zerbitzariak konexioa itxi du
 in mbyte	admin	eu	MByte-sen
 inbound	admin	eu	sartzen direnak
 install crontab	admin	eu	Crontab instalatu
@@ -209,7 +208,6 @@ login shell	admin	eu	Saio hasierako shell-a
 login time	admin	eu	Saio hasierarako sarrera ordua
 mail settings	admin	eu	Posta elektronikoaren konfigurazioa
 main email-address	admin	eu	Helbide elektroniko nagusia
-home screen message	admin	eu	Pantaila nagusiko mezua
 manager	admin	eu	Administratzailea
 maximum entries in click path history	admin	eu	Historian egon daitezkeen sarrera kopuru maximoa
 members	admin	eu	Kideak
@@ -229,6 +227,7 @@ no alternate email address	admin	eu	ez da ordezko helbide elektronikorik
 no jobs in the database !!!	admin	eu	Ez dago lanik datu basean
 no login history exists for this user	admin	eu	Ez dago sarrera erregistrorik erabiltzaile honentzeko
 no matches found	admin	eu	Ez dago emaitzik
+no message returned.	admin	eu	Ez da mezurik itzuli
 no modes available	admin	eu	ez dago modurik eskuragarri
 no permission to add groups	admin	eu	ez duzu baimenik taldeak gehitzeko
 no permission to add users	admin	eu	ez duzu baimenik erabiltzaileak gehitzeko
@@ -236,13 +235,13 @@ no permission to create groups	admin	eu	ez duzu baimenik taldeak sortzeko
 one month	admin	eu	hilabete bat
 one week	admin	eu	aste bat
 order	admin	eu	Ordena
+organisation	admin	eu	antolaketa
 outbound	admin	eu	irteerakoa
 password for smtp-authentication	admin	eu	SMTP-rako identifikazio pasahitza
 path information	admin	eu	Bideko informazioa
 peer server list	admin	eu	Peer zerbitzari zerrenda
 peer servers	admin	eu	Peer zerbitzaria
 percent of users that logged out	admin	eu	Saioa utzi duten erabiltzaile portzentajea
-percent this user has logged out	admin	eu	Erabiltzaile honek saioa utzi duen portzentajea
 permission denied	admin	eu	Baimena ukatuta
 permission denied !!!	admin	eu	Baimena ukatua!
 permission denied!!!	admin	eu	Baimena ukatuta!
@@ -253,6 +252,7 @@ please enter a name	admin	eu	Mesedez sartu izen bat
 please enter a name for that server !	admin	eu	Mesedez sartu izen bat zerbitzari honi!
 please run setup to become current	admin	eu	Mesedez setup exekutatu eguneratzeko
 please select	admin	eu	Mesedez aukeratu
+port	admin	eu	ataka
 postfix with ldap	admin	eu	Postfix-ak LDAP-arekin
 preferences	admin	eu	Hobespenak
 primary group	admin	eu	Talde nagusia
@@ -262,16 +262,11 @@ re-enter password	admin	eu	Pasahitza baieztatu
 read this list of methods.	admin	eu	Metodo zerrenda hau irakurri
 register application hooks	admin	eu	Aplikazioaren hooks-ak erregistratu
 remove	admin	eu	ezabatu
-remove all users from this group	admin	eu	Talde honetako erabiltzaile guztiak ezabatu
-remove all users from this group ?	admin	eu	Talde honetako erabiltzaile guztiak ezabatu?
-return to view account	admin	eu	Kontua berriz ere ikusi
-route all mails to	admin	eu	e-posta guztiak zuzendu
 run asynchronous services	admin	eu	Zerbitzu asinkromoak exekutatu
 save the category	admin	eu	kategoria gorde
 save the category and return back to the list	admin	eu	kategoria gorde eta zerrendara itzuli
 saves the changes made and leaves	admin	eu	aldaketak gorde eta irten
 saves this entry	admin	eu	Sarrera hau gorde
-search accounts	admin	eu	Kontuak bilatu
 search categories	admin	eu	Kategoriak bilatu
 search groups	admin	eu	Taldeak bilatu
 search peer servers	admin	eu	peer zerbitzariak bilatu
@@ -291,7 +286,9 @@ show current action	admin	eu	Momentuko ekintza erakutsi
 show error log	admin	eu	Erroreen erregistroa erakutsi
 show phpinfo()	admin	eu	phpinfo( ) erakutsi
 show session ip address	admin	eu	Saioaren IP helbidea erakutsi
+sieve settings	admin	eu	SIEVE ren lehentasunak
 site	admin	eu	Lekua
+smtp settings	admin	eu	SMTP lehentasunak
 soap	admin	eu	SOAP
 sorry, that group name has already been taken.	admin	eu	Talde izen hau hartuta dago
 sorry, the follow users are still a member of the group %1	admin	eu	Ondorengo erabiltzaileak oraindik %1 taldeko kideak dira
@@ -299,7 +296,6 @@ sort the entries	admin	eu	sarrerak ordenatu
 ssl	admin	eu	ssl
 standard	admin	eu	estandar
 standard imap server	admin	eu	IMAP zerbitzari estandarra
-standard pop3 server	admin	eu	POP3 zerbitzari estandarra
 standard smtp-server	admin	eu	SMTP zerbitzari estandarra
 start	admin	eu	Hasiera
 start testjob!	admin	eu	Froga lana hasi
@@ -323,6 +319,7 @@ the two passwords are not the same	admin	eu	Bi pasahitzak ez dira berdinak
 they must be removed before you can continue	admin	eu	Ezabatuak izan behar dira jarraitu ahal izateko
 this application is current	admin	eu	Aplikazio hau eguneratua dago
 this application requires an upgrade	admin	eu	Aplikazio honek egunetzea behar du
+this php has no imap support compiled in!!	admin	eu	PHParendako IMAPa konpilatu gabe
 times	admin	eu	Orduak
 top	admin	eu	Gorenekoa
 total records	admin	eu	Erregistroak guztira
@@ -334,12 +331,15 @@ type of customfield	admin	eu	Eremu pertsanalizatu mota
 up	admin	eu	gora
 updated	admin	eu	Gaurkoatua
 use cookies to pass sessionid	admin	eu	Cookiak erabili saioak gordetzeko
+use default	admin	eu	Lehenetsia erabili
 use pure html compliant code (not fully working yet)	admin	eu	HTML kode garbia erabili (oraindik ez du guztiz funtzionatzen)
+use smtp auth	admin	eu	SMTP autentifikazioa erabili
 use theme	admin	eu	Gaia erabili
 user accounts	admin	eu	Erabiltzaile kontuak
 user data	common	eu	Erabiltzailearen datuak
 user groups	admin	eu	Erabiltzaile taldeak
 userdata	admin	eu	erabiltzaile datuak
+users can define their own emailaccounts	admin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete
 users choice	admin	eu	Erabiltzaileak aukeratzeko
 view access log	admin	eu	Sarrera erregistroa ikusi
 view account	admin	eu	Kontua ikusi
@@ -358,37 +358,3 @@ you must enter an application name.	admin	eu	Aplikazioari izen bat eman behar di
 you must enter an application title.	admin	eu	Aplikazioari izenburu bat jarri behar diozu.
 you must select a file type	admin	eu	Fitxategi mota bat aukeratu behar duzu
 your session could not be verified.	admin	eu	Zure saioa ezin izan da egiaztatu
-(no subject)	admin	eu	(gai gabe)
-advanced options	admin	eu	Aukera aurreratuak
-alternate email address	admin	eu	Helbide elektroniko alternatiboa
-bad login name or password.	admin	eu	Izen edo pasahitz okerra
-default	admin	eu	Lehenetsia
-email address	admin	eu	Helbide elektronikoa
-encrypted connection	admin	eu	konexioa enkriptatua
-entry saved	admin	eu	Sarrera gordeta
-error saving the entry!!!	admin	eu	Errorea sarrera gordetzerakoan
-event details follow	admin	eu	Gertakariaren detaileak
-imap server	admin	eu	IMAP Zerbitzaria
-imap server closed the connection.	admin	eu	IMAP zerbitzariak konexioa itxi du
-in mbyte	admin	eu	MByte-sen
-leave empty for no quota	admin	eu	zurian utzi kuotarik ez badago
-mail settings	admin	eu	Posta elektronikoaren konfigurazioa
-no alternate email address	admin	eu	ez da ordezko helbide elektronikorik
-no message returned.	admin	eu	Ez da mezurik itzuli
-order	admin	eu	Ordena
-organisation	admin	eu	antolaketa
-port	admin	eu	ataka
-postfix with ldap	admin	eu	Postfix-ak LDAP-arekin
-quota settings	admin	eu	kuotaren konfigurazioa
-quota size in mbyte	admin	eu	kuotaren tamaina MBytes-etan
-remove	admin	eu	ezabatu
-sieve settings	admin	eu	SIEVE ren lehentasunak
-smtp settings	admin	eu	SMTP lehentasunak
-standard	admin	eu	estandar
-standard imap server	admin	eu	IMAP zerbitzari estandarra
-standard pop3 server	admin	eu	POP3 zerbitzari estandarra
-standard smtp-server	admin	eu	SMTP zerbitzari estandarra
-this php has no imap support compiled in!!	admin	eu	PHParendako IMAPa konpilatu gabe
-use default	admin	eu	Lehenetsia erabili
-use smtp auth	admin	eu	SMTP autentifikazioa erabili
-users can define their own emailaccounts	admin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete

@@ -28,7 +28,6 @@
 (default no, leave it off if you dont use it)	admin	hu	Alapértelmezésként Nem, hagyja ki ha nem használja
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	hu	(az imapclass-nak támogatnia kell ezt a funkciót a megfelelő konfigurációs érték lekérdezésével, és alapértelmezett kvótaként át kell adnia az IMAP-kiszolgálónak).
 (no subject)	admin	hu	(nincs tárgy)
-(stored password will not be shown here)	admin	hu	A tárolt jelszó nem fog itt megjelenni!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
 -  type	admin	hu	- típus
 1 year	admin	hu	1 év
@@ -58,10 +57,7 @@ acl csv export	admin	hu	ACL CSV exportálása
 acl deleted.	admin	hu	Hozzáférés törölve.
 acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
-action	admin	hu	Művelet
-actions	admin	hu	Műveletek
 activate	admin	hu	Aktivál
-activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő engedélyezése
 active templates	admin	hu	Aktív vázlatok
 add a category	admin	hu	Kategória hozzáadása
 add a group	admin	hu	Csoport hozzáadása
@@ -87,13 +83,10 @@ admin email	admin	hu	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekről és azonosítókról (üresen hagyva nem lesz értesítés).
 admin name	admin	hu	Adminisztrátor neve
 admin password	admin	hu	Adminisztrátor jelszava
-admin username	admin	hu	Adminisztrátor neve
-administration	admin	hu	Adminisztráció
 admins	admin	hu	Adminisztrátorok
 advanced options	admin	hu	Haladó beállítások
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 15).
 aliases	admin	hu	Álnevek
-all categories	admin	hu	Összes kategória
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
 all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
@@ -292,10 +285,10 @@ enter a description for the category	admin	hu	A kategória leírásának megadá
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	hu	Adjon meg néhány véletlenszerűen kiválasztott karaktert<br>az app_session titkosításhoz (mcrypt szükséges)
 enter the background color for the login page	admin	hu	A bejelentkezési oldal háttérszíne
 enter the background color for the site title	admin	hu	A webhely címének háttérszíne
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hu	Adja meg az ideiglenes fájlok teljes elérési útvonalát.<br>Például: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	hu	Adja meg az ideiglenes fájlok teljes elérési útvonalát.<br>Például: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	hu	Adja meg az ideiglenes fájlok teljes elérési útvonalát.<br>Például: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	hu	Adja meg a felhasználók és csoportok fájljainak teljes elérési útvonalát.<br>Például /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	hu	Adja meg a gazdagép nevét, ahol az EGw szerver fut
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Adja meg az EGroupware elérhetőségének az URL-jét.<br>Például: https://egw.domain.com/egroupware vagy /egroupware<br><b>Lezáró 'per' jel nélkül</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	hu	Keresési szöveg megadása. Az összes bejegyzés megjelenítéséhez hagyja üreset és ismét nyomja meg az ELKÜLD gombot
@@ -529,7 +522,6 @@ save the category	admin	hu	Kategória mentése.
 save the category and return back to the list	admin	hu	Kategória mentése és visszatérés a listához.
 saves the changes made and leaves	admin	hu	Változások mentése és kilépés.
 saves this entry	admin	hu	Bejegyzés mentése
-search accounts	admin	hu	Felhasználói hozzáférések keresése
 search categories	admin	hu	Kategóriák keresése
 search groups	admin	hu	Csoportok keresése
 search peer servers	admin	hu	Peer szerverek keresése

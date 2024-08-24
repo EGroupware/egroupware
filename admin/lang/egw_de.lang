@@ -68,7 +68,6 @@ acl rights	common	de	ACL-Rechte
 acl updated	admin	de	ACL aktualisiert
 acl updated.	admin	de	ACL aktualisiert.
 activate	admin	de	Aktivieren
-activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 activated	admin	de	Aktiviert
 activated again	admin	de	Wieder aktiviert
 active mail accounts	admin	de	E-Mail Konten aktivieren

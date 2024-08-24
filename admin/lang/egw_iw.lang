@@ -1,9 +1,8 @@
 %1 - %2 of %3 user accounts	admin	iw	%1 - %2 מתוך %3 חשבונות משתמשים
 %1 - %2 of %3 user groups	admin	iw	%1 - %2 מתוך %3 קבוצות משתמשים
 %1 not found or not executable !!!	admin	iw	!%1 נא נמצא או שאינו ניתן להרצה
-(stored password will not be shown here)	admin	iw	(סיסמא שמורה לא יוצג כאן)
+(no subject)	admin	iw	(ללא נושא)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	iw	(-להתקנת יישומים חדשים השתמש ב<br>
-accesslog and bruteforce defense	admin	iw	הגנת של יומן גישה והשימוש בכוח
 account active	admin	iw	החשבון פעיל
 account has been created	common	iw	החשבון נוצר
 account has been deleted	common	iw	החשבון נמחק
@@ -13,10 +12,7 @@ account permissions	admin	iw	הרשאות חשבון
 account preferences	admin	iw	העדיפויות חשבון
 acl manager	admin	iw	מנהל רשימות גישה
 acl rights	common	iw	הרשאות רשימות גישה
-action	admin	iw	פעולה
-actions	admin	iw	פעולות
 activate	admin	iw	הפעל
-activate wysiwyg-editor	admin	iw	WYSIWYG הפעל עורך
 add a category	admin	iw	הוסף קטגוריה
 add a group	admin	iw	הוסף קבוצה
 add a new account.	admin	iw	.הוסף חשבון חדש
@@ -31,17 +27,17 @@ add group	admin	iw	הוסף קבוצה
 add new account	admin	iw	הוסף חשבון חדש
 add new application	admin	iw	הוסף יישום חדש
 add peer server	admin	iw	הוסף שרת חבר
+add profile	admin	iw	הוסף פרופיל
 add sub-category	admin	iw	הוסף תת-קטגוריה
+admin dn	admin	iw	של המנהל dn
 admin email	admin	iw	ניהול דוא"ל
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	iw	(כתובות דוא"ל של המנהלים (המופרדות בפסיק) אליהן תישלך הודעות בדבר חסימות (ריק =ללא הודעות
 admin name	admin	iw	שם מנהל
-administration	admin	iw	ניהול
+admin password	admin	iw	סיסמת מנהל
 admins	admin	iw	מנהלים
 advanced options	admin	iw	אופציות מתקדמות
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום חשבון (ברירת מחדל 3
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום כתובת (ברירת מחדל 3
 all applications	admin	iw	כל היישומים
-all categories	admin	iw	כל הקטגוריות
 all records and account information will be lost!	admin	iw	!כל הרשומות ומידע חשבון יאבדו
 all users	admin	iw	כל המשתמשים
 allow anonymous access to this app	admin	iw	אפשר גישה אנונימית ליישום זה
@@ -86,6 +82,7 @@ check ip address of all sessions	admin	iw	של כל המושבים IP בדוק �
 check items to <b>%1</b> to %2 for %3	admin	iw	בדוק פריטים <br>ל%1</br>  ל%2 עבור %3
 click to select a color	admin	iw	הקלק לבחירת צבע
 color	admin	iw	צבע
+continue	admin	iw	המשך
 country	admin	iw	ארץ
 country selection	admin	iw	בחירת ארץ
 create group	admin	iw	צור קבוצה
@@ -134,13 +131,14 @@ description can not exceed 255 characters in length !	admin	iw	!אורך התי�
 determines the order the fields are displayed	admin	iw	קובע את סדר תצוגת השדות
 disable	admin	iw	הפוך ללא פעיל
 disable "auto completion" of the login form	admin	iw	הפוך "השלמה אוטומטית" של טופס הכניסה ללא פעילה
-disable wysiwyg-editor	admin	iw	ללא פעיל WYSIWYG הפוך עורך
 disabled (not recomended)	admin	iw	(לא פעיל (לא מומלץ
 display	admin	iw	תצוגה
 do not delete the category and return back to the list	admin	iw	אל תציג את הקטגוריה וחזור אל הרשימה
 do you also want to delete all global subcategories ?	admin	iw	?ברצונך גם למחוק את תתי-הקטגוריות הגלובליות
+do you really want to delete this profile	admin	iw	בטוח שברצונך למחוק פרופיל זה
 do you want to delete all global subcategories ?	admin	iw	?ברצונך למחוק את תתי-הקטגוריות הגלובליות
 do you want to move all global subcategories one level down ?	admin	iw	?ברצונך להוריד את כל תתי-הקטגוריות רמה אחת למטה
+domainname	admin	iw	שם הדומיין
 down	admin	iw	למטה
 edit account	admin	iw	ערוך חשבון
 edit application	admin	iw	ערוך יישום
@@ -160,8 +158,7 @@ email account active	admin	iw	חשבון דואר אלקטרוני פעיל
 email address	admin	iw	כתובת דואר אלקטרוני
 enable	admin	iw	אפשר
 enable debug-messages	admin	iw	לפעילים debug הפוך הודעות
-enabled - hidden from navbar	admin	iw	פעיל - מוסתר מפס הניווט
-enabled - popup window	admin	iw	פעיל חלוןנית קופצת
+enable sieve	admin	iw	Sieve אישפור
 enter a description for the category	admin	iw	ציין תיאור לקטגוריה זו
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	iw	הקלד טקסט אקראי עבור הצפנת<br>
 enter the background color for the login page	admin	iw	ציין את צבע הרקע של עמוד הכניסה
@@ -175,17 +172,18 @@ enter the site password for peer servers	admin	iw	הקלד את סיסמת הא�
 enter the site username for peer servers	admin	iw	הקלד את שם המשתמש האתר עבור שרתי חבר
 enter the title for your site	admin	iw	הקלד את הכותרת של האתר שלך
 enter the title of your logo	admin	iw	הקלד את הכותרת ללוגו שלך
-enter the url or filename (in api/templates/default/images) of your logo	admin	iw	של הלוגו שלך (api/templates/default/images-או שם הקובץ(ב URL-ציין את ה
 enter the url where your logo should link to	admin	iw	בו אל קישור זה יש לקשור את הלוגו שלך URL-הקלד את ה
-enter your default ftp server	admin	iw	המחדלי שלך FTP-הקלד את שרת ה
 enter your default mail domain ( from: user@domain )	admin	iw	(user@domain :הקלד את דומיין הדואר המחדלי שלך (מאת
+enter your default mail domain (from: user@domain)	admin	iw	(user@domain :ציין את דומיין דואר המחדלי שלך (לדוגמא
 enter your http proxy server	admin	iw	שלך HTTP-הקלד את שם שרת הפרוקסי ה
 enter your http proxy server port	admin	iw	שלך HTTP-הקלד את הפורט בשרת הפרוקסי ה
 enter your smtp server hostname or ip address	admin	iw	שלו IP-שלך או אתכתובת ה SMTP-הכנס את שם שרת ה
 enter your smtp server port	admin	iw	שלך SMTP-הכנס את פורט שרת ה
+entry saved	admin	iw	הרשומה נשמרה
 error canceling timer, maybe there's none set !!!	admin	iw	!שגיאה בכיוון הטיימר, יתכן שאין טיימר מכוון
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	iw	!שגיאה בכיוון הטיימר, תחביר שגוי או שכבר רץ טיימר אחד
 error: %1 not found or other error !!!	admin	iw	!שגיאה: %1 לא נמצא או שגיאה אחרת
+event details follow	admin	iw	פרטי האירוע בהמשך
 expires	admin	iw	פג תוקף
 failed to change password.	admin	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 fallback (after each pageview)	admin	iw	(נקודת החזרה (לאחר כל תצוגת עמוד
@@ -196,6 +194,7 @@ for the times above	admin	iw	עבור השעות לעיל
 for the times below (empty values count as '*', all empty = every minute)	admin	iw	(עבור השעות למטה )ערך ריק נחשב כ-"*", הכל ריק = כל דקה
 force selectbox	admin	iw	לחייב תיבת בחירה
 forward also to	admin	iw	להעביר גם אל
+forward email's to	admin	iw	להעביר דואר אלקטרוני אל
 forward only	admin	iw	העבר בלבד
 full name	admin	iw	שם מלא
 global categories	common	iw	קטגוריות גלובליות
@@ -208,6 +207,7 @@ group manager	admin	iw	מנהל הקבוצה
 group name	admin	iw	שם הקבוצה
 hide php information	admin	iw	php הסתר נתוני
 home directory	admin	iw	מחיצת בית
+home screen message	admin	iw	מסר של מסך הראשי
 host information	admin	iw	מידע על השרת
 hour<br>(0-23)	admin	iw	שעה<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	iw	(כמה ימים יש להשאיר רשומות ביומן הגישה עד שמוחקים אותן (ברירת מחדל: 90
@@ -216,6 +216,12 @@ icon	admin	iw	צלמית
 idle	admin	iw	סרק
 if no acl records for user or any group the user is a member of	admin	iw	אם אין למשתמש או לקבוצה כל שהיא אליה הוא שייך רשומות ברשימת גישה
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	iw	?האם ברצונך לנהל תכונות שלמחיצת הבית ושל של הכניסה LDAP-אם משתמשים ב
+imap admin password	admin	iw	IMAP סיסמת ניהול
+imap admin user	admin	iw	IMAP שם מנהל
+imap server	admin	iw	שרת IMAP
+imap server hostname or ip address	admin	iw	שלו IP- או כתובת הIMAP שם שרת
+imap server logintyp	admin	iw	IMAP סוג כניסה לשרת
+imap server port	admin	iw	IMAP פורט שרת
 in mbyte	admin	iw	MB-ב
 inbound	admin	iw	כלפי פנים
 install crontab	admin	iw	crontab התקן
@@ -231,12 +237,19 @@ last login	admin	iw	הכניסה האחרונה
 last login from	admin	iw	-הכמיסה האחרונה מ
 last time read	admin	iw	נקרא לאחרונה
 ldap accounts context	admin	iw	LDAP הקשר של חשבונות
+ldap basedn	admin	iw	dn הביסי של LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	iw	(/home for /home/username :לדוגמא) LDAP קידומת של מחיצת הבית המחדלית של
 ldap default shell (e.g. /bin/bash)	admin	iw	(/bin/bash :לדוגמא) LDAP של ברירת המחדל של(
 ldap encryption type	admin	iw	LDAP סוג ההצפנה של
 ldap groups context	admin	iw	LDAP הקשר של קבוצות
 ldap host	admin	iw	LDAP מחשב
 ldap root password	admin	iw	LDAP של root-סיסמת ה
+ldap server	admin	iw	LDAP שרת
+ldap server accounts dn	admin	iw	LDAP של שרת חשבונות DN
+ldap server admin dn	admin	iw	LDAP מנהל שרת של DN
+ldap server admin password	admin	iw	LDAP סיסמה של מנהל שרת
+ldap server hostname or ip address	admin	iw	IP או כתובת LDAP שם שרת
+ldap settings	admin	iw	LDAP הגדרות
 leave empty for no quota	admin	iw	השאר ריק ללא הקצאה
 leave the category untouched and return back to the list	admin	iw	אל תגע בקטגוריה וחזור אל הרשימה
 leave the group untouched and return back to the list	admin	iw	אל תיגע בקבוצו וחזור את הרשימה
@@ -253,7 +266,6 @@ login shell	admin	iw	כניסה shell
 login time	admin	iw	שעת הכניסה
 loginid	admin	iw	זיהוי כניסה
 mail settings	admin	iw	הגדרות דואר
-home screen message	admin	iw	מסר של מסך הראשי
 manager	admin	iw	מנהל
 maximum account id (e.g. 65535 or 1000000)	admin	iw	(זיהוי חשבון מירבי (לדוגמא: 65535 או 10000000
 maximum entries in click path history	admin	iw	כמות הרשומות המירבי בהסטוריה של הקלקות
@@ -265,12 +277,14 @@ mode	admin	iw	מצב
 modified	admin	iw	השתנה
 month	admin	iw	חודש
 name must not be empty !!!	admin	iw	!לשם אסור להיות ריק
+name of organisation	admin	iw	שם האירגון
 new group name	admin	iw	שם של הקבוצה החדשה
 new name	admin	iw	שם חדש
 new password [ leave blank for no change ]	admin	iw	(סיסמא חדשה (השאר ריק להשאיר ללא שינוי
 next run	admin	iw	ההרצה הבאה
 no algorithms available	admin	iw	אין אלגוריטמים זמינים
 no alternate email address	admin	iw	אין כתובת דואר אלקטרוני חלופי
+no forwarding email address	admin	iw	אין כתובת להעברת דואר אלקטרוני
 no jobs in the database !!!	admin	iw	!אין עבודות בבסיס הנתונים
 no login history exists for this user	admin	iw	לא קיימת הסטוריה של כניסות של משתמש זה
 no matches found	admin	iw	לא נמצאו התאמות
@@ -283,6 +297,7 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	iw	
 one month	admin	iw	חודש אחד
 one week	admin	iw	שבוע אחד
 order	admin	iw	סדר
+organisation	admin	iw	אירגון
 outbound	admin	iw	קלפי חוץ
 passthrough	admin	iw	מעבר
 password for smtp-authentication	admin	iw	SMTP סיסמא לאימות של
@@ -290,7 +305,6 @@ path information	admin	iw	מידע על המסלול
 peer server list	admin	iw	רשימת שרתים חברים
 peer servers	admin	iw	שרתים חברים
 percent of users that logged out	admin	iw	איוז המשתמשים שיצאו מהמערכת
-percent this user has logged out	admin	iw	אחוז הפעמים בהם משתמש זה יצא מהמערכת
 permission denied	admin	iw	הגישה אסורה
 permissions	admin	iw	הרשאות
 permissions this group has	admin	iw	הרשאות של הקבוצה
@@ -302,21 +316,19 @@ please select	admin	iw	נא לבחור
 postfix with ldap	admin	iw	LDAP עם Postfix
 preferences	admin	iw	עדיפויות
 primary group	admin	iw	קבוצה ראשית
+profile list	admin	iw	רשימת פרופילים
+profile name	admin	iw	שם פרופיל
 qmaildotmode	admin	iw	qmaildotmode
 quota settings	admin	iw	הגדרות הקצאה
 re-enter password	admin	iw	הקלד סיסמא שנית
 read this list of methods.	admin	iw	.קרא רשימת מטודות זו
 remove	admin	iw	הסר
-remove all users from this group	admin	iw	הסר את כל המשתמשים מקבוצה זו
-remove all users from this group ?	admin	iw	?להסיר את כל המשתמשים מקבוצה זו
-return to view account	admin	iw	חזרה לתצוגת חשבון
 rows	admin	iw	שורות
 run asynchronous services	admin	iw	הרץ שירותים א-סנכרונים
 save the category	admin	iw	שמור את הקטגוריה
 save the category and return back to the list	admin	iw	שמור את הקטגוריה וחזור לרשימה
 saves the changes made and leaves	admin	iw	יוצא ושומר את השינוים
 saves this entry	admin	iw	שומר רשומה זו
-search accounts	admin	iw	חיפוש חשבונות
 search categories	admin	iw	חיפוש קטגוריות
 search groups	admin	iw	חיפוש קבוצות
 search peer servers	admin	iw	חיפוש שרתים חברים
@@ -324,6 +336,7 @@ security	admin	iw	אבטחה
 select group managers	admin	iw	בחר מנהלי קבוצה
 select permissions this group will have	admin	iw	בחר אילו הרשאות יהיו לקבוצה זו
 select the parent category. if this is a main category select no category	admin	iw	בחר את קטגוריית האם. אם זוהי קטגוריה ראשית, בחר ללא קטגוריה
+select type of smtp server	admin	iw	SMTP בחר סוג שרת
 select users for inclusion	admin	iw	בחר איזה משץמשים לכלול
 select where you want to store/retrieve filesystem information	admin	iw	בחר היכן ברצונך לשמור/לאחזר את המידע אודות מערכת הקובצים
 select where you want to store/retrieve user accounts	admin	iw	בחר היכן ברצונך לשמור/לאחזר חשבונות משתמשים
@@ -337,20 +350,25 @@ server url	admin	iw	של השרת URL
 server username	admin	iw	שם משתמש בשרת
 set preference values.	admin	iw	.קבע ערכי עדיפות
 should the login page include a language selectbox (useful for demo-sites) ?	admin	iw	(לכלול תיבת בחירת שפה בעמוד הכניסה (שימושי לרתרי דמו
-show 'powered by' logo on	admin	iw	-הצג לוגו  'הופעל בעזרת' ב
 show access log	admin	iw	הצג את יומן הגישה
 show current action	admin	iw	הצג פעולה נוכחית
 show error log	admin	iw	הצג יומן שגיאות
 show phpinfo()	admin	iw	PHPINFO() הצג
 show session ip address	admin	iw	של המושב IP הצג כתובת
+sieve server hostname or ip address	admin	iw	IP או כתובת Sieve שם שרת
+sieve server port	admin	iw	Sieve פורט שרת
+sieve settings	admin	iw	Sieve הגדרות
 site	admin	iw	אתר
+smtp server name	admin	iw	SMTP שם שרת
+smtp settings	admin	iw	הגדרות SMTP
+smtp-server hostname or ip address	admin	iw	IP או כתובת SMTP שם שרת
+smtp-server port	admin	iw	SMTP פורת שרת
 sorry, that group name has already been taken.	admin	iw	.מצטער, שם קבוצה זה כבר תפוס
 sorry, the above users are still a member of the group %1	admin	iw	מצטער, המשתמשים הרשומים לעיל עדיין חברים בקבוצת %1
 sorry, the follow users are still a member of the group %1	admin	iw	מצטער, המשתמשים הרשומים מטה עדיין חברים בקבוצת %1
 sort the entries	admin	iw	מיין את הרשומות
-standard	admin	iw	סנדרד
+standard	admin	iw	תקני
 standard imap server	admin	iw	תקני IMAP שרת
-standard pop3 server	admin	iw	תקני POP3 שרת
 standard smtp-server	admin	iw	תקני SMTP שרת
 start testjob!	admin	iw	!החל עבודת הניסיון
 submit changes	admin	iw	הגש שינוים
@@ -390,13 +408,19 @@ two weeks	admin	iw	שבועיים
 up	admin	iw	למעלה
 updated	admin	iw	מעודכן
 use cookies to pass sessionid	admin	iw	השתמש בעוגיות כדי להעביר זיהוי מושב
+use default	admin	iw	השתמש בברירת המחדל
+use ldap defaults	admin	iw	LDAP השתמש בברירות מחדל של
 use pure html compliant code (not fully working yet)	admin	iw	(עם תאימות מלאה (לא לגמרי עובד עדיין HTML השתמש בקוד
+use smtp auth	admin	iw	LDAP השתמש באימות משתמשים של
 use theme	admin	iw	השתמש בערכת נושא
+use tls authentication	admin	iw	TLS השתמש באימות
+use tls encryption	admin	iw	TLS השתמש בהצפנת
 user accounts	admin	iw	חשבונות משתמשים
 user data	common	iw	נתוני משתמש
 user for smtp-authentication (leave it empty if no auth required)	admin	iw	(השאר ריק אם לא דרושה אימות) SMTP שם משתמש עבור אימות
 user groups	admin	iw	קבוצות משתמשים
 userdata	admin	iw	נתוני משתמש
+users can define their own emailaccounts	admin	iw	משתמשים יכולים להגדיר בעצמם את חשבונות דואר האלקטרוני שלהם
 users choice	admin	iw	בחירת המשתמשים
 view access log	admin	iw	הצג יומן גישה
 view account	admin	iw	הצג חשבון
@@ -405,12 +429,8 @@ view error log	admin	iw	הצג יומן שגיאות
 view sessions	admin	iw	הצג מושבים
 view this user	admin	iw	הצג משתמש זה
 view user account	admin	iw	הצג חשבון משתמש
+virtual mail manager	admin	iw	מלהל דואר וירטואלי
 who would you like to transfer all records owned by the deleted user to?	admin	iw	?אל מי ברצונך להעביר את כל הרשומות של המשתמש הנמחק
-would you like egroupware to cache the egw info array ?	admin	iw	?egw יטמין את מערך המידע של EGroupware-ברצונך ש
-would you like egroupware to check for a new version<br>when admins login ?	admin	iw	יבדוק אם יש גירסא חדשה EGroupware-תרצה ש<br>
-would you like egroupware to check for new application versions when admins login ?	admin	iw	יבדוק אם יש גירסת יישומים חדשה EGroupware-תרצה ש<br>
-would you like to automaticaly load new langfiles (at login-time) ?	admin	iw	(האם להטעין קבצי שפה חדשים אוטומטית (שבשעת הכניסה למערכת
-would you like to show each application's upgrade status ?	admin	iw	תרצה להציג את סטאטוס העדכון של כל יישום
 you have entered an invalid expiration date	admin	iw	ציינת תאריך פוגה לא חוקי
 you must add at least 1 permission or group to this account	admin	iw	עליך לציין לפחות הרשאה אחת או קבוצה אחת לחשבון זה
 you must enter a group name.	admin	iw	.עליך לציין שם לקבוצה
@@ -421,81 +441,5 @@ you must enter an application name.	admin	iw	.עליך לציין שם לייש�
 you must enter an application title.	admin	iw	עליך לציין כותרת ליישום
 you must select a file type	admin	iw	עליך לבחור סןג קובץ
 you will need to remove the subcategories before you can delete this category	admin	iw	!עליך להסיר את תתי-הקטגוריות לפני שאפשר יהיה למחוק קטגוריה זו
-your session could not be verified.	admin	iw	.לא הצלחתי לשחזר את המושב
-(no subject)	admin	iw	(ללא נושא)
-add profile	admin	iw	הוסף פרופיל
-admin dn	admin	iw	של המנהל dn
-admin password	admin	iw	סיסמת מנהל
-admin username	admin	iw	שם משתמש של המנהל
-advanced options	admin	iw	אופציות מתקדמות
-alternate email address	admin	iw	כתובת דואר אלקטרוני חילופי
-continue	admin	iw	המשך
-cyrus imap server	admin	iw	Cyrus IMAP שרת
-cyrus imap server administration	admin	iw	Cyrus IMAP ניהול שרת
-default	admin	iw	ברירת מחדל
-deliver extern	admin	iw	מסירה חיצונית
-do you really want to delete this profile	admin	iw	בטוח שברצונך למחוק פרופיל זה
-domainname	admin	iw	שם הדומיין
-edit email settings	admin	iw	ערוך הגדרות דואר אלקטרוני
-email account active	admin	iw	חשבון דואר אלקטרוני פעיל
-email address	admin	iw	כתובת דואר אלקטרוני
-enable cyrus imap server administration	admin	iw	Cyrus IMAP איפשור ניהול שרת
-enable sieve	admin	iw	Sieve אישפור
-enter your default mail domain (from: user@domain)	admin	iw	(user@domain :ציין את דומיין דואר המחדלי שלך (לדוגמא
-entry saved	admin	iw	הרשומה נשמרה
-event details follow	admin	iw	פרטי האירוע בהמשך
-forward also to	admin	iw	להעביר גם אל
-forward email's to	admin	iw	להעביר דואר אלקטרוני אל
-forward only	admin	iw	העבר בלבד
-imap admin password	admin	iw	IMAP סיסמת ניהול
-imap admin user	admin	iw	IMAP שם מנהל
-imap c-client version < 2001	admin	iw	IMAP C-Client Version < 2001
-imap server	admin	iw	שרת IMAP
-imap server hostname or ip address	admin	iw	שלו IP- או כתובת הIMAP שם שרת
-imap server logintyp	admin	iw	IMAP סוג כניסה לשרת
-imap server port	admin	iw	IMAP פורט שרת
-imap/pop3 server name	admin	iw	IMAP/POP3 שם שרת
-in mbyte	admin	iw	MB-ב
-ldap basedn	admin	iw	dn הביסי של LDAP
-ldap server	admin	iw	LDAP שרת
-ldap server accounts dn	admin	iw	LDAP של שרת חשבונות DN
-ldap server admin dn	admin	iw	LDAP מנהל שרת של DN
-ldap server admin password	admin	iw	LDAP סיסמה של מנהל שרת
-ldap server hostname or ip address	admin	iw	IP או כתובת LDAP שם שרת
-ldap settings	admin	iw	LDAP הגדרות
-leave empty for no quota	admin	iw	השאר ריק ללא הקצאה
-mail settings	admin	iw	הגדרות דואר
-name of organisation	admin	iw	שם האירגון
-no alternate email address	admin	iw	אין כתובת דואר אלקטרוני חלופי
-no forwarding email address	admin	iw	אין כתובת להעברת דואר אלקטרוני
-order	admin	iw	סדר
-organisation	admin	iw	אירגון
-pop3 server hostname or ip address	admin	iw	IP או כתובת pop3 שם שרת
-pop3 server port	admin	iw	POP3 פורט שרת
-postfix with ldap	admin	iw	LDAP עם Postfix
-profile list	admin	iw	רשימת פרופילים
-profile name	admin	iw	שם פרופיל
-qmaildotmode	admin	iw	qmaildotmode
-quota settings	admin	iw	הגדרות הקצאה
-remove	admin	iw	הסר
-select type of imap/pop3 server	admin	iw	IMAP/POP3 בחר סוג שרת
-select type of smtp server	admin	iw	SMTP בחר סוג שרת
-sieve server hostname or ip address	admin	iw	IP או כתובת Sieve שם שרת
-sieve server port	admin	iw	Sieve פורט שרת
-sieve settings	admin	iw	Sieve הגדרות
-smtp server name	admin	iw	SMTP שם שרת
-smtp settings	admin	iw	הגדרות SMTP
-smtp-server hostname or ip address	admin	iw	IP או כתובת SMTP שם שרת
-smtp-server port	admin	iw	SMTP פורת שרת
-standard	admin	iw	תקני
-standard imap server	admin	iw	תקני IMAP שרת
-standard pop3 server	admin	iw	תקני POP3 שרת
-standard smtp-server	admin	iw	תקני SMTP שרת
-use default	admin	iw	השתמש בברירת המחדל
-use ldap defaults	admin	iw	LDAP השתמש בברירות מחדל של
-use smtp auth	admin	iw	LDAP השתמש באימות משתמשים של
-use tls authentication	admin	iw	TLS השתמש באימות
-use tls encryption	admin	iw	TLS השתמש בהצפנת
-users can define their own emailaccounts	admin	iw	משתמשים יכולים להגדיר בעצמם את חשבונות דואר האלקטרוני שלהם
-virtual mail manager	admin	iw	מלהל דואר וירטואלי
 your name	admin	iw	השם שלך
+your session could not be verified.	admin	iw	.לא הצלחתי לשחזר את המושב

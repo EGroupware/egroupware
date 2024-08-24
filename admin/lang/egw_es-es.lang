@@ -68,7 +68,6 @@ acl rights	common	es-es	Permisos de ACL
 acl updated	admin	es-es	Se ha actualizado la ACL
 acl updated.	admin	es-es	Se ha actualizado la ACL.
 activate	admin	es-es	Activar
-activate wysiwyg-editor	admin	es-es	Activar editor WYSIWYG
 activated	admin	es-es	activado
 activated again	admin	es-es	ctivado de nuevo
 active mail accounts	admin	es-es	Cuentas de correo activas
@@ -92,7 +91,6 @@ add new email address:	admin	es-es	Añadir nueva dirección de correo:
 add peer server	admin	es-es	Añadir servidor 'peer'
 add profile	admin	es-es	Añadir perfil
 add sub-category	admin	es-es	Añadir subcategoría
-add to group	admin	es-es	Añadir al grupo
 add user	admin	es-es	Añadir usuario
 add user or group	admin	es-es	Añadir usuario o grupo
 added	admin	es-es	añadido
@@ -175,7 +173,6 @@ bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 blocking after wrong password	admin	es-es	Bloqueo después de una contraseña incorrecta
 bottom	admin	es-es	Parte inferior
-bulk changes	admin	es-es	Cambios masivos
 bulk password reset	admin	es-es	Restablecimiento de contraseña en bruto
 by	admin	es-es	En
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	es-es	Seleccionando un usuario o grupo se elimina la cuenta de correo de todos los demás usuarios<br>¿Está seguro de querer hacer eso?
@@ -264,10 +261,10 @@ custom egroupware web font as woff2 file	admin	es-es	Tipografía web EGroupware 
 custom fields	admin	es-es	Campos personalizados
 custom fields tab	admin	es-es	pestaña de campos personalizados
 custom translation	admin	es-es	Traducción personalizadas
-customfield '%1' added	admin	es-es	Se agregó el campo personalizado '%1'.
-customfield '%1' deleted	admin	es-es	Se suprimió el campo personalizado '%1'.
-customfield '%1' modified	admin	es-es	Se modificó el campo personalizado '%1'.
-customfield deleted	admin	es-es	Campo personalizado suprimido.
+customfield '%1' added	admin	es-es	Se agregó el campo personalizado '%1'
+customfield '%1' deleted	admin	es-es	Se suprimió el campo personalizado '%1'
+customfield '%1' modified	admin	es-es	Se modificó el campo personalizado '%1'
+customfield deleted	admin	es-es	Campo personalizado suprimido
 customfield saved.	admin	es-es	Campo personalizado grabado.
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
 data	admin	es-es	Datos
@@ -398,10 +395,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	es-es	Introduzca un texto aleatorio para el cifrado <br> de la sesión (requiere mcrypt)
 enter the background color for the login page	admin	es-es	Introduzca el color de fondo para la página de inicio de sesión
 enter the background color for the site title	admin	es-es	Introduzca el color de fondo para el título del sitio
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	es-es	Introduzca la ruta completa para los archivos temporales.<br> Ejemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	es-es	Introduzca la ruta completa para los archivos de usuarios<br>y de grupo. Ejemplos: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	es-es	Introduzca el nombre de la máquina sobre la cual se está ejecutando este servidor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	es-es	Introduzca la URL de EGroupware.<br>Ejemplo: https://egw.dominio.com/egroupware o /egroupware.<br><b>Sin barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	es-es	Introduzca la cadena de búsqueda. Para mostrar todas las entradas, vacíe este campo y pulse de nuevo el botón ENVIAR.
@@ -512,7 +509,7 @@ how username get constructed	admin	es-es	Cómo se construye el nombre de usuario
 html/plaintext	admin	es-es	HTML/Texto
 icon	admin	es-es	Icono
 identity	admin	es-es	Identidad
-identity deleted	admin	es-es	Identidad suprimida.
+identity deleted	admin	es-es	Identidad suprimida
 identity saved.	admin	es-es	Identidad grabada.
 idle	admin	es-es	Inactivo
 if different from email address	admin	es-es	si es diferente de la dirección de correo-e

@@ -1,9 +1,8 @@
 %1 - %2 of %3 user accounts	admin	hr	%1 - %2 od %3 Korisničkih računa
 %1 - %2 of %3 user groups	admin	hr	%1 - %2 od %3 Korisniočkih grupa
 %1 not found or not executable !!!	admin	hr	%1 nisam našai ili nije izvršivo !!!
-(stored password will not be shown here)	admin	hr	(Spremljena zaporka se ovdje neće prikazivati)
+(no subject)	admin	hr	(nema teme)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hr	(Radi instalacije novih aplikacija upotrijebite<br><a href="setup/" target="setup"></a> [Uređivanje aplikacija] !!!)
-accesslog and bruteforce defense	admin	hr	AccessLog and BruteForce defense
 account active	admin	hr	Arhiva korisničkih računa
 account has been created	common	hr	Korisnički račun je napravljen
 account has been deleted	common	hr	Korisnički račun je obrisan
@@ -13,10 +12,7 @@ account permissions	admin	hr	Dozvole korisničkog računa
 account preferences	admin	hr	Postavke korisničkog računa
 acl manager	admin	hr	ACL Uređivanje
 acl rights	common	hr	ACL Prava
-action	admin	hr	Akcija (radnja)
-actions	admin	hr	Akcije
 activate	admin	hr	Aktiviraj
-activate wysiwyg-editor	admin	hr	aktivacija WYSIWYG-uređivača
 add a category	admin	hr	dodaj kategoriju
 add a group	admin	hr	dodaj grupu
 add a new account.	admin	hr	Dodaj novi korisnički račun
@@ -31,14 +27,15 @@ add group	admin	hr	Dodaj grupu
 add new account	admin	hr	Dodaj novi korisnički račun
 add new application	admin	hr	Dodaj novu aplikaciju
 add peer server	admin	hr	Dodaj peer poslužitelj
+add profile	admin	hr	Add Profile
 add sub-category	admin	hr	Dodaj podkategoriju
+admin dn	admin	hr	admin dn
 admin email	admin	hr	E-mail adresa administratora
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hr	E-mail adresa administratora (odvojen zarezima) za obavijesti o sustavu (ukoliko ostavite prazno obavijesti neće biti slane)
 admin name	admin	hr	Ime administratora
-administration	admin	hr	Administracija
+admin password	admin	hr	admin password
 admins	admin	hr	Administratori
 advanced options	admin	hr	advanced options
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati korisnički račun (početna vrijednost 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	hr	Nakon koliko neuspijelih pokušaja prijave treba zaključati IP adresu (početna vrijednost 3) ?
 all applications	admin	hr	all applications
 all records and account information will be lost!	admin	hr	Svi zapisi i informacije o korisničkim računima će biti izgubljene!
@@ -85,6 +82,7 @@ check ip address of all sessions	admin	hr	Provijeri IP adresu svih sessions
 check items to <b>%1</b> to %2 for %3	admin	hr	Provijeri od <b>%1</b> do %2 za %3
 click to select a color	admin	hr	Izaberite boju
 color	admin	hr	Boja
+continue	admin	hr	Continue
 country	admin	hr	Država
 country selection	admin	hr	Odabir zemlje
 create group	admin	hr	Napravi grupu
@@ -96,7 +94,7 @@ cyrus imap server	admin	hr	Cyrus IMAP Server
 data	admin	hr	Podaci
 day	admin	hr	Dan
 day of week<br>(0-6, 0=sun)	admin	hr	Dan u tjednu<br>(0-6, 0=Ned)
-default	admin	hr	Početno postavljena vrijednost
+default	admin	hr	default
 default file system space per user	admin	hr	Početno postavljeni prostor za datoteke po korisniku
 default file system space per user/group ?	admin	hr	Početno postavljeni prostor za datoteke po korisniku/grupe?
 deinstall crontab	admin	hr	Deinstall crontab
@@ -133,13 +131,14 @@ description can not exceed 255 characters in length !	admin	hr	Opis nemože biti
 determines the order the fields are displayed	admin	hr	Određuje redosljed prikazivanja polja
 disable	admin	hr	Onesposobi
 disable "auto completion" of the login form	admin	hr	Disable "auto completion" of the login form
-disable wysiwyg-editor	admin	hr	onemogući WYSIWYG-uređivač
 disabled (not recomended)	admin	hr	onemogućeno (nije preporučeno)
 display	admin	hr	Prikaz
 do not delete the category and return back to the list	admin	hr	NE obriši kategoriju i vrati se na listu
 do you also want to delete all global subcategories ?	admin	hr	Želite li obrisati i sve globalne podkategorije ?
+do you really want to delete this profile	admin	hr	Do you really want to delete this Profile
 do you want to delete all global subcategories ?	admin	hr	Želite li obrisati i sve globalne podkategorije ?
 do you want to move all global subcategories one level down ?	admin	hr	Želite li pomaknuti sve globalne podkategorije za jedan nivo prema dolje ?
+domainname	admin	hr	domainname
 down	admin	hr	dolje
 edit account	admin	hr	Uredi korisnički račun
 edit application	admin	hr	Uredi aplikaciju
@@ -159,8 +158,7 @@ email account active	admin	hr	email account active
 email address	admin	hr	email address
 enable	admin	hr	Omogući
 enable debug-messages	admin	hr	Omogući poruke za ispravljanje pogrešaka
-enabled - hidden from navbar	admin	hr	Omogućeno -  skriveno od gornjeg menija
-enabled - popup window	admin	hr	Omogućeno - novi prozor
+enable sieve	admin	hr	enable Sieve
 enter a description for the category	admin	hr	unesite opis z akategoriju
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	hr	Enter some random text for app_session <br>encryption (requires mcrypt)
 enter the background color for the login page	admin	hr	Unesite pozadinsku boju stranice za prijavu
@@ -174,17 +172,18 @@ enter the site password for peer servers	admin	hr	Unesite zaporku za peer poslu�
 enter the site username for peer servers	admin	hr	Unesite korisničko ime za peer poslužitelje
 enter the title for your site	admin	hr	Unesite naslov vaših stranica
 enter the title of your logo	admin	hr	Unesite naslov vašeg logtipa
-enter the url or filename (in api/templates/default/images) of your logo	admin	hr	Unesite URL ili ime datoteke (u api/templates/default/images) vašeg logotipa
 enter the url where your logo should link to	admin	hr	Unesite URL na što bi vaš logo trebao biti vezan
-enter your default ftp server	admin	hr	Unesite vaš početno postavljen FTP poslužitelj
 enter your default mail domain ( from: user@domain )	admin	hr	Unesite vašu početno postavljenu domenu za poštu ( Forma: user@domain )
+enter your default mail domain (from: user@domain)	admin	hr	Enter your default mail domain (from: user@domain)
 enter your http proxy server	admin	hr	Unesite vaš HTTP proxy poslužitelj
 enter your http proxy server port	admin	hr	Unesite port vašeg HTTP proxy poslužitelja
 enter your smtp server hostname or ip address	admin	hr	Unesite ime vašeg SMTP poslužitelja ili IP adresu
 enter your smtp server port	admin	hr	Unesite port vašeg SMTP poslužitelja
+entry saved	admin	hr	Entry saved
 error canceling timer, maybe there's none set !!!	admin	hr	Greška prilikom otkazivanja vremenskog brojenja, možda nije postavljen!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	hr	Error setting timer, wrong syntax or maybe there's one already running !!!
 error: %1 not found or other error !!!	admin	hr	GREŠKA: %1 nije nađeno ili neka druga greška !!!
+event details follow	admin	hr	Slijede detalji obveze
 expires	admin	hr	Istječe
 failed to change password.	admin	hr	Nisam mogao promijeniti zaporku.
 fallback (after each pageview)	admin	hr	fallback (after each pageview)
@@ -195,6 +194,7 @@ for the times above	admin	hr	za vremena prikazana iznad
 for the times below (empty values count as '*', all empty = every minute)	admin	hr	za vremena prikazana ispod (prazne vrijednosti vrijede kao '*', sve prazno = svake minute)
 force selectbox	admin	hr	Force Selectbox
 forward also to	admin	hr	forward also to
+forward email's to	admin	hr	forward email's to
 forward only	admin	hr	forward only
 full name	admin	hr	Puno Ime
 global categories	common	hr	Globalne kategorije
@@ -207,6 +207,7 @@ group manager	admin	hr	Upravljanje grupama
 group name	admin	hr	Ime grupe
 hide php information	admin	hr	sakrij php informacije
 home directory	admin	hr	Home directory
+home screen message	admin	hr	Poruka glavnog ekrana
 host information	admin	hr	Informacije poslužitelja
 hour<br>(0-23)	admin	hr	Sat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hr	Koliko dana bi zapisi trebali biti sačuvani u zapisu pristupa, prije brisanja (početno postavljeno 90) ?
@@ -215,6 +216,12 @@ icon	admin	hr	Ikona
 idle	admin	hr	idle
 if no acl records for user or any group the user is a member of	admin	hr	Ukoliko nema ACL zapisa za korisnika ili bilo koju grupu kojoj korisnik pripada
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hr	Ukoliko koristite LDAP, želite li upravljati atributima početnog direktorija i loginshell?
+imap admin password	admin	hr	IMAP admin password
+imap admin user	admin	hr	IMAP admin user
+imap server	admin	hr	IMAP Poslužitelj
+imap server hostname or ip address	admin	hr	IMAP server hostname or ip address
+imap server logintyp	admin	hr	IMAP server login type
+imap server port	admin	hr	IMAP server port
 in mbyte	admin	hr	in MByte
 inbound	admin	hr	dolazno
 install crontab	admin	hr	Instaliraj crontab
@@ -231,6 +238,7 @@ last login	admin	hr	zadnja prijava
 last login from	admin	hr	zadnja prijava od
 last time read	admin	hr	Poslijednji put pročitano
 ldap accounts context	admin	hr	kontekst LDAP korisničkih računa
+ldap basedn	admin	hr	LDAP basedn
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	hr	Početno postavljnei prefiks LDAP početne mape (npr. /home za /home/username)
 ldap default shell (e.g. /bin/bash)	admin	hr	LDAP Default shell (e.g. /bin/bash)
 ldap encryption type	admin	hr	LDAP tip enkripcije
@@ -238,6 +246,12 @@ ldap groups context	admin	hr	kontekst LDAP grupa
 ldap host	admin	hr	LDAP poslužitelj
 ldap root password	admin	hr	LDAP root password
 ldap rootdn	admin	hr	LDAP rootdn
+ldap server	admin	hr	LDAP server
+ldap server accounts dn	admin	hr	LDAP server accounts DN
+ldap server admin dn	admin	hr	LDAP server admin DN
+ldap server admin password	admin	hr	LDAP server admin password
+ldap server hostname or ip address	admin	hr	LDAP server hostname or ip address
+ldap settings	admin	hr	LDAP settings
 leave empty for no quota	admin	hr	leave empty for no quota
 leave the category untouched and return back to the list	admin	hr	ostavi kategoriju nedirnutu i varti se na listu
 leave the group untouched and return back to the list	admin	hr	Ostavi kategoriju nedirnutu i varti se na listu
@@ -253,8 +267,7 @@ login screen	admin	hr	Ekran prijave
 login shell	admin	hr	Login shell
 login time	admin	hr	Vrijeme prijave
 loginid	admin	hr	LoginID
-mail settings	admin	hr	Postavke pošte
-home screen message	admin	hr	Poruka glavnog ekrana
+mail settings	admin	hr	Mail settings
 manager	admin	hr	Upravitelj
 maximum account id (e.g. 65535 or 1000000)	admin	hr	Najveći indetitet korisničkog računa (npr. 65535 ili 1000000)
 maximum entries in click path history	admin	hr	Maximum entries in click path history
@@ -266,12 +279,14 @@ mode	admin	hr	Mode
 modified	admin	hr	Promijenjeno
 month	admin	hr	Mjesec
 name must not be empty !!!	admin	hr	Ime nesmije biti prazno!!!
+name of organisation	admin	hr	Name of organization
 new group name	admin	hr	Ime nove grupe
 new name	admin	hr	novo ime
 new password [ leave blank for no change ]	admin	hr	Nova zaporka [ostavite prazno ukoliko ne želite mijenjati]
 next run	admin	hr	Next run
 no algorithms available	admin	hr	no algorithms available
 no alternate email address	admin	hr	no alternate email address
+no forwarding email address	admin	hr	no forwarding email address
 no jobs in the database !!!	admin	hr	Nema poslova u bazi podataka!!!
 no login history exists for this user	admin	hr	Za ovog korisnika ne postoji povijest prijava
 no matches found	admin	hr	Nisam našao podudarnosti
@@ -284,6 +299,7 @@ number of row for a multiline inputfield or line of a multi-select-box	admin	hr	
 one month	admin	hr	one month
 one week	admin	hr	one week
 order	admin	hr	Naredba
+organisation	admin	hr	organizacija
 outbound	admin	hr	izlazno
 passthrough	admin	hr	passthrough
 password for smtp-authentication	admin	hr	Zaporka za  provjeru SMTP-autentičnosti
@@ -291,7 +307,6 @@ path information	admin	hr	Path information
 peer server list	admin	hr	Lista Peer popslužitelja
 peer servers	admin	hr	Peer poslužitelji
 percent of users that logged out	admin	hr	Postotak korisnika koji su se odjavili
-percent this user has logged out	admin	hr	Percent this user has logged out
 permission denied	admin	hr	Uskraćena dozvola
 permissions	admin	hr	Dozvole
 permissions this group has	admin	hr	Dozvole koje ima ova grupa
@@ -303,22 +318,20 @@ please select	admin	hr	Molimo vas izaberite
 postfix with ldap	admin	hr	Postfix with LDAP
 preferences	admin	hr	Postavke
 primary group	admin	hr	primarna grupa
+profile list	admin	hr	Profile List
+profile name	admin	hr	Profile Name
 qmaildotmode	admin	hr	qmaildotmode
 quota settings	admin	hr	quota settings
 re-enter password	admin	hr	Ponovo unesite zaporku
 read this list of methods.	admin	hr	Read this list of methods.
 register application hooks	admin	hr	Register application hooks
-remove	admin	hr	Makni
-remove all users from this group	admin	hr	Ukloni sve korisnike iz ove grupe
-remove all users from this group ?	admin	hr	Da uklonim sve korisnike iz ove grupe?
-return to view account	admin	hr	Return to view account
+remove	admin	hr	remove
 rows	admin	hr	Retci
 run asynchronous services	admin	hr	Run Asynchronous services
 save the category	admin	hr	spremi kategoriju
 save the category and return back to the list	admin	hr	spremi kategoriju i vrati se na listu
 saves the changes made and leaves	admin	hr	sprema promjene i izlazi
 saves this entry	admin	hr	Sprema ovaj zapis
-search accounts	admin	hr	Traži korisničke račune
 search categories	admin	hr	Traži kategorije
 search groups	admin	hr	Traži grupe
 search peer servers	admin	hr	Traži peer poslužitelje
@@ -326,6 +339,7 @@ security	admin	hr	Sigurnost
 select group managers	admin	hr	Izaberite upravljače grupama
 select permissions this group will have	admin	hr	Izaberite koje će dozvole ova grupa imati
 select the parent category. if this is a main category select no category	admin	hr	Select the parent category. If this is a main category select NO CATEGORY
+select type of smtp server	admin	hr	Select type of SMTP Server
 select users for inclusion	admin	hr	Select users for inclusion
 select where you want to store/retrieve filesystem information	admin	hr	Select where you want to store/retrieve filesystem information
 select where you want to store/retrieve user accounts	admin	hr	Izaberite gdje želite spremati/dohvatiti korisničke račune
@@ -339,22 +353,27 @@ server url	admin	hr	URL poslušitelja
 server username	admin	hr	Korisničko ime poslužitelja
 set preference values.	admin	hr	Postavite vrijednosti postavki.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	hr	Should the login page include a language selectbox (useful for demo-sites) ?
-show 'powered by' logo on	admin	hr	Show 'powered by' logo on
 show access log	admin	hr	Prikaži listu zapisa pristupa
 show current action	admin	hr	Show current action
 show error log	admin	hr	Prikaži listu zapisa grešaka
 show phpinfo()	admin	hr	Prikaži phpinfo()
 show session ip address	admin	hr	Show session IP address
+sieve server hostname or ip address	admin	hr	Sieve server hostname or ip address
+sieve server port	admin	hr	Sieve server port
+sieve settings	admin	hr	Sieve settings
 site	admin	hr	Site
+smtp server name	admin	hr	SMTP server name
+smtp settings	admin	hr	Postavke SMTP
+smtp-server hostname or ip address	admin	hr	SMTP server hostname or IP address
+smtp-server port	admin	hr	SMTP server port
 soap	admin	hr	SOAP
 sorry, that group name has already been taken.	admin	hr	Nažalost, to ime grupe je već zauzeto
 sorry, the above users are still a member of the group %1	admin	hr	Nažalost, gornji korisnici su još uvijek pripadnici grupe %1
 sorry, the follow users are still a member of the group %1	admin	hr	Nažalost, slijedeći korisnici su još uvijek pripadnici grupe %1
 sort the entries	admin	hr	Rasporedi zapise
 ssl	admin	hr	ssl
-standard	admin	hr	standard
+standard	admin	hr	Standard
 standard imap server	admin	hr	Standard IMAP server
-standard pop3 server	admin	hr	Standard POP3 server
 standard smtp-server	admin	hr	Standard SMTP server
 start testjob!	admin	hr	Start TestJob!
 submit changes	admin	hr	Pošalji promjene
@@ -381,6 +400,7 @@ they must be removed before you can continue	admin	hr	Moraju biti uklonjeni prij
 this application is current	admin	hr	Ova aplikacija je trenutna
 this application requires an upgrade	admin	hr	ova aplikacija zahtijeva obnavljanje
 this category is currently being used by applications as a parent category	admin	hr	Ova kategorija je trenutno upotrebljavana od aplikacija kao osnovna kategorija.
+this php has no imap support compiled in!!	admin	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	hr	Timeout for application session data in seconds (default 86400 = 1 day)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	hr	Timeout for sessions in seconds (default 14400 = 4 hours)
 times	admin	hr	Times
@@ -395,13 +415,19 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 up	admin	hr	gore
 updated	admin	hr	Updated
 use cookies to pass sessionid	admin	hr	Use cookies to pass sessionid
+use default	admin	hr	Use default
+use ldap defaults	admin	hr	use LDAP defaults
 use pure html compliant code (not fully working yet)	admin	hr	Use pure HTML compliant code (not fully working yet)
+use smtp auth	admin	hr	Use SMTP auth
 use theme	admin	hr	Upotrijebi temu
+use tls authentication	admin	hr	Use TLS authentication
+use tls encryption	admin	hr	Use TLS encryption
 user accounts	admin	hr	Korisnički računi
 user data	common	hr	Podaci o korisnicima
 user for smtp-authentication (leave it empty if no auth required)	admin	hr	User for SMTP-authentication (leave it empty if no auth required)
 user groups	admin	hr	Korisničke grupe
 userdata	admin	hr	podaci o korisnicima
+users can define their own emailaccounts	admin	hr	Users can define their own email accounts
 users choice	admin	hr	Users Choice
 view access log	admin	hr	Prikaži zapis liste prijava
 view account	admin	hr	Prikaži korisnički račun
@@ -410,12 +436,8 @@ view error log	admin	hr	Prikaži zapis liste grešaka
 view sessions	admin	hr	View sessions
 view this user	admin	hr	Prikaži ovog korisnika
 view user account	admin	hr	Prikaži korisničke račune
+virtual mail manager	admin	hr	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	hr	Kome bi željeli prenjeti SVE zapise koje je imao obrisani korisnik?
-would you like egroupware to cache the egw info array ?	admin	hr	Would you like EGroupware to cache the egw info array ?
-would you like egroupware to check for a new version<br>when admins login ?	admin	hr	Da li želite da EGroupware provijeri postojanje nove verzije<br>kada se administrator prijavi ?
-would you like egroupware to check for new application versions when admins login ?	admin	hr	Da li želite da EGroupware provijeri postojanje nove verzije aplikacije kada se administrator prijavi ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	hr	Would you like to automatically load new langfiles (at login-time) ?
-would you like to show each application's upgrade status ?	admin	hr	Would you like to show each application's upgrade status ?
 xml-rpc	admin	hr	XML-RPC
 you have entered an invalid expiration date	admin	hr	You have entered an invalid expiration date
 you must add at least 1 permission or group to this account	admin	hr	You must add at least 1 permission or group to this account
@@ -428,79 +450,3 @@ you must enter an application title.	admin	hr	Morate unijeti naslov aplikacije.
 you must select a file type	admin	hr	Morate izabrati vrstu datoteke.
 you will need to remove the subcategories before you can delete this category	admin	hr	Morate obrisati sve podkategorije prije noego što obrišete ovu kategoriju !
 your session could not be verified.	admin	hr	Vašu sesiju nije moguće potvrditi.
-(no subject)	admin	hr	(nema teme)
-add profile	admin	hr	Add Profile
-admin dn	admin	hr	admin dn
-admin password	admin	hr	admin password
-admin username	admin	hr	admin username
-advanced options	admin	hr	advanced options
-alternate email address	admin	hr	alternate email address
-continue	admin	hr	Continue
-cyrus imap server	admin	hr	Cyrus IMAP Server
-cyrus imap server administration	admin	hr	Cyrus IMAP server administration
-default	admin	hr	default
-deliver extern	admin	hr	deliver extern
-do you really want to delete this profile	admin	hr	Do you really want to delete this Profile
-domainname	admin	hr	domainname
-edit email settings	admin	hr	edit email settings
-email account active	admin	hr	email account active
-email address	admin	hr	email address
-enable cyrus imap server administration	admin	hr	enable Cyrus IMAP server administration
-enable sieve	admin	hr	enable Sieve
-enter your default mail domain (from: user@domain)	admin	hr	Enter your default mail domain (from: user@domain)
-entry saved	admin	hr	Entry saved
-event details follow	admin	hr	Slijede detalji obveze
-forward also to	admin	hr	forward also to
-forward email's to	admin	hr	forward email's to
-forward only	admin	hr	forward only
-imap admin password	admin	hr	IMAP admin password
-imap admin user	admin	hr	IMAP admin user
-imap server	admin	hr	IMAP Poslužitelj
-imap server hostname or ip address	admin	hr	IMAP server hostname or ip address
-imap server logintyp	admin	hr	IMAP server login type
-imap server port	admin	hr	IMAP server port
-imap/pop3 server name	admin	hr	IMAP/POP3 server name
-in mbyte	admin	hr	in MByte
-ldap basedn	admin	hr	LDAP basedn
-ldap server	admin	hr	LDAP server
-ldap server accounts dn	admin	hr	LDAP server accounts DN
-ldap server admin dn	admin	hr	LDAP server admin DN
-ldap server admin password	admin	hr	LDAP server admin password
-ldap server hostname or ip address	admin	hr	LDAP server hostname or ip address
-ldap settings	admin	hr	LDAP settings
-leave empty for no quota	admin	hr	leave empty for no quota
-mail settings	admin	hr	Mail settings
-name of organisation	admin	hr	Name of organization
-no alternate email address	admin	hr	no alternate email address
-no forwarding email address	admin	hr	no forwarding email address
-order	admin	hr	Naredba
-organisation	admin	hr	organizacija
-pop3 server hostname or ip address	admin	hr	POP3 server hostname or ip address
-pop3 server port	admin	hr	POP3 server port
-postfix with ldap	admin	hr	Postfix with LDAP
-profile list	admin	hr	Profile List
-profile name	admin	hr	Profile Name
-qmaildotmode	admin	hr	qmaildotmode
-quota settings	admin	hr	quota settings
-remove	admin	hr	remove
-select type of imap/pop3 server	admin	hr	Select type of IMAP/POP3 server
-select type of smtp server	admin	hr	Select type of SMTP Server
-sieve server hostname or ip address	admin	hr	Sieve server hostname or ip address
-sieve server port	admin	hr	Sieve server port
-sieve settings	admin	hr	Sieve settings
-smtp server name	admin	hr	SMTP server name
-smtp settings	admin	hr	Postavke SMTP
-smtp-server hostname or ip address	admin	hr	SMTP server hostname or IP address
-smtp-server port	admin	hr	SMTP server port
-standard	admin	hr	Standard
-standard imap server	admin	hr	Standard IMAP server
-standard pop3 server	admin	hr	Standard POP3 server
-standard smtp-server	admin	hr	Standard SMTP server
-this php has no imap support compiled in!!	admin	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
-use default	admin	hr	Use default
-use ldap defaults	admin	hr	use LDAP defaults
-use smtp auth	admin	hr	Use SMTP auth
-use tls authentication	admin	hr	Use TLS authentication
-use tls encryption	admin	hr	Use TLS encryption
-users can define their own emailaccounts	admin	hr	Users can define their own email accounts
-virtual mail manager	admin	hr	Virtual MAIL ManaGeR

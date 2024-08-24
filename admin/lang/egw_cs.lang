@@ -57,7 +57,6 @@ acl deleted.	admin	cs	ACL byly smazány.
 acl manager	admin	cs	Správce ACL
 acl rights	common	cs	ACL práva
 activate	admin	cs	Aktivovat
-activate wysiwyg-editor	admin	cs	Aktivovat WYSIWYG editor
 active templates	admin	cs	Aktivní šablony
 add a category	admin	cs	Přidat kategorii
 add a group	admin	cs	Přidat skupinu
@@ -77,7 +76,6 @@ add new email address:	admin	cs	Přidat novou e-mailovou adresu:
 add peer server	admin	cs	Přidat peer server
 add profile	admin	cs	Přidat profil
 add sub-category	admin	cs	Přidat podkategorii
-add to group	admin	cs	Přidat do skupiny
 add user	admin	cs	Přidat uživatele
 add user or group	admin	cs	Přidání uživatele nebo skupiny
 admin dn	admin	cs	DN (distiguished name) administrátora
@@ -146,8 +144,6 @@ bi-dir passthrough	admin	cs	průchozí v obou směrech
 bi-directional	admin	cs	obousměrné
 blocking after wrong password	admin	cs	Blokování po zadání nesprávného hesla
 bottom	admin	cs	Dolní okraj
-bulk changes	admin	cs	Hromadné změny
-bulk password reset	admin	cs	Hromadná změna hesla
 calculate next run	admin	cs	Vypočítat další spuštění
 can be used by application	admin	cs	Může být použit aplikací
 can be used by group	admin	cs	Může být použit skupinou
@@ -162,9 +158,6 @@ category '%1' deleted	admin	cs	Kategorie '%1' odstraněna
 category deleted.	admin	cs	Kategorie byla smazána.
 category list	admin	cs	Seznam kategorie
 category saved.	admin	cs	Kategorie byla uložena.
-certificate	admin	cs	Certifikát
-certificate details	admin	cs	Podrobnosti o certifikátu
-certificate validation in days	admin	cs	Ověření platnosti certifikátu ve dnech
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení

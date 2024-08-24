@@ -9,10 +9,8 @@
 %1 rights for %2 and applications %3	admin	lo	%1 ສິດທິແລະການໃຊ້ງານ%2
 %1 user %2	admin	lo	%1 ຜູ້ໃຊ້ %2
 (default no, leave it off if you dont use it)	admin	lo	(ຄ່າເລີ່ມຕົ້ນ "ບໍ່", ປ່ອຍມັນໄວ້ ຖ້າເຈົ້າບໍ່ໃຊ້)
-(stored password will not be shown here)	admin	lo	(ລະຫັດຜ່ານທີ່ເກັບໄວ້ຈະບໍ່ໄດ້ສະແດງຢູ່ນີ້)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lo	(ຕິດຕັ້ງໂປຼແກຼມໃໝ່ ນໍາໃຊ້ href="setup/" <br> <a target="setup"> ການຕັ້ງຄ່າ </ a> [ຈັດການການໃຊ້ງານ]!)
 -  type	admin	lo	ຊະນິດ
-accesslog and bruteforce defense	admin	lo	ບັນທຶກການເຂົ້າລະບົບແລະການປ້ອງກັນ
 account %1 %2	admin	lo	ບັນຊີ %1 %2
 account '%1' deleted.	admin	lo	ບັນຊີ '%1' ຖືກລຶບ
 account active	admin	lo	ບັນຊີທີ່ໃຊ້ງານຢູ່
@@ -27,9 +25,6 @@ acl added.	admin	lo	ໄດ້ເພີ່ມ ACL.
 acl deleted.	admin	lo	ໄດ້ລຶບ ACL.
 acl manager	admin	lo	ຜູ້ຈັດການ ACL
 acl rights	common	lo	ສິດທິ ACL
-action	admin	lo	ປະຕິບັດ
-actions	admin	lo	ການດໍາເນີນງານ
-activate wysiwyg-editor	admin	lo	ເປີດໃຊ້ງານ WYSIWYG-ຕົວແກ້ໄຂ
 add a category	admin	lo	ເພີ່ມໝວດໝູ່
 add a group	admin	lo	ເພີ່ມກຸ່ມ
 add a new account.	admin	lo	ເພີ່ມບັນຊີໃໝ່
@@ -50,13 +45,10 @@ admin email	admin	lo	Email ຜູ້ເບິ່່ງແຍງລະບົບ
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lo	ທີ່ຢູ່ email ຜູ້ເບິ່ງແຍງລະບົບ(ຂັ້ນດ້ວຍຈຸດ)ເພື່ອແຈ້ງເຕືອນໃຫ້ຮູ້ blocking(ຄ່າວ່າງເປົ່າແມ່ນບໍ່ໄດ້ແຈ້ງເຕືອນ)
 admin name	admin	lo	ຊື່ຜູ້ເບິ່ງແຍງລະບົບ
 admin queue and history	admin	lo	ລໍາດັບຄິວຜູ້ຄຸ້ມຄອງລະບົບ ແລະ ປະຫວັດຜ່ານມາ
-administration	admin	lo	ການບໍລິຫານ
 admins	admin	lo	ຜູ້ເບິ່ງແຍງລະບົບ
 advanced options	admin	lo	ການຕັ້ງຄ່າແບບພິເສດ
-after how many unsuccessful attempts to login, an account should be blocked (default 15) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ບັນຊີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 15) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ໄອພີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
 aliases	admin	lo	ຊື່ແທນ
-all categories	admin	lo	ໝວດໝູ່ທັງໝົດ
 all records and account information will be lost!	admin	lo	ຂໍ້ມູນທີ່ບັນທຶກ ແລະ ບັນຊີທັງໝົດຈະສູນຫາຍ!
 all users	admin	lo	ຜູ້ໃຊ້ທັງໝົດ
 allow anonymous access to this app	admin	lo	ອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ງານທີ່ບໍ່ໄດ້ລະບຸຊື່ app
@@ -89,10 +81,6 @@ async services last executed	admin	lo	ຈັດການ Async ຫຼ້າສ�
 asynchronous timed services	admin	lo	ການສີ້ນສຸດຂອງເວລາບໍ່ກົງກັນ
 asyncservices not yet installed or other error (%1) !!!	admin	lo	asyncservices ຍັງບໍ່ໄດ້ຕິດຕັ້ງຫຼືມີຂໍ້ຜິດພາດອື່ນໆ!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lo	ພະຍາຍາມທີຈະໃຊ້ mimetype ທີ່ຖືກຕ້ອງສໍາລັບ FTP ແທນທີ່ຈະໃຊ້ຄ່າເລີ່ມຕົນ 'application/octet-stream'
-attribute accountstatus explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-accuntStatus-</i></b>ຈາກ QMAIL schema
-attribute mail explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mail-</i></b>ຈາກ QMAIL schema
-attribute mailalternateaddress explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mailAlternateAddress-</i></b>ຈາກ QMAIL schema
-attribute mailforwardingaddress explained	admin	lo	ນີ້ຈະຈັດການກັບຄຸນລັກສະນະ <b><i>-mailForwardingAddress-</i></b>ຈາກ QMAIL schema
 authentication / accounts	admin	lo	ການຮັບຮອງ/ບັນຊີ
 auto create account records for authenticated users	admin	lo	ສ້າງຕົວບັນທຶກອັດຕະໂນມັດຂອງບັນຊີຜູ້ໃຊ້ເພື່ອຍືນຍັນສິດນໍາໃຊ້
 back to the list	admin	lo	ກັບຄືນຫາລາຍການ
@@ -175,7 +163,6 @@ deny access to user accounts	admin	lo	ບໍອະນຸຍາດໃຫ້ເຂ
 description can not exceed 255 characters in length !	admin	lo	ລາຍລະອຽດບໍ່ໃຫ້ກາຍ 255 ຕົວອັກສອນ!
 determines the order the fields are displayed	admin	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
 disable "auto completion" of the login form	admin	lo	ປິດການໃຊ້ງານ"auto completion" ຂອງແບບຟອມການເຂົ້າລະລຶບ
-disable wysiwyg-editor	admin	lo	ປິດການໃຊ້ WYSIWYG-ຕົວແກ້ໄຂ
 disabled (not recomended)	admin	lo	ປິດການໃຊ້(ບໍ່ຂໍແນະນໍາ)
 display	admin	lo	ສະແດງ
 do not delete the category and return back to the list	admin	lo	ຫ້າມລຶບໝວດໝູ່ ແລະ ໃຫ້ກັບມາທີ່ໜ້າລາຍການ
@@ -205,10 +192,6 @@ email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
 email address	admin	lo	ທີ່ຢູ່ email
 enable debug-messages	admin	lo	ເປິດການໃຊ້ debug-messages
 enable spellcheck in rich text editor	admin	lo	ເປິດການໃຊ້ການກວດແກ້ຄໍໍາສັບ?
-enable the soap service	admin	lo	ເປິດການໃຊ້ບໍລິການ soap
-enable the xmlrpc service	admin	lo	ເປິດການໃຊ້ບໍລິການ xmlrpc
-enabled - hidden from navbar	admin	lo	ໄດ້ເປິດໃຊ້ Hidden ຈາກ navbar
-enabled - popup window	admin	lo	ໄດ້ເປິດໃຊ້ Popup Window
 enter a description for the category	admin	lo	ພິມຄໍາອະທິບາຍສໍາລັບໝວດໝູ່
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	lo	ພິມຄໍາສັບແບບສຸ່ມສໍາລັບ app-session <br> encryption (requires mcrypt)
 enter the background color for the login page	admin	lo	ພິມສີພື້ນສໍາລັບໜ້າເຂົ້າສູ່ລະບົບ
@@ -222,11 +205,8 @@ enter the site password for peer servers	admin	lo	ພິມລະຫັດຜ່
 enter the site username for peer servers	admin	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
 enter the title for your site	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ເວບໄຊ້ ຂອງທ່ານ
 enter the title of your logo	admin	lo	ພິມຫົວຂໍ້ສໍາລັບ ໂລໂກ້ ຂອງທ່ານ
-enter the url or filename (in api/templates/default/images) of your logo	admin	lo	ພິມ URL ຫຼື filename (ທີ່ api/templates/default/images) ສໍາລັບ ໂລໂກ້ ທ່ານ
-enter the url or filename (in your templates image directory) of your favicon (the little icon that appears in the browsers tabs)	admin	lo	ພິມ URL ຫຼື ຊື່່ຟາຍ (ທີ່ templates image directory ຂອງທ່ານ) ສໍາລັບ ໄອຄອນທີ່່ທ່ານມັກ (ເຊິ່ງຈະສະແດງໄອຄັອນນ້ອຍໆ ຢູ່ໃນ ແທັບສ ຂອງບຣາວເຊີ)
 enter the url where your logo should link to	admin	lo	ພິມ URL ທີ່ ໂລໂກ້ ຂອງທ່ານຈະເຊື່ອມຕໍ່ຫາ
 enter the vfs-path where additional images, icons or logos can be placed (and found by egroupwares applications). the path must start with /,and be readable by all users	admin	lo	ພິມ VFS-Path ບ່ອນທີ່ສາມາດຈັດເກັບ ບັນດາ ຮູບພາບ, ໄອຄອນ ຫຼື ໂລໂກ້ ( ແລະ ຊອກຫາໄດ້ດ້ວຍ ແອັບພຼິເຄຊັນຂອງ EGroupwares ). ພາດເກັບຟາຍ ຕ້ອງສາມາດຂຽນແລະອ່ານໄດ້ດ້ວຍທຸ່ກຜູ້ໃຊ້.
-enter your default ftp server	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ FTP ເຊີບເວີ້ ຂອງທ່ານ
 enter your default mail domain ( from: user@domain )	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ mail domain ຂອງທ່ານ(ຈາກ: user@domain)
 enter your http proxy server	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ຂອງທ່ານ
 enter your http proxy server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ ພອດ ຂອງທ່ານ
@@ -242,9 +222,9 @@ error saving to db:	admin	lo	ການບັນທຶກເຂົ້າຖານ
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lo	ການຕັ້ງຄ່າເວລາພົບຂໍ້ຜິດພາດ, ອາດຈະຜິດທີ່ໄວຍະກອນ ຫຼື ອາດຈະມີບາງສ່ວນກໍາລັງຖືກໃຊ້ງານຢູ່
 error! no appname found	admin	lo	ພົບຂໍ້ຜິດພາດ! ບໍ່ເຫັນ appname
 error: %1 not found or other error !!!	admin	lo	ພົບຂໍ້ຜິດພາດ: %1 ບໍ່ພົບ ຫຼື ພົບຂໍ້ຜິດພາດອື່ນໆ!!!
+event details follow	admin	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
 exists	admin	lo	ມີຢູ່ແລ້ວ
 expires	admin	lo	ໝົດອາຍຸ
-explanation of ldapman	admin	lo	moduleນີ້ໄດ້ຮັບການທົດສອບເພື່ອ POSTFIX, LDAP, Courier-IMAP ແລະຈະຕ້ອງມີ schemas CORE ແລະ QMAIL(OID7914). ສ່ວນລາຍລະອຽດເພີ່ມເຕີມກ່ຽວກັບການນໍາໃຊ້ແລະກໍາໜົດຄ່າຂອງລະບົບນີ້ສາມາດພົບໄດ້ທີ່ README.Idapman in doc folder of ADMIN.
 failed to change password.	admin	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
 fallback (after each pageview)	admin	lo	ທາງເລືອກ(ຫຼັງຈາກການສະແດງໃນແຕ່ລະໜ້າ)
 false	admin	lo	ຜິດ/ບໍ່ຜ່ານ
@@ -272,6 +252,7 @@ group name	admin	lo	ຊື່ກຸ່ມ
 hash	admin	lo	Hash
 hide php information	admin	lo	ເຊື່ອງຂໍ້ມູນ PHP
 home directory	admin	lo	Home directory
+home screen message	admin	lo	ຂໍ້ຄວາມໜ້າຈໍຫຼັກ
 host information	admin	lo	ຂໍ້ມູນ ໂຮສ
 hour<br>(0-23)	admin	lo	ຊົ່ວໂມງ<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	lo	ຂາດໜາດຮູບທີ່ເຊື່ອມຕໍ່ຄວນຈະເປັນຂະໜາດໃຫຍ່ເທົ່າໃດ(pixels ສູງສຸດ)?
@@ -337,7 +318,6 @@ logintime	admin	lo	ເວລາເຂົ້າລະບົບ
 logoutime	admin	lo	ເວລາອອກລະບົບ
 mail settings	admin	lo	ຕັ້ງຄ່າ mail
 main email-address	admin	lo	ທີ່ຢູ່ email ຫຼັກ
-home screen message	admin	lo	ຂໍ້ຄວາມໜ້າຈໍຫຼັກ
 manager	admin	lo	ຜູ້ຈັດການ
 maximum account id (e.g. 65535 or 1000000)	admin	lo	ຈໍານວນ ID ບັບຊີສູງສຸດ(ເຊັ່ນ: 65535 ຫຼື 1000000)
 maximum entries in click path history	admin	lo	ຄ່າສູງສຸດຂອງປະຫວັດພາດເກັບຟາຍທີ່ໄດ້ກົດ
@@ -386,7 +366,6 @@ path information	admin	lo	ຂໍ້ມູນຂອງພາດຈັດເກັ
 peer server list	admin	lo	ລາຍການ peer ເຊີບເວີ້
 peer servers	admin	lo	Peer ເຊີບເວີ
 percent of users that logged out	admin	lo	ເປີເຊັນຜູ້ໃຊ້ທີ່ອອກຈາກລະບົບ
-percent this user has logged out	admin	lo	ເປີເຊັນຜູ້ໃຊ້ນີ້ທີ່ອອກຈາກລະບົບ
 permission denied	admin	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ
 permission denied !!!	admin	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ !!!
 permissions	admin	lo	ການອະນຸຍາດ
@@ -412,12 +391,8 @@ remote administration instances	admin	lo	Remote administration instances
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	lo	ການບໍລິຫານໃນໄລຍະໄກ ຕ້ອງມີການເປີດໃຊ້ງານໃນໄລຍະໄກ ເຊັ່ນພາຍໃຕ້ການກໍານົດຄ່າ Admin > Site configuration!
 remote instance saved	admin	lo	Remote instance ໄດ້ບັນທຶກແລ້ວ
 remove	admin	lo	ລຶບອອກ
-remove all users from this group	admin	lo	ລຶບຜູ້ໃຊ້ງານທັງບໝົດອອກຈາກກຸ່ມນີ້
-remove all users from this group ?	admin	lo	ລຶບຜູ້ໃຊ້ງານທັງບໝົດອອກຈາກກຸ່ມນີ້ ?
 requested	admin	lo	ການຮ້ອງຂໍ
-return to view account	admin	lo	ກັບຄືນສູ່ໜ້າສະແດງບັນຊີ
 rights	admin	lo	ສິດທິ
-route all mails to	admin	lo	ເສັ້ນທາງເມລ ທັງໝົດໄປຍັງ
 rpm or debian package	admin	lo	RPM ຫຼື Debian package
 run asynchronous services	admin	lo	ເປີດບໍລິການ Asynchronous
 save the category	admin	lo	ບັນທຶກໝວດໝູ່
@@ -425,7 +400,6 @@ save the category and return back to the list	admin	lo	ບັນທຶກໝວ�
 saves the changes made and leaves	admin	lo	ບັນທຶກການປ່ຽນແປງ made ແລະ leaves
 saves this entry	admin	lo	ບັນທຶກຂໍ້ມູນການເຂົ້ານີ້
 scheduled	admin	lo	ກໍານົດເວລາ
-search accounts	admin	lo	ຄົ້ນຫາບັນຊີ
 search categories	admin	lo	ຄົ້ນຫາໝວດໝູ່
 search groups	admin	lo	ຄົ້ນຫາກຸ່ມ
 search peer servers	admin	lo	ຄົ້ນຫາ peer ເຊີເວີ້
@@ -449,7 +423,6 @@ sessions last 30 days	admin	lo	ໝົດກໍານົດພາຍໃນ 30 ມ
 set preference values.	admin	lo	ກໍານົດຄ່າການຕັ້ງຄ່າ
 should exceptions contain a trace (including function arguments)	admin	lo	ຄວນມີການຕິດຕາມຂໍ້ຍົກເວັ້ນ (ລວມທັງຂໍ້ໂຕ້ແຍ່ງ ຂອງຟັງຊັນ)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	lo	ໜ້າຈໍລ໋ອກອິນຄວນມີຊ່ອງເລືອກພາສາ(ໃຊ້ສໍາລັບ demo-sites)
-show 'powered by' logo on	admin	lo	Show 'powered by' logo on
 show access log	admin	lo	ສະແດງການເຂົ້າໃຊ້ງານລະບົບ
 show current action	admin	lo	ສະແດງການເຮັດວຽກປັດຈຸບັນ
 show error log	admin	lo	ສະແດງລ໋ອກຟາຍຂໍ້ຜິດພາດ
@@ -464,7 +437,6 @@ sort the entries	admin	lo	ການຈັດລຽນລາຍການ
 ssl	admin	lo	ssl
 standard	admin	lo	ມາດຕະຖານ
 standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
-standard pop3 server	admin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
 standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
 start	admin	lo	ເລີ່ມ
 start testjob!	admin	lo	ເລີ່ມຕົ້ນທົດສອບການເຮັດວຽກ!
@@ -474,7 +446,6 @@ submit statistic information	admin	lo	ນໍາສະເໜີຂໍ້ມູນ
 submit the search string	admin	lo	ນໍາສະເໜີຂໍ້ຄວາມທີຄົ້ນຫາ
 submit to egroupware.org	admin	lo	ສົ່ງໄປທີ່ egroupware.org
 subtype	admin	lo	ຊະນິດຍ່ອຍ
-subversion checkout	admin	lo	Subversion ແຈ້ງອອກ
 success	admin	lo	ສໍາເລັດ
 switch it off, if users are randomly thrown out	admin	lo	ປິດການເຮັດວຽກ, ຖ້າຜູ້ໃຊ້ອອກລະບົບ
 template selection	admin	lo	ການເລືອກແມ່ແບບ
@@ -526,6 +497,7 @@ updated	admin	lo	ປັບປຸງແລ້ວ
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	lo	URL ຂອງການຕິດຕັ້ງລະບົບຕາຕະລາງ(EGroupware) ເຊັ່ນ.http://domain.com/egroupware
 usage	admin	lo	ການໃຊ້
 use cookies to pass sessionid	admin	lo	ໃຊ້ cookies ເພື່ອຜ່ານ sessionid
+use default	admin	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ
 use pure html compliant code (not fully working yet)	admin	lo	ໃຊ້ HTML code (ຍັງເຮັດວຽກບໍ່ເຕັມທີ່)
 use theme	admin	lo	ຮູບແບບການໃຊ້
 user accounts	admin	lo	ບັນຊີຜູ້ໃຊ້ງານ
@@ -545,11 +517,6 @@ view user account	admin	lo	ສະແດງບັນຊີຜູ້ໃຊ້
 warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	lo	ພວກເຮົາຂໍໃຫ້ຂໍ້ມູນເຫຼົ່ານັ້ນເພື່ອວັດຖຸປະສົງສະເພາະທາງສະຖິຕິເພື່ອໃຫ້ໄດ້ພາບລວມທົ່ວໄປກ່ຽວກັບການໃຊ້ ລະບົບຕາຕະລາງ (Egroupware) ໃນທົ່ວໂລກ
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	lo	ພວກເຮົາບໍ່ສາມາດບັນທຶກຂໍ້ມູນໃດໆກ່ຽວກັບຕົວທ່ານ
 who would you like to transfer all records owned by the deleted user to?	admin	lo	ແມ່ນຜູ້ໃດທີ່ຕ້ອງການເອົາຂໍ້ມູນຂອງຜູ້ທີ່ຖືກລຶບໄປ ?
-would you like egroupware to cache the egw info array ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ໃຫ້ເກັບເປັນຊຸດຂໍ້ມູນ egw?
-would you like egroupware to check for a new version<br>when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ເພື່ອກວດສອບ <br> ສໍາລັບເວີເຊິ້ນໃໝ່ເມື່ອ admins ເຂົ້າສູ່ລະບົບ ?
-would you like egroupware to check for new application versions when admins login ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (EGroupware) ເພື່ອກວດສອບ ແອັບພຼິເຄຊັນໃໝ່ເມື່ອຜູ້ຄຸ້ມຄອງລະບົບ ເຂົ້າສູ່ລະບົບ ?
-would you like to automaticaly load new langfiles (at login-time) ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະໂຫຼດອັດຕະໂນມັດໄຟລພາສາໃໝ່ (ເວລາລ໋ອກອິນ) ?
-would you like to show each application's upgrade status ?	admin	lo	ທ່ານຕ້ອງການສະແດງສະຖານະການປັບປຸງຂອງແຕ່ລະແອັບພຼິເຄຊັນ ບໍ?
 wrong account type: %1 is no %2 !!!	admin	lo	ປະເພດບັນຊີຜິດພາດ: %1 ບໍ່ແມ່ນ %2!
 wrong admin-account or -password !!!	admin	lo	ບັນຊີຜູ້ຄຸ້ມຄອງລະບົບ ຫຼື ລະຫັດຜ່ານຜີດພາດ !
 xml-rpc	admin	lo	XML-RPC
@@ -570,30 +537,3 @@ you need to enter install id and password!	admin	lo	ທ່ານຕ້ອງໃ�
 you will need to remove the subcategories before you can delete this category	admin	lo	ທ່ານຕ້ອງລຶບໝວດໝູ່ຍ່ອຍກ່ອນທີ່ຈະລຶບໝວດໝູ່ນີ້
 your last submission was less then %1 days ago!	admin	lo	ຄັ້ງລ່າສຸດໃນການສົ່ງຢ່າງໜ້ອຍ % 1 ມຶ້ທີ່ຜ່ານມາ
 your session could not be verified.	admin	lo	ເຊສຊັ້ນຂອງທ່ານຈະບໍ່ສາມາດຢືນຢັນ
-advanced options	admin	lo	ການຕັ້ງຄ່າແບບພິເສດ
-alternate email address	admin	lo	ທີ່ຢູ່ email ອື່ນ
-cyrus imap server	admin	lo	Cyrus IMAP Server
-default	admin	lo	ຄ່າເລີ່ມຕົ້ນ
-deliver extern	admin	lo	ສົ່ງ extern
-edit email settings	admin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
-email account active	admin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
-email address	admin	lo	ທີ່ຢູ່ email
-error saving account!	admin	lo	ການບັນທຶກບັນຊີພົບຂໍ້ຜິດພາດ!
-event details follow	admin	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
-forward also to	admin	lo	ສົ່ງຕໍ່ໄປຫາ
-forward only	admin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
-in mbyte	admin	lo	ໃນ Mbyte
-leave empty for no quota	admin	lo	ອອກຈາກລະບົບສໍາລັບບໍ່ມີໂກຕ້າ
-mail settings	admin	lo	ຕັ້ງຄ່າ mail
-no alternate email address	admin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
-order	admin	lo	Order
-postfix with ldap	admin	lo	Postfix ດ້ວຍ LDAP
-qmaildotmode	admin	lo	qmaildotmode
-quota settings	admin	lo	ໂກຕ້າການຕັ້ງຄ່າ
-quota size in mbyte	admin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
-remove	admin	lo	ລຶບອອກ
-standard	admin	lo	ມາດຕະຖານ
-standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
-standard pop3 server	admin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
-standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
-use default	admin	lo	ໃຊ້ຄ່າເລີ່ມຕົ້ນ

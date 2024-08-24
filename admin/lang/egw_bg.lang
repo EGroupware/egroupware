@@ -68,7 +68,6 @@ acl rights	common	bg	ACL права
 acl updated	admin	bg	ACL е актуализиран
 acl updated.	admin	bg	ACL е актуализиран.
 activate	admin	bg	Активиране
-activate wysiwyg-editor	admin	bg	Активиране на WYSIWYG-редактор
 activated	admin	bg	Активиран
 active mail accounts	admin	bg	Активни пощенски акаунти
 active templates	admin	bg	Активни шаблони
@@ -90,7 +89,6 @@ add new email address:	admin	bg	Добавяне на нов имейл адре
 add peer server	admin	bg	Добавете Peer Server
 add profile	admin	bg	Добавете профил
 add sub-category	admin	bg	Добавете Подкатегория
-add to group	admin	bg	Добавяне към група
 add user	admin	bg	Добавяне на потребител
 add user or group	admin	bg	Добавяне на потребител или група
 added	admin	bg	Добавено
@@ -106,12 +104,6 @@ application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
 bad login name or password.	admin	bg	Лошо име за вход или парола.
-blocking after wrong password	admin	bg	Блокиране след грешна парола
-bulk changes	admin	bg	Групови промени
-bulk password reset	admin	bg	Групова промяна на паролата
-certificate	admin	bg	Сертификат
-certificate details	admin	bg	Подробности за сертификата
-certificate validation in days	admin	bg	Валидиране на сертификата в дни
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
 copy of	admin	bg	Копие на
 country	admin	bg	Държава
