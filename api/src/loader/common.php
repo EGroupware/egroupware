@@ -417,7 +417,9 @@ if (!function_exists('parse_navbar'))
 	}
 }
 
-if (!function_exists('display_sidebox'))
+if (!function_exists('display_sidebox') &&
+	// allow developer TranslationTools scanner to overwrite the function
+	($_GET['menuaction'] ?? null) !== 'developer.EGroupware\\Developer\\TranslationTools.scan')
 {
 	/**
 	 * echo's out a sidebox menu
