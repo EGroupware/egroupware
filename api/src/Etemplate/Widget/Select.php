@@ -326,12 +326,16 @@ class Select extends Etemplate\Widget
 	/**
 	 * Get all values from an option array, which can be an associate array with values as key, or a "real" array or arrays with key "value"
 	 *
+	 * $options can be a real array, still using the key as value:
+	 * - ["", "low", "normal", "high"]
+	 *
 	 * @param array|array[] $options incl. possible children
 	 * @return string[]
 	 */
 	static function optionValues(array $options)
 	{
-		if (!$options || (function_exists('array_is_list') && !array_is_list($options)) ||
+		if (!$options || !is_array(current($options)) || !isset(current($options)['value']) ||
+			(function_exists('array_is_list') && !array_is_list($options)) ||
 			(!function_exists('array_is_list') && !isset($options[0]) && !isset($options[count($options) - 1])))
 		{
 			return array_keys($options);
