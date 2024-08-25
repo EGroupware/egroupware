@@ -549,7 +549,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                    autocomplete="off"
                    ?disabled=${this.disabled}
                    ?readonly=${this.readonly}
-                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
+                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder || this.emptyLabel}"
                    tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${() => {this.hasFocus = false;}}
@@ -630,7 +630,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasValue = this.value && this.value.length > 0;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
+		const isPlaceholderVisible = (this.placeholder || this.emptyLabel) && this.value.length === 0 && !this.disabled && !this.readonly;
 
 		return html`
             <div
