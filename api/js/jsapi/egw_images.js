@@ -103,13 +103,11 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				}
 			}
 			tries['global'] = _name;
-			if (typeof images['global'] !== 'undefined' && typeof images['global'][_name] === 'string')
+			if (_name !== 'navbar' &&	// do NOT overwrite navbar images of all apps with placeholder
+				typeof images['global'] !== 'undefined' && typeof images['global'][_name] === 'string'&&
+				typeof images['bootstrap'] !== 'undefined' && typeof images['bootstrap'][images['global'][_name]] == 'string')
 			{
-				if (typeof images['bootstrap'] !== 'undefined' && typeof images['bootstrap'][_name] == 'string')
-				{
-					return this.webserverUrl+images['bootstrap'][_name];
-				}
-				return this.image(images['global'][_name], _app);
+				return this.webserverUrl+images['bootstrap'][images['global'][_name]];
 			}
 			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
 			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')

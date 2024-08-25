@@ -133,8 +133,6 @@ class Image
 		'priority'	=> 'dash-circle',
 		'private'	=> 'key',
 		'reload'	=> 'arrow-clockwise',
-		'save' => 'api/save',   // @todo: as bootstrap's save would shadow api/save and is not fitting
-		'save_new'	=> 'api/save_new',  // @todo
 		'save_zip'	=> 'file-zip',
 		//'search'	=> 'search',
 		'security-update'	=> 'shield-exclamation',
