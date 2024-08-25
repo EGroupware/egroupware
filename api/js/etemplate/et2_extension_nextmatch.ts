@@ -3145,7 +3145,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 										// Should be OK to print now
 										dialog.updateComplete.then(() =>
 										{
-											resolve();
+											window.setTimeout(() => resolve(), 500);
 										});
 									});
 								}, 10 * fetchedCount);
@@ -3175,7 +3175,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					window.setTimeout(function()
 					{
 						resolve();
-					}, 0);
+					}, 200);
 				}
 			}.bind(this);
 			const value = {
