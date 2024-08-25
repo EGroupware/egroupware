@@ -101,7 +101,7 @@
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[class] $row_cont[cat_id]" valign="top">
-					<et2-image  align="center" label="$row_cont[type_label]" src="$row_cont[type]" noLang="1"/>
+					<et2-image  align="center" label="$row_cont[type_label]" src="$row_cont[type]" noLang="1" style="font-size: 200%"/>
 					<et2-vbox  id="${row}[id]">
 						<et2-description  id="${row}[line1]" noLang="1"></et2-description>
 						<et2-description  id="${row}[line2]" noLang="1"></et2-description>

@@ -58,13 +58,17 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		{
 			// Hide if no valid image
 			if (this._img) this._img.src = '';
-			this.className = '';
+			this.className = this.title = '';
 			return;
 		}
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap && !this._img)
 		{
 			this.className = 'bi-'+bootstrap[1];
+			if (this.statustext || this.label)
+			{
+				this.title = this.statustext || this.label;
+			}
 			return;
 		}
 		// change between bootstrap and regular img
@@ -165,6 +169,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		if (bootstrap)
 		{
 			this.className = 'bi-'+bootstrap[1];
+			this.title = this.statustext || this.label;
 			return html``;
 		}
 		this.className = '';
