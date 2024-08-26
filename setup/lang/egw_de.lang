@@ -28,7 +28,6 @@
 80 (http)	setup	de	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	de	<b>Zeichensatz</b> (benutzen sie UTF-8 wenn sie planen Sprachen mit verschiedenen Zeichensätzen zu verwenden)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	de	==> andere Gruppe '%1' unter der gidNumber %2, Mitgliedschaften wurden NICHT gesetzt!
-[header-password],[header-user],[new-password],[new-user]	setup	de	[Header-Passwort],[Header-Benutzer],[neues-Passwort],[neuer-Benutzer]
 access denied: wrong username or password for manage-header !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für die Headerverwaltung!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für Konfiguration der Domain '%1(%2)' !
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
@@ -259,6 +258,8 @@ deregistered	setup	de	nicht registriert
 details for admin account	setup	de	Details des Admin-Kontos
 developers' table schema toy	setup	de	Entwickler Tabellen Schema "Spielzeug"
 did not find any valid db support!	setup	de	Konnte keine gültige Datenbankunterstützung finden!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	de	Nur abschalten wenn Ihr AD Probleme mit VLV Kontrollen hat UND alle Benutzer in einer einzigen Abfrage liefern kann!
+disable vlv controls	setup	de	VLV Kontrollen abschalten
 distribution-lists too	setup	de	auch Verteilerlisten
 do not check for deleted user	setup	de	Nicht auf gelöschte Benutzer prüfen
 do you want persistent connections (higher performance, but consumes more resources)	setup	de	Wollen Sie eine permanente Datenbankverbindung verwenden?<br>(höhere Performance, braucht aber mehr Ressourcen)
@@ -304,10 +305,10 @@ enable mcrypt	setup	de	MCrypt einschalten
 enforce ssl (allows to specify just a path above)	setup	de	Erzwinge SSL (erlaubt darüber nur einen Pfad anzugeben)
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br>(benötigt mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br>Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur EGroupware Installation.<br>Beispiel: https://egw.domain.com/egroupware   or   /egroupware<br><b>Keinen nachfolgenden Slash /</b>
@@ -461,8 +462,8 @@ manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
 manual / help	setup	de	Handbuch / Hilfe
 match saml usernames to existing ones (use strings or regular expression)	setup	de	Verbinde SAML Benutzernamen mit bestehenden (benutze Strings oder Reguläre Ausdrücke)
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: EGroupware benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
 maximum account id (e.g. 65535 or 1000000)	setup	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: EGroupware benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
 may be broken	setup	de	Kann kaputt sein
 mcrypt algorithm (default tripledes)	setup	de	MCrypt-Algorithmus (Vorgabe TRIPLEDES)
 mcrypt initialization vector	setup	de	MCrypt-Initialisierungsvektor
@@ -576,8 +577,8 @@ read translations from	setup	de	Lese Übersetzungen von
 readable by the webserver	setup	de	Lesbar durch den Webserver
 really uninstall all applications	setup	de	WIRKLICH alle Anwendungen deinstallieren
 refusing to delete dn "%1"!	setup	de	Löschen von DN "%1" verweigert!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), EGroupware benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
 registered	setup	de	Registriert
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	de	register_globals ist eingeschaltet (On), EGroupware benötigt das NICHT und es ist generell sicherer es auszuschalten (Off)
 regular expression to filter by dn	setup	de	Regulärer Ausdruck zum Filtern nach DN
 rejected lines	setup	de	Zurückgewiesene Zeilen
 remove	setup	de	Entfernen
@@ -847,5 +848,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht und Sie werden alle Daten verlieren!
 your temporary directory '%1' %2	setup	de	Ihr temporäres Verzeichnis '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	de	[Header-Passwort],[Header-Benutzer],[neues-Passwort],[neuer-Benutzer]
 {db | php(default) | php-restore}	setup	de	{db | php(Vorgabe) | php-restore}
 {off(default) | on}	setup	de	{off(Vorgabe) | on}

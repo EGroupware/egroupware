@@ -89,6 +89,7 @@ trait LdapVlvSortRequestTrait
 		// check if we require sorting and server supports it
 		$control = [];
 		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_numeric($start) &&
+			empty($this->frontend->config['ads_disable_vlv']) &&
 			$this->serverinfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
 			($sort_values = $this->sortValues($order_by)))
 		{
