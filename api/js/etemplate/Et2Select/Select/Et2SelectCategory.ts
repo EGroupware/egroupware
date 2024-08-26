@@ -123,7 +123,7 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 		let css = "";
 		const catColor = (option) =>
 		{
-			css += ".cat_" + option.value + " {--category-color: " + (option.data?.color || "transparent") + ";}\n";
+			css += ".cat_" + option.value + " {--category-color: var(--cat-" + option.value + "-color ,transparent);}\n";
 
 			if (typeof option.children === 'object')
 			{

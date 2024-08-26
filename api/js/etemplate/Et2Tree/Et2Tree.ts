@@ -872,16 +872,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 		//fallback to try and set icon if everything else failed
 		if (!img) img = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
-		if (img?.endsWith(".png"))
-		{
-			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
-			img = img.replace(".png", ".svg");
-		}
-		//append image path, if img is only relative (does not start with / or https://)
-		if (img && typeof img === "string" && !img.match(/^(\/|https?:\/\/)/))
-		{
-			img = this.imagePath + img;
-		}
 
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
 		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
@@ -938,7 +928,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             >
 
 
-				<sl-icon src="${img ?? nothing}"></sl-icon>
+                <et2-image src="${img ?? nothing}"></et2-image>
                 <span class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
