@@ -38,7 +38,8 @@ export default css`
 	}
 
 	.tree-dropdown__combobox {
-		flex: 1;
+		min-height: calc(var(--sl-input-height-medium) - 2 * var(--sl-input-border-width));
+
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -54,8 +55,6 @@ export default css`
 		overflow-x: hidden;
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
-		padding-top: 0.1rem;
-		padding-bottom: 0.1rem;
 
 		transition: var(--sl-transition-fast) color, var(--sl-transition-fast) border, var(--sl-transition-fast) box-shadow,
 		var(--sl-transition-fast) background-color;
@@ -84,7 +83,7 @@ export default css`
 	/* Trigger */
 
 	.tree-dropdown__expand-icon {
-		height: var(--sl-input-height-medium);
+		height: var(--sl-input-height-small);
 		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
@@ -111,7 +110,7 @@ export default css`
 		flex-wrap: wrap;
 		align-content: center;
 		gap: 0.1rem 0.5rem;
-		min-height: var(--sl-input-height-medium);
+		padding-top: var(--sl-spacing-3x-small);
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 	}
 
