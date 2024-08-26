@@ -2994,7 +2994,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			{
 				this.set_columns(jQuery.extend([], this.egw().preference(pref, app)));
 			}
-
+			let printDialog;
 			const callback = function(button, value)
 			{
 				if(button === Et2Dialog.CANCEL_BUTTON)
@@ -3083,7 +3083,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 						egw.lang('Loading'), egw.lang('please wait...'), {}, [
 							{
 								"button_id": Et2Dialog.CANCEL_BUTTON,
-								label: 'cancel',
+								label: egw.lang('Cancel'),
 								id: 'dialog[cancel]',
 								image: 'cancel'
 							}
@@ -3140,15 +3140,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 									const promises = nodeListArray.map(node => node.updateComplete);
 									Promise.all(promises).finally(() =>
 									{
-										dialog.close();
-
 										// Should be OK to print now
-										dialog.updateComplete.then(() =>
-										{
-											window.setTimeout(() => resolve(), 500);
-										});
+										dialog.close().then(() => resolve());
 									});
-								}, 10 * fetchedCount);
+								}, 3 * fetchedCount);
 							}
 
 						}, ctx);
@@ -3172,10 +3167,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					// No scrollbar in print view
 					jQuery('.egwGridView_scrollarea', this.div).css('overflow-y', 'hidden');
 					// Give dialog a chance to close, or it will be in the print
-					window.setTimeout(function()
-					{
-						resolve();
-					}, 200);
+					printDialog.close().then(() => resolve());
 				}
 			}.bind(this);
 			const value = {
@@ -3193,7 +3185,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 					}
 				}
 			};
-			await this._create_print_dialog.call(this, value, callback).updateComplete;
+			await (printDialog=this._create_print_dialog.call(this, value, callback)).updateComplete;
 		});
 	}
 
