@@ -1237,7 +1237,9 @@ class Ldap
 
 		// check if we require sorting and server supports it
 		$control = [];
-		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_array($start) && $this->ldapServerInfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
+		if (PHP_VERSION >= 7.3 && !empty($order_by) && is_array($start) &&
+			empty($this->ldap_config['ads_disable_vlv']) &&
+			$this->ldapServerInfo->supportedControl(LDAP_CONTROL_SORTREQUEST, LDAP_CONTROL_VLVREQUEST) &&
 			($sort_values = $this->sort_values($order_by)))
 		{
 			[$offset, $num_rows] = $start;
@@ -1260,6 +1262,7 @@ class Ldap
 		}
 		elseif (PHP_VERSION >= 7.3 && empty($order_by) &&
 			($start === false || is_array($start) && count($start) === 3) &&
+			empty($this->ldap_config['ads_disable_vlv']) &&
 			$this->ldapServerInfo->supportedControl(LDAP_CONTROL_PAGEDRESULTS))
 		{
 			if ($start === false)

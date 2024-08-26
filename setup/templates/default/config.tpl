@@ -30,7 +30,7 @@
 
    <tr class="row_on">
     <td>{lang_Enter_the_full_path_for_users_and_group_files.<br />Examples:_/files,_E:\FILES}</td>
-    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="40" /></td>
+    <td><input name="newsettings[files_dir]" value="{value_files_dir}" size="80" /></td>
    </tr>
 
    <tr class="row_off">
@@ -47,7 +47,7 @@
 
    <tr class="row_off">
     <td>{lang_Enter_the_full_path_to_the_backup_directory.<br />if_empty:_files_directory}/db_backup:</td>
-    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="40" /></td>
+    <td><input name="newsettings[backup_dir]" value="{value_backup_dir}" size="80" /></td>
    </tr>
 
    <tr class="row_on">
@@ -56,12 +56,12 @@
 
    <tr class="row_off">
     <td>{lang_Enter_the_full_path_for_temporary_files.<br />Examples:_/tmp,_C:\TEMP}:</td>
-    <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="40" /></td>
+    <td><input name="newsettings[temp_dir]" value="{value_temp_dir}" size="80" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Enter_the_location_of_eGroupWare's_URL.<br />Example:_http://www.domain.com/egroupware_&nbsp;_or_&nbsp;_/egroupware<br /><b>No_trailing_slash</b>}:</td>
-    <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="40" /></td>
+    <td><input name="newsettings[webserver_url]" value="{value_webserver_url}" size="80" /></td>
    </tr>
 
    <tr class="row_off">
@@ -300,32 +300,32 @@
     	{lang_LDAP_host} {lang_IP_or_URL}: (ldap|ldaps|tls)://IP[:port]/<br/>
     	({lang_use_space_to_separate_multiple}):
     </td>
-    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}" size="40" /></td>
+    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}" size="80" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_accounts_context}:</td>
-    <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="40" /></td>
+    <td><input name="newsettings[ldap_context]" value="{value_ldap_context}" size="80" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_LDAP_search_filter_for_accounts,_default:_"(uid=%user)",_%domain=EGw-domain}:</td>
-    <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="40" /></td>
+    <td><input name="newsettings[ldap_search_filter]" value="{value_ldap_search_filter}" size="80" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_groups_context}:</td>
-    <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="40" /></td>
+    <td><input name="newsettings[ldap_group_context]" value="{value_ldap_group_context}" size="80" /></td>
    </tr>
 
    <tr class="row_on">
     <td>{lang_Additional_group_filter_(optional)}:</td>
-    <td><input name="newsettings[ldap_group_filter]" value="{value_ldap_group_filter}" size="40" /></td>
+    <td><input name="newsettings[ldap_group_filter]" value="{value_ldap_group_filter}" size="80" /></td>
    </tr>
 
    <tr class="row_off">
     <td>{lang_LDAP_rootdn} {lang_(searching_accounts_and_changing_passwords)}:</td>
-    <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="40" /></td>
+    <td><input name="newsettings[ldap_root_dn]" value="{value_ldap_root_dn}" size="80" /></td>
    </tr>
 
    <tr class="row_on">
@@ -387,11 +387,11 @@
    </tr>
    <tr class="row_off">
      <td>{lang_Host/IP_Domain_controler} ({lang_use_space_to_separate_multiple}):</td>
-     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40" /></td>
+     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="80" /></td>
    </tr>
    <tr class="row_on">
      <td>{lang_Domain_name}:</td>
-     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
+     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="80" /></td>
    </tr>
    <tr class="row_off">
      <td>
@@ -399,11 +399,11 @@
      	({lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled})<br/>
      	{lang_Requires_"Reset_Password"_privilege,_to_change_passwords!}
      </td>
-     <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="40" /></td>
+     <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="80" /></td>
    </tr>
    <tr class="row_on">
      <td>{lang_Password}:</td>
-     <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="40" /></td>
+     <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="80" /></td>
    </tr>
    <tr class="row_off">
      <td>
@@ -417,6 +417,9 @@
 			<option value="tls"{selected_ads_connection_tls}>TLS</option>
 			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
      	</select>
+        &nbsp; <label title="{lang_Disable_only_if_your_AD_has_problems_with_VLV_controls_AND_can_return_all_users_in_a_single_query!}">
+            <input type="checkbox" value="disable" {checked_ads_disable_vlv_disable} name="newsettings[ads_disable_vlv]"/>
+            {lang_Disable_VLV_controls}</label>
      </td>
    </tr>
    <tr class="row_on">
@@ -434,7 +437,7 @@
         <input name="newsettings[ads_group_context]" value="{value_ads_group_context}" size="80" />
         <input type="hidden" value="" name="newsettings[ads_group_extra_types]"/>
         <label><input type="checkbox" value="distributionlists" {checked_ads_group_extra_types_distributionlists} name="newsettings[ads_group_extra_types]"/>
-            {lang_distribution-lists too}</label>
+            {lang_distribution-lists_too}</label>
      </td>
    </tr>
    <tr class="row_on">
