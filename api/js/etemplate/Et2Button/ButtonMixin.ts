@@ -78,7 +78,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
             	display:none !important;
             }
 
-			/* Leave label there for accessability, but position it so it can't be seen */
+			/* Leave label there for accessibility, but position it so it can't be seen */
 			:host(.imageOnly) .button__label {
 				position: absolute;
 				left: -999px
@@ -94,6 +94,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
                 max-width: 20px;
                 display: flex;
 				font-size: 20px !important;
+				padding-left: var(--et2-button-image-padding-left);
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;
@@ -127,6 +128,9 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 				justify-content: center;
 				width: var(--sl-input-height-medium);
 				padding-inline-start: 0;			
+			}
+			.button--has-prefix:not(.button--has-label) ::slotted(et2-image) {
+				padding-left: 0;
 			}
 			
 			/* Override primary styling - we use variant=primary on first dialog button */
