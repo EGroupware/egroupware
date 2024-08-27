@@ -239,9 +239,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                 /* Stop icon from shrinking if there's not enough space */
                 /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
 
-                sl-tree-item sl-icon {
+                sl-tree-item et2-image {
                     flex: 0 0 1em;
                     font-size: calc(100% + 2px);
+					padding-right: .4em;
                 }
 
                 ::part(label) {
