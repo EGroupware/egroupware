@@ -104,10 +104,19 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			}
 			tries['global'] = _name;
 			if (_name !== 'navbar' &&	// do NOT overwrite navbar images of all apps with placeholder
-				typeof images['global'] !== 'undefined' && typeof images['global'][_name] === 'string'&&
-				typeof images['bootstrap'] !== 'undefined' && typeof images['bootstrap'][images['global'][_name]] == 'string')
+				typeof images['global'] !== 'undefined' && typeof images['global'][_name] === 'string')
 			{
-				return this.webserverUrl+images['bootstrap'][images['global'][_name]];
+				if (typeof images['bootstrap'] !== 'undefined' && typeof images['bootstrap'][images['global'][_name]] == 'string')
+				{
+					return this.webserverUrl+images['bootstrap'][images['global'][_name]];
+				}
+				// global replaces image with non-bootstrap image like {"save": "api/save"} to NOT use bootstrap's "save" icon
+				if (images['global'][_name].indexOf('/') !== -1)
+				{
+					const split = images['global'][_name].split('/',2);
+					_app = split[0];
+					_name = split[1];
+				}
 			}
 			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
 			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')

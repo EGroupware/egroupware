@@ -133,6 +133,8 @@ class Image
 		'priority'	=> 'dash-circle',
 		'private'	=> 'key',
 		'reload'	=> 'arrow-clockwise',
+		'save'      => 'api/bi-save',   // composition of floppy=apply and x-square=cancel
+		'save_new'  => 'api/bi-save-new',
 		'save_zip'	=> 'file-zip',
 		//'search'	=> 'search',
 		'security-update'	=> 'shield-exclamation',
