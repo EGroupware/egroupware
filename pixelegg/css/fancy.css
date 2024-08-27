@@ -7216,3 +7216,6 @@ img.et2_button_icon[src*="svg"]:hover {
   border: 1px solid;
   border-radius: var(--sl-border-radius-pill);
 }
+.nextmatch_header .header_count {
+  border-radius: var(--sl-border-radius-medium);
+}

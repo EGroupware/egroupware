@@ -194,9 +194,15 @@ export class Et2VfsMime extends Et2ImageExpose
 		{
 			this.mime = _value.mime;
 		}
+		this.label = '';
 		if(_value.path)
 		{
 			this.href = _value.path;
+			const parts = _value.path.split('.');
+			if (parts.length > 1)
+			{
+				this.label = egw.lang('%1 File', parts.pop())
+			}
 		}
 		if(_value.download_url)
 		{

@@ -118,6 +118,11 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 					_name = split[1];
 				}
 			}
+			// do NOT find old mime128-icons, if not translated to bootstrap
+			if (_name.startsWith('mime128_'))
+			{
+				return null;
+			}
 			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
 			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')
 			{

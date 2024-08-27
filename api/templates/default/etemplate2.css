@@ -4212,7 +4212,7 @@ button.shortcut-buttons-flatpickr-button {
     z-index: 790 !important;
 }
 
-/* Fix tinemce toolbar z-index is way higher (safari only) */
+/* Fix tinymce toolbar z-index is way higher (safari only) */
 .tox .tox-editor-container .tox-editor-header {
 	z-index: auto;
 }
@@ -4225,6 +4225,11 @@ et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
 
 et2-vfs-mime {
     position: relative;
+    font-size: 22px !important;
+}
+et2-vfs-mime img {
+    width: auto !important;
+    display: inline-block;
 }
 et2-vfs-mime img.overlay {
     position: absolute;

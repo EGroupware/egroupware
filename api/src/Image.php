@@ -44,7 +44,7 @@ class Image
 		'arrow_right'	=> 'caret-right-fill',
 		'arrow_up'	=> 'caret-up-fill',
 		'back'	=> 'forward',
-		'bullet'	=> 'record-circle',
+		'bullet'	=> /*'record-*/ 'circle',
 		'cake'	=> 'cake2',
 		'calendar'	=> 'calendar3',
 		'call'	=> 'telephone',
@@ -72,7 +72,7 @@ class Image
 		'down'	=> 'forward',
 		//'download'	=> 'download',
 		'drop'	=> 'paperclip',
-		'edit'	=> 'pencil-fill',
+		'edit'	=> 'pencil-square',
 		'edit_leaf'	=> 'pencil-square',
 		'editpaste'	=> 'clipboard2-data',
 		'export'	=> 'download',
@@ -103,8 +103,62 @@ class Image
 		'menu_active'	=> 'forward',
 		'menu_list'	=> 'list-task',
 		'milestone'	=> 'check2-circle',
-		'mime128_application_pdf'	=> 'file-earmark-pdf',
 		'mime128_directory'	=> 'folder2',
+		'mime128_unknown' => 'file-earmark',
+		'mime128_application_octet-stream' => 'file-earmark-binary',
+		'mime128_message_rfc822' => 'envelope-at',
+		'mime128_text_plain' => 'file-earmark-text',
+		'mime128_text_html' => 'filetype-html',
+		'mime128_text_css' => 'filetype-css',
+		'mime128_text_csv' => 'filetype-csv',
+		'mime128_text_x-python' => 'filetype-py',
+		'mime128_text_x-markdown' => 'filetype-md',
+		//'mime128_text_x-vcard' => '',   // todo
+		//'mime128_text_calendar' => '',   // todo
+		'mime128_application_pdf'   => 'filetype-pdf',
+		'mime128_application_javascript'    => 'filetype-js',
+		'mime128_application_rtf'   => 'file-earmark-richtext',
+		'mime128_application_xml'   => 'filetype-xml',
+		'mime128_application_x-egroupware-etemplate' => 'file-earmark-code',
+		'mime128_application_msword' => 'filetype-doc',
+		'mime128_application_zip' => 'file-earmark-zip',
+		'mime128_application_x-gtar' => 'file-earmark-zip',
+		'mime128_application_x-gzip' => 'file-earmark-zip',
+		'mime128_application_x-tar' => 'file-earmark-zip',
+		'mime128_application_x-bzip2' => 'file-earmark-zip',
+		'mime128_application_x-7z-compressed' => 'file-earmark-zip',
+		'mime128_application_x-rar-compressed' => 'file-earmark-zip',
+		'mime128_application_x-httpd-php' => 'filetype-php',
+		'mime128_application_json' => 'filetype-json',
+		'mime128_application_yaml' => 'filetype-yml',
+		'mime128_application_postscript' => 'filetype-ai',
+		'mime128_application_vnd.ms-excel' => 'filetype-xls',
+		'mime128_application_vnd.ms-powerpoint' => 'filetype-ppt',
+		'mime128_application_vnd.oasis.opendocument.presentation' => 'file-earmark-slides', // todo
+		'mime128_application_vnd.oasis.opendocument.spreadsheet' => 'file-earmark-spreadsheet', // todo
+		'mime128_application_vnd.oasis.opendocument.text' => 'file-earmark-word',   // todo
+		'mime128_application_vnd.openxmlformats-officedocument.presentationml.presentation' => 'filetype-pptx',
+		//'mime128_application_vnd.openxmlformats-officedocument.presentationml.slideshow' => '',
+		'mime128_application_vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'filetype-xlsx',
+		'mime128_application_vnd.openxmlformats-officedocument.wordprocessingml.document' => 'filetype-docx',
+		'mime128_application_x-sh' => 'filetype-sh',
+		'mime128_application_x-sql' => 'filetype-sql',
+		'mime128_video' => 'file-earmark-play',
+		'mime128_video_mp4' => 'filetype-mp4',
+		'mime128_video_mov' => 'filetype-mov',
+		//'mime128_video_ogg' => '',
+		'mime128_image' => 'file-earmark-image',
+		'mime128_image_bmp' => 'filetype-bmp',
+		'mime128_image_jpeg' => 'filetype-jpg',
+		'mime128_image_png' => 'filetype-png',
+		'mime128_image_gif' => 'filetype-gif',
+		'mime128_image_svg' => 'filetype-svg',
+		'mime128_image_tiff' => 'filetype-tiff',
+		'mime128_image_vnd.adobe.photoshop' => 'filetype-psd',
+		'mime128_image_vnd.adobe.illustrator' => 'filetype-ai',
+		'mime128_audio' => 'file-earmark-music',
+		'mime128_audio_mp4' => 'filetype-mp4',
+		'mime128_audio_x-wav' => 'filetype-wav',
 		'minus'	=> 'dash-lg',
 		'month'	=> 'calendar-month',
 		'mouse_scroll_lr'	=> 'arrows',
@@ -183,9 +237,9 @@ class Image
 		'dhtmlxtree/close'	=> 'caret-down',
 		'dhtmlxtree/folderClosed'	=> 'folder2',
 		'dhtmlxtree/folderOpen'	=> 'folder2-open',
-		'dhtmlxtree/kfm_home'	=> 'upload',
+		'dhtmlxtree/kfm_home'	=> 'download',
 		'dhtmlxtree/MailFolderClosed'	=> 'folder2',
-		'dhtmlxtree/MailFolderDrafts'	=> 'floppy',
+		'dhtmlxtree/MailFolderDrafts'	=> 'pencil-square',
 		'dhtmlxtree/MailFolderHam'	=> 'envelope-check',
 		'dhtmlxtree/MailFolderJunk'	=> 'exclamation-octagon',
 		'dhtmlxtree/MailFolderOutbox'	=> 'upload',
@@ -354,15 +408,20 @@ class Image
 		{
 			$url = $webserver_url.$image_map['vfs'][$image.$extension];
 		}
+		// then our globals lookup table $global2bootstrap, but not for $app/navbar
+		elseif(($image !== 'navbar' || $app === 'api') && (isset($image_map['global'][$app.'/'.$image]) || isset($image_map['global'][$image])))
+		{
+			$image = $image_map['global'][$app.'/'.$image] ?? $image_map['global'][$image];
+		}
+		// return mime128_* not found in bootstrap as not found
+		elseif(str_starts_with($image, 'mime128_') && !isset($image_map['global'][$image]))
+		{
+			return null;
+		}
 		// then app specific ones
 		elseif(isset($image_map[$app][$image.$extension]))
 		{
 			$url = $webserver_url.$image_map[$app][$image.$extension];
-		}
-		// then our globals lookup table $img2bootstrap
-		elseif(isset($image_map['global'][$image]))
-		{
-			$image = $image_map['global'][$image];
 		}
 		if (isset($url))
 		{
