@@ -247,6 +247,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
                 ::part(label) {
                     overflow: hidden;
+					flex: 1 1 auto;
                 }
 
                 ::part(label):hover {
