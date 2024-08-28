@@ -78,12 +78,12 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			// Handle images in appname/imagename format
 			if(_name.indexOf('/') > 0)
 			{
-				var split = _name.split('/',2);
-				// dhtmlxtree and egw_action are subdirs in image dir, not applications
-				if (split[0] !== 'dhtmlxtree' && split[0] !== 'egw_action')
+				var split = _name.match(/^([^/]+)\/(.*)$/);
+				// e.g. dhtmlxtree and egw_action are subdirs in image dir, not applications
+				if (typeof images[split[1]] !== 'undefined')
 				{
-					_app = split[0];
-					_name = split[1];
+					_app = split[1];
+					_name = split[2];
 				}
 			}
 
