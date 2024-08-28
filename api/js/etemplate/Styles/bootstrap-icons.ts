@@ -17,7 +17,7 @@ export default css`
         font-variant: normal;
         text-transform: none;
         line-height: 1;
-        vertical-align: -.125em;
+		vertical-align: middle;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }

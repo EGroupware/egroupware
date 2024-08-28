@@ -31,6 +31,11 @@
 	--track-width: 3px;
 }
 
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  vertical-align: middle;
+}
 // Addressbook
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
 	background-color: fade(@addressbook-color, 30%);

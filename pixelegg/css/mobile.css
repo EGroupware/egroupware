@@ -6833,6 +6833,11 @@ table.egwGridView_grid img.et2_appicon {
   --sl-color-gray-150: hsl(240, 4.9%, 92.5%);
   --track-width: 3px;
 }
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  vertical-align: middle;
+}
 #egw_fw_basecontainer.egw_fw_sidebar_toggleOn #addressbook_sidebox_header.egw_fw_ui_sidemenu_entry_header_active {
   background-color: rgba(0, 51, 102, 0.3);
   border-left: 4px solid #003366 !important;
