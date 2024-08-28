@@ -53,7 +53,15 @@ export class Et2Details extends Et2Widget(SlDetails)
 			.details.hoist {
 				position: relative;
 			}
-	
+
+				/*
+								.details .details__body {
+									height: calc(100% - 2em - 2 * var(--sl-spacing-medium));
+									overflow-x: hidden;
+									overflow-y: auto;
+								}
+								
+				 */
 			.details.hoist .details__body {
 				position: absolute;
 				z-index: var(--sl-z-index-drawer);
