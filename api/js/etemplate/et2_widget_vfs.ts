@@ -580,7 +580,7 @@ export class et2_vfsUpload extends et2_file
 	getDOMNode(sender) {
 		if(sender && sender !== this && (sender.tagName && sender.tagName.indexOf("VFS") >= 0 || sender._type && sender._type.indexOf('vfs') >= 0))
 		{
-			let value = sender.getValue && sender.getValue() || sender.options?.value || false;
+			let value = sender.getValue && sender.getValue() || sender.value || false;
 			let row;
 			if(value)
 			{
