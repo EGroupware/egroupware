@@ -7200,19 +7200,22 @@ img.et2_button_icon[src*="svg"]:hover {
 }
 :root,
 :host,
-.sl-theme-light {
+.sl-theme-light,
+.sl-theme-dark {
   --sl-border-radius-medium: 20px;
   --sl-input-border-radius-medium: var(--sl-border-radius-medium);
   --et2-button-image-padding-left: 0.3rem;
 }
 :root et2-tabbox,
 :host et2-tabbox,
-.sl-theme-light et2-tabbox {
+.sl-theme-light et2-tabbox,
+.sl-theme-dark et2-tabbox {
   --track-width: 0px;
 }
 :root et2-tabbox et2-tab[active]::part(base),
 :host et2-tabbox et2-tab[active]::part(base),
-.sl-theme-light et2-tabbox et2-tab[active]::part(base) {
+.sl-theme-light et2-tabbox et2-tab[active]::part(base),
+.sl-theme-dark et2-tabbox et2-tab[active]::part(base) {
   border: 1px solid;
   border-radius: var(--sl-border-radius-pill);
 }
