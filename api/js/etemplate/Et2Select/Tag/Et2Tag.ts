@@ -35,7 +35,8 @@ export class Et2Tag extends Et2Widget(SlTag)
 
 			::slotted(et2-image) {
 			  height: 20px;
-			  width: 20px;
+				width: var(--icon-width, 20px);
+				display: inline-block;
 			}
 
 			.tag__prefix {

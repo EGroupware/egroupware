@@ -340,6 +340,21 @@ a.et2_url.url {
     margin-left: 0px;
 }
 
+/* et2-image has no shadow DOM, styles here */
+
+et2-image {
+	display: inline-block;
+}
+
+et2-image::slotted(img) {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+et2-image[icon] {
+	height: 1.3rem;
+	font-size: 1.3rem !important;
+}
 /**
  * Former button without background_image --> <et2-image class="et2-image-button"
  */

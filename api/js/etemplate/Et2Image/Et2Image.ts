@@ -8,7 +8,7 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement} from "lit";
+import {html, LitElement} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
@@ -17,6 +17,8 @@ import {customElement} from "lit/decorators/custom-element.js";
 @customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
+
+	/** Et2Image has no shadow DOM, styles in etemplate2.css
 	static get styles()
 	{
 		return [
@@ -37,6 +39,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 				}
 			`];
 	}
+	 */
 
 	/**
 	 * The label of the image
