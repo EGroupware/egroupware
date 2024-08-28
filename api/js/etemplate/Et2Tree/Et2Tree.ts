@@ -891,7 +891,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     part="item"
                     exportparts="checkbox, label, item:item-item"
                     id=${value}
-                    title=${selectOption.tooltip || nothing}
+                    title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
                     ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
                     ?expanded=${expandState}

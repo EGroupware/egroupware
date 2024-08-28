@@ -313,11 +313,15 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			super.connectedCallback();
 
 			this.addEventListener("click", this._handleClick);
-
-			if(this.statustext && !egwIsMobile())
+			if (this.statustext && !egwIsMobile())
 			{
-				this.egw().tooltipBind(this, this.egw().lang(this.statustext));
+				this.bindTooltip();
 			}
+		}
+
+		bindTooltip()
+		{
+			this.egw().tooltipBind(this, this.egw().lang(this.statustext));
 		}
 
 		disconnectedCallback()
@@ -326,6 +330,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			this.removeEventListener("click", this._handleClick);
 		}
+
 
 		/**
 		 * NOT the setter, since we cannot add to the DOM before connectedCallback()
@@ -513,7 +518,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				this.egw().tooltipUnbind(this);
 				if(this.statustext)
 				{
-					this.egw().tooltipBind(this, this.statustext);
+					this.bindTooltip()
 				}
 			}
 			if(changedProperties.has("onclick"))
