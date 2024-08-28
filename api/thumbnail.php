@@ -147,7 +147,7 @@ function read_thumbnail($src)
 	{
 		// Check whether the destination file already exists and is newer than
 		// the source file. Assume the file doesn't exist if thumbnail is turned off.
-		$exists = file_exists($dst) && filemtime($dst) >= filemtime($src);
+		$exists = file_exists($dst) && filemtime($dst) >= max(filemtime($src), filemtime(__FILE__));
 		// Only generate the thumbnail if the destination file does not match the
 		// conditions mentioned above. Abort if $maxsize is 0.
 		$gen_thumb = !$exists;
@@ -498,8 +498,14 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 		list($app, $icon) = explode('/', Vfs::mime_icon($mime), 2);
 		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
 			Api\Image::find($app, $icon), 2);
-		if (str_ends_with($path, '.svg')) return;
-		$dst = EGW_SERVER_ROOT.$path;
+		$dst = EGW_SERVER_ROOT . $path;
+		// GD can not deal directly with SVG, we need have a PNG to add it
+		if (str_ends_with($dst, '.svg') &&
+			!file_exists($dst = EGW_SERVER_ROOT . '/api/templates/default/images/bi-'.
+				str_replace('bi-', '', basename($dst, '.svg')).'.png'))
+		{
+			return;
+		}
 		$tag_image = imagecreatefrompng($dst);
 	}
 
@@ -513,7 +519,7 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 	{
 		imagecopyresampled($target_image,$tag_image,
 			$target_width - $tag_width,
-			$target_height - $tag_height,
+			$target_height - round(1.1*$tag_height),
 			0,0,
 			$tag_width,
 			$tag_height,
@@ -524,7 +530,7 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 }
 
 /**
- * Create an gd_image with transparent background.
+ * Create a gd_image with transparent background.
  *
  * @param int $w the width of the resulting image
  * @param int $h the height of the resutling image
