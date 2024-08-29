@@ -84,6 +84,7 @@ export default css`
 
 	.tree-dropdown__expand-icon {
 		height: var(--sl-input-height-small);
+		margin-top: var(--sl-spacing-small);
 		flex: 0 0 auto;
 		display: flex;
 		align-items: center;
@@ -112,6 +113,7 @@ export default css`
 		gap: 0.1rem 0.5rem;
 		padding-top: var(--sl-spacing-3x-small);
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
+		min-width: 0px;
 	}
 
 	/* End tags */
@@ -125,7 +127,7 @@ export default css`
 	.tree-dropdown__search {
 		flex: 1 1 7em;
 		order: 10;
-		min-width: 7em;
+		min-width: 2em;
 		border: none;
 		outline: none;
 
