@@ -2823,11 +2823,6 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 /* Hide label visually */
-.et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(base) {
-	justify-content: center;
-	padding-inline-start: 0;
-}
-
 .et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(label) {
 	position: absolute;
 	top: 100%;
