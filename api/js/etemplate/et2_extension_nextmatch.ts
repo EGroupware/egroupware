@@ -219,6 +219,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			"description": "If a refresh deletes the currently selected row, we normally advance the selection to the next row.  Set to true to stop this.",
 			"default": false
 		},
+		"hide_search": {
+			"name": "Hide the search box",
+			"type": "boolean",
+			"description": "If set to true the search box is hidden, default is false",
+			"default": false
+		},
 		"view": {
 			"name": "View",
 			"type": "string",
@@ -3422,6 +3428,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		// Search
 		this.search_box = jQuery(document.createElement("div"))
 			.addClass('search')
+			.css( this.nextmatch.options.hide_search ? "display" : "" , this.nextmatch.options.hide_search ? "none" : "")
 			.prependTo(egwIsMobile() ? this.nextmatch.getDOMNode() : this.row_div)
 
 		// searchbox widget options
