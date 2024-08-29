@@ -40,11 +40,13 @@
   html[data-darkmode='1'] {
     background: #000;
     filter: invert(1) hue-rotate(180deg) brightness(1);
+    /* need to explicitly disable the filter on the img tag, if used, as it would be applied twice and therefore not at all */
   }
   html[data-darkmode='1'] sl-menu-item::part(prefix),
   html[data-darkmode='1'] et2-select-country::part(prefix),
   html[data-darkmode='1'] et2-button::part(prefix),
   html[data-darkmode='1'] *::part(image),
+  html[data-darkmode='1'] et2-image,
   html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
@@ -61,6 +63,9 @@
   html[data-darkmode='1'] et2-avatar-group,
   html[data-darkmode='1'] .blueimp-gallery .slide {
     filter: invert(1) hue-rotate(180deg) !important;
+  }
+  html[data-darkmode='1'] et2-image > img {
+    filter: none !important;
   }
   html[data-darkmode='1'] #blueimp-gallery video,
   html[data-darkmode='1'] #blueimp-gallery .video-content {
