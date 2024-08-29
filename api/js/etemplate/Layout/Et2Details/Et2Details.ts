@@ -50,19 +50,14 @@ export class Et2Details extends Et2Widget(SlDetails)
             	order: 1;
             }
 
+				.details {
+					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+				}
 			.details.hoist {
 				position: relative;
 			}
 
-				/*
-								.details .details__body {
-									height: calc(100% - 2em - 2 * var(--sl-spacing-medium));
-									overflow-x: hidden;
-									overflow-y: auto;
-								}
-								
-				 */
-			.details.hoist .details__body {
+				.details.hoist .details__body {
 				position: absolute;
 				z-index: var(--sl-z-index-drawer);
 				background: var(--sl-color-neutral-0);

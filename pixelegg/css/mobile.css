@@ -6832,6 +6832,7 @@ table.egwGridView_grid img.et2_appicon {
   --sl-input-border-radius-small: 2px;
   --sl-input-border-radius-medium: 3px;
   --sl-input-border-color-focus: #E6E6E6;
+  --sl-panel-border-color: var(--sl-color-neutral-400);
   --indicator-color: #696969;
   --sl-input-focus-ring-color: #26537C;
   --sl-focus-ring-width: 2px;
