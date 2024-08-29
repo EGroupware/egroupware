@@ -340,8 +340,8 @@ class Image
 		'mail/prio_high'	=> 'exclamation-diamond',
 		'mail/prio_low'	=> 'arrow-down-square',
 		'mail/read_flagged_small'	=> 'flag',
-		'mail/smime_encrypt'	=> 'building-lock',
-		'mail/smime_sign'	=> 'database-lock',
+		//'mail/smime_encrypt'	=> 'building-lock', // old icons are better/easier to understand, need to be adapted to new BI style
+		//'mail/smime_sign'	=> 'database-lock',
 		'mail/source'	=> 'code',
 		'mail/spam_list_domain_add'	=> 'house-add',
 		'mail/spam_list_domain_remove'	=> 'house-dash',
