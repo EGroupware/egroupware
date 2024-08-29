@@ -2324,6 +2324,12 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 		$content['mail_id']=$rowID;
 
+		if ($headers['SMIMETYPE'])
+		{
+			$content['smime'] = Mail\Smime::isSmimeSignatureOnly($headers['SMIMETYPE'])?
+				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
+		}
+
 		// DRAG attachments actions
 		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
 			'file_drag' => array(

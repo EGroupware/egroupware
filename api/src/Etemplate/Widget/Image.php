@@ -40,7 +40,7 @@ class Image extends Etemplate\Widget
 		if (empty($app) || empty($img) || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
 		{
 			$img = $image;
-			list($app) = explode('.',$form_name);
+			list($app) = explode('.', self::$request->template['name']);
 		}
 		$src = Api\Image::find($app, $img);
 		/*if(!$this->id)

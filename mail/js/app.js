@@ -2423,9 +2423,9 @@ app.classes.mail = AppJS.extend(
 		// Check if this is a top level node and
 		// change profile if server has changed
 		var server = _folder.split('::');
-		var previousServer = _previous.split('::');
+		var previousServer = _previous?.split('::');
 		var profile_selected = (_folder.indexOf('::') === -1);
-		if (server[0] != previousServer[0] && profile_selected)
+		if ((!previousServer || server[0] != previousServer[0]) && profile_selected)
 		{
 			// mail_changeProfile triggers a refresh, no need to do any more
 			return this.mail_changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
