@@ -5479,6 +5479,7 @@ class Mail
 		else
 		{
 			$fquery->headerText(array('peek'=>$preserveUnSeen));
+			$fquery->structure();
 		}
 		$fquery->size();
 
@@ -5489,9 +5490,9 @@ class Mail
 			foreach($headersNew as $_fetchObject)
 			{
 				$headers = $_fetchObject->getHeaderText(0,Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+				$mailStructureObject = $_fetchObject->getStructure();
 				if ($_partID != '')
 				{
-					$mailStructureObject = $_fetchObject->getStructure();
 					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
 					{
 						if ($mime_id==$_partID)
@@ -5512,6 +5513,7 @@ class Mail
 			}
 			$retValue = is_object($headers) ? $headers->toArray():array();
 			if ($size) $retValue['size'] = $size;
+			$retValue['smimeType']		= Mail\Smime::getSmimeType($mailStructureObject);
 		}
 		$retValue = array_change_key_case($retValue,CASE_UPPER);
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue));
