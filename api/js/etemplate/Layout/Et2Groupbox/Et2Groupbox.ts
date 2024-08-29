@@ -50,7 +50,7 @@ export class Et2Groupbox extends Et2Details
 				 */
 
 				.details__body {
-					height: calc(100% - 3em - var(--sl-border-radius-medium)) !important;
+					height: calc(100% - 2em - var(--sl-border-radius-medium)) !important;
 					position: relative;
 				}
 
@@ -62,7 +62,7 @@ export class Et2Groupbox extends Et2Details
 				.details__content {
 					overflow: hidden;
 					overflow-y: auto;
-					height: 100%;
+					height: calc(100% - 2 * var(--sl-spacing-medium));
 				}
 
 				/* end workaround */
@@ -89,6 +89,7 @@ export class Et2Groupbox extends Et2Details
                 details.summaryOnTop {
                     padding-top: .5rem;
                     margin-top: .5rem;
+					height: auto;
                 }
 			`,
 		];

@@ -52,6 +52,7 @@ export class Et2Details extends Et2Widget(SlDetails)
 
 				.details {
 					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+					margin: 0px;
 				}
 			.details.hoist {
 				position: relative;
