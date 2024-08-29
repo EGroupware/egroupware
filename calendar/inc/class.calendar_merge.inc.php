@@ -153,6 +153,11 @@ class calendar_merge extends Api\Storage\Merge
 			$ids = json_decode($_REQUEST['id'], true);
 		}
 
+		// Need an array, and to modify the original to add path in
+		if(!is_array($_REQUEST['document']))
+		{
+			$_REQUEST['document'] = [$_REQUEST['document']];
+		}
 		foreach($_REQUEST['document'] as &$document)
 		{
 			// Try to make time span into appropriate ranges to match

@@ -2372,7 +2372,7 @@ export class CalendarApp extends EgwApp
 				menuaction: 'calendar.calendar_merge.merge_entries',
 				document: widget.getValue(),
 				merge: 'calendar_merge',
-				pdf: false,
+				options: {pdf: false},
 				select_all: false,
 				id: JSON.stringify({
 					first: app.calendar.state.first,
