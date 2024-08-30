@@ -582,7 +582,7 @@ export class et2_vfsUpload extends et2_file
 		{
 			let value = sender.getValue && sender.getValue() || sender.value || false;
 			let row;
-			if(value)
+			if(value && value.path)
 			{
 				// Have a value, we can find the right place
 				row = jQuery("[data-path='" + (value.path.replace(/'/g, '&quot')) + "']", this.list);
@@ -672,7 +672,6 @@ export class et2_vfsUpload extends et2_file
 			.addClass('title')
 			.appendTo(row);
 		let mime = <Et2VfsMime>et2_createWidget('vfs-mime', {value: file_data}, this);
-		mime._parent_node = this.getDOMNode(mime);
 
 		// Trigger expose on click, if supported
 		let vfs_attrs = {value: file_data, onclick: undefined};
