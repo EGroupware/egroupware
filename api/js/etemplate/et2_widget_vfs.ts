@@ -582,7 +582,7 @@ export class et2_vfsUpload extends et2_file
 		{
 			let value = sender.getValue && sender.getValue() || sender.options?.value || false;
 			let row;
-			if(value)
+			if(value && value.path)
 			{
 				// Have a value, we can find the right place
 				row = jQuery("[data-path='" + (value.path.replace(/'/g, '&quot')) + "']", this.list);
