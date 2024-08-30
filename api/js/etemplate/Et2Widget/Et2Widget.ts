@@ -1028,8 +1028,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 			};
 			doLoadingFinished();
+			const updateComplete = this.updateComplete;
+			// Record widget for debug
+			updateComplete["widget"] = this;
 
-			promises.push(this.getUpdateComplete());
+			promises.push(updateComplete);
 		}
 
 		getWidgetById(_id)

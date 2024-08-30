@@ -22,7 +22,7 @@ import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_cloneObject, et2_csvSplit} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_IDOMNode, et2_IInputNode} from "./et2_core_interfaces";
-import {loadWebComponent,Et2Widget} from "./Et2Widget/Et2Widget";
+import {Et2Widget, loadWebComponent} from "./Et2Widget/Et2Widget";
 // fixing circular dependencies by only importing type
 import type {et2_container} from "./et2_core_baseWidget";
 import type {et2_inputWidget} from "./et2_core_inputWidget";
@@ -927,6 +927,9 @@ export class et2_widget extends ClassWithAttributes
 		}
 		else if(typeof result == "object" && result.then)
 		{
+			// Record widget for debug
+			result["widget"] = this;
+
 			// Warn if list was not provided
 			if (warn_if_deferred)
 			{
