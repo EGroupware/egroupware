@@ -493,6 +493,7 @@ reply	mail	en	Reply
 reply all	mail	en	Reply all
 reply message type	mail	en	Reply message type
 reply to	mail	en	Reply to
+reply with attachments	mail	en	Reply with attachments
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	en	Replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. If you still wish to include content of this encrypted message, you may try to use forward as attachment instead.
 replyto	mail	en	replyto
 report as ham	mail	en	Report as Ham
