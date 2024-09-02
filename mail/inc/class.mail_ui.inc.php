@@ -1887,7 +1887,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					// flatten reply-actions for toolbar
 					foreach($actions[$act]['children'] as $name => $child)
 					{
-						$actionsenabled[$name]=$child;
+						$actionsenabled[$name]=$child+[
+							'group' => $actions[$act]['group'],
+						];
 					}
 					break;
 				case 'forward':
