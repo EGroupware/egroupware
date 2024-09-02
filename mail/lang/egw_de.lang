@@ -493,6 +493,7 @@ reply	mail	de	Antworten
 reply all	mail	de	Allen antworten
 reply message type	mail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	mail	de	Antworten an
+reply with attachments	mail	de	Antworten mit Anhängen
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	de	Die Antwort auf diese Nachricht ist fehlgeschlagen, weil der Inhalt dieser Nachricht verschlüsselt zu sein scheint und nicht richtig entschlüsselt werden kann. Wenn Sie dennoch den Inhalt dieser verschlüsselten Nachricht einbinden möchten, können Sie versuchen, statt dessen Weiterleiten als Anhang zu verwenden.
 replyto	mail	de	Antwort an
 report as ham	mail	de	Als "gute E-Mail" kennzeichnen

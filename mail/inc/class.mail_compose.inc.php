@@ -1576,9 +1576,14 @@ class mail_compose
 						$suppressSigOnTop = true;
 					}
 					break;
+				case 'reply_attachments':
+					$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, 'inline');
+					// fall through (everything but attachments get overwritten)
 				case 'reply':
+				case 'reply_single':
 				case 'reply_all':
-					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
+					$content = $this->getReplyData(str_replace('reply_', '', $from) ?: 'single',
+						$icServer, $folder, $msgUID, $part_id);
 					if ($content['mimeType'] === 'plain' && $GLOBALS['egw_info']['user']['preferences']['mail']['replyOptions'] === 'html')
 					{
 						$content['body'] = htmlspecialchars($content['body']);
@@ -2182,7 +2187,8 @@ class mail_compose
 	 * @param $_mode can be:
 	 * 		single: for a reply to one address
 	 * 		all: for a reply to all
-	 * 		forward: inlineforwarding of a message with its attachments
+	 *      attachments: (single) reply with attachments, like inline-forwarding
+	 * 		forward: inline-forwarding of a message with its attachments
 	 * @param $_icServer number (0 as it is the active Profile)
 	 * @param $_folder string
 	 * @param $_uid number
@@ -2382,7 +2388,8 @@ class mail_compose
 				foreach($newBody ? explode("\n",$newBody) : [] as $value) {
 					// Try to remove signatures from quoted parts to avoid multiple
 					// signatures problem in reply (rfc3676#section-4.3).
-					if ($_mode != 'forward' && ($hasSignature || ($hasSignature = preg_match("/^--\s[\r\n]$/",$value))))
+					if (!in_array($_mode, ['forward', 'attachments']) &&
+						($hasSignature || ($hasSignature = preg_match("/^--\s[\r\n]$/",$value))))
 					{
 						continue;
 					}
