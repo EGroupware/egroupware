@@ -480,7 +480,10 @@ class mail_ui
 							'no_columnselection' => false
 						);
 					}
-					if (Api\Header\UserAgent::mobile()) $content[self::$nm_index]['header_row'] = 'mail.index.header_right';
+					if (Api\Header\UserAgent::mobile())
+					{
+						$content[self::$nm_index]['header_row'] = 'mail.index.header_right';
+					}
 				}
 
 				// These must always be set, even if $content is an array
@@ -1179,21 +1182,35 @@ class mail_ui
 				'default' => true,
 				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/mail/templates/mobile/view.xet'))
 			),
-			'reply' => array(
+			'replies' => array(
 				'caption' => 'Reply',
 				'icon' => 'mail_reply',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
-				'toolbarDefault' => true
-			),
-			'reply_all' => array(
-				'caption' => 'Reply All',
-				'icon' => 'mail_replyall',
-				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.mail_compose',
-				'allowOnMultiple' => false,
-				'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => 'Ctrl + Shift + A'),
+				'children' => [
+					'reply' => [
+						'caption' => 'Reply',
+						'icon' => 'mail_reply',
+						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'allowOnMultiple' => false,
+						'toolbarDefault' => true,
+					],
+					'reply_all' => [
+						'caption' => 'Reply All',
+						'icon' => 'mail_replyall',
+						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'allowOnMultiple' => false,
+						'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => 'Ctrl + Shift + A'),
+						'toolbarDefault' => true,
+					],
+					'reply_attachments' => [
+						'caption' => 'Reply With Attachments',
+						'icon' => 'attach',
+						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'allowOnMultiple' => false,
+					],
+				],
 			),
 			'forward' => array(
 				'caption' => 'Forward',
@@ -1858,19 +1875,26 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function get_toolbar_actions()
 	{
 		$actions = $this->get_actions();
-		$arrActions = array('composeasnew', 'reply', 'reply_all', 'forward', 'flagged', 'delete', 'print',
+		$arrActions = array('composeasnew', 'replies', 'forward', 'flagged', 'delete', 'print',
 			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5','spam', 'ham');
+		$actionsenabled = [];
 		foreach( $arrActions as &$act)
 		{
 			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
 			switch ($act)
 			{
+				case 'replies':
+					// flatten reply-actions for toolbar
+					foreach($actions[$act]['children'] as $name => $child)
+					{
+						$actionsenabled[$name]=$child;
+					}
+					break;
 				case 'forward':
 					$actionsenabled[$act]=$actions[$act];
 					break;
 				case 'save':
 					$actionsenabled[$act]=$actions[$act];
-
 					break;
 				case 'view':
 					$actionsenabled[$act]=$actions[$act];
