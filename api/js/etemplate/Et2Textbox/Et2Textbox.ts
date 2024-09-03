@@ -202,6 +202,10 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 
 	protected updateMaskValue()
 	{
+		if(!this._mask)
+		{
+			return;
+		}
 		this._mask.unmaskedValue = "" + this.value;
 		this._mask.updateValue();
 		this.updateComplete.then(() =>

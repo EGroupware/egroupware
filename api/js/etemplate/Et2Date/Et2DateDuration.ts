@@ -313,7 +313,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 		{
 			for(let i = this._durationNode.length; --i >= 0;)
 			{
-				value += parseInt(<string>this._durationNode[i].value) * this._unit2seconds(this._durationNode[i].name);
+				value += this._durationNode[i].valueAsNumber * this._unit2seconds(this._durationNode[i].name);
 			}
 			if(this.dataFormat !== 's')
 			{

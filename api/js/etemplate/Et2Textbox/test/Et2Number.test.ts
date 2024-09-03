@@ -83,13 +83,14 @@ describe("Number widget", () =>
 				expected = set;
 			}
 			element.value = set;
-			assert.equal(element.value, expected);
+			assert.equal(element.getValue(), expected);
 
 		};
 
 		it("Handles . as decimal", () =>
 		{
 			window.egw.preference = () => ".";
+			element.decimalSeparator = ".";
 
 			checkValue("1");
 			assert.equal(element.valueAsNumber, 1, "Numeric value does not match");
@@ -102,10 +103,12 @@ describe("Number widget", () =>
 		it("Handles , as decimal", () =>
 		{
 			window.egw.preference = () => ",";
+			element.decimalSeparator = ",";
 
 			checkValue("1");
 			assert.equal(element.valueAsNumber, 1, "Numeric value does not match");
 			checkValue("1,1", "1.1");
+			assert.equal(element.getValue(), "1.1");
 			assert.equal(element.valueAsNumber, 1.1, "Numeric value does not match");
 
 			element.value = "Fail";

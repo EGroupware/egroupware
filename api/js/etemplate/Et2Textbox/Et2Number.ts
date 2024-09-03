@@ -9,7 +9,7 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
-import {css, html, nothing, render} from "lit";
+import {css, html, nothing, PropertyValues, render} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 
@@ -150,6 +150,10 @@ export class Et2Number extends Et2Textbox
 
 		// Add spinners
 		render(this._incrementButtonTemplate(), this);
+		if(this.value)
+		{
+			this.value = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator, this.precision);
+		}
 	}
 
 	firstUpdated()
@@ -168,6 +172,14 @@ export class Et2Number extends Et2Textbox
 				textContent: this[slot]
 			}));
 		});
+	}
+
+	willUpdate(changedProperties : PropertyValues)
+	{
+		if(this._mask && Object.keys(this.maskOptions).filter(v => changedProperties.has(v)).length > 0)
+		{
+			this._mask.updateOptions(this.maskOptions);
+		}
 	}
 
 	transformAttributes(attrs)
@@ -237,7 +249,6 @@ export class Et2Number extends Et2Textbox
 			val = this.min;
 		}
 		super.value = formatNumber(val, this.decimalSeparator, this.thousandsSeparator, this.precision);
-		this.updateMaskValue();
 	}
 
 	get value() : string
@@ -245,6 +256,13 @@ export class Et2Number extends Et2Textbox
 		return super.value;
 	}
 
+	protected updateMaskValue()
+	{}
+
+	/**
+	 * Value returned to server is always no thousands separator, "." decimal separator
+	 * @returns {any}
+	 */
 	getValue() : any
 	{
 		if(this.value == "" || typeof this.value == "undefined")
@@ -257,8 +275,7 @@ export class Et2Number extends Et2Textbox
 
 	get valueAsNumber() : number
 	{
-		this.updateMaskValue();
-		let formattedValue = (this._mask?.value ? this.stripFormat(this._mask.value) : this._mask?.unmaskedValue) ?? this.value;
+		let formattedValue : string | number = "" + this.stripFormat(this.value);
 		if(formattedValue == "")
 		{
 			return 0;
@@ -345,21 +362,6 @@ export class Et2Number extends Et2Textbox
 		return options;
 	}
 
-	updateMaskValue()
-	{
-		this._mask?.updateValue();
-		if(!this.mask && this._mask)
-		{
-			// Number mask sometimes gets lost with different decimal characters
-			this._mask.unmaskedValue = ("" + this.value);
-		}
-
-		if(this.value !== "" && this._mask)
-		{
-			this._mask.value = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator, this.precision);
-		}
-		this._mask?.updateValue();
-	}
 
 
 	private handleScroll(e)
@@ -409,7 +411,7 @@ export class Et2Number extends Et2Textbox
  * @param {number} value
  * @returns {string}
  */
-export function formatNumber(value : number, decimalSeparator : string = ".", thousandsSeparator : string = "", decimalPlaces = undefined) : string
+export function formatNumber(value : string | number, decimalSeparator : string = ".", thousandsSeparator : string = "", decimalPlaces = undefined) : string
 {
 	// Split by . because value is a number, so . is decimal separator
 	let parts = ("" + value).split(".");
