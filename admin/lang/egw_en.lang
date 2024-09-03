@@ -115,6 +115,7 @@ all records and account information will be lost!	admin	en	All records and accou
 all users	admin	en	All users
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	en	Allow the user to store his password under 'Security & Passwords' for SingleSignOn.
 allow user to set 'remember me' token	admin	en	Allow user to set 'Remember me' token
 allow users to change forwards	admin	en	Allow users to change forwards
 allow users to create identities for aliases	admin	en	Allow users to create identities for aliases

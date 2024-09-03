@@ -115,6 +115,7 @@ all records and account information will be lost!	admin	de	Alle Datensätze und 
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
 allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installation-IDs.
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	de	Erlaubt dem Benutzer sein Passwort unter 'Sicherheit & Passwort' für SingleSignOn zu speichern.
 allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich erinnern" Token zu setzen
 allow users to change forwards	admin	de	Anwender dürfen Weiterleitung bearbeiten
 allow users to create identities for aliases	admin	de	Anwender dürfen Identitäten für Aliase anlegen

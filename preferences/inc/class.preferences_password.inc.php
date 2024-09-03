@@ -56,6 +56,10 @@ class preferences_password
 					'gauth_android' => self::GAUTH_ANDROID,
 					'gauth_ios' => self::GAUTH_IOS,
 				];
+				if (($content['store_password_for_sso'] = $GLOBALS['egw_info']['server']['store_password_for_sso'] ?? false))
+				{
+					$content['store-password-for-sso'] = $content['store_password_for_sso'];
+				}
 			}
 			else
 			{
@@ -74,6 +78,24 @@ class preferences_password
 					switch($content['tabs'])
 					{
 						case 'change_password':
+							if (!empty($GLOBALS['egw_info']['server']['store_password_for_sso']) &&
+								$content['store-password-for-sso'] && $content['button']['save'])
+							{
+								if (!$auth->authenticate($GLOBALS['egw_info']['user']['account_lid'], $content['password']))
+								{
+									$tmpl->set_validation_error('password', lang('Password is invalid'));
+									break;
+								}
+								Credentials::write(0, $GLOBALS['egw_info']['user']['account_lid'], $content['password'],
+									Credentials::SSO_PASSWORD, $GLOBALS['egw_info']['user']['account_id']);
+
+								// close now, if we're not changing the password
+								if ($GLOBALS['egw']->acl->check('nopasswordchange', 1) || empty($content['n_passwd']) && empty($content['n_passwd_2']))
+								{
+									Framework::refresh_opener(lang('Password stored'), 'preferences');
+									Framework::window_close();
+								}
+							}
 							if (!$GLOBALS['egw']->acl->check('nopasswordchange', 1) && $content['button']['save'])
 							{
 								if (($errors = self::do_change($content['password'], $content['n_passwd'], $content['n_passwd_2'])))
@@ -158,7 +180,14 @@ class preferences_password
 		// disable password change, if user has not right to change it
 		if ($GLOBALS['egw']->acl->check('nopasswordchange', 1))
 		{
-			$readonlys['tabs']['change_password'] = true;
+			if (!empty($GLOBALS['egw_info']['server']['store_password_for_sso']))
+			{
+				$content['nopasswordchange'] = true;
+			}
+			else
+			{
+				$readonlys['tabs']['change_password'] = true;
+			}
 		}
 
 		$preserve = [
