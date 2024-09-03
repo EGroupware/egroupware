@@ -100,6 +100,7 @@ icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
 icons only	preferences	en	Icons only
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	en	If a line is already selected, further lines get either selected by holding Ctrl/Cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. If no line is selected clicking on one allways selects it. Holding down Shift key selects everything between current select line and the one clicked.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	en	If enabled, your entered password will be stored and passed on to other server, when you login via SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	en	Images linked to an entry can be displayed as thumbnails. Turn this off to speed up page display.
 in which country are you. this is used to set certain defaults for you.	preferences	en	Select the country. It sets some defaults e.g. in Calendar.
 interface/template selection	preferences	en	Interface | Template
@@ -108,6 +109,7 @@ just clicking on the line, like a checkbox	preferences	en	Just clicking on the l
 kama theme	preferences	en	Kama theme
 keep list open for selecting multiple	preferences	en	Keep list open for selecting multiple
 language	preferences	en	Language
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	en	Logging in via SingleSignOn does not provide a password to pass it on to mail- or file-servers.
 look & feel	preferences	en	Look & feel
 lowercase letters	preferences	en	lowercase letters
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	en	Makes the sidebar on the left with scroll button scrollable up/down (useful for users on tablets).
@@ -132,6 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	en
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	en	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
 password is invalid	preferences	en	Password is invalid
 password must have at least %1 characters	preferences	en	password must have at least %1 characters
+password stored	preferences	en	Password stored
 permanent time zone selection	preferences	en	Permanent time zone
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	en	Select time zones to switch between. Switch is NOT shown, if less than two time zones are selected.
 please select your timezone.	preferences	en	Select your time zone.
@@ -173,11 +176,13 @@ show qrcode	preferences	en	Show QRCode
 show qrcode to enable on an additional device.	preferences	en	Show QRCode to enable on an additional device.
 show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
+singlesignon and passwords	preferences	en	SingleSignOn and passwords
 small paragraph	preferences	en	Small Paragraph
 special characters	preferences	en	Special characters
 spellchecker language	addressbook	en	Spellchecker language
 stay open	preferences	en	Stay open
 stay open, but not for email	preferences	en	Stay open, but not for email
+store password retrievable for singlesignon	common	en	Store password retrievable for SingleSignOn
 text editor settings	preferences	en	Text editor settings
 text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.

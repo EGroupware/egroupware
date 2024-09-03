@@ -15,6 +15,7 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
+use EGroupware\Api\Cache;
 use Jumbojett\OpenIDConnectClientException;
 
 /**
@@ -86,9 +87,14 @@ class Credentials
 	const OAUTH_REFRESH_TOKEN = 256;
 
 	/**
+	 * Password to use, if none provided due to SSO login
+	 */
+	const SSO_PASSWORD = 512;
+
+	/**
 	 * All credentials
 	 */
-	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA|self::SPAMTITAN|self::OAUTH_REFRESH_TOKEN;
+	const ALL = self::IMAP|self::SMTP|self::ADMIN|self::SMIME|self::TWOFA|self::SPAMTITAN|self::OAUTH_REFRESH_TOKEN|self::SSO_PASSWORD;
 
 	/**
 	 * Password in cleartext
@@ -138,7 +144,8 @@ class Credentials
 		self::SMIME => 'acc_smime_',
 		self::TWOFA => '2fa_',
 		self::SPAMTITAN => 'acc_spam_',
-		self::OAUTH_REFRESH_TOKEN => 'acc_oauth_'
+		self::OAUTH_REFRESH_TOKEN => 'acc_oauth_',
+		self::SSO_PASSWORD => 'sso_',
 	);
 
 	/**
@@ -213,7 +220,7 @@ class Credentials
 				self::$cache[$acc_id][$row['account_id']][$row['cred_type']] = $row;
 				//error_log(__METHOD__."($acc_id, $type, ".array2string($account_id).") stored to cache ".array2string($row));
 
-				if (!isset($on_login) && self::needMigration($row['cred_pw_enc']))
+				if (!isset($on_login) && self::needMigration($row['cred_pw_enc'], $row['cred_type']))
 				{
 					$on_login = array(__CLASS__.'::migrate', $acc_id);
 				}
@@ -264,6 +271,38 @@ class Credentials
 			}
 		}
 		return $results;
+	}
+
+	/**
+	 * Get password to use for current user, if he has one stored for SSO AND store it in session like the regular password
+	 *
+	 * @return string|null
+	 */
+	public static function ssoPassword() : ?string
+	{
+		// check if we have a regular, non-anonymous session
+		if (!isset($GLOBALS['egw']->session) ||
+			!empty($GLOBALS['egw']->session->cd_reason) ||
+			$GLOBALS['egw']->session->session_flags !== 'N')
+		{
+			return null;
+		}
+
+		if (!empty($GLOBALS['egw']->session->passwd))
+		{
+			return $GLOBALS['egw']->session->passwd;
+		}
+
+		$data = self::read(0, self::SSO_PASSWORD, $GLOBALS['egw_info']['user']['account_id']);
+
+		if (isset($data[self::$type2prefix[self::SSO_PASSWORD].'password']))
+		{
+			Api\Cache::setSession('phpgwapi', 'password',
+				base64_encode($GLOBALS['egw']->session->passwd = $data[self::$type2prefix[self::SSO_PASSWORD].'password']));
+
+			return $data[self::$type2prefix[self::SSO_PASSWORD].'password'];
+		}
+		return null;
 	}
 
 	/**
@@ -388,9 +427,10 @@ class Credentials
 	 * @param int $type self::IMAP, self::SMTP, self::ADMIN or self::SMIME
 	 * @param int $account_id if of user-account for whom credentials are
 	 * @param int $cred_id =null id of existing credentials to update
+	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return int cred_id
 	 */
-	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null)
+	public static function write($acc_id, $username, $password, $type, $account_id=0, $cred_id=null, ?bool $use_system=null)
 	{
 		//error_log(__METHOD__."(acc_id=$acc_id, '$username', \$password, type=$type, account_id=$account_id, cred_id=$cred_id)");
 		if (!empty($cred_id) && !is_numeric($cred_id) || !is_numeric($account_id))
@@ -415,7 +455,7 @@ class Credentials
 			'account_id' => $account_id,
 			'cred_username' => $username,
 			'cred_password' => (string)$password === '' ? '' :
-				self::encrypt($password, $account_id, $pw_enc),
+				self::encrypt($password, $account_id, $pw_enc, $use_system ?? ($type == self::SSO_PASSWORD ? true : null)),
 			'cred_type' => $type,
 			'cred_pw_enc' => $pw_enc,
 		);
@@ -490,12 +530,13 @@ class Credentials
 	 * @param string $password cleartext password
 	 * @param int $account_id user-account password is for
 	 * @param int& $pw_enc on return encryption used
+	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return string encrypted password
 	 */
-	public static function encrypt($password, $account_id, &$pw_enc)
+	public static function encrypt($password, $account_id, &$pw_enc, ?bool $use_system=null)
 	{
 		try {
-			return self::encrypt_openssl_aes($password, $account_id, $pw_enc);
+			return self::encrypt_openssl_aes($password, $account_id, $pw_enc, null, null, $use_system);
 		}
 		catch (Api\Exception\AssertionFailed $ex) {
 			try {
@@ -531,13 +572,14 @@ class Credentials
 	 * @param int& $pw_enc on return encryption used
 	 * @param string $key =null key/password to use, default password according to account_id
 	 * @param string $salt =null (binary) salt to use, default generate new random salt
+	 * @param bool $use_system =null true: use system-secret/SYSTEM_AES, false: use user-password/USER_AES, null: determine automatic
 	 * @return string encrypted password
 	 */
-	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null, $salt=null)
+	protected static function encrypt_openssl_aes($password, $account_id, &$pw_enc, $key=null, $salt=null, ?bool $use_system=null)
 	{
 		if (empty($key))
 		{
-			if ($account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
+			if ($use_system !== true && $account_id > 0 && $account_id == $GLOBALS['egw_info']['user']['account_id'] &&
 				($key = Api\Cache::getSession('phpgwapi', 'password')) &&
 				// do NOT encrypt password if (optional) SAML or OpenIdConnect auth is enabled
 				!array_filter(array_keys(Api\Config::read('phpgwapi')), static function($name)
@@ -769,10 +811,16 @@ class Credentials
 	 * Check if credentials need migration to AES
 	 *
 	 * @param string $pw_enc
+	 * @param int|null $cred_type =null
 	 * @return boolean
 	 */
-	static public function needMigration($pw_enc)
+	static public function needMigration($pw_enc, ?int $cred_type=null)
 	{
+		// do NOT migrate/store SSO-passwords with user-credentials
+		if (isset($cred_type) && $cred_type == self::SSO_PASSWORD)
+		{
+			return false;
+		}
 		return $pw_enc == self::USER || $pw_enc == self::SYSTEM || $pw_enc == self::CLEARTEXT;
 	}
 
@@ -790,7 +838,7 @@ class Credentials
 				{
 					foreach($rows as $cred_type => &$row)
 					{
-						if (self::needMigration($row['cred_pw_enc']) && ($row['cred_pw_enc'] != self::USER ||
+						if (self::needMigration($row['cred_pw_enc'], $cred_type) && ($row['cred_pw_enc'] != self::USER ||
 							$row['cred_pw_enc'] == self::USER && $account_id == $GLOBALS['egw_info']['user']['account_id']))
 						{
 							self::write($acc_id, $row['cred_username'], self::decrypt($row), $cred_type, $account_id, $row['cred_id']);

@@ -100,6 +100,7 @@ icon	preferences	de	Symbol
 icons and text	preferences	de	Symbole und Text
 icons only	preferences	de	Nur Symbole
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) und anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox, ausgewählt. Wenn keine Zeile ausgewählt ist, wählt anklicken diese immer aus. Das Halten der Umschalt-Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	de	Ihr eingegebenes Passwort wird gespeichert und an andere Server weiter gegeben, wenn eingeschaltet und Sie sich per SingleSignOn anmelden.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
@@ -108,6 +109,7 @@ just clicking on the line, like a checkbox	preferences	de	Einfaches anklicken de
 kama theme	preferences	de	Kama-Theme
 keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	de	Das Anmelden per SingleSignOn liefert kein Passwort das an Mail- oder Datei-Server weiter gegeben werden kann.
 look & feel	preferences	de	Aussehen und Handhabung
 lowercase letters	preferences	de	Kleinbuchstaben
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Macht die Seitenleiste links mit Scroll-Button nach oben/unten scrollbar (nützlich für Benutzer auf Tablets).
@@ -132,6 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	de
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzernamens oder vollständigen Namen (3 oder mehr Zeichen lang)
 password is invalid	preferences	de	Das Passwort ist ungültig
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
+password stored	preferences	de	Passwort gespeichert
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
@@ -173,11 +176,13 @@ show qrcode	preferences	de	QR-Code anzeigen
 show qrcode to enable on an additional device.	preferences	de	Zeigt den QR-Code wieder an um ihn auf weiteren Geräten einzurichten.
 show text on navigation icons	preferences	de	Text zu Icons in der Navigationsleiste anzeigen
 show_more_apps	common	de	Mehr Anwendungen anzeigen
+singlesignon and passwords	preferences	de	SingleSignOn und Passwörter
 small paragraph	preferences	de	Schmaler Absatz
 special characters	preferences	de	Sonderzeichen
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
 stay open	preferences	de	Liste auflassen
 stay open, but not for email	preferences	de	Liste auflassen, aber nicht für E-Mail
+store password retrievable for singlesignon	common	de	Passwort wiederherstellbar für SingleSignOn speichern
 text editor settings	preferences	de	Einstellungen des Texteditors
 text only	preferences	de	Nur Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
