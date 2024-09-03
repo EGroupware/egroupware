@@ -664,14 +664,27 @@ class StreamWrapper extends Base implements StreamWrapperIface
 		$this->opened_dir_writable = $this->check_access($this->opened_dir_url,Vfs::WRITABLE);
 		// check our fstab if we need to add some of the mountpoints
 		$basepath = Vfs::parse_url($path,PHP_URL_PATH);
-		foreach(array_keys(self::$fstab) as $mounted)
+		foreach(self::$fstab as $mounted => $url)
 		{
+			$access = null;
 			if (((Vfs::dirname($mounted) == $basepath || Vfs::dirname($mounted).'/' == $basepath) && $mounted != '/') &&
 				// only return children readable by the user, if dir is not writable
 				(!self::HIDE_UNREADABLES || $this->opened_dir_writable ||
-					$this->check_access($mounted,Vfs::READABLE)))
+					($access=$this->check_access($mounted,Vfs::READABLE))))
 			{
 				$this->extra_dirs[] = Vfs::basename($mounted);
+			}
+			// if there is no password in the session, but it's required for that mount-point, and
+			// admin enabled storing passwords for SSO --> open "Security & password" popup so user can enter it
+			elseif ($access === false && !empty($GLOBALS['egw_info']['server']['store_password_for_sso']) &&
+				strpos($url, '$user:$pass') !== false && empty($GLOBALS['egw']->session->passwd) &&
+				Api\Json\Request::isJSONRequest())
+			{
+				Api\Cache::getSession(__CLASS__, 'no-session-password', static function()
+				{
+					Api\Json\Response::get()->apply('egw.open_link', ['preferences.preferences_password.change', '_blank', '850x580', null, true]);
+					return true;
+				});
 			}
 		}
 
