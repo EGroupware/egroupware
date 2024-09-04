@@ -952,6 +952,7 @@ class calendar_uiviews extends calendar_ui
 			$status = array(
 				'id' => $id,
 				'caption' => $status,
+                'icon' => $ui->bo->status_images[$id],
 				'onExecute' => 'javaScript:app.calendar.status'
 			);
 		}
