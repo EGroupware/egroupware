@@ -697,7 +697,7 @@ class preferences_settings
 	protected static function get_default_label($default, array $values, $lang=true)
 	{
 		// explode comma-separated multiple default values
-		if (!is_array($default) && !isset($values[$default]) && strpos($default, ',') !== false)
+		if(!is_array($default) && !isset($values[$default]) && strpos($default, ',') > 0)
 		{
 			$labels = explode(',', $default);
 		}
