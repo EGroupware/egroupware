@@ -1531,14 +1531,14 @@ abstract class Merge
 			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><$3>$4</$3></table:table-cell>';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><$3>$4</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // tables in open office writer
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
 				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-				$replacement = '<table:table-cell$1office:value-type="float" office:value="$4"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // open office writer
 			case 'application/xmlExcel.Sheet':    // Excel 2003
@@ -1549,10 +1549,23 @@ abstract class Merge
 		}
 		if(!empty($format) && $names)
 		{
+			// Use raw value instead of formatted value for spreadsheets (when present), but don't interfere otherwise
+			$callback = function ($matches) use ($replacement)
+			{
+				if($matches[4] && ($fieldname = substr($matches[4], 2, -2)) && in_array($this->prefix("", $fieldname, '$'), $this->numeric_fields))
+				{
+					$matches[5] = $this->prefix("", $fieldname . '_-raw-', '$');
+				}
+				else
+				{
+					$matches[5] = $matches[4];
+				}
+				return str_replace(['$0', '$1', '$2', '$3', '$4', '$5'], $matches, $replacement);
+			};
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
 			do
 			{
-				$result = preg_replace($format, $replacement, $content, -1);
+				$result = preg_replace_callback($format, $callback, $content, -1);
 			}
 				// try to increase/double pcre.backtrack_limit failure
 			while(preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR && self::increase_backtrack_limit());
@@ -1687,6 +1700,7 @@ abstract class Merge
 	/**
 	 * Expand link_to custom fields with the merge replacements from the app
 	 * but only if the template uses them.
+	 * We also do other custom field processing here
 	 */
 	public function cf_link_to_expand($values, $content, &$replacements, $app = null)
 	{
@@ -1695,6 +1709,21 @@ abstract class Merge
 			$app = str_replace('_merge', '', get_class($this));
 		}
 		$cfs = Api\Storage\Customfields::get($app);
+
+		// Custom field processing
+		foreach($cfs as $fieldname => $field_data)
+		{
+			switch($field_data['type'])
+			{
+				case 'float':
+				case 'int':
+					$this->numeric_fields[] = "$$#{$fieldname}$$";
+					break;
+				case 'date':
+				case 'datetime':
+					$this->date_fields[] = "$$#{$fieldname}$$";
+			}
+		}
 
 		// Cache, in case more than one sub-placeholder is used
 		$app_replacements = array();
