@@ -695,7 +695,8 @@ abstract class Framework extends Framework\Extra
 		   return [
 			   'name' => 'current_user',
 			   'title' => lang('Current users').':'.$GLOBALS['egw']->session->session_count(),
-			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true')
+			   'url' => self::link('/index.php','menuaction=admin.admin_accesslog.sessions&ajax=true'),
+			   'icon' => 'people',
 		   ];
 	   }
 	}
@@ -1243,7 +1244,7 @@ abstract class Framework extends Framework\Extra
 		// Home should be at the top before preferences
 		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
 		{
-			$this->_add_topmenu_item($apps['home']);
+			$this->_add_topmenu_item(['icon' => 'home']+$apps['home']);
 		}
 
 		// array of topmenu preferences items (orders of the items matter)
@@ -1305,23 +1306,28 @@ abstract class Framework extends Framework\Extra
 			'prefs' => array(
 				'title' => 'Preferences',
 				'hook'  => 'settings',
+				'icon'  => 'preferences',
 			),
 			'acl' => array(
 				'title' => 'Access',
 				'hook'  => 'acl_rights',
+				'icon'  => 'lock',
 			),
 			'useraccount' => array(
 				'title' => 'My Account',
 				'hook'  => 'user_account',
+				'icon'  => 'addressbook/accounts',
 			),
 			'cats' => array(
 				'title' => 'Categories',
-				'hook' => 'categories',
+				'hook'  => 'categories',
 				'run_hook' => true,	// acturally run hook, not just look it's implemented
+				'icon'  => 'tag',
 			),
 			'security' => array(
 				'title' => 'Security & Password',
-				'hook' => 'preferences_security',
+				'hook'  => 'preferences_security',
+				'icon'  => 'key',
 			),
 		);
 		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['server']['deny_'.$type] &&
@@ -1356,6 +1362,7 @@ abstract class Framework extends Framework\Extra
 						'title' => lang($types[$type]['title']),
 						'url'   => 'javascript:egw.open_link("'.
 							self::link('/index.php?menuaction=preferences.preferences_password.change').'","_blank","850x580")',
+						'icon'  => $types[$type]['icon'],
 					));
 				}
 				break;
@@ -1367,6 +1374,7 @@ abstract class Framework extends Framework\Extra
 						'name'  => 'preferences',
 						'title' => lang($types[$type]['title']),
 						'url'   => "javascript:framework.toggle_darkmode()",
+						'icon'  => $types[$type]['icon'],
 					));
 				}
 				break;
@@ -1377,6 +1385,7 @@ abstract class Framework extends Framework\Extra
 					$this->_add_topmenu_item(array(
 						'id' => $type,
 						'name' => 'useraccount',
+						'icon'  => $types[$type]['icon'],
 						'title' => lang($types[$type]['title']),
 						'url'   => "javascript:egw.open_link('".self::link('/index.php?menuaction=addressbook.addressbook_ui.edit&account_id='.$GLOBALS['egw_info']['user']['account_id'])."','_blank','850x580')",
 					));
@@ -1386,6 +1395,7 @@ abstract class Framework extends Framework\Extra
 				$this->_add_topmenu_item(array(
 					'id' => $type,
 					'name' => 'preferences',
+					'icon'  => $types[$type]['icon'],
 					'title' => lang($types[$type]['title']),
 					'url' => "javascript:egw.show_preferences(\"$type\",".json_encode($apps).')',
 				));
