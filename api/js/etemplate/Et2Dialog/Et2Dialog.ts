@@ -226,6 +226,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 					background-color: var(--sl-color-gray-100);
 					padding: 0;
 					order: 99;
+					border-top-right-radius: calc(var(--sl-border-radius-medium) * .5);
 				}
 				.dialog__footer	{
 					--footer-spacing: 5px;
