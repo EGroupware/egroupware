@@ -57,8 +57,6 @@ class Image
 		//'copy'	=> 'copy',
 		'cti_phone'	=> 'telephone',
 		'cursor_editable'	=> 'copy',
-		'darkmode_off'	=> 'moon-fill',
-		'darkmode_on'	=> 'brightness-high',
 		'datepopup'	=> 'calendar3',
 		'delete'	=> 'trash3',
 		'deleted'	=> 'trash3',
@@ -361,6 +359,7 @@ class Image
 		'timesheet/play'	=> 'play-fill',
 		'timesheet/play-blue'	=> 'play-fill',
 		'timesheet/stop'	=> 'stop-fill',
+		/* not used
 		'topmenu_items/access'	=> 'lock',
 		'topmenu_items/category'	=> 'tag',
 		'topmenu_items/home'	=> 'house-door',
@@ -380,6 +379,7 @@ class Image
 		'topmenu_items/password'	=> 'key',
 		'topmenu_items/search'	=> 'search',
 		'topmenu_items/setup'	=> 'gear',
+		*/
 	];
 	/**
 	 * Searches a appname, template and maybe language and type-specific image
