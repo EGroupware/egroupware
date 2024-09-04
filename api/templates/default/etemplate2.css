@@ -2925,7 +2925,7 @@ div.et2_toolbar.ui-widget-header {
 .et2_toolbar .et2_toolbar_actionlist et2-button,
 .et2_toolbar .et2_toolbar_actionlist et2-switch {
 	margin-right: 1ex;
-	min-width: 32px;
+	min-width: 35px;
 }
 
 /* Make toolbar switches clickable everywhere, not just the top half */
