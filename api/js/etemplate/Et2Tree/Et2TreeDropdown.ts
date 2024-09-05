@@ -520,6 +520,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.requestUpdate("open");
 		this.updateComplete.then(() =>
 		{
+			this._tree.style.minWidth = getComputedStyle(this).width;
 			this._tree.focus();
 		})
 	}
@@ -665,8 +666,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                             })}
                             flip
                             shift
-                            sync="width"
-                            auto-size="vertical"
+                            auto-size="both"
                             auto-size-padding="10"
                             ?active=${this.open}
                             placement=${this.placement || "bottom"}
@@ -696,7 +696,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 .id=${this.id + "_tree"}
                                 ._parent=${this}
                                 class="tree-dropdown__tree"
-                                exportparts=""
+                                exportparts="label"
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
                                 value=${this.multiple ? nothing : this.value}

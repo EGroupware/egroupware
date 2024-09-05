@@ -227,43 +227,47 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			css`
                 :host {
                     --sl-spacing-large: 1rem;
+					display: block;
                 }
 
-                ::part(expand-button) {
-                    rotate: none;
-                    padding: 0 0.2em 0 5em;
-                    margin-left: -5em;
 
-                }
+				::part(expand-button) {
+					rotate: none;
+					padding: 0 var(--sl-spacing-small);
+				}
 
-                /* Stop icon from shrinking if there's not enough space */
+				/* Stop icon from shrinking if there's not enough space */
                 /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
 
                 sl-tree-item et2-image {
                     flex: 0 0 1em;
                     font-size: calc(100% + 2px);
+					line-height: calc(100% - 2px);
 					padding-right: .4em;
+					width: 1em;
+					height: 1em;
+					display: inline-block;
                 }
 
-                ::part(label) {
-                    overflow: hidden;
+				::part(label) {
+					overflow: hidden;
 					flex: 1 1 auto;
-                }
+				}
 
-                ::part(label):hover {
-                    text-decoration: underline;
-                }
+				::part(label):hover {
+					text-decoration: underline;
+				}
 
-                .tree-item__label {
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
+				.tree-item__label {
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
 
-                sl-tree-item.drop-hover {
-                    background-color: var(--highlight-background-color);
-                }
-				
+				sl-tree-item.drop-hover {
+					background-color: var(--highlight-background-color);
+				}
+
 				/*Mail specific style TODO move it out of the component*/
                 sl-tree-item.unread > .tree-item__label {
                         font-weight: bold;
@@ -885,6 +889,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			})
 		}
 		const value = selectOption.value ?? selectOption.id;
+		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
 
 		return html`
             <sl-tree-item
@@ -893,8 +898,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     id=${value}
                     title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
-                    ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
+                    ?selected=${selected}
                     ?expanded=${expandState}
+                    ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
                     @sl-lazy-load=${(event) => {
@@ -931,7 +937,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 
                 <et2-image src="${img ?? nothing}"></et2-image>
-                <span class="tree-item__label">
+                <span part="label_text" class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
                 ${(selectOption.badge) ?
