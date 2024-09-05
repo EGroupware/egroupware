@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	fr	%1 %2 droits pour %3 de %4 vers %5
-%1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
-%1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
 %1 access to other data	admin	fr	%1 accès aux données des autres
 %1 accounts being activated	admin	fr	%1 comptes activés
 %1 acl entries deleted.	admin	fr	%1 entrées ACL supprimées.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fr	%1 catégorie(s) %2, %3 en échec pour droits insuffisants !
 %1 class not instanciated	admin	fr	Classe %1 non instanciée
 %1 entries deleted	admin	fr	%1 entrées supprimées
-%1 entries deleted.	admin	fr	%1 éléments supprimés.
 %1 group %2	admin	fr	%1 groupe %2
 %1 is no command!	admin	fr	%1 n'est pas une commande !
 %1 log entries deleted.	admin	fr	%1 entrées dans le log effacées.
@@ -45,7 +42,6 @@ account "%1" has no email address --> not notified!	admin	fr	Le compte "%1" n'a 
 account "%1" has no plaintext password!	admin	fr	Le compte "%1" n'a PAS de mot de passe au format texte !
 account %1 %2	admin	fr	Compte %1 %2
 account '%1' deleted.	admin	fr	Compte '%' supprimé.
-account '%1' not found !!!	admin	fr	Le compte %1 n'a pas été trouvé!
 account active	admin	fr	Compte actif
 account deleted.	admin	fr	Compte supprimé.
 account has been created	common	fr	Le compte a été créé.

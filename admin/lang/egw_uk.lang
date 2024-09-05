@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	uk	%1 %2 права для %3 на %4 - %5
-%1 - %2 of %3 user accounts	admin	uk	%1 - %2 з %3 користувачів
-%1 - %2 of %3 user groups	admin	uk	%1 - %2 з %3 груп користувачів
 %1 access to other data	admin	uk	%1 доступ до інших даних
 %1 accounts being activated	admin	uk	активовано %1 облікових записів
 %1 acl entries deleted.	admin	uk	Видалено %1 записів ACL.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	uk	%1 категорія(и) %2, %3 не вдалося через недостатні права!
 %1 class not instanciated	admin	uk	%1 клас не створено
 %1 entries deleted	admin	uk	Видалено %1 запис
-%1 entries deleted.	admin	uk	Видалено %1 запис.
 %1 group %2	admin	uk	%1 група %2
 %1 is no command!	admin	uk	%1 не є командою!
 %1 log entries deleted.	admin	uk	Видалено %1 записів журналу.
@@ -61,6 +58,9 @@ add new account	admin	uk	Створити новий рахунок
 add new application	admin	uk	Додати нове приложення
 add peer server	admin	uk	Додати Peer сервер
 add sub-category	admin	uk	Додати підкатегорію
+add to group	admin	uk	Додати до групи
+add user	admin	uk	Додати користувача
+add user or group	admin	uk	Додати користувача або групу
 admin email	admin	uk	email адміністратора
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	uk	email адреси адміністраторів (розділені комою), які будуть сповіщатися про випадки блокування (залиште порожнім, якщо сповіщень не треба)
 admin name	admin	uk	Ім'я адміністратора
@@ -93,13 +93,19 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	admin	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
 back to the list	admin	uk	Назад до переліку
+blocking after wrong password	admin	uk	Блокування після неправильного пароля
 bottom	admin	uk	низ
+bulk changes	admin	uk	Масові зміни
+bulk password reset	admin	uk	Масове скидання пароля
 calculate next run	admin	uk	Розрахувати наступний запуск
 can change password	admin	uk	Може міняти пароль
 cancel testjob!	admin	uk	Перервати Тестове завдання!
 categories list	admin	uk	Перелік категорій
 category %1 has been saved !	admin	uk	Категорія % збережено!
 category list	admin	uk	Перелік категорій
+certificate	admin	uk	Сертифікат
+certificate details	admin	uk	Інформація про сертифікат
+certificate validation in days	admin	uk	Термін дії сертифіката в днях
 change acl rights	admin	uk	Змінити ACL права
 change config settings	admin	uk	Змінити конфігураційні установки
 change login screen message	admin	uk	Змінити повідомлення основного екрану
@@ -211,6 +217,7 @@ host information	admin	uk	Інформація хосту
 hour<br>(0-23)	admin	uk	Година<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	uk	Скільки днів записи мають зберігатися в протоколі доступу (по замовченню 90)?
 how many minutes should an account or ip be blocked (default 1) ?	admin	uk	На скільки хвилин блокується рахунок або IP (по замовченню 30)?
+html/plaintext	admin	uk	HTML/Tекст
 idle	admin	uk	простій
 if no acl records for user or any group the user is a member of	admin	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?

@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	it	%1 %2 diritti per %3 su %4 a %5
-%1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 account utenti
-%1 - %2 of %3 user groups	admin	it	%1 - %2 di %3 gruppi utenti
 %1 access to other data	admin	it	%1 accesso ad altri dati
 %1 accounts being activated	admin	it	%1 account attivati
 %1 acl entries deleted.	admin	it	%1 voci ACL eliminate.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	it	%1 categoria(e) %2, %3 fallito per mancanza di permessi sufficienti!
 %1 class not instanciated	admin	it	%1 classe not istanziata
 %1 entries deleted	admin	it	%1 voci cancellate
-%1 entries deleted.	admin	it	%1 inserimenti cancellati.
 %1 group %2	admin	it	%1 gruppo %2
 %1 is no command!	admin	it	%1 non è un comando!
 %1 log entries deleted.	admin	it	%1 voci di registro eliminate.
@@ -45,7 +42,6 @@ account "%1" has no email address --> not notified!	admin	it	L'account "%1" non 
 account "%1" has no plaintext password!	admin	it	L'account "%1" NON ha una password in testo semplice!
 account %1 %2	admin	it	Account %1 %2
 account '%1' deleted.	admin	it	Account '%1' eliminato.
-account '%1' not found !!!	admin	it	Account '%1' non trovato!
 account active	admin	it	Account attivo
 account deleted.	admin	it	Account cancellato.
 account has been created	common	it	L'account è stato creato.

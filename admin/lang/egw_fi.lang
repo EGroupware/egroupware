@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	fi	%1 %2 oikeudet %3:lle %4:stä %5:een %1 %2:n osalta
-%1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 käyttäjätunnusta
-%1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 käyttäjäryhmää
 %1 access to other data	admin	fi	%1 pääsy muihin tietoihin
 %1 accounts being activated	admin	fi	%1 aktivoitavat tilit
 %1 acl entries deleted.	admin	fi	%1 ACL-merkinnät poistetaan.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fi	%1 kategoriaa %2, %3 epäonnistui käyttäjäoikeuksien takia!
 %1 class not instanciated	admin	fi	%1 luokkaa ei ole luotu
 %1 entries deleted	admin	fi	%1 merkinnät poistettu
-%1 entries deleted.	admin	fi	%1 tapahtumaa poistettu.
 %1 group %2	admin	fi	%1 ryhmä %2
 %1 is no command!	admin	fi	%1 ei ole käsky!
 %1 log entries deleted.	admin	fi	%1 lokitietuetta poistettu.
@@ -43,7 +40,6 @@ account "%1" has no email address --> not notified!	admin	fi	Käyttäjätilillä
 account "%1" has no plaintext password!	admin	fi	Käyttäjätilillä "%1" ei ole "plain text" salasanaa
 account %1 %2	admin	fi	Käyttäjätili%1 %2
 account '%1' deleted.	admin	fi	Käyttäjätili '%1' poistettu
-account '%1' not found !!!	admin	fi	Tiliä '%1' ei löytynyt!
 account active	admin	fi	Käyttäjätili aktiivinen
 account deleted.	admin	fi	Käyttäjätili poistettu.
 account has been created	common	fi	Käyttäjätili luotu.

@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	cs	%1 %2 práva pro %3 na %4 až %5
-%1 - %2 of %3 user accounts	admin	cs	%1 - %2 z %3 uživatelských účtů
-%1 - %2 of %3 user groups	admin	cs	%1 - %2 z %3 uživatelských skupin
 %1 access to other data	admin	cs	%1 přístup k dalším datům
 %1 accounts being activated	admin	cs	%1 aktivované účty
 %1 acl entries deleted.	admin	cs	%1 odstraněny záznamy ACL.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	cs	%1 kategorie(y) %2, %3 selhaly z důvodu nedostatečných práv!
 %1 class not instanciated	admin	cs	Nebyl vytvořen objekt třídy %1
 %1 entries deleted	admin	cs	%1 záznamy odstraněny
-%1 entries deleted.	admin	cs	%1 záznamy odstraněny.
 %1 group %2	admin	cs	%1 skupina %2
 %1 is no command!	admin	cs	%1 není příkaz!
 %1 log entries deleted.	admin	cs	%1 záznamů logu smazáno.
@@ -42,7 +39,6 @@ access token revoked.	admin	cs	Přístupový token byl zrušen.
 account	admin	cs	Účet
 account %1 %2	admin	cs	Účet %1 %2
 account '%1' deleted.	admin	cs	Účet '%1' byl smazán.
-account '%1' not found !!!	admin	cs	Účet '%1' nebyl nalezen!
 account active	admin	cs	Účet aktivní
 account deleted.	admin	cs	Smazaný účet.
 account has been created	common	cs	Účet byl vytvořen.

@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	ru	%1 %2 права для %3 на %4 - %5
-%1 - %2 of %3 user accounts	admin	ru	%1 - %2 из %3 учётных записей пользователей
-%1 - %2 of %3 user groups	admin	ru	%1 - %2 из %3 пользовательских групп
 %1 access to other data	admin	ru	%1 доступ к другим данным
 %1 accounts being activated	admin	ru	%1 активируемые учетные записи
 %1 acl entries deleted.	admin	ru	%1 удалены записи ACL.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ru	%1 категория(й) %2, %3 отказ по причине отсутствия прав!
 %1 class not instanciated	admin	ru	%1 класс не представлен
 %1 entries deleted	admin	ru	%1 запись удалена
-%1 entries deleted.	admin	ru	%1 записи удалены.
 %1 group %2	admin	ru	%1 группа %2
 %1 is no command!	admin	ru	%1 - это не команда!
 %1 log entries deleted.	admin	ru	%1 записей журнала удалено
@@ -42,7 +39,6 @@ account "%1" has no email address --> not notified!	admin	ru	Учётная за
 account "%1" has no plaintext password!	admin	ru	Учётная запись «%1» не имеет plaintext пароля
 account %1 %2	admin	ru	Учётная запись %1 %2
 account '%1' deleted.	admin	ru	Учётная запись «%1» удалена
-account '%1' not found !!!	admin	ru	Учетная запись '%1' не найдена!
 account active	admin	ru	Учётная запись активна
 account has been created	common	ru	Учётная запись создана
 account has been deleted	common	ru	Учётная запись удалена

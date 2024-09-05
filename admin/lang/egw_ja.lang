@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	ja	%4 から %5 の %3 の %1 %2 の権利。
-%1 - %2 of %3 user accounts	admin	ja	%1 - %3 ユーザ・アカウントの %2
-%1 - %2 of %3 user groups	admin	ja	%1 - %3 ユーザーグループの %2
 %1 access to other data	admin	ja	「%1」が他者のデータにアクセス可能
 %1 accounts being activated	admin	ja	%1 アカウントがアクティブになりました。
 %1 acl entries deleted.	admin	ja	%1 個の ACL 項目を削除しました。
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ja	権限が不十分なため、%1 カテゴリ %2、%3 に失敗しました！
 %1 class not instanciated	admin	ja	%1 クラスがインスタンス化されていません。
 %1 entries deleted	admin	ja	%1 つのエントリが削除されました。
-%1 entries deleted.	admin	ja	%1 個の項目を削除しました。
 %1 group %2	admin	ja	%1 グループ %2
 %1 is no command!	admin	ja	%1 はコマンドではありません!
 %1 log entries deleted.	admin	ja	%1 個のログ項目を削除しました。
@@ -45,7 +42,6 @@ account "%1" has no email address --> not notified!	admin	ja	アカウント "%1
 account "%1" has no plaintext password!	admin	ja	アカウント "%1" は平文パスワードがありません!
 account %1 %2	admin	ja	アカウント %1 %2
 account '%1' deleted.	admin	ja	アカウント '%1' を削除しました。
-account '%1' not found !!!	admin	ja	アカウント '%1' が見つかりません!
 account active	admin	ja	アカウントアクティブ
 account deleted.	admin	ja	アカウントを削除しました。
 account has been created	common	ja	アカウントを作成しました。
@@ -86,6 +82,7 @@ add new email address:	admin	ja	追加するメール・アドレス:
 add peer server	admin	ja	ピア・サーバを追加
 add profile	admin	ja	プロフィールを追加
 add sub-category	admin	ja	サブ・カテゴリを追加
+add to group	admin	ja	グループに追加
 add user	admin	ja	ユーザを追加
 add user or group	admin	ja	ユーザ/グループを追加
 admin dn	admin	ja	管理者 DN
@@ -154,7 +151,9 @@ bad or malformed request. server responded: %s	admin	ja	不正な、または不
 bad request: %s	admin	ja	不正なリクエスト: %s
 bi-dir passthrough	admin	ja	双方向パススルー
 bi-directional	admin	ja	双方向
+blocking after wrong password	admin	ja	パスワード間違いによるブロック
 bottom	admin	ja	下部
+bulk changes	admin	ja	一括変更
 bulk password reset	admin	ja	バルク・パスワード・リセット
 calculate next run	admin	ja	次回の実行日時を算出
 calendar recurrence horizont in days (default 1000)	admin	ja	Calendar recurrence horizon in days. Default = 1000.
@@ -171,6 +170,8 @@ category deleted.	admin	ja	カテゴリを削除しました。
 category list	admin	ja	カテゴリ一覧
 category saved.	admin	ja	カテゴリを保存しました。
 certificate	admin	ja	証明書
+certificate details	admin	ja	証明書の詳細
+certificate validation in days	admin	ja	証明書検証日数
 change account_id	admin	ja	アカウント ID を変更する
 change acl rights	admin	ja	ACL 権限を変更する
 change config settings	admin	ja	環境設定を変更
@@ -434,6 +435,7 @@ how many entries should non-admins be able to export (empty = no limit, no = no 
 how many minutes should an account or ip be blocked (default 1) ?	admin	ja	ログインをブロックする時間（分）（既定=1分）
 how should email addresses for new users be constructed?	admin	ja	新規ユーザ・アカウントの電子メール・アドレスの既定の書式を選択してください
 how username get constructed	admin	ja	How username get constructed
+html/plaintext	admin	ja	HTML/テキスト
 icon	admin	ja	アイコン
 identity deleted	admin	ja	名称を削除しました
 identity saved.	admin	ja	名称を保存しました。

@@ -1,12 +1,9 @@
-%1 - %2 of %3 user accounts	admin	zh-tw	第%1 到 %2 /共 %3 個使用者
-%1 - %2 of %3 user groups	admin	zh-tw	第%1 到 %2 /共 %3 個使用者群組
 %1 acl records of not (longer) existing accounts deleted.	admin	zh-tw	未有帳號使用的 %1 筆 ACL 資料刪除了。
 %1 not found or not executable !!!	admin	zh-tw	找不到%1或是無法執行！
 (default no, leave it off if you dont use it)	admin	zh-tw	（預設為否，如果您不希望使用請不要修改）
 (no subject)	emailadmin	zh-tw	(沒有標題)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh-tw	(安裝應用程式必須透過<br><a href="setup/" target="setup">安裝程式</a> [管理應用程式] ！)
 -  type	admin	zh-tw	- 類型
-account '%1' not found !!!	emailadmin	zh-tw	找不到帳號 '%1'！
 account active	admin	zh-tw	啟用帳號
 account has been created	common	zh-tw	成功新增帳號
 account has been deleted	common	zh-tw	成功移除帳號

@@ -1,5 +1,3 @@
-%1 - %2 of %3 user accounts	admin	lo	%1 - %2 ຂອງ %3 ບັນຊີຜູ້ໃຊ້
-%1 - %2 of %3 user groups	admin	lo	%1 - %2 ຂອງ %3 ກຸ່ມຜູ້ໃຊ້
 %1 acl records of not (longer) existing accounts deleted.	admin	lo	%1 ACL ຈະບໍ່ບັນທຶກບັນຊີທີລຶບ
 %1 class not instanciated	admin	lo	%1 class not instanciated
 %1 group %2	admin	lo	%1 ກຸ່ມ %2

@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	pt	%1 %2 direitos para %3 em %4 a %5
-%1 - %2 of %3 user accounts	admin	pt	%1 - %2 de %3 contas de utilizadores
-%1 - %2 of %3 user groups	admin	pt	%1 - %2 de %3 grupos de utilizadores
 %1 access to other data	admin	pt	%1 acesso a outros dados
 %1 accounts being activated	admin	pt	%1 contas a serem activadas
 %1 acl entries deleted.	admin	pt	%1 entradas ACL eliminadas.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	pt	%1 categoria(s) %2, %3 falhou devido a direitos insuficientes!
 %1 class not instanciated	admin	pt	%1 classe não instanciada
 %1 entries deleted	admin	pt	%1 entradas eliminadas
-%1 entries deleted.	admin	pt	%1 entradas eliminadas.
 %1 group %2	admin	pt	%1 grupo %2
 %1 is no command!	admin	pt	%1 não é um comando!
 %1 log entries deleted.	admin	pt	%1 entradas de registo eliminadas.

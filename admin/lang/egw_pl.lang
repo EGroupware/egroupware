@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	pl	%1 %2 uprawnienia dla %3 na %4 do %5
-%1 - %2 of %3 user accounts	admin	pl	%1 - %2 z %3 kont użtkowników
-%1 - %2 of %3 user groups	admin	pl	%1 / %2 z %3 grup użytkowników
 %1 access to other data	admin	pl	%1 dostęp do innych danych
 %1 accounts being activated	admin	pl	%1 aktywowane konta
 %1 acl entries deleted.	admin	pl	%1 usunięte wpisy ACL.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	pl	%1 kategoria(i) %2, %3 nie powiodło się z powodu niewystarczających uprawnień!
 %1 class not instanciated	admin	pl	%1 klasa nie ma instancji
 %1 entries deleted	admin	pl	%1 wpisy usunięte
-%1 entries deleted.	admin	pl	%1 wpisy usunięte.
 %1 group %2	admin	pl	%1 grupa %2
 %1 is no command!	admin	pl	%1 to nie polecenie!
 %1 log entries deleted.	admin	pl	Skasowano %1 wpisów dziennika.
@@ -40,7 +37,6 @@ access token revoked.	admin	pl	Token dostępu został cofnięty.
 account	admin	pl	Konto
 account %1 %2	admin	pl	Konto %1 %2
 account '%1' deleted.	admin	pl	Konto '%1' usunięte
-account '%1' not found !!!	admin	pl	Konto '%1' nie zostało znalezione!
 account active	admin	pl	Konto aktywne
 account has been created	common	pl	Konto zostało utworzone
 account has been deleted	common	pl	Konto zostało usunięte

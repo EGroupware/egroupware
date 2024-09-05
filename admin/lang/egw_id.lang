@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	id	%1 %2 hak untuk %3 pada %4 hingga %5
-%1 - %2 of %3 user accounts	admin	id	%1 - %2 dari %3 akoun pengguna
-%1 - %2 of %3 user groups	admin	id	%1 - %2 dari %3 kelompok pengguna
 %1 access to other data	admin	id	%1 akses ke data lain
 %1 accounts being activated	admin	id	%1 akun yang sedang diaktifkan
 %1 acl entries deleted.	admin	id	%1 entri ACL dihapus.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	id	%1 kategori %2, %3 gagal karena hak yang tidak mencukupi!
 %1 class not instanciated	admin	id	%1 kelas tidak di-instansiasi
 %1 entries deleted	admin	id	%1 entri dihapus
-%1 entries deleted.	admin	id	%1 entri dihapus.
 %1 group %2	admin	id	%1 kelompok %2
 %1 is no command!	admin	id	%1 tidak ada perintah!
 %1 log entries deleted.	admin	id	%1 entri log dihapus.
@@ -44,7 +41,6 @@ account	admin	id	Akun
 account "%1" has no plaintext password!	admin	id	Akun "%1" TIDAK memiliki kata sandi teks!
 account %1 %2	admin	id	Akoun %1 %2
 account '%1' deleted.	admin	id	Akoun '%1' dihapus.
-account '%1' not found !!!	admin	id	Akoun '%1' tidak ditemukan!
 account active	admin	id	Akoun aktif
 account deleted.	admin	id	Akun dihapus.
 account has been created	common	id	Akoun telah dibuat.

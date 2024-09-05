@@ -1,5 +1,3 @@
-%1 - %2 of %3 user accounts	admin	fa	%1 - %2 از %3 حساب کاربری
-%1 - %2 of %3 user groups	admin	fa	%1 - %2 از %3 گروههای کاربران
 %1 acl records of not (longer) existing accounts deleted.	admin	fa	%1 اطلاعات حقوق دسترسی حسابهائی که دیگر موجود نیستند حذف شد
 %1 not found or not executable !!!	admin	fa	%1 یافت نشد یا اجرائی نبود !!!
 (default no, leave it off if you dont use it)	admin	fa	پیش فرض نه است. خالی بگذارید اگر استفاده نمی کنید

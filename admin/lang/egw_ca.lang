@@ -1,5 +1,3 @@
-%1 - %2 of %3 user accounts	admin	ca	%1 - %2 de %3 comptes d'usuaris
-%1 - %2 of %3 user groups	admin	ca	%1 - %2 de %3 grups d'usuaris
 %1 acl records of not (longer) existing accounts deleted.	admin	ca	S'han esborrat %1 registres ACL de comptes no existents.
 %1 not found or not executable !!!	admin	ca	No s'ha trobat %1 o no és un executable
 (default no, leave it off if you dont use it)	admin	ca	(per defecte NO, deixa-ho així si no l'utilitzes)

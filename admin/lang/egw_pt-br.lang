@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	pt-br	%1 %2 direitos para %3 em %4 a %5
-%1 - %2 of %3 user accounts	admin	pt-br	%1 - %2 de %3 contas de usuários
-%1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usuários
 %1 access to other data	admin	pt-br	%1 acesso a outros dados
 %1 accounts being activated	admin	pt-br	%1 contas sendo ativadas
 %1 acl entries deleted.	admin	pt-br	%1 entradas de ACL excluídas.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	pt-br	%1 categoria(s) %2, %3 falhou devido a direitos insuficientes!
 %1 class not instanciated	admin	pt-br	Classe %1 não instanciada
 %1 entries deleted	admin	pt-br	%1 entradas excluídas
-%1 entries deleted.	admin	pt-br	%1 cadastros excluídos.
 %1 group %2	admin	pt-br	%1 grupo %2
 %1 is no command!	admin	pt-br	%1 não é um comando!
 %1 log entries deleted.	admin	pt-br	%1 entradas de registro excluídas.
@@ -40,7 +37,6 @@ access token revoked.	admin	pt-br	Token de acesso revogado.
 account	admin	pt-br	Conta
 account %1 %2	admin	pt-br	Conta %1 %2
 account '%1' deleted.	admin	pt-br	Conta '%1' removida.
-account '%1' not found !!!	admin	pt-br	Conta '%1' não encontrada!
 account active	admin	pt-br	Conta ativa
 account deleted.	admin	pt-br	%1 cadastros excluídos.
 account has been created	common	pt-br	A conta foi criada.
@@ -76,6 +72,9 @@ add new email address:	admin	pt-br	Adicionar novo e-mail:
 add peer server	admin	pt-br	Adicionar servidor remoto
 add profile	admin	pt-br	Adicionar Perfil
 add sub-category	admin	pt-br	Adicionar subcategoria
+add to group	admin	pt-br	Adicionar ao grupo
+add user	admin	pt-br	Adicionar usuário
+add user or group	admin	pt-br	Adicionar usuário ou grupo
 admin dn	admin	pt-br	DN do administrador
 admin email	admin	pt-br	Email do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt-br	Endereços eletrônicos dos administradores (seprados por vírgula) a serem notificados em caso de bloqueio (em branco para não notificar).
@@ -140,6 +139,8 @@ bi-dir passthrough	admin	pt-br	Pular bi-direcional
 bi-directional	admin	pt-br	bi-direcional
 blocking after wrong password	admin	pt-br	Bloqueio após senha incorreta
 bottom	admin	pt-br	Inferior
+bulk changes	admin	pt-br	Alterações em massa
+bulk password reset	admin	pt-br	Redefinição de senha em massa
 calculate next run	admin	pt-br	Calcular próxima execução
 can be used by application	admin	pt-br	Pode ser usado pela aplicação
 can be used by group	admin	pt-br	Pode ser usado pelo grupo
@@ -153,6 +154,9 @@ category '%1' deleted	admin	pt-br	Categoria '%1' excluída
 category deleted.	admin	pt-br	Categoria removida.
 category list	admin	pt-br	Lista de Categorias
 category saved.	admin	pt-br	Categoria salva.
+certificate	admin	pt-br	Certificado
+certificate details	admin	pt-br	Detalhes do certificado
+certificate validation in days	admin	pt-br	Validação do certificado em dias
 change account_id	admin	pt-br	Alterar ID da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
@@ -321,6 +325,7 @@ error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou 
 event details follow	admin	pt-br	Detalhes do Evento seguir
 exists	admin	pt-br	Existe
 expires	admin	pt-br	Expira
+exports groups into a csv file.	admin	pt-br	Exportação de grupos em um arquivo CSV.
 failed to change password.	admin	pt-br	Erro ao moudar a senha.
 failed to delete account!	admin	pt-br	Falha ao excluir conta!
 fallback (after each pageview)	admin	pt-br	Recuperar (após cada página visualizada).
@@ -343,7 +348,10 @@ general	admin	pt-br	Geral
 global categories	common	pt-br	Categorias globais
 global options	admin	pt-br	Opções globais
 grant	admin	pt-br	Conceder
+group '%1' deleted.	admin	pt-br	Grupo '%1' excluído.
 group ?	admin	pt-br	Grupo?
+group csv export	admin	pt-br	Exportação de CSV de grupo
+group csv import	admin	pt-br	Importação de CSV de grupo
 group has been added	common	pt-br	Grupo adicionado.
 group has been deleted	common	pt-br	Grupo removido.
 group has been updated	common	pt-br	Grupo atualizado.

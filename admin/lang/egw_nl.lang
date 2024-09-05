@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	nl	%1 %2 rechten voor %3 op %4 tot %5
-%1 - %2 of %3 user accounts	admin	nl	%1 - %2 van %3 gebruikersaccounts
-%1 - %2 of %3 user groups	admin	nl	%1 - %2 van %3 gebruikersgroepen
 %1 access to other data	admin	nl	%1 toegang tot andere gegevens
 %1 accounts being activated	admin	nl	%1 accounts worden geactiveerd
 %1 acl entries deleted.	admin	nl	%1 ACL entries verwijderd.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	nl	%1 categorie(ën) %2, %3 mislukt vanwege onvoldoende rechten!
 %1 class not instanciated	admin	nl	%1 klasse niet geinstantieerd
 %1 entries deleted	admin	nl	%1 vermeldingen verwijderd
-%1 entries deleted.	admin	nl	%1 vermeldingen verwijderd.
 %1 group %2	admin	nl	%1 groep %2
 %1 is no command!	admin	nl	%1 is geen commando!
 %1 log entries deleted.	admin	nl	%1 logboekvermeldingen verwijderd.
@@ -40,7 +37,6 @@ access token revoked.	admin	nl	Toegangstoken ingetrokken.
 account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
 account '%1' deleted.	admin	nl	Account '%1' verwijderd.
-account '%1' not found !!!	admin	nl	Account '%1' niet gevonden!
 account active	admin	nl	Account actief
 account has been created	common	nl	Account is aangemaakt.
 account has been deleted	common	nl	Account is verwijderd.

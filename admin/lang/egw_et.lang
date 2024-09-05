@@ -6,7 +6,6 @@
 %1 category(s) %2	admin	et	%1 kategooria(d) %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	et	%1 kategooria(d) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
 %1 entries deleted	admin	et	%1 kirjed kustutatud
-%1 entries deleted.	admin	et	%1 kirjed kustutatud.
 %1 mail credentials deleted	admin	et	%1 maili mandaat kustutatud
 %1 phrases saved.	admin	et	%1 fraasid salvestatud.
 %1 run rights for applications	admin	et	%1 rakenduste käivitamise õigused
@@ -24,7 +23,6 @@
 6 month	admin	et	6 kuud
 access token revoked.	admin	et	Juurdepääsutunnistus tühistatud.
 account	admin	et	Konto
-account '%1' not found !!!	admin	et	Kontot '%1' ei leitud!
 account active	admin	et	Konto aktiivne
 account deleted.	admin	et	Konto kustutatakse.
 account has been created	common	et	Konto on tehtud

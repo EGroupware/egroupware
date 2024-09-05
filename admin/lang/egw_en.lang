@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	en	%1 %2 rights for %3 on %4 to %5
-%1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
-%1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 access to other data	admin	en	%1 access to other data
 %1 accounts being activated	admin	en	%1 accounts being activated
 %1 acl entries deleted.	admin	en	%1 ACL entries deleted.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	en	%1 category(s) %2, %3 failed because of insufficent rights!
 %1 class not instanciated	admin	en	%1 class not instanciated
 %1 entries deleted	admin	en	%1 entries deleted
-%1 entries deleted.	admin	en	%1 entries deleted.
 %1 group %2	admin	en	%1 group %2
 %1 is no command!	admin	en	%1 is no command!
 %1 log entries deleted.	admin	en	%1 log entries deleted.

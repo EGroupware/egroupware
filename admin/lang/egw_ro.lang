@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	ro	%1 %2 drepturi pentru %3 pe %4 până la %5
-%1 - %2 of %3 user accounts	admin	ro	%1 - %2 din %3 conturi de utilizator
-%1 - %2 of %3 user groups	admin	ro	%1 - %2 din grupurile de utilizatori %3
 %1 access to other data	admin	ro	%1 acces la alte date
 %1 accounts being activated	admin	ro	%1 conturi în curs de activare
 %1 acl entries deleted.	admin	ro	%1 intrări ACL șterse.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ro	%1 category(s) %2, %3 a eșuat din cauza drepturilor insuficiente!
 %1 class not instanciated	admin	ro	%1 class not instanciated
 %1 entries deleted	admin	ro	%1 intrări șterse
-%1 entries deleted.	admin	ro	%1 intrări șterse
 %1 group %2	admin	ro	%1 grup %2
 %1 is no command!	admin	ro	%1 nu este o comandă!
 %1 log entries deleted.	admin	ro	%1 intrări de jurnal șterse.
@@ -36,9 +33,19 @@
 access token revoked.	admin	ro	Token de acces revocat.
 account	admin	ro	Cont
 acl csv export	admin	ro	Export ACL CSV
+add to group	admin	ro	Adăugare la grup
+add user	admin	ro	Adaugă utilizator
+add user or group	admin	ro	Adăugare utilizator sau grup
+blocking after wrong password	admin	ro	Blocare după o parolă greșită
+bulk changes	admin	ro	Modificări în masă
+bulk password reset	admin	ro	Resetare în masă a parolei
+certificate	admin	ro	Certificat
+certificate details	admin	ro	Detalii certificat
+certificate validation in days	admin	ro	Validarea certificatului în zile
 custom 1	admin	ro	Personalizat 1
 custom 2	admin	ro	Personalizat 2
 custom 3	admin	ro	Personalizat 3
+html/plaintext	admin	ro	HTML/Text
 last %1 logins	admin	ro	Ultimele %1 accesări
 last %1 logins for %2	admin	ro	Ultimele %1 autentificări pentru %2
 last time read	admin	ro	Ultima dată când a fost citit

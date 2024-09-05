@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	tr	%4 ila %5 arasında %3 için %1 %2 hakları
-%1 - %2 of %3 user accounts	admin	tr	%3 kullanıcı hesabı arasından %1 - %2
-%1 - %2 of %3 user groups	admin	tr	%3 kullanıcı grubu arasından %1 - %2
 %1 access to other data	admin	tr	Diğer verilere %1 erişim
 %1 accounts being activated	admin	tr	%1 hesap etkinleştiriliyor
 %1 acl entries deleted.	admin	tr	%1 ACL girişleri silindi.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	tr	%1 kategori(ler) %2, %3 yetersiz haklar nedeniyle başarısız oldu!
 %1 class not instanciated	admin	tr	%1 sınıfı kurulmadı
 %1 entries deleted	admin	tr	%1 giriş silindi
-%1 entries deleted.	admin	tr	%1 giriş silindi.
 %1 group %2	admin	tr	%1 grup %2
 %1 is no command!	admin	tr	%1 komut değil!
 %1 log entries deleted.	admin	tr	%1 günlük girdisi silindi.
@@ -70,6 +67,9 @@ add new email address:	admin	tr	Yeni e-posta adresi ekleyin:
 add peer server	admin	tr	Peer sunucusu ekle
 add profile	admin	tr	Profil ekle
 add sub-category	admin	tr	Alt-kategori ekle
+add to group	admin	tr	Gruba ekle
+add user	admin	tr	Kullanıcı ekle
+add user or group	admin	tr	Kullanıcı veya grup ekleme
 admin email	admin	tr	Yönetici e-mail
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	tr	Engelleme işlemi hakkında yönetici e-mail adresleri (virgülle ayrılmış) haberdar edilecektir.
 admin name	admin	tr	Yönetici İsmi
@@ -106,7 +106,10 @@ available placeholders	admin	tr	Mevcut yer tutucular
 back to the list	admin	tr	Listeye geri dön
 bi-dir passthrough	admin	tr	çift-yön içiçe
 bi-directional	admin	tr	çift yönlü
+blocking after wrong password	admin	tr	Yanlış şifre sonrası engelleme
 bottom	admin	tr	Taban
+bulk changes	admin	tr	Toplu değişiklikler
+bulk password reset	admin	tr	Toplu şifre sıfırlama
 calculate next run	admin	tr	SIradaki çalıştırmayı hesapla
 can change password	admin	tr	Şifre değiştirebilir
 cancel changes	admin	tr	Değişiklikleri iptal et
@@ -114,6 +117,9 @@ cancel testjob!	admin	tr	Test görevini iptal et!
 categories list	admin	tr	Kategori listesi
 category %1 has been saved !	admin	tr	Kategori %1 kaydedildi!
 category list	admin	tr	Kategori listesi
+certificate	admin	tr	Sertifika
+certificate details	admin	tr	Sertifika detayları
+certificate validation in days	admin	tr	Gün içinde sertifika doğrulama
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
 change login screen message	admin	tr	Ana ekran mesajını değiştir
