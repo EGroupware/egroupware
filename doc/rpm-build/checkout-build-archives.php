@@ -223,9 +223,16 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 		$output = null;
 		run_cmd($cmd, $output);
 
+        $date_last_tag = new DateTime(preg_replace('/^\d+\.\d+\./', '', $last_tag));
 		foreach($output as $line)
 		{
-			if (substr($line, 0, 4) == "    " && ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+            if (substr($line, 0, 8) === "Date:   ")
+            {
+                $date_commit = new DateTime(substr($line, 8));
+            }
+			if (substr($line, 0, 4) == "    " &&
+                $date_commit > $date_last_tag &&    // skip (rebased) commits older than the last tag
+                ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
 			{
 				$changelog .= $msg."\n";
 			}
