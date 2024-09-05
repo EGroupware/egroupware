@@ -3,7 +3,7 @@
 
 cd $(dirname $0)
 
-DEFAULT_PHP_VERSION=8.2
+DEFAULT_PHP_VERSION=8.3
 PHP_VERSION=$DEFAULT_PHP_VERSION
 BASE=ubuntu:20.04
 # which architectures to build for multi-platform images, if buildx is available on a Docker desktop or newer Docker installation
