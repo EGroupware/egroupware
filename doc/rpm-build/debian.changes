@@ -1,3 +1,33 @@
+egroupware-docker (23.1.20240905) hardy; urgency=low
+
+  * Admin: allow to show groups by container: e.g. LDAP DN or arbitrary part of name found by a regular expression
+  * Admin: Add bulk changes as a context menu action for user list
+  * Mail/Filemanager: admin can allow users to store a password to pass to mail- and file-servers in case they use (password-less) SingleSignOn
+  * Mail: new reply with attachments (answer to mail incl. all attachments)
+  * Mail: show s/mime signed/encrypted icons in mail display popup (verification is only shown in preview!)
+  * Mail: make sure to create a valid Message-ID header, even if SERVER_NAME is set to "_"
+  * Mail: fix broken PDF attachments which were quoted-printable encoded
+  * Mail/Calendar: improved display of meeting requests: what's changed, single recurrence or whole series, display and enter comment when accepting/rejecting a request
+  * Calendar: fix conflict check to take into account that whole-day (floating) events start and end by definition in all timezones at midnight
+  * Calendar: ask user to apply changes in series master to already created exceptions
+  * Calendar: allow to create recurring events with explicit recurrences
+  * CalDAV: fixed all-day events from Thunderbird with timezone were one day longer
+  * Calendar/Resources/CalDAV: fix not reported priviledges for resources causing resource calendars to appear readonly in CalDAV clients
+  * eSync/Calendar: new preference how many days to sync back, if client specifies no limit / all, default is 365
+  * Notifications: fix wrong condition leading to infinite recursion (causing timeout) and high database load
+  * LDAP/Import: fix not imported memberships of groups in LDAP not using their gidNumber, because it is already used as uidNumber / user
+  * LDAP/ActiveDirectory Sync: permanently store DN+entryUUID and use the latter to detect renamed user or accounts
+  * LDAP/AD: automatic retry, if connection to LDAP server was lost
+  * InfoLog/REST API: attributes "progress" and "percentComplete" were NOT parsed when creating or updating entries
+  * All apps/REST API: fix custom-fields of type "date-time" to be stored timezone aware, if no format is specified
+  * Api/Auth/OpenIDConnect: allow to specify which JWT payload attribute to use and a regular expression to extract username from it
+  * Kanban: Add listen & change for swimlanes
+  * ViDoTeach: push changes to start-page including material list with summery
+  * ViDoTeach: record when disclaimer was agreed to incl. requiring existing participants to agree, if a disclaimer is added later
+  * EPL: fix not working symlinks in merge-stream-wrapper e.g. /templates
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 05 Sep 2024 09:14:05 +0200
+
 egroupware-docker (23.1.20240624) hardy; urgency=low
 
   * THIS IS A SECURITY UPDATE: thanks to Christian Zaeske from SySS GmbH and Hochschule Magdeburgr-Stendal, please update ASAP
