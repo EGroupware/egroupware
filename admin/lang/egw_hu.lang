@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	hu	%1 %2 jogok %3-ra %4-től %5-ig %1 %2-ig
-%1 - %2 of %3 user accounts	admin	hu	%1 - %2 felhasználói hozzáférés a %3 hozzáférésből
-%1 - %2 of %3 user groups	admin	hu	%1 - %2 felhasználói csoport a %3 csoportból
 %1 access to other data	admin	hu	%1 hozzáférés más adatokhoz
 %1 accounts being activated	admin	hu	%1 fiókok aktiválása
 %1 acl entries deleted.	admin	hu	%1 ACL bejegyzések törlése.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	hu	%1 kategória(k) %2, %3 sikertelen volt a nem megfelelő jogok miatt!
 %1 class not instanciated	admin	hu	%1 class not instanciated
 %1 entries deleted	admin	hu	%1 bejegyzés törölve
-%1 entries deleted.	admin	hu	%1 bejegyzés törölve.
 %1 group %2	admin	hu	%1 csoport %2
 %1 is no command!	admin	hu	%1 nem parancs!
 %1 log entries deleted.	admin	hu	%1 naplóbejegyzések törölve.
@@ -41,7 +38,6 @@ account	admin	hu	Fiók
 account "%1" has no plaintext password!	admin	hu	A "%1" fióknak NINCS egyszerű szöveges jelszava!
 account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
 account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.
-account '%1' not found !!!	admin	hu	'%1' felhasználói azonosító nem található!
 account active	admin	hu	Hozzáférés aktív
 account deleted.	admin	hu	Fiók törölve.
 account has been created	common	hu	Az azonosító létrehozva.
@@ -76,6 +72,7 @@ add new email address:	admin	hu	Új email cím hozzáadása:
 add peer server	admin	hu	Add Peer Server
 add profile	admin	hu	Profil hozzáadása
 add sub-category	admin	hu	Alkategória hozzáadása
+add to group	admin	hu	Hozzáadás a csoporthoz
 add user	admin	hu	Felhasználó hozzáadása
 add user or group	admin	hu	Felhasználó vagy csoport hozzáadása
 admin dn	admin	hu	Admin DN
@@ -134,6 +131,8 @@ bi-dir passthrough	admin	hu	kétirányú átjáró
 bi-directional	admin	hu	kétirányú
 blocking after wrong password	admin	hu	Blokkolás rossz jelszó után
 bottom	admin	hu	Legalsó
+bulk changes	admin	hu	Tömeges módosítások
+bulk password reset	admin	hu	Jelszó tömeges visszaállítása
 calculate next run	admin	hu	Legközelebbi futás kiszámítása
 can be used by application	admin	hu	Ez a modul használhatja
 can be used by group	admin	hu	Ez a csoport használhatja

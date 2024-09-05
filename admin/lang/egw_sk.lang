@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	sk	%1 %2 práva pre %3 on %4 to %5
-%1 - %2 of %3 user accounts	admin	sk	%1 - %2 z %3 používateľských účtov
-%1 - %2 of %3 user groups	admin	sk	%1 - %2 z %3 používateľských skupín
 %1 access to other data	admin	sk	%1 prístup k iným údajom
 %1 accounts being activated	admin	sk	%1 účtov bolo aktivovaných
 %1 acl entries deleted.	admin	sk	%1 položiek ACL bolo odstránených.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	sk	%1 kategórií %2, %3 zlyhalo kvôli nedostatočným oprávneniam!
 %1 class not instanciated	admin	sk	%1 trieda nie je inštancionalizovaná
 %1 entries deleted	admin	sk	%1 záznamy odstránené
-%1 entries deleted.	admin	sk	%1 položiek bolo odstránených.
 %1 group %2	admin	sk	%1 skupina %2
 %1 is no command!	admin	sk	%1 nie je príkaz!
 %1 log entries deleted.	admin	sk	%1 položiek záznamu bolo zmazaných.
@@ -45,7 +42,6 @@ account "%1" has no email address --> not notified!	admin	sk	Účet "%1" nemá e
 account "%1" has no plaintext password!	admin	sk	Účet "%1" nemá heslo v čistom texte!
 account %1 %2	admin	sk	Účet %1 %2
 account '%1' deleted.	admin	sk	Účet '%1' bol zmazaný.
-account '%1' not found !!!	admin	sk	Účet '%1' sa nenašiel!
 account active	admin	sk	Platnosť účtu
 account deleted.	admin	sk	Účet bol odstránený.
 account has been created	common	sk	Účet bol vytvorený.

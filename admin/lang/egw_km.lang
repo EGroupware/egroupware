@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	km	សិទ្ធិ %1 %2 សម្រាប់ %3 លើ %4 ដល់ %5
-%1 - %2 of %3 user accounts	admin	km	%1 - %2 នៃគណនីអ្នកប្រើប្រាស់ %3
-%1 - %2 of %3 user groups	admin	km	%1 - %2 នៃក្រុមអ្នកប្រើប្រាស់ %3
 %1 access to other data	admin	km	%1 ចូលប្រើទិន្នន័យផ្សេងទៀត។
 %1 accounts being activated	admin	km	គណនី %1 កំពុងត្រូវបានធ្វើឱ្យសកម្ម
 %1 acl entries deleted.	admin	km	បានលុបធាតុ ACL %1 ។
@@ -10,7 +8,6 @@
 %1 category(s) %2	admin	km	%1 ប្រភេទ %2
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	km	%1 ប្រភេទ(s) %2, %3 បានបរាជ័យ ដោយសារសិទ្ធិមិនគ្រប់គ្រាន់ !!!
 %1 class not instanciated	admin	km	ថ្នាក់ %1 មិន​បាន​រំជួល​ចិត្ត
-%1 entries deleted.	admin	km	ធាតុ %1 ត្រូវ​បាន​លុប។
 %1 group %2	admin	km	%1 ក្រុម %2
 %1 is no command!	admin	km	%1 គឺគ្មានពាក្យបញ្ជាទេ!
 %1 log entries deleted.	admin	km	ធាតុ​កំណត់​ហេតុ %1 ត្រូវ​បាន​លុប។
@@ -40,7 +37,6 @@ account "%1" has no email address --> not notified!	admin	km	គណនី "%1" �
 account "%1" has no plaintext password!	admin	km	គណនី "%1" មិនមានពាក្យសម្ងាត់អត្ថបទធម្មតាទេ!
 account %1 %2	admin	km	គណនី%1 %2
 account '%1' deleted.	admin	km	គណនី '%1' ត្រូវបានលុប។
-account '%1' not found !!!	admin	km	រកមិនឃើញគណនី '%1' ទេ!
 account active	admin	km	គណនីសកម្ម
 account deleted.	admin	km	គណនីត្រូវបានលុប។
 account has been created	common	km	គណនីត្រូវបានបង្កើតឡើង។

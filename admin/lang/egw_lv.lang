@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	lv	%1 %2 %3 tiesības uz %3 no %4 līdz %5
-%1 - %2 of %3 user accounts	admin	lv	%1 -%2 no%3 lietotāju konti
-%1 - %2 of %3 user groups	admin	lv	%1-%2 no %3 lietotāju grupas
 %1 access to other data	admin	lv	%1 piekļuve citiem datiem
 %1 accounts being activated	admin	lv	%1 aktivizētie konti
 %1 acl entries deleted.	admin	lv	%1 ACL ieraksti dzēsti.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	lv	%1 kategorija(-as) %2, %3 neizdevās nepietiekamu tiesību dēļ!
 %1 class not instanciated	admin	lv	%1 klase nav instancēta
 %1 entries deleted	admin	lv	%1 ieraksti dzēsti
-%1 entries deleted.	admin	lv	%1 ieraksti dzēsti.
 %1 group %2	admin	lv	%1 grupa %2
 %1 is no command!	admin	lv	%1 nav komanda!
 %1 log entries deleted.	admin	lv	%1 žurnāla ieraksti dzēsti.
@@ -64,6 +61,9 @@ add new application	admin	lv	Pievienot jaunu aplikāciju
 add peer server	admin	lv	Pievienot vienādranga serveri
 add profile	admin	lv	Pievienot profilu
 add sub-category	admin	lv	Pievienot apakšgrupu
+add to group	admin	lv	Pievienot grupai
+add user	admin	lv	Pievienot lietotāju
+add user or group	admin	lv	Pievienot lietotāju vai grupu
 admin dn	admin	lv	Administratora DN
 admin email	admin	lv	Administratora e-pasts
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	lv	Administratora e-pasta adreses(atdalītas ar komatu), lai tiktu informēts par bloķēšanu(atstāt tukšu, lai nesaņemtu paziņojumu)
@@ -103,13 +103,19 @@ authentication / accounts	admin	lv	Autentifikācija/Konti
 auto create account records for authenticated users	admin	lv	Automātiski veidot konta ierakstus apstiprinātiem lietotājiem
 back to the list	admin	lv	Atpakaļ uz sarakstu
 bi-directional	admin	lv	divpusējs
+blocking after wrong password	admin	lv	Bloķēšana pēc nepareizas paroles
 bottom	admin	lv	Augšā
+bulk changes	admin	lv	Vairumtirdzniecības izmaiņas
+bulk password reset	admin	lv	Paroles masveida atjaunošana
 calculate next run	admin	lv	Izskaitļot nākošo darbību(next run)
 can change password	admin	lv	Var nomainīt paroli
 cancel testjob!	admin	lv	Atcelt Testa Darbību!
 categories list	admin	lv	Kategoriju saraksts
 category %1 has been saved !	admin	lv	Kategorija %1 tika saglabāta!
 category list	admin	lv	Kategoriju saraksts
+certificate	admin	lv	Sertifikāts
+certificate details	admin	lv	Informācija par sertifikātu
+certificate validation in days	admin	lv	Sertifikāta apstiprināšana dienās
 change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
@@ -249,6 +255,7 @@ host information	admin	lv	Host informācija
 hour<br>(0-23)	admin	lv	Stundas <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lv	Cik dienu vajadzētu saglabāt iesniegtos datus piekļuves loga, pirms tie tiek izdzēsti (noklusējums 90)?
 how many minutes should an account or ip be blocked (default 1) ?	admin	lv	Cik minūtes vajadzētu bloķēt kontu vai IP (noklusējums 30)?
+html/plaintext	admin	lv	HTML/Teksts
 icon	admin	lv	Ikona
 idle	admin	lv	Dīkstāve (idle)
 if no acl records for user or any group the user is a member of	admin	lv	Ja nav ACL ierakstu lietotājiem vai kādai grupai, lietotājs ir ...?

@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	sv	%1 %2 rättigheter för %3 på %4 till %5
-%1 - %2 of %3 user accounts	admin	sv	%1 - %2 av %3 användarkonton
-%1 - %2 of %3 user groups	admin	sv	%1 - %2 av %3 användargrupper
 %1 access to other data	admin	sv	%1 tillgång till andra uppgifter
 %1 accounts being activated	admin	sv	%1 konton som aktiveras
 %1 acl entries deleted.	admin	sv	%1 ACL-poster raderade.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	sv	%1 kategori(er) %2, %3 misslyckades på grund av otillräckliga rättigheter!
 %1 class not instanciated	admin	sv	%1 klass inte instansierad
 %1 entries deleted	admin	sv	%1 poster raderade
-%1 entries deleted.	admin	sv	%1 poster raderade.
 %1 group %2	admin	sv	%1 grupp %2
 %1 is no command!	admin	sv	%1 är inget kommando!
 %1 log entries deleted.	admin	sv	%1 loggposter raderade.

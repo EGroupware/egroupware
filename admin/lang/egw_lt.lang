@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	lt	%1 %2 %3 teisės %4 iki %5
-%1 - %2 of %3 user accounts	admin	lt	%1 - %2 iš %3 naudotojų paskyrų
-%1 - %2 of %3 user groups	admin	lt	%1 - %2 iš %3 naudotojų grupių
 %1 access to other data	admin	lt	%1 prieiga prie kitų duomenų
 %1 accounts being activated	admin	lt	%1 aktyvuojamos paskyros
 %1 acl entries deleted.	admin	lt	%1 ACL įrašai ištrinti.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	lt	%1 kategorijos (-ų) %2, %3 nepavyko dėl nepakankamų teisių!
 %1 class not instanciated	admin	lt	%1 klasė neįsteigta
 %1 entries deleted	admin	lt	%1 įrašai ištrinti
-%1 entries deleted.	admin	lt	%1 įrašai ištrinti.
 %1 group %2	admin	lt	%1 grupė %2
 %1 is no command!	admin	lt	%1 nėra komanda!
 %1 log entries deleted.	admin	lt	%1 žurnalo įrašai ištrinti.
@@ -35,9 +32,19 @@
 access token revoked.	admin	lt	Prieigos žetonas atšauktas.
 account	admin	lt	Paskyra
 acl csv export	admin	lt	ACL CSV eksportas
+add a group	admin	lt	Pridėti prie grupės
+add user	admin	lt	Pridėti naudotoją
+add user or group	admin	lt	Pridėti naudotoją arba grupę
+blocking after wrong password	admin	lt	Blokavimas po neteisingo slaptažodžio
+bulk changes	admin	lt	Masiniai pakeitimai
+bulk password reset	admin	lt	Masinis slaptažodžio keitimas
+certificate	admin	lt	Sertifikatas
+certificate details	admin	lt	Sertifikato informacija
+certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
 custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
+html/plaintext	admin	lt	HTML / Tekstas
 last %1 logins	admin	lt	Paskutiniai %1 prisijungimai
 last %1 logins for %2	admin	lt	Paskutiniai %1 prisijungimai prie %2
 last time read	admin	lt	Paskutinį kartą perskaitytas

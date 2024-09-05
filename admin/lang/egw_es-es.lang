@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	es-es	%1 %2 derechos para %3 en %4 a %5
-%1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
-%1 - %2 of %3 user groups	admin	es-es	%1 - %2 de %3 grupos de usuarios
 %1 access to other data	admin	es-es	Acceso de %1 a otros datos
 %1 accounts being activated	admin	es-es	%1 cuentas activadas
 %1 acl entries deleted.	admin	es-es	%1 entradas de ACL borradas.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	es-es	%1 categorías %2, %3 fallaron por permisos insuficiente
 %1 class not instanciated	admin	es-es	La clase %1 no está instanciada
 %1 entries deleted	admin	es-es	%1 entradas borradas
-%1 entries deleted.	admin	es-es	%1 entradas suprimidas.
 %1 group %2	admin	es-es	%1 grupo %2
 %1 is no command!	admin	es-es	¡%1 no es un comando!
 %1 log entries deleted.	admin	es-es	Se han borrado %1 entradas del log.
@@ -45,7 +42,6 @@ account "%1" has no email address --> not notified!	admin	es-es	La cuenta "%1" n
 account "%1" has no plaintext password!	admin	es-es	¡La cuenta "%1" NO tiene la contraseña en texto claro!
 account %1 %2	admin	es-es	Cuenta %1 %2
 account '%1' deleted.	admin	es-es	Se ha borrado la cuenta '%1'.
-account '%1' not found !!!	admin	es-es	¡No se encontró la cuenta '%1'!
 account active	admin	es-es	Cuenta activa
 account deleted.	admin	es-es	Cuenta suprimida.
 account has been created	common	es-es	La cuenta ha sido creada.

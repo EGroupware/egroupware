@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	ko	%4에서 %5까지 %3에 대한 %1 %2 권한
-%1 - %2 of %3 user accounts	admin	ko	%1 - %3 의 %2 사용자 계정
-%1 - %2 of %3 user groups	admin	ko	%1 - %3 의 %2 유저 그룹
 %1 access to other data	admin	ko	다른 데이터에 대한 %1 액세스 권한
 %1 accounts being activated	admin	ko	활성화 중인 %1 계정
 %1 acl entries deleted.	admin	ko	%1 ACL 항목이 삭제되었습니다.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	ko	권한이 부족하여 %1 범주(들) %2, %3에 실패했습니다!
 %1 class not instanciated	admin	ko	%1 클래스가 인스턴스화되지 않았습니다.
 %1 entries deleted	admin	ko	%1 항목 삭제됨
-%1 entries deleted.	admin	ko	%1 항목 삭제됨.
 %1 group %2	admin	ko	%1 그룹 %2
 %1 is no command!	admin	ko	%1은(는) 명령이 아닙니다!
 %1 log entries deleted.	admin	ko	%1 로그 항목이 삭제되었습니다.
@@ -56,6 +53,9 @@ add new account	admin	ko	새 계정 추가
 add new application	admin	ko	새 응용프로그램 추가
 add peer server	admin	ko	피어 서버 추가
 add sub-category	admin	ko	하위-카테고리 추가
+add to group	admin	ko	그룹에 추가
+add user	admin	ko	사용자 추가
+add user or group	admin	ko	사용자 또는 그룹 추가
 admin email	admin	ko	관리자 이메일
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ko	블럭되면 알림 메일 발송될 관리자 이메일 주소들 (컴마구분,비어있으면 안알림)
 admin name	admin	ko	관리자 이름
@@ -92,13 +92,19 @@ auto create account records for authenticated users	admin	ko	인증된 사용자
 back to the list	admin	ko	목록으로 돌아감
 bi-dir passthrough	admin	ko	양방향 통과 (bi-dir passthrough)
 bi-directional	admin	ko	양방향( bi-directional )
+blocking after wrong password	admin	ko	잘못된 비밀번호로 차단하기
 bottom	admin	ko	하단
+bulk changes	admin	ko	일괄 변경
+bulk password reset	admin	ko	일괄 비밀번호 재설정
 calculate next run	admin	ko	다음 실행을 계산
 can change password	admin	ko	암호 변경 가능
 cancel testjob!	admin	ko	테스트작업(TestJob) 취소
 categories list	admin	ko	카테고리 목록
 category %1 has been saved !	admin	ko	%1 카테고리가 저장되었습니다!
 category list	admin	ko	카테고리 목록
+certificate	admin	ko	인증서
+certificate details	admin	ko	인증서 상세 정보
+certificate validation in days	admin	ko	인증서 유효성 검사 일수
 change account_id	admin	ko	계정 ID 변경
 change acl rights	admin	ko	ACL 권한 변경
 change config settings	admin	ko	구성 설정 변경
@@ -224,6 +230,7 @@ host information	admin	ko	호스트 정보
 hour<br>(0-23)	admin	ko	시간<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
 how many minutes should an account or ip be blocked (default 1) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
+html/plaintext	admin	ko	HTML/텍스트
 icon	admin	ko	아이콘
 idle	admin	ko	대기시간
 if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :

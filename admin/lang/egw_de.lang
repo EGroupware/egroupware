@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	de	%1 %2 Rechte für %3 auf %4 bis %5
-%1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
-%1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
 %1 accounts being activated	admin	de	%1 Konten werden aktiviert
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	de	%1 Kategorie(n) %2, %3 fehlgeschlagen wegen fehlender Rechte!
 %1 class not instanciated	admin	de	%1 Klasse nicht instanziiert
 %1 entries deleted	admin	de	%1 Einträge gelöscht
-%1 entries deleted.	admin	de	%1 Einträge gelöscht
 %1 group %2	admin	de	%1 Benutzergruppe %2
 %1 is no command!	admin	de	%1 ist kein Befehl!
 %1 log entries deleted.	admin	de	%1 Protokolleinträge gelöscht.

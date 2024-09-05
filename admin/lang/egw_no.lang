@@ -1,6 +1,4 @@
 %1 %2 rights for %3 on %4 to %5	admin	no	%1 %2 rettigheter for %3 på %4 til %5
-%1 - %2 of %3 user accounts	admin	no	%1 - %2 av %3 brukerkontoer
-%1 - %2 of %3 user groups	admin	no	%1 - %2 av %3 brukergrupper
 %1 access to other data	admin	no	%1 tilgang til andre data
 %1 accounts being activated	admin	no	%1 kontoer som aktiveres
 %1 acl entries deleted.	admin	no	%1 ACL-oppføringer slettet.
@@ -11,7 +9,6 @@
 %1 category(s) %2, %3 failed because of insufficent rights !!!	admin	no	%1 kategori(er) %2, %3 mislyktes på grunn av utilstrekkelige rettigheter!
 %1 class not instanciated	admin	no	%1 klasse ikke installert
 %1 entries deleted	admin	no	%1 oppføringer slettet
-%1 entries deleted.	admin	no	%1 oppføringer slettet.
 %1 group %2	admin	no	%1 gruppe %2
 %1 is no command!	admin	no	%1 er ingen kommando!
 %1 log entries deleted.	admin	no	%1 loggoppføringer slettet.
