@@ -1676,7 +1676,7 @@ class Base
 					{
 						if ((int) $this->debug >= 4)
 						{
-							echo "<p>not_unique in ".array2string($col)." as for '$key_col': '${data[$key_col]}' != '${other[$key_col]}'</p>\n";
+							echo "<p>not_unique in ".array2string($col)." as for '$key_col': '{$data[$key_col]}' != '{$other[$key_col]}'</p>\n";
 						}
 						return $n;	// different entry => $n not unique
 					}
