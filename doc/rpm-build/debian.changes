@@ -25,6 +25,7 @@ egroupware-docker (23.1.20240905) hardy; urgency=low
   * ViDoTeach: push changes to start-page including material list with summery
   * ViDoTeach: record when disclaimer was agreed to incl. requiring existing participants to agree, if a disclaimer is added later
   * EPL: fix not working symlinks in merge-stream-wrapper e.g. /templates
+  * replace tree and context menu with Shoelace widgets
 
  -- Ralf Becker <rb@egroupware.org>  Thu, 05 Sep 2024 09:14:05 +0200
 
