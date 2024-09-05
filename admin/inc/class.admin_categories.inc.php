@@ -128,7 +128,10 @@ class admin_categories
 				$readonlys['__ALL__'] = true;
 				$readonlys['button[cancel]'] = false;
 			}
-			$content['base_url'] = self::icon_url();
+			if (!empty($content['data']['icon']))
+			{
+				$content['data']['icon'] = preg_replace('/\.(png|svg|jpe?g|gif)$/i', '', $content['data']['icon']);
+			}
 		}
 		elseif ($content['button'] || $content['delete'])
 		{
@@ -258,12 +261,9 @@ class admin_categories
 		}
 		$content['msg'] = $msg;
 		if(!$content['appname']) $content['appname'] = $appname;
-		if($content['data']['icon'])
-		{
-			$content['icon_url'] = Api\Image::find('vfs',$content['data']['icon']) ?: self::icon_url($content['data']['icon']);
-		}
+		if (!$content['parent']) $content['parent'] = '';
 
-		$sel_options['icon'] = self::get_icons();
+		$sel_options['icon'] = self::get_icons($content['data']['icon']);
 		$sel_options['owner'] = array();
 
 		// User's category - add current value to be able to preserve owner
@@ -334,48 +334,58 @@ class admin_categories
 	}
 
 	/**
-	 * Return URL of an icon, or base url with trailing slash
-	 *
-	 * @param string $icon = '' filename
-	 * @return string url
-	 */
-	static function icon_url($icon='')
-	{
-		return $GLOBALS['egw_info']['server']['webserver_url'].self::ICON_PATH.'/'.$icon;
-	}
-
-	/**
 	 * Return icons from /api/images
 	 *
 	 * @return array filename => label
 	 */
-	static function get_icons()
+	static function get_icons(string $_icon=null)
 	{
-		$icons = array();
-		if (file_exists($image_dir=EGW_SERVER_ROOT.self::ICON_PATH) && ($dir = dir($image_dir)))
+		$stock_icon = false;
+		$icons = [];
+		foreach(Api\Image::map() as $app => $images)
 		{
-			$matches = null;
-			while(($file = $dir->read()))
+			if (!in_array($app, ['global', 'vfs'])) continue;
+
+			foreach($images as $image => $icon)
 			{
-				if (preg_match('/^(.*)\\.(png|gif|jpe?g)$/i',$file,$matches))
+				if ($app === 'vfs' || str_starts_with($image, 'images/'))
 				{
-					$icons[$file] = ucfirst($matches[1]);
+					if ($app !== 'vfs') $image = substr($image, 7);
+					$icons[] = ['value' => $image, 'label' => ucfirst($image), 'icon' => $icon];
+					if ($_icon === $image) $stock_icon = true;
 				}
 			}
-			$dir->close();
 		}
-
-		// Get custom icons
-		$map = Api\Image::map();
-		if(array_key_exists('vfs', $map))
+		// add arbitrary icons
+		if ($_icon && !$stock_icon && ($icon = Api\Image::find('vfs', $_icon)))
 		{
-			foreach($map['vfs'] as $name => $path)
-			{
-				$icons[$name] = $name;
-			}
+			$icons[] = ['value' => $_icon, 'label' => ucfirst($_icon), 'icon' => $icon];
 		}
-		asort($icons);
+		uasort($icons, static function ($a, $b) {
+			return strnatcasecmp($a['label'], $b['label']);
+		});
 		return $icons;
+	}
+
+	/**
+	 * Search bootstrap icons
+	 *
+	 * @param string $pattern
+	 * @throws Api\Json\Exception
+	 */
+	public function ajax_search(string $pattern)
+	{
+		$pattern = strtolower($pattern);
+		$icons = [];
+		foreach(Api\Image::map()['bootstrap'] ?? [] as $image => $icon)
+		{
+			if (strpos($image, $pattern) !== false)
+			{
+				$icons[] = ['value' => $image, 'label' => $image, 'icon' => $icon];
+			}
+			if (count($icons) > 100) break;
+		}
+		Api\Json\Response::get()->data($icons);
 	}
 
 	/**
@@ -430,7 +440,12 @@ class admin_categories
 				$row['level_spacer'] = str_repeat('&nbsp; &nbsp; ',$row['level']);
 			}
 
-			if ($row['data']['icon']) $row['icon_url'] = Api\Image::find('vfs',$row['data']['icon']) ?: self::icon_url($row['data']['icon']);
+			if (!empty($row['data']['icon']))
+			{
+				$row['data']['icon'] = preg_replace('/\.(png|svg|jpe?g|gif)$/i', '', $row['data']['icon']);
+				$row['icon_url'] = Api\Image::find('', 'images/'.$row['data']['icon']) ?:
+					Api\Image::find('vfs', $row['data']['icon']);
+			}
 
 			$row['subs'] = $row['children'] ? count($row['children']) : 0;
 

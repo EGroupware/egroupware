@@ -50,7 +50,9 @@ foreach($categories as $cat)
 	}
 	if (!empty($cat['data']['icon']))
 	{
-		$content .= ".cat_{$cat['id']} .cat_icon { background-image: url('". admin_categories::icon_url($cat['data']['icon']) ."');} /*{$cat['name']}*/\n";
+		$icon = preg_replace('/\.(png|svg|jpe?g|gif)$/i', '', $cat['data']['icon']);
+		$content .= ".cat_{$cat['id']} .cat_icon { background-image: url('". (
+			Api\Image::find('', 'images/'.$icon) ?: Api\Image::find('vfs', $icon)) ."');} /*{$cat['name']}*/\n";
 	}
 }
 

@@ -549,7 +549,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                    autocomplete="off"
                    ?disabled=${this.disabled}
                    ?readonly=${this.readonly}
-                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder || this.emptyLabel}"
+                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.egw().lang(this.placeholder || this.emptyLabel)}"
                    tabindex="0"
                    @keydown=${this.handleSearchKeyDown}
                    @blur=${() => {this.hasFocus = false;}}

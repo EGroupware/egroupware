@@ -150,7 +150,8 @@ class Select extends Etemplate\Widget
 			$widget_type = substr($widget_type, 4);
 		}
 		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
-		$allowFreeEntries = $this->attrs['allowFreeEntries'] || $this->getElementAttribute($form_name, 'allowFreeEntries');
+		$allowFreeEntries = $this->attrs['allowFreeEntries'] || $this->getElementAttribute($form_name, 'allowFreeEntries') ||
+			$this->attrs['searchUrl'] || $this->getElementAttribute($form_name, 'searchUrl');
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -771,7 +772,8 @@ class Select extends Etemplate\Widget
 								}))),
 							//add different class per level to allow different styling for each category level:
 							'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}",
-							'icon'     => !empty($cat['data']['icon']) ? \admin_categories::icon_url($cat['data']['icon']) : null,
+							'icon'     => empty($cat['data']['icon']) ? null :
+								(Api\Image::find('', 'images/'.$cat['data']['icon']) ?: Api\Image::find('vfs', $cat['data']['icon'])),
 							// send cat-date too
 						]+(is_array($cat['data']) ? $cat['data'] : []));
 				};
