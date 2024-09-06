@@ -109,6 +109,19 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		 */
 		private _xmlOptions : SelectOption[] = [];
 
+		/**
+		 * List of properties that get translated
+		 * @returns object
+		 */
+		static get translate()
+		{
+			return {
+				...super.translate,
+				emptyLabel: true,
+			}
+		}
+
+
 		constructor(...args : any[])
 		{
 			super(...args);
