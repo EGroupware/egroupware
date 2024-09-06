@@ -2,6 +2,7 @@ egroupware-docker (23.1.20240905) hardy; urgency=low
 
   * Admin: allow to show groups by container: e.g. LDAP DN or arbitrary part of name found by a regular expression
   * Admin: Add bulk changes as a context menu action for user list
+  * Admin/all apps: custom-fields can now specify tabs they are displayed in (instead of one standard tab)
   * Mail/Filemanager: admin can allow users to store a password to pass to mail- and file-servers in case they use (password-less) SingleSignOn
   * Mail: new reply with attachments (answer to mail incl. all attachments)
   * Mail: show s/mime signed/encrypted icons in mail display popup (verification is only shown in preview!)
@@ -12,7 +13,7 @@ egroupware-docker (23.1.20240905) hardy; urgency=low
   * Calendar: ask user to apply changes in series master to already created exceptions
   * Calendar: allow to create recurring events with explicit recurrences
   * CalDAV: fixed all-day events from Thunderbird with timezone were one day longer
-  * Calendar/Resources/CalDAV: fix not reported priviledges for resources causing resource calendars to appear readonly in CalDAV clients
+  * Calendar/Resources/CalDAV: fix not reported privileges for resources causing resource calendars to appear readonly in CalDAV clients
   * eSync/Calendar: new preference how many days to sync back, if client specifies no limit / all, default is 365
   * Notifications: fix wrong condition leading to infinite recursion (causing timeout) and high database load
   * LDAP/Import: fix not imported memberships of groups in LDAP not using their gidNumber, because it is already used as uidNumber / user
@@ -25,7 +26,8 @@ egroupware-docker (23.1.20240905) hardy; urgency=low
   * ViDoTeach: push changes to start-page including material list with summery
   * ViDoTeach: record when disclaimer was agreed to incl. requiring existing participants to agree, if a disclaimer is added later
   * EPL: fix not working symlinks in merge-stream-wrapper e.g. /templates
-  * replace tree and context menu with Shoelace widgets
+  * All apps: admin can now upload a web-font to use in EGroupware independent of what the user selected for his browser
+  * replaced tree and context menu with Shoelace widgets
 
  -- Ralf Becker <rb@egroupware.org>  Thu, 05 Sep 2024 09:14:05 +0200
 
