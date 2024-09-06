@@ -5,15 +5,14 @@
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
-				<column width="350"/>
-				<column width="45"/>
-				<column width="50"/>
+				<column width="250"/>
+				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="@no_types">
 					<et2-description  value="Type"></et2-description>
 					<et2-select  span="3" id="cf_type2" rows="5" multiple="1" noLang="1"></et2-select>
-					<et2-description></et2-description>
 				</row>
 				<row>
 					<et2-description  value="Label"></et2-description>
@@ -22,10 +21,7 @@
 				<row>
 					<et2-description  value="Type of field"></et2-description>
 					<customfields-types statustext="Type of customfield" id="cf_type" class="et2_fullWidth" span="2" onchange="app.admin.cf_type_change"/>
-					<et2-hbox  span="2">
-						<et2-description  value="Required"></et2-description>
-						<et2-checkbox  id="cf_needed"></et2-checkbox>
-					</et2-hbox>
+					<et2-checkbox id="cf_needed" label="Required" style="padding-left: .5em"></et2-checkbox>
 				</row>
 				<row disabled="!@use_private">
 					<et2-description  value="Private"></et2-description>
@@ -41,19 +37,15 @@
 				</row>
 				<row>
 					<et2-description  value="Length"></et2-description>
-					<et2-hbox span="all">
-						<et2-number statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
-						<et2-description value="Rows"></et2-description>
-						<et2-number statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
-					</et2-hbox>
+					<et2-number statustext="displayed length of input field (set rows=1 to limit length)" id="cf_len" precision="0"></et2-number>
+					<et2-description value="Rows"></et2-description>
+					<et2-number statustext="number of row for a multiline inputfield or line of a multi-select-box" id="cf_rows" min="0" precision="0" placeholder="1"></et2-number>
 				</row>
 				<row>
 					<et2-description  value="Order"></et2-description>
-					<et2-hbox  span="all">
-						<et2-number  statustext="determines the order the fields are displayed" id="cf_order" min="1" precision="0"></et2-number>
-						<et2-description value="Tab"></et2-description>
-						<et2-textbox id="cf_tab" size="32" maxlength="64" placeholder="custom fields tab" statustext="Name of tab to create and show field in"></et2-textbox>
-					</et2-hbox>
+					<et2-number  statustext="determines the order the fields are displayed" id="cf_order" min="1" precision="0"></et2-number>
+					<et2-description value="Tab"></et2-description>
+					<et2-textbox id="cf_tab" maxlength="64" placeholder="custom fields tab" statustext="Name of tab to create and show field in" style="min-width: 15em"></et2-textbox>
 				</row>
 			</rows>
 		</grid>
