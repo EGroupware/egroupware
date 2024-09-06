@@ -75,36 +75,36 @@ tr.mail.deleted  td:first-child{
 	width: 16px;
 	height: 16px;
 	background-repeat: no-repeat;
-	background-image: url(../default/images/kmmsgread.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-open.svg);
 	background-size: 16px 16px;
 }
 
 tr.deleted .status_img {
-	background-image: url(../default/images/kmmsgdel.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
 }
 
 tr.unseen .status_img {
-	background-image: url(../default/images/kmmsgunseen.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-fill.svg);
 }
 
 tr.flagged_seen .status_img {
-	background-image: url(../default/images/read_flagged_small.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/flag.svg) !important;
 }
 
 tr.flagged_unseen .status_img {
-	background-image: url(../default/images/unread_flagged_small.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/flag-fill.svg) !important;
 }
 
 tr.recent .status_img {
-	background-image: url(../default/images/kmmsgnew.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-plus.svg) !important;
 }
 
 tr.replied .status_img {
-	background-image: url(../default/images/mail_reply.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/reply.svg) !important;
 }
 
 tr.forwarded .status_img {
-	background-image: url(../default/images/mail_forward.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/forward.svg) !important;
 }
 
 .subjectBold
@@ -395,7 +395,7 @@ div.mail-compose_fileselector {
 }
 .mail-compose_fileselector span.et2_file_span {
 	background-repeat: no-repeat;
-	background-image: url(../default/images/attach.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/paperclip.svg);
 	background-size: inherit;
 	background-position: left;
 }
@@ -407,7 +407,7 @@ div.mail-compose_fileselector {
 	font-weight: bold;
 	padding-left: 30px;
 	width: 80px;
-	background-image: url(../default/images/mail_send.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/send.svg) !important;
 	background-position: left;
 	background-repeat: no-repeat;
 }
