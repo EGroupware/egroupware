@@ -4971,12 +4971,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$response->call('app.mail.lock_tree');
 			}
 			$this->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
-
-			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
-			$parts = explode($heirarchyDelimeter, $junkFolder);
-			$fShortName = array_pop($parts);
 			$fStatus = array(
-				$icServerID.self::$delimiter.$junkFolder => lang($fShortName)
+				$icServerID.self::$delimiter.$junkFolder => 0
 			);
 			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
 			//-as we don't have junk folder specific information available on client-side we need to deal with it on server
@@ -5022,12 +5018,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$response->call('app.mail.lock_tree');
 			}
 			$this->mail_bo->compressFolder($trashFolder);
-
-			$heirarchyDelimeter = $this->mail_bo->getHierarchyDelimiter(true);
-			$parts = explode($heirarchyDelimeter, $trashFolder);
-			$fShortName = array_pop($parts);
 			$fStatus = array(
-				$icServerID.self::$delimiter.$trashFolder => lang($fShortName)
+				$icServerID.self::$delimiter.$trashFolder => 0
 			);
 			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
 			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
