@@ -745,7 +745,23 @@ export class etemplate2
 				// to run.
 				setTimeout(() =>
 				{
-					Promise.all(deferred).then(() =>
+					Promise.race([Promise.all(deferred),
+						// If loading takes too long, give some feedback so we can try to track down why
+						new Promise((resolve) =>
+						{
+							setTimeout(() =>
+								{
+									if(this.ready)
+									{
+										return;
+									}
+									egw.debug("error", "Loading timeout");
+									console.debug("Deferred widget list, look for widgets still pending.", deferred);
+									resolve()
+								}, 10000
+							);
+						})
+					]).then(() =>
 					{
 
 						console.timeEnd("deferred");
