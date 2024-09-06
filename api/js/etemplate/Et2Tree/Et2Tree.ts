@@ -911,6 +911,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
                             const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
                             parentNode.item = [...result.item]
+							if (parentNode.item.length == 0)
+							{
+								parentNode.child = false;
+								this.getDomNode(parentNode.id).loading = false
+							}
                             this.requestUpdate("_selectOptions")
 							this._link_actions(this.actions)
                         })
