@@ -68,10 +68,6 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		if (bootstrap && !this._img)
 		{
 			this.className = 'bi-'+bootstrap[1];
-			if (this.statustext || this.label)
-			{
-				this.title = this.statustext || this.label;
-			}
 			return;
 		}
 		// change between bootstrap and regular img
@@ -172,18 +168,16 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		if (bootstrap)
 		{
 			this.className = 'bi-'+bootstrap[1];
-			this.title = this.statustext || this.label;
 			return html``;
 		}
 		this.className = '';
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${url}"
-                 alt="${this.label}"
+                 alt="${this.label || this.statustext}"
 				 style="${this.height ? 'height: 100%; width: auto' : 'width: 100%; height: auto'}"
                  part="image"
                  loading="lazy"
-                 title="${this.statustext || this.label}"
             >`;
 	}
 
@@ -244,7 +238,8 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 		for(const changedPropertiesKey in changedProperties)
 		{
-			if(Et2Image.getPropertyOptions()[changedPropertiesKey])
+			if(Et2Image.getPropertyOptions()[changedPropertiesKey] &&
+				!(changedPropertiesKey === 'label' || changedPropertiesKey === 'statustext'))
 			{
 				this._img[changedPropertiesKey] = this[changedPropertiesKey];
 			}
