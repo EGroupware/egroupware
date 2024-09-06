@@ -14,9 +14,9 @@ import {etemplate2} from "../etemplate/etemplate2";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
-import {EGW_KEY_ENTER} from "../egw_action/egw_action_constants";
 import "sortablejs/Sortable.min.js";
 import {Et2Favorites} from "../etemplate/Et2Favorites/Et2Favorites";
+import {egw_globalObjectManager} from "../egw_action/egw_action";
 
 /**
  * Common base class for application javascript
