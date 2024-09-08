@@ -558,7 +558,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			$this->_week_align_month($this->first,$this->last);
 			$weekNavH = "1 month";
-			$navHeader = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
+			$navHeader = lang(date('F',$this->bo->date2ts($this->date))).' '.$this->year;
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(%1) date=%2: first=%3, last=%4',False,$weeks,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));
 
