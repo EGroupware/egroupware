@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a3b52762bd5073ae132b5d2aee74b30",
+    "content-hash": "7761c13b4a34ffe5aba0b720102ea4f8",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -879,23 +879,23 @@
         },
         {
             "name": "egroupware/adodb-php",
-            "version": "v5.22.7",
+            "version": "5.22.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/ADOdb.git",
-                "reference": "e7150539d5707ae556172532e2b25ac4e88cb2a6"
+                "reference": "5b4848ff23ae949b507a47527b54bab52f739c95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/e7150539d5707ae556172532e2b25ac4e88cb2a6",
-                "reference": "e7150539d5707ae556172532e2b25ac4e88cb2a6",
+                "url": "https://api.github.com/repos/EGroupware/ADOdb/zipball/5b4848ff23ae949b507a47527b54bab52f739c95",
+                "reference": "5b4848ff23ae949b507a47527b54bab52f739c95",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5"
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -936,7 +936,7 @@
                 "issues": "https://github.com/ADOdb/ADOdb/issues",
                 "source": "https://github.com/ADOdb/ADOdb"
             },
-            "time": "2023-11-04T22:25:49+00:00"
+            "time": "2024-09-08T14:39:14+00:00"
         },
         {
             "name": "egroupware/bookmarks",
