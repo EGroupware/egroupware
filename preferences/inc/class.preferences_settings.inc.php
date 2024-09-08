@@ -411,7 +411,7 @@ class preferences_settings
 		return null;
 	}
 
-	public static function defaultLabel(string $type='user')
+	public static function defaultLabel(?string $type='user')
 	{
 		switch($type)
 		{
