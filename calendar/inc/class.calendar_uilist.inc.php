@@ -358,7 +358,7 @@ class calendar_uilist extends calendar_ui
 				$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
 				unset($this->last['raw']);
 				$this->last = $this->bo->date2ts($this->last);
-				$this->date_filters['week'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
+				$this->date_filters['week'] = $label = lang('Week').' '.date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 				$search_params['start'] = $this->first;
 				$search_params['end'] = $this->last;
 				$params['startdate'] = Api\DateTime::to($this->first, Api\DateTime::ET2);
@@ -372,7 +372,7 @@ class calendar_uilist extends calendar_ui
 				unset($this->first['raw']);
 				$this->last = $this->first;
 				$this->last['month'] += 1;
-				$this->date_filters['month'] = $label = lang(adodb_date('F',$this->bo->date2ts($params['date']))).' '.$this->first['year'];
+				$this->date_filters['month'] = $label = lang(date('F',$this->bo->date2ts($params['date']))).' '.$this->first['year'];
 				$this->first = $this->bo->date2ts($this->first);
 				$this->last = $this->bo->date2ts($this->last);
 				$this->last--;

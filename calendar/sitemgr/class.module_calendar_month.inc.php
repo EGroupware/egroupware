@@ -300,7 +300,7 @@ class module_calendar_month extends Module
 				'menuaction' => false,
 				'date' => $this->bo->date2string($week_start),
 			);
-			$title = lang('Wk').' '.adodb_date('W',$week_start);
+			$title = lang('Wk').' '.date('W',$week_start);
 			if (!isset($GLOBALS['egw']->template))
 			{
 				$GLOBALS['egw']->template = new Framework\Template;

@@ -331,11 +331,11 @@ class module_calendar_list extends Module
 			$html .= '  <div class="cal_list_weektop"></div>'."\n";
 			foreach ($rows as $event)
 			{
-				if (($last_week != 0) && (adodb_date('W-Y',$event['start']) != $last_week))
+				if (($last_week != 0) && (date('W-Y',$event['start']) != $last_week))
 				{
 					$html .= '  <div class="cal_list_weeksplit"></div>'."\n";
 				}
-				$last_week = adodb_date('W-Y',$event['start']);
+				$last_week = date('W-Y',$event['start']);
 				$html .= "  <!-- Event -->\n";
 				if ($event_count % 2 == 0) {
 					$html .= '  <div class="cal_list_event cal_event_even">'."\n";
@@ -347,10 +347,10 @@ class module_calendar_list extends Module
 				$html .= '    <div class="cal_list_title">'.$event['title']."</div>\n";
 				$html .= '    <div class="cal_list_date">';
 				$html .= '<span class="cal_list_start">';
-				$html .= '<span class="cal_list_weekday">'.lang(adodb_date('D',$event['start'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
+				$html .= '<span class="cal_list_weekday">'.lang(date('D',$event['start'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
 				$html .= $this->bo->format_date($event['start'])."</span>";
 				$html .= '<span class="cal_list_end"> - ';
-				$html .= '<span class="cal_list_weekday">'.lang(adodb_date('D',$event['end'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
+				$html .= '<span class="cal_list_weekday">'.lang(date('D',$event['end'])).".".($this->bo->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ')."</span>";
 				$html .= $this->bo->format_date($event['end'])."</span></div>\n";
 				$descr = trim($event['description']);
 				if (! empty($descr)) {

@@ -1561,7 +1561,7 @@ class calendar_bo
 						$param = $param ? 'True' : 'False';
 						break;
 					case 'integer':
-						if ($param >= mktime(0,0,0,1,1,2000)) $param = adodb_date('Y-m-d H:i:s',$param)." ($param)";
+						if ($param >= mktime(0,0,0,1,1,2000)) $param = date('Y-m-d H:i:s',$param)." ($param)";
 						break;
 				}
 			}
@@ -1595,7 +1595,7 @@ class calendar_bo
 
 		if ($display_day)
 		{
-			$range = lang(adodb_date('l',$first['raw'])).($this->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ');
+			$range = lang(date('l',$first['raw'])).($this->common_prefs['dateformat'][0] != 'd' ? ' ' : ', ');
 		}
 		for ($i = 0; $i < 5; $i += 2)
 		{
@@ -1615,7 +1615,7 @@ class calendar_bo
 						}
 						if ($display_time)
 						{
-							$range .= ' '.adodb_date($timefmt,$first['raw']);
+							$range .= ' '.date($timefmt,$first['raw']);
 						}
 						if (!$last)
 						{
@@ -1637,7 +1637,7 @@ class calendar_bo
 					{
 						if ($display_time)
 						{
-							$range .= ' '.adodb_date($timefmt,$first['raw']);
+							$range .= ' '.date($timefmt,$first['raw']);
 						}
 						$range .= ' - ';
 					}
@@ -1657,7 +1657,7 @@ class calendar_bo
 		}
 		if ($display_time && $last)
 		{
-			$range .= ' '.adodb_date($timefmt,$last['raw']);
+			$range .= ' '.date($timefmt,$last['raw']);
 		}
 		if ($datefmt[4] == 'Y' && $datefmt[0] == 'm')
 		{
