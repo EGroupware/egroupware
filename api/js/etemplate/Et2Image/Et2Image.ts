@@ -13,6 +13,7 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
+import "../../jsapi/egw_images.js";
 
 @customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
@@ -198,7 +199,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		{
 			return img_href;
 		}
-		let src = this.egw()?.image(img_href);
+		let src = this.egw() && typeof this.egw().image == "function" ? this.egw()?.image(img_href) : "";
 		if(src)
 		{
 			return src;
