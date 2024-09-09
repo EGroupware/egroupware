@@ -113,7 +113,10 @@ class importexport_schedule_ui
 			// Remove any left blank
 			foreach($schedule as $key => &$value)
 			{
-				if($value == '') unset($schedule[$key]);
+				if(trim($value) == '')
+				{
+					unset($schedule[$key]);
+				}
 			}
 			$result = $async->set_timer(
 				$schedule,
