@@ -1029,6 +1029,12 @@ export abstract class EgwApp
 					}
 					if(this.dataset.id != 'add')
 					{
+						// check for mobile framework and close the sidebox/-bar
+						if (typeof framework.toggleMenu === 'function')
+						{
+							framework.toggleMenu('on');
+						}
+
 						event.stopImmediatePropagation();
 						self.setState.call(self, state);
 						return false;
