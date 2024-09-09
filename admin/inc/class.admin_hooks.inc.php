@@ -71,7 +71,7 @@ class admin_hooks
 
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
-				$file['Bulk password reset']        = Egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
+				$file['Bulk changes']        = Egw::link('/index.php','menuaction=admin.admin_passwordreset.index&ajax=true');
 				$file['Application passwords']      = Egw::link('/index.php', 'menuaction=admin.EGroupware\\Admin\\Token.index&ajax=true');
 			}
 

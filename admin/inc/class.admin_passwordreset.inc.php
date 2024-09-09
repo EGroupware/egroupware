@@ -68,7 +68,7 @@ class admin_passwordreset
 	{
 
 		// Setup if opened as a dialog
-		$content['dialog'] = $_GET['dialog'];
+		$content['dialog'] = $_GET['dialog'] ?? null;
 		if($content['dialog'] && !$content['users'] && isset($_GET['ids']))
 		{
 			$content['users'] = $_GET['ids'];
@@ -181,7 +181,8 @@ class admin_passwordreset
 		$tmpl = new Api\Etemplate('admin.passwordreset');
 		$tmpl->exec('admin.admin_passwordreset.index',$content,$sel_options,$readonlys,array(
 			'changed' => $changed,
-		));
+			'dialog'  => $content['dialog'],
+		), 2 * !empty($content['dialog']));
 	}
 
 	protected function resetAccount($account_id, $content, $change_pw, $current_hash, &$msg, &$changed)
