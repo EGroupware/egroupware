@@ -2420,6 +2420,12 @@ app.classes.mail = AppJS.extend(
 			return;
 		}
 
+		// check for mobile framework and close the sidebox/-bar
+		if (typeof framework.toggleMenu === 'function')
+		{
+			framework.toggleMenu('on');
+		}
+
 		// Check if this is a top level node and
 		// change profile if server has changed
 		var server = _folder.split('::');

@@ -171,6 +171,11 @@ class AdminApp extends EgwApp
 			window.open(_url, '_blank');
 			return;
 		}
+		// check for mobile framework and close the sidebox/-bar
+		if (typeof framework.toggleMenu === 'function')
+		{
+			framework.toggleMenu('on');
+		}
 		var ajax : any = false;
 		if (_url)
 		{
