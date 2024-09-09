@@ -114,12 +114,14 @@ export default css`
 		padding-top: var(--sl-spacing-3x-small);
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 		min-width: 0px;
+	}
 
-		// Limit tag size
+	/* Limit tag size */
 
-		& > * {
-			max-width: 25em;
-		}
+	.tree_tag {
+		color: green;
+		max-width: 25em;
+		overflow: hidden;
 	}
 
 	/* End tags */
