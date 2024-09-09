@@ -594,7 +594,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 					this.requestUpdate("resultsOpen", false)
 				}
 				event.stopPropagation();
-				this.setCurrentResult(this.currentResult ?? this._resultNodes[0]);
+
+				this.setCurrentResult(
+					this.currentResult && this.contains(this.currentResult) ?
+					this.currentResult : this._resultNodes[0]
+				);
 				return;
 			}
 
