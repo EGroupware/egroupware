@@ -119,9 +119,13 @@ export default css`
 	/* Limit tag size */
 
 	.tree_tag {
-		color: green;
 		max-width: 25em;
 		overflow: hidden;
+	}
+
+	:host(:not([multiple])) .tree_tag::part(base) {
+		border-color: transparent;
+		background-color: transparent;
 	}
 
 	/* End tags */

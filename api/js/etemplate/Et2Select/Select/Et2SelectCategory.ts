@@ -30,6 +30,11 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 					border-inline-start: 4px solid transparent;
 					border-inline-start-color: var(--category-color, transparent);
 				}
+
+				:host(:not([multiple])) .tree_tag::part(base) {
+					border-inline-start: 4px solid transparent;
+					border-inline-start-color: var(--category-color, transparent);
+				}
 			`
 		];
 	}
