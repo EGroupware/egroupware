@@ -288,9 +288,6 @@
   #mail-index tr span.mail.flagged.mobile_cat_col {
     background: #ff0000;
   }
-  #mail-index tr span.mail.prio_high.mobile_cat_col {
-    background: #ac0000;
-  }
   #mail-index tr span.mail.deleted.mobile_cat_col {
     background: silver;
     text-decoration: line-through;

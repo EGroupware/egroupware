@@ -61,10 +61,6 @@ tr.mail.flagged td:first-child{
 	border-left: 6px solid #ff0000 !important;
 }
 
-tr.mail.prio_high td:first-child{
-	border-left: 6px solid #ac0000 !important;
-}
-
 tr.mail.deleted  td:first-child{
 	border-left: 6px solid silver;
 	text-decoration : line-through;
