@@ -137,7 +137,7 @@
 						</grid>
 						<et2-hbox>
 							<et2-date-time id="recur_rdate"></et2-date-time>
-							<et2-button id="button[add_rdate]" label="Add" statustext="Add recurrence"></et2-button>
+							<et2-button id="button[add_rdate]" image="add" statustext="Add recurrence"></et2-button>
 						</et2-hbox>
 					</et2-vbox>
 					<et2-description  value="Exceptions"></et2-description>
