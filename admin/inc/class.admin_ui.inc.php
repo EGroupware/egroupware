@@ -179,7 +179,7 @@ class admin_ui
 				'group'           => $group,
 				'nm_action'       => 'popup',
 				'url'             => 'menuaction=admin.admin_passwordreset.index&dialog=true&ids=$id&select_all=$select_all',
-				'width'           => 750,
+				'width'           => 800,
 				'height'          => 600
 			);
 			// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
