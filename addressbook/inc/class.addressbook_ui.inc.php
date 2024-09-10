@@ -2735,12 +2735,12 @@ class addressbook_ui extends addressbook_bo
 				{
 					return substr($cf['name'], 0, 5) === 'ldap_';
 				}));
-		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
+		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || empty($this->config['private_cf_tab']);
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
 		if (!$content['id']) $readonlys['button[delete]'] = !$content['id'];
-		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
+		$content['no_private_cfs'] = empty($this->config['private_cf_tab']);
 		$content['hide_change_org'] = $readonlys['change_org'] = empty($content['org_name']) || $view;
 
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
@@ -3220,7 +3220,7 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
 		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
 			$this->account_repository != 'sql' && $content['account_id'];
-		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
+		$content['no_private_cfs'] = empty($this->config['private_cf_tab']);
 
 		// last and next calendar date
 		if (!empty($content['id'])) $dates = current($this->read_calendar(array($content['account_id'] ? $content['account_id'] : 'c'.$content['id']),false));
@@ -3455,7 +3455,7 @@ class addressbook_ui extends addressbook_bo
 		$content['no_tid'] = true;
 		$content['showsearchbuttons'] = true; // enable search operation and search buttons| they're disabled by default
 
-		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
+		$content['no_private_cfs'] = empty($this->config['private_cf_tab']);
 
 		return $this->tmpl->exec('addressbook.addressbook_ui.extSearch',$content,$sel_options,$readonlys,array(),2);
 	}
