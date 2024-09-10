@@ -1439,7 +1439,24 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 
 			// If we're the root object, return the phpgwapi API instance
-			return typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? window['egw'] : null);
+			let egwInstance = typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? <IegwAppLocal><unknown>window['egw'] : null);
+
+			// Make sure required methods are there
+			// These methods are used inside widgets, but may not always be available depending on egw() loading (tests, docs)
+			const required = {
+				debug: () => {console.log(arguments);},
+				lang: (l) => {return l;},
+				preference: () => {return false;},
+			};
+			for(let functionName in required)
+			{
+				if(egwInstance && typeof egwInstance[functionName] !== "function")
+				{
+					egwInstance[functionName] = required[functionName];
+				}
+			}
+
+			return egwInstance;
 		}
 	}
 
