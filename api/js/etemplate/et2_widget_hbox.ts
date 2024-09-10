@@ -200,6 +200,6 @@ export class et2_hbox extends et2_baseWidget
 	}
 }
 
-et2_register_widget(et2_hbox, ["old-hbox"]);
+et2_register_widget(et2_hbox, ["hbox", "old-hbox"]);
 
 
