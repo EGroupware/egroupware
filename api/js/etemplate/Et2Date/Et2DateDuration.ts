@@ -17,6 +17,7 @@ import {dateStyles} from "./DateStyles";
 import shoelace from "../Styles/shoelace";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
+import {live} from "lit/directives/live.js";
 
 export interface formatOptions
 {
@@ -363,6 +364,18 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 	set value(_value)
 	{
 		this._display = this._convert_to_display(this.emptyNot0 && ""+_value === "" ? '' : parseFloat(_value));
+		// Update values
+		(typeof this._display.value == "string" ? this._display.value.split(":") : [this._display.value])
+			.forEach((v, index) =>
+			{
+				if(!this._durationNode[index])
+				{
+					return;
+				}
+				const old = this._durationNode[index]?.value;
+				this._durationNode[index].value = v;
+				this._durationNode[index].requestUpdate("value", old);
+			});
 		this.requestUpdate();
 	}
 
@@ -578,7 +591,7 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
                                 step=${this.step}
 								precision=${typeof input.precision === "number" ? input.precision : nothing} 
 								title=${input.title || nothing}
-                                value=${input.value}
+                                value=${live(input.value)}
                                 @sl-change=${this.handleInputChange}
                     ></et2-number>`
         )}

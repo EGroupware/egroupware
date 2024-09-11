@@ -218,6 +218,7 @@ export class Et2Number extends Et2Textbox
 	@property({type: String})
 	set value(val)
 	{
+		const old = this.value;
 		if("" + val !== "")
 		{
 			// Remove separator so parseFloat works
@@ -238,6 +239,7 @@ export class Et2Number extends Et2Textbox
 		if(isNaN(val))
 		{
 			super.value = val;
+			this.requestUpdate("value", old);
 			return;
 		}
 		if(this.max && val > this.max)
@@ -249,6 +251,8 @@ export class Et2Number extends Et2Textbox
 			val = this.min;
 		}
 		super.value = formatNumber(val, this.decimalSeparator, this.thousandsSeparator, this.precision);
+
+		this.requestUpdate("value", old);
 	}
 
 	get value() : string
@@ -337,7 +341,7 @@ export class Et2Number extends Et2Textbox
 			// The initial options need to match an actual number
 			radix: this.decimalSeparator,
 			thousandsSeparator: this.thousandsSeparator,
-			mask: this.mask ?? Number,
+			//		mask: this.mask ?? Number,
 			lazy: false,
 			padFractionalZeros: (typeof this.precision !== "undefined"),
 			definitions: {
