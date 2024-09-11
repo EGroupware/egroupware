@@ -133,14 +133,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	connectedCallback()
 	{
 		super.connectedCallback();
-
-		document.addEventListener("click", this.handleDocumentClick);
 	}
 
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
-		document.removeEventListener("click", this.handleDocumentClick);
 	}
 
 	updated(changedProperties : PropertyValues)
@@ -242,6 +239,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			return undefined;
 		}
 
+		document.addEventListener("click", this.handleDocumentClick);
 		this.open = true;
 		this.requestUpdate("open", false)
 		return this.updateComplete
@@ -254,6 +252,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		{
 			return undefined;
 		}
+
+		document.removeEventListener("click", this.handleDocumentClick);
 
 		this.open = false;
 		this._popup.active = false;
@@ -510,10 +510,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		{
 			this._popup.active = false;
 			this._searchNode.value = "";
+			document.removeEventListener("click", this.handleDocumentClick);
 		}
 		else
 		{
 			this._popup.active = true;
+			document.addEventListener("click", this.handleDocumentClick);
 		}
 		this.open = this._popup.active;
 		this.treeOrSearch = "tree";
