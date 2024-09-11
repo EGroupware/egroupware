@@ -62,7 +62,7 @@ class infolog_wizard_import_ical
 			$content['step'] = 'wizard_step55';
 			foreach(array('override_values') as $field)
 			{
-				if(!$content[$field] && array_key_exists($field, $content['plugin_options']))
+				if(empty($content[$field]) && !empty($content['plugin_options']) && array_key_exists($field, $content['plugin_options']))
 				{
 					$content[$field] = $content['plugin_options'][$field];
 				}
