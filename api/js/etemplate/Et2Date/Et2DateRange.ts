@@ -23,12 +23,12 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			...dateStyles,
 			css`
 
-              .input-group {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                align-items: baseline;
-              }
+				.form-control-input {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					align-items: baseline;
+				}
 			`,
 		];
 	}
@@ -129,7 +129,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
-				placeholder=${ifDefined(this.placeholder)}
+                placeholder=${ifDefined(this.placeholder || this.egw().lang("From"))}
 				defaultDate=${ifDefined(this.value?.from)}
             ></et2-date>
             <et2-date
@@ -137,7 +137,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
                     ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
-				placeholder=${ifDefined(this.placeholder)}
+                    placeholder=${ifDefined(this.placeholder || this.egw().lang("To"))}
 				value=${ifDefined(this.value?.to)}
             ></et2-date>
 		`;
