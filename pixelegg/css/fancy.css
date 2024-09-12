@@ -277,13 +277,13 @@
     margin-left: -10px;
   }
   a.et2_url.email {
-    background-image: url(../../api/templates/default/images/email.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/envelope.svg);
   }
   a.et2_url.phone {
-    background-image: url(../../api/templates/default/images/phone.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/telephone.svg);
   }
   a.et2_url.url {
-    background-image: url(../../api/templates/default/images/url.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/link-45deg.svg);
   }
   /**
  * Button widget - text only, and icon
@@ -355,7 +355,7 @@
   }
   .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
     /*visibility: hidden;*/
-    background-image: url(../../api/templates/default/images/close.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/x-square.svg);
     margin: -2px -3px;
     padding: 0px;
   }
@@ -375,7 +375,7 @@
     border-left: 1px solid #F2F2F2;
   }
   .ui-datepicker .ui-datepicker-buttonpane button[data-handler="today"] {
-    background-image: url(../../api/templates/default/images/bullet.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/record.svg);
     background-color: transparent;
     background-size: contain;
     border: none;
@@ -387,12 +387,12 @@
     background-color: transparent;
   }
   .ui-datepicker .ui-datepicker-prev span {
-    background-image: url(../../api/templates/default/images/previous.svg) !important;
+    background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-left.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }
   .ui-datepicker .ui-datepicker-next span {
-    background-image: url(../../api/templates/default/images/next.svg) !important;
+    background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-right.svg) !important;
     background-position: 0px 0px !important;
     background-size: contain;
   }
@@ -403,13 +403,13 @@
   .et2_file .progress li:hover div.remove {
     width: 16px;
     height: 16px;
-    background-image: url("../../api/templates/default/images/delete.svg");
+    background-image: url("../../node_modules/bootstrap-icons/icons/trash3.svg");
   }
   .et2_file .progress p {
     background-color: #FFDD73;
   }
   span.et2_file_span {
-    background-image: url(../../api/templates/default/images/attach.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/paperclip.svg);
   }
   span.et2_file_span img[url*="svg"] {
     background-color: #b4b4b4 !important;
@@ -509,7 +509,7 @@
     left: 0px;
   }
   .et2_link_to .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
+    background: #ffffff url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center right;
   }
   .et2_link_to .et2_file span {
     background-position: center;
@@ -520,7 +520,7 @@
     border-radius: 3px;
   }
   .et2_link_entry .ui-icon-triangle-1-s {
-    background: #ffffff url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
+    background: #ffffff url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center right;
     background-size: contain;
   }
   .et2_link {
@@ -541,7 +541,7 @@
   }
   .et2_link_list td div.delete {
     visibility: hidden;
-    background-image: url("../../api/templates/default/images/delete.svg");
+    background-image: url("../../node_modules/bootstrap-icons/icons/trash3.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px 12px;
@@ -549,7 +549,7 @@
   }
   .et2_vfs td div.delete {
     visibility: hidden;
-    background-image: url("../../api/templates/default/images/delete.svg");
+    background-image: url("../../node_modules/bootstrap-icons/icons/trash3.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 12px 12px;
@@ -911,7 +911,7 @@
     color: #000000;
   }
   .sidebox-favorites ul.favorites li.ui-menu-item:hover a .ui-icon-trash {
-    background-image: url(../../api/templates/default/images/delete.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
     background-size: 12px 12px;
     background-position: center 2px;
     margin-top: 0px;
@@ -929,7 +929,7 @@
   .sidebox-favorites ul.favorites li.ui-menu-item a div.ui-icon-heart {
     width: 9px;
     height: 16px;
-    background-image: url(../../api/templates/default/images/favorites.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/star-fill.svg);
     background-size: 16px 16px;
     background-position: 1px 0;
     margin-right: 9px;
@@ -940,7 +940,7 @@
     height: 16px;
     margin-left: 4px;
     margin-right: 10px;
-    background-image: url(../../api/templates/default/images/fav_filter.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/star.svg);
     background-size: 16px 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
@@ -972,12 +972,12 @@
   }
   .nextmatch_sortheader.asc {
     font-weight: bold;
-    background-image: url(../../api/templates/default/images/arrow_up.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
     background-size: 8px 8px;
   }
   .nextmatch_sortheader.desc {
     font-weight: bold;
-    background-image: url(../../api/templates/default/images/arrow_down.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
     background-size: 8px 8px;
   }
   /**
@@ -1027,11 +1027,11 @@
 * et2_taglist
 */
   .et2_taglist_toggle > div.toggle {
-    background-image: url("../../api/templates/default/images/minus.svg");
+    background-image: url("../../node_modules/bootstrap-icons/icons/dash-lg.svg");
     background-size: 50%;
   }
   .et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
-    background-image: url("../../api/templates/default/images/plus.svg");
+    background-image: url("../../node_modules/bootstrap-icons/icons/plus-lg.svg");
     background-size: 50%;
   }
   .et2_taglist.et2_taglist_category {
@@ -1106,11 +1106,11 @@
     padding-left: 5px;
   }
   .et2_vfsPath input.et2_textbox.et2_vfs {
-    background-image: url(../../api/templates/default/images/edit.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/pencil-square.svg);
   }
   /*#################################### ET2 SEARCHBOX #####################################################*/
   .et2_searchbox button.et2_button {
-    background-image: url(../../api/templates/default/images/search.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
     background-size: 20px 20px;
     background-position: center;
   }
@@ -1242,13 +1242,13 @@ option:checked {
   text-decoration: none;
 }
 .ui-state-default .ui-icon.ui-icon-triangle-1-s {
-  background: url("../../api/templates/default/images/arrow_down.svg");
+  background: url("../../node_modules/bootstrap-icons/icons/caret-down-fill.svg");
   background-size: 8px auto;
   background-position: center;
   background-repeat: no-repeat;
 }
 .ui-widget-header .ui-icon.ui-icon-check {
-  background-image: url("../../api/templates/default/images/check.svg");
+  background-image: url("../../node_modules/bootstrap-icons/icons/check-lg.svg");
   background-size: 12px auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -1343,9 +1343,7 @@ option:checked {
   background-color: #FFDD73;
 }
 .ui-icon-close {
-  /*visibility: hidden;*/
-  /*background-image: url(../../api/templates/default/images/search.png);*/
-  background-image: url("../../api/templates/default/images/cancel.svg");
+  background-image: url("../../node_modules/bootstrap-icons/icons/x-square.svg");
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: 12px 12px;
@@ -1375,7 +1373,7 @@ span.ui-icon-close {
 }
 /*Schliessen x*/
 .ui-icon-closethick {
-  background-image: url(../../api/templates/default/images/close.svg) !important;
+  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg) !important;
   background-repeat: no-repeat;
   background-color: #FFFFFF;
   background-size: contain;
@@ -1424,7 +1422,7 @@ span.ui-multiselect-header {
   color: #FFFFFF;
 }
 span.ui-icon-search {
-  background-image: url(../../api/templates/default/images/search.svg) !important;
+  background-image: url(../../node_modules/bootstrap-icons/icons/search.svg) !important;
   background-position: 0px;
   background-size: 10px 10px;
 }
@@ -2173,7 +2171,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-color: transparent;
 }
 #loginMainDiv div#centerBox form table.divLoginbox select[name="remember_me"] {
-  background-image: url(../../api/templates/default/images/task.png);
+  /*background-image: url(../../node_modules/bootstrap-icons/icons/task.png);*/
   background-repeat: no-repeat;
   background-position-x: 0;
 }
@@ -2215,10 +2213,10 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   opacity: 0.5;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.username {
-  background-image: url(../../api/templates/default/images/personal.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/person.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.password {
-  background-image: url(../../api/templates/default/images/password.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/key.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.remember_me {
   background-image: none;
@@ -2227,10 +2225,10 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   padding-left: 31px;
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.domain {
-  background-image: url(../../api/templates/default/images/internet.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/globe2.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox span.field_icons.language {
-  background-image: url(../../api/templates/default/images/language.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/translate.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="checkbox"] {
   height: 25px;
@@ -2379,7 +2377,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   float: right;
 }
 .egw_fw_ui_tab_content > .loading {
-  background-image: url('../../api/templates/default/images/loading.gif');
+  background-image: url('../../api/templates/default/images/loading.svg');
   background-repeat: no-repeat;
   text-align: center;
   line-height: 400px;
@@ -2522,7 +2520,7 @@ button[id="timesheet-edit_button[delete]"],
 button[id="displayToolbar-delete"],
 button.et2_button_delete {
   /*background-color: @color_negative_action_hover !important;*/
-  background-image: url('../../api/templates/default/images/delete.png');
+  background-image: url('../../node_modules/bootstrap-icons/icons/trash3.svg');
   margin-left: 3em;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
@@ -2625,7 +2623,7 @@ button.et2_button_delete:active {
  *
  ######################################################################################## */
 #passwordchange {
-  background-image: url('../../api/templates/default/images/cancel.png') !important;
+  background-image: url('../../node_modules/bootstrap-icons/icons/x-lg.svg') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2672,7 +2670,7 @@ button.et2_button_delete:active {
 /*div.et2_box_widget .et2_button_text:last_child,*/
 button[id="cancel"],
 button#cancel {
-  background-image: url('../../api/templates/default/images/cancel.png') !important;
+  background-image: url('node_modules/bootstrap-icons/icons/x-square.svg') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2714,7 +2712,7 @@ button#cancel:active {
   box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 #passwordcancel {
-  background-image: url('../../api/templates/default/images/cancel.png') !important;
+  background-image: url('../../node_modules/bootstrap-icons/icons/x-lg.svg') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2777,7 +2775,7 @@ button.add:before {
   line-height: 1.1em;
 }
 button[id="add"] {
-  background-image: url('../../api/templates/default/images/add.png') !important;
+  background-image: url('../../node_modules/bootstrap-icons/icons/plus-circle.svg') !important;
   /*.border_normal;*/
   /*.box_shadow_standard_light;*/
   /*.rounded (3px);*/
@@ -2824,13 +2822,13 @@ button[id="add"] {
 /* @end */
 /* @group Single Chosen */
 .chzn-container-single .chzn-single div b {
-  background-image: url("../../api/templates/default/images/arrow_down.svg") !important;
+  background-image: url("../../node_modules/bootstrap-icons/icons/caret-down-fill.svg") !important;
   background-size: 8px auto !important;
   background-position: center;
   background-repeat: no-repeat;
 }
 .chzn-container-single.chzn-with-drop .chzn-single div b {
-  background-image: url("../../api/templates/default/images/arrow_up.svg") !important;
+  background-image: url("../../node_modules/bootstrap-icons/icons/caret-up-fill.svg") !important;
   background-size: 8px auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -3055,12 +3053,12 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0;
-  background: url(../../api/templates/default/images/arrow_down.svg) no-repeat center right;
+  background: url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg) no-repeat center right;
   background-size: 8px auto;
   background-position-x: calc(100% - 8px);
 }
 select:active {
-  background: #ffffff url(../../api/templates/default/images/arrow_up.svg) no-repeat center right;
+  background: #ffffff url(../../node_modules/bootstrap-icons/icons/caret-up-fill.svg) no-repeat center right;
   background-size: 8px auto;
   background-position-x: calc(100% - 8px);
 }
@@ -3217,11 +3215,6 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.su
  * @package pixelegg
  * @version $Id$
  */
-/*body {
-    background-color: @gray_0;
-    background-image: url(../../api/templates/default/images/bgDialog.png);
-    background-repeat: repeat-x;
-}*/
 div#popupMainDiv {
   padding: 8px;
   background-color: #FFFFFF;
@@ -3250,7 +3243,7 @@ form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input {
   /*.background-clip(padding-box);*/
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker {
-  background-image: url("../../api/templates/default/images/datepopup.png");
+  background-image: url("../../node_modules/bootstrap-icons/icons/calendar3.svg");
 }
 form.et2_container div table.et2_grid tbody tr .row td .et2_box_widget input.hasDatepicker:hover {
   cursor: pointer;
@@ -3549,21 +3542,21 @@ div.admin-config form > table td b {
 }
 .warning_message {
   border-left: 24px solid rgba(255, 204, 0, 0.5) !important;
-  background-image: url(../../api/templates/default/images/dialog_warning.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/exclamation-triangle.svg);
 }
 .error_message {
   border-left: 24px solid rgba(204, 0, 51, 0.5) !important;
-  background-image: url(../../api/templates/default/images/dialog_error.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/exclamation-circle.svg);
 }
 .info_message {
-  background-image: url(../../api/templates/default/images/dialog_info.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/info-circle.svg);
 }
 .info_message .discard {
   float: right;
   margin-top: 4px;
 }
 .success_message {
-  background-image: url(../../api/templates/default/images/check.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
 }
 /**
  * Message in popup
@@ -3616,7 +3609,7 @@ body .egw_message_wrapper div#egw_message span.close {
   background: #d0cdcdb5;
   right: 10px;
   top: 10px;
-  background-image: url(../../api/templates/default/images/close.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
   background-size: 12px;
   background-repeat: no-repeat;
   background-position: center;
@@ -3872,7 +3865,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../api/templates/default/images/delete.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3922,7 +3915,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../api/templates/default/images/search.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3973,7 +3966,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../api/templates/default/images/close.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -3988,7 +3981,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../api/templates/default/images/back.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-left.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px;
@@ -4003,7 +3996,7 @@ td.lettersearch {
   float: right;
   width: 24px;
   height: 24px;
-  background-image: url(../../api/templates/default/images/forward.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-right.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px;
@@ -4039,7 +4032,7 @@ td.lettersearch {
   background: rgba(103, 159, 210, 0.2);
 }
 #egwpopup div#egwpopup_header .egwpopup_deleteall {
-  background-image: url(../../api/templates/default/images/delete.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/trash3.svg);
   width: 12px;
   height: 12px;
   background-position: center;
@@ -4442,7 +4435,7 @@ body.scrollVertical {
 }
 /*ICON List*/
 #egw_fw_topmenu_slide.slidedown {
-  background-image: url("../../api/templates/default/images/list.png");
+  background-image: url("../../node_modules/bootstrap-icons/icons/list.svg");
   background-position: center center;
   height: 15px;
   width: 15px;
@@ -4588,7 +4581,7 @@ body.scrollVertical {
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header:hover .egw_fw_ui_tab_close_button {
   top: 0px;
-  background-image: url(../../api/templates/default/images/close.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   font-size: 12px;
@@ -4772,7 +4765,7 @@ body.scrollVertical {
   padding-left: 35px;
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active:hover {
-  background-image: url(../../api/templates/default/images/reload.png);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-clockwise.svg);
   background-size: 18px;
   background-position: 9px 6px;
   background-repeat: no-repeat;
@@ -4855,7 +4848,7 @@ body.scrollVertical {
   line-height: 1em;
   font-size: 13px;
   font-weight: normal;
-  background-image: url(../../api/templates/default/images/arrow_right.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/caret-right-fill.svg);
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 12px;
@@ -4877,7 +4870,7 @@ body.scrollVertical {
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h1,
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category_active h2 {
   color: #f2f2f2;
-  background-image: url(../../api/templates/default/images/arrow_down.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
   line-height: 1em;
   font-size: 12px;
   background-size: 12px;
@@ -5245,7 +5238,7 @@ body.scrollVertical {
   height: 35px;
   top: 0px;
   border-bottom: 1px solid silver;
-  background-image: url(../../api/templates/default/images/up.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-up.svg.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-position-y: 5px;
@@ -5255,7 +5248,7 @@ body.scrollVertical {
   bottom: 0px;
   height: 35px;
   border-top: 1px solid silver;
-  background-image: url(../../api/templates/default/images/down.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-down.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-position-y: 6px;
@@ -6162,12 +6155,12 @@ table.egwGridView_grid span.arrow {
   width: 8px;
 }
 table.egwGridView_grid span.arrow.opened {
-  background-image: url("../../api/templates/default/images/arrow_down.svg");
+  background-image: url("../../node_modules/bootstrap-icons/icons/caret-down-fill.svg");
   cursor: pointer;
   background-position: bottom;
 }
 table.egwGridView_grid span.arrow.closed {
-  background-image: url("../../api/templates/default/images/arrow_right.svg");
+  background-image: url("../../node_modules/bootstrap-icons/icons/caret-right-fill.svg");
   cursor: pointer;
   background-position: right;
 }

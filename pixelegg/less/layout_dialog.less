@@ -18,12 +18,6 @@
 @import (reference) "definitions.less";
 //##############################################################################################################
 
-/*body {
-    background-color: @gray_0;
-    background-image: url(../../api/templates/default/images/bgDialog.png);
-    background-repeat: repeat-x;
-}*/
-
 // Dialoge Allgemeine Definition
 
 div#popupMainDiv {
@@ -67,7 +61,7 @@ form.et2_container {
                                 }
 
                                 input.hasDatepicker {
-                                    background-image: url( "../../api/templates/default/images/datepopup.png");
+                                    background-image: url( "../../node_modules/bootstrap-icons/icons/calendar3.svg");
 
                                     &:hover {cursor: pointer;}
                                 }
@@ -420,21 +414,21 @@ div.admin-config form > table {
 }
 .warning_message {
 	border-left: 24px solid @egw_color_msg_warning !important;
-	background-image: url(../../api/templates/default/images/dialog_warning.png);
+	background-image: url(../../node_modules/bootstrap-icons/icons/exclamation-triangle.svg);
 }
 .error_message {
 	border-left: 24px solid @egw_color_msg_error !important;
-	background-image: url(../../api/templates/default/images/dialog_error.png);
+	background-image: url(../../node_modules/bootstrap-icons/icons/exclamation-circle.svg);
 }
 .info_message {
-	background-image: url(../../api/templates/default/images/dialog_info.svg);
+	background-image: url(../../node_modules/bootstrap-icons/icons/info-circle.svg);
 	.discard  {
 		float:right;
 		margin-top: 4px;
 	}
 }
 .success_message {
-	background-image: url(../../api/templates/default/images/check.svg);
+	background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
 }
 /**
  * Message in popup
@@ -483,7 +477,7 @@ body .egw_message_wrapper {
 			background: #d0cdcdb5;
 			right: 10px;
 			top: 10px;
-			background-image: url(../../api/templates/default/images/close.svg);
+			background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
 			background-size: 12px;
 			background-repeat: no-repeat;
 			background-position: center;
