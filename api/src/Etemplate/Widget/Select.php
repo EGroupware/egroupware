@@ -311,6 +311,13 @@ class Select extends Etemplate\Widget
 					}
 					$value = $sum;
 					break;
+
+				case 'select-bool':
+					if (isset($value))
+					{
+						$value = (bool)$value;
+					}
+					break;
 			}
 			if (isset($value))
 			{
