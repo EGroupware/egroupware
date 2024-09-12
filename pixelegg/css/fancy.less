@@ -9,23 +9,47 @@
 
 // overwriting pixelegg.less and Shoelace themes
 :root, :host, .sl-theme-light, .sl-theme-dark {
-  --sl-border-radius-medium: 20px;
-  --sl-input-border-radius-medium: var(--sl-border-radius-medium);
-  --et2-button-image-padding-left: .3rem;
+    --sl-border-radius-medium: 20px;
+    --sl-input-border-radius-medium: var(--sl-border-radius-medium);
+    --et2-button-image-padding-left: .3rem;
 
-  et2-tabbox {
-	--track-width: 0px;
+    et2-tabbox {
+        --track-width: 0px;
 
-	et2-tab[active] {
-	  &::part(base) {
-		border: 1px solid;
-		border-radius: var(--sl-border-radius-pill);
-	  }
-	}
-  }
+
+        &::part(tabs) {
+            padding-bottom: var(--sl-spacing-large);
+            padding-top: var(--sl-spacing-x-large);
+            gap: var(--sl-spacing-large);
+        }
+
+        et2-tab {
+            &::part(base) {
+                border: 1px solid;
+                border-color: var(--sl-color-neutral-300);
+                border-radius: var(--sl-border-radius-pill);
+            }
+        }
+
+        et2-tab[active] {
+            &::part(base) {
+                border-color: var(--sl-color-neutral-900);
+            }
+        }
+        
+        et2-tab-panel{
+            border: 1px solid var(--sl-color-neutral-300);
+            border-radius: var(--sl-border-radius-medium);
+            padding: var(--sl-spacing-medium);
+        }
+
+        .et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox{
+            border-radius: var(--sl-border-radius-pill);
+        }
+    }
 }
 
 // styling of legacy NM parts
 .nextmatch_header .header_count {
-	border-radius: var(--sl-border-radius-medium);
+    border-radius: var(--sl-border-radius-medium);
 }

@@ -7147,11 +7147,44 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-dark et2-tabbox {
   --track-width: 0px;
 }
+:root et2-tabbox::part(tabs),
+:host et2-tabbox::part(tabs),
+.sl-theme-light et2-tabbox::part(tabs),
+.sl-theme-dark et2-tabbox::part(tabs) {
+  padding-bottom: var(--sl-spacing-large);
+  padding-top: var(--sl-spacing-x-large);
+  gap: var(--sl-spacing-large);
+}
+:root et2-tabbox et2-tab::part(base),
+:host et2-tabbox et2-tab::part(base),
+.sl-theme-light et2-tabbox et2-tab::part(base),
+.sl-theme-dark et2-tabbox et2-tab::part(base) {
+  border: 1px solid;
+  border-color: var(--sl-color-neutral-300);
+  border-radius: var(--sl-border-radius-pill);
+}
 :root et2-tabbox et2-tab[active]::part(base),
 :host et2-tabbox et2-tab[active]::part(base),
 .sl-theme-light et2-tabbox et2-tab[active]::part(base),
 .sl-theme-dark et2-tabbox et2-tab[active]::part(base) {
-  border: 1px solid;
+  border-color: var(--sl-color-neutral-900);
+}
+:root et2-tabbox et2-tab-panel,
+:host et2-tabbox et2-tab-panel,
+.sl-theme-light et2-tabbox et2-tab-panel,
+.sl-theme-dark et2-tabbox et2-tab-panel {
+  border: 1px solid var(--sl-color-neutral-300);
+  border-radius: var(--sl-border-radius-medium);
+  padding: var(--sl-spacing-medium);
+}
+:root et2-tabbox .et2_toolbar input.et2_textbox,
+:host et2-tabbox .et2_toolbar input.et2_textbox,
+.sl-theme-light et2-tabbox .et2_toolbar input.et2_textbox,
+.sl-theme-dark et2-tabbox .et2_toolbar input.et2_textbox,
+:root et2-tabbox .nextmatch_header_row input.et2_textbox,
+:host et2-tabbox .nextmatch_header_row input.et2_textbox,
+.sl-theme-light et2-tabbox .nextmatch_header_row input.et2_textbox,
+.sl-theme-dark et2-tabbox .nextmatch_header_row input.et2_textbox {
   border-radius: var(--sl-border-radius-pill);
 }
 .nextmatch_header .header_count {
