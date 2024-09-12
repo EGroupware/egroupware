@@ -15,6 +15,7 @@ import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import shoelace from "../Styles/shoelace";
 import {ifDefined} from "lit/directives/if-defined.js";
+import {property} from "lit/decorators/property.js";
 
 /**
  * A split button - a button with a dropdown list
@@ -75,6 +76,9 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		};
 	}
 
+	@property()
+	placement:string = "bottom-end";
+
 	// Make sure imports stay
 	private _group : SlButtonGroup;
 	private _dropdow : SlDropdown;
@@ -115,7 +119,7 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                 >
                     ${this.label}
                 </sl-button>
-                <sl-dropdown placement="bottom-end" hoist part="dropdown">
+                <sl-dropdown placement=${this.placement} hoist part="dropdown">
                     <slot name="trigger" slot="trigger">
                         <sl-button part="trigger" size="${egwIsMobile() ? "large" : "medium"}" slot="trigger" caret
                                ?disabled=${this.disabled}></sl-button>
