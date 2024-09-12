@@ -7021,7 +7021,7 @@ img.et2_button_icon[src*="svg"]:hover {
     width: 50px;
     height: 50px;
     float: left;
-    background-image: url('../../api/templates/default/images/cancelled.svg');
+    background-image: url('../../node_modules/bootstrap-icons/icons/x-lg.svg');
     -webkit-filter: contrast(2);
     background-repeat: no-repeat;
     z-index: 1000;
@@ -7049,7 +7049,7 @@ img.et2_button_icon[src*="svg"]:hover {
     margin-left: 60px;
   }
   body #egw_fw_basecontainer #egw_fw_top_toolbar .egw_fw_logout a#topmenu_logout {
-    background-image: url(../../api/templates/default/images/logout.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/power.svg);
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
@@ -7097,7 +7097,7 @@ img.et2_button_icon[src*="svg"]:hover {
     box-shadow: none;
   }
   body #egw_fw_basecontainer div#egw_fw_menu {
-    background-image: url(../../api/templates/default/images/topmenu_items/mobile/menu_active.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/arrow-left.svg);
     cursor: pointer;
     position: fixed;
     width: 50px;
@@ -7175,35 +7175,35 @@ img.et2_button_icon[src*="svg"]:hover {
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_home {
-    background-image: url(../../api/templates/default/images/topmenu_items/home.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/house-door.svg);
     display: none;
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_prefs {
-    background-image: url(../../api/templates/default/images/topmenu_items/setup.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/gear.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl {
-    background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/lock.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_cats {
-    background-image: url(../../api/templates/default/images/topmenu_items/category.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/tag.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_password {
-    background-image: url(../../api/templates/default/images/topmenu_items/password.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/key.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_search {
-    background-image: url(../../api/templates/default/images/topmenu_items/search.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/search.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_acl {
-    background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/lock.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_calls {
-    background-image: url(../../api/templates/default/images/phone.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/telephone.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_logout {
-    background-image: url(../../api/templates/default/images/logout.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/power.svg);
   }
   body #egw_fw_basecontainer div#egw_fw_topmenu_items ul a#topmenu_current_user {
-    background-image: url(../../api/templates/default/images/users.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/people.svg);
   }
   body #egw_fw_basecontainer #egw_fw_userinfo {
     height: 50px;
@@ -7410,7 +7410,7 @@ img.et2_button_icon[src*="svg"]:hover {
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active {
     cursor: pointer;
-    background-image: url("../../api/templates/default/images/clear.png");
+    /*background-image: url("../../node_modules/bootstrap-icons/icons/clear.png");*/
     background-position: 95% -3000px;
     background-repeat: no-repeat;
     background-color: #f0f0f0;
@@ -7423,7 +7423,7 @@ img.et2_button_icon[src*="svg"]:hover {
     height: 33px;
   }
   body #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active .close {
-    background-image: url(../../api/templates/default/images/close.svg);
+    background-image: url(../../node_modules/bootstrap-icons/icons/x-lg.svg);
     width: 18px;
     height: 33px;
     display: inline-block;
@@ -7489,7 +7489,7 @@ img.et2_button_icon[src*="svg"]:hover {
     border-width: 0px 1px 1px 1px;
   }
   body .sidebar-toggle #egw_fw_top_toolbar div#egw_fw_menu {
-    background-image: url(../../api/templates/default/images/topmenu_items/mobile/menu.png);
+    background-image: url(../../node_modules/bootstrap-icons/icons/list.svg);
   }
   body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_topmenu_info_items,
   body .sidebar-toggle #egw_fw_top_toolbar #egw_fw_topmenu,

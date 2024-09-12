@@ -73,6 +73,7 @@ class Image
 		'edit'	=> 'pencil-square',
 		'edit_leaf'	=> 'pencil-square',
 		'editpaste'	=> 'clipboard2-data',
+		'email'     => 'envelope',
 		'export'	=> 'box-arrow-up',
 		'fav_filter'	=> 'star',
 		'favorites'	=> 'star-fill',
@@ -99,6 +100,7 @@ class Image
 		//'lock'	=> 'lock',
 		'logout'	=> 'power',
 		//used in mobile: 'menu_active'	=> 'array-bar-left',
+		'mail'      => 'envelope',
 		'menu_list'	=> 'list-task',
 		'milestone'	=> 'check2-circle',
 		'mime128_directory'	=> 'folder2',
@@ -228,7 +230,7 @@ class Image
 		'calendar/accepted'	=> 'check-lg',
 		'calendar/day'	=> '1-square',
 		'calendar/list_view'	=> 'list',
-		'calendar/month_view'	=> 'calendar-month',
+		'calendar/month_view'	=> 'calendar/bi-12-square',
 		'calendar/multiweek_view'	=> 'card-list',
 		'calendar/needs-action'	=> 'question-circle',
 		'calendar/next'	=> 'arrow-bar-right',
@@ -268,6 +270,7 @@ class Image
 		'filemanager/gohome'	=> 'house-door',
 		'filemanager/list_row'	=> 'list',
 		'filemanager/list_tile'	=> 'grid-3x3-gap',
+		'filemanager/linkpaste' => 'filemanager/bi-linkpaste',
 		'filemanager/mailpaste'	=> 'envelope-check',
 		'filemanager/upload'	=> 'upload',
 		'images/blocks'	=> 'boxes',
@@ -427,11 +430,11 @@ class Image
 		elseif(($image !== 'navbar' || $app === 'api') && (isset($image_map['global'][$app.'/'.$image]) || isset($image_map['global'][$image])))
 		{
 			$image = $image_map['global'][$app.'/'.$image] ?? $image_map['global'][$image];
-		}
-		// return mime128_* not found in bootstrap as not found
-		elseif(str_starts_with($image, 'mime128_') && !isset($image_map['global'][$image]))
-		{
-			return null;
+			// allow redirects like "calendar/yearview" --> "calendar/bi-12-square"
+			if (strpos($image, '/'))
+			{
+				list($app, $image) = explode('/', $image, 2);
+			}
 		}
 		// then app specific ones
 		elseif(isset($image_map[$app][$image.$extension]))
@@ -452,10 +455,6 @@ class Image
 		{
 			$url = $webserver_url.$image_map['api'][$image.$extension];
 		}
-		elseif(isset($image_map['phpgwapi'][$image.$extension]))
-		{
-			$url = $webserver_url.$image_map['phpgwapi'][$image.$extension];
-		}
 
 		if (!empty($url))
 		{
@@ -473,7 +472,7 @@ class Image
 			self::get_extension($image, $name);
 			return self::find($app, $name, $extension, $add_cachebuster);
 		}
-		//error_log(__METHOD__."('$app', '$image', '$extension') image NOT found!");
+		error_log(__METHOD__."('$app', '$image') image NOT found!");
 		return null;
 	}
 

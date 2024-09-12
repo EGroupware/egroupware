@@ -1030,7 +1030,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 				var $sidebar = jQuery('#'+egw.app_name()+'_sidebox_content');
 				$sidebar.toggle();
 				jQuery(this).css({
-					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'api/templates/default/images/apps.svg':egw.app_name()+'/templates/default/images/navbar.svg)')
+					'background-image':'url('+egw.webserverUrl+'/' + ($sidebar.is(":visible")?'node_modules/bootstrap-icons/icons/grid-3x3-gap.svg':egw.app_name()+'/templates/default/images/navbar.svg)')
 				});
 
 			});
