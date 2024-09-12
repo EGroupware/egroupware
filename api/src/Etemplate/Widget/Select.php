@@ -739,7 +739,7 @@ class Select extends Etemplate\Widget
 			case 'select-cat':
 				// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				$application = self::expand_name($widget->attrs['application'], 0, 0, '', '', self::$cont) ?? $type3;
-				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type;
+				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type ?? 'true';
 				$parentCat = self::expand_name($widget->attrs['parentCat'], 0, 0, '', '', self::$cont) ?? $type4;
 
 				if((!$application || $application === $GLOBALS['egw']->categories->app_name) &&
@@ -752,7 +752,7 @@ class Select extends Etemplate\Widget
 					$categories = new Api\Categories($type5, $application);
 				}
 				// Allow text for global
-				$globalCategories = ($globalCategories && strlen($globalCategories) > 1 ? $globalCategories : !$globalCategories);
+				$globalCategories = $globalCategories && (strlen($globalCategories) > 1 ? $globalCategories === 'true' : (bool)$globalCategories);
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
 				$cats = $categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) ?: [];
 				$cat2option = static function(array $cat) use (&$cat2option, $globalCategories, $cats)
