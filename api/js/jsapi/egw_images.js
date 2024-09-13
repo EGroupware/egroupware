@@ -95,7 +95,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 
 			// own instance specific images in vfs have the highest precedence
 			tries.vfs = _name;
-			if (typeof images.vfs !== 'undefined' && images.vfs[_name] === 'string')
+			if (typeof images.vfs !== 'undefined' && typeof images.vfs[_name] === 'string')
 			{
 				return this.webserverUrl+images.vfs[_name];
 			}
