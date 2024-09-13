@@ -16,7 +16,6 @@
     et2-tabbox {
         --track-width: 0px;
 
-
         &::part(tabs) {
             padding-bottom: var(--sl-spacing-x-small);
             padding-top: var(--sl-spacing-medium);
@@ -29,6 +28,8 @@
                 border-color: var(--sl-color-neutral-300);
                 border-radius: var(--sl-border-radius-pill);
             }
+
+
         }
 
         et2-tab[active] {
@@ -36,7 +37,10 @@
                 border-color: var(--sl-color-neutral-900);
             }
         }
-        
+
+        .tabLabel {
+            max-height: 1em;
+        }
         et2-tab-panel{
             border: 1px solid var(--sl-color-neutral-300);
             border-radius: var(--sl-border-radius-medium);

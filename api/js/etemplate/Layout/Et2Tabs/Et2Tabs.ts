@@ -402,7 +402,10 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			}, this);
 
 			// Set tab label
-			tab.flagDiv.appendChild(document.createTextNode(tab.label));
+			const node = document.createElement("span")
+			node.appendChild(document.createTextNode(tab.label));
+			node.classList.add("tabLabel")
+			tab.flagDiv.appendChild(node);
 
 			if(tab.tabNode && tab.tabNode.children.length)
 			{

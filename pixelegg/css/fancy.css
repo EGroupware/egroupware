@@ -7181,6 +7181,12 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-dark et2-tabbox et2-tab[active]::part(base) {
   border-color: var(--sl-color-neutral-900);
 }
+:root et2-tabbox .tabLabel,
+:host et2-tabbox .tabLabel,
+.sl-theme-light et2-tabbox .tabLabel,
+.sl-theme-dark et2-tabbox .tabLabel {
+  max-height: 1em;
+}
 :root et2-tabbox et2-tab-panel,
 :host et2-tabbox et2-tab-panel,
 .sl-theme-light et2-tabbox et2-tab-panel,
