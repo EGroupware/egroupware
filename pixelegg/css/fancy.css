@@ -7163,9 +7163,9 @@ img.et2_button_icon[src*="svg"]:hover {
 :host et2-tabbox::part(tabs),
 .sl-theme-light et2-tabbox::part(tabs),
 .sl-theme-dark et2-tabbox::part(tabs) {
-  padding-bottom: var(--sl-spacing-large);
-  padding-top: var(--sl-spacing-x-large);
-  gap: var(--sl-spacing-large);
+  padding-bottom: var(--sl-spacing-x-small);
+  padding-top: var(--sl-spacing-medium);
+  gap: var(--sl-spacing-medium);
 }
 :root et2-tabbox et2-tab::part(base),
 :host et2-tabbox et2-tab::part(base),
@@ -7198,6 +7198,9 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-light et2-tabbox .nextmatch_header_row input.et2_textbox,
 .sl-theme-dark et2-tabbox .nextmatch_header_row input.et2_textbox {
   border-radius: var(--sl-border-radius-pill);
+}
+.et2_required:not(.hasValue) {
+  background-color: initial;
 }
 .nextmatch_header .header_count {
   border-radius: var(--sl-border-radius-medium);

@@ -18,9 +18,9 @@
 
 
         &::part(tabs) {
-            padding-bottom: var(--sl-spacing-large);
-            padding-top: var(--sl-spacing-x-large);
-            gap: var(--sl-spacing-large);
+            padding-bottom: var(--sl-spacing-x-small);
+            padding-top: var(--sl-spacing-medium);
+            gap: var(--sl-spacing-medium);
         }
 
         et2-tab {
@@ -47,6 +47,10 @@
             border-radius: var(--sl-border-radius-pill);
         }
     }
+}
+
+.et2_required:not(.hasValue){
+    background-color: initial;
 }
 
 // styling of legacy NM parts
