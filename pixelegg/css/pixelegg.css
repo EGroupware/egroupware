@@ -5243,7 +5243,7 @@ body.scrollVertical {
   height: 35px;
   top: 0px;
   border-bottom: 1px solid silver;
-  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-up.svg.svg);
+  background-image: url(../../node_modules/bootstrap-icons/icons/arrow-bar-up.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-position-y: 5px;
