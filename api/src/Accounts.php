@@ -266,8 +266,8 @@ class Accounts
 			{
 				return $this->backend->search($param);
 			}, [], self::READ_CACHE_TIMEOUT);
-			$this->total = count($result);
-			if (!empty($param['offset']))
+			$this->total = $result ? count($result) : 0;
+			if ($result && !empty($param['offset']))
 			{
 				return array_slice($result, $param['start'], $param['offset'], true);
 			}
