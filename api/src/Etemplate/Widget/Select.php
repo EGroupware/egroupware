@@ -746,7 +746,12 @@ class Select extends Etemplate\Widget
 			case 'select-cat':
 				// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app, $type4: parent-id, $type5=owner (-1=global),$type6=show missing
 				$application = self::expand_name($widget->attrs['application'], 0, 0, '', '', self::$cont) ?? $type3;
-				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type ?? 'true';
+				$globalCategories = self::expand_name($widget->attrs['globalCategories'], 0, 0, '', '', self::$cont) ?? $type;
+				// set default of true (ajax_get_options uses a legacy_options string, which means nothing set is "")
+				if ($globalCategories === null || $globalCategories === '')
+				{
+					$globalCategories = true;
+				}
 				$parentCat = self::expand_name($widget->attrs['parentCat'], 0, 0, '', '', self::$cont) ?? $type4;
 
 				if((!$application || $application === $GLOBALS['egw']->categories->app_name) &&
