@@ -225,17 +225,8 @@
 					font-weight: normal;
 				}
 				h1::before,h2::before {
-					display: inline-block;
-					font-family: bootstrap-icons !important;
-					font-style: normal;
-					font-weight: normal !important;
-					font-variant: normal;
-					text-transform: none;
-					line-height: 1;
-					vertical-align: -.125em;
-					-webkit-font-smoothing: antialiased;
-					-moz-osx-font-smoothing: grayscale;
-					content: "\f231 ";	/* caret-right-fill */
+					.bootstrap-icons;
+					content: "\f231";	// caret-right-fill
 				}
 
 				h2 {
@@ -286,7 +277,7 @@
 					}
 				}
 				h1::before,h2::before {
-					content: "\f229 ";	/* caret-down-fill */
+					content: "\f229 ";	// caret-down-fill
 				}
 
 				&:hover {background-color: @egw_color_2_d; .transition (0.2s, ease-out);}
