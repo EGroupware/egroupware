@@ -239,7 +239,7 @@ class admin_customfields
 				}
 				$this->types2[$type] = $entry['name'];
 			}
-			$sel_options['types'] = $sel_options['cf_type2'] = $this->types2;
+			$sel_options['types'] = $sel_options['cf_type2'] = ['~~all~~' => lang('All')]+$this->types2;
 
 			$content['type_template'] = $this->appname . '.admin.types';
 			$content['content_types']['appname'] = $this->appname;
@@ -756,8 +756,25 @@ class admin_customfields
 		$rows = array();
 
 		$query['col_filter']['cf_app'] = $query['appname'];
+		if (!empty($t2=$query['col_filter']['cf_type2']))
+		{
+			if ($t2 === '~~all~~')
+			{
+				$query['col_filter'][0] = 'cf_type2 IS NULL';
+			}
+			else
+			{
+				$query['col_filter'][0] = '(cf_type2 IS NULL OR cf_type2='.$GLOBALS['egw']->db->quote($t2).')';
+			}
+			unset($query['col_filter']['cf_type2']);
+		}
 		$total = $this->so->get_rows($query, $rows, $readonlys);
 		unset($query['col_filter']['cf_app']);
+		if (isset($t2))
+		{
+			unset($query['col_filter'][0]);
+			$query['col_filter']['cf_type2'] = $t2;
+		}
 
 		foreach($rows as &$row)
 		{
