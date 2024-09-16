@@ -79,7 +79,7 @@ export class Et2VfsMime extends Et2ImageExpose
 	isExposable() : boolean
 	{
 		// do not try to expose directories, they are handled by the action system
-		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE)
+		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE || !this.value.download_url)
 		{
 			return false;
 		}
@@ -184,7 +184,11 @@ export class Et2VfsMime extends Et2ImageExpose
 		{
 			return;
 		}
-		if(typeof _value !== 'object')
+		if (typeof _value === 'string' && _value.indexOf('/') >= 0)
+		{
+			_value = {mime: _value};
+		}
+		else if(typeof _value !== 'object')
 		{
 			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
 			// Keep going, will be 'unknown type'

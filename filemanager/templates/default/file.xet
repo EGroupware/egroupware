@@ -9,8 +9,8 @@
 			</columns>
 			<rows>
 				<row height="30">
-					<et2-image  align="center" src="icon" class="mimeIcon"></et2-image>
-					<vfs-name id="name" needed="1" class="fileName et2_fullWidth"/>
+					<et2-vfs-mime  align="center" id="mime"></et2-vfs-mime>
+					<et2-vfs-name id="name" required="true" class="fileName et2_fullWidth"/>
 				</row>
 				<row>
 					<hrule span="all"/>
