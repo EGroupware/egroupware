@@ -267,9 +267,16 @@ class importexport_schedule_ui
 	}
 
 	/**
-	* Generate a async key
-	*/
-	public static function generate_id($data)
+	 * Generate an unique async key
+	 *
+	 * If the id is longer than 64 chars (supported in current DB schema), we use the first 32 chars
+	 * plus a md5 hash of the whole data.
+	 *
+	 * @param array $data
+	 * @param bool $old false: generate new id with md5 hash, if otherwise to long, true: generate old, to 64 chars truncated, id
+	 * @return false|string
+	 */
+	public static function generate_id($data, $old=false)
 	{
 
 		$query = array(
@@ -280,7 +287,11 @@ class importexport_schedule_ui
 		$definition_list = ((array)$definitions->get_definitions());
 
 		$id = 'importexport.'.$definition_list[0].'.'.$data['target'];
-		return substr($id, 0, 64);
+		if (strlen($id) <= 64 || $old)
+		{
+			return substr($id, 0, 64);
+		}
+		return substr($id, 0, 32).md5($id);
 	}
 
 	/**
@@ -645,12 +656,12 @@ class importexport_schedule_ui
 	{
 		$id = self::generate_id($data);
 		$async = new Api\Asyncservice();
-		$jobs = $async->read($id);
-		$job = $jobs[$id];
+		$jobs = $async->read($id) ?: $async->read($old_id=self::generate_id($data, true)) ?: [];
+		$job = array_shift($jobs);
 
 		if(is_array($job))
 		{
-			$async->cancel_timer($id);
+			$async->cancel_timer($old_id ?? $id);
 			$result = $async->set_timer(
 				$job['times'],
 				$id,
