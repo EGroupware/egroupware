@@ -12,7 +12,7 @@
 			<rows>
 				<row disabled="@no_types">
 					<et2-description  value="Type"></et2-description>
-					<et2-select  span="3" id="cf_type2" rows="5" multiple="1" noLang="1"></et2-select>
+					<et2-select  span="3" id="cf_type2" rows="5" multiple="true" placeholder="All" noLang="1"></et2-select>
 				</row>
 				<row>
 					<et2-description  value="Label"></et2-description>
@@ -33,7 +33,7 @@
 				</row-->
 				<row>
 					<et2-description  statustext="each value is a line like id[=label], or use @path to read options from a file in EGroupware directory" value="Options"></et2-description>
-					<et2-textarea  statustext="@statustext" id="cf_values" rows="5" size="30" span="3" width="99%"></et2-textarea>
+					<et2-textarea  statustext="@statustext" id="cf_values" rows="5" span="3" width="99%"></et2-textarea>
 				</row>
 				<row>
 					<et2-description  value="Length"></et2-description>
