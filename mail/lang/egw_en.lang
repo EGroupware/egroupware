@@ -277,6 +277,7 @@ handling of external http images / mixed content in mails	mail	en	Handling of ex
 header	mail	en	Header
 header lines	mail	en	Header lines
 high	mail	en	High
+high priority	mail	en	High priority
 hold %1 to drag files to your computer	mail	en	Hold %1 to drag files to your computer
 home page folders	mail	en	home page folders
 hostname or ip	mail	en	Hostname or IP
@@ -333,6 +334,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+low priority	mail	en	Low priority
 mail	common	en	Mail
 mail acl	mail	en	Email access rights
 mail filter	mail	en	Filter

@@ -2052,7 +2052,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 
 			$imageHTMLBlock = '';
 			//error_log(__METHOD__.__LINE__.array2string($header));
-			if (in_array("attachments", $cols))
+			if (in_array('attachments', $cols))
 			{
 				if (!empty($header['attachments']) && (in_array($header['mimetype'], array(
 						'multipart/mixed', 'multipart/signed', 'multipart/related', 'multipart/report',
@@ -2085,11 +2085,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				// show priority flag
 				if ($header['priority'] < 3)
 				{
-					 $image = Api\Html::image('mail','prio_high');
+					 $image = Api\Html::image('mail','prio_high', lang('High priority'));
 				}
 				elseif ($header['priority'] > 3)
 				{
-					$image = Api\Html::image('mail','prio_low');
+					$image = Api\Html::image('mail','prio_low', lang('Low priority'));
 				}
 				else
 				{
@@ -2099,9 +2099,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$imageflagged ='';
 				if ($header['flagged'])
 				{
-					$imageflagged = Api\Html::image('mail','unread_flagged_small');
+					$imageflagged = Api\Html::image('mail','unread_flagged_small', lang('Unread'));
 				}
-				$data["attachments"] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
+				$data['attachments'] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
 			}
 
 			// sent or draft or template folder -> to address

@@ -104,7 +104,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 
 .mail_externalImagesMsg button.closeBtn {
 	float: right;
-    background-image: url(../api/templates/default/images/close.svg);
+    background-image: url(../node_modules/bootstrap-icons/icons/x-lg.svg);
     height: 30px;
     width: 50px;
     background-repeat: no-repeat;

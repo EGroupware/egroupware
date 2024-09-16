@@ -277,6 +277,7 @@ handling of external http images / mixed content in mails	mail	de	Behandlung von
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
 high	mail	de	hoch
+high priority	mail	de	Hohe Priorität
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
@@ -333,6 +334,7 @@ learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da
 less than	mail	de	kleiner als
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern).
+low priority	mail	de	Niedrige Priorität
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter
