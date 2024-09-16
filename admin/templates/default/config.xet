@@ -385,7 +385,7 @@
 						<et2-description  value="How many entries should non-admins be able to export (empty = no limit, no = no export)"></et2-description>
 						<et2-description  value="This controls exports and merging."></et2-description>
 					</et2-vbox>
-					<et2-textbox  id="newsettings[export_limit]"></et2-textbox>
+					<et2-textbox  id="newsettings[export_limit]" placeholder="No limit"></et2-textbox>
 				</row>
 				<row>
 					<et2-description  value="Group excepted from above export limit (admins are always excepted)" label="%s:"></et2-description>
