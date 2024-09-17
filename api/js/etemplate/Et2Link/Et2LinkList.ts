@@ -115,6 +115,8 @@ export class Et2LinkList extends Et2LinkString
 			readonly: {type: Boolean}
 		}
 	}
+	
+	private context : egwMenu;
 
 	constructor()
 	{
@@ -130,7 +132,6 @@ export class Et2LinkList extends Et2LinkString
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this._createContextMenu();
 
 		// Look for LinkTo and listen for change so we can update
 		if(this.getInstanceManager())
@@ -526,6 +527,11 @@ export class Et2LinkList extends Et2LinkString
 		if(this.readonly || _ev.altKey || _ev.ctrlKey || _ev.shiftKey || _ev.metaKey)
 		{
 			return;
+		}
+
+		if(!this.context)
+		{
+			this._createContextMenu();
 		}
 		// Find the link
 		let link = this.querySelector("et2-link[slot='" + _ev.currentTarget.id + "']");
