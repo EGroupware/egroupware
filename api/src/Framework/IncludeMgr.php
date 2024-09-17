@@ -314,10 +314,10 @@ class IncludeMgr
 	 */
 	private function translate_params($package, $file=null, $app='api')
 	{
-		if ($package[0] == '/' && is_readable(EGW_SERVER_ROOT.parse_url($path = $package, PHP_URL_PATH)) ||
+		if ($package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.parse_url($path = $package, PHP_URL_PATH)) ||
 			// fix old /phpgwapi/js/ path by replacing it with /api/js/
 			substr($package, 0, 13) == '/phpgwapi/js/' && is_readable(EGW_SERVER_ROOT.parse_url($path = str_replace('/phpgwapi/js/', '/api/js/', $package), PHP_URL_PATH)) ||
-			$package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
+			$package && $package[0] == '/' && is_readable(EGW_SERVER_ROOT.($path = $package)) ||
 			$package == '.' && is_readable(EGW_SERVER_ROOT.($path="/$app/js/$file.js")) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			// fix not found by using app='api'
@@ -325,7 +325,7 @@ class IncludeMgr
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
 			// normalise /./ to /
-			$path = str_replace('/./', '/', $path);
+			$path = str_replace(['/./', '//'], '/', $path);
 
 			// Handle the special case, that the file is an url - in this case
 			// we will do no further processing but just include the file
