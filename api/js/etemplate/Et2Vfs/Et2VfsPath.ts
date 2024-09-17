@@ -261,10 +261,14 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	protected _getIcon(pathParts)
 	{
-		let image = this.egw().image("filemanager", "api");
+		let image = this.egw().image("navbar", "filemanager");
 		if(pathParts.length > 2 && pathParts[1] == "apps")
 		{
-			image = this.egw().image('navbar', pathParts[2].toLowerCase());
+			const app = this.egw().app(pathParts[2], 'name') || this.egw().appByTitle(pathParts[2], 'name');
+			if (app && !(image = this.egw().image('navbar', app)))
+			{
+				image = this.egw().image('navbar', 'api');
+			}
 		}
 
 		return image;
@@ -289,6 +293,11 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 						pathName = html`${until(this.egw().link_title(pathParts[2], pathParts[3], true) || pathName, pathName)}`
 					}
 			}
+		}
+		// we want / aka pathParts [''] to be displayed as /, therefore we need to add another '' to it
+		else if (pathParts.length === 1)
+		{
+			pathParts.unshift('');
 		}
 		return html`
             <sl-breadcrumb-item class="vfs-path__directory" data-value="${path.trim()}">
@@ -347,7 +356,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                 >
                     <slot part="prefix" name="prefix">
                         ${icon ? html`
-                            <et2-image src="${icon}" slot="prefix"
+                            <et2-image src="${icon}" slot="prefix" height="1.5em"
                                        @click=${(e) =>
                                        {
                                            this.setValue("/");

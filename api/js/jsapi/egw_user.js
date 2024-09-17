@@ -88,6 +88,24 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		},
 
 		/**
+		 * Same as app(), but use the translated app-name / title
+		 *
+		 * @param {string} _title
+		 * @param {string} _name attribute to return, default return whole app-data-object
+		 */
+		appByTitle: function(_title, _name)
+		{
+			for(const app in userData.apps)
+			{
+				if (userData.apps[app].title === _title)
+				{
+					return typeof _name == 'undefined' || typeof userData.apps[app] == 'undefined' ?
+						userData.apps[app] : userData.apps[app][_name];
+				}
+			}
+		},
+
+		/**
 		 * Get a list of accounts the user has access to
 		 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 		 *
