@@ -69,7 +69,7 @@ class admin_passwordreset
 
 		// Setup if opened as a dialog
 		$content['dialog'] = $_GET['dialog'] ?? null;
-		if($content['dialog'] && !$content['users'] && isset($_GET['ids']))
+		if($content['dialog'] && empty($content['users']) && isset($_GET['ids']))
 		{
 			$content['users'] = $_GET['ids'];
 
@@ -77,7 +77,8 @@ class admin_passwordreset
 			if($_GET['select_all'] == 'true')
 			{
 				@set_time_limit(0);            // switch off the execution time limit, as it's for big selections to small
-				$query['num_rows'] = -1;       // all
+				$query['num_rows'] = false;       // all
+				$query['start'] = 0;
 				$readonlys = null;
 				$content['users'] = [];
 				$rows = [];
@@ -97,7 +98,7 @@ class admin_passwordreset
 		{
 			$current_hash = 'md5';
 		}
-		if (is_array($content))
+		if (is_array($content) && !isset($_GET['dialog']))
 		{
 			// Save message for next time
 			Api\Config::save_value('password_reset_message',array('subject' => $content['subject'], 'body' => $content['body']),'admin');
