@@ -569,7 +569,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			else if([" ", "Enter"].includes(event.key) && this.currentResult)
 			{
 				event.preventDefault();
-				this.currentResult.selected = true;
+				this.toggleResultSelection(this.currentResult, true);
 				this.searchResultSelected();
 			}
 		}
