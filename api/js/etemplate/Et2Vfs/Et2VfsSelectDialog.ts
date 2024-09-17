@@ -232,7 +232,11 @@ export class Et2VfsSelectDialog
 			this._dialog.panel.style.height = "40em";
 		});
 		// Get file list
-		this.startSearch();
+		if(this.open)
+		{
+			debugger;
+			this.startSearch();
+		}
 	}
 
 	protected willUpdate(changedProperties : PropertyValues)
