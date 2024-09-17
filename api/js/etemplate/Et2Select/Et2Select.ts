@@ -976,6 +976,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     tabindex="-1"
                     ?pill=${this.pill}
                     size=${this.size || "medium"}
+                    title=${option.title}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     .editable=${isEditable}
