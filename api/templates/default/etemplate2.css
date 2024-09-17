@@ -4021,7 +4021,6 @@ et2-vfs-mime {
     font-size: 22px !important;
 }
 et2-vfs-mime img {
-    width: auto !important;
     display: inline-block;
 }
 et2-vfs-mime img.overlay {
