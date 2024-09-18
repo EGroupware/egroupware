@@ -575,12 +575,17 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.show();
 	}
 
-	private handleSearchBlur(event)
+	private handleInternalBlur(event)
 	{
 		// Focus lost to some other internal component - ignore it
-		if(event.composedPath().includes(this.shadowRoot))
+		let o = event.relatedTarget;
+		while(o)
 		{
-			return;
+			if(o == this.shadowRoot)
+			{
+				return;
+			}
+			o = o.parentNode;
 		}
 		this.handleBlur();
 	}
@@ -589,9 +594,17 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	{
 		super.handleSearchKeyDown(event);
 
+		// Show options if popup is closed
 		if(event.key == "ArrowDown" && !this.open && !this.resultsOpen)
 		{
 			this.show();
+			event.stopPropagation();
+		}
+		// Move to tree if popup is open & tree is showing
+		else if(event.key == "ArrowDown" && this.treeOrSearch == "tree")
+		{
+			this._tree.focus();
+			event.stopPropagation();
 		}
 
 		// Left at beginning goes to tags
@@ -752,7 +765,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                    tabindex="0"
                    .value=${this.hasFocus ? "" : this.displayLabel}
                    @keydown=${this.handleSearchKeyDown}
-                   @blur=${this.handleSearchBlur}
+                   @blur=${this.handleInternalBlur}
                    @focus=${this.handleSearchFocus}
                    @paste=${this.handlePaste}
             />
@@ -944,6 +957,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 								.autoloading="${this.autoloading}"
 								?leafOnly = ${this.leafOnly}
 
+                                @blur=${this.handleInternalBlur}
                                 @sl-selection-change=${this.handleTreeChange}
                         >
                         </et2-tree>

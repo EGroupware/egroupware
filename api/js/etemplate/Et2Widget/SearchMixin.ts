@@ -566,7 +566,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				this.setCurrentResult(suggestions[newIndex]);
 			}
 			// Close results on escape
-			else if(["Escape"].includes(event.key))
+			else if(["Escape", "Tab"].includes(event.key))
 			{
 				this.resultsOpen = false;
 				this._searchNode.focus();
