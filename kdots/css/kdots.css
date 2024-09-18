@@ -378,7 +378,6 @@ div.et2_nextmatch > div:not(:first-child) {
   max-height: 100%;
 }
 div.et2_nextmatch .egwGridView_outer {
-  height: 100%;
   border-collapse: collapse;
 }
 div.et2_nextmatch .egwGridView_outer thead > tr {

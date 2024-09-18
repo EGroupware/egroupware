@@ -38,7 +38,7 @@ export default css`
 		flex: 1 0 2em;
 		max-height: 3em;
 
-		background-color: var(--application-color, --primary-background-color);
+		background-color: var(--application-color, var(--primary-background-color));
 		color: var(--application-header-text-color, var(--sl-color-neutral-0));
 		font-size: 1.8em;
 	}
