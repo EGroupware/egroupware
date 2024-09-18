@@ -439,7 +439,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	/**
 	 * Keyboard events that the search input did not grab
-	 * (tags, otion navigation)
+	 * (tags, option navigation)
 	 *
 	 * @param {KeyboardEvent} event
 	 */
@@ -493,6 +493,15 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			{
 				this._searchNode.focus();
 			}
+			event.stopPropagation();
+			return;
+		}
+		// Close popup if focus is on tree
+		if(["Escape"].includes(event.key))
+		{
+			this.hide();
+			event.stopPropagation();
+			return;
 		}
 	}
 
@@ -594,6 +603,13 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	{
 		super.handleSearchKeyDown(event);
 
+		// Hide popup if focus is on search
+		if(["Escape"].includes(event.key))
+		{
+			this.hide();
+			event.stopPropagation();
+			return;
+		}
 		// Show options if popup is closed
 		if(event.key == "ArrowDown" && !this.open && !this.resultsOpen)
 		{
@@ -958,6 +974,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 								?leafOnly = ${this.leafOnly}
 
                                 @blur=${this.handleInternalBlur}
+                                @keydown=${this.handleComboboxKeyDown}
                                 @sl-selection-change=${this.handleTreeChange}
                         >
                         </et2-tree>
