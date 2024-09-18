@@ -717,6 +717,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	inputTemplate()
 	{
 		let placeholder = this.egw().lang("search");
+		let image : symbol | TemplateResult = nothing;
 		if(this.disabled || this.readonly || (this.open && this.value))
 		{
 			placeholder = "";
@@ -725,7 +726,13 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		{
 			placeholder = this.emptyLabel || this.placeholder;
 		}
+		if(!this.multiple && this.value && !this.open)
+		{
+			const option = this.optionSearch(this.value, this.select_options, 'value', 'children');
+			image = option ? this.iconTemplate(option?.option ?? option) : null;
+		}
 		return html`
+            ${image}
             <input id="search" type="text" part="input"
                    class="tree-dropdown__search search__input"
                    autocomplete="off"

@@ -54,7 +54,8 @@ export default css`
 	}
 	.tree-dropdown__combobox {
 		min-height: calc(var(--sl-input-height-medium) - 2 * var(--sl-input-border-width));
-
+		flex: 1 1 auto;
+		
 		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -128,6 +129,9 @@ export default css`
 
 	/* Single */
 
+	.tree-dropdown__combobox > et2-image {
+		padding-right: var(--sl-spacing-medium);
+	}
 
 	/* End single */
 

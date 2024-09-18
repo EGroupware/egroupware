@@ -5,7 +5,8 @@
  */
 import {html, literal, StaticValue} from "lit/static-html.js";
 import {property} from "lit/decorators/property.js";
-import {css, PropertyValues, unsafeCSS} from "lit";
+import {until} from "lit/directives/until.js";
+import {css, nothing, PropertyValues, TemplateResult, unsafeCSS} from "lit";
 import {Et2TreeDropdown} from "../../Et2Tree/Et2TreeDropdown";
 import {Et2CategoryTag} from "../Tag/Et2CategoryTag";
 import {Et2StaticSelectMixin, StaticOptions as so} from "../StaticOptions";
@@ -26,14 +27,27 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 					--category-color: transparent;
 				}
 
+				/* Color on tree items */
 				::part(item-item) {
 					border-inline-start: 4px solid transparent;
 					border-inline-start-color: var(--category-color, transparent);
 				}
 
+				/* Color on tags */
 				:host(:not([multiple])) .tree_tag::part(base) {
 					border-inline-start: 4px solid transparent;
 					border-inline-start-color: var(--category-color, transparent);
+				}
+
+				/* Color on single value */
+
+				:host(:not([multiple])) .tree-dropdown:not(.tree-dropdown--has-value) .tree-dropdown__combobox {
+					padding-inline-start: 3px;
+				}
+
+				:host(:not([multiple])) .tree-dropdown--has-value .tree-dropdown__combobox {
+					border-inline-start: 4px solid;
+					border-inline-start-color: var(--category-color, var(--sl-input-border-color));
 				}
 			`
 		];
@@ -81,12 +95,6 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 		this.fetchComplete = so.cat(this).then(options => {
 			this.select_options = options;
 			this.requestUpdate("select_options");
-
-			if (this._tree)
-			{
-				this._tree._selectOptions = options
-				this._tree.requestUpdate();
-			}
 		});
 	}
 
@@ -160,6 +168,30 @@ export class Et2SelectCategory extends Et2StaticSelectMixin(Et2TreeDropdown)
 
 		// Just re-draw to get the colors & icon
 		this.requestUpdate();
+	}
+
+	render()
+	{
+		let style : Promise<TemplateResult> | symbol = nothing;
+		if(this.value && !this.multiple)
+		{
+			style = this.fetchComplete.then(() =>
+			{
+				const option = this.optionSearch(this.value, this.select_options, 'value', 'children');
+				if(option)
+				{
+					const css = ".tree-dropdown--has-value .tree-dropdown__combobox {" +
+						"--category-color: var(--cat-" + option.value + "-color ,var(--sl-input-border-color));" +
+						"}\n";
+					return html`
+                        <style>${unsafeCSS(css)}</style>`;
+				}
+			});
+		}
+		return html`
+            ${until(style, nothing)}
+            ${super.render()}
+		`;
 	}
 }
 
