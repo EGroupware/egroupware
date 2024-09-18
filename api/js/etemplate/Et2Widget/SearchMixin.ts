@@ -505,6 +505,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			{
 				this.value = [this.selectedResults[0]?.value] ?? [];
 			}
+			// Dispatch the change event
+			this.updateComplete.then(() =>
+			{
+				this.dispatchEvent(new Event("change", {bubbles: true}));
+			});
 			 */
 
 			this.updateComplete.then(() =>
