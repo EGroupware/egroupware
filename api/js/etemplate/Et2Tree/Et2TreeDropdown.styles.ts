@@ -147,7 +147,8 @@ export default css`
 		flex-wrap: wrap;
 		align-content: center;
 		gap: 0.1rem 0.5rem;
-		padding-top: var(--sl-spacing-3x-small);
+		margin-top: 1px;
+		padding: var(--sl-spacing-3x-small) 0;
 		max-height: calc(var(--height, 5) * var(--sl-input-height-medium));
 		min-width: 0px;
 	}
@@ -189,10 +190,6 @@ export default css`
 
 	:host([open]) .tree-dropdown__search {
 		cursor: text;
-	}
-
-	:host(:not([open])) .tree-dropdown--has-value.tree-dropdown--multiple .tree-dropdown__search {
-		visibility: hidden;
 	}
 
 	.tree-dropdown--disabled .tree-dropdown__search {
