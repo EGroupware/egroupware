@@ -26,6 +26,7 @@ import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
 import {EgwActionObject} from "../egw_action/EgwActionObject";
 import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
+import {egw_globalObjectManager} from "../egw_action/egw_action";
 
 /**
  * Type for push-message
