@@ -1332,9 +1332,6 @@ option:checked {
 .ui-widget-header .ui-state-error-text {
   color: #FF0000;
 }
-.drop-hover {
-  background-color: #FFDD73;
-}
 .ui-icon-close {
   background-image: url("../../node_modules/bootstrap-icons/icons/x-square.svg");
   background-repeat: no-repeat;

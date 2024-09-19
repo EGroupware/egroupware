@@ -1353,9 +1353,6 @@ option:checked {
 .ui-widget-header .ui-state-error-text {
   color: #FF0000;
 }
-.drop-hover {
-  background-color: #FFDD73;
-}
 .ui-icon-close {
   background-image: url("../../node_modules/bootstrap-icons/icons/x-square.svg");
   background-repeat: no-repeat;
@@ -9342,21 +9339,6 @@ table.egwGridView_grid img.et2_appicon {
     box-shado: none;
   }
   body input[type="checkbox"] {
-    width: 32px !important;
-    height: 32px !important;
-  }
-  body input[type="checkbox"]:before {
-    content: "";
-    width: 32px;
-    height: 32px;
-    background-image: url(../../node_modules/bootstrap-icons/icons/square.svg) !important;
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-size: 31px;
-    margin-left: -5px;
-  }
-  body input[type="checkbox"]:checked {
-    background-image: url(../../node_modules/bootstrap-icons/icons/square.svg) !important;
     width: 32px !important;
     height: 32px !important;
   }
