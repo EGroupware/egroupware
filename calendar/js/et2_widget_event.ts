@@ -177,13 +177,13 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						this._actionObject = null;
 				}
 
-				this.div.off();
-				this.title.remove();
+				this.div?.off();
+				this.title?.remove();
 				this.title = null;
-				this.body.remove();
+				this.body?.remove();
 				this.body = null;
 				this.icons = null;
-				this.div.remove();
+				this.div?.remove();
 				this.div = null;
 
 				jQuery('body.egw_tooltip').remove();

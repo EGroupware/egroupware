@@ -839,7 +839,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			return;
 		}
 		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-		console.log(event.type, id);
+		//console.log(event.type, id);
 
 		const typeMap = {
 			dragenter: EGW_AI_DRAG_ENTER,
