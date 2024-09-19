@@ -217,7 +217,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		this.createTabs(tabData);
 
 		// Use the height of the first tab if height not set
-		this._sizeTabs();
+		this._sizeTabs(tabData);
 
 		// Load any additional child nodes
 		for(let i = 0; i < _node.childNodes.length; i++)
@@ -240,7 +240,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	 * Use the height of the first tab if height not set
 	 * @protected
 	 */
-	protected _sizeTabs()
+	protected _sizeTabs(tabData : Array<object>)
 	{
 		if(!this.tabHeight && tabData.length > 0)
 		{
