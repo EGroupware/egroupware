@@ -7153,6 +7153,7 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-light,
 .sl-theme-dark {
   --sl-border-radius-medium: 20px;
+  --sl-border-radius-small: 1rem;
   --sl-input-border-radius-medium: var(--sl-border-radius-medium);
   --et2-button-image-padding-left: 0.6rem;
 }

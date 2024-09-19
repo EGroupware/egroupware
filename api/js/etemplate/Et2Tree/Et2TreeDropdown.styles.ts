@@ -223,7 +223,7 @@ export default css`
 		box-shadow: var(--sl-shadow-large);
 		background: var(--sl-panel-background-color);
 		border: solid var(--sl-panel-border-width) var(--sl-panel-border-color);
-		border-radius: var(--sl-border-radius-medium);
+		border-radius: var(--sl-border-radius-small);
 		padding-block: var(--sl-spacing-x-small);
 		padding-inline: 0;
 		overflow-y: auto;
