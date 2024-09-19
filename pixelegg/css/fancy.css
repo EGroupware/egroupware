@@ -7154,7 +7154,17 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-dark {
   --sl-border-radius-medium: 20px;
   --sl-input-border-radius-medium: var(--sl-border-radius-medium);
-  --et2-button-image-padding-left: 0.3rem;
+  --et2-button-image-padding-left: 0.6rem;
+}
+:root et2-button:not(imageOnly) > et2-image[class*="circle"],
+:host et2-button:not(imageOnly) > et2-image[class*="circle"],
+.sl-theme-light et2-button:not(imageOnly) > et2-image[class*="circle"],
+.sl-theme-dark et2-button:not(imageOnly) > et2-image[class*="circle"],
+:root et2-button:not(imageOnly) > et2-image[class*="clock"],
+:host et2-button:not(imageOnly) > et2-image[class*="clock"],
+.sl-theme-light et2-button:not(imageOnly) > et2-image[class*="clock"],
+.sl-theme-dark et2-button:not(imageOnly) > et2-image[class*="clock"] {
+  --et2-button-image-padding-left: 0.2rem;
 }
 :root et2-tabbox,
 :host et2-tabbox,
