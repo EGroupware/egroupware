@@ -61,6 +61,35 @@
     background-color: initial;
 }
 
+//rounded flatpickr
+div.flatpickr-calendar {
+    border-radius: var(--sl-border-radius-medium);
+}
+
+div.flatpickr-calendar .flatpickr-months {
+    border-top-left-radius: var(--sl-border-radius-medium);
+    border-top-right-radius: var(--sl-border-radius-medium);
+}
+
+div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:first-child {
+    border-bottom-left-radius: var(--sl-border-radius-medium);
+}
+
+div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:last-child {
+    border-bottom-right-radius: var(--sl-border-radius-medium);
+}
+
+.flatpickr-calendar > .flatpickr-time:first-child{
+    border-top-left-radius: var(--sl-border-radius-medium);
+    border-top-right-radius: var(--sl-border-radius-medium);
+}
+
+.flatpickr-calendar > .flatpickr-time:first-child .flatpickr-minute ~ span{
+    margin-right: 1em;
+}
+//end rounded flatpickr
+
+
 // styling of legacy NM parts
 .nextmatch_header .header_count {
     border-radius: var(--sl-border-radius-medium);
