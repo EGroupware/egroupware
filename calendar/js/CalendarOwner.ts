@@ -28,14 +28,21 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		return [
 			...super.styles,
 			css`
-			/* Larger maximum height before scroll*/
-			.select__tags {
-				max-height: 10em;
-			}
+				/* Larger maximum height before scroll*/
 
-			  .title {
-				float: right;
-			  }
+				.select__tags {
+					max-height: 10em;
+				}
+
+				.title {
+					float: right;
+				}
+
+				/* Hide unwanted vertical scrollbars with 1 row of tags */
+
+				::part(tag) {
+					overflow: hidden;
+				}
 			`
 		];
 	}
