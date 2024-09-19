@@ -178,7 +178,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${url}"
                  alt="${this.label || this.statustext}"
-				 style="${this.height ? 'height: 100%; width: auto' : 'width: 100%; height: auto'}"
+				 style="${this.height ? 'max-height: 100%; width: auto' : 'max-width: 100%; height: auto'}"
                  part="image"
                  loading="lazy"
             >`;
