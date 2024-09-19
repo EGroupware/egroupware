@@ -7,7 +7,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
- * @version $Id$
  */
 @import "../less/darkmode.less";
 @import "../css/mobile.less";
@@ -676,6 +675,7 @@
 		  display: block;
 	  }
 	  et2-button.plus_button {
+		.bootstrap-icons;
 		position: fixed !important;
 		right: 15px;
 		bottom: 15px;
@@ -686,15 +686,23 @@
 		z-index: 100;
 		background-color: #0c5da5;
 		border: none;
-		background-image: url(../../node_modules/bootstrap-icons/icons/plus-lg.svg) !important;
 		background-repeat: no-repeat;
-		background-size: 24px 24px;
 		margin: 0;
 		padding: 0;
 
 		&:hover, &:active {
 		  background-color: #0c5da5;
 		}
+		&::before {
+			color: white;
+			content: "\f64d";	// plus-lg
+			font-size: 32px;
+			line-height: 60px;
+			color: #fff;
+			text-align: center;
+			width: 60px;
+			font-weight: bolder;
+			display: inline-block		}
 	  }
 
 	  et2-button.plus_button::part(base) {

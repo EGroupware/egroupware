@@ -7,7 +7,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Hadi Nategh <hn@stylite.de>
  * @package pixelegg
- * @version $Id$
  */
 /**
  * EGroupware: Darkmode theme
@@ -8429,6 +8428,16 @@ table.egwGridView_grid img.et2_appicon {
     display: block;
   }
   body et2-button.plus_button {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -0.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     position: fixed !important;
     right: 15px;
     bottom: 15px;
@@ -8439,15 +8448,24 @@ table.egwGridView_grid img.et2_appicon {
     z-index: 100;
     background-color: #0c5da5;
     border: none;
-    background-image: url(../../node_modules/bootstrap-icons/icons/plus-lg.svg) !important;
     background-repeat: no-repeat;
-    background-size: 24px 24px;
     margin: 0;
     padding: 0;
   }
   body et2-button.plus_button:hover,
   body et2-button.plus_button:active {
     background-color: #0c5da5;
+  }
+  body et2-button.plus_button::before {
+    color: white;
+    content: "\f64d";
+    font-size: 32px;
+    line-height: 60px;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    font-weight: bolder;
+    display: inline-block;
   }
   body et2-button.plus_button::part(base) {
     display: none;
