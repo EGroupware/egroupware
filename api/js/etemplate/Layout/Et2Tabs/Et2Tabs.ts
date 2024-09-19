@@ -217,6 +217,31 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		this.createTabs(tabData);
 
 		// Use the height of the first tab if height not set
+		this._sizeTabs();
+
+		// Load any additional child nodes
+		for(let i = 0; i < _node.childNodes.length; i++)
+		{
+			let node = _node.childNodes[i];
+			let widgetType = node.nodeName.toLowerCase();
+
+			// Skip text & already handled nodes
+			if(["#comment", "#text", "tabs", "tabpanels"].includes(widgetType))
+			{
+				continue;
+			}
+
+			// Create the new element
+			this.createElementFromNode(node);
+		}
+	}
+
+	/**
+	 * Use the height of the first tab if height not set
+	 * @protected
+	 */
+	protected _sizeTabs()
+	{
 		if(!this.tabHeight && tabData.length > 0)
 		{
 			const firstTab = tabData[0].contentDiv;
@@ -245,22 +270,6 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 					firstTab.removeAttribute("active");
 				}
 			})
-		}
-
-		// Load any additional child nodes
-		for(let i = 0; i < _node.childNodes.length; i++)
-		{
-			let node = _node.childNodes[i];
-			let widgetType = node.nodeName.toLowerCase();
-
-			// Skip text & already handled nodes
-			if(["#comment", "#text", "tabs", "tabpanels"].includes(widgetType))
-			{
-				continue;
-			}
-
-			// Create the new element
-			this.createElementFromNode(node);
 		}
 	}
 
