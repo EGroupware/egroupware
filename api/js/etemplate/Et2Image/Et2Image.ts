@@ -164,6 +164,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 			// Hide if no valid image
 			return html``;
 		}
+		// set title on et2-image for both bootstrap-image via css-class and embedded img tag
+		this.title = this.statustext || this.label || "";
+
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap)
 		{
