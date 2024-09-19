@@ -745,11 +745,15 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	inputTemplate()
 	{
-		let placeholder = this.egw().lang("search");
+		let placeholder = "";
 		let image : symbol | TemplateResult = nothing;
-		if(this.disabled || this.readonly || (this.open && this.value) || (this.multiple && this.value.length > 0))
+		if(this.disabled || this.readonly || (!this.open && this.multiple && this.value.length > 0))
 		{
 			placeholder = "";
+		}
+		else if(this.open)
+		{
+			placeholder = this.egw().lang("Search");
 		}
 		else
 		{
