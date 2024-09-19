@@ -6797,6 +6797,7 @@ table.egwGridView_grid img.et2_appicon {
   --sl-focus-ring-width: 2px;
   --sl-color-gray-150: hsl(240, 4.9%, 92.5%);
   --track-width: 3px;
+  --et2-favorites-left: 0.4em;
 }
 .bi::before,
 [class^="bi-"]::before,
@@ -7142,6 +7143,11 @@ img.et2_button_icon[src*="svg"]:hover {
 ::-ms-input-placeholder {
   color: #666666;
 }
+.et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(base) {
+  justify-content: center;
+  --et2-button-image-padding-left: 0;
+  padding-inline-start: 0;
+}
 :root,
 :host,
 .sl-theme-light,
@@ -7161,7 +7167,7 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-light et2-tabbox::part(tabs),
 .sl-theme-dark et2-tabbox::part(tabs) {
   padding-bottom: var(--sl-spacing-x-small);
-  padding-top: var(--sl-spacing-medium);
+  padding-top: var(--sl-spacing-large);
   gap: var(--sl-spacing-medium);
 }
 :root et2-tabbox et2-tab::part(base),
@@ -7182,7 +7188,7 @@ img.et2_button_icon[src*="svg"]:hover {
 :host et2-tabbox .tabLabel,
 .sl-theme-light et2-tabbox .tabLabel,
 .sl-theme-dark et2-tabbox .tabLabel {
-  max-height: 1em;
+  max-height: 1.1em;
 }
 :root et2-tabbox et2-tab-panel,
 :host et2-tabbox et2-tab-panel,

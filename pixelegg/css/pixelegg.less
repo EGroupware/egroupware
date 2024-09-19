@@ -30,6 +30,7 @@
 	--sl-focus-ring-width: 2px;
 	--sl-color-gray-150: hsl(240, 4.9%, 92.5%);
 	--track-width: 3px;
+	--et2-favorites-left: .4em;
 }
 
 .bi::before,
@@ -410,4 +411,10 @@ img.et2_button_icon[src*="svg"], img.et2_button_icon[src*="svg"]:hover {
 }
 ::-ms-input-placeholder{
 	color: @color_placeholder;
+}
+
+.et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(base) {
+	justify-content: center;
+	--et2-button-image-padding-left: 0;
+	padding-inline-start: 0;
 }

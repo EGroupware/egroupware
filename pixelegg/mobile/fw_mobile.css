@@ -6607,6 +6607,7 @@ span.egw_tutorial_title {
   --sl-focus-ring-width: 2px;
   --sl-color-gray-150: hsl(240, 4.9%, 92.5%);
   --track-width: 3px;
+  --et2-favorites-left: 0.4em;
 }
 .bi::before,
 [class^="bi-"]::before,
@@ -6952,6 +6953,11 @@ img.et2_button_icon[src*="svg"]:hover {
 ::-ms-input-placeholder {
   color: #666666;
 }
+.et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(base) {
+  justify-content: center;
+  --et2-button-image-padding-left: 0;
+  padding-inline-start: 0;
+}
 @keyframes fw-firstload {
   0%,
   20%,
@@ -6974,6 +6980,9 @@ img.et2_button_icon[src*="svg"]:hover {
   }
 }
 @media all {
+  :host {
+    --et2-favorites-left: 0.7em;
+  }
   body {
     background-color: transparent;
     /*BOF close/back button styling*/
