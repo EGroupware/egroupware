@@ -75,6 +75,8 @@ export const composedPathContains = (_ev: any, tag?: string, className?: string)
  * @event {{id: String, item:SlTreeItem}} sl-expand emmited when tree item expands
  * //TODO add for other events
  * @since 23.1.x
+ *
+ * @event et2-click Emitted when a tree item is clicked.  Clicks on the expand / collapse button and other slotted contents are excluded
  */
 export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements FindActionTarget
 {
@@ -903,6 +905,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
+                    @click=${async(event) =>
+                    {
+                        // Don't react to expand or children
+                        if(event.target.hasAttribute("slot") || !event.target?.closest("sl-tree-item"))
+                        {
+                            return;
+                        }
+                        await this.updateComplete;
+                        event.target?.closest("sl-tree-item").dispatchEvent(new CustomEvent("et2-click", {
+                            detail: {item: event.target?.closest("sl-tree-item")},
+                            bubbles: true,
+                            composed: true
+                        }));
+                    }}
                     @sl-lazy-load=${(event) => {
                         // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
                         event.stopPropagation();
