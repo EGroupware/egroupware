@@ -1921,7 +1921,7 @@ class infolog_ui
 					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
-						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
+						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Permission denied!') :
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars(Egw::link('/index.php',array(
