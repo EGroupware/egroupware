@@ -2039,6 +2039,7 @@ egw-validation-feedback[type] {
 .nextmatch_header_row > .filtersContainer > et2-select, .nextmatch_header_row > .filtersContainer > et2-select-cat {
     /* Make all filters the same size.  Otherwise they'll flex for different sized values */
     max-width: 33%;
+    width: calc(33% - 4px);
 }
 
 .nextmatch_header_row > .header_row_right {
