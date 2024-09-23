@@ -78,7 +78,9 @@ export class Et2Searchbox extends Et2Textbox
 	{
 		event.preventDefault();
 
+		const oldValue = this.value;
 		this.value = '';
+		this.requestUpdate("value", oldValue);
 		this._oldChange(event);
 
 		// Call super so it works as expected
