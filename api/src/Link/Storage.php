@@ -47,6 +47,7 @@ class Storage
 	 * True if call to get_links or get_3links exceeded limit (contains not all rows)
 	 */
 	public static $limit_exceeded = false;
+	public static int $row_count = 0;
 
 	/**
 	 * creates a link between $app1,$id1 and $app2,$id2
@@ -122,7 +123,7 @@ class Storage
 	 * @param int|array $limit =null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC', $deleted=false, $limit=null)
+	static function get_links($app, $id, $only_app = '', $order = 'link_lastmod DESC', $deleted = false, $limit = null)
 	{
 		if (self::DEBUG)
 		{
@@ -132,7 +133,14 @@ class Storage
 		{
 			$only_app = substr($only_app,1);
 		}
-
+		$query = self::$db->expression(
+			self::TABLE, '((',
+			self::encodeRow(['link_app1' => $app, 'link_id1' => $id,]),
+			') OR (',
+			self::encodeRow(['link_app2' => $app, 'link_id2' => $id,]),
+			'))',
+			$deleted ? '' : ' AND deleted IS NULL'
+		);
 		$offset = false;
 		if (is_array($limit))
 		{
@@ -142,18 +150,30 @@ class Storage
 		{
 			$offset = 0;
 		}
+		if($offset !== false)    // need to get the total too
+		{
+			if(self::$db->Type == 'mysql' && (float)self::$db->ServerInfo['version'] >= 4.0)
+			{
+				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+			}
+			else    // can't do a count, have to run the query without limit
+			{
+				self::$row_count = self::$db->select(
+					self::$table_name, '*', $query, __LINE__, __FILE__, false, $order ? " ORDER BY $order" : '', false, 0
+				)->NumRows();
+			}
+		}
 
 		$links = array();
 		try {
-			foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', self::encodeRow([
-						'link_app1'	=> $app,
-						'link_id1'	=> $id,
-					]), ') OR (', self::encodeRow([
-						'link_app2'	=> $app,
-						'link_id2'	=> $id,
-					]), '))',
-					$deleted ? '' : ' AND deleted IS NULL'
-				), __LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit) as $row)
+			$rs = self::$db->select(self::TABLE, ($mysql_calc_rows ?? '') . '*', $query,
+									__LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit
+			);
+			if(!empty($mysql_calc_rows))
+			{
+				self::$row_count = self::$db->query('SELECT FOUND_ROWS()')->fetchColumn();
+			}
+			foreach($rs as $row)
 			{
 				$row = self::decodeRow($row);
 
