@@ -71,8 +71,7 @@ export class Et2LinkList extends Et2LinkString
 
 				/* CSS for child elements */
 
-
-				et2-link::part(title):after {
+				::slotted(*):after {
 					/* Reset from Et2LinkString */
 					content: initial;
 				}
@@ -217,6 +216,7 @@ export class Et2LinkList extends Et2LinkString
 	{
 		this._link_list = links;
 		this.requestUpdate();
+		this.updateComplete.then(() => super._addLinks(links));
 	}
 
 	/**
@@ -252,7 +252,7 @@ export class Et2LinkList extends Et2LinkString
 		return html`
             <div id="${this._get_row_id(link)}"
                  @contextmenu=${this._handleRowContext}>
-                ${this._linkTemplate(link)}
+                <slot name="${this._get_row_id(link)}"></slot>
             </div>`;
 	}
 
