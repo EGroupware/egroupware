@@ -169,7 +169,7 @@ class Storage
 				}
 			}
 			// if query returns exactly limit rows, we assume there are more and therefore set self::$limit_exceeded
-			self::$limit_exceeded = $offset !== false && count(is_array($id) ? $links : $links[$id]) == $limit;
+			self::$limit_exceeded = $offset !== false && $links && count(is_array($id) ? $links : ($links[$id]??[])) == $limit;
 		}
 		// catch Illegal mix of collations (ascii_general_ci,IMPLICIT) and (utf8_general_ci,COERCIBLE) for operation '=' (1267)
 		// caused by non-ascii chars compared with ascii field uid
