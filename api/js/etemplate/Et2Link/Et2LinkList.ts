@@ -71,7 +71,7 @@ export class Et2LinkList extends Et2LinkString
 
 				/* CSS for child elements */
 
-				::slotted(*):after {
+				et2-link::part(title):after {
 					/* Reset from Et2LinkString */
 					content: initial;
 				}
@@ -252,7 +252,7 @@ export class Et2LinkList extends Et2LinkString
 		return html`
             <div id="${this._get_row_id(link)}"
                  @contextmenu=${this._handleRowContext}>
-                <slot name="${this._get_row_id(link)}"></slot>
+                ${this._linkTemplate(link)}
             </div>`;
 	}
 
@@ -594,7 +594,7 @@ export class Et2LinkList extends Et2LinkString
 			this._createContextMenu();
 		}
 		// Find the link
-		let link = this.querySelector("et2-link[slot='" + _ev.currentTarget.id + "']");
+		let link = _ev.currentTarget.querySelector("et2-link");
 
 		let _link_data = Object.assign({app: link.app, id: link.entryId}, link.dataset);
 		// Comment only available if link_id is there and not readonly
@@ -615,7 +615,7 @@ export class Et2LinkList extends Et2LinkString
 
 	protected _set_comment(link, comment)
 	{
-		let remark = this.querySelector("et2-link[slot='" + this._get_row_id(link) + "']");
+		let remark = this.shadowRoot.querySelector("#" + this._get_row_id(link) + " et2-link");
 		if(!remark)
 		{
 			console.warn("Could not find link to comment on", link);
