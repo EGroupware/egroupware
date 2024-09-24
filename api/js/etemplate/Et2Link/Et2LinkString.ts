@@ -13,8 +13,10 @@
 import {css, html, LitElement, PropertyValues, render, TemplateResult} from "lit";
 import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
-import {Et2Link, LinkInfo} from "./Et2Link";
+import {LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
 /**
  * Display a list of entries in a comma separated list
@@ -25,6 +27,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
  */
 
 // @ts-ignore TypeScript says there's something wrong with types
+@customElement('et2-link-string')
 export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
 
@@ -62,52 +65,52 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	}
 
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Specify the application for all the entries, so you only need to specify the entry ID
-			 */
-			application: {
-				type: String,
-				reflect: true,
-			},
-			/**
-			 * Application entry ID
-			 */
-			entryId: {
-				type: String,
-				reflect: true
-			},
-			/**
-			 * Application filter
-			 * Set to an appname or comma separated list of applications to show only linked entries from those
-			 * applications
-			 */
-			onlyApp: {
-				type: String
-			},
-			/**
-			 * Type filter
-			 * Sub-type key to list only entries of that type
-			 */
-			linkType: {
-				type: String
-			},
+	/**
+	 * Specify the application for all the entries, so you only need to specify the entry ID
+	 */
+	@property({ type: String, reflect: true })
+	application;
 
-			// Show links that are marked as deleted, being held for purge
-			showDeleted: {type: Boolean},
+	/**
+	 * Application entry ID
+	 */
+	@property({type: String, reflect: true})
+	entryId;
 
-			/**
-			 * Pass value as an object, will be parsed to set application & entryId
-			 */
-			value: {
-				type: Object,
-				reflect: false
-			}
-		}
-	}
+	/**
+	 * Application filter
+	 * Set to an appname or comma separated list of applications to show only linked entries from those
+	 * applications
+	 */
+	@property({type: String})
+	onlyApp;
+
+	/**
+	 * Type filter
+	 * Sub-type key to list only entries of that type
+	 */
+	@property({type: String})
+	linkType;
+
+	/**
+	 * Show links that are marked as deleted, being held for purge
+ 	 */
+	@property({type: Boolean})
+	showDeleted = false;
+
+	/**
+	 * Pass value as an object, will be parsed to set application & entryId
+	 */
+	@property({type: Object})
+	value;
+
+	/**
+	 * Number of application-links to load (file-links are always fully loaded currently)
+	 *
+	 * If number is exceeded, a "Load more links ..." button is displayed, which will load the double amount of links each time clicked
+	 */
+	@property({type: Number})
+	limit = 20;
 
 	protected _link_list : LinkInfo[];
 	protected _loadingPromise : Promise<LinkInfo[]>;
@@ -116,7 +119,6 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		super();
 		this._link_list = []
-		this.__showDeleted = false;
 	}
 
 	async getUpdateComplete()
@@ -229,6 +231,21 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	}
 
 	/**
+	 * Render "more links available"
+	 *
+	 * @param link
+	 * @returns {TemplateResult}
+	 * @protected
+	 */
+	protected _moreAvailableTemplate(link : LinkInfo) : TemplateResult
+	{
+		return html`
+            <et2-button image="${link.icon}" label="${link.title}" .onclick="${() => {
+				this.get_links();
+			}}" ._parent=${this} slot="link_exceeded"></et2-button>`;
+	}
+
+	/**
 	 * Render that we're waiting for data
 	 * @returns {TemplateResult}
 	 * @protected
@@ -256,7 +273,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		links.forEach((link) =>
 		{
 			let temp = document.createElement("div");
-			render(this._linkTemplate(link), temp);
+			render(link.app === 'exceeded' ? this._moreAvailableTemplate(link) : this._linkTemplate(link), temp);
 			temp.childNodes.forEach((node) => this.appendChild(node));
 		})
 
@@ -290,8 +307,11 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			to_app: this.application,
 			to_id: this.entryId,
 			only_app: this.onlyApp,
-			show_deleted: this.showDeleted
+			show_deleted: this.showDeleted,
+			limit: this.limit
 		};
+		this.limit *= 2;	// double number of loaded links on next call
+
 		if(this._loadingPromise)
 		{
 			// Already waiting
@@ -333,6 +353,4 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			this[k] = _values[k];
 		}
 	}
-};
-
-customElements.define("et2-link-string", Et2LinkString);
+}

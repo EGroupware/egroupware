@@ -522,6 +522,7 @@ class Link extends Link\Storage
 			return $ids;
 		}
 		$ids = Link\Storage::get_links($app, $id, $only_app, $order, $deleted, $limit);
+		$limit_exceeded = self::$limit_exceeded;
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
@@ -533,7 +534,7 @@ class Link extends Link\Storage
 		//echo "ids=<pre>"; print_r($ids); echo "</pre>\n";
 		if ($cache_titles)
 		{
-			// agregate links by app
+			// aggregate links by app
 			$app_ids = array();
 			foreach($ids as $link)
 			{
@@ -553,6 +554,7 @@ class Link extends Link\Storage
 			}
 			reset($ids);
 		}
+		self::$limit_exceeded = $limit_exceeded;
 		return $ids;
 	}
 
