@@ -137,28 +137,26 @@ class HtmLawed
 	 */
 	static function getStyles(&$html)
 	{
-		$ct=0;
-		$newStyle = null;
-		if (stripos($html,'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
-		if ($ct>0)
+		if (stripos($html,'<style')!==false)
 		{
-			//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
-			$style2buffer = implode('',$newStyle[0]);
-			// only replace what we have found, we use it here, as we use the same routine in Api\Mail\Html::replaceTagsCompletley
-			// no need to do the extra routine
-			$html = str_ireplace($newStyle[0],'',$html);
-		}
-		if (!empty($style2buffer))
-		{
-			//error_log(__METHOD__.__LINE__.array2string($style2buffer));
-			$test = json_encode($style2buffer);
-			//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
-			//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
-			if ($test=="null" && strlen($style2buffer)>0)
+			$newStyle = null;
+			preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $html, $newStyle);
+			if (isset($newStyle))
 			{
-				// this should not be needed, unless something fails with charset detection/ wrong charset passed
-				error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Carset Detected:'.Api\Translation::detect_encoding($style2buffer));
-				$style2buffer = utf8_encode($style2buffer);
+				$style2buffer = implode("\n", $newStyle[0]);
+				// only replace what we have found, we use it here, as we use the same routine in Api\Mail\Html::replaceTagsCompletley
+				// no need to do the extra routine
+				$html = str_ireplace($newStyle[0],'',$html);
+			}
+			if (!empty($style2buffer))
+			{
+				$test = json_encode($style2buffer);
+				if ($test=="null" && strlen($style2buffer))
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Carset Detected:'.Api\Translation::detect_encoding($style2buffer));
+					$style2buffer = utf8_encode($style2buffer);
+				}
 			}
 		}
 		$style = $style2buffer ?? '';

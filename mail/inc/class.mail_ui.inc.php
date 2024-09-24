@@ -3584,6 +3584,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$alreadyHtmlLawed=false;
 				$newBody	= $singleBodyPart['body'];
+
+				// remove script tags incl. their content, includes e.g. <script type="application/ld+json">
+				// before HtmLawed below only removes the script-tags but leaves the content
+				Mail\Html::replaceTagsCompletley($newBody, 'script');
+
 				//TODO:$newBody	= $this->highlightQuotes($newBody);
 				#error_log(print_r($newBody,true));
 				if ($useTidy && extension_loaded('tidy'))
@@ -3599,7 +3604,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						$newBody = $cleaned;
 					}
-					// filter only the 'body', as we only want that part, if we throw away the Api\Html
+					// filter only the 'body', as we only want that part, if we throw away the html
 					if (preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches) && !empty($matches[2]))
 					{
 						$hasOther = true;
