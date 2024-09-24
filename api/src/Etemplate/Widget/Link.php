@@ -201,7 +201,8 @@ class Link extends Etemplate\Widget
 		$app = $value['to_app'];
 		$id = $value['to_id'];
 
-		$links = Api\Link::get_links($app, $id, $value['only_app'], 'link_lastmod DESC', true, $value['show_deleted']);
+		$links = Api\Link::get_links($app, $id, $value['only_app'] ?? '', 'link_lastmod DESC', true, $value['show_deleted'], $value['limit'] ?? null);
+		$limit_exceeded = !empty($value['limit']) && Api\Link::$limit_exceeded;
 		$only_links = [];
 		if($value['only_app'])
 		{
@@ -242,6 +243,15 @@ class Link extends Etemplate\Widget
 				$link['icon'] = Api\Link::get_registry($link['app'], 'icon');
 				$link['help'] = lang('Remove this link (not the entry itself)');
 			}
+		}
+		if ($limit_exceeded)
+		{
+			$links[] = [
+				'app' => 'exceeded',
+				'id' => 'exceeded',
+				'title' => lang('Load more links ...'),
+				'icon' => 'box-arrow-down',
+			];
 		}
 
 		$response = Api\Json\Response::get();
