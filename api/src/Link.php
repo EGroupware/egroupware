@@ -497,7 +497,7 @@ class Link extends Link\Storage
 	 * @param int $limit =null number of entries to return, only affects links, attachments are allways reported!
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC',$cache_titles=false, $deleted=false, $limit=null)
+	static function get_links($app, $id, $only_app = '', $order = 'link_lastmod DESC, link_id DESC', $cache_titles = false, $deleted = false, $limit = null)
 	{
 		if (self::DEBUG) echo "<p>Link::get_links(app='$app',id='$id',only_app='$only_app',order='$order',deleted='$deleted')</p>\n";
 
@@ -529,6 +529,7 @@ class Link extends Link\Storage
 			if (($vfs_ids = self::list_attached($app,$id)))
 			{
 				$ids += $vfs_ids;
+				self::$row_count += count($vfs_ids);
 			}
 		}
 		//echo "ids=<pre>"; print_r($ids); echo "</pre>\n";
@@ -550,6 +551,7 @@ class Link extends Link\Storage
 				if(!self::title(is_array($link) ? $link['app'] : $only_app, is_array($link) ? $link['id'] : $link))
 				{
 					unset($ids[$key]);
+					self::$row_count--;
 				}
 			}
 			reset($ids);
