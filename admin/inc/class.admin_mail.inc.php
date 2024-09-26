@@ -368,7 +368,7 @@ class admin_mail
 			}
 		}
 		$readonlys['button[manual]'] = true;
-		unset($content['manual_class']);
+		unset($content['manual_class'], $content['button']);
 		$sel_options['acc_imap_ssl'] = self::$ssl_types;
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys,
 			array_diff_key($content, ['output'=>true]), 2);
