@@ -68,24 +68,6 @@ export class Et2Searchbox extends Et2Textbox
 			this.blur();
 		}
 	}
-
-	/**
-	 * Overwritten to trigger a change/search
-	 *
-	 * @param event
-	 */
-	handleClearClick(event : MouseEvent)
-	{
-		event.preventDefault();
-
-		const oldValue = this.value;
-		this.value = '';
-		this.requestUpdate("value", oldValue);
-		this._oldChange(event);
-
-		// Call super so it works as expected
-		super.handleClearClick(event);
-	}
 }
 // @ts-ignore TypeScript is not recognizing that this is a LitElement
 customElements.define("et2-searchbox", Et2Searchbox);
