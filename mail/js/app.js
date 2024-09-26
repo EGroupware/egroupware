@@ -1829,7 +1829,7 @@ app.classes.mail = AppJS.extend(
 			node = ftree.getNode(_senders[0].id);
 		}
 
-		if (node && node.im0.indexOf('NoSelect') !== -1)
+		if (node && node?.im0?.indexOf('NoSelect') !== -1)
 		{
 			//ftree.reSelectItem(_previous);
 			return false;
