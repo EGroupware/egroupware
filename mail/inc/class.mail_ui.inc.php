@@ -4140,7 +4140,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			foreach ($_folder as $_folderName)
 			{
 				list($profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
-				if (is_numeric($profileID))
+				if (is_numeric($profileID)) //things like mail::xxx will be ignored
 				{
 					if ($profileID != $this->mail_bo->profileID) continue; // only current connection
 					if ($folderName)

@@ -83,6 +83,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	//does not work because it would need to be run on the shadow root
 	//@query("sl-tree-item[selected]") selected: SlTreeItem;
 
+	//the trees lazy-loading promise, so we can externally do additional stuff after it resolves
+	private lazyLoading: Promise<void>;
+
 	/**
 	 * get the first selected node using attributes on the shadow root elements
 	 */
@@ -178,7 +181,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// Check if top level should be autoloaded
 		if(this.autoloading && !this._selectOptions?.length)
 		{
-			this.handleLazyLoading({item: this._selectOptions}).then((results) =>
+			this.lazyLoading = this.handleLazyLoading({item: this._selectOptions}).then((results) =>
 			{
 				this._selectOptions = results?.item ?? [];
 				this._initCurrent()
@@ -850,6 +853,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.widget_object.getObjectById(id).iface.triggerEvent(typeMap[event.type], event);
 	}
 
+	protected async finishedLazyLoading()
+	{
+		await this.lazyLoading;
+		let result = this.lazyLoading
+		return result
+	}
+
+
+
 	/**
 	 * Overridable, add style
 	 * @returns {TemplateResult<1>}
@@ -923,7 +935,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                         // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
                         event.stopPropagation();
 
-                        this.handleLazyLoading(selectOption).then((result) => {
+						this.lazyLoading = this.handleLazyLoading(selectOption).then((result) => {
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
                             const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
                             parentNode.item = [...result.item]

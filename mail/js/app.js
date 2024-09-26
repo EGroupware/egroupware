@@ -1533,10 +1533,8 @@ app.classes.mail = AppJS.extend(
 			{
 				this.mail_refreshQuotaDisplay();
 			}
-			// TODO the two lines below are not working yet.
-                //var no =tree_wdg.getSelectedItem();
-			//tree_wdg.focusItem(no.id);
-		} catch(e) { } // ignore the error; maybe the template is not loaded yet
+		} catch(e) {
+		} // ignore the error; maybe the template is not loaded yet
 	},
 
 	/**
@@ -2390,7 +2388,7 @@ app.classes.mail = AppJS.extend(
 			this.unlock_tree();
 		},this))
 			.sendRequest(true);
-            _widget.updateComplete.then (() => {
+            _widget.finishedLazyLoading().then (() => {
                 this.mail_changeFolder(folder+"::INBOX", _widget, '');
                 _widget.reSelectItem(folder+"::INBOX")
             });
