@@ -179,7 +179,7 @@ class Image
 		'mouse_scroll_lr'	=> 'arrows',
 		'mouse_scroll_ud'	=> 'arrow-down-up',
 		'move'	=> 'scissors',
-		'navbar'	=> 'app',
+		'navbar'	=> 'app-indicator',
 		'new'	=> 'file-earmark-plus',
 		'new_leaf'	=> 'file-earmark-plus',
 		'next'	=> 'arrow-bar-right',
@@ -430,7 +430,8 @@ class Image
 			$url = $webserver_url.$image_map['vfs'][$image.$extension];
 		}
 		// then our globals lookup table $global2bootstrap, but not for $app/navbar
-		elseif(($image !== 'navbar' || $app === 'api') && (isset($image_map['global'][$app.'/'.$image]) || isset($image_map['global'][$image])))
+		elseif(($image !== 'navbar' || $app === 'api' || !isset($image_map[$app][$image])) &&
+			(isset($image_map['global'][$app.'/'.$image]) || isset($image_map['global'][$image])))
 		{
 			$image = $image_map['global'][$app.'/'.$image] ?? $image_map['global'][$image];
 			// allow redirects like "calendar/yearview" --> "calendar/bi-12-square"
