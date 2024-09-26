@@ -1054,7 +1054,7 @@ import {tapAndSwipe} from "../../api/js/tapandswipe";
 			// Update selection counter in nm header
 			if (_widget._type == 'nextmatch' && _widget.getSelection().ids.length > 0)
 			{
-				if (senders && senders[0].actionLinks)
+				if (senders && senders[0]?.actionLinks)
 				{
 					var delete_action = null;
 					for (var i=0; i< senders[0].actionLinks.length;i++)
