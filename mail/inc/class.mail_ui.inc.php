@@ -4129,7 +4129,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @param array $_folder folders to refresh its unseen message counters
 	 * @return nothing
 	 */
-	function ajax_setFolderStatus($_folder)
+	function ajax_setFolderStatus($_folder, $force_change = false)
 	{
 		Api\Translation::add_app('mail');
 		//error_log(__METHOD__.__LINE__.array2string($_folder));
@@ -4155,7 +4155,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 							continue;
 						}
 						//error_log(__METHOD__.__LINE__.array2string($fS));
-						if ($fS['unseen'])
+						if ($fS['unseen'] || $force_change)
 						{
 							$oA[$_folderName] = ''.$fS['unseen'];
 						}
@@ -5301,6 +5301,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			else if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
+                self::ajax_setFolderStatus([$_messageList['msg']['0']],true);
 				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),lang($folder)),'mail');
 			}
 			else
