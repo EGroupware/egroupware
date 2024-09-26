@@ -55,19 +55,26 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	@property({type: String})
 	set src(_src)
 	{
+		this.classList.forEach(_class =>
+		{
+			if(_class.startsWith('bi-'))
+			{
+				this.classList.remove(_class);
+			}
+		});
+
 		this.__src = _src;
 		let url = this.parse_href(_src) || this.parse_href(this.defaultSrc);
 		if(!url)
 		{
 			// Hide if no valid image
 			if (this._img) this._img.src = '';
-			this.className = this.title = '';
 			return;
 		}
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap && !this._img)
 		{
-			this.className = 'bi-'+bootstrap[1];
+			this.classList.add('bi-' + bootstrap[1]);
 			return;
 		}
 		// change between bootstrap and regular img
@@ -167,9 +174,6 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		// set title on et2-image for both bootstrap-image via css-class and embedded img tag
 		this.title = this.statustext || this.label || "";
 
-		this.classList.forEach(_class => {
-			if (_class.startsWith('bi-')) this.classList.remove(_class);
-		});
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap)
 		{
