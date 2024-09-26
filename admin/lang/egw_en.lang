@@ -840,6 +840,7 @@ site	admin	en	Site
 skip imap	admin	en	Skip IMAP
 skipping imap configuration!	admin	en	Skipping IMAP configuration!
 smtp authentication	admin	en	SMTP authentication
+smtp only: to create only an smtp account	admin	en	SMTP only: to create only an SMTP account
 smtp options	admin	en	SMTP options
 smtp server	admin	en	SMTP server
 smtp server name	admin	en	SMTP server name

@@ -840,6 +840,7 @@ site	admin	de	Site
 skip imap	admin	de	IMAP auslassen
 skipping imap configuration!	admin	de	IMAP-Konfiguration ausgelassen!
 smtp authentication	admin	de	SMTP-Anmeldung
+smtp only: to create only an smtp account	admin	de	SMTP only: nur ein SMTP Konto anzulegen
 smtp options	admin	de	SMTP-Optionen
 smtp server	admin	de	SMTP-Server
 smtp server name	admin	de	SMTP-Server Name
