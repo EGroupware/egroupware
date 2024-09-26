@@ -337,6 +337,7 @@ window.egw_fw_ui_tab = function(_parent, _contHeaderDiv, _contDiv, _icon, _callb
 	this.headerDiv = document.createElement("span");
 	this.headerDiv._position = _pos;
 	jQuery(this.headerDiv).attr('id', this.tag.appName+'-egw_fw_ui_tab_header').addClass("egw_fw_ui_tab_header");
+	this.headerDiv.setAttribute('title', this.tag.displayName);
 
 	//Create a new callback object and attach it to the header div
 	this.headerDiv._callbackObject = new egw_fw_class_callback(this, _callback);
