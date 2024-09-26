@@ -159,6 +159,8 @@ class Image
 		'mime128_video_mp4' => 'filetype-mp4',
 		'mime128_video_mov' => 'filetype-mov',
 		'mime128_video_webm' => 'bi-filetype-webm',
+		'mime128_video_x-youtube' => 'youtube',
+		'mime128_video_x-livefeedback' => 'smallpart/navbar',
 		//'mime128_video_ogg' => '',
 		'mime128_image' => 'file-earmark-image',
 		'mime128_image_bmp' => 'filetype-bmp',
