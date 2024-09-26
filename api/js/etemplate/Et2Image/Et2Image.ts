@@ -167,13 +167,15 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		// set title on et2-image for both bootstrap-image via css-class and embedded img tag
 		this.title = this.statustext || this.label || "";
 
+		this.classList.forEach(_class => {
+			if (_class.startsWith('bi-')) this.classList.remove(_class);
+		});
 		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
 		if (bootstrap)
 		{
-			this.className = 'bi-'+bootstrap[1];
+			this.classList.add('bi-'+bootstrap[1]);
 			return html``;
 		}
-		this.className = '';
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
                  src="${url}"
