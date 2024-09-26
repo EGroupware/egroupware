@@ -1928,11 +1928,13 @@ app.classes.mail = AppJS.extend(
 		for (const folderId in _status) {
 			//ftree.setLabel(folderId,_status[folderId]["displayName"]);
 			// display folder-name bold for unseen mails
+			if(_status[folderId] ===0 || _status[folderId] ==="0") _status[folderId] = null;
 			if(_status[folderId])
 			{
 				ftree.setClass(folderId, 'unread','+');
 			}else if(!_status[folderId] || _status[folderId] ===0 || _status[folderId] ==="0") {
 				ftree.setClass(folderId, 'unread','-');
+				_status[folderId]=null;
 			}
 			ftree.set_badge(folderId,_status[folderId]);
 			//alert(i +'->'+_status[i]);
