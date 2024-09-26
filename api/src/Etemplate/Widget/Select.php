@@ -733,8 +733,19 @@ class Select extends Etemplate\Widget
 				{
 					$categories = new Api\Categories($type5, $application);
 				}
-				// Allow text for global
-				$globalCategories = $globalCategories && (strlen($globalCategories) > 1 ? $globalCategories === 'true' : (bool)$globalCategories);
+				// Allow text "all_no_acl" for globalCategories
+				switch($globalCategories)
+				{
+					case 'all_no_acl':
+						break;
+					case 'true':
+					case 'false':
+						$globalCategories = $globalCategories === 'true';
+						break;
+					default:
+						$globalCategories = (bool)$globalCategories;
+						break;
+				}
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
 				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) as $cat)
 				{
