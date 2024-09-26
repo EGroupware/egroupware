@@ -67,15 +67,16 @@
   }
   #filemanager-index_nm .nextmatch_header .filemanager_navigation {
     height: auto;
+    width: 100%;
   }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_path {
+  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_nm_path {
     height: 50px;
     width: calc(100% - 90px);
     display: inline-block;
     border: none;
     background: white;
   }
-  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_path:focus {
+  #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_nm_path:focus {
     outline: none;
   }
   #filemanager-index_nm .nextmatch_header .filemanager_navigation #filemanager-index_up {

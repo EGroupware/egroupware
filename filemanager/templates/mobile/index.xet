@@ -18,12 +18,12 @@
 						<et2-vfs-mime  align="center" id="$row"></et2-vfs-mime>
 					</et2-vbox>
 					<et2-vbox>
-						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+						<et2-vfs-name id="${row}[name]" readonly="true"/>
 						<et2-description  id="${row}[comment]"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
 						<vfs-size align="right" id="${row}[size]"/>
-						<et2-date-time-today  id="${row}[mtime]" readonly="true"></et2-date-time-today>
+						<et2-date-time-today id="${row}[mtime]"></et2-date-time-today>
 					</et2-vbox>
 				</row>
 			</rows>
@@ -46,10 +46,10 @@
 	<template id="filemanager.index.header_left" template="" lang="" group="0" version="1.9.002">
 		<et2-hbox  span="all" class="filemanager_navigation">
 			<et2-hbox>
-				<et2-image  label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up"></et2-image>
+				<et2-image  label="Up" src="goup" onclick="app.filemanager.change_dir('..',widget);" id="up" style="font-size: 28px"></et2-image>
 			</et2-hbox>
-			<et2-vfs-name id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" size="80" class="address"/>
-			<file label="" statustext="Select file to upload in current directory" class="plus_button" id="upload" progress_dropdownlist = "true" drop_target ="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
+			<et2-vfs-path id="path" onchange="if(widget.getValue() == '') { app.filemanager.change_dir('~',widget);} return true;" class="address"/>
+			<file label="" statustext="Select file to upload in current directory" class="plus_button" id="upload" progress_dropdownlist="true" drop_target="divAppbox" multiple="true" onFinishOne="app.filemanager.uploadOnOne"/>
 		</et2-hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
