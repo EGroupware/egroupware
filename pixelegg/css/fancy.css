@@ -7282,3 +7282,6 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:last-child {
   right: 0px;
   top: 2px;
 }
+#egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_content .egw_fw_ui_category {
+  border-radius: var(--sl-border-radius-medium);
+}
