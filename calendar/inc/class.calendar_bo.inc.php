@@ -831,7 +831,7 @@ class calendar_bo
 			'uid'	=> $event['uid'],
 			'etag'	=> $event['etag'],
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
-			'public'=> 0,
+			'public'=> $event['public'],
 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
 			'non_blocking' => $event['non_blocking'],
 			'caldav_name' => $event['caldav_name'],
