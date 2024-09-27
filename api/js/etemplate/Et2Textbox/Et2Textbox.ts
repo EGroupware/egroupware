@@ -46,9 +46,6 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		];
 	}
 
-	@property()
-	value = "";
-
 	/**
 	 * Placeholder text to show as a hint when the input is empty.
 	 */
@@ -73,7 +70,6 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 
 	private __validator : any;
 	protected _mask : InputMask;
-	protected _value : string = "";
 
 	inputMode = "text";
 
@@ -154,6 +150,19 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		}
 	}
 
+	@property()
+	get value()
+	{
+		return super.value;
+	}
+
+	set value(newValue : string)
+	{
+		const oldValue = this.value;
+		super.value = newValue;
+		this.requestUpdate("value", oldValue);
+	}
+	
 	/**
 	 * Get the options for masking.
 	 * Can be overridden by subclass for additional options.
