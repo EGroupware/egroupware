@@ -834,7 +834,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		const typeMap = {
 			dragenter: EGW_AI_DRAG_ENTER,
-			dragleave: EGW_AI_DRAG_OUT
+			dragleave: EGW_AI_DRAG_OUT,
+			drop: EGW_AI_DRAG_OUT,
 		}
 		this.widget_object.getObjectById(id).iface.triggerEvent(typeMap[event.type], event);
 	}
@@ -1048,6 +1049,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     }
                     @dragenter=${(event) => {this.handleDragEvent(event);}}
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
+					@drop=${(event) => {this.handleDragEvent(event);}}
             >
 				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
 				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
