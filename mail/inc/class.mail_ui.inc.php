@@ -5440,6 +5440,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			$response = Api\Json\Response::get();
 			if (empty($error))
 			{
+                self::ajax_setFolderStatus([$uidA['profileID']."::".$folder],true);
 				$response->call('app.mail.mail_deleteMessagesShowResult',array('egw_message'=>'', 'msg'=>$_messageList['msg']));
 			}
 			else
