@@ -832,7 +832,7 @@ class calendar_bo
 			'end'   => $event['end'],
 			'whole_day' => $event['whole_day'],
 			'tzid'  => $event['tzid'],
-			'title' => lang('private'),
+			'title' => $event['public'] ? lang('busy') : lang('private'),
 			'modified'	=> $event['modified'],
 			'owner'		=> $event['owner'],
 			'uid'	=> $event['uid'],
