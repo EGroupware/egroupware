@@ -10,7 +10,7 @@
 			<rows>
 				<row height="30">
 					<et2-vfs-mime  align="center" id="mime"></et2-vfs-mime>
-					<et2-vfs-name id="name" required="true" class="fileName et2_fullWidth"/>
+					<et2-vfs-name  id="name" required="true" class="fileName"/>
 				</row>
 				<row>
 					<hrule span="all"/>
@@ -29,7 +29,7 @@
 				</row>
 				<row disabled="@is_link">
 					<et2-description  value="Size"></et2-description>
-					<vfs-size id="size" options="1"/>
+					<vfs-size id="size"/>
 				</row>
 				<row>
 					<et2-description  value="Created"></et2-description>
@@ -53,8 +53,7 @@
 			</columns>
 			<rows>
 				<row>
-					<groupbox>
-						<caption label="Accessrights"/>
+					<et2-groupbox  summary="Accessrights">
 						<grid width="100%">
                             <columns>
                                 <column width="80"/>
@@ -83,11 +82,10 @@
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 				<row>
-					<groupbox>
-						<caption label="Owner"/>
+					<et2-groupbox  summary="Owner">
 						<grid width="100%">
                             <columns>
                                 <column width="80"/>
@@ -95,18 +93,16 @@
                             </columns>
                             <rows>
                                 <row>
-                                    <et2-description value="User"></et2-description>
-                                    <et2-select-account label="@ro_uid_root" id="uid"
-                                                        accountType="accounts"></et2-select-account>
+                                    <et2-description  value="User"></et2-description>
+                                    <et2-select-account  label="@ro_uid_root" id="uid" accountType="accounts"></et2-select-account>
                                 </row>
                                 <row>
-                                    <et2-description value="Group"></et2-description>
-                                    <et2-select-account label="@ro_gid_root" id="gid"
-                                                        accountType="groups"></et2-select-account>
+                                    <et2-description  value="Group"></et2-description>
+                                    <et2-select-account  label="@ro_gid_root" id="gid" accountType="groups"></et2-select-account>
                                 </row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 				<row disabled="!@is_dir">
 					<et2-checkbox  label="Modify all Subdirectories and their content" id="modify_subs"></et2-checkbox>
@@ -115,9 +111,8 @@
 		</grid>
 	</template>
 	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
-        <et2-vbox class="full-height">
-            <groupbox style="flex-grow: 1">
-                <caption label="Extended access control list"/>
+        <et2-vbox  class="full-height">
+            <et2-groupbox  style="flex-grow: 1" summary="Extended access control list">
                 <grid width="100%" overflow="auto" id="eacl">
                     <columns>
                         <column width="80"/>
@@ -127,24 +122,24 @@
                     </columns>
                     <rows>
                         <row class="th">
-                            <et2-description value="Owner"></et2-description>
-                            <et2-description value="Rights"></et2-description>
-                            <et2-description value="Inherited"></et2-description>
+                            <et2-description  value="Owner"></et2-description>
+                            <et2-description  value="Rights"></et2-description>
+                            <et2-description  value="Inherited"></et2-description>
                             <et2-description></et2-description>
                         </row>
                         <row class="row" disabled="!@1">
-                            <et2-select-account id="${row}[owner]" readonly="true"></et2-select-account>
-                            <et2-select id="${row}[rights]" readonly="true"></et2-select>
-                            <et2-description id="${row}[path]"></et2-description>
-                            <et2-button label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
+                            <et2-select-account  id="${row}[owner]" readonly="true"></et2-select-account>
+                            <et2-select  id="${row}[rights]" readonly="true"></et2-select>
+                            <et2-description  id="${row}[path]"></et2-description>
+                            <et2-button  label="Delete" id="delete[$row_cont[ino]-$row_cont[owner]]" onclick="et2_dialog.confirm(widget,'Delete this extended ACL?','Delete')" image="delete"></et2-button>
                         </row>
                     </rows>
                 </grid>
-            </groupbox>
-            <et2-hbox valign="bottom" disabled="!@is_owner">
-                <et2-select-account class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both" placement="top"></et2-select-account>
-                <et2-select class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
-                <et2-button label="Add" id="button[eacl]" image="add"></et2-button>
+            </et2-groupbox>
+            <et2-hbox disabled="!@is_owner">
+                <et2-select-account  class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both" placement="top"></et2-select-account>
+                <et2-select  class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
+                <et2-button  label="Add" id="button[eacl]" image="add"></et2-button>
             </et2-hbox>
         </et2-vbox>
     </template>
@@ -190,8 +185,7 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<groupbox>
-						<caption label="Merge settings"/>
+					<et2-groupbox  summary="Merge settings">
 						<grid>
 							<columns>
 								<column />
@@ -208,7 +202,7 @@
 								</row>
 							</rows>
 						</grid>
-					</groupbox>
+					</et2-groupbox>
 				</row>
 			</rows>
 		</grid>
@@ -247,12 +241,11 @@
 							<et2-button  label="Apply" id="button[apply]" image="apply"></et2-button>
 							<et2-button  label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" noSubmit="true"></et2-button>
 						</et2-hbox>
-						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="superuser" noSubmit="true"></et2-button>
+						<et2-button  align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudouser" onclick="jQuery('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();" image="lock" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
                 <row>
-                    <groupbox class="superuser">
-                        <caption label="Enter setup user and password"/>
+                    <et2-groupbox  class="superuser" summary="Enter setup user and password">
                         <grid>
                             <columns>
                                 <column/>
@@ -260,24 +253,24 @@
                             </columns>
                             <rows>
                                 <row>
-                                    <et2-description for="sudo[user]" value="User"></et2-description>
-                                    <et2-textbox id="sudo[user]"></et2-textbox>
+                                    <et2-description  for="sudo[user]" value="User"></et2-description>
+                                    <et2-textbox  id="sudo[user]"></et2-textbox>
                                 </row>
                                 <row>
-                                    <et2-description for="sudo[passwd]" value="Password"></et2-description>
-                                    <et2-password id="sudo[passwd]" autocomplete="on"></et2-password>
+                                    <et2-description  for="sudo[passwd]" value="Password"></et2-description>
+                                    <et2-password  id="sudo[passwd]" autocomplete="on"></et2-password>
                                 </row>
                                 <row>
                                     <et2-description></et2-description>
                                     <et2-hbox>
-                                        <et2-button label="Submit" id="button[setup]"></et2-button>
-                                        <et2-button label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true"></et2-button>
+                                        <et2-button  label="Submit" id="button[setup]" image="check"></et2-button>
+                                        <et2-button  label="Cancel" onclick="jQuery('.superuser').hide();" noSubmit="true" image="cancel"></et2-button>
                                     </et2-hbox>
 
                                 </row>
                             </rows>
                         </grid>
-                    </groupbox>
+                    </et2-groupbox>
                 </row>
             </rows>
         </grid>
@@ -285,13 +278,14 @@
             .full-height { height: 100% }
             .full-height > fieldset { flex-grow: 1; }
             .superuser {
-            position: absolute;
-            top: 130px;
-            left: 120px;
-            width: 200px;
-            background-color: white;
-            z-index: 1;
-            display: none;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				padding: 5px;
+				background-color: white;
+				z-index: 1;
+				display: none;
             }
         </styles>
     </template>
