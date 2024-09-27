@@ -53,7 +53,8 @@
 			</columns>
 			<rows>
 				<row>
-					<et2-groupbox  summary="Accessrights">
+					<groupbox>
+						<caption label="Accessrights"/>
 						<grid width="100%">
                             <columns>
                                 <column width="80"/>
@@ -82,10 +83,11 @@
 								</row>
 							</rows>
 						</grid>
-					</et2-groupbox>
+					</groupbox>
 				</row>
 				<row>
-					<et2-groupbox  summary="Owner">
+					<groupbox>
+						<caption label="Owner"/>
 						<grid width="100%">
                             <columns>
                                 <column width="80"/>
@@ -102,7 +104,7 @@
                                 </row>
 							</rows>
 						</grid>
-					</et2-groupbox>
+					</groupbox>
 				</row>
 				<row disabled="!@is_dir">
 					<et2-checkbox  label="Modify all Subdirectories and their content" id="modify_subs"></et2-checkbox>
@@ -112,7 +114,8 @@
 	</template>
 	<template id="filemanager.file.eacl" template="" lang="" group="0" version="1.9.001">
         <et2-vbox  class="full-height">
-            <et2-groupbox  style="flex-grow: 1" summary="Extended access control list">
+            <groupbox  style="flex-grow: 1">
+				<caption label="Extended access control list"/>
                 <grid width="100%" overflow="auto" id="eacl">
                     <columns>
                         <column width="80"/>
@@ -135,7 +138,7 @@
                         </row>
                     </rows>
                 </grid>
-            </et2-groupbox>
+            </groupbox>
             <et2-hbox disabled="!@is_owner">
                 <et2-select-account  class="filemanager-file_filemanager-file-eaclowner eaclAccount" label="Owner" id="eacl_owner" emptyLabel="select one" accountType="both" placement="top"></et2-select-account>
                 <et2-select  class="eaclRights" statustext="You can only grant additional rights, you can NOT take rights away!" label="Rights" id="eacl[rights]"></et2-select>
@@ -185,7 +188,8 @@
 					</et2-hbox>
 				</row>
 				<row>
-					<et2-groupbox  summary="Merge settings">
+					<groupbox>
+						<caption label="Merge settings"/>
 						<grid>
 							<columns>
 								<column />
@@ -202,7 +206,7 @@
 								</row>
 							</rows>
 						</grid>
-					</et2-groupbox>
+					</groupbox>
 				</row>
 			</rows>
 		</grid>
@@ -245,7 +249,8 @@
 					</et2-hbox>
 				</row>
                 <row>
-                    <et2-groupbox  class="superuser" summary="Enter setup user and password">
+                    <groupbox  class="superuser">
+						<caption label="Enter setup user and password"/>
                         <grid>
                             <columns>
                                 <column/>
@@ -270,7 +275,7 @@
                                 </row>
                             </rows>
                         </grid>
-                    </et2-groupbox>
+                    </groupbox>
                 </row>
             </rows>
         </grid>
