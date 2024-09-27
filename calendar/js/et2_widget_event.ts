@@ -362,7 +362,7 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				this.body.toggleClass('calendar_calEventBodySmall', event.whole_day_on_top || false);
 
 				// Header
-				const title = !event.is_private ? egw.htmlspecialchars(event['title']) : egw.lang('private');
+				const title = egw.htmlspecialchars(event['title']);
 
 				this.title
 						.html('<span class="calendar_calTimespan">' + this._get_timespan(event) + '<br /></span>')
