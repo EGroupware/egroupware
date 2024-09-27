@@ -5127,10 +5127,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$this->changeProfile($uidA['profileID']);
 				}
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+                //_messageList['msg'][0] was in form of {accountID}::{folderName}
+                // so we need to correct $folder and $profileID
 				if(!$folder && !$uidA['msg'] && $uidA['accountID'])
 				{
 					$folder = $uidA['accountID'];
 				}
+                $profileID = $uidA['profileID'];
+                if(!$profileID && !$uidA['msg'] && $uidA['app'])
+                {
+                    $profileID=$uidA['app'];
+                }
+                //end correction
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
@@ -5301,7 +5309,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			else if ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false)))
 			{
-                self::ajax_setFolderStatus($_messageList['msg'],true);
+                self::ajax_setFolderStatus([$profileID."::".$folder],true);
 				$response->call('egw.refresh',lang('flagged %1 messages as %2 in %3',(isset($_messageList['all']) && $_messageList['all']?lang('all'):count($_messageList['msg'])),lang(($flag[$_flag]?$flag[$_flag]:$_flag)),lang($folder)),'mail');
 			}
 			else
