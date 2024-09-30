@@ -24,17 +24,17 @@ accepted	calendar	ja	参加回答済み
 access denied to the calendar of %1 !!!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!!!
 access to calendar of %1 denied!	calendar	ja	%1 のカレンダーに対するアクセスが拒否されました!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ja	通知要因となったアクション（追加, キャンセル, 参加回答, 不参加回答, ...）
-actions	calendar	ja	アクション
-actions...	calendar	ja	アクション...
 add alarm	calendar	ja	アラームを追加
 add appointments via shortened dialog or complete edit window	calendar	ja	短縮ダイアログまたは完全な編集ウィンドウで予定を追加
 add current view as favorite	calendar	ja	現在の表示をお気に入りに追加
 add new alarm	calendar	ja	新規アラームを追加
 add new event	calendar	ja	新規予約の追加
 add new participants or resource	calendar	ja	新規参加者またはリソースを追加
+add recurrence	calendar	ja	再帰の追加
 add timesheet entry	calendar	ja	タイムシート・エントリーを追加
 added	calendar	ja	追加されました
 added by synchronization	calendar	ja	同期（追加）しました。
+added recurrence on %1.	calendar	ja	%1 に再帰を追加しました。
 after	calendar	ja	後
 after %1	calendar	ja	%1 以後
 after current date	calendar	ja	本日以後
@@ -46,7 +46,6 @@ alarm deleted	calendar	ja	アラームを削除しました。
 alarm for %1 at %2 in %3	calendar	ja	Alarm for %1 at %2 in %3
 alarm management	calendar	ja	アラーム管理
 alarms	calendar	ja	アラーム
-all categories	calendar	ja	全カテゴリ
 all day	calendar	ja	全ての日
 all events	calendar	ja	全イベント
 all exceptions are converted into single events.	calendar	ja	全例外を1個のイベントに変換しました。
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	ja	イベントの再編集を許可
 always	calendar	ja	常に
 always use full edit dialog	calendar	ja	常に完全な編集ダイアログを使用
 always use the full edit dialog, not this little dialog	calendar	ja	この小さなダイアログではなく、常に完全な編集ダイアログを使用してください。
+apply changes to (future) exceptions too?	calendar	ja	変更を (将来の) 例外にも適用しますか?
 apply the action on the whole query, not only the shown events	calendar	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）
 apply the changes	calendar	ja	変更を保存
 appointment settings	calendar	ja	イベント設定
@@ -205,6 +205,7 @@ edit this series of recurring events	calendar	ja	繰返しイベントを編集
 email address migration	calendar	ja	電子メール・アドレスの移行
 empty = no alarm	calendar	ja	空欄 = アラーム無し
 empty for all	calendar	ja	空欄に設定すると全て
+empty target calendar before importing	calendar	ja	インポート前にターゲットカレンダーを空にする
 end	calendar	ja	終了日時
 end date/time	calendar	ja	終了日時
 enddate	calendar	ja	終了日
@@ -242,12 +243,12 @@ exclude weekend	calendar	ja	週末を除く
 execute a further action for this entry	calendar	ja	このイベントで更にアクションを実行
 existing links	calendar	ja	定義済みリンク
 exists	calendar	ja	存在
+explicit recurrences	calendar	ja	明示的な再帰
 export definition to use for nextmatch export	calendar	ja	エクスポートで用いる設定ファイル
 exports events from your calendar in ical format.	calendar	ja	iCal フォーマットでカレンダー・イベントをエクスポート
 exports events from your calendar into a csv file.	calendar	ja	CSV 形式でカレンダー・イベントをエクスポート
 extended	calendar	ja	延長日時
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ja	拡張更新は、常に完全なイベント詳細を含みます。そのため、iCal を他のカレンダー・アプリケーションでインポートすることが可能です。
-favorites	calendar	ja	お気に入り
 fieldseparator	calendar	ja	項目の区切り
 filemanager	calendar	ja	ファイル・マネージャ
 filename	calendar	ja	ファイル名
@@ -364,6 +365,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	ja	最�
 maximum available quantity of %1 exceeded!	calendar	ja	指定可能な最大数 %1 を超過しています!
 meeting canceled	calendar	ja	ミーティングはキャンセルされました。
 meeting request	calendar	ja	ミーティング参加要請
+meeting request additional recurrence(s)	calendar	ja	会議が追加の再帰を要求する
 meetingrequest to all participants	calendar	ja	全参加者に参加要請
 merge document...	calendar	ja	ドキュメントのマージ...
 midnight	calendar	ja	深夜
@@ -432,10 +434,12 @@ one week	calendar	ja	1週間
 one year	calendar	ja	1年
 only group-events	calendar	ja	グループ・イベントのみ
 only recurrences until %1 (excluding) have been checked!	calendar	ja	%1 まで（排他）の繰返しだけチェックされました!
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	ja	一部の完全準拠クライアント（Appleなど）のみがサポートしています。URLを入力しなければならない場合、サポートされていない可能性が高いです！
 only the initial date of that recurring event is checked!	calendar	ja	繰返しイベントの初回の日だけチェックされました!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	ja	カレンダーを開く初回にのみ使用されます。それ以降は、最後に使用した表示が使用されます。
 open todo's:	calendar	ja	オープン状態の ToDo:
 optional	calendar	ja	任意参加
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	ja	そうしないと、タイトル、説明、...、または新しい参加者の変更は、すでに作成された例外には反映されません。
 output unit	calendar	ja	出力単位
 overlap holiday	calendar	ja	重複休日
 owner too	calendar	ja	所有者
@@ -510,8 +514,6 @@ search string for the events	calendar	ja	イベントを検索
 select a %1	calendar	ja	Select a %1
 select a color for this calendar	calendar	ja	カレンダー表示色を選択
 select a time	calendar	ja	時間を選択
-select an action	calendar	ja	アクションを選択
-select an action...	calendar	ja	アクションを選択...
 select multiple contacts for a further action	calendar	ja	アクションを実行するコンタクトを選択
 select resources	calendar	ja	リソースを選択
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	ja	イベントのスケジュールが変更された場合に、参加者の参加可否回答をリセットするか否か、さらにリセットする場合はその条件を指定してください。
@@ -584,6 +586,7 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the exceptions are deleted together with the series.	calendar	ja	繰返しイベントおよび例外を削除しました。
 the extern organizer changed the event!	calendar	ja	外部主催者がイベントを変更しました！
 the following document-types are supported:	calendar	ja	下記のドキュメント・タイプがサポートされます:
+the organizer changed the event!	calendar	ja	主催者がイベントを変更しました！
 the original series will be terminated today and a new series be created.	calendar	ja	元の繰返しイベントは本日終了し、新規繰返しイベントが作成されます。
 the resource you selected is already overbooked:	calendar	ja	指定されたリソースは既に重複予約されています:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	ja	送信者 "%1" は外部オーガナイザ "%2" ではありません！
@@ -596,6 +599,7 @@ this entry is opened by user:	calendar	ja	この項目は下記のユーザに�
 this event is part of a series	calendar	ja	このイベントは、繰返しイベントです。
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ja	予定表を開いた時に選択されるグループです。グループは、予定表でいつでも変更可能です。
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	ja	このイベントは繰返しイベントです。この一回分のイベントを削除しますか？それとも繰返しイベント全体を削除しますか？
+this is a single recurrence of a recurring event.	calendar	ja	主催者がイベントを変更しました!
 this mail cancels a meeting	calendar	ja	このメールは、会議のキャンセルのお知らせです。
 this mail contains a meeting request	calendar	ja	このメールは、会議の参加要請です。
 this mail contains a reply to a meeting request	calendar	ja	このメールは、会議参加要請に対する回答です。
@@ -639,6 +643,7 @@ update timezones	common	ja	タイムゾーンを更新
 updated	calendar	ja	更新日時
 use end date	calendar	ja	終了日を使う
 use event tz	calendar	ja	イベントのタイムゾーンを使用
+use quick add or full edit dialog when creating a new event	calendar	ja	新しいイベントを作成するときは、クイック追加またはフル編集ダイアログを使用してください。
 use range-views to optimise calendar queries?	calendar	ja	カレンダー・クエリを最適化するため範囲表示を使用するかどうかを指定します。
 use side menu to filter participants	calendar	ja	Use side menu to filter participants参加者をフィルターする際にサイドメニューを使用
 use the selected time and close the popup	calendar	ja	選択された時刻を使用しポップアップを閉じる
@@ -691,6 +696,7 @@ you are not allowed to book the resource selected:	calendar	ja	下記のリソ�
 you are not invited to that event!	calendar	ja	イベントに招待されていません!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	ja	上記の受信者宛てで参加依頼をメール送信します。メール・クライアントによっては、メッセージ本体が表示されない場合がありますが、添付の参加依頼は閲覧できます。
 you can either set a year or a occurrence, not both !!!	calendar	ja	年、または事象のいずれか一方だけ指定可能です。
+you can only notify other users, not yourself!	calendar	ja	通知できるのは他のユーザーだけで、自分自身には通知できません！
 you can only set a year or a occurrence !!!	calendar	ja	年、または事象のいずれか一方だけ指定可能です。
 you do not have permission to read this record!	calendar	ja	このレコードを読み取る権限がありません。
 you have a meeting scheduled for %1	calendar	ja	%1 に会議の予定があります。

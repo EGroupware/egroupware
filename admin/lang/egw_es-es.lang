@@ -22,10 +22,7 @@
 %1 token %2.	admin	es-es	%1 token %2.
 %1 user %2	admin	es-es	%1 usuario %2
 (de)activate mail accounts	admin	es-es	(des)activar cuentas de correo
-(default no, leave it off if you dont use it)	admin	es-es	Por defecto, No, desactivar si no se usa
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	es-es	(imapclass debe admitir esta característica al consultar el valor de configuración correspondiente y pasarlo como cuota predeterminada al imapserver)
 (no subject)	admin	es-es	(Sin asunto)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones]
 -  type	admin	es-es	- tipo
 1 year	admin	es-es	1 año
 2 month	admin	es-es	2 meses
@@ -87,6 +84,7 @@ add new email address:	admin	es-es	Añadir nueva dirección de correo:
 add peer server	admin	es-es	Añadir servidor 'peer'
 add profile	admin	es-es	Añadir perfil
 add sub-category	admin	es-es	Añadir subcategoría
+add to group	admin	es-es	Añadir al grupo
 add user	admin	es-es	Añadir usuario
 add user or group	admin	es-es	Añadir usuario o grupo
 added	admin	es-es	añadido
@@ -110,6 +108,7 @@ all records and account information will be lost!	admin	es-es	¡Se perderán tod
 all users	admin	es-es	Todos los usuarios
 allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta aplicación
 allow remote administration from following install id's (comma separated)	admin	es-es	Permitir la administración remota desde los siguientes ID de instalación (separados por comas).
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	es-es	Permitir al usuario almacenar su contraseña en 'Seguridad y Contraseñas' para SingleSignOn.
 allow user to set 'remember me' token	admin	es-es	Permitir al usuario configurar el token 'Recordarme'
 allow users to change forwards	admin	es-es	Permitir a los usuarios cambiar reenvíos
 allow users to create identities for aliases	admin	es-es	Permitir a los usuarios crear identidades para alias
@@ -158,9 +157,6 @@ authentication / accounts	admin	es-es	Identificación | Cuentas
 auto create account records for authenticated users	admin	es-es	Crear cuentas automáticamente para usuarios identificados.
 automatically transfer entries owned by the user:	admin	es-es	Transfiere automáticamente las entradas propiedad del usuario:
 available placeholders	admin	es-es	Marcadores disponibles
-back to admin/grouplist	admin	es-es	Volver a Administración/Lista de grupos
-back to admin/userlist	admin	es-es	Volver a Administración/Lista de usuarios
-back to the list	admin	es-es	Volver a la lista
 backup directory %1 mounted as %2	admin	es-es	El directorio de copias de seguridad %1 está montado como %2
 bad login name or password.	admin	es-es	Nombre de usuario o contraseña incorrectos.
 bad or malformed request. server responded: %s	admin	es-es	Petición errónea o mal formado. El servidor respondió: %s
@@ -169,14 +165,13 @@ bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 blocking after wrong password	admin	es-es	Bloqueo después de una contraseña incorrecta
 bottom	admin	es-es	Parte inferior
+bulk changes	admin	es-es	Cambios masivos
 bulk password reset	admin	es-es	Restablecimiento de contraseña en bruto
 by	admin	es-es	En
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	es-es	Seleccionando un usuario o grupo se elimina la cuenta de correo de todos los demás usuarios<br>¿Está seguro de querer hacer eso?
 calculate next run	admin	es-es	Calcular la siguiente ejecución
 calendar recurrence horizont in days (default 1000)	admin	es-es	Horizonte de recurrencia del calendario en días (predeterminado: 1000)
-can be used by application	admin	es-es	Puede usarse por la aplicación
-can be used by group	admin	es-es	Puede usarse por el grupo
-can be used by user	admin	es-es	Puede usarse por el usuario
+can be used to show groups by container, if enabled	admin	es-es	Puede utilizarse para mostrar grupos por contenedor, si está activado
 can change password	admin	es-es	Puede cambiar la contraseña
 can not change users into groups, same sign required!	admin	es-es	¡NO se pueden cambiar los usuarios en grupos, se requiere el mismo signo!
 cancel changes	admin	es-es	Cancelar cambios
@@ -191,6 +186,7 @@ category saved.	admin	es-es	Se ha guardado la categoria.
 certificate	admin	es-es	Certificado
 certificate details	admin	es-es	Certificate details
 certificate validation in days	admin	es-es	Validación del certificado en días
+change access	admin	es-es	Cambiar derechos de acceso
 change account_id	admin	es-es	Cambiar el campo account ID
 change acl rights	admin	es-es	Cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
@@ -224,6 +220,7 @@ configuration	admin	es-es	Configuración
 configuration saved.	admin	es-es	Configuración guardada.
 connection dropped by imap server.	admin	es-es	El servidor IMAP ha interrumpido la conexión.
 connection is not secure! everyone can read eg. your credentials.	admin	es-es	¡La conexión NO es segura! e.g. Todos pueden leer sus credenciales.
+container	admin	es-es	Contenedor
 continue	admin	es-es	Continuar
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	es-es	Dominio de la cookie (vacío significa usar el nombre del dominio completo, para el Administrador de sitios web, p. ej. "dominio.com" permite usar la misma cookie para egw.dominio.com y egw.dominio.com).
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	es-es	Ruta de la cookie (permite múltiples sesiones de egw con distintos directorios, pero ¡tiene problemas con el Administrador de sitios web!).
@@ -339,12 +336,6 @@ do not generate email addresses	admin	es-es	No generar direcciones de correo-e
 do not offer introduction video	admin	es-es	No ofrecer video introductorio
 do not send cookie	admin	es-es	no enviar cookie
 do not set attribute	admin	es-es	No establecer atributo
-do not validate certificate	admin	es-es	No validar el certificado
-do you also want to delete all global subcategories ?	admin	es-es	¿Desea eliminar también todas las subcategorías globales?
-do you really want to delete this profile	admin	es-es	¿Realmente desea borrar este perfil?
-do you really want to reset the filter for the profile listing	admin	es-es	¿Realmente desea restablecer el filtro para la lista de perfiles?
-do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
-do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
 document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
 domainname	admin	es-es	Nombre del dominio
 down	admin	es-es	Abajo
@@ -485,6 +476,7 @@ group excepted from above export limit (admins are always excepted)	admin	es-es	
 group has been added	common	es-es	El grupo ha sido añadido.
 group has been deleted	common	es-es	El grupo ha sido eliminado.
 group has been updated	common	es-es	El grupo ha sido actualizado.
+group hierarchy	admin	es-es	Jerarquía de grupos
 group list	admin	es-es	Lista de grupos
 group manager	admin	es-es	Administrador de grupos
 group name	admin	es-es	Nombre del grupo
@@ -741,6 +733,7 @@ quota size in mbyte	admin	es-es	Tamaño de la cuota en MBytes
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos.
 register application hooks	admin	es-es	Registrar "hooks" de la aplicación
+regular expression to find part to use as container	admin	es-es	Expresión regular para encontrar la parte a utilizar como contenedor
 reject passwords containing part of username or full name (3 or more characters long)	admin	es-es	Rechazar las contraseñas que contengan parte del nombre o el nombre completo (con 3 o más caracteres de longitud)
 relay access checked	admin	es-es	Acceso de retransmisión comprobado
 remark	admin	es-es	Observación
@@ -819,6 +812,7 @@ show as optional, but required once user has it setup	admin	es-es	Se muestra com
 show as required, but only once user has it setup	admin	es-es	Mostrar según sea necesario, pero solo una vez que el usuario lo tiene configurado
 show current action	admin	es-es	Mostrar acción actual
 show error log	admin	es-es	Mostrar registro de errores
+show groups in container based on	admin	es-es	Mostrar grupos en el contenedor en función de
 show members	admin	es-es	Mostrar miembros
 show phpinfo()	admin	es-es	Mostrar phpinfo()
 show session ip address	admin	es-es	Mostar la dirección IP de la sesión
@@ -1016,10 +1010,8 @@ you must add at least 1 permission or group to this account	admin	es-es	¡Debe a
 you must enter a group name.	admin	es-es	Debe introducir un nombre de grupo.
 you must enter a lastname	admin	es-es	Debe introducir un apellido.
 you must enter a loginid	admin	es-es	Debe introducir un nombre de usuario.
-you must enter an application name and title.	admin	es-es	Debe introducir nombre y título para la aplicación.
 you must enter an application name.	admin	es-es	Debe introducir un nombre de aplicación.
 you must enter an application title.	admin	es-es	Debe introducir un título para la aplicación.
-you must select a file type	admin	es-es	Debe seleccionar un tipo de archivo.
 you must select at least one group member.	admin	es-es	Debe seleccionar al menos un miembro del grupo.
 you need to enter install id and password!	admin	es-es	¡Necesita introducir el ID de instalación o la contraseña!
 you need to select as least one action!	admin	es-es	¡Necesita seleccionar al menos una acción!
@@ -1027,6 +1019,5 @@ you need to select some users first!	admin	es-es	¡Necesita seleccionar antes al
 you need to specify a forwarding address, when checking "%1"!	admin	es-es	¡Debe especificar una dirección de reenvío, al marcar "%1"!
 you will need to remove the subcategories before you can delete this category	admin	es-es	¡Deberá eliminar las subcategorías antes de poder borrar esta categoría!
 your last submission was less then %1 days ago!	admin	es-es	¡Su último envío fue hace menos de %1 días!
-your message to  %1 was displayed.	admin	es-es	Su mensaje a %1 fue mostrado.
 your name	admin	es-es	Su nombre
 your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.

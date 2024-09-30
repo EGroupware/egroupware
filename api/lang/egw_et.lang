@@ -5,7 +5,10 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br>või tee %3 veebiserverijaoks kirjutatavaks.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1EGroupware%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 '%1' copied to clipboard	common	et	'%1' kopeeritud lõikelauale
+'%1' does not match the required pattern '%2'	common	et	'%1' ei vasta nõutavale mustrile ('%2')
+'%1' is not a valid app-name ('%2')!	common	et	'%1' ei ole kehtiv rakenduse nimi ('%2')!
 '%1' is not a valid json file!	common	et	'%1' ei ole kehtiv JSON-fail
+'%1' must not contain (back)slashes!	common	et	'%1' ei tohi sisaldada (tagasi)kaldkriipsu!
 00 (disable)	admin	et	00 (keela)
 1 day	common	et	1 Päev
 1 hour	common	et	1 Tund
@@ -151,6 +154,7 @@ centered	common	et	Keskjoondatud
 central african republic	common	et	KESK-AAFRIKA VABARIIK
 chad	common	et	TŠAAD
 change	common	et	Muuda
+changes that you made may not be saved.	common	et	Tehtud muudatusi ei pruugi salvestada.
 charset	common	et	Kirjatüüp
 check all	common	et	Kontrolli kõik
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	et	Kontrollige tühje väärtusi IF-avaldustes. Näide {{IF url~EMPTY~~Website:}}} - Kui url ei ole tühi, kirjutab "Website:"
@@ -500,6 +504,7 @@ only yours	common	et	Ainult sinu
 open	common	et	Avatud
 open existing contact	common	et	Avage olemasolev kontakt
 open popup window	common	et	Ava hüpikaken
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	et	OpenIDConnecti sisselogimine õnnestus, kuid kasutaja '%1' EI OLE EGroupware'is olemas JA automaatne kasutaja loomine on keelatud!
 operator	common	et	Operaator
 optional note about the link	common	et	Valikuline märkus lingi jaoks
 options	common	et	Omadused
@@ -550,7 +555,6 @@ private	common	et	Privaatne
 programs	common	et	Programmid
 project	common	et	Projekt
 properties	common	et	Omadused
-protocol is required	common	et	Protokoll on nõutav
 read	common	et	Loe
 reading	common	et	Loen
 readonly	common	et	Loeainult
@@ -624,9 +628,9 @@ show page generation time?	common	et	Näita lehe genereerimise aega
 show password	common	et	Näita parooli
 show values	common	et	Näita Väärtusi
 show/hide	common	et	Näita/peida külgriba
-show_more_apps	common	et	Näita rohkem programme
 showing	common	et	Näitan
 showing %1	common	et	Näitan %1
+show_more_apps	common	et	Näita rohkem programme
 sign up	common	et	Registreerimine
 simple	common	et	Lihtne
 singapore	common	et	SINGAPUR

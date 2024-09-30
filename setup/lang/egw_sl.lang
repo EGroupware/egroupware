@@ -24,13 +24,11 @@
 13 (ntp)	setup	sl	13 (ntp)
 80 (http)	setup	sl	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sl	uporaba <b>nabora znakov</b>(uporabite UTF-8, če načrtujete uporabo jezikov z neASCII kodnimi tabelami):
-[header-password],[header-user],[new-password],[new-user]	setup	sl	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	sl	Dostop zavrnjen: napačno uporabniško ime ali geslo za upravljanje glave!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sl	Dostop zavrnjen: napačno uporabniško ime ali geslo za konfiguracijo domene '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	sl	Repozitorij računov {sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	sl	Račun obstaja
 actions	setup	sl	Akcije
-activate safe password check	setup	sl	Aktivira varno preverjanje gesel
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sl	Samodejno kreirani uporabniki se dodajo v to skupino (Če pustite prazno, bo uporabljena skupina 'Privzeto')
 add new database instance (egw domain)	setup	sl	Dodaj novo zbirko podatkov (domeno EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sl	Doda ali uredi domeno:
@@ -181,17 +179,14 @@ creating tables	setup	sl	Ustvarjanje tabel
 creation of %1 in %2 failed !!!	setup	sl	Ustvarjanje %1 in %2 ni bilo uspešno!
 current configuration:	setup	sl	Trenutna konfiguracija:
 current system-charset	setup	sl	Trenutni sistemski nabor znakov
-current system-charset is %1.	setup	sl	Trenutni sistemski nabor znakov je %1.
 current version	setup	sl	Trenutna različica
 currently installed languages: %1 <br />	setup	sl	Trenutno nameščeni jeziki: %1<br>
 custom handler: %1	setup	sl	Ročnik po meri: %1
 custom set via %1	setup	sl	Nastavitev po meri %1
-cyrus imap: admin user,password	setup	sl	Cyrus IMAP: administratorko ime, geslo
 database	setup	sl	Zbirka podatkov
 database instance (egw domain)	setup	sl	Instanca zbirke podatkov (domena EGw)
 database is version %1 and up to date.	setup	sl	Zbirka podatkov je različica %1 in je posodobljena.
 database successfully converted from '%1' to '%2'	setup	sl	Podatkovna baza je bila uspešno prevedena iz '%1' v '%2'.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sl	Vrata za datum.<br>Če uporabljate vrata 13, prosim, da ustrezno prilagodite pravila požarnega zidu, preden potrdite podatke na tej strani.<br>(Vrata: 13 / Strežnik: 129.6.15.28)
 day	setup	sl	Dan
 day of week<br />(0-6, 0=sunday)	setup	sl	Dan v tednu<br>(0-6, 0=nedelja)
 db backup and restore	setup	sl	Arhiviranje in obnavljanje podatkovne baze
@@ -221,6 +216,8 @@ deregistered	setup	sl	Odregistriran
 details for admin account	setup	sl	Podrobnosti upravljalčevega računa
 developers' table schema toy	setup	sl	Razvijalčeva shema tabel
 did not find any valid db support!	setup	sl	Ne najdem delujoče podpore za podatkovno bazo.
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	sl	Onemogočite samo, če ima vaš AD težave z nadzorom VLV IN lahko vrne vse uporabnike z eno samo poizvedbo!
+disable vlv controls	setup	sl	Onemogočite kontrole VLV
 do you want persistent connections (higher performance, but consumes more resources)	setup	sl	Ali želite trajne povezave (večja učinkovitost, vendar večja poraba sistemskih sredstev)?
 do you want to manage homedirectory and loginshell attributes?	setup	sl	Ali želite upravljati domači direktorij in lastnosti prijavne lupine
 does not exist	setup	sl	Ne obstaja
@@ -253,10 +250,10 @@ enable for extra debug-messages	setup	sl	Vključi za izpis dodatnih razhroščev
 enable mcrypt	setup	sl	Omogoči Mcrypt
 enter some random text for app session encryption	setup	sl	Vnesite nekaj naključnega besedila za kriptiranje aplikacijskih sej
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sl	Vnesite nekaj naključnega besedila za<br>kriptiranje aplikacijskih sej (zahteva mcrypt).
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sl	Vnesite polno pot do začasnih datotek.<br>Na primer: /tmp, c:\temp
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sl	Vnesite polno pot do začasnih datotek.<br>Na primer: /tmp, c:\temp
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	sl	Vnesite polno pot do uporabniških datotek.<br>Na primer: /files, c:\files
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sl	Vnesite polno pot do začasnih datotek.<br>Na primer: /tmp, c:\temp
 enter the full path for users and group files.<br />examples: /files, e:files	setup	sl	Vnesite polno pot do uporabniških datotek.<br>Na primer: /files, c:\files
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	sl	Vnesite polno pot do uporabniških datotek.<br>Na primer: /files, c:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	sl	Vpišite pot do arhivske mape.<br>Če je prazno bo uporabljena splošna pot za datoteke
 enter the hostname of the machine on which this server is running	setup	sl	Vnesite ime strežnika, na katerem teče projekt
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sl	Vnesite EGroupwareov URL na vašem računalniku.<br>Na primer: https://www.podjetje.si/egroupware   ali   /egroupware<br><b>Naslov naj bo brez zaključne poševnice</b>
@@ -377,8 +374,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	sl	Upravljanje aplikacij
 manage languages	setup	sl	Upravljanje jezikov
 manual / help	setup	sl	Priročnik/pomoč
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sl	Najdaljši čas izvajanja (max_execution_time) je nastavljen na manj kot 30 sekund: EGw občasno potrebuje daljši čas izvajanja zato lahko pričajujete občasne napake
 maximum account id (e.g. 65535 or 1000000)	setup	sl	Najvišji ID uporabniškega računa (npr. 65535 ali 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sl	Najdaljši čas izvajanja (max_execution_time) je nastavljen na manj kot 30 sekund: EGw občasno potrebuje daljši čas izvajanja zato lahko pričajujete občasne napake
 may be broken	setup	sl	Morda je prekinjen
 mcrypt algorithm (default tripledes)	setup	sl	Mcrypt algoritem (privzeto TIRPLEDES)
 mcrypt initialization vector	setup	sl	Mcrypt začetni vektor
@@ -394,7 +391,6 @@ modifications have been completed!	setup	sl	Spremembe so končane.
 modified	setup	sl	Spremenjeno
 modify	setup	sl	Spremeni
 month	setup	sl	Mesec
-multi-language support setup	setup	sl	Namestitev večjezične podpore
 name of database	setup	sl	Ime podatkovne baze
 name of db user egroupware uses to connect	setup	sl	Uporabniško ime za dostop do podatkovne baze
 never	setup	sl	Nikoli
@@ -425,6 +421,7 @@ one month	setup	sl	Čez en mesec
 one week	setup	sl	Čez en teden
 only add languages that are not in the database already	setup	sl	Le dodaj jezike, ki jih še ni v podatkovni bazi.
 only add new phrases	setup	sl	Le dodaj nove fraze
+openidconnect login	setup	sl	Prijava OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	sl	neobvezno, če je omogočeno samo preverjanje pristnosti IN anonimno iskanje.
 or	setup	sl	ali
 or %1continue to the header admin%2	setup	sl	ali %1nadaljuj  v nastavitve glave%2
@@ -476,8 +473,8 @@ read translations from	setup	sl	Preberi prevode iz
 readable by the webserver	setup	sl	Ima omogočeno branje spletnega strežnika
 really uninstall all applications	setup	sl	RES odstranim vse aplikacije
 refusing to delete dn "%1"!	setup	sl	Zavrača brisanje DN "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sl	Vrednost "register_globals" je nastavljena na "On", EGw NE zahteva spremembe vendar je na splošno bolj varno, če je nastavljena na "Off"
 registered	setup	sl	Registriran
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sl	Vrednost "register_globals" je nastavljena na "On", EGw NE zahteva spremembe vendar je na splošno bolj varno, če je nastavljena na "Off"
 regular expression to filter by dn	setup	sl	Regularni izraz za filtriranje po DN
 rejected lines	setup	sl	Zavržene vrstice
 remove	setup	sl	Odstrani
@@ -579,7 +576,7 @@ the following applications need to be upgraded:	setup	sl	Naslednje aplikacije po
 the function %1 is needed from: %2.	setup	sl	Funkcija %1 je potrebna za: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	sl	Funkcija imagecreatefromjpeg je del razširitve gd (s podporo jpeg!). Potrebna je za prenos slik v stikih.
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	sl	Razširitev ldap je potrebna, če uporabljate LDAP kot skladišče računov ali stikov, avtentikacijo preko LDAP ali AD. Ni potrebna za standardno namestitev z uporabo SQL.
-the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sl	"mbstring" dodatek je potreben za polno podporo UTF-8 (Unicode).
+the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sl	mbstring dodatek je potreben za polno podporo UTF-8 (Unicode).
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sl	Vrednost "mbstring.func_overload = 7" je potrebna za polno podporo UTF-8 (Unicode).
 the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	sl	VFS (virtual file system) zahteva razširitev PDO in določen gonilnik zbirke podatkov.
 the session extension is needed to use php sessions (db-sessions work without).	setup	sl	Razširitev sej je potrebna za uporabo sej PHP (db-sessions deluje brez).
@@ -703,5 +700,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	sl	Vaše tabele so najnovejše
 your tables will be dropped and you will lose data	setup	sl	Vaše tabele bodo odstranjene. Pri tem boste izgubili podatke!
 your temporary directory '%1' %2	setup	sl	Vaša začasna mapa '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	sl	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	sl	{db | php(default) | php-restore}
 {off(default) | on}	setup	sl	{off(default) | on}

@@ -22,10 +22,7 @@
 %1 token %2.	admin	pl	%1 token %2.
 %1 user %2	admin	pl	%1 użytkownik %2
 (de)activate mail accounts	admin	pl	(de)Aktywacja kont pocztowych
-(default no, leave it off if you dont use it)	admin	pl	(standardowo nie, pozostaw wyłączone, jeśli nie używasz)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pl	(imapclass musi obsługiwać tę funkcję poprzez zapytanie o odpowiednią wartość konfiguracyjną i przekazanie jej jako defaultquota do serwera IMAP)
 (no subject)	admin	pl	(bez tematu)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pl	(Aby zainstalować nowe aplikacje, użyj<br><a href="setup/" target="setup">Setup</a> [Zarządzaj aplikacjami]!)
 -  type	admin	pl	- typ
 1 year	admin	pl	1 rok
 2 month	admin	pl	2 miesiące
@@ -71,6 +68,9 @@ add new email address:	admin	pl	Dodaj nowy adres poczty elektronicznej:
 add peer server	admin	pl	Dodaj serwer równorzędny
 add profile	admin	pl	Dodaj profil
 add sub-category	admin	pl	Dodaj podkategorię
+add to group	admin	pl	Dodaj do grupy
+add user	admin	pl	Dodaj użytkownika
+add user or group	admin	pl	Dodawanie użytkownika lub grupy
 admin dn	admin	pl	DN (nazwa wyróżniająca) administratora
 admin email	admin	pl	e-mail administratora
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pl	Lista adresów pocztowych administratorów (oddzielonych przecinkiem), których należy zawiadamiać o blokowaniu kont/adresów (zawiadomienia są wyłączone, jeżeli pole jest puste)
@@ -86,6 +86,7 @@ all records and account information will be lost!	admin	pl	Wszystkie rekordy i i
 all users	admin	pl	Wszyscy użytkownicy
 allow anonymous access to this app	admin	pl	Pozwól na dostęp anonimowy do tej aplikacji
 allow remote administration from following install id's (comma separated)	admin	pl	Zezwól na zdalną administrację z tych ID instalacji (rozdzielone przecinkiem)
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	pl	Zezwól użytkownikowi na przechowywanie hasła w sekcji „Bezpieczeństwo i hasła” dla SingleSignOn.
 alternate email address	admin	pl	Alternatywny adres email
 anonymous user	admin	pl	Użytkownik anonimowy
 anonymous user (not shown in list sessions)	admin	pl	Użytkownik anonimowy (nie pojawia się w wykazie sesji)
@@ -119,19 +120,16 @@ asyncservices not yet installed or other error (%1) !!!	admin	pl	Asyncservices n
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pl	Spróbuj wykryć typ pliku dla FTP zamiast standardowego 'application/octet-stream'
 authentication / accounts	admin	pl	Uwierzytelnianie / Konta
 auto create account records for authenticated users	admin	pl	Automatycznie stwórz zapisy kont dla uwierzytelnionych użytkowników
-back to admin/grouplist	admin	pl	Powrót do konta administratora/ listy grup
-back to admin/userlist	admin	pl	Powrót do konta administratora/ listy użytkowników
-back to the list	admin	pl	Powrót do listy
 bad login name or password.	admin	pl	Zła nazwa użytkownika lub hasło
 bad or malformed request. server responded: %s	admin	pl	Nieprawidłowe lub źle skonstruowane żądane. Serwer odpowiedział: %s
 bad request: %s	admin	pl	Nieprawidłowe żądanie: %s
 bi-dir passthrough	admin	pl	Przepływ dwukierunkowy
 bi-directional	admin	pl	Dwukierunkowy
 bottom	admin	pl	Na dole
+bulk changes	admin	pl	Zmiany zbiorcze
+bulk password reset	admin	pl	Zbiorcze resetowanie hasła
 calculate next run	admin	pl	Oblicz następny start
-can be used by application	admin	pl	Może być używane przez aplikację
-can be used by group	admin	pl	Może byc używane przez grupę
-can be used by user	admin	pl	Może być używane przez użytkownika
+can be used to show groups by container, if enabled	admin	pl	Może być używany do wyświetlania grup według kontenera, jeśli jest włączony.
 can change password	admin	pl	Może zmieniać własne hasło
 cancel testjob!	admin	pl	Skasuj Testjob!
 cancel this scheduled command	admin	pl	Anuluj to zaplanowane polecenie
@@ -140,6 +138,7 @@ category %1 has been saved !	admin	pl	Kategoria %1 została zapisana
 category deleted.	admin	pl	Kategoria usunięta.
 category list	admin	pl	Lista kategorii
 category saved.	admin	pl	Kategoria zapisana.
+change access	admin	pl	Zmiana praw dostępu
 change account_id	admin	pl	Zmień account_ID
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
 change config settings	admin	pl	Zmiana ustawień
@@ -154,6 +153,7 @@ command scheduled to run at %1	admin	pl	Uruchomienie polecenia zaplanowane na %1
 commercial: all sorts of companies	admin	pl	Komercyjne: wszystkie rodzaje firm
 config password or md5 hash from the header.inc.php	admin	pl	Hasło konfiguracji lub hash md5 z pliku header.inc.php
 connection dropped by imap server.	admin	pl	Połączenie zerwane przez serwer IMAP
+container	admin	pl	Kontener
 continue	admin	pl	Kontunuj
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pl	Domena dla ciasteczek (pusta wartość oznacza pełną nazwę domeny, dla aplikacji SiteMgr przykładowo '.domena.pl' pozwoli używać tego samego ciasteczka dla domen egw.domena.pl oraz www.domena.pl)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pl	Ścieżka ciasteczka (pozwala na wiele równoległych sesji EGw do różnych podkatalogów, generuje problemy z aplikacją SiteMgr!)
@@ -222,12 +222,6 @@ disabled (not recomended)	admin	pl	Wyłączone (nie zalecane)
 display	admin	pl	Wyświetl
 displaying html messages is disabled	admin	pl	Wyświetlanie wiadomości w HTML jest wyłączone
 do not delete the category and return back to the list	admin	pl	NIE usuwaj tej kategorii i wróć do listy
-do not validate certificate	admin	pl	Nie sprawdzaj poprawności certyfikatu
-do you also want to delete all global subcategories ?	admin	pl	Czy chcesz usunąć także wszystkie globalne podkategorie?
-do you really want to delete this profile	admin	pl	Czy na pewno chcesz usunąć ten profil?
-do you really want to reset the filter for the profile listing	admin	pl	Czy na pewno chcesz zresetować filtr w liście profilu?
-do you want to delete all global subcategories ?	admin	pl	Czy chcesz usunąć wszystkie globalne podkategorie?
-do you want to move all global subcategories one level down ?	admin	pl	Czy przenieść wszystkie podkategorie o jeden poziom w dół?
 document root (default)	admin	pl	Katalog główny serwera WWW (domyślnie)
 domainname	admin	pl	Nazwa domeny
 down	admin	pl	W dół
@@ -326,6 +320,7 @@ group ?	admin	pl	Grupa?
 group has been added	common	pl	Dodano grupę
 group has been deleted	common	pl	Usunięto grupę
 group has been updated	common	pl	Zaktualizowano grupę
+group hierarchy	admin	pl	Hierarchia grup
 group list	admin	pl	Lista grup
 group manager	admin	pl	Menedżer grup
 group name	admin	pl	Nazwa grupy
@@ -516,6 +511,7 @@ quota size in mbyte	admin	pl	Ograniczenie w megabajtach
 re-enter password	admin	pl	Powtórzenie hasła
 read this list of methods.	admin	pl	Wczytaj listę metod
 register application hooks	admin	pl	Zarejestruj wszelkie haczyki aplikacji
+regular expression to find part to use as container	admin	pl	Wyrażenie regularne do znalezienia części do użycia jako kontener
 remote administration instances	admin	pl	Instancje zdalnej administracji
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pl	Zdalne zarządzanie musi być włączone w systemie zdalnym w zakładce Administracja > Konfiguracja serwisu
 remote instance saved	admin	pl	Zdalna instancja zapisana
@@ -561,6 +557,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	pl	Wyświetl dziennik dostępów
 show current action	admin	pl	Pokaż bieżącą akcję
 show error log	admin	pl	Wśywietl dziennik błędów
+show groups in container based on	admin	pl	Pokaż grupy w kontenerze na podstawie
 show phpinfo()	admin	pl	Wyświetl phpinfo()
 show session ip address	admin	pl	Wyświetl adres IP sesji
 sieve server hostname or ip address	admin	pl	Adres IP lub nazwa Sieve
@@ -698,10 +695,8 @@ you must add at least 1 permission or group to this account	admin	pl	Musisz doda
 you must enter a group name.	admin	pl	Musisz podać nazwę grupy
 you must enter a lastname	admin	pl	Musisz podać nazwisko
 you must enter a loginid	admin	pl	Musisz podać login (ID)
-you must enter an application name and title.	admin	pl	Musisz podać nazwę i tytuł aplikacji
 you must enter an application name.	admin	pl	Musisz podać nazwę aplikacji
 you must enter an application title.	admin	pl	Musisz podać tytuł aplikacji
-you must select a file type	admin	pl	Musisz wybrać typ pliku
 you must select at least one group member.	admin	pl	Musisz wybrać przynajmniej jednego członka grupy.
 you need to enter install id and password!	admin	pl	Musisz podać ID instalacji i hasło!
 you will need to remove the subcategories before you can delete this category	admin	pl	Należy usunąć kategorie podrzędne przed skasowaniem tej kategorii!

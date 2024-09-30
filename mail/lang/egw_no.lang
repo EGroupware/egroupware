@@ -28,6 +28,7 @@ certificate issued by	mail	no	Sertifikat utstedt av
 changing subject failed because of %1	mail	no	Endring av emne mislyktes på grunn av %1
 changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
+checking admin credentials failed	mail	no	Kontroll av administratorlegitimasjon mislyktes
 compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
 contact label	mail	no	Kontaktetikett
@@ -75,7 +76,7 @@ file into:	mail	no	Flytt til:
 filemanager	mail	no	Filhåndterer
 filemode has been switched to %1	mail	no	Filemode har blitt byttet til: %1
 flagged	mail	no	flagget
-flagged %1 messages as %2 in %3	mail	no	Flagget %1 melding(er) som %2 i %3
+flagged %1 messages as %2 in %3	mail	no	Flagget %1 melding(er) som "%2" i %3.
 flagged %1 messages as flagged in %2	mail	no	Flagget %1 melding(er) som flagget i %2
 flagged %1 messages as unflagged in %2	mail	no	Flagget %1-melding(er) som ikke flagget i %2
 folder	mail	no	Mappe
@@ -124,6 +125,7 @@ learning as spam failed because of %1	mail	no	Læring som spam mislyktes på gru
 less than	mail	no	mindre enn
 limit mailing list results when searching for addresses	mail	no	Begrense postlisteresultater når du søker etter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	no	Liste over handlinger som skal slås på/aktiveres som standard (f.eks. handlingen Mail composer lagre som InfoLog).
+mail probably has no text-body	mail	no	Mailen har sannsynligvis ingen tekst
 mail settings	mail	no	Epost innstillinger
 mails can be copied to that folder via context menu, if folder is configured.	mail	no	E-postmeldinger kan kopieres til denne mappen via kontekstmenyen hvis mappen er konfigurert.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	no	Mailserver rapporterte:<br><br>%1<br><br>Vil du fortsette med å slette de valgte meldingene umiddelbart (klikk ok)?<br>Hvis ikke, kan du prøve å tømme papirkurven før du fortsetter. (klikk på Avbryt)
@@ -185,6 +187,7 @@ replied	mail	no	svart
 reply	mail	no	Svar
 reply all	mail	no	Svar alle
 reply to	mail	no	Svar til
+reply with attachments	mail	no	Svar med vedlegg
 replyto	mail	no	SvarTil
 report as spam	mail	no	Rapporter som søppelpost
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	no	Rapporter denne e-posten som Ham (ikke spam) - spam-løsninger som spamTitan vil lære av dette

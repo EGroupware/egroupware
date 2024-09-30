@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	fr	%1 répertoire %2 trouvé !
 %1 email addresses inserted	common	fr	%1 adresse(s) email insérée(s)
 %1 email(s) added into %2	common	fr	%1 adresse(s) email insérée(s) dans %2
-%1 entries found, select one ...	common	fr	%1 élément(s) trouvé(s), sélectionnez en un ...
 %1 etemplates deleted	common	fr	%1 eTemplate(s) supprimé(s).
-%1 etemplates for application '%2' dumped to '%3'	common	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	common	fr	%1 eTemplate(s) trouvé(s).
 %1 file	common	fr	%1 fichier
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !
-%1 matches on search criteria	common	fr	%1 occurences sur les critères de recherche
 %1 more %2 selected ...	common	fr	%1 plus %2 sélectionné(s) ...
 %1 more...	common	fr	%1 plus ...
-%1 new etemplates imported for application '%2'	common	fr	%1 eTemplate(s) importé(s) pour l'Application '%2'
 %1 not implemented for %2!	common	fr	%1 pas implémenté pour %2 !
 %1 proxy of %2	common	fr	%1 proxy sur %2
 %1 setting "%2" = %3 disallows access via http!	admin	fr	%1 paramètres "%2" = "%3" désactive l'accès via http !
@@ -27,8 +23,10 @@
 %s onchange	common	fr	%s onChange
 %s readonly	common	fr	%s LectureSeule
 '%1' copied to clipboard	common	fr	'%1' copié dans le presse-papiers
+'%1' does not match the required pattern '%2'	common	fr	'%1' ne correspond pas au modèle requis ('%2')
 '%1' has an invalid format	common	fr	'%1' a un format invalide
 '%1' has an invalid format !!!	common	fr	'%1' a un format invalide !
+'%1' is not a valid app-name ('%2')!	common	fr	'%1' n'est PAS un nom d'application valide ('%2') !
 '%1' is not a valid date !!!	common	fr	'%1'  n'est pas une date valide !
 '%1' is not a valid floatingpoint number !!!	common	fr	'%1' n'est pas un nombre à virgule flottante valide !
 '%1' is not a valid integer !!!	common	fr	'%1' n'est pas un entier valide !
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	fr	'%1' n'est pas une timezone valide !
 '%1' is not allowed ('%2')!	common	fr	'%1' n'est PAS permis ('%2') !
 '%1' is not allowed%2)!	common	fr	'%1' n'est PAS permis '%2' !
+'%1' must not contain (back)slashes!	common	fr	'%1' ne doit pas contenir de barres obliques (arrière) !
 (session restored in %1 seconds)	common	fr	Session restaurée en %1 secondes
 00 (disable)	admin	fr	00 (non actif)
 1 day	common	fr	1 Jour
@@ -257,6 +256,7 @@ chad	common	fr	TCHAD
 change	common	fr	Changer
 change owner	common	fr	Changer le propriétaire
 changed	common	fr	Modifié
+changes that you made may not be saved.	common	fr	Il se peut que les modifications que vous avez apportées ne soient pas sauvegardées.
 charset	common	fr	Jeu de caractères
 check all	common	fr	Tout cocher
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fr	Vérifier les valeurs vides dans les structures conditionnelles IF. Par exemple {{IF url~EMPTY~~Website:}} - Si url n'est pas vide, écrit "Website:"
@@ -998,6 +998,7 @@ open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open sidebox	common	fr	Ouvrir la barre de menu latérale
 open the online help.	common	fr	Ouvrir l'aide en ligne
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fr	Connexion OpenIDConnect réussie, mais l'utilisateur '%1' n'existe PAS dans EGroupware, et la création automatique d'utilisateurs est désactivée !
 operator	common	fr	Opérateur
 optional note about the link	common	fr	Note optionnelle à propos du lien
 options	common	fr	Options
@@ -1091,14 +1092,12 @@ private	common	fr	Privé
 programs	common	fr	Programmes
 project	common	fr	Projet
 properties	common	fr	Propriétés
-protocol is required	common	fr	Le protocole est requis
 public	common	fr	Public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
 quick add	common	fr	Ajout rapide
 radiobutton	common	fr	BoutonRadio
 read	common	fr	Lire
-read a list of entries.	common	fr	Lire une liste d'entrées.
 read a single entry by passing the id and fieldlist.	common	fr	Lire une unique entrée en passant l'ID et la liste des champs.
 read etemplate from database (for the keys above)	common	fr	Lire eTemplate depuis la base de données (pour les clés ci-dessus)
 read this list of methods.	common	fr	Lisez cette liste de méthodes
@@ -1301,12 +1300,12 @@ show page generation time?	common	fr	Afficher le temps de génération de la pag
 show password	common	fr	Afficher le mot de passe
 show values	common	fr	Montrer les valeurs
 show/hide	common	fr	Afficher/masquer la barre latérale
-show_more_apps	common	fr	Voir plus d'applications
 showing	common	fr	Montre
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	fr	Montre / autorise à entrer des valeurs dans l'eTemplate pour tester
 shows/displays etemplate for testing, does not save it before	common	fr	Montre/affiche l'eTemplate pour tester, ne l'enregistre pas avant
+show_more_apps	common	fr	Voir plus d'applications
 sierra leone	common	fr	SIERRA LEONE
 sign up	common	fr	S'inscrire
 simple	common	fr	Simple
@@ -1501,7 +1500,6 @@ weekend	common	fr	Weekend
 welcome	common	fr	Bienvenue
 western european	common	fr	Europe occidentale
 western sahara	common	fr	SAHARA OCCIDENTAL
-what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir ?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	Ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fr	Quand vous fusionnez les entités dans des documents, ils seront stockés ici. Si aucun dossier n'est indiqué, il seront stockés dans votre dossier personnel (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.

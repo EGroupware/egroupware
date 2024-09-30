@@ -107,6 +107,8 @@ overwrite time	common	fr	Surcharger le temps
 overwriting start or stop time	timesheet	fr	Surcharger le temps de début ou de fin
 parent	admin	fr	Parent
 pause	common	fr	Pause
+pause time	timesheet	fr	Temps de pause
+paused	timesheet	fr	En pause
 permission denied!!!	timesheet	fr	Autorisation refusée!!!
 permissions error - %1 could not %2	timesheet	fr	Error de permission - %1 ne peut %2
 prevent deleting	admin	fr	Empêcher la suppression

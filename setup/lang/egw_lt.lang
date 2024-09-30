@@ -1,3 +1,5 @@
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	lt	Išjungti tik tada, jei jūsų AD turi problemų su VLV valdikliais IR gali grąžinti visus naudotojus viena užklausa!
+disable vlv controls	setup	lt	Išjungti VLV valdiklius
 error searching "dn=%1" for "%2"!	setup	lt	Klaida ieškant "DN=%1" pagal "%2"!
 error uploading your backup!	setup	lt	Klaida įkeliant atsarginę kopiją!
 every	setup	lt	Kiekvienas
@@ -7,6 +9,7 @@ failed updating user "%1" dn="%2"!	setup	lt	Nepavyko atnaujinti naudotojo "%1" D
 failed writing configuration file header.inc.php, check the permissions !!!	setup	lt	Nepavyko įrašyti konfigūracijos failo header.inc.php, patikrinkite teises!
 fallback authentication	setup	lt	Atsarginis autentiškumo nustatymas
 min backup count	setup	lt	Didžiausias saugomų atsarginių kopijų skaičius (nulis: visos)
+openidconnect login	setup	lt	OpenIDConnect prisijungimas
 optional, if only authentication and anonymous search is enabled	setup	lt	neprivaloma, jei įjungta tik autentifikacija IR anoniminė paieška.
 or leave empty and select openidconnect as authentication type above for single sign on	setup	lt	arba palikite tuščią ir pirmiau pasirinkite "OpenID Connect" kaip autentifikavimo tipą, jei norite prisijungti vienu prisijungimu
 or leave empty and select saml as authentication type above for single sign on	setup	lt	arba palikite tuščią ir pirmiau pasirinkite SAML kaip autentifikavimo tipą vienkartiniam prisijungimui
@@ -23,3 +26,4 @@ replace username and email	setup	lt	Pakeiskite vartotojo vardą ir el. pašto ad
 replace username and keep email	setup	lt	Pakeisti vartotojo vardą ir palikti el. paštą
 required to change passwords	setup	lt	reikalaujama pakeisti slaptažodžius
 requires "reset password" privilege, to change passwords!	setup	lt	Norint pakeisti slaptažodžius, reikia "Reset Password" privilegijos!
+you need to select your current charset!	setup	lt	Reikia pasirinkti esamą charset!

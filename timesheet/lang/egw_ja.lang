@@ -4,7 +4,6 @@
 2 month ago	timesheet	ja	2ヶ月前
 2 years ago	timesheet	ja	2年前
 3 years ago	timesheet	ja	3年前
-access by	timesheet	ja	アクセスするユーザ/グループ
 all projects	timesheet	ja	全プロジェクト
 and its members	timesheet	ja	、およびそのメンバー
 applies the changes	timesheet	ja	変更を適用
@@ -18,11 +17,9 @@ check all	timesheet	ja	全て選択
 choose 'creator' of imported data	timesheet	ja	インポート・データの作成者を選択
 comment by %1 at %2:	timesheet	ja	%1が%2にコメント:
 create new links	timesheet	ja	新規リンクを作成
-created	timesheet	ja	作成日時
 creates a new field	timesheet	ja	Creates a new field
 creating new entry	timesheet	ja	新規項目を作成中
 custom fields	timesheet	ja	カスタム項目
-data from	timesheet	ja	データの取得元
 default document to insert entries	timesheet	ja	項目を挿入する既定のドキュメント
 delete this status	timesheet	ja	この状態を削除
 deleted	timesheet	ja	削除済み
@@ -38,18 +35,16 @@ entry deleted	timesheet	ja	項目を削除しました。
 entry saved	timesheet	ja	項目を保存しました。
 error deleting the entry!!!	timesheet	ja	項目の削除中にエラー!
 error saving the entry!!!	timesheet	ja	項目の保存中にエラー!
-Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
-Example {{LETTERPREFIX}} - Gives a letter prefix without double spaces, if the title is emty for  example	calendar	ja	例 {{LETTERPREFIX}} - ダブル・スペースを挟まずに接頭字を出力(タイトルが空の場合など）。
-Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
-Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
-Example {{NENVLF role}} - if field role is not empty, set a LF without any value of the field	calendar	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
+example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	calendar	ja	例 {{nenvlf role}} - 項目のロールが空でない場合、項目の値でなく改行を出力。
 existing links	timesheet	ja	リンク
 exists	timesheet	ja	存在
 export definition to use for nextmatch export	timesheet	ja	エクスポートで用いる設定ファイル
 export to openoffice spreadsheet	timesheet	ja	OpenOffice スプレッドシートにエクスポート
 exports entries from your timesheet into a csv file.	timesheet	ja	タイムシートの項目をCSV ファイルにエクスポート
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ja	タイムシートの項目をCSVファイルにエクスポートします。
-favorites	timesheet	ja	お気に入り
 field must not be empty !!!	timesheet	ja	項目を空にすることはできません!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 full: use only projectmanager	admin	ja	Full: プロジェクト・マネージャだけを使用
@@ -95,6 +90,9 @@ only admin can edit this status	timesheet	ja	この状態のタイムシート�
 or endtime	timesheet	ja	終了時刻
 order	timesheet	ja	順序
 parent	timesheet	ja	親
+pause	common	ja	一時停止
+pause time	timesheet	ja	一時停止時間
+paused	timesheet	ja	一時停止
 permission denied!!!	timesheet	ja	権限が拒否されました!
 permissions error - %1 could not %2	timesheet	ja	権限エラー - %1は%2できません。
 prevent deleting	admin	ja	削除禁止
@@ -104,7 +102,6 @@ projectmanager integration	admin	ja	プロジェクト・マネージャ統合
 quantity	timesheet	ja	数量
 recovered	timesheet	ja	復旧済み
 replacements for inserting entries into documents	timesheet	ja	ドキュメントに挿入する項目の置換
-rights	timesheet	ja	権限
 save & new	timesheet	ja	保存 & 新規
 saves the changes made	timesheet	ja	変更を保存
 saves the changes made and leaves	timesheet	ja	変更を保存して終了
@@ -120,12 +117,14 @@ set to	timesheet	ja	設定値:
 show a quantity sum (eg. to sum up negative overtime)	admin	ja	合計を表示
 skip record	timesheet	ja	レコードを読み飛ばす
 start	timesheet	ja	開始日
+start-time can not be before last stop- or pause-time %1!	common	ja	開始時刻を最後の停止時刻または一時停止時刻 %1 より前にすることはできません！
 starttime	timesheet	ja	開始時刻
 starttime has to be before endtime !!!	timesheet	ja	開始時刻は終了時刻よりも前である必要があります!
 status	timesheet	ja	状態
 status deleted.	timesheet	ja	状態を削除しました。
 status of created timesheets	timesheet	ja	作成したタイムシートの状態
 status updated.	timesheet	ja	状態を更新しました。
+stop- or pause-time can not be before the start-time %1!	common	ja	停止時間または一時停止時間を開始時間 %1 より前にすることはできません！
 sum %1:	timesheet	ja	%1 合計:
 tag to mark positions for address labels	timesheet	ja	アドレスラベルで、位置を記録するためのタグ
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	ja	ドキュメントにはプレース・ホルダー（例: {{%3}}）を埋め込むことができ、ドキュメント保存時に実データで置換されます。
@@ -136,6 +135,7 @@ this month	timesheet	ja	今月
 this week	timesheet	ja	今週
 this year	timesheet	ja	今年
 ticket modified by %1 at %2	timesheet	ja	%1が%2にチケットを変更しました。
+timer already running or paused	common	ja	タイマは既に実行中または一時停止中です。
 timesheet	common	ja	タイムシート
 timesheet csv export	timesheet	ja	タイムシート CSV エクスポート
 timesheet csv import	timesheet	ja	タイムシート CSV インポート
@@ -148,7 +148,7 @@ timesheet status-%1 '%2' added.	timesheet	ja	タイムシート（状態:%1) '%2
 timesheet-%1 '%2' updated.	timesheet	ja	タイムシート-%1 '%2' を更新しました。
 timesheet-%1 deleted.	timesheet	ja	タイムシート-%1 を削除しました。
 titles of any entries linked to the current record, excluding attached files	timesheet	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
-unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ja	"%1" をアカウントIDに変換できません。%3にプラグイン設定(%2)を適用しました。
+unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ja	%1 をアカウントIDに変換できません。%3にプラグイン設定(%2)を適用しました。
 unitprice	timesheet	ja	単価
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 values for selectbox	timesheet	ja	セレクトボックスで表示する値

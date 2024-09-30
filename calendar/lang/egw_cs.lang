@@ -24,17 +24,17 @@ accepted	calendar	cs	Přijato
 access denied to the calendar of %1 !!!	calendar	cs	Odmítnut přístup ke kalendáři %1!
 access to calendar of %1 denied!	calendar	cs	Odmítnut přístup ke kalendáři %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	cs	Akce, který vyvolala upozornění: Přidáno, Ukončeno, Přijato, Odmítnuto, ...
-actions	calendar	cs	Akce
-actions...	calendar	cs	Akce ...
 add alarm	calendar	cs	Přidat připomínku
 add appointments via shortened dialog or complete edit window	calendar	cs	Přidávání schůzek prostřednictvím zkráceného dialogu nebo kompletního editačního okna
 add current view as favorite	calendar	cs	Přidat tento pohled jako oblíbený
 add new alarm	calendar	cs	Vytvořit novou připomínku
 add new event	calendar	cs	Přidání nové schůzky
 add new participants or resource	calendar	cs	Přidat nové účastníky nebo místo
+add recurrence	calendar	cs	Přidání recidivy
 add timesheet entry	calendar	cs	Přidat pracovní výkaz
 added	calendar	cs	Přidáno
 added by synchronization	calendar	cs	Přidáno synchronizací
+added recurrence on %1.	calendar	cs	Přidána rekurence na %1.
 after	calendar	cs	Po
 after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
@@ -46,7 +46,6 @@ alarm deleted	calendar	cs	Připomínka smazána
 alarm for %1 at %2 in %3	calendar	cs	Připomínka pro %1 v %2 v %3
 alarm management	calendar	cs	Správa připomínek
 alarms	calendar	cs	Připomínky
-all categories	calendar	cs	Všechny kategorie
 all day	calendar	cs	Celý den
 all events	calendar	cs	Všechny události
 all exceptions are converted into single events.	calendar	cs	Všechny vyjímky jsou převedeny na jednotlivé události
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	cs	Dovoluje znovu editovat událost
 always	calendar	cs	Vždy
 always use full edit dialog	calendar	cs	Vždy používat úplné editační okno
 always use the full edit dialog, not this little dialog	calendar	cs	Vždy používejte úplné editační okno, ne toto malé okno
+apply changes to (future) exceptions too?	calendar	cs	Použít změny i na (budoucí) výjimky?
 apply the action on the whole query, not only the shown events	calendar	cs	Aplikovat akci na celý výsledek dotazu, nejen zobrazené události
 apply the changes	calendar	cs	Použít změny
 appointment settings	calendar	cs	Nastavení schůzky
@@ -247,6 +247,7 @@ exclude weekend	calendar	cs	Vyloučit víkend
 execute a further action for this entry	calendar	cs	Spustit další akci pro tento záznam
 existing links	calendar	cs	Stávající odkazy
 exists	calendar	cs	Stávající
+explicit recurrences	calendar	cs	Explicitní rekurence
 export definition to use for nextmatch export	calendar	cs	Export definic pro použití v dalších exportech
 exports events from your calendar in ical format.	calendar	cs	Export událostí z vašeho kalendáře do formátu iCal
 exports events from your calendar into a csv file.	calendar	cs	Export událostí z vašeho kalendáře do formátu CSV
@@ -368,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	cs	Maxi
 maximum available quantity of %1 exceeded!	calendar	cs	Dosažen maximální počet %1
 meeting canceled	calendar	cs	Schůzka zrušena
 meeting request	calendar	cs	Žádost o schůzku
+meeting request additional recurrence(s)	calendar	cs	Schůzka si vyžádá další opakování
 meetingrequest to all participants	calendar	cs	Žádost o schůzku pro všechny účastníky
 merge document...	calendar	cs	Sloučit dokument
 midnight	calendar	cs	Půlnoc
@@ -446,6 +448,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	cs	Aktivní úkoly:
 optional	calendar	cs	Volitelné
 organizer	calendar	cs	Organizátor
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	cs	V opačném případě se změny názvu, popisu, ... nebo noví účastníci nepřenesou do již vytvořených výjimek.
 output unit	calendar	cs	Výstupní jednotka
 overlap holiday	calendar	cs	Překrýt svátek
 owner too	calendar	cs	Také vlastník
@@ -522,8 +525,6 @@ search string for the events	calendar	cs	Vyhledání řetězce v událostech
 select a %1	calendar	cs	Vybrat %1
 select a color for this calendar	calendar	cs	Vyberte barvu kalendáře
 select a time	calendar	cs	Vybrat čas
-select an action	calendar	cs	Vyberte akci
-select an action...	calendar	cs	Vyberte akci ...
 select multiple contacts for a further action	calendar	cs	Vybrat více kontaktů pro další akci
 select resources	calendar	cs	Vybrat zdroje
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	cs	Pokud je událost posunuta na později, má být status účastníků obnoven?
@@ -597,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	cs	Výjimky jsou smazány spolu s pravidelným opakováním.
 the extern organizer changed the event!	calendar	cs	Externí organizátor změnil událost!
 the following document-types are supported:	calendar	cs	Jsou podporovány následující typy dokumentů:
+the organizer changed the event!	calendar	cs	Organizátor změnil událost!
 the original series will be terminated today and a new series be created.	calendar	cs	Původní pravidelné opakování bude k dnešnímu dni přerušeno a bude vytvořeno nové pravidelné opakování.
 the resource you selected is already overbooked:	calendar	cs	Vybraný zdroj je již příliš obsazen.
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	cs	Odesílatel "%1" NENÍ externí organizátor "%2", postupujte opatrně!
@@ -609,6 +611,7 @@ this entry is opened by user:	calendar	cs	Tento záznam byl v nastaveném interv
 this event is part of a series	calendar	cs	Tato událost je součástí řady pravidelného opakování
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	cs	Tato skupina je přednastavena, když vstoupíte do plánovače. V plánovači jí můžete změnit kdykoli se Vám zlíbí.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	cs	Toto je událost z řady pravidelného opakování. Chcete smazat pouze tuto jednu událost, nebo celou řadu pravidelného opakování?
+this is a single recurrence of a recurring event.	calendar	cs	Jedná se o jedno opakování opakující se události.
 this mail cancels a meeting	calendar	cs	Tímto e-mailem se ruší schůzka
 this mail contains a meeting request	calendar	cs	Tento e-mail obsahuje žádost o schůzku
 this mail contains a reply to a meeting request	calendar	cs	Tento e-mail obsahuje odpověď na žádost o schůzku
@@ -708,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	cs	Nemáte oprávně
 you are not invited to that event!	calendar	cs	Na tuto událost nejste pozváni!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	cs	Pokoušíte se odeslat požadavek na schůzku výše uvedeným příjemcům. V závislosti na tom, jakým e-mailovým klientem bude pozvánka otevřena, bude, nebo nebude viditelný text níže (pak bude požadavek na schůzku v příloze mailu).
 you can either set a year or a occurrence, not both !!!	calendar	cs	Můžete nastavit rok nebo výskyt, ne obojí!
+you can only notify other users, not yourself!	calendar	cs	Můžete na ni upozornit pouze ostatní uživatele, nikoli sebe!
 you can only set a year or a occurrence !!!	calendar	cs	Můžete nastavit jen rok nebo výskyt!
 you do not have permission to read this record!	calendar	cs	Nemáte oprávnění ke čtení tohoto záznamu!
 you have a meeting scheduled for %1	calendar	cs	Máte naplánovano setkání na %1

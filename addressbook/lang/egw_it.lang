@@ -1,11 +1,9 @@
-%1 added	addressbook	it	%1 aggiunto
 %1 contact(s) %2	addressbook	it	%1 contatto(i) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	it	%1 contatto/i %2, %3 non è riuscito a causa di %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti!
 %1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori).
 %1 fields in %2 other organisation member(s) changed	addressbook	it	%1 campi in %2 altro/i membro/i dell'organizzazione modificati.
 %1 key(s) added to public keyserver "%2".	addressbook	it	%1 chiavi aggiunte nel server pubblico "%2".
-%1 not implemented for %2!	addressbook	it	%1 non implementato per %2!
 %1 public keys added.	addressbook	it	%1 chiavi pubbliche aggiunte.
 %1 records imported	addressbook	it	%1 record importati.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti. Non ancora importati, è possibile tornare %2indietro%3 e deselezionare Test Importazione.
@@ -14,13 +12,9 @@
 %s please calculate the result	addressbook	it	%s per favore calcolare il risultato
 (e.g. 1969)	addressbook	it	(es. 1969)
 (empty = use global limit, no = no export at all)	admin	it	Vuoto = usa limite globale, no = non esportare nulla
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione <nessuno> non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
 @-eval() is only availible to admins!!!	addressbook	it	@-eval() è disponibile solo agli amministratori!
 account id	addressbook	it	ID Account
 account repository	admin	it	Archivio account
-accounts	addressbook	it	Account
-actions	addressbook	it	Azioni
-add %1	addressbook	it	Aggiungi %1
 add a contact to this organisation	addressbook	it	Aggiungi un contatto a questa organizzazione
 add a customfield to link title	addressbook	it	Aggiungi un campo personalizzato al titolo del collegamento
 add a new contact	addressbook	it	Aggiungi un nuovo contatto
@@ -61,7 +55,6 @@ addressbook vcard export	addressbook	it	Esportazione vCard
 addressbook vcard import	addressbook	it	Importazione da vCard rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
 addvcard	addressbook	it	Aggiungi vCard
-advanced search	addressbook	it	Ricerca avanzata
 all addressbooks	addressbook	it	Tutte le rubriche
 all contacts	addressbook	it	Tutti i contatti
 all in one field	addressbook	it	Tutto in un Campo
@@ -426,7 +419,6 @@ public key	addressbook	it	Chiave Pubblica
 public sharing url	addressbook	it	URL di condivisione pubblico
 publish into groups:	addressbook	it	Pubblica nei gruppi:
 read a list / search for entries.	addressbook	it	Leggi un elenco / cerca delle voci.
-read a list of entries.	addressbook	it	Leggi un elenco di voci
 read a single entry by passing the id and fieldlist.	addressbook	it	Leggi una singola voce passando l'ID e elenco campi.
 read only	addressbook	it	Sola lettura
 record access	addressbook	it	Accesso alla scheda

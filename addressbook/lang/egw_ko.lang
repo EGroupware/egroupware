@@ -1,18 +1,11 @@
-%1 added	addressbook	ko	%1 추가됨
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ko	%4 때문에 %1 연락처(들) %2, %3이(가) 실패했습니다!
 %1 contacts updated (%2 errors).	addressbook	ko	%1 연락처가 업데이트되었습니다(%2 오류).
 %1 key(s) added to public keyserver "%2".	addressbook	ko	공개 키 서버 "%2"에 %1키가 추가되었습니다.
-%1 not implemented for %2!	addressbook	ko	%2에 대해 %1이(가) 구현되지 않았습니다!
 %1 public keys added.	addressbook	ko	%1 공개 키가 추가되었습니다.
-%1 records imported	addressbook	ko	%1 개의 레코드를 가져왔습니다
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
 (e.g. 1969)	addressbook	ko	예 1969
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ko	<b>변환할 타입이 <없습니다></b> 리스트에서 변환할 타입을 선택하세요
 @-eval() is only availible to admins!!!	addressbook	ko	@-eval() 은 관리자만 가능합니다!
 account repository	admin	ko	계정 저장소
-accounts	addressbook	ko	계정
-actions	addressbook	ko	액션
-add %1	addressbook	ko	%1 추가
 add a contact to this organisation	addressbook	ko	이 조직에 연락처 추가
 add a new contact	addressbook	ko	새 연락처 추가
 add a new list	addressbook	ko	새 목록 추가
@@ -34,7 +27,6 @@ addressbook list	addressbook	ko	주소록 목록
 addressbook preferences	addressbook	ko	주소록 환경설정
 addressbook-fieldname	addressbook	ko	주소록-필드이름
 addvcard	addressbook	ko	VCard 추가
-advanced search	addressbook	ko	상세 검색
 all addressbooks	addressbook	ko	모든 주소록
 all contacts	addressbook	ko	모든 연락처
 all types	addressbook	ko	모든 유형
@@ -87,7 +79,6 @@ csv-fieldname	addressbook	ko	CSV-필드이름
 csv-filename	addressbook	ko	CSV-파일이름
 custom	addressbook	ko	사용자정의
 custom fields	addressbook	ko	사용자정의 필드
-debug output in browser	addressbook	ko	브라우저에서 디버그 출력
 default	addressbook	ko	기본
 default action on double-click	addressbook	ko	더블 클릭 시 기본 동작
 default filter	addressbook	ko	기본 필터
@@ -127,7 +118,6 @@ export from addressbook	addressbook	ko	주소록에서 내보내기
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 extra	addressbook	ko	기타
 favorite phone	addressbook	ko	즐겨찾는 전화
-favorites	addressbook	ko	즐겨찾기
 fax	addressbook	ko	팩스
 fax number	common	ko	팩스 번호
 field %1 has been added !	addressbook	ko	%1 필드가 추가되었습니다!
@@ -160,7 +150,6 @@ import file	addressbook	ko	파일 가져오기
 import from ldif, csv, or vcard	addressbook	ko	LDIF,CSV 나 VCard에서 가져오기
 import from outlook	addressbook	ko	아웃룩에서 가져오기
 import next set	addressbook	ko	** 다음 집합(set)에서 가져오기
-import_instructions	addressbook	ko	넷스케입에서 주소록을 열고 <b>파일</b>메뉴에서 <b>내보내기</b>를 선택합니다. 파일이 LDIF형식으로 저장됩니다.<p> 아웃룩일때 컨텍(인적관리) 폴더로 가서 <b>파일</b>메뉴에 <b>가져오기 와 내보내기...</b>를 선택하면 컴마구분텍스트로 내보내기 되어 저장됩니다.<p> 팜 데스크탑 4.0이나 그 이상 버전에서는 , 주소록에 가서 <b>파일</b>메뉴에 <b>내보내기</b>를 선택하면 VCard 형식으로 파일이 내보내기 되어 저장됩니다.
 importer's personal	addressbook	ko	가져온 사람의 개인
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	CSV 파일에서 주소록으로 연락처를 가져옵니다. CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 imports contacts into your addressbook from a vcard file.	addressbook	ko	vCard 파일에서 주소록으로 연락처를 가져옵니다.
@@ -212,7 +201,6 @@ prefix	addressbook	ko	접두어
 private address	addressbook	ko	비공개 주소
 public key	addressbook	ko	공개키
 public sharing url	addressbook	ko	공개 공유 URL
-read a list of entries.	addressbook	ko	엔트리 목록을 읽음
 read a single entry by passing the id and fieldlist.	addressbook	ko	ID와 필드목록으로 단일 엔트리를 읽음
 record access	addressbook	ko	레코드 접근
 record owner	addressbook	ko	레코드 소유자
@@ -224,8 +212,6 @@ schedule a video conference	addressbook	ko	화상 회의 예약하기
 select a source address to be used in geolocation routing system	addressbook	ko	지리적 위치 라우팅 시스템에서 사용할 소스 주소를 선택하세요.
 select all	addressbook	ko	모두 선택
 select an opened dialog	addressbook	ko	열린 대화상자 선택
-select the type of conversion	addressbook	ko	변환할 형식을 선택하세요
-select the type of conversion:	addressbook	ko	변환할 형식선택:
 send fax via email by replacing fax number with an email address	addressbook	ko	팩스 번호를 이메일 주소로 대체하여 이메일로 팩스 보내기
 send succeeded to %1	common	ko	%1로 전송에 성공했습니다.
 show active accounts	addressbook	ko	활성 계정 표시

@@ -1,7 +1,6 @@
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lt	%1 kontaktas (-ai) %2, %3 nepavyko dėl %4!
 %1 contacts updated (%2 errors).	addressbook	lt	%1 kontaktai atnaujinti (%2 klaidos).
 %1 key(s) added to public keyserver "%2".	addressbook	lt	%1 raktas (-ai) pridėtas (-i) į viešąjį raktų serverį "%2".
-%1 not implemented for %2!	addressbook	lt	%1 neįgyvendinta %2!
 %1 public keys added.	addressbook	lt	Pridėta %1 viešųjų raktų.
 %1 shared this contact on %2 with %3 %4	addressbook	lt	%1 pasidalijo šiuo kontaktu %2 %3 %4
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	lt	Į adresinės nuorodas pridėkite pasirinktinį lauką, kuris rodomas kitose programose. Numatytoji reikšmė yra none customfield.
@@ -40,7 +39,6 @@ export definition to use for nextmatch export	addressbook	lt	Eksporto apibrėžt
 export definitition to use for nextmatch export	addressbook	lt	Eksporto apibrėžtis, naudojama nextmatch eksportui
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lt	Eksportuoja adresų knygelės kontaktus į CSV failą. Skirtuke Parinktys galite pasirinkti ir kitus skirtukus.
 favorite phone	addressbook	lt	Mėgstamiausias telefonas
-favorites	addressbook	lt	Mėgstamiausi
 fields to check for duplicates	addressbook	lt	Laukai, kuriuose tikrinama, ar nėra dublikatų
 fields to consider when looking for duplicate contacts.	addressbook	lt	Laukai, į kuriuos reikia atsižvelgti ieškant pasikartojančių kontaktų.
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	lt	Šią žymę naudokite serijinei raidei. Turinį, kurį norite pakartoti, patalpinkite tarp dviejų žymų.

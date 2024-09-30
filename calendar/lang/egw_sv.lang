@@ -20,17 +20,17 @@ accepted	calendar	sv	Accepterat
 access denied to the calendar of %1 !!!	calendar	sv	Åtkomst nekas till %1 kalender!
 access to calendar of %1 denied!	calendar	sv	Åtkomst till %1:s kalender nekad!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sv	Händelse som orsakade meddelandet: Tillagd, Avbruten, Accepterade, Avvisade, ...
-actions	calendar	sv	Åtgärder
-actions...	calendar	sv	Åtgärder ...
 add alarm	calendar	sv	Skapa larm
 add appointments via shortened dialog or complete edit window	calendar	sv	Lägg till möten via förkortad dialogruta eller komplett redigeringsfönster
 add current view as favorite	calendar	sv	Lägg till aktuell vy som favorit
 add new alarm	calendar	sv	Lägg till nytt larm
 add new event	calendar	sv	Lägg till nytt möte
 add new participants or resource	calendar	sv	Lägg till nya deltagare eller resurser
+add recurrence	calendar	sv	Lägg till återkommande
 add timesheet entry	calendar	sv	Lägg till tidredovisnings post
 added	calendar	sv	Skapad
 added by synchronization	calendar	sv	Läggs till genom synkronisering
+added recurrence on %1.	calendar	sv	Lade till återkommande på %1.
 after	calendar	sv	Efter
 after %1	calendar	sv	Efter %1
 after current date	calendar	sv	Efter dagens datum
@@ -42,7 +42,6 @@ alarm deleted	calendar	sv	Larm raderat
 alarm for %1 at %2 in %3	calendar	sv	Larm för %1 vid %2 i %3
 alarm management	calendar	sv	Larm hantering
 alarms	calendar	sv	Larm
-all categories	calendar	sv	Samtliga kategorier
 all day	calendar	sv	Heldag
 all events	calendar	sv	Alla händelser
 all exceptions are converted into single events.	calendar	sv	Alla undantag konverteras till enskilda händelser.
@@ -56,6 +55,7 @@ allows to edit the event again	calendar	sv	Tillåter fler ändringar av händels
 always	calendar	sv	Alltid
 always use full edit dialog	calendar	sv	Använd alltid hela redigeringsdialogen
 always use the full edit dialog, not this little dialog	calendar	sv	Använd alltid hela redigeringsdialogen, inte den här lilla dialogen
+apply changes to (future) exceptions too?	calendar	sv	Tillämpa ändringar på (framtida) undantag också?
 apply the action on the whole query, not only the shown events	calendar	sv	Använd aktionen på hela frågan, inte bara visade händelser.
 apply the changes	calendar	sv	Spara ändringar
 appointment settings	calendar	sv	Inställningar för möten
@@ -185,6 +185,7 @@ exclude weekend	calendar	sv	Uteslut helg
 execute a further action for this entry	calendar	sv	Utför fler åtgärder för posten
 existing links	calendar	sv	Nuvarande länkar
 exists	calendar	sv	Existerar
+explicit recurrences	calendar	sv	Explicita upprepningar
 extended	calendar	sv	Utökad
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sv	Utökade uppdateringar inkluderar alltid all händelse info. iCal kan importeras av vissa andra applikationer.
 fieldseparator	calendar	sv	Fältavskiljare
@@ -265,6 +266,7 @@ location, start- and endtimes, ...	calendar	sv	Plats, start- och slut tid
 mail all participants	calendar	sv	Skicka e-post till alla deltagare
 make freebusy information available to not logged in persons?	calendar	sv	Gör freebusy åtkomlig för oinloggade personer också
 maximum available quantity of %1 exceeded!	calendar	sv	Maximal tillgänglig kvantitet av %1 överskriden!
+meeting request additional recurrence(s)	calendar	sv	Mötesbegäran ytterligare upprepning(ar)
 min days	calendar	sv	Min dagar
 minimum number of users for showing day view as consolidated.	calendar	sv	Minsta antal användare för att visa dagsvyn som konsoliderad.
 minimum number of users for showing week view as consolidated.	calendar	sv	Minsta antal användare för att visa veckovyn som konsoliderad.
@@ -320,9 +322,11 @@ one month	calendar	sv	En månad
 one week	calendar	sv	En vecka
 one year	calendar	sv	Ett år
 only group-events	calendar	sv	Bara grupp-evenemang
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	sv	Stöds endast av ett fåtal klienter som är helt kompatibla (t.ex. från Apple). Om du måste ange en URL kommer den troligen inte att stödjas!
 only the initial date of that recurring event is checked!	calendar	sv	Bara första förekomsten kontrolleras i denna återkommande uppgift!
 open todo's:	calendar	sv	Uppgifter:
 optional	calendar	sv	Valfri
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	sv	Annars kommer ändringar av titel, beskrivning, ... eller nya deltagare inte att överföras till undantag som redan har skapats.
 output unit	calendar	sv	Enhet för utdata
 overlap holiday	calendar	sv	Överlappande helgdag
 owner too	calendar	sv	Även ägaren
@@ -334,6 +338,7 @@ people holiday	calendar	sv	Allmän helgdag
 permission denied	calendar	sv	Åtkomst nekad
 planner by category	calendar	sv	Planerare enl. kategori
 planner by user	calendar	sv	Planerare enl. användare
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	sv	Observera: Konfliktkontroll görs aldrig i det förflutna och begränsas alltid av ovanstående återkomsthorisont.
 please note: you can configure the field assignments after you uploaded the file.	calendar	sv	Anmärkning: Du kan konfigurera fält tilldelning efter du laddat upp filen.
 preselected group for entering the planner	calendar	sv	Förvald grupp för åtkomst till Planeraren
 previous	calendar	sv	Föregende
@@ -376,7 +381,6 @@ saves the event ignoring the conflict	calendar	sv	Spara händelsen och ignorera 
 scheduling conflict	calendar	sv	Schema konflikt
 select a %1	calendar	sv	Välj %1
 select a time	calendar	sv	Välj en tid
-select an action	calendar	sv	Välj en aktion
 select multiple contacts for a further action	calendar	sv	Välj flera kontakter för åtgärd
 select resources	calendar	sv	Välj resurser
 select who should get the alarm	calendar	sv	Välja mottagare av larm
@@ -426,6 +430,7 @@ test import (show importable records <u>only</u> in browser)	calendar	sv	Testa i
 the apple ical apps use this color to display events from this calendar.	calendar	sv	Apparna Apple iCal använder denna färg för att visa händelser från denna kalender.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	sv	Dokumentet kan innehålla platshållare som {{%1}}, som ersätts med data.
 the extern organizer changed the event!	calendar	sv	Den externa arrangören ändrade evenemanget!
+the organizer changed the event!	calendar	sv	Arrangören ändrade evenemanget!
 the resource you selected is already overbooked:	calendar	sv	Resursen du valde är redan fullbokad:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	sv	Avsändaren "%1" är INTE den externa organisatören "%2", fortsätt med försiktighet!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	sv	Avsändaren "%1" är INTE deltagaren som svarar "%2", fortsätt med försiktighet!
@@ -436,6 +441,7 @@ this entry is currently opened by %1!	calendar	sv	Denna post har redan öppnats 
 this entry is opened by user:	calendar	sv	Denna post har öppnats inom den inställda tidsintervall av användare:
 this event is part of a series	calendar	sv	Denna händelse är del av en serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sv	Denna grupp är förvald när du öppnar Planeraren. Du kan ändra den i Planderaren närsom helst.
+this is a single recurrence of a recurring event.	calendar	sv	Detta är en enstaka upprepning av en återkommande händelse.
 this message is sent for canceled or deleted events.	calendar	sv	Meddelandet skickas för avbrutna eller raderad händelser.
 this message is sent for modified or moved events.	calendar	sv	Meddelandet skickas för ändrade eller flyttade händelser.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sv	Meddelandet skickas till deltagare i händelser du äger, som har begärt meddelande om nya händelser.<br>Du kan använda variabler som ersätts med data ur händelse posten. Första raden är ämnet i meddelandet.
@@ -496,6 +502,7 @@ yearly	calendar	sv	Årlig
 yearview	calendar	sv	År
 you are not allowed to book the resource selected:	calendar	sv	Du har inte rätt att boka den valda resursen:
 you can either set a year or a occurrence, not both !!!	calendar	sv	Du kan antingen sätta år eller ett tillfälle, inte båda.
+you can only notify other users, not yourself!	calendar	sv	Du kan bara meddela andra användare, inte dig själv!
 you can only set a year or a occurrence !!!	calendar	sv	Du kan bara sätta år eller ett tillfälle
 you do not have permission to read this record!	calendar	sv	Du saknar rättighet att läsa posten
 you have a meeting scheduled for %1	calendar	sv	Du har ett schemalagt möte kl. %1

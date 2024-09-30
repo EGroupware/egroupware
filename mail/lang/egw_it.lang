@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	it	Seleziona per salvare come evento in agenda all'atto di invio
 check to save as infolog on send	mail	it	Seleziona per salvare come scheda attività all'atto di invio
 check to save as tracker entry on send	mail	it	Seleziona per salvare come scheda tracker all'atto di invio
+checking admin credentials failed	mail	it	Verifica delle credenziali di amministrazione fallita
 choose file	mail	it	Seleziona file
 common acl	mail	it	Permessi ACL comuni
 compose	mail	it	Componi
@@ -243,7 +244,7 @@ files	mail	it	File
 flag / unflag	mail	it	Spunta / Togli spunta
 flag or unflag a mail	mail	it	Spunta / Togli spunta un messaggio
 flagged	mail	it	contrassegnato
-flagged %1 messages as %2 in %3	mail	it	Contrassegnato %1 messaggi come %2 in %3
+flagged %1 messages as %2 in %3	mail	it	Contrassegnato %1 messaggi come "%2" in %3.
 flagged %1 messages as flagged in %2	mail	it	Contrassegnato %1 messaggi come contrassegnati in %2
 flagged %1 messages as unflagged in %2	mail	it	Contrassegnato %1 messaggi come non conrassegnati in %2
 flagged / unflagged	mail	it	Spuntato / Non spuntato
@@ -336,6 +337,7 @@ mail	common	it	Mail
 mail acl	mail	it	Permessi ACL della posta
 mail filter	mail	it	Filtro
 mail filter rule	mail	it	Regola del filtro posta
+mail probably has no text-body	mail	it	La posta probabilmente non ha testo
 mail settings	mail	it	Impostazioni email
 mail source	mail	it	Sorgente email
 mail-address	mail	it	Indirizzo email
@@ -491,6 +493,7 @@ reply	mail	it	Rispondi
 reply all	mail	it	Rispondi a tutti
 reply message type	mail	it	Tipo di messaggio di riposta
 reply to	mail	it	Rispondi a
+reply with attachments	mail	it	Risposta con allegati
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	it	La risposta a questo messaggio non è riuscita perché il suo contenuto sembra essere crittografato e non può essere decrittografato correttamente. Se desideri comunque includere il contenuto di questo messaggio crittografato, puoi provare ad inoltrare come allegato.
 replyto	mail	it	risposta a
 report as ham	mail	it	Segnala come Ham

@@ -5,9 +5,7 @@
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	da	%1 posteringer læst (ikke implamenteret endnu, du skalgå %2tilbage%3 og fravælge Test import.
 %1 shared this contact on %2 with %3 %4	addressbook	da	%1 delte denne kontakt på %2 %3 %4
 (e.g. 1969)	addressbook	da	(f.eks 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	da	<b>Ingen konverteringstype <none> blev fundet.</b> Vælg venligst en konverteringstype fra listen
 @-eval() is only availible to admins!!!	addressbook	da	@-eval() er kun tilgængelig for administratorer!
-actions	addressbook	da	Handling
 add custom field	addressbook	da	Tilføj valgfrit felt
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	da	Tilføj brugerdefineret felt til links i adressebogen, som vises i andre programmer. Standardværdien er ingen brugerdefinerede felter.
 add to bcc	addressbook	da	Tilføj til Blindkopi
@@ -25,7 +23,6 @@ addressbook list	addressbook	da	Liste over adressebøger
 addressbook preferences	addressbook	da	Adressebog preferencer
 addressbook-fieldname	addressbook	da	Adressebog feltnavn
 addvcard	addressbook	da	Tilføj vCard
-advanced search	addressbook	da	Avanceretsøgning
 all addressbooks	addressbook	da	Alle adressebøger
 all types	addressbook	da	Alle typer
 allow	addressbook	da	Tillad
@@ -73,7 +70,6 @@ csv-fieldname	addressbook	da	CSV-Feltnavn
 csv-filename	addressbook	da	CVS-Filnavn
 custom	addressbook	da	Valgfri
 custom fields	addressbook	da	Valgfri Felter
-debug output in browser	addressbook	da	Vis fejlmeddelser i browser vinduet
 default	addressbook	da	Standard
 default action on double-click	addressbook	da	Standardhandling ved dobbeltklik
 default filter	addressbook	da	Standardfilter
@@ -116,7 +112,6 @@ export from addressbook	addressbook	da	Eksporter fra adressebogen
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Eksporterer kontakter fra adressebogen til en CSV-fil. Under fanen Indstillinger kan du også vælge andre separatorer.
 extra	addressbook	da	Ekstra
 favorite phone	addressbook	da	Favorit-telefon
-favorites	addressbook	da	Favoritter
 fax	addressbook	da	Fax
 fax number	common	da	Faxnummer
 field %1 has been added !	addressbook	da	Felt %1 er tilføjet!
@@ -162,7 +157,6 @@ import from ldif, csv, or vcard	addressbook	da	Importer fra LDIF, CVS eller vCar
 import from outlook	addressbook	da	Importer fra Outlook
 import multiple vcard	addressbook	da	Importer mange vCards
 import next set	addressbook	da	Impoter næste
-import_instructions	addressbook	da	I Netscape, åben Adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i LDIF formatet.<p>Eller i Outlook, vælg din kontakt mappe, vælg <b>Import and Export...</b> fra b>File</b> menuen og eksporter dine kontakt personer til en komma separeret fil (CSV). <p>Eller, i Palm Desktop 4.0 eller nyere, brug adressebogen og vælg <b>Export</b> fra <b>File</b> menuen. Den eksporteret fil vil være i VCard formatet
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	da	Importerer kontakter til adressebogen fra en CSV-fil. CSV betyder 'kommaseparerede værdier'. I indstillingsfanen kan du også vælge andre separatorer.
 include all groups	addressbook	da	Inkluder alle grupper
 infolog-contact	addressbook	da	InfoLog Kontakt
@@ -220,7 +214,6 @@ private address	addressbook	da	Privat adresse
 public key	addressbook	da	Offentlig Nøgle
 public sharing url	addressbook	da	URL til offentlig deling
 read a list / search for entries.	addressbook	da	Læs liste / søg for elementer
-read a list of entries.	addressbook	da	Læs en liste af indtastninger
 read a single entry by passing the id and fieldlist.	addressbook	da	Læs et enkelt element ved at give ID og fil-liste
 record access	addressbook	da	Posterings adgang
 record owner	addressbook	da	Posterings ejer
@@ -233,8 +226,6 @@ search letter	addressbook	da	Søg bogstav
 select a source address to be used in geolocation routing system	addressbook	da	Vælg en kildeadresse, der skal bruges i GeoLocation-routingsystemet
 select all	addressbook	da	Vælg alle
 select an opened dialog	addressbook	da	Vælg en åbnet dialog
-select the type of conversion	addressbook	da	Vælg type af konvertering
-select the type of conversion:	addressbook	da	Vælg type af konvertering:
 send fax via email by replacing fax number with an email address	addressbook	da	Send fax via e-mail ved at erstatte faxnummeret med en e-mailadresse
 send succeeded to %1	common	da	Send lykkedes til %1
 share into addressbook	addressbook	da	Del til adressebog

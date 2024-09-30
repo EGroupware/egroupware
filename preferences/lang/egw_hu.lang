@@ -45,11 +45,13 @@ how to update lists	preferences	hu	A listák frissítése
 icon	preferences	hu	Ikon
 icons and text	preferences	hu	Ikonok és képek
 icons only	preferences	hu	csak ikonok
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	hu	Ha engedélyezve van, a megadott jelszó tárolásra kerül és továbbításra kerül a többi kiszolgálónak, amikor SSO-n keresztül bejelentkezik.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	hu	Bejegyzéshez csatolt képeket ikonként meg lehet jeleníteni. Ez az opció kikapcsolható, így a lapok gyorsabban jelennek meg.
 in which country are you. this is used to set certain defaults for you.	preferences	hu	Ön melyik országban van. Ez alapján pár alapbeállítás automatikusan megtörténik.
 interface/template selection	preferences	hu	Felület/Sablon választás
 it sets content size (text only) according to selected size.	preferences	hu	A tartalom méretét (csak a szöveget) a kiválasztott méretnek megfelelően állítja be.
 language	preferences	hu	Nyelv
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	hu	A SingleSignOn-on keresztül történő bejelentkezés nem ad jelszót a levelező- vagy fájlszervereknek való továbbadáshoz.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	hu	Az alkalmazások listája görgethetővé tétele fel/le görgetőgombokkal (hasznos a görgetőkerék nélküli egérrel dolgozó felhasználók számára).
 max matches per page	preferences	hu	Maximális találatok laponként
 max number of icons in navbar	preferences	hu	Az ikonok maximális száma a navigációs panelen
@@ -57,6 +59,7 @@ no default	preferences	hu	Nincs alapértelmezett
 no user-selection at all	common	hu	Egyáltalán nincs felhasználó választás
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hu	Megjegyzés: az email-eknél használt jelszó ezzel nem változott meg. Ezt önnek kell megtennie.
 p: paragraph	preferences	hu	p: Paragrafus
+password stored	preferences	hu	Tárolt jelszó.
 permanent time zone selection	preferences	hu	Állandó időzóna szelekció
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
 please select your timezone.	preferences	hu	Kérlek válassz időzónát.
@@ -82,7 +85,9 @@ show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
 show_more_apps	common	hu	Több program megjelenítése
+singlesignon and passwords	preferences	hu	SingleSignOn és jelszavak
 spellchecker language	addressbook	hu	Helyesírás-ellenörző nyelve
+store password retrievable for singlesignon	common	hu	A SingleSignOn számára visszakereshető jelszó tárolása
 text only	preferences	hu	Csak szöveg
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	hu	Az alapértelmezett alkalmazás fog elindulni, amikor belép az EGroupware-be vagy a Kezdőlap ikonra kattint.<br>Több alkalmazást is megjeleníthet a Kezdőlapon(Főképernyőn), ha nem jelöl meg itt alapértelmezett alkalmazást. Ezeket az egyes alkalmazások beállításai között kell beállítani (pl. Felamimail, Infolog, Hírszerkesztő stb.).
 the old password is not correct	preferences	hu	A régi jelszó hibás

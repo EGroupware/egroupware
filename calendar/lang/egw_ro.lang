@@ -14,15 +14,15 @@ a party crasher in someone who is not invited to the meeting but somehow got the
 accept	calendar	ro	Acceptă
 accepted	calendar	ro	Acceptat
 access to calendar of %1 denied!	calendar	ro	Accesul la calendarul lui %1 refuzat!
-actions	calendar	ro	Acțiuni
-actions...	calendar	ro	Acțiuni ...
 add appointments via shortened dialog or complete edit window	calendar	ro	Adăugați programări prin intermediul unei ferestre de dialog scurtate sau al unei ferestre de editare completă
 add current view as favorite	calendar	ro	Adăugați vizualizarea curentă ca favorită
 add new alarm	calendar	ro	Adăugați o nouă alarmă
 add new event	calendar	ro	Adăugați o nouă programare
 add new participants or resource	calendar	ro	Adăugați noi participanți sau resurse
+add recurrence	calendar	ro	Adăugarea recurenței
 add timesheet entry	calendar	ro	Adăugare intrare în foaia de pontaj
 added by synchronization	calendar	ro	Adăugat prin sincronizare
+added recurrence on %1.	calendar	ro	Adăugarea recurenței la %1.
 after	calendar	ro	După
 after %1	calendar	ro	După %1
 age:	calendar	ro	Vârsta:
@@ -34,6 +34,7 @@ allow booking requests from any user when creating events?	calendar	ro	Permiteț
 allow party crashers with email that match the following regular expression	calendar	ro	Permiteți petrecăreților care se prezintă cu e-mailuri care se potrivesc cu următoarea expresie regulată
 always use full edit dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă
 always use the full edit dialog, not this little dialog	calendar	ro	Utilizați întotdeauna fereastra de editare completă, nu această fereastră de dialog redusă
+apply changes to (future) exceptions too?	calendar	ro	Aplicați modificările și excepțiilor (viitoare)?
 attention	calendar	ro	În atenția
 by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	ro	În mod implicit (nu este setat nimic aici), EGroupware permite doar organizatorului/proprietarului să îi adauge.
 category report	calendar	ro	Raport de categorie
@@ -42,6 +43,7 @@ date range	calendar	ro	Intervalul de date
 email address migration	calendar	ro	Migrarea adresei de e-mail
 error notifying %1	calendar	ro	Eroare de notificare %1
 exclude weekend	calendar	ro	Excludeți Weekend
+explicit recurrences	calendar	ro	Recurențe explicite
 how many days to be removed in the future (default 365)	calendar	ro	Câte zile trebuie să fie eliminate în viitor (implicit 365)
 how many days to be removed in the past (default 100)	calendar	ro	Câte zile trebuie să fie eliminate în trecut (implicit 100)
 how many days to sync in the future (default %1)	calendar	ro	Câte zile trebuie sincronizate în viitor (implicit %1)
@@ -60,6 +62,7 @@ ical file	calendar	ro	Fișier iCal
 ical import	calendar	ro	Import iCal
 ical successful imported	calendar	ro	iCal importat cu succes.
 maximum available quantity of %1 exceeded!	calendar	ro	Cantitatea maximă disponibilă de %1 a fost depășită!
+meeting request additional recurrence(s)	calendar	ro	Reuniunea solicită recurență(e) suplimentară(e)
 min days	calendar	ro	Zile minime
 minimum number of users for showing day view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru afișarea vizualizării zilei ca fiind consolidată.
 minimum number of users for showing week view as consolidated.	calendar	ro	Numărul minim de utilizatori pentru a afișa vizualizarea săptămânală ca fiind consolidată.
@@ -69,7 +72,10 @@ never notify externals (non-users) about events i create	calendar	ro	Nu notifica
 notify	calendar	ro	Notificare
 notify all externals (non-users) about this event	calendar	ro	Notifică toate persoanele externe (non-utilizatori) despre acest eveniment
 number of resources to be booked	calendar	ro	Numărul de resurse care urmează să fie rezervate
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	ro	Compatibil doar cu câțiva clienți complet compatibili (de exemplu, de la Apple). Dacă trebuie să introduceți un URL, cel mai probabil acesta nu va fi acceptat!
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	ro	În caz contrar, modificările aduse titlului, descrierii, ... sau participanților noi nu vor fi transferate excepțiilor care au fost deja create.
 output unit	calendar	ro	Unitate de ieșire
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	ro	Vă rugăm să rețineți: Verificarea conflictului nu se face niciodată în trecut și este întotdeauna limitată de orizontul de recurență de mai sus.
 private event	calendar	ro	Eveniment privat
 recordings	calendar	ro	Înregistrări
 removes the event from my calendar	calendar	ro	Elimină evenimentul din calendarul meu
@@ -85,7 +91,10 @@ status	calendar	ro	Stare
 the apple ical apps use this color to display events from this calendar.	calendar	ro	Aplicațiile Apple iCal utilizează această culoare pentru a afișa evenimentele din acest calendar.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	ro	Documentul poate conține caractere de subsol precum {{%1}}, care vor fi înlocuite cu datele.
 the extern organizer changed the event!	calendar	ro	Organizatorul extern a modificat evenimentul!
+the organizer changed the event!	calendar	ro	Organizatorul a schimbat evenimentul!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	ro	Expeditorul "%1" NU este organizatorul extern "%2", procedați cu prudență!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	ro	Expeditorul "%1" NU este participantul care răspunde la "%2", procedați cu prudență!
+this is a single recurrence of a recurring event.	calendar	ro	Aceasta este o singură recurență a unui eveniment recurent.
 toggle weekend	calendar	ro	Comutați weekendul
 utilities	calendar	ro	Utilități
+you can only notify other users, not yourself!	calendar	ro	Puteți notifica doar alți utilizatori, nu și dumneavoastră!

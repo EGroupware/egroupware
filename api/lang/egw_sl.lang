@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	sl	%1 imenikov %2 najdenih!
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov.
 %1 email(s) added into %2	common	sl	%1 e-poštno(-a) sporočilo(-a) dodano(-a) v %2
-%1 entries found, select one ...	common	sl	Najdenih je %1 vnosov, izberite enega ...
 %1 etemplates deleted	common	sl	%1 predlog zbrisanih.
-%1 etemplates for application '%2' dumped to '%3'	common	sl	%1 eTemplate za program '%2' premaknjenih na '%3'
 %1 etemplates found	common	sl	%1 najdenih eTemplate.
 %1 file	common	sl	%1 datoteka
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
-%1 matches on search criteria	common	sl	%1 zadetkov za iskani kriterij
 %1 more %2 selected ...	common	sl	%1 več %2 izbranih ...
 %1 more...	common	sl	%1 več ...
-%1 new etemplates imported for application '%2'	common	sl	%1 novih eTemplate uvoženih za program '%2'
 %1 not implemented for %2!	common	sl	%1 ni implementirano za %2!
 %1 proxy of %2	common	sl	%1 strežnik proxy %2
 %1 setting "%2" = %3 disallows access via http!	admin	sl	% 1 nastavitev "%2" =%3 onemogoča dostop prek http!
@@ -27,8 +23,10 @@
 %s onchange	common	sl	%s onChange
 %s readonly	common	sl	%s samo za branje
 '%1' copied to clipboard	common	sl	'%1' se kopira v odložišče
+'%1' does not match the required pattern '%2'	common	sl	'%1' se ne ujema z zahtevanim vzorcem ('%2')
 '%1' has an invalid format	common	sl	'%1' ima nepravilen format
 '%1' has an invalid format !!!	common	sl	'%1' ima nepravilen format!
+'%1' is not a valid app-name ('%2')!	common	sl	'%1' NI veljavno ime aplikacije ('%2')!
 '%1' is not a valid date !!!	common	sl	'%1' ni veljaven datum!
 '%1' is not a valid floatingpoint number !!!	common	sl	'%1' ni pravilno decimalno število!
 '%1' is not a valid integer !!!	common	sl	'%1' ni pravilno celo število!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	sl	'%1' ni veljavno časovno območje!
 '%1' is not allowed ('%2')!	common	sl	'%1' NI dovoljeno ('%2')!
 '%1' is not allowed%2)!	common	sl	'%1' NI dovoljeno %2)!
+'%1' must not contain (back)slashes!	common	sl	'%1' ne sme vsebovati (povratnih) poševnic!
 (session restored in %1 seconds)	common	sl	Seja je bila vzpostavljena v % sekundah
 00 (disable)	admin	sl	00 (izklopi)
 1 day	common	sl	1 dan
@@ -251,6 +250,7 @@ chad	common	sl	ČAD
 change	common	sl	Spremeni
 change owner	common	sl	Spremeni lastnika
 changed	common	sl	Spremenjeno
+changes that you made may not be saved.	common	sl	Opravljene spremembe se morda ne bodo shranile.
 charset	common	sl	Charset
 check all	common	sl	Preveri vse
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sl	Preverite prazne vrednosti v stavkih IF. Primer {{IF url~EMPTY~~Website:}} - Če url ni prazen, napiše "Spletna stran:".
@@ -978,6 +978,7 @@ open	common	sl	Odpri
 open existing contact	common	sl	Odprite obstoječi stik
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri pojavno okno
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sl	Prijava v OpenIDConnect je bila uspešna, vendar uporabnik '%1' NE obstaja v programu EGroupware in samodejno ustvarjanje uporabnikov je onemogočeno!
 operator	common	sl	Operator
 optional note about the link	common	sl	Morebitne opombe o povezavi
 options	common	sl	Možnosti
@@ -1068,14 +1069,12 @@ private	common	sl	Zasebno
 programs	common	sl	Programi
 project	common	sl	Projekt
 properties	common	sl	Lastnosti
-protocol is required	common	sl	Potreben je protokol
 public	common	sl	Javno
 puerto rico	common	sl	PORTORIKO
 qatar	common	sl	KATAR
 quick add	common	sl	Hitro dodajanje
 radiobutton	common	sl	Radijski gumb
 read	common	sl	Beri
-read a list of entries.	common	sl	Beri seznam vnosov.
 read a single entry by passing the id and fieldlist.	common	sl	Beri posamezni vnos s podano šifro in seznamom polj.
 read etemplate from database (for the keys above)	common	sl	Beri eTemplate iz zbirke podatkov (za zgornje ključe)
 read this list of methods.	common	sl	Preberi ta seznam postopkov
@@ -1269,12 +1268,12 @@ show page generation time?	common	sl	Prikažem čas ustvarjanja strani
 show password	common	sl	Prikaži geslo
 show values	common	sl	Prikaži vrednosti
 show/hide	common	sl	prikaži/skrij stransko vrstico
-show_more_apps	common	sl	Prikaži več aplikacij
 showing	common	sl	Prikazovanje
 showing %1	common	sl	Prikazanih %1
 showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3
 shows / allows you to enter values into the etemplate for testing	common	sl	Prikaže / omogoči vnos vrednosti v eTemplate za testiranje
 shows/displays etemplate for testing, does not save it before	common	sl	Prikaže eTemplate za testiranje, vendar je pred tem ne shrani
+show_more_apps	common	sl	Prikaži več aplikacij
 sierra leone	common	sl	SIERRA LEONE
 sign up	common	sl	Prijavite se
 simple	common	sl	Preprosto
@@ -1468,7 +1467,6 @@ weekend	common	sl	Vikend
 welcome	common	sl	Dobrodošli
 western european	common	sl	Zahodna evropa
 western sahara	common	sl	ZAHODNA SAHARA
-what color should all the blank space on the desktop have	common	sl	Kakšne barve naj bo prazen prostor na namizju?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sl	Kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sl	Ko vnose združite v dokumente, bodo ti shranjeni tukaj. Če mape ne navedete, bodo shranjeni v vašem domačem imeniku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.

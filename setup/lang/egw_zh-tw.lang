@@ -12,13 +12,11 @@
 13 (ntp)	setup	zh-tw	13 (ntp)
 80 (http)	setup	zh-tw	80 (網站伺服器)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	zh-tw	<b>使用的字元編碼</b> (如果您希望使用多國語言環境，請輸入 utf-8 ):
-[header-password],[header-user],[new-password],[new-user]	setup	zh-tw	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	zh-tw	登入失敗：頁首管理的帳號或密碼有誤！
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	zh-tw	登入失敗：設定網域 '%1(%2)' 的帳號或密碼有誤！
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	zh-tw	帳號資料庫{sql(預設) | ldap},[認證{sql | ldap | mail | ads | http | ...}],[sql 加密方式{md5 | blowfish_crypt | md5_crypt | crypt}],[檢查儲存的密碼{ (預設)|True}],[允許使用 cookie 認證{ (預設)|True}]
 accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
-activate safe password check	setup	zh-tw	啟用儲存密碼功能
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
 add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(EGw 網域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh-tw	新增或編輯一個網域：
@@ -107,7 +105,6 @@ check ip address of all sessions	setup	zh-tw	檢查所有連線的網路位址
 checking extension %1 is loaded or loadable	setup	zh-tw	檢查%1是否已讀取或可讀取
 checking file-permissions of %1 for %2 %3: %4	setup	zh-tw	檢查 %1 的檔案權限是否為 %2 %3，目前狀態： %4
 checking for gd support...	setup	zh-tw	檢查是否支援GD...
-checking pear%1 is installed	setup	zh-tw	檢查 PEAR%1 安裝狀態
 checking php.ini	setup	zh-tw	檢查php.ini
 checking required php version %1 (recommended %2)	setup	zh-tw	檢查 PHP 版本為 %1 （建議為 %2）
 checking the egroupware installation	setup	zh-tw	檢查EGroupware安裝狀態
@@ -151,14 +148,12 @@ creating tables	setup	zh-tw	正在建立資料表
 creation of %1 in %2 failed !!!	setup	zh-tw	在 %2 建立 %1 時發生錯誤！
 current configuration:	setup	zh-tw	目前設定：
 current system-charset	setup	zh-tw	目前系統字元編碼
-current system-charset is %1.	setup	zh-tw	目前系統字元編碼是 %1 。
 current version	setup	zh-tw	目前的版本
 currently installed languages: %1 <br />	setup	zh-tw	目前已安裝的語言：%1 <br />
 database	setup	zh-tw	資料庫
 database instance (egw domain)	setup	zh-tw	資料庫實例（eGW網域）
 database is version %1 and up to date.	setup	zh-tw	資料庫版本為 %1 ，是最新版本
 database successfully converted from '%1' to '%2'	setup	zh-tw	資料庫成功的從 '%1' 轉換成 '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	zh-tw	時間服務埠<br />如果使用13埠，請在送出之前確認您已經設置好適當的防火牆規則。<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	zh-tw	日
 day of week<br />(0-6, 0=sunday)	setup	zh-tw	週日數<br />(0-6, 0=星期天)
 db backup and restore	setup	zh-tw	資料庫備份與還原
@@ -320,8 +315,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	zh-tw	管理應用程式
 manage languages	setup	zh-tw	管理語言
 manual / help	setup	zh-tw	手冊
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh-tw	max_execution_time(最大可執行時間)被設定為小於30(秒)：EGroupware有時候需要更多的執行時間，特別是無法預期的錯誤
 maximum account id (e.g. 65535 or 1000000)	setup	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh-tw	max_execution_time(最大可執行時間)被設定為小於30(秒)：EGroupware有時候需要更多的執行時間，特別是無法預期的錯誤
 may be broken	setup	zh-tw	或許毀損
 mcrypt algorithm (default tripledes)	setup	zh-tw	Mcrypt 演算法 (預設為 TRIPLEDES)
 mcrypt initialization vector	setup	zh-tw	MCrypt 組態依據
@@ -336,7 +331,6 @@ modifications have been completed!	setup	zh-tw	修改已經完成！
 modified	setup	zh-tw	修改日期
 modify	setup	zh-tw	修改
 month	setup	zh-tw	月
-multi-language support setup	setup	zh-tw	多國語言設定
 name of database	setup	zh-tw	資料庫名稱
 name of db user egroupware uses to connect	setup	zh-tw	EGroupware用來與資料庫連結的帳號
 never	setup	zh-tw	從未
@@ -406,8 +400,8 @@ re-enter password	setup	zh-tw	重新輸入密碼
 read translations from	setup	zh-tw	讀取翻譯資料
 readable by the webserver	setup	zh-tw	網頁伺服器可讀取
 really uninstall all applications	setup	zh-tw	確定要移除所有的應用程式
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh-tw	register_globals開啟中，EGroupware不需要這個設定，而且關閉它通常會比較安全
 registered	setup	zh-tw	註冊
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh-tw	register_globals開啟中，EGroupware不需要這個設定，而且關閉它通常會比較安全
 rejected lines	setup	zh-tw	拒絕的行數
 remove	setup	zh-tw	移除
 remove all	setup	zh-tw	全部移除
@@ -599,5 +593,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	zh-tw	您的資料表目前狀態
 your tables will be dropped and you will lose data	setup	zh-tw	您的資料表將會被完全移除，您也將會遺失所有的資料。
 your temporary directory '%1' %2	setup	zh-tw	您的暫存資料夾 '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	zh-tw	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	zh-tw	{db | php(預設) | php-restore}
 {off(default) | on}	setup	zh-tw	{off(預設) | on}

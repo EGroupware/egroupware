@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	pt-br	%1 %2 diretórios encontrado!
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 email(s) added into %2	common	pt-br	%1 e-mail(s) adicionado(s) em %2
-%1 entries found, select one ...	common	pt-br	%1 entradas encontradas, selecione uma ...
 %1 etemplates deleted	common	pt-br	%1 eModelo(s) removido(s)
-%1 etemplates for application '%2' dumped to '%3'	common	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
 %1 etemplates found	common	pt-br	%1 eModelo encontrados
 %1 file	common	pt-br	%1 arquivo
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web!
-%1 matches on search criteria	common	pt-br	%1 encontrados para os critérios da busca
 %1 more %2 selected ...	common	pt-br	%1 mais %2 selecionados ...
 %1 more...	common	pt-br	Mais %1 ...
-%1 new etemplates imported for application '%2'	common	pt-br	%1 novo eTemplate importado para a aplicação '%2'
 %1 not implemented for %2!	common	pt-br	%1 não implementado para %2!
 %1 proxy of %2	common	pt-br	%1 %2 de procuração
 %1 setting "%2" = %3 disallows access via http!	admin	pt-br	A configuração %1 "%2" = %3 não permite o acesso via http!
@@ -27,8 +23,10 @@
 %s onchange	common	pt-br	%s Sobre alteração
 %s readonly	common	pt-br	%s apenas leitura
 '%1' copied to clipboard	common	pt-br	'%1' copiado para prancheta
+'%1' does not match the required pattern '%2'	common	pt-br	'%1' não corresponde ao padrão exigido ('%2')
 '%1' has an invalid format	common	pt-br	'%1' tem um formato inválido
 '%1' has an invalid format !!!	common	pt-br	'%1' está em um formato inválido!
+'%1' is not a valid app-name ('%2')!	common	pt-br	'%1' NÃO é um nome de aplicativo válido ('%2')!
 '%1' is not a valid date !!!	common	pt-br	'%1' não é uma data válida!
 '%1' is not a valid floatingpoint number !!!	common	pt-br	'%1' não é um número válido para o ponto flutuante!
 '%1' is not a valid integer !!!	common	pt-br	'%1' não é um inteiro válido!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	pt-br	'%1' não é um fuso horário válido!
 '%1' is not allowed ('%2')!	common	pt-br	'%1' não é permitido ('%2')!
 '%1' is not allowed%2)!	common	pt-br	'%1' NÃO é permitido (%2)!
+'%1' must not contain (back)slashes!	common	pt-br	'%1' não deve conter barras (invertidas)!
 (session restored in %1 seconds)	common	pt-br	Sessão restaurada em %1 segundos.
 00 (disable)	admin	pt-br	00 (desabilitado)
 1 day	common	pt-br	1 Dia
@@ -248,6 +247,7 @@ chad	common	pt-br	CHADE
 change	common	pt-br	Alterar
 change owner	common	pt-br	Alterar proprietário
 changed	common	pt-br	Alterado
+changes that you made may not be saved.	common	pt-br	As alterações que você fez podem não ser salvas.
 charset	common	pt-br	Conjunto de caracteres
 check all	common	pt-br	Verificar todos
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pt-br	Verifique se há valores vazios nas instruções IF. Exemplo {{IF url~EMPTY~~Website:}} - Se o url não estiver vazio, escreve "Website:"
@@ -950,6 +950,7 @@ open	common	pt-br	Abrir
 open existing contact	common	pt-br	Abrir contato existente
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt-br	O login do OpenIDConnect foi bem-sucedido, mas o usuário '%1' NÃO existe no EGroupware, e a criação automática de usuários está desativada!
 operator	common	pt-br	Operador
 optional note about the link	common	pt-br	Nota opcional para o link
 options	common	pt-br	Opções
@@ -1041,14 +1042,12 @@ private	common	pt-br	Particular
 programs	common	pt-br	Programas
 project	common	pt-br	Projeto
 properties	common	pt-br	Propriedades
-protocol is required	common	pt-br	O protocolo é necessário
 public	common	pt-br	Público
 puerto rico	common	pt-br	PORTO RICO
 qatar	common	pt-br	QATAR
 quick add	common	pt-br	Adição rápida
 radiobutton	common	pt-br	Botão de escolha
 read	common	pt-br	Ler
-read a list of entries.	common	pt-br	Ler uma lista de registro
 read a single entry by passing the id and fieldlist.	common	pt-br	Ler uma entrada única passando o ID e a lista de campo.
 read etemplate from database (for the keys above)	common	pt-br	Ler eTemplate da base de dados (para as chaves acima)
 read this list of methods.	common	pt-br	Leia a lista de métodos.
@@ -1228,12 +1227,12 @@ show page generation time?	common	pt-br	Exibir tempo de geração da página
 show password	common	pt-br	Mostrar senha
 show values	common	pt-br	Mostrar valores
 show/hide	common	pt-br	Mostrar/ocultar barra lateral
-show_more_apps	common	pt-br	Mostrar mais aplicativos
 showing	common	pt-br	Exibindo
 showing %1	common	pt-br	Exibindo %1
 showing %1 - %2 of %3	common	pt-br	Exibindo %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	pt-br	Exibir / permite que você informe valores ao eModelo apenas para testá-los
 shows/displays etemplate for testing, does not save it before	common	pt-br	Exibir eModelo para teste, SEM SALVAR antes
+show_more_apps	common	pt-br	Mostrar mais aplicativos
 sierra leone	common	pt-br	SERRA LEOA
 sign up	common	pt-br	Registrar-se
 simple	common	pt-br	Simples
@@ -1410,7 +1409,6 @@ weekend	common	pt-br	Final de semana
 welcome	common	pt-br	Bem Vindo
 western european	common	pt-br	Europa Ocidental
 western sahara	common	pt-br	WESTERN SAHARA
-what color should all the blank space on the desktop have	common	pt-br	Que cor todo espaço em branco deve ter na tela?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt-br	O que acontece com o conteúdo excedente: vísivel (default), oculto, scroll, auto (o navegador decide)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.

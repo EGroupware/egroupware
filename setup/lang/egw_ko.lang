@@ -98,7 +98,6 @@ current system-charset	setup	ko	현재 시스템 문자셋
 current version	setup	ko	현재 버전
 currently installed languages: %1 <br />	setup	ko	현재 설치된 언어: %1 <br>
 database successfully converted from '%1' to '%2'	setup	ko	데이터베이스가 '%1'에서 '%2'으로 전환에 성공했습니다.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ko	날짜시간 포트를 설정합니다<br> 만약 13번 포트를 사용하신다면 적합한 방화벽 정책을 설정하시고 이 페이지를 서브밋(submit)해 주세요.<br>(포트:13 / 호스트:129.6.15.28)
 day	setup	ko	날
 db host	setup	ko	DB 호스트
 db name	setup	ko	DB 이름
@@ -123,6 +122,8 @@ deregistered	setup	ko	등록해지됨
 details for admin account	setup	ko	관리자 계정에 자세한 정보
 developers' table schema toy	setup	ko	개발자용 테이블 스키마 도구
 did not find any valid db support!	setup	ko	유요한 DB 지원을 찾을수 없습니다!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ko	AD에 VLV 컨트롤에 문제가 있고 단일 쿼리에서 모든 사용자를 반환할 수 있는 경우에만 비활성화하세요!
+disable vlv controls	setup	ko	VLV 컨트롤 비활성화
 do you want persistent connections (higher performance, but consumes more resources)	setup	ko	지속적인 연결을 할까요? ( 실행속도는 좋습니다만,더 많은 자원을 소모합니다)
 do you want to manage homedirectory and loginshell attributes?	setup	ko	홈디렉토리와 로그인쉘 속성을 관리하시겠습니까?
 domain	setup	ko	도메인
@@ -151,7 +152,7 @@ enter your http proxy server port	setup	ko	HTTP 프록시 서버 포트 입력
 enter your http proxy server username	setup	ko	HTTP 프록시 서버 사용자이름 입력
 error in admin-creation !!!	setup	ko	관리자 생성 에러!
 error in group-creation !!!	setup	ko	그룹 생성 에러!
-error searching "dn=%1" for "%2"!	setup	ko	"DN=%1"에서 "%2"을(를) 검색하는 동안 오류가 발생했습니다!
+error searching "dn=%1" for "%2"!	setup	ko	DN=%1에서 "%2"을(를) 검색하는 동안 오류가 발생했습니다!
 error uploading your backup!	setup	ko	백업을 업로드하는 동안 오류가 발생했습니다!
 every	setup	ko	모든
 export has been completed!	setup	ko	내보내기가 완료되었습니다!
@@ -217,8 +218,8 @@ logout	setup	ko	접속해제
 make sure that your database is created and the account permissions are set	setup	ko	귀하의 데이터베이스는 생성되었고 계정의 권한도 설정되었음을 확인하세요
 manage applications	setup	ko	응용프로그램 관리
 manage languages	setup	ko	언어 관리
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: EGroupware는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다
 maximum account id (e.g. 65535 or 1000000)	setup	ko	최대 계정ID  (예 65535 나 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: EGroupware는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다
 may be broken	setup	ko	는 깨진것 같습니다.
 mcrypt algorithm (default tripledes)	setup	ko	Mcrypt 알고리즘 (기본 TRIPLEDES)
 mcrypt initialization vector	setup	ko	MCrypt 초기화 백터
@@ -230,7 +231,6 @@ modifications have been completed!	setup	ko	변경이 완료되었습니다!
 modified	setup	ko	변경됨
 modify	setup	ko	변경
 month	setup	ko	월
-multi-language support setup	setup	ko	다중-언어 지원 설정
 name of database	setup	ko	데이터베이스 이름
 name of db user egroupware uses to connect	setup	ko	EGroupware가 사용할 DB 사용자 이름
 never	setup	ko	절대
@@ -255,6 +255,7 @@ one month	setup	ko	한 달
 one week	setup	ko	일주일
 only add languages that are not in the database already	setup	ko	데이터베이스에 없을때만 새 언어 추가하기를 사용하세요
 only add new phrases	setup	ko	새 구문만 추가
+openidconnect login	setup	ko	OpenIDConnect 로그인
 optional, if only authentication and anonymous search is enabled	setup	ko	선택 사항, 인증 및 익명 검색만 사용하도록 설정한 경우
 or	setup	ko	이거나(OR연산)
 or %1continue to the header admin%2	setup	ko	이거나 %1상위 관리자로 계속%2
@@ -294,8 +295,8 @@ re-enter password	setup	ko	암호 재입력
 read translations from	setup	ko	번역내용 읽기
 readable by the webserver	setup	ko	웹 서버가 읽을수 있음
 really uninstall all applications	setup	ko	모든 응용프로그램을 삭제
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, EGroupware에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
 registered	setup	ko	등록됨
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ko	register_globals 이 켜져 있습니다, EGroupware에서는 필요없는 기능이며 보안상으로도 Off로 설정하시는 것이 좋습니다
 regular expression to filter by dn	setup	ko	DN으로 필터링하는 정규식
 rejected lines	setup	ko	거부된 라인
 remove	setup	ko	삭제

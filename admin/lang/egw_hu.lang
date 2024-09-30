@@ -22,10 +22,7 @@
 %1 token %2.	admin	hu	%1 token %2.
 %1 user %2	admin	hu	%1 felhasználó %2
 (de)activate mail accounts	admin	hu	Mailfiókok (de)aktiválása
-(default no, leave it off if you dont use it)	admin	hu	Alapértelmezésként Nem, hagyja ki ha nem használja
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	hu	(az imapclass-nak támogatnia kell ezt a funkciót a megfelelő konfigurációs érték lekérdezésével, és alapértelmezett kvótaként át kell adnia az IMAP-kiszolgálónak).
 (no subject)	admin	hu	(nincs tárgy)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
 -  type	admin	hu	- típus
 1 year	admin	hu	1 év
 2 month	admin	hu	2 hónap
@@ -87,6 +84,7 @@ aliases	admin	hu	Álnevek
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
 all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	hu	Engedélyezze a felhasználónak, hogy jelszavát a 'Biztonság és jelszavak' alatt tárolja a SingleSignOn-hoz.
 alternate email address	admin	hu	Alternatív emailcím
 anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor).
@@ -121,9 +119,6 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	hu	Azonosítás / Azonosítók
 auto create account records for authenticated users	admin	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
 available placeholders	admin	hu	Elérhető helytartók
-back to admin/grouplist	admin	hu	Vissza az csoportok adminisztráláshoz
-back to admin/userlist	admin	hu	Vissza a felhasználók adminisztráláshoz
-back to the list	admin	hu	Vissza a listához
 bad login name or password.	admin	hu	Hibás belépési név vagy jelszó.
 bad or malformed request. server responded: %s	admin	hu	Hibás kérés. Szerver válasza: %s
 bad request: %s	admin	hu	Hibás kérés: %s
@@ -134,9 +129,7 @@ bottom	admin	hu	Legalsó
 bulk changes	admin	hu	Tömeges módosítások
 bulk password reset	admin	hu	Jelszó tömeges visszaállítása
 calculate next run	admin	hu	Legközelebbi futás kiszámítása
-can be used by application	admin	hu	Ez a modul használhatja
-can be used by group	admin	hu	Ez a csoport használhatja
-can be used by user	admin	hu	A felhasználó alkalmazhatja
+can be used to show groups by container, if enabled	admin	hu	Használható a csoportok konténer szerinti megjelenítésére, ha engedélyezve van.
 can change password	admin	hu	Megváltoztathatja a jelszavát
 cancel changes	admin	hu	Módosítások törlése
 cancel testjob!	admin	hu	Tesztfeladat leállítása/törlése!
@@ -149,6 +142,7 @@ category saved.	admin	hu	Kategória mentve.
 certificate	admin	hu	Tanúsítvány
 certificate details	admin	hu	A tanúsítvány részletei
 certificate validation in days	admin	hu	Tanúsítvány érvényesítés napokban
+change access	admin	hu	Hozzáférési jogok módosítása
 change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
 change login screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
@@ -160,6 +154,7 @@ color	admin	hu	Szín
 configuration	admin	hu	Konfiguráció
 configuration saved.	admin	hu	Konfiguráció mentve.
 connection dropped by imap server.	admin	hu	A kapcsolatot az IMAP szerver eldobta.
+container	admin	hu	Konténer
 continue	admin	hu	Folytat
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	hu	Süti tartomány (az alapértelmezett üres jelentése a teljes domain, például a SiteManager esetében a ".domain.com" lehetővé teszi ugyanazon süti használatát az egw.domain.com és a www.domain.com számára is)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	hu	Süti útvonal (többszörös EGw munkamenetet külön könyvtárakba menti, problémákat okozhat a Sitemanager esetében).
@@ -243,12 +238,6 @@ display	admin	hu	Megjelenítés
 displayed length of input field (set rows=1 to limit length)	admin	hu	A beviteli mező megjelenített hossza (a hossz korlátozásához állítsa be a sorok=1 értéket).
 displaying html messages is disabled	admin	hu	HTML levelek megjelenítése tiltva
 do not delete the category and return back to the list	admin	hu	A kategória törlése NÉLKÜL vissza a listázáshoz
-do not validate certificate	admin	hu	Ne ellenőrizze a tanúsítványt
-do you also want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes általános alkategória?
-do you really want to delete this profile	admin	hu	Valóban törölni kívánja ezt a profilt?
-do you really want to reset the filter for the profile listing	admin	hu	Valóban törölni szeretnéd a profillista szűrőt?
-do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes alkategória?
-do you want to move all global subcategories one level down ?	admin	hu	Biztosan szeretné egy szinttel lejjebb vinni az összes globális alkategóriát?
 document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
 domainname	admin	hu	Tartománynév
 down	admin	hu	Le
@@ -337,6 +326,7 @@ group ?	admin	hu	Csoport?
 group has been added	common	hu	A csoport hozzáadása megtörtént.
 group has been deleted	common	hu	A csoport törlése megtörtént.
 group has been updated	common	hu	A csoport frissítése megtörtént.
+group hierarchy	admin	hu	Csoport-hierarchia
 group list	admin	hu	Csoportlista
 group manager	admin	hu	Csoportmenedzser
 group name	admin	hu	Csoport neve
@@ -509,6 +499,7 @@ quota size in mbyte	admin	hu	Kvóta Mbájtokban
 re-enter password	admin	hu	Jelszó újra
 read this list of methods.	admin	hu	Eljárás lista olvasása.
 register application hooks	admin	hu	Regisztrálja az alkalmazás visszacsatolást
+regular expression to find part to use as container	admin	hu	Szabályos kifejezés a konténerként használandó rész kereséséhez
 remove	admin	hu	Eltávolítás
 reset filter	admin	hu	Szűrö törlése
 rights	admin	hu	Hozzáférés
@@ -551,6 +542,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	hu	Hozzáférési napló megjelenítése
 show current action	admin	hu	Jelenlegi művelet megjelenítése
 show error log	admin	hu	Hibanapló megjelenítése
+show groups in container based on	admin	hu	Csoportok megjelenítése a konténerben a következők alapján
 show phpinfo()	admin	hu	phpinfo() megjelenítése
 show session ip address	admin	hu	Session IP cím megjelenítése
 sieve server hostname or ip address	admin	hu	Sieve szerver hosztneve vagy IP címe
@@ -674,12 +666,9 @@ you must add at least 1 permission or group to this account	admin	hu	Legalább e
 you must enter a group name.	admin	hu	Meg kell adnia egy csoportnevet.
 you must enter a lastname	admin	hu	Meg kell adnia egy keresztnevet.
 you must enter a loginid	admin	hu	Meg kell adnia egy bejelentkezési azonosítót.
-you must enter an application name and title.	admin	hu	Meg kell adnia az alkalmazás nevét és címét.
 you must enter an application name.	admin	hu	Meg kell adnia egy alkalmazás nevét.
 you must enter an application title.	admin	hu	Meg kell adnia egy alkalmazás címet.
-you must select a file type	admin	hu	Kötelező fájltípust választani.
 you must select at least one group member.	admin	hu	Legalább egy csoport tagot ki kell jelölnie.
 you will need to remove the subcategories before you can delete this category	admin	hu	Mielőtt ezt a kategóriát törölné, el kell távolítania az összes alkategóriáját!
-your message to  %1 was displayed.	admin	hu	A %1-nek küldött üzenete megjelent.
 your name	admin	hu	Az ön neve
 your session could not be verified.	admin	hu	Az ön munkamenete nem ellenőrizhető.

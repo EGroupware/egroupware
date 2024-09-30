@@ -2,6 +2,7 @@
 account:	notifications	pt	Conta:
 all possible notification backends	notifications	pt	Todos os backends de notificação possíveis
 are you sure you want to delete all notifications?	notifications	pt	Tem a certeza de que pretende eliminar todas as notificações?
+automatic deleted notifications older than	admin	pt	Eliminar automaticamente as notificações mais antigas do que
 browser	notifications	pt	Navegador
 browser is starting.	notifications	pt	O navegador está a iniciar.
 cancal settings?	notifications	pt	Cancelar definições?
@@ -44,6 +45,7 @@ message from	notifications	pt	Mensagem de
 minutes	notifications	pt	Minutos
 more info	notifications	pt	Mais informações
 notifier	notifications	pt	Notificador
+only used if no push server available!	admin	pt	Utilizado apenas se não existir um servidor push disponível!
 open notified entry	notifications	pt	Abrir a entrada notificada
 page not found, please check serveraddress.	notifications	pt	Página não encontrada, por favor verifique o endereço do servidor.
 password:	notifications	pt	Palavra-passe:

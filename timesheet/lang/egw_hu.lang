@@ -26,7 +26,6 @@ error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépe
 error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!!!
 existing links	timesheet	hu	Meglévő hivatkozások
 export to openoffice spreadsheet	timesheet	hu	Exportálás OpenOffice Táblázatkezelő formátumban
-favorites	timesheet	hu	Kedvencek
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
 general fields:	timesheet	hu	Általános mezők:
@@ -51,6 +50,9 @@ number of row for a multiline inputfield or line of a multi-select-box	timesheet
 or endtime	timesheet	hu	vagy Befejezési idő
 order	timesheet	hu	Rendezés
 parent	timesheet	hu	Szülő
+pause	common	hu	Szünet
+pause time	timesheet	hu	Szünet ideje
+paused	timesheet	hu	Szüneteltetés
 permission denied!!!	timesheet	hu	Hozzáférés megtagadva!!!
 price	timesheet	hu	Ár
 projectmanager integration	admin	hu	ProjectManager integráció
@@ -63,14 +65,17 @@ select a price	timesheet	hu	Ár kiválasztása
 select a project	timesheet	hu	Projekt kiválasztása
 show a quantity sum (eg. to sum up negative overtime)	admin	hu	Jelenítse meg a mennyiségi összesítést (pl. hogy összesítse a negatív túlmunkát is)
 start	timesheet	hu	Kezdés
+start-time can not be before last stop- or pause-time %1!	common	hu	A kezdési idő nem lehet az utolsó megállási vagy szünetelési idő %1 előtt!
 starttime	timesheet	hu	Kezdési idő
 starttime has to be before endtime !!!	timesheet	hu	A kezdési időnek a befejezés előtt kell lennie!
+stop- or pause-time can not be before the start-time %1!	common	hu	A leállási vagy szüneteltetési idő nem lehet az indítási idő %1 előtt!
 sum %1:	timesheet	hu	Összesen %1:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	hu	a nevet a rendszer használja (<=20 karakter), megváltozása esetén a létező adatok elérhetetlenekké válnak
 the text displayed to the user	timesheet	hu	a szöveg megjelenítve a felhasználónak
 this month	timesheet	hu	Folyó hónap
 this week	timesheet	hu	Folyó hét
 this year	timesheet	hu	Folyó év
+timer already running or paused	common	hu	Az időzítő már fut vagy szünetel
 timesheet	common	hu	Regiszter
 timesheet csv export	timesheet	hu	Regiszter CSV export
 timesheet openoffice export	timesheet	hu	Regiszter OpenOffice export

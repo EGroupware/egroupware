@@ -1,3 +1,5 @@
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ro	Dezactivați numai dacă AD-ul dvs. are probleme cu controalele VLV ȘI poate returna toți utilizatorii într-o singură interogare!
+disable vlv controls	setup	ro	Dezactivați controalele VLV
 error searching "dn=%1" for "%2"!	setup	ro	Eroare la căutarea "DN=%1" pentru "%2"!
 error uploading your backup!	setup	ro	Eroare la încărcarea copiei de rezervă!
 every	setup	ro	Fiecare
@@ -6,6 +8,7 @@ failed to mount backup directory!	setup	ro	A eșuat montarea directorului Backup
 failed updating user "%1" dn="%2"!	setup	ro	A eșuat actualizarea utilizatorului "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	ro	A eșuat la scrierea fișierului de configurare header.inc.php, verificați permisiunile!
 fallback authentication	setup	ro	Autentificare de rezervă
+openidconnect login	setup	ro	Conectare OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	ro	opcional, se apenas a autenticação E a pesquisa anônima estiverem ativadas
 or leave empty and select openidconnect as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione OpenID Connect como tipo de autenticação acima para logon único
 or leave empty and select saml as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione SAML como tipo de autenticação acima para logon único
@@ -22,3 +25,4 @@ replace username and email	setup	ro	Înlocuiți numele de utilizator și adresa 
 replace username and keep email	setup	ro	Înlocuiește numele de utilizator și păstrează adresa de e-mail
 required to change passwords	setup	ro	Necesar pentru a schimba parolele
 requires "reset password" privilege, to change passwords!	setup	ro	Necesită privilegiul "Reset Password", pentru a schimba parolele!
+you need to select your current charset!	setup	ro	Trebuie să selectați setul de caractere curent!

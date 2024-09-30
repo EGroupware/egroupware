@@ -16,7 +16,7 @@ deletes this field	timesheet	pt	eliminar este campo
 determines the order the fields are displayed	timesheet	pt	determina a ordem de apresentação dos campos
 directory with documents to insert entries	timesheet	pt	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt	cada valor é uma linha como <id>[=<etiqueta>]
-edit status	common	pt	Editar estado
+edit status	timesheet	pt	Editar estado
 edit this entry	timesheet	pt	Editar este registo
 empty if identical to duration	timesheet	pt	vazio se for igual à duração
 end	timesheet	pt	Fim
@@ -51,7 +51,10 @@ no details	timesheet	pt	Sem detalhes
 no project	timesheet	pt	Nenhum projeto
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 order	timesheet	pt	Ordenar
-parent	admin	pt	Principal
+parent	timesheet	pt	Principal
+pause	common	pt	Pausa
+pause time	timesheet	pt	Tempo de pausa
+paused	timesheet	pt	Pausado
 permission denied!!!	timesheet	pt	Permissão negada!!!
 permissions error - %1 could not %2	timesheet	pt	Erro de permissões -% 1 não pôde% 2
 price	timesheet	pt	Preço
@@ -64,6 +67,8 @@ saves this entry and add a new one	timesheet	pt	Guarda este registo e adiciona u
 select a price	timesheet	pt	Seleccione um preço
 select a project	timesheet	pt	Seleccione um projecto
 start	timesheet	pt	Início
+start-time can not be before last stop- or pause-time %1!	common	pt	A hora de início não pode ser anterior à última hora de paragem ou pausa %1!
+stop- or pause-time can not be before the start-time %1!	common	pt	A hora de paragem ou pausa não pode ser anterior à hora de início %1!
 sum %1:	timesheet	pt	Sum %1:
 tag to mark positions for address labels	timesheet	pt	Tag para marcar posições para etiquetas de endereço
 the following document-types are supported:	timesheet	pt	Os seguintes tipos de documentos são suportados:
@@ -72,6 +77,7 @@ the text displayed to the user	timesheet	pt	o texto apresentado ao utilizador
 this month	timesheet	pt	Este mês
 this week	timesheet	pt	Esta semana
 this year	timesheet	pt	Este ano
+timer already running or paused	common	pt	O temporizador já está a funcionar ou em pausa
 timesheet	common	pt	Folha de tempo
 unitprice	timesheet	pt	Preço por unidade
 values for selectbox	timesheet	pt	Valores para a caixa de selecção

@@ -22,10 +22,7 @@
 %1 token %2.	admin	bg	%1 токен %2.
 %1 user %2	admin	bg	%1 потребител %2
 (de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
-(default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, остави го изключен, ако не се ползва
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	bg	(imapclass трябва да поддържа тази функция чрез запитване за съответната стойност на конфигурацията и да я предаде като квота по подразбиране на IMAP сървъра)
 (no subject)	admin	bg	(без тема)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	bg	За инсталиране на нови приложения използвайте <br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	bg	- вид
 1 year	admin	bg	1 година
 2 month	admin	bg	2 месеца
@@ -85,6 +82,7 @@ add new email address:	admin	bg	Добавяне на нов имейл адре
 add peer server	admin	bg	Добавете Peer Server
 add profile	admin	bg	Добавете профил
 add sub-category	admin	bg	Добавете Подкатегория
+add to group	admin	bg	Добавяне в група
 add user	admin	bg	Добавяне на потребител
 add user or group	admin	bg	Добавяне на потребител или група
 added	admin	bg	Добавено
@@ -96,11 +94,17 @@ admin password	admin	bg	Парола на администратора
 admins	admin	bg	Администратори
 advanced options	admin	bg	Разширени опции
 aliases	admin	bg	Псевдоними
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	bg	Разрешете на потребителя да съхранява паролата си в „Сигурност и пароли“ за SingleSignOn.
 application passwords	admin	bg	Пароли за приложения
 apply the changes	admin	bg	Прилагане на промените
 archive: zip or tar	admin	bg	Архив: ZIP или tar
 bad login name or password.	admin	bg	Лошо име за вход или парола.
+bulk changes	admin	bg	Групови промени
+bulk password reset	admin	bg	Групово възстановяване на паролата
+can be used to show groups by container, if enabled	admin	bg	Може да се използва за показване на групи по контейнер, ако е разрешено
+change access	admin	bg	Промяна на правата за достъп
 checking push (green for success or red for failure)	admin	bg	Проверка на PUSH (зелено = ОК, червено = не е ОК)
+container	admin	bg	Контейнер
 copy of	admin	bg	Копие на
 country	admin	bg	Държава
 created	admin	bg	Създаден
@@ -127,6 +131,7 @@ global categories	common	bg	Глобални категории
 group has been added	common	bg	Групата е добавена.
 group has been deleted	common	bg	Групата е била изтрита.
 group has been updated	common	bg	Групата е актуализирана.
+group hierarchy	admin	bg	Йерархия на групите
 html/plaintext	admin	bg	HTML/текст
 internal name max. 64 chars	admin	bg	Вътрешно име макс. 64 символа
 invalid format, must end in a group of digits e.g. %1 or %2	admin	bg	Невалиден формат, трябва да завършва с група цифри, например %1 или %2
@@ -148,9 +153,11 @@ own categories	admin	bg	Собствени категории
 own install id	admin	bg	Собствен идентификатор на инсталацията
 own install id:	admin	bg	Идентификатор на собствена инсталация:
 permission denied	admin	bg	Не е позволено
+regular expression to find part to use as container	admin	bg	Редовен израз за намиране на част, която да се използва като контейнер
 requested	admin	bg	Заявена
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
 serial number	admin	bg	Сериен номер
+show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
 start	admin	bg	Старт
 translation	admin	bg	Превод
 two weeks	admin	bg	две седмици

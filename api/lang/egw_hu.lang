@@ -6,7 +6,10 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	hu	%1Válasszon egy másik könyvtárat%2<br />vagy tegye írhatóvá a %3 könyvtárat a webszerver számára.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hu	Az %1EGroupware%2 egy php nyelven írt webalapú, többfelhasználós csoportmunkát támogató alkalmazáscsomag.
 '%1' copied to clipboard	common	hu	'%1' másolva a vágólapra
+'%1' does not match the required pattern '%2'	common	hu	'%1' nem felel meg a kért mintának ('%2')
+'%1' is not a valid app-name ('%2')!	common	hu	'%1' NEM érvényes alkalmazásnév ('%2')!
 '%1' is not a valid json file!	common	hu	'%1' nem érvényes JSON fájl
+'%1' must not contain (back)slashes!	common	hu	'%1' nem tartalmazhat (hátsó)perjeleket!
 (session restored in %1 seconds)	common	hu	Munkafázis visszaállítva %1 másodperc alatt.
 00 (disable)	admin	hu	00 (tiltva)
 1 day	common	hu	1 nap
@@ -164,6 +167,7 @@ central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
 change	common	hu	Változtat
 changed	common	hu	Változott
+changes that you made may not be saved.	common	hu	Előfordulhat, hogy az elvégzett módosítások nem kerülnek mentésre.
 charset	common	hu	Betűkészlet
 check all	common	hu	Összes kijelölese
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	hu	Ellenőrizze az üres értékeket az IF utasításokban. Példa {{IF url~EMPTY~~Weboldal:}}} - Ha az url nem üres, akkor kiírja, hogy "Webhely:".
@@ -214,7 +218,7 @@ contacting server...	common	hu	Csatlakozás szerverhez ...
 contains	common	hu	Tartalmaz
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
-copy "%1"	common	hu	"%1" másolása
+copy "%1"	common	hu	%1 másolása
 copy of:	common	hu	Másolat:
 copy to	common	hu	Másolás a következőre
 copy to clipboard	common	hu	Vágólapra másol
@@ -628,6 +632,7 @@ open	common	hu	Megnyit
 open existing contact	common	hu	Meglévő kapcsolat megnyitása
 open notify window	common	hu	Értesítő ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	hu	Az OpenIDConnect bejelentkezés sikeres, de a '%1' felhasználó NEM létezik az EGroupware-ben, ÉS az automatikus felhasználó létrehozása le van tiltva!
 options	common	hu	Opciók
 or	common	hu	vagy
 ordered list	common	hu	Számozott lista
@@ -705,7 +710,6 @@ public	common	hu	Nyilvános
 puerto rico	common	hu	Puerto Rico
 qatar	common	hu	Katar
 read	common	hu	Olvas
-read a list of entries.	common	hu	Bejegyzés lista olvasása.
 read a single entry by passing the id and fieldlist.	common	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
 read this list of methods.	common	hu	Eljárás lista olvasása
 reading	common	hu	Olvasás
@@ -794,9 +798,9 @@ show page generation time on the bottom of the page?	common	hu	Mutassa az oldal 
 show page generation time?	common	hu	Oldal generálási idő megjelenítése
 show password	common	hu	Jelszó megjelenítése
 show/hide	common	hu	Oldalsáv megjelenítése/elrejtése
-show_more_apps	common	hu	Több alkalmazás mutatása
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
+show_more_apps	common	hu	Több alkalmazás mutatása
 sierra leone	common	hu	Sierra Leone
 sign up	common	hu	Regisztráció
 simple	common	hu	Egyszerű
@@ -909,7 +913,6 @@ weekend	common	hu	Hétvége
 welcome	common	hu	Üdvözlet
 western european	common	hu	Nyugat-európai
 western sahara	common	hu	Nyugat-Szahara
-what color should all the blank space on the desktop have	common	hu	Milyen színnel rendelkezzen az összes üres terület az asztalon?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hu	Igen választása esetén a Kezdőlap és Kilépés gombok megjelennek a felső alkalmazás tálcán.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	hu	Hol és hogyan legyenek az EGroupware link szerű tulajdonságok, leírások és kijelentkezés megjelenítve.
 which groups	common	hu	Melyik csoport

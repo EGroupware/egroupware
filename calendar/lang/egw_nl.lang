@@ -20,17 +20,17 @@ accepted	calendar	nl	Geaccepteerd
 access denied to the calendar of %1 !!!	calendar	nl	Toegang tot de agenda van %1 geweigerd!
 access to calendar of %1 denied!	calendar	nl	Toegang tot agenda van %1 geweigerd!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	nl	Reden van de notificatie: Toegevoegd, Geannuleerd, Geaccepteerd, Geweigerd, ...
-actions	calendar	nl	Acties
-actions...	calendar	nl	Acties ...
 add alarm	calendar	nl	Alarm toevoegen
 add appointments via shortened dialog or complete edit window	calendar	nl	Afspraken toevoegen via verkort dialoogvenster of volledig bewerkingsvenster
 add current view as favorite	calendar	nl	Huidige weergave toevoegen als favoriet
 add new alarm	calendar	nl	Nieuw alarm toevoegen
 add new event	calendar	nl	Nieuwe afspraak toevoegen
 add new participants or resource	calendar	nl	Nieuwe deelnemers of middelen toevoegen
+add recurrence	calendar	nl	Herhaling toevoegen
 add timesheet entry	calendar	nl	Urenregistratie toevoegen
 added	calendar	nl	Toegevoegd
 added by synchronization	calendar	nl	Toegevoegd door synchronisatie
+added recurrence on %1.	calendar	nl	Herhaling toegevoegd op %1.
 after	calendar	nl	Na
 after %1	calendar	nl	Na %1
 after current date	calendar	nl	Na de huidige datum
@@ -42,7 +42,6 @@ alarm deleted	calendar	nl	Herinnering verwijderd
 alarm for %1 at %2 in %3	calendar	nl	Herinnering voor %1 op %2 in %3
 alarm management	calendar	nl	Herinneringen beheer
 alarms	calendar	nl	Herinneringen
-all categories	calendar	nl	Alle categorieën
 all day	calendar	nl	Hele dag
 all events	calendar	nl	Alle gebeurtenissen
 all exceptions are converted into single events.	calendar	nl	Alle uitzonderingen worden omgezet in afzonderlijke gebeurtenissen.
@@ -56,6 +55,7 @@ allows to edit the event again	calendar	nl	Staat toe om de gebeurtenis opnieuw t
 always	calendar	nl	Altijd
 always use full edit dialog	calendar	nl	Gebruik altijd het volledige bewerkingsvenster
 always use the full edit dialog, not this little dialog	calendar	nl	Gebruik altijd het volledige bewerkingsvenster, niet dit kleine venster
+apply changes to (future) exceptions too?	calendar	nl	Wijzigingen ook toepassen op (toekomstige) uitzonderingen?
 apply the changes	calendar	nl	Wijzigingen doorvoeren
 attention	calendar	nl	Attentie
 back half a month	calendar	nl	Halve maand terug
@@ -184,12 +184,12 @@ exclude weekend	calendar	nl	Weekend uitsluiten
 execute a further action for this entry	calendar	nl	Voer een vervolg actie uit voor dit record
 existing links	calendar	nl	Bestaande links
 exists	calendar	nl	Bestaat
+explicit recurrences	calendar	nl	Expliciete herhalingen
 export definition to use for nextmatch export	calendar	nl	Export definitie om te gebruiken bij nextmatch export
 exports events from your calendar in ical format.	calendar	nl	Exporteert gebeurtenissen uit je Agenda in iCal formaat.
 exports events from your calendar into a csv file.	calendar	nl	Exporteert gebeurtenissen uit je Agenda naar een CSV-bestand.
 extended	calendar	nl	Uitgebreid
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	nl	Uitgebreide updates bevatten altijd de complete afspraakdetails. iCal's kunnen worden geïmporteerd door aan aantal agendatoepassingen
-favorites	calendar	nl	Favorieten
 fieldseparator	calendar	nl	Veldscheidingssymbool
 filemanager	calendar	nl	Bestandsbeheer
 filename	calendar	nl	Bestandsnaam
@@ -278,6 +278,7 @@ mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not logged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor niet ingelogde personen?
 manage mapping	calendar	nl	Beheer de mappings
 maximum available quantity of %1 exceeded!	calendar	nl	Maximum beschikbare hoeveelheid van %1 overschreden!
+meeting request additional recurrence(s)	calendar	nl	Vergadering vraagt extra herhaling(en) aan
 min days	calendar	nl	Min dagen
 minimum number of users for showing day view as consolidated.	calendar	nl	Minimum aantal gebruikers voor het tonen van dagweergave als geconsolideerd.
 minimum number of users for showing week view as consolidated.	calendar	nl	Minimum aantal gebruikers voor weekweergave als geconsolideerd.
@@ -328,8 +329,10 @@ on time change of more than 4 hours too	calendar	nl	Ook bij tijdswijziging van m
 one month	calendar	nl	Een maand
 one week	calendar	nl	Een week
 one year	calendar	nl	Een jaar
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	nl	Alleen ondersteund door een paar volledig compatibele clients (bijv. van Apple). Als je een URL moet invoeren, wordt deze waarschijnlijk niet ondersteund!
 only the initial date of that recurring event is checked!	calendar	nl	Alleen de begindatum van die terugkerende gebeurtenis is gecontroleerd!
 open todo's:	calendar	nl	Openstaande taken:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	nl	Anders worden wijzigingen in de titel, beschrijving, ... of nieuwe deelnemers niet overgedragen naar uitzonderingen die al zijn aangemaakt.
 output unit	calendar	nl	Uitvoereenheid
 overlap holiday	calendar	nl	Vakantie overlapt
 participants	calendar	nl	Deelnemers
@@ -340,6 +343,7 @@ people holiday	calendar	nl	Mensen vakantie
 permission denied	calendar	nl	Toegang geweigerd
 planner by category	calendar	nl	Planner per categorie
 planner by user	calendar	nl	Planner per gebruiker
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	nl	Let op: Conflictcontrole wordt nooit in het verleden uitgevoerd en is altijd beperkt door de bovenstaande herhalingshorizon.
 please note: you can configure the field assignments after you uploaded the file.	calendar	nl	Let op: U kunt het veld toewijzingen instellen NADAT u het bestand het geupload
 preselected group for entering the planner	calendar	nl	Voorgeselecteerde groep bij het openen van de planner
 prevent deleting of entries	admin	nl	Voorkomen dat deelnemers worden verwijderd
@@ -423,6 +427,7 @@ the document can contain placeholder like {{%1}}, to be replaced with the data.	
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
 the extern organizer changed the event!	calendar	nl	De externe organisator heeft de gebeurtenis gewijzigd!
 the following document-types are supported:	calendar	nl	De volgende document types worden ondersteund :
+the organizer changed the event!	calendar	nl	De organisator heeft het evenement gewijzigd!
 the original series will be terminated today and a new series be created.	calendar	nl	De oorspronkelijke serie wordt vandaag beëindigd en er wordt een nieuwe serie aangemaakt.
 the resource you selected is already overbooked:	calendar	nl	De bron die u selecteerde is reeds over bezet:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	nl	De afzender "%1" is NIET de externe organisator "%2", wees voorzichtig!
@@ -433,6 +438,7 @@ this defines the start of your dayview. events before this time, are shown above
 this entry is currently opened by %1!	calendar	nl	Dit record is nu geopend door %1!
 this entry is opened by user:	calendar	nl	Dit record werd geopend binnen het ingestelde tijdsinterval door gebruiker:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	nl	Deze groep is voorgeselecteerd wanneer u de planner opent. U kunt deze selectie in de planner eventueel wijzigen.
+this is a single recurrence of a recurring event.	calendar	nl	Dit is een enkele herhaling van een terugkerend evenement.
 this message is sent for canceled or deleted events.	calendar	nl	Deze notificatie wordt verstuurd voor geannuleerde en verwijderde afspraken.
 this message is sent for modified or moved events.	calendar	nl	Deze notificatie wordt verstuurd voor gewijzigde afspraken.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	nl	Deze notificatie wordt verstuurd naar elke deelnemer van uw afspraken die notificatie voor nieuwe afspraken heeft geactiveerd.<br>U kunt bepaalde plaatsvervangende woorden invullen  die worden gebruikt met de gegevens van de afspraak. De eerste regel is het onderwerp van de email.
@@ -484,6 +490,7 @@ yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen g
 yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 you are not allowed to book the resource selected:	calendar	nl	U bent niet bevoegd om de geselecteerde bron te boeken:
 you can either set a year or a occurrence, not both !!!	calendar	nl	U kunt een of een jaar of een gebeurtenis instellen, niet beiden!
+you can only notify other users, not yourself!	calendar	nl	Je kunt alleen andere gebruikers verwittigen, niet jezelf!
 you can only set a year or a occurrence !!!	calendar	nl	U kunt alleen een Jaar of een Gebeurtenis instellen!
 you do not have permission to read this record!	calendar	nl	U heeft geen toegang om dit record in te lezen!
 you have a meeting scheduled for %1	calendar	nl	U heeft een vergadering gepland voor %1

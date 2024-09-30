@@ -22,10 +22,7 @@
 %1 token %2.	admin	tr	%1 belirteci %2.
 %1 user %2	admin	tr	%1 kullanıcı %2
 (de)activate mail accounts	admin	tr	Posta hesaplarını (de)Etkinleştir
-(default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	tr	(imapclass, ilgili yapılandırma değerini sorgulayarak bu özelliği desteklemeli ve IMAP sunucusuna defaultquota olarak aktarmalıdır)
 (no subject)	admin	tr	(konu yok)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	tr	(Yeni uygulama yüklemek için <br><a href="setup/" target="setup">Kurulum</a>u kullanınız. !!!)
 1 year	admin	tr	1 yıl
 2 month	admin	tr	2 ay
 2 weeks	admin	tr	2 hafta
@@ -79,6 +76,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 all records and account information will be lost!	admin	tr	Bütün kayıtlar ve hesap bilgileri kaybedilecektir!
 all users	admin	tr	Tüm Kullanıcılar
 allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ver
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	tr	Kullanıcının parolasını SingleSignOn için 'Güvenlik ve Parolalar' altında saklamasına izin verin.
 anonymous user	admin	tr	Anonim kullanıcı
 anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez.
 appearance	admin	tr	Görünüm
@@ -103,7 +101,6 @@ authentication	admin	tr	Kimlik Doğrulama
 authentication / accounts	admin	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	admin	tr	Giriş yapan kullanıcılar için kayıt tut.
 available placeholders	admin	tr	Mevcut yer tutucular
-back to the list	admin	tr	Listeye geri dön
 bi-dir passthrough	admin	tr	çift-yön içiçe
 bi-directional	admin	tr	çift yönlü
 blocking after wrong password	admin	tr	Yanlış şifre sonrası engelleme
@@ -111,6 +108,7 @@ bottom	admin	tr	Taban
 bulk changes	admin	tr	Toplu değişiklikler
 bulk password reset	admin	tr	Toplu şifre sıfırlama
 calculate next run	admin	tr	SIradaki çalıştırmayı hesapla
+can be used to show groups by container, if enabled	admin	tr	Etkinleştirilmişse, grupları konteynere göre göstermek için kullanılabilir
 can change password	admin	tr	Şifre değiştirebilir
 cancel changes	admin	tr	Değişiklikleri iptal et
 cancel testjob!	admin	tr	Test görevini iptal et!
@@ -120,6 +118,7 @@ category list	admin	tr	Kategori listesi
 certificate	admin	tr	Sertifika
 certificate details	admin	tr	Sertifika detayları
 certificate validation in days	admin	tr	Gün içinde sertifika doğrulama
+change access	admin	tr	Erişim haklarını değiştirme
 change acl rights	admin	tr	ACL haklarını değiştir
 change config settings	admin	tr	Sistem ayarlarını değiştir
 change login screen message	admin	tr	Ana ekran mesajını değiştir
@@ -127,6 +126,7 @@ check ip address of all sessions	admin	tr	Bütün oturumların IP'leri kontrol e
 check items to <b>%1</b> to %2 for %3	admin	tr	%3 ögelerini <b>%1</b>den %2'ye kadar seç
 click to select a color	admin	tr	Renk seçmek için tıklayın
 color	admin	tr	Renk
+container	admin	tr	Konteyner
 country	admin	tr	Ülke
 country selection	admin	tr	Ülke seçimi
 create group	admin	tr	Grup oluştur
@@ -175,9 +175,6 @@ disable "auto completion" of the login form	admin	tr	Sistem girişi "Otomatik ta
 disabled (not recomended)	admin	tr	Kullanılmıyor (Önerilmiyor)
 display	admin	tr	Görüntüle
 do not delete the category and return back to the list	admin	tr	Kategoriyi <b>silme</b> ve listeye geri dön
-do you also want to delete all global subcategories ?	admin	tr	Bütün genel alt-kategorileri de silmek ister misiniz?
-do you want to delete all global subcategories ?	admin	tr	Bütün genel alt-kategorileri silmek ister misiniz?
-do you want to move all global subcategories one level down ?	admin	tr	Bir seviye alt bütün genel alt-kategorileri silmek ister misiniz?
 edit account	admin	tr	Hesap düzenle
 edit application	admin	tr	Uygulama düzenle
 edit global category	admin	tr	Genel kategori düzenle
@@ -229,6 +226,7 @@ group ?	admin	tr	Grup?
 group has been added	common	tr	Grup eklendi
 group has been deleted	common	tr	Grup silindi
 group has been updated	common	tr	Grup güncellendi
+group hierarchy	admin	tr	Grup hiyerarşisi
 group list	admin	tr	Grup listesi
 group manager	admin	tr	Grup Yöneticisi
 group name	admin	tr	Grup İsmi
@@ -336,6 +334,7 @@ primary group	admin	tr	Ana grup
 re-enter password	admin	tr	Şifreyi yeniden giriniz
 read this list of methods.	admin	tr	Method listesini oku
 register application hooks	admin	tr	Uygulama bağlantılarını kaydet
+regular expression to find part to use as container	admin	tr	Kapsayıcı olarak kullanılacak parçayı bulmak için düzenli ifade
 remove	admin	tr	Kaldır
 run asynchronous services	admin	tr	Asenkron servisleri çalıştır
 save the category	admin	tr	Kategoriyi kaydet
@@ -365,6 +364,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	tr	Erişim kütüğünü göster
 show current action	admin	tr	Şu anki eylemi göster
 show error log	admin	tr	Hata kütüğünü göster
+show groups in container based on	admin	tr	Kapsayıcıdaki grupları aşağıdakilere göre göster
 show phpinfo()	admin	tr	phpinfo() görüntüle
 show session ip address	admin	tr	Oturum IP adreslerini görüntüle
 site	admin	tr	Site
@@ -432,8 +432,6 @@ you must add at least 1 permission or group to this account	admin	tr	Bu hesaba e
 you must enter a group name.	admin	tr	Bir grup adı girmelisiniz
 you must enter a lastname	admin	tr	Bir soyadı girmelisiniz
 you must enter a loginid	admin	tr	Bir kullanıcı adı girmelisiniz
-you must enter an application name and title.	admin	tr	Bir uygulama adı ve başlığı girmelisiniz
 you must enter an application name.	admin	tr	Bir uygulama adı girmelisiniz
 you must enter an application title.	admin	tr	Bir uygulama başlığı girmelisiniz
-you must select a file type	admin	tr	Bir dosya tipi seçmelisiniz
 you will need to remove the subcategories before you can delete this category	admin	tr	Bir kategoriyi silmeden önce o kategoriye ait tüm alt kategorileri kaldırmalısınız !

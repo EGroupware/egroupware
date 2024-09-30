@@ -2,12 +2,9 @@
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
 %1 email(s) added into %2	common	lv	%1 e-pasts(-i) pievienots(-i) uz %2
 %1 etemplates deleted	common	lv	%1 eTemplates izdzēstas.
-%1 etemplates for application '%2' dumped to '%3'	common	lv	%1 eTemplates %2' aplikācijai izmestas %3'
 %1 etemplates found	common	lv	Atrasti %1 eTemplates.
 %1 is not executable by the webserver !!!	common	lv	%1 nav izpildāms tīmekļa serverī!
-%1 matches on search criteria	common	lv	Meklēšanas kritērijiem atbilst %1 ieraksti
 %1 more %2 selected ...	common	lv	%1 atlasīts vēl %2 ...
-%1 new etemplates imported for application '%2'	common	lv	%2 Aplikācijai inmportētas %1 jauni eTemplates
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	lv	%1EGroupware%2 ir daudzlietotāju, caur tīmekļa pārlūkprogrammu lietojama Groupware ,kas programmēta %3PHP%4.
 %s disabled	common	lv	%s nav atļauts
 %s needed	common	lv	%s vajadzīgs
@@ -15,13 +12,16 @@
 %s onchange	common	lv	%s Mainās
 %s readonly	common	lv	%s tikai lasāms
 '%1' copied to clipboard	common	lv	'%1' nokopēts uz starpliktuvi
+'%1' does not match the required pattern '%2'	common	lv	'%1' neatbilst vajadzīgajam paraugam ('%2').
 '%1' has an invalid format	common	lv	'%1' ir nederīgs formāts
 '%1' has an invalid format !!!	common	lv	%1' nav derīgs formāts!
+'%1' is not a valid app-name ('%2')!	common	lv	“%1“ NAV derīgs lietotnes nosaukums (”%2")!
 '%1' is not a valid date !!!	common	lv	'%1' nav derīgs datums!
 '%1' is not a valid floatingpoint number !!!	common	lv	%1' nav derīgs peldošā komata skaitlis!
 '%1' is not a valid integer !!!	common	lv	%1' nav derīgs vesels skaitlis!
 '%1' is not a valid json file!	common	lv	'%1' nav derīgs JSON fails
 '%1' is not a valid timezone!	common	lv	'%1' nav derīga laika zona!
+'%1' must not contain (back)slashes!	common	lv	“%1” nedrīkst saturēt (atpakaļ)slīpsvītras!
 00 (disable)	admin	lv	00 (disable)
 1 day	common	lv	1 diena
 1 hour	common	lv	1 stunda
@@ -185,6 +185,7 @@ central african republic	common	lv	CENTRĀLĀFRIKAS REPUBLIKA
 chad	common	lv	ČADA
 change	common	lv	Mainīt
 changed	common	lv	Mainīts
+changes that you made may not be saved.	common	lv	Veiktās izmaiņas var netikt saglabātas.
 charset	common	lv	Saraksts
 check all	common	lv	Parbaudīt visu
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	lv	Pārbaudiet, vai IF paziņojumos nav tukšu vērtību. Piemērs {{{IF url~EMPTY~~~Website:}}} - Ja url nav tukšs, raksta "Vietne:".
@@ -699,6 +700,7 @@ open	common	lv	Atvērt
 open existing contact	common	lv	Atvērt esošo kontaktu
 open notify window	common	lv	Atvērt informācijas logu
 open popup window	common	lv	Atvērt papildus logu
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lv	OpenIDConnect pieteikšanās ir veiksmīga, bet lietotājs '%1' EGroupware neeksistē, UN automātiskā lietotāju izveide ir atspējota!
 operator	common	lv	Operators
 optional note about the link	common	lv	Atzīme par saiti pēc izvēles
 options	common	lv	Opcijas
@@ -774,7 +776,6 @@ puerto rico	common	lv	PUERTORIKO
 qatar	common	lv	KATARA
 radiobutton	common	lv	Radiopogas
 read	common	lv	Lasīt
-read a list of entries.	common	lv	Lasīt ierakstu sarakstu.
 read a single entry by passing the id and fieldlist.	common	lv	Lasīt atsevišķu ierakstu apejot ID un lauku sarakstu.
 read etemplate from database (for the keys above)	common	lv	lasīt eTemplate no datubāzes (ar iepriekšminētajām atslēgām)
 read this list of methods.	common	lv	Izlasiet šo metožu sarakstu.
@@ -888,12 +889,12 @@ show page generation time on the bottom of the page?	common	lv	Parādīt lapas �
 show password	common	lv	Rādīt paroli
 show values	common	lv	Rādīt vērtības
 show/hide	common	lv	Parādīt/noslēpt sānu joslu
-show_more_apps	common	lv	Rādīt_vairāk_aplikācijas
 showing	common	lv	Rādīšana
 showing %1	common	lv	rādu %1
 showing %1 - %2 of %3	common	lv	rādu %1 - %2 no %3
 shows / allows you to enter values into the etemplate for testing	common	lv	Parāda/ ļauj ievadīt vērtības eVeidnē testēšanai
 shows/displays etemplate for testing, does not save it before	common	lv	Parāda/ attēlo eVeidni testēšanai, pirms tam nesaglabājot
+show_more_apps	common	lv	Rādīt_vairāk_aplikācijas
 sierra leone	common	lv	SJERRALEONE
 sign up	common	lv	Reģistrēties
 singapore	common	lv	SINGAPŪRA

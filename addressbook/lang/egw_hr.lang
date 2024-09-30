@@ -1,14 +1,10 @@
-%1 records imported	addressbook	hr	%1 zapisa uvezeno
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hr	%1 zapisa pročitano (još nije uvezeno, možete se %2vratiti%3 i odznačiti Testiraj Uvoz)
 (e.g. 1969)	addressbook	hr	(npr. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	hr	<b>Nema konverzijskog tipa &lt;nema&gt; nemogu locirati.</b>  Molim vas izaberite vrstu konverzije s liste
 @-eval() is only availible to admins!!!	addressbook	hr	@-eval() je dostupan samo administratorima!!!
-actions	addressbook	hr	Akcije
 add a single entry by passing the fields.	addressbook	hr	Dodaj jedan unos proslijeđujući polja
 add custom field	addressbook	hr	Dodaj proizvoljno polje
 added	addressbook	hr	Dodano
 address book	common	hr	Adresar
-address book - vcard in	addressbook	hr	Adresar - VCard in
 address book - view	addressbook	hr	Adresar - pregled
 address line 2	addressbook	hr	Adresa Linija 2
 address type	addressbook	hr	Tip Adrese
@@ -49,7 +45,6 @@ csv-fieldname	addressbook	hr	CSV-Ime Polja
 csv-filename	addressbook	hr	CSV-Ime Datoteke
 custom	addressbook	hr	Proizvoljno
 custom fields	addressbook	hr	Proizvoljno Polje
-debug output in browser	addressbook	hr	Prikaz poruka o izlaznim greškama unutar pretraživača
 default	addressbook	hr	Početno postavljena vrijednost
 default filter	addressbook	hr	Osnovni Filter
 delete a single entry by passing the id.	addressbook	hr	Delete a single entry by passing the id.
@@ -94,7 +89,6 @@ import file	addressbook	hr	Uvezi Datoteku
 import from ldif, csv, or vcard	addressbook	hr	Uvezi iz LDIF, CSV, ili VCard
 import from outlook	addressbook	hr	Uvezi iz Outlook
 import next set	addressbook	hr	Uvezi slijedeći set
-import_instructions	addressbook	hr	U Netscape, otvori Adresar i izaberi <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti će u LDIF formatu.<p>Ili, u Outlook, izaberite vaš Contacts mapu, izaberite <b>Import and Export...</b> iz <b>File</b> menija i izvezite vaše kontakte u tekst razmaknut zarezom (comma separated text (CSV)) datoteku.  <p>Ili, u Palm Desktop 4.0 ili više, izaberite vaš adresar i izaberite <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti će u VCard formatu.
 infolog-contact	addressbook	hr	InfoLog
 international	addressbook	hr	Međunarodni
 label	addressbook	hr	LAbela
@@ -127,14 +121,11 @@ postal	common	hr	Poštanski
 pref	addressbook	hr	pref
 prefix	addressbook	hr	Prefiks
 public key	addressbook	hr	Javni ključ
-read a list of entries.	addressbook	hr	Pročitaj listu zapisa
 read a single entry by passing the id and fieldlist.	addressbook	hr	Pročitaj jedan zapis proslijeđujući šifru i listu polja
 record access	addressbook	hr	Pristup Podacima
 record owner	addressbook	hr	Vlasnik Podataka
 repetition	addressbook	hr	Ponavljanje
 select all	addressbook	hr	Označi Sve
-select the type of conversion	addressbook	hr	Izaberite vrstu konverzije
-select the type of conversion:	addressbook	hr	Izaberite vrstu konverzije:
 show	addressbook	hr	Show
 startrecord	addressbook	hr	Početni tzapis
 state	common	hr	Županija

@@ -2,6 +2,11 @@ dark mode theme	preferences	ro	Tema modului întunecat
 fast	preferences	ro	Rapid
 fast update add new entries always top of the list and updates existing ones in place, unless list is sorted by last modified. exact updates do a full refresh, if the list is not sorted by last modified.	preferences	ro	Actualizarea rapidă adaugă noi intrări întotdeauna în partea de sus a listei și le actualizează pe cele existente pe loc, cu excepția cazului în care lista este ordonată după ultima modificare. Actualizările exacte fac o reîmprospătare completă, dacă lista nu este ordonată după ultima modificare.
 how to update lists	preferences	ro	Cum se actualizează listele
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ro	Dacă este activată, parola introdusă va fi stocată și transmisă către alte servere, atunci când vă conectați prin SSO.
 it sets content size (text only) according to selected size.	preferences	ro	Setează dimensiunea conținutului (numai pentru text) în funcție de dimensiunea selectată.
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ro	Conectarea prin SingleSignOn nu oferă o parolă pentru a o transmite către serverele de e-mail sau de fișiere.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ro	Lista de aplicații poate fi derulată cu ajutorul butoanelor de derulare sus/jos (util pentru utilizatorii care lucrează cu un mouse fără rotiță de derulare).
+password stored	preferences	ro	Parolă stocată.
 set content size	preferences	ro	Setați dimensiunea conținutului
+singlesignon and passwords	preferences	ro	SingleSignOn și parolele
+store password retrievable for singlesignon	common	ro	Stocați parola recuperabilă pentru SingleSignOn

@@ -40,6 +40,7 @@ certificate issued by	mail	hu	A tanúsítványt kiállította
 changing subject failed because of %1	mail	hu	A tárgy módosítása nem sikerült %1 miatt
 changing subject failed folder %1 does not exist	mail	hu	A téma módosítása sikertelen %1 mappa nem létezik
 check message against next rule also	mail	hu	Üzenet ellenőrzése a következő szabály szerint is
+checking admin credentials failed	mail	hu	Az admin hitelesítő adatok ellenőrzése sikertelen
 compose	mail	hu	Szerkeszt
 compose as new	mail	hu	Szerkesztés újként
 compress folder	mail	hu	Mappa tömörítése
@@ -117,7 +118,7 @@ filemanager	mail	hu	Filekezelő
 filemode has been switched to %1	mail	hu	Fájlmódra váltott: %1
 flag / unflag	mail	hu	Zászló / Zászló visszavonása
 flagged	mail	hu	megjelölt
-flagged %1 messages as %2 in %3	mail	hu	%1 üzenet(ek) megjelölése %2-ként %3-ban
+flagged %1 messages as %2 in %3	mail	hu	%1 üzenet(ek) megjelölése "%2"-ként %3-ban.
 flagged %1 messages as flagged in %2	mail	hu	%1 üzenet(ek) megjelölve %2-ben megjelölve %2-ben
 flagged %1 messages as unflagged in %2	mail	hu	%1 üzenet(ek) megjelölése %2-ben nem megjelölve
 folder	mail	hu	Mappa
@@ -174,6 +175,7 @@ mail	common	hu	E-mail
 mail acl	mail	hu	Hozzáférési jogok
 mail filter	mail	hu	Levélszűrő
 mail filter rule	mail	hu	Levélszűrő szabály
+mail probably has no text-body	mail	hu	A levél valószínűleg nem tartalmaz szöveget
 mail settings	mail	hu	eMail beállítások
 mail source	mail	hu	Levélforrás
 mail-address	mail	hu	Levelezési cím
@@ -266,6 +268,7 @@ replied	mail	hu	megválaszolt
 reply	mail	hu	Válasz
 reply all	mail	hu	Válasz mindenkinek
 reply to	mail	hu	Válasz
+reply with attachments	mail	hu	Válasz mellékletekkel
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	hu	Az üzenetre való válaszadás sikertelen volt, mert az üzenet tartalma titkosítottnak tűnik, és nem lehet megfelelően visszafejteni. Ha továbbra is szeretné a titkosított üzenet tartalmát, próbálja meg helyette a csatolmányként való továbbítást használni.
 replyto	mail	hu	Válasz
 report as ham	mail	hu	Jelentés Ham-ként

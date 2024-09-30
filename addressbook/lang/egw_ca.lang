@@ -1,17 +1,11 @@
-%1 added	addressbook	ca	%1 afegit
 %1 contact(s) %2	addressbook	ca	%1 contacte(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ca	%1 contacte(s) %2, %3 ha fallat per que no teniu suficients drets !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	ca	%1 camps en %2 altres membres de l'organització han canviat
-%1 records imported	addressbook	ca	%1 registres importats
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ca	%1 registres llegits (no importats encara, podeu tornar %2enrere%3 i desmarcar Prova d'Importació)
 %1 starts with '%2'	addressbook	ca	%1 comença amb '%2'
 (e.g. 1969)	addressbook	ca	(p. ex. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ca	<b>No s'ha trobat el tipus de conversió <cap>.</b> Seleccioneu un tipus de la llista
 @-eval() is only availible to admins!!!	addressbook	ca	@-eval() només és disponible per als administradors!!!
 account repository	admin	ca	Dipòsit de comptes
-accounts	addressbook	ca	Comptes
-actions	addressbook	ca	Accions
-add %1	addressbook	ca	Afegeix %1
 add a contact to this organisation	addressbook	ca	Afegeix un contacte a aquesta organització
 add a new contact	addressbook	ca	Afegeix un nou contacte
 add a new list	addressbook	ca	Afegeix una nova llista
@@ -24,7 +18,6 @@ added by synchronisation	addressbook	ca	afegit per sincronització
 added to distribution list	addressbook	ca	afegit a la llista de distribució
 additional information about using ldap as contact repository	admin	ca	Informació adicional sobre l'ús de LDAP com a dipòsit de contactes
 address book	common	ca	Llibreta d'adreces
-address book - vcard in	addressbook	ca	Llibreta d'adreces - Entrada de targeta VCard
 address book - view	addressbook	ca	Llibreta d'adreces - veure
 address line 2	addressbook	ca	Adreça línia 2
 address type	addressbook	ca	Tipus d'adreça
@@ -35,7 +28,6 @@ addressbook preferences	addressbook	ca	Preferències de la llibreta d'adreces
 addressbook the contact should be saved to	addressbook	ca	Llibreta d'adreces el contacte hauria de ser desat a
 addressbook-fieldname	addressbook	ca	Camp - Llibreta d'adreces
 addvcard	addressbook	ca	Afegir VCard
-advanced search	addressbook	ca	Cerca avançada
 all contacts	addressbook	ca	Tots els contactes
 allow users to maintain their own account-data	admin	ca	Permet als usuaris  mantenir les seves pròpies dades de compte
 alt. csv import	addressbook	ca	Importar CSV (avançat)
@@ -76,7 +68,6 @@ company name	addressbook	ca	Nom de l'empresa
 configuration	common	ca	Configuració
 contact	common	ca	Contacte
 contact application	admin	ca	Aplicació del contacte
-contact copied	addressbook	ca	Contacte copiat
 contact deleted	addressbook	ca	Contacte eliminat
 contact id	addressbook	ca	ID del contacte
 contact repository	admin	ca	dipòsit de contactes
@@ -97,7 +88,6 @@ csv-fieldname	addressbook	ca	Camp CSV
 csv-filename	addressbook	ca	Arxiu CSV
 custom	addressbook	ca	Personalitzat
 custom fields	addressbook	ca	Camps personalitzats
-debug output in browser	addressbook	ca	Depurar sortida al navegador
 default	addressbook	ca	per defecte
 default address format	addressbook	ca	Format d'adreces per defecte
 default addressbook for adding contacts	addressbook	ca	Llibreta d'adreces predeterminada per afegir contactes
@@ -186,7 +176,6 @@ import from ldif, csv, or vcard	addressbook	ca	Importar des de LDIF, CSV o VCard
 import from outlook	addressbook	ca	Importar des d'Outlook
 import multiple vcard	addressbook	ca	Importa VCard Múltiple
 import next set	addressbook	ca	Importar següent registre
-import_instructions	addressbook	ca	Si useu Mozilla o Netscape, obriu la llibreta d'adreces i seleccioneu <b>Exportar</b> des del menú <b>Arxiu</b>. L'arxiu exportat estarà en format LDIF.<p>O bé, en Outlook, seleccioneu la vostra carpeta de contactes, després, al menú <b>Arxiu</b>, <b>Importar i Exportar...</b> per desar-los en un arxiu separat per comes (CSV).<p>O també, en Palm Desktop 4.0 o superior, visiteu la vostra llibreta d'adreces i seleccioneu <b>Exportar</b> al menú <b>Arxiu</b>. L'arxiu exportat estarà en format VCard.
 in %1 days (%2) is %3's birthday.	addressbook	ca	En %1 dies (%2) es l'aniversari de %3.
 income	addressbook	ca	Entrada
 infolog-contact	addressbook	ca	Tasques i Notes
@@ -252,7 +241,6 @@ prefix	addressbook	ca	Prefix
 public key	addressbook	ca	Clau pública
 publish into groups:	addressbook	ca	Publica dins els grups:
 read a list / search for entries.	addressbook	ca	Llegiu una llista / cercau entrades
-read a list of entries.	addressbook	ca	Llegir una llista d'entrades
 read a single entry by passing the id and fieldlist.	addressbook	ca	Llegir una sola entrada passant l'identificador i la llista de camps
 read only	addressbook	ca	només lectura
 record access	addressbook	ca	Accés al registre
@@ -266,12 +254,9 @@ select a portrait format jpeg photo. it will be resized to 60 pixel width.	addre
 select a view	addressbook	ca	Seleccioneu una vista
 select addressbook type	addressbook	ca	Seleccioneu un tipus de llibreta d'adreces
 select all	addressbook	ca	Seleccionar tot
-select an action or addressbook to move to	addressbook	ca	Seleccioneu una acció o una llibreta d'adreces per moure a
 select migration type	admin	ca	Seleccioneu un tipus de migració
 select multiple contacts for a further action	addressbook	ca	Seleccioneu múltiples contactes per una propera acció
 select phone number as prefered way of contact	addressbook	ca	Seleccioneu el número de telèfon com a mitjà preferit de contacte
-select the type of conversion	addressbook	ca	Seleccioneu el tipus de conversió
-select the type of conversion:	addressbook	ca	Seleccioneu el tipus de conversió:
 select where you want to store / retrieve contacts	admin	ca	Seleccioneu quan voleu emmagatzemar / recuperar contactes
 selected contacts	addressbook	ca	Contactes selecionats
 should the columns photo and home address always be displayed, even if they are empty.	addressbook	ca	Les columnes de fotografia i domicili han de mostrar-se sempre, fins i tot si estan buides.
@@ -301,7 +286,6 @@ update a single entry by passing the fields.	addressbook	ca	Actualitzar una sola
 updated	addressbook	ca	Actualitzat
 upload or delete the photo	addressbook	ca	Carrega o esborra  la foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ca	URL per enllaçar-hi números de telèfon (utilitzeu %1 = número per trucar, %u = nom de compte, %t = telèfon de compte)
-use an extra category tab?	addressbook	ca	Utilitzeu una pestanya de categoria extra?
 use country list	addressbook	ca	Utilitzar llista de països
 use setup for a full account-migration	admin	ca	utilitzeu la instal·lació per una migració de compte complerta
 used for links and for the own sorting of the list	addressbook	ca	utilitzat per enllaços i per l'ordenació pròpia de la llista

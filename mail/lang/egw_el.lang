@@ -95,6 +95,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	el	Επιλέξτε για να αποθηκευτεί ως καταχώρηση ημερολογίου κατά την αποστολή
 check to save as infolog on send	mail	el	Επιλέξτε για να αποθηκευτεί ως Infolog κατά την αποστολή
 check to save as tracker entry on send	mail	el	Επιλέξτε για να αποθηκευτεί ως Tracker κατά την αποστολή
+checking admin credentials failed	mail	el	Ο έλεγχος των διαπιστευτηρίων διαχειριστή απέτυχε
 choose file	mail	el	Επιλογή αρχείου
 common acl	mail	el	Κοινά δικαιώματα
 compose	mail	el	Σύνταξη
@@ -235,7 +236,7 @@ files	mail	el	Αρχεία
 flag / unflag	mail	el	Σήμανση / αποσήμανση
 flag or unflag a mail	mail	el	Σήμανση ή αποσήμανση ενός μηνύματος
 flagged	mail	el	με σήμανση
-flagged %1 messages as %2 in %3	mail	el	Τέθηκε η σήμανση %2 σε %1 μήνυμα(τα) στο %3
+flagged %1 messages as %2 in %3	mail	el	Τέθηκε η σήμανση "%2" σε %1 μήνυμα(τα) στο %3.
 flagged %1 messages as flagged in %2	mail	el	Σημάνθηκαν %1 μήνυμα(τα) στο %2
 flagged %1 messages as unflagged in %2	mail	el	Αφαιρέθηκε ή σημάνση από %1 μήνυμα(τα) στο %2
 flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
@@ -325,6 +326,7 @@ mail	common	el	Mail
 mail acl	mail	el	Δικαιώματα πρόσβασης
 mail filter	mail	el	Φίλτρα μηνυμάτων
 mail filter rule	mail	el	Κανόνας φίλτρου μηνυμάτων
+mail probably has no text-body	mail	el	Η αλληλογραφία πιθανώς δεν έχει κείμενο
 mail settings	mail	el	Ρυθμίσεις μηνυμάτων
 mail source	mail	el	Πηγαίος κώδικας μηνύματος
 mail-address	mail	el	Διεύθυνση αλληλογραφίας
@@ -460,6 +462,7 @@ reply	mail	el	Απάντηση
 reply all	mail	el	Απάντηση σε όλους
 reply message type	mail	el	Τύπος μηνύματος απάντησης
 reply to	mail	el	Η απάντηση να ληφθεί στην διεύθυνση
+reply with attachments	mail	el	Απάντηση με συνημμένα αρχεία
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	el	Η απάντηση σε αυτό το μήνυμα απέτυχε επειδή το περιεχόμενο αυτού του μηνύματος φαίνεται να είναι κρυπτογραφημένο και δεν μπορεί να αποκρυπτογραφηθεί σωστά. Εάν εξακολουθείτε να επιθυμείτε να συμπεριλάβετε το περιεχόμενο αυτού του κρυπτογραφημένου μηνύματος, μπορείτε να προσπαθήσετε να χρησιμοποιήσετε την προώθηση ως συνημμένο αντί αυτού.
 replyto	mail	el	Απάντηση στο
 report as ham	mail	el	Αναφορά ως Ham

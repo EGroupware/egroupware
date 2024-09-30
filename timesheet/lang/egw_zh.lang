@@ -53,6 +53,9 @@ number of row for a multiline inputfield or line of a multi-select-box	timesheet
 or endtime	timesheet	zh	结束时间
 order	timesheet	zh	排序
 parent	timesheet	zh	上一层
+pause	common	zh	暂停
+pause time	timesheet	zh	暂停时间
+paused	timesheet	zh	已暂停
 permission denied!!!	timesheet	zh	没有权限！
 price	timesheet	zh	价格
 projectmanager integration	admin	zh	项目管理集成
@@ -65,8 +68,10 @@ select a price	timesheet	zh	选择一个价格
 select a project	timesheet	zh	选择一个项目
 show a quantity sum (eg. to sum up negative overtime)	admin	zh	显示数量合计(如：合计超时加班的费用)
 start	timesheet	zh	开始
+start-time can not be before last stop- or pause-time %1!	common	zh	开始时间不能早于上次停止或暂停时间 %1！
 starttime	timesheet	zh	开始时间
 starttime has to be before endtime !!!	timesheet	zh	开始时间必须在结束时间之前！
+stop- or pause-time can not be before the start-time %1!	common	zh	停止或暂停时间不能早于开始时间 %1！
 sum %1:	timesheet	zh	合计%1：
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
 the text displayed to the user	timesheet	zh	向用户显示的文本
@@ -74,6 +79,7 @@ this month	timesheet	zh	这个月
 this week	timesheet	zh	这星期
 this year	timesheet	zh	今年
 ticket modified by %1 at %2	timesheet	zh	传票由%1在%2修改
+timer already running or paused	common	zh	计时器已运行或暂停
 timesheet	common	zh	时间表
 timesheet csv export	timesheet	zh	时间表 CSV 格式导出
 timesheet openoffice export	timesheet	zh	时间表 OpenOffice 格式导出

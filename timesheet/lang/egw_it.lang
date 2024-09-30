@@ -1,6 +1,6 @@
 %1 timesheets(s) %2	timesheet	it	%1 fogli ore %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	it	%1 fogli ore %2, %3 falliti a causa di permessi insufficienti
---> enter new name	admin	it	->> inserisci nuovo nome
+--> enter new name	timesheet	it	->> inserisci nuovo nome
 2 month ago	timesheet	it	2 mesi fa
 2 years ago	timesheet	it	2 anni fa
 3 years ago	timesheet	it	3 anni fa
@@ -21,13 +21,13 @@ creates a new field	timesheet	it	Crea un nuovo campo
 creating new entry	timesheet	it	creazione di una nuova voce
 custom fields	timesheet	it	Campi Personalizzati
 default document to insert entries	timesheet	it	Documento predefinito per l'inserimento
-delete this status	admin	it	Cancella questo stato
+delete this status	timesheet	it	Cancella questo stato
 deleted	timesheet	it	cancellato
 deletes this field	timesheet	it	Cancella questo campo
 determines the order the fields are displayed	timesheet	it	Determina l'ordine di visualizzazione dei campi
 directory with documents to insert entries	timesheet	it	Cartella con documenti per l'inserimento
 each value is a line like <id>[=<label>]	timesheet	it	ogni valore è una linea come <id>[=<label>]
-edit status	common	it	Modifica lo Stato
+edit status	timesheet	it	Modifica lo Stato
 edit this entry	timesheet	it	Modifica questa voce
 empty if identical to duration	timesheet	it	vuoto se identico a durata
 end	timesheet	it	Fine
@@ -85,11 +85,14 @@ no project	timesheet	it	Non mostrare progetto
 no status	timesheet	it	Non mostrare stato
 none: use only free project-names	admin	it	Nessuno: usa solo nomi progetto liberi
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	it	Numero di righe per un campo di testo oppure un campo di selezione multipla
-only admin	admin	it	Solo amministratori
-only admin can edit this status	admin	it	Solo gli amministratori possono modificare fogli ore con stato
+only admin	timesheet	it	Solo amministratori
+only admin can edit this status	timesheet	it	Solo gli amministratori possono modificare fogli ore con stato
 or endtime	timesheet	it	o OraFine
 order	timesheet	it	Ordine
-parent	admin	it	Superiore
+parent	timesheet	it	Superiore
+pause	common	it	Pausa
+pause time	timesheet	it	Tempo di pausa
+paused	timesheet	it	Pausa
 permission denied!!!	timesheet	it	Permesso negato!!!
 permissions error - %1 could not %2	timesheet	it	Errore di permessi - %1 non può %2
 prevent deleting	admin	it	Prevenzione eliminazioni
@@ -114,12 +117,14 @@ set to	timesheet	it	Imposta a
 show a quantity sum (eg. to sum up negative overtime)	admin	it	Mostra una somma p.es somma dello straordinario negativo
 skip record	timesheet	it	Salta voce
 start	timesheet	it	Inizio
+start-time can not be before last stop- or pause-time %1!	common	it	Il tempo di avvio non può essere precedente all'ultimo tempo di arresto o di pausa %1!
 starttime	timesheet	it	OraInizio
 starttime has to be before endtime !!!	timesheet	it	L'orario di inizio deve essere prima della fine
 status	timesheet	it	Stato
 status deleted.	timesheet	it	Stato eliminato
 status of created timesheets	timesheet	it	Stato di fogli ore creati
 status updated.	timesheet	it	Stato aggiornato
+stop- or pause-time can not be before the start-time %1!	common	it	Il tempo di stop o di pausa non può essere precedente al tempo di avvio %1!
 sum %1:	timesheet	it	Somma %1:
 tag to mark positions for address labels	timesheet	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	it	Il documento può contenere variabili metasintattiche come {{%3}}, da rimpiazzare con i dati (%1elenco completo delle variabili metasintattiche%2)
@@ -130,6 +135,7 @@ this month	timesheet	it	Questo mese
 this week	timesheet	it	Questa settimana
 this year	timesheet	it	Questo anno
 ticket modified by %1 at %2	timesheet	it	Ticket modificato da %1 al %2
+timer already running or paused	common	it	Timer già in funzione o in pausa
 timesheet	common	it	Foglio Ore
 timesheet csv export	timesheet	it	Esportazione folgio ore in CSV
 timesheet csv import	timesheet	it	Importazione folgio ore da CSV

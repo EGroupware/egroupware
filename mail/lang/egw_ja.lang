@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	ja	送信時にイベントとして保存
 check to save as infolog on send	mail	ja	送信後インフォログとして保存
 check to save as tracker entry on send	mail	ja	送信後トラッカーに保存
+checking admin credentials failed	mail	ja	管理者認証のチェックに失敗
 choose file	mail	ja	ファイルを選択してください
 common acl	mail	ja	共通ACL
 compose	mail	ja	作成
@@ -243,7 +244,7 @@ files	mail	ja	ファイル
 flag / unflag	mail	ja	フラグ
 flag or unflag a mail	mail	ja	フラグを付ける/外す
 flagged	mail	ja	フラグ付き
-flagged %1 messages as %2 in %3	mail	ja	%3 の %1 個のメッセージに「%2」フラグを付けました
+flagged %1 messages as %2 in %3	mail	ja	%3 の %1 個のメッセージに「%2」フラグを付けました。
 flagged %1 messages as flagged in %2	mail	ja	%2 の %1 個のメッセージにフラグを付けました
 flagged %1 messages as unflagged in %2	mail	ja	%2 の %1 個のメッセージからフラグを外しました
 flagged / unflagged	mail	ja	フラグを立てる/外す
@@ -336,6 +337,7 @@ mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
 mail filter rule	mail	ja	メールフィルタルール
+mail probably has no text-body	mail	ja	メールはおそらくテキストがありません
 mail settings	mail	ja	電子メール設定
 mail source	mail	ja	メールのソース
 mail-address	mail	ja	メール・アドレス
@@ -491,6 +493,7 @@ reply	mail	ja	返信
 reply all	mail	ja	全員に返信
 reply message type	mail	ja	返信メッセージのタイプ
 reply to	mail	ja	返信
+reply with attachments	mail	ja	添付ファイルで返信する
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	ja	引用するメッセージは暗号化されていて復号できないため返信できません。返信するには、「添付として転送」を利用してください。
 replyto	mail	ja	返信先
 report as ham	mail	ja	ハムとして報告

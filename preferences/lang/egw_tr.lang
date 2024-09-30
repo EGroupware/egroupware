@@ -13,9 +13,14 @@ fast update add new entries always top of the list and updates existing ones in 
 hours	preferences	tr	Saat
 how to update lists	preferences	tr	Listeler nasıl güncellenir
 icon	preferences	tr	Simge
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	tr	Etkinleştirilirse, girdiğiniz parola saklanır ve SSO ile oturum açtığınızda diğer sunucuya aktarılır.
 it sets content size (text only) according to selected size.	preferences	tr	İçerik boyutunu (yalnızca metin) seçilen boyuta göre ayarlar.
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	tr	SingleSignOn üzerinden oturum açmak, posta veya dosya sunucularına aktarmak için bir parola sağlamaz.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	tr	Uygulamalar listesini yukarı/aşağı kaydırma düğmeleriyle kaydırılabilir hale getirin (kaydırma tekerleği olmayan fareyle çalışan kullanıcılar için kullanışlıdır)
+password stored	preferences	tr	Parola saklanır.
 selectbox	preferences	tr	Seçim kutusu
 set content size	preferences	tr	İçerik boyutunu ayarla
+singlesignon and passwords	preferences	tr	SingleSignOn ve parolalar
+store password retrievable for singlesignon	common	tr	SingleSignOn için alınabilen parolayı sakla
 the two passwords are not the same	preferences	tr	İki şifre birbirinden farklı
 users choice	preferences	tr	Kullanıcı Seçimleri

@@ -49,6 +49,9 @@ number of row for a multiline inputfield or line of a multi-select-box	timesheet
 or endtime	timesheet	bg	или краен срок
 order	timesheet	bg	Ред
 parent	timesheet	bg	Родителски
+pause	common	bg	Пауза
+pause time	timesheet	bg	Време за пауза
+paused	timesheet	bg	Пауза
 permission denied!!!	timesheet	bg	Достъпът отказан!!!
 price	timesheet	bg	Цена
 projectmanager integration	admin	bg	Интеграция с Проект-мениджъра
@@ -60,14 +63,17 @@ saves this entry and add a new one	timesheet	bg	Запазва записа и �
 select a price	timesheet	bg	Изберете цена
 select a project	timesheet	bg	Изберете проект
 start	timesheet	bg	Начало
+start-time can not be before last stop- or pause-time %1!	common	bg	Началното време не може да бъде преди последното време на спиране или пауза %1!
 starttime	timesheet	bg	Начален час
 starttime has to be before endtime !!!	timesheet	bg	Началният час трябва да бъде преди крайния !!!
+stop- or pause-time can not be before the start-time %1!	common	bg	Времето на спиране или пауза не може да бъде преди времето на стартиране %1!
 sum %1:	timesheet	bg	Сума %1:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	bg	името, използвано в системата (до 20 символа) Промяната му прави съществуващите данни недостъпни
 the text displayed to the user	timesheet	bg	текстът, показван на потребителя
 this month	timesheet	bg	Този месец
 this week	timesheet	bg	Тази седмица
 this year	timesheet	bg	Тази година
+timer already running or paused	common	bg	Таймерът вече работи или е спрян на пауза
 timesheet	common	bg	График
 timesheet csv export	timesheet	bg	График: експорт в CSV
 timesheet openoffice export	timesheet	bg	График: експорт в OpenOffice

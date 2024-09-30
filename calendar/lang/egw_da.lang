@@ -19,17 +19,17 @@ accepted	calendar	da	Accepteret
 access denied to the calendar of %1 !!!	calendar	da	Adgang nægtet til %1's kalender!
 access to calendar of %1 denied!	calendar	da	Adgang til %1's kalender nægtet!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	da	Handlingen der forårsagede påmindelsen: Tilføjet, Annulleret, Accepteret, Forkastet, ...
-actions	calendar	da	Handlinger
-actions...	calendar	da	Handlinger ...
 add alarm	calendar	da	Tilføj alarm
 add appointments via shortened dialog or complete edit window	calendar	da	Tilføj aftaler via forkortet dialog eller komplet redigeringsvindue
 add current view as favorite	calendar	da	Tilføj aktuel visning som favorit
 add new alarm	calendar	da	Tilføj ny alarm
 add new event	calendar	da	Tilføj ny aftale
 add new participants or resource	calendar	da	Tilføj nye deltagere eller ressourcer
+add recurrence	calendar	da	Tilføj gentagelse
 add timesheet entry	calendar	da	Tilføj timeseddel-post
 added	calendar	da	Tilføjet
 added by synchronization	calendar	da	Tilføjet ved synkronisering
+added recurrence on %1.	calendar	da	Tilføjet gentagelse på %1.
 after	calendar	da	Efter
 after %1	calendar	da	Efter %1
 after current date	calendar	da	Efter aktuel dato
@@ -41,7 +41,6 @@ alarm deleted	calendar	da	Alarm slettet
 alarm for %1 at %2 in %3	calendar	da	Alarm for %1 ved %2 i %3
 alarm management	calendar	da	Alarm håndtering
 alarms	calendar	da	Alarmer
-all categories	calendar	da	Alle kategorier
 all day	calendar	da	Hele dagen
 all events	calendar	da	Alle aftaler
 all exceptions are converted into single events.	calendar	da	Alle undtagelser konverteres til enkeltbegivenheder.
@@ -55,6 +54,7 @@ allows to edit the event again	calendar	da	Tillader at redigere aftalen igen
 always	calendar	da	Altid
 always use full edit dialog	calendar	da	Brug altid den fulde redigeringsdialog
 always use the full edit dialog, not this little dialog	calendar	da	Brug altid den fulde redigeringsdialog, ikke denne lille dialogboks.
+apply changes to (future) exceptions too?	calendar	da	Anvend også ændringer på (fremtidige) undtagelser?
 apply the changes	calendar	da	Acceptér ændringerne
 attention	calendar	da	Opmærksomhed
 back half a month	calendar	da	Halv måned baglæns
@@ -140,10 +140,15 @@ event deleted	calendar	da	Aftale slettet
 event details follow	calendar	da	Hændelses detajler følger
 event saved	calendar	da	Aftale gemt
 event will occupy the whole day	calendar	da	Aftale vil vare hele dagen
+every user can invite other users and groups	admin	da	Alle brugere kan invitere andre brugere og grupper
 exception	calendar	da	Undtagelse
+exception created - you can now edit or delete it	calendar	da	Undtagelse oprettet - du kan nu redigere eller slette den.
 exceptions	calendar	da	Undtagelser
 exclude weekend	calendar	da	Ekskluder weekenden
 existing links	calendar	da	Eksisterende links
+explicit recurrences	calendar	da	Eksplicitte gentagelser
+exports events from your calendar in ical format.	calendar	da	Eksporterer begivenheder fra din kalender i iCal-format.
+exports events from your calendar into a csv file.	calendar	da	Eksporterer begivenheder fra din kalender til en CSV-fil.
 extended	calendar	da	Udvidet
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	da	Udvidet updateringer indeholder alle hændelses detaljerne. iCal's kan importeres af visse andre kalendersystemer.
 fieldseparator	calendar	da	Felt separator
@@ -213,6 +218,7 @@ location, start- and endtimes, ...	calendar	da	Lokation, start- og sluttider, ..
 mail all participants	calendar	da	E-mail alle deltagere
 make freebusy information available to not logged in persons?	calendar	da	Gør fri/optaget information tilgængelig for ikke-indloggede personer?
 maximum available quantity of %1 exceeded!	calendar	da	Maksimal tilgængelig mængde af %1 overskredet!
+meeting request additional recurrence(s)	calendar	da	Mødeanmodning om yderligere gentagelse(r)
 min days	calendar	da	Min dage
 minimum number of users for showing day view as consolidated.	calendar	da	Minimum antal brugere for at vise dagsvisning som konsolideret.
 minimum number of users for showing week view as consolidated.	calendar	da	Minimum antal brugere for at vise ugevisning som konsolideret.
@@ -260,8 +266,10 @@ on time change of more than 4 hours too	calendar	da	Også når tiden ændres mer
 one month	calendar	da	En måned
 one week	calendar	da	En uge
 one year	calendar	da	Et år
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	da	Understøttes kun af nogle få fuldt kompatible klienter (f.eks. fra Apple). Hvis du skal indtaste en URL, vil den højst sandsynligt ikke blive understøttet!
 only the initial date of that recurring event is checked!	calendar	da	Kun den initielle dato af den gentagne aftale er checket!
 open todo's:	calendar	da	Åben Opgave:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	da	Ellers vil ændringer i titel, beskrivelse, ... eller nye deltagere ikke blive overført til undtagelser, der allerede er oprettet.
 output unit	calendar	da	Output-enhed
 overlap holiday	calendar	da	Overlap helligdag
 participants	calendar	da	Deltagere
@@ -271,6 +279,7 @@ password for not loged in users to your freebusy information?	calendar	da	Adgang
 permission denied	calendar	da	Adgang nægtet
 planner by category	calendar	da	Planlægger sorteret efter kategori
 planner by user	calendar	da	Planlægger sorteret efter bruger
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	da	Bemærk: Konflikttjek udføres aldrig i fortiden og er altid begrænset af ovenstående gentagelseshorisont.
 please note: you can configure the field assignments after you uploaded the file.	calendar	da	Bemærk: Du kan ændre feltets assigments EFTER du har uploaded filen.
 preselected group for entering the planner	calendar	da	Forud valgte gruppe valgt i planlæggeren
 previous	calendar	da	Tidligere
@@ -304,7 +313,6 @@ saves the event ignoring the conflict	calendar	da	Ignorér konflikt og gem aftal
 scheduling conflict	calendar	da	Aftale konflikt
 select a %1	calendar	da	Vælg en %1
 select a time	calendar	da	Vælg et tidspunkt
-select an action...	calendar	da	Vælg en handling ...
 select resources	calendar	da	Vælg ressourcer
 select who should get the alarm	calendar	da	Vælg hvem der skal have sat alarm
 send notifications	calendar	da	Send notifikationer
@@ -336,12 +344,14 @@ test import (show importable records <u>only</u> in browser)	calendar	da	Test in
 the apple ical apps use this color to display events from this calendar.	calendar	da	Apple iCal Apps bruger denne farve til at vise begivenheder fra denne kalender.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	da	Dokumentet kan indeholde pladsholdere som {{%1}}, der skal erstattes med data.
 the extern organizer changed the event!	calendar	da	Den eksterne arrangør har ændret begivenheden!
+the organizer changed the event!	calendar	da	Arrangøren har ændret begivenheden!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	da	Afsenderen "%1" er IKKE den eksterne arrangør "%2", fortsæt med forsigtighed!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	da	Afsenderen "%1" er IKKE deltageren, der svarer "%2", fortsæt med forsigtighed!
 this day is shown as first day in the week or month view.	calendar	da	Denne dag bliver vist som den første dag i uge eller måned visning.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	da	Dette definerer dagens slutning i dags visning. Aftaler efter dette tidspunkt vil blive vist under alle andre aftaler.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	da	Dette definerer starten på dagen i dags visning. Aftaler før denne tid vil blive vist over alle andre aftaler.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	da	Denne gruppe bliver automatisk valgt, når du er i planlæggeren. Du kan ændre det i planlæggeren når som helst.
+this is a single recurrence of a recurring event.	calendar	da	Dette er en enkelt gentagelse af en tilbagevendende begivenhed.
 this message is sent for canceled or deleted events.	calendar	da	Denne besked bliver sendt, når en aftale bliver annulleret eller slettet.
 this message is sent for modified or moved events.	calendar	da	Denne besked bliver sendt, hvis en aftale bliver flyttet eller ændret.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	da	Denne besked er sendt til alle deltagere af aftalen som du ejer, som har anmodet om påmindelse af nye aftaler.<br>Du kan bruge visse variabler, som bliver erstattet af informationen i aftalen. Den første linie er emne linien i e-mailen.
@@ -383,6 +393,7 @@ work day starts on	calendar	da	Arbejdsdage begynder om
 yearly	calendar	da	Årlig
 yearview	calendar	da	Visning af år
 you can either set a year or a occurrence, not both !!!	calendar	da	Du kan enten sætte den til År eller en hændelse, men ikke begge!
+you can only notify other users, not yourself!	calendar	da	Du kan kun underrette andre brugere, ikke dig selv!
 you can only set a year or a occurrence !!!	calendar	da	Du kan kun sætte et år eller hændelse!
 you do not have permission to read this record!	calendar	da	Du har ikke rettigheder til at læse denne postering!
 you have a meeting scheduled for %1	calendar	da	Du har et møde planglagt d. (%1)

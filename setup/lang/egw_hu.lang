@@ -33,6 +33,8 @@ default	setup	hu	Alapértelmezett
 default file system space per user/group ?	setup	hu	Az alapértelmezett fájlrendszerméret felhasználónként?
 delete	setup	hu	Törlés
 deny all users access to grant other users access to their entries ?	setup	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	hu	Csak akkor tiltsa le, ha az AD-nek problémái vannak a VLV-ellenőrzésekkel, ÉS egyetlen lekérdezéssel vissza tudja adni az összes felhasználót!
+disable vlv controls	setup	hu	VLV vezérlők letiltása
 domain	setup	hu	Tartomány
 download	setup	hu	Letöltés
 enter the hostname of the machine on which this server is running	setup	hu	Adja meg a gazdagép nevét, ahol az egw szerver fut.
@@ -78,6 +80,7 @@ no modes available	setup	hu	Nincs elérhetó mód
 not set	setup	hu	Nincs megadva
 one month	setup	hu	Egy hónap
 one week	setup	hu	Egy hét
+openidconnect login	setup	hu	OpenIDConnect bejelentkezés
 optional, if only authentication and anonymous search is enabled	setup	hu	opcionális, ha csak a hitelesítés ÉS az anonim keresés van engedélyezve
 or	setup	hu	vagy
 or leave empty and select openidconnect as authentication type above for single sign on	setup	hu	vagy hagyja üresen, és válassza az OpenID Connect hitelesítési típust a fenti egyszeri bejelentkezéshez.
@@ -95,7 +98,7 @@ rename	setup	hu	Átnevezés
 replace username and email	setup	hu	Felhasználónév és e-mail cím cseréje
 replace username and keep email	setup	hu	Felhasználónév cseréje és email megtartása
 required to change passwords	setup	hu	Jelszavak megváltoztatásához szükséges
-requires "reset password" privilege, to change passwords!	setup	hu	"Jelszó visszaállítása" jogosultság szükséges a jelszavak megváltoztatásához!
+requires "reset password" privilege, to change passwords!	setup	hu	Jelszó visszaállítása jogosultság szükséges a jelszavak megváltoztatásához!
 select where you want to store/retrieve user accounts	setup	hu	Válassza ki, hol kívánja tárolni a felhasználói hozzáféréseket
 selectbox	setup	hu	Kiválasztó doboz
 show 'powered by' logo on	setup	hu	'Powered by' logó megjelenítése
@@ -107,3 +110,4 @@ use pure html compliant code (not fully working yet)	setup	hu	Használjon tiszta
 user for smtp-authentication (leave it empty if no auth required)	setup	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)
 would you like to show each application's upgrade status ?	setup	hu	Akarja, hogy megjelenítésre kerüljön minden alkalmazás upgrade állapota?
 write	setup	hu	Írás
+you need to select your current charset!	setup	hu	Ki kell választania az aktuális karakterkészletet!

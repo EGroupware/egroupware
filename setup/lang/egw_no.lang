@@ -117,7 +117,6 @@ current system-charset	setup	no	Nåværende system-karaktersett
 current version	setup	no	Aktuell versjon
 currently installed languages: %1 <br />	setup	no	Installerte språk: %1 <br>
 database successfully converted from '%1' to '%2'	setup	no	Database konvertert fra '%1' till '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	no	Datetime-port.<br>Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br>(Port: 13 / Host 129.6.15.28)
 day	setup	no	Dag
 day of week<br />(0-6, 0=sunday)	setup	no	Ukedag<br>(0-6, 0=søndag)
 db backup and restore	setup	no	DB backup och restore
@@ -144,6 +143,8 @@ deregistered	setup	no	Avregistrert
 details for admin account	setup	no	Detaljer for Adminkonto
 developers' table schema toy	setup	no	Utviklernes Tabell skjema verktøy
 did not find any valid db support!	setup	no	Kunde inte hitta något giltigt databasstöd
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	no	Deaktiver bare hvis AD-et ditt har problemer med VLV-kontroller OG kan returnere alle brukere i en enkelt spørring!
+disable vlv controls	setup	no	Deaktiver VLV-kontroller
 do you want persistent connections (higher performance, but consumes more resources)	setup	no	Vill du använda persistent connections? (bättre prestanda men använder fler systemresurser)
 do you want to manage homedirectory and loginshell attributes?	setup	no	Vill du hantera attribut för hemkatalog och skalprogram?
 does not exist	setup	no	Eksisterer ikke
@@ -249,8 +250,8 @@ mail server login type	setup	no	E-post tjener innloggingstype
 make sure that your database is created and the account permissions are set	setup	no	Förvissa dig om att din databas är skapad, och att åtkomst är konfigurerad rätt
 manage applications	setup	no	Håndtere programmer
 manage languages	setup	no	Håndtere språk
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	no	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 maximum account id (e.g. 65535 or 1000000)	setup	no	Maximalt kontoID (dvs 65535 eller 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	no	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 may be broken	setup	no	Kan være brutt
 mcrypt algorithm (default tripledes)	setup	no	Algoritme for MCrypt (default 3DES)
 mcrypt initialization vector	setup	no	MCrypt initialisasjonsvektor
@@ -263,7 +264,6 @@ modifications have been completed!	setup	no	Förändringarna genomförda
 modified	setup	no	Endret
 modify	setup	no	Förändra
 month	setup	no	Måned
-multi-language support setup	setup	no	Multispråksstöd
 name of database	setup	no	Navn på database
 name of db user egroupware uses to connect	setup	no	Namnet på det användarkonto EGroupware skall använda för att ansluta till databasen
 never	setup	no	Aldri
@@ -289,6 +289,7 @@ one month	setup	no	En måned
 one week	setup	no	En uke
 only add languages that are not in the database already	setup	no	Legg bare til språk som ikke finnes i databasen allerede.
 only add new phrases	setup	no	Legg bare til nye fraser
+openidconnect login	setup	no	OpenIDConnect-pålogging
 optional, if only authentication and anonymous search is enabled	setup	no	valgfritt, hvis kun autentisering OG anonymt søk er aktivert
 or	setup	no	eller
 or %1continue to the header admin%2	setup	no	eller %1fortsätt till Header Admin%2
@@ -329,8 +330,8 @@ re-enter password	setup	no	Skriv inn passord igen
 read translations from	setup	no	Läs översättningar från
 readable by the webserver	setup	no	Läsbar av webservern
 really uninstall all applications	setup	no	Vill du verkligen avinstallera samtliga installationer
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 registered	setup	no	Registrert
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	no	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 regular expression to filter by dn	setup	no	Regulært uttrykk for å filtrere etter DN
 rejected lines	setup	no	Ej godtagna rader
 remove	setup	no	Fjerne

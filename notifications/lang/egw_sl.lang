@@ -2,6 +2,7 @@
 account:	notifications	sl	Račun:
 all possible notification backends	notifications	sl	Vsa možna obvestila
 are you sure you want to delete all notifications?	notifications	sl	Ali ste prepričani, da želite izbrisati vsa obvestila?
+automatic deleted notifications older than	admin	sl	Samodejno brisanje obvestil, starejših od
 browser	notifications	sl	Brskalnik
 browser is starting.	notifications	sl	Brskalnika je zagnan.
 cancal settings?	notifications	sl	Prekinem nastavitve?
@@ -65,6 +66,7 @@ more info	notifications	sl	Več informacij
 notification	common	sl	Obvestilo
 notifier	notifications	sl	Obveščevalec
 notify me by	notifications	sl	Obvesti me
+only used if no push server available!	admin	sl	Uporablja se samo, če ni na voljo potisnega strežnika!
 open notified entry	notifications	sl	Odprti vnešeno obvestilo
 optimize e-mails for external mail client	notifications	sl	Optimizirajte e-pošto za zunanji e-poštni odjemalec
 page not found, please check serveraddress.	notifications	sl	Stran ni našel, prosimo, preverite naslov strežnika.

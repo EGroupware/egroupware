@@ -9,17 +9,17 @@ accept	calendar	tr	Kabul Et
 accepted	calendar	tr	Kabul Edildi
 access to calendar of %1 denied!	calendar	tr	%1'in takvimine erişim reddedildi!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	tr	Uyarıya sebep olan eylem: Eklendi, İptal Edildi, Onaylandı, Reddedildi, ...
-actions	calendar	tr	Eylemler
-actions...	calendar	tr	Eylemler ...
 add alarm	calendar	tr	Alarm Ekle
 add appointments via shortened dialog or complete edit window	calendar	tr	Kısaltılmış iletişim kutusu veya tam düzenleme penceresi aracılığıyla randevu ekleyin
 add current view as favorite	calendar	tr	Geçerli görünümü favori olarak ekle
 add new alarm	calendar	tr	Yeni alarm ekle
 add new event	calendar	tr	Yeni randevu ekle
 add new participants or resource	calendar	tr	Yeni katılımcı veya kaynak ekleme
+add recurrence	calendar	tr	Tekrarlama ekle
 add timesheet entry	calendar	tr	Zaman çizelgesi girişi ekleme
 added	calendar	tr	Eklendi
 added by synchronization	calendar	tr	Senkronizasyon tarafından eklendi
+added recurrence on %1.	calendar	tr	%1'e yineleme eklendi.
 after	calendar	tr	Sonra
 after %1	calendar	tr	%1'den sonra
 after current date	calendar	tr	Geçerli tarihten sonra
@@ -31,7 +31,6 @@ alarm deleted	calendar	tr	Alarm silindi.
 alarm for %1 at %2 in %3	calendar	tr	%3'te %2'de %1 için alarm
 alarm management	calendar	tr	Alarm Yönetimi
 alarms	calendar	tr	Alarmlar
-all categories	calendar	tr	Tüm kategoriler
 all day	calendar	tr	Tüm Gün
 all events	calendar	tr	Tüm etkinlikler
 all exceptions are converted into single events.	calendar	tr	Tüm istisnalar tek olaylara dönüştürülür.
@@ -45,6 +44,7 @@ allows to edit the event again	calendar	tr	Etkinliği tekrar düzenlemeye izin v
 always	calendar	tr	Her zaman
 always use full edit dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın
 always use the full edit dialog, not this little dialog	calendar	tr	Her zaman tam düzenleme iletişim kutusunu kullanın, bu küçük iletişim kutusunu değil
+apply changes to (future) exceptions too?	calendar	tr	Değişiklikleri (gelecekteki) istisnalara da uygulayalım mı?
 attention	calendar	tr	Dikkat
 before the event	calendar	tr	Etkinlikten önce
 birthday	calendar	tr	Doğum Günü
@@ -83,6 +83,7 @@ duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
 email address migration	calendar	tr	E-posta adresi taşıma
 empty for all	calendar	tr	Tamamı için boş
+empty target calendar before importing	calendar	tr	İçe aktarmadan önce hedef takvimi boşaltın
 end date/time	calendar	tr	Bitiş tarih/Zaman
 enddate	calendar	tr	Bitiş tarihi
 ends	calendar	tr	Bitiyor
@@ -90,6 +91,7 @@ error notifying %1	calendar	tr	%1 bildirilirken hata oluştu
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
 exceptions	calendar	tr	İstisnalar
 exclude weekend	calendar	tr	Hafta Sonu Hariç
+explicit recurrences	calendar	tr	Açık yinelemeler
 extended	calendar	tr	Genişletilmiş
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	tr	Genişletilmiş güncellemeler daima etkinlik detaylarının tamamını içerir. iCal bir çok takvim uygulaması tarafından ithal edilebilen bir formatdır.
 fieldseparator	calendar	tr	Alan Ayracı
@@ -126,6 +128,7 @@ lastname of person to notify	calendar	tr	Uyarılacak kişinin soyadı
 link to view the event	calendar	tr	Etkinliği görüntülemek için link
 location	calendar	tr	Konum
 maximum available quantity of %1 exceeded!	calendar	tr	1% maksimum kullanılabilir miktarı aşıldı!
+meeting request additional recurrence(s)	calendar	tr	Toplantı talebi ek nüks(ler)
 min days	calendar	tr	Min gün
 minimum number of users for showing day view as consolidated.	calendar	tr	Gün görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
 minimum number of users for showing week view as consolidated.	calendar	tr	Hafta görünümünü konsolide olarak göstermek için minimum kullanıcı sayısı.
@@ -162,7 +165,9 @@ on all modification, but responses	calendar	tr	Bütün değişikliklerde ama yan
 on any time change too	calendar	tr	Herhangi zaman değişiminde de
 on participant responses too	calendar	tr	Katılımcı cavaplarında da
 on time change of more than 4 hours too	calendar	tr	4 saatten fazla zaman değişikliklerinde de
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	tr	Yalnızca birkaç tam uyumlu istemci tarafından desteklenir (örn. Apple'dan). Bir URL girmeniz gerekiyorsa, büyük olasılıkla desteklenmeyecektir!
 open todo's:	calendar	tr	Yapılacak İşleri Aç:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	tr	Aksi takdirde, başlıkta, açıklamada, ... veya yeni katılımcılarda yapılan değişiklikler önceden oluşturulmuş istisnalara aktarılmayacaktır.
 output unit	calendar	tr	Çıkış birimi
 overlap holiday	calendar	tr	Çakışan tatil
 participants	calendar	tr	Katılımcılar
@@ -171,6 +176,7 @@ people holiday	calendar	tr	Tatildeki insanlar
 permission denied	calendar	tr	İzin verilmedi
 planner by category	calendar	tr	Kategoriye göre planlama
 planner by user	calendar	tr	Kullanıcıya göre planlama
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	tr	Lütfen dikkat: Çakışma kontrolü asla geçmişte yapılmaz ve her zaman yukarıdaki yineleme ufku ile sınırlıdır.
 preselected group for entering the planner	calendar	tr	Planlamaya girmek için önceden seçilmiş grup
 private and global public	calendar	tr	Özel ve Genel Umumi (Public)
 private and group public	calendar	tr	Özel ve Umumi Grup
@@ -213,12 +219,14 @@ test import (show importable records <u>only</u> in browser)	calendar	tr	İthal 
 the apple ical apps use this color to display events from this calendar.	calendar	tr	Apple iCal Uygulamaları bu takvimdeki etkinlikleri görüntülemek için bu rengi kullanır.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	tr	Belge, verilerle değiştirilmek üzere {{%1}} gibi yer tutucu içerebilir.
 the extern organizer changed the event!	calendar	tr	Harici düzenleyici etkinliği değiştirdi!
+the organizer changed the event!	calendar	tr	Organizatör etkinliği değiştirdi!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	tr	Gönderen "%1", harici düzenleyici "%2" DEĞİLDİR, dikkatli olun!
-the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	tr	"%1" göndericisi "%2" yanıtını veren katılımcı DEĞİL, dikkatli olun!
+the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	tr	%1 göndericisi "%2" yanıtını veren katılımcı DEĞİL, dikkatli olun!
 this day is shown as first day in the week or month view.	calendar	tr	Bu gün, aylık ve haftalık görünümde ilk gün olarak görünülenir.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	tr	Bu günlük görünümünüzün sonunu tanımlar. Bundan sonraki etkinlikler günlük görünümün altında görüntülenir.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	tr	Bu günlük görünümüzün başlangıcını tanımlar. Bu zamandan önceki etkinlikler günlük görünümün üzerinde görüntülenir.<br>Bu zaman aynı zamanda yeni etkinlikler için varsayılan başlangıç zamanı olarak kullanılır.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	tr	Bu grup planlamaya girdiğinizde önceden seçilidir. Bunu planlamaya girdiğinizde istediğiniz zaman değiştirebilirsiniz.
+this is a single recurrence of a recurring event.	calendar	tr	Bu, yinelenen bir etkinliğin tek bir yinelenmesidir.
 this message is sent for canceled or deleted events.	calendar	tr	Bu mesaj iptal edilmiş ya da silinmiş etkinlikler için gönderilmiştir.
 this message is sent for modified or moved events.	calendar	tr	Bu mesaj değiştirilmiş ya da taşınmış etkinlikler için gönderilmiştir.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	tr	Bu mesaj yeni etkinliklerden haberdar olmak istediğini belirtmiş ve sizin sahibi olduğunuz etkinliklerin katılımcısı olan bütün katılımcılara gönderilmiştir.<br>Etkinlik bilgileri arasında değiştirilecek bir çok değişkene mesajınızda yer verebilirsiniz. ilk satır e-mailin konusunu oluşturur.
@@ -248,6 +256,7 @@ work day ends on	calendar	tr	Mesai günleri bitişi
 work day starts on	calendar	tr	Mesai günleri başlangıcı
 yearly	calendar	tr	Yıllık
 yearview	calendar	tr	Yıllık Görünüm
+you can only notify other users, not yourself!	calendar	tr	Sadece diğer kullanıcıları bilgilendirebilirsiniz, kendinizi değil!
 you do not have permission to read this record!	calendar	tr	Bu kaydı okumak için yeterli izniniz yok!
 you have a meeting scheduled for %1	calendar	tr	%1 için zamanlanmış bir toplantınız var
 your meeting scheduled for %1 has been canceled	calendar	tr	%1 için ayarlanmış toplantınız iptal edilmiştir

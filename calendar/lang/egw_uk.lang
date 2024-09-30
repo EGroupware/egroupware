@@ -9,17 +9,17 @@ accept	calendar	uk	Прийняти
 accepted	calendar	uk	Прийнято
 access to calendar of %1 denied!	calendar	uk	У доступі до календаря %1 відмовлено!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	uk	Дії, що призводять то сповіщення: Добавлено, Відмінено, Прийнято, Відхилено, ...
-actions	calendar	uk	Дії
-actions...	calendar	uk	Дії ...
 add alarm	calendar	uk	Добавити попередження
 add appointments via shortened dialog or complete edit window	calendar	uk	Додавання зустрічей через скорочений діалог або повне вікно редагування
 add current view as favorite	calendar	uk	Додати поточний перегляд до обраного
 add new alarm	calendar	uk	Додати новий будильник
 add new event	calendar	uk	Додати нову зустріч
 add new participants or resource	calendar	uk	Додайте нових учасників або ресурс
+add recurrence	calendar	uk	Додати рекурентність
 add timesheet entry	calendar	uk	Додати запис до табеля обліку робочого часу
 added	calendar	uk	Добавлено
 added by synchronization	calendar	uk	Додано шляхом синхронізації
+added recurrence on %1.	calendar	uk	Додано повторення на %1.
 after	calendar	uk	Після
 after %1	calendar	uk	Після %1
 age:	calendar	uk	Вік:
@@ -28,7 +28,6 @@ alarm added automatic to new events before event start-time	calendar	uk	Сигн
 alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
 alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
-all categories	calendar	uk	Всі категорії
 all day	calendar	uk	На повний день
 all exceptions are converted into single events.	calendar	uk	Всі винятки перетворюються на окремі події.
 all future	calendar	uk	Всі майбутні
@@ -39,6 +38,7 @@ allow users to prevent change notifications ('do not notify')	calendar	uk	Доз
 always	calendar	uk	Завжди
 always use full edit dialog	calendar	uk	Завжди використовувати повне вікно редагування
 always use the full edit dialog, not this little dialog	calendar	uk	Завжди використовувати повне діалогове вікно редагування, а не це маленьке діалогове вікно
+apply changes to (future) exceptions too?	calendar	uk	Застосувати зміни і до (майбутніх) винятків?
 attention	calendar	uk	До уваги
 before the event	calendar	uk	перед подією
 birthday	calendar	uk	День народження
@@ -79,6 +79,7 @@ duration	calendar	uk	Тривалість
 edit series	calendar	uk	Редагувати серію
 email address migration	calendar	uk	Перенесення адреси електронної пошти
 empty for all	calendar	uk	Порожньо для всіх
+empty target calendar before importing	calendar	uk	Порожній цільовий календар перед імпортом
 end date/time	calendar	uk	Число/Час закінчення
 enddate	calendar	uk	Число закінчення
 ends	calendar	uk	закінчується
@@ -87,6 +88,7 @@ event details follow	calendar	uk	Подробиці події
 exceptions	calendar	uk	Виключення
 exclude weekend	calendar	uk	Виключити вихідні
 existing links	calendar	uk	Існуючі посилання
+explicit recurrences	calendar	uk	Явні повторення
 extended	calendar	uk	Розширений
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	uk	Розширені зміни завжди включають всі подробиці події. iCal формат може бути імпортовано іншими програмами ведення Календарю.
 fieldseparator	calendar	uk	Розділитель полів
@@ -124,6 +126,7 @@ lastname of person to notify	calendar	uk	Прізвище людини для п
 links	calendar	uk	Посилання
 location	calendar	uk	Місце
 maximum available quantity of %1 exceeded!	calendar	uk	Максимально доступну кількість %1 перевищено!
+meeting request additional recurrence(s)	calendar	uk	Збори вимагають додаткових повторень
 min days	calendar	uk	Мінімум днів
 minimum number of users for showing day view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення зведеного перегляду за день.
 minimum number of users for showing week view as consolidated.	calendar	uk	Мінімальна кількість користувачів для відображення тижневого перегляду як консолідованого.
@@ -160,7 +163,9 @@ on any time change too	calendar	uk	також при будь яких змін�
 on invitation / cancellation only	calendar	uk	тільки при запрошенні/відміні
 on participant responses too	calendar	uk	також при відповідях учасників
 on time change of more than 4 hours too	calendar	uk	також при зміні часу більше чим на 4 години
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	uk	Підтримується лише кількома повністю сумісними клієнтами (наприклад, від Apple). Якщо вам потрібно ввести URL-адресу, вона, швидше за все, не буде підтримуватися!
 open todo's:	calendar	uk	Відкриті записи Завдань:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	uk	Інакше зміни в назві, описі, ... або нові учасники не будуть перенесені до вже створених винятків.
 output unit	calendar	uk	Одиниця виміру
 overlap holiday	calendar	uk	свята включно
 participants	calendar	uk	Учасники
@@ -168,6 +173,7 @@ people holiday	calendar	uk	народні свята
 permission denied	calendar	uk	Заборонено
 planner by category	calendar	uk	Планування по категоріям
 planner by user	calendar	uk	Планування по користувачам
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	uk	Зверніть увагу: перевірка на конфлікт ніколи не виконується в минулому і завжди обмежується вищезазначеним горизонтом повторюваності.
 preselected group for entering the planner	calendar	uk	Задана група для входу в Планування
 private and global public	calendar	uk	Особисте та загально публічне
 private and group public	calendar	uk	Особисте та публічне для групи
@@ -212,12 +218,14 @@ test import (show importable records <u>only</u> in browser)	calendar	uk	Тес�
 the apple ical apps use this color to display events from this calendar.	calendar	uk	Додатки Apple iCal використовують цей колір для відображення подій з цього календаря.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	uk	Документ може містити заповнювач типу {{%1}}, який буде замінено даними.
 the extern organizer changed the event!	calendar	uk	Зовнішній організатор змінив подію!
+the organizer changed the event!	calendar	uk	Організатор змінив подію!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	uk	Відправник "%1" НЕ є зовнішнім організатором "%2", будьте обережні!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	uk	Відправник "%1" НЕ є учасником, який відповідає "%2", будьте обережні!
 this day is shown as first day in the week or month view.	calendar	uk	Цей день показується як перший у вигляді тиждня або місяця.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	uk	Це визначає кінець Вигляду дня. Події після цього часу показуються нижче вигляду дня.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	uk	Це визначає початок Вигляду дня. Події до цього часу показуються вище вигляду дня.<br>Цей час також використовується як час початку по замовченню у нових подіях.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	uk	Ця група вибрана наперед при вході в Планування. Ви можете змінити її в Плануванні будь коли.
+this is a single recurrence of a recurring event.	calendar	uk	Це єдине повторення події, що повторюється.
 this message is sent for canceled or deleted events.	calendar	uk	Це повідомлення відсилається для відмінених чи видалених подій.
 this message is sent for modified or moved events.	calendar	uk	Це повідомлення відсилається для змінених чи зміщених подій.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	uk	Це повідомлення відсилається кожному учаснику подій, власником яких є Ви, якщо учасники встановили нагадування щодо нових подій.<br>Ви можете скористатись деякими змінним, котрі заміщаються інформацією події. Перший рядок є темою листа.
@@ -243,6 +251,7 @@ work day starts on	calendar	uk	Робочий день починається
 yearly	calendar	uk	Річний
 yearview	calendar	uk	Вигляд року
 you can either set a year or a occurrence, not both !!!	calendar	uk	Ви можете встановити або Рік або Поширення, не обидва!!!
+you can only notify other users, not yourself!	calendar	uk	Ви можете повідомити тільки інших користувачів, але не себе!
 you can only set a year or a occurrence !!!	calendar	uk	Ви можете встановити або Рік або Поширення!
 you do not have permission to read this record!	calendar	uk	Ви не маєте права на перегляд цьго запису!
 you have a meeting scheduled for %1	calendar	uk	Ви маєте зустріч, призначену на %1

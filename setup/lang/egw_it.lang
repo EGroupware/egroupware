@@ -28,13 +28,11 @@
 80 (http)	setup	it	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	it	<b>set di caratteri da utilizzare</b> Usare UTF-8 se si vogliono usare lingue con vari set di caratteri.
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	it	==> gruppo differente '%1' sotto quel numero did %2, le appartenenze al gruppo NON verranno impostate!
-[header-password],[header-user],[new-password],[new-user]	setup	it	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	it	Accesso negato: nome utente o password errati per la gestione del header!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	it	Accesso negato: nome utente o password errati per la configurazione del dominio '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	it	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encryption{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	it	Esistono Account
 actions	setup	it	Azioni
-activate safe password check	setup	it	Attiva il controllo sicurezza password
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	it	Aggiungi gli utenti auto-creati a questo gruppo (sarà utilizzato 'Default'se il campo è vuoto)
 add new database instance (egw domain)	setup	it	Aggiungi istanza database (dominio EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	it	aggiungi o modifica un dominio: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -219,6 +217,8 @@ deny access	setup	it	Nega accesso
 deny all users access to grant other users access to their entries ?	setup	it	Nega a tutti gli utenti l'accesso ai dati inseriti dagli altri utenti?
 deregistered	setup	it	Deregistrato
 details for admin account	setup	it	Dettagli per l'utente amministratore
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	it	Disabilitare solo se il vostro AD ha problemi con i controlli VLV E può restituire tutti gli utenti in un'unica query!
+disable vlv controls	setup	it	Desactivar controles VLV
 domain	setup	it	Dominio
 domain select box on login	setup	it	Casella selezione dominio al Login
 dont touch my data	setup	it	Non toccare i miei dati
@@ -295,7 +295,6 @@ modified	setup	it	Modificato
 modify	setup	it	Modifica
 month	setup	it	Mese
 mount backup directory to %1	setup	it	Monta la cartella di backup su %1
-multi-language support setup	setup	it	Configurazione del supporto multi-lingua
 name of database	setup	it	Nome del database
 never	setup	it	Mai
 new	setup	it	Nuovo
@@ -317,6 +316,7 @@ one month	setup	it	Un mese
 one week	setup	it	Una settimana
 only add languages that are not in the database already	setup	it	Aggiungi solo le lingue che non sono già presenti nel database
 only add new phrases	setup	it	Aggiungi solo le nuove frasi
+openidconnect login	setup	it	Accesso OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	it	opzionale, se è abilitata solo l'autenticazione E la ricerca anonima
 or	setup	it	o
 or leave empty and select openidconnect as authentication type above for single sign on	setup	it	oppure lasciare vuoto e selezionare OpenID Connect come tipo di autenticazione sopra per il single sign on
@@ -432,6 +432,7 @@ you are ready for this stage, but this stage is not yet written.<br />	setup	it	
 you do not have any languages installed. please install one now <br />	setup	it	Non hai nessuna lingua installata. Per favore installane una adesso.<br>
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	it	Non hai JPGraph nella versione %1 o superiore installato! E' un componente necessario per la generazione del grafico Gantt.
 you must enter a username for the admin	setup	it	Devi inserire un nome utente per l'amministratore
+you need to select your current charset!	setup	it	È necessario selezionare il charset attuale!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	it	Dovresti disinstallare e poi reinstallare, oppure tentare riparazioni manuali
 your applications are current	setup	it	Le tue applicazioni sono aggiornate
 your database does not exist	setup	it	Il tuo database non esiste
@@ -439,3 +440,4 @@ your database is not working!	setup	it	Il tuo database non sta funzionando!
 your database is working, but you dont have any applications installed	setup	it	Il tuo database funziona correttamente, ma non hai nessuna applicazione installata
 your tables are current	setup	it	Le tue tabelle sono aggiornate
 your tables will be dropped and you will lose data	setup	it	Le tue tabelle verranno cancellate e perderai tutti i tuoi dati
+[header-password],[header-user],[new-password],[new-user]	setup	it	[header-password],[header-user],[new-password],[new-user]

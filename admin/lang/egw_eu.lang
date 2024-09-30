@@ -53,7 +53,6 @@ are you sure you want to kill this session ?	admin	eu	Ziru zaude saio honekin am
 async services last executed	admin	eu	Azken zerbitzu asinkronoak exekutatuak
 asynchronous timed services	admin	eu	Zerbitzu asinkronoak programatuak
 authentication / accounts	admin	eu	Identitatea/Kontuak
-back to the list	admin	eu	zerrendara itzuli
 bad login name or password.	admin	eu	Izen edo pasahitz okerra
 bottom	admin	eu	azpialdea
 calculate next run	admin	eu	Hurrengo exekuzioa kalkulatu
@@ -111,8 +110,6 @@ disable	admin	eu	Ezgaitu
 disabled (not recomended)	admin	eu	desaktibatua (ez da gomendatzen)
 display	admin	eu	Erakutsi
 do not delete the category and return back to the list	admin	eu	EZ ezabatu kategoria eta itzuli zerrendera
-do you want to delete all global subcategories ?	admin	eu	Azpikategoria orokor guztiak ezabatu nahi dituzu?
-do you want to move all global subcategories one level down ?	admin	eu	Kategoria orokor guztiak ere ezabatu nahi dituzu?
 down	admin	eu	behea
 edit account	admin	eu	Kontua editatu
 edit application	admin	eu	Aplikazioa editatu
@@ -351,8 +348,6 @@ you must add at least 1 permission or group to this account	admin	eu	Gutxienez b
 you must enter a group name.	admin	eu	Taldeari izen bat eman behar diozu.
 you must enter a lastname	admin	eu	Abizen bat sartu behar duzu
 you must enter a loginid	admin	eu	Erabiltzaile izen bat sartu behar duzu
-you must enter an application name and title.	admin	eu	Izen eta izenburu bat jarri behar diozu aplikazioari.
 you must enter an application name.	admin	eu	Aplikazioari izen bat eman behar diozu.
 you must enter an application title.	admin	eu	Aplikazioari izenburu bat jarri behar diozu.
-you must select a file type	admin	eu	Fitxategi mota bat aukeratu behar duzu
 your session could not be verified.	admin	eu	Zure saioa ezin izan da egiaztatu

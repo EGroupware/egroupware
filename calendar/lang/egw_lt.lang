@@ -3,14 +3,15 @@
 (%1 events in %2 seconds)	calendar	lt	(%1 įvykis per %2 sekundes)
 a party crasher in someone who is not invited to the meeting but somehow got the invitation.	calendar	lt	Į vakarėlį įsibrovėlis - tai asmuo, kuris NĖRA kviečiamas į susitikimą, bet kažkokiu būdu gavo kvietimą.
 access to calendar of %1 denied!	calendar	lt	Prieiga prie %1 kalendoriaus atmesta!
-actions...	calendar	lt	Veiksmai ...
 add alarm	calendar	lt	Pridėti naują žadintuvą
 add appointments via shortened dialog or complete edit window	calendar	lt	Įtraukti susitikimus per sutrumpintą dialogo langą arba visą redagavimo langą
 add current view as favorite	calendar	lt	Pridėti dabartinį vaizdą kaip mėgstamiausią
 add new event	calendar	lt	Pridėti naują paskyrimą
 add new participants or resource	calendar	lt	Pridėti naujų dalyvių arba išteklių
+add recurrence	calendar	lt	Pridėti pasikartojimą
 add timesheet entry	calendar	lt	Pridėti darbo laiko apskaitos žiniaraščio įrašą
 added by synchronization	calendar	lt	Pridėta sinchronizuojant
+added recurrence on %1.	calendar	lt	Pridėtas %1 pasikartojimas.
 after	calendar	lt	Po
 after %1	calendar	lt	Po %1
 age:	calendar	lt	Amžius:
@@ -22,6 +23,7 @@ allow booking requests from any user when creating events?	calendar	lt	Kuriant �
 allow party crashers with email that match the following regular expression	calendar	lt	Leiskite į vakarėlį įsilaužusiems asmenims siųsti el. laiškus, atitinkančius šią reguliariąją išraišką
 always use full edit dialog	calendar	lt	Visada naudokite visą redagavimo dialogo langą
 always use the full edit dialog, not this little dialog	calendar	lt	Visada naudokite visą redagavimo langą, o ne šį mažą langą
+apply changes to (future) exceptions too?	calendar	lt	Taikyti pakeitimus ir (būsimoms) išimtims?
 attention	calendar	lt	Dėmesio
 by default (nothing is set here) egroupware allows only the organizer/owner to add them.	calendar	lt	Pagal numatytuosius nustatymus (čia nieko nenustatyta) "EGroupware" leidžia juos pridėti tik organizatoriui / savininkui.
 category report	calendar	lt	Kategorija Ataskaita
@@ -30,6 +32,7 @@ date range	calendar	lt	Datų intervalas
 email address migration	calendar	lt	El. pašto adreso perkėlimas
 error notifying %1	calendar	lt	Klaida pranešant %1
 exclude weekend	calendar	lt	Neįtraukti savaitgalio
+explicit recurrences	calendar	lt	Aiškūs pasikartojimai
 how many days to be removed in the future (default 365)	calendar	lt	Kiek dienų bus pašalinta ateityje (numatytoji 365)
 how many days to be removed in the past (default 100)	calendar	lt	Kiek dienų turi būti pašalinta praeityje (numatytoji reikšmė 100)
 how many days to sync in the future (default %1)	calendar	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
@@ -41,6 +44,7 @@ ical	calendar	lt	iCal
 ical / rfc2445	calendar	lt	iCal / RFC2445
 ical cannot change the owner of an existing event.  this applies to new events only.	calendar	lt	iCal negali pakeisti esamo įvykio savininko. Tai taikoma tik naujiems įvykiams.
 maximum available quantity of %1 exceeded!	calendar	lt	Didžiausias galimas %1 kiekis viršytas!
+meeting request additional recurrence(s)	calendar	lt	Susitikimo prašymas dėl papildomo (-ų) pasikartojimo (-ų)
 min days	calendar	lt	Minimalus dienų skaičius
 minimum number of users for showing day view as consolidated.	calendar	lt	Mažiausias naudotojų skaičius, kad dienos rodinys būtų rodomas kaip konsoliduotas.
 minimum number of users for showing week view as consolidated.	calendar	lt	Mažiausias naudotojų skaičius, kad savaitės vaizdas būtų rodomas kaip konsoliduotas.
@@ -50,7 +54,10 @@ never notify externals (non-users) about events i create	calendar	lt	Niekada nep
 notify	calendar	lt	Pranešti
 notify all externals (non-users) about this event	calendar	lt	Pranešti visiems išoriniams asmenims (ne naudotojams) apie šį įvykį
 number of resources to be booked	calendar	lt	Užsakomų išteklių skaičius
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	lt	Palaikoma tik kelių visiškai suderinamų klientų (pvz., „Apple“). Jei turite įvesti URL adresą, greičiausiai jis nebus palaikomas!
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	lt	Priešingu atveju pavadinimo, aprašymo, ... pakeitimai arba nauji dalyviai nebus perkelti į jau sukurtas išimtis.
 output unit	calendar	lt	Išvesties vienetas
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	lt	Atkreipkite dėmesį: Konflikto tikrinimas niekada neatliekamas praeityje ir visada ribojamas pirmiau nurodytu pasikartojimo horizontu.
 private event	calendar	lt	Privatus renginys
 recordings	calendar	lt	Įrašai
 removes the event from my calendar	calendar	lt	Pašalina įvykį iš mano kalendoriaus
@@ -66,7 +73,10 @@ status	calendar	lt	Būsena
 the apple ical apps use this color to display events from this calendar.	calendar	lt	Šią spalvą "Apple iCal" programos naudoja šio kalendoriaus įvykiams rodyti.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	lt	Dokumente gali būti tokios pakaitinės žymos kaip {{%1}}, kurios bus pakeistos duomenimis.
 the extern organizer changed the event!	calendar	lt	Išorinis organizatorius pakeitė įvykį!
+the organizer changed the event!	calendar	lt	Organizatorius pakeitė renginį!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	lt	Siuntėjas "%1" NĖRA išorinis organizatorius "%2", elkitės atsargiai!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	lt	Siuntėjas "%1" NĖRA atsakantis dalyvis "%2", elkitės atsargiai!
+this is a single recurrence of a recurring event.	calendar	lt	Tai vienas pasikartojančio renginio pasikartojimas.
 toggle weekend	calendar	lt	Perjungti savaitgalį
 utilities	calendar	lt	Komunalinės paslaugos
+you can only notify other users, not yourself!	calendar	lt	Galite pranešti tik kitiems naudotojams, bet ne sau!

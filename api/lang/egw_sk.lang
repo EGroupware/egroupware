@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	sk	Našlo sa %1 priečinkov %2!
 %1 email addresses inserted	common	sk	%1 e-mailových adries bolo vložených.
 %1 email(s) added into %2	common	sk	%1 e-mailov bolo pridaných do %2
-%1 entries found, select one ...	common	sk	Našlo sa %1 položiek, vyberte si jednu ...
 %1 etemplates deleted	common	sk	%1 eTemplate bolo odstránených.
-%1 etemplates for application '%2' dumped to '%3'	common	sk	%1 eTemplate pre aplikáciu '%2' urobilo výpis do '%3'
 %1 etemplates found	common	sk	Našlo sa %1 eTemplate.
 %1 file	common	sk	%1 súbor
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spustiť!
-%1 matches on search criteria	common	sk	Nájdených bolo %1 zhôd s vyhľadávacím kritériom
 %1 more %2 selected ...	common	sk	Vybraných bolo o %1 viac %2 ...
 %1 more...	common	sk	O %1 viac ...
-%1 new etemplates imported for application '%2'	common	sk	Naimportovaných %1 nových eTemplate pre aplikáciu '%2'
 %1 not implemented for %2!	common	sk	%1 nie je implementované pre %2!
 %1 proxy of %2	common	sk	%1 proxy k %2
 %1 setting "%2" = %3 disallows access via http!	admin	sk	%1nastavenie "%2" = %3 neumožňuje prístup cez http!
@@ -27,8 +23,10 @@
 %s onchange	common	sk	%s onchange
 %s readonly	common	sk	%s len na čítanie
 '%1' copied to clipboard	common	sk	'%1' skopírované do schránky
+'%1' does not match the required pattern '%2'	common	sk	'%1' nezodpovedá požadovanému vzoru ('%2')
 '%1' has an invalid format	common	sk	'%1' má nesprávny formát
 '%1' has an invalid format !!!	common	sk	'%1' má nesprávny formát!
+'%1' is not a valid app-name ('%2')!	common	sk	'%1' NIE JE platný názov aplikácie (“%2")!
 '%1' is not a valid date !!!	common	sk	'%1' nie je platný dátum!
 '%1' is not a valid floatingpoint number !!!	common	sk	'%1' nie je platné číslo s plávajúcou desatinnou čiarkou!
 '%1' is not a valid integer !!!	common	sk	'%1' nie je platné celé číslo!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	sk	'%1' nie je platné časové pásmo!
 '%1' is not allowed ('%2')!	common	sk	'%1' NIE je dovolené ('%2')!
 '%1' is not allowed%2)!	common	sk	'%1' NIE je dovolené %2)!
+'%1' must not contain (back)slashes!	common	sk	'%1' nesmie obsahovať (spätné) lomítka!
 (session restored in %1 seconds)	common	sk	Relácia obnovená za %1 sekúnd.
 00 (disable)	admin	sk	00 (vypnúť)
 1 day	common	sk	1 deň
@@ -256,6 +255,7 @@ chad	common	sk	ČAD
 change	common	sk	Zmeniť
 change owner	common	sk	Zmeniť vlastníka
 changed	common	sk	Zmenené
+changes that you made may not be saved.	common	sk	Vykonané zmeny sa nemusia uložiť.
 charset	common	sk	Charset
 check all	common	sk	Označiť všetko
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sk	Začiarknite pre prázdne hodnoty v deklarácii IF. Napríklad {{IF url~EMPTY~~Website:}} - Ak URL nie je prázdna, napíše "Website:"
@@ -990,6 +990,7 @@ open	common	sk	Otvoriť
 open existing contact	common	sk	Otvoriť existujúci kontakt
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sk	Prihlásenie do OpenIDConnect bolo úspešné, ale používateľ '%1' v EGroupware NEexistuje a automatické vytváranie používateľov je vypnuté!
 operator	common	sk	Operátor
 optional note about the link	common	sk	Voliteľná poznámka o Odkaze
 options	common	sk	Možnosti
@@ -1080,14 +1081,12 @@ private	common	sk	Súkromné
 programs	common	sk	Programy
 project	common	sk	Projekt
 properties	common	sk	Vlastnosti
-protocol is required	common	sk	Vyžaduje sa protokol
 public	common	sk	Verejné
 puerto rico	common	sk	PORTORIKO
 qatar	common	sk	KATAR
 quick add	common	sk	Rýchle pridanie
 radiobutton	common	sk	Tlačítko vypnutia
 read	common	sk	Čítať
-read a list of entries.	common	sk	Čítať zoznam záznamov.
 read a single entry by passing the id and fieldlist.	common	sk	Načítať jednotlivý záznam pomocou zadania ID a zoznamu.
 read etemplate from database (for the keys above)	common	sk	Načítať eTemplate z databázy (pre vyššieuvedené kľúče)
 read this list of methods.	common	sk	Čítaj tento zoznam metód
@@ -1284,12 +1283,12 @@ show page generation time?	common	sk	Ukázať čas generovania stránky
 show password	common	sk	Ukázať heslo
 show values	common	sk	Zobraziť hodnoty
 show/hide	common	sk	Zobraziť/skryť bočný panel
-show_more_apps	common	sk	Show_more_apps
 showing	common	sk	Zobrazujem
 showing %1	common	sk	zobrazujem %1
 showing %1 - %2 of %3	common	sk	zobrazujem %1 - %2 z %3
 shows / allows you to enter values into the etemplate for testing	common	sk	Zobrazí / umožní zadať hodnoty do eTemplate pre testovacie účely
 shows/displays etemplate for testing, does not save it before	common	sk	Zobrazí eTemplate pre testovanie, NEuloží ju predtým
+show_more_apps	common	sk	Show_more_apps
 sierra leone	common	sk	SIERRA LEONE
 sign up	common	sk	Prihlásiť sa
 simple	common	sk	Jednoduché
@@ -1484,7 +1483,6 @@ weekend	common	sk	Víkend
 welcome	common	sk	Vitajte
 western european	common	sk	Západoeurópske
 western sahara	common	sk	ZÁPADNÁ SAHARA
-what color should all the blank space on the desktop have	common	sk	Akú farbu má mať všetok prázdny priestor na desktope?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sk	Čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sk	Keď zlúčite položky do dokumentov, budú uložené na tomto mieste. Ak neposkytnete priečinok, uložia sa do Vášho domovského priečinku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.

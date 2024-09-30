@@ -22,13 +22,11 @@
 80 (http)	setup	ru	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	ru	<b>используемая таблица символов</b> (используйте UTF-8 если планируете использовать языки с различающимися таблицами символов):
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	ru	==> Под этим gidNumber %2 другая группа '%1', членство не задано!
-[header-password],[header-user],[new-password],[new-user]	setup	ru	[пароль заголовка],[пароль пльзователя],[новый пароль],[новый пользователь]
 access denied: wrong username or password for manage-header !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для управления заголовком!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для настройки домена '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	ru	хранилище учетных записей{sql(по умолчанию) | ldap},[верификация{sql | ldap | mail | ads | http | ...}],[шифрование sql{md5 | blowfish_crypt | md5_crypt | crypt}],[проверка сохранения? пароля{ (по умолчанию)|True}],[разрешить авторизацию по куки{ (по умолчанию)|True}]
 accounts existing	setup	ru	Существующие учетные записи
 actions	setup	ru	Действия
-activate safe password check	setup	ru	Включить проверку паролей на защищенность
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ru	Добавить автоматически созданных пользователей в эту группу (если пусто, то будет попытка добавит в группу по умолчанию 'Default')
 add new database instance (egw domain)	setup	ru	Добавьте новую операцию в базу данных
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	ru	добавить или редактировать имя домена: [имя домена(по умолчанию)],[имя БД(egroupware)],[пользователь БД(egroupware)],пароль БД,[тип БД(mysql)],[сервер БД(localhost)],[порт БД(зависит от БД)],[пользователь-администратор(как администратор заголовка)],[пароль администратора(как у администратора заголовка)]
@@ -141,8 +139,6 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	ru	Проверка расширения %1 загружена или загружаема
 checking file-permissions of %1 for %2 %3: %4	setup	ru	Проверка доступа к файлам %1 для %2 %3: %4
 checking for gd support...	setup	ru	Проверка графической (GD) поддержки ...
-checking for jpgraph in %1	setup	ru	Проверка наличия JPGraph в %1
-checking for tnef application	setup	ru	Проверка на наличие tnef
 checking function %1 exists	setup	ru	Проверка функции %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	ru	Проверка доступности на запись веб-сервером пути, указанного в php.ini параметром session.save_path='%1'
 checking php.ini	setup	ru	Проверка php.ini
@@ -190,18 +186,15 @@ creating tables	setup	ru	Создание таблиц
 creation of %1 in %2 failed !!!	setup	ru	Создание %1 в %2 не удалось!
 current configuration:	setup	ru	Текущая конфигурация:
 current system-charset	setup	ru	Текущий набор символов
-current system-charset is %1.	setup	ru	Текущий набор символов %1
 current version	setup	ru	Текущая версия
 currently installed languages: %1 <br />	setup	ru	Установленные языки: %1
 custom handler: %1	setup	ru	Пользовательский обработчик: %1
 custom set via %1	setup	ru	Пользовательский набор через %1
-cyrus imap: admin user,password	setup	ru	Cyrus IMAP: имя входа администратора, пароль
 database	setup	ru	База данных
 database instance (egw domain)	setup	ru	Экземпляр базы данных (домен EGw)
 database is version %1 and up to date.	setup	ru	Версия базы данных %1 актуальна
 database successfully converted from '%1' to '%2'	setup	ru	База данных успешно  преобразована из %1 в %2
 datebase %1 droped.	setup	ru	База данных %1 удалена
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ru	Порт точного времени.<br>При использовании порта 13, прежде чем подтверждать и отправлять эту страницу, пожалуйста удостоверьтесь что соответствующие настройки файерволлов корректно проведены.<br>(Порт: 13 / Хост: 129.6.15.28)
 day	setup	ru	день
 day of week<br />(0-6, 0=sunday)	setup	ru	день недели<br>(0-6, 0=воскресенье)
 db backup and restore	setup	ru	Резервное копирование и восстановление БД
@@ -228,6 +221,8 @@ deregistered	setup	ru	Регистрация отменена
 details for admin account	setup	ru	Детали учетной записи администратора
 developers' table schema toy	setup	ru	Игрушка "Схема Таблицы" для Разработчиков
 did not find any valid db support!	setup	ru	Не найдена какая-либо верная поддержка БД!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ru	Отключайте только в том случае, если ваша AD имеет проблемы с VLV-контролем и может вернуть всех пользователей в одном запросе!
+disable vlv controls	setup	ru	Отключить элементы управления VLV
 do you want persistent connections (higher performance, but consumes more resources)	setup	ru	Вы желаете использовать постоянные соединения (выше производительность, но требует больше ресурсов)
 do you want to manage homedirectory and loginshell attributes?	setup	ru	Не желаете ли вы поуправлять атрибутами домашней папки и системы входа(loginshell)?
 does not exist	setup	ru	не существует
@@ -262,10 +257,10 @@ enable mcrypt	setup	ru	Включить MCrypt
 enforce ssl (allows to specify just a path above)	setup	ru	Требовать SSL (допустимо указывать только путь)
 enter some random text for app session encryption	setup	ru	Введите какой-нибудь случайный текст для шифрования приложения session
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	ru	Введите какой-нибудь случайный текст для шифрования<br>app_session (требуется mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ru	Введите полный путь до временных файлов.<br>Примеры: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	ru	Введите полный путь до временных файлов.<br>Примеры: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	ru	Введите полный путь до файлов пользователей и групп.<br>Примеры: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ru	Введите полный путь до временных файлов.<br>Примеры: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	ru	Введите полный путь до файлов пользователей и групп.<br>Примеры: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ru	Введите полный путь до файлов пользователей и групп.<br>Примеры: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	ru	Введите полный путь к папке резервного копирования.<br> Если не заполнено, используется папка файлов пользователей files
 enter the hostname of the machine on which this server is running	setup	ru	Введите имя компьютера на котором запущен сервер
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ru	Укажате адрес EGroupware.<br>Пример: http://www.domain.com/egroupware   или   /egroupware<br><b>Без косой черты в конце</b>
@@ -385,7 +380,6 @@ login as user postgres, eg. by using su as root	setup	ru	Войти как по�
 login to mysql -	setup	ru	Вход в mysql -
 loginname needed for domain configuration	setup	ru	Для конфигурирования домена необходимо имя входа
 logout	setup	ru	Выход
-mail account of %1 migraged	setup	ru	Учётная запись %1 перенесена
 mail domain (for virtual mail manager)	setup	ru	Домен почты (для управления Виртуальной почтой)
 mail server login type	setup	ru	Тип входа в сервер почты
 mail server protocol	setup	ru	Протокол связи с сервером почты
@@ -393,8 +387,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	ru	Управление Приложениями
 manage languages	setup	ru	Управление Языками
 manual / help	setup	ru	Руководство / Помощь
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ru	параметр max_execution_time установлен на значение менее 30 секунд:EGroupware иногда бывает необходимо более длителное время запуска, за исключением случающихся проблм
 maximum account id (e.g. 65535 or 1000000)	setup	ru	Максимальный идентификатор учетной записи (напр. 65535 или 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ru	параметр max_execution_time установлен на значение менее 30 секунд:EGroupware иногда бывает необходимо более длителное время запуска, за исключением случающихся проблм
 may be broken	setup	ru	может быть сломан
 mcrypt algorithm (default tripledes)	setup	ru	Алгоритм MCrypt (по умолчанию TRIPLEDES)
 mcrypt initialization vector	setup	ru	Вектор инициализации MCrypt
@@ -412,7 +406,6 @@ modified	setup	ru	Изменено
 modify	setup	ru	Изменить
 month	setup	ru	месяц
 mount backup directory to %1	setup	ru	Подключить backup каталог в %1
-multi-language support setup	setup	ru	Установка многояыковой поддержки
 name of database	setup	ru	Имя базы данных
 name of db user egroupware uses to connect	setup	ru	Имя пользователя БД используемое EGroupware для подключения
 never	setup	ru	никогда
@@ -444,6 +437,7 @@ one month	setup	ru	один месяц
 one week	setup	ru	одна неделя
 only add languages that are not in the database already	setup	ru	Только добавить языки которых еще нет в базе данных
 only add new phrases	setup	ru	Только добавить новые фразы
+openidconnect login	setup	ru	Вход в систему OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	ru	необязательно, если включена только аутентификация и анонимный поиск
 or	setup	ru	или
 or %1continue to the header admin%2	setup	ru	или %1Перейти к Администрированию Заголовка%2
@@ -496,8 +490,8 @@ read translations from	setup	ru	Прочитать переводы из
 readable by the webserver	setup	ru	веб-сервер может читать
 really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
 refusing to delete dn "%1"!	setup	ru	Отказано в удалении DN "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ru	параметр   register_globals  включен, EGroupware этого НЕ требует и в основном защищенность выше когда он выключен
 registered	setup	ru	зарегистрировано
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ru	параметр   register_globals  включен, EGroupware этого НЕ требует и в основном защищенность выше когда он выключен
 regular expression to filter by dn	setup	ru	Регулярное выражение для фильтрации по DN
 rejected lines	setup	ru	Отклоненные строки
 remove	setup	ru	Удалить
@@ -737,5 +731,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	ru	Ваши таблицы текущей версии
 your tables will be dropped and you will lose data	setup	ru	Ваши таблицы будут сброшены и вы потеряете данные!
 your temporary directory '%1' %2	setup	ru	Ваша папка временных файлов '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	ru	[пароль заголовка],[пароль пльзователя],[новый пароль],[новый пользователь]
 {db | php(default) | php-restore}	setup	ru	{БД | php(по-умолчанию)| php-восстановление}
 {off(default) | on}	setup	ru	{выкл(по-умолчанию) | вкл}

@@ -24,11 +24,17 @@ no details	timesheet	da	Ingen detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
 order	timesheet	da	Rækkefølge
 parent	timesheet	da	Overstående
+pause	common	da	Pause
+pause time	timesheet	da	Tid for pause
+paused	timesheet	da	Pauseret
 saves the changes made	timesheet	da	gem ændringer
 saves the changes made and leaves	timesheet	da	gem ændringerne og afslut
 start	timesheet	da	Start
+start-time can not be before last stop- or pause-time %1!	common	da	Starttidspunktet kan ikke være før sidste stop- eller pausetidspunkt %1!
+stop- or pause-time can not be before the start-time %1!	common	da	Stop- eller pausetidspunktet kan ikke være før starttidspunktet %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
 the text displayed to the user	timesheet	da	teksten som vises til brugeren
+timer already running or paused	common	da	Timer kører allerede eller er sat på pause
 values for selectbox	timesheet	da	Værdier for selectboks
 week	timesheet	da	Uge
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	da	Din database er ikke up to date (%1 vs. %2) Kør %3setup%4 for at opdatere database.

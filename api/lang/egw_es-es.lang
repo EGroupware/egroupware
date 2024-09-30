@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	es-es	¡%1 directorios %2 encontrados!
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo.
 %1 email(s) added into %2	common	es-es	Se añadieron %1 correos-e a %2
-%1 entries found, select one ...	common	es-es	Se han encontrado %1 entradas. Seleccione una ...
 %1 etemplates deleted	common	es-es	%1 plantillas borradas
-%1 etemplates for application '%2' dumped to '%3'	common	es-es	%1 plantillas para la aplicación '%2' volcadas a '%3'
 %1 etemplates found	common	es-es	%1 plantillas encontradas.
 %1 file	common	es-es	archivo %1
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web!
-%1 matches on search criteria	common	es-es	%1 coincidencias para la búsqueda solicitada
 %1 more %2 selected ...	common	es-es	%1 más %2 seleccionados ...
 %1 more...	common	es-es	%1 más ...
-%1 new etemplates imported for application '%2'	common	es-es	%1 nuevas plantillas importadas para la aplicación '%2'
 %1 not implemented for %2!	common	es-es	¡%1 no está implementado para %2!
 %1 proxy of %2	common	es-es	%1 proxy de %2
 %1 setting "%2" = %3 disallows access via http!	admin	es-es	¡%1 configurando "%2" =%3 no permite el acceso a través de http!
@@ -27,8 +23,10 @@
 %s onchange	common	es-es	%s onchange
 %s readonly	common	es-es	%s de sólo lectura
 '%1' copied to clipboard	common	es-es	%1' copiado en el portapapeles
+'%1' does not match the required pattern '%2'	common	es-es	'%1' no coincide con el patrón requerido ('%2')
 '%1' has an invalid format	common	es-es	'%1' no tiene un formato válido
 '%1' has an invalid format !!!	common	es-es	¡'%1' no tiene un formato válido!
+'%1' is not a valid app-name ('%2')!	common	es-es	¡'%1' NO es un nombre de aplicación válido ('%2')!
 '%1' is not a valid date !!!	common	es-es	¡'%1'  no es una fecha válida!
 '%1' is not a valid floatingpoint number !!!	common	es-es	¡'%1' no es un número válido de coma flotante!
 '%1' is not a valid integer !!!	common	es-es	¡'%1' no es un entero válido!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	es-es	¡'%1' no es una zona horaria válida!
 '%1' is not allowed ('%2')!	common	es-es	¡'%1' NO está permitido ('%2')!
 '%1' is not allowed%2)!	common	es-es	¡'% 1' NO está permitido (%2)!
+'%1' must not contain (back)slashes!	common	es-es	'%1' no debe contener barras (invertidas).
 (session restored in %1 seconds)	common	es-es	Sesión restaurada en %1 segundos.
 00 (disable)	admin	es-es	00 (desactivar)
 1 day	common	es-es	1 día
@@ -257,6 +256,7 @@ chad	common	es-es	CHAD
 change	common	es-es	Cambiar
 change owner	common	es-es	Cambiar el propietario
 changed	common	es-es	Modificado
+changes that you made may not be saved.	common	es-es	Es posible que no se guarden los cambios realizados.
 charset	common	es-es	Conjunto de caracteres
 check all	common	es-es	Marcar todo
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	es-es	Compruebe si hay valores vacíos en las sentencias IF. Ejemplo {{IF url~EMPTY~~Website:}} - Si url no está vacío, escribe "Website:"
@@ -992,6 +992,7 @@ open	common	es-es	Abrir
 open existing contact	common	es-es	Abrir contacto existente
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	es-es	El inicio de sesión OpenIDConnect se ha realizado correctamente, pero el usuario '%1' NO existe en EGroupware, ¡Y la creación automática de usuarios está desactivada!
 operator	common	es-es	Operador
 optional note about the link	common	es-es	Nota opcional sobre el enlace
 options	common	es-es	Opciones
@@ -1085,14 +1086,12 @@ private	common	es-es	Privado
 programs	common	es-es	Programas
 project	common	es-es	Proyecto
 properties	common	es-es	Propiedades
-protocol is required	common	es-es	Se requiere protocolo
 public	common	es-es	Público
 puerto rico	common	es-es	PUERTO RICO
 qatar	common	es-es	QATAR
 quick add	common	es-es	Añadir rápido
 radiobutton	common	es-es	Botón tipo radio
 read	common	es-es	Leer
-read a list of entries.	common	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	common	es-es	Leer una sola entrada pasando el ID y la lista de campos
 read etemplate from database (for the keys above)	common	es-es	Leer plantilla de la base de datos (para las claves de arriba)
 read this list of methods.	common	es-es	Leer esta lista de métodos
@@ -1290,12 +1289,12 @@ show page generation time?	common	es-es	Mostrar el tiempo que tarda en generarse
 show password	common	es-es	Mostrar contraseña
 show values	common	es-es	Mostar valores
 show/hide	common	es-es	Mostrar/ocultar barra lateral
-show_more_apps	common	es-es	Mostrar más aplicaciones
 showing	common	es-es	Mostrando
 showing %1	common	es-es	Mostrando %1
 showing %1 - %2 of %3	common	es-es	Mostrando %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	es-es	Muestra / permite introducir valores en la plantilla para probar
 shows/displays etemplate for testing, does not save it before	common	es-es	Muestra la plantilla para pruebas. NO la guarda antes
+show_more_apps	common	es-es	Mostrar más aplicaciones
 sierra leone	common	es-es	SIERRA LEONA
 sign up	common	es-es	Registrarse
 simple	common	es-es	Simple
@@ -1490,7 +1489,6 @@ weekend	common	es-es	Fin de semana
 welcome	common	es-es	Página principal
 western european	common	es-es	Europeo occidental
 western sahara	common	es-es	SAHARA OCCIDENTAL
-what color should all the blank space on the desktop have	common	es-es	¿Qué color debe tener todo el espacio en blanco en el escritorio?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	es-es	Cuando fusione entradas en documentos, se almacenarán aquí. Si no se proporciona ninguna carpeta, se almacenarán en su directorio personal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.

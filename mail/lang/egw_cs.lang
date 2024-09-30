@@ -480,6 +480,7 @@ reply	mail	cs	Odpovědět
 reply all	mail	cs	Odpovědět všem
 reply message type	mail	cs	Formátovat e-mail při odpovídání / přeposílání
 reply to	mail	cs	Odpovědět (komu)
+reply with attachments	mail	cs	Odpovědět s přílohami
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	cs	Odpověď na tuto zprávu se nezdařila, protože obsah této zprávy je zřejmě zašifrován a nelze jej správně dešifrovat. Pokud si přesto přejete obsah této zašifrované zprávy uvést, můžete místo toho zkusit použít předání jako přílohu.
 replyto	mail	cs	Odpovědět (komu)
 report as ham	mail	cs	Nahlásit jako ham

@@ -244,7 +244,7 @@ files	mail	de	Anhang
 flag / unflag	mail	de	Markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	Markiert
-flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als "%2" in %3 markiert
+flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als "%2" in %3 markiert.
 flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
 flagged / unflagged	mail	de	Markierung

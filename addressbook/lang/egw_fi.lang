@@ -1,26 +1,19 @@
-%1 added	addressbook	fi	%1 lisätty
 %1 contact(s) %2	addressbook	fi	%1 yhteystieto(a) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fi	%1 yhteyshenkilö(t) %2, %3 epäonnistui %4:n vuoksi!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fi	%1 yhteystieto(a) %2, %3 epäonnistui puutteellisien ACL-oikeuksien takia!
 %1 contacts updated (%2 errors).	addressbook	fi	%1 yhteystietoa päivitetty, %2 virhe(ttä).
 %1 fields in %2 other organisation member(s) changed	addressbook	fi	%1 kenttiä %2:ssa muun organisaation jäsen(iä) on muutettu.
 %1 key(s) added to public keyserver "%2".	addressbook	fi	%1 avain(t) lisätty julkiseen avainpalvelimeen "%2".
-%1 not implemented for %2!	addressbook	fi	%1 ei ole implementoitu %2!
 %1 public keys added.	addressbook	fi	%1 julkista avainta lisätty.
-%1 records imported	addressbook	fi	%1 tietuetta tuotu.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fi	%1 tietuetta luettu (ei vielä tuotu, voit %2palata%3 takaisin ja poistaa valinnan "Testi Tuonti").
 %1 shared this contact on %2 with %3 %4	addressbook	fi	%1 jakoi tämän yhteystiedon %2:ssa %3:n kanssa %4:n kanssa
 %1 starts with '%2'	addressbook	fi	%1 alkaa %2
 %s please calculate the result	addressbook	fi	%s, ole hyvä ja laske tulos
 (e.g. 1969)	addressbook	fi	(esim. 1969)
 (empty = use global limit, no = no export at all)	admin	fi	Tyhjä = käytä yleistä rajoitusta, ei = ei vientiä
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fi	<b>Muunnostyyppiä <none> ei löydy.</b> Valitse muunnostyyppi listasta.
 @-eval() is only availible to admins!!!	addressbook	fi	@-eval() on vain ylläpitäjien käytettävissä!
 account id	addressbook	fi	Käyttäjätilin ID
 account repository	admin	fi	Käyttäjätilien varasto
-accounts	addressbook	fi	Käyttäjätilit
-actions	addressbook	fi	Toiminnot
-add %1	addressbook	fi	Lisää %1
 add a contact to this organisation	addressbook	fi	Lisää yhteystieto tähän organisaatioon
 add a customfield to link title	addressbook	fi	Lisää mukautettu kenttä linkin otsikkoon
 add a new contact	addressbook	fi	Lisää uusi yhteystieto
@@ -59,7 +52,6 @@ addressbook vcard export	addressbook	fi	Osoitekirjan vCard-vienti
 addressbook vcard import	addressbook	fi	Osoitekirjan vCard-tuonti
 addressbook-fieldname	addressbook	fi	Osoitekirja - kentän nimi
 addvcard	addressbook	fi	Lisää vCard
-advanced search	addressbook	fi	Tarkennettu haku
 all addressbooks	addressbook	fi	Kaikki osoitekirjat
 all contacts	addressbook	fi	Kaikki yhteystiedot
 all in one field	addressbook	fi	Kaikki yhdessä kentässä
@@ -158,7 +150,6 @@ custom	addressbook	fi	Lisätiedot
 custom etemplate for the contactform	addressbook	fi	Muokkaa eMallipohja yhteystietokaavakkeelle
 custom fields	addressbook	fi	Lisätiedot
 data exchange settings	addressbook	fi	Tiedonvaihdon asetukset
-debug output in browser	addressbook	fi	Virheenselvitys selaimessa
 default	addressbook	fi	Oletus
 default action on double-click	addressbook	fi	Kaksoisnapsautuksen oletustoiminto
 default address format	addressbook	fi	Oletusosoitteen muoto
@@ -243,7 +234,6 @@ extra	addressbook	fi	Lisätiedot
 extra private	addressbook	fi	Yksityiset tiedot
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	fi	%1 organisaation jäsen(ien) muutos epäonnistui (Puutteelliset oikeudet)!
 favorite phone	addressbook	fi	Suosikkipuhelin
-favorites	addressbook	fi	Suosikit
 fax	addressbook	fi	Faksi
 fax number	common	fi	Faksinumero
 field %1 has been added !	addressbook	fi	Kenttä %1 on lisätty!
@@ -302,7 +292,6 @@ import from ldif, csv, or vcard	addressbook	fi	Tuo LDIF-, CSV- tai vCard-muodost
 import from outlook	addressbook	fi	Tuo Outlookista
 import multiple vcard	addressbook	fi	Tuo useita vCard:ja
 import next set	addressbook	fi	Tuo seuraava ryhmä
-import_instructions	addressbook	fi	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file. <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu. The file exported will be in vCard format.
 importer's personal	addressbook	fi	Tuojan henkilökohtainen
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	fi	Tuo yhteystiedot osoitekirjaan CSV tiedostosta. CVS (Comma Seperated Values) tarkoittaa pilkulla erotettua muotoilua. Voit valita Asetukset välilehdeltä myös muita erotustapoja.
 imports contacts into your addressbook from a vcard file.	addressbook	fi	Tuo yhteystietoja osoitekirjaan vCard-tiedostosta.
@@ -366,7 +355,6 @@ name of current user, all other contact fields are valid too	addressbook	fi	Nyky
 name, address	addressbook	fi	Nimi, osoite
 name, email, phone	addressbook	fi	Nimi, sähköposti, puhelin
 new contact submitted by %1 at %2	addressbook	fi	Uusi yhteystieto lisätty: %1, %2
-new window opened to edit infolog for your selection	addressbook	fi	Uusi ikkuna avattu, voit muokata valitsemaasi InfoLog.
 next date	addressbook	fi	Seuraava tapaaminen
 no categories selected	addressbook	fi	Kategorioita ei ole valittu
 no country selected	addressbook	fi	Ei valittua maata
@@ -413,7 +401,6 @@ public key	addressbook	fi	Julkinen avain
 public sharing url	addressbook	fi	Julkisen jakamisen URL-osoite
 publish into groups:	addressbook	fi	Julkaise ryhmissä:
 read a list / search for entries.	addressbook	fi	Lue luettelo / hae tietueita.
-read a list of entries.	addressbook	fi	Lue tietueiden luettelo
 read a single entry by passing the id and fieldlist.	addressbook	fi	Lue yksittäinen tietue antamalla tunniste (ID) ja kenttäluettelo.
 read only	addressbook	fi	Vain luku
 record access	addressbook	fi	Tietueen käyttöoikeus
@@ -437,14 +424,10 @@ select a source address to be used in geolocation routing system	addressbook	fi	
 select a view	addressbook	fi	Valitse näkymä
 select addressbook type	addressbook	fi	Valitse osoitekirjan tyyppi
 select all	addressbook	fi	Valitse kaikki
-select an action or addressbook to move to	addressbook	fi	Valitse toiminto tai osoitekirja siirrettäväksi
-select an action or addressbook to move to...	addressbook	fi	Valitse toiminto tai osoitekirja siirrettäväksi ...
 select an opened dialog	addressbook	fi	Valitse avattu valintaikkuna
 select migration type	admin	fi	Valitse sulautustapa
 select multiple contacts for a further action	addressbook	fi	Suorita valituille yhteystiedoille seuraava toiminto
 select phone number as prefered way of contact	addressbook	fi	Valitse puhelinnumero ensisijaiseksi yhteydenottotavaksi yhteystiedolle
-select the type of conversion	addressbook	fi	Valitse muunnoksen tyyppi
-select the type of conversion:	addressbook	fi	Valitse muunnoksen tyyppi:
 select where you want to store / retrieve contacts	admin	fi	Valitse minne varastoit / palautat yhteystiedot
 selected contacts	addressbook	fi	Valitse yhteystiedot
 send emailcopy to receiver	addressbook	fi	Lähetä sähköpostikopio vastaanottajalle

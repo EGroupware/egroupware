@@ -78,6 +78,7 @@ icon	preferences	sl	Ikona
 icons and text	preferences	sl	Ikone in besedilo
 icons only	preferences	sl	Samo ikone
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	sl	Če je vrstica že izbrana, se druge črte izberejo tako, da držite tipko Ctrl / Cmd in kliknete nanje (če ne izbrišete trenutne izbrane vrstice) ali pa jih preprosto kliknete kot potrditveno polje. Če nobena vrstica ni izbrana, jo klikne na enega, ki ga vedno izbere. Če pritisnete tipko Shift, izberejo vse med trenutno izbrano vrstico in enim klikom.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	sl	Če je omogočeno, se vneseno geslo shrani in posreduje drugemu strežniku, ko se prijavite prek SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	sl	Slike, ki so povezane na vnos, so lahko prikazane kot ikonice. Če želite pohitriti nalaganje strani, lahko to izključite.
 in which country are you. this is used to set certain defaults for you.	preferences	sl	V kateri državi ste. Uporabno za pravilen izbor privzetih vrednosti.
 interface/template selection	preferences	sl	Vmesnik/izbira predloge
@@ -85,6 +86,7 @@ it sets content size (text only) according to selected size.	preferences	sl	Nast
 just clicking on the line, like a checkbox	preferences	sl	samo kliknite na vrstico, na primer potrditveno polje
 kama theme	preferences	sl	Kama predloga
 language	preferences	sl	Jezik
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sl	Prijava prek SingleSignOn ne zagotavlja gesla za posredovanje poštnim ali datotečnim strežnikom.
 look & feel	preferences	sl	Poglej in občuti
 lowercase letters	preferences	sl	male črke
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sl	Seznam aplikacij je mogoče pomikati z gumboma za pomikanje navzgor in navzdol (uporabno za uporabnike, ki delajo z miško brez kolesca za pomikanje).
@@ -105,6 +107,7 @@ password changed	preferences	sl	Geslo je spremenjeno.
 password contains only %1 of required %2 character classes: no %3	preferences	sl	geslo vsebuje samo %1 potrebnih %2 znakovnih razredov: ne %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	sl	geslo vsebuje "%1" del vašega uporabniškega ali celotnega imena (3 ali več znakov)
 password must have at least %1 characters	preferences	sl	geslo mora imeti vsaj %1 znakov
+password stored	preferences	sl	Shranjeno geslo.
 permanent time zone selection	preferences	sl	Stalni časovni pas
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sl	Izberite časovne pasove za preklop med. Stikalo ni prikazano, če je izbrana manj kot dve časovni pasovi.
 please select your timezone.	preferences	sl	Izberite svoj časovni pas.
@@ -136,8 +139,10 @@ show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
 show number of current users	preferences	sl	Prikaži število prijavljenih uporabnikov
 show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski ikoni
 show_more_apps	common	sl	Pokaži več aplikacij
+singlesignon and passwords	preferences	sl	SingleSignOn in gesla
 special characters	preferences	sl	posebne znake
 spellchecker language	addressbook	sl	Jezik črkovalnika
+store password retrievable for singlesignon	common	sl	Shranjevanje gesla, ki ga je mogoče priklicati za SingleSignOn
 text editor settings	preferences	sl	Nastavitve urejevalnika besedila
 text only	preferences	sl	Samo besedilo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sl	Privzeta aplikacija se bo zagnala ob vstopu v EGW ali ob kliku na domačo ikono.<br>Na domači strani je lahko hkrati prikazanih več aplikacij. Prikaz aplikacij določate v nastavitvah aplikacij.

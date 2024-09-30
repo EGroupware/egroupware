@@ -22,13 +22,11 @@
 80 (http)	setup	pl	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do użycia</b> (wybierz UTF-8 jeżeli planujesz używać różnych języków z różnymi zestawami znaków)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	pl	===> inna grupa '%1' pod numerem <i>gidNumber</i> , nie ustawiono przynależności.
-[header-password],[header-user],[new-password],[new-user]	setup	pl	[hasło-administracyjne (header)],[użytkownik-administracyjny (header)],[nowe-hasło],[nowy-użytkownik]
 access denied: wrong username or password for manage-header !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do zarządzania domenami EGw!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do konfigurowania domeny '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pl	konto repozytorium{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	pl	Konta istnieją
 actions	setup	pl	Akcje
-activate safe password check	setup	pl	Aktywuj sprawdzanie bezpiecznego hasła
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Dodawaj automatycznie tworzonych użytkowników do tej grupy ('Domyślna' będzie wybierana jeżeli zostawisz puste.)
 add new database instance (egw domain)	setup	pl	Dodaj nową instancję bazy danych (domenę EGroupware)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pl	dodaj lub edytuj domenę: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -136,7 +134,6 @@ check to backup and restore the files directory (may use a lot of space, make su
 checking extension %1 is loaded or loadable	setup	pl	Sprawdzam, czy rozszerzenie %1 jest załadowane lub możliwe do załadowania
 checking file-permissions of %1 for %2 %3: %4	setup	pl	Sprawdzam prawa dostępu obiektu %1 dla %2 %3: %4
 checking for gd support...	setup	pl	Sprawdzam wsparcie dla modułu GD ...
-checking for jpgraph in %1	setup	pl	Sprawdzam JPGraph w %1
 checking function %1 exists	setup	pl	Sprawdzam, czy funkcja '%1' istnieje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pl	Sprawdzam czy ustawienia w php.ini  session.save_path='%1' - czy web serwer jest uprawniony do zapisu dla tego pliku.
 checking php.ini	setup	pl	Sprawdzam plik php.ini
@@ -183,18 +180,15 @@ creating tables	setup	pl	Tworzenie tabel
 creation of %1 in %2 failed !!!	setup	pl	Tworzenie %1 w polu %2!
 current configuration:	setup	pl	Bieżąca konfiguracja:
 current system-charset	setup	pl	Bieżący systemowy zestaw znaków
-current system-charset is %1.	setup	pl	Bieżący systemowy zestaw znaków to %1.
 current version	setup	pl	Aktualna wersja
 currently installed languages: %1 <br />	setup	pl	Zainstalowane wersje językowe: %1 <br>
 custom handler: %1	setup	pl	Niestandardowa obsługa: %1
 custom set via %1	setup	pl	Niestandardowe ustawienie przez %1
-cyrus imap: admin user,password	setup	pl	Cyrus IMAP: użytkownik Admin, Hasło
 database	setup	pl	Baza danych
 database instance (egw domain)	setup	pl	Instancja bazy danych domena (EGroupware)
 database is version %1 and up to date.	setup	pl	Wersja bazy danych to %1 i jest to najnowsza dostępna wersja
 database successfully converted from '%1' to '%2'	setup	pl	Baza danych poprawnie skonwertowana z '%1' do '%2'
 datebase %1 droped.	setup	pl	Baza danych %1 usunięta.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pl	Port czasowy <br>Jeśli używany port 13, ustaw reguły Firewall przed zatwierdzeniem zmian.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	pl	Dzień
 day of week<br />(0-6, 0=sunday)	setup	pl	Dzień tygodnia <br>(0-6, 0=niedziela)
 db backup and restore	setup	pl	Kopie zapasowe bazy danych
@@ -220,6 +214,8 @@ deregistered	setup	pl	Wyrejestrowano
 details for admin account	setup	pl	Dane konta administratora
 developers' table schema toy	setup	pl	Narzędzie tworzenia schematów dla developerów
 did not find any valid db support!	setup	pl	Nie znaleziono żadnego wsparcia dla znanych baz danych!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	pl	Wyłącz tylko jeśli AD ma problemy z kontrolkami VLV ORAZ może zwrócić wszystkich użytkowników w jednym zapytaniu!
+disable vlv controls	setup	pl	Wyłącz kontrolki VLV
 do you want persistent connections (higher performance, but consumes more resources)	setup	pl	Czy zachować połączenie stałe? (Większa wydajność, przy konsumpcji większej liczby zasobów)
 do you want to manage homedirectory and loginshell attributes?	setup	pl	Czy chcesz zarządzać katalogami domowymi i atrybutami loginów powłoki shell?
 does not exist	setup	pl	Nie istnieje
@@ -253,10 +249,10 @@ enable for extra debug-messages	setup	pl	Uaktywnij dla dodatkowych informacji de
 enable mcrypt	setup	pl	Uaktywnij Mcrypt
 enter some random text for app session encryption	setup	pl	Wprowadź losowy tekst  dla zaszyfrowania sesji aplikacji
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	pl	Wprowadź losowy tekst  dla zaszyfrowania <br>sesji aplikacji (wymaga mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br />Na przykład: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br>Na przykład: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br>Na przykład: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pl	Podaj pełną ścieżkę do katalogu dla plików tymczasowych.<br />Na przykład: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br>Na przykład: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br>Na przykład: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pl	Wprowadź pełną ścieżkę do katalogu kopii bezpieczeństwa. <br> jeśli pusta: katalog plików
 enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwę komputera, na którym jest uruchomiony serwer
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala EGroupware's URL.<br>Na przykład: https://www.domain.com/egroupware   or   /egroupware<br><b>Bez kończącego ciacha (,,/'')</b>
@@ -378,8 +374,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pl	Zarządzanie aplikacjami
 manage languages	setup	pl	Zarządzanie językami
 manual / help	setup	pl	Podręcznik pomocy
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pl	max_execution_time jest ustawiony na mniej niż 30 (sekund): EGw wymaga czasami dłuższego czasu time_execution - mogą powstać błędy
 maximum account id (e.g. 65535 or 1000000)	setup	pl	Maksymalny ID konta (np. 65535 lub 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pl	max_execution_time jest ustawiony na mniej niż 30 (sekund): EGw wymaga czasami dłuższego czasu time_execution - mogą powstać błędy
 may be broken	setup	pl	Być może uszkodzony
 mcrypt algorithm (default tripledes)	setup	pl	Mcrypt algorithm (default TRIPLEDES)
 mcrypt initialization vector	setup	pl	Wektor inicjalizujący Mcrypt
@@ -394,7 +390,6 @@ modifications have been completed!	setup	pl	Zmiany zostały wprowadzone!
 modified	setup	pl	Zmodyfikowany
 modify	setup	pl	Modyfikuj
 month	setup	pl	Miesiąc
-multi-language support setup	setup	pl	Instalacja wersji językowych
 name of database	setup	pl	Nazwa bazy danych
 name of db user egroupware uses to connect	setup	pl	Nazwa bazy danych użytkowników EGw używane do połączeń
 never	setup	pl	Nigdy
@@ -426,6 +421,7 @@ one month	setup	pl	Jeden miesiąc
 one week	setup	pl	Jeden tydzień
 only add languages that are not in the database already	setup	pl	Dodaj tylko te języki, których nie ma jeszcze w bazie danych
 only add new phrases	setup	pl	Dodaj tylko nowe zdania
+openidconnect login	setup	pl	Logowanie OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	pl	opcjonalnie, jeśli włączone jest tylko uwierzytelnianie ORAZ wyszukiwanie anonimowe
 or	setup	pl	lub
 or %1continue to the header admin%2	setup	pl	lub %1 kontunuj w Header Admin %2
@@ -476,8 +472,8 @@ read translations from	setup	pl	Czytaj tłumaczenie z
 readable by the webserver	setup	pl	Do odczytu przez serwer WEB
 really uninstall all applications	setup	pl	NA PEWNO usunąć WSZYSTKIE aplikacje
 refusing to delete dn "%1"!	setup	pl	Usuwanie dn "%1" odrzucone!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pl	register_globals jest włączone, EGroupware tego nie wymaga jak również jest bezpieczniej gdy opcja ta jest wyłączona
 registered	setup	pl	Zarejestrowano
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pl	register_globals jest włączone, EGroupware tego nie wymaga jak również jest bezpieczniej gdy opcja ta jest wyłączona
 regular expression to filter by dn	setup	pl	Wyrażenie regularne do filtrowania według DN
 rejected lines	setup	pl	Odrzucone linie
 remove	setup	pl	Usuń
@@ -702,5 +698,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	pl	Twoje tabele są aktualne
 your tables will be dropped and you will lose data	setup	pl	Tabele zostaną usunięte, a Twoje dane utracone!
 your temporary directory '%1' %2	setup	pl	Katalog tymczasowy '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	pl	[hasło-administracyjne (header)],[użytkownik-administracyjny (header)],[nowe-hasło],[nowy-użytkownik]
 {db | php(default) | php-restore}	setup	pl	{db | php(domyślnie) | php-restore}
 {off(default) | on}	setup	pl	{off(domyślnie) | on}

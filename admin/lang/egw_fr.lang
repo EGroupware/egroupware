@@ -22,10 +22,7 @@
 %1 token %2.	admin	fr	%1 jeton %2.
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
-(default no, leave it off if you dont use it)	admin	fr	Défaut = Non, laissez-le désactivé si vous ne l'utilisez pas
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	fr	(imapclass doit supporter cette fonctionnalité en interrogeant la valeur de configuration correspondante et la passer comme defaultquota au serveur IMAP)
 (no subject)	admin	fr	Pas de sujet
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !
 -  type	admin	fr	- type
 1 year	admin	fr	1 an
 2 month	admin	fr	2 mois
@@ -87,6 +84,7 @@ add new email address:	admin	fr	Ajouter une nouvelle adresse email:
 add peer server	admin	fr	Ajouter un Serveur Pair
 add profile	admin	fr	Ajouter un profil
 add sub-category	admin	fr	Ajouter une sous-catégorie
+add to group	admin	fr	Ajouter au groupe
 add user	admin	fr	Ajouter un utilisateur
 add user or group	admin	fr	Ajouter un utilisateur ou un groupe
 added	admin	fr	ajouté
@@ -110,6 +108,7 @@ all records and account information will be lost!	admin	fr	Tous les enregistreme
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
 allow remote administration from following install id's (comma separated)	admin	fr	Autoriser l'administration à distance depuis les ID d'installation suivantes, séparé par des virgules.
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	fr	Permettre à l'utilisateur de stocker son mot de passe sous « Sécurité et mots de passe » pour SingleSignOn.
 allow user to set 'remember me' token	admin	fr	AUtoriser les utilisateurs à utiliser "Se souvenir de moi"
 allow users to change forwards	admin	fr	Autoriser les utilisateurs à changer les transferts
 allow users to create identities for aliases	admin	fr	Autoriser les utilisateurs à créer des identités pour les alias
@@ -158,9 +157,6 @@ authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés.
 automatically transfer entries owned by the user:	admin	fr	Transférer automatiquement les entrées appartenant à l'utilisateur :
 available placeholders	admin	fr	Mots clés disponibles
-back to admin/grouplist	admin	fr	Retour à l'admin / liste des groupes
-back to admin/userlist	admin	fr	Retour à l'admin / liste des utilisateurs
-back to the list	admin	fr	Retour à la liste
 backup directory %1 mounted as %2	admin	fr	Répertoire de backup %1 monté comme %2
 bad login name or password.	admin	fr	ID login ou mot de passe erroné.
 bad or malformed request. server responded: %s	admin	fr	Requête invalide ou erronnée. Réponse serveur: %s
@@ -169,14 +165,13 @@ bi-dir passthrough	admin	fr	passage bidirectionnel
 bi-directional	admin	fr	bidirectionnel
 blocking after wrong password	admin	fr	Blocage après mauvais mot de passe
 bottom	admin	fr	Bas
+bulk changes	admin	fr	Changements en bloc
 bulk password reset	admin	fr	Reset des mots de passe
 by	admin	fr	Par
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	fr	En sélectionnant un utilisateur ou un groupe, vous effacez le compte mail pour tous les autres utilisateurs!<br>Êtes-vous sûrs de vouloir le faire ?
 calculate next run	admin	fr	Calculer la prochaine exécution
 calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
-can be used by application	admin	fr	Peut être utilisée par application
-can be used by group	admin	fr	Peut être utilisée par un groupe
-can be used by user	admin	fr	Peut être utilisée par un utilisateur
+can be used to show groups by container, if enabled	admin	fr	Peut être utilisé pour afficher les groupes par conteneur, si l'option est activée.
 can change password	admin	fr	Peut modifier son mot de passe
 can not change users into groups, same sign required!	admin	fr	Vous ne pouvez pas transformer un utilisateur en groupe ! (valeur ID de même signe nécessaire)
 cancel changes	admin	fr	Annuler les changements
@@ -191,6 +186,7 @@ category saved.	admin	fr	Catégorie enregistrée.
 certificate	admin	fr	Certificat
 certificate details	admin	fr	Détails du certificat
 certificate validation in days	admin	fr	Validité du certificat en jours
+change access	admin	fr	Modifier les droits d'accès
 change account_id	admin	fr	Changer l'ID du compte
 change acl rights	admin	fr	modifier les droits d'accès (ACL)
 change config settings	admin	fr	Modifier les paramètres de configuration
@@ -224,6 +220,7 @@ configuration	admin	fr	Configuration
 configuration saved.	admin	fr	Configuration enregistrée.
 connection dropped by imap server.	admin	fr	Connexion interrompue par le serveur IMAP.
 connection is not secure! everyone can read eg. your credentials.	admin	fr	La connexion n'est pas sécurisée ! Par exemple, vos codes de connexion peuvent être interceptés.
+container	admin	fr	Conteneur
 continue	admin	fr	Continuer
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	fr	Domaine du cookie. Vide par défaut utilise le nom de domaine complet. Par exemple, dans le Gestionnaire de site ".domaine.com" permet d'utiliser le même cookie pour egw.domaine.com et www.domaine.com.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fr	Chemin vers le cookie. Permet des sessions d'EGroupware multiple avec des répertoires différents.
@@ -339,12 +336,6 @@ do not generate email addresses	admin	fr	Ne pas générer les adresses email
 do not offer introduction video	admin	fr	Ne pas proposer la vidéo d'introduction
 do not send cookie	admin	fr	ne pas envoyer de cookie
 do not set attribute	admin	fr	Ne pas définir d'attribut
-do not validate certificate	admin	fr	Ne pas valider le certificat
-do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi supprimer toutes les sous-catégories globales ?
-do you really want to delete this profile	admin	fr	Voulez-vous vraiment supprimer ce profil ?
-do you really want to reset the filter for the profile listing	admin	fr	Voulez-vous vraiment réinitialiser le filtre pour le listage des profils ?
-do you want to delete all global subcategories ?	admin	fr	Voulez-vous supprimer toutes les sous-catégories globales ?
-do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
 document root (default)	admin	fr	Racine des documents (défaut)
 domainname	admin	fr	Nom de domaine
 down	admin	fr	Bas
@@ -485,6 +476,7 @@ group excepted from above export limit (admins are always excepted)	admin	fr	Gro
 group has been added	common	fr	Le groupe a été ajouté.
 group has been deleted	common	fr	Le groupe a été effacé.
 group has been updated	common	fr	Le groupe a été mis à jour.
+group hierarchy	admin	fr	Hiérarchie des groupes
 group list	admin	fr	Liste des groupes
 group manager	admin	fr	Gestionnaire de groupe
 group name	admin	fr	Nom du groupe
@@ -741,6 +733,7 @@ quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Entrez à nouveau le mot de passe
 read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Inscrire les dépendances
+regular expression to find part to use as container	admin	fr	Expression régulière pour trouver la partie à utiliser comme conteneur
 reject passwords containing part of username or full name (3 or more characters long)	admin	fr	Rejeter les mots de passe contenant une partie du nom complet ou du login (3 caractères ou plus)
 relay access checked	admin	fr	Accès au relais vérifié
 remark	admin	fr	Remarque
@@ -819,6 +812,7 @@ show as optional, but required once user has it setup	admin	fr	Montrer comme fac
 show as required, but only once user has it setup	admin	fr	Afficher selon les besoins, mais seulement une fois que l'utilisateur l'a configuré
 show current action	admin	fr	Afficher les actions en cours
 show error log	admin	fr	Afficher le journal des erreurs
+show groups in container based on	admin	fr	Afficher les groupes dans le conteneur en fonction de
 show members	admin	fr	Afficher les membres
 show phpinfo()	admin	fr	Afficher phpinfo()
 show session ip address	admin	fr	Afficher les adresses IP des sessions
@@ -1016,10 +1010,8 @@ you must add at least 1 permission or group to this account	admin	fr	Vous devez 
 you must enter a group name.	admin	fr	Vous devez entrer un nom de groupe.
 you must enter a lastname	admin	fr	Vous devez entrer un nom.
 you must enter a loginid	admin	fr	Vous devez entrer un loginID.
-you must enter an application name and title.	admin	fr	Vous devez entrer un nom d'application et un titre.
 you must enter an application name.	admin	fr	Vous devez entrer un nom d'application.
 you must enter an application title.	admin	fr	Vous devez entrer un titre d'application.
-you must select a file type	admin	fr	Vous devez choisir un type de fichier.
 you must select at least one group member.	admin	fr	Vous devez sélectionner au moins un membre de groupe.
 you need to enter install id and password!	admin	fr	Vous devez entre l'ID d'installation ET le mot de passe !
 you need to select as least one action!	admin	fr	Vous devez sélectionner au moins un action !
@@ -1027,6 +1019,5 @@ you need to select some users first!	admin	fr	Vous devez sélectionner quelques 
 you need to specify a forwarding address, when checking "%1"!	admin	fr	Vous devez spécifier une adresse de transfert, lorsque vous cochez "%1" !
 you will need to remove the subcategories before you can delete this category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer cette catégorie !
 your last submission was less then %1 days ago!	admin	fr	Votre dernier envoi était il y a moins de %1 jour(s) !
-your message to  %1 was displayed.	admin	fr	Votre message à %1 a été affiché.
 your name	admin	fr	Votre nom
 your session could not be verified.	admin	fr	Votre session n'a pas pu être vérifiée.

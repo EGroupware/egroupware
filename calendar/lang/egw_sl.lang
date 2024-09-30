@@ -24,17 +24,17 @@ accepted	calendar	sl	Sprejeto
 access denied to the calendar of %1 !!!	calendar	sl	Dostop je bil zavrnjen v koledarju %1!
 access to calendar of %1 denied!	calendar	sl	Dostop do koledarja %1 je bil zavrnjen!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sl	Dejanje, ki je sprožilo obvestilo: Dodano, Prekinjeno, Sprejeto, Zavrnjeno,...
-actions	calendar	sl	Dejanja
-actions...	calendar	sl	Dejanja ...
 add alarm	calendar	sl	Dodaj opomnik
 add appointments via shortened dialog or complete edit window	calendar	sl	Dodajanje sestankov prek skrajšanega pogovornega okna ali celotnega okna za urejanje
 add current view as favorite	calendar	sl	Dodaj trenutni pogled med priljubljene
 add new alarm	calendar	sl	Dodaj nov alarm
 add new event	calendar	sl	Dodajanje novega sestanka
 add new participants or resource	calendar	sl	Dodajanje novih udeležencev ali virov
+add recurrence	calendar	sl	Dodaj ponovitev
 add timesheet entry	calendar	sl	Dodaj vnos timeheet
 added	calendar	sl	Dodano
 added by synchronization	calendar	sl	Dodano s sinhronizacijo
+added recurrence on %1.	calendar	sl	Dodana ponovitev na %1.
 after	calendar	sl	Po
 after %1	calendar	sl	Po %1
 after current date	calendar	sl	Za trenutnim datumom
@@ -46,7 +46,6 @@ alarm deleted	calendar	sl	Alarm zbrisan
 alarm for %1 at %2 in %3	calendar	sl	Opomnik za %1 ob %2 v %3
 alarm management	calendar	sl	Upravljanje opomnikov
 alarms	calendar	sl	Opomniki
-all categories	calendar	sl	Vse kategorije
 all day	calendar	sl	Ves dan
 all events	calendar	sl	Vsi dogodki
 all exceptions are converted into single events.	calendar	sl	Vse izjeme se pretvorijo v posamezne dogodke.
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	sl	Dovoli ponovno urejanje dogodka
 always	calendar	sl	Vedno
 always use full edit dialog	calendar	sl	Vedno uporabite celotno pogovorno okno za urejanje
 always use the full edit dialog, not this little dialog	calendar	sl	Vedno uporabite celotno pogovorno okno za urejanje in ne tega majhnega pogovornega okna
+apply changes to (future) exceptions too?	calendar	sl	Uporabiti spremembe tudi za (prihodnje) izjeme?
 apply the action on the whole query, not only the shown events	calendar	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazani dogodki.
 apply the changes	calendar	sl	Uveljavi spremembe
 appointment settings	calendar	sl	Nastavitve imenovanja
@@ -240,12 +240,12 @@ exclude weekend	calendar	sl	Izključi vikend
 execute a further action for this entry	calendar	sl	Izvede dodatna dejanja za ta vnos
 existing links	calendar	sl	Obstoječe povezave
 exists	calendar	sl	Obstaja
+explicit recurrences	calendar	sl	Izrecne ponovitve
 export definition to use for nextmatch export	calendar	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
 exports events from your calendar in ical format.	calendar	sl	Izvozi dogodke iz vašega koledarja v formatu iCal.
 exports events from your calendar into a csv file.	calendar	sl	Izvozi dogodke iz svojega koledarja v datoteko CSV.
 extended	calendar	sl	Razširjen
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sl	Razširjeni popravki vedno vključujejo popolne podrobnosti o dogodku. iCal-ovi dogodki se lahko uvozijo preko drugih aplikacij koledarja.
-favorites	calendar	sl	Priljubljene
 fieldseparator	calendar	sl	Ločilo polj
 filemanager	calendar	sl	Dokumenti
 filename	calendar	sl	Ime datoteke
@@ -355,6 +355,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	sl	Max.
 maximum available quantity of %1 exceeded!	calendar	sl	Največja razpoložljiva količina %1 je presežena!
 meeting canceled	calendar	sl	Srečanje je bilo preklicano
 meeting request	calendar	sl	Zahteva za sestanek
+meeting request additional recurrence(s)	calendar	sl	Sestanek zahteva dodatne ponovitve
 meetingrequest to all participants	calendar	sl	Poročanje vsem udeležencem
 merge document...	calendar	sl	Spoji dokumente ...
 midnight	calendar	sl	Polnoč
@@ -428,6 +429,7 @@ only supported by a few fully conformant clients (eg. from apple). if you have t
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	sl	Uporablja se samo za prvi ogled koledarja, nato pa se uporabi zadnji izbran pogled.
 open todo's:	calendar	sl	Odprti ToDo-ji:
 optional	calendar	sl	Opcijsko
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	sl	V nasprotnem primeru se spremembe naslova, opisa, ... ali novi udeleženci ne bodo prenesli na že ustvarjene izjeme.
 output unit	calendar	sl	Izhodna enota
 overlap holiday	calendar	sl	Prekrivajoči se prazniki
 owner too	calendar	sl	Tudi lastnik
@@ -501,8 +503,6 @@ search string for the events	calendar	sl	Iskanje nizov za dogodke
 select a %1	calendar	sl	Izberite %1
 select a color for this calendar	calendar	sl	Izberite barvo za koledar
 select a time	calendar	sl	izberite čas
-select an action	calendar	sl	Izberite dejanje
-select an action...	calendar	sl	Izberite dejanje ...
 select multiple contacts for a further action	calendar	sl	Izberite več stikov za nadaljnja dejanja
 select resources	calendar	sl	Izberite sredstva
 select who should get the alarm	calendar	sl	Izberite, kdo naj dodi sporočilo alarma
@@ -572,6 +572,7 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	sl	Dokument lahko vsebuje vsebnik kot {{%1}}, ki ga je treba zamenjati s podatki.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	sl	Dokument lahko vsebuje mesto, na primer {{%3}}, ki ga je treba zamenjati s podatki (%1 popoln seznam imen imenika%2).
 the exceptions are deleted together with the series.	calendar	sl	Izjeme se črtajo skupaj s serijo.
+the extern organizer changed the event!	calendar	sl	Organizator je spremenil dogodek!
 the following document-types are supported:	calendar	sl	Podprte so naslednje vrste dokumentov:
 the original series will be terminated today and a new series be created.	calendar	sl	Prvotna serija bo končana danes in ustvarjena bo nova serija.
 the resource you selected is already overbooked:	calendar	sl	Viri, ki ste jih izbrali, so že rezervirani:
@@ -583,6 +584,7 @@ this entry is opened by user:	calendar	sl	Ta vnos je med nastavljenim časom odp
 this event is part of a series	calendar	sl	Ta dogodek je del serije
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sl	Ta skupina je že označena, ko vstopite v načrtovalca. V načrtovalcu jo lahko spremenite kadarkoli želite.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	sl	To je ponavljajoči se dogodek. Želite izbrisati samo to ponovitev ali celotno serijo?
+this is a single recurrence of a recurring event.	calendar	sl	To je ena ponovitev ponavljajočega se dogodka.
 this mail cancels a meeting	calendar	sl	Ta pošta preklicuje sestanek
 this mail contains a meeting request	calendar	sl	Ta e-pošta vsebuje zahtevo za sestanek
 this mail contains a reply to a meeting request	calendar	sl	Ta e-pošta vsebuje odgovor na zahtevo za sestanek
@@ -673,6 +675,7 @@ you already replied to this invitation with	calendar	sl	Da, na vabilo ste že od
 you are not allowed to book the resource selected:	calendar	sl	Nimate dovoljenja za rezervacijo izbranega vira:
 you are not invited to that event!	calendar	sl	Na ta dogodek niste povabljeni!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	sl	Poskusite poslati sporočilo o prejemu na prejemnike zgoraj. Odvisno od stranke, s katero se je ta pošta odprla, prejemnik lahko ali ne bo videl spodnjega sporočila, ampak samo pogledate priloženo zahtevo za sestanek.
+you can only notify other users, not yourself!	calendar	sl	O tem lahko obvestite samo druge uporabnike, ne pa tudi sebe!
 you do not have permission to read this record!	calendar	sl	Nimate dovoljenja brati tega zapisa!
 you have a meeting scheduled for %1	calendar	sl	Imate napovedan sestanek ob %1
 you need to select an account, contact or resource first!	calendar	sl	Najprej morate izbrati račun, stik ali sredstvo!

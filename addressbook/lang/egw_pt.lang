@@ -1,14 +1,10 @@
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt	%1 contacto(s) %2, %3 falhou devido a %4!
 %1 contacts updated (%2 errors).	addressbook	pt	%1 contactos actualizados (%2 erros).
 %1 key(s) added to public keyserver "%2".	addressbook	pt	%1 chave(s) adicionada(s) ao servidor de chaves público "%2".
-%1 not implemented for %2!	addressbook	pt	% 1 não implementado para% 2!
 %1 public keys added.	addressbook	pt	%1 chaves públicas adicionadas.
-%1 records imported	addressbook	pt	%1 registos importados.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt	%1 registos lidos (ainda por importar: pode %2voltar%3 atrás e desmarcar a opção Importação de Teste).
 (e.g. 1969)	addressbook	pt	(ex: 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pt	<b>O tipo de conversão <Nenhum> não foi encontrado.</b> Por favor, escolha um tipo de conversão da lista
 @-eval() is only availible to admins!!!	addressbook	pt	@-eval() só está disponível para administradores!
-actions	addressbook	pt	Acções
 add a single entry by passing the fields.	addressbook	pt	Adicionar um registo único passando os campos.
 add custom field	addressbook	pt	Adicionar campo personalizado
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	pt	Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.
@@ -26,7 +22,6 @@ addressbook	common	pt	Livro de endereços
 addressbook preferences	addressbook	pt	Preferências do livro de endereços
 addressbook-fieldname	addressbook	pt	Livro de endereços - Nome do campo
 addvcard	addressbook	pt	Adicionar vCard
-advanced search	addressbook	pt	Pesquisa avançada
 all types	addressbook	pt	Todos os tipos
 allow	addressbook	pt	Permitir
 allow for contacts only	addressbook	pt	Permitir apenas para contactos
@@ -65,7 +60,7 @@ company name	addressbook	pt	Nome da empresa
 configuration	common	pt	Configuração
 contact	common	pt	Contacto
 contact application	admin	pt	Aplicação de contactos
-contact saved	addressbook	pt	Contacto guardado
+contact saved	addressbook	pt	Contacto guardado.
 contact settings	admin	pt	Preferências de contactos
 contains	addressbook	pt	Contém
 copied by %1, from record #%2.	addressbook	pt	Copiado do registo #%2, por %1.
@@ -245,7 +240,6 @@ public key	addressbook	pt	Chave pública
 public sharing url	addressbook	pt	URL de partilha pública
 publish into groups:	addressbook	pt	Publicar nos grupos:
 read a list / search for entries.	addressbook	pt	Ler uma lista / pesquisar registos.
-read a list of entries.	addressbook	pt	Ler uma lista de registos.
 read a single entry by passing the id and fieldlist.	addressbook	pt	Ler um registo único passando a ID e a lista de campos.
 record access	addressbook	pt	Acesso ao registo
 record owner	addressbook	pt	Dono do registo

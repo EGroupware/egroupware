@@ -12,9 +12,7 @@
 %1 successful	admin	zh	%1 成功
 %1 token %2.	admin	zh	%1 标记 %2.
 %1 user %2	admin	zh	%1 用户 %2
-(default no, leave it off if you dont use it)	admin	zh	(默认为否，如果您不打算使用请不要修改)
 (no subject)	admin	zh	(无主题)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh	(请使用<a href="setup/" target="setup">[管理应用程序]</a>来安装新的应用程序！)
 -  type	admin	zh	- 类型
 1 year	admin	zh	1年
 2 month	admin	zh	2个月
@@ -56,6 +54,9 @@ add new email address:	admin	zh	添加新邮箱地址：
 add peer server	admin	zh	添加对等服务器
 add profile	admin	zh	添加 profile
 add sub-category	admin	zh	添加子类别
+add to group	admin	zh	添加到组
+add user	admin	zh	添加用户
+add user or group	admin	zh	添加用户或组
 admin dn	admin	zh	管理 DN
 admin email	admin	zh	管理员邮箱
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	zh	管理员电子邮件地址 (逗号分隔) 以便通知有关故障等 (留空将不通知任何人)
@@ -71,6 +72,7 @@ all records and account information will be lost!	admin	zh	所有的记录和账
 all users	admin	zh	所有用户
 allow anonymous access to this app	admin	zh	允许匿名用户访问此应用程序
 allow remote administration from following install id's (comma separated)	admin	zh	允许从以下的安装 ID (逗号分隔) 进行远程管理
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	zh	允许用户在单点登录的 “安全与密码 ”下存储密码。
 alternate email address	admin	zh	候选邮箱地址
 anonymous user	admin	zh	匿名用户
 anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
@@ -102,16 +104,16 @@ asyncservices not yet installed or other error (%1) !!!	admin	zh	异步服务尚
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh	在FTP中尝试使用正确的MIME type来替代默认的'application/otect-stream'
 authentication / accounts	admin	zh	认证/账户
 auto create account records for authenticated users	admin	zh	自动为已通过身份验证的用户创建帐户记录
-back to the list	admin	zh	返回列表
 bad login name or password.	admin	zh	错误登录名和密码。
 bad or malformed request. server responded: %s	admin	zh	不正确的请求。服务器或应：%s
 bad request: %s	admin	zh	错误请求：%s
 bi-dir passthrough	admin	zh	bi-dir passthrough(双向通过)
 bi-directional	admin	zh	bi-directional(双向)
 bottom	admin	zh	底部
+bulk changes	admin	zh	批量更改
+bulk password reset	admin	zh	批量重置密码
 calculate next run	admin	zh	计划下次运行
-can be used by application	admin	zh	可用于应用程序
-can be used by group	admin	zh	可用于群组
+can be used to show groups by container, if enabled	admin	zh	如果启用，可用于按容器显示组
 can change password	admin	zh	可以更改密码
 cancel testjob!	admin	zh	取消测试任务！
 categories list	admin	zh	分类列表
@@ -119,6 +121,7 @@ category %1 has been saved !	admin	zh	类别%1已保存！
 category deleted.	admin	zh	类别已删除。
 category list	admin	zh	类别列表
 category saved.	admin	zh	类别已保存。
+change access	admin	zh	更改访问权限
 change account_id	admin	zh	更改帐户 ID
 change acl rights	admin	zh	更改 ACL 权限
 change config settings	admin	zh	更改配置设定
@@ -131,6 +134,7 @@ click to select a color	admin	zh	点击选择一种颜色
 color	admin	zh	颜色
 command scheduled to run at %1	admin	zh	计划命令运行在%1
 connection dropped by imap server.	admin	zh	连接被 IMAP 服务器中断。
+container	admin	zh	容器
 continue	admin	zh	继续
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh	Cookie 域 (默认为空表示使用完整域名，对于 SiteMgr 等 ".domain.com" 允许 egw.domain.com 与 www.domain.com 使用同一个 cookie)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh	Cookie 路径 (允许多个 EGroupware 会话使用不同的目录，与 SiteMgr 会有问题！)
@@ -198,11 +202,6 @@ disabled (not recomended)	admin	zh	禁用 (不推荐)
 display	admin	zh	显示
 displaying html messages is disabled	admin	zh	显示HTML邮件被禁用
 do not delete the category and return back to the list	admin	zh	不要删除类别和返回其列表
-do not validate certificate	admin	zh	不确认证书
-do you also want to delete all global subcategories ?	admin	zh	您是否同样要删除所有全局子类别？
-do you really want to delete this profile	admin	zh	您确定要删除这个 profile 文件
-do you want to delete all global subcategories ?	admin	zh	您是否想要删除所有的全局子类别？
-do you want to move all global subcategories one level down ?	admin	zh	您是否想要把所有的全局子类别向下移动一级？
 document root (default)	admin	zh	文件根目录 (默认)
 domainname	admin	zh	域名
 down	admin	zh	向下
@@ -290,6 +289,7 @@ group ?	admin	zh	群组？
 group has been added	common	zh	组已添加
 group has been deleted	common	zh	组已删除
 group has been updated	common	zh	组已更新
+group hierarchy	admin	zh	组层次结构
 group list	admin	zh	组列表
 group manager	admin	zh	组管理
 group name	admin	zh	组名称
@@ -458,6 +458,7 @@ quota size in mbyte	admin	zh	配额大小(MB)
 re-enter password	admin	zh	重新输入密码
 read this list of methods.	admin	zh	读取这一方法列表。
 register application hooks	admin	zh	注册应用程序挂接
+regular expression to find part to use as container	admin	zh	正则表达式查找用作容器的部分
 remote administration instances	admin	zh	远程管理实例
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	zh	远程管理需要在系<b>统管理 -->站点配置</b>中启用远程实例!
 remote instance saved	admin	zh	远程实例已保存
@@ -496,6 +497,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	zh	显示访问日志
 show current action	admin	zh	显示当前操作
 show error log	admin	zh	显示错误日志
+show groups in container based on	admin	zh	根据以下条件在容器中显示组
 show phpinfo()	admin	zh	显示 phpinfo()
 show session ip address	admin	zh	显示会话IP地址
 sieve server hostname or ip address	admin	zh	Sieve 服务器主机名或 IP 地址
@@ -609,10 +611,8 @@ you must add at least 1 permission or group to this account	admin	zh	必须至�
 you must enter a group name.	admin	zh	必须输入组名称。
 you must enter a lastname	admin	zh	必须输入姓
 you must enter a loginid	admin	zh	必须输入登录 ID
-you must enter an application name and title.	admin	zh	必须为应用程序指定名称和标题。
 you must enter an application name.	admin	zh	必须为应用程序指定名称。
 you must enter an application title.	admin	zh	必须为应用程序指定标题。
-you must select a file type	admin	zh	必须选择文件类型
 you must select at least one group member.	admin	zh	您必须至少选择一个组成员。
 you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！

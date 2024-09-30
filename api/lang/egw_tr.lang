@@ -1,7 +1,10 @@
 %1 email(s) added into %2	common	tr	%1 e-posta(lar) %2'ye eklendi
 %1 more %2 selected ...	common	tr	%1 e-posta(lar) %2'ye eklendi ...
 '%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
+'%1' does not match the required pattern '%2'	common	tr	'%1' gerekli kalıpla ('%2') eşleşmiyor
+'%1' is not a valid app-name ('%2')!	common	tr	'%1' geçerli bir uygulama adı DEĞİLDİR ('%2')!
 '%1' is not a valid json file!	common	tr	'%1' geçerli bir JSON dosyası değil
+'%1' must not contain (back)slashes!	common	tr	'%1' (ters) eğik çizgiler içermemelidir!
 1 day	common	tr	1 gün
 1 hour	common	tr	1 saat
 1 minute	common	tr	1 dakika
@@ -55,6 +58,7 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 calendar	common	tr	Takvim
 cancel	common	tr	Ýptal
 change	common	tr	Deðiþtir
+changes that you made may not be saved.	common	tr	Yaptığınız değişiklikler kaydedilemeyebilir.
 charset	common	tr	Karakter kümesi
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	tr	IF deyimlerinde boş değerleri kontrol edin. Örnek {{IF url~EMPTY~~Web Sitesi:}} - Eğer url boş değilse, "Web sitesi:" yazar
 choose the default filename for merged documents.	preferences	tr	Birleştirilen belgeler için varsayılan dosya adını seçin.
@@ -120,7 +124,7 @@ how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
 how many rows to print	common	tr	Kaç satır yazdırılacağı
 html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
-if you use "2-factor-authentication", please enter the code here.	common	tr	"2 Faktörlü Kimlik Doğrulama" kullanıyorsanız, lütfen kodu buraya girin.
+if you use "2-factor-authentication", please enter the code here.	common	tr	2 Faktörlü Kimlik Doğrulama kullanıyorsanız, lütfen kodu buraya girin.
 include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
 infolog types to sync	common	tr	Senkronize edilecek InfoLog türleri
 insert placeholder	common	tr	Yer tutucu ekle
@@ -155,6 +159,7 @@ no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
 open	common	tr	Açık
 open existing contact	common	tr	Mevcut kontağı aç
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	tr	OpenIDConnect girişi başarılı, ancak '%1' kullanıcısı EGroupware'de mevcut DEĞİL VE otomatik kullanıcı oluşturma devre dışı!
 or	common	tr	ya da
 original	common	tr	Orjinal
 ownership	common	tr	Sahiplik

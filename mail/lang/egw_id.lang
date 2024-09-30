@@ -38,6 +38,7 @@ certificate info for email %1	mail	id	Info sertifikat untuk email %1
 certificate issued by	mail	id	Sertifikat dikeluarkan oleh
 changing subject failed because of %1	mail	id	Mengubah subjek gagal karena %1
 changing subject failed folder %1 does not exist	mail	id	Mengubah subjek gagal folder %1 tidak ada
+checking admin credentials failed	mail	id	Memeriksa kredensial admin gagal
 compose	mail	id	Tulis
 compose as new	mail	id	tulis sbg pesan baru
 compress folder	mail	id	Mampatkan folder
@@ -146,6 +147,7 @@ mail	common	id	Surat
 mail acl	mail	id	Hak akses
 mail filter	mail	id	Filter surat
 mail filter rule	mail	id	Aturan penyaring surat
+mail probably has no text-body	mail	id	Email mungkin tidak memiliki teks
 mail settings	mail	id	Pengaturan Mail
 mail source	mail	id	Sumber surat
 mail-address	mail	id	Alamat surat
@@ -227,6 +229,7 @@ replied	mail	id	dibalas
 reply	mail	id	Balas
 reply all	mail	id	Balas ke Semua
 reply to	mail	id	Balas Ke
+reply with attachments	mail	id	Membalas dengan lampiran
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	id	Membalas pesan ini gagal karena isi pesan ini tampaknya terenkripsi dan tidak dapat didekripsi dengan benar. Jika Anda masih ingin menyertakan isi pesan terenkripsi ini, Anda dapat mencoba menggunakan forward as attachment sebagai gantinya.
 replyto	mail	id	ReplyTo
 report as ham	mail	id	Laporkan sebagai Ham

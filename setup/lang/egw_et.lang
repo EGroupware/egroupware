@@ -67,10 +67,8 @@ created	setup	et	Loodud
 created header.inc.php!	setup	et	Tehtud header.inc.php!
 creating tables	setup	et	Loon Tabeleid
 current configuration:	setup	et	Käesolev konfiguratsioon
-current system-charset is %1.	setup	et	Käesolev süsteemi süsteemi charset on %1.
 current version	setup	et	Käesolev Versioon
 currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud keeled:  %1<br>
-cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja, Parool
 database	setup	et	Andmebaas
 day	setup	et	Päev
 db backup and restore	setup	et	DB tagavara ja taastamine
@@ -79,6 +77,8 @@ delete	setup	et	Kustuta
 delete all my tables and data	setup	et	Kustuta kõik minu tabelid ja andmed
 deleting tables	setup	et	Kustutan Tabeleid
 deny access	setup	et	Keela Ligipääs
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	et	Lülita välja ainult siis, kui su AD-l on probleeme VLV kontrolliga JA saab kõik kasutajad ühe päringuga tagasi!
+disable vlv controls	setup	et	VLV kontrollide keelamine
 domain name	setup	et	Doomeni nimi
 download	setup	et	Lae alla
 edit current configuration	setup	et	Muuda Käesolevat Konfiguratsiooni
@@ -162,6 +162,7 @@ one month	setup	et	Üks kuu
 one week	setup	et	Üks nädal
 only add languages that are not in the database already	setup	et	Lisa ainult keeled mis pole veel andmebaasis
 only add new phrases	setup	et	Lsa ainult uued fraasid
+openidconnect login	setup	et	OpenIDConnect sisselogimine
 optional, if only authentication and anonymous search is enabled	setup	et	vabatahtlik, kui on lubatud ainult autentimine JA anonüümne otsing
 or	setup	et	või
 or leave empty and select openidconnect as authentication type above for single sign on	setup	et	või jäta tühjaks ja vali ühekordse sisselogimise puhul eespool autentimise tüübiks OpenID Connect.
@@ -253,6 +254,7 @@ year	setup	et	Aasta
 yes	setup	et	Jah
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
 you have successfully logged out	setup	et	Oled täielikult välja loginud
+you need to select your current charset!	setup	et	Peate valima oma praeguse märgistuse!
 you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati ...
 your applications are current	setup	et	Sinu rakendused on kaasaegsed
 your database does not exist	setup	et	Sinu andmebaasi ei eksisteeri

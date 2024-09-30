@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	ja	%1 ディレクトリ %2 が見つかりました！
 %1 email addresses inserted	common	ja	%1 個の電子メール・アドレスを挿入しました。
 %1 email(s) added into %2	common	ja	%1 の電子メールが %2 に追加されました。
-%1 entries found, select one ...	common	ja	%1 個の項目がみつかりました。選択してください ...
 %1 etemplates deleted	common	ja	%1 個の eTemplates を削除しました。
-%1 etemplates for application '%2' dumped to '%3'	common	ja	アプリケーション '%2' の %1 eTemplate(s) が '%3' にダンプされました。
 %1 etemplates found	common	ja	%1 個の eTemplate が見つかりました。
 %1 file	common	ja	%1 ファイル
 %1 is not executable by the webserver !!!	common	ja	%1 はウェブ・サーバー上で実行できません!
-%1 matches on search criteria	common	ja	%1 個の一致
 %1 more %2 selected ...	common	ja	%1 つ以上の %2 が選択されました。
 %1 more...	common	ja	%1 詳細...
-%1 new etemplates imported for application '%2'	common	ja	アプリケーション %2 向けの %1 個の新規 eTemplates をインポートしました
 %1 not implemented for %2!	common	ja	%2 で %1 は実装されていません!
 %1 proxy of %2	common	ja	%1 proxy of %2
 %1 setting "%2" = %3 disallows access via http!	admin	ja	%1 設定 "%2" = %3 は http 経由のアクセスを許可しません！
@@ -27,8 +23,10 @@
 %s onchange	common	ja	%s onChange
 %s readonly	common	ja	%s 読み取り専用
 '%1' copied to clipboard	common	ja	'%1' がクリップボードにコピーされました。
+'%1' does not match the required pattern '%2'	common	ja	'%1' が必須パターン ('%2') に一致しません。
 '%1' has an invalid format	common	ja	'%1' のフォーマットが不正です。
 '%1' has an invalid format !!!	common	ja	'%1' のフォーマットが不正です!
+'%1' is not a valid app-name ('%2')!	common	ja	'%1' は有効なアプリ名ではありません ('%2')！
 '%1' is not a valid date !!!	common	ja	'%1' の日付が不正です!
 '%1' is not a valid floatingpoint number !!!	common	ja	'%1' は不正な浮動小数です!
 '%1' is not a valid integer !!!	common	ja	'%1' は無効な整数です!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	ja	'%1' は無効なタイムゾーンです!
 '%1' is not allowed ('%2')!	common	ja	'%1' は禁止されています ('%2')!
 '%1' is not allowed%2)!	common	ja	'%1' 禁止されています %2)!
+'%1' must not contain (back)slashes!	common	ja	'%1' に (バックスラッシュ) を含めてはいけません！
 (session restored in %1 seconds)	common	ja	セッションを %1 秒で復旧しました。
 00 (disable)	admin	ja	00 (無効化)
 1 day	common	ja	1 日
@@ -250,6 +249,7 @@ chad	common	ja	チャド
 change	common	ja	変更
 change owner	common	ja	所有者を変更
 changed	common	ja	変更済み
+changes that you made may not be saved.	common	ja	行った変更が保存されない可能性があります。
 charset	common	ja	utf-8
 check all	common	ja	全て選択
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ja	IF文で空の値をチェックします。例 {{IF url~EMPTY~~ウェブサイト:}}。- urlが空でない場合、"ウェブサイト: "と表示します。
@@ -321,7 +321,7 @@ content type	common	ja	コンテント・タイプ
 cook islands	common	ja	クック諸島
 cookies are required to login to this site	login	ja	このサイトにログインするにはクッキーが必要です
 copy	common	ja	コピー
-copy "%1"	common	ja	"%1"をコピー
+copy "%1"	common	ja	%1をコピー
 copy of:	common	ja	をコピーします。
 copy to	common	ja	コピー先
 copy to clipboard	common	ja	クリップボードにコピー
@@ -969,6 +969,7 @@ open	common	ja	開く
 open existing contact	common	ja	既存のコンタクトを開く
 open notify window	common	ja	通知ウィンドウを開く
 open popup window	common	ja	ポップアップ・ウィンドウを開く
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ja	OpenIDConnect ログインは成功しましたが、ユーザ '%1' が EGroupware に存在せず、ユーザの自動作成が無効になっています！
 operator	common	ja	Operator
 optional note about the link	common	ja	Optional note for Link
 options	common	ja	オプション
@@ -1059,14 +1060,12 @@ private	common	ja	プライベート
 programs	common	ja	プログラム
 project	common	ja	プロジェクト
 properties	common	ja	プロパティ
-protocol is required	common	ja	プロトコルを指定してください
 public	common	ja	パブリック
 puerto rico	common	ja	プエルトリコ
 qatar	common	ja	カタール
 quick add	common	ja	クイック追加
 radiobutton	common	ja	ラジオボタン
 read	common	ja	表示
-read a list of entries.	common	ja	Read a list of entries.
 read a single entry by passing the id and fieldlist.	common	ja	Read a single entry by passing the ID and field list.
 read etemplate from database (for the keys above)	common	ja	Read eTemplate from database (for the keys above)
 read this list of methods.	common	ja	Read this list of methods
@@ -1250,12 +1249,12 @@ show page generation time?	common	ja	Show page generation time
 show password	common	ja	パスワードの表示
 show values	common	ja	値を表示
 show/hide	common	ja	サイドバーの表示/非表示
-show_more_apps	common	ja	show_more_apps
 showing	common	ja	表示中
 showing %1	common	ja	表示数 %1
 showing %1 - %2 of %3	common	ja	表示数 %1 - %2 of %3
 shows / allows you to enter values into the etemplate for testing	common	ja	Shows / allows to enter values into the eTemplate for testing
 shows/displays etemplate for testing, does not save it before	common	ja	Shows / displays eTemplate for testing, does NOT save it
+show_more_apps	common	ja	show_more_apps
 sierra leone	common	ja	シエラレオネ
 sign up	common	ja	サインアップ
 simple	common	ja	Simple
@@ -1443,7 +1442,6 @@ weekend	common	ja	週末
 welcome	common	ja	ようこそ
 western european	common	ja	西ヨーロッパ
 western sahara	common	ja	西サハラ
-what color should all the blank space on the desktop have	common	ja	What color should all the blank space on the desktop have?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ja	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ja	エントリーをドキュメントにマージすると、それらはここに保存されます。フォルダが提供されない場合、それらはホームディレクトリ(%1)に保存されます。
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ja	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.

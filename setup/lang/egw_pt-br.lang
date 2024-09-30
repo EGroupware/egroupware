@@ -17,13 +17,11 @@
 13 (ntp)	setup	pt-br	13 (ntp)
 80 (http)	setup	pt-br	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codificação de caracteres</b> (use UTF-8 se você pretende usar idiomas com diferentes codificações).
-[header-password],[header-user],[new-password],[new-user]	setup	pt-br	[senha-header],[usuário-header],[nova-senha],[novo-usuário]
 access denied: wrong username or password for manage-header !!!	setup	pt-br	Acesso negado: nome de usuário ou senha errados para gerenciar o servidor!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pt-br	Acesso negado: nome de usuário ou senha errados para configurar o domínio '%1 (%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pt-br	repositório de contas {sql(padrão) | ldap},[autenticação{sql | ldap | mail | ads | http | ...}],[criptografia sql{md5 | browfish_crypt | md5_crypt | crypt}],[permitir salvar senha{(padrão) | True}],[permitir autenticação via cookie{(padrão) | True}]
 accounts existing	setup	pt-br	Contas existentes
 actions	setup	pt-br	Ações
-activate safe password check	setup	pt-br	Ativar salvamento de senhas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usuários criados automaticamente para este grupo (o grupo 'Padrão' será utilizado se este campo estiver vazio.)
 add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domínio EGw )
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	pt-br	adicionar ou editar um domínio:
@@ -164,16 +162,13 @@ creating tables	setup	pt-br	Criando tabelas
 creation of %1 in %2 failed !!!	setup	pt-br	Criação de %1 em %2 falhou!
 current configuration:	setup	pt-br	Configuração atual:
 current system-charset	setup	pt-br	Codificação de caracteres atual do sistema
-current system-charset is %1.	setup	pt-br	Codificação de caracteres atual do sistema é %1.
 current version	setup	pt-br	Versão atual
 currently installed languages: %1 <br />	setup	pt-br	Idiomas instalados atualmente: %1<br>
 custom set via %1	setup	pt-br	Definição personalizada através de %1
-cyrus imap: admin user,password	setup	pt-br	IMAP Cyrus: usuário administrador,senha
 database	setup	pt-br	Base de dados
 database instance (egw domain)	setup	pt-br	Instância da base de dados (domínio EGw)
 database is version %1 and up to date.	setup	pt-br	base de dados está na versão %1 e atualizada
 database successfully converted from '%1' to '%2'	setup	pt-br	Conversão bem sucedida da base de dados de '%1' para '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt-br	Nota NTP <br> se estiver usando a porta 13, por favor configure as regras de acesso do seu firewall corretamente antes de enviar essa página <br> (port 13 / servidor 129.6.15.28)
 day	setup	pt-br	Dia
 day of week<br />(0-6, 0=sunday)	setup	pt-br	Dia da semana<br>(0-6, 0=domingo)
 db backup and restore	setup	pt-br	Backup e Restauração da base de dados
@@ -200,6 +195,8 @@ deregistered	setup	pt-br	Descadastrada
 details for admin account	setup	pt-br	Detalhes da conta do Administrador
 developers' table schema toy	setup	pt-br	Ferramenta  para esquemas de tabelas
 did not find any valid db support!	setup	pt-br	Não foi possível localizar um suporte a base de dados válido
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	pt-br	Desative apenas se o seu AD tiver problemas com controles VLV E puder retornar todos os usuários em uma única consulta!
+disable vlv controls	setup	pt-br	Desativar controles VLV
 do you want persistent connections (higher performance, but consumes more resources)	setup	pt-br	Você deseja usar conexões persistentes? (implica em uma performace melhor mas em um maior gasto de recursos)
 do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Você deseja gerenciar os atributos do diretório base e do interpretador de comandos?
 does not exist	setup	pt-br	Não existe
@@ -232,10 +229,10 @@ enable for extra debug-messages	setup	pt-br	Habilitar mensagens de depuração e
 enable mcrypt	setup	pt-br	Habilitar Mcrypt
 enter some random text for app session encryption	setup	pt-br	Digite algum texto aleatório para encriptação de sessão
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt-br	Digite um texto aleatório para a encriptação de sessão (requer mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diretório de backup.<br>Se vazio: diretório de arquivos
 enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da máquina em que este servidor está sendo executado
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do EGroupware.<br>Ex.: https://www.dominio.com.br/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
@@ -352,8 +349,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pt-br	Configurar aplicações
 manage languages	setup	pt-br	Configurar idiomas
 manual / help	setup	pt-br	Manual / Ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o EGroupware necessita de um limite maior que esse. É possível que ocorram problemas.
 maximum account id (e.g. 65535 or 1000000)	setup	pt-br	ID máximo para contas (Exemplo: 65535 ou 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o EGroupware necessita de um limite maior que esse. É possível que ocorram problemas.
 may be broken	setup	pt-br	Pode estar quebrado
 mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padrão TRIPLEDES)
 mcrypt initialization vector	setup	pt-br	Vetor de iniciação do Mcrypt
@@ -369,7 +366,6 @@ modifications have been completed!	setup	pt-br	As modificações foram completad
 modified	setup	pt-br	Modificado
 modify	setup	pt-br	Modificar
 month	setup	pt-br	Mês
-multi-language support setup	setup	pt-br	Configuração de suporte a idiomas
 name of database	setup	pt-br	Nome da base de dados
 name of db user egroupware uses to connect	setup	pt-br	Nome do usuário da base de dados que o EGroupware deve usar para conexão
 never	setup	pt-br	Nunca
@@ -400,6 +396,7 @@ one month	setup	pt-br	Um mês
 one week	setup	pt-br	Uma semana
 only add languages that are not in the database already	setup	pt-br	Somente adicionar idiomas que ainda não estão na base de dados
 only add new phrases	setup	pt-br	Somente adicionar novas frases
+openidconnect login	setup	pt-br	Login do OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	pt-br	opcional, se apenas a autenticação E a pesquisa anônima estiverem ativadas
 or	setup	pt-br	ou
 or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para a Configuração do Servidor%2
@@ -446,8 +443,8 @@ re-enter password	setup	pt-br	Digite novamente a senha
 read translations from	setup	pt-br	Ler as traduções de
 readable by the webserver	setup	pt-br	Leitura pelo servidor web
 really uninstall all applications	setup	pt-br	REALMENTE desinstalar todas aplicações
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A variável register_globais está ligada. O EGroupware não necessita desse recurso e geralmente é mais seguro manter essa variável desligada.
 registered	setup	pt-br	Registrado
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt-br	A variável register_globais está ligada. O EGroupware não necessita desse recurso e geralmente é mais seguro manter essa variável desligada.
 regular expression to filter by dn	setup	pt-br	Expressão regular para filtrar por DN
 rejected lines	setup	pt-br	Linhas rejeitadas.
 remove	setup	pt-br	Remover
@@ -667,5 +664,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	pt-br	Suas tabelas estão atualizadas
 your tables will be dropped and you will lose data	setup	pt-br	Suas tabelas serão removidas e os dados serão perdidos!
 your temporary directory '%1' %2	setup	pt-br	Seu diretório temporário '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	pt-br	[senha-header],[usuário-header],[nova-senha],[novo-usuário]
 {db | php(default) | php-restore}	setup	pt-br	{db | php(default) | php-restore}
 {off(default) | on}	setup	pt-br	{off(default | on}

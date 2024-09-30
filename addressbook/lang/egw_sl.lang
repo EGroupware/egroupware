@@ -1,26 +1,19 @@
-%1 added	addressbook	sl	%1 dodan
 %1 contact(s) %2	addressbook	sl	%1 stikov %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sl	%1 stik(-i) %2, %3 ni uspel zaradi %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sl	%1 je kontaktiral %2, pri %3 se je pojavila napaka zaradi premajhnih pravic!
 %1 contacts updated (%2 errors).	addressbook	sl	%1 stikov je bilo posodobljenih (%2 napak).
 %1 fields in %2 other organisation member(s) changed	addressbook	sl	%1 polje %2 članu v drugi organizaciji se je spremenilo.
 %1 key(s) added to public keyserver "%2".	addressbook	sl	Ključi %1, dodani javnemu ključevu "%2".
-%1 not implemented for %2!	addressbook	sl	%1 ni implementirano za %2!
 %1 public keys added.	addressbook	sl	Dodani so javni ključ i%1.
-%1 records imported	addressbook	sl	%1 zapisov uvoženih.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sl	1% zapisov prebranih (niso še uvoženi, lahko greste %2nazaj%3 in odznačite preizkus uvoza).
 %1 shared this contact on %2 with %3 %4	addressbook	sl	%1 je ta stik delil na %2 %3 %4
 %1 starts with '%2'	addressbook	sl	%1 se začne z '%2'
 %s please calculate the result	addressbook	sl	%s izračunaj rezultat
 (e.g. 1969)	addressbook	sl	(npr. 1969)
 (empty = use global limit, no = no export at all)	admin	sl	(prazno = uporabi globalno omejitev, ne = izvoz ni dovoljen)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda <noben> lahko je zaklenjen.</b> Izberite tip prevoda s seznama
 @-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo oskrbnikom!
 account id	addressbook	sl	ID računa
 account repository	admin	sl	Repozitorij z računi
-accounts	addressbook	sl	Računi
-actions	addressbook	sl	Dejanja
-add %1	addressbook	sl	Dodaj %1
 add a contact to this organisation	addressbook	sl	Dodaj kontakt v to organizacijo
 add a customfield to link title	addressbook	sl	Dodajte po meri polje za povezavo naslova
 add a new contact	addressbook	sl	Dodaj nov kontakt
@@ -61,7 +54,6 @@ addressbook vcard export	addressbook	sl	Izvoz vCard adresarja
 addressbook vcard import	addressbook	sl	Uvoz vCard imenika
 addressbook-fieldname	addressbook	sl	Adresar-Ime polja
 addvcard	addressbook	sl	Dodaj vCard
-advanced search	addressbook	sl	Napredno iskanje
 all addressbooks	addressbook	sl	Vsi adresarji
 all contacts	addressbook	sl	Vsi kontakti
 all in one field	addressbook	sl	Vse v enem polju
@@ -254,7 +246,6 @@ extra encodings	addressbook	sl	Dodatno kodiranje
 extra private	addressbook	sl	Posebej zasebno
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sl	Napaka pri spreminjanju %1 članov organizacije (premalo pravic)!
 favorite phone	addressbook	sl	Najljubši telefon
-favorites	addressbook	sl	Priljubljene
 fax	addressbook	sl	Faks
 fax (private)	addressbook	sl	Faks (zasebno)
 fax number	common	sl	Faks
@@ -423,7 +414,6 @@ public key	addressbook	sl	Javni ključ
 public sharing url	addressbook	sl	URL za javno deljenje
 publish into groups:	addressbook	sl	Objavi v skupinah:
 read a list / search for entries.	addressbook	sl	Preberi seznam / iskanje vnosov.
-read a list of entries.	addressbook	sl	Preberi seznam vnosov.
 read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi zapis s podano šifro in seznamom polj.
 read only	addressbook	sl	Samo za branje
 record access	addressbook	sl	Dostop do zapisa

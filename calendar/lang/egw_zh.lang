@@ -12,17 +12,17 @@ accepted	calendar	zh	已接受
 access denied to the calendar of %1 !!!	calendar	zh	对 %1 的日历的访问被拒绝！
 access to calendar of %1 denied!	calendar	zh	拒绝访问 %1 的日历！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh	执行下列操作将发出通知：添加, 取消, 接受, 拒绝...
-actions	calendar	zh	操作
-actions...	calendar	zh	操作...
 add alarm	calendar	zh	添加闹铃
 add appointments via shortened dialog or complete edit window	calendar	zh	通过缩短的对话框或完整的编辑窗口添加约会
 add current view as favorite	calendar	zh	将当前视图添加为收藏夹
 add new alarm	calendar	zh	添加新警报
 add new event	calendar	zh	添加新预约
 add new participants or resource	calendar	zh	添加新与会者或资源
+add recurrence	calendar	zh	添加递归
 add timesheet entry	calendar	zh	添加时间表条目
 added	calendar	zh	添加
 added by synchronization	calendar	zh	通过同步添加
+added recurrence on %1.	calendar	zh	在 %1 上添加了递归。
 after	calendar	zh	之后
 after %1	calendar	zh	在%1以后
 after current date	calendar	zh	在当前日期之后
@@ -34,7 +34,6 @@ alarm deleted	calendar	zh	闹铃以删除
 alarm for %1 at %2 in %3	calendar	zh	在%3的%1中%2闹铃
 alarm management	calendar	zh	闹铃管理
 alarms	calendar	zh	闹铃
-all categories	calendar	zh	所有类别
 all day	calendar	zh	所有日期
 all events	calendar	zh	所有事件
 all exceptions are converted into single events.	calendar	zh	所有例外情况都会转换为单个事件。
@@ -47,6 +46,7 @@ allows to edit the event again	calendar	zh	允许再次编辑事件
 always	calendar	zh	永远
 always use full edit dialog	calendar	zh	始终使用完整的编辑对话框
 always use the full edit dialog, not this little dialog	calendar	zh	始终使用完整的编辑对话框，而不是这个小对话框
+apply changes to (future) exceptions too?	calendar	zh	将更改也应用于（未来的）异常？
 apply the changes	calendar	zh	应用修改
 attention	calendar	zh	注意事项
 back half a month	calendar	zh	上半个月
@@ -144,6 +144,7 @@ exceptions	calendar	zh	例外
 exclude weekend	calendar	zh	不包括周末
 execute a further action for this entry	calendar	zh	为这一输入执行进一步的操作
 existing links	calendar	zh	已存在链接
+explicit recurrences	calendar	zh	明确递归
 extended	calendar	zh	扩展
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zh	扩展更新总是含完整的事件细节，iCal 格式可以被其它日历应用软件读取。
 fieldseparator	calendar	zh	字段分隔符
@@ -217,6 +218,7 @@ mail all participants	calendar	zh	发邮件给所有参与者
 make freebusy information available to not logged in persons?	calendar	zh	将可用的空闲/繁忙信息开放给未注册的人？
 manage mapping	calendar	zh	管理匹配
 maximum available quantity of %1 exceeded!	calendar	zh	超过 %1 的最大可用数量！
+meeting request additional recurrence(s)	calendar	zh	会议要求增加递归
 min days	calendar	zh	最小天数
 minimum number of users for showing day view as consolidated.	calendar	zh	合并显示日视图的最少用户数。
 minimum number of users for showing week view as consolidated.	calendar	zh	合并显示周视图的最少用户数。
@@ -263,8 +265,10 @@ on time change of more than 4 hours too	calendar	zh	在超过4个小时的时间
 one month	calendar	zh	一月
 one week	calendar	zh	一星期
 one year	calendar	zh	一年
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	zh	只有少数完全兼容的客户端（如 Apple）支持。如果必须输入 URL，则很可能不支持！
 only the initial date of that recurring event is checked!	calendar	zh	仅当重复事件的初始日期！
 open todo's:	calendar	zh	待办事项
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	zh	否则，对标题、说明......或新参与者的更改不会转移到已创建的例外中。
 output unit	calendar	zh	输出单位
 overlap holiday	calendar	zh	重迭假日
 participants	calendar	zh	参与者
@@ -275,6 +279,7 @@ people holiday	calendar	zh	假日
 permission denied	calendar	zh	没有权限
 planner by category	calendar	zh	根据类别计划
 planner by user	calendar	zh	根据用户计划
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	zh	请注意：冲突检查永远不会在过去进行，并且总是受限于上述重复发生的时间范围。
 please note: you can configure the field assignments after you uploaded the file.	calendar	zh	请注意：您可以在上传文件<b>之后</b>设置制定字段分配。
 preselected group for entering the planner	calendar	zh	为计划预先选定参与的组
 previous	calendar	zh	上一个
@@ -349,6 +354,7 @@ test import (show importable records <u>only</u> in browser)	calendar	zh	测试�
 the apple ical apps use this color to display events from this calendar.	calendar	zh	Apple iCal 应用程序使用这种颜色来显示该日历中的事件。
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	zh	文件可以包含占位符，如 {{%1}}，并用数据替换。
 the extern organizer changed the event!	calendar	zh	外部组织者更改了事件！
+the organizer changed the event!	calendar	zh	组织者更改了活动！
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	zh	发件人"%1 "不是外部组织者"%2"，请谨慎操作！
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	zh	发件人"%1 "不是回复"%2 "的参与者，请谨慎操作！
 this day is shown as first day in the week or month view.	calendar	zh	这一天在周视图或是月视图中显示为第一天。
@@ -356,6 +362,7 @@ this defines the end of your dayview. events after this time, are shown below th
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	zh	这定义了您的日视图的开始，在这个时间之前的事件，显示在日视图的上面。<br>这个时间同样也作为新建事件的默认开始时间。
 this entry is opened by user:	calendar	zh	本条目由用户在配置的时间间隔内开放：
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zh	该群组是当您输入计划管理时预选的组，您可以在您愿意的任何时间在计划管理中进行修改。
+this is a single recurrence of a recurring event.	calendar	zh	这是重复事件的单次重复。
 this message is sent for canceled or deleted events.	calendar	zh	这个消息是因为事件被取消或被删除而发的。
 this message is sent for modified or moved events.	calendar	zh	这个消息是因为事件被修改或移动而发。
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zh	这个消息被发送到您自己所拥有的事件的每一个要求得到有关新事件通知的参与者。<br>你可以使用某些变量得以替换事件的数据。第一行是电子邮件的主题。
@@ -401,6 +408,7 @@ work day starts on	calendar	zh	工作日开始时间
 yearly	calendar	zh	每年
 yearview	calendar	zh	年视图
 you can either set a year or a occurrence, not both !!!	calendar	zh	您可以设置一年或一个事件，不是两者！
+you can only notify other users, not yourself!	calendar	zh	您只能通知其他用户，不能通知自己！
 you can only set a year or a occurrence !!!	calendar	zh	您只能设置一年或一个期间！
 you do not have permission to read this record!	calendar	zh	您没有读取该纪录的权限！
 you have a meeting scheduled for %1	calendar	zh	您在 %1 有一个会议安排

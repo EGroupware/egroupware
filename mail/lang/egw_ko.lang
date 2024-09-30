@@ -20,6 +20,7 @@ certificate info for email %1	mail	ko	이메일 %1에 대한 인증서 정보
 certificate issued by	mail	ko	인증서 발급처
 changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다
 changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다
+checking admin credentials failed	mail	ko	관리자 자격 증명 확인에 실패했습니다.
 contact label	mail	ko	연락처 레이블
 delete selected folders	mail	ko	選択したフォルダを削除する
 deleted	mail	ko	삭제됨
@@ -44,7 +45,7 @@ failed to unsubscribe folder %1!	mail	ko	%1 폴더의 구독을 취소하지 못
 file into	mail	ko	로 이동하십시오
 file into:	mail	ko	로 이동하십시오:
 filemode has been switched to %1	mail	ko	%1 폴더의 구독을 취소하지 못했습니다!
-flagged %1 messages as %2 in %3	mail	ko	%3에서 %1 메시지를 %2로 플래그 지정했습니다
+flagged %1 messages as %2 in %3	mail	ko	%3에서 %1 메시지를 “%2”로 플래그 지정했습니다.
 flagged %1 messages as flagged in %2	mail	ko	%2에서 %1 메시지를 %2로 플래그 지정했습니다
 flagged %1 messages as unflagged in %2	mail	ko	%2에서 %1 메시지를 플래그가 없는 것으로 플래그 지정했습니다
 folder %1 %2 failed because of %3!	mail	ko	%3 때문에 %1 폴더 %2을(를) 구독하지 못했습니다!
@@ -86,6 +87,7 @@ learning as spam failed because of %1	mail	ko	%1 때문에 스팸으로 학습�
 less than	mail	ko	미만
 limit mailing list results when searching for addresses	mail	ko	주소 검색 시 메일 그룹 결과 제한
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ko	기본적으로 전환/활성화할 작업 목록(예: 메일 작성 InfoLog 작업으로 저장)
+mail probably has no text-body	mail	ko	메일에 텍스트가 없을 수 있습니다.
 mail settings	mail	ko	메일 설정
 mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
 mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	mail	ko	메일 서버가 보고했습니다:\n%1 \n선택한 메시지를 즉시 삭제하여 계속 진행하시겠습니까(확인 클릭)\n그렇지 않은 경우 계속하기 전에 휴지통 폴더를 비우십시오. (취소 클릭)
@@ -138,6 +140,7 @@ remove all	mail	ko	모두 제거
 removing %1 from blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에서 %1을(를) 제거하지 못했습니다
 removing %1 from whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용된 이메일 주소에서 %1을(를) 제거하지 못했습니다
 replace 'http://' in image urls with (trailing / required!)	mail	ko	이미지 URL에서 'http://'를 (후행/필수!)로 바꾸세요.
+reply with attachments	mail	ko	첨부파일이 있는 답장
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	ko	이 메시지의 콘텐츠가 암호화되어 제대로 해독할 수 없는 것 같으므로 이 메시지에 회신하지 못했습니다. 이 암호화된 메시지의 내용을 계속 포함하려면 대신 첨부 파일로 전달을 사용해 보세요.
 report as ham	mail	ko	햄으로 신고
 report as spam	mail	ko	스팸으로 신고

@@ -65,6 +65,9 @@ only admin can edit this status	admin	cs	Tento stav smí editovat jen administr�
 or endtime	timesheet	cs	nebo Koncový čas
 order	timesheet	cs	Pořadí
 parent	admin	cs	Nadřazený
+pause	common	cs	Pauza
+pause time	timesheet	cs	Doba pauzy
+paused	timesheet	cs	Pauza
 permission denied!!!	timesheet	cs	Přístup zamítnut!
 price	timesheet	cs	Cena
 projectmanager integration	admin	cs	Integrace se Správcem projektů
@@ -81,11 +84,13 @@ select multiple timeshhets for a further action	timesheet	cs	Vybrat více pracov
 select the predefined status, whan creating a new timesheet	preferences	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
 show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit součet množství (např. pro sečtení záporného přesčasu)
 start	timesheet	cs	Začátek
+start-time can not be before last stop- or pause-time %1!	common	cs	Čas spuštění nesmí být před posledním časem zastavení nebo pauzy %1!
 starttime	timesheet	cs	Počáteční čas
 starttime has to be before endtime !!!	timesheet	cs	Počáteční čas musí předcházet času ukončení!
 status deleted.	timesheet	cs	Stav byl smazán
 status of created timesheets	timesheet	cs	Stav vytvářených pracovních výkazů
 status updated.	timesheet	cs	Stav byl aktualizován.
+stop- or pause-time can not be before the start-time %1!	common	cs	Stop- nebo pause-time nemůže být před start-time %1!
 sum %1:	timesheet	cs	Součet %1:
 tag to mark positions for address labels	timesheet	cs	Značka pro vyznačení pozic v adresních štítcích
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	cs	Interně používaný název (<= 20 znaků), jeho změna vede k nedostupnosti stávajících dat
@@ -94,6 +99,7 @@ this month	timesheet	cs	Tento měsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
 ticket modified by %1 at %2	timesheet	cs	Ohlášení změnil(a) %1 v %2
+timer already running or paused	common	cs	Časovač již běží nebo je pozastavený
 timesheet	common	cs	Pracovní výkaz
 timesheet csv export	timesheet	cs	Export pracovního výkazu do CSV
 timesheet modified by %1 at %2	timesheet	cs	Pracovní výkaz změnil(a) %1 v %2

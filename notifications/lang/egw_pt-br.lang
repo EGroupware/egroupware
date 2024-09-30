@@ -2,6 +2,7 @@
 account:	notifications	pt-br	Conta:
 all possible notification backends	notifications	pt-br	Todas as possíveis backends de notificação
 are you sure you want to delete all notifications?	notifications	pt-br	Tem certeza de que deseja excluir todas as notificações?
+automatic deleted notifications older than	admin	pt-br	Exclusão automática de notificações mais antigas que
 browser	notifications	pt-br	Navegador
 browser is starting.	notifications	pt-br	Navegador está começando.
 cancal settings?	notifications	pt-br	Configurações Cancal?
@@ -65,6 +66,7 @@ more info	notifications	pt-br	Mais informações
 notification	common	pt-br	Notificação
 notifier	notifications	pt-br	Notifier
 notify me by	notifications	pt-br	Notificar-me por
+only used if no push server available!	admin	pt-br	Usado somente se não houver um servidor push disponível!
 open notified entry	notifications	pt-br	Abrir registro notificado
 optimize e-mails for external mail client	notifications	pt-br	Optmizar e-mails para clientes externos
 page not found, please check serveraddress.	notifications	pt-br	Página não encontrada, verifique o endereço do servidor.

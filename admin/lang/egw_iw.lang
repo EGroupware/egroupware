@@ -1,6 +1,5 @@
 %1 not found or not executable !!!	admin	iw	!%1 נא נמצא או שאינו ניתן להרצה
 (no subject)	admin	iw	(ללא נושא)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	iw	(-להתקנת יישומים חדשים השתמש ב<br>
 account active	admin	iw	החשבון פעיל
 account has been created	common	iw	החשבון נוצר
 account has been deleted	common	iw	החשבון נמחק
@@ -63,7 +62,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	iw	!שירותים
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	iw	'application/octet-stream' במקום ברירת המחדל FTP נכון עבור MIME נסה להשתמש בסוג
 authentication / accounts	admin	iw	אימות / חשבונות
 auto create account records for authenticated users	admin	iw	צור אוטומטית רשומות חשבון עבור משתמשים מאומתים
-back to the list	admin	iw	חזרה לרשימה
 bi-dir passthrough	admin	iw	מעבר דו-מחיצתי
 bi-directional	admin	iw	דו-כיווני
 bottom	admin	iw	תחתית
@@ -132,10 +130,6 @@ disable "auto completion" of the login form	admin	iw	הפוך "השלמה אוט
 disabled (not recomended)	admin	iw	(לא פעיל (לא מומלץ
 display	admin	iw	תצוגה
 do not delete the category and return back to the list	admin	iw	אל תציג את הקטגוריה וחזור אל הרשימה
-do you also want to delete all global subcategories ?	admin	iw	?ברצונך גם למחוק את תתי-הקטגוריות הגלובליות
-do you really want to delete this profile	admin	iw	בטוח שברצונך למחוק פרופיל זה
-do you want to delete all global subcategories ?	admin	iw	?ברצונך למחוק את תתי-הקטגוריות הגלובליות
-do you want to move all global subcategories one level down ?	admin	iw	?ברצונך להוריד את כל תתי-הקטגוריות רמה אחת למטה
 domainname	admin	iw	שם הדומיין
 down	admin	iw	למטה
 edit account	admin	iw	ערוך חשבון
@@ -434,10 +428,8 @@ you must add at least 1 permission or group to this account	admin	iw	עליך ל
 you must enter a group name.	admin	iw	.עליך לציין שם לקבוצה
 you must enter a lastname	admin	iw	עליך לציין שם משפחה
 you must enter a loginid	admin	iw	.עליך לציין זיהוי כניסה
-you must enter an application name and title.	admin	iw	.עליך לציין שם וכותרת ליישום
 you must enter an application name.	admin	iw	.עליך לציין שם ליישום
 you must enter an application title.	admin	iw	עליך לציין כותרת ליישום
-you must select a file type	admin	iw	עליך לבחור סןג קובץ
 you will need to remove the subcategories before you can delete this category	admin	iw	!עליך להסיר את תתי-הקטגוריות לפני שאפשר יהיה למחוק קטגוריה זו
 your name	admin	iw	השם שלך
 your session could not be verified.	admin	iw	.לא הצלחתי לשחזר את המושב

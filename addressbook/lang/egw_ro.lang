@@ -1,9 +1,7 @@
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ro	%1 contact(e) %2, %3 a eșuat din cauza lui %4!
 %1 contacts updated (%2 errors).	addressbook	ro	%1 contacte actualizate (%2 erori).
 %1 key(s) added to public keyserver "%2".	addressbook	ro	%1 cheie(e) adăugată(e) la serverul public de chei "%2".
-%1 not implemented for %2!	addressbook	ro	%1 nu este implementat pentru %2!
 %1 public keys added.	addressbook	ro	%1 chei publice adăugate.
-%1 records imported	addressbook	ro	%1 înregistrări importate.
 %1 shared this contact on %2 with %3 %4	addressbook	ro	%1 a partajat acest contact pe %2 %3 %4
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	ro	Adăugați un câmp personalizat la legăturile din agenda de adrese, care se afișează în alte aplicații. Valoarea implicită este niciun câmp personalizat.
 add to bcc	addressbook	ro	Adăugați la copia oarbă
@@ -41,7 +39,6 @@ export definition to use for nextmatch export	addressbook	ro	Definiție de expor
 export definitition to use for nextmatch export	addressbook	ro	Definiția de export care trebuie utilizată pentru exportul nextmatch
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ro	Exportă contactele din agenda de adrese într-un fișier CSV.  CSV înseamnă "Comma Separated Values" (Valori separate prin virgulă). În fila Opțiuni puteți alege și alți separatori.
 favorite phone	addressbook	ro	Telefon preferat
-favorites	addressbook	ro	Favorite
 fields to check for duplicates	addressbook	ro	Câmpuri pentru a verifica dacă există dubluri
 fields to consider when looking for duplicate contacts.	addressbook	ro	Câmpuri care trebuie luate în considerare atunci când se caută contacte duplicate.
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	ro	Utilizați această etichetă pentru litera de serie. Așezați conținutul pe care doriți să îl repetați între două etichete.

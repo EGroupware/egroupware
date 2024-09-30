@@ -47,6 +47,8 @@ default	setup	bg	по подразбиране
 delete	setup	bg	Изтриване
 deleting tables	setup	bg	Изтриване на таблици
 details for admin account	setup	bg	Подробности за администраторския акаунт
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	bg	Деактивирайте само ако AD има проблеми с контрола на VLV И може да върне всички потребители с една заявка!
+disable vlv controls	setup	bg	Деактивиране на VLV контролите
 download	setup	bg	Изтегляне
 error searching "dn=%1" for "%2"!	setup	bg	Грешка при търсенето на "DN=%1" за "%2"!
 error uploading your backup!	setup	bg	Грешка при качване на резервно копие!
@@ -84,6 +86,7 @@ no	setup	bg	Не
 not set	setup	bg	не е зададено
 one month	setup	bg	един месец
 one week	setup	bg	една седмица
+openidconnect login	setup	bg	Вход с OpenIDConnect
 or	setup	bg	или
 or leave empty and select openidconnect as authentication type above for single sign on	setup	bg	или оставете празно място и изберете OpenID Connect като тип удостоверяване по-горе за единично влизане
 or leave empty and select saml as authentication type above for single sign on	setup	bg	или оставете празно място и изберете SAML като тип удостоверяване по-горе за единично влизане
@@ -139,5 +142,6 @@ warning!	setup	bg	Внимание
 welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на EGroupware
 writable by the webserver	setup	bg	с права за запис от уеб-сървъра
 yes	setup	bg	Да
+you need to select your current charset!	setup	bg	Трябва да изберете текущия си charset!
 your database does not exist	setup	bg	Базата ви данни не съществува
 your database is not working!	setup	bg	Базата ви данни не работи!

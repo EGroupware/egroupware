@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	pt	%1 directórios %2 encontrados!
 %1 email addresses inserted	common	pt	%1 endereço(s) de correio electrónico inserido(s)
 %1 email(s) added into %2	common	pt	%1 e-mail(s) adicionado(s) a %2
-%1 entries found, select one ...	common	pt	%1 Uma entrada encontrada, selecione uma ...
 %1 etemplates deleted	common	pt	%1 modelos Web eliminados
-%1 etemplates for application '%2' dumped to '%3'	common	pt	%1 modelos Web para a aplicação %2' deixados em '%3'
 %1 etemplates found	common	pt	%1 modelos Web encontrados
 %1 file	common	pt	Ficheiro %1
 %1 is not executable by the webserver !!!	common	pt	%1 não é executável pelo servidor Web!
-%1 matches on search criteria	common	pt	%1 ocorrências da pesquisa
 %1 more %2 selected ...	common	pt	%1 mais %2 seleccionados ...
 %1 more...	common	pt	% Mais 1 ...
-%1 new etemplates imported for application '%2'	common	pt	%1 modelos Web novos importados para a aplicação '%2'
 %1 not implemented for %2!	common	pt	% 1 não implementado para% 2!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt	%1Escolha outra directoria%2<br>ou torne %3 editável pelo servidor Web.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt	O %1EGroupware%2 é uma ferramenta Web groupware criada em %3PHP%4, para ser utilizada por vários utilizadores em simultâneo.
@@ -23,8 +19,10 @@
 %s onchange	common	pt	%s a ser alteraados
 %s readonly	common	pt	%s apenas para leitura
 '%1' copied to clipboard	common	pt	%1' copiado para prancheta
+'%1' does not match the required pattern '%2'	common	pt	“%1“ não corresponde ao padrão requerido (”%2")
 '%1' has an invalid format	common	pt	'% 1' tem um formato inválido
 '%1' has an invalid format !!!	common	pt	'%1' tem um formato inválido!
+'%1' is not a valid app-name ('%2')!	common	pt	'%1' NÃO é um nome de aplicação válido ('%2')!
 '%1' is not a valid date !!!	common	pt	'%1' não é uma data válida!
 '%1' is not a valid floatingpoint number !!!	common	pt	%1' não é um número de ponto de flutuação válido!
 '%1' is not a valid integer !!!	common	pt	'%1' não é um inteiro válido!
@@ -32,6 +30,7 @@
 '%1' is not a valid timezone!	common	pt	'%1' não é um fuso horário válido!
 '%1' is not allowed ('%2')!	common	pt	'% 1' não é permitido ('% 2')!
 '%1' is not allowed%2)!	common	pt	'%1' NÃO é permitido (%2)!
+'%1' must not contain (back)slashes!	common	pt	'%1' não pode conter barras (invertidas)!
 (session restored in %1 seconds)	common	pt	Session restored in %1 seconds.
 00 (disable)	admin	pt	00 (desactivado)
 1 day	common	pt	1 Dia
@@ -224,6 +223,7 @@ chad	common	pt	Chade
 change	common	pt	Alterar
 change owner	common	pt	Alterar proprietário
 changed	common	pt	Alterado/a
+changes that you made may not be saved.	common	pt	As alterações efectuadas podem não ser guardadas.
 charset	common	pt	Conjunto de carateres
 check all	common	pt	Marcar todas
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pt	Verifique se há valores vazios em instruções IF. Exemplo {{IF url~EMPTY~~Website:}} - Se o url não estiver vazio, escreve "Website:"
@@ -359,7 +359,6 @@ denmark	common	pt	Dinamarca
 description	common	pt	Descrição
 detail	common	pt	Detalhe
 details	common	pt	Detalhes
-direction left to right	common	pt	Da esquerda para a direita
 directory	common	pt	Directoria
 disabled	common	pt	Desactivado
 discard changes	common	pt	Ignorar alterações
@@ -571,7 +570,6 @@ how many days to sync in the past (default %1)	groupdav	pt	Quantos dias para sin
 how many entries should the list show	common	pt	Número de registos a exibir na lista
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt	Quantos ícones devem ser exibidos na barra de navegação (topo da página). Os ícones adicionais irão para um outro menu. Para aceder a este menu basta clicar no ícone mais à direita da barra de navegação.
 how many rows to print	common	pt	Quantas filas a imprimir
-how to show the general egroupware menu ?	common	pt	Como mostrar o menu geral do EGroupware
 html	common	pt	HTML
 html link to the current record	common	pt	Link HTML para o registro atual
 html links to any entries linked to the current record, excluding attached files	common	pt	Ligações HTML para quaisquer entradas ligadas ao registo atual, excluindo ficheiros anexados
@@ -579,7 +577,6 @@ hungary	common	pt	Hungria
 iceland	common	pt	Islândia
 id	common	pt	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	pt	Se o campo estiver desactivado, será apresentada uma célula vazia da tabela, para remoção (temporária) do campo/célula
-if the clock is enabled would you like it to update it every second or every minute?	common	pt	Se o relógio estiver activo, deseja actualizá-lo ao segundo ou ao minuto.
 if there are some images in the background folder you can choose the one you would like to see.	common	pt	Se existirem imagens na pasta de fundo, pode escolher a que gosta mais.
 if you use "2-factor-authentication", please enter the code here.	common	pt	Se utilizar a "Autenticação de 2 factores", introduza o código aqui.
 image	common	pt	Imagem
@@ -721,7 +718,6 @@ marshall islands	common	pt	Ilhas Marshall
 martinique	common	pt	Martinica
 mauritania	common	pt	Mauritânia
 mauritius	common	pt	Maurícias
-max number of icons in navbar	common	pt	Número máximo de ícones na barra de navegação
 maximum size for uploads	filemanager	pt	Tamanho máximo de carregamento
 may	common	pt	Maio
 mayotte	common	pt	Mayotte
@@ -850,6 +846,7 @@ open notify window	common	pt	Abrir janela de aviso
 open popup window	common	pt	Abrir janela popup
 open sidebox	common	pt	Abrir caixa lateral
 open the online help.	common	pt	Abrir ajuda em linha
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt	Início de sessão do OpenIDConnect bem sucedido, mas o utilizador '%1' NÃO existe no EGroupware, E a criação automática de utilizadores está desactivada!
 operator	common	pt	Operador
 optional note about the link	common	pt	Informações adicionais sobre a ligação
 options	common	pt	Opções
@@ -935,7 +932,6 @@ puerto rico	common	pt	Porto Rico
 qatar	common	pt	Qatar
 radiobutton	common	pt	Botão de selecção única
 read	common	pt	Ler
-read a list of entries.	common	pt	Ler uma lista de registos.
 read a single entry by passing the id and fieldlist.	common	pt	Ler um registo único passando a ID e a lista de campos.
 read etemplate from database (for the keys above)	common	pt	Ler modelo Web da base de dados (para as chaves em cima)
 read this list of methods.	common	pt	Lê esta lista de métodos.
@@ -1071,20 +1067,18 @@ show (no save)	common	pt	Exibir (sem guardar)
 show all	common	pt	Exibir tudo
 show all / cancel filter	common	pt	Mostrar tudo / cancelar filtro
 show all categorys	common	pt	Exibir todas as categorias
-show logo's on the desktop.	common	pt	Exibir logótipo no ambiente de trabalho.
-show menu	common	pt	Exibir menu
 show page generation time	common	pt	Exibir tempo de geração da página
 show page generation time on the bottom of the page?	common	pt	Exibir tempo de geração da página no final da página.
 show page generation time?	common	pt	Exibir tempo de geração da página
 show password	common	pt	Mostrar palavra-passe
 show values	common	pt	Exibir valores
 show/hide	common	pt	Mostrar/ocultar barra lateral
-show_more_apps	common	pt	Exibir mais aplicações
 showing	common	pt	A exibir
 showing %1	common	pt	A exibir %1
 showing %1 - %2 of %3	common	pt	A exibir %1 - %2 de %3
 shows / allows you to enter values into the etemplate for testing	common	pt	exibe / permite-lhe a submissão de valores no modelo Web para testes
 shows/displays etemplate for testing, does not save it before	common	pt	Exibr/apresenta o modelo Web para testes. NÃO o guarda antes
+show_more_apps	common	pt	Exibir mais aplicações
 sierra leone	common	pt	Serra Leoa
 sign up	common	pt	Inscrever-se
 singapore	common	pt	Singapura
@@ -1241,7 +1235,6 @@ wednesday	common	pt	Quarta
 weekend	common	pt	Fim-de-semana
 welcome	common	pt	Bem-vindo
 western sahara	common	pt	Saara Ocidental
-what color should all the blank space on the desktop have	common	pt	Que cor deve preencher todos os espaços em branco do ambiente de trabalho?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt	O que acontece ao conteúdo excedente: visível (por omissão), oculto, consultável utilizando a barra de deslocamento, automático (decisão do navegador)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os botões "página inicial" e "sair" serão apresentados como aplicações na barra de aplicações.
 which groups	common	pt	Que grupo(s)

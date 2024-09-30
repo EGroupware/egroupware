@@ -25,7 +25,6 @@
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe = Nein. Ausgeschaltet lassen, wenn nicht benutzt)
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfigurationswert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 (no subject)	admin	de	(Kein Betreff)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten]!)
 -  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
 2 month	admin	de	2 Monate
@@ -42,7 +41,6 @@ account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat k
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext-Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
 account '%1' deleted.	admin	de	Konto '%1' gelöscht.
-account '%1' not found !!!	admin	de	Mail-Konto '%1' nicht gefunden!
 account active	admin	de	Konto aktiv
 account deleted.	admin	de	Mail-Konto gelöscht.
 account has been created	common	de	Konto wurde erstellt.
@@ -161,9 +159,6 @@ authentication / accounts	admin	de	Benutzerauthentifizierung / Benutzerkonten
 auto create account records for authenticated users	admin	de	Automatisch Benutzerkonten für authentifizierte Benutzer anlegen.
 automatically transfer entries owned by the user:	admin	de	Übertrage Einträge des Benutzers automatisch:
 available placeholders	admin	de	Verfügbare Platzhalter
-back to admin/grouplist	admin	de	Zurück zu: Admin / Gruppenverwaltung
-back to admin/userlist	admin	de	Zurück zu: Admin / Benutzerverwaltung
-back to the list	admin	de	Zurück zur Liste
 backup directory %1 mounted as %2	admin	de	Datensicherungsverzeichnis %1 unter %2 gemountet
 bad login name or password.	admin	de	Falscher Benutzername oder Passwort.
 bad or malformed request. server responded: %s	admin	de	Falsche oder ungültige Anfrage. Server antwortet: %s
@@ -178,9 +173,6 @@ by	admin	de	Von
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	de	Durch die Auswahl eines Benutzer oder Gruppe löschen Sie das Mailkonto für alle anderen Benutzer!<br>Sind Sie wirklich sicher, dass Sie das wollen?
 calculate next run	admin	de	Nächste Ausführung berechnen
 calendar recurrence horizont in days (default 1000)	admin	de	Kalender Wiederholungs-Bereich in Tagen (Vorgabe sind 1000)
-can be used by application	admin	de	Kann von folgender Anwendung verwendet werden
-can be used by group	admin	de	Kann von folgender Gruppe verwendet werden
-can be used by user	admin	de	Kann von folgendem Benutzer verwendet werden
 can be used to show groups by container, if enabled	admin	de	Kann benutzt werden um Gruppen in Containern anzuzeigen, wenn eingeschaltet
 can change password	admin	de	Darf Passwort ändern
 can not change users into groups, same sign required!	admin	de	Das Ändern von Benutzern in Gruppen ist nicht möglich. Gleiches Kennzeichen wird benötigt!
@@ -346,12 +338,6 @@ do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
 do not send cookie	admin	de	Cookie nicht senden
 do not set attribute	admin	de	Attribute nicht setzen
-do not validate certificate	admin	de	Zertifikat nicht überprüfen
-do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
-do you really want to delete this profile	admin	de	Wollen Sie dieses Profil wirklich löschen?
-do you really want to reset the filter for the profile listing	admin	de	Möchten Sie den Filter für die Profilliste wirklich zurücksetzen?
-do you want to delete all global subcategories ?	admin	de	Möchten Sie alle globale Unterkategorien löschen?
-do you want to move all global subcategories one level down ?	admin	de	Wollen Sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 domainname	admin	de	Domänenname
 down	admin	de	Nach unten
@@ -904,7 +890,7 @@ they must be removed before you can continue	admin	de	Sie müssen zuvor aus dies
 this application is current	admin	de	Diese Anwendung ist aktuell.
 this application requires an upgrade	admin	de	Diese Anwendung benötigt ein Upgrade.
 this category is currently being used by applications as a parent category	admin	de	Diese Kategorie wird gegenwärtig als übergeordnete Kategorie benutzt.
-this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten.
+this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten/E-Mails.
 this is a mail account for all users!	admin	de	Das ist ein Mail-Konto für ALLE Benutzer!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!<br>Das Konto wird für ALLE Benutzer gelöscht!<br>Sind Sie wirklich sicher, dass Sie das wollen?
 this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
@@ -1028,10 +1014,8 @@ you must add at least 1 permission or group to this account	admin	de	Sie müssen
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
 you must enter a lastname	admin	de	Sie müssen einen Nachnamen angeben.
 you must enter a loginid	admin	de	Sie müssen einen Benutzernamen angeben.
-you must enter an application name and title.	admin	de	Sie müssen der Anwendung einen Namen und einen Titel geben.
 you must enter an application name.	admin	de	Sie müssen der Anwendung einen Namen geben.
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
-you must select a file type	admin	de	Sie müssen einen Dateityp auswählen.
 you must select at least one group member.	admin	de	Sie müssen mindestens ein Gruppenmitglied auswählen.
 you need to enter install id and password!	admin	de	Sie müssen die Installations-ID UND das Passwort eingeben!
 you need to select as least one action!	admin	de	Sie müssen mindestens einen Befehl auswählen!
@@ -1039,6 +1023,5 @@ you need to select some users first!	admin	de	Sie müssen zuerst einige Benutzer
 you need to specify a forwarding address, when checking "%1"!	admin	de	Sie müssen eine Weiterleitungs-Adresse angeben, wenn "%1" angehakt ist!
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
 your last submission was less then %1 days ago!	admin	de	Ihre letzte Übertragung liegt weniger als %1 Tage zurück!
-your message to  %1 was displayed.	admin	de	Ihre Nachricht %1 wurde angezeigt.
 your name	admin	de	Ihr Name
 your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.

@@ -27,6 +27,7 @@ certificate info for email %1	mail	lt	Sertifikato informacija apie el. pašto %1
 certificate issued by	mail	lt	Sertifikatą išdavė
 changing subject failed because of %1	mail	lt	Pakeisti temą nepavyko dėl %1
 changing subject failed folder %1 does not exist	mail	lt	Pakeisti temą nepavyko aplankas %1 neegzistuoja
+checking admin credentials failed	mail	lt	Nepavyko patikrinti administratoriaus įgaliojimų
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
 contact label	mail	lt	Kontaktų etiketė
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
@@ -55,7 +56,7 @@ failed to unsubscribe folder %1!	mail	lt	Nepavyko atsisakyti aplanko %1!
 file into	mail	lt	Perkelti į
 file into:	mail	lt	Perkelti į:
 filemode has been switched to %1	mail	lt	Failų režimas perjungtas į: %1
-flagged %1 messages as %2 in %3	mail	lt	%1 pranešimas (-ai) pažymėtas (-i) kaip %2 %3
+flagged %1 messages as %2 in %3	mail	lt	%1 pranešimas (-ai) pažymėtas (-i) kaip "%2" %3.
 flagged %1 messages as flagged in %2	mail	lt	%1 pranešimas (-ai) pažymėtas (-i) kaip pažymėtas (-i) %2
 flagged %1 messages as unflagged in %2	mail	lt	%1 pranešimas(-ai) pažymėtas(-i) kaip nepažymėtas(-i) %2
 folder %1 %2 failed because of %3!	mail	lt	Aplankas %1 %2 nepavyko dėl %3!
@@ -99,6 +100,7 @@ mail	common	lt	Paštas
 mail acl	mail	lt	Prieigos teisės
 mail filter	mail	lt	Pašto filtras
 mail filter rule	mail	lt	Pašto filtro taisyklė
+mail probably has no text-body	mail	lt	Paštas tikriausiai neturi teksto
 mail settings	mail	lt	Pašto nustatymai
 mail source	mail	lt	Pašto šaltinis
 mail-address	mail	lt	Pašto adresas
@@ -164,6 +166,7 @@ remove all	mail	lt	Pašalinti visus
 removing %1 from blacklisted email addresses failed because of %2	mail	lt	Pašalinti %1 iš juodojo sąrašo el. pašto adresų nepavyko dėl %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	lt	Pašalinti %1 iš visų į sąrašą įtrauktų el. pašto adresų nepavyko dėl %2
 replace 'http://' in image urls with (trailing / required!)	mail	lt	Pakeiskite "http://" paveikslėlių adresų nuorodose į (būtina naudoti galinį /!)
+reply with attachments	mail	lt	Atsakykite su priedais
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	lt	Atsakyti į šį pranešimą nepavyko, nes atrodo, kad šio pranešimo turinys užšifruotas ir jo negalima tinkamai iššifruoti. Jei vis tiek norite įtraukti šio užšifruoto pranešimo turinį, vietoj to galite pabandyti naudoti persiuntimą kaip priedą.
 report as ham	mail	lt	Pranešti kaip Ham
 report as spam	mail	lt	Pranešti kaip šlamštą

@@ -2,6 +2,7 @@
 account:	notifications	no	Konto:
 all possible notification backends	notifications	no	Alle mulige varslingsbackends
 are you sure you want to delete all notifications?	notifications	no	Er du sikker på at du vil slette alle varsler?
+automatic deleted notifications older than	admin	no	Automatisk sletting av varsler eldre enn
 browser	notifications	no	Nettleser
 browser is starting.	notifications	no	Nettleseren starter.
 cancal settings?	notifications	no	Avbryt innstillinger?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	no	Det kreves informas
 delete all messages	notifications	no	Slett alle meldinger
 delete notifications	notifications	no	Slett varsler
 delete this message	notifications	no	Slett denne meldingen
+do not notify me at all	notifications	no	Ikke varsle meg i det hele tatt
 domain not found, please check serveraddress.	notifications	no	Domene ikke funnet, vennligst sjekk serveradressen.
+e-mail only	notifications	no	Kun e-post
 egroupware login is starting, please wait.	notifications	no	EGroupware-pålogging starter, vennligst vent.
 egroupware logindomain:	notifications	no	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	no	EGroupware Logindomains funnet, vennligst velg.
 egroupware not found by url or connection lost to server.	notifications	no	EGroupware ikke funnet via URL eller forbindelsen til serveren er brutt.
 egroupware not found by url.	notifications	no	EGroupware ikke funnet via URL.
+egroupware-popup and e-mail	notifications	no	EGroupware-popup og e-post
+egroupware-popup and windows-popup	notifications	no	EGroupware-popup og Windows-popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	no	EGroupware-popup først, hvis det mislykkes, varsle meg via e-post
+egroupware-popup only	notifications	no	Kun EGroupware-popup
 email notifications only, if user is not logged in	notifications	no	Kun e-postvarsler, hvis brukeren ikke er logget inn
 error browser can`t start.	notifications	no	Feil Nettleser kan ikke starte.
 error on loading tray icon	notifications	no	Feil ved lasting av Tray-ikonet
@@ -44,6 +51,7 @@ message from	notifications	no	Melding fra
 minutes	notifications	no	Minutter
 more info	notifications	no	Mer informasjon
 notifier	notifications	no	Varsler
+only used if no push server available!	admin	no	Brukes bare hvis ingen push-server er tilgjengelig!
 open notified entry	notifications	no	Åpne varslet oppføring
 page not found, please check serveraddress.	notifications	no	Siden ble ikke funnet, vennligst sjekk serveradressen.
 password:	notifications	no	Passord:

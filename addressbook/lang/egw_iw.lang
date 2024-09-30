@@ -1,14 +1,10 @@
-%1 records imported	addressbook	iw	%1 רשומות הובאו
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	iw	%1 רשומות נקראו (אך עדיין לא הובאו. ניתן %2לחזור%3 ולהוריד את הסימן ליד בדוק ייבוא)
 (e.g. 1969)	addressbook	iw	(למשל 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	iw	<b>לא נמצא סוג המרה &lt;ללא&gt;</b>. נא לבחור סוג המרה מהרשימה.
 @-eval() is only availible to admins!!!	addressbook	iw	זמינה למנהלים בלבד @-eval()
-actions	addressbook	iw	פעולות
 add a single entry by passing the fields.	addressbook	iw	.הוסף רשומה יחידה ע"י העברת השדות שלה
 add custom field	addressbook	iw	הוסף שדה מוצתאם אישית
 added	addressbook	iw	נוסף
 address book	common	iw	ספר כתובות
-address book - vcard in	addressbook	iw	VCard-ספר כתובות -  ב
 address book - view	addressbook	iw	ספר כתובות - תצוגה
 address line 2	addressbook	iw	כתובת שורה 2
 address type	addressbook	iw	סוג כתובת
@@ -16,7 +12,6 @@ addressbook	common	iw	ספר כתובות
 addressbook preferences	addressbook	iw	עדיפויות ספר כתובות
 addressbook-fieldname	addressbook	iw	ספר כתובות - שם שדה
 addvcard	addressbook	iw	VCard הוסף
-advanced search	addressbook	iw	חיפוש מתקדם
 alt. csv import	addressbook	iw	חלופי  CSV ייבוא
 always	addressbook	iw	תמיד
 are you sure you want to delete this field?	addressbook	iw	בטוח שברצונך למחוק שדה זה?
@@ -51,7 +46,6 @@ csv-fieldname	addressbook	iw	CSV שם שדה
 csv-filename	addressbook	iw	CSV שם קובץ
 custom	addressbook	iw	מותאם אישית
 custom fields	addressbook	iw	שדות מותאמים אישית
-debug output in browser	addressbook	iw	להעביר פלט לדפדפן לפיענוח
 default	addressbook	iw	ברירת מחדל
 default filter	addressbook	iw	מסנן מחדלי
 delete a single entry by passing the id.	addressbook	iw	.מחיקת רשומה יחידה ע"י העברת זיהויו
@@ -131,14 +125,11 @@ pref	addressbook	iw	עדיפות
 prefix	addressbook	iw	קידומת
 public key	addressbook	iw	מפתח ציבורי
 read a list / search for entries.	addressbook	iw	קרא רשימה/חפש רשומות
-read a list of entries.	addressbook	iw	קרא רשימת רשומות
 read a single entry by passing the id and fieldlist.	addressbook	iw	קרא רשומה בודדת על ידי העברת הזיהוי ורשימת שדות
 record access	addressbook	iw	גישה לרשומות
 record owner	addressbook	iw	בעל הרשומות
 repetition	addressbook	iw	חזרה
 select all	addressbook	iw	בחר הכל
-select the type of conversion	addressbook	iw	בחר את סוג ההמרה
-select the type of conversion:	addressbook	iw	:בחר את סוג ההמרה
 show	addressbook	iw	הצג
 startrecord	addressbook	iw	רשומה מתחלת
 state	common	iw	מדינה

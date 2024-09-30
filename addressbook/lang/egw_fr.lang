@@ -1,26 +1,19 @@
-%1 added	addressbook	fr	%1 ajouté
 %1 contact(s) %2	addressbook	fr	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	fr	%1 contact(s) %2, %3 en échec pour %4 !
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	fr	%1 contact(s) %2, %3 en erreur (droits d'accès insuffisants) !
 %1 contacts updated (%2 errors).	addressbook	fr	%1 contacts mis à jour (%2 erreurs).
 %1 fields in %2 other organisation member(s) changed	addressbook	fr	Le champ %1 dans %2 autre(s) membre(s) de l'organisation a changé.
 %1 key(s) added to public keyserver "%2".	addressbook	fr	%1 clé(s) publique(s) ajoutée(s) au serveur de clés publiques "%2".
-%1 not implemented for %2!	addressbook	fr	%1 non implémenté pour %2 !
 %1 public keys added.	addressbook	fr	%1 clé(s) publique(s) ajoutée(s).
-%1 records imported	addressbook	fr	%1 enregistrements importés.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation).
 %1 shared this contact on %2 with %3 %4	addressbook	fr	%1 a communiqué ce contact le %2 %3 %4
 %1 starts with '%2'	addressbook	fr	%1 débute avec '%2'
 %s please calculate the result	addressbook	fr	%s calculez s'il vous plait le résultat
 (e.g. 1969)	addressbook	fr	(e.g. 1969)
 (empty = use global limit, no = no export at all)	admin	fr	Vide = pas de limite globale, no = pas d'export du tout
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion <aucun> n'a pu être trouvé.</b> SVP choisissez un type de conversion depuis la liste
 @-eval() is only availible to admins!!!	addressbook	fr	@-eval() est disponible uniquement pour les administrateurs !
 account id	addressbook	fr	Compte ID
 account repository	admin	fr	Dépôt de comptes
-accounts	addressbook	fr	Comptes
-actions	addressbook	fr	Actions
-add %1	addressbook	fr	Ajouter %1
 add a contact to this organisation	addressbook	fr	Ajouter un contact à cette organisation
 add a customfield to link title	addressbook	fr	Ajouter un champ personnalisé au titre du lien
 add a new contact	addressbook	fr	Ajouter un nouveau contact
@@ -61,7 +54,6 @@ addressbook vcard export	addressbook	fr	Import vCard du carnet d'adresses
 addressbook vcard import	addressbook	fr	Import vCard du carnet d'adresses
 addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom du champ
 addvcard	addressbook	fr	Ajouter vCard
-advanced search	addressbook	fr	Recherche avancée
 all addressbooks	addressbook	fr	Tous les carnets d'adresses
 all contacts	addressbook	fr	Tous les contacts
 all in one field	addressbook	fr	Tout en un champ
@@ -138,7 +130,7 @@ contact maintenance	admin	fr	Maintenance des contacts.
 contact modified by %1 at %2	addressbook	fr	Contact modifiée par %1 à %2 .
 contact not found!	addressbook	fr	Contact introuvable !
 contact repository	admin	fr	Dépôt de contacts
-contact saved	addressbook	fr	Contact enregistré
+contact saved	addressbook	fr	Contact enregistré.
 contact settings	admin	fr	Paramètres du contact
 contactform	addressbook	fr	Formulaire de contact
 contacts	common	fr	Contacts
@@ -426,7 +418,6 @@ public key	addressbook	fr	Clé publique
 public sharing url	addressbook	fr	URL de partage public
 publish into groups:	addressbook	fr	Publié dans les groupes:
 read a list / search for entries.	addressbook	fr	Lire une liste / rechercher des entrées.
-read a list of entries.	addressbook	fr	Lire une liste d'entrées.
 read a single entry by passing the id and fieldlist.	addressbook	fr	Lire une seule entrée en passant l'ID et la liste des champs.
 read only	addressbook	fr	Lecture seule
 record access	addressbook	fr	Enregistrer l'accès

@@ -28,13 +28,11 @@
 80 (http)	setup	fr	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	fr	<b>jeu de caractères à utiliser</b> (prendre UTF-8 si vous prévoyez d'utiliser des langues avec différents jeux de caractères) :
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	fr	===> groupe différent  '%1' avec ce gidNumber %2, les appartenances ne sont PAS appliquées !
-[header-password],[header-user],[new-password],[new-user]	setup	fr	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour manage-header !
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour configurer le domaine '%1(%2)' !
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	fr	account repository{sql(par défaut) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (par défaut)|True}],[allow cookie auth{ (par défaut)|True}]
 accounts existing	setup	fr	Comptes déjà créés
 actions	setup	fr	Actions
-activate safe password check	setup	fr	Activer la vérification de la sécurité des mots de passe
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-créés à ce groupe (le groupe 'Default' sera tenté si ceci est vide.)
 add new database instance (egw domain)	setup	fr	Ajouter une nouvelle instance de base de données (domaine EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fr	ajouter ou modifier un domaine: [domain-name(par défaut)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(hôte local)],[db-port(spécifique base de données)],[config-user(comme En-tête)],[config-passwd(comme En-tête)]
@@ -159,8 +157,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	fr	Vérification si l'extension %1 est chargée ou chargeable
 checking file-permissions of %1 for %2 %3: %4	setup	fr	Vérification des permissions de fichiers de %1 pour %2 %3: %4
 checking for gd support...	setup	fr	Vérification du support GD...
-checking for jpgraph in %1	setup	fr	Vérification de la présence de JPGraph dans %1
-checking for tnef application	setup	fr	Vérification de la présence de l'application tnef
 checking function %1 exists	setup	fr	Vérification si les fonctions %1 existent
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fr	Vérification si le serveur web a les droits d'écriture sur le répertoire du paramètre session.save_path='%1' de php.ini
 checking package %1 is installed	setup	fr	Vérification de l'installation du paquetage %1
@@ -215,19 +211,16 @@ creating tables	setup	fr	Création de tables en cours
 creation of %1 in %2 failed !!!	setup	fr	La création de %1 dans %2 a échoué !
 current configuration:	setup	fr	Configuration actuelle:
 current system-charset	setup	fr	Jeu de caractères actuel
-current system-charset is %1.	setup	fr	Le jeu de caractères actuel est %1.
 current version	setup	fr	Version actuelle
 currently installed languages: %1 <br />	setup	fr	Langues installées actuellement: %1<br>
 custom oid	setup	fr	OID personnalisé
 custom set via %1	setup	fr	Personnalisé via %1
-cyrus imap: admin user,password	setup	fr	Cyrus IMAP: Admin user,Password
 daily	setup	fr	Quotidien
 database	setup	fr	Base de données
 database instance (egw domain)	setup	fr	Instance de base de données (domaine EGw)
 database is version %1 and up to date.	setup	fr	La base de données est en version %1 et est à jour
 database successfully converted from '%1' to '%2'	setup	fr	Base de données convertie de '%1' à '%2' avec succès
 datebase %1 droped.	setup	fr	Base de données %1 supprimée.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fr	Port Date/heure.<br>Si vous utilisez le port 13, SVP modifiez les règles du firewall avant de modifier cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
 day	setup	fr	Jour
 day of week<br />(0-6, 0=sunday)	setup	fr	Jour de la semaine<br>(0-6, 0=dimanche)
 db backup and restore	setup	fr	Sauvegarde et récupération base de données
@@ -257,6 +250,8 @@ deregistered	setup	fr	Désenregistré
 details for admin account	setup	fr	Détails du compte admin
 developers' table schema toy	setup	fr	Jouet pour les schémas de table pour développeurs
 did not find any valid db support!	setup	fr	Aucun support de base de données valide !
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	fr	Ne désactivez cette option que si votre AD a des problèmes avec les contrôles VLV ET qu'il peut renvoyer tous les utilisateurs en une seule requête !
+disable vlv controls	setup	fr	Désactiver les contrôles VLV
 do not check for deleted user	setup	fr	Ne pas vérifier si l'utilisateur a été supprimé
 do you want persistent connections (higher performance, but consumes more resources)	setup	fr	Voulez-vous des connexions persistantes (meilleure performance, mais consomme plus de ressources)
 do you want to manage homedirectory and loginshell attributes?	setup	fr	Voulez-vous gérer les attributs des répertoire d'accueil et du shell de connexion ?
@@ -301,10 +296,10 @@ enable mcrypt	setup	fr	Activer MCrypt
 enforce ssl (allows to specify just a path above)	setup	fr	Forcer le SSL (permet de spécifier le chemin ci-dessus)
 enter some random text for app session encryption	setup	fr	Entrez du texte aléatoirement pour le chiffrement des sessions applicatives
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fr	Entrez du texte aléatoirement pour le <br>chiffrement app_session (nécessite mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br>Exemples: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br>Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br>Exemples: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br>Exemples: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	fr	Entrez le chemin complet vers le répertoire de sauvegarde.<br>si vide: répertoire des fichiers
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de EGroupware.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de / (slash ou division) à la fin</b>
@@ -446,7 +441,6 @@ login to mysql -	setup	fr	Connexion à mysql -
 loginname needed for domain configuration	setup	fr	Login requis pour la configuration du domaine
 logout	setup	fr	Se déconnecter
 logs to	setup	fr	se connecte à
-mail account of %1 migraged	setup	fr	Compte email de %1 migré
 mail account of %1 migrated	setup	fr	Compte email de %1 migré
 mail domain (for virtual mail manager)	setup	fr	Domaine email (pour Virtual mail manager)
 mail server login type	setup	fr	Type de login au serveur de messagerie
@@ -456,8 +450,8 @@ manage applications	setup	fr	Gérer les applications
 manage languages	setup	fr	Gérer les langues
 manual / help	setup	fr	Manuel / Aide
 match saml usernames to existing ones (use strings or regular expression)	setup	fr	Correspondances entre les noms d'utilisateurs SAML et les utilisateurs existants (utiliser une chaîne de caractères ou une expression régulière)
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «max_execution_time» est positionnée en dessous des 30 secondes : <br>Parfois, EGroupware aura besoin de plus de temps.
 maximum account id (e.g. 65535 or 1000000)	setup	fr	ID de compte maximum (p.e. 65535 ou 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «max_execution_time» est positionnée en dessous des 30 secondes : <br>Parfois, EGroupware aura besoin de plus de temps.
 may be broken	setup	fr	Pourrait être inconsistant
 mcrypt algorithm (default tripledes)	setup	fr	Algorithme Mcrypt (par défaut TRIPLEDES)
 mcrypt initialization vector	setup	fr	Vecteur d'initialisation MCrypt
@@ -478,7 +472,6 @@ modify	setup	fr	Modifier
 month	setup	fr	Mois
 more information	setup	fr	Plus d'informations
 mount backup directory to %1	setup	fr	Monter le répertoire de backup sur %1
-multi-language support setup	setup	fr	Setup pour le support multilingue
 name for service provider	setup	fr	Nom du prestataire de services
 name of database	setup	fr	Nom de la base de données
 name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont EGroupware se sert pour se connecter
@@ -515,6 +508,7 @@ one month	setup	fr	Un mois
 one week	setup	fr	Une semaine
 only add languages that are not in the database already	setup	fr	Ajouter seulement les langues qui ne sont pas déjà dans la base de données
 only add new phrases	setup	fr	Ajouter seulement les nouvelles phrases
+openidconnect login	setup	fr	Connexion OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	fr	optionnel, seulement si l'authentification ET la recherche anonyme est activée
 or	setup	fr	ou
 or %1continue to the header admin%2	setup	fr	ou %1continuer vers la configuration d'entête%2
@@ -539,7 +533,7 @@ periodic import from ads or ldap into egroupware database	setup	fr	Importation p
 persistent connections	setup	fr	Connexions persistantes
 php client	setup	fr	PHP Client
 php proxy	setup	fr	PHP Proxy
-php session handler enabled in php.ini	setup	fr	"PHP session handler" autorisé dans php.ini
+php session handler enabled in php.ini	setup	fr	PHP session handler autorisé dans php.ini
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure egroupware for your environment	setup	fr	SVP configurez EGroupware pour votre environnement
@@ -569,8 +563,8 @@ read translations from	setup	fr	Lire les traductions depuis
 readable by the webserver	setup	fr	Lisible par le serveur Web
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
 refusing to delete dn "%1"!	setup	fr	Refus de la suppression de DN "%1" !
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, EGroupware n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 registered	setup	fr	Enregistré
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, EGroupware n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 regular expression to filter by dn	setup	fr	Expression régulière pour filtrer par DN
 rejected lines	setup	fr	Lignes rejetées
 remove	setup	fr	Enlever
@@ -841,5 +835,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	fr	Vos tables sont à jour
 your tables will be dropped and you will lose data	setup	fr	Vos tables seront supprimées et vous allez perdre des données !
 your temporary directory '%1' %2	setup	fr	Votre répertoire temporaire '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	fr	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	fr	{db | php(par défaut) | php-restore}
 {off(default) | on}	setup	fr	{off(par défaut) | on}

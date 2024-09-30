@@ -1,11 +1,9 @@
-%1 added	addressbook	cs	%1 přidáno
 %1 contact(s) %2	addressbook	cs	%1 kontakt(ů) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	cs	%1 kontakt(y) %2, %3 se nezdařil z důvodu %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	cs	%1 kontakt(ů) %2, %3 selhal(o) z důvodu nedostatečných oprávnění!
 %1 contacts updated (%2 errors).	addressbook	cs	%1 kontaktů zaktualizováno (chyb: %2).
 %1 fields in %2 other organisation member(s) changed	addressbook	cs	%1 položek u %2 ostatních členů organizace změněno.
 %1 key(s) added to public keyserver "%2".	addressbook	cs	%1 klíč(ů) bylo přidáno do veřejného úložiště klíčů "%2".
-%1 not implemented for %2!	addressbook	cs	%1 není implementováno pro %2!
 %1 public keys added.	addressbook	cs	%1 veřejných klíčů bylo přidáno.
 %1 records imported	addressbook	cs	%1 záznamů importováno.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	cs	%1 záznamů načteno (zatím nebyly importovány, můžete se vrátit %2zpět%3 a odškrtnout Testovat Import).
@@ -14,13 +12,9 @@
 %s please calculate the result	addressbook	cs	%s prosím spočítejte výsledek
 (e.g. 1969)	addressbook	cs	(např. 1969)
 (empty = use global limit, no = no export at all)	admin	cs	(prázdné = použít globální limit, ne = žádný export)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	cs	<b>Žádný konverzní typ <none> nebyl nalezen.</b> Vyberte si prosím konverzní typ ze seznamu
 @-eval() is only availible to admins!!!	addressbook	cs	@-eval() je přístupná jen administrátorům!
 account id	addressbook	cs	ID účtu
 account repository	admin	cs	Databáze účtů
-accounts	addressbook	cs	Účty
-actions	addressbook	cs	Akce
-add %1	addressbook	cs	Přidat %1
 add a contact to this organisation	addressbook	cs	Přidat kontakt k této organizaci
 add a customfield to link title	addressbook	cs	Přidat uživatelské pole jako odkaz na název
 add a new contact	addressbook	cs	Přidat nový kontakt
@@ -61,7 +55,6 @@ addressbook vcard export	addressbook	cs	Export adresáře ve formátu vCard
 addressbook vcard import	addressbook	cs	Import adresáře ve formátu vCard
 addressbook-fieldname	addressbook	cs	Adresář - název položky
 addvcard	addressbook	cs	Přidat vCard
-advanced search	addressbook	cs	Rozšířené hledání
 all addressbooks	addressbook	cs	Všechny adresáře
 all contacts	addressbook	cs	Všechny kontakty
 all in one field	addressbook	cs	Vše v jednom poli
@@ -423,7 +416,6 @@ public key	addressbook	cs	Veřejný klíč
 public sharing url	addressbook	cs	Adresa URL pro veřejné sdílení
 publish into groups:	addressbook	cs	Zveřejnit ve skupinách:
 read a list / search for entries.	addressbook	cs	Načíst seznam / vyhledat záznamy.
-read a list of entries.	addressbook	cs	Načíst seznam záznamů.
 read a single entry by passing the id and fieldlist.	addressbook	cs	Načíst záznam zadáním id a seznamu položek.
 read only	addressbook	cs	Jen ke čtení
 record access	addressbook	cs	Přístup k záznamu

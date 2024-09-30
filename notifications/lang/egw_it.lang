@@ -2,6 +2,7 @@
 account:	notifications	it	Account:
 all possible notification backends	notifications	it	Tutti i backend di notifica possibili
 are you sure you want to delete all notifications?	notifications	it	Eliminare tutte le notifiche?
+automatic deleted notifications older than	admin	it	Elimina automaticamente le notifiche più vecchie di
 browser	notifications	it	Browser
 browser is starting.	notifications	it	Il browser si sta avviando.
 cancal settings?	notifications	it	Cancellare impostazioni?
@@ -65,6 +66,7 @@ more info	notifications	it	Più informazioni
 notification	common	it	Notifica
 notifier	notifications	it	Chi avvisa
 notify me by	notifications	it	Avvisami da
+only used if no push server available!	admin	it	Utilizzato solo se non è disponibile un server push!
 open notified entry	notifications	it	Oprire voce di notifica
 optimize e-mails for external mail client	notifications	it	Ottimizza email per client esterni
 page not found, please check serveraddress.	notifications	it	Pagina non trovata, per favore usare indirizzo server

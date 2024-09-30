@@ -22,7 +22,6 @@
 %1 token %2.	admin	lt	%1 simbolis %2.
 %1 user %2	admin	lt	%1 naudotojas %2
 (de)activate mail accounts	admin	lt	(de)aktyvuoti pašto paskyras
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	lt	(imapclass turi palaikyti šią funkciją, užklausdama atitinkamą konfigūracijos reikšmę ir perduodama ją kaip numatytąją kvotą IMAP serveriui)
 1 year	admin	lt	1 metai
 2 month	admin	lt	2 mėnesiai
 2 weeks	admin	lt	2 savaitės
@@ -33,17 +32,23 @@ access token revoked.	admin	lt	Prieigos žetonas atšauktas.
 account	admin	lt	Paskyra
 acl csv export	admin	lt	ACL CSV eksportas
 add a group	admin	lt	Pridėti prie grupės
+add to group	admin	lt	Pridėti prie grupės
 add user	admin	lt	Pridėti naudotoją
 add user or group	admin	lt	Pridėti naudotoją arba grupę
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	lt	Leisti naudotojui saugoti savo slaptažodį SingleSignOn skiltyje „Saugumas ir slaptažodžiai“.
 blocking after wrong password	admin	lt	Blokavimas po neteisingo slaptažodžio
 bulk changes	admin	lt	Masiniai pakeitimai
 bulk password reset	admin	lt	Masinis slaptažodžio keitimas
+can be used to show groups by container, if enabled	admin	lt	Galima naudoti grupėms pagal konteinerį rodyti, jei įjungta
 certificate	admin	lt	Sertifikatas
 certificate details	admin	lt	Sertifikato informacija
 certificate validation in days	admin	lt	Sertifikato patvirtinimas per kelias dienas
+change access	admin	lt	Keisti prieigos teises
+container	admin	lt	Konteineris
 custom 1	admin	lt	Pasirinktinis 1
 custom 2	admin	lt	Pasirinktinis 2
 custom 3	admin	lt	Pasirinktinis 3
+group hierarchy	admin	lt	Grupių hierarchija
 html/plaintext	admin	lt	HTML / Tekstas
 last %1 logins	admin	lt	Paskutiniai %1 prisijungimai
 last %1 logins for %2	admin	lt	Paskutiniai %1 prisijungimai prie %2
@@ -61,5 +66,7 @@ other security configuration	admin	lt	Kita saugumo konfigūracija
 own categories	admin	lt	Savos kategorijos
 own install id	admin	lt	Nuosavas diegimo ID
 own install id:	admin	lt	Nuosavas diegimo ID:
+regular expression to find part to use as container	admin	lt	Reguliarioji išraiška daliai, kurią galima naudoti kaip konteinerį, rasti
+show groups in container based on	admin	lt	Rodyti grupes konteineryje pagal
 total records	admin	lt	Iš viso įrašų
 user-agent	admin	lt	User-Agent

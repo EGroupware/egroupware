@@ -2,7 +2,10 @@
 %1 email(s) added into %2	common	ko	%2에 추가된 %1 이메일(들)
 %1 is not executable by the webserver !!!	common	ko	%1 은 웹서버에 의해 실행될 수 없습니다!
 %1 more %2 selected ...	common	ko	%1 추가 %2 선택 ...
+'%1' does not match the required pattern '%2'	common	ko	'%1'이(가) 필요한 패턴('%2')과 일치하지 않습니다.
+'%1' is not a valid app-name ('%2')!	common	ko	'%1'이(가) 올바른 앱 이름이 아닙니다('%2')!
 '%1' is not a valid json file!	common	ko	'%1'이(가) 올바른 JSON 파일이 아닙니다.
+'%1' must not contain (back)slashes!	common	ko	'%1'에는 (백)슬래시가 포함되어서는 안 됩니다!
 00 (disable)	admin	ko	00 ( 미사용 / 추천 )
 1 day	common	ko	1日
 1 hour	common	ko	1時間
@@ -74,6 +77,7 @@ category %1 has been added !	common	ko	%1 분류가 추가되었습니다!
 category %1 has been updated !	common	ko	%1 분류가 갱신되었습니다!
 change	common	ko	변경
 changed	common	ko	변경됨
+changes that you made may not be saved.	common	ko	변경한 내용이 저장되지 않을 수 있습니다.
 charset	common	ko	utf-8
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ko	IF 문에 빈 값이 있는지 확인하세요. 예시 {{IF url~EMPTY~~웹사이트:}} - url이 비어 있지 않으면 "웹사이트:"를 작성합니다.
 check installation	common	ko	설치 점검
@@ -308,6 +312,7 @@ open	common	ko	개설
 open existing contact	common	ko	기존 연락처 열기
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ko	OpenIDConnect 로그인에 성공했지만 사용자 '%1'이(가) EGroupware에 존재하지 않으며 자동 사용자 생성이 비활성화되었습니다!
 operator	common	ko	운영자
 optional note about the link	common	ko	링크에 대한 선택적 참고 사항
 options	common	ko	옵션
@@ -361,7 +366,6 @@ priority	common	ko	중요도
 private	common	ko	개인
 project	common	ko	프로젝트
 public	common	ko	공개
-read a list of entries.	common	ko	엔트리 목록을 읽음
 read a single entry by passing the id and fieldlist.	common	ko	ID와 필드목록으로 단일 엔트리를 읽음
 read this list of methods.	common	ko	이 메소드 목록 읽기
 readonly	common	ko	읽기전용
@@ -410,9 +414,9 @@ show page generation time on the bottom of the page?	common	ko	페이지 생성 
 show page generation time?	common	ko	페이지 생성시간을 출력합니까?
 show password	common	ko	비밀번호 표시
 show/hide	common	ko	사이드바 표시/숨기기
-show_more_apps	common	ko	더 많은 응용프로그램 보기
 showing %1	common	ko	현재 %1
 showing %1 - %2 of %3	common	ko	전체 %3에서 %1 - %2
+show_more_apps	common	ko	더 많은 응용프로그램 보기
 sign up	common	ko	가입하기
 site configuration	common	ko	앱 구성
 sorry, your login has expired	login	ko	귀하의 사용자ID는 만료되어 더 이상 사용하실수 없습니다.

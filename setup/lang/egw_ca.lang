@@ -16,7 +16,6 @@ access denied: wrong username or password for manage-header !!!	setup	ca	Accés 
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	ca	Accés denegat: Nom d'usuari o contrasenya erroni per configurar el domini '%1(%2)' !!!
 accounts existing	setup	ca	Comptes existents
 actions	setup	ca	Accions
-activate safe password check	setup	ca	Activa comprovació de contrasenya segura
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ca	Afegir usuaris creats automàticament a aquest grup (Si es buit, serà assignat al grup 'Default')
 add new database instance (egw domain)	setup	ca	Afegeix una nova instància a la base de dades (domini EGw)
 additional settings	setup	ca	Configuració addicional
@@ -102,7 +101,6 @@ checking extension %1 is loaded or loadable	setup	ca	Comprovant si l'extensió %
 checking file-permissions of %1 for %2 %3: %4	setup	ca	Comprovant permisos de fitxer de %1 per %2 %3: %4
 checking for gd support...	setup	ca	Comprovant suport GD...
 checking function %1 exists	setup	ca	Comprovant si funció %1 existeix
-checking pear%1 is installed	setup	ca	Comprovant si s'ha instral·lat PEAR%1
 checking php.ini	setup	ca	Comprovant php.ini
 checking required php version %1 (recommended %2)	setup	ca	Comprovant si hi ha PHP versió %1 (recomanat %2)
 checking the egroupware installation	setup	ca	Comprovant la instal·lació d'EGroupware
@@ -142,15 +140,12 @@ creating tables	setup	ca	Creant Taules
 creation of %1 in %2 failed !!!	setup	ca	Creació de %1 en %2 ha fallat !!!
 current configuration:	setup	ca	Configuració actual:
 current system-charset	setup	ca	Joc de caràcters actual del sistema
-current system-charset is %1.	setup	ca	El joc de caràcters actual del sistema és %1.
 current version	setup	ca	Versió Actual
 currently installed languages: %1 <br />	setup	ca	Idiomes instal·lats actualment: %1 <br />
-cyrus imap: admin user,password	setup	ca	Cyrus IMAP: Usuari administrador, contrasenya
 database	setup	ca	Base de dades
 database instance (egw domain)	setup	ca	Instància de base de dades (domini EGw)
 database is version %1 and up to date.	setup	ca	base de dades està en la versió %1 i actualitzada.
 database successfully converted from '%1' to '%2'	setup	ca	Base de dades convertida correctament de '%1' a '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ca	Port data i hora.<br />Si utilitzes el port 13, per favor comprova les regles del firewall abans d'enviar aquesta pàgina.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	ca	dia
 day of week<br />(0-6, 0=sunday)	setup	ca	dia de la setmana<br />(0-6, 0=diumenge)
 db backup and restore	setup	ca	còpia de seguretat i restauració de la BBDD
@@ -233,8 +228,8 @@ header admin login	setup	ca	Connexió d'Administració Principal
 header password	setup	ca	Contrasenya d'Administració Principal
 header username	setup	ca	Nom d'Usuari d'Administració Principal
 historylog removed	setup	ca	Registre de l'historial esborrat
-hooks deregistered	setup	ca	"Hooks" desregistrats
-hooks registered	setup	ca	"Hooks" registrats
+hooks deregistered	setup	ca	Hooks desregistrats
+hooks registered	setup	ca	Hooks registrats
 host information	setup	ca	Informació del servidor
 host/ip domain controler	setup	ca	Controlador del servidor/domini IP
 hostname/ip of database server	setup	ca	Nom o adreça IP del servidor de la base de dades
@@ -299,8 +294,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	ca	Administrar aplicacions
 manage languages	setup	ca	Administrar idiomes
 manual / help	setup	ca	Manual / ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): EGroupware a vegades necessita un temps d'execució major. Hi pot haver petades ocasionals
 maximum account id (e.g. 65535 or 1000000)	setup	ca	Id màxim de compte (ex. 65535 o 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): EGroupware a vegades necessita un temps d'execució major. Hi pot haver petades ocasionals
 may be broken	setup	ca	pot estar trencat
 mcrypt algorithm (default tripledes)	setup	ca	Algorisme Mcrypt (predeterminat: TRIPLEDES)
 mcrypt initialization vector	setup	ca	Vector d' inicialització Mcrypt
@@ -314,7 +309,6 @@ modifications have been completed!	setup	ca	Modificacions acabades!
 modified	setup	ca	Modificat
 modify	setup	ca	Modificar
 month	setup	ca	mes
-multi-language support setup	setup	ca	Configuració del suport Multi-Idioma
 name of database	setup	ca	Nom de la base de dades
 name of db user egroupware uses to connect	setup	ca	Nom de l'usuari de la base de dades que usa EGroupware per a connectar
 never	setup	ca	mai
@@ -356,8 +350,6 @@ path information	setup	ca	Informació del camí
 path of egroupware install directory (default auto-detected)	setup	ca	camí del directori d'instal·lació d'EGroupware (per defecte l'autodetecta)
 path to user and group files has to be outside of the webservers document-root!!!	setup	ca	El camí als arxius d'usuaris i grups HA D'ESTAR FORA de l'arrel del servidor web!!
 path to various directories: have to exist and be writeable by the webserver	setup	ca	camí a varis directoris: han d'existir i que el servidor web hi pugui escriure
-pear (%1) is a php repository and is usually in a package called %2.	setup	ca	PEAR (%1) és una llibreria PHP i normalment està en un paquet anomenat %2.
-pear%1 is needed by: %2.	setup	ca	PEAR%1 és necessari per: %2.
 persistent connections	setup	ca	Connexions persistents
 please check for sql scripts within the application's directory	setup	ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicació
 please check read/write permissions on directories, or back up and use another option.	setup	ca	Si us plau, comproveu els permisos de lectura i escriptura als directoris, o torneu i feu servir una altra opció
@@ -385,8 +377,8 @@ re-enter password	setup	ca	Confirmeu la contrasenya
 read translations from	setup	ca	Llegir traduccions de
 readable by the webserver	setup	ca	pot ser llegit pel servidor web
 really uninstall all applications	setup	ca	REALMENT voleu desinstal·lar totes les aplicacions
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals està activat. EGroupware NO ho necessita i generalment és més segur tenir-ho desactivat.
 registered	setup	ca	registrat
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals està activat. EGroupware NO ho necessita i generalment és més segur tenir-ho desactivat.
 rejected lines	setup	ca	Línies rebutjades
 remove	setup	ca	Esborrar
 remove all	setup	ca	Esborrar tot

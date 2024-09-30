@@ -119,7 +119,7 @@ file rejected, no %2. is:%1	mail	pl	Plik odrzucony. Jest %1 nie %2.
 filemanager	mail	pl	Pliki
 filemode has been switched to %1	mail	pl	Tryb pliku został przełączony na: %1
 flagged	mail	pl	oflagowano
-flagged %1 messages as %2 in %3	mail	pl	Oznaczono %1 wiadomości jako %2 w %3
+flagged %1 messages as %2 in %3	mail	pl	Oznaczono %1 wiadomości jako "%2" w %3.
 flagged %1 messages as flagged in %2	mail	pl	Oznaczono %1 wiadomości jako oznaczone w %2
 flagged %1 messages as unflagged in %2	mail	pl	Oznaczono %1 wiadomości jako nieoznaczone w %2
 folder	mail	pl	Katalog

@@ -1,26 +1,19 @@
-%1 added	addressbook	nl	%1 toegevoegd
 %1 contact(s) %2	addressbook	nl	%1 contact(en) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	nl	%1 contact(en) %2, %3 mislukt vanwege onvoldoende rechten!
 %1 contacts updated (%2 errors).	addressbook	nl	%1 contacten bijgewerkt (%2 fouten)
 %1 fields in %2 other organisation member(s) changed	addressbook	nl	%1 velden in %2 andere organisatie lid/leden gewijzigd.
 %1 key(s) added to public keyserver "%2".	addressbook	nl	%1 sleutel(s) toegevoegd aan publieke keyserver "%2".
-%1 not implemented for %2!	addressbook	nl	%1 niet geimplementeerd voor %2!
 %1 public keys added.	addressbook	nl	%1 publieke sleutels toegevoegd.
-%1 records imported	addressbook	nl	%1 adressen geïmporteerd.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geïmporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten).
 %1 shared this contact on %2 with %3 %4	addressbook	nl	%1 heeft dit contact gedeeld op %2 %3 %4
 %1 starts with '%2'	addressbook	nl	%1 begint met '%2'
 %s please calculate the result	addressbook	nl	%s bereken svp het resultaat
 (e.g. 1969)	addressbook	nl	(bijv. 1969)
 (empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst
 @-eval() is only availible to admins!!!	addressbook	nl	@-eval() is alleen beschikbaar voor beheerders!
 account id	addressbook	nl	Account ID
 account repository	admin	nl	Account databasegegevens
-accounts	addressbook	nl	Accounts
-actions	addressbook	nl	Acties
-add %1	addressbook	nl	%1 toevoegen
 add a contact to this organisation	addressbook	nl	Voeg een contact toe aan deze organisatie
 add a customfield to link title	addressbook	nl	Voeg een zelf gedefinieerd veld toe om titel te linken
 add a new contact	addressbook	nl	Voeg een contact toe
@@ -61,7 +54,6 @@ addressbook vcard export	addressbook	nl	Adresboek vCard export
 addressbook vcard import	addressbook	nl	Adresboek vCard import
 addressbook-fieldname	addressbook	nl	Adresboek-veldnaam
 addvcard	addressbook	nl	vCard toevoegen
-advanced search	addressbook	nl	UItgebreid zoeken
 all addressbooks	addressbook	nl	Alle adresboeken
 all contacts	addressbook	nl	Alle contacten
 all in one field	addressbook	nl	Alles in 1 veld
@@ -167,7 +159,6 @@ custom	addressbook	nl	Aangepast
 custom etemplate for the contactform	addressbook	nl	Aangepaste eTemplate voor het contactformulier
 custom fields	addressbook	nl	Aangepast velden
 data exchange settings	addressbook	nl	Data exchange instellingen
-debug output in browser	addressbook	nl	Debug resultaat in browser
 default	addressbook	nl	Standaard
 default action on double-click	addressbook	nl	Standaard actie bij dubbel klikken
 default address format	addressbook	nl	Standaard adresformaat
@@ -255,7 +246,6 @@ extra encodings	addressbook	nl	Extra versleutelen
 extra private	addressbook	nl	Extra prive
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	nl	wijzigen van %1 organisatie lid/leden mislukte (onvoldoende rechten)!
 favorite phone	addressbook	nl	Favoriete telefoon
-favorites	addressbook	nl	Favorieten
 fax	addressbook	nl	Fax
 fax (private)	addressbook	nl	Fac (prive)
 fax number	common	nl	Faxnummer
@@ -315,7 +305,6 @@ import from ldif, csv, or vcard	addressbook	nl	Importeren vanuit LDIF, CSV or vC
 import from outlook	addressbook	nl	Importeren vanuit Outlook
 import multiple vcard	addressbook	nl	Importeer Meervoudige vCard
 import next set	addressbook	nl	Importeren volgende serie
-import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het vCard formaat.
 importer's personal	addressbook	nl	Importeer eigen
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 imports contacts into your addressbook from a vcard file.	addressbook	nl	Importeer contacten in uw adresboek van een bestand in vCard
@@ -379,7 +368,6 @@ name of current user, all other contact fields are valid too	addressbook	nl	Naam
 name, address	addressbook	nl	Naam, adres
 name, email, phone	addressbook	nl	Naam, e-mail, telefoon
 new contact submitted by %1 at %2	addressbook	nl	Nieuwe contact toegevoegd op %2 door %1.
-new window opened to edit infolog for your selection	addressbook	nl	Nieuw venster geopend waarin de InfoLog voor uw selectie bewerkt wordt.
 next date	addressbook	nl	Volgende datum
 no categories selected	addressbook	nl	Geen categorieën geselecteerd
 no country selected	addressbook	nl	Geen land geselecteerd
@@ -426,7 +414,6 @@ public key	addressbook	nl	Public Key
 public sharing url	addressbook	nl	URL voor publiek delen
 publish into groups:	addressbook	nl	Publiceer in groepen:
 read a list / search for entries.	addressbook	nl	Lees een lijst / zoek naar records.
-read a list of entries.	addressbook	nl	Lees een lijst met records
 read a single entry by passing the id and fieldlist.	addressbook	nl	Lees een record door een ID. in te voeren en een veldenlijst.
 read only	addressbook	nl	Alleen-lezen
 record access	addressbook	nl	Bestandstoegang
@@ -450,14 +437,10 @@ select a source address to be used in geolocation routing system	addressbook	nl	
 select a view	addressbook	nl	Kies een weergave
 select addressbook type	addressbook	nl	Kies een adresboek type
 select all	addressbook	nl	Alles selecteren
-select an action or addressbook to move to	addressbook	nl	Kies een actie of adresboek om te verplaatsen
-select an action or addressbook to move to...	addressbook	nl	Selecteer een actie of adresboek om naar te verplaatsen ...
 select an opened dialog	addressbook	nl	Selecteer een geopend dialoogvenster
 select migration type	admin	nl	Kies een migratie type
 select multiple contacts for a further action	addressbook	nl	Kies meerdere contacten voor verdere actie
 select phone number as prefered way of contact	addressbook	nl	Kies een telefoonnummer als een voorkeur tot contact
-select the type of conversion	addressbook	nl	Kies type conversie
-select the type of conversion:	addressbook	nl	Kies type conversie:
 select where you want to store / retrieve contacts	admin	nl	Kies waar je contacten wilt opslaan / ophalen
 selected contacts	addressbook	nl	Geselecteerde contacten
 send emailcopy to receiver	addressbook	nl	Zend een kopie mail naar ontvanger

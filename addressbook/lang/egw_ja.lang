@@ -1,26 +1,19 @@
-%1 added	addressbook	ja	%1 を追加しました
 %1 contact(s) %2	addressbook	ja	%1 個のコンタクトを %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ja	%1 連絡先 %2、%3 が %4 のため失敗しました!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ja	%1 個のコンタクトを %2, （権限不足のため %3 個は失敗!）
 %1 contacts updated (%2 errors).	addressbook	ja	%1 個のコンタクトを更新しました (%2 個のエラー)。
 %1 fields in %2 other organisation member(s) changed	addressbook	ja	他の組織メンバ %2 の %1 フィールドが変更されました。
 %1 key(s) added to public keyserver "%2".	addressbook	ja	%1 個のキーを公開キー・サーバー "%2" に追加しました。
-%1 not implemented for %2!	addressbook	ja	%2 用 %1 は実装されていません!
 %1 public keys added.	addressbook	ja	%1 公開キーを追加しました。
-%1 records imported	addressbook	ja	%1 件インポートしました
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ja	%1 個のレコードを読み込みましたが、まだインポートされていません。画面を戻って予行演習モードを解除してください。
 %1 shared this contact on %2 with %3 %4	addressbook	ja	%1 はこのコンタクトを %2 で %3 %4 と共有しました。
 %1 starts with '%2'	addressbook	ja	%1 を %2 で開始
 %s please calculate the result	addressbook	ja	%s 結果を計算してください
 (e.g. 1969)	addressbook	ja	(例 1969)
 (empty = use global limit, no = no export at all)	admin	ja	空 = グローバル・リミットを使用, no = エクスポートしない
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ja	<b>変換タイプ <none> が見つかりません。</b> 一覧から変換タイプを選択してください。
 @-eval() is only availible to admins!!!	addressbook	ja	@-eval() は管理者専用です!
 account id	addressbook	ja	アカウント ID
 account repository	admin	ja	アカウント・リポジトリ
-accounts	addressbook	ja	アカウント
-actions	addressbook	ja	動作
-add %1	addressbook	ja	%1 を追加
 add a contact to this organisation	addressbook	ja	この組織・団体にコンタクトを追加
 add a customfield to link title	addressbook	ja	リンク・タイトルにカスタム項目を追加
 add a new contact	addressbook	ja	新規コンタクトを追加
@@ -61,7 +54,6 @@ addressbook vcard export	addressbook	ja	アドレス帳 vCard エクスポート
 addressbook vcard import	addressbook	ja	アドレス帳 vCard インポート
 addressbook-fieldname	addressbook	ja	アドレス帳-項目名
 addvcard	addressbook	ja	vCard追加
-advanced search	addressbook	ja	詳細検索
 all addressbooks	addressbook	ja	全アドレス帳
 all contacts	addressbook	ja	全コンタクト
 all in one field	addressbook	ja	1項目内に全て
@@ -167,7 +159,6 @@ custom	addressbook	ja	カスタム
 custom etemplate for the contactform	addressbook	ja	eTemplate をコンタクト・フォーム用にカスタマイズ
 custom fields	addressbook	ja	カスタム項目
 data exchange settings	addressbook	ja	データ交換設定
-debug output in browser	addressbook	ja	ブラウザにデバッグ情報を出力
 default	addressbook	ja	既定値
 default action on double-click	addressbook	ja	ダブル・クリック時の既定のアクション
 default address format	addressbook	ja	既定の住所書式
@@ -255,7 +246,6 @@ extra encodings	addressbook	ja	拡張エンコーディング
 extra private	addressbook	ja	拡張（個人用）
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	ja	組織・団体のメンバーを更新できませんでした（権限不足）!
 favorite phone	addressbook	ja	お気に入り電話
-favorites	addressbook	ja	お気に入り
 fax	addressbook	ja	FAX
 fax (private)	addressbook	ja	FAX（個人用）
 fax number	common	ja	FAX番号
@@ -315,7 +305,6 @@ import from ldif, csv, or vcard	addressbook	ja	インポート（LDIF, CSV, vCar
 import from outlook	addressbook	ja	インポート（Outlook）
 import multiple vcard	addressbook	ja	複数の vCards をインポート
 import next set	addressbook	ja	次のセットをインポート
-import_instructions	addressbook	ja	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	ja	インポート実行者
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ja	CSVファイルからアドレス帳に連絡先をインポートします。CSVは「カンマ区切り値」を意味します。オプションタブで他のセパレータを選択することもできます。
 imports contacts into your addressbook from a vcard file.	addressbook	ja	vCard ファイルからアドレス帳にコンタクトをインポート。
@@ -379,7 +368,6 @@ name of current user, all other contact fields are valid too	addressbook	ja	ユ�
 name, address	addressbook	ja	氏名, 住所
 name, email, phone	addressbook	ja	名前、メールアドレス、電話番号
 new contact submitted by %1 at %2	addressbook	ja	新規コンタクトは %1 によって %2 に送信されました。
-new window opened to edit infolog for your selection	addressbook	ja	インフォログ編集ウィンドウを新規に開きました。
 next date	addressbook	ja	次の日付
 no categories selected	addressbook	ja	カテゴリ未選択
 no country selected	addressbook	ja	国が選択されていません
@@ -426,7 +414,6 @@ public key	addressbook	ja	パブリック・キー
 public sharing url	addressbook	ja	公開共有URL
 publish into groups:	addressbook	ja	グループに追加:
 read a list / search for entries.	addressbook	ja	リストを読み込む / 項目を検索
-read a list of entries.	addressbook	ja	項目リストを読み込む
 read a single entry by passing the id and fieldlist.	addressbook	ja	ID と項目リストを送信してデータを取得
 read only	addressbook	ja	読み取り専用
 record access	addressbook	ja	アクセス権
@@ -450,14 +437,10 @@ select a source address to be used in geolocation routing system	addressbook	ja	
 select a view	addressbook	ja	表示を選択
 select addressbook type	addressbook	ja	アドレス帳タイプを選択
 select all	addressbook	ja	全て選択
-select an action or addressbook to move to	addressbook	ja	アクション、または移動するアドレス帳を選択
-select an action or addressbook to move to...	addressbook	ja	アクション、または移動するアドレス帳を選択...
 select an opened dialog	addressbook	ja	開いているダイアログを選択
 select migration type	admin	ja	移行タイプを選択
 select multiple contacts for a further action	addressbook	ja	アクションのためのコンタクトを選択
 select phone number as prefered way of contact	addressbook	ja	優先コンタクト方法として電話番号を選択
-select the type of conversion	addressbook	ja	変換タイプを選択
-select the type of conversion:	addressbook	ja	変換タイプを選択:
 select where you want to store / retrieve contacts	admin	ja	コンタクトの保存先/取得元を選択
 selected contacts	addressbook	ja	選択済みコンタクト
 send emailcopy to receiver	addressbook	ja	メールのコピーを送信
@@ -518,7 +501,7 @@ translation	addressbook	ja	翻訳
 two of: %1	addressbook	ja	二つを選択: %1
 type	addressbook	ja	タイプ
 un-delete	addressbook	ja	復元
-unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	ja	"%1" をアカウント ID に変換できません。所有者用プラグイン設定 (%2) を使用。
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	ja	%1 をアカウント ID に変換できません。所有者用プラグイン設定 (%2) を使用。
 unable to delete	addressbook	ja	削除できません
 unable to import into %1, using %2	addressbook	ja	%2 による %1 へのインポートはできません
 unique id (uid)	addressbook	ja	固有 ID (UID)

@@ -1,8 +1,6 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	ca	S'han esborrat %1 registres ACL de comptes no existents.
 %1 not found or not executable !!!	admin	ca	No s'ha trobat %1 o no és un executable
-(default no, leave it off if you dont use it)	admin	ca	(per defecte NO, deixa-ho així si no l'utilitzes)
 (no subject)	admin	ca	(Sense assumpte)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
 -  type	admin	ca	- tipus
 account active	admin	ca	Compte actiu
 account has been created	common	ca	S'ha creat el compte
@@ -70,7 +68,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	ca	Serveis asíncr
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	ca	Intenteu fer servir el tipus MIME correcte per a FTP en lloc del valor per defecte  'application/octet-stream'
 authentication / accounts	admin	ca	Identificació / Comptes
 auto create account records for authenticated users	admin	ca	Crear comptes automàticament per a usuaris identificats
-back to the list	admin	ca	tornar a la llista
 bi-dir passthrough	admin	ca	pas bidireccional
 bi-directional	admin	ca	bidireccional
 bottom	admin	ca	peu
@@ -143,10 +140,6 @@ disable "auto completion" of the login form	admin	ca	Desactivar "completat autom
 disabled (not recomended)	admin	ca	desactivat (no es recomana)
 display	admin	ca	Mostrar
 do not delete the category and return back to the list	admin	ca	NO esborrar la categoria i tornar a la lista
-do you also want to delete all global subcategories ?	admin	ca	Voleu també esborrar totes les subcategories globals?
-do you really want to delete this profile	admin	ca	Realmente voleu esborrar aquest perfil?
-do you want to delete all global subcategories ?	admin	ca	Voleu esborrar totes les subcategories globals?
-do you want to move all global subcategories one level down ?	admin	ca	Voleu moure totes les subcategories globals un nivell cap avall?
 document root (default)	admin	ca	Arrel del document (predetermidada)
 domainname	admin	ca	Nom del domini
 down	admin	ca	avall
@@ -473,10 +466,8 @@ you must add at least 1 permission or group to this account	admin	ca	Heu d'afegi
 you must enter a group name.	admin	ca	Heu d'introduir un nom de grup
 you must enter a lastname	admin	ca	Heu d'introduir els cognoms
 you must enter a loginid	admin	ca	Heu d'introduir un nom d'usuari
-you must enter an application name and title.	admin	ca	Heu d'introduir un nom i títol per a l'aplicació.
 you must enter an application name.	admin	ca	Heu d'introduir un nom d'aplicació.
 you must enter an application title.	admin	ca	Heu d'introduïr un títol per a l'aplicació.
-you must select a file type	admin	ca	Heu de seleccionar un tipus d'arxiu
 you must select at least one group member.	admin	ca	Heu de seleccionar un membre del grup com a mínim.
 you will need to remove the subcategories before you can delete this category	admin	ca	Heu d'esborrar les subcategories abans de poder esborrar aquesta categoria !
 your session could not be verified.	admin	ca	La vostra sessió no s'ha pogut verificar.

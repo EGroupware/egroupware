@@ -16,17 +16,17 @@ accept	calendar	lv	Akceptēt
 accepted	calendar	lv	Akceptēts
 access to calendar of %1 denied!	calendar	lv	Piekļuve %1 kalendāram liegta!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	lv	Darbība, kas izsauca paziņojumu: Pievienots, Atcelts, Akceptēts, Noraidīts
-actions	calendar	lv	Darbības
-actions...	calendar	lv	Darbības ...
 add alarm	calendar	lv	PIevienot trauksmi
 add appointments via shortened dialog or complete edit window	calendar	lv	Pievienojiet tikšanās, izmantojot saīsināto dialogu vai pilnu rediģēšanas logu
 add current view as favorite	calendar	lv	Pievienot pašreizējo skatījumu kā iecienītāko
 add new alarm	calendar	lv	Pievienot jaunu modinātāju
 add new event	calendar	lv	Pievienot jaunu tikšanos
 add new participants or resource	calendar	lv	Jaunu dalībnieku vai resursu pievienošana
+add recurrence	calendar	lv	Pievienot atkārtošanos
 add timesheet entry	calendar	lv	Pievienot darba laika uzskaites ierakstu
 added	calendar	lv	PIevienots
 added by synchronization	calendar	lv	Pievienots ar sinhronizāciju
+added recurrence on %1.	calendar	lv	Pievienots atkārtojums %1.
 after	calendar	lv	Pēc
 after %1	calendar	lv	Pēc %1
 age:	calendar	lv	Vecums:
@@ -35,13 +35,13 @@ alarm added automatic to new events before event start-time	calendar	lv	Trauksme
 alarm for %1 at %2 in %3	calendar	lv	Trauksme %1 pie %2 %3
 alarm management	calendar	lv	Trauksmes vadība
 alarms	calendar	lv	Trauksmes
-all categories	calendar	lv	Visas kategorijas
 all day	calendar	lv	VIsu dienu
 allow booking requests from any user when creating events?	calendar	lv	Atļaut rezervācijas pieprasījumus no jebkura lietotāja, veidojot notikumus?
 allow party crashers with email that match the following regular expression	calendar	lv	Atļaujiet ierasties uz ballīti personām, kuru e-pasta vēstules atbilst šādai regulārajai izteiksmei
 always	calendar	lv	Vienmēr
 always use full edit dialog	calendar	lv	Vienmēr izmantojiet pilnu rediģēšanas dialogu
 always use the full edit dialog, not this little dialog	calendar	lv	Vienmēr izmantojiet pilnu rediģēšanas logu, nevis šo mazo logu.
+apply changes to (future) exceptions too?	calendar	lv	Piemērot izmaiņas arī (nākotnes) izņēmumiem?
 apply the changes	calendar	lv	Lietot izmaiņas
 attention	calendar	lv	Uzmanību
 before the event	calendar	lv	Pirms šī notikuma
@@ -86,9 +86,14 @@ end date/time	calendar	lv	Beigu datums/laiks
 enddate	calendar	lv	Beigu datums
 ends	calendar	lv	Beidzas
 error notifying %1	calendar	lv	Kļūda, paziņojot %1
+every user can invite other users and groups	admin	lv	Katrs lietotājs var uzaicināt citus lietotājus un grupas
+exception created - you can now edit or delete it	calendar	lv	Izņēmums izveidots - tagad to var rediģēt vai dzēst.
 exceptions	calendar	lv	Izņēmumi
 exclude weekend	calendar	lv	Izslēgt nedēļas nogali
 existing links	calendar	lv	Eksistējošas saites
+explicit recurrences	calendar	lv	Skaidri atkārtojumi
+exports events from your calendar in ical format.	calendar	lv	Eksportē notikumus no kalendāra iCal formātā.
+exports events from your calendar into a csv file.	calendar	lv	Eksportē notikumus no kalendāra CSV failā.
 extended	calendar	lv	Paplašinats
 fieldseparator	calendar	lv	Lauka atdalītājs
 filemanager	calendar	lv	Datņu pārvaldnieks
@@ -127,6 +132,7 @@ link to view the event	calendar	lv	Saistīt, lai parādītu notikumu
 links	calendar	lv	Saites
 location	calendar	lv	Novietojums
 maximum available quantity of %1 exceeded!	calendar	lv	Pārsniegts %1 maksimālais pieejamais daudzums!
+meeting request additional recurrence(s)	calendar	lv	Tikšanās pieprasa papildu atkārtošanos(-as)
 min days	calendar	lv	Min dienas
 minimum number of users for showing day view as consolidated.	calendar	lv	Minimālais lietotāju skaits dienas skata rādīšanai kā konsolidēts.
 minimum number of users for showing week view as consolidated.	calendar	lv	Minimālais lietotāju skaits, lai nedēļas skats tiktu parādīts kā konsolidēts.
@@ -164,7 +170,9 @@ on participant responses too	calendar	lv	Arī uz salībnieku atbildēm
 on time change of more than 4 hours too	calendar	lv	Arī uz laiku vairāk par 4 stundām
 one month	calendar	lv	Viens mēnesis
 one week	calendar	lv	Viena nedēļa
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	lv	Atbalsta tikai daži pilnībā saderīgi klienti (piemēram, Apple). Ja jums ir jāievada URL, tas, visticamāk, netiks atbalstīts!
 open todo's:	calendar	lv	Atvērt Jādara vienības
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	lv	Pretējā gadījumā izmaiņas nosaukumā, aprakstā, ... vai jauni dalībnieki netiks pārnesti uz jau izveidotiem izņēmumiem.
 output unit	calendar	lv	Izvades vienība
 overlap holiday	calendar	lv	Brīvdiena pārklājas
 participants	calendar	lv	Dalībnieki
@@ -172,6 +180,7 @@ people holiday	calendar	lv	Cilvēku brīvdienas
 permission denied	calendar	lv	Atļauja liegta
 planner by category	calendar	lv	Plānptājs pēc kategorijas
 planner by user	calendar	lv	Plānotājs pēc lietotāja
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	lv	Lūdzu, ņemiet vērā: Konflikta pārbaude nekad netiek veikta pagātnē un vienmēr ir ierobežota ar iepriekš minēto atkārtošanās horizontu.
 preselected group for entering the planner	calendar	lv	Iepriekšizvēlētā grupa iekļūsanai plānotājā
 previous	calendar	lv	Iepriekšējā
 private and global public	calendar	lv	Privāts un Vispārēji publisks
@@ -218,11 +227,13 @@ test import (show importable records <u>only</u> in browser)	calendar	lv	Pārbau
 the apple ical apps use this color to display events from this calendar.	calendar	lv	Apple iCal lietotnes izmanto šo krāsu, lai parādītu notikumus no šī kalendāra.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	lv	Dokumentā var ietvert aizvietotāju, piemēram, {{%1}}, kas tiks aizstāts ar datiem.
 the extern organizer changed the event!	calendar	lv	Ārējais organizators mainīja notikumu!
+the organizer changed the event!	calendar	lv	Organizators ir mainījis notikumu!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	lv	Sūtītājs "%1" NAV ārējais organizators "%2", rīkojieties piesardzīgi!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	lv	Sūtītājs "%1" NAV dalībnieks, kas atbild "%2", rīkojieties piesardzīgi!
 this day is shown as first day in the week or month view.	calendar	lv	Mēneša skatā šī diena ir parādīta kā pirmā nedēļas vai mēneša diena.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	lv	Tas definē tavas dienas skata beigas. Notikumi pēc šī laika tiek parādīti zem dienas skata.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	lv	Šī ir grupa, kas iepriekšizvēlēta, kad tu ieej plānotājā. Tu to vari mainīt plānotājā kad vien vēlies.
+this is a single recurrence of a recurring event.	calendar	lv	Šis ir atkārtojoša pasākuma atsevišķs atkārtojums.
 this message is sent for canceled or deleted events.	calendar	lv	Šī vēstule tika nosūtīta uz atceltajiem vai izdzēstiem notikumiem.
 this message is sent for modified or moved events.	calendar	lv	Šī vēstule tika nosūtīta  uz pārveidotajiem vai pārvietotajiem notikumiem.
 this module displays the current month	calendar	lv	Šis modulis parāda patreizējo mēnesi
@@ -249,6 +260,7 @@ work day starts on	calendar	lv	Darba diena sākas
 yearly	calendar	lv	Ikgadējs
 yearview	calendar	lv	Gada skats
 you can either set a year or a occurrence, not both !!!	calendar	lv	Tu vari uzstādīt vai nu gadu vai nu atgadījumu, ne abus!
+you can only notify other users, not yourself!	calendar	lv	Jūs varat paziņot tikai citiem lietotājiem, bet ne sev!
 you can only set a year or a occurrence !!!	calendar	lv	Tu vari uzstādīt gadu vai atgadījumu!
 you do not have permission to read this record!	calendar	lv	Tev nav tiesību lasīt šo ierakstu!
 you have a meeting scheduled for %1	calendar	lv	Tev ir ieplānota tikšanās %1

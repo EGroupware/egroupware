@@ -3,7 +3,10 @@
 %1 more %2 selected ...	common	uk	Вибрано ще %1 %2 ...
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	uk	%1EGroupware%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 '%1' copied to clipboard	common	uk	'%1' скопійовано в буфер обміну
+'%1' does not match the required pattern '%2'	common	uk	'%1' не відповідає потрібному шаблону ('%2')
+'%1' is not a valid app-name ('%2')!	common	uk	'%1' НЕ є допустимою назвою програми ('%2')!
 '%1' is not a valid json file!	common	uk	'%1' не є коректним JSON-файлом
+'%1' must not contain (back)slashes!	common	uk	'%1' не повинно містити (зворотних) косих рисок!
 00 (disable)	admin	uk	00 (disable)
 1 day	common	uk	1 день
 1 hour	common	uk	1 година
@@ -110,6 +113,7 @@ category %1 has been updated !	common	uk	Категорія (%1) змінена!
 cc	common	uk	Cc
 chad	common	uk	ЧАД
 change	common	uk	Змінити
+changes that you made may not be saved.	common	uk	Зміни, які ви зробили, можуть не зберегтися.
 charset	common	uk	Кодування
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	uk	Перевірте порожні значення в операторах IF. Приклад {{IF url~EMPTY~~Website:}} - Якщо url не порожній, пише "Веб-сайт:"
 check installation	common	uk	Перевірити інсталяцію
@@ -412,6 +416,7 @@ open	common	uk	відкрито
 open existing contact	common	uk	Відкрити існуючий контакт
 open notify window	common	uk	Відкрити вікно повідомлень
 open popup window	common	uk	Відкрити вспливаюче вікно
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	uk	Вхід до OpenIDConnect виконано успішно, але користувача '%1' НЕ ІСНУЄ в EGroupware, а автоматичне створення користувачів вимкнено!
 original	common	uk	Оригінальне
 other	common	uk	Інше
 overview	common	uk	Перегляд
@@ -466,7 +471,6 @@ private	common	uk	Особисте
 project	common	uk	Проект
 public	common	uk	публічне
 read	common	uk	Читати
-read a list of entries.	common	uk	Прочитати перелік записів.
 read a single entry by passing the id and fieldlist.	common	uk	Прочитати один запис по ID та переліку полів.
 read this list of methods.	common	uk	Прочитати цей перелік методів
 refresh	common	uk	Поновити
@@ -516,9 +520,9 @@ show all categorys	common	uk	Показати всі категорії
 show page generation time	common	uk	Показувати час генерації сторінки
 show page generation time on the bottom of the page?	common	uk	Показувати час генерації сторінки в низу сторінки.
 show password	common	uk	Показати пароль
-show_more_apps	common	uk	Показати більше приложень
 showing %1	common	uk	видно %1
 showing %1 - %2 of %3	common	uk	видно %1 - %2 з %3
+show_more_apps	common	uk	Показати більше приложень
 sierra leone	common	uk	С'ЄРРА ЛІОНЕ
 sign up	common	uk	Зареєструватися
 singapore	common	uk	СІНГАПУР

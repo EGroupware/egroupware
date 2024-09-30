@@ -48,6 +48,7 @@ check message against next rule also	mail	et	Kontrollida sõnumit ka järgmise r
 check to save as calendar event on send	mail	et	Kontrollida nuppu, et luua sündmusena pärast saatmist
 check to save as infolog on send	mail	et	Märkige nupp, et luua pärast saatmist InfoLogina
 check to save as tracker entry on send	mail	et	Kontrollida nuppu, et luua piletina pärast saatmist
+checking admin credentials failed	mail	et	Administraatori volituste kontrollimine ebaõnnestus
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
@@ -96,7 +97,7 @@ failed to unsubscribe folder %1!	mail	et	Ebaõnnestus kausta %1 tühistamine!
 file into	mail	et	Liiguta
 file into:	mail	et	Liiguta:
 filemode has been switched to %1	mail	et	Filemode on vahetatud: %1
-flagged %1 messages as %2 in %3	mail	et	Märgistatud %1 sõnum(id) kui %2 aastal %3
+flagged %1 messages as %2 in %3	mail	et	Märgistatud %1 sõnum(id) kui "%2" aastal %3.
 flagged %1 messages as flagged in %2	mail	et	Märgistatud %1 sõnum(id) kui märgistatud %2-s.
 flagged %1 messages as unflagged in %2	mail	et	Märgistatud %1 sõnum(id) kui märkimata %2-s.
 folder %1 %2 failed because of %3!	mail	et	Kaust %1 %2 ebaõnnestus, sest %3!
@@ -141,6 +142,7 @@ mail	common	et	E-postid
 mail acl	mail	et	Juurdepääsuõigused
 mail filter	mail	et	Maili filter
 mail filter rule	mail	et	Postifiltri reegel
+mail probably has no text-body	mail	et	Mailil puudub tõenäoliselt tekst
 mail settings	mail	et	Mail settingud
 mail source	mail	et	Maili allikas
 mail-address	mail	et	Mail-aadress
@@ -213,6 +215,7 @@ removing %1 from whiltelisted email addresses failed because of %2	mail	et	%1 ee
 replace 'http://' in image urls with (trailing / required!)	mail	et	Asendage 'http://' pildi urlites (tagumine / nõutav!)
 replied	mail	et	vastatud
 reply	mail	et	Vasta
+reply with attachments	mail	et	Vastus koos manustega
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	et	Sellele sõnumile vastamine ebaõnnestus, sest selle sõnumi sisu näib olevat krüpteeritud ja seda ei saa korralikult dekrüpteerida. Kui soovite selle krüpteeritud sõnumi sisu siiski lisada, võite proovida selle asemel kasutada edastamist manusena.
 report as ham	mail	et	Teatada kui Ham
 report this email content as ham (not spam) - spam solutions like spamtitan will learn	mail	et	Teatage sellest e-posti sisust kui Ham (mitte rämpspost) - rämpsposti lahendused nagu spamTitan õpivad ära

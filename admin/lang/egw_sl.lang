@@ -16,10 +16,7 @@
 %1 sessions killed	admin	sl	Ubitih %1 sej.
 %1 user %2	admin	sl	%1 uporabnik %2
 (de)activate mail accounts	admin	sl	(de) aktivirate poštne račune
-(default no, leave it off if you dont use it)	admin	sl	(privzeto Ne. Če ne uporabljate, pustite Ne)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sl	(imapclass mora to funkcijo podpreti tako, da poizveduje ustrezno vrednost konfiguracije in ga prenese kot privzeto na sliko imaprežnika)
 (no subject)	admin	sl	(brez zadeve)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
 -  type	admin	sl	- vrsta
 1 year	admin	sl	1 leto
 2 month	admin	sl	2 meseca
@@ -79,6 +76,7 @@ add new email address:	admin	sl	Dodaj nov e-naslov:
 add peer server	admin	sl	Dodaj vzporedni strežnik
 add profile	admin	sl	Dodaj profil
 add sub-category	admin	sl	Dodaj podkategorijo
+add to group	admin	sl	Dodaj v skupino
 add user	admin	sl	Dodaj uporabnika
 add user or group	admin	sl	Dodaj uporabnika ali skupino
 admin dn	admin	sl	Oskrbnikov dn
@@ -98,6 +96,7 @@ all records and account information will be lost!	admin	sl	Vsi podatki o računi
 all users	admin	sl	Vsi uporabniki
 allow anonymous access to this app	admin	sl	Dovoli dostop do te aplikacije anonimnim uporabnikom
 allow remote administration from following install id's (comma separated)	admin	sl	Omogočite oddaljeno administracijo od naslednjih ID-jev namestitve, ločenih z vejico.
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	sl	Uporabniku dovolite, da v razdelku „Varnost in gesla“ shrani svoje geslo za funkcijo SingleSignOn.
 allow users to change forwards	admin	sl	Uporabnikom omogočite, da spremenijo naprej
 allow users to create identities for aliases	admin	sl	Dovoli uporabnikom, da ustvarijo identitete za vzdevke
 alternate email address	admin	sl	Alternativen E-naslov
@@ -138,9 +137,6 @@ attributes	admin	sl	Lastnosti
 authentication / accounts	admin	sl	Avtentikacija / Računi
 auto create account records for authenticated users	admin	sl	Samodejno ustvari zapise računa za uspešno prijavljene uporabnike
 available placeholders	admin	sl	Razpoložljivi nosilci
-back to admin/grouplist	admin	sl	Nazaj na Admin/Seznam skupin
-back to admin/userlist	admin	sl	Nazaj na Admin/Seznam uporabnikov
-back to the list	admin	sl	Nazaj na seznam
 backup directory %1 mounted as %2	admin	sl	Imenik za varnostno kopiranje %1 je nameščen kot %2
 bad login name or password.	admin	sl	Napačno uporabniško ime ali geslo.
 bad or malformed request. server responded: %s	admin	sl	Napačna ali napačno oblikovana zahteva. Odgovor strežnika: %s
@@ -148,12 +144,11 @@ bad request: %s	admin	sl	Napačna zahteva: %s
 bi-dir passthrough	admin	sl	Dvosmeren prehod
 bi-directional	admin	sl	Dvosmeren
 bottom	admin	sl	Dno
+bulk changes	admin	sl	Množične spremembe
 bulk password reset	admin	sl	Ponastavitev množičnega gesla
 calculate next run	admin	sl	Izračunaj naslednji zagon
 calendar recurrence horizont in days (default 1000)	admin	sl	Obdobje ponovitve koledarja v dneh. Privzeto = 1000.
-can be used by application	admin	sl	Je lahko uporabljen iz aplikacije
-can be used by group	admin	sl	Je lahko uporabljen iz skupine
-can be used by user	admin	sl	Lahko uporablja uporabnik
+can be used to show groups by container, if enabled	admin	sl	Lahko se uporabi za prikaz skupin po vsebniku, če je omogočeno.
 can change password	admin	sl	Sme menjati geslo
 can not change users into groups, same sign required!	admin	sl	Ne morem spremeniti uporabnikov v skupine, potreben je isti znak!
 cancel testjob!	admin	sl	Prekini testno nalogo!
@@ -164,6 +159,7 @@ category deleted.	admin	sl	Kategorije izbrisana
 category list	admin	sl	Seznam kategorij
 category saved.	admin	sl	Kategorije shranjena.
 certificate	admin	sl	Certifikat
+change access	admin	sl	Spreminjanje pravic dostopa
 change account_id	admin	sl	Spremeni ID računa
 change acl rights	admin	sl	Spremeni pravice ACL
 change config settings	admin	sl	Spremeni konfiguracijske nastavitve
@@ -189,6 +185,7 @@ config password or md5 hash from the header.inc.php	admin	sl	Namestitveno geslo 
 configuration saved.	admin	sl	Nastavitev je shranjena.
 connection dropped by imap server.	admin	sl	Strežnik IMAP je prekinil povezavo.
 connection is not secure! everyone can read eg. your credentials.	admin	sl	Povezava ni varna! Vsakdo lahko prebere npr. svoje poverilnice.
+container	admin	sl	Kontejner
 continue	admin	sl	Nadaljuj
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sl	Domena za piškotke (privzeto je prazno, kar pomeni, da bo uporabljeno celotno ime domene. Za SiteMgr ".domena.si" dovoli uporabo istega piškotka za domeno www.domena.si in za egw.domena.si)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sl	Pot za piškotke (dovoljeno je več sej eGW z različnimi mapami ampak se znajo pojaviti problemi s SiteMgr!)
@@ -284,12 +281,6 @@ displaying plain messages is disabled	admin	sl	prikazovanje navadnih sporočil j
 do not delete the category and return back to the list	admin	sl	<B>Ne</B> izbriši kategorije in se vrni nazaj na seznam.
 do not generate email addresses	admin	sl	Ne ustvarjajte e-poštnih naslovov
 do not offer introduction video	admin	sl	Ne predlagajte uvodnega videoposnetka
-do not validate certificate	admin	sl	Ne preverjaj certifikata
-do you also want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi vse globalne podkategorije?
-do you really want to delete this profile	admin	sl	Ali res želite izbrisati ta profil?
-do you really want to reset the filter for the profile listing	admin	sl	Res želite ponastaviti filter za listanje profilov?
-do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne vse podkategorije?
-do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
 document root (default)	admin	sl	Koren dokumentov (Document root) (privzeto)
 domainname	admin	sl	Ime domene
 down	admin	sl	Navzdol
@@ -419,6 +410,7 @@ group excepted from above export limit (admins are always excepted)	admin	sl	Sku
 group has been added	common	sl	Skupina je bila dodana.
 group has been deleted	common	sl	Skupina je bila izbrisana.
 group has been updated	common	sl	Skupina je bila posodobljena.
+group hierarchy	admin	sl	Hierarhija skupin
 group list	admin	sl	Seznam skupin
 group manager	admin	sl	Upravljalec skupin
 group name	admin	sl	Ime skupine
@@ -651,6 +643,7 @@ quota size in mbyte	admin	sl	Velikost kvote v MB
 re-enter password	admin	sl	Ponovite geslo
 read this list of methods.	admin	sl	Preberite ta seznam metod
 register application hooks	admin	sl	Registrirajte zanke aplikacij
+regular expression to find part to use as container	admin	sl	Regularni izraz za iskanje dela, ki se uporabi kot vsebnik
 reject passwords containing part of username or full name (3 or more characters long)	admin	sl	Zavrni gesla, ki vsebujejo del uporabniškega imena ali polnega imena (3 ali več znakov)
 relay access checked	admin	sl	Preverjen dostop
 remote administration instances	admin	sl	Oddaljena skrbnikova instanca
@@ -707,6 +700,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	sl	Pokaži evidenco dostopov
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
+show groups in container based on	admin	sl	Prikaz skupin v vsebniku na podlagi
 show members	admin	sl	Prikaži člane
 show phpinfo()	admin	sl	Pokaži phpinfo() informacije
 show session ip address	admin	sl	Pokaži IP naslov seje
@@ -881,10 +875,8 @@ you must add at least 1 permission or group to this account	admin	sl	Skupini ali
 you must enter a group name.	admin	sl	Vnesti morate ime skupine.
 you must enter a lastname	admin	sl	Vnesti morate priimek
 you must enter a loginid	admin	sl	Vnesti morate uporabniško ime
-you must enter an application name and title.	admin	sl	Vnesti morate ime in naziv aplikacije.
 you must enter an application name.	admin	sl	Vnesti morate ime aplikacije.
 you must enter an application title.	admin	sl	Vnesti morate naslov aplikacije.
-you must select a file type	admin	sl	Izbrati morate tip datoteke
 you must select at least one group member.	admin	sl	Izbrati morate najmanj enega člana skupine.
 you need to enter install id and password!	admin	sl	Vnesti morate ID za namestitev in geslo!
 you need to select as least one action!	admin	sl	Izbrati morate vsaj eno akcijo!
@@ -892,6 +884,5 @@ you need to select some users first!	admin	sl	Najprej morate izbrati nekaj upora
 you need to specify a forwarding address, when checking "%1"!	admin	sl	Pri preverjanju "%1" morate navesti naslov za posredovanje!
 you will need to remove the subcategories before you can delete this category	admin	sl	Preden lahko izbrišete to kategorijo, morate izbrisati vse podkategorije!
 your last submission was less then %1 days ago!	admin	sl	Vaša zadnja predložitev je bila manj kot %1 dni nazaj!
-your message to  %1 was displayed.	admin	sl	Prikazano je bilo vaše sporočilo %1.
 your name	admin	sl	Vaše ime
 your session could not be verified.	admin	sl	Vaša seja ne more biti preverjena.

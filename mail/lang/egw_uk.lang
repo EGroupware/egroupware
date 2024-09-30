@@ -28,6 +28,7 @@ certificate info for email %1	mail	uk	Інформація про сертифі
 certificate issued by	mail	uk	Сертифікат виданий
 changing subject failed because of %1	mail	uk	Не вдалося змінити тему через %1
 changing subject failed folder %1 does not exist	mail	uk	Змінити тему не вдалося, папка %1 не існує
+checking admin credentials failed	mail	uk	Не вдалося перевірити облікові дані адміністратора
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 contact label	mail	uk	Мітка контакту
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
@@ -64,7 +65,7 @@ file into	mail	uk	Перейдіть до
 file into:	mail	uk	Перейдіть до:
 filemode has been switched to %1	mail	uk	Перейдено до файлового режиму: %1
 flag / unflag	mail	uk	Встановити / зняти прапорець
-flagged %1 messages as %2 in %3	mail	uk	Позначити %1 повідомлення як %2 у %3
+flagged %1 messages as %2 in %3	mail	uk	Позначити %1 повідомлення як "%2" у %3.
 flagged %1 messages as flagged in %2	mail	uk	Позначити повідомлення %1 як такі, що позначені у %2
 flagged %1 messages as unflagged in %2	mail	uk	Позначено %1 повідомлення як такі, що не позначені у %2
 folder %1 %2 failed because of %3!	mail	uk	Теку %1 %2 не вдалося створити через %3!
@@ -109,6 +110,7 @@ mail	common	uk	Пошта
 mail acl	mail	uk	Права доступу
 mail filter	mail	uk	Поштовий фільтр
 mail filter rule	mail	uk	Правило фільтрації пошти
+mail probably has no text-body	mail	uk	Ймовірно, пошта не містить тексту
 mail settings	mail	uk	Налаштування пошти
 mail source	mail	uk	Джерело пошти
 mail-address	mail	uk	Поштова адреса
@@ -177,6 +179,7 @@ remove all	mail	uk	Видалити всі
 removing %1 from blacklisted email addresses failed because of %2	mail	uk	Видалення %1 з чорного списку не вдалося через %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	uk	Видалення %1 з білого списку адрес не вдалося через %2
 replace 'http://' in image urls with (trailing / required!)	mail	uk	Замініть 'http://' в URL-адресах зображень на (обов'язково!)
+reply with attachments	mail	uk	Відповісти з вкладеннями
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	uk	Не вдалося відповісти на це повідомлення, оскільки вміст цього повідомлення зашифровано і не може бути розшифрований належним чином. Якщо ви все ще бажаєте включити вміст цього зашифрованого повідомлення, спробуйте використати переслати як вкладення.
 report as ham	mail	uk	Повідомити як шинку
 report as spam	mail	uk	Повідомити як спам

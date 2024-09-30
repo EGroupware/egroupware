@@ -15,6 +15,8 @@ day	setup	tr	Gün
 default	setup	tr	Varsayılan
 default file system space per user/group ?	setup	tr	(Varsayılan) Kullanıcı/Grup disk alanı
 deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanıcıların diğer kullanıcıların girdilerine erişimini engelle?
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	tr	Yalnızca AD'nizde VLV denetimleriyle ilgili sorunlar varsa VE tüm kullanıcıları tek bir sorguda döndürebiliyorsa devre dışı bırakın!
+disable vlv controls	setup	tr	VLV denetimlerini devre dışı bırakın
 download	setup	tr	İndir
 enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun çalıştığı makinanın hostadı'nı giriniz.
 enter the site password for peer servers	setup	tr	Peer sunucular için site şifresi giriniz.
@@ -23,12 +25,12 @@ enter the title for your site	setup	tr	Site başlığını giriniz.
 enter your default ftp server	setup	tr	Varsayılan FTP sunucusunu giriniz
 enter your http proxy server	setup	tr	HTTP Proxy sunucunuzu giriniz.
 enter your http proxy server port	setup	tr	HTTP Proxy sunucu portunuzu giriniz.
-error searching "dn=%1" for "%2"!	setup	tr	"%2" için "DN=%1" ararken hata oluştu!
+error searching "dn=%1" for "%2"!	setup	tr	%2 için "DN=%1" ararken hata oluştu!
 error uploading your backup!	setup	tr	Yedeğiniz yüklenirken hata oluştu!
 every	setup	tr	Her
 export has been completed!	setup	tr	Dışa aktarma işlemi tamamlandı!
 failed to mount backup directory!	setup	tr	Yedekleme dizini bağlanamadı!
-failed updating user "%1" dn="%2"!	setup	tr	"%1" DN="%2" kullanıcısı güncellenemedi!
+failed updating user "%1" dn="%2"!	setup	tr	%1 DN="%2" kullanıcısı güncellenemedi!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	tr	header.inc.php yapılandırma dosyası yazılamadı, izinleri kontrol edin!
 fallback authentication	setup	tr	Yedek Kimlik Doğrulama
 force selectbox	setup	tr	Seçimn kurusunu mecburi tut
@@ -53,6 +55,7 @@ next run	setup	tr	Sıradaki çalıştırma
 no algorithms available	setup	tr	Mevcut hiç algoritma yok
 no modes available	setup	tr	Mevcut hiç mod yok
 ok	setup	tr	Tamam
+openidconnect login	setup	tr	OpenIDConnect Girişi
 optional, if only authentication and anonymous search is enabled	setup	tr	yalnızca kimlik doğrulama VE anonim arama etkinleştirilmişse isteğe bağlı
 or	setup	tr	ya da
 or leave empty and select openidconnect as authentication type above for single sign on	setup	tr	veya boş bırakın ve çoklu oturum açma için yukarıda kimlik doğrulama türü olarak OpenID Connect'i seçin
@@ -84,3 +87,4 @@ users choice	setup	tr	Kullanıcı Seçimleri
 version	setup	tr	Sürüm
 would you like to show each application's upgrade status ?	setup	tr	Her uygulamanın güncelleme durumunu görüntülemek ister misiniz?
 write	setup	tr	Yaz
+you need to select your current charset!	setup	tr	Geçerli karakter setinizi seçmeniz gerekir!

@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	sk	Zaškrtnite, ak chcete pri odoslaní uložiť ako udalosť
 check to save as infolog on send	mail	sk	Zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Záznamníka
 check to save as tracker entry on send	mail	sk	Zaškrtnite, ak to chcete pri odoslaní uložiť ako položku Sledovača
+checking admin credentials failed	mail	sk	Kontrola poverení správcu zlyhala
 choose file	mail	sk	Vyberte súbor
 common acl	mail	sk	Bežné ACL
 compose	mail	sk	Nová správa
@@ -243,7 +244,7 @@ files	mail	sk	Súbory
 flag / unflag	mail	sk	Značku Pridať / Odstrániť
 flag or unflag a mail	mail	sk	Označkovať alebo odznačkovať správu
 flagged	mail	sk	Označkovaná
-flagged %1 messages as %2 in %3	mail	sk	Označkovaných %1 správ ako %2 v %3
+flagged %1 messages as %2 in %3	mail	sk	Označkovaných %1 správ ako "%2" v %3.
 flagged %1 messages as flagged in %2	mail	sk	Označkovaných %1 správ ako označkované v %2
 flagged %1 messages as unflagged in %2	mail	sk	Označkovaných %1 správ ako neoznačkované %2
 flagged / unflagged	mail	sk	Označkované/Odznačkované
@@ -336,6 +337,7 @@ mail	common	sk	E-mail
 mail acl	mail	sk	ACL pre Mail
 mail filter	mail	sk	Filter správ
 mail filter rule	mail	sk	Pravidlo poštového filtra
+mail probably has no text-body	mail	sk	Mail pravdepodobne nemá žiadny text
 mail settings	mail	sk	Nastavenia pošty
 mail source	mail	sk	Zdroj správy
 mail-address	mail	sk	Mail-Adresa
@@ -491,6 +493,7 @@ reply	mail	sk	Odpoveď
 reply all	mail	sk	Odpoveď všetkým
 reply message type	mail	sk	Typ odpovede
 reply to	mail	sk	Odpovedať na
+reply with attachments	mail	sk	Odpovedzte s prílohami
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sk	Odpoveď na túto správu zlyhala, pretože obsah správy je asi šifrovaný a nedá sa správne dešifrovať. Ak napriek tomu chcete správu odoslať ďalej, skúste ju "Odoslať ako prílohu".
 replyto	mail	sk	Odpovedať na
 report as ham	mail	sk	Označiť ako NIE nevyžiadanú

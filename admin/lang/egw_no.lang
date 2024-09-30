@@ -22,10 +22,7 @@
 %1 token %2.	admin	no	%1 token %2.
 %1 user %2	admin	no	%1 bruker %2
 (de)activate mail accounts	admin	no	(de)aktivere e-postkontoer
-(default no, leave it off if you dont use it)	admin	no	Standard nei, la den være av dersom du ikke bruker den
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	no	(imapclass må støtte denne funksjonen ved å spørre etter den tilsvarende konfigurasjonsverdien og sende den som standardkvote til IMAP-serveren)
 (no subject)	admin	no	(uten emne)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	no	For å installere nye applikasjoner, bruk <br><a href="setup/" target="setup">Oppsett</a> [Behandle applikasjoner]
 access token revoked.	admin	no	Tilgangstoken tilbakekalt.
 account	admin	no	Konto
 account active	admin	no	Aktiv konto
@@ -55,6 +52,9 @@ add new application	admin	no	Legg til ny applikasjon
 add peer server	admin	no	Legg til Peer Tjener
 add profile	admin	no	Legg til profil
 add sub-category	admin	no	Legg til underkategori
+add to group	admin	no	Legg til i gruppe
+add user	admin	no	Legg til bruker
+add user or group	admin	no	Legg til bruker eller gruppe
 admin dn	admin	no	Admin DN
 admin email	admin	no	Admin E-post
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	no	Admin e-post adresser (komma-separert) som blir varslet om blokkering (ingen varsler hvis tom)
@@ -68,6 +68,7 @@ all applications	admin	no	Samtlige programmer
 all records and account information will be lost!	admin	no	All historie og brukerinformasjon vil gå tapt!
 all users	admin	no	Alle brukere
 allow anonymous access to this app	admin	no	Tillat anonym tilgang til denne applikasjonen
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	no	Tillat brukeren å lagre passordet sitt under «Sikkerhet og passord» for SingleSignOn.
 alternate email address	admin	no	Alternativ e-mailadresse
 anonymous user	admin	no	Anonym bruker
 anonymous user (not shown in list sessions)	admin	no	Anonym Bruker (vises ikke i sesjonsliste)
@@ -92,16 +93,19 @@ asyncservices not yet installed or other error (%1) !!!	admin	no	Asynkrone tjene
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	no	Forsøk å bruke korrekt MIMEtype for FTP istedenfor standard 'application/octet-stream'
 authentication / accounts	admin	no	Autorisasjon / Kontoer
 auto create account records for authenticated users	admin	no	Opprett kontoer for autoriserte brukere automatisk
-back to the list	admin	no	Tilbake til listen
 bi-dir passthrough	admin	no	bi-mappe gjennomgang
 bi-directional	admin	no	bi-direksjon
 bottom	admin	no	Bunn
+bulk changes	admin	no	Masseendringer
+bulk password reset	admin	no	Masse tilbakestilling av passord
 calculate next run	admin	no	Kalkuler neste gjennomgang
+can be used to show groups by container, if enabled	admin	no	Kan brukes til å vise grupper etter container, hvis aktivert
 can change password	admin	no	Kan endre passord
 cancel testjob!	admin	no	Avbryt TestJob!
 categories list	admin	no	Kategoriliste
 category %1 has been saved !	admin	no	Kategori %1 er lagret
 category list	admin	no	Kategoriliste
+change access	admin	no	Endre tilgangsrettigheter
 change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
 change login screen message	admin	no	Endre melding på hovedside
@@ -109,6 +113,7 @@ check ip address of all sessions	admin	no	Sjekk alle sesjoners IP-adresse
 check items to <b>%1</b> to %2 for %3	admin	no	Sjekk oppføringene til <b>%1</b> til %2 for %3
 click to select a color	admin	no	Trykk for å velge farge
 color	admin	no	Farge
+container	admin	no	Beholder
 continue	admin	no	Fortsette
 country	admin	no	Land
 country selection	admin	no	Velg land
@@ -166,10 +171,6 @@ disable "auto completion" of the login form	admin	no	Deaktiver "autofullfør" i 
 disabled (not recomended)	admin	no	Deaktivert (ikke anbefalt)
 display	admin	no	Vis
 do not delete the category and return back to the list	admin	no	IKKE slett denne kategorien og returner til listen
-do you also want to delete all global subcategories ?	admin	no	Vil du også slette alle globale kategorier?
-do you really want to delete this profile	admin	no	Ønsker du virkelig å slette denne profilen
-do you want to delete all global subcategories ?	admin	no	Vil du slette alle globale underkategorier?
-do you want to move all global subcategories one level down ?	admin	no	Vil du flytte alle globale underkategorier ett steg ned?
 domainname	admin	no	Domenenavn
 down	admin	no	Ned
 edit account	admin	no	Rediger konto
@@ -236,6 +237,7 @@ group ?	admin	no	Gruppe?
 group has been added	common	no	Gruppen er lagt til
 group has been deleted	common	no	Gruppen er slettet
 group has been updated	common	no	Gruppen er oppdatert
+group hierarchy	admin	no	Gruppehierarki
 group list	admin	no	Gruppeliste
 group manager	admin	no	Gruppeleder
 group name	admin	no	Gruppe Navn
@@ -363,6 +365,7 @@ quota size in mbyte	admin	no	Grense Str. i Mbyte
 re-enter password	admin	no	Skriv inn passord igjen
 read this list of methods.	admin	no	Les denne listen av metoder.
 register application hooks	admin	no	Registrer program hooks
+regular expression to find part to use as container	admin	no	Regulært uttrykk for å finne en del som skal brukes som container
 remove	admin	no	Fjern
 rows	admin	no	Rader
 run asynchronous services	admin	no	Kjør asonkrone serviser
@@ -394,6 +397,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	no	Vis aksesslogg
 show current action	admin	no	Vis gjeldende aksjon
 show error log	admin	no	Vis feillogg
+show groups in container based on	admin	no	Vis grupper i beholderen basert på
 show phpinfo()	admin	no	Vis phpinfo()
 show session ip address	admin	no	Vis IP adresse for session
 sieve server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for Sieve-tjener
@@ -483,10 +487,8 @@ you must add at least 1 permission or group to this account	admin	no	Du må legg
 you must enter a group name.	admin	no	Du må registrere et gruppenavn
 you must enter a lastname	admin	no	Du må registrere et etternavn
 you must enter a loginid	admin	no	Du må registrere et påloggingsident
-you must enter an application name and title.	admin	no	Du må registrere programnavn og tittel
 you must enter an application name.	admin	no	Du må registrere et programnavn
 you must enter an application title.	admin	no	Du må registrere et programtittel
-you must select a file type	admin	no	Du må velge en filtype
 you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!
 your name	admin	no	Ditt navn
 your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes

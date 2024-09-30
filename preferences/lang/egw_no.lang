@@ -37,13 +37,16 @@ how should egroupware display dates for you.	preferences	no	Hvordan skal EGroupw
 icon	preferences	no	Ikon
 icons and text	preferences	no	Ikoner og tekst
 icons only	preferences	no	kun ikoner
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	no	Hvis denne funksjonen er aktivert, lagres passordet ditt og sendes videre til andre servere når du logger inn via SSO.
 in which country are you. this is used to set certain defaults for you.	preferences	no	Hvilket land du befinner deg i. Brukes for å velge visse standardverdier for deg.
 interface/template selection	preferences	no	Valg av mal
 language	preferences	no	Språk
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	no	Når du logger inn via SingleSignOn, får du ikke passord for å sende det videre til e-post- eller filservere.
 max matches per page	preferences	no	Maks. treff per side
 max number of icons in navbar	preferences	no	Maks. antall ikoner på navigasjonslinjen
 no default	preferences	no	Ingen standardverdi
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	no	Noter: Denne funksonen endrer *ikke* ditt epost passord. Dette må gjøres manuellt.
+password stored	preferences	no	Passord lagres.
 please, select a new theme	preferences	no	Vennligst velg en ny mal
 popup with search	preferences	no	Sprett-opp meny for søking
 re-enter your password	preferences	no	Skriv inn ditt passord igjen
@@ -60,6 +63,8 @@ show navigation bar as	preferences	no	Vis navigasjonslinje som
 show number of current users	preferences	no	Vis antall pålogget brukere
 show text on navigation icons	preferences	no	Vis tekst på navigasjonsikoner
 show_more_apps	common	no	Vis flere programmer
+singlesignon and passwords	preferences	no	SingleSignOn og passord
+store password retrievable for singlesignon	common	no	Lagre passord som kan hentes for SingleSignOn
 text only	preferences	no	Kun tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	no	Standard programmet startes når du starter EGroupware eller klikker på hjemmeside ikonet.<b>Du kan ellers vise flere programmer på hjemmesiden så lenge du ikke velger spesifikt program her (må konfigureres i preferansene til det enkelte program).
 the old password is not correct	preferences	no	Det gamle passordet er ikke korrekt

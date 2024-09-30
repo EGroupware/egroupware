@@ -14,9 +14,7 @@
 %1 successful	admin	da	%1 vellykket
 %1 token %2.	admin	da	%1 token %2.
 (de)activate mail accounts	admin	da	(de)Aktiver mailkonti
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	da	(imapclass skal understøtte denne funktion ved at forespørge den tilsvarende konfigurationsværdi og videregive den som defaultquota til IMAP-serveren)
 (no subject)	admin	da	(ingen emne)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	da	(For at installere nye applikationer brug <br><a href="setup/" target="setup">Setup</a> [Administrere Applikationer]!)
 1 year	admin	da	1 år
 2 month	admin	da	2 måneder
 2 weeks	admin	da	2 uger
@@ -57,6 +55,7 @@ add new application	admin	da	Tilføj ny applikation
 add peer server	admin	da	Tilføj Peer Server
 add profile	admin	da	Tilføj Profil
 add sub-category	admin	da	Tilføj underkategori
+add to group	admin	da	Tilføj til gruppe
 add user	admin	da	Tilføj bruger
 add user or group	admin	da	Tilføj bruger eller gruppe
 admin dn	admin	da	Admin DN
@@ -71,6 +70,7 @@ all groups	admin	da	Alle grupper
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	da	Giv brugeren mulighed for at gemme sin adgangskode under 'Sikkerhed og adgangskoder' til SingleSignOn.
 alternate email address	admin	da	Alternativ e-mail adresse
 anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen).
@@ -96,21 +96,25 @@ are you sure you want to kill this session ?	admin	da	Er du sikker på du vil af
 async services last executed	admin	da	Async services sidst eksekveret
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
 available placeholders	admin	da	Tilgængelige pladsholdere
-back to the list	admin	da	Tilbage til listen
 bi-directional	admin	da	bi-directional
 bottom	admin	da	Bunden
+bulk changes	admin	da	Masseændringer
+bulk password reset	admin	da	Nulstilling af adgangskode i bulk
 calculate next run	admin	da	Beregn næste kørsel
+can be used to show groups by container, if enabled	admin	da	Kan bruges til at vise grupper efter container, hvis det er aktiveret
 can change password	admin	da	Kan ændre adgangskode
 cancel testjob!	admin	da	Annuller testjob
 categories list	admin	da	Vis kategorier
 category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
+change access	admin	da	Skift adgangsrettigheder
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change login screen message	admin	da	Ændre startside besked
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
 click to select a color	admin	da	Klik for at vælge en farve
 color	admin	da	Farve
+container	admin	da	Beholder
 copy of	admin	da	Kopi af
 country	admin	da	Land
 country selection	admin	da	Vælg land
@@ -168,10 +172,6 @@ disabled (not recomended)	admin	da	Deaktiveret (ikke anbefalet)
 display	admin	da	Vis
 displayed length of input field (set rows=1 to limit length)	admin	da	Viset længde af inputfelt (sæt rækker=1 for at begrænse længden)
 do not delete the category and return back to the list	admin	da	Slet IKKE denne kategori og vend tilbage til listen
-do you also want to delete all global subcategories ?	admin	da	Vil du også slette alle globale underkategorier?
-do you really want to delete this profile	admin	da	Vil du virkelig slette denne profil?
-do you want to delete all global subcategories ?	admin	da	Vil du slette alle globale underkategorier?
-do you want to move all global subcategories one level down ?	admin	da	Vil du flytte alle globale underkategorier et tak ned?
 domainname	admin	da	Domæne navn
 down	admin	da	Ned
 edit account	admin	da	Redigér konto
@@ -236,6 +236,7 @@ group ?	admin	da	Gruppe?
 group has been added	common	da	Gruppen er tilføjet.
 group has been deleted	common	da	Gruppen er slettet.
 group has been updated	common	da	Gruppen er opdateret.
+group hierarchy	admin	da	Gruppe-hierarki
 group list	admin	da	Gruppe liste
 group manager	admin	da	Gruppe Manager
 group name	admin	da	Gruppenavn
@@ -370,6 +371,7 @@ qmaildotmode	admin	da	qmaildotmode
 quota settings	admin	da	Quota indstillinger
 re-enter password	admin	da	Genindtast adgangskode
 read this list of methods.	admin	da	Læs denne liste over metoder.
+regular expression to find part to use as container	admin	da	Regulært udtryk til at finde en del, der skal bruges som container
 remove	admin	da	Fjern
 requires 'openid / oauth2 server' app.	admin	da	Kræver appen 'OpenID / OAuth2 Server'.
 rows	admin	da	Rækker
@@ -405,6 +407,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	da	Vis adgangslog
 show current action	admin	da	Vis nuværende handling
 show error log	admin	da	Vis fejllog
+show groups in container based on	admin	da	Vis grupper i container baseret på
 show phpinfo()	admin	da	Vis phpinfo()
 show session ip address	admin	da	Vis session IP adresse
 sieve server hostname or ip address	admin	da	Sieve server domænenavn eller IP adresse
@@ -499,9 +502,7 @@ you must add at least 1 permission or group to this account	admin	da	Du skal min
 you must enter a group name.	admin	da	Du skal indtaste et gruppenavn.
 you must enter a lastname	admin	da	Du skal indtaste et efternavn.
 you must enter a loginid	admin	da	Du skal indtaste et loginID.
-you must enter an application name and title.	admin	da	Du skal indtaste et applikations navn og titel.
 you must enter an application name.	admin	da	Du skal indtaste et applikations navn.
 you must enter an application title.	admin	da	Du skal indtaste en applikations titel.
-you must select a file type	admin	da	Du skal vælge en type.
 you will need to remove the subcategories before you can delete this category	admin	da	Du blive nød til at fjerne underkategorierne for du kan slette denne kategori!
 your session could not be verified.	admin	da	Din session kunne ikke verificeres

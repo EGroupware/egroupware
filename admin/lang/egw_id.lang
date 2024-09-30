@@ -22,10 +22,7 @@
 %1 token %2.	admin	id	%1 token %2.
 %1 user %2	admin	id	%1 pengguna %2
 (de)activate mail accounts	admin	id	(de) Mengaktifkan akun email
-(default no, leave it off if you dont use it)	admin	id	Default = Tidak, biarkan saja jika Anda tidak menggunakannya
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	id	(imapclass harus mendukung fitur ini dengan meminta nilai konfigurasi yang sesuai dan meneruskannya sebagai defaultquota ke server IMAP)
 (no subject)	admin	id	(tanpa subyek)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	id	Untuk menginstal aplikasi baru, gunakan<br><a href="setup/" target="setup">Setup</a> [Kelola Aplikasi]!
 -  type	admin	id	- tipe
 1 year	admin	id	1 tahun
 2 month	admin	id	2 bulan
@@ -72,6 +69,9 @@ add new email address:	admin	id	Tambah alamat email baru:
 add peer server	admin	id	Tambah Peer Server
 add profile	admin	id	Tambah Profil
 add sub-category	admin	id	Tambah sub-kategori
+add to group	admin	id	Tambahkan ke grup
+add user	admin	id	Tambahkan pengguna
+add user or group	admin	id	Tambahkan pengguna atau grup
 admin dn	admin	id	Admin DN
 admin email	admin	id	Email Admin
 admin name	admin	id	Nama Admin
@@ -81,6 +81,7 @@ advanced options	admin	id	Opsi Canggih
 aliases	admin	id	Alias
 all applications	admin	id	Semua aplikasi
 all users	admin	id	Semua pengguna
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	id	Izinkan pengguna untuk menyimpan kata sandinya di bawah 'Keamanan & Kata Sandi' untuk SingleSignOn.
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
 any application	admin	id	Semua aplikasi
@@ -98,14 +99,14 @@ apply the changes	admin	id	Terapkan perubahan
 are you sure you want to delete this category ?	common	id	Anda yakin ingin menghapus kategori ini?
 asynchronous timed services	admin	id	Asynchronous timed services
 authentication / accounts	admin	id	Otentikasi / Akoun
-back to admin/grouplist	admin	id	Kembali ke Admin/Daftar Kelompok
-back to admin/userlist	admin	id	Kembali ke Admin/Daftar pengguna
-back to the list	admin	id	Kembali ke daftar
 bad login name or password.	admin	id	Nama atau password tidak benar.
 bi-dir passthrough	admin	id	bi-dir passthrough
 bi-directional	admin	id	bi-directional
 bottom	admin	id	Bawah
+bulk changes	admin	id	Perubahan massal
+bulk password reset	admin	id	Pengaturan ulang kata sandi massal
 calculate next run	admin	id	Calculate next run
+can be used to show groups by container, if enabled	admin	id	Dapat digunakan untuk menampilkan grup berdasarkan kontainer, jika diaktifkan
 can change password	admin	id	Dapat mengubah kata sandi
 cancel testjob!	admin	id	Batalkan TestJob!
 categories list	admin	id	Daftar Kategori
@@ -113,6 +114,7 @@ category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
+change access	admin	id	Mengubah hak akses
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
@@ -120,6 +122,7 @@ change login screen message	admin	id	Ubah pesan pada layar utama
 children	admin	id	Anak
 click to select a color	admin	id	Klik untuk memilih warna
 color	admin	id	Warna
+container	admin	id	Wadah
 continue	admin	id	Lanjutkan
 could not open secure connection to the imap server. %s : %s.	admin	id	Tidak dapat membuka koneksi aman ke server IMAP. %s : %s.
 country	admin	id	Negara
@@ -214,6 +217,7 @@ group ?	admin	id	Kelompok?
 group has been added	common	id	Kelompok telah dibuat
 group has been deleted	common	id	Kelompok telah dihapus
 group has been updated	common	id	Kelompok telah dikinikan
+group hierarchy	admin	id	Hirarki grup
 group list	admin	id	Daftar Kelompok
 group manager	admin	id	Manajer Kelompok
 group name	admin	id	Nama Kelompok
@@ -339,6 +343,7 @@ qmaildotmode	admin	id	qmaildotmode
 quota settings	admin	id	Pengaturan Kuota
 quota size in mbyte	admin	id	Ukuran kuota dalam MByte
 re-enter password	admin	id	Masukan-ulang password
+regular expression to find part to use as container	admin	id	Ekspresi reguler untuk menemukan bagian yang akan digunakan sebagai kontainer
 remove	admin	id	Buang
 requested	admin	id	Diminta
 reset filter	admin	id	Ulangi penyaringan
@@ -366,6 +371,7 @@ set preference values.	admin	id	Set preference values.
 show access log	admin	id	Tampilkan log akses
 show current action	admin	id	Tampilkan tindakan saat ini
 show error log	admin	id	Tampilkan log error
+show groups in container based on	admin	id	Menampilkan grup dalam kontainer berdasarkan
 show phpinfo()	admin	id	Tampilkan phpinfo()
 sieve server hostname or ip address	admin	id	Sieve server hostname or IP address
 sieve server port	admin	id	Sieve server port

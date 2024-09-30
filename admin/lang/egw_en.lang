@@ -25,7 +25,6 @@
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
 (imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the IMAP server)
 (no subject)	admin	en	(no subject)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	en	- type
 1 year	admin	en	1 year
 2 month	admin	en	2 month
@@ -42,7 +41,6 @@ account "%1" has no email address --> not notified!	admin	en	Account "%1" has no
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
 account %1 %2	admin	en	Account %1 %2
 account '%1' deleted.	admin	en	Account '%1' deleted.
-account '%1' not found !!!	admin	en	Account '%1' not found!
 account active	admin	en	Account active
 account deleted.	admin	en	Account deleted.
 account has been created	common	en	Account has been created.
@@ -161,9 +159,6 @@ authentication / accounts	admin	en	Authentication | Accounts
 auto create account records for authenticated users	admin	en	Auto create account records for authenticated users.
 automatically transfer entries owned by the user:	admin	en	Automatically transfer entries owned by the user:
 available placeholders	admin	en	Available placeholders
-back to admin/grouplist	admin	en	Back to Admin / Group list
-back to admin/userlist	admin	en	Back to Admin / User list
-back to the list	admin	en	Back to the list
 backup directory %1 mounted as %2	admin	en	Backup directory %1 mounted as %2
 bad login name or password.	admin	en	Bad login name or password.
 bad or malformed request. server responded: %s	admin	en	Bad or malformed request. %s
@@ -178,9 +173,6 @@ by	admin	en	By
 by selecting a user or group you effectively delete the mail account for all other users!\n\nare you really sure you want to do that?	admin	en	By selecting a user or group you effectively delete the mail account for all other users!<br>Are you really sure you want to do that?
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
-can be used by application	admin	en	Can be used by application
-can be used by group	admin	en	Can be used by group
-can be used by user	admin	en	Can be used by user
 can be used to show groups by container, if enabled	admin	en	Can be used to show groups by container, if enabled
 can change password	admin	en	Can change password
 can not change users into groups, same sign required!	admin	en	Can NOT change users into groups, same sign required!
@@ -346,12 +338,6 @@ do not generate email addresses	admin	en	Do not generate email addresses
 do not offer introduction video	admin	en	Do not offer introduction video
 do not send cookie	admin	en	do not send cookie
 do not set attribute	admin	en	Do not set attribute
-do not validate certificate	admin	en	Do not validate certificate
-do you also want to delete all global subcategories ?	admin	en	Do you also want to delete all global sub categories?
-do you really want to delete this profile	admin	en	Do you really want to delete this profile?
-do you really want to reset the filter for the profile listing	admin	en	Do you really want to reset the filter for the profile listing?
-do you want to delete all global subcategories ?	admin	en	Do you want to delete all global sub categories?
-do you want to move all global subcategories one level down ?	admin	en	Do you want to move all global sub categories one level down?
 document root (default)	admin	en	Document root (default)
 domainname	admin	en	Domain name
 down	admin	en	Down
@@ -1028,10 +1014,8 @@ you must add at least 1 permission or group to this account	admin	en	You must ad
 you must enter a group name.	admin	en	You must enter a group name.
 you must enter a lastname	admin	en	You must enter a last name.
 you must enter a loginid	admin	en	You must enter a login ID.
-you must enter an application name and title.	admin	en	You must enter an application name and title.
 you must enter an application name.	admin	en	You must enter an application name.
 you must enter an application title.	admin	en	You must enter an application title.
-you must select a file type	admin	en	You must select a file type.
 you must select at least one group member.	admin	en	You must select at least one group member.
 you need to enter install id and password!	admin	en	You need to enter install ID AND password!
 you need to select as least one action!	admin	en	You need to select as least one action!
@@ -1039,6 +1023,5 @@ you need to select some users first!	admin	en	You need to select some users firs
 you need to specify a forwarding address, when checking "%1"!	admin	en	You need to specify a forwarding address, when checking "%1"!
 you will need to remove the subcategories before you can delete this category	admin	en	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
-your message to  %1 was displayed.	admin	en	Your message to %1 was displayed.
 your name	admin	en	Your name
 your session could not be verified.	admin	en	Your session could not be verified.

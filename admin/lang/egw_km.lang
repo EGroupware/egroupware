@@ -18,10 +18,7 @@
 %1 sessions killed	admin	km	%1 វគ្គត្រូវបានសម្លាប់។
 %1 user %2	admin	km	%1 អ្នកប្រើប្រាស់ %2
 (de)activate mail accounts	admin	km	(មិន)ធ្វើឱ្យគណនីអ៊ីមែលសកម្ម
-(default no, leave it off if you dont use it)	admin	km	លំនាំដើម = ទេ ទុកវាចោល ប្រសិនបើអ្នកមិនប្រើវា។
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	km	(imapclass ត្រូវ​តែ​គាំទ្រ​លក្ខណៈ​ពិសេស​នេះ​ដោយ​សួរ​តម្លៃ​កំណត់​ដែល​ត្រូវ​គ្នា​ហើយ​បញ្ជូន​វា​ជា​កូតា​លំនាំដើម​ទៅ imapserver)
 (no subject)	admin	km	(គ្មាន​ប្រធាន)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	km	ដើម្បីដំឡើងកម្មវិធីថ្មី សូមប្រើ<br><a href="setup/" target="setup">ដំឡើង</a> [គ្រប់គ្រងកម្មវិធី]!
 -  type	admin	km	- ប្រភេទ
 1 year	admin	km	1 ឆ្នាំ
 2 month	admin	km	2 ខែ
@@ -148,9 +145,6 @@ authentication / accounts	admin	km	ការផ្ទៀងផ្ទាត់ភ
 auto create account records for authenticated users	admin	km	បង្កើតកំណត់ត្រាគណនីដោយស្វ័យប្រវត្តិសម្រាប់អ្នកប្រើប្រាស់ដែលបានផ្ទៀងផ្ទាត់។
 automatically transfer entries owned by the user:	admin	km	ផ្ទេរធាតុដែលគ្រប់គ្រងដោយអ្នកប្រើប្រាស់ដោយស្វ័យប្រវត្តិ៖
 available placeholders	admin	km	កន្លែងដាក់ដែលមាន
-back to admin/grouplist	admin	km	ត្រលប់ទៅបញ្ជីអ្នកគ្រប់គ្រង / ក្រុម
-back to admin/userlist	admin	km	ត្រលប់ទៅបញ្ជីអ្នកគ្រប់គ្រង / អ្នកប្រើប្រាស់
-back to the list	admin	km	ត្រឡប់ទៅបញ្ជីវិញ។
 backup directory %1 mounted as %2	admin	km	ថតបម្រុងទុក%1 បានម៉ោនជា%2
 bad login name or password.	admin	km	ឈ្មោះចូល ឬពាក្យសម្ងាត់មិនល្អ។
 bad or malformed request. server responded: %s	admin	km	សំណើមិនត្រឹមត្រូវ ឬមិនប្រក្រតី។ %s
@@ -162,9 +156,6 @@ bottom	admin	km	Bottom
 bulk password reset	admin	km	Bulk password reset
 calculate next run	admin	km	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	km	ការកើតឡើងវិញនៃប្រតិទិនគិតជាថ្ងៃ។ លំនាំដើម = 1000 ។
-can be used by application	admin	km	Can be used by application
-can be used by group	admin	km	Can be used by group
-can be used by user	admin	km	Can be used by user
 can change password	admin	km	Can change password
 can not change users into groups, same sign required!	admin	km	មិនអាចប្តូរអ្នកប្រើប្រាស់ទៅជាក្រុមបានទេ ត្រូវមានសញ្ញាដូចគ្នា!
 cancel changes	admin	km	Cancel changes
@@ -322,12 +313,6 @@ do not generate email addresses	admin	km	កុំបង្កើតអាសយ
 do not offer introduction video	admin	km	កុំផ្តល់វីដេអូណែនាំ
 do not send cookie	admin	km	កុំផ្ញើខូឃី
 do not set attribute	admin	km	កុំកំណត់គុណលក្ខណៈ
-do not validate certificate	admin	km	កុំធ្វើឱ្យមានសុពលភាពវិញ្ញាបនបត្រ
-do you also want to delete all global subcategories ?	admin	km	តើអ្នកចង់លុបប្រភេទរងសកលទាំងអស់ដែរទេ?
-do you really want to delete this profile	admin	km	តើអ្នកពិតជាចង់លុបកម្រងព័ត៌មាននេះមែនទេ?
-do you really want to reset the filter for the profile listing	admin	km	តើអ្នកពិតជាចង់កំណត់តម្រងឡើងវិញសម្រាប់ការចុះបញ្ជីកម្រងព័ត៌មានមែនទេ?
-do you want to delete all global subcategories ?	admin	km	តើអ្នកចង់លុបប្រភេទរងសកលទាំងអស់ទេ?
-do you want to move all global subcategories one level down ?	admin	km	តើ​អ្នក​ចង់​ផ្លាស់ទី​ប្រភេទ​រង​សកល​ទាំងអស់​ចុះ​មួយ​កម្រិត​ដែរ​ឬ​ទេ?
 document root (default)	admin	km	ឫសឯកសារ (លំនាំដើម)
 domainname	admin	km	ឈ្មោះដែន
 down	admin	km	ចុះ
@@ -971,10 +956,8 @@ you must add at least 1 permission or group to this account	admin	km	អ្ន�
 you must enter a group name.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះក្រុម។
 you must enter a lastname	admin	km	អ្នកត្រូវតែបញ្ចូលនាមត្រកូល។
 you must enter a loginid	admin	km	អ្នកត្រូវតែបញ្ចូលលេខសម្គាល់ចូល។
-you must enter an application name and title.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះកម្មវិធី និងចំណងជើង។
 you must enter an application name.	admin	km	អ្នកត្រូវតែបញ្ចូលឈ្មោះកម្មវិធី។
 you must enter an application title.	admin	km	អ្នកត្រូវតែបញ្ចូលចំណងជើងកម្មវិធី។
-you must select a file type	admin	km	អ្នកត្រូវតែជ្រើសរើសប្រភេទឯកសារ។
 you must select at least one group member.	admin	km	អ្នកត្រូវតែជ្រើសរើសសមាជិកក្រុមយ៉ាងតិចមួយ។
 you need to enter install id and password!	admin	km	អ្នក​ត្រូវ​បញ្ចូល​លេខ​សម្គាល់​និង​លេខ​សម្ងាត់​ដំឡើង!
 you need to select as least one action!	admin	km	អ្នកត្រូវជ្រើសរើសសកម្មភាពយ៉ាងហោចណាស់មួយ!
@@ -982,6 +965,5 @@ you need to select some users first!	admin	km	អ្នកត្រូវជ្�
 you need to specify a forwarding address, when checking "%1"!	admin	km	អ្នកត្រូវបញ្ជាក់អាសយដ្ឋានបញ្ជូនបន្ត នៅពេលពិនិត្យ "%1"!
 you will need to remove the subcategories before you can delete this category	admin	km	ដកប្រភេទរងមុននឹងលុបប្រភេទនេះចេញ!
 your last submission was less then %1 days ago!	admin	km	ការដាក់ស្នើចុងក្រោយរបស់អ្នកគឺតិចជាង %1 ថ្ងៃមុន!
-your message to  %1 was displayed.	admin	km	សាររបស់អ្នកទៅកាន់%1 ត្រូវបានបង្ហាញ។
 your name	admin	km	ឈ្មោះ​របស់​អ្នក
 your session could not be verified.	admin	km	សម័យរបស់អ្នកមិនអាចផ្ទៀងផ្ទាត់បានទេ។

@@ -4,9 +4,11 @@
 %1 directories %2 found!	admin	lt	Rastas %1 katalogas %2!
 %1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1.
 %1 email(s) added into %2	common	lt	%1 el. laiškas (-ai) įtrauktas (-i) į %2
-%1 entries found, select one ...	common	lt	Rasta %1 įrašų, pasirinkite vieną ...
 '%1' copied to clipboard	common	lt	'%1' nukopijuota į iškarpinę
+'%1' does not match the required pattern '%2'	common	lt	'%1' neatitinka reikalaujamo šablono ('%2')
+'%1' is not a valid app-name ('%2')!	common	lt	'%1' NĖRA tinkamas programos pavadinimas (“%2")!
 '%1' is not a valid json file!	common	lt	'%1' nėra galiojantis JSON failas
+'%1' must not contain (back)slashes!	common	lt	'%1' neturi būti (atgalinių) brūkšnelių!
 00 (disable)	admin	lt	00 (išjungti)
 1 day	common	lt	1 diena
 1 hour	common	lt	1 valanda
@@ -83,6 +85,7 @@ canada	common	lt	KANADA
 category	common	lt	Kategorija
 cc	common	lt	Cc
 chad	common	lt	ČADAS
+changes that you made may not be saved.	common	lt	Atlikti pakeitimai gali būti neišsaugoti.
 charset	common	lt	Žodžių rinkinys
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	lt	Patikrinkite, ar IF teiginiuose nėra tuščių reikšmių. Pavyzdys {{IF url~EMPTY~~~Website:}} - Jei url nėra tuščias, rašoma "Svetainė:".
 chile	common	lt	ČILĖ
@@ -263,6 +266,7 @@ on *nix systems please type: %1	common	lt	*nix sistemose prašome rašyti: %1
 only private	common	lt	Tik privačius
 open	common	lt	Atviras
 open existing contact	common	lt	Atidaryti esamą kontaktą
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lt	Prisijungimas prie „OpenIDConnect“ pavyko, bet naudotojas „%1“ NĖRA „EGroupware“ sistemoje, o automatinis naudotojo kūrimas yra išjungtas!
 ownership	common	lt	Nuosavybė
 pakistan	common	lt	PAKISTANAS
 panama	common	lt	PANAMA

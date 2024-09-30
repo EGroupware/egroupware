@@ -1,4 +1,4 @@
---> enter new name	admin	pt-br	--> informe o novo nome
+--> enter new name	timesheet	pt-br	--> informe o novo nome
 2 month ago	timesheet	pt-br	2 meses atrás
 2 years ago	timesheet	pt-br	2 anos atrás
 3 years ago	timesheet	pt-br	3 anos atrás
@@ -14,13 +14,13 @@ creates a new field	timesheet	pt-br	criar um novo campo
 creating new entry	timesheet	pt-br	criando novo registro
 custom fields	timesheet	pt-br	Campos personalizados
 default document to insert entries	timesheet	pt-br	Documento padrão para inserir entradas
-delete this status	admin	pt-br	Remover este status
+delete this status	timesheet	pt-br	Remover este status
 deleted	timesheet	pt-br	removido
 deletes this field	timesheet	pt-br	Remover este campo
 determines the order the fields are displayed	timesheet	pt-br	determinar a ordem de exibição dos campos
 directory with documents to insert entries	timesheet	pt-br	Diretório com documentos para inserir entradas
 each value is a line like <id>[=<label>]	timesheet	pt-br	cada valor é uma linha como <id>[=<label>]
-edit status	common	pt-br	Editar o Status
+edit status	timesheet	pt-br	Editar o Status
 edit this entry	timesheet	pt-br	Editar este registro
 empty if identical to duration	timesheet	pt-br	vazio se idêntico à duração
 end	timesheet	pt-br	Fim
@@ -65,7 +65,10 @@ none: use only free project-names	admin	pt-br	Nenhum: usar apenas nomes de proje
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
 or endtime	timesheet	pt-br	or horário final
 order	timesheet	pt-br	Ordem
-parent	admin	pt-br	Pai
+parent	timesheet	pt-br	Pai
+pause	common	pt-br	Pausa
+pause time	timesheet	pt-br	Tempo de pausa
+paused	timesheet	pt-br	Pausado
 permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
@@ -79,8 +82,10 @@ select a price	timesheet	pt-br	Selecionar um preço
 select a project	timesheet	pt-br	Selecionar um projeto
 show a quantity sum (eg. to sum up negative overtime)	admin	pt-br	Exibir uma soma de quantidade (exemplo: para somar tempo extra negativo)
 start	timesheet	pt-br	Início
+start-time can not be before last stop- or pause-time %1!	common	pt-br	O horário de início não pode ser anterior ao último horário de parada ou pausa %1!
 starttime	timesheet	pt-br	Horário inicial
 starttime has to be before endtime !!!	timesheet	pt-br	Horário inicial deve ser anterior ao horário final !!!
+stop- or pause-time can not be before the start-time %1!	common	pt-br	O tempo de parada ou pausa não pode ser anterior ao tempo de início %1!
 sum %1:	timesheet	pt-br	Soma %1:
 tag to mark positions for address labels	timesheet	pt-br	Tag para marcar posições para etiquetas de endereço
 the following document-types are supported:	timesheet	pt-br	Os seguintes tipos de documentos são suportados:
@@ -90,6 +95,7 @@ this month	timesheet	pt-br	Este mês
 this week	timesheet	pt-br	Esta semana
 this year	timesheet	pt-br	Este ano
 ticket modified by %1 at %2	timesheet	pt-br	Ticket modificado por %1 em %2
+timer already running or paused	common	pt-br	O timer já está em execução ou pausado
 timesheet	common	pt-br	Planilha de Tempo
 timesheet csv export	timesheet	pt-br	Exportar Planilha - CSV
 timesheet openoffice export	timesheet	pt-br	Exportar Planilha OpenOffice

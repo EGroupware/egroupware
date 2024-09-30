@@ -100,6 +100,7 @@ icon	preferences	it	Icona
 icons and text	preferences	it	Icone e testo
 icons only	preferences	it	Solo icone
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	it	Se una riga è già selezionata, altre possono essere selezionate premendo su Ctrl/ e cliccando su di esse (per non deselezionare la riga già selezionata), oppure semplicemente cliccandoci sopra come se fossero caselle da spuntare. Se non è selezionata nessuna riga, se ci si clicca sopra, sarà sempre selezionata. Premendo il taso Maiusc (Shift) si può selezionare tutto quel che c'è fra la riga attuamente scelta e quella cliccata.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	it	Se abilitata, la password inserita verrà memorizzata e trasmessa ad altri server, quando si effettua il login tramite SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	it	Le immagini collegate ad una voce possono essere mostrate come miniature. Togliere questa opzione per velocizzare il caricamento della pagina.
 in which country are you. this is used to set certain defaults for you.	preferences	it	In quale nazione sei. Sarà usato per impostare alcuni parametri predefiniti.
 interface/template selection	preferences	it	Selezione Interfaccia/Template
@@ -108,6 +109,7 @@ just clicking on the line, like a checkbox	preferences	it	semplicemente cliccand
 kama theme	preferences	it	Tema Kama
 keep list open for selecting multiple	preferences	it	Mantenere l'elenco aperto per la selezione di più elementi
 language	preferences	it	Lingua
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	it	L'accesso tramite SingleSignOn non fornisce una password da trasmettere ai server di posta o di file.
 look & feel	preferences	it	Look & Feel
 lowercase letters	preferences	it	lettere minuscole
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	it	Rendere l'elenco delle applicazioni scrollabile con i pulsanti di scorrimento verso l'alto e verso il basso (utile per gli utenti che lavorano con il mouse senza rotellina).
@@ -132,6 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	it
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	it	la password contiene "%1" una parte o tutto il tuo nome (3 o più caratteri di lunghezza)
 password is invalid	preferences	it	La password non è valida
 password must have at least %1 characters	preferences	it	la password deve avere almeno %1 caratteri
+password stored	preferences	it	Password memorizzata.
 permanent time zone selection	preferences	it	Fuso orario permanente
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	it	Seleziona i fusi orari fra cui selezionare. Non verrebbe visualizzato un menù di scelta se almeno due fusi orari non fossero selezionati.
 please select your timezone.	preferences	it	Seleziona il fuso orario
@@ -173,11 +176,13 @@ show qrcode	preferences	it	Mostra codice QR
 show qrcode to enable on an additional device.	preferences	it	Mostra il codice QR da abilitare su altro dispositivo
 show text on navigation icons	preferences	it	Mostra testo nelle icone di navigazione
 show_more_apps	common	it	Visualizza altre applicazioni
+singlesignon and passwords	preferences	it	SingleSignOn e le password
 small paragraph	preferences	it	Carattere piccolo
 special characters	preferences	it	caratteri speciali
 spellchecker language	addressbook	it	Lingua del correttore ortografico
 stay open	preferences	it	Rimanere aperti
 stay open, but not for email	preferences	it	Rimanete aperti, ma non per le e-mail
+store password retrievable for singlesignon	common	it	Memorizzazione della password recuperabile per SingleSignOn
 text editor settings	preferences	it	Impostazioni dell'editor di testo
 text only	preferences	it	Solo Testo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	it	L'applicazione predefinita partirà quando entri in EGroupware o premi sull'icona della homepage.<br>Puoi avere più di una applicazione visualizzata in homepage, se non scegli un'applicazione specifica (dovrà esser configurato nelle preferenze di ogni applicazione).

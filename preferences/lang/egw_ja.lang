@@ -29,8 +29,8 @@ custom sidebar menu active color, defaults to above color darkened	common	ja	サ
 dark moono theme	preferences	ja	Dark Moono Theme
 data exchange settings	preferences	ja	データ交換設定
 date format	preferences	ja	日付書式
-default application	preferences	ja	既定のアプリケーション
 default	preferences	ja	既定値
+default application	preferences	ja	既定のアプリケーション
 default font	preferences	ja	既定のフォント
 default font size	preferences	ja	既定のフォント・サイズ
 default preferences	preferences	ja	設定の既定値
@@ -74,12 +74,14 @@ icon	preferences	ja	アイコン
 icons and text	preferences	ja	アイコンとテキスト
 icons only	preferences	ja	アイコンのみ
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	ja	複数行を選択する際に、Ctrl/Cmd キーを押しながらクリックして選択するか、あるいはチェックボックスのように単純にクリックして選択するか、を指定します。（シフト・キーを押しながらクリックすると、2クリック間の全ての行が選択されます）
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ja	有効にすると、SSO経由でログインしたときに、入力されたパスワードが保存され、他のサーバに渡されます。
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	ja	項目にリンクする画像をサムネイルで表示します。これを無効にすることで表示速度を改善できます。
 in which country are you. this is used to set certain defaults for you.	preferences	ja	国を選択してください。カレンダー等での既定値として使用されます。
 interface/template selection	preferences	ja	テンプレート選択
 just clicking on the line, like a checkbox	preferences	ja	チェックボックスのように単純クリックで選択
 kama theme	preferences	ja	Kama theme
 language	preferences	ja	言語
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ja	SingleSignOn経由でログインしても、メールサーバやファイルサーバにパスワードを渡すことはできません。
 look & feel	preferences	ja	ルック&フィール
 lowercase letters	preferences	ja	小文字
 max matches per page	preferences	ja	１ページ最大行数
@@ -99,6 +101,7 @@ password changed	preferences	ja	パスワードを変更しました。
 password contains only %1 of required %2 character classes: no %3	preferences	ja	password contains only %1 of required %2 character classes: no %3
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	ja	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
 password must have at least %1 characters	preferences	ja	password must have at least %1 characters
+password stored	preferences	ja	パスワードの保存。
 permanent time zone selection	preferences	ja	タイム・ゾーン
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	ja	Select time zones to switch between. Switch is NOT shown, if less than two time zones are selected.
 please select your timezone.	preferences	ja	タイム・ゾーンを選択してください。
@@ -129,8 +132,10 @@ show navigation bar as	preferences	ja	ナビゲーション
 show number of current users	preferences	ja	現在のユーザ
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
 show_more_apps	common	ja	アプリケーションをもっと表示する
+singlesignon and passwords	preferences	ja	SingleSignOnとパスワード
 special characters	preferences	ja	特殊文字
 spellchecker language	addressbook	ja	スペルチェックする言語
+store password retrievable for singlesignon	common	ja	SingleSignOnで取得可能なパスワードを保存する。
 text editor settings	preferences	ja	テキスト・エディタ設定
 text only	preferences	ja	テキストのみ
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ja	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.

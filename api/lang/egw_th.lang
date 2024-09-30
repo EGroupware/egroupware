@@ -29,8 +29,6 @@ are you sure you want to delete this entry ?	common	th	แน่ใจไหม�
 argentina	common	th	อาร์เจนตินา
 august	common	th	สิงหาคม
 author	common	th	ผู้เขียน
-autohide sidebox menus	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติ
-automatically hide the sidebox menus?	common	th	ให้เมนูข้างๆเก็บตัวอัตโนมัติไหม
 back	common	th	กลับไป
 back to user login	common	th	กลับไปถึงหน้าเข้า
 bad login or password	common	th	รหัสผ่านหรือขื่อไม่ถูก
@@ -157,7 +155,6 @@ server name	common	th	ชื่อเซอฟ์เวอร์
 setup	common	th	การติตตั้ง และ ตั้งค่า
 show all	common	th	แสดงทั้งหมด
 show all categorys	common	th	แสดงทุกประเภท
-show menu	common	th	แสดงเมนู
 start date	common	th	เริ่มวันที่
 start time	common	th	เริ่มเวลา
 subject	common	th	หัวข้อ

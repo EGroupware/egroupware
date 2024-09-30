@@ -2,19 +2,15 @@
 %1 hours	calendar	zh-tw	%1 小時
 %1 records imported	calendar	zh-tw	%1 筆資料匯入
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	zh-tw	讀取了%1筆資料(還沒匯入，您必須回到上一頁並且取消圈選匯入測試)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	zh-tw	<b>請注意</b>： 行事曆使用了您的國家假日，目前設定為 %1 ；您可以將它修改為適合您的 %2 。<br /> %3 假日資訊是自動從 %4 安裝的，可以在 %5 修改。
 a non blocking event will not conflict with other events	calendar	zh-tw	一個未鎖定事件將不會與其他事件產生衝突
 accept	calendar	zh-tw	確定
 accept or reject an invitation	calendar	zh-tw	接受或拒絕邀約
 accepted	calendar	zh-tw	已接受
 access denied to the calendar of %1 !!!	calendar	zh-tw	您沒有權限存取 %1 的行事曆！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh-tw	需要提醒的操作：新增、取消、接受、拒絕、...
-actions	calendar	zh-tw	動作
-actions...	calendar	zh-tw	動作...
 add alarm	calendar	zh-tw	新增警示
 add timesheet entry	calendar	zh-tw	新增時間表資料
 added	calendar	zh-tw	新增日期
-added by synchronisation	calendar	zh-tw	同步後新增
 after %1	calendar	zh-tw	在%1以後
 after current date	calendar	zh-tw	在今天以後
 alarm	calendar	zh-tw	警告
@@ -23,7 +19,6 @@ alarm deleted	calendar	zh-tw	警告刪除了
 alarm for %1 at %2 in %3	calendar	zh-tw	在%3的%1 中 %2警告
 alarm management	calendar	zh-tw	警示管理
 alarms	calendar	zh-tw	警告
-all categories	calendar	zh-tw	所有類別
 all day	calendar	zh-tw	所有日期
 all events	calendar	zh-tw	所有事件
 all future	calendar	zh-tw	所有未來的
@@ -31,8 +26,6 @@ all participants	calendar	zh-tw	所有參與人
 allows to edit the event again	calendar	zh-tw	允許再一次編輯事件
 always	calendar	zh-tw	永遠
 apply the changes	calendar	zh-tw	儲存異動
-are you sure you want to delete this country ?	calendar	zh-tw	您確定要移除這個國家嗎？
-are you sure you want to delete this holiday ?	calendar	zh-tw	您確定要移除這個假日嗎？
 back half a month	calendar	zh-tw	前半個月
 back one month	calendar	zh-tw	上個月
 before %1	calendar	zh-tw	在%1之前
@@ -44,7 +37,6 @@ busy	calendar	zh-tw	忙碌
 by	calendar	zh-tw	於
 calendar event	calendar	zh-tw	日曆事件
 calendar fields:	calendar	zh-tw	行事曆欄位：
-calendar holiday management	admin	zh-tw	行事曆假日管理
 calendar menu	calendar	zh-tw	行事曆選單
 calendar preferences	calendar	zh-tw	行事曆喜好設定
 calendar settings	admin	zh-tw	設定行事曆
@@ -56,7 +48,6 @@ check all	calendar	zh-tw	全選
 choose a category	calendar	zh-tw	選擇一個類別
 close the window	calendar	zh-tw	關閉視窗
 compose a mail to all participants after the event is saved	calendar	zh-tw	在這個事件儲存後發信通知所有的參與人
-copy of:	calendar	zh-tw	複製：
 copy this event	calendar	zh-tw	複製這個事件
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	zh-tw	複製異動資料到剪貼簿， %1重新讀取資料%2並且將他們合併。
 countries	calendar	zh-tw	國家
@@ -88,13 +79,11 @@ delete this event	calendar	zh-tw	刪除這個事件
 delete this exception	calendar	zh-tw	刪除這個例外
 delete this series of recurring events	calendar	zh-tw	刪除這個系列的循環事件
 deleted	calendar	zh-tw	刪除了
-uninvited	calendar	zh-tw	拒絕邀請
 display status of events	calendar	zh-tw	顯示事件的狀態
 displayed view	calendar	zh-tw	檢視方式
 do you want a weekview with or without weekend?	calendar	zh-tw	您是否希望週曆包含週末？
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	zh-tw	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh-tw	您希望定期透過電子郵件收到系統自動寄出的約會通知概要嗎？<br>這個概要會在每天早上寄出每日概要或是每個星期一寄出每週概要。<br>它只會在那一天或是那一週有約會時寄出。
-do you wish to autoload calendar holidays files dynamically?	admin	zh-tw	您希望動態新增行事曆的假日嗎？
 download	calendar	zh-tw	下載
 download this event as ical	calendar	zh-tw	下載這個事件的 iCal 格式檔案
 duration	calendar	zh-tw	期間
@@ -116,7 +105,6 @@ error: no participants selected !!!	calendar	zh-tw	錯誤：沒有選擇參與�
 error: saving the event !!!	calendar	zh-tw	錯誤： 儲存事件時！
 error: starttime has to be before the endtime !!!	calendar	zh-tw	錯誤：開始時間必須在結束時間之前！
 error: the entry has been updated since you opened it for editing!	calendar	zh-tw	錯誤： 在您開始編輯後這個資料已經被其他人更新了！
-event copied - the copy can now be edited	calendar	zh-tw	複製事件完成，現在可以編輯複製後的事件
 event deleted	calendar	zh-tw	事件刪除了
 event details follow	calendar	zh-tw	事件細節
 event saved	calendar	zh-tw	事件儲存了
@@ -160,7 +148,6 @@ high priority	calendar	zh-tw	高優先權
 history	calendar	zh-tw	記錄
 history logging	admin	zh-tw	歷史記錄
 holiday	calendar	zh-tw	假日
-holiday management	calendar	zh-tw	假日管理
 holidays	calendar	zh-tw	假日
 hours	calendar	zh-tw	小時
 how far to search (from startdate)	calendar	zh-tw	搜尋的期間(從開始日期)
@@ -171,7 +158,6 @@ ical export	calendar	zh-tw	iCal 匯出
 ical file	calendar	zh-tw	iCal 檔案
 ical import	calendar	zh-tw	iCal 匯入
 ical successful imported	calendar	zh-tw	iCal 匯入成功
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	zh-tw	如果選擇的假日剛好是週末，系統會自動移到星期一。
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zh-tw	如果您在此並未設定密碼，知道網址的人就能夠讀取。
 ignore conflict	calendar	zh-tw	忽略重疊的約會
 import	calendar	zh-tw	匯入
@@ -188,7 +174,6 @@ links	calendar	zh-tw	連結
 links, attachments	calendar	zh-tw	連結、附加檔案
 listview	calendar	zh-tw	檢視清單
 location	calendar	zh-tw	約會位置
-location to autoload from	admin	zh-tw	自動讀取的位置
 location, start- and endtimes, ...	calendar	zh-tw	位置，開始與結束時間等
 mail all participants	calendar	zh-tw	發信給所有參與人
 make freebusy information available to not logged in persons?	calendar	zh-tw	將行程資訊開放給未登入的人？
@@ -212,8 +197,8 @@ non blocking	calendar	zh-tw	未鎖定
 not	calendar	zh-tw	否
 notification messages for added events	calendar	zh-tw	新增事件提醒
 notification messages for canceled events	calendar	zh-tw	取消事件提醒
-notification messages for uninvited participants	calendar	zh-tw	拒絕參與事件提醒
 notification messages for modified events	calendar	zh-tw	修改事件提醒
+notification messages for uninvited participants	calendar	zh-tw	拒絕參與事件提醒
 notification messages for your alarms	calendar	zh-tw	您的通知事件提醒
 notification messages for your responses	calendar	zh-tw	您的回覆事件提醒
 number of records to read (%1)	calendar	zh-tw	讀取的資料筆數(%1)
@@ -274,7 +259,6 @@ select multiple contacts for a further action	calendar	zh-tw	選擇多個聯絡�
 select resources	calendar	zh-tw	選擇資源
 select who should get the alarm	calendar	zh-tw	選擇誰應該被通知
 selected range	calendar	zh-tw	選擇的範圍
-set a year only for one-time / non-regular holidays.	calendar	zh-tw	設定只有特定年會發生的假日
 set new events to private	calendar	zh-tw	設定新事件為私人的
 should new events created as private by default ?	calendar	zh-tw	預設新增的事件是私人的？
 should the planner display an empty row for users or categories without any appointment.	calendar	zh-tw	規劃圖中，沒有任何約會的使用者或類別是否要顯示空的資料列。
@@ -302,8 +286,8 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	zh-tw	這個群組是當您進入計畫管理時預設的群組，您可以在事後修改。
 this message is sent for canceled or deleted events.	calendar	zh-tw	這個訊息是因為事件的取消或刪除
 this message is sent for modified or moved events.	calendar	zh-tw	這個訊息是因為事件的修改或移動
-this message is sent to uninvited participants.	calendar	zh-tw	這個訊息會送給拒絕參與的人
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	zh-tw	這個訊息會送給您所擁有的所有事件中有設定提醒功能的參與人。<br>您可以使用事件資料的替代值。第一行是郵件的標題。
+this message is sent to uninvited participants.	calendar	zh-tw	這個訊息會送給拒絕參與的人
 this message is sent when you accept, tentative accept or reject an event.	calendar	zh-tw	這個訊息會在您同意、暫時同意或是拒絕一個事件後寄出，
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	zh-tw	這個訊息會在您設定事件警示時寄出，包含一些您或需需要的訊息。
 this module displays the current month	calendar	zh-tw	這個模組會顯示這個月的月曆
@@ -318,6 +302,7 @@ to many might exceed your execution-time-limit	calendar	zh-tw	處理太多資料
 translation	calendar	zh-tw	轉換
 tue	calendar	zh-tw	二
 two weeks	calendar	zh-tw	兩週
+uninvited	calendar	zh-tw	拒絕邀請
 updated	calendar	zh-tw	更新日期
 use end date	calendar	zh-tw	有結束日期
 use the selected time and close the popup	calendar	zh-tw	使用指定的時間並且關閉彈出視窗

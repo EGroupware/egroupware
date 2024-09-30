@@ -100,6 +100,7 @@ icon	preferences	es-es	Icono
 icons and text	preferences	es-es	Iconos y texto
 icons only	preferences	es-es	Sólo iconos
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	es-es	Si una línea ya está seleccionada, se seleccionan más líneas manteniendo pulsada la tecla Ctrl/Cmd y haciendo clic sobre ellas (para no deseleccionar la línea seleccionada actual), o simplemente haciendo clic sobre ellas como para una casilla de verificación. Si no hay ninguna línea seleccionada, al hacer clic en una siempre se selecciona. Manteniendo pulsada la tecla Mayúsculas se selecciona todo lo que hay entre la línea seleccionada y la que se ha pulsado.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	es-es	Si está activada, la contraseña introducida se almacenará y se transmitirá a otros servidores cuando inicie sesión a través de SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	es-es	Las imágenes vinculadas a una entrada pueden mostrarse como miniaturas. Puede desactivar este comportamiento para acelerar la carga de la página.
 in which country are you. this is used to set certain defaults for you.	preferences	es-es	País en el que se encuentra. Se utiliza para configurar ciertos detalles.
 interface/template selection	preferences	es-es	Selección de interfaz/plantilla
@@ -108,6 +109,7 @@ just clicking on the line, like a checkbox	preferences	es-es	simplemente haciend
 kama theme	preferences	es-es	Tema Kama
 keep list open for selecting multiple	preferences	es-es	Mantener la lista abierta para seleccionar varios
 language	preferences	es-es	Idioma
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	es-es	El inicio de sesión a través de SingleSignOn no proporciona una contraseña para pasarla a servidores de correo o archivos.
 look & feel	preferences	es-es	Aspecto
 lowercase letters	preferences	es-es	letras minúsculas
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	es-es	Hacer que la lista de aplicaciones se pueda desplazar con botones de desplazamiento hacia arriba y hacia abajo (útil para los usuarios que trabajan con un ratón sin rueda de desplazamiento)
@@ -132,6 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	es
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	es-es	la contraseña contiene con "%1" una parte de su nombre de usuario o nombre completo (3 o más caracteres)
 password is invalid	preferences	es-es	La contraseña no es válida
 password must have at least %1 characters	preferences	es-es	la contraseña debe tener al menos %1 caracteres
+password stored	preferences	es-es	Contraseña almacenada.
 permanent time zone selection	preferences	es-es	Selección permanente de zona horaria
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	es-es	Por favor, seleccione las zonas horarias entre las que desee cambiar répidamente. El cambio NO se muestra si se seleccionan menos de dos.
 please select your timezone.	preferences	es-es	Por favor, seleccione su zona horaria.
@@ -173,11 +176,13 @@ show qrcode	preferences	es-es	Mostrar QRCode
 show qrcode to enable on an additional device.	preferences	es-es	Mostrar QRCode para activar en un dispositivo adicional.
 show text on navigation icons	preferences	es-es	Mostrar descripción sobre los iconos
 show_more_apps	common	es-es	Mostrar más aplicaciones
+singlesignon and passwords	preferences	es-es	SingleSignOn y las contraseñas
 small paragraph	preferences	es-es	Párrafo pequeño
 special characters	preferences	es-es	caracteres especiales
 spellchecker language	addressbook	es-es	Idioma del corrector ortográfico
 stay open	preferences	es-es	Permanecer abierto
 stay open, but not for email	preferences	es-es	Mantente abierto, pero no para el correo electrónico
+store password retrievable for singlesignon	common	es-es	Contraseña almacenada recuperable para SingleSignOn
 text editor settings	preferences	es-es	Ajustes del editor de texto
 text only	preferences	es-es	Sólo texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en EGroupware o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.

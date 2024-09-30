@@ -21,12 +21,10 @@
 13 (ntp)	setup	fi	13 (ntp)
 80 (http)	setup	fi	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	fi	<b>käytettävä merkistö</b>(Käytä UTF-8 jos aiot käyttää kieliä jotka tarvitsevat eri merkistöjä):
-[header-password],[header-user],[new-password],[new-user]	setup	fi	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	fi	Pääsy estetty: Väärä käyttäjätunnus tai salasana manage-header osioon !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fi	Pääsy estetty: Väärä käyttäjätunnus tai salasana Domainin '%1(%2)' konfigurointitiedostoon!
 accounts existing	setup	fi	Käyttäjätilit on olemassa
 actions	setup	fi	Toimenpiteet
-activate safe password check	setup	fi	Aktivoi salasanan turvallisuuden tarkistus
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fi	Lisää automaattisesti luodut käyttäjätunnukset tähän ryhmään (käytetään ryhmää 'default', jos et määrittele)
 add new database instance (egw domain)	setup	fi	Lisää uusi tietokanta instanssi (EGW domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fi	Lisää tai muokkaa domainia:[domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -171,15 +169,12 @@ creating tables	setup	fi	Luodaan tauluja
 creation of %1 in %2 failed !!!	setup	fi	%1 luominen %2:ssa epäonnistui!
 current configuration:	setup	fi	Nykyiset asetukset:
 current system-charset	setup	fi	Nykyinen järjestelmän merkistö
-current system-charset is %1.	setup	fi	Nykyisen järjestelmän merkistö on %1
 current version	setup	fi	Nykyinen versio
 currently installed languages: %1 <br />	setup	fi	Asennetut kielet: %1<br>
-cyrus imap: admin user,password	setup	fi	Cyrus IMAP: pääkäyttäjä, salasana
 database	setup	fi	Tietokanta
 database instance (egw domain)	setup	fi	Tietokannan instanssi (EGw domain)
 database is version %1 and up to date.	setup	fi	Tietokanta on versiosta %1 ja se päivitetään.
 database successfully converted from '%1' to '%2'	setup	fi	Tietokanta on konvertoitu versiosta '%1' versioon '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fi	Datetime-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	fi	Päivä
 day of week<br />(0-6, 0=sunday)	setup	fi	Viikonpäivä<br>(0-6, 0=sunnuntai)
 db backup and restore	setup	fi	Tietokannan varmuuskopiointi ja palautus
@@ -206,6 +201,8 @@ deregistered	setup	fi	Rekisteröinti poistettu
 details for admin account	setup	fi	Ylläpitäjän tiedot
 developers' table schema toy	setup	fi	Sovelluskehittäjien taulukkoskeeman lelu
 did not find any valid db support!	setup	fi	Mitään tietokantatukea ei löytynyt!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	fi	Poista käytöstä vain, jos AD:lläsi on ongelmia VLV-valvonnan kanssa JA jos voit palauttaa kaikki käyttäjät yhdellä kyselyllä!
+disable vlv controls	setup	fi	VLV-ohjainten poistaminen käytöstä
 do you want persistent connections (higher performance, but consumes more resources)	setup	fi	Haluatko käyttää pysyviä yhteyksiä (parempi suorituskyky, mutta kuluttaa enemmän resursseja)
 do you want to manage homedirectory and loginshell attributes?	setup	fi	Haluatko hallita kotihakemistoja ja shell-attribuutteja?
 does not exist	setup	fi	Ei löydy
@@ -235,10 +232,10 @@ enable for extra debug-messages	setup	fi	Näytä tarkemmat debuggausviestit
 enable mcrypt	setup	fi	Ota MCrypt käyttöön
 enter some random text for app session encryption	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon salaukseen
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon <br>salaukseen (tarvitaan mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br>Esimerkkejä: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br>Esimerkkejä: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br>Esimerkkejä: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br>Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fi	Enter the hostname of the machine on which this server is running
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna EGroupwaren URL.<br>Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
 enter the site password for peer servers	setup	fi	Anna peer-palvelinten site-salasana
@@ -340,8 +337,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	fi	Sovellusten hallinta
 manage languages	setup	fi	Kielten hallinta
 manual / help	setup	fi	Käsikirja / Ohje
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fi	max_execution_time on vähemmän kuin 30 (sekuntia): EGroupware tarvitsee toisinaan pidempää suoritusaikaa, voit odottaa ongelmia
 maximum account id (e.g. 65535 or 1000000)	setup	fi	Käyttäjätunnisteen maksimiarvo (esim. 65535 tai 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fi	max_execution_time on vähemmän kuin 30 (sekuntia): EGroupware tarvitsee toisinaan pidempää suoritusaikaa, voit odottaa ongelmia
 may be broken	setup	fi	Voi olla rikki
 mcrypt algorithm (default tripledes)	setup	fi	Mcrypt-algoritmi (oletus TRIPLEDES)
 mcrypt initialization vector	setup	fi	MCryptin alustusvektori
@@ -356,7 +353,6 @@ modifications have been completed!	setup	fi	Muutokset on suoritettu loppuun!
 modified	setup	fi	Muokattu
 modify	setup	fi	Muokkaa
 month	setup	fi	kuukausi
-multi-language support setup	setup	fi	Kielituen asennus
 name of database	setup	fi	Tietokannan nimi
 name of db user egroupware uses to connect	setup	fi	Tietokantakäyttäjä, jota EGroupware käyttää
 never	setup	fi	Ei koskaan
@@ -383,6 +379,7 @@ one month	setup	fi	Kuukausi
 one week	setup	fi	Viikko
 only add languages that are not in the database already	setup	fi	Lisää vain kielet, joita ei ole tietokannassa
 only add new phrases	setup	fi	Lisää vain uudet merkkijonot
+openidconnect login	setup	fi	OpenIDConnect-kirjautuminen
 optional, if only authentication and anonymous search is enabled	setup	fi	valinnainen, jos vain todennus JA anonyymi haku on käytössä
 or	setup	fi	tai
 or %1continue to the header admin%2	setup	fi	tai %1jatka Header-ylläpitoon%2
@@ -428,8 +425,8 @@ re-enter password	setup	fi	Anna salasana uudelleen
 read translations from	setup	fi	Lue käännökset
 readable by the webserver	setup	fi	www-palvelimen luettavissa
 really uninstall all applications	setup	fi	Haluan VARMASTI poistaa kaikki sovellukset
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fi	register_globals on päällä. EGroupware ei vaadi tätä, ja on turvallisempaa ottaa se pois käytöstä (Off).
 registered	setup	fi	Rekisteröity
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fi	register_globals on päällä. EGroupware ei vaadi tätä, ja on turvallisempaa ottaa se pois käytöstä (Off).
 rejected lines	setup	fi	Hylätyt rivit
 remove	setup	fi	Poista
 remove all	setup	fi	Poista kaikki
@@ -597,5 +594,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	fi	Tietokantataulut ovat ajan tasalla
 your tables will be dropped and you will lose data	setup	fi	Tietokantataulut poistetaan, ja menetät tietoja!
 your temporary directory '%1' %2	setup	fi	Väliaikaistietojen hakemisto '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	fi	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	fi	{db | php(default) | php-restore}
 {off(default) | on}	setup	fi	{off(default) | on}

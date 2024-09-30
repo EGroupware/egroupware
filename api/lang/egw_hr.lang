@@ -1,9 +1,21 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	hr	%1 (%2 new) Messages writen for Application '%3' and Languages '%4'
 %1 email addresses inserted	common	hr	unešeno %1 e-mail adresa
+%1 etemplates deleted	common	hr	%1 eTemplates deleted
+%1 etemplates found	common	hr	%1 eTemplates found
 %1 is not executable by the webserver !!!	common	hr	%1 webserver ne može izvršiti!!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	hr	%1EGroupware%2 je višekorisnički, web-bazirani groupware suite pisan u %3PHP%4.
+%s disabled	common	hr	%s disabled
+%s needed	common	hr	%s needed
+%s notranslation	common	hr	%s NoTranslation
+%s onchange	common	hr	%s onChange
+%s readonly	common	hr	%s readonly
+'%1' has an invalid format !!!	common	hr	'%1' has an invalid format !!!
+'%1' is not a valid floatingpoint number !!!	common	hr	'%1' is not a valid floatingpoint number !!!
+'%1' is not a valid integer !!!	common	hr	'%1' is not a valid integer !!!
 00 (disable)	admin	hr	00 (disable)
 13 (ntp)	admin	hr	13 (ntp)
 80 (http)	admin	hr	80 (http)
+a pattern to be searched for	common	hr	a pattern to be searched for
 about	common	hr	O
 about %1	common	hr	O %1
 access	common	hr	Pristup
@@ -18,26 +30,38 @@ actions	common	hr	Akcije
 active	common	hr	Aktivno
 add	common	hr	Dodaj
 add %1 category for	common	hr	Dodaj %1 kategoriju za
+add a new column (after the existing ones)	common	hr	Add a new column (after the existing ones)
+add a new multi-column index	common	hr	Add a new multi-column index
 add category	common	hr	Dodaj kategoriju
+add column	common	hr	Add Column
+add index	common	hr	Add Index
 add sub	common	hr	Dodaj pod
+add table	common	hr	Add Table
 addressbook	common	hr	Adresar
 admin	common	hr	Admin
 administration	common	hr	Administracija
 afghanistan	common	hr	AFGHANISTAN
 albania	common	hr	ALBANIA
 algeria	common	hr	ALGERIA
+align	common	hr	Align
+alignment of label and input-field in table-cell	common	hr	alignment of label and input-field in table-cell
+alignment of the v/hbox containing table-cell	common	hr	Alignment of the V/HBox containing table-cell
 all	common	hr	Sve
 all fields	common	hr	sva polja
-alphabet	common	hr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	hr	Svi korisnici
 alternate style-sheet:	common	hr	Alternativni style-sheet:
+am	common	hr	am
 american samoa	common	hr	AMERICAN SAMOA
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	hr	an indexed column speeds up querys using that column (cost space on the disk !!!)
 and	common	hr	And
 andorra	common	hr	ANDORRA
 angola	common	hr	ANGOLA
 anguilla	common	hr	ANGUILLA
 antarctica	common	hr	ANTARCTICA
 antigua and barbuda	common	hr	ANTIGUA AND BARBUDA
-application	common	hr	Aplikacija
+application	common	hr	Application
+application name needed to write a langfile or dump the etemplates !!!	common	hr	Application name needed to write a langfile or dump the eTemplates !!!
+applications	common	hr	Aplikacije
 apply	common	hr	Primjeni
 april	common	hr	Travanj
 are you sure you want to delete these entries ?	common	hr	Da li ste sigurni da želite obrisati ove stavke ?
@@ -45,12 +69,12 @@ are you sure you want to delete this entry ?	common	hr	Da li ste sigurni da žel
 argentina	common	hr	ARGENTINA
 armenia	common	hr	ARMENIA
 aruba	common	hr	ARUBA
+attach	common	hr	Attach
+attach file	common	hr	attach file
 august	common	hr	Kolovoz
 australia	common	hr	AUSTRALIA
 austria	common	hr	AUSTRIA
 author	common	hr	Autor
-autohide sidebox menus	common	hr	Automatski sakrij izbornike sa strane
-automatically hide the sidebox menus?	common	hr	Automatski sakrij izbornike sa strane?
 autosave default category	common	hr	Autosave Default Category
 azerbaijan	common	hr	AZERBAIJAN
 back	common	hr	Povratak
@@ -69,8 +93,10 @@ benin	common	hr	BENIN
 bermuda	common	hr	BERMUDA
 bhutan	common	hr	BHUTAN
 blocked, too many attempts	common	hr	Blokirano, previše pokušaja
+blurtext	common	hr	blurText
 bolivia	common	hr	BOLIVIA
 border	common	hr	Border
+border-line-thickness for the table-tag	common	hr	Border-line-thickness for the table-tag
 bosnia and herzegovina	common	hr	BOSNIA AND HERZEGOVINA
 botswana	common	hr	BOTSWANA
 bottom	common	hr	dno
@@ -84,73 +110,117 @@ burundi	common	hr	BURUNDI
 calendar	common	hr	Kalendar
 cambodia	common	hr	CAMBODIA
 cameroon	common	hr	CAMEROON
+can not have special sql-value null	common	hr	can not have special SQL-value NULL
 canada	common	hr	CANADA
-cancel	common	hr	Otkaži
+cancel	common	hr	Cancel
 cannot replace %1 because it is a directory	common	hr	Nemogu zamijeniti %1 jer je mapa.
 cape verde	common	hr	CAPE VERDE
 categories	common	hr	Kategorije
 categories for	common	hr	kategorije za
-category	common	hr	Kategorija
+category	common	hr	Category
 category %1 has been added !	common	hr	Kategorija %1 je dodana !
 category %1 has been updated !	common	hr	Kategorija %1 je ažurirana !
 cayman islands	common	hr	CAYMAN ISLANDS
 cc	common	hr	Cc
+cellpadding for the table-tag	common	hr	Cellpadding for the table-tag
+cells	common	hr	Cells
+cellspacing for the table-tag	common	hr	Cellspacing for the table-tag
+center	common	hr	Center
 central african republic	common	hr	CENTRAL AFRICAN REPUBLIC
 chad	common	hr	CHAD
 change	common	hr	Promijeni
+changed	common	hr	Promijenjeno
 charset	common	hr	utf-8
+check if content should only be displayed but not altered (the content is not send back then!)	common	hr	check if content should only be displayed but not altered (the content is not send back then!)
+check if field has to be filled by user	common	hr	check if field has to be filled by user
 check installation	common	hr	Provjeri instalaciju
 check now	common	hr	Check Now
+checkbox	common	hr	Checkbox
 chile	common	hr	CHILE
 china	common	hr	CHINA
 choose the category	common	hr	Odaberi kategoriju
 choose the parent category	common	hr	Odaberi početnu kategoriju
 christmas island	common	hr	CHRISTMAS ISLAND
+class	common	hr	Class
+class, valign	common	hr	class, Valign
 clear	common	hr	Clear
 clear form	common	hr	Clear Form
 click	common	hr	Click
-click or mouse over to show menus	common	hr	Click or Mouse Over to show menus
-click or mouse over to show menus?	common	hr	Click or Mouse Over to show menus?
+click here to attach the file	common	hr	click here to attach the file
+click here to create the link	common	hr	click here to create the Link
+click here to start the search	common	hr	Click here to start the search
+click here to upload the file	common	hr	Click here to upload the file
+click to order after that criteria	common	hr	click to order after that criteria
 close	common	hr	Zatvori
 cocos (keeling) islands	common	hr	COCOS (KEELING) ISLANDS
 colombia	common	hr	COLOMBIA
+columnname	common	hr	ColumnName
+comment	common	hr	Comment
 comoros	common	hr	COMOROS
 company	common	hr	Tvrtka
+confirm	common	hr	Potvrdi
 congo	common	hr	CONGO
 congo, the democratic republic of the	common	hr	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+contact	common	hr	Kontakt
+contains	common	hr	sadrži
 cook islands	common	hr	COOK ISLANDS
 copy	common	hr	Kopiraj
 costa rica	common	hr	COSTA RICA
 cote d ivoire	common	hr	COTE D IVOIRE
 create	common	hr	Create
+create a new table for the application	common	hr	Create a new table for the application
 created by	common	hr	Created By
 croatia	common	hr	CROATIA
+css class for the table-tag	common	hr	CSS class for the table-tag
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	hr	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-styles	common	hr	CSS-styles
 cuba	common	hr	CUBA
 currency	common	hr	Valuta
 current	common	hr	Trenutni
 current users	common	hr	Trenutni korisnici
+custom	common	hr	Proizvoljno
+custom fields	common	hr	Proizvoljno Polje
 cyprus	common	hr	CYPRUS
 czech republic	common	hr	CZECH REPUBLIC
 date	common	hr	Datum
 date due	common	hr	Date Due
+date+time	common	hr	Date+Time
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hr	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
+day	common	hr	Day
+days	common	hr	dana
+db ensures that every row has a unique value in that column	common	hr	DB ensures that every row has a unique value in that column
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	hr	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
+db-tools	common	hr	DB-Tools
 december	common	hr	Prosinac
+deck	common	hr	Deck (internal)
+default	common	hr	Default
 default category	common	hr	Default Category
 delete	common	hr	Obriši
+delete a single entry by passing the id.	common	hr	Delete a single entry by passing the id.
+delete all selected etemplates, without further inquiry	common	hr	delete ALL selected eTemplates, WITHOUT further inquiry
 delete category	common	hr	Obriši kategoriju
+delete column	common	hr	Delete Column
+delete index	common	hr	Delete Index
 delete this entry	common	hr	Obriši ovaj zapis
+delete this etemplate	common	hr	delete this eTemplate
+delete whole column (can not be undone!!!)	common	hr	delete whole column (can NOT be undone!!!)
+deletes the above spez. etemplate from the database, can not be undone	common	hr	deletes the above spez. eTemplate from the database, can NOT be undone
+deletes the etemplate spez. above	common	hr	deletes the eTemplate spez. above
+deletes this column	common	hr	Deletes this column
+deletes this index	common	hr	Deletes this index
 denmark	common	hr	DENMARK
 description	common	hr	Opis
 detail	common	hr	Detalj
 details	common	hr	Detalji
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hr	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 directory	common	hr	Mapa
-disable internet explorer png-image-bugfix	common	hr	Disable Internet Explorer png-image-bugfix
-disable slider effects	common	hr	Disable slider effects
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hr	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
 disabled	common	hr	Onemogućeno
+discard changes	common	hr	discard changes
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	hr	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
+displayed in statusline of browser if input-field gets focus	common	hr	displayed in statusline of browser if input-field gets focus
 djibouti	common	hr	DJIBOUTI
 do you also want to delete all subcategories ?	common	hr	Do you also want to delete all subcategories ?
+do you want to save the changes you made in table %s?	common	hr	Do you want to save the changes you made in table %s?
+documentation	common	hr	Documentation
 domain	common	hr	Domena
 domain name for mail-address, eg. "%1"	common	hr	domain name for mail-address, eg. "%1"
 domestic	common	hr	Domestic
@@ -158,23 +228,41 @@ dominica	common	hr	DOMINICA
 dominican republic	common	hr	DOMINICAN REPUBLIC
 done	common	hr	Done
 download	common	hr	Preuzmi sa poslužitelja
+drop a table - this can not be undone	common	hr	Drop a table - this can NOT be undone
+drop table	common	hr	Drop Table
+dump4setup	common	hr	Dump4Setup
+duration	common	hr	Trajanje
 e-mail	common	hr	E-Mail
 east timor	common	hr	EAST TIMOR
 ecuador	common	hr	ECUADOR
-edit	common	hr	Uredi
+edit	common	hr	Edit
 edit %1 category for	common	hr	Uredi %1 kategoriju za
 edit categories	common	hr	Uredi Kategorije
 edit category	common	hr	Uredi kategoriju
+edit the etemplate spez. above	common	hr	edit the eTemplate spez. above
+editable templates - db-tools	common	hr	Editable Templates - DB-Tools
+editable templates - delete template	common	hr	Editable Templates - Delete Template
+editable templates - editor	common	hr	Editable Templates - Editor
+editable templates - search	common	hr	Editable Templates - Search
+editable templates - show template	common	hr	Editable Templates - Show Template
 egroupware: login blocked for user '%1', ip %2	common	hr	EGroupware: login blokiran za korisnika '%1', IP %2
 egypt	common	hr	EGYPT
 el salvador	common	hr	EL SALVADOR
 email	common	hr	E-Mail
 email-address of the user, eg. "%1"	common	hr	email-address of the user, eg. "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	hr	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
+enable javascript onchange submit	common	hr	enable JavaScript onChange submit
 enabled	common	hr	Omogućeno
 end date	common	hr	End date
 end time	common	hr	End time
+enter '' for an empty default, nothing mean no default	common	hr	enter '' for an empty default, nothing mean no default
+enter a search pattern	common	hr	Enter a search pattern
+enter filename to upload and attach, use [browse...] to search for it	common	hr	Enter filename to upload and attach, use [Browse...] to search for it
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hr	Enter the location of EGroupware's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
+enter the new version number here (> old_version), empty for no update-file	common	hr	enter the new version number here (> old_version), empty for no update-file
+enter the new version number here (has to be > old_version)	common	hr	enter the new version number here (has to be > old_version)
 entry has been deleted sucessfully	common	hr	Entry has been deleted sucessfully
+entry saved	common	hr	Entry saved
 entry updated sucessfully	common	hr	Entry updated sucessfully
 equatorial guinea	common	hr	EQUATORIAL GUINEA
 eritrea	common	hr	ERITREA
@@ -182,25 +270,47 @@ error	common	hr	Greška
 error creating %1 %2 directory	common	hr	Greška pri kreiranju %1 %2 mape
 error deleting %1 %2 directory	common	hr	Greška pri brisanju %1 %2 mape
 error renaming %1 %2 directory	common	hr	Greška pri preimenovanju %1 %2 mape
+error: template not found !!!	common	hr	Error: Template not found !!!
+error: webserver is not allowed to write into '%1' !!!	common	hr	Error: webserver is not allowed to write into '%1' !!!
+error: writing file (no write-permission for the webserver) !!!	common	hr	Error: writing file (no write-permission for the webserver) !!!
 estonia	common	hr	ESTONIA
+etemplate	common	hr	eTemplate
+etemplate '%1' imported, use save to put it in the database	common	hr	eTemplate '%1' imported, use Save to put it in the database
+etemplate '%1' written to '%2'	common	hr	eTemplate '%1' written to '%2'
+etemplate editor	common	hr	eTemplate Editor
+etemplate tutorial	common	hr	eTemplate Tutorial
 ethiopia	common	hr	ETHIOPIA
 exact	common	hr	exact
+exchange this row with the one above	common	hr	exchange this row with the one above
+exchange this two columns	common	hr	exchange this two columns
+export the loaded etemplate into a xml-file	common	hr	export the loaded eTemplate into a xml-file
+export xml	common	hr	Export XML
+extensions loaded:	common	hr	Extensions loaded:
 failed to change password.	common	hr	Nisam mogao promijeniti zaporku.
 falkland islands (malvinas)	common	hr	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	hr	FAROE ISLANDS
 fax number	common	hr	fax number
 february	common	hr	Veljača
+field must not be empty !!!	common	hr	Field must not be empty !!!
 fields	common	hr	Polja
 fiji	common	hr	FIJI
+file	common	hr	File
+file contains more than one etemplate, last one is shown !!!	common	hr	File contains more than one eTemplate, last one is shown !!!
+file writen	common	hr	File writen
 files	common	hr	Datoteke
+fileupload	common	hr	FileUpload
 filter	common	hr	Filter
 finland	common	hr	FINLAND
+first	common	hr	First
 first name	common	hr	First name
 first name of the user, eg. "%1"	common	hr	first name of the user, eg. "%1"
 first page	common	hr	Početna stranica
 firstname	common	hr	Ime
 fixme!	common	hr	FIXME!
+floating point	common	hr	Floating Point
 force selectbox	common	hr	Force SelectBox
+foreign key	common	hr	Foreign Key
+formatted text (html)	common	hr	Formatted Text (HTML)
 france	common	hr	FRANCE
 french guiana	common	hr	FRENCH GUIANA
 french polynesia	common	hr	FRENCH POLYNESIA
@@ -217,6 +327,10 @@ ghana	common	hr	GHANA
 gibraltar	common	hr	GIBRALTAR
 global	common	hr	Global
 global public	common	hr	Global Public
+go to the first entry	common	hr	go to the first entry
+go to the last entry	common	hr	go to the last entry
+go to the next page of entries	common	hr	go to the next page of entries
+go to the previous page of entries	common	hr	go to the previous page of entries
 grant access	common	hr	Omogući pristup
 greece	common	hr	GREECE
 greenland	common	hr	GREENLAND
@@ -238,22 +352,46 @@ guinea	common	hr	GUINEA
 guinea-bissau	common	hr	GUINEA-BISSAU
 guyana	common	hr	GUYANA
 haiti	common	hr	HAITI
+hbox	common	hr	HBox
 heard island and mcdonald islands	common	hr	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	hr	Height
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	hr	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
+height of the table in % or pixels for the table-tag and (optional) div	common	hr	Height of the table in % or pixels for the table-tag and (optional) div
+height, disabled	common	hr	Height, Disabled
 help	common	hr	Help
 high	common	hr	High
 highest	common	hr	Highest
 holy see (vatican city state)	common	hr	HOLY SEE (VATICAN CITY STATE)
 home	common	hr	Početna stranica
 home email	common	hr	home email
+home screen	common	hr	home screen
 honduras	common	hr	HONDURAS
 hong kong	common	hr	HONG KONG
+horizontal rule	common	hr	Horizontal Rule
+hour	common	hr	Hour
+hours	common	hr	sati
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hr	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+html	common	hr	Html
 hungary	common	hr	HUNGARY
 iceland	common	hr	ICELAND
+id	common	hr	identitet
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	hr	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
+image	common	hr	Image
+import	common	hr	Import
+import an etemplate from a xml-file	common	hr	import an eTemplate from a xml-file
+import table-definitions from existing db-table	common	hr	Import table-definitions from existing db-table
+import xml	common	hr	Import XML
+index/name of returned content (name of the template, link / method for image)	common	hr	index/name of returned content (name of the Template, Link / Method for Image)
+indexed	common	hr	Indexed
+indexoptions	common	hr	Indexoptions
 india	common	hr	INDIA
 indonesia	common	hr	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	hr	Insert all %1 addresses of the %2 contacts in %3
+insert new column behind this one	common	hr	insert new column behind this one
+insert new column in front of all	common	hr	insert new column in front of all
+insert new row after this one	common	hr	insert new row after this one
+insert new row in front of first line	common	hr	insert new row in front of first Line
+integer	common	hr	Integer
 international	common	hr	International
 invalid filename	common	hr	Nevažeće ime datoteke
 invalid ip address	common	hr	Invalid IP address
@@ -279,14 +417,19 @@ justify left	common	hr	Justify Left
 justify right	common	hr	Justify Right
 kazakstan	common	hr	KAZAKSTAN
 kenya	common	hr	KENYA
+key	common	hr	Key
 keywords	common	hr	Keywords
 kiribati	common	hr	KIRIBATI
 korea, democratic peoples republic of	common	hr	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
 korea, republic of	common	hr	KOREA, REPUBLIC OF
 kuwait	common	hr	KUWAIT
 kyrgyzstan	common	hr	KYRGYZSTAN
+label	common	hr	Label
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	hr	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
+lang	common	hr	Lang
 language	common	hr	Language
 lao peoples democratic republic	common	hr	LAO PEOPLES DEMOCRATIC REPUBLIC
+last	common	hr	Last
 last modified	common	hr	Zadnja izmjena
 last name	common	hr	Prezime
 last name of the user, eg. "%1"	common	hr	last name of the user, eg. "%1"
@@ -295,15 +438,21 @@ lastname	common	hr	Lastname
 latvia	common	hr	LATVIA
 lebanon	common	hr	LEBANON
 left	common	hr	Left
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	hr	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 lesotho	common	hr	LESOTHO
 liberia	common	hr	LIBERIA
 libyan arab jamahiriya	common	hr	LIBYAN ARAB JAMAHIRIYA
 license	common	hr	License
 liechtenstein	common	hr	LIECHTENSTEIN
+link	common	hr	Link
+linklist	common	hr	LinkList
+linkstring	common	hr	LinkString
+linkto	common	hr	LinkTo
 list	common	hr	List
 list members	common	hr	List members
 lithuania	common	hr	LITHUANIA
 load	common	hr	Unesi
+load this template into the editor	common	hr	load this template into the editor
 local	common	hr	Local
 login	common	hr	Prijava
 loginid	common	hr	LoginID
@@ -316,7 +465,6 @@ macedonia, the former yugoslav republic of	common	hr	MACEDONIA, THE FORMER YUGOS
 madagascar	common	hr	MADAGASCAR
 mail domain, eg. "%1"	common	hr	mail domain, eg. "%1"
 main category	common	hr	Main category
-home screen	common	hr	home screen
 maintainer	common	hr	Maintainer
 malawi	common	hr	MALAWI
 malaysia	common	hr	MALAYSIA
@@ -328,7 +476,6 @@ marshall islands	common	hr	MARSHALL ISLANDS
 martinique	common	hr	MARTINIQUE
 mauritania	common	hr	MAURITANIA
 mauritius	common	hr	MAURITIUS
-max number of icons in navbar	common	hr	Max number of icons in navbar
 may	common	hr	May
 mayotte	common	hr	MAYOTTE
 medium	common	hr	Medium
@@ -336,30 +483,45 @@ menu	common	hr	Izbornik
 message	common	hr	Poruka
 mexico	common	hr	MEXICO
 micronesia, federated states of	common	hr	MICRONESIA, FEDERATED STATES OF
-minute	common	hr	Minuta
+minute	common	hr	Minute
+minutes	common	hr	minuta
 moldova, republic of	common	hr	MOLDOVA, REPUBLIC OF
 monaco	common	hr	MONACO
 monday	common	hr	Ponedjeljak
 mongolia	common	hr	MONGOLIA
+month	common	hr	Month
 montserrat	common	hr	MONTSERRAT
+more	common	hr	More
 morocco	common	hr	MOROCCO
 mozambique	common	hr	MOZAMBIQUE
+multicolumn indices	common	hr	Multicolumn Indices
 myanmar	common	hr	MYANMAR
-name	common	hr	Naziv
+name	common	hr	Name
+name of other table where column is a key from	common	hr	name of other table where column is a key from
+name of table to add	common	hr	Name of table to add
+name of the etemplate, should be in form application.function[.subtemplate]	common	hr	name of the eTemplate, should be in form application.function[.subTemplate]
 name of the user, eg. "%1"	common	hr	name of the user, eg. "%1"
 namibia	common	hr	NAMIBIA
 nauru	common	hr	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	hr	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
 nepal	common	hr	NEPAL
 netherlands	common	hr	NETHERLANDS
 netherlands antilles	common	hr	NETHERLANDS ANTILLES
 never	common	hr	Never
+new	common	hr	New
 new caledonia	common	hr	NEW CALEDONIA
 new entry added sucessfully	common	hr	New entry added sucessfully
 new main category	common	hr	New main category
+new search	common	hr	New search
+new table created	common	hr	New table created
 new value	common	hr	New Value
 new zealand	common	hr	NEW ZEALAND
+newer version '%1' exists !!!	common	hr	newer version '%1' exists !!!
 next	common	hr	Slijedeći
 next page	common	hr	Next page
+nextmatch	common	hr	Nextmatch
+nextmatch filterheader	common	hr	Nextmatch Filterheader
+nextmatch sortheader	common	hr	Nextmatch Sortheader
 nicaragua	common	hr	NICARAGUA
 niger	common	hr	NIGER
 nigeria	common	hr	NIGERIA
@@ -367,7 +529,10 @@ niue	common	hr	NIUE
 no	common	hr	Ne
 no - cancel	common	hr	Ne - Otkaži
 no entries found, try again ...	common	hr	no entries found, try again ...
+no file	common	hr	no file
+no filename given or selected via browse...	common	hr	no filename given or selected via Browse...
 no history for this record	common	hr	No history for this record
+no matches found	common	hr	Nemogu naći podudarnosti
 no subject	common	hr	No Subject
 none	common	hr	None
 norfolk island	common	hr	NORFOLK ISLAND
@@ -376,26 +541,37 @@ northern mariana islands	common	hr	NORTHERN MARIANA ISLANDS
 norway	common	hr	NORWAY
 not	common	hr	ne
 not assigned	common	hr	not assigned
+not null	common	hr	NOT NULL
 note	common	hr	Note
 notes	common	hr	Notes
+nothing found - try again !!!	common	hr	Nothing found - try again !!!
+nothing matched search criteria !!!	common	hr	Nothing matched search criteria !!!
 notify window	common	hr	Notify Window
 november	common	hr	Studeni
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	hr	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	hr	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 october	common	hr	Listopad
+of	common	hr	of
 ok	common	hr	Uredu
 old value	common	hr	Old Value
 oman	common	hr	OMAN
 on *nix systems please type: %1	common	hr	On *nix systems please type: %1
 on mouse over	common	hr	On Mouse Over
+only an other version found !!!	common	hr	only an other Version found !!!
 only private	common	hr	only private
 only yours	common	hr	only yours
 open	common	hr	otvori
 open notify window	common	hr	Open notify window
 open popup window	common	hr	Open popup window
+optional note about the link	common	hr	optional note about the Link
+options	common	hr	Options
 or	common	hr	or
 original	common	hr	Original
 other	common	hr	Other
+overflow	common	hr	Overflow
 overview	common	hr	Pregled
 owner	common	hr	Vlasnik
+padding	common	hr	Padding
 page	common	hr	Stranica
 page was generated in %1 seconds	common	hr	Page was generated in %1 seconds
 pakistan	common	hr	PAKISTAN
@@ -418,18 +594,23 @@ phone number	common	hr	phone number
 pitcairn	common	hr	PITCAIRN
 please %1 by hand	common	hr	Please %1 by hand
 please enter a name	common	hr	Please enter a name !
+please enter table-name first !!!	common	hr	Please enter table-name first !!!
 please run setup to become current	common	hr	Please run setup to become current
 please select	common	hr	Please Select
 please set your global preferences	common	hr	Please set your global preferences !
 please set your preferences for this application	common	hr	Please set your preferences for this application !
 please wait...	common	hr	Please Wait...
+pm	common	hr	pm
 poland	common	hr	POLAND
 popup with search	common	hr	Popup with search
 portugal	common	hr	PORTUGAL
 postal	common	hr	Postal
+precision	common	hr	Precision
 preferences	common	hr	Postavke
 previous page	common	hr	Previous page
 primary group	common	hr	primarna grupa
+primary key	common	hr	Primary Key
+primary key for the table, gets automaticaly indexed	common	hr	Primary key for the table, gets automaticaly indexed
 print	common	hr	Print
 priority	common	hr	Priority
 private	common	hr	Private
@@ -437,14 +618,23 @@ project	common	hr	Project
 public	common	hr	public
 puerto rico	common	hr	PUERTO RICO
 qatar	common	hr	QATAR
+radiobutton	common	hr	Radiobutton
 read	common	hr	Read
+read a single entry by passing the id and fieldlist.	common	hr	Read a single entry by passing the id and fieldlist.
+read etemplate from database (for the keys above)	common	hr	read eTemplate from database (for the keys above)
 read this list of methods.	common	hr	Read this list of methods.
 reading	common	hr	čitam
+readonly	common	hr	samo za čitanje
+refresh	common	hr	Obnovi
 reject	common	hr	Reject
+remove row (can not be undone!!!)	common	hr	remove Row (can NOT be undone!!!)
 remove selected accounts	common	hr	remove selected accounts
+remove this link (not the entry itself)	common	hr	Remove this link (not the entry itself)
 rename	common	hr	Rename
+reset	common	hr	Postavi ponovo
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	hr	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	hr	Returns an array of todo items
+returns savely, without deleting	common	hr	returns savely, WITHOUT deleting
 returns struct of users application access	common	hr	Returns struct of users application access
 reunion	common	hr	REUNION
 right	common	hr	Right
@@ -462,21 +652,51 @@ sao tome and principe	common	hr	SAO TOME AND PRINCIPE
 saturday	common	hr	Subota
 saudi arabia	common	hr	SAUDI ARABIA
 save	common	hr	Snimi
+save all	common	hr	Spremi sve
+save the etemplate under the above keys (name, ...), change them for a saveas	common	hr	save the eTemplate under the above keys (name, ...), change them for a SaveAs
+saves changes to tables_current.inc.php	common	hr	saves changes to tables_current.inc.php
+scale	common	hr	Scale
+scale for float	common	hr	scale for float
 search	common	hr	Search
 search %1 '%2'	common	hr	Search %1 '%2'
 search accounts	common	hr	Traži korisničke račune
 search or select accounts	common	hr	Search or select accounts
 section	common	hr	Section
 select	common	hr	Select
+select a category	common	hr	select a Category
+select a primary contact, to show in the list	common	hr	Select a primary contact, to show in the list
+select access	common	hr	Select Access
+select account	common	hr	Select Account
 select all	common	hr	Označi Sve
 select all %1 %2 for %3	common	hr	Select all %1 %2 for %3
+select an app first !!!	common	hr	Select an app first !!!
+select an app to search in	common	hr	Select an App to search in
+select an application	common	hr	Select an application
+select an application, (*) = uninstalled	common	hr	Select an application, (*) = uninstalled
+select an entry to link with	common	hr	Select an entry to link with
+select an table of the application	common	hr	Select an table of the application
+select application	common	hr	Select Application
 select category	common	hr	Select Category
+select country	common	hr	Select Country
 select date	common	hr	Select date
+select day	common	hr	Select Day
 select group	common	hr	Select group
 select home email address	common	hr	Select home email address
+select if content of field should not be translated (label gets always translated)	common	hr	select if content of field should not be translated (label gets always translated)
+select month	common	hr	Select Month
+select number	common	hr	Select Number
 select one	common	hr	Select one
+select one ...	common	hr	Select One ...
+select percentage	common	hr	Select Percentage
+select priority	common	hr	Select Priority
+select state	common	hr	Select State
+select the indexed columns in their desired order	common	hr	Select the indexed columns in their desired order
+select this etemplate to delete it	common	hr	select this eTemplate to delete it
 select user	common	hr	Select user
+select which values to show	common	hr	select which values to show
 select work email address	common	hr	Select work email address
+select year	common	hr	Select Year
+selectbox	common	hr	Selectbox
 selection	common	hr	Selection
 send	common	hr	Send
 senegal	common	hr	SENEGAL
@@ -484,17 +704,23 @@ september	common	hr	September
 server %1 has been added	common	hr	Server %1 has been added
 server name	common	hr	Server Name
 session has been killed	common	hr	Session has been killed
+sets today as date	common	hr	sets today as date
 setup	common	hr	Setup
 setup main menu	common	hr	Setup Main Menu
 seychelles	common	hr	SEYCHELLES
+show	common	hr	Show
+show (no save)	common	hr	Show (no save)
 show all	common	hr	show all
 show all categorys	common	hr	Show all categorys
-show menu	common	hr	show menu
 show page generation time	common	hr	Show page generation time
 show page generation time on the bottom of the page?	common	hr	Show page generation time on the bottom of the page?
-show_more_apps	common	hr	show_more_apps
+show values	common	hr	Show Values
+showing	common	hr	showing
 showing %1	common	hr	showing %1
 showing %1 - %2 of %3	common	hr	showing %1 - %2 of %3
+shows / allows you to enter values into the etemplate for testing	common	hr	shows / allows you to enter values into the eTemplate for testing
+shows/displays etemplate for testing, does not save it before	common	hr	shows/displays eTemplate for testing, does NOT save it before
+show_more_apps	common	hr	show_more_apps
 sierra leone	common	hr	SIERRA LEONE
 singapore	common	hr	SINGAPORE
 site configuration	common	hr	Site configuration
@@ -506,14 +732,20 @@ somalia	common	hr	SOMALIA
 sorry, your login has expired	login	hr	Sorry, your login has expired
 south africa	common	hr	SOUTH AFRICA
 south georgia and the south sandwich islands	common	hr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	common	hr	Spacing
 spain	common	hr	SPAIN
+span, class	common	hr	Span, Class
 sri lanka	common	hr	SRI LANKA
+stack	common	hr	Stack
+start a new search, cancel this link	common	hr	start a new search, cancel this link
 start date	common	hr	Start date
+start new search for the above pattern	common	hr	start new search for the above pattern
 start time	common	hr	Start time
 start with	common	hr	start with
 status	common	hr	Status
 subject	common	hr	Tema
 submit	common	hr	Submit
+submitbutton	common	hr	Submitbutton
 substitutions and their meanings:	common	hr	Substitutions and their meanings:
 sudan	common	hr	SUDAN
 sunday	common	hr	Sunday
@@ -523,23 +755,35 @@ swaziland	common	hr	SWAZILAND
 sweden	common	hr	SWEDEN
 switzerland	common	hr	SWITZERLAND
 syrian arab republic	common	hr	SYRIAN ARAB REPUBLIC
+table unchanged, no write necessary !!!	common	hr	Table unchanged, no write necessary !!!
+tablename	common	hr	TableName
+tabs	common	hr	Tabs
 taiwan	common	hr	TAIWAN/TAIPEI
 tajikistan	common	hr	TAJIKISTAN
 tanzania, united republic of	common	hr	TANZANIA, UNITED REPUBLIC OF
+template	common	hr	Template
+template deleted	common	hr	Template deleted
+template saved	common	hr	Template saved
+text	common	hr	Text
 text color:	common	hr	Text color:
+textarea	common	hr	Textarea
 thailand	common	hr	THAILAND
 the following applications require upgrades	common	hr	The following applications require upgrades
 the mail server returned	common	hr	The mail server returned
 this name has been used already	common	hr	This name has been used already !
+this text gets displayed if the input-field is empty and has no focus (blur)	common	hr	this text gets displayed if the input-field is empty and has no focus (blur)
 thursday	common	hr	Četvrtak
-time	common	hr	Vrijeme
+time	common	hr	Time
 time zone	common	hr	Vremenska zona
 time zone offset	common	hr	Time zone offset
 title	common	hr	Naslov
 to	common	hr	To
 to correct this error for the future you will need to properly set the	common	hr	To correct this error for the future you will need to properly set the
 to go back to the msg list, click <a href= %1 >here</a>	common	hr	To go back to the msg list, click <a href="%1">here</a>
-today	common	hr	Danas
+to start the db-tools	common	hr	to start the DB-Tools
+to start the etemplate editor	common	hr	to start the eTemplate editor
+to start the search	common	hr	to start the search
+today	common	hr	Today
 todays date, eg. "%1"	common	hr	todays date, eg. "%1"
 togo	common	hr	TOGO
 tokelau	common	hr	TOKELAU
@@ -555,14 +799,20 @@ turkmenistan	common	hr	TURKMENISTAN
 turks and caicos islands	common	hr	TURKS AND CAICOS ISLANDS
 tuvalu	common	hr	TUVALU
 type	common	hr	Type
+type of the column	common	hr	type of the column
+type of the field (select label if field should be empty)	common	hr	type of the field (select Label if field should be empty)
 uganda	common	hr	UGANDA
 ukraine	common	hr	UKRAINE
+unique	common	hr	Unique
 united arab emirates	common	hr	UNITED ARAB EMIRATES
 united kingdom	common	hr	UNITED KINGDOM
 united states	common	hr	UNITED STATES
 united states minor outlying islands	common	hr	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	hr	Unknown
+unlink	common	hr	Unlink
 update	common	hr	Ažuriraj
+update a single entry by passing the fields.	common	hr	Update a single entry by passing the fields.
+update from version '%s' to	common	hr	Update from Version '%s' to
 upload	common	hr	Upload
 url	common	hr	URL
 uruguay	common	hr	URUGUAY
@@ -578,24 +828,38 @@ users	common	hr	korisnici
 users choice	common	hr	Users Choice
 uzbekistan	common	hr	UZBEKISTAN
 value	common	hr	Value
+value has to be at least '%1' !!!	common	hr	Value has to be at least '%1' !!!
+value has to be at maximum '%1' !!!	common	hr	Value has to be at maximum '%1' !!!
 vanuatu	common	hr	VANUATU
+vbox	common	hr	VBox
 venezuela	common	hr	VENEZUELA
-version	common	hr	Verzija
+version	common	hr	Version
 viet nam	common	hr	VIETNAM
 view	common	hr	Pogled
+view this linked entry in its application	common	hr	view this linked entry in its application
 virgin islands, british	common	hr	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	hr	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	hr	WALLIS AND FUTUNA
 wednesday	common	hr	Srijeda
 welcome	common	hr	Dobrodošli
 western sahara	common	hr	WESTERN SAHARA
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	hr	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hr	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which groups	common	hr	Koje grupe
 width	common	hr	Width
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	hr	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
+width of the table in % or pixels for the table-tag and (optional) div	common	hr	Width of the table in % or pixels for the table-tag and (optional) div
+width, disabled	common	hr	Width, Disabled
 work email	common	hr	E-mail poslovni
+write <app>/setup/tables_current.inc.php	common	hr	Write <app>/setup/tables_current.inc.php
+write langfile	common	hr	Write Langfile
+write tables	common	hr	Write Tables
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	hr	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
 writing	common	hr	zapisujem
 written by:	common	hr	Napisao:
-year	common	hr	Godina
+xml-file to import	common	hr	xml-file to import
+xslt template	common	hr	XSLT Template
+year	common	hr	Year
 yemen	common	hr	YEMEN
 yes	common	hr	Da
 yes - delete	common	hr	Da - Obriši
@@ -616,311 +880,3 @@ your search returned 1 match	common	hr	Vaša pretraga je vratila 1 rezultat
 your settings have been updated	common	hr	Vaše postavke su Ažurirane
 zambia	common	hr	ZAMBIA
 zimbabwe	common	hr	ZIMBABWE
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	hr	%1 (%2 new) Messages writen for Application '%3' and Languages '%4'
-%1 etemplates deleted	common	hr	%1 eTemplates deleted
-%1 etemplates for application '%2' dumped to '%3'	common	hr	%1 eTemplates for Application '%2' dumped to '%3'
-%1 etemplates found	common	hr	%1 eTemplates found
-%1 matches on search criteria	common	hr	%1 matches on search criteria
-%1 new etemplates imported for application '%2'	common	hr	%1 new eTemplates imported for Application '%2'
-%s disabled	common	hr	%s disabled
-%s needed	common	hr	%s needed
-%s notranslation	common	hr	%s NoTranslation
-%s onchange	common	hr	%s onChange
-%s readonly	common	hr	%s readonly
-'%1' has an invalid format !!!	common	hr	'%1' has an invalid format !!!
-'%1' is not a valid floatingpoint number !!!	common	hr	'%1' is not a valid floatingpoint number !!!
-'%1' is not a valid integer !!!	common	hr	'%1' is not a valid integer !!!
-a pattern to be searched for	common	hr	a pattern to be searched for
-add a new column (after the existing ones)	common	hr	Add a new column (after the existing ones)
-add a new multi-column index	common	hr	Add a new multi-column index
-add column	common	hr	Add Column
-add index	common	hr	Add Index
-add table	common	hr	Add Table
-align	common	hr	Align
-alignment of label and input-field in table-cell	common	hr	alignment of label and input-field in table-cell
-alignment of the v/hbox containing table-cell	common	hr	Alignment of the V/HBox containing table-cell
-all users	common	hr	Svi korisnici
-am	common	hr	am
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	hr	an indexed column speeds up querys using that column (cost space on the disk !!!)
-and	common	hr	And
-application	common	hr	Application
-application name needed to write a langfile or dump the etemplates !!!	common	hr	Application name needed to write a langfile or dump the eTemplates !!!
-applications	common	hr	Aplikacije
-attach	common	hr	Attach
-attach file	common	hr	attach file
-blurtext	common	hr	blurText
-border	common	hr	Border
-border-line-thickness for the table-tag	common	hr	Border-line-thickness for the table-tag
-bottom	common	hr	dno
-can not have special sql-value null	common	hr	can not have special SQL-value NULL
-cancel	common	hr	Cancel
-category	common	hr	Category
-cellpadding for the table-tag	common	hr	Cellpadding for the table-tag
-cells	common	hr	Cells
-cellspacing for the table-tag	common	hr	Cellspacing for the table-tag
-center	common	hr	Center
-changed	common	hr	Promijenjeno
-check if content should only be displayed but not altered (the content is not send back then!)	common	hr	check if content should only be displayed but not altered (the content is not send back then!)
-check if field has to be filled by user	common	hr	check if field has to be filled by user
-checkbox	common	hr	Checkbox
-class	common	hr	Class
-class, valign	common	hr	class, Valign
-click here to attach the file	common	hr	click here to attach the file
-click here to create the link	common	hr	click here to create the Link
-click here to start the search	common	hr	Click here to start the search
-click here to upload the file	common	hr	Click here to upload the file
-click to order after that criteria	common	hr	click to order after that criteria
-columnname	common	hr	ColumnName
-comment	common	hr	Comment
-confirm	common	hr	Potvrdi
-contact	common	hr	Kontakt
-contains	common	hr	sadrži
-create a new table for the application	common	hr	Create a new table for the application
-css class for the table-tag	common	hr	CSS class for the table-tag
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	hr	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
-css-styles	common	hr	CSS-styles
-custom	common	hr	Proizvoljno
-custom fields	common	hr	Proizvoljno Polje
-date+time	common	hr	Date+Time
-day	common	hr	Day
-days	common	hr	dana
-db ensures that every row has a unique value in that column	common	hr	DB ensures that every row has a unique value in that column
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	hr	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
-db-tools	common	hr	DB-Tools
-deck	common	hr	Deck (internal)
-default	common	hr	Default
-delete a single entry by passing the id.	common	hr	Delete a single entry by passing the id.
-delete all selected etemplates, without further inquiry	common	hr	delete ALL selected eTemplates, WITHOUT further inquiry
-delete column	common	hr	Delete Column
-delete index	common	hr	Delete Index
-delete this etemplate	common	hr	delete this eTemplate
-delete whole column (can not be undone!!!)	common	hr	delete whole column (can NOT be undone!!!)
-deletes the above spez. etemplate from the database, can not be undone	common	hr	deletes the above spez. eTemplate from the database, can NOT be undone
-deletes the etemplate spez. above	common	hr	deletes the eTemplate spez. above
-deletes this column	common	hr	Deletes this column
-deletes this index	common	hr	Deletes this index
-discard changes	common	hr	discard changes
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	hr	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
-displayed in statusline of browser if input-field gets focus	common	hr	displayed in statusline of browser if input-field gets focus
-do you want to save the changes you made in table %s?	common	hr	Do you want to save the changes you made in table %s?
-documentation	common	hr	Documentation
-drop a table - this can not be undone	common	hr	Drop a table - this can NOT be undone
-drop table	common	hr	Drop Table
-dump4setup	common	hr	Dump4Setup
-duration	common	hr	Trajanje
-edit	common	hr	Edit
-edit the etemplate spez. above	common	hr	edit the eTemplate spez. above
-editable templates - db-tools	common	hr	Editable Templates - DB-Tools
-editable templates - delete template	common	hr	Editable Templates - Delete Template
-editable templates - editor	common	hr	Editable Templates - Editor
-editable templates - search	common	hr	Editable Templates - Search
-editable templates - show template	common	hr	Editable Templates - Show Template
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	hr	embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
-enable javascript onchange submit	common	hr	enable JavaScript onChange submit
-enter '' for an empty default, nothing mean no default	common	hr	enter '' for an empty default, nothing mean no default
-enter a search pattern	common	hr	Enter a search pattern
-enter filename to upload and attach, use [browse...] to search for it	common	hr	Enter filename to upload and attach, use [Browse...] to search for it
-enter the new version number here (> old_version), empty for no update-file	common	hr	enter the new version number here (> old_version), empty for no update-file
-enter the new version number here (has to be > old_version)	common	hr	enter the new version number here (has to be > old_version)
-entry saved	common	hr	Entry saved
-error: template not found !!!	common	hr	Error: Template not found !!!
-error: webserver is not allowed to write into '%1' !!!	common	hr	Error: webserver is not allowed to write into '%1' !!!
-error: writing file (no write-permission for the webserver) !!!	common	hr	Error: writing file (no write-permission for the webserver) !!!
-etemplate	common	hr	eTemplate
-etemplate '%1' imported, use save to put it in the database	common	hr	eTemplate '%1' imported, use Save to put it in the database
-etemplate '%1' written to '%2'	common	hr	eTemplate '%1' written to '%2'
-etemplate editor	common	hr	eTemplate Editor
-etemplate tutorial	common	hr	eTemplate Tutorial
-exchange this row with the one above	common	hr	exchange this row with the one above
-exchange this two columns	common	hr	exchange this two columns
-export the loaded etemplate into a xml-file	common	hr	export the loaded eTemplate into a xml-file
-export xml	common	hr	Export XML
-extensions loaded:	common	hr	Extensions loaded:
-field must not be empty !!!	common	hr	Field must not be empty !!!
-file	common	hr	File
-file contains more than one etemplate, last one is shown !!!	common	hr	File contains more than one eTemplate, last one is shown !!!
-file writen	common	hr	File writen
-fileupload	common	hr	FileUpload
-first	common	hr	First
-floating point	common	hr	Floating Point
-foreign key	common	hr	Foreign Key
-formatted text (html)	common	hr	Formatted Text (HTML)
-go to the first entry	common	hr	go to the first entry
-go to the last entry	common	hr	go to the last entry
-go to the next page of entries	common	hr	go to the next page of entries
-go to the previous page of entries	common	hr	go to the previous page of entries
-hbox	common	hr	HBox
-height	common	hr	Height
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	hr	height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty
-height of the table in % or pixels for the table-tag and (optional) div	common	hr	Height of the table in % or pixels for the table-tag and (optional) div
-height, disabled	common	hr	Height, Disabled
-help	common	hr	Help
-horizontal rule	common	hr	Horizontal Rule
-hour	common	hr	Hour
-hours	common	hr	sati
-html	common	hr	Html
-id	common	hr	identitet
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	hr	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
-image	common	hr	Image
-import	common	hr	Import
-import an etemplate from a xml-file	common	hr	import an eTemplate from a xml-file
-import table-definitions from existing db-table	common	hr	Import table-definitions from existing db-table
-import xml	common	hr	Import XML
-index/name of returned content (name of the template, link / method for image)	common	hr	index/name of returned content (name of the Template, Link / Method for Image)
-indexed	common	hr	Indexed
-indexoptions	common	hr	Indexoptions
-insert new column behind this one	common	hr	insert new column behind this one
-insert new column in front of all	common	hr	insert new column in front of all
-insert new row after this one	common	hr	insert new row after this one
-insert new row in front of first line	common	hr	insert new row in front of first Line
-integer	common	hr	Integer
-key	common	hr	Key
-label	common	hr	Label
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	hr	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
-lang	common	hr	Lang
-last	common	hr	Last
-left	common	hr	Left
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	hr	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
-link	common	hr	Link
-linklist	common	hr	LinkList
-linkstring	common	hr	LinkString
-linkto	common	hr	LinkTo
-load this template into the editor	common	hr	load this template into the editor
-minute	common	hr	Minute
-minutes	common	hr	minuta
-month	common	hr	Month
-more	common	hr	More
-multicolumn indices	common	hr	Multicolumn Indices
-name	common	hr	Name
-name of other table where column is a key from	common	hr	name of other table where column is a key from
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	hr	name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')
-name of table to add	common	hr	Name of table to add
-name of the etemplate, should be in form application.function[.subtemplate]	common	hr	name of the eTemplate, should be in form application.function[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	hr	need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'
-new	common	hr	New
-new search	common	hr	New search
-new table created	common	hr	New table created
-newer version '%1' exists !!!	common	hr	newer version '%1' exists !!!
-nextmatch	common	hr	Nextmatch
-nextmatch filterheader	common	hr	Nextmatch Filterheader
-nextmatch sortheader	common	hr	Nextmatch Sortheader
-no file	common	hr	no file
-no filename given or selected via browse...	common	hr	no filename given or selected via Browse...
-no matches found	common	hr	Nemogu naći podudarnosti
-not null	common	hr	NOT NULL
-nothing found - try again !!!	common	hr	Nothing found - try again !!!
-nothing matched search criteria !!!	common	hr	Nothing matched search criteria !!!
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	hr	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	hr	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
-of	common	hr	of
-only an other version found !!!	common	hr	only an other Version found !!!
-optional note about the link	common	hr	optional note about the Link
-options	common	hr	Options
-or	common	hr	or
-overflow	common	hr	Overflow
-padding	common	hr	Padding
-please enter table-name first !!!	common	hr	Please enter table-name first !!!
-pm	common	hr	pm
-precision	common	hr	Precision
-primary key	common	hr	Primary Key
-primary key for the table, gets automaticaly indexed	common	hr	Primary key for the table, gets automaticaly indexed
-radiobutton	common	hr	Radiobutton
-read	common	hr	Read
-read a list of entries.	common	hr	Read a list of entries.
-read a single entry by passing the id and fieldlist.	common	hr	Read a single entry by passing the id and fieldlist.
-read etemplate from database (for the keys above)	common	hr	read eTemplate from database (for the keys above)
-readonly	common	hr	samo za čitanje
-refresh	common	hr	Obnovi
-remove row (can not be undone!!!)	common	hr	remove Row (can NOT be undone!!!)
-remove this link (not the entry itself)	common	hr	Remove this link (not the entry itself)
-reset	common	hr	Postavi ponovo
-returns savely, without deleting	common	hr	returns savely, WITHOUT deleting
-right	common	hr	Right
-save all	common	hr	Spremi sve
-save the etemplate under the above keys (name, ...), change them for a saveas	common	hr	save the eTemplate under the above keys (name, ...), change them for a SaveAs
-saves changes to tables_current.inc.php	common	hr	saves changes to tables_current.inc.php
-scale	common	hr	Scale
-scale for float	common	hr	scale for float
-search	common	hr	Search
-select a category	common	hr	select a Category
-select a primary contact, to show in the list	common	hr	Select a primary contact, to show in the list
-select access	common	hr	Select Access
-select account	common	hr	Select Account
-select an app first !!!	common	hr	Select an app first !!!
-select an app to search in	common	hr	Select an App to search in
-select an application	common	hr	Select an application
-select an application, (*) = uninstalled	common	hr	Select an application, (*) = uninstalled
-select an entry to link with	common	hr	Select an entry to link with
-select an table of the application	common	hr	Select an table of the application
-select application	common	hr	Select Application
-select category	common	hr	Select Category
-select country	common	hr	Select Country
-select day	common	hr	Select Day
-select if content of field should not be translated (label gets always translated)	common	hr	select if content of field should not be translated (label gets always translated)
-select month	common	hr	Select Month
-select number	common	hr	Select Number
-select one ...	common	hr	Select One ...
-select percentage	common	hr	Select Percentage
-select priority	common	hr	Select Priority
-select state	common	hr	Select State
-select the indexed columns in their desired order	common	hr	Select the indexed columns in their desired order
-select this etemplate to delete it	common	hr	select this eTemplate to delete it
-select which values to show	common	hr	select which values to show
-select year	common	hr	Select Year
-selectbox	common	hr	Selectbox
-sets today as date	common	hr	sets today as date
-show	common	hr	Show
-show (no save)	common	hr	Show (no save)
-show values	common	hr	Show Values
-showing	common	hr	showing
-shows / allows you to enter values into the etemplate for testing	common	hr	shows / allows you to enter values into the eTemplate for testing
-shows/displays etemplate for testing, does not save it before	common	hr	shows/displays eTemplate for testing, does NOT save it before
-spacing	common	hr	Spacing
-span, class	common	hr	Span, Class
-stack	common	hr	Stack
-start a new search, cancel this link	common	hr	start a new search, cancel this link
-start new search for the above pattern	common	hr	start new search for the above pattern
-submitbutton	common	hr	Submitbutton
-table unchanged, no write necessary !!!	common	hr	Table unchanged, no write necessary !!!
-tablename	common	hr	TableName
-tabs	common	hr	Tabs
-template	common	hr	Template
-template deleted	common	hr	Template deleted
-template saved	common	hr	Template saved
-text	common	hr	Text
-textarea	common	hr	Textarea
-this text gets displayed if the input-field is empty and has no focus (blur)	common	hr	this text gets displayed if the input-field is empty and has no focus (blur)
-time	common	hr	Time
-to start the db-tools	common	hr	to start the DB-Tools
-to start the etemplate editor	common	hr	to start the eTemplate editor
-to start the search	common	hr	to start the search
-today	common	hr	Today
-top	common	hr	vrh
-type	common	hr	Type
-type of the column	common	hr	type of the column
-type of the field (select label if field should be empty)	common	hr	type of the field (select Label if field should be empty)
-unique	common	hr	Unique
-unlink	common	hr	Unlink
-update a single entry by passing the fields.	common	hr	Update a single entry by passing the fields.
-update from version '%s' to	common	hr	Update from Version '%s' to
-upload	common	hr	Upload
-value	common	hr	Value
-value has to be at least '%1' !!!	common	hr	Value has to be at least '%1' !!!
-value has to be at maximum '%1' !!!	common	hr	Value has to be at maximum '%1' !!!
-vbox	common	hr	VBox
-version	common	hr	Version
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	hr	version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)
-view this linked entry in its application	common	hr	view this linked entry in its application
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	hr	what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
-width	common	hr	Width
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	hr	width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty
-width of the table in % or pixels for the table-tag and (optional) div	common	hr	Width of the table in % or pixels for the table-tag and (optional) div
-width, disabled	common	hr	Width, Disabled
-write <app>/setup/tables_current.inc.php	common	hr	Write <app>/setup/tables_current.inc.php
-write langfile	common	hr	Write Langfile
-write tables	common	hr	Write Tables
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	hr	writes a 'etemplates.inc.php' file (for application in Name) in the setup-dir of the app
-xml-file to import	common	hr	xml-file to import
-xslt template	common	hr	XSLT Template
-year	common	hr	Year
-id	common	hr	identitet

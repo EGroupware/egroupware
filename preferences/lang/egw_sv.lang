@@ -43,10 +43,12 @@ how to update lists	preferences	sv	Hur man uppdaterar listor
 icon	preferences	sv	Ikon
 icons and text	preferences	sv	Ikon och text
 icons only	preferences	sv	Ikon endast
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	sv	Om det är aktiverat kommer ditt lösenord att lagras och skickas vidare till en annan server när du loggar in via SSO.
 in which country are you. this is used to set certain defaults for you.	preferences	sv	I vilket land befinner du dig? Används för att göra standard inställningar.
 interface/template selection	preferences	sv	Gränsnitt / mall val
 it sets content size (text only) according to selected size.	preferences	sv	Den ställer in storleken på innehållet (endast text) i enlighet med den valda storleken.
 language	preferences	sv	Språk
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sv	Inloggning via SingleSignOn ger inte ett lösenord för att vidarebefordra det till mail- eller filservrar.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sv	Gör programlistan rullbar med upp-/nedrullningsknappar (användbart för användare som arbetar med mus utan rullhjul).
 max matches per page	preferences	sv	Max träffar per sida
 max number of icons in navbar	preferences	sv	Max antal ikoner i navigeringslisten
@@ -54,6 +56,7 @@ no default	preferences	sv	Ingen standard
 no user-selection at all	common	sv	Inga användarval alls
 note: this feature does *not* change your email password. this will	preferences	sv	Notera: Funktionen ändrar inte ditt e-postlösenord. Detta
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	sv	Notera: Funktionen ändrar *inte* ditt e-postlösenord. Detta måste göras manuellt.
+password stored	preferences	sv	Lösenord lagras.
 please, select a new theme	preferences	sv	Välj nytt tema
 popup with search	preferences	sv	Popup med sökning
 re-enter your password	preferences	sv	Bekräfta lösenordet
@@ -73,6 +76,8 @@ show navigation bar as	preferences	sv	Visa navigeringslisten som
 show number of current users	preferences	sv	Visa antal aktiva användare
 show text on navigation icons	preferences	sv	Visa text på navigeringsikoner
 show_more_apps	common	sv	Visa fler applikationer
+singlesignon and passwords	preferences	sv	SingleSignOn och lösenord
+store password retrievable for singlesignon	common	sv	Lagra lösenord som kan hämtas för SingleSignOn
 text only	preferences	sv	Endast text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på EGroupware-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the old password is not correct	preferences	sv	Gamla lösenordet är inte rätt

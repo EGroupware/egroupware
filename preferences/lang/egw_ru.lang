@@ -67,12 +67,14 @@ icon	preferences	ru	Значок
 icons and text	preferences	ru	Значки и текст
 icons only	preferences	ru	только значки
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	ru	Если строка уже выбрана, следующие строки могут быть выбраны путем удержания клавиши Ctr/Cmd и нажатием на них (не снимая выбора текущей строки), или просто нажатием на них как в меню. Если ни одна строка не выбрана, нажмите на все, ранее выбранные. Удержание кнопки Shift выберет все строки между текущей выбранной строкой и последней нажатой.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ru	Если эта функция включена, введенный вами пароль будет храниться и передаваться на другой сервер при входе через SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	ru	Изображение, связанное с записью, может быть показано в виде миниатюры. Вы можете это выключить, чтобы увеличить скорость отображения страницы.
 in which country are you. this is used to set certain defaults for you.	preferences	ru	В какой вы стране. Используется для некоторых значений по умолчанию.
 interface/template selection	preferences	ru	Выбор Интерфейса/Шаблона
 it sets content size (text only) according to selected size.	preferences	ru	Устанавливает размер содержимого (только текст) в соответствии с выбранным размером.
 just clicking on the line, like a checkbox	preferences	ru	просто нажмите на строку, как в меню
 language	preferences	ru	Язык
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ru	При входе через SingleSignOn пароль не передается почтовым или файловым серверам.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	ru	Сделать список приложений прокручиваемым с помощью кнопок прокрутки вверх/вниз (полезно для пользователей, работающих с мышью без колеса прокрутки)
 max matches per page	preferences	ru	Максимум совпадений на странице
 max number of icons in navbar	preferences	ru	Максимальное число значков в панели навигации
@@ -85,6 +87,7 @@ number format	preferences	ru	Формат числа
 old password and new password are the same. this is invalid. you must enter a new password	preferences	ru	Старый и новый пароли одинаковы. Необходимо ввести новый пароль!
 p: paragraph	preferences	ru	p: Параграф
 password changed	preferences	ru	Пароль изменен.
+password stored	preferences	ru	Хранение пароля.
 permanent time zone selection	preferences	ru	Постоянный часовой пояс
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	ru	Выберите часовой пояс для переключения между ними. Переключение не показывается, если выбрано менее двух часовых поясов.
 please select your timezone.	preferences	ru	Выберите ваш часовой пояс.
@@ -114,7 +117,9 @@ show navigation bar as	preferences	ru	Отображать строку нави
 show number of current users	preferences	ru	Показывать число текущих пользователей
 show text on navigation icons	preferences	ru	Показывать текст на значках навигации
 show_more_apps	common	ru	Показывать больше приложений
+singlesignon and passwords	preferences	ru	SingleSignOn и пароли
 spellchecker language	addressbook	ru	Язык проверки орфографии
+store password retrievable for singlesignon	common	ru	Хранение пароля, который можно получить для SingleSignOn
 text editor settings	preferences	ru	Установки редактора текста
 text only	preferences	ru	Только текст
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ru	Приложение по умолчанию будет запущено когда вы входите в EGroupware или кликните на значок Домой.<br>Также вы можете иметь не одно приложение на домашней странице (Домой), если вы не выбрали здесь определенного приложения (может быть настроено в свойствах каждого приложения).

@@ -24,17 +24,17 @@ accepted	calendar	fr	Accepté
 access denied to the calendar of %1 !!!	calendar	fr	Accès au calendrier de %1 refusé !
 access to calendar of %1 denied!	calendar	fr	Accès au calendrier de %1 refusé !
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fr	L'action qui a causé la notification: Ajouté, Annulé, Accepté, Rejeté, ...
-actions	calendar	fr	Actions
-actions...	calendar	fr	Actions ...
 add alarm	calendar	fr	Ajouter une alarme
 add appointments via shortened dialog or complete edit window	calendar	fr	Ajouter les rendez-vous par une boîte de dialogue courte ou par une fenêtre complète
 add current view as favorite	calendar	fr	Ajouter cette vue aux favoris
 add new alarm	calendar	fr	Ajouter une alarme
 add new event	calendar	fr	Ajouter un nouvel événement
 add new participants or resource	calendar	fr	Ajouter de nouveaux participants ou ressources
+add recurrence	calendar	fr	Ajouter une récurrence
 add timesheet entry	calendar	fr	Ajouter une entrée feuille de temps
 added	calendar	fr	Ajouté
 added by synchronization	calendar	fr	Ajouté par synchronisation
+added recurrence on %1.	calendar	fr	Ajout d'une récurrence sur %1.
 after	calendar	fr	Après
 after %1	calendar	fr	Après %1
 after current date	calendar	fr	Après la date courante
@@ -46,7 +46,6 @@ alarm deleted	calendar	fr	Alarme supprimée.
 alarm for %1 at %2 in %3	calendar	fr	Alarme pour %1 à %2 dans %3
 alarm management	calendar	fr	Gestion des alarmes
 alarms	calendar	fr	Alarmes
-all categories	calendar	fr	Toutes catégories
 all day	calendar	fr	Journée entière
 all events	calendar	fr	Tous les événements
 all exceptions are converted into single events.	calendar	fr	Toutes les exceptions sont converties en événements uniques
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	fr	Autorise la réédition de l'événem
 always	calendar	fr	Toujours
 always use full edit dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète
 always use the full edit dialog, not this little dialog	calendar	fr	Toujours utiliser la boîte de dialogue complète, pas cette petite fenêtre ...
+apply changes to (future) exceptions too?	calendar	fr	Appliquer les changements aux exceptions (futures) également ?
 apply the action on the whole query, not only the shown events	calendar	fr	Appliquer l'action sur la requête entière, PAS SEULEMENT sur les événements affichés.
 apply the changes	calendar	fr	Appliquer les modifications
 appointment settings	calendar	fr	Paramètres des rendez-vous
@@ -247,6 +247,7 @@ exclude weekend	calendar	fr	Exclure le week-end
 execute a further action for this entry	calendar	fr	Exécuter une action supplémentaire pour cette entrée
 existing links	calendar	fr	Liens existants
 exists	calendar	fr	Existe
+explicit recurrences	calendar	fr	Récurrence explicite
 export definition to use for nextmatch export	calendar	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exports events from your calendar in ical format.	calendar	fr	Exporter les événements de votre calendrier au format iCal
 exports events from your calendar into a csv file.	calendar	fr	Exporter les événements de votre calendrier au format CSV
@@ -368,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	fr	Nomb
 maximum available quantity of %1 exceeded!	calendar	fr	Dépassement de la quantité maximum disponible %1 !
 meeting canceled	calendar	fr	Rendez-vous annulé
 meeting request	calendar	fr	Demande de rendez-vous
+meeting request additional recurrence(s)	calendar	fr	La réunion demande une (des) récurrence(s) supplémentaire(s)
 meetingrequest to all participants	calendar	fr	Demande de rendez-vous à tous les participants
 merge document...	calendar	fr	Fusionner un document ...
 midnight	calendar	fr	Minuit
@@ -446,6 +448,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	fr	Tâches ouvertes
 optional	calendar	fr	Optionnel
 organizer	calendar	fr	Organisateur
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	fr	Sinon, les modifications apportées au titre, à la description, ... ou aux nouveaux participants ne seront pas transférées aux exceptions déjà créées.
 output unit	calendar	fr	Unité de sortie
 overlap holiday	calendar	fr	Jour fériés chevauchant
 owner too	calendar	fr	Aussi les "propriétaires"
@@ -522,8 +525,6 @@ search string for the events	calendar	fr	Chaîne de recherche sur les événemen
 select a %1	calendar	fr	Sélectionnez un %1
 select a color for this calendar	calendar	fr	Sélectionner une couleur pour le calendrier
 select a time	calendar	fr	Sélectionnez une heure
-select an action	calendar	fr	Sélectionner une action
-select an action...	calendar	fr	Sélectionner une action ...
 select multiple contacts for a further action	calendar	fr	Sélectionner plusieurs contacts pour une même action
 select resources	calendar	fr	Sélectionner les ressources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fr	Sélectionner si vous souhaitez le statut du participant remis à "Pas de réponse", si un événement est déplacé plus tard
@@ -597,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	fr	Les exceptions sont supprimées avec la série.
 the extern organizer changed the event!	calendar	fr	L'organisateur externe a modifié l'événement !
 the following document-types are supported:	calendar	fr	Les types de documents suivant sont autorisés :
+the organizer changed the event!	calendar	fr	L'organisateur a modifié l'événement !
 the original series will be terminated today and a new series be created.	calendar	fr	La série d'origine sera terminée aujourd'hui et une nouvelle série sera créée.
 the resource you selected is already overbooked:	calendar	fr	La ressource sélectionnée est déjà over-bookée :
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	fr	L'expéditeur "%1" n'est PAS l'organisateur externe "%2", procédez avec prudence !
@@ -609,6 +611,7 @@ this entry is opened by user:	calendar	fr	Cet élément a été ouvert dans l'in
 this event is part of a series	calendar	fr	Cet événement fait partie d'une série
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fr	Ce groupe qui est présélectionné quand vous entrez dans le planificateur. Vous pouvez le modifier dans le planning chaque fois que vous le désirez.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	fr	Ceci est un événement récurrent. Souhaitez-vous supprimer juste cette occurrence ou bien toute la série ?
+this is a single recurrence of a recurring event.	calendar	fr	Il s'agit d'une récurrence unique d'un événement récurrent.
 this mail cancels a meeting	calendar	fr	Cet email annul un rendez-vous
 this mail contains a meeting request	calendar	fr	Cet email contient une demande de rendez-vous
 this mail contains a reply to a meeting request	calendar	fr	Cet email contient une réponse à une demande de rendez-vous
@@ -665,7 +668,7 @@ use weekday start	calendar	fr	Utiliser le début de semaine
 user or group	calendar	fr	Utilisateur ou groupe
 user selectable css file for the calendar setup	calendar	fr	Fichier css sélectionnable pour le setup du calendrier
 users + groups: inviting both always requires an invite grant	admin	fr	Utilisateurs + groupes : inviter les deux nécessite une autorisation d'invitation
-using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur
+using already existing event on server.	calendar	fr	Utilisation d'un évément déjà existant sur le serveur.
 utilities	calendar	fr	Utilitaires
 view exception	calendar	fr	Voir l'exception
 view series	calendar	fr	Voir la série
@@ -708,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	fr	Vous n'est pas au
 you are not invited to that event!	calendar	fr	Vous n'êtes pas invité à cet événement !
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	fr	Vous essayez d'envoyer par email une demande de rendez-vous aux destinataires ci-dessus.  Selon le client de messagerie utilisé, le destinataire pourra éventuellement ne pas voir le message ci-dessous mais seulement la demande de rendez-vous en pièce jointe.
 you can either set a year or a occurrence, not both !!!	calendar	fr	Vous pouvez soit régler une année ou une occurrence, pas les deux !
+you can only notify other users, not yourself!	calendar	fr	Vous ne pouvez avertir que les autres utilisateurs, pas vous-même !
 you can only set a year or a occurrence !!!	calendar	fr	Vous pouvez uniquement régler une année ou une occurrence !
 you do not have permission to read this record!	calendar	fr	Vous n'avez pas les droits de lire cet enregistrement !
 you have a meeting scheduled for %1	calendar	fr	Vous avez une réunion planifiée pour %1

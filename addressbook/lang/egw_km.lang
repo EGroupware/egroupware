@@ -1,26 +1,19 @@
-%1 added	addressbook	km	%1 បានបន្ថែម
 %1 contact(s) %2	addressbook	km	%1 អ្នកទំនាក់ទំនង %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែ %4 !!!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	km	%1 contact(s) %2, %3 បានបរាជ័យដោយសារតែសិទ្ធិមិនគ្រប់គ្រាន់!
 %1 contacts updated (%2 errors).	addressbook	km	ទំនាក់ទំនង %1 បានធ្វើបច្ចុប្បន្នភាព (%2 កំហុស) ។
 %1 fields in %2 other organisation member(s) changed	addressbook	km	វាល %1 ក្នុង %2 សមាជិកស្ថាប័នផ្សេងទៀតបានផ្លាស់ប្តូរ។
 %1 key(s) added to public keyserver "%2".	addressbook	km	%1 key(s) បានបន្ថែមទៅម៉ាស៊ីនបម្រើសោសាធារណៈ "%2"។
-%1 not implemented for %2!	addressbook	km	%1 មិនត្រូវបានអនុវត្តសម្រាប់ %2!
 %1 public keys added.	addressbook	km	%1 នៃកូនសោសាធារណៈបានបន្ថែម។
-%1 records imported	addressbook	km	%1 កំណត់ត្រាបាននាំចូល។
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	km	%1 នៃកំណត់ត្រាបានអាន។ មិន​ទាន់​បាន​នាំ​ចូល​ទេ អ្នក​អាច​ចូល​ទៅ %2back%3 ហើយ​បិទ​ ការ​នាំចូល​សាកល្បង។
 %1 shared this contact on %2 with %3 %4	addressbook	km	%1 បានចែករំលែកអ្នកទំនាក់ទំនងនេះជាមួយ %2 និង %3 %4
 %1 starts with '%2'	addressbook	km	%1 ចាប់ផ្តើមជាមួយ '%2'
 %s please calculate the result	addressbook	km	%s សូមធ្វើការគណនាលទ្ធផល
 (e.g. 1969)	addressbook	km	(ឧទាហរណ៍ 1969)
 (empty = use global limit, no = no export at all)	admin	km	Empty = ប្រើដែនកំណត់សកល, no = មិនធ្វើការនាំចូលទាំងអស់
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	km	<b>គ្មានការបម្លែងប្រភេទ <none> អាចធ្វើការផ្លាស់ប្តូរទីតាំង </b> ជ្រើសរើសប្រភេទនៃការបម្លែងពីក្នុងបញ្ជឺ
 @-eval() is only availible to admins!!!	addressbook	km	@-eval() អាចធ្វើការរកបានដោយអ្នកគ្រប់គ្រងតែប៉ុណ្ណោះ!
 account id	addressbook	km	លេខសម្គាល់គណនី
 account repository	admin	km	ឃ្លាំងគណនី
-accounts	addressbook	km	គណនី
-actions	addressbook	km	សកម្មភាព
-add %1	addressbook	km	បន្ថែម 1%
 add a contact to this organisation	addressbook	km	បន្ថែមអ្នកទំនាក់ទំនងម្នាក់ចូលក្នុងស្ថាប៏ននេះ
 add a customfield to link title	addressbook	km	បន្ថែមវាលពិសេសចូលតំណចំណងជើង
 add a new contact	addressbook	km	បន្ថែមអ្នកទំនាក់ទំនងថ្មីម្នាក់
@@ -43,7 +36,6 @@ added by synchronisation	addressbook	km	បានបន្ថែមដោយស�
 added to distribution list	addressbook	km	បានបន្ថែមទៅបញ្ជីចែកចាយ
 additional information about using ldap as contact repository	admin	km	ព័ត៌មានបន្ថែមអំពីការប្រើ LDAP ជាឃ្លាំងទំនាក់ទំនង
 address book	common	km	សៀវភៅអាសយដ្ឋាន
-address book - vcard in	addressbook	km	សៀវភៅអាសយដ្ឋាន - vCard ចូល
 address book - view	addressbook	km	សៀវភៅអាសយដ្ឋាន - ទិដ្ឋភាព
 address line 2	addressbook	km	ខ្សែអាសយដ្ឋាន ២
 address line 2 (private)	addressbook	km	ខ្សែអាសយដ្ឋាន ២(ឯកជន)
@@ -62,7 +54,6 @@ addressbook vcard export	addressbook	km	សៀវភៅអាសយដ្ឋា�
 addressbook vcard import	addressbook	km	សៀវភៅអាសយដ្ឋាន vCard នាំចូល
 addressbook-fieldname	addressbook	km	សៀវភៅអាសយដ្ឋានវាលបញ្ចូលឈ្មោះ
 addvcard	addressbook	km	បន្ថែម vCard
-advanced search	addressbook	km	ការស្វែងរកកម្រិតខ្ពស់
 all addressbooks	addressbook	km	សៀវភៅអាសយដ្ឋានទាំងអស់
 all contacts	addressbook	km	អ្នកទំនាក់ទំនងទាំងអស់
 all in one field	addressbook	km	ក្នុងវាលតែមួយទាំងអស់
@@ -167,7 +158,6 @@ custom	addressbook	km	ផ្ទាល់ខ្លួន
 custom etemplate for the contactform	addressbook	km	គំរូ eTemplate ផ្ទាល់ខ្លួនសម្រាប់ទម្រង់ទំនាក់ទំនង
 custom fields	addressbook	km	វាលផ្ទាល់ខ្លួន
 data exchange settings	addressbook	km	ការកំណត់ការផ្លាស់ប្តូរទិន្នន័យ
-debug output in browser	addressbook	km	ជួសជុលកំហុសលទ្ធផលនៅក្នុងកម្មវិធីរុករក
 default	addressbook	km	លំនាំដើម
 default action on double-click	addressbook	km	សកម្មភាពលំនាំដើមនៅពេលចុចពីរដង
 default address format	addressbook	km	ទម្រង់អាសយដ្ឋានលំនាំដើម
@@ -255,7 +245,6 @@ extra encodings	addressbook	km	ការអុិនកូដបន្ថែម
 extra private	addressbook	km	ឯកជនភាពបន្ថែម
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	km	បរាជ័យក្នុងការផ្លាស់ប្តូរសមាជិក %1 របស់ស្ថាប័ន សិទ្ធិមិនគ្រប់គ្រាន់!
 favorite phone	addressbook	km	ទូរស័ព្ទដែលចូលចិត្ត
-favorites	addressbook	km	ចំណូលចិត្ត
 fax	addressbook	km	ទូរសារ
 fax (private)	addressbook	km	ទូរសារ (ឯកជន)
 fax number	common	km	លេខទូរសារ
@@ -313,7 +302,6 @@ import from ldif, csv, or vcard	addressbook	km	នាំចូលពី LDIF, CS
 import from outlook	addressbook	km	នាំចូលពី Outlook
 import multiple vcard	addressbook	km	នាំចូល vCard ច្រើន។
 import next set	addressbook	km	នាំចូលឈុតបន្ទាប់
-import_instructions	addressbook	km	នៅក្នុង Netscape បើកសៀវភៅអាសយដ្ឋាន ហើយជ្រើសរើស <b>នាំចេញ</b> ពីម៉ឺនុយ <b>File</b> ។ ឯកសារដែលបាននាំចេញនឹងមានទម្រង់ LDIF ។<p>ឬនៅក្នុង Outlook ជ្រើសរើសថតទំនាក់ទំនងរបស់អ្នក ជ្រើសរើស <b>នាំចូល និងនាំចេញ...</b> ពីម៉ឺនុយ <b>ឯកសារ</b> ហើយនាំចេញរបស់អ្នក ទំនាក់ទំនងទៅក្នុងឯកសារអត្ថបទបំបែកដោយសញ្ញាក្បៀស (CSV) ។ <p>ឬនៅក្នុង Palm Desktop 4.0 ឬខ្ពស់ជាងនេះ សូមចូលទៅកាន់សៀវភៅអាសយដ្ឋានរបស់អ្នក ហើយជ្រើសរើស <b>នាំចេញ</b> ពីម៉ឺនុយ <b>File</b> ។ ឯកសារដែលបាននាំចេញនឹងមានទម្រង់ vCard ។
 importer's personal	addressbook	km	ផ្ទាល់ខ្លួនរបស់អ្នកនាំចូល
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានពីឯកសារ CSV ។ CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស'។ នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត។
 imports contacts into your addressbook from a vcard file.	addressbook	km	នាំចូលទំនាក់ទំនងទៅក្នុងសៀវភៅអាសយដ្ឋានរបស់អ្នកពីឯកសារ vCard ។
@@ -375,7 +363,6 @@ name of current user, all other contact fields are valid too	addressbook	km	ឈ�
 name, address	addressbook	km	ឈ្មោះ, អាស័យដ្ឋាន
 name, email, phone	addressbook	km	ឈ្មោះ អុីមែល ទូរស័ព្ទ
 new contact submitted by %1 at %2	addressbook	km	ទំនាក់ទំនងថ្មីបានដាក់ជូនដោយ %1 នៅ %2 ។
-new window opened to edit infolog for your selection	addressbook	km	បង្អួចថ្មីបានបើកដើម្បីកែសម្រួល InfoLog ។
 next date	addressbook	km	កាលបរិច្ឆេទបន្ទាប់
 no categories selected	addressbook	km	គ្មានកាតាឡុកបានជ្រើសរើសទេ
 no country selected	addressbook	km	គ្មានប្រទេសដែលបានជ្រើសរើសទេ
@@ -422,7 +409,6 @@ public key	addressbook	km	សោសាធារណៈ
 public sharing url	addressbook	km	URL ចែករំលែកជាសាធារណៈ
 publish into groups:	addressbook	km	ផ្សព្វផ្សាយជាក្រុម៖
 read a list / search for entries.	addressbook	km	អានបញ្ជី / ស្វែងរកធាតុ។
-read a list of entries.	addressbook	km	អានបញ្ជីនៃធាតុ។
 read a single entry by passing the id and fieldlist.	addressbook	km	អានធាតុតែមួយដោយឆ្លងកាត់លេខសម្គាល់ និងបញ្ជីវាល។
 read only	addressbook	km	អាច​បាន​តែ​អាន
 record access	addressbook	km	ការចូលកំណត់ត្រា
@@ -445,14 +431,10 @@ select a source address to be used in geolocation routing system	addressbook	km	
 select a view	addressbook	km	ជ្រើសរើសទិដ្ឋភាព
 select addressbook type	addressbook	km	ជ្រើសរើសប្រភេទសៀវភៅអាសយដ្ឋាន
 select all	addressbook	km	ជ្រើសរើស​ទាំងអស់
-select an action or addressbook to move to	addressbook	km	ជ្រើសរើសសកម្មភាព ឬសៀវភៅអាសយដ្ឋានដើម្បីផ្លាស់ទីទៅ
-select an action or addressbook to move to...	addressbook	km	ជ្រើសរើសសកម្មភាព ឬសៀវភៅអាសយដ្ឋាន ដើម្បីផ្លាស់ទីទៅ...
 select an opened dialog	addressbook	km	ជ្រើសរើសប្រអប់ដែលបានបើក
 select migration type	admin	km	ជ្រើសរើសប្រភេទការផ្លាស់ប្តូរទីតាំង
 select multiple contacts for a further action	addressbook	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
 select phone number as prefered way of contact	addressbook	km	ជ្រើសរើសលេខទូរស័ព្ទជាមធ្យោបាយទំនាក់ទំនងដែលពេញចិត្ត
-select the type of conversion	addressbook	km	ជ្រើសរើសប្រភេទនៃការបំប្លែង
-select the type of conversion:	addressbook	km	ជ្រើសរើសប្រភេទនៃការបំប្លែង៖
 select where you want to store / retrieve contacts	admin	km	ជ្រើសរើសកន្លែងដែលទំនាក់ទំនងគួរតែត្រូវបានរក្សាទុក / ទាញយក។
 selected contacts	addressbook	km	ទំនាក់ទំនងដែលបានជ្រើសរើស
 send emailcopy to receiver	addressbook	km	ផ្ញើច្បាប់ចម្លងអុីមែលទៅអ្នកទទួល

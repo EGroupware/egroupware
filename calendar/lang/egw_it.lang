@@ -24,17 +24,17 @@ accepted	calendar	it	Accettato
 access denied to the calendar of %1 !!!	calendar	it	Accesso negato all'agenda di %1 !!!
 access to calendar of %1 denied!	calendar	it	Accesso al calendario di %1 negato!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	it	Azione che ha causato la notifica: Aggiunto, Cancellato, Accettato, Rifiutato, ...
-actions	calendar	it	Azioni
-actions...	calendar	it	Azioni
 add alarm	calendar	it	Aggiungi Allarme
 add appointments via shortened dialog or complete edit window	calendar	it	Aggiunti appuntamenti con una finestra di dialogo più corta oppure con la finestra completa
 add current view as favorite	calendar	it	Aggiungi questa visualizzazione come preferita
 add new alarm	calendar	it	Aggiungi allarme
 add new event	calendar	it	Aggiungi un nuovo appuntamento
 add new participants or resource	calendar	it	Aggiungi nuovi partecipanti o risorse
+add recurrence	calendar	it	Aggiungi ricorrenza
 add timesheet entry	calendar	it	Aggiungi foglio ore
 added	calendar	it	Aggiunto
 added by synchronization	calendar	it	Aggiunto dalla sincronizzazione
+added recurrence on %1.	calendar	it	Aggiunta ricorrenza su %1.
 after	calendar	it	dopo
 after %1	calendar	it	Dopo %1
 after current date	calendar	it	Dopo la data attuale
@@ -46,7 +46,6 @@ alarm deleted	calendar	it	Sveglia cancellata
 alarm for %1 at %2 in %3	calendar	it	Allarme per %1 a %2 in %3
 alarm management	calendar	it	Gestione Allarmi
 alarms	calendar	it	Allarmi
-all categories	calendar	it	Tutte le categorie
 all day	calendar	it	Tutto il giorno
 all events	calendar	it	Tutti gli eventi
 all exceptions are converted into single events.	calendar	it	Tutte le eccezioni sono convertite in eventi singoli.
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	it	Permette di modificare ancora l'event
 always	calendar	it	Sempre
 always use full edit dialog	calendar	it	Usa sempre l'immissione rapida
 always use the full edit dialog, not this little dialog	calendar	it	Usa sempre l'immissione completa
+apply changes to (future) exceptions too?	calendar	it	Applicare le modifiche anche alle eccezioni (future)?
 apply the action on the whole query, not only the shown events	calendar	it	Applica all'intera interrogazione, NON solo agli eventi mostrati
 apply the changes	calendar	it	Apllica le modifiche
 appointment settings	calendar	it	Impostazioni appuntamenti
@@ -247,6 +247,7 @@ exclude weekend	calendar	it	Escludere il fine settimana
 execute a further action for this entry	calendar	it	Esegui ancora una azione per questo inserimento
 existing links	calendar	it	Collegamenti esistenti
 exists	calendar	it	Esiste
+explicit recurrences	calendar	it	Ricorrenze esplicite
 export definition to use for nextmatch export	calendar	it	Definizione di esportazione da utilizzare per l'esportazione "nextmatch" (corrispondenza successiva)
 exports events from your calendar in ical format.	calendar	it	Esporta eventi dalla tua Agenda in formato iCal
 exports events from your calendar into a csv file.	calendar	it	Esporta eventi dalla tua Agenda in file CSV
@@ -368,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	it	Nume
 maximum available quantity of %1 exceeded!	calendar	it	Quantità massima di %1 ecceduta!
 meeting canceled	calendar	it	Incontro annullato
 meeting request	calendar	it	Richiesta meeting
+meeting request additional recurrence(s)	calendar	it	Richiesta di riunione con ricorrenze aggiuntive
 meetingrequest to all participants	calendar	it	Richiesta di riunione a tutti i partecipanti
 merge document...	calendar	it	Unire documento...
 midnight	calendar	it	Mezzanotte
@@ -446,6 +448,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	it	ToDo Aperti:
 optional	calendar	it	Opzionale
 organizer	calendar	it	Organizzatore
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	it	In caso contrario, le modifiche al titolo, alla descrizione o ai nuovi partecipanti non verranno trasferite alle eccezioni già create.
 output unit	calendar	it	Unità di uscita
 overlap holiday	calendar	it	sovrapposizione di una festività
 owner too	calendar	it	Anche il proprietario
@@ -522,8 +525,6 @@ search string for the events	calendar	it	Cerca stringa di testo negli eventi
 select a %1	calendar	it	Seleziona %1
 select a color for this calendar	calendar	it	Seleziona un colore per questa agenda
 select a time	calendar	it	Seleziona un'orario
-select an action	calendar	it	Seleziona una azione
-select an action...	calendar	it	Seleziona una azione
 select multiple contacts for a further action	calendar	it	Seleziona contatti multipli per azioni ulteriori
 select resources	calendar	it	Seleziona risorse
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi
@@ -597,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	it	Le eccezioni sono eliminate insieme alla serie
 the extern organizer changed the event!	calendar	it	L'organizzatore esterno ha cambiato l'evento!
 the following document-types are supported:	calendar	it	I seguenti tipi di documenti sono supportati:
+the organizer changed the event!	calendar	it	L'organizzatore ha cambiato l'evento!
 the original series will be terminated today and a new series be created.	calendar	it	La serie originale terminerà oggi e una nuova serie verrà creata
 the resource you selected is already overbooked:	calendar	it	La risorsa selezionata è già in overbooking
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	it	Il mittente "%1" NON è l'organizzatore esterno "%2", procedere con cautela!
@@ -609,6 +611,7 @@ this entry is opened by user:	calendar	it	Questa scheda è stata aperta nell'int
 this event is part of a series	calendar	it	Questo evento è parte di una serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	it	Questo gruppo è preselezionato quando entri nel pianificatore. Quando vorrai potrai cambiarlo nel pianificatore.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	it	Questo è un evento ricorrente. Si vuole eliminare solo questa istanza oppure tutta la serie?
+this is a single recurrence of a recurring event.	calendar	it	Si tratta di una singola ricorrenza di un evento ricorrente.
 this mail cancels a meeting	calendar	it	Questo messaggio annulla un incontro
 this mail contains a meeting request	calendar	it	Questo messaggio contiene una richiesta di riunione
 this mail contains a reply to a meeting request	calendar	it	Questo messaggio contiene una risposta alla richiesta di riunione
@@ -708,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	it	Non puoi prenotar
 you are not invited to that event!	calendar	it	Non hai un invito per quell'evento!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	it	Stai tentando di inviare una richiesta di meeting via email ai destinatari qui sopra. In base al programma di posta usato per visualizzare la mail, il destinatario potrebbe vedere o non vedere il messaggio sottostante ma soltanto la richiesta come allegato.
 you can either set a year or a occurrence, not both !!!	calendar	it	Puoi impostare un Anno o un'Occorrenza, non entrambi !!!
+you can only notify other users, not yourself!	calendar	it	È possibile avvisare solo gli altri utenti, non se stessi!
 you can only set a year or a occurrence !!!	calendar	it	E' possibile impostare solo un anno o una occorrenza!!!
 you do not have permission to read this record!	calendar	it	Non hai l'autorizzazione per leggere questo record
 you have a meeting scheduled for %1	calendar	it	Hai un meeting fissato alle %1

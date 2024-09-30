@@ -46,6 +46,7 @@ change editor type	mail	sv	Växla redigerare till HTML-läge
 changing subject failed because of %1	mail	sv	Byte av ämne misslyckades på grund av %1
 changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
+checking admin credentials failed	mail	sv	Kontroll av administratörsuppgifter misslyckades
 compose	mail	sv	Skriv
 compose as new	mail	sv	Skriv som ny
 compress folder	mail	sv	Komprimera katalog
@@ -122,7 +123,7 @@ filemanager	mail	sv	Filhanterare
 filemode has been switched to %1	mail	sv	Filemodus er endret til: %1
 flag / unflag	mail	sv	Flagga / Avflagga
 flagged	mail	sv	Flaggad
-flagged %1 messages as %2 in %3	mail	sv	Flaggade %1 meddelande(n) som %2 i %3
+flagged %1 messages as %2 in %3	mail	sv	Flaggade %1 meddelande(n) som "%2" i %3.
 flagged %1 messages as flagged in %2	mail	sv	Flaggade %1 meddelande(n) som flaggade i %2
 flagged %1 messages as unflagged in %2	mail	sv	Flaggade %1 meddelande(n) som flaggade i %2
 folder	mail	sv	Katalog
@@ -180,6 +181,7 @@ mail	common	sv	E-post
 mail acl	mail	sv	Tillträdesrättigheter
 mail filter	mail	sv	E-postfilter
 mail filter rule	mail	sv	Regel för e-postfilter
+mail probably has no text-body	mail	sv	Mailet har förmodligen ingen text
 mail settings	mail	sv	E-post alternativ
 mail source	mail	sv	E-postkälla
 mail-address	mail	sv	E-postadress
@@ -273,6 +275,7 @@ replied	mail	sv	Svarade
 reply	mail	sv	Svara
 reply all	mail	sv	Svara alla
 reply to	mail	sv	Svara till
+reply with attachments	mail	sv	Svara med bilagor
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sv	Att svara på detta meddelande misslyckades eftersom innehållet i detta meddelande verkar vara krypterat och inte kan dekrypteras korrekt. Om du fortfarande vill inkludera innehållet i detta krypterade meddelande kan du försöka använda vidarebefordra som bilaga istället.
 replyto	mail	sv	Svara till
 report as ham	mail	sv	Rapportera som Ham

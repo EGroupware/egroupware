@@ -22,10 +22,7 @@
 %1 token %2.	admin	cs	%1 token %2.
 %1 user %2	admin	cs	%1 uživatel %2
 (de)activate mail accounts	admin	cs	(de)Aktivace poštovních účtů
-(default no, leave it off if you dont use it)	admin	cs	Výchozí hodnota = Ne, pokud ji nepoužíváte, nechte ji vypnutou
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	cs	(imapclass musí tuto funkci podporovat dotazem na příslušnou hodnotu konfigurace a předat ji jako výchozí kvótu serveru IMAP).
 (no subject)	admin	cs	(žádný předmět)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	cs	Pro instalaci nových aplikací použijte<br><a href="setup/" target="setup">Setup</a> [Spravovat aplikace]!
 -  type	admin	cs	- typ
 1 year	admin	cs	1 rok
 2 month	admin	cs	2 měsíce
@@ -72,6 +69,7 @@ add new email address:	admin	cs	Přidat novou e-mailovou adresu:
 add peer server	admin	cs	Přidat peer server
 add profile	admin	cs	Přidat profil
 add sub-category	admin	cs	Přidat podkategorii
+add to group	admin	cs	Přidat do skupiny
 add user	admin	cs	Přidat uživatele
 add user or group	admin	cs	Přidání uživatele nebo skupiny
 admin dn	admin	cs	DN (distiguished name) administrátora
@@ -91,6 +89,7 @@ all records and account information will be lost!	admin	cs	Všechny záznamy a i
 all users	admin	cs	Všichni uživatelé
 allow anonymous access to this app	admin	cs	Povolit anonymní přístup k této aplikaci
 allow remote administration from following install id's (comma separated)	admin	cs	Povolit vzdálenou administraci z následujících instalačních ID (oddělených čárkami).
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	cs	Povolit uživateli uložit heslo v části „Zabezpečení a hesla“ pro SingleSignOn.
 allow user to set 'remember me' token	admin	cs	Umožnit uživateli nastavit token „Zapamatovat si mě“.
 alternate email address	admin	cs	Alternativní e-mailová adresa
 anonymous user	admin	cs	Anonymní uživatel
@@ -129,9 +128,6 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	cs	Autentikace | Účty
 auto create account records for authenticated users	admin	cs	Automaticky vytvořit záznamy pro autentikované uživatele
 available placeholders	admin	cs	Dostupné zástupné symboly
-back to admin/grouplist	admin	cs	Zpět na Administrátor/Skupiny uživatelů
-back to admin/userlist	admin	cs	Zpět na Administrátor/Uživatelské účty
-back to the list	admin	cs	Zpět na seznam
 backup directory %1 mounted as %2	admin	cs	Záložní adresář %1 připojen jako %2
 bad login name or password.	admin	cs	Chybné přihlašovací jméno nebo heslo.
 bad or malformed request. server responded: %s	admin	cs	Chybný nebo špatně fomulovaný požadavek. Server odpověděl: %s
@@ -140,10 +136,10 @@ bi-dir passthrough	admin	cs	průchozí v obou směrech
 bi-directional	admin	cs	obousměrné
 blocking after wrong password	admin	cs	Blokování po zadání nesprávného hesla
 bottom	admin	cs	Dolní okraj
+bulk changes	admin	cs	Hromadné změny
+bulk password reset	admin	cs	Hromadné resetování hesla
 calculate next run	admin	cs	Vypočítat další spuštění
-can be used by application	admin	cs	Může být použit aplikací
-can be used by group	admin	cs	Může být použit skupinou
-can be used by user	admin	cs	Může být použit uživatelem
+can be used to show groups by container, if enabled	admin	cs	Lze použít k zobrazení skupin podle kontejneru, pokud je povoleno.
 can change password	admin	cs	Může změnit heslo
 cancel changes	admin	cs	Zrušit změny
 cancel testjob!	admin	cs	Ukočit testovací úlohu
@@ -154,6 +150,7 @@ category '%1' deleted	admin	cs	Kategorie '%1' odstraněna
 category deleted.	admin	cs	Kategorie byla smazána.
 category list	admin	cs	Seznam kategorie
 category saved.	admin	cs	Kategorie byla uložena.
+change access	admin	cs	Změnit přístupová práva
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
 change config settings	admin	cs	Změnít konfigurační nastavení
@@ -169,6 +166,7 @@ command scheduled to run at %1	admin	cs	Spuštění příkazu naplánováno na %
 commercial: all sorts of companies	admin	cs	Komerční: všechny typy společností
 config password or md5 hash from the header.inc.php	admin	cs	Heslo konfigurace nebo MD5 hash ze souboru header.inc.php
 connection dropped by imap server.	admin	cs	Připojení ukončeno IMAP serverem.
+container	admin	cs	Kontejner
 continue	admin	cs	Pokračovat
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	cs	Cookie doména (výchozí prázdná hodnota znamená použití celého doménového jména; ve Správci webu např. ".domena.cz" dovoluje použít stejnou cookie pro egw.domena.cz i www.domena.cz)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	cs	Cookie cesta (umožňuje několik EGroupware relací s různými adresáři, nefunguje korektně ve Správci webu!)
@@ -250,12 +248,6 @@ displayed length of input field (set rows=1 to limit length)	admin	cs	Zobrazená
 displaying html messages is disabled	admin	cs	Zobrazování HTML zpráv je zakázáno
 do not delete the category and return back to the list	admin	cs	NEmazat kategorii a vrátit se zpět na seznam
 do not generate email addresses	admin	cs	Negenerujte e-mailové adresy
-do not validate certificate	admin	cs	Neověřovat certifikát
-do you also want to delete all global subcategories ?	admin	cs	Chcete také smazat všechny globální kategorie?
-do you really want to delete this profile	admin	cs	Opravdu chcete smazat tento profil?
-do you really want to reset the filter for the profile listing	admin	cs	Opravdu chcete vyresetovat filtr pro seznam profilů?
-do you want to delete all global subcategories ?	admin	cs	Chcete smazat všechny globální podkategorie?
-do you want to move all global subcategories one level down ?	admin	cs	Chcete přesunout všechny globální podkategorie o jednu úroveň níže?
 document root (default)	admin	cs	Kořenový adresář dokumentů (výchozí)
 domainname	admin	cs	Doménové jméno
 down	admin	cs	Dolů
@@ -353,6 +345,7 @@ group ?	admin	cs	Skupina?
 group has been added	common	cs	Skupina byla přidána.
 group has been deleted	common	cs	Skupina byla smazána.
 group has been updated	common	cs	Skupina byla aktualizována.
+group hierarchy	admin	cs	Hierarchie skupin
 group list	admin	cs	Seznam skupin
 group manager	admin	cs	Správce skupin
 group name	admin	cs	Název skupiny
@@ -556,6 +549,7 @@ quota size in mbyte	admin	cs	Velikost kvóty v MBytech
 re-enter password	admin	cs	Zadejte heslo znovu
 read this list of methods.	admin	cs	Načíst seznam metod.
 register application hooks	admin	cs	Registrovat aplikace
+regular expression to find part to use as container	admin	cs	Regulární výraz pro vyhledání části, která má být použita jako kontejner
 remote administration instances	admin	cs	Instance vzdálené administrace
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	cs	Vzdálená administrace musí být povolena na vzdálené instanci pod položkou Administrátor > Konfigurace webu!
 remote instance saved	admin	cs	Vzdálená instance uložena.
@@ -604,6 +598,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	cs	Zobrazit přístupový protokol
 show current action	admin	cs	Zobrazit aktuální akci
 show error log	admin	cs	Zobrazit chybový protokol
+show groups in container based on	admin	cs	Zobrazení skupin v kontejneru na základě
 show phpinfo()	admin	cs	Zobrazit phpinfo()
 show session ip address	admin	cs	Zobrazit IP adresu relace
 sieve server hostname or ip address	admin	cs	DNS jméno nebo IP adresa Sieve serveru
@@ -758,10 +753,8 @@ you must add at least 1 permission or group to this account	admin	cs	Musíte zad
 you must enter a group name.	admin	cs	Musíte zadat jméno skupiny.
 you must enter a lastname	admin	cs	Musíte zadat příjmení.
 you must enter a loginid	admin	cs	Musíte zadat přihlašovací ID.
-you must enter an application name and title.	admin	cs	Musíte zadat název aplikace a titulek.
 you must enter an application name.	admin	cs	Musíte zadat název aplikace.
 you must enter an application title.	admin	cs	Musíte zadat titulek aplikace.
-you must select a file type	admin	cs	Musíte vybrat typ souboru.
 you must select at least one group member.	admin	cs	Musíte vybrat alespoň jednoho člena skupiny.
 you need to enter install id and password!	admin	cs	Musíte zadat instalační ID a heslo!
 you will need to remove the subcategories before you can delete this category	admin	cs	Než smažete tuto kategorii, musíte smazat všechny podkategorie!

@@ -1,6 +1,6 @@
 %1 timesheets(s) %2	timesheet	es-es	%1 hojas de tiempo %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	es-es	%1 hojas de tiempo %2, !!%2 fallaron por falta de permisos!!
---> enter new name	admin	es-es	--> introduzca un nombre nuevo
+--> enter new name	timesheet	es-es	--> introduzca un nombre nuevo
 2 month ago	timesheet	es-es	Hace 2 meses
 2 years ago	timesheet	es-es	Hace 2 años
 3 years ago	timesheet	es-es	Hace 3 años
@@ -20,13 +20,13 @@ creates a new field	timesheet	es-es	crea un campo nuevo
 creating new entry	timesheet	es-es	creando nueva entrada
 custom fields	timesheet	es-es	Campos personalizados
 default document to insert entries	timesheet	es-es	Documento predeterminado para insertar entradas
-delete this status	admin	es-es	Borrar este estado
+delete this status	timesheet	es-es	Borrar este estado
 deleted	timesheet	es-es	borrado
 deletes this field	timesheet	es-es	borra este campo
 determines the order the fields are displayed	timesheet	es-es	determina el orden en que se muestran los campos
 directory with documents to insert entries	timesheet	es-es	Directorio con documentos para insertar entradas
 each value is a line like <id>[=<label>]	timesheet	es-es	cada valor es una línea como <id>[=<etiqueta>]
-edit status	common	es-es	Editar estado
+edit status	timesheet	es-es	Editar estado
 edit this entry	timesheet	es-es	Editar esta entrada
 empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
 end	timesheet	es-es	Fin
@@ -80,11 +80,14 @@ no project	timesheet	es-es	Sin proyecto
 no status	timesheet	es-es	Sin estado
 none: use only free project-names	admin	es-es	Ninguno: usar sólo nombres de proyecto libres
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	es-es	número de fila para un campo de entrada multilínea or línea de un campo de selección múltiple
-only admin	admin	es-es	Sólo el administrador
-only admin can edit this status	admin	es-es	sólo el administador puede editar el estado
+only admin	timesheet	es-es	Sólo el administrador
+only admin can edit this status	timesheet	es-es	sólo el administador puede editar el estado
 or endtime	timesheet	es-es	u hora de finalización
 order	timesheet	es-es	Orden
-parent	admin	es-es	Padre
+parent	timesheet	es-es	Padre
+pause	common	es-es	Pausa
+pause time	timesheet	es-es	Tiempo de pausa
+paused	timesheet	es-es	Pausa
 permission denied!!!	timesheet	es-es	¡Se ha denegado el permiso!
 permissions error - %1 could not %2	timesheet	es-es	Error en los permisos - %1 no pudo %2
 price	timesheet	es-es	Precio
@@ -103,11 +106,13 @@ select multiple timeshhets for a further action	timesheet	es-es	Seleccionar múl
 select the predefined status, whan creating a new timesheet	preferences	es-es	Seleccionar el estado predefinido cuando se cree una hoja de tiempos nueva
 show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
+start-time can not be before last stop- or pause-time %1!	common	es-es	¡La hora de inicio no puede ser anterior a la última hora de parada o pausa %1!
 starttime	timesheet	es-es	Hora de inicio
 starttime has to be before endtime !!!	timesheet	es-es	¡La hora de comienzo tiene que ser antes que la hora de fin!
 status deleted.	timesheet	es-es	Se ha borrado el estado.
 status of created timesheets	timesheet	es-es	Estado de las hojas de tiempo creadas
 status updated.	timesheet	es-es	Se ha actualizado el estado.
+stop- or pause-time can not be before the start-time %1!	common	es-es	¡La hora de parada o pausa no puede ser anterior a la hora de inicio %1!
 sum %1:	timesheet	es-es	Suma %1:
 tag to mark positions for address labels	timesheet	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
@@ -118,6 +123,7 @@ this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
 this year	timesheet	es-es	Este año
 ticket modified by %1 at %2	timesheet	es-es	Ticket modificado por %1 a las %2
+timer already running or paused	common	es-es	Temporizador ya en marcha o en pausa
 timesheet	common	es-es	Hoja de presencia
 timesheet csv export	timesheet	es-es	Exportar a CSV la hoja de presencia
 timesheet modified by %1 at %2	timesheet	es-es	Hoja de tiempos modificada por %1 a las %2

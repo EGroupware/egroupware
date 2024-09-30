@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	cs	%1 složek %2 nenalezeno!
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo.
 %1 email(s) added into %2	common	cs	%1 e-mail(y) přidán(y) do %2
-%1 entries found, select one ...	common	cs	Nalezeno %1 záznamů, vyberte jeden ...
 %1 etemplates deleted	common	cs	%1 eTemplates smazáno.
-%1 etemplates for application '%2' dumped to '%3'	common	cs	%1 eTemplates pro aplikaci '%2' vytvořilo výpis do '%3'
 %1 etemplates found	common	cs	%1 eTemplates nalezeno.
 %1 file	common	cs	%1 soubor
 %1 is not executable by the webserver !!!	common	cs	%1 není spustitelný pro webový server!
-%1 matches on search criteria	common	cs	%1 shod s kritériem vyhledávání
 %1 more %2 selected ...	common	cs	%1 více %2 vybráno ...
 %1 more...	common	cs	%1 více ...
-%1 new etemplates imported for application '%2'	common	cs	%1 nových eTemplates importováno pro aplikaci '%2'
 %1 not implemented for %2!	common	cs	%1 není implementováno pro %2!
 %1 proxy of %2	common	cs	%1 zástupce %2
 %1 setting "%2" = %3 disallows access via http!	admin	cs	%1 nastavení "%2" = %3 nedovoluje přístup přes http protokol!
@@ -27,8 +23,10 @@
 %s onchange	common	cs	%s onchange
 %s readonly	common	cs	%s jen ke čtení
 '%1' copied to clipboard	common	cs	'%1' zkopírováno do schránky
+'%1' does not match the required pattern '%2'	common	cs	'%1' neodpovídá požadovanému vzoru ('%2')
 '%1' has an invalid format	common	cs	'%1' má nesprávný formát
 '%1' has an invalid format !!!	common	cs	'%1' má nesprávný formát!
+'%1' is not a valid app-name ('%2')!	common	cs	'%1' NENÍ platný název aplikace ('%2')!
 '%1' is not a valid date !!!	common	cs	'%1' není platné datum!
 '%1' is not a valid floatingpoint number !!!	common	cs	'%1' není platné číslo s pohyblivou desetinnou čárkou!
 '%1' is not a valid integer !!!	common	cs	'%1' není platné celé číslo!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	cs	'%1' není platní časová zóna!
 '%1' is not allowed ('%2')!	common	cs	'%1' NENÍ povoleno ('%2')!
 '%1' is not allowed%2)!	common	cs	'%1' NENÍ povoleno ('%2')!
+'%1' must not contain (back)slashes!	common	cs	'%1' nesmí obsahovat (zpětná) lomítka!
 (session restored in %1 seconds)	common	cs	Relace bude obnovena za %1 vteřin.
 00 (disable)	admin	cs	00 (zakázat)
 1 day	common	cs	1 den
@@ -251,6 +250,7 @@ chad	common	cs	ČAD
 change	common	cs	Změnit
 change owner	common	cs	Změna vlastníka
 changed	common	cs	Změněno
+changes that you made may not be saved.	common	cs	Provedené změny se nemusí uložit.
 charset	common	cs	Heslová sada
 check all	common	cs	Označit všechny
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	cs	Kontrola prázdných hodnot v příkazech IF. Příklad {{IF url~EMPTY~~Webové stránky:}} - Pokud url není prázdná, napíše "Webové stránky:"
@@ -985,6 +985,7 @@ open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
 open sidebox	common	cs	Otevřít postranní panel
 open the online help.	common	cs	Otevřit online nápovědu
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	cs	Přihlášení pomocí OpenIDConnect proběhlo úspěšně, ale uživatel '%1' v EGroupware NEexistuje a automatické vytváření uživatelů je zakázáno!
 operator	common	cs	Operátor
 optional note about the link	common	cs	Volitelná poznámka o odkazu
 options	common	cs	Volby
@@ -1076,14 +1077,12 @@ private	common	cs	Soukromé
 programs	common	cs	Programy
 project	common	cs	Projekt
 properties	common	cs	Vlastnosti
-protocol is required	common	cs	Je vyžadován protokol
 public	common	cs	Veřejné
 puerto rico	common	cs	PORTORIKO
 qatar	common	cs	KATAR
 quick add	common	cs	Rychlé přidání
 radiobutton	common	cs	Přepínací tlačítko
 read	common	cs	Číst
-read a list of entries.	common	cs	Načíst seznam záznamů
 read a single entry by passing the id and fieldlist.	common	cs	Načíst jednotlivý záznam zadáním jeho ID a seznamu polí.
 read etemplate from database (for the keys above)	common	cs	Načíst eTemplate z databáze (pro výše uvedené klíče)
 read this list of methods.	common	cs	Číst tento seznam metod
@@ -1281,12 +1280,12 @@ show page generation time?	common	cs	Zobrazit čas generovaní stránky
 show password	common	cs	Zobrazit heslo
 show values	common	cs	Zobrazit hodnoty
 show/hide	common	cs	Zobrazit/skrýt postranní panel
-show_more_apps	common	cs	Zobrazit_více_aplikací
 showing	common	cs	Zobrazuji
 showing %1	common	cs	Zobrazeno %1
 showing %1 - %2 of %3	common	cs	Zobrazeno %1 - %2 z %3
 shows / allows you to enter values into the etemplate for testing	common	cs	Zobrazí / umožní Vám zadat hodnoty do eTemplate pro testování
 shows/displays etemplate for testing, does not save it before	common	cs	Zobrazí eTemplate pro testování, předtím jí NEukládá
+show_more_apps	common	cs	Zobrazit_více_aplikací
 sierra leone	common	cs	SIERRA LEONE
 sign up	common	cs	Zaregistrovat se
 simple	common	cs	Jednoduchý
@@ -1479,7 +1478,6 @@ weekend	common	cs	Víkend
 welcome	common	cs	Vítejte
 western european	common	cs	Západoevropské
 western sahara	common	cs	ZÁPADNÍ SAHARA
-what color should all the blank space on the desktop have	common	cs	Jakou barvu by měla mít všechna prázdná místa na pracovní ploše?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	Co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	cs	Když sloučíte záznamy do dokumentů, budou uloženy zde. Pokud není zadána žádná složka, budou uloženy ve vašem domovském adresáři (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
