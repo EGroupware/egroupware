@@ -1,3 +1,19 @@
+egroupware-docker (23.1.20240930) hardy; urgency=low
+
+  * PHP Security Update to 8.3.12
+  * All apps: limit number of loaded links to 20 and offering to load more, if more are available
+  * All apps: allow longer sharing-path up to 1024 chars (instead of just 255), which also limited Collabora editing
+  * Admin: bulk action together with a selected group and select all was not working / complaining about nothing selected
+  * Admin: trying to create a global category with a parent gave a validation error
+  * Calendar: differ between private events and only having free/busy-rights by showing "busy" instead of "private" as title
+  * Mail: remove content of script and style tags from displayed html mail
+  * Mail: fix wrong badge (with number of unread mails) when using empty Trash or Spam folder
+  * ActiveDirectory: allow to disable VLV controls, if your AD has problems with it AND can return all users in a single query
+  * Filemanager: fix not being able to become superuser
+  * All apps: updated translations from our translation server
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 30 Sep 2024 08:43:10 +0200
+
 egroupware-docker (23.1.20240905) hardy; urgency=low
 
   * Admin: allow to show groups by container: e.g. LDAP DN or arbitrary part of name found by a regular expression
