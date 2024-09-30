@@ -24,50 +24,63 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 
 	// Reference to the widget that's handling actions for us
 	public findActionTargetHandler : EgwActionObject;
-    constructor(_tree:Et2Tree, _itemId: string) {
 
-        super();
-        this.node = _tree.getDomNode(_itemId);
-        this.id = _itemId
-        this.tree = _tree
+	private timeout : ReturnType<typeof setTimeout>;
+
+	constructor(_tree : Et2Tree)
+	{
+
+		super();
+		this.tree = _tree
 		this.findActionTargetHandler = _tree.widget_object;
-        this.doGetDOMNode = function () {
-            return this.node;
-        }
-        let timeout: NodeJS.Timeout;
+	}
 
-        this.doTriggerEvent = function (_event) {
-            if (_event == EGW_AI_DRAG_ENTER)
-            {
+	public doTriggerEvent(egw_event : number, dom_event : Event)
+	{
+		const target = this.tree.findActionTarget(dom_event);
+		if(egw_event == EGW_AI_DRAG_ENTER)
+		{
+			target.target.classList.add("draggedOver", "drop-hover");
+			this.timeout = setTimeout(() =>
+			{
+				if(target.target.classList.contains("draggedOver"))
+				{
+					(<SlTreeItem>target.target).expanded = true
+				}
+			}, EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT)
+		}
+		else if(egw_event == EGW_AI_DRAG_OUT)
+		{
+			target.target.classList.remove("draggedOver", "drop-hover");
+			clearTimeout(this.timeout)
+		}
+		else
+		{
+			debugger;
+		}
+		return true
+	}
 
-				this.node.classList.add("draggedOver", "drop-hover");
-                timeout = setTimeout(() => {
-                    if (this.node.classList.contains("draggedOver"))
-                    {
-                        this.node.expanded = true
-                    }
-                }, EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT)
-            }
-            if (_event == EGW_AI_DRAG_OUT)
-            {
-				(this.node).classList.remove("draggedOver", "drop-hover");
-                clearTimeout(timeout)
-            }
-            return true
-        }
+	public doSetState(_state)
+	{
+		if(!this.tree || !this.tree.focusItem)
+		{
+			return;
+		}
 
-        this.doSetState = function (_state) {
-            if (!_tree || !_tree.focusItem) return;
+		// Update the "focused" flag
+		if(egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
+		{
+			this.tree.focusItem(this.id);
+		}
+		if(egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
+		{
+			// _tree.selectItem(this.id, false);	// false = do not trigger onSelect
+		}
+	}
 
-            // Update the "focused" flag
-            if (egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
-            {
-                _tree.focusItem(this.id);
-            }
-            if (egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
-            {
-               // _tree.selectItem(this.id, false);	// false = do not trigger onSelect
-            }
-        }
-    }
+	doGetDOMNode()
+	{
+		return this.tree;
+	}
 }
