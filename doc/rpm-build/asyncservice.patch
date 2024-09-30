@@ -1,8 +1,8 @@
-diff --git egroupware/admin/inc/class.admin_asyncservice.inc.php egroupware/admin/inc/class.admin_asyncservice.inc.php
-index df66f9c39e..38f9c35818 100644
---- egroupware/admin/inc/class.admin_asyncservice.inc.php
-+++ egroupware/admin/inc/class.admin_asyncservice.inc.php
-@@ -98,16 +98,20 @@ class admin_asyncservice
+diff --git a/admin/inc/class.admin_asyncservice.inc.php b/admin/inc/class.admin_asyncservice.inc.php
+index 21b1c6d4d1..39f7ffa3e7 100644
+--- a/admin/inc/class.admin_asyncservice.inc.php
++++ b/admin/inc/class.admin_asyncservice.inc.php
+@@ -99,16 +99,20 @@ class admin_asyncservice
  		{
  			Api\Config::save_value('asyncservice', $GLOBALS['egw_info']['server']['asyncservice']=$_POST['asyncservice'], 'phpgwapi');
  		}
@@ -23,7 +23,7 @@ index df66f9c39e..38f9c35818 100644
  		echo '<p><b>'.htmlspecialchars(lang('Run Asynchronous services')).'</b>'.
  			' <select name="asyncservice" onChange="this.form.submit();">';
  		foreach ($async_use as $key => $label)
-@@ -116,7 +120,7 @@ class admin_asyncservice
+@@ -117,7 +121,7 @@ class admin_asyncservice
  			echo "<option value=\"$key\"$selected>".htmlspecialchars($label)."</option>\n";
  		}
  		echo "</select>\n";
@@ -32,20 +32,20 @@ index df66f9c39e..38f9c35818 100644
  		if (is_array($installed) && isset($installed['cronline']))
  		{
  			echo ' &nbsp; <input type="submit" name="deinstall" value="'.htmlspecialchars(lang('Deinstall crontab'))."\">\n";
-@@ -146,6 +150,8 @@ class admin_asyncservice
+@@ -147,6 +151,8 @@ class admin_asyncservice
  			echo '<p><input type="submit" name="install" value="'.htmlspecialchars(lang('Install crontab'))."\">\n".
  				htmlspecialchars(lang("for the times below (empty values count as '*', all empty = every minute)"))."</p>\n";
  		}
 +*/
 +		echo '<p>'.htmlspecialchars(lang('Installed crontab')).": /etc/cron.d/egroupware.cron\n";
-
+ 
  		echo "<hr><table border=0><tr>\n";
  		foreach ($units as $u => $ulabel)
-diff --git egroupware/api/src/Egw.php egroupware/api/src/Egw.php
-index 5c52f126f2..5360039799 100644
---- egroupware/api/src/Egw.php
-+++ egroupware/api/src/Egw.php
-@@ -617,12 +617,14 @@ class Egw extends Egw\Base
+diff --git a/api/src/Egw.php b/api/src/Egw.php
+index 8226e0c5dc..8542eb370c 100644
+--- a/api/src/Egw.php
++++ b/api/src/Egw.php
+@@ -641,12 +641,14 @@ class Egw extends Egw\Base
  					_egw_log_exception($ex);
  				}
  			}
