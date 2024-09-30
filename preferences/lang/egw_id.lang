@@ -44,11 +44,13 @@ how to update lists	preferences	id	Cara memperbarui daftar
 icon	preferences	id	Ikon
 icons and text	preferences	id	Ikon dan teks
 icons only	preferences	id	hanya ikon
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	id	Jika diaktifkan, kata sandi yang Anda masukkan akan disimpan dan diteruskan ke server lain, saat Anda masuk melalui SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	id	Gambar terkait pada suatu entri dapat ditampilkan dalam <em>thumbnails.</em> Anda dapat mematikannya untuk mempercepat tampilan halaman.
 in which country are you. this is used to set certain defaults for you.	preferences	id	Negara anda. Ini digunakan untuk menentukan bawaan tertentu.
 interface/template selection	preferences	id	Pemilihan Antarmuka/Templat
 it sets content size (text only) according to selected size.	preferences	id	Ini menetapkan ukuran konten (hanya teks) menurut ukuran yang dipilih.
 language	preferences	id	Bahasa
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	id	Masuk melalui SingleSignOn tidak memberikan kata sandi untuk diteruskan ke server email atau file.
 max matches per page	preferences	id	Maks. pencocokan per halaman
 max number of icons in navbar	preferences	id	Maks. jumlah ikon pada baris navigasi
 no default	preferences	id	Tanpa bawaan
@@ -57,6 +59,7 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	id	catatan: Fitur ini *tidak" mengubah password email anda. Ini harus dikerjakan sendiri.
 number format	preferences	id	Format bilangan
 p: paragraph	preferences	id	p: Paragraph
+password stored	preferences	id	Kata sandi tersimpan.
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
 please select your timezone.	preferences	id	Pilih zonawaktu anda.
 please, select a new theme	preferences	id	Pilih tema yang baru
@@ -75,7 +78,9 @@ show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai
 show number of current users	preferences	id	Tampilkan jumlah pengguna saat ini
 show text on navigation icons	preferences	id	Tampilkan teks pada ikon navigasi
 show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
+singlesignon and passwords	preferences	id	SingleSignOn dan kata sandi
 spellchecker language	addressbook	id	Bahasa untuk Cek ejaan
+store password retrievable for singlesignon	common	id	Menyimpan kata sandi yang dapat diambil untuk SingleSignOn
 text only	preferences	id	Hanya teks
 the old password is not correct	preferences	id	Password lama keliru
 the two passwords are not the same	preferences	id	Kedua password tidak sama

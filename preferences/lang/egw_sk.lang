@@ -97,6 +97,7 @@ icon	preferences	sk	Ikona
 icons and text	preferences	sk	Ikony s textom
 icons only	preferences	sk	Len ikony
 if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	sk	Ak je už riadok vybratý, ďalšie riadky vyberiete tak, že podržíte klávesy Ctrl/Cmd a kliknite na ne; takto nedôjde k odznačeniu už označeného riadku. Alebo na ne len kliknete ako pre začiarkávacie políčko. Ak nie je označený žiadny riadok, a vy na nejaký kliknete, tak ho označíte. Ak podržíte klávesu Shift, tak označíte všetko, čo leží medzi aktuálne vybratým riadkom a ďalším na ktorý kliknete.
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	sk	Ak je táto možnosť povolená, vaše zadané heslo sa uloží a odovzdá ďalšiemu serveru, keď sa prihlásite prostredníctvom SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	sk	Obrázky, na ktoré sa v zázname odkazuje, sa dajú zobrazovať ako náhľady. Ak chcete zrýchliť zobrazovanie, tak to vypnite.
 in which country are you. this is used to set certain defaults for you.	preferences	sk	V akej krajine sa nachádzate. Informácia sa použije na nastavenie niektorých predvolieb.
 interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablóny
@@ -105,6 +106,7 @@ just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím 
 kama theme	preferences	sk	Kama téma
 keep list open for selecting multiple	preferences	sk	Ponechať zoznam otvorený pre výber viacerých možností
 language	preferences	sk	Jazyk
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sk	Pri prihlásení cez SingleSignOn sa heslo neposkytuje na odovzdanie poštovým alebo súborovým serverom.
 look & feel	preferences	sk	Vzhľad a použiteľnosť
 lowercase letters	preferences	sk	malé písmená
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sk	Nastaviť zoznam aplikácií posúvateľný pomocou posuvných tlačítok (užitočné pre používateľov s myšou bez kolieska)
@@ -129,6 +131,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	sk
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	sk	heslo obsahuje s "%1" časti používateľského alebo plného mena (v dĺžke aspoň 3 znaky)
 password is invalid	preferences	sk	Heslo je nesprávne
 password must have at least %1 characters	preferences	sk	heslo musí mať aspoň %1 znakov
+password stored	preferences	sk	Uložené heslo.
 permanent time zone selection	preferences	sk	Výber trvalého časového pásma
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sk	Prosím, vyberte časové pásma, medzi ktorými chcete mať možnosť rýchleho prepínania. Prepínač sa NEZOBRAZÍ, ak vyberiete menej než dve.
 please select your timezone.	preferences	sk	Prosím, vyberte svoje časové pásmo.
@@ -170,11 +173,13 @@ show qrcode	preferences	sk	Ukázať QR kód
 show qrcode to enable on an additional device.	preferences	sk	Ukázať QR kód pre povolenie na prídavnom zariadení.
 show text on navigation icons	preferences	sk	Zobrazovať text na navigačných ikonách
 show_more_apps	common	sk	Zobraziť ďalšie aplikácie
+singlesignon and passwords	preferences	sk	SingleSignOn a heslá
 small paragraph	preferences	sk	Malý odstavec
 special characters	preferences	sk	špeciálne znaky
 spellchecker language	addressbook	sk	Jazyk kontroly pravopisu
 stay open	preferences	sk	Ponechať otvorené
 stay open, but not for email	preferences	sk	Ponechať otvorené, ale nie pre E-mail
+store password retrievable for singlesignon	common	sk	Uloženie hesla načítateľného pre SingleSignOn
 text editor settings	preferences	sk	Nastavenia textového editora
 text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do EGroupware alebo kliknutí na ikonku Domovskej stránky.<br>Naraz môžete mať na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete žiadnu. Musíte si to však ponastavovať v nastaveniach jednotlivých aplikácií.

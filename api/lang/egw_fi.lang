@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	fi	%1 hakemistoja %2 löytyi!
 %1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty.
 %1 email(s) added into %2	common	fi	%1 sähköposti(t) lisätty %2:een
-%1 entries found, select one ...	common	fi	%1 tapahtuma(a) löydetty, valitse yksi ...
 %1 etemplates deleted	common	fi	%1 eTemplate(a) poistettu.
-%1 etemplates for application '%2' dumped to '%3'	common	fi	%1 sovelluksen %2 eTemplate(a) viety %3
 %1 etemplates found	common	fi	%1 eTemplate(a) löydetty.
 %1 file	common	fi	%1 tiedosto(a)
 %1 is not executable by the webserver !!!	common	fi	%1 ei ole web-palvelimen suoritettavissa!
-%1 matches on search criteria	common	fi	Hakuehdolla löytyi %1 kpl
 %1 more %2 selected ...	common	fi	%1 lisää %2 valittu ...
 %1 more...	common	fi	%1 lisää ...
-%1 new etemplates imported for application '%2'	common	fi	%1 sovelluksen %2 uutta eTemplate tuotu
 %1 not implemented for %2!	common	fi	%1 ei ole implementoitu '%2':een!
 %1 proxy of %2	common	fi	%1 %2:n välityspalvelin
 %1 setting "%2" = %3 disallows access via http!	admin	fi	%1 asetus "%2" = %3 estää pääsyn http:n kautta!
@@ -27,8 +23,10 @@
 %s onchange	common	fi	%s onchange
 %s readonly	common	fi	%s vain lukuoikeus
 '%1' copied to clipboard	common	fi	'%1' kopioitu leikepöydälle
+'%1' does not match the required pattern '%2'	common	fi	'%1' ei vastaa vaadittua mallia ('%2').
 '%1' has an invalid format	common	fi	'%1' on virheellisessä muodossa
 '%1' has an invalid format !!!	common	fi	'%1' on väärässä muodossa!
+'%1' is not a valid app-name ('%2')!	common	fi	'%1' EI ole kelvollinen sovelluksen nimi ('%2')!
 '%1' is not a valid date !!!	common	fi	'%1' on epäkelpo päiväys!
 '%1' is not a valid floatingpoint number !!!	common	fi	'%1' ei ole desimaaliluku!
 '%1' is not a valid integer !!!	common	fi	'%1' ei ole kokonaisluku!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	fi	'%1' ei ole kelvollinen aikavyöhyke!
 '%1' is not allowed ('%2')!	common	fi	'%1' ei ole sallittu ('%2')!
 '%1' is not allowed%2)!	common	fi	'%1' ei ole sallittu (%2)!
+'%1' must not contain (back)slashes!	common	fi	'%1' ei saa sisältää vinoviivoja!
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
 00 (disable)	admin	fi	00 (ei käytössä)
 1 day	common	fi	1 Päivä
@@ -251,6 +250,7 @@ chad	common	fi	TSAD
 change	common	fi	Muuta
 change owner	common	fi	Vaihda omistaja
 changed	common	fi	Muokattu
+changes that you made may not be saved.	common	fi	Tehdyt muutokset eivät ehkä tallennu.
 charset	common	fi	Merkistö
 check all	common	fi	Tarkista kaikki
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	fi	Tarkista tyhjät arvot IF-lausekkeissa. Esimerkki {{IF url~EMPTY~~Website:}}} - Jos url ei ole tyhjä, kirjoittaa "Verkkosivusto:".
@@ -949,6 +949,7 @@ open	common	fi	Avaa
 open existing contact	common	fi	Avaa olemassa oleva yhteyshenkilö
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fi	OpenIDConnect-kirjautuminen onnistui, mutta käyttäjää '%1' EI ole olemassa EGroupwaressa, JA automaattinen käyttäjän luominen on poistettu käytöstä!
 operator	common	fi	Operaattori
 optional note about the link	common	fi	Linkin kuvaus (vapaaehtoinen)
 options	common	fi	Asetukset
@@ -1038,14 +1039,12 @@ private	common	fi	Yksityinen
 programs	common	fi	Ohjelmat
 project	common	fi	Projekti
 properties	common	fi	Ominaisuudet
-protocol is required	common	fi	Pöytäkirja vaaditaan
 public	common	fi	Julkinen
 puerto rico	common	fi	PUERTO RICO
 qatar	common	fi	QATAR
 quick add	common	fi	Nopea lisäys
 radiobutton	common	fi	Valintaruutu
 read	common	fi	Luku
-read a list of entries.	common	fi	Lue tietueiden listaa
 read a single entry by passing the id and fieldlist.	common	fi	Lue yksittäinen tietue ohittaen ID ja kentän lista.
 read etemplate from database (for the keys above)	common	fi	Lue eTemplate tietokannasta (avaimet yläpuolella)
 read this list of methods.	common	fi	Lue tämä lista
@@ -1220,12 +1219,12 @@ show page generation time?	common	fi	Näytä sivun tekemiseen kulunut aika
 show password	common	fi	Näytä salasana
 show values	common	fi	Näytä arvot
 show/hide	common	fi	näytä/piilota sivupalkki
-show_more_apps	common	fi	Show_more_apps
 showing	common	fi	Näkyvissä
 showing %1	common	fi	Näytetään %1
 showing %1 - %2 of %3	common	fi	Näytetään %1 - %2 %3:sta.
 shows / allows you to enter values into the etemplate for testing	common	fi	Näyttää / sallii arvojen syötön eTemplate testitarkoituksessa
 shows/displays etemplate for testing, does not save it before	common	fi	Näyttää eTemplate testitarkoituksessa, EI tallenna mallipohjaa
+show_more_apps	common	fi	Show_more_apps
 sierra leone	common	fi	SIERRA LEONE
 sign up	common	fi	Rekisteröidy
 simple	common	fi	Yksinkertainen
@@ -1396,7 +1395,6 @@ weekend	common	fi	Viikonloppu
 welcome	common	fi	Tervetuloa
 western european	common	fi	Western european
 western sahara	common	fi	LÄNSISAHARA
-what color should all the blank space on the desktop have	common	fi	Minkä värisinä kaikki työpöydän tyhjät kohdat näytetään?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fi	Mitä tapahtuu ylimenevän osan kanssa: näkyvä (oletus), piilotettu, vieritys (scroll), automaattinen (selain päätää)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fi	Kun yhdistät merkintöjä asiakirjoihin, ne tallennetaan tänne. Jos kansiota ei ole annettu, ne tallennetaan kotihakemistoosi (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kyllä, kotisivu- ja uloskirjautumispainikkeet näkyvät yläreunan valikossa, kuten sovellukset.

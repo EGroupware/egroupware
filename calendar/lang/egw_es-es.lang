@@ -24,17 +24,17 @@ accepted	calendar	es-es	Aceptado
 access denied to the calendar of %1 !!!	calendar	es-es	¡Acceso denegado al calendario de %1!
 access to calendar of %1 denied!	calendar	es-es	¡Acceso al calendario de %1 denegado!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	es-es	Acción que causó la notificación: Añadido, Cancelado, Aceptado, Rechazado, ...
-actions	calendar	es-es	Acciones
-actions...	calendar	es-es	Acciones ...
 add alarm	calendar	es-es	Añadir alarma
 add appointments via shortened dialog or complete edit window	calendar	es-es	Añada citas por medio de un diálogo reducido o complete la ventana de edición
 add current view as favorite	calendar	es-es	Añadir vista actual como favorita
 add new alarm	calendar	es-es	Añadir nueva alarma
 add new event	calendar	es-es	Añadir nueva cita
 add new participants or resource	calendar	es-es	Añadir nuevos participantes o recursos
+add recurrence	calendar	es-es	Añadir repetición
 add timesheet entry	calendar	es-es	Añadir entrada en la hoja de tiempos
 added	calendar	es-es	Añadido
 added by synchronization	calendar	es-es	Añadido por sincronización
+added recurrence on %1.	calendar	es-es	Recurrencia añadida en %1.
 after	calendar	es-es	Después
 after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
@@ -46,7 +46,6 @@ alarm deleted	calendar	es-es	Se ha borrado una alarma
 alarm for %1 at %2 in %3	calendar	es-es	Alarma para %1 en %2 en %3
 alarm management	calendar	es-es	Gestión de alarmas
 alarms	calendar	es-es	Alarmas
-all categories	calendar	es-es	Todas las categorías
 all day	calendar	es-es	Todo el día
 all events	calendar	es-es	Todos los eventos
 all exceptions are converted into single events.	calendar	es-es	Todas las excepciones se convierten en eventos simples
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	es-es	Permite volver a editar el evento
 always	calendar	es-es	Siempre
 always use full edit dialog	calendar	es-es	Utilice siempre el cuadro de diálogo de edición completa
 always use the full edit dialog, not this little dialog	calendar	es-es	Utilice siempre el cuadro de diálogo de edición completo, no este pequeño cuadro de diálogo
+apply changes to (future) exceptions too?	calendar	es-es	¿Aplicar los cambios también a las (futuras) excepciones?
 apply the action on the whole query, not only the shown events	calendar	es-es	Aplicar la acción en toda la consulta, NO sólo en los eventos mostrados
 apply the changes	calendar	es-es	Aplicar los cambios
 appointment settings	calendar	es-es	Ajustes de Citas
@@ -247,6 +247,7 @@ exclude weekend	calendar	es-es	Excluir fin de semana
 execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
 exists	calendar	es-es	Existe
+explicit recurrences	calendar	es-es	Recurrencias explícitas
 export definition to use for nextmatch export	calendar	es-es	Exportar la definición a usar para exportar nextmatch
 exports events from your calendar in ical format.	calendar	es-es	Exporta eventos de su calendario en formato iCal.
 exports events from your calendar into a csv file.	calendar	es-es	Exporta eventos de su calendario a un archivo CSV.
@@ -368,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	es-es	N
 maximum available quantity of %1 exceeded!	calendar	es-es	¡Cantidad máxima disponible de %1 superada!
 meeting canceled	calendar	es-es	Reunión cancelada
 meeting request	calendar	es-es	Solicitud de reunión
+meeting request additional recurrence(s)	calendar	es-es	Reunión de solicitud de recurrencia(s) adicional(es)
 meetingrequest to all participants	calendar	es-es	Solicitud de reunión a todos los participantes
 merge document...	calendar	es-es	Fusionar documento ...
 midnight	calendar	es-es	Medianoche
@@ -446,6 +448,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	es-es	Abrir tareas pendientes
 optional	calendar	es-es	Opcional
 organizer	calendar	es-es	Organizador
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	es-es	De lo contrario, los cambios en el título, la descripción, ... o los nuevos participantes no se transferirán a las excepciones ya creadas.
 output unit	calendar	es-es	Unidad de salida
 overlap holiday	calendar	es-es	Solapar festivo
 owner too	calendar	es-es	El propietario también
@@ -595,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	es-es	Las excepciones se borran junto con las series.
 the extern organizer changed the event!	calendar	es-es	El organizador externo ha cambiado el evento.
 the following document-types are supported:	calendar	es-es	Los siguientes tipos de documentos están soportados:
+the organizer changed the event!	calendar	es-es	El organizador ha cambiado el evento
 the original series will be terminated today and a new series be created.	calendar	es-es	La serie original terminará hoy y se creará una serie nueva.
 the resource you selected is already overbooked:	calendar	es-es	El recurso que ha seleccionado ya está reservado:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	es-es	El remitente "%1" NO es el organizador externo "%2", ¡tenga cuidado!
@@ -607,6 +611,7 @@ this entry is opened by user:	calendar	es-es	Esta entrada se abrió dentro del i
 this event is part of a series	calendar	es-es	Este evento es parte de una serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	es-es	Este grupo es el predeterminado al entrar en el planificador. Puede cambiarlo en el planificador cuando quiera.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	es-es	Este es un evento recurrente. ¿Desea eliminar sólo esta repetición o toda la serie?
+this is a single recurrence of a recurring event.	calendar	es-es	Se trata de una sola repetición de un evento recurrente.
 this mail cancels a meeting	calendar	es-es	Este correo-e cancela una reunión
 this mail contains a meeting request	calendar	es-es	Este correo-e contiene una solicitud de reunión
 this mail contains a reply to a meeting request	calendar	es-es	Este correo-e contiene una respuesta a una solicitud de reunión
@@ -706,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	es-es	No tiene permi
 you are not invited to that event!	calendar	es-es	¡Usted no está invitado a ese evento!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	es-es	Se intenta enviar por correo una convocatoria de reunión a los destinatarios arriba indicados. Dependiendo del cliente con el que se abra este correo, el destinatario puede o no ver el mensaje que aparece a continuación, sino sólo la convocatoria de reunión adjunta.
 you can either set a year or a occurrence, not both !!!	calendar	es-es	Puede poner un año o una ocurrencia, pero no ambos.
+you can only notify other users, not yourself!	calendar	es-es	Sólo puede notificarlo a otros usuarios, ¡no a usted mismo!
 you can only set a year or a occurrence !!!	calendar	es-es	Sólo puede poner un año o una ocurrencia
 you do not have permission to read this record!	calendar	es-es	¡No tiene permiso para leer este registro!
 you have a meeting scheduled for %1	calendar	es-es	Ud. tiene una reunión programada para %1

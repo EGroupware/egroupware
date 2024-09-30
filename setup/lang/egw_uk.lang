@@ -14,6 +14,8 @@ day	setup	uk	День
 default	setup	uk	По замовченню
 default file system space per user/group ?	setup	uk	Обсяг файлової системи для користувача/групи по замовченню
 deny all users access to grant other users access to their entries ?	setup	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів?
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	uk	Вимикайте, тільки якщо ваш AD має проблеми з контролем VLV і може повернути всіх користувачів в одному запиті!
+disable vlv controls	setup	uk	Вимкнути VLV-контроль
 download	setup	uk	Загрузити
 enter the hostname of the machine on which this server is running	setup	uk	Введіть hostname машини, на якій працює цей сервер.
 enter the site password for peer servers	setup	uk	Введіть пароль сайту для peer серверів
@@ -50,6 +52,7 @@ next run	setup	uk	Наступний запуск
 no algorithms available	setup	uk	Немає алгоритмів
 no modes available	setup	uk	Немає режимів
 not	setup	uk	не треба
+openidconnect login	setup	uk	OpenIDConnect Логін
 optional, if only authentication and anonymous search is enabled	setup	uk	необов'язково, якщо ввімкнено лише автентифікацію та анонімний пошук
 or leave empty and select openidconnect as authentication type above for single sign on	setup	uk	або залиште пустим і виберіть OpenID Connect як тип автентифікації вище для єдиного входу
 or leave empty and select saml as authentication type above for single sign on	setup	uk	або залиште поле порожнім і виберіть SAML як тип автентифікації для єдиного входу
@@ -75,3 +78,4 @@ use cookies to pass sessionid	setup	uk	Використовувати куки �
 use pure html compliant code (not fully working yet)	setup	uk	Використовувати чистий HTML код (ще не повністю працює)
 would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення?
 write	setup	uk	Записати
+you need to select your current charset!	setup	uk	Потрібно вибрати поточну кодування!

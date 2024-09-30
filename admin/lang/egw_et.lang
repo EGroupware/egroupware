@@ -13,8 +13,6 @@
 %1 successful	admin	et	%1 edukas
 %1 token %2.	admin	et	%1 sümbol %2.
 (de)activate mail accounts	admin	et	(de)Aktiveerige postikontod
-(default no, leave it off if you dont use it)	admin	et	(vaikimisi Ei, jäta see välja kui sa seda ei kasuta)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	et	(imapclass peab seda funktsiooni toetama, küsides vastavat config-väärtust ja edastades selle vaikekvoodina IMAP-serverile)
 1 year	admin	et	1 aasta
 2 month	admin	et	2 kuud
 2 weeks	admin	et	2 nädalat
@@ -52,12 +50,14 @@ add new application	admin	et	Lisa uus rakendus
 add new email address:	admin	et	Lisa uus email aadress:
 add profile	admin	et	Lisa Profiil
 add sub-category	admin	et	Lisa alam kategooria
+add to group	admin	et	Lisa gruppi
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
 admin password	admin	et	Admin parool
 all applications	admin	et	Kõik rakendused
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	et	Lubage kasutajal salvestada oma parool SingleSignOn'i jaoks jaotises „Turvalisus ja paroolid“.
 alternate email address	admin	et	Alternatiivne email aadress
 anonymous user	admin	et	Anonymous kasutaja
 anonymous user (not shown in list sessions)	admin	et	Anonüümne Kasutaja (pole nähtav protsesside listis).
@@ -78,13 +78,18 @@ are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kust
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni?
 authentication / accounts	admin	et	Autentimine / Kontod
 bad login name or password.	admin	et	Vale kasutajanimi või parool.
+bulk changes	admin	et	Massilised muudatused
+bulk password reset	admin	et	Paroolide massiline lähtestamine
+can be used to show groups by container, if enabled	admin	et	Saab kasutada gruppide kuvamiseks konteineri järgi, kui see on lubatud
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
+change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
+container	admin	et	Konteiner
 continue	admin	et	Jätka
 copy of	admin	et	Koopia
 country	admin	et	Riik
@@ -127,11 +132,6 @@ disable	admin	et	Keela
 disabled (not recomended)	admin	et	Väljalülitatud (pole soovitav)
 displayed length of input field (set rows=1 to limit length)	admin	et	Sisendvälja kuvatud pikkus (pikkuse piiramiseks seadke read=1)
 displaying html messages is disabled	admin	et	HTML kirjade näitamine on välja lülitatud
-do not validate certificate	admin	et	Ära valideeri sertifikaati
-do you also want to delete all global subcategories ?	admin	et	Kas tahad kustutada samuti kõik globaalsed alamkategooriad?
-do you really want to delete this profile	admin	et	Tahad tõesti kustutada seda Profiili?
-do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada kõik globaalsed alamkategooriad?
-do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla?
 document root (default)	admin	et	Dokument root (vaikimisi)
 domainname	admin	et	Doomeninimi
 down	admin	et	Alla
@@ -172,6 +172,7 @@ general	admin	et	Üldine
 global categories	common	et	Globaalsed Kategooriad
 global options	admin	et	Globaalsed omadused
 group ?	admin	et	Grupp?
+group hierarchy	admin	et	Grupi hierarhia
 group list	admin	et	Gruppi nimekiri
 group name	admin	et	Grupi Nimi
 hide php information	admin	et	Peida PHP informatsioon
@@ -251,6 +252,7 @@ please select	admin	et	Palun Vali
 port	admin	et	Port
 primary group	admin	et	Primaarne Grupp
 re-enter password	admin	et	Sisesta parool uuesti
+regular expression to find part to use as container	admin	et	Regulaarväljend konteinerina kasutatava osa leidmiseks
 remove	admin	et	Eemalda
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
@@ -267,6 +269,7 @@ server settings	admin	et	Serveri setingud
 server username	admin	et	Serveri Kasutajanimi
 show access log	admin	et	Näita külastuste logi
 show error log	admin	et	Näita vigade logi
+show groups in container based on	admin	et	Konteineri gruppide kuvamine konteineri alusel
 show phpinfo()	admin	et	Näita phpinfo()
 show session ip address	admin	et	Näita sessiooni IP aadressi
 sieve server port	admin	et	Sieve serveri port
@@ -316,9 +319,7 @@ you have to enter a name, to create a new field!!!	admin	et	Pead sisestama mime 
 you must enter a group name.	admin	et	Pead sisestama grupi nime.
 you must enter a lastname	admin	et	Pead sisestama perekonnanime.
 you must enter a loginid	admin	et	Pead sisestama sisselogimise nime.
-you must enter an application name and title.	admin	et	Pead sisestama rakenduse nime ja pealkirja.
 you must enter an application name.	admin	et	Pead sisestama rakenduse nime.
 you must enter an application title.	admin	et	Pead sisesestama rakenduse pealkirja.
-you must select a file type	admin	et	Pead valima failitüübi.
 you must select at least one group member.	admin	et	Pead valima vähemalt ühe grupiliikme.
 you will need to remove the subcategories before you can delete this category	admin	et	Pead eemaldama kõigepealt alamkategoorjad kustutamaks seda kategooriat!

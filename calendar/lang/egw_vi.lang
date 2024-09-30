@@ -11,11 +11,8 @@ alarm for %1 at %2 in %3	calendar	vi	Nh&#7855;c nh&#7903; cho %1 t&#7841;i %2 tr
 alarm management	calendar	vi	Qu&#7843;n lý Nh&#7855;c nh&#7903;
 alarms	calendar	vi	Các nh&#7855;c nh&#7903;
 all day	calendar	vi	C&#7843; ngày
-are you sure you want to delete this country ?	calendar	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa Qu&#7889;c gia này ?
-are you sure you want to delete this holiday ?	calendar	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa Ngày ngh&#7881; l&#7877; này ?
 before the event	calendar	vi	tr&#432;&#7899;c s&#7921; ki&#7879;n
 calendar event	calendar	vi	L&#7883;ch S&#7921; ki&#7879;n
-calendar holiday management	admin	vi	L&#7883;ch Qu&#7843;n lý Ngày ngh&#7881; l&#7877;
 calendar preferences	calendar	vi	Các tùy ch&#7885;n L&#7883;ch
 calendar settings	admin	vi	Các thi&#7871;t l&#7853;p L&#7883;ch
 calendar-fieldname	calendar	vi	L&#7883;ch-Tên tr&#432;&#7901;ng
@@ -39,7 +36,6 @@ deleted	calendar	vi	&#272;ã xóa
 display status of events	calendar	vi	Hi&#7875;n th&#7883; Tr&#7841;ng thái c&#7911;a các S&#7921; ki&#7879;n
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	vi	B&#7841;n có mu&#7889;n nh&#7853;n &#273;&#432;&#7907;c thông báo v&#7873; các cu&#7897;c h&#7865;n m&#7899;i ho&#7863;c có thay &#273;&#7893;i? B&#7841;n &#273;&#432;&#7907;c thông báo v&#7873; các thay &#273;&#7893;i do chính b&#7841;n t&#7841;o ra.<br>B&#7841;n có th&#7875; gi&#7899;i h&#7841;n nh&#7919;ng thông báo ch&#7881; cho nh&#7919;ng thay &#273;&#7893;i nào &#273;ó mà thôi. M&#7895;i m&#7909;c bao g&#7891;m t&#7845;t c&#7843; thông báo &#273;&#432;&#7907;c li&#7879;t kê &#7903; phía trên nó. T&#7845;t c&#7843; s&#7921; thay &#273;&#7893;i bao g&#7891;m thay &#273;&#7893;i tiêu &#273;&#7873;, di&#7877;n gi&#7843;i, thành viên, nh&#432;ng không có &#273;áp &#7913;ng thành viên nào. N&#7871;u ng&#432;&#7901;i ch&#7911; trì s&#7921; ki&#7879;n yêu c&#7847;u b&#7845;t k&#7923; thông báo nào, anh &#7845;y c&#361;ng luôn luôn nh&#7853;n &#273;&#432;&#7907;c các ph&#7843;n h&#7891;i c&#7911;a thành viên nh&#432; nh&#7919;ng s&#7921; &#273;&#7891;ng ý và t&#7915; ch&#7889;i
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	vi	B&#7841;n có mu&#7889;n nh&#7853;n m&#7897;t b&#7843;ng tóm t&#7855;t các cu&#7897;c h&#7865;n qua email hay không?<br>B&#7843;ng tóm t&#7855;t &#273;&#432;&#7907;c g&#7917;i t&#7899;i &#273;&#7883;a ch&#7881; email chính th&#7913;c c&#7911;a b&#7841;n vào sáng ngày hôm &#273;ó ho&#7863;c vào th&#7913; Hai &#273;&#7889;i v&#7899;i các b&#7843;ng t&#7893;ng k&#7871;t hàng tu&#7847;n.<br>Nó ch&#7881; &#273;&#432;&#7907;c g&#7917;i &#273;i khi b&#7841;n có b&#7845;t k&#7923; cu&#7897;c h&#7865;n nào trong ngày hôm &#273;ó ho&#7863;c trong tu&#7847;n &#273;ó.
-do you wish to autoload calendar holidays files dynamically?	admin	vi	B&#7841;n có mu&#7889;n t&#7921; &#273;&#7897;ng t&#7843;i các t&#7853;p tin ngày ngh&#7881; l&#7877; ?
 download	calendar	vi	T&#7843;i v&#7873;
 duration	calendar	vi	Th&#7901;i gian
 edit series	calendar	vi	Hi&#7879;u ch&#7881;nh hàng lo&#7841;t
@@ -66,11 +62,9 @@ group public only	calendar	vi	Dành cho môi tr&#432;&#7901;ng chung
 here is your requested alarm.	calendar	vi	&#272;ây là nh&#7855;c nh&#7903; &#273;&#432;&#7907;c yêu c&#7847;u c&#7911;a b&#7841;n.
 high priority	calendar	vi	kh&#7849;n
 holiday	calendar	vi	Ngày ngh&#7881; l&#7877;
-holiday management	calendar	vi	Qu&#7843;n lý Ngày ngh&#7881; l&#7877;
 holidays	calendar	vi	Các Ngày ngh&#7881; l&#7877;
 hours	calendar	vi	gi&#7901;
 ical / rfc2445	calendar	vi	iCal / rfc2445
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	vi	N&#7871;u ngày ngh&#7881; l&#7877; r&#417;i vào cu&#7889;i tu&#7847;n, nó s&#7869; &#273;&#432;&#7907;c tính sang ngày th&#7913; Hai tu&#7847;n sau.
 ignore conflict	calendar	vi	B&#7887; qua s&#7921; ch&#7891;ng chéo
 import	calendar	vi	Nh&#7853;p
 import csv-file	common	vi	Nh&#7853;p t&#7853;p tin CSV
@@ -79,7 +73,6 @@ last	calendar	vi	cu&#7889;i
 lastname of person to notify	calendar	vi	H&#7885; c&#7911;a ng&#432;&#7901;i &#273;&#432;&#7907;c nh&#7853;n thông báo
 link to view the event	calendar	vi	Liên k&#7871;t &#273;&#7875; xem s&#7921; ki&#7879;n
 location	calendar	vi	V&#7883; trí
-location to autoload from	admin	vi	T&#7921; &#273;&#7897;ng t&#7843;i t&#7915; v&#7883; trí
 minutes	calendar	vi	phút
 modified	calendar	vi	&#272;ã hi&#7879;u ch&#7881;nh
 mon	calendar	vi	Hai
@@ -131,7 +124,6 @@ reset	calendar	vi	Thi&#7871;t l&#7853;p l&#7841;i
 rule	calendar	vi	Nguyên t&#7855;c
 sat	calendar	vi	B&#7843;y
 scheduling conflict	calendar	vi	Lên l&#7883;ch ch&#7891;ng chéo
-set a year only for one-time / non-regular holidays.	calendar	vi	Thi&#7871;t l&#7853;p ngày ngh&#7881; m&#7897;t l&#7847;n trong n&#259;m/ngày ngh&#7881; b&#7845;t th&#432;&#7901;ng
 set new events to private	calendar	vi	Gi&#7919; kín các s&#7921; ki&#7879;n m&#7899;i cho cá nhân
 should new events created as private by default ?	calendar	vi	Có nên &#273;&#7875; m&#7863;c &#273;&#7883;nh các s&#7921; ki&#7879;n m&#7899;i &#273;&#432;&#7907;c gi&#7919; riêng cho cá nhân ?
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	vi	Có c&#7847;n hi&#7875;n th&#7883; tình tr&#7841;ng c&#7911;a s&#7921; ki&#7879;n/công vi&#7879;c-các thành viên (&#273;&#7891;ng ý, t&#7915; ch&#7889;i, ...) trong ngo&#7863;c vuông phía sau m&#7895;i tên thành viên không?

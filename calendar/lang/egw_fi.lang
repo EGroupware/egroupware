@@ -23,17 +23,17 @@ accepted	calendar	fi	Hyväksytyt
 access denied to the calendar of %1 !!!	calendar	fi	Pääsy kalenteriin '%1' estetty!
 access to calendar of %1 denied!	calendar	fi	Pääsy kalenteriin '%1' estetty!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fi	Toimenpide, joka aiheutti huomautuksen: Lisätty, Keskeytetty, Hyväksytty, Hylätty ...
-actions	calendar	fi	Toiminnot
-actions...	calendar	fi	Toiminnot
 add alarm	calendar	fi	Lisää hälytys
 add appointments via shortened dialog or complete edit window	calendar	fi	Lisää tapaamisia lyhennetyn valintaikkunan tai koko muokkausikkunan kautta.
 add current view as favorite	calendar	fi	Lisää näkymä suosikkeihin
 add new alarm	calendar	fi	Lisää uusi hälytys
 add new event	calendar	fi	Lisää uusi tapaaminen
 add new participants or resource	calendar	fi	Lisää uusia osallistujia tai resursseja
+add recurrence	calendar	fi	Lisää toistuvuus
 add timesheet entry	calendar	fi	Lisää ajanhallinnan merkintä
 added	calendar	fi	Lisätty
 added by synchronization	calendar	fi	Lisätty synkronoinnin avulla
+added recurrence on %1.	calendar	fi	Lisätty toistuvuus %1.
 after	calendar	fi	Jälkeen
 after %1	calendar	fi	%1 jälkeen
 after current date	calendar	fi	Nykyisen päivän jälkeen
@@ -45,7 +45,6 @@ alarm deleted	calendar	fi	Hälytys poistettu
 alarm for %1 at %2 in %3	calendar	fi	Hälytys tapahtumalle %1, aika %2, paikka %3
 alarm management	calendar	fi	Hälytysten hallinta
 alarms	calendar	fi	Hälytykset
-all categories	calendar	fi	Kaikki kategoriat
 all day	calendar	fi	Koko päivä
 all events	calendar	fi	Kaikki tapahtumat
 all exceptions are converted into single events.	calendar	fi	Kaikki poikkeukset ovat muutettu yksittäisiksi tapahtumiksi
@@ -59,6 +58,7 @@ allows to edit the event again	calendar	fi	Salli tapahtuman muokkaaminen uudelle
 always	calendar	fi	Aina
 always use full edit dialog	calendar	fi	Käytä aina täydellistä muokkausikkunaa
 always use the full edit dialog, not this little dialog	calendar	fi	Käytä aina koko muokkausikkunaa, älä tätä pientä ikkunaa.
+apply changes to (future) exceptions too?	calendar	fi	Sovelletaanko muutoksia myös (tuleviin) poikkeuksiin?
 apply the action on the whole query, not only the shown events	calendar	fi	Suorita toiminto koko kyselylle, ei vain niille jotka näkyvät listalla.
 apply the changes	calendar	fi	Lisää muutokset
 appointment settings	calendar	fi	Nimitysasetukset
@@ -227,13 +227,12 @@ exclude weekend	calendar	fi	Viikonlopun poissulkeminen
 execute a further action for this entry	calendar	fi	Estä muutoksien tekeminen tähän tapahtumaan
 existing links	calendar	fi	Olemassaolevat linkit
 exists	calendar	fi	Olemassaoleva
-explicit dates	calendar	fi	Eksplisiittiset tapahtumat
+explicit recurrences	calendar	fi	Eksplisiittiset toistuvuudet
 export definition to use for nextmatch export	calendar	fi	Vienti asetukset 'nextmatch' vientiin
 exports events from your calendar in ical format.	calendar	fi	Vie kalenteritapahtumia iCal muotoon
 exports events from your calendar into a csv file.	calendar	fi	Vie kalenteritapahtumia CSV muotoon
 extended	calendar	fi	Laajennettu
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	fi	Laajennetuissa päivityksissä on aina täydelliset tapahtuman yksityiskohdat. iCal-tiedoston voi viedä muihin kalenterisovelluksiin.
-favorites	calendar	fi	Suosikit
 fieldseparator	calendar	fi	Kentän erotin
 filemanager	calendar	fi	Tiedostonhallinta
 filename	calendar	fi	Tiedostonimi
@@ -339,6 +338,7 @@ make freebusy information available to not logged in persons?	calendar	fi	Salli 
 manage mapping	calendar	fi	Hallitse mappingiä
 max. number of entries to show (leave empty for no restriction)	calendar	fi	Näkyvien tapahtumien maksimimäärä (tyhjä=ei rajoitusta)
 maximum available quantity of %1 exceeded!	calendar	fi	%1:n käytettävissä oleva enimmäismäärä ylitetty!
+meeting request additional recurrence(s)	calendar	fi	Kokouspyyntö lisäkertauksen (-kertausten) lisäämisestä
 merge document...	calendar	fi	Syötä asiakirjaan
 min days	calendar	fi	Min päivät
 minimum number of users for showing day view as consolidated.	calendar	fi	Käyttäjien vähimmäismäärä päiväkohtaisen näkymän näyttämiseksi konsolidoituna.
@@ -401,10 +401,12 @@ one month	calendar	fi	Yksi kuukausi
 one week	calendar	fi	Yksi viikko
 one year	calendar	fi	Yksi vuosi
 only group-events	calendar	fi	Vain ryhmätapahtumat
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	fi	Vain muutamat täysin yhteensopivat asiakkaat (esim. Apple) tukevat tätä. Jos joudut syöttämään URL-osoitteen, sitä ei todennäköisesti tueta!
 only the initial date of that recurring event is checked!	calendar	fi	Vain ensimmäinen aloituspäivä toistuvasta tapahtumasta valittu!
 open todo's:	calendar	fi	Avoimet tehtävät:
 optional	calendar	fi	Valinnainen
 organizer	calendar	fi	Järjestäjä
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	fi	Muuten otsikkoon, kuvaukseen, ... tai uusiin osallistujiin tehtyjä muutoksia ei siirretä jo luotuihin poikkeuksiin.
 output unit	calendar	fi	Tulostusyksikkö
 overlap holiday	calendar	fi	Päällekkäinen loma
 owner too	calendar	fi	Myös omistajana tai osallistujana
@@ -417,6 +419,7 @@ permission denied	calendar	fi	Ei käyttöoikeutta
 planner by category	calendar	fi	Suunnittelunäkymä kategorian mukaan
 planner by user	calendar	fi	Suunnittelunäkymä käyttäjien mukaan
 please first select participants on the left and then use plus button to add them	calendar	fi	Valitse ensin osallistujat vasemmalla ja lisää heidät sitten plus-painikkeella.
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	fi	Huomaa: Ristiriitojen tarkistusta ei koskaan tehdä menneisyydessä, ja se on aina rajoitettu edellä mainitulla toistuvuushorisontilla.
 please note: you can configure the field assignments after you uploaded the file.	calendar	fi	Huom: kentän merkinnät konfiguroidaan sen JÄLKEEN kun olet ladannut tiedoston.
 preselected group for entering the planner	calendar	fi	Suunnittelunäkymän oletusryhmä
 prevent deleting of entries	admin	fi	Estä tapahtumien poisto
@@ -542,6 +545,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	fi	Poikkeukset on poistettu yhdessä tapahtumasarjan kanssa
 the extern organizer changed the event!	calendar	fi	Ulkopuolinen järjestäjä muutti tapahtumaa!
 the following document-types are supported:	calendar	fi	Seuraavat tiedostotyypit ovat tuettuja:
+the organizer changed the event!	calendar	fi	Järjestäjä muutti tapahtumaa!
 the original series will be terminated today and a new series be created.	calendar	fi	Alkuperäinen tapahtumasarja päättyy tähän päivään ja uusi sarja luodaan.
 the resource you selected is already overbooked:	calendar	fi	Valitsemasi resurssi on jo varattu:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	fi	Lähettäjä "%1" EI ole ulkoinen järjestäjä "%2", toimi varoen!
@@ -554,6 +558,7 @@ this entry is opened by user:	calendar	fi	Käyttäjä, joka avasi tietueen asete
 this event is part of a series	calendar	fi	Tämä tapahtuma on osa tapahtumasarjaa
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fi	Tämä ryhmä on oletuksena kun teet suunnitelmaa. Voit vaihtaa sen koska tahansa suunnittelunäkymässä.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	fi	Tämä on toistuva tapahtuma. Haluatko poistaa vain tämän toistuvan tapahtuman vai koko sarjan?
+this is a single recurrence of a recurring event.	calendar	fi	Tämä on toistuvan tapahtuman yksittäinen toistuminen.
 this mail cancels a meeting	calendar	fi	Tämä sähköposti peruuttaa kokouksen
 this mail contains a meeting request	calendar	fi	Tämä sähköposti sisältää kutsun
 this mail contains a reply to a meeting request	calendar	fi	Tämä sähköposti sisältää vastauksen kokouspyyntöön
@@ -637,6 +642,7 @@ yes, users can purge their deleted items	admin	fi	Kyllä, kaikki käyttäjät vo
 you are not allowed to book the resource selected:	calendar	fi	Sinulla ei ole oikeuksia valitsemasi resurssin varaamiseen:
 you are not invited to that event!	calendar	fi	Sinua ei ole kutsuttu!
 you can either set a year or a occurrence, not both !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan, et molempia!
+you can only notify other users, not yourself!	calendar	fi	Voit ilmoittaa vain muille käyttäjille, et itsellesi!
 you can only set a year or a occurrence !!!	calendar	fi	Voit antaa vain vuoden tai tapahtuma-ajan!
 you do not have permission to read this record!	calendar	fi	Sinulla ei ole lukuoikeutta tähän tietueeseen!
 you have a meeting scheduled for %1	calendar	fi	Sinulla on tapaaminen %1

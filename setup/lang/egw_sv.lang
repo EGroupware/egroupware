@@ -17,7 +17,6 @@ access denied: wrong username or password to configure the domain '%1(%2)' !!!	s
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	sv	Kontodatabasen {sql(standard) | ldap},[autenticering{sql | ldap | mail | ads | http | ...}],[sql kryptering{md5 | blowfish_crypt | md5_crypt | crypt}],[check spara lösenord{ (standard)|True}],[tillåt cookie auth{ (standard)|True}]
 accounts existing	setup	sv	Befintliga konton
 actions	setup	sv	Åtgärder
-activate safe password check	setup	sv	Aktivera säkra lösenords kontrollen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sv	Lägg till automatiskt skapade användare till denna grupp ('Default' kommer att användas om denna är tom)
 add new database instance (egw domain)	setup	sv	Lägg till ny databas instans (EGw domän)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sv	Lägg till eller ändra en domän: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -151,15 +150,12 @@ creating tables	setup	sv	Skapar tabeller
 creation of %1 in %2 failed !!!	setup	sv	Kunde inte skapa %1 i %2
 current configuration:	setup	sv	Nuvarande konfiguration
 current system-charset	setup	sv	Nuvarande system teckeuppsättning
-current system-charset is %1.	setup	sv	Nuvarande system teckeuppsättning är %1
 current version	setup	sv	Aktuell version
 currently installed languages: %1 <br />	setup	sv	Installerade språk: %1 <br>
-cyrus imap: admin user,password	setup	sv	Cyrus IMAP: Admin användare och lösenord
 database	setup	sv	Databas
 database instance (egw domain)	setup	sv	Databas instans (EGw domän)
 database is version %1 and up to date.	setup	sv	Databas version %1 och är uppdaterad
 database successfully converted from '%1' to '%2'	setup	sv	Databas konverterad från '%1' till '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sv	Datetime port.<br>Om du använder port 13, sätt brandväggsreglerna korrekt innan du trycker på Klar<br>(Port: 13 / Host 129.6.15.28)
 day	setup	sv	Dag
 day of week<br />(0-6, 0=sunday)	setup	sv	Veckodag<br>(0-6, 0=Söndag)
 db backup and restore	setup	sv	Databas backup och restore
@@ -185,6 +181,8 @@ dependency failure	setup	sv	Beroendefel
 deregistered	setup	sv	Avregistrerad
 details for admin account	setup	sv	Detaljer för Adminkontot
 did not find any valid db support!	setup	sv	Kunde inte hitta något giltigt databasstöd
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	sv	Inaktivera endast om din AD har problem med VLV-kontroller OCH kan returnera alla användare i en enda fråga!
+disable vlv controls	setup	sv	Avaktivera VLV-kontroller
 do you want persistent connections (higher performance, but consumes more resources)	setup	sv	Vill du använda persistent connections? (bättre prestanda men använder fler systemresurser)
 do you want to manage homedirectory and loginshell attributes?	setup	sv	Vill du hantera attribut för hemkatalog och skalprogram?
 does not exist	setup	sv	Existerar inte
@@ -215,10 +213,10 @@ enable for extra debug-messages	setup	sv	Visa extra debug information
 enable mcrypt	setup	sv	Aktivera Mcrypt
 enter some random text for app session encryption	setup	sv	Skriv in lite slumpmässig text för kryptering av sessionsinformation
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sv	Skriv in lite slumpmässig text för<br>kryptering av sessionsinformation (kräver MCrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sv	Ange fullständig sökväg för temp-filer<br>T ex: /tmp, c:\temp
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sv	Ange fullständig sökväg för temp-filer<br>T ex: /tmp, c:\temp
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler<br>T ex: /files, e:\files
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sv	Ange fullständig sökväg för temp-filer<br>T ex: /tmp, c:\temp
 enter the full path for users and group files.<br />examples: /files, e:files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler<br>T ex: /files, e:\files
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	sv	Ange fullständig sökväg för användar- och gruppfiler<br>T ex: /files, e:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	sv	Ange fullständig sökväg för backupkatalog<br>om tomt: samma som användarfiler
 enter the hostname of the machine on which this server is running	setup	sv	Ange värdnamn för maskinen som kör denna server
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sv	Ange EGroupware:s URL.<br>T ex: https://www.doman.com/egroupware  eller  /egroupware<br><b>Ingen avslutande slash</b>
@@ -332,8 +330,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	sv	Hantera applikationer
 manage languages	setup	sv	Hantera språk
 manual / help	setup	sv	Manual / hjälp
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sv	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 maximum account id (e.g. 65535 or 1000000)	setup	sv	Maximalt konto ID (dvs 65535 eller 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sv	max_execution_time är satt till mindre än 30 sekunder. EGroupware behöver ibland mer tid på sig. Förvänta dig problem emellanåt.
 may be broken	setup	sv	kan vara trasig
 mcrypt algorithm (default tripledes)	setup	sv	Mcrypt algoritm (standard 3DES)
 mcrypt initialization vector	setup	sv	Mcrypt initialisationsvektor
@@ -349,7 +347,6 @@ modifications have been completed!	setup	sv	Ändringarna genomförda
 modified	setup	sv	Ändrad
 modify	setup	sv	Ändra
 month	setup	sv	Månad
-multi-language support setup	setup	sv	Flerspråksstöd
 name of database	setup	sv	Databasnamn
 name of db user egroupware uses to connect	setup	sv	Namnet på det användarkonto EGroupware skall använda för att ansluta till databasen
 never	setup	sv	Aldrig
@@ -379,6 +376,7 @@ one month	setup	sv	En månad
 one week	setup	sv	En vecka
 only add languages that are not in the database already	setup	sv	Lägga bara till språk som ännu inte finns i databasen
 only add new phrases	setup	sv	Lägg enbart till nya fraser
+openidconnect login	setup	sv	Inloggning med OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	sv	valfritt, om endast autentisering OCH anonym sökning är aktiverat
 or	setup	sv	Eller
 or %1continue to the header admin%2	setup	sv	Eller %1fortsätt till Header-hantering%2
@@ -425,8 +423,8 @@ re-enter password	setup	sv	Återge lösenordet igen
 read translations from	setup	sv	Läs in översättningar från
 readable by the webserver	setup	sv	Läsbar av webservern
 really uninstall all applications	setup	sv	Vill du verkligen avinstallera samtliga installationer
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 registered	setup	sv	Registrerad
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, EGroupware kräver inte det och det är säkrare med det AVslaget.
 regular expression to filter by dn	setup	sv	Reguljärt uttryck för att filtrera efter DN
 rejected lines	setup	sv	Ej godtagna rader
 remove	setup	sv	Radera

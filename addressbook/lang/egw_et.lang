@@ -1,9 +1,5 @@
-%1 added	addressbook	et	%1 lisatud
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu!
 %1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4
-accounts	addressbook	et	Kontod
-actions	addressbook	et	Tegevused
-add %1	addressbook	et	Lisa %1
 add a new contact	addressbook	et	Lisa uus kontakt
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	et	Lisa aadressiraamatu linkidele kohandatud väli, mis kuvatakse teistes rakendustes. Vaikeväärtus on none customfield.
 add to bcc	addressbook	et	Lisa Pimekopeeringusse
@@ -13,7 +9,6 @@ add to distribution list:	addressbook	et	Lisada jaotamisnimekirja:
 add to to	addressbook	et	Lisa juurde
 added	addressbook	et	Lisatud
 added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
-advanced search	addressbook	et	Laiendatud Otsing
 allow	addressbook	et	Luba
 allow for contacts only	addressbook	et	Luba ainult kontaktidele
 always	addressbook	et	Alati

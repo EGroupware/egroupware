@@ -32,19 +32,24 @@ how to update lists	preferences	bg	Как да актуализирате спи
 icon	preferences	bg	Картинки
 icons and text	preferences	bg	Картинки и текст
 icons only	preferences	bg	само картинки
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	bg	Ако е разрешено, въведената от вас парола ще бъде съхранена и предадена на друг сървър, когато влезете чрез SSO.
 in which country are you. this is used to set certain defaults for you.	preferences	bg	Страната, в която се намирате. Използва се за някои настройки по подразбиране.
 it sets content size (text only) according to selected size.	preferences	bg	Той задава размера на съдържанието (само за текст) в съответствие с избрания размер.
 language	preferences	bg	Език
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	bg	Влизането чрез SingleSignOn не осигурява парола, която да се предава на пощенски или файлови сървъри.
 max matches per page	preferences	bg	Максимален брой съвпадения на страница
 max number of icons in navbar	preferences	bg	Максимален брой картинки в лентата за управление
 no default	preferences	bg	Без стойност по подразбиране
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	bg	Бележка: Това НЕ сменя паролата ви за пощата. Нейната смяна трябва да се направи по друг начин.
+password stored	preferences	bg	Запазена парола.
 please, select a new theme	preferences	bg	Моля изберете нова тема
 re-enter your password	preferences	bg	Въведете отново паролата
 select different theme	preferences	bg	Избор на различна тема
 select one	preferences	bg	Изберете
 set content size	preferences	bg	Задаване на размера на съдържанието
 show number of current users	preferences	bg	Показване на броя включени в момента потребители
+singlesignon and passwords	preferences	bg	SingleSignOn и пароли
+store password retrievable for singlesignon	common	bg	Съхраняване на парола, която може да се извлича за SingleSignOn
 text only	preferences	bg	Само текст
 the two passwords are not the same	preferences	bg	Паролите не съвпадат
 theme (colors/fonts) selection	preferences	bg	Избор на тема (цветове и шрифтове)

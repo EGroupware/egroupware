@@ -45,7 +45,6 @@ export definition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nex
 export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
-favorites	timesheet	fi	Suosikit
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
 full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
@@ -89,6 +88,9 @@ only admin can edit this status	timesheet	fi	Vain ylläpitäjät voivat muokata 
 or endtime	timesheet	fi	tai päättymisaika
 order	timesheet	fi	Järjestys
 parent	timesheet	fi	Pää-
+pause	common	fi	Tauko
+pause time	timesheet	fi	Taukoaika
+paused	timesheet	fi	Tauko
 permission denied!!!	timesheet	fi	Pääsy estetty!
 permissions error - %1 could not %2	timesheet	fi	Virhe oikeuksissa - %1 ei voinut: %2
 price	timesheet	fi	Hinta
@@ -112,12 +114,14 @@ set to	timesheet	fi	Aseta
 show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa
 skip record	timesheet	fi	Ohita
 start	timesheet	fi	Alku
+start-time can not be before last stop- or pause-time %1!	common	fi	Aloitusaika ei voi olla ennen viimeisintä pysäytys- tai taukoaikaa %1!
 starttime	timesheet	fi	Aloitusaika
 starttime has to be before endtime !!!	timesheet	fi	Aloitusajan pitää olla ennen päättymiaikaa
 status	timesheet	fi	Tila
 status deleted.	timesheet	fi	Tila poistettu.
 status of created timesheets	timesheet	fi	Luotujen merkintöjen tila.
 status updated.	timesheet	fi	Tila päivitetty.
+stop- or pause-time can not be before the start-time %1!	common	fi	Pysäytys- tai taukoaika ei voi olla ennen aloitusaikaa %1!
 sum %1:	timesheet	fi	Summa %1:
 tag to mark positions for address labels	timesheet	fi	Käytä tägiä osoitetarroihin
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2
@@ -128,6 +132,7 @@ this month	timesheet	fi	Tässä kuussa
 this week	timesheet	fi	Tällä viikolla
 this year	timesheet	fi	Tänä vuonna
 ticket modified by %1 at %2	timesheet	fi	Merkintää muokannut %1, %2
+timer already running or paused	common	fi	Ajastin on jo käynnissä tai tauolla
 timesheet	common	fi	Ajanhallinta
 timesheet csv export	timesheet	fi	Ajanhallinnan CSV-vienti
 timesheet csv import	timesheet	fi	Ajanhallinnan CSV-tuonti

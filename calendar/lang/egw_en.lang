@@ -442,7 +442,7 @@ one week	calendar	en	One week
 one year	calendar	en	One year
 only group-events	calendar	en	Only group events
 only recurrences until %1 (excluding) have been checked!	calendar	en	Only recurrences until %1 (excluding) have been checked!
-only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	en	Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	en	Only supported by a few fully compliant clients (eg. from Apple). If you have to enter a URL, it will most likely not be supported!
 only the initial date of that recurring event is checked!	calendar	en	Only the initial date of that recurring event is checked!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	en	Only used for first viewing of calendar, afterwards last selected view is used.
 open todo's:	calendar	en	Open ToDo's:
@@ -464,7 +464,7 @@ permission denied	calendar	en	Permission denied.
 planner by category	calendar	en	Planner by category
 planner by user	calendar	en	Planner by user
 please first select participants on the left and then use plus button to add them	calendar	en	Please first select participants on the left and then use plus button to add them
-please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	en	Please note: conflict check is never done in the past and always limited by above recurrence horizon.
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	en	Please note: Conflict check is never done in the past and always limited by above recurrence horizon.
 please note: you can configure the field assignments after you uploaded the file.	calendar	en	Note: You can configure the field assignments AFTER you uploaded the file.
 preselected group for entering the planner	calendar	en	Pre-selected group for entering the planner
 prevent deleting of entries	admin	en	Prevent deleting of entries

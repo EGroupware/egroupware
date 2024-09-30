@@ -32,7 +32,6 @@ access denied: wrong username or password for manage-header !!!	setup	sk	Prístu
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre konfiguráciu domény '%1(%2)'!
 accounts existing	setup	sk	Existujúce účty
 actions	setup	sk	Akcie
-activate safe password check	setup	sk	Aktivovať voľbu ukladania hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sk	Automaticky vytvorených používateľov priradiť do tejto skupiny (ak prázdne, použije sa 'Predvolená').
 add new database instance (egw domain)	setup	sk	Pridať novú databázovú inštanciu (EGw domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sk	pridať alebo upraviť doménu: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -154,8 +153,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	sk	Kontrola - rozšírenie %1 je nahraté alebo dostupné
 checking file-permissions of %1 for %2 %3: %4	setup	sk	Kontrolujem prístupové práva %1 pre %2 %3: %4
 checking for gd support...	setup	sk	Zisťujem podporu GD ...
-checking for jpgraph in %1	setup	sk	Zisťujem podporu JPGraph v %1
-checking for tnef application	setup	sk	Zisťujem aplikáciu tnef
 checking function %1 exists	setup	sk	Kontrolná funkcia %1 existuje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sk	Zisťujem, či php.ini setting session.save_path='%1' je zapisovateľné webserverom
 checking package %1 is installed	setup	sk	Kontrola - balík %1 je nainštalovaný.
@@ -206,19 +203,16 @@ creating tables	setup	sk	Vytváram tabuľky
 creation of %1 in %2 failed !!!	setup	sk	Nepodarilo sa vytvoriť %1 v %2!
 current configuration:	setup	sk	Súčasná konfigurácia:
 current system-charset	setup	sk	Súčasná systémová znaková sada
-current system-charset is %1.	setup	sk	Súčasná systémová znaková sada je %1.
 current version	setup	sk	Súčasná verzia
 currently installed languages: %1 <br />	setup	sk	Momentálne nainštalované jazyky: %1<br>
 custom handler: %1	setup	sk	Vlastná obsluha: %1
 custom set via %1	setup	sk	Vlastné nastavenie cez %1
-cyrus imap: admin user,password	setup	sk	Cyrus IMAP: Správcovo používateľské meno,heslo
 daily	setup	sk	Denne
 database	setup	sk	Databáza
 database instance (egw domain)	setup	sk	Databázová inštancia (EGw domain)
 database is version %1 and up to date.	setup	sk	Databáza má verziu %1 a je aktuálna.
 database successfully converted from '%1' to '%2'	setup	sk	Databáza bola úspešne konvertovaná z '%1' na '%2'
 datebase %1 droped.	setup	sk	Databáza %1 zahodená
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	sk	Port pre dátum/čas.<br>Ak používate port 13, prosím nastavte správne pravidlá na firewall-e, ešte pred odoslaním tejto stránky.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	sk	Deň
 day of week<br />(0-6, 0=sunday)	setup	sk	Deň v týždni<br>(0-6, 0=nedeľa)
 db backup and restore	setup	sk	Záloha a obnova databázy
@@ -247,6 +241,8 @@ dependency failure	setup	sk	Zlyhanie závislostí
 deregistered	setup	sk	Odregistrované
 details for admin account	setup	sk	Podrobnosti pre správcov účet
 did not find any valid db support!	setup	sk	Nenašiel som žiadnu funkčnú podporu pre DB!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	sk	Zakážte len vtedy, ak má váš AD problémy s kontrolou VLV A dokáže vrátiť všetkých používateľov v rámci jedného dotazu!
+disable vlv controls	setup	sk	Zakázanie kontrol VLV
 do not check for deleted user	setup	sk	NEskúmať odstráneného používateľa
 do you want persistent connections (higher performance, but consumes more resources)	setup	sk	Chcete trvalé spojenia (vyšší výkon, ale väčšie nároky na zdroje)
 do you want to manage homedirectory and loginshell attributes?	setup	sk	Chcete spravovať domovský adresár a atribúty login shellu?
@@ -286,10 +282,10 @@ enable mcrypt	setup	sk	Zapnúť MCrypt
 enforce ssl (allows to specify just a path above)	setup	sk	Vyžadovať SSL (umožňuje zadať iba vyššieuvedenú cestu)
 enter some random text for app session encryption	setup	sk	Zadajte nejaký náhodný text pre potreby kódovania sedenia aplikácie
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby<br>kódovania sedenia aplikácie (vyžaduje mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br>Príklady: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br>Príklady: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br>Príklady: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k dočasným súborom.<br>Príklady: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br>Príklady: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	sk	Zadajte plnú cestu k súborom používateľov a skupín.<br>Príklady: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	sk	Zadajte plnú cestu k adresáru záloh.<br>ak ponecháte prázdne: adresár files
 enter the hostname of the machine on which this server is running	setup	sk	Zadajte názov (hostname) stroja na ktorom beží tento server
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sk	Zadajte umiestnenie URL EGroupware.<br>Príklad: https://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukončovacieho lomítka</b>
@@ -423,7 +419,6 @@ login to mysql -	setup	sk	Prihlásiť do mysql -
 loginname needed for domain configuration	setup	sk	Potrebné prihlasovacie meno pre konfiguráciu domény
 logout	setup	sk	Odhlásenie
 logs to	setup	sk	prihlasuje sa na
-mail account of %1 migraged	setup	sk	Poštový účet %1 premigrovaný
 mail account of %1 migrated	setup	sk	Poštový účet %1 premigrovaný
 mail domain (for virtual mail manager)	setup	sk	Poštová doména (pre virtuálneho emailového manažéra)
 mail server login type	setup	sk	Typ prihlásenia poštového servera
@@ -433,8 +428,8 @@ manage applications	setup	sk	Správa aplikácií
 manage languages	setup	sk	Správa jazykov
 manual / help	setup	sk	Manuál / pomocník
 match saml usernames to existing ones (use strings or regular expression)	setup	sk	Porovnať SAML používateľské mená s existujúcimi (s použitím reťazcov alebo regulárneho výrazu)
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sk	Maximálny čas vykonávania je nastavené na menej než 30 (sekúnd): EGroupware z času na čas potrebuje väčší čas vykonávania, okrem výnimočných zlyhaní
 maximum account id (e.g. 65535 or 1000000)	setup	sk	Maximálne ID účtu (napr. 65535 alebo 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sk	Maximálny čas vykonávania je nastavené na menej než 30 (sekúnd): EGroupware z času na čas potrebuje väčší čas vykonávania, okrem výnimočných zlyhaní
 may be broken	setup	sk	Môže byť pokazená
 mcrypt algorithm (default tripledes)	setup	sk	Mcrypt algoritmus (predvolený TRIPLEDES)
 mcrypt initialization vector	setup	sk	Mcrypt inicializačný vektor
@@ -455,7 +450,6 @@ modify	setup	sk	Upraviť
 month	setup	sk	Mesiac
 more information	setup	sk	Viac informácií
 mount backup directory to %1	setup	sk	Primontovať zálohový priečinok na %1
-multi-language support setup	setup	sk	Nastavenie mnohojazyčnej podpory
 name for service provider	setup	sk	Meno poskytovateľa služby
 name of database	setup	sk	Meno databázy
 name of db user egroupware uses to connect	setup	sk	Meno db používateľa, pod ktorým sa EGroupware pripája
@@ -492,6 +486,7 @@ one month	setup	sk	Jeden mesiac
 one week	setup	sk	Jeden týždeň
 only add languages that are not in the database already	setup	sk	Iba pridať tie jazyky, ktoré ešte nie sú v databáze
 only add new phrases	setup	sk	Iba pridať nové frázy
+openidconnect login	setup	sk	Prihlásenie cez OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	sk	nepovinné, ak je zapnuté len overovanie a anonymné vyhľadávanie
 or	setup	sk	alebo
 or %1continue to the header admin%2	setup	sk	alebo %1Pokračovať k Správcovi hlavičiek%2
@@ -546,8 +541,8 @@ read translations from	setup	sk	Načítať preklady z
 readable by the webserver	setup	sk	Čitateľné pre webserver
 really uninstall all applications	setup	sk	SKUTOČNE odinštalovať všetky aplikácie
 refusing to delete dn "%1"!	setup	sk	Odmietam odstrániť DN "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sk	register_globals sú zapnuté, EGroupware to NEvyžaduje a je celkovo omnoho bezpečnejšie VYPNÚŤ ich
 registered	setup	sk	Registrované
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sk	register_globals sú zapnuté, EGroupware to NEvyžaduje a je celkovo omnoho bezpečnejšie VYPNÚŤ ich
 regular expression to filter by dn	setup	sk	Regulárny výraz na filtrovanie podľa DN
 rejected lines	setup	sk	Odmietnuté riadky
 remove	setup	sk	Odstrániť

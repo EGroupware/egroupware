@@ -97,7 +97,6 @@ current system-charset	setup	iw	סט תוים הנוכחי של המערכת
 current version	setup	iw	גירסא נוכחית
 currently installed languages: %1 <br />	setup	iw	שפות מותקנות : %1 <br />
 database successfully converted from '%1' to '%2'	setup	iw	בסיס הנתונים הומר בהצלחה מ-'%1' ל-'%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	iw	פורט תאריך/שעה<br />
 day	setup	iw	יום
 db host	setup	iw	שרת בסיס הנתונים
 db name	setup	iw	שם בסיס הנתונים
@@ -208,8 +207,8 @@ mail server login type	setup	iw	סוג הכניסה לשרת הדואר
 make sure that your database is created and the account permissions are set	setup	iw	וודא שבסיס הנתונים נוצר ושהרשאות החשבונות הוגדרו
 manage applications	setup	iw	ניהול יישומים
 manage languages	setup	iw	ניהול שפות
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	iw	:(זמן הרצה מירבי נקבע כפחות מ-30 (שניות
 maximum account id (e.g. 65535 or 1000000)	setup	iw	(זיהוי חשבון מירבי (למשל 65335 או 100000
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	iw	:(זמן הרצה מירבי נקבע כפחות מ-30 (שניות
 may be broken	setup	iw	יתכן ששבור
 mcrypt algorithm (default tripledes)	setup	iw	(TripleDES ברירת מחדל) MCrypt אלגוריטם של
 mcrypt initialization vector	setup	iw	MCrypt וקטור אתחול של
@@ -222,7 +221,6 @@ modifications have been completed!	setup	iw	!השינוים הושלמו
 modified	setup	iw	השתנה
 modify	setup	iw	שינוי
 month	setup	iw	חודש
-multi-language support setup	setup	iw	הגדרות תמיכה רב-לשונית
 name of database	setup	iw	שם בסיס הנתונים
 name of db user egroupware uses to connect	setup	iw	משתמש כדי להתחבר EGroupware-שם משתמש בסיס הנתונים ש
 never	setup	iw	לעולם לא
@@ -280,8 +278,8 @@ re-enter password	setup	iw	הכנס שוב את הסיסמא
 read translations from	setup	iw	-קרא תרגומים מ
 readable by the webserver	setup	iw	ניתן לקריאה על ידי שרת הווב
 really uninstall all applications	setup	iw	באמת להסיר את התקנת כל היישומים
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	iw	אינו מחייב זאת, ובאופן כללי מאובטח יותר באשר הוא כבוי EGroupware-דלוק, ו register-globals
 registered	setup	iw	רשום
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	iw	אינו מחייב זאת, ובאופן כללי מאובטח יותר באשר הוא כבוי EGroupware-דלוק, ו register-globals
 rejected lines	setup	iw	שורות נדחו
 remove	setup	iw	הסר
 remove all	setup	iw	הסר הכל

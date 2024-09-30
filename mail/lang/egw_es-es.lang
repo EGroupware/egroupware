@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	es-es	Marque para guardar como evento al enviar
 check to save as infolog on send	mail	es-es	Marque para guardar como infolog al enviar
 check to save as tracker entry on send	mail	es-es	Marque para guardar como entrada de seguimiento al enviar
+checking admin credentials failed	mail	es-es	Error al comprobar las credenciales de administrador
 choose file	mail	es-es	Elija el archivo
 common acl	mail	es-es	Lista de control de acceso común
 compose	mail	es-es	Redactar
@@ -243,7 +244,7 @@ files	mail	es-es	Archivos
 flag / unflag	mail	es-es	Marcar / Desmarcar
 flag or unflag a mail	mail	es-es	Marcar o desmarcar un correo
 flagged	mail	es-es	marcado
-flagged %1 messages as %2 in %3	mail	es-es	marcado %1 mensaje(s) como %2 en %3
+flagged %1 messages as %2 in %3	mail	es-es	Marcado %1 mensaje(s) como "%2" en %3.
 flagged %1 messages as flagged in %2	mail	es-es	marcado %1 mensaje(s) como marcado en %2
 flagged %1 messages as unflagged in %2	mail	es-es	marcado %1 mensaje(s) como desmarcado en %2
 flagged / unflagged	mail	es-es	Marcado / Desmarcado
@@ -336,6 +337,7 @@ mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
 mail filter	mail	es-es	Filtrar
 mail filter rule	mail	es-es	Regla de filtro de correo
+mail probably has no text-body	mail	es-es	El correo probablemente no tiene texto
 mail settings	mail	es-es	Configuración del correo
 mail source	mail	es-es	Fuente de correo
 mail-address	mail	es-es	Dirección de correo
@@ -491,6 +493,7 @@ reply	mail	es-es	Responder
 reply all	mail	es-es	Responder a todos
 reply message type	mail	es-es	Tipo de mensaje de respuesta
 reply to	mail	es-es	Responder a
+reply with attachments	mail	es-es	Responder con archivos adjuntos
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	es-es	La respuesta a este mensaje ha fallado porque el contenido de este mensaje parece estar encriptado y no se puede desencriptar correctamente. Si aún desea incluir el contenido de este mensaje cifrado, puede intentar reenviarlo como archivo adjunto.
 replyto	mail	es-es	Responder a
 report as ham	mail	es-es	Informar como Ham

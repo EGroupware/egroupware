@@ -19,17 +19,17 @@ accepted	calendar	hu	Elfogadva
 access denied to the calendar of %1 !!!	calendar	hu	%1 naptárhoz a hozzáférés megtagadva!
 access to calendar of %1 denied!	calendar	hu	Hozzáférés a %1 naptárához megtagadva!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	hu	Értesítés a következők miatt: Hozzáadva, Mégsem, Elfogadva, Elutasítva, ...
-actions	calendar	hu	Műveletek
-actions...	calendar	hu	Műveletek ...
 add alarm	calendar	hu	Riasztás hozzáadása
 add appointments via shortened dialog or complete edit window	calendar	hu	Időpontok hozzáadása rövidített párbeszédpanelen vagy teljes szerkesztőablakon keresztül
 add current view as favorite	calendar	hu	Az aktuális nézet hozzáadása kedvencnek
 add new alarm	calendar	hu	Új riasztás hozzáadása
 add new event	calendar	hu	Új találkozó hozzáadása
 add new participants or resource	calendar	hu	Új résztvevők vagy erőforrás hozzáadása
+add recurrence	calendar	hu	Ismétlődés hozzáadása
 add timesheet entry	calendar	hu	Regiszter bejegyzés hozzáadása
 added	calendar	hu	Hozzáadva
 added by synchronization	calendar	hu	Hozzáadás szinkronizálással
+added recurrence on %1.	calendar	hu	Visszatérés hozzáadva %1.
 after	calendar	hu	A  után
 after %1	calendar	hu	%1 után
 after current date	calendar	hu	Mai dátum után
@@ -41,7 +41,6 @@ alarm deleted	calendar	hu	Riasztás törölve
 alarm for %1 at %2 in %3	calendar	hu	Riasztás %1-nek %2-nél %3-ban
 alarm management	calendar	hu	Riasztás kezelés
 alarms	calendar	hu	Riasztások
-all categories	calendar	hu	Összes kategória
 all day	calendar	hu	Egész nap
 all events	calendar	hu	Összes esemény
 all exceptions are converted into single events.	calendar	hu	Minden kivétel egyetlen eseménnyé alakul át.
@@ -55,6 +54,7 @@ allows to edit the event again	calendar	hu	Esemény újra szerkesztésének enge
 always	calendar	hu	Mindig
 always use full edit dialog	calendar	hu	Mindig a teljes szerkesztési párbeszédpanel használata
 always use the full edit dialog, not this little dialog	calendar	hu	Mindig a teljes szerkesztési párbeszédpanelt használja, nem ezt a kis párbeszédpanelt.
+apply changes to (future) exceptions too?	calendar	hu	A változtatásokat a (jövőbeli) kivételekre is alkalmazni?
 apply the changes	calendar	hu	Változások elfogadása
 attention	calendar	hu	Figyelem
 back half a month	calendar	hu	Fél hónapot vissza
@@ -141,6 +141,7 @@ edit this event	calendar	hu	Esemény szerkesztése
 edit this series of recurring events	calendar	hu	Ismétlődő esemény szerkesztése
 email address migration	calendar	hu	E-mail cím migráció
 empty for all	calendar	hu	Összes törlése
+empty target calendar before importing	calendar	hu	Üres célnaptár importálás előtt
 end	calendar	hu	Befejezés
 end date/time	calendar	hu	Befejezés dátuma/ideje
 enddate	calendar	hu	Befejezési dátum
@@ -166,12 +167,11 @@ exceptions	calendar	hu	Kivételek
 exclude weekend	calendar	hu	Hétvége kizárása
 execute a further action for this entry	calendar	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	calendar	hu	Meglévő hivatkozások
-explicit dates	calendar	hu	Kifejezett események
+explicit recurrences	calendar	hu	Explicit ismétlődések
 exports events from your calendar in ical format.	calendar	hu	Események exportálása a naptárból iCal formátumban.
 exports events from your calendar into a csv file.	calendar	hu	Események exportálása a naptárából CSV fájlba.
 extended	calendar	hu	Kibővített
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hu	Kibővített frissítések mindig tartalmazzák a komplett esemény-jellemzőket.
-favorites	calendar	hu	Kedvencek
 fieldseparator	calendar	hu	Mező elválasztó
 filemanager	calendar	hu	Filekezelő
 filename	calendar	hu	Állománynév
@@ -245,6 +245,7 @@ location, start- and endtimes, ...	calendar	hu	Helyszín, kezdési- és befejez�
 mail all participants	calendar	hu	Résztvevők email értesítése
 make freebusy information available to not logged in persons?	calendar	hu	Foglalt-Szabad információ elérhető-e a be nem jelentkezett személyeknek?
 maximum available quantity of %1 exceeded!	calendar	hu	A %1 maximálisan elérhető mennyiség túllépve!
+meeting request additional recurrence(s)	calendar	hu	Találkozó további ismétlődés(ek) kérése
 min days	calendar	hu	Min napok
 minimum number of users for showing day view as consolidated.	calendar	hu	A felhasználók minimális száma a napi nézet konszolidáltként való megjelenítéséhez.
 minimum number of users for showing week view as consolidated.	calendar	hu	A felhasználók minimális száma a heti nézet összevontként való megjelenítéséhez.
@@ -291,8 +292,10 @@ on time change of more than 4 hours too	calendar	hu	Több mint 4 óra idő vált
 one month	calendar	hu	Egy hónap
 one week	calendar	hu	Egy hét
 one year	calendar	hu	Egy év
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	hu	Csak néhány teljesen kompatibilis kliens támogatja (pl. az Apple-től). Ha URL-t kell megadnia, akkor az valószínűleg nem lesz támogatott!
 only the initial date of that recurring event is checked!	calendar	hu	Az ismétlődő esemény esetén ssak a kezdeti dátum van ellenőrizve!
 open todo's:	calendar	hu	Tennivalók Megnyitása:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	hu	Ellenkező esetben a cím, a leírás, ... vagy az új résztvevők módosításai nem kerülnek át a már létrehozott kivételekre.
 output unit	calendar	hu	Kimeneti egység
 overlap holiday	calendar	hu	Szabadság átfedés
 owner too	calendar	hu	Tulajdonost is
@@ -304,6 +307,7 @@ people holiday	calendar	hu	Emberek szabadsága
 permission denied	calendar	hu	Hozzáférés megtagadva
 planner by category	calendar	hu	Tervező kategória szerint
 planner by user	calendar	hu	Tervező felhasználó szerint
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	hu	Megjegyzés: A konfliktusellenőrzés soha nem történik a múltban, és mindig a fenti ismétlődési horizontra korlátozódik.
 please note: you can configure the field assignments after you uploaded the file.	calendar	hu	Megjegyzés: A mezőhozzárendelést konfigurálhatja, miután a fájlt feltöltötte.
 preselected group for entering the planner	calendar	hu	Előre kiválasztott csoport a tervezőbe lépéshez
 previous	calendar	hu	Előző
@@ -379,6 +383,7 @@ test import (show importable records <u>only</u> in browser)	calendar	hu	Import 
 the apple ical apps use this color to display events from this calendar.	calendar	hu	Az Apple iCal alkalmazások ezt a színt használják a naptár eseményeinek megjelenítésére.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	hu	A dokumentum tartalmazhat helyőrzőt, például {{%1}}, amelyet az adatokkal kell helyettesíteni.
 the extern organizer changed the event!	calendar	hu	A külső szervező megváltoztatta az eseményt!
+the organizer changed the event!	calendar	hu	A szervező megváltoztatta az eseményt!
 the resource you selected is already overbooked:	calendar	hu	A kiválasztott eszköz már foglalt:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	hu	A "%1" feladó NEM a "%2" külső szervező, járjon el óvatosan!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	hu	A "%1" feladó NEM a "%2" válaszoló résztvevő, járjon el óvatosan!
@@ -388,6 +393,7 @@ this defines the start of your dayview. events before this time, are shown above
 this entry is currently opened by %1!	calendar	hu	A bejegyzést %1 szerkeszti!
 this entry is opened by user:	calendar	hu	Ezt a bejegyzést megnyitotta a következő felhasználó:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	hu	Tervezőbe lépéskor ez a kiválasztott csoport. A tervezőben ez bármikor megváltoztatható.
+this is a single recurrence of a recurring event.	calendar	hu	Ez egy ismétlődő esemény egyetlen ismétlődése.
 this message is sent for canceled or deleted events.	calendar	hu	Ez az üzenet abban az esetben kerül elküldésre amikor megszakít vagy töröl egy eseményt.
 this message is sent for modified or moved events.	calendar	hu	Ez az üzenet akkor kerül elküldésre, amikor módosít vagy áthelyez eseményeket.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	hu	Ez az üzenet akkor lesz elküldve a Te eseményed minden résztvevönek, akiknek van kért értesítés egy új eseményröl. <b>Különbözö változókat használhasz amik helyettesítve vannak az esemény adatával. Az elsö sor az email tárgya.
@@ -435,6 +441,7 @@ yearview	calendar	hu	Éves Nézet
 yes, only admins can purge deleted items	admin	hu	Igen, csak az adminisztrátorok távolíthatják el a törölt elemeket
 you are not allowed to book the resource selected:	calendar	hu	Nincs jogosultságod az eszköz lefoglalásához:
 you can either set a year or a occurrence, not both !!!	calendar	hu	Vagy Évet, vagy Előfordulást lehet beállítani, de mindkettőt nem lehet!
+you can only notify other users, not yourself!	calendar	hu	Csak más felhasználókat értesíthet, saját magát nem!
 you can only set a year or a occurrence !!!	calendar	hu	Csak egy évet vagy előfordulást lehet beállítani.
 you do not have permission to read this record!	calendar	hu	Nincs jogosultsága olvasni ezt a bejegyzést!
 you have a meeting scheduled for %1	calendar	hu	Ütemezett megbeszélése van %1

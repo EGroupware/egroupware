@@ -134,7 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	en
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	en	password contains with "%1" a parts of your user- or full-name (3 or more characters long)
 password is invalid	preferences	en	Password is invalid
 password must have at least %1 characters	preferences	en	password must have at least %1 characters
-password stored	preferences	en	Password stored
+password stored	preferences	en	Password stored.
 permanent time zone selection	preferences	en	Permanent time zone
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	en	Select time zones to switch between. Switch is NOT shown, if less than two time zones are selected.
 please select your timezone.	preferences	en	Select your time zone.

@@ -51,6 +51,7 @@ check message against next rule also	mail	fi	Tarkista viesti myös seuraavaa sä
 check to save as calendar event on send	mail	fi	Tarkista painike luoda tapahtumana lähettämisen jälkeen
 check to save as infolog on send	mail	fi	Tarkista painike, jolla luodaan InfoLogina lähetyksen jälkeen.
 check to save as tracker entry on send	mail	fi	Tarkista painike, jolla luodaan tikettinä lähettämisen jälkeen
+checking admin credentials failed	mail	fi	Ylläpitäjän valtakirjojen tarkistaminen epäonnistui
 compose	mail	fi	Kirjoita viesti
 compose as new	mail	fi	Kirjoita uusi viesti
 compress folder	mail	fi	Tiivistä kansio
@@ -124,7 +125,7 @@ file into:	mail	fi	Siirry osoitteeseen:
 filemanager	mail	fi	Tiedostonhallinta
 filemode has been switched to %1	mail	fi	Filemode on vaihdettu: %1
 flagged	mail	fi	Merkitty tunnuksella
-flagged %1 messages as %2 in %3	mail	fi	Merkittiin %1 viesti(t) %2:ksi %3:ssa %3:ssa
+flagged %1 messages as %2 in %3	mail	fi	Merkittiin %1 viesti(t) "%2":ksi %3:ssa %3:ssa.
 flagged %1 messages as flagged in %2	mail	fi	Merkittiin %1 viesti(t) merkityksi %2:ssa
 flagged %1 messages as unflagged in %2	mail	fi	Merkittiin %1 viesti(t) merkitsemättömäksi %2:ssa
 folder	mail	fi	Kansio
@@ -184,6 +185,7 @@ mail	common	fi	Sähköpostit
 mail acl	mail	fi	Käyttöoikeudet
 mail filter	mail	fi	Postisuodatin
 mail filter rule	mail	fi	Postisuodattimen sääntö
+mail probably has no text-body	mail	fi	Sähköpostissa ei todennäköisesti ole tekstiä
 mail settings	mail	fi	Sähköpostiasetukset
 mail source	mail	fi	Sähköpostin lähde
 mail-address	mail	fi	Sähköpostiosoite
@@ -277,6 +279,7 @@ replied	mail	fi	Vastattu
 reply	mail	fi	Vastaa
 reply all	mail	fi	Vastaa kaikille
 reply to	mail	fi	Vastaanottaja
+reply with attachments	mail	fi	Vastaa liitetiedostojen kanssa
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	fi	Tähän viestiin vastaaminen epäonnistui, koska viestin sisältö näyttää olevan salattu eikä sitä voida purkaa kunnolla. Jos haluat silti sisällyttää tämän salatun viestin sisällön, voit yrittää käyttää sen sijaan lähetä edelleen liitetiedostona.
 replyto	mail	fi	Vastaanottaja
 report as ham	mail	fi	Ilmoita Ham

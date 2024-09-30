@@ -33,7 +33,6 @@ access denied: wrong username or password to configure the domain '%1(%2)' !!!	s
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
-activate safe password check	setup	de	Aktiviere die "sicheres Passwort"-Überprüfung
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Gruppe hinzufügen ("Default" wird versucht wenn nichts angegeben.)
 add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (EGw Domain) hinzufügen
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	de	Domain hinzufügen oder bearbeiten: [Domainname(default)],[DB-Name(egroupware)],[DB-Benutzer(egroupware)],DB-Passwort,[DB-Typ(mysql)],[DB-Host(localhost)],[DB-Port(DB spezifisch)],[Konfigurationsbenutzer(wie Header)],[Konfig-Passwort(wie Header)]
@@ -158,8 +157,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
-checking for jpgraph in %1	setup	de	Überprüfe JPGraph in %1
-checking for tnef application	setup	de	Überprüfe tnef Anwendung
 checking function %1 exists	setup	de	Überprüfe ob die Funktion %1 verfügbar ist
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	de	Überprüfe ob der Webserver auf die php.ini Einstellung session.save_path='%1' schreiben kann
 checking package %1 is installed	setup	de	Überprüfe ob das Paket %1 installiert ist
@@ -214,21 +211,18 @@ creating tables	setup	de	Erstelle Tabellen
 creation of %1 in %2 failed !!!	setup	de	Anlegen von %1 in %2 fehlgeschlagen!
 current configuration:	setup	de	Aktuelle Konfiguration:
 current system-charset	setup	de	Aktueller Systemzeichensatz
-current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br>
 custom attribute	setup	de	Benutzerdefiniertes Attribute
 custom handler: %1	setup	de	Eigener Sitzunghandler: %1
 custom oid	setup	de	Benutzerdefinierte OID
 custom set via %1	setup	de	Benutzerdefiniert über "%1" gesetzt
-cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer, Passwort
 daily	setup	de	täglich
 database	setup	de	Datenbank
 database instance (egw domain)	setup	de	Datenbankinstanz (EGw Domain)
 database is version %1 and up to date.	setup	de	Datenbank ist Version %1 und aktuell.
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datebase %1 droped.	setup	de	Datenbank %1 gelöscht.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br>Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br>(Port 13/Host: 129.6.15.28)
 day	setup	de	Tag
 day of week<br />(0-6, 0=sunday)	setup	de	Wochentag<br>(0-6, 0=Sonntag)
 db backup and restore	setup	de	DB Datensicherung und Wiederherstellung
@@ -452,7 +446,6 @@ login to mysql -	setup	de	mysql aufrufen -
 loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
 logout	setup	de	Abmelden
 logs to	setup	de	protokolliert nach
-mail account of %1 migraged	setup	de	Mail-Konto von %1 migriert
 mail account of %1 migrated	setup	de	Mail-Konto von %1 migriert
 mail domain (for virtual mail manager)	setup	de	Mail-Domain (für Virtual Mail Manager)
 mail server login type	setup	de	Mail-Server Login Typ
@@ -484,7 +477,6 @@ modify	setup	de	Ändern
 month	setup	de	Monat
 more information	setup	de	Mehr Informationen
 mount backup directory to %1	setup	de	Datensicherungsverzeichnis unter %1 mounten
-multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name for service provider	setup	de	Name des Service Provider / Dienstes
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den EGroupware verwendet
@@ -522,6 +514,7 @@ one month	setup	de	Ein Monat
 one week	setup	de	Eine Woche
 only add languages that are not in the database already	setup	de	Nur Sprachen hinzufügen, die noch nicht in der Datenbank sind
 only add new phrases	setup	de	Nur neue Begriffe hinzufügen
+openidconnect login	setup	de	OpenIDConnect Anmeldung
 optional, if only authentication and anonymous search is enabled	setup	de	optional, wenn nur Authentifizierung UND anonymes Suchen erlaubt ist
 or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
@@ -827,6 +820,7 @@ you must save and run an inital import, before the periodic import will start	se
 you need to add at least one egroupware domain / database instance.	setup	de	Sie müssen mindestens eine EGroupware Domain / Datenbank Instanz hinzufügen.
 you need to configure egroupware:	setup	de	Sie müssen EGroupware konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
+you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you need to specify a password!	setup	de	Sie müssen ein Passwort angeben!
 you should %1log out%2 and in again, to update your current session!	setup	de	Sie sollten sich %1ausloggen%2 und erneut einloggen, um ihre Sitzung zu aktualisieren!
 you should either install the sources or uninstall it, to get rid of the tables	setup	de	Sie sollten entweder die Quellen installieren oder die Anwendung deinstallieren, um die Tabellen los zu werden.

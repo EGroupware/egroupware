@@ -1,20 +1,15 @@
 %1 contact(s) %2	addressbook	eu	%1 kontaktu %2
-%1 records imported	addressbook	eu	%1 erregistro inportatuak
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	eu	%1 erregistro irakurriak (oraindik inportatu gabe, atzera itzuli eta "Inportazio Testa" kontrol laukia hautatu gabe utzi)
 %1 starts with '%2'	addressbook	eu	%1 '%2'tik hasten da
 (e.g. 1969)	addressbook	eu	(adib. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	eu	<b>Ez da aurkitu <none> konbertsio mota.</b> Mesedez, aukeratu bat ondorengo zerrendatik
 @-eval() is only availible to admins!!!	addressbook	eu	@-eval() administratzaileek bakarrik erabil dezakete
 account repository	admin	eu	Kontuak
-accounts	addressbook	eu	Kontuak
-actions	addressbook	eu	Ekintzak
 add a contact to this organisation	addressbook	eu	Kontaktu bat gehitu antolakuntza honetara
 add a new contact	addressbook	eu	Kontaktu berri bat gehitu
 add a single entry by passing the fields.	addressbook	eu	Gehitu sarrera berri bat eremua izendatuz.
 add custom field	addressbook	eu	Eremu berri bat gehitu
 added	addressbook	eu	Gehitua
 address book	common	eu	Helbide-liburua
-address book - vcard in	addressbook	eu	Helbide-liburua - VCard bidez
 address book - view	addressbook	eu	Helbide-liburua - ikusi
 address line 2	addressbook	eu	Helbidea-2.lerroa
 address type	addressbook	eu	Helbide mota
@@ -24,7 +19,6 @@ addressbook preferences	addressbook	eu	Helbidea-liburuko hobespenak
 addressbook the contact should be saved to	addressbook	eu	Kontaktuak gordetzeko helbide-liburua
 addressbook-fieldname	addressbook	eu	Helbide-liburua - eremu izena
 addvcard	addressbook	eu	VCard-a gehitu
-advanced search	addressbook	eu	Bilaketa aurreratua
 all contacts	addressbook	eu	Kontaktu guztiak
 alt. csv import	addressbook	eu	CVS-ak inportatzeko
 always	addressbook	eu	beti
@@ -76,7 +70,6 @@ csv-fieldname	addressbook	eu	CVS - Eremu izena
 csv-filename	addressbook	eu	CVS - Fitxategi izena
 custom	addressbook	eu	Egokitua
 custom fields	addressbook	eu	Egokitu Eremuak
-debug output in browser	addressbook	eu	Hirteera nabigatzailean erakutsi
 default	addressbook	eu	Lehenetsia
 default filter	addressbook	eu	Iragazki lehenetsia
 delete a single entry by passing the id.	addressbook	eu	Ezabatu errenkada bakarra id. pasatuaz
@@ -147,7 +140,6 @@ import from ldif, csv, or vcard	addressbook	eu	Inportatu LDIF, CVS ed VCard form
 import from outlook	addressbook	eu	Inportatu Outlooketik
 import multiple vcard	addressbook	eu	Inportatu VCard talde bat
 import next set	addressbook	eu	Inportatu hurrengo taldea
-import_instructions	addressbook	eu	Netscape erabiliz gero, helbide liburua aukeratu eta klikatu <b>Exportatu</b>, <b>fitxategi</b> menuan. Exportaturiko fitxategia LDIF formatuan egongo da.<p>Edo, Microsoft  outlookarekin, hautatu zure kontaktu karpeta eta ondoren hautatu <b>Inportatu eta Exportatu</b>, <b>Fitxategia</b> menutik eta exportatu kontaktuak komas separaturiko testu fitxategi batetara (CVS). <p>Edo, Palm Desktop 4.0 edo berriagoan, helbide liburura sartu eta hautatu <b>Exportatu</b>, <b>Fitxategia</b> menuan. Exportaturiko fitxategia VCard formatuan egongo da.
 in %1 days (%2) is %3's birthday.	addressbook	eu	%1 egunetan (%2) %3ren urtebetzea izango da
 income	addressbook	eu	Sarrerak
 infolog-contact	addressbook	eu	Egitekoak
@@ -200,7 +192,6 @@ preferred phone	addressbook	eu	hobestutako telefonoa
 prefix	addressbook	eu	Aurrizkia
 public key	addressbook	eu	Giltza publikoa
 publish into groups:	addressbook	eu	Taldeetan publikatu:
-read a list of entries.	addressbook	eu	Sarrea zerrenda bat irakurri
 read a single entry by passing the id and fieldlist.	addressbook	eu	Sarrera bakarra irakurri "ID"-a eta "eremu zerrenda" pasatuaz.
 read only	addressbook	eu	Soilik irakurri
 record access	addressbook	eu	Erregistrora sarrera
@@ -208,8 +199,6 @@ record owner	addressbook	eu	Erregistroaren jabea
 repetition	addressbook	eu	Errepikapena
 role	addressbook	eu	Rola
 select all	addressbook	eu	Guztiak hautatu
-select the type of conversion	addressbook	eu	Hautatu bihurketa mota
-select the type of conversion:	addressbook	eu	Hautatu bihurketa mota:
 show	addressbook	eu	Bistaratu
 start	admin	eu	Hasiera
 startrecord	addressbook	eu	Erregistro hasera

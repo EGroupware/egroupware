@@ -60,12 +60,14 @@ how to update lists	preferences	fi	Luetteloiden päivittäminen
 icon	preferences	fi	Kuvake
 icons and text	preferences	fi	Kuvakkeet ja teksti
 icons only	preferences	fi	Vain kuvakkeet
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	fi	Jos tämä on käytössä, syötetty salasanasi tallennetaan ja välitetään toiselle palvelimelle, kun kirjaudut sisään SSO:n kautta.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	fi	Näytä linkitettyjen kuvien thumbnailit. Voit ottaa tämän toiminnon pois käytöstä nopeuttaaksesi sivun latautumista.
 in which country are you. this is used to set certain defaults for you.	preferences	fi	Maa, jossa olet. Tämän avulla määritellään joitakin oletusasetuksia.
 interface/template selection	preferences	fi	Mallipohja
 it sets content size (text only) according to selected size.	preferences	fi	Se asettaa sisällön koon (vain teksti) valitun koon mukaan.
 just clicking on the line, like a checkbox	preferences	fi	Klikkaamalla riviä
 language	preferences	fi	Kieli
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	fi	SingleSignOnin kautta kirjautuminen ei anna salasanaa, joka välitetään sähköposti- tai tiedostopalvelimille.
 max matches per page	preferences	fi	Osumien maksimimäärä sivulla
 max number of icons in navbar	preferences	fi	Kuvakkeiden maksimimäärä navigaatiopalkissa
 no default	preferences	fi	Ei oletusta
@@ -76,6 +78,7 @@ number format	preferences	fi	Numeroiden muoto
 old password and new password are the same. this is invalid. you must enter a new password	preferences	fi	Vanha ja uusi salasana ovat samanlaiset. Valitse uusi salasana.
 p: paragraph	preferences	fi	p: Paragraph
 password changed	preferences	fi	Salasana vaihdettu!
+password stored	preferences	fi	Salasana tallennetaan.
 permanent time zone selection	preferences	fi	Oletusaikavyöhyke
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fi	Valitse kaikki aikavyöhykkeet, joiden haluat näkyvän pudotusvalikossa sivun yläreunassa. Valitse vähintään kaksi aikavyöhykettä.
 please select your timezone.	preferences	fi	Valitse aikavyöhyke
@@ -103,7 +106,9 @@ show navigation bar as	preferences	fi	Näytä navigaatiopalkki
 show number of current users	preferences	fi	Nykyiset käyttäjät
 show text on navigation icons	preferences	fi	Näytä navigaatiokuvakkeiden teksti
 show_more_apps	common	fi	Näytä lisää sovelluksia
+singlesignon and passwords	preferences	fi	SingleSignOn ja salasanat
 spellchecker language	addressbook	fi	Oikolukuohjelman kieli
+store password retrievable for singlesignon	common	fi	Tallenna salasana, joka voidaan hakea SingleSignOn-järjestelmää varten.
 text only	preferences	fi	Vain teksti
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus käynnistyy kun kirjaudut EGroupwareen tai painat etusivun kuvaketta.<br>Sinulla voi olla enemmän kuin yksi sovellus etusivullasi (pitää asettaa sovelluskohtaisesti), jollet määrittele tiettyä sovellusta tähän.
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein!

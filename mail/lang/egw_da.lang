@@ -50,6 +50,7 @@ check message against next rule also	mail	da	Tjek også beskeden mod næste rege
 check to save as calendar event on send	mail	da	Marker knappen for at oprette som begivenhed efter afsendelse
 check to save as infolog on send	mail	da	Marker knappen for at oprette som InfoLog efter afsendelse
 check to save as tracker entry on send	mail	da	Marker knappen for at oprette som billet efter afsendelse
+checking admin credentials failed	mail	da	Kontrol af administratorlegitimation mislykkedes
 compose	mail	da	Ny meddelse
 compress folder	mail	da	Komprimere mappe
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	da	Konfigurerede værdier vil automatisk blive indstillet i dialogboksen for det respekterede felt, når du skriver en ny e-mail.
@@ -108,7 +109,7 @@ file into:	mail	da	Flyt til:
 filemanager	mail	da	Filhåndtering
 filemode has been switched to %1	mail	da	Filemode er blevet skiftet til: %1
 flagged	mail	da	Flag sat
-flagged %1 messages as %2 in %3	mail	da	Markerede %1 besked(er) som %2 i %3
+flagged %1 messages as %2 in %3	mail	da	Markerede %1 besked(er) som "%2" i %3.
 flagged %1 messages as flagged in %2	mail	da	Flaggede %1 besked(er) som flagget i %2
 flagged %1 messages as unflagged in %2	mail	da	Flagede %1 besked(er) som ikke-flagede i %2
 folder	mail	da	Bibliotek
@@ -158,6 +159,7 @@ mail	common	da	Mail
 mail acl	mail	da	Adgangsrettigheder
 mail filter	mail	da	Mailfilter
 mail filter rule	mail	da	Regel for postfilter
+mail probably has no text-body	mail	da	Mailen har sandsynligvis ingen tekst
 mail settings	mail	da	Post indstillinger
 mail source	mail	da	Mailkilde
 mail-address	mail	da	Mail-Address
@@ -237,6 +239,7 @@ replied	mail	da	Besvaret
 reply	mail	da	Besvar
 reply all	mail	da	Besvar Alle
 reply to	mail	da	Besvar Til
+reply with attachments	mail	da	Svar med vedhæftede filer
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	da	Besvarelse af denne besked mislykkedes, fordi indholdet af denne besked ser ud til at være krypteret og ikke kan dekrypteres korrekt. Hvis du stadig ønsker at inkludere indholdet af denne krypterede besked, kan du prøve at bruge videresend som vedhæftet fil i stedet.
 replyto	mail	da	Besvar Til
 report as ham	mail	da	Rapporter som skinke

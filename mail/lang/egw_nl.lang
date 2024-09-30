@@ -87,6 +87,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	nl	Vink de knop aan om aan te maken als gebeurtenis na verzending
 check to save as infolog on send	mail	nl	Selecteer om ook als infolog te bewaren
 check to save as tracker entry on send	mail	nl	Selecteer om ook als invoer voor tracker te bewaren
+checking admin credentials failed	mail	nl	Controleren admingegevens mislukt
 choose file	mail	nl	Kies bestand
 common acl	mail	nl	ACL Standaard
 compose	mail	nl	Schrijf nieuw bericht
@@ -227,7 +228,7 @@ files	mail	nl	Bestanden
 flag / unflag	mail	nl	Markeer / Geen markering op
 flag or unflag a mail	mail	nl	Markeer een bericht
 flagged	mail	nl	gemarkeerd
-flagged %1 messages as %2 in %3	mail	nl	Gemarkeerd %1 berichten als %2in %3
+flagged %1 messages as %2 in %3	mail	nl	Gemarkeerd %1 berichten als "%2" in %3.
 flagged %1 messages as flagged in %2	mail	nl	Gemarkeerd %1 berichten als gemarkeerd in %2
 flagged %1 messages as unflagged in %2	mail	nl	Gemarkeerd %1 berichten als niet gemarkeerd in %2
 flagged / unflagged	mail	nl	Gemarkeerd / Niet gemarkeerd
@@ -316,6 +317,7 @@ mail	common	nl	Mail
 mail acl	mail	nl	Toegangsrechten
 mail filter	mail	nl	Berichten filter
 mail filter rule	mail	nl	Mail filter regel
+mail probably has no text-body	mail	nl	Mail heeft waarschijnlijk geen tekst
 mail settings	mail	nl	Mail instellingen
 mail source	mail	nl	Berichten oorsporng
 mail-address	mail	nl	Bericht-adres
@@ -456,6 +458,7 @@ reply	mail	nl	Antwoord
 reply all	mail	nl	Antwoord aan Allen
 reply message type	mail	nl	Type antwoord bericht
 reply to	mail	nl	Antwoord aan
+reply with attachments	mail	nl	Antwoord met bijlagen
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	nl	Het beantwoorden van dit bericht is mislukt omdat de inhoud van dit bericht versleuteld lijkt te zijn en niet goed ontsleuteld kan worden. Als je toch de inhoud van dit versleutelde bericht wilt meesturen, kun je in plaats daarvan proberen om doorsturen als bijlage te gebruiken.
 replyto	mail	nl	Antwoord aan
 report as ham	mail	nl	Rapporteren als Ham

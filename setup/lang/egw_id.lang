@@ -1,7 +1,6 @@
 00 (disable)	setup	id	00 (disable / recomended)
 13 (ntp)	setup	id	13 (ntp)
 80 (http)	setup	id	80 (http)
-[header-password],[header-user],[new-password],[new-user]	setup	id	[header-password],[header-user],[new-password],[new-user]
 accounts existing	setup	id	Accounts existing
 actions	setup	id	Tindakan
 additional settings	setup	id	Pengaturan Tambahan
@@ -71,6 +70,8 @@ deleting tables	setup	id	Menghapus Tables
 deny access	setup	id	Deny Access
 dependency failure	setup	id	Dependency Failure
 deregistered	setup	id	deregistered
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	id	Nonaktifkan hanya jika AD Anda bermasalah dengan kontrol VLV DAN dapat mengembalikan semua pengguna dalam satu kueri!
+disable vlv controls	setup	id	Menonaktifkan kontrol VLV
 domain	setup	id	Domain
 domain name	setup	id	Domain name
 domain-name	setup	id	domain-name
@@ -142,6 +143,7 @@ not set	setup	id	not set
 ok	setup	id	OK
 one month	setup	id	satu bulan
 one week	setup	id	satu minggu
+openidconnect login	setup	id	Login OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	id	opsional, jika hanya otentikasi DAN pencarian anonim yang diaktifkan
 or	setup	id	atau
 or leave empty and select openidconnect as authentication type above for single sign on	setup	id	atau biarkan kosong dan pilih OpenID Connect sebagai jenis autentikasi di atas untuk sistem masuk tunggal
@@ -231,3 +233,5 @@ world writable	setup	id	world writable
 write	setup	id	Tulis
 year	setup	id	tahun
 yes	setup	id	Ya
+you need to select your current charset!	setup	id	Anda perlu memilih charset Anda saat ini!
+[header-password],[header-user],[new-password],[new-user]	setup	id	[header-password],[header-user],[new-password],[new-user]

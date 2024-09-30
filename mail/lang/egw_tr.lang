@@ -28,6 +28,7 @@ certificate info for email %1	mail	tr	E-posta %1 için sertifika bilgisi
 certificate issued by	mail	tr	Tarafından verilen sertifika
 changing subject failed because of %1	mail	tr	Konu değiştirme %1 nedeniyle başarısız oldu
 changing subject failed folder %1 does not exist	mail	tr	Konu değiştirme başarısız %1 klasörü mevcut değil
+checking admin credentials failed	mail	tr	Yönetici kimlik bilgilerinin denetlenmesi başarısız oldu
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
 contact label	mail	tr	İletişim etiketi
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
@@ -64,7 +65,7 @@ file into	mail	tr	Şuraya taşı
 file into:	mail	tr	Şuraya taşı:
 filemode has been switched to %1	mail	tr	Dosya modu şu şekilde değiştirildi: %1
 flag / unflag	mail	tr	Bayrak / Bayrak Kaldır
-flagged %1 messages as %2 in %3	mail	tr	%1 mesaj(lar)ını %3 içinde %2 olarak işaretledi
+flagged %1 messages as %2 in %3	mail	tr	%1 mesaj(lar)ını %3 içinde "%2" olarak işaretledi.
 flagged %1 messages as flagged in %2	mail	tr	%1 mesaj(lar)ı %2'de işaretlendi olarak işaretlendi
 flagged %1 messages as unflagged in %2	mail	tr	%1 mesaj(lar)ını %2'de etiketlenmemiş olarak işaretledi
 folder %1 %2 failed because of %3!	mail	tr	Klasör %1 %2, %3 nedeniyle başarısız oldu!
@@ -107,6 +108,7 @@ mail	common	tr	Posta
 mail acl	mail	tr	Erişim hakları
 mail filter	mail	tr	Posta filtresi
 mail filter rule	mail	tr	Posta filtresi kuralı
+mail probably has no text-body	mail	tr	Postada muhtemelen metin yoktur
 mail settings	mail	tr	Mail ayarları
 mail source	mail	tr	Posta Kaynağı
 mail-address	mail	tr	Posta Adresi
@@ -180,6 +182,7 @@ rename folder	mail	tr	Klasörü yeniden adlandır
 replace 'http://' in image urls with (trailing / required!)	mail	tr	Resim URL'lerinde 'http://' yerine (sondaki / gerekli!)
 reply	mail	tr	Yanıtla
 reply all	mail	tr	Hepsini yanıtla
+reply with attachments	mail	tr	Eklerle birlikte yanıtlayın
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	tr	Bu mesajın içeriği şifrelenmiş göründüğü ve şifresi düzgün bir şekilde çözülemediği için bu mesajı yanıtlamak başarısız oldu. Bu şifreli mesajın içeriğini hala eklemek istiyorsanız, bunun yerine ek olarak ilet seçeneğini kullanmayı deneyebilirsiniz.
 report as ham	mail	tr	Ham olarak bildir
 report as spam	mail	tr	Spam olarak bildir

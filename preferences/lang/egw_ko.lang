@@ -34,13 +34,16 @@ how should egroupware display dates for you.	preferences	ko	EGroupware가 날짜
 icon	preferences	ko	아이콘
 icons and text	preferences	ko	아이콘과 설명
 icons only	preferences	ko	오직 아이콘만
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	ko	이 기능을 활성화하면 SSO를 통해 로그인할 때 입력한 비밀번호가 저장되어 다른 서버로 전달됩니다.
 in which country are you. this is used to set certain defaults for you.	preferences	ko	지금 계신 국가는? 이 설정은 기본설정이 됩니다.
 interface/template selection	preferences	ko	인터페이스/템플릿 선택
 language	preferences	ko	언어
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ko	싱글사인온을 통해 로그인하면 메일 서버나 파일 서버에 전달할 비밀번호가 제공되지 않습니다.
 max matches per page	preferences	ko	페이지당 최대 일치 개수
 max number of icons in navbar	preferences	ko	네비게이션바 에서 최대 아이콘 개수
 no default	preferences	ko	기본설정 없음
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ko	참고: e-mail의 암호는 변경되지 않습니다. 수동으로 변경하십시오.
+password stored	preferences	ko	비밀번호 저장.
 please, select a new theme	preferences	ko	새로운 테마를 선택하세요.
 popup with search	preferences	ko	팝업으로 검색
 re-enter your password	preferences	ko	새로운 암호 확인
@@ -57,6 +60,8 @@ show navigation bar as	preferences	ko	네비게이션 바를 볼때
 show number of current users	preferences	ko	현재 사용자 수
 show text on navigation icons	preferences	ko	툴팁보기
 show_more_apps	common	ko	더 많은 응용프로그램 보기
+singlesignon and passwords	preferences	ko	SingleSignOn 및 비밀번호
+store password retrievable for singlesignon	common	ko	SingleSignOn에 대해 검색 가능한 저장 비밀번호
 text only	preferences	ko	글자만
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ko	** EGroupware를 시작하면 기본 응용프로그램이 시작되고 홈페이지 아이콘을 클릭해도 마찬가지입니다.<br>여기서 응용프로그램을 직접 선택하지 않고 각 응용프로그램의 구성에서 설정하지 않을 경우 하나 이상의 응용프로그램을 홈페이지에 보이게 환경설정할수 있습니다
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ko	선택상자가 모든 사용자에 보입니다 (만약 사용자가 많다면 느려질수 있습니다) 팝업창은 사용자의 이름이나 그룹으로 검색할 수 있습니다.

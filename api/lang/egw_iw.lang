@@ -1,7 +1,19 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	iw	%1 (%2 חדשות) הודועות נכתבו ליישום '%3' ולשפות %4
 %1 email addresses inserted	common	iw	נקלטו %1 כתובות דואר אלקטרוני
+%1 etemplates deleted	common	iw	eTemplates נמחקו %1
+%1 etemplates found	common	iw	eTemplates נמצאו %1
 %1 is not executable by the webserver !!!	common	iw	!%1 אינו ניתן להרצה על יד שרת הווב
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	iw	%4PHP%3-הנו סוויטת תוכנה קבוצתית, רב-משתמשים, מבוססת ווב, התכובה ב %2 EGroupware%1
+%s disabled	common	iw	לא פעיל %s
+%s needed	common	iw	נדרש %s
+%s notranslation	common	iw	%s אין תרגום
+%s onchange	common	iw	%s עם שינוי
+%s readonly	common	iw	לקריאה בלבד %s
+'%1' has an invalid format !!!	common	iw	!ל -'%1' פורמאט לא חוקי
+'%1' is not a valid floatingpoint number !!!	common	iw	!'%1' אינו מספר נקודה צפה חוקי
+'%1' is not a valid integer !!!	common	iw	!'%1' אינו מספר שלם חוקי
 00 (disable)	admin	iw	00 (בטל)
+a pattern to be searched for	common	iw	תבנית חיפוש
 about	common	iw	אודות
 about %1	common	iw	אודות %1
 access	common	iw	גישה
@@ -16,25 +28,38 @@ actions	common	iw	פעולות
 active	common	iw	פעיל
 add	common	iw	הוסף
 add %1 category for	common	iw	הוסף קטגוריה %1 עבור
+add a new column (after the existing ones)	common	iw	(הוסף עמודה חדשה (אחרי הקיימות
+add a new multi-column index	common	iw	הוסף אינדקס רב-עמודות
 add category	common	iw	הוסף קטגוריה
+add column	common	iw	הוסף עמודה
+add index	common	iw	הוסף אינדקס
 add sub	common	iw	הוסף תת קטגוריה
+add table	common	iw	הוסף טבלה
 addressbook	common	iw	ספר כתובות
 admin	common	iw	מנהל
 administration	common	iw	ניהול
+advanced search	common	iw	חיפוש מתקדם
+align	common	iw	יישר
+alignment of label and input-field in table-cell	common	iw	יישור התווית ושדה הקלט בתא של הטלה
+alignment of the v/hbox containing table-cell	common	iw	יישור תיבת האנכי/אופקי המכיל את התא של הטבהל
 all	common	iw	הכל
 all fields	common	iw	כל השדות
-alphabet	common	iw	א,ב,ג,ד,ה,ו,ז,ח,ט,י,כ,ל,מ,נ,ס,ע,פ,צ,ק,ר,ש,ת
+all users	common	iw	כל המשתמשים
 alternate style-sheet:	common	iw	:דף סגנון חלופי
+am	common	iw	הנני
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	iw	!(עמודה מאונדקסת מזרזת שאילתות המשתמשות בעמודה זו (על חשבון מקום אכסון
 and	common	iw	-ו
 application	common	iw	יישום
+application name needed to write a langfile or dump the etemplates !!!	common	iw	!eTemplates שם היישום הדרוש כדי לכתוב קובץ שפה או להשליך
+applications	common	iw	יישומים
 apply	common	iw	בצע
 april	common	iw	אפריל
 are you sure you want to delete these entries ?	common	iw	?בטוח שהנך רוצה למחוק רשומות אילו
 are you sure you want to delete this entry ?	common	iw	?בטוח שהנך רוצה למחוק רשומה זו
+attach	common	iw	צרף
+attach file	common	iw	צרף קובץ
 august	common	iw	אוגוסט
 author	common	iw	הכותב
-autohide sidebox menus	common	iw	הסתרה אוטומטית של תפריטי צד
-automatically hide the sidebox menus?	common	iw	?להסתיר אוטומטית תפריטים בתיבת צד אוטומטית
 autosave default category	common	iw	שמירה אוטומטית של קטגוריה ברירת מחדל
 back	common	iw	חזור
 back to user login	common	iw	חזור אל כניסת משתמש
@@ -42,10 +67,13 @@ background color:	common	iw	:צבע רקע
 bad login or password	common	iw	שם כניסה או סיסמא שגויה
 bcc	common	iw	העתק מוסתר
 blocked, too many attempts	common	iw	חסום, יותר מדי נסיונות
+blurtext	common	iw	טשטש טקסט
 bold	common	iw	מודגש
 border	common	iw	גבול
+border-line-thickness for the table-tag	common	iw	עובי קו הגבול של תג טבלה
 bottom	common	iw	תחתית
 calendar	common	iw	לוח שנה
+can not have special sql-value null	common	iw	NULL מיוחד SQL לא יכול לקבל ערך
 cancel	common	iw	בטל
 cannot replace %1 because it is a directory	common	iw	לא יכול להחליף את %1 כי היא מחיצה
 caption	common	iw	כותרת
@@ -55,57 +83,109 @@ category	common	iw	קטגוריה
 category %1 has been added !	common	iw	!קטגוריה %1 נוספה
 category %1 has been updated !	common	iw	!קטגוריה %1 עודכנה
 cc	common	iw	העתק
+cellpadding for the table-tag	common	iw	ריפוד התא עבור תג טבלה
+cells	common	iw	תאים
+cellspacing for the table-tag	common	iw	ריווח תאים לתג טבלה
+center	common	iw	מרכז
 change	common	iw	שנה
+changed	common	iw	שונה
 charset	common	iw	UTF-8
+check if content should only be displayed but not altered (the content is not send back then!)	common	iw	(בדוק באם יש להציג את התוכן בלבד ולא לשנות אותו (אז לא מחזירים את התוכן
+check if field has to be filled by user	common	iw	סמן אם על המשתמש למלא את השדה
 check installation	common	iw	בדוק התקנה
 check now	common	iw	בדוק עכשיו
+checkbox	common	iw	תיבת סימון
 choose the category	common	iw	בחר את הקטגוריה
 choose the parent category	common	iw	בחר את קטגורית אם
+class	common	iw	סיווג
+class, valign	common	iw	סיווג, יישור אנכי
 clear	common	iw	נקה
 clear form	common	iw	נקה טופס
 click	common	iw	הקלק
-click or mouse over to show menus	common	iw	הקלק או העבר את העכבר מעל כדי לראות תפריטים
-click or mouse over to show menus?	common	iw	?הקלק או העבר את העכבר מעל כדי לראות תפריטים
+click here to attach the file	common	iw	הקלק כאן כדי לצרף את הקובץ
+click here to create the link	common	iw	הקלק כאן כדי ליצור את הקישור
+click here to start the search	common	iw	הקלק כאן כדי להתחיל את החיפוש
+click here to upload the file	common	iw	הקלק כאן לעלות את הקובץ
+click to order after that criteria	common	iw	הקלק כאן כדי לסדר לפי קרטיריון זה
 close	common	iw	סגור
+columnname	common	iw	שם העמודה
+comment	common	iw	הערה
 company	common	iw	חברה
+confirm	common	iw	אישורך
+contact	common	iw	איש קשר
+contains	common	iw	מכיל
 copy	common	iw	העתק
 create	common	iw	צור
+create a new table for the application	common	iw	צור עמודה חדשה עבור יישום זה
 created by	common	iw	נוצר על ידי
+creates an english ('en') langfile from label and helptexts (for application in name)	common	iw	(מתוויות וטקסט עזרה (עבור היישום בשם ('en') יוצר קובץ שפה באנגלית
+css class for the table-tag	common	iw	עבור תג הטבלה CSS סיווג
+css-styles	common	iw	CSS-סגנונות
 currency	common	iw	מטבע
 current	common	iw	נוכחי
 current users	common	iw	משתמשים נוכחיים
+custom	common	iw	מותאם אישית
+custom fields	common	iw	שדות מותאמים אישית
 date	common	iw	תאריך
 date due	common	iw	תאריך יעד
+date+time	common	iw	שעה+תאריך
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	iw	הפורט של תאריך/שעה
+day	common	iw	יום
+days	common	iw	ימים
+db ensures that every row has a unique value in that column	common	iw	בסיס הנתונים מוודא של כל שורה יש ערך ייחודי בעמודה זו
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	iw	עבור אורך המונדקס של עמודה mysql(100) או nysql(FULLTECT): אפשרויות אידקס ייחודיות של (בסיס הנתונים (המופרד בפסיקים
+db-tools	common	iw	כלי בסיס הנתונים
 december	common	iw	דצמבר
+deck	common	iw	(חפיסה (פנימית
+default	common	iw	ברירת מחדל
 default category	common	iw	קטגוריה ברירת מחדל
 delete	common	iw	מחק
+delete a single entry by passing the id.	common	iw	.מחיקת רשומה  ע"י העברת זיהויו
+delete all selected etemplates, without further inquiry	common	iw	המובחרים ללא כל שאלה נוספת eTemplates מחק את כל
 delete category	common	iw	מחק קטגוריה
+delete column	common	iw	מחק עמודה
+delete index	common	iw	מחק אידקס
 delete row	common	iw	מחק שורה
 delete this entry	common	iw	מחק רשומה זו
+delete this etemplate	common	iw	זה eTemplate מחק
+delete whole column (can not be undone!!!)	common	iw	(!מחק את כל העמודה (לא ניתן לשחזר
+deletes the above spez. etemplate from the database, can not be undone	common	iw	הרשומה לעיל מבסיס הנתונים, לא ניתן לשחזר eTemplate-מוחק את ספציפיקצית ה
+deletes the etemplate spez. above	common	iw	לעיל eTemplate-מוחק את ה
+deletes this column	common	iw	מוחק עמודה זו
+deletes this index	common	iw	מוחק אינדקס זה
 description	common	iw	תיאור
 detail	common	iw	פירוט
 details	common	iw	פרטים
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	iw	?PNG וחדש יותר כדי להציג שקיפות בתמונות Internet Explorer 5.5-לבטל תיקון הבג ב
 directory	common	iw	מחיצה
-disable internet explorer png-image-bugfix	common	iw	internet Explorer-ב PNG של תמונות bug-לבטל את תיקון ה
-disable slider effects	common	iw	בטל אפקט סליידר
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	iw	לבטל את אפקט האנימציה של הסליידר?<br>
 disabled	common	iw	מבוטל
+discard changes	common	iw	בטל שינוים
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	iw	(מוצג בקידמת הקלט או שהקלט המוכנס עבור '%s' בתווית (תווית כפתור הגש או קובץ התמונה
+displayed in statusline of browser if input-field gets focus	common	iw	מוצג בשורת המצב בדפדפן אם שדה הקלט מקבל את הפוקוס
 do you also want to delete all subcategories ?	common	iw	?האם למחוק גם את כל תתי הקטגוריה
+do you want to save the changes you made in table %s?	common	iw	?ברצונך לשמור את השינוים שעשית בטבלת '%s'
 doctype:	common	iw	:סוג מסמך
 document properties	common	iw	תכונות המסמך
 document title:	common	iw	:כותרת המסמך
+documentation	common	iw	תיעוד
 domain	common	iw	דומיין
 domain name for mail-address, eg. "%1"	common	iw	שם הדומיין עבור כתובות דואר אלקטרוני, למשל "%1"
 domestic	common	iw	מקומי
 done	common	iw	בוצע
 download	common	iw	הורד
+drop a table - this can not be undone	common	iw	השלך טבלה - לא ניתן לשיחזור
+drop table	common	iw	השלך טבלה
+duration	common	iw	משך
 e-mail	common	iw	דואר אלקטרוני
 edit	common	iw	ערוך
 edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
 edit categories	common	iw	ערוך קטגוריות
 edit category	common	iw	ערוך קטגוריה
+edit the etemplate spez. above	common	iw	לעיל eTemplates-ערוך את ספציפיקציות ה
+editable templates - db-tools	common	iw	הניתנים לעריכה - כלי בסיס נתונים eTemplates
+editable templates - delete template	common	iw	הניתנים לעריכה - מחק תבנית eTemplates
+editable templates - editor	common	iw	הניתנים לעריכה - עורך eTemplates
+editable templates - search	common	iw	הניתנים לעריכה - חיפוש eTemplates
+editable templates - show template	common	iw	הניתנים לעריכה - הצג תבניות eTemplates
 egroupware	common	iw	sdg
 egroupware: login blocked for user '%1', ip %2	common	iw	EGroupware: הכניסה נחסמה למשתמש '%1', IP %2
 email	common	iw	דואר אלקטרוני
@@ -113,31 +193,63 @@ email-address of the user, eg. "%1"	common	iw	כתובת דוא"ל של המשת
 enabled	common	iw	מאופשר
 end date	common	iw	תאריך סיום
 end time	common	iw	שעת סיום
+enter '' for an empty default, nothing mean no default	common	iw	הקש '' עבור ברירת מחדל ריקה, כלום משמעותו - ללא ברירת מחדל
+enter a search pattern	common	iw	ציין תבנית לחיפוס
+enter filename to upload and attach, use [browse...] to search for it	common	iw	ציין שם קובץ להעלות ולצרף, השתמש ב-[עיון] לחיפוש
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	EGroupware של URL-הקלד את ה<br>
+enter the new version number here (> old_version), empty for no update-file	common	iw	ציין את מספר הגירסה החדשה כאן (> הגירסה הישנה), השאר ריק אם אין קובץ מעודכן
+enter the new version number here (has to be > old_version)	common	iw	(ציין כאן את מספר הגירסה החדשה (חייב להיות > מספר הגירסה הישנה
 entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
+entry saved	common	iw	הרשומה נשמרה
 entry updated sucessfully	common	iw	הרשומה עודכנה בהצלחה
 error	common	iw	שגיאה
 error creating %1 %2 directory	common	iw	שגיאה אירע בעת יצירת סיפריה %1 %2
 error deleting %1 %2 directory	common	iw	שגיאה אירע בעת מחיקת סיפריה %1 %2
 error renaming %1 %2 directory	common	iw	שגיאה אירע בעת שינוי שם סיפריה %1 %2
+error: template not found !!!	common	iw	!שגיאה: התבנית לא נמצאה
+error: webserver is not allowed to write into '%1' !!!	common	iw	!%1 שגיאה: לשרת הווב אין הרשאה לכתוב אל
+error: writing file (no write-permission for the webserver) !!!	common	iw	(!שגיאה: בכתיבת הקובץ (אין לשרת הווב הרשאות כתיבה
+etemplate '%1' imported, use save to put it in the database	common	iw	הובא, השתמש ב-[שמור] כדי להכניס אותו לבסיס הנתונים eTemplate-ה
+etemplate '%1' written to '%2'	common	iw	%1 נכתב אל %2 eTemplate-ה
+etemplate editor	common	iw	eTemplate עורך
+etemplate reference	common	iw	eTemplate מדריך
+etemplate tutorial	common	iw	eTemplate-שיעור פרטי ב
 exact	common	iw	בדיוק
+exchange this row with the one above	common	iw	החלף בין שורה זו לשורה מעליה
+exchange this two columns	common	iw	החלף בין שתי עמודות הללו
+export the loaded etemplate into a xml-file	common	iw	xml הטעון לקובץ eTemplate-ייצא את ה
+export xml	common	iw	xml ייצוא
+extensions loaded:	common	iw	:הרחבות טעונות
 failed to change password.	common	iw	.לא הצלחתי לשנות את הסיסמא. נא ליצור קשר עם מנהל המערכת
 fax number	common	iw	מספר פקס
 february	common	iw	פברואר
+field must not be empty !!!	common	iw	!אסור לשדה הזה להיות ריק
 fields	common	iw	שדות
+file	common	iw	קובץ
+file contains more than one etemplate, last one is shown !!!	common	iw	!אחד, האחרון מוצג eTemplate-הקובץ מכיל יותר מ
+file writen	common	iw	הקובץ נכתב
 files	common	iw	קבצים
+fileupload	common	iw	העלת קובץ
 filter	common	iw	מסנן
+first	common	iw	ראשון
 first name	common	iw	שם פרטי
 first name of the user, eg. "%1"	common	iw	שם פרטי של המשתמש, לדוגמא "%1"
 first page	common	iw	עמוד ראשון
 firstname	common	iw	שם פרטי
 fixme!	common	iw	!תקן אותי
+floating point	common	iw	נקודה צפה
 force selectbox	common	iw	לחייב תיבת בחירה
+foreign key	common	iw	מפתח זר
+formatted text (html)	common	iw	(HTML) טקסט מפורמאט
 friday	common	iw	יום שישי
 fullname	common	iw	שם מלא
 general menu	common	iw	תפריט כללי
 global	common	iw	גלובלי
 global public	common	iw	ציבור גלובלי
+go to the first entry	common	iw	אל הרשומה הראשונה
+go to the last entry	common	iw	אל הרשומה האחרונה
+go to the next page of entries	common	iw	אל עמוד רשומות הבא
+go to the previous page of entries	common	iw	אל עמוד רשומות הקודם
 grant access	common	iw	לאפשר כניסה
 group	common	iw	קבוצה
 group access	common	iw	גישת קבוצה
@@ -150,18 +262,38 @@ groups	common	iw	קבוצות
 groups with permission for %1	common	iw	קבוצות בעלי הרשאות עבור %1
 groups without permission for %1	common	iw	קבוצות ללא הרשאות עבור %1
 height	common	iw	גובה
+height, disabled	common	iw	גובה, במוטל
 help	common	iw	עזרה
 high	common	iw	גבוה
 highest	common	iw	הגבוה ביותר
 home	common	iw	בית
 home email	common	iw	דוא"ל בבית
+home screen	common	iw	מסך ראשי
+horizontal rule	common	iw	חוק אופקי
+hour	common	iw	שעה
+hours	common	iw	שעות
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	iw	?(כמה צלמיות יש להציג בפס הניווט (בראש העמוד<br>
+id	common	iw	זיהוי
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	iw	אם השדה מבוטל תא ריק מוצג כדי להסיר (זמנית) את השדה/תא
+image	common	iw	תמונה
 image url	common	iw	של התמונה URL
+import	common	iw	ייבוא
+import an etemplate from a xml-file	common	iw	xml מקובץ eTemplate ייבוא
+import table-definitions from existing db-table	common	iw	ייבוא הגדרות טבלאות מטבלת בסיס נתונים קיימת
+import xml	common	iw	xml ייבוא
+index/name of returned content (name of the template, link / method for image)	common	iw	(אידקס/שם של התוכן המוחזר (השם של התבנית/קישור/מטודה עבור תמונה
+indexed	common	iw	מאונדקס
+indexoptions	common	iw	אפשריות אידקס
 insert all %1 addresses of the %2 contacts in %3	common	iw	הוסף את כל %1 הכתובות של %2 אנשי הקשר בתוך %3
 insert column after	common	iw	הוסף עמודה אחרי
 insert column before	common	iw	הוסף עמודה לפני
+insert new column behind this one	common	iw	הוסף עמודה חדשה אחרי עמודה זו
+insert new column in front of all	common	iw	הוסף עמודה חדשה לפני כולן
+insert new row after this one	common	iw	הוסף שורה חדשה אחרי שורה זו
+insert new row in front of first line	common	iw	הוסף שורה חדשה לפני השורה הראשונה
 insert row after	common	iw	הוסף שורה אחרי
 insert row before	common	iw	הוסף שורה לפני
+integer	common	iw	מספר שלם
 international	common	iw	בינלאומי
 invalid filename	common	iw	שם קובץ לא חוקי
 invalid ip address	common	iw	לא חוקית IP כתובת
@@ -178,8 +310,13 @@ justify center	common	iw	יישור למרכז
 justify full	common	iw	יישור מלא
 justify left	common	iw	יישור שמאלה
 justify right	common	iw	יישור ימינה
+key	common	iw	מפתח
 keywords	common	iw	מלות מפתח
+label	common	iw	תווית
+lang	common	iw	שפה
 language	common	iw	שפה
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	iw	עבור עברית) עבור תבניות תלויות שפה 'iw' :הקיצור של השפה (לדוגמא<br>
+last	common	iw	אחרון
 last modified	common	iw	שונה לאחרונה
 last name	common	iw	שם משפחה
 last name of the user, eg. "%1"	common	iw	שם משפחה של המשתמש, לדוגמא "%1"
@@ -187,9 +324,14 @@ last page	common	iw	עמוד אחרון
 lastname	common	iw	שם משפחה
 left	common	iw	שמאל
 license	common	iw	רשיון
+link	common	iw	קישור
+linklist	common	iw	רשימת קישורים
+linkstring	common	iw	מחרוזת הקישור
+linkto	common	iw	לקשור אל
 list	common	iw	רשימה
 list members	common	iw	חברים ברשימה
 load	common	iw	טען
+load this template into the editor	common	iw	טען תבנית זו אל העורך
 local	common	iw	מקומי
 login	common	iw	כניסה
 loginid	common	iw	זיהוי כניסה
@@ -198,54 +340,80 @@ low	common	iw	נמוך
 lowest	common	iw	הנמוך ביותר
 mail domain, eg. "%1"	common	iw	דומיין של הדואר, לדוגמא "%1"
 main category	common	iw	קטגוריה ראשית
-home screen	common	iw	מסך ראשי
 maintainer	common	iw	מתחזק
 march	common	iw	מרץ
-max number of icons in navbar	common	iw	כמות מירבית של צלמיות בפס ניווט
 may	common	iw	מאי
 medium	common	iw	בינוני
 menu	common	iw	תפריט
 message	common	iw	הודעה
 minute	common	iw	דקה
+minutes	common	iw	דקות
 monday	common	iw	יום שני
+month	common	iw	חודש
+more	common	iw	עוד
+multicolumn indices	common	iw	אידקס רב-עמודות
 name	common	iw	שם
+name of other table where column is a key from	common	iw	שם הטבלה בה עמודה זו מהווה מפתח
+name of table to add	common	iw	שם הטבלה להוסיף
+name of the etemplate, should be in form application.function[.subtemplate]	common	iw	[צריך להיות בצורה יישום.פונקציה[.תת-תבנית ,eTemplate-שם ה
 name of the user, eg. "%1"	common	iw	שם המשתמש, לדוגמא "%1"
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של <br>
 never	common	iw	לעולם לא
+new	common	iw	חדש
 new entry added sucessfully	common	iw	רשומה חדשה נוספה בהצלחה
 new main category	common	iw	קטגוריה ראשית חדשה
+new search	common	iw	חיפוש חדש
+new table created	common	iw	נוצרה טבלה חדשה
 new value	common	iw	ערך חדש
+newer version '%1' exists !!!	common	iw	!קיימת גירסה חדשה יותר
 next	common	iw	הבאה
 next page	common	iw	עמוד הבא
+nextmatch	common	iw	ההתאמה הבאה
+nextmatch filterheader	common	iw	סנן כותרות להתאמה הבאה
+nextmatch sortheader	common	iw	מיין כותרות להתאמה הבאה
 no	common	iw	לא
 no - cancel	common	iw	לא - בטל
 no entries found, try again ...	common	iw	...לא נמצאו רשומות, נסה שוב
+no file	common	iw	אין קובץ
+no filename given or selected via browse...	common	iw	[לא ציון שם קובץ וגם לא נבחר באמצעות [עיון
 no history for this record	common	iw	אין היסטוריה לרשומה זו
+no matches found	common	iw	לא נמצאו התאמות
 no subject	common	iw	אין נושא
 none	common	iw	ללא
 normal	common	iw	רגיל
 not	common	iw	לא
 not a user yet? register now	common	iw	עדיין לא משתמש? הרשם עכשיו
 not assigned	common	iw	לא נקבע
+not null	common	iw	NULL לא
 note	common	iw	הערה
 notes	common	iw	הערות
+nothing found - try again !!!	common	iw	!לא נמצא כלום - נסה שוב
+nothing matched search criteria !!!	common	iw	!שום דבר לא התאים לקרטריון החיפוש
 notify window	common	iw	חלון הודעות
 november	common	iw	נובמבר
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	iw	(TD-עבור תג ה) CSS עבור כל העמודות הנותרות 'all' כמות העמודות עליהן השדה/התא צריך להתפרס
 october	common	iw	אוקטובר
+of	common	iw	של
 ok	common	iw	בסדר
 old value	common	iw	ערך קודם
 on *nix systems please type: %1	common	iw	במערכות 'ניקס יש לכתוב: %1
 on mouse over	common	iw	במעבר עכבר
+only an other version found !!!	common	iw	!נמצאה גירסה אחרת בלבד
 only private	common	iw	רק פרטיים
 only yours	common	iw	רק את שלך
 open	common	iw	פתח
 open notify window	common	iw	פתח חלון הודעות
 open popup window	common	iw	פתח חלון קופץ
+optional note about the link	common	iw	הערה אפציונלית לקישור
+options	common	iw	אפשריות
 or	common	iw	או
 ordered list	common	iw	רשימה מסודרת
 original	common	iw	מקור
 other	common	iw	אחר
+overflow	common	iw	גלישה
 overview	common	iw	סקירה כללית
 owner	common	iw	הבעלים
+padding	common	iw	ריפוד
 page	common	iw	עמוד
 page was generated in %1 seconds	common	iw	עמוד נוצר ב-%1 שניות
 parcel	common	iw	חבילה
@@ -259,83 +427,149 @@ personal	common	iw	אישי
 phone number	common	iw	מספר טלפון
 please %1 by hand	common	iw	נא ל%1 ידנית
 please enter a name	common	iw	!נא להקליד שם
+please enter table-name first !!!	common	iw	!נא להקליד שם טבלה קודם
 please run setup to become current	common	iw	נא להריץ הגדרה כדי להיות מעודכן
 please select	common	iw	נא לבחור
 please set your global preferences	common	iw	!נא לקבוע את עדיפויות הגלובלית שלך
 please set your preferences for this application	common	iw	!נא לקבוע את העדיפויות שלך ליישום זה
 please wait...	common	iw	...המתן בבקשה
+pm	common	iw	אחה"צ
 popup with search	common	iw	חלונית קופצת עם חיפוש
 postal	common	iw	דואר
+precision	common	iw	דיוק
 preferences	common	iw	העדיפויות
 previous page	common	iw	עמוד קודם
 primary group	common	iw	קבוצה ראשית
+primary key	common	iw	מפתח ראשי
+primary key for the table, gets automaticaly indexed	common	iw	המפתח הראשי של הטבלה, מאונדקס אוטומטית
 primary style-sheet:	common	iw	:דף סגנון ראשי
 print	common	iw	הדפס
 priority	common	iw	עדיפות
 private	common	iw	פרטי
 project	common	iw	פרויקט
 public	common	iw	ציבורי
+radiobutton	common	iw	כפתור רדיו
 read	common	iw	קרא
+read a single entry by passing the id and fieldlist.	common	iw	קרא רשומוה בודדת ע"י העברת הזיהוי ורשימת שדות
+read etemplate from database (for the keys above)	common	iw	(מבסיס נתונים (עבור המפתחות לעיל eTemplate קרא
 read this list of methods.	common	iw	.קרא רשימת מטודות זו
 reading	common	iw	קורא
+readonly	common	iw	לקריאה בלבד
+refresh	common	iw	רענן
 reject	common	iw	דחה
+remove row (can not be undone!!!)	common	iw	(הסר שורה (לא ניתן לשחזור
 remove selected accounts	common	iw	מחק חשבונות מובחרים
+remove this link (not the entry itself)	common	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
 rename	common	iw	שנה שם
 replace	common	iw	החלף
 replace with	common	iw	-החלף ב
+required	common	iw	נדרש
+reset	common	iw	איפוס
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	iw	מחזיר רשימה מלאה של חשבונות במערכת. אזהרה: הרשימה עשויה להיות גדולה למדי
 returns an array of todo items	common	iw	מחזיר מערך של פרטי משימות
+returns savely, without deleting	common	iw	חוזר תוך כדי שמירה, בלי למחוק
 returns struct of users application access	common	iw	מחזיר את מבנה הגישה של משתמשים ליישומים
 right	common	iw	ימין
 saturday	common	iw	יום שבת
 save	common	iw	שמור
-search	common	iw	חיפוש
+save all	common	iw	שמור הכל
+save the etemplate under the above keys (name, ...), change them for a saveas	common	iw	[תחת המפתחות לעיל (שם,...), שנה שם עבור [שמור בשם eTemplate-שמור את ה
+saves changes to tables_current.inc.php	common	iw	tables_current.inc.php שמור שינוים אל
+scale	common	iw	קנה מידה
+scale for float	common	iw	קנה המידה עבור נקודה צפה
+search	common	iw	חפש
 search %1 '%2'	common	iw	חיפוש %1 '%2'
 search accounts	common	iw	חיפוש חשבונות
 search or select accounts	common	iw	חפש או בחר חשבונות
 section	common	iw	חלק
 select	common	iw	בחר
+select a category	common	iw	בחר קטגוריה
+select a primary contact, to show in the list	common	iw	בחר איש קשר ראשי להציג ברשימה
+select access	common	iw	בחר גישה
+select account	common	iw	בחר חשבון
 select all	common	iw	בחר הכל
 select all %1 %2 for %3	common	iw	בחר כל %1 %2 עבור %3
+select an app first !!!	common	iw	קודם !יש לבחור יישום
+select an app to search in	common	iw	בחר יישום לחפש בו
+select an application	common	iw	בחר יישום
+select an application, (*) = uninstalled	common	iw	בחר יישום, (*)=לא מותקן
+select an entry to link with	common	iw	בחר רשומה לקשור אליה
+select an table of the application	common	iw	בחר טבלה של היישום
+select application	common	iw	בחר יישום
 select category	common	iw	בחר קטגוריה
+select country	common	iw	בחר ארץ
 select date	common	iw	בחר תאריך
+select day	common	iw	בחר יום
 select group	common	iw	בחר קבוצה
 select home email address	common	iw	בחר כתובת דוא"ל בבית
+select if content of field should not be translated (label gets always translated)	common	iw	(בחר אם אין לתרגם את תוכן השדה (התווית תתורגם בכל מקרה
+select month	common	iw	בחר חודש
+select number	common	iw	בחר מספר
 select one	common	iw	בחר אחד
+select one ...	common	iw	...בחר אחד
+select percentage	common	iw	בחר אחוזים
+select priority	common	iw	בחר עדיפות
+select state	common	iw	בחר מדינה
+select the indexed columns in their desired order	common	iw	בחר את העמודות המאונדקסות בסדר הרצוי
+select this etemplate to delete it	common	iw	הזה כדי למחוק אותו eTemplate-בחר את ה
 select user	common	iw	בחר משתמש
+select which values to show	common	iw	בחר אלו ערכים להציג
 select work email address	common	iw	בחר כתובת דוא"ל בעבודה
+select year	common	iw	בחר שנה
+selectbox	common	iw	תיבת בחירה
 selection	common	iw	בחירה
 send	common	iw	שלח
 september	common	iw	ספטמבר
 server %1 has been added	common	iw	השרת %1 נוסף
 server name	common	iw	שם השרת
 session has been killed	common	iw	הרגתי את המושב
+sets today as date	common	iw	קובע תאריך של היום
 setup	common	iw	הגדרה
 setup main menu	common	iw	הגדרת תפריט ראשי
+show	common	iw	הצג
+show (no save)	common	iw	(הצג (בלי שמירה
 show all	common	iw	הצג הכל
 show all categorys	common	iw	הצג כל הקטגוריות
-show menu	common	iw	הצג תפריט
 show page generation time	common	iw	הצג זמן יצירת העמוד
 show page generation time on the bottom of the page?	common	iw	?להציג את זמן יצירת העמוד בתחתית העמוד
-show_more_apps	common	iw	הצג_עוד_יישומים
+show values	common	iw	הצג ערכים
+showing	common	iw	מציג
 showing %1	common	iw	מציג %1
 showing %1 - %2 of %3	common	iw	מציג %1 - %2 מתוך %3
+shows / allows you to enter values into the etemplate for testing	common	iw	לבדיקה eTemplate-מציג/מאפשר לך להכניס ערכים אל תוך ה
+shows/displays etemplate for testing, does not save it before	common	iw	לבדיקה, ללא שמירה מקדימה eTemplate מראה/מציג
+show_more_apps	common	iw	הצג_עוד_יישומים
 site configuration	common	iw	הגדרות אתר
 size	common	iw	גודל
 sorry, your login has expired	login	iw	מצטער, פג תוקפו של החשבון שלך
+spacing	common	iw	ריווח
+span, class	common	iw	תחום/קאלסה
+stack	common	iw	ערימה
+start a new search, cancel this link	common	iw	מתחיל חיפוש חדש, בטל קישור זה
 start date	common	iw	תאריך התחלה
+start new search for the above pattern	common	iw	מתחיל חיפוש חדש עם התבנית לעיל
 start time	common	iw	שעת התחלה
 start with	common	iw	-התחל ב
 status	common	iw	סטאטוס
 subject	common	iw	נושא
 submit	common	iw	הגש
+submitbutton	common	iw	כפתור הגש
 substitutions and their meanings:	common	iw	:חלופות ופירושן
 sunday	common	iw	יום ראשון
 table properties	common	iw	תכונות טבלה
+table unchanged, no write necessary !!!	common	iw	!הטבלה לא שונתה , אין צורך בכתיבה
+tablename	common	iw	שם הטבלה
+tabs	common	iw	טבים
+template	common	iw	תבנית
+template deleted	common	iw	התבנית נמחקה
+template saved	common	iw	התבנית נשמרה
+text	common	iw	טקסט
 text color:	common	iw	:צבע טקסט
+textarea	common	iw	איזור טקסט
 the following applications require upgrades	common	iw	היישומים הבאים זקוקים לעדכונים
 the mail server returned	common	iw	שרת הדואר החזיר
 this name has been used already	common	iw	!שם זה בשימוש כבר
+this text gets displayed if the input-field is empty and has no focus (blur)	common	iw	(טקסט זה מוצג כאשר שדה הקלט ריק והפוקוס לא נמצא בו (מטוטש
 thursday	common	iw	יום חמישי
 time	common	iw	שעה
 time zone	common	iw	איזור שעון
@@ -344,6 +578,9 @@ title	common	iw	כותרת
 to	common	iw	אל
 to correct this error for the future you will need to properly set the	common	iw	-כדי לתקן שגיאה זאת לעתיד, עליך לקבוע נכון את ה
 to go back to the msg list, click <a href= %1 >here</a>	common	iw	כדי לחזור אל רשימת ההודעות, לחץ <a href="%1">כאן</a>
+to start the db-tools	common	iw	כדי להתחיל את כלי בסיסי הנתונים
+to start the etemplate editor	common	iw	eTemplate-כדי להתחיל את עורך ה
+to start the search	common	iw	להתחיל את החיפוש
 today	common	iw	היום
 todays date, eg. "%1"	common	iw	תאריך היום, לדוגמא "%1"
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	iw	%4 IP-יותר מידי נסיונות כניסה כושלים : %1 למשתמש %2, %3 לכתובת ה
@@ -351,9 +588,15 @@ top	common	iw	עליון
 total	common	iw	סך הכל
 tuesday	common	iw	יום שלישי
 type	common	iw	סוג
+type of the column	common	iw	סוג העמודה
+type of the field (select label if field should be empty)	common	iw	(סוג השדה (בחר תווית אם על השדה להיות ריק
 underline	common	iw	קו תחתי
+unique	common	iw	ייחודי
 unknown	common	iw	לא מוכר
+unlink	common	iw	בטל קישור
 update	common	iw	עדכן
+update a single entry by passing the fields.	common	iw	.עדכן רשומה בודדת על ידי העברת השדות
+update from version '%s' to	common	iw	עדכן מגירסה '%s'  אל
 upload	common	iw	העלה
 use button to search for	common	iw	השתמש בכפתור כדי לחפש
 use button to search for address	common	iw	השתמש בכפתור לחיפוש כתובת
@@ -366,16 +609,26 @@ username	common	iw	שם משתמש
 users	common	iw	משתמשים
 users choice	common	iw	בחירת המשתמשים
 value	common	iw	ערך
+value has to be at least '%1' !!!	common	iw	!על הערך להיות לפחות %1
+value has to be at maximum '%1' !!!	common	iw	!הערך חייב להיות %1 לכל היותר
 version	common	iw	גירסא
 view	common	iw	תצוגה
+view this linked entry in its application	common	iw	צפה ברשומה  מקושרת זו ביישום שלה
 wednesday	common	iw	יום רביעי
 welcome	common	iw	ברוך בואך
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	iw	(מה לעשות כאשר נתונים גולשים: נראים (ברירת המחדל), מוסתרים, נגללים, אוטומטי (הדפדפן מחליט
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	iw	.כאשר עונים כאן כן, כפתורי הבית והיציאה מהמערכת מוצגים כצלמיות יישום בפס הניווט הראשי
 which groups	common	iw	איזו קבוצות
 width	common	iw	רוחב
+width, disabled	common	iw	רוחב, מבוטל
 work email	common	iw	דוא"ל בעבודה
+write <app>/setup/tables_current.inc.php	common	iw	<app>/setup/tables_current.inc.php כתוב
+write langfile	common	iw	כתוב קובץ שפה
+write tables	common	iw	כתוב טבלאות
 writing	common	iw	כותב
 written by:	common	iw	:נכתב על ידי
+xml-file to import	common	iw	ליבוא xml קובץ
+xslt template	common	iw	XSLT תבנית
 year	common	iw	שנה
 yes	common	iw	כן
 yes - delete	common	iw	כן - מחק
@@ -396,298 +649,3 @@ your search returned 1 match	common	iw	החיפוש שלך מצא התאמה א�
 your settings have been updated	common	iw	ההגדרות שלך עודכנו
 zambia	common	iw	זמביה
 zoom	common	iw	הגדל
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	iw	%1 (%2 חדשות) הודועות נכתבו ליישום '%3' ולשפות %4
-%1 etemplates deleted	common	iw	eTemplates נמחקו %1
-%1 etemplates for application '%2' dumped to '%3'	common	iw	עבור יישום '%2' הושלחו אל %3 eTemplates %1
-%1 etemplates found	common	iw	eTemplates נמצאו %1
-%1 matches on search criteria	common	iw	%1 התאמות בהתאם לקריטריון החיפוש
-%1 new etemplates imported for application '%2'	common	iw	חדשים עבור יישום '%2' eTemplates %1
-%s disabled	common	iw	לא פעיל %s
-%s needed	common	iw	נדרש %s
-%s notranslation	common	iw	%s אין תרגום
-%s onchange	common	iw	%s עם שינוי
-%s readonly	common	iw	לקריאה בלבד %s
-'%1' has an invalid format !!!	common	iw	!ל -'%1' פורמאט לא חוקי
-'%1' is not a valid floatingpoint number !!!	common	iw	!'%1' אינו מספר נקודה צפה חוקי
-'%1' is not a valid integer !!!	common	iw	!'%1' אינו מספר שלם חוקי
-a pattern to be searched for	common	iw	תבנית חיפוש
-add a new column (after the existing ones)	common	iw	(הוסף עמודה חדשה (אחרי הקיימות
-add a new multi-column index	common	iw	הוסף אינדקס רב-עמודות
-add column	common	iw	הוסף עמודה
-add index	common	iw	הוסף אינדקס
-add table	common	iw	הוסף טבלה
-advanced search	common	iw	חיפוש מתקדם
-align	common	iw	יישר
-alignment of label and input-field in table-cell	common	iw	יישור התווית ושדה הקלט בתא של הטלה
-alignment of the v/hbox containing table-cell	common	iw	יישור תיבת האנכי/אופקי המכיל את התא של הטבהל
-all users	common	iw	כל המשתמשים
-am	common	iw	הנני
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	iw	!(עמודה מאונדקסת מזרזת שאילתות המשתמשות בעמודה זו (על חשבון מקום אכסון
-and	common	iw	-ו
-application	common	iw	יישום
-application name needed to write a langfile or dump the etemplates !!!	common	iw	!eTemplates שם היישום הדרוש כדי לכתוב קובץ שפה או להשליך
-applications	common	iw	יישומים
-attach	common	iw	צרף
-attach file	common	iw	צרף קובץ
-blurtext	common	iw	טשטש טקסט
-border	common	iw	גבול
-border-line-thickness for the table-tag	common	iw	עובי קו הגבול של תג טבלה
-can not have special sql-value null	common	iw	NULL מיוחד SQL לא יכול לקבל ערך
-cancel	common	iw	בטל
-category	common	iw	קטגוריה
-cellpadding for the table-tag	common	iw	ריפוד התא עבור תג טבלה
-cells	common	iw	תאים
-cellspacing for the table-tag	common	iw	ריווח תאים לתג טבלה
-center	common	iw	מרכז
-changed	common	iw	שונה
-check if content should only be displayed but not altered (the content is not send back then!)	common	iw	(בדוק באם יש להציג את התוכן בלבד ולא לשנות אותו (אז לא מחזירים את התוכן
-check if field has to be filled by user	common	iw	סמן אם על המשתמש למלא את השדה
-checkbox	common	iw	תיבת סימון
-class	common	iw	סיווג
-class, valign	common	iw	סיווג, יישור אנכי
-click here to attach the file	common	iw	הקלק כאן כדי לצרף את הקובץ
-click here to create the link	common	iw	הקלק כאן כדי ליצור את הקישור
-click here to start the search	common	iw	הקלק כאן כדי להתחיל את החיפוש
-click here to upload the file	common	iw	הקלק כאן לעלות את הקובץ
-click to order after that criteria	common	iw	הקלק כאן כדי לסדר לפי קרטיריון זה
-columnname	common	iw	שם העמודה
-comment	common	iw	הערה
-confirm	common	iw	אישורך
-contact	common	iw	איש קשר
-contains	common	iw	מכיל
-create a new table for the application	common	iw	צור עמודה חדשה עבור יישום זה
-creates an english ('en') langfile from label and helptexts (for application in name)	common	iw	(מתוויות וטקסט עזרה (עבור היישום בשם ('en') יוצר קובץ שפה באנגלית
-css class for the table-tag	common	iw	עבור תג הטבלה CSS סיווג
-css-styles	common	iw	CSS-סגנונות
-custom	common	iw	מותאם אישית
-custom fields	common	iw	שדות מותאמים אישית
-date+time	common	iw	שעה+תאריך
-day	common	iw	יום
-days	common	iw	ימים
-db ensures that every row has a unique value in that column	common	iw	בסיס הנתונים מוודא של כל שורה יש ערך ייחודי בעמודה זו
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	iw	עבור אורך המונדקס של עמודה mysql(100) או nysql(FULLTECT): אפשרויות אידקס ייחודיות של (בסיס הנתונים (המופרד בפסיקים
-db-tools	common	iw	כלי בסיס הנתונים
-deck	common	iw	(חפיסה (פנימית
-default	common	iw	ברירת מחדל
-delete a single entry by passing the id.	common	iw	.מחיקת רשומה  ע"י העברת זיהויו
-delete all selected etemplates, without further inquiry	common	iw	המובחרים ללא כל שאלה נוספת eTemplates מחק את כל
-delete column	common	iw	מחק עמודה
-delete index	common	iw	מחק אידקס
-delete this etemplate	common	iw	זה eTemplate מחק
-delete whole column (can not be undone!!!)	common	iw	(!מחק את כל העמודה (לא ניתן לשחזר
-deletes the above spez. etemplate from the database, can not be undone	common	iw	הרשומה לעיל מבסיס הנתונים, לא ניתן לשחזר eTemplate-מוחק את ספציפיקצית ה
-deletes the etemplate spez. above	common	iw	לעיל eTemplate-מוחק את ה
-deletes this column	common	iw	מוחק עמודה זו
-deletes this index	common	iw	מוחק אינדקס זה
-discard changes	common	iw	בטל שינוים
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	iw	(מוצג בקידמת הקלט או שהקלט המוכנס עבור '%s' בתווית (תווית כפתור הגש או קובץ התמונה
-displayed in statusline of browser if input-field gets focus	common	iw	מוצג בשורת המצב בדפדפן אם שדה הקלט מקבל את הפוקוס
-do you want to save the changes you made in table %s?	common	iw	?ברצונך לשמור את השינוים שעשית בטבלת '%s'
-documentation	common	iw	תיעוד
-drop a table - this can not be undone	common	iw	השלך טבלה - לא ניתן לשיחזור
-drop table	common	iw	השלך טבלה
-duration	common	iw	משך
-edit	common	iw	ערוך
-edit the etemplate spez. above	common	iw	לעיל eTemplates-ערוך את ספציפיקציות ה
-editable templates - db-tools	common	iw	הניתנים לעריכה - כלי בסיס נתונים eTemplates
-editable templates - delete template	common	iw	הניתנים לעריכה - מחק תבנית eTemplates
-editable templates - editor	common	iw	הניתנים לעריכה - עורך eTemplates
-editable templates - search	common	iw	הניתנים לעריכה - חיפוש eTemplates
-editable templates - show template	common	iw	הניתנים לעריכה - הצג תבניות eTemplates
-enter '' for an empty default, nothing mean no default	common	iw	הקש '' עבור ברירת מחדל ריקה, כלום משמעותו - ללא ברירת מחדל
-enter a search pattern	common	iw	ציין תבנית לחיפוס
-enter filename to upload and attach, use [browse...] to search for it	common	iw	ציין שם קובץ להעלות ולצרף, השתמש ב-[עיון] לחיפוש
-enter the new version number here (> old_version), empty for no update-file	common	iw	ציין את מספר הגירסה החדשה כאן (> הגירסה הישנה), השאר ריק אם אין קובץ מעודכן
-enter the new version number here (has to be > old_version)	common	iw	(ציין כאן את מספר הגירסה החדשה (חייב להיות > מספר הגירסה הישנה
-entry saved	common	iw	הרשומה נשמרה
-error: template not found !!!	common	iw	!שגיאה: התבנית לא נמצאה
-error: webserver is not allowed to write into '%1' !!!	common	iw	!%1 שגיאה: לשרת הווב אין הרשאה לכתוב אל
-error: writing file (no write-permission for the webserver) !!!	common	iw	(!שגיאה: בכתיבת הקובץ (אין לשרת הווב הרשאות כתיבה
-etemplate '%1' imported, use save to put it in the database	common	iw	הובא, השתמש ב-[שמור] כדי להכניס אותו לבסיס הנתונים eTemplate-ה
-etemplate '%1' written to '%2'	common	iw	%1 נכתב אל %2 eTemplate-ה
-etemplate editor	common	iw	eTemplate עורך
-etemplate reference	common	iw	eTemplate מדריך
-etemplate tutorial	common	iw	eTemplate-שיעור פרטי ב
-exchange this row with the one above	common	iw	החלף בין שורה זו לשורה מעליה
-exchange this two columns	common	iw	החלף בין שתי עמודות הללו
-export the loaded etemplate into a xml-file	common	iw	xml הטעון לקובץ eTemplate-ייצא את ה
-export xml	common	iw	xml ייצוא
-extensions loaded:	common	iw	:הרחבות טעונות
-field must not be empty !!!	common	iw	!אסור לשדה הזה להיות ריק
-file	common	iw	קובץ
-file contains more than one etemplate, last one is shown !!!	common	iw	!אחד, האחרון מוצג eTemplate-הקובץ מכיל יותר מ
-file writen	common	iw	הקובץ נכתב
-fileupload	common	iw	העלת קובץ
-first	common	iw	ראשון
-floating point	common	iw	נקודה צפה
-foreign key	common	iw	מפתח זר
-formatted text (html)	common	iw	(HTML) טקסט מפורמאט
-go to the first entry	common	iw	אל הרשומה הראשונה
-go to the last entry	common	iw	אל הרשומה האחרונה
-go to the next page of entries	common	iw	אל עמוד רשומות הבא
-go to the previous page of entries	common	iw	אל עמוד רשומות הקודם
-height	common	iw	גובה
-height, disabled	common	iw	גובה, במוטל
-help	common	iw	עזרה
-horizontal rule	common	iw	חוק אופקי
-hour	common	iw	שעה
-hours	common	iw	שעות
-id	common	iw	זיהוי
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	iw	אם השדה מבוטל תא ריק מוצג כדי להסיר (זמנית) את השדה/תא
-image	common	iw	תמונה
-import	common	iw	ייבוא
-import an etemplate from a xml-file	common	iw	xml מקובץ eTemplate ייבוא
-import table-definitions from existing db-table	common	iw	ייבוא הגדרות טבלאות מטבלת בסיס נתונים קיימת
-import xml	common	iw	xml ייבוא
-index/name of returned content (name of the template, link / method for image)	common	iw	(אידקס/שם של התוכן המוחזר (השם של התבנית/קישור/מטודה עבור תמונה
-indexed	common	iw	מאונדקס
-indexoptions	common	iw	אפשריות אידקס
-insert new column behind this one	common	iw	הוסף עמודה חדשה אחרי עמודה זו
-insert new column in front of all	common	iw	הוסף עמודה חדשה לפני כולן
-insert new row after this one	common	iw	הוסף שורה חדשה אחרי שורה זו
-insert new row in front of first line	common	iw	הוסף שורה חדשה לפני השורה הראשונה
-integer	common	iw	מספר שלם
-key	common	iw	מפתח
-label	common	iw	תווית
-lang	common	iw	שפה
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	iw	עבור עברית) עבור תבניות תלויות שפה 'iw' :הקיצור של השפה (לדוגמא<br>
-last	common	iw	אחרון
-left	common	iw	שמאל
-link	common	iw	קישור
-linklist	common	iw	רשימת קישורים
-linkstring	common	iw	מחרוזת הקישור
-linkto	common	iw	לקשור אל
-load this template into the editor	common	iw	טען תבנית זו אל העורך
-minute	common	iw	דקה
-minutes	common	iw	דקות
-month	common	iw	חודש
-more	common	iw	עוד
-multicolumn indices	common	iw	אידקס רב-עמודות
-name	common	iw	שם
-name of other table where column is a key from	common	iw	שם הטבלה בה עמודה זו מהווה מפתח
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	iw	(verdilak :לדוגמא ) phpgw השם של סט תבניות
-name of table to add	common	iw	שם הטבלה להוסיף
-name of the etemplate, should be in form application.function[.subtemplate]	common	iw	[צריך להיות בצורה יישום.פונקציה[.תת-תבנית ,eTemplate-שם ה
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	iw	חייב להיות ייחודי בטבלה, ואסור להשתמש במילות מפתח של <br>
-new	common	iw	חדש
-new search	common	iw	חיפוש חדש
-new table created	common	iw	נוצרה טבלה חדשה
-newer version '%1' exists !!!	common	iw	!קיימת גירסה חדשה יותר
-nextmatch	common	iw	ההתאמה הבאה
-nextmatch filterheader	common	iw	סנן כותרות להתאמה הבאה
-nextmatch sortheader	common	iw	מיין כותרות להתאמה הבאה
-no file	common	iw	אין קובץ
-no filename given or selected via browse...	common	iw	[לא ציון שם קובץ וגם לא נבחר באמצעות [עיון
-no matches found	common	iw	לא נמצאו התאמות
-not null	common	iw	NULL לא
-nothing found - try again !!!	common	iw	!לא נמצא כלום - נסה שוב
-nothing matched search criteria !!!	common	iw	!שום דבר לא התאים לקרטריון החיפוש
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	iw	(TD-עבור תג ה) CSS עבור כל העמודות הנותרות 'all' כמות העמודות עליהן השדה/התא צריך להתפרס
-of	common	iw	של
-only an other version found !!!	common	iw	!נמצאה גירסה אחרת בלבד
-optional note about the link	common	iw	הערה אפציונלית לקישור
-options	common	iw	אפשריות
-or	common	iw	או
-overflow	common	iw	גלישה
-padding	common	iw	ריפוד
-please enter table-name first !!!	common	iw	!נא להקליד שם טבלה קודם
-pm	common	iw	אחה"צ
-precision	common	iw	דיוק
-primary key	common	iw	מפתח ראשי
-primary key for the table, gets automaticaly indexed	common	iw	המפתח הראשי של הטבלה, מאונדקס אוטומטית
-radiobutton	common	iw	כפתור רדיו
-read	common	iw	קרא
-read a list of entries.	common	iw	קרא רשימת רשומות
-read a single entry by passing the id and fieldlist.	common	iw	קרא רשומוה בודדת ע"י העברת הזיהוי ורשימת שדות
-read etemplate from database (for the keys above)	common	iw	(מבסיס נתונים (עבור המפתחות לעיל eTemplate קרא
-readonly	common	iw	לקריאה בלבד
-refresh	common	iw	רענן
-remove row (can not be undone!!!)	common	iw	(הסר שורה (לא ניתן לשחזור
-remove this link (not the entry itself)	common	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
-required	common	iw	נדרש
-reset	common	iw	איפוס
-returns savely, without deleting	common	iw	חוזר תוך כדי שמירה, בלי למחוק
-right	common	iw	ימין
-save all	common	iw	שמור הכל
-save the etemplate under the above keys (name, ...), change them for a saveas	common	iw	[תחת המפתחות לעיל (שם,...), שנה שם עבור [שמור בשם eTemplate-שמור את ה
-saves changes to tables_current.inc.php	common	iw	tables_current.inc.php שמור שינוים אל
-scale	common	iw	קנה מידה
-scale for float	common	iw	קנה המידה עבור נקודה צפה
-search	common	iw	חפש
-select a category	common	iw	בחר קטגוריה
-select a primary contact, to show in the list	common	iw	בחר איש קשר ראשי להציג ברשימה
-select access	common	iw	בחר גישה
-select account	common	iw	בחר חשבון
-select an app first !!!	common	iw	קודם !יש לבחור יישום
-select an app to search in	common	iw	בחר יישום לחפש בו
-select an application	common	iw	בחר יישום
-select an application, (*) = uninstalled	common	iw	בחר יישום, (*)=לא מותקן
-select an entry to link with	common	iw	בחר רשומה לקשור אליה
-select an table of the application	common	iw	בחר טבלה של היישום
-select application	common	iw	בחר יישום
-select category	common	iw	בחר קטגוריה
-select country	common	iw	בחר ארץ
-select day	common	iw	בחר יום
-select if content of field should not be translated (label gets always translated)	common	iw	(בחר אם אין לתרגם את תוכן השדה (התווית תתורגם בכל מקרה
-select month	common	iw	בחר חודש
-select number	common	iw	בחר מספר
-select one ...	common	iw	...בחר אחד
-select percentage	common	iw	בחר אחוזים
-select priority	common	iw	בחר עדיפות
-select state	common	iw	בחר מדינה
-select the indexed columns in their desired order	common	iw	בחר את העמודות המאונדקסות בסדר הרצוי
-select this etemplate to delete it	common	iw	הזה כדי למחוק אותו eTemplate-בחר את ה
-select which values to show	common	iw	בחר אלו ערכים להציג
-select year	common	iw	בחר שנה
-selectbox	common	iw	תיבת בחירה
-sets today as date	common	iw	קובע תאריך של היום
-show	common	iw	הצג
-show (no save)	common	iw	(הצג (בלי שמירה
-show values	common	iw	הצג ערכים
-showing	common	iw	מציג
-shows / allows you to enter values into the etemplate for testing	common	iw	לבדיקה eTemplate-מציג/מאפשר לך להכניס ערכים אל תוך ה
-shows/displays etemplate for testing, does not save it before	common	iw	לבדיקה, ללא שמירה מקדימה eTemplate מראה/מציג
-spacing	common	iw	ריווח
-span, class	common	iw	תחום/קאלסה
-stack	common	iw	ערימה
-start a new search, cancel this link	common	iw	מתחיל חיפוש חדש, בטל קישור זה
-start new search for the above pattern	common	iw	מתחיל חיפוש חדש עם התבנית לעיל
-submitbutton	common	iw	כפתור הגש
-table unchanged, no write necessary !!!	common	iw	!הטבלה לא שונתה , אין צורך בכתיבה
-tablename	common	iw	שם הטבלה
-tabs	common	iw	טבים
-template	common	iw	תבנית
-template deleted	common	iw	התבנית נמחקה
-template saved	common	iw	התבנית נשמרה
-text	common	iw	טקסט
-textarea	common	iw	איזור טקסט
-this text gets displayed if the input-field is empty and has no focus (blur)	common	iw	(טקסט זה מוצג כאשר שדה הקלט ריק והפוקוס לא נמצא בו (מטוטש
-time	common	iw	שעה
-to start the db-tools	common	iw	כדי להתחיל את כלי בסיסי הנתונים
-to start the etemplate editor	common	iw	eTemplate-כדי להתחיל את עורך ה
-to start the search	common	iw	להתחיל את החיפוש
-today	common	iw	היום
-type	common	iw	סוג
-type of the column	common	iw	סוג העמודה
-type of the field (select label if field should be empty)	common	iw	(סוג השדה (בחר תווית אם על השדה להיות ריק
-unique	common	iw	ייחודי
-unlink	common	iw	בטל קישור
-update a single entry by passing the fields.	common	iw	.עדכן רשומה בודדת על ידי העברת השדות
-update from version '%s' to	common	iw	עדכן מגירסה '%s'  אל
-upload	common	iw	העלה
-value	common	iw	ערך
-value has to be at least '%1' !!!	common	iw	!על הערך להיות לפחות %1
-value has to be at maximum '%1' !!!	common	iw	!הערך חייב להיות %1 לכל היותר
-version	common	iw	גירסא
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	iw	(מספר הגירסא, צריך להיות בצורה: ראשי.משני.עדכון (לדוגמא: 0.9.13.001 כאשר ממלאים  באפסים
-view this linked entry in its application	common	iw	צפה ברשומה  מקושרת זו ביישום שלה
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	iw	(מה לעשות כאשר נתונים גולשים: נראים (ברירת המחדל), מוסתרים, נגללים, אוטומטי (הדפדפן מחליט
-width	common	iw	רוחב
-width, disabled	common	iw	רוחב, מבוטל
-write <app>/setup/tables_current.inc.php	common	iw	<app>/setup/tables_current.inc.php כתוב
-write langfile	common	iw	כתוב קובץ שפה
-write tables	common	iw	כתוב טבלאות
-xml-file to import	common	iw	ליבוא xml קובץ
-xslt template	common	iw	XSLT תבנית
-year	common	iw	שנה
-id	common	iw	זיהוי

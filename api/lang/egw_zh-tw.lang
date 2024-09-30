@@ -1,7 +1,19 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	common	zh-tw	以語言 '%4' 寫入%1筆(%2 新的)應用程式 '%3' 的訊息
 %1 email addresses inserted	common	zh-tw	已匯入 %1 筆電子郵件位址
+%1 etemplates deleted	common	zh-tw	刪除了 %1 個樣板
+%1 etemplates found	common	zh-tw	找到 %1 個樣板
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh-tw	%1選擇一個其他資料夾%2<br />或是讓網頁伺服器可以寫入 %3 。
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1EGroupware%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
+%s disabled	common	zh-tw	%s 停用
+%s needed	common	zh-tw	需要 %s
+%s notranslation	common	zh-tw	%s 未翻譯
+%s onchange	common	zh-tw	%s 調整中
+%s readonly	common	zh-tw	%s 唯讀
+'%1' has an invalid format !!!	common	zh-tw	'%1' 格式錯誤！
+'%1' is not a valid date !!!	common	zh-tw	'%1'不是有效的日期！
+'%1' is not a valid floatingpoint number !!!	common	zh-tw	'%1' 不是正確的浮點數！
+'%1' is not a valid integer !!!	common	zh-tw	'%1' 不是正確的整數！
 00 (disable)	admin	zh-tw	00 (關閉)
 1 day	common	zh-tw	1 天
 1 hour	common	zh-tw	1 小時
@@ -9,11 +21,15 @@
 1 week	common	zh-tw	1 星期
 13 (ntp)	admin	zh-tw	13 (ntp)
 80 (http)	admin	zh-tw	80 (http)
+a pattern to be searched for	common	zh-tw	搜尋條件
 about	common	zh-tw	關於
 about %1	common	zh-tw	關於 %1
 about egroupware	common	zh-tw	關於 EGroupware
 access	common	zh-tw	存取權限
 access not permitted	common	zh-tw	存取遭拒
+accesskey	common	zh-tw	存取鍵值
+accesskeys can also be specified with an & in the label (eg. &name)	common	zh-tw	存取鍵值也可以在標籤中包含一個 & （例如 &Name）
+account contactdata	common	zh-tw	新增聯絡人資料
 account has been created	common	zh-tw	帳號已經建立
 account has been deleted	common	zh-tw	帳號已經刪除
 account has been updated	common	zh-tw	帳號已經更新
@@ -22,33 +38,54 @@ accounts	common	zh-tw	帳號
 acl	common	zh-tw	控管權限
 action	common	zh-tw	動作
 actions	common	zh-tw	動作
+actions...	common	zh-tw	動作...
 active	common	zh-tw	啟用
 add	common	zh-tw	新增
 add %1 category for	common	zh-tw	新增 %1 子分類給
+add a new column (after the existing ones)	common	zh-tw	新增欄位(在已存在的之後)
 add a new contact	common	zh-tw	新增聯絡人
+add a new entry of the selected application	common	zh-tw	在選擇的應用程式中新增一筆資料
+add a new multi-column index	common	zh-tw	新增多欄索引
 add category	common	zh-tw	新增分類
+add column	common	zh-tw	新增欄位
+add index	common	zh-tw	新增索引
+add new	common	zh-tw	新增
 add shortcut	common	zh-tw	新增快速鍵
 add sub	common	zh-tw	新增子分類
+add table	common	zh-tw	新增表格
 addressbook	common	zh-tw	通訊錄
 admin	common	zh-tw	系統管理
 administration	common	zh-tw	系統管理
+advanced search	common	zh-tw	進階搜尋
 afghanistan	common	zh-tw	阿富汗
 albania	common	zh-tw	阿爾巴尼亞
 algeria	common	zh-tw	阿爾吉利亞
+align	common	zh-tw	對齊
+alignment of label and input-field in table-cell	common	zh-tw	標題與表格輸入文字對齊方式
+alignment of the v/hbox containing table-cell	common	zh-tw	V/HBox的對齊方式
 all	common	zh-tw	所有
+all days	common	zh-tw	全部日數
 all fields	common	zh-tw	所有欄位
 all languages	common	zh-tw	所有語言
-alphabet	common	zh-tw	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all operations save the template!	common	zh-tw	所有的操作儲存到樣板！
+all users	common	zh-tw	所有使用者
 alternate style-sheet:	common	zh-tw	替換的樣式表：
+am	common	zh-tw	上午
 american samoa	common	zh-tw	AMERICAN SAMOA
 an existing and by the webserver readable directory enables the image browser and upload.	common	zh-tw	一個已經存在而且網頁伺服器可以讀取的資料夾可以啟用圖片瀏覽器以及上傳功能。
+an indexed column speeds up querys using that column (cost space on the disk !!!)	common	zh-tw	索引欄位可以提高搜尋資料的速度(但是會佔用硬碟的空間！)
 and	common	zh-tw	且
 andorra	common	zh-tw	安道爾
 angola	common	zh-tw	安哥拉
 anguilla	common	zh-tw	安圭拉
 antarctica	common	zh-tw	南極洲
 antigua and barbuda	common	zh-tw	ANTIGUA AND BARBUDA
+api	common	zh-tw	EGroupware 核心
 application	common	zh-tw	應用程式
+application name needed to write a langfile or dump the etemplates !!!	common	zh-tw	應用程式需要有語言檔或是將樣板匯出！
+applications	common	zh-tw	應用程式
+applies the changes made	common	zh-tw	儲存異動
+applies the changes to the given version of the template	common	zh-tw	在這個樣板的指定版本儲存異動
 apply	common	zh-tw	確認
 april	common	zh-tw	四月
 are you sure you want to delete these entries ?	common	zh-tw	您確定要刪除這些資料？
@@ -56,14 +93,13 @@ are you sure you want to delete this entry ?	common	zh-tw	您確定要刪除此�
 argentina	common	zh-tw	阿根廷
 armenia	common	zh-tw	阿美尼亞
 aruba	common	zh-tw	阿盧巴
+as default	common	zh-tw	如同預設
+attach	common	zh-tw	附加
+attach file	common	zh-tw	附加檔案
 august	common	zh-tw	八月
 australia	common	zh-tw	澳洲
 austria	common	zh-tw	奧地利
 author	common	zh-tw	作者
-autohide sidebox menu's	common	zh-tw	自動隱藏其他選單項目
-autohide sidebox menus	common	zh-tw	自動隱藏其他選單項目
-automatically hide the sidebox menu's?	common	zh-tw	自動隱藏其他選單項目？
-automatically hide the sidebox menus?	common	zh-tw	自動隱藏其他選單項目？
 autosave default category	common	zh-tw	自動儲存預設分類目錄
 azerbaijan	common	zh-tw	亞賽拜然
 back	common	zh-tw	上一頁
@@ -74,6 +110,7 @@ bahamas	common	zh-tw	巴哈馬
 bahrain	common	zh-tw	巴林
 bangladesh	common	zh-tw	孟加拉
 barbados	common	zh-tw	巴貝多
+baseline	common	zh-tw	基線
 bcc	common	zh-tw	密件副本
 belarus	common	zh-tw	BELARUS
 belgium	common	zh-tw	比利時
@@ -82,13 +119,17 @@ benin	common	zh-tw	貝南
 bermuda	common	zh-tw	百慕達
 bhutan	common	zh-tw	不丹
 blocked, too many attempts	common	zh-tw	被鎖定了，嘗試太多次
+blurtext	common	zh-tw	模糊文字
 bold	common	zh-tw	粗體
 bolivia	common	zh-tw	玻利維亞
 border	common	zh-tw	框線
+border-line-thickness for the table-tag	common	zh-tw	表格標籤使用的框線厚度
 bosnia and herzegovina	common	zh-tw	BOSNIA AND HERZEGOVINA
 botswana	common	zh-tw	波紮那
 bottom	common	zh-tw	底部
 bouvet island	common	zh-tw	BOUVET ISLAND
+box	common	zh-tw	區塊
+box...	common	zh-tw	區塊...
 brazil	common	zh-tw	巴西
 british indian ocean territory	common	zh-tw	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	zh-tw	BRUNEI DARUSSALAM
@@ -98,9 +139,13 @@ burundi	common	zh-tw	BURUNDI
 calendar	common	zh-tw	行事曆
 cambodia	common	zh-tw	高棉
 cameroon	common	zh-tw	CAMEROON
+can not have special sql-value null	common	zh-tw	無法使用特出的SQL值 NULL
 canada	common	zh-tw	加拿大
 cancel	common	zh-tw	取消
 cannot replace %1 because it is a directory	common	zh-tw	無法取代 %1 ，因為它是資料夾
+cant delete a single widget from a grid !!!	common	zh-tw	無法從表格中刪除單一容器！
+cant delete the only column of a grid !!!	common	zh-tw	無法從表格中刪除唯一的欄位！
+cant delete the only row in a grid !!!	common	zh-tw	無法從表格中刪除唯一的資料列！
 cant open '%1' for %2	common	zh-tw	無法在 %2 開啟 '%1'
 cape verde	common	zh-tw	CAPE VERDE
 caption	common	zh-tw	標題
@@ -109,15 +154,25 @@ categories for	common	zh-tw	類別
 category	common	zh-tw	類別
 category %1 has been added !	common	zh-tw	已新增分類 %1 ！
 category %1 has been updated !	common	zh-tw	已更新分類 %1 ！
+category tree	common	zh-tw	類別樹
 cayman islands	common	zh-tw	CAYMAN ISLANDS
 cc	common	zh-tw	副本
+cellpadding for the table-tag	common	zh-tw	表格文字與格線的距離
+cells	common	zh-tw	儲存格
+cellspacing for the table-tag	common	zh-tw	表格欄位與欄位文字的距離
+center	common	zh-tw	置中
 centered	common	zh-tw	置中
 central african republic	common	zh-tw	CENTRAL AFRICAN REPUBLIC
 chad	common	zh-tw	查德
 change	common	zh-tw	更換
+changed	common	zh-tw	已異動
 charset	common	zh-tw	utf-8
+check all	common	zh-tw	全選
+check if content should only be displayed but not altered (the content is not send back then!)	common	zh-tw	如果內容只能被顯示而不能被改變請勾選
+check if field has to be filled by user	common	zh-tw	如果欄位址能夠讓使用者填入請勾選
 check installation	common	zh-tw	檢查系統安裝狀態
 check now	common	zh-tw	立刻檢查
+checkbox	common	zh-tw	核選方塊
 chile	common	zh-tw	智利
 china	common	zh-tw	中國大陸
 choose a background color	common	zh-tw	選擇背景顏色
@@ -128,64 +183,117 @@ choose a text color for the icons	common	zh-tw	選擇圖示的文字顏色
 choose the category	common	zh-tw	選擇分類
 choose the parent category	common	zh-tw	選擇上一層分類
 christmas island	common	zh-tw	CHRISTMAS ISLAND
+class	common	zh-tw	類別
+class, valign	common	zh-tw	類別，垂直對齊
 clear	common	zh-tw	清除
 clear form	common	zh-tw	清除表單
 click	common	zh-tw	點選
-click or mouse over to show menus	common	zh-tw	點選或是移動滑鼠來顯示選單
-click or mouse over to show menus?	common	zh-tw	點選或是移動滑鼠來顯示選單？
+click here to attach the file	common	zh-tw	點選這裡來附加檔案
+click here to create the link	common	zh-tw	點選這裡來建立連結
+click here to start the search	common	zh-tw	點選這裡開始搜尋
+click here to upload the file	common	zh-tw	點選這裡來上傳檔案
+click to order after that criteria	common	zh-tw	點選這裡來排序搜尋結果
+clickable path	common	zh-tw	可點選路徑
 close	common	zh-tw	關閉
 close sidebox	common	zh-tw	關閉其他選單
+closes the window without saving the changes	common	zh-tw	關閉視窗且不儲存
 cocos (keeling) islands	common	zh-tw	COCOS (KEELING) ISLANDS
 colombia	common	zh-tw	哥倫比亞
+column...	common	zh-tw	欄位...
+columnname	common	zh-tw	欄位名稱
+comment	common	zh-tw	備註
 common preferences	common	zh-tw	一般設定
 comoros	common	zh-tw	COMOROS
 company	common	zh-tw	公司
+confirm	common	zh-tw	確認
+confirmation message or custom javascript (returning true or false)	common	zh-tw	確認訊息或是自訂的 javascript （傳回 true 或 false）
+confirmation necesary or custom java-script	common	zh-tw	需要確認或自訂的 javascript
 congo	common	zh-tw	剛果
 congo, the democratic republic of the	common	zh-tw	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+contact	common	zh-tw	聯絡人
+contact field to show	common	zh-tw	要顯示的聯絡人欄位
+contact fields	common	zh-tw	聯絡人欄位
 contacting server...	common	zh-tw	與伺服器連線中...
+contains	common	zh-tw	包含
 cook islands	common	zh-tw	COOK ISLANDS
 copy	common	zh-tw	複製
 costa rica	common	zh-tw	COSTA RICA
 cote d ivoire	common	zh-tw	COTE D IVOIRE
 could not contact server. operation timed out!	common	zh-tw	無法連線伺服器，連線逾時！
 create	common	zh-tw	建立
+create a new table for the application	common	zh-tw	為這個應用程式建立一個新的表格
 created by	common	zh-tw	建立者
+creates an english ('en') langfile from label and helptexts (for application in name)	common	zh-tw	從標籤與求助文字建立一個英文('en')的語言檔
 croatia	common	zh-tw	克羅地亞
+css class for the table-tag	common	zh-tw	表格標間的CSS類別
+css properties	common	zh-tw	CSS屬性
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	zh-tw	這一列的CSS類別，內定值：'nmh' = 下一筆符合條件的頁首，'nmr' = 改變下一列符合條件的資料，'nmr0'+'nmr1'下一列符合條件的資料
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	zh-tw	資料列的CSS類別名稱，預設為：'th' = 標題列, 'row' = 互換資料, 'row_off'+'row_on' 資料列
+css-styles	common	zh-tw	CSS風格
 cuba	common	zh-tw	古巴
 currency	common	zh-tw	貨幣
 current	common	zh-tw	現在
 current users	common	zh-tw	線上使用者
+custom	common	zh-tw	自訂
+custom fields	common	zh-tw	自訂欄位
+custom javascript for onchange	common	zh-tw	自訂 onChange 動作的 javascript
+cut	common	zh-tw	剪下
 cyprus	common	zh-tw	賽普勒斯
 czech republic	common	zh-tw	捷克共和國
 date	common	zh-tw	日期
 date due	common	zh-tw	到期日期
+date+time	common	zh-tw	日期+時間
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	zh-tw	時間服務埠。<br>如果使用13埠，在送出之前記得檢查您的防火牆設定。<br>(Port: 13 / Host: 129.6.15.28)
+day	common	zh-tw	天
+days	common	zh-tw	天
+db ensures that every row has a unique value in that column	common	zh-tw	在那個欄位中資料庫能夠確保每一列可以有一個不重複的數值
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	zh-tw	特定資料庫索引選項(逗點分隔)，例如 mysql(FULLTEXT)或mysql(100)來設定欄位索引長度
+db-tools	common	zh-tw	資料庫工具
 december	common	zh-tw	十二月
+deck	common	zh-tw	裝飾(內部)
+default	common	zh-tw	預設
 default category	common	zh-tw	預設分類
 default height for the windows	common	zh-tw	預設視窗高度
 default width for the windows	common	zh-tw	預設視窗寬度
 delete	common	zh-tw	移除
+delete a single entry by passing the id.	common	zh-tw	依照送出的代碼來刪除一筆資料
+delete all selected etemplates, without further inquiry	common	zh-tw	刪除所有選取的樣板，不再確認
+delete and cut save the template!	common	zh-tw	刪除與剪下來儲存樣板！
 delete category	common	zh-tw	刪除分類
+delete column	common	zh-tw	刪除欄位
+delete index	common	zh-tw	刪除索引
 delete row	common	zh-tw	刪除列
+delete the spezified etemplate	common	zh-tw	刪除指定樣板
+delete this column	common	zh-tw	刪除這個欄位
 delete this entry	common	zh-tw	刪除這個事件
+delete this etemplate	common	zh-tw	刪除這個樣板
+delete this file	common	zh-tw	刪除這個檔案
+delete this row	common	zh-tw	刪除這個資料
+delete whole column (can not be undone!!!)	common	zh-tw	刪除整個欄位(無法復原！)
+deletes the above spez. etemplate from the database, can not be undone	common	zh-tw	從資料庫刪除上面指定的樣板，無法還原
+deletes the etemplate spez. above	common	zh-tw	刪除上面指定的樣板
+deletes this column	common	zh-tw	刪除這個欄位
+deletes this index	common	zh-tw	刪除這個索引
 denmark	common	zh-tw	丹麥
 description	common	zh-tw	說明
 detail	common	zh-tw	詳細
 details	common	zh-tw	詳細
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
-direction left to right	common	zh-tw	方向由左至右
 directory	common	zh-tw	資料夾
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh-tw	資料夾不存在、網頁伺服器無法讀取或是路徑並非相對於網頁根目錄！
-disable internet explorer png-image-bugfix	common	zh-tw	停用 IE png-image-bugfix
-disable slider effects	common	zh-tw	停用切換效果
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh-tw	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	停用為 IE 5.5 或更新版本設計的修正程式？這個程式的用意在讓 PNG 格式圖片能夠顯示透明效果。
 disabled	common	zh-tw	停用
+discard changes	common	zh-tw	放棄異動
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	zh-tw	在輸入之前顯示或是基於標籤(送出按鈕的標籤或是圖片的檔案名稱)中的'%s'來插入輸入值
+displayed in statusline of browser if input-field gets focus	common	zh-tw	如果游標停在輸入欄位時在瀏覽器的狀態列顯示
+displayed in the top line of the groupbox (legend)	common	zh-tw	在群組區塊（範例）的最上方顯示
 djibouti	common	zh-tw	吉布地
 do you also want to delete all subcategories ?	common	zh-tw	您確定要刪除所有的子分類？
+do you want to save the changes you made in table %s?	common	zh-tw	您是否要儲存在表格 %s 的異動？
 doctype:	common	zh-tw	文件類型：
+document '%1' does not exist or is not readable for you!	preferences	zh-tw	文件 '%1' 不存在或是無法讀取！
 document properties	common	zh-tw	文件屬性
 document title:	common	zh-tw	文件標題：
+documentation	common	zh-tw	文件
+doesn't matter	common	zh-tw	沒關係
 domain	common	zh-tw	網址
 domain name for mail-address, eg. "%1"	common	zh-tw	電子郵件信箱的網址, 例如： "%1"
 domestic	common	zh-tw	國內的
@@ -193,6 +301,10 @@ dominica	common	zh-tw	多明尼加
 dominican republic	common	zh-tw	多明尼加共和國
 done	common	zh-tw	完成
 download	common	zh-tw	下載
+drop a table - this can not be undone	common	zh-tw	移出一個資料表 - 將無法還原
+drop table	common	zh-tw	移除資料表
+dump4setup	common	zh-tw	匯出安裝所需資料
+duration	common	zh-tw	期間
 e-mail	common	zh-tw	電子郵件
 east timor	common	zh-tw	EAST TIMOR
 ecuador	common	zh-tw	厄瓜多爾
@@ -200,17 +312,33 @@ edit	common	zh-tw	編輯
 edit %1 category for	common	zh-tw	編輯分類 %1 給
 edit categories	common	zh-tw	編輯分類
 edit category	common	zh-tw	編輯分類
+edit embeded css styles or of the applications app.css file	common	zh-tw	編輯嵌入的 CSS 風格或是應用程式的 app.css 檔案
+edit the etemplate spez. above	common	zh-tw	編輯上面指定的樣板
+edit...	common	zh-tw	編輯...
+editable templates - db-tools	common	zh-tw	可編輯樣板 - 資料庫工具
+editable templates - delete template	common	zh-tw	可編輯樣板 - 刪除樣板
+editable templates - editor	common	zh-tw	可編輯樣板 - 編輯器
+editable templates - search	common	zh-tw	可編輯樣板 - 搜尋
+editable templates - show template	common	zh-tw	可編輯樣板 - 顯示樣板
 egroupware	common	zh-tw	EGroupware
 egroupware: login blocked for user '%1', ip %2	common	zh-tw	EGroupware: 使用者鎖定 '%1', IP %2
 egypt	common	zh-tw	埃及
 el salvador	common	zh-tw	EL SALVADOR
 email	common	zh-tw	電子郵件
 email-address of the user, eg. "%1"	common	zh-tw	使用者的電子郵件, 例： "%1"
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	zh-tw	嵌入式CSS風格，例如'.red { background: red; }' (注意 '.' 在類別名稱之前) 或是 '@import url(...)' (類別名稱可以在整個網頁使用！)
+enable javascript onchange submit	common	zh-tw	啟用 JavaScript 異動時送出功能
 enabled	common	zh-tw	啟用
 end date	common	zh-tw	結束日期
 end time	common	zh-tw	結束時間
+enter '' for an empty default, nothing mean no default	common	zh-tw	沒有意味著沒有預設值，輸入 '' 代表
+enter a search pattern	common	zh-tw	輸入搜尋條件
+enter filename to upload and attach, use [browse...] to search for it	common	zh-tw	輸入上傳與附加檔案的名稱，使用[瀏覽...]來選取
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入EGroupware的網址<br>例如：http://www.domain.com/egroupware   或   /egroupware<br><b>最後面不要有斜線</b>
+enter the new version number here (> old_version), empty for no update-file	common	zh-tw	輸入新的版本編號(大於舊版)，空白表示沒有更新
+enter the new version number here (has to be > old_version)	common	zh-tw	輸入新的版本編號(必須大於舊版)
 entry has been deleted sucessfully	common	zh-tw	資料已成功移除
+entry saved	common	zh-tw	資料儲存了
 entry updated sucessfully	common	zh-tw	資料已成功更新
 equatorial guinea	common	zh-tw	EQUATORIAL GUINEA
 eritrea	common	zh-tw	厄立特里亞
@@ -218,10 +346,25 @@ error	common	zh-tw	錯誤
 error creating %1 %2 directory	common	zh-tw	無法建立目錄 %1 %2
 error deleting %1 %2 directory	common	zh-tw	無法移除目錄 %1 %2
 error renaming %1 %2 directory	common	zh-tw	無法更名目錄 %1 %2
+error: template not found !!!	common	zh-tw	錯誤：找不到樣板！
+error: webserver is not allowed to write into '%1' !!!	common	zh-tw	錯誤：網頁伺服器無法寫入檔案 '%1'！
+error: while saving !!!	common	zh-tw	錯誤：儲存時！
+error: writing file (no write-permission for the webserver) !!!	common	zh-tw	錯誤：寫入檔案時(網頁伺服器沒有寫入的權限)！
 estonia	common	zh-tw	愛沙尼亞
+etemplate	common	zh-tw	樣板管理
+etemplate '%1' imported, use save to put it in the database	common	zh-tw	匯入了樣板 '%1' ，點選儲存來將它放入資料庫中
+etemplate '%1' written to '%2'	common	zh-tw	樣板 '%1' 另存成 '%2'
+etemplate editor	common	zh-tw	樣板編輯器
+etemplate reference	common	zh-tw	樣板參考
+etemplate tutorial	common	zh-tw	樣板教學
 ethiopia	common	zh-tw	衣索比亞
 everything	common	zh-tw	全部
 exact	common	zh-tw	解開
+exchange this row with the one above	common	zh-tw	用上面的資料與這一列交換
+exchange this two columns	common	zh-tw	交換這兩個欄位
+export the loaded etemplate into a xml-file	common	zh-tw	將讀取的樣板匯出成XML檔案
+export xml	common	zh-tw	匯出XML
+extensions loaded:	common	zh-tw	已讀取外掛：
 failed to change password.	common	zh-tw	密碼變更錯誤，請聯絡管理員
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh-tw	無法連線伺服器或是伺服器回應訊息有誤，請重試或是聯繫管理員。
 falkland islands (malvinas)	common	zh-tw	FALKLAND ISLANDS (MALVINAS)
@@ -229,19 +372,29 @@ faroe islands	common	zh-tw	FAROE ISLANDS
 fax number	common	zh-tw	傳真號碼
 features of the editor?	common	zh-tw	編輯器的功能？
 february	common	zh-tw	二月
+field	common	zh-tw	欄位
+field must not be empty !!!	common	zh-tw	欄位不能空白！
 fields	common	zh-tw	欄位
 fiji	common	zh-tw	裴濟
+file	common	zh-tw	檔案
+file contains more than one etemplate, last one is shown !!!	common	zh-tw	檔案包含多個樣板，只顯示最後一筆！
+file writen	common	zh-tw	檔案寫入
 files	common	zh-tw	檔案
+fileupload	common	zh-tw	檔案上傳
 filter	common	zh-tw	篩選
 finland	common	zh-tw	芬蘭
+first	common	zh-tw	第一筆
 first name	common	zh-tw	名
 first name of the user, eg. "%1"	common	zh-tw	使用者的名, 例如： "%1"
 first page	common	zh-tw	第一頁
 firstname	common	zh-tw	名
 fixme!	common	zh-tw	修正！
+floating point	common	zh-tw	浮點數
 folder already exists.	common	zh-tw	資料夾已經存在
 force selectbox	common	zh-tw	強制使用選取方塊
+foreign key	common	zh-tw	外部金鑰
 forever	common	zh-tw	永遠
+formatted text (html)	common	zh-tw	格式化文字(HTML)
 france	common	zh-tw	法國
 french guiana	common	zh-tw	法國奎亞那
 french polynesia	common	zh-tw	法國玻里尼西亞
@@ -252,6 +405,7 @@ fullname	common	zh-tw	全名
 fullscreen mode	common	zh-tw	全螢幕模式
 gabon	common	zh-tw	加彭
 gambia	common	zh-tw	甘比亞
+general fields:	preferences	zh-tw	一般欄位：
 general menu	common	zh-tw	一般選單
 georgia	common	zh-tw	喬治亞
 german	common	zh-tw	德國
@@ -260,10 +414,17 @@ ghana	common	zh-tw	迦納
 gibraltar	common	zh-tw	GIBRALTAR
 global	common	zh-tw	全域
 global public	common	zh-tw	全域共用
+go to the first entry	common	zh-tw	到第一筆資料
+go to the last entry	common	zh-tw	到最後一筆資料
+go to the next page of entries	common	zh-tw	下一頁資料
+go to the previous page of entries	common	zh-tw	上一頁資料
 grant access	common	zh-tw	存取權限開放
 greece	common	zh-tw	希臘
 greenland	common	zh-tw	格陵蘭
 grenada	common	zh-tw	格瑞那達
+grid	common	zh-tw	表格
+grid column attributes	common	zh-tw	表格欄位屬性
+grid row attributes	common	zh-tw	表格資料列屬性
 group	common	zh-tw	群組
 group access	common	zh-tw	群組存取
 group has been added	common	zh-tw	群組已經新增
@@ -271,6 +432,7 @@ group has been deleted	common	zh-tw	群組已經刪除
 group has been updated	common	zh-tw	群組已經更新
 group name	common	zh-tw	群組名稱
 group public	common	zh-tw	群組共用
+groupbox	common	zh-tw	群組區塊
 groups	common	zh-tw	群組
 groups with permission for %1	common	zh-tw	群組具有 %1 的權限
 groups without permission for %1	common	zh-tw	群組不具有 %1 的權限
@@ -280,32 +442,67 @@ guatemala	common	zh-tw	GUATEMALA
 guinea	common	zh-tw	GUINEA
 guinea-bissau	common	zh-tw	GUINEA-BISSAU
 guyana	common	zh-tw	GUYANA
+h	common	zh-tw	時
 haiti	common	zh-tw	HAITI
+hbox	common	zh-tw	HBox
 heard island and mcdonald islands	common	zh-tw	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	zh-tw	高度
-help	common	zh-tw	協助
+height of row (in % or pixel)	common	zh-tw	資料列高度（百分比或像素）
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	zh-tw	列高(%或是畫素)，停用列： [! = not]<value>[=<check>] ，例如'!@data' 會在該列沒有任何資料的時候停用
+height of the table in % or pixels for the table-tag and (optional) div	common	zh-tw	表格標籤的高度(%或是畫素)，或是其他div區塊
+height, disabled	common	zh-tw	高度，停用
+help	common	zh-tw	求助
 high	common	zh-tw	高
 highest	common	zh-tw	最高
+history log	common	zh-tw	歷史記錄
 holy see (vatican city state)	common	zh-tw	HOLY SEE (VATICAN CITY STATE)
 home	common	zh-tw	首頁
 home email	common	zh-tw	家用信箱
+home screen	common	zh-tw	主畫面
 honduras	common	zh-tw	HONDURAS
 hong kong	common	zh-tw	香港
+horizontal rule	common	zh-tw	合併規則
+hour	common	zh-tw	小時
+hours	common	zh-tw	小時
+how many entries should the list show	common	zh-tw	清單要顯示多少筆資料
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh-tw	在導覽列要顯示多少圖示(每頁的最上方)，多出的圖示會顯示在另外一個導覽列最右方的下拉式選單
+html	common	zh-tw	HTML
 hungary	common	zh-tw	匈牙利
 iceland	common	zh-tw	冰島
-iespell not detected. click ok to go to download page.	common	zh-tw	找不到 ieSpell ，點選是來前往下載頁面。
-if the clock is enabled would you like it to update it every second or every minute?	common	zh-tw	如果使用時鐘，更新的頻率是每秒還是每分？
+id	common	zh-tw	編號
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	zh-tw	如果儲存格被停用則會顯示一個空白的表格區，藉此(暫時)移除一個儲存格
 if there are some images in the background folder you can choose the one you would like to see.	common	zh-tw	如果背景資料夾中有一些圖片，您可以選擇希望使用的一個。
+image	common	zh-tw	圖片
 image directory relative to document root (use / !), example:	common	zh-tw	相對於文件根目錄的圖片資料夾（使用 / !），例如：
 image url	common	zh-tw	圖片網址
+import	common	zh-tw	匯入
+import an etemplate from a xml-file	common	zh-tw	從XML檔案匯入一個樣板
+import table-definitions from existing db-table	common	zh-tw	從既有的資料庫表單匯入表格設定
+import xml	common	zh-tw	匯入XML
+increment version to not overwrite the existing template	common	zh-tw	增加版本來避免覆蓋現有的樣板
+index/name of returned content (name of the template, link / method for image)	common	zh-tw	傳回內容的索引/名稱(樣板名稱，圖片的連結或方法)
+indexed	common	zh-tw	已索引
+indexoptions	common	zh-tw	索引選項
 india	common	zh-tw	印度
 indonesia	common	zh-tw	印尼
+initial	common	zh-tw	初始的
+insert a column before	common	zh-tw	在前面插入一個欄位
+insert a column behind	common	zh-tw	在後面插入一個欄位
+insert a row above	common	zh-tw	在上方插入一列
+insert a row below	common	zh-tw	在下方插入一列
+insert a widget before	common	zh-tw	在前面插入一個容器
+insert a widget behind	common	zh-tw	在後面插入一個容器
 insert all %1 addresses of the %2 contacts in %3	common	zh-tw	在 %3 插入 %1 的 %2 筆聯絡人位址
 insert column after	common	zh-tw	欄位插在後面
 insert column before	common	zh-tw	欄位插在前面
+insert in document	common	zh-tw	插入文件
+insert new column behind this one	common	zh-tw	在這一個之前插入新的欄位
+insert new column in front of all	common	zh-tw	在最前面插入新的欄位
+insert new row after this one	common	zh-tw	在這一個之後插入新的欄位
+insert new row in front of first line	common	zh-tw	在這一行之前插入新的欄位
 insert row after	common	zh-tw	列插在後面
 insert row before	common	zh-tw	列插在前面
+integer	common	zh-tw	整數
 international	common	zh-tw	國際
 invalid filename	common	zh-tw	錯誤的檔案名稱
 invalid ip address	common	zh-tw	錯誤的IP位址
@@ -331,15 +528,21 @@ justify left	common	zh-tw	靠左
 justify right	common	zh-tw	靠右
 kazakstan	common	zh-tw	哈薩克
 kenya	common	zh-tw	肯亞
+key	common	zh-tw	鍵值
 keywords	common	zh-tw	關鍵字
 kiribati	common	zh-tw	KIRIBATI
 korea, democratic peoples republic of	common	zh-tw	北韓
 korea, republic of	common	zh-tw	南韓
 kuwait	common	zh-tw	科威特
 kyrgyzstan	common	zh-tw	KYRGYZSTAN
+label	common	zh-tw	標籤
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	zh-tw	標籤:[bold][italic] 文字:[len][,max] 數字:[min][,[max][,len]] 文字方塊:[rows][,cols] 核選方塊:[width] 範例l.:[IndexInContent] 下拉式選單:[multiselect] 日期:[values: eg. 'Y-m-d']
+lang	common	zh-tw	語言
 language	common	zh-tw	語言
+language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	zh-tw	獨立語言樣板(''會讀取使用者的偏好語言或是預設值，一般樣板預設是讀取英文)的語言縮寫(例如'en'代表english)
 language_direction_rtl	common	zh-tw	language_direction_rtl
 lao peoples democratic republic	common	zh-tw	LAO PEOPLES DEMOCRATIC REPUBLIC
+last	common	zh-tw	最後
 last modified	common	zh-tw	最後更新
 last name	common	zh-tw	姓
 last name of the user, eg. "%1"	common	zh-tw	使用者的姓，例： "%1"
@@ -349,16 +552,25 @@ latvia	common	zh-tw	拉托維亞
 ldap-mgr	common	zh-tw	LDAP管理員
 lebanon	common	zh-tw	黎巴嫩
 left	common	zh-tw	左
+length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	zh-tw	字元長度，精確數字：2,4,8 和浮點數：4,8
 lesotho	common	zh-tw	賴索托
 liberia	common	zh-tw	賴比瑞亞
 libyan arab jamahiriya	common	zh-tw	LIBYAN ARAB JAMAHIRIYA
 license	common	zh-tw	版權
 liechtenstein	common	zh-tw	列支敦士敦
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh-tw	第 %1 行：'%2'<br><b>csv 資料欄位數量與資料表 %3 不同 ==> 略過</b>
+link	common	zh-tw	連結
+linkapps	common	zh-tw	連結模組
+linkentry	common	zh-tw	連結資料
+linklist	common	zh-tw	連結清單
+linkstring	common	zh-tw	連結文字
+linkto	common	zh-tw	連結網址
 list	common	zh-tw	列表
 list members	common	zh-tw	列出會員
 lithuania	common	zh-tw	LITHUANIA
 load	common	zh-tw	讀取
+load this template into the editor	common	zh-tw	將這個樣板載入編輯器中
+loading	common	zh-tw	載入中
 local	common	zh-tw	本地
 locations	common	zh-tw	位置
 login	common	zh-tw	登入
@@ -374,7 +586,6 @@ macedonia, the former yugoslav republic of	common	zh-tw	MACEDONIA, THE FORMER YU
 madagascar	common	zh-tw	MADAGASCAR
 mail domain, eg. "%1"	common	zh-tw	郵件網址, 例： "%1"
 main category	common	zh-tw	主要分類
-home screen	common	zh-tw	主畫面
 maintainer	common	zh-tw	維護者
 malawi	common	zh-tw	MALAWI
 malaysia	common	zh-tw	MALAYSIA
@@ -386,7 +597,6 @@ marshall islands	common	zh-tw	MARSHALL ISLANDS
 martinique	common	zh-tw	MARTINIQUE
 mauritania	common	zh-tw	MAURITANIA
 mauritius	common	zh-tw	MAURITIUS
-max number of icons in navbar	common	zh-tw	導覽列最多顯示圖示數量
 may	common	zh-tw	五月
 mayotte	common	zh-tw	MAYOTTE
 medium	common	zh-tw	中等
@@ -394,40 +604,64 @@ menu	common	zh-tw	選單
 message	common	zh-tw	訊息
 mexico	common	zh-tw	墨西哥
 micronesia, federated states of	common	zh-tw	MICRONESIA, FEDERATED STATES OF
+middle	common	zh-tw	中間
 minute	common	zh-tw	分
+minutes	common	zh-tw	分
 moldova, republic of	common	zh-tw	MOLDOVA, REPUBLIC OF
 monaco	common	zh-tw	MONACO
 monday	common	zh-tw	星期一
 mongolia	common	zh-tw	MONGOLIA
 montenegro	common	zh-tw	MONTENEGRO
+month	common	zh-tw	月
 montserrat	common	zh-tw	MONTSERRAT
+more	common	zh-tw	更多
 morocco	common	zh-tw	MOROCCO
 mozambique	common	zh-tw	MOZAMBIQUE
+multicolumn indices	common	zh-tw	多欄索引
 multiple	common	zh-tw	多選
 myanmar	common	zh-tw	MYANMAR
 name	common	zh-tw	名稱
+name of other table where column is a key from	common	zh-tw	欄位是鍵值的其他表格名稱
+name of table to add	common	zh-tw	新增表格的名稱
+name of the etemplate, should be in form application.function[.subtemplate]	common	zh-tw	樣板名稱，必須在表單 application.function[.subTemplate] 中
 name of the user, eg. "%1"	common	zh-tw	使用者名稱，例： "%1"
 namibia	common	zh-tw	NAMIBIA
 nauru	common	zh-tw	NAURU
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	zh-tw	在表格中必須是唯一的且不是SQL的保留字，最好加上兩個英文與一個底線當作前置字元來表示應用程式
 nepal	common	zh-tw	NEPAL
 netherlands	common	zh-tw	NETHERLANDS
 netherlands antilles	common	zh-tw	NETHERLANDS ANTILLES
 never	common	zh-tw	從未
+new	common	zh-tw	新增
 new caledonia	common	zh-tw	NEW CALEDONIA
 new entry added sucessfully	common	zh-tw	成功新增資料
 new main category	common	zh-tw	新的主要分類
+new search	common	zh-tw	新的搜尋
+new table created	common	zh-tw	建立了新的表格
 new value	common	zh-tw	新數值
 new zealand	common	zh-tw	紐西蘭
+newer version '%1' exists !!!	common	zh-tw	更新的版本 '%1'！
 next	common	zh-tw	下一個
 next page	common	zh-tw	下一頁
+nextmatch	common	zh-tw	下一個
+nextmatch accountfilter	common	zh-tw	下一個符合的帳號規則
+nextmatch custom filterheader	common	zh-tw	下一個符合的自訂規則頁首
+nextmatch filterheader	common	zh-tw	下一個條件頁首
+nextmatch header	common	zh-tw	下一個頁首
+nextmatch sortheader	common	zh-tw	下一個分類頁首
 nicaragua	common	zh-tw	NICARAGUA
 niger	common	zh-tw	NIGER
 nigeria	common	zh-tw	NIGERIA
 niue	common	zh-tw	NIUE
 no	common	zh-tw	否
 no - cancel	common	zh-tw	否 - 取消
+no column to swap with !!!	common	zh-tw	沒有可以切換的欄位！
 no entries found, try again ...	common	zh-tw	找不到任何資料，請重試
+no file	common	zh-tw	沒有檔案
+no filename given or selected via browse...	common	zh-tw	沒有檔案名稱或是從瀏覽器選取...
 no history for this record	common	zh-tw	這筆紀錄沒有歷史資料
+no matches found	common	zh-tw	沒有找到符合的資料
+no row to swap with !!!	common	zh-tw	沒有可以切換的資料列！
 no savant2 template directories were found in:	common	zh-tw	沒有找到 Savant2 樣板資料夾：
 no subject	common	zh-tw	無主題
 none	common	zh-tw	無
@@ -438,30 +672,49 @@ norway	common	zh-tw	NORWAY
 not	common	zh-tw	否
 not a user yet? register now	common	zh-tw	還沒成為會員？立刻註冊
 not assigned	common	zh-tw	未分配
+not null	common	zh-tw	NOT NULL
 note	common	zh-tw	備註
 notes	common	zh-tw	備忘
+nothing	common	zh-tw	無
+nothing found - try again !!!	common	zh-tw	找不到任何資料 - 重試一次！
+nothing in clipboard to paste !!!	common	zh-tw	剪貼簿沒有資料！
+nothing matched search criteria !!!	common	zh-tw	搜尋條件找不到任何資料
 notifications	common	zh-tw	提醒通知
 notify window	common	zh-tw	提示視窗
 notify your administrator to correct this situation	common	zh-tw	提醒您的管理者來修正這個情況
 november	common	zh-tw	十一月
+now	common	zh-tw	現在
+number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	zh-tw	合併儲存格的數字或是輸入'all'來合併剩下的儲存格、CSS類別名稱(TD標籤)
+number of rows/cols in a v/hbox, cellpadding, cellspacing	common	zh-tw	V/HBox中列或是行的欄位間隔、文字與框線的距離
 october	common	zh-tw	十月
+of	common	zh-tw	的
 ok	common	zh-tw	確定
 old value	common	zh-tw	原始值
 oman	common	zh-tw	OMAN
 on *nix systems please type: %1	common	zh-tw	在*nix系統請輸入：%1
 on mouse over	common	zh-tw	當滑鼠移過
+onchange	common	zh-tw	異動時
+onclick	common	zh-tw	點選時
+only an other version found !!!	common	zh-tw	只有找到一個其他版本！
 only private	common	zh-tw	只有私人的
 only yours	common	zh-tw	屬於您的資料
 open	common	zh-tw	開啟
 open notify window	common	zh-tw	開啟警示視窗
 open popup window	common	zh-tw	開啟彈出式視窗
 open sidebox	common	zh-tw	開啟其他選單
+open the online help.	common	zh-tw	開啟線上說明
+operator	common	zh-tw	運算元
+optional note about the link	common	zh-tw	連結的附註
+options	common	zh-tw	選項
 or	common	zh-tw	或
+order to navigating by tab key through the form	common	zh-tw	表單中跳位鍵的順序
 ordered list	common	zh-tw	已排序清單
 original	common	zh-tw	原本的
 other	common	zh-tw	其它
+overflow	common	zh-tw	超過
 overview	common	zh-tw	總覽
 owner	common	zh-tw	擁有者
+padding	common	zh-tw	文框距離
 page	common	zh-tw	頁
 page was generated in %1 seconds	common	zh-tw	網頁花費 %1 秒產生
 pakistan	common	zh-tw	PAKISTAN
@@ -472,6 +725,7 @@ papua new guinea	common	zh-tw	PAPUA NEW GUINEA
 paraguay	common	zh-tw	PARAGUAY
 parcel	common	zh-tw	塊
 parent category	common	zh-tw	上一層分類
+parent is a '%1' !!!	common	zh-tw	上一層是一個 '%1' ！
 password	common	zh-tw	密碼
 password could not be changed	common	zh-tw	無法修改密碼
 password has been updated	common	zh-tw	已成功更新密碼
@@ -480,29 +734,36 @@ password must contain at least %1 numbers	common	zh-tw	密碼必須包含至少 
 password must contain at least %1 special characters	common	zh-tw	密碼必須包含至少 %1 個特殊字元
 password must contain at least %1 uppercase letters	common	zh-tw	密碼必須包含至少 %1 個大寫英文字母
 password must have at least %1 characters	common	zh-tw	密碼必須包含至少 %1 個字元
+paste	common	zh-tw	貼上
+path	common	zh-tw	路徑
 path to user and group files has to be outside of the webservers document-root!!!	common	zh-tw	使用者與群組的檔案路徑必須要在網站伺服器的網頁跟目錄之外！
 permissions to the files/users directory	common	zh-tw	檔案/使用者資料夾的權限
 personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
 philippines	common	zh-tw	菲律賓
 phone number	common	zh-tw	電話
-api	common	zh-tw	EGroupware 核心
 pitcairn	common	zh-tw	PITCAIRN
 please %1 by hand	common	zh-tw	請手動 %1
 please enter a name	common	zh-tw	請輸入名稱！
+please enter table-name first !!!	common	zh-tw	請先輸入表格名稱！
 please run setup to become current	common	zh-tw	請執行設定程式以到目前的
 please select	common	zh-tw	請選擇
 please set your global preferences	common	zh-tw	請設定您的全域設定
 please set your preferences for this application	common	zh-tw	請設定這個應用程式的個人喜好設定
 please wait...	common	zh-tw	請等待...
+pm	common	zh-tw	下午
 poland	common	zh-tw	波瀾
+popup	common	zh-tw	彈出式視窗
 popup with search	common	zh-tw	跳出搜尋
 portugal	common	zh-tw	PORTUGAL
 postal	common	zh-tw	郵遞區號
 powered by	common	zh-tw	系統提供
+precision	common	zh-tw	精密度
 preferences	common	zh-tw	喜好設定
 previous page	common	zh-tw	上一頁
 primary group	common	zh-tw	主要群組
+primary key	common	zh-tw	主鍵
+primary key for the table, gets automaticaly indexed	common	zh-tw	表單的主鍵，用來自動產生索引
 primary style-sheet:	common	zh-tw	主要樣式表：
 print	common	zh-tw	列印
 priority	common	zh-tw	優先權
@@ -512,25 +773,36 @@ project	common	zh-tw	專案
 public	common	zh-tw	共用
 puerto rico	common	zh-tw	PUERTO RICO
 qatar	common	zh-tw	QATAR
+radiobutton	common	zh-tw	核選按鈕
 read	common	zh-tw	讀取
+read a single entry by passing the id and fieldlist.	common	zh-tw	透過ID與儲存格清單來讀取一筆資料
+read etemplate from database (for the keys above)	common	zh-tw	從資料庫讀取樣板(透過上面的鍵值)
 read this list of methods.	common	zh-tw	讀取這個方法的列表
 reading	common	zh-tw	閱讀中
+readonly	common	zh-tw	唯讀
+refresh	common	zh-tw	重新整理
 regular	common	zh-tw	規則
 reject	common	zh-tw	拒絕
 remember me	common	zh-tw	記住我
+remove row (can not be undone!!!)	common	zh-tw	移除列(無法還原！)
 remove selected accounts	common	zh-tw	移除選取的帳號
 remove shortcut	common	zh-tw	移除快速鍵
+remove this link (not the entry itself)	common	zh-tw	移除這個連結(不是它的資料)
 rename	common	zh-tw	更名
 replace	common	zh-tw	取代
 replace with	common	zh-tw	取代於
+required	common	zh-tw	必填
+reset	common	zh-tw	重設
 resources	common	zh-tw	資源
 restore failed	common	zh-tw	還原失敗
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh-tw	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
 returns an array of todo items	common	zh-tw	傳回待辦事項所有項目成為陣列
+returns savely, without deleting	common	zh-tw	回上頁，不儲存
 returns struct of users application access	common	zh-tw	傳回使用者應用程式存取架構
 reunion	common	zh-tw	REUNION
-right	common	zh-tw	右
+right	common	zh-tw	正確
 romania	common	zh-tw	ROMANIA
+row...	common	zh-tw	資料列...
 russian federation	common	zh-tw	RUSSIAN FEDERATION
 rwanda	common	zh-tw	RWANDA
 saint helena	common	zh-tw	SAINT HELENA
@@ -545,24 +817,66 @@ saturday	common	zh-tw	星期六
 saudi arabia	common	zh-tw	SAUDI ARABIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh-tw	Savant2 與解析器版本不同 <br/>程式版本：%1 <br/>Savants 版本： %2
 save	common	zh-tw	儲存
+save all	common	zh-tw	儲存全部
+save selected columns as default preference for all users.	common	zh-tw	儲存選擇的欄位為所有使用者的預設值。
+save the changes made and close the window	common	zh-tw	儲存異動並且關閉視窗
+save the etemplate under the above keys (name, ...), change them for a saveas	common	zh-tw	以上面的鍵值(name,...)儲存樣板，另存到其他位置
+saves changes to tables_current.inc.php	common	zh-tw	儲存到tables_current.inc.php
+saves the template with given version number and closes the window	common	zh-tw	使用指定的版本編號儲存樣板後關閉視窗
+scale	common	zh-tw	尺度
+scale for float	common	zh-tw	小數點位數
 search	common	zh-tw	搜尋
 search %1 '%2'	common	zh-tw	搜尋 %1 '%2'
 search accounts	common	zh-tw	搜尋帳號
+search for '%1'	common	zh-tw	搜尋 '%1'
 second	common	zh-tw	秒
 section	common	zh-tw	選擇
 select	common	zh-tw	選擇
+select a category	common	zh-tw	類別
+select a primary contact, to show in the list	common	zh-tw	選擇主要聯絡人來顯示在清單
+select access	common	zh-tw	存取
+select account	common	zh-tw	帳號
 select all	common	zh-tw	選擇全部
 select all %1 %2 for %3	common	zh-tw	選擇 %3 的所有 %1 %2
-select category	common	zh-tw	選擇分類
+select an app first !!!	common	zh-tw	請先選擇一個應用程式！
+select an app to search in	common	zh-tw	選擇要搜尋的應用程式
+select an application	common	zh-tw	應用程式
+select an application, (*) = uninstalled	common	zh-tw	應用程式，(*)表示未安裝
+select an entry to link with	common	zh-tw	選擇要連結的事件
+select an table of the application	common	zh-tw	選擇一個應用程式的資料表
+select application	common	zh-tw	應用程式
+select application to search	common	zh-tw	選擇要搜尋的應用程式
+select category	common	zh-tw	類別
+select columns	common	zh-tw	選擇欄位
+select country	common	zh-tw	國家
 select date	common	zh-tw	選擇日期
+select day	common	zh-tw	日期
+select day of week	common	zh-tw	選一週的一天
+select entry	common	zh-tw	選擇資料
 select group	common	zh-tw	選擇群組
 select home email address	common	zh-tw	選擇家用信箱
+select hour	common	zh-tw	選擇時數
+select if content of field should not be translated (label gets always translated)	common	zh-tw	如果內容或儲存格不希望被翻譯(標籤都是會被翻譯的)
+select language	common	zh-tw	選擇語言
+select month	common	zh-tw	月份
 select multiple accounts	common	zh-tw	選擇多個帳號
+select number	common	zh-tw	數字
 select one	common	zh-tw	選擇一個
+select one ...	common	zh-tw	選擇一個...
+select percentage	common	zh-tw	選擇比率
+select priority	common	zh-tw	選擇優先次序
+select state	common	zh-tw	選擇狀態
+select the columns to display in the list	common	zh-tw	選擇清單中要顯示的欄位
 select the default height for the application windows	common	zh-tw	選擇應用程式視窗的預設高度
 select the default width for the application windows	common	zh-tw	選擇應用程式視窗的預設寬度
+select the indexed columns in their desired order	common	zh-tw	在他們預期的順序中選擇索引欄位
+select this etemplate to delete it	common	zh-tw	選擇刪除這個樣板
 select user	common	zh-tw	選擇使用者
+select which accounts to show	common	zh-tw	選擇要顯示的帳號
+select which values to show	common	zh-tw	選擇要顯示的數值
 select work email address	common	zh-tw	選擇工作用信箱
+select year	common	zh-tw	選擇年
+selectbox	common	zh-tw	下拉選單
 selection	common	zh-tw	選擇
 send	common	zh-tw	送出
 senegal	common	zh-tw	SENEGAL
@@ -573,22 +887,25 @@ server answered. processing response...	common	zh-tw	伺服器回應了，處理
 server contacted. waiting for response...	common	zh-tw	伺服器連上了，等待回應中...
 server name	common	zh-tw	伺服器名稱
 session has been killed	common	zh-tw	連線已被中斷
+sets today as date	common	zh-tw	設定為今天
 setup	common	zh-tw	安裝
 setup main menu	common	zh-tw	安裝主要選單
 seychelles	common	zh-tw	SEYCHELLES
+should the form be submitted or any custom javascript be executed	common	zh-tw	表單是否要送出或是執行任何自訂的 javascript
+show	common	zh-tw	顯示
+show (no save)	common	zh-tw	顯示(不儲存)
 show all	common	zh-tw	顯示全部
 show all categorys	common	zh-tw	顯示全部類別
-show clock?	common	zh-tw	顯示時鐘？
-show home and logout button in main application bar?	common	zh-tw	在選單顯示首頁與登出按鈕？
-show logo's on the desktop.	common	zh-tw	在桌面顯示圖示。
-show menu	common	zh-tw	顯示選單
 show page generation time	common	zh-tw	顯示網頁產生時間
 show page generation time on the bottom of the page?	common	zh-tw	將網頁產生時間顯示在頁尾？
 show page generation time?	common	zh-tw	顯示頁面產生時間？
-show the logo's of egroupware and x-desktop on the desktop.	common	zh-tw	在桌面顯示 EGroupware 與 x-desktop 的 logo
-show_more_apps	common	zh-tw	show_more_apps
+show values	common	zh-tw	顯示數值
+showing	common	zh-tw	顯示中
 showing %1	common	zh-tw	顯示 %1
 showing %1 - %2 of %3	common	zh-tw	顯示 %1 - %2 之 %3
+shows / allows you to enter values into the etemplate for testing	common	zh-tw	顯示/允許您基於測試來輸入數值到樣版中
+shows/displays etemplate for testing, does not save it before	common	zh-tw	在儲存之前預覽/測試樣板
+show_more_apps	common	zh-tw	show_more_apps
 sierra leone	common	zh-tw	SIERRA LEONE
 simple	common	zh-tw	簡單
 singapore	common	zh-tw	新加坡
@@ -601,9 +918,15 @@ somalia	common	zh-tw	索馬利亞
 sorry, your login has expired	login	zh-tw	抱歉，您的帳號已經過期
 south africa	common	zh-tw	SOUTH AFRICA
 south georgia and the south sandwich islands	common	zh-tw	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	common	zh-tw	空間
 spain	common	zh-tw	西班牙
+span	common	zh-tw	分割
+span, class	common	zh-tw	分割，類別
 sri lanka	common	zh-tw	SRI LANKA
+stack	common	zh-tw	堆疊
+start a new search, cancel this link	common	zh-tw	取消這個連結，開啟新的搜尋
 start date	common	zh-tw	開始日期
+start new search for the above pattern	common	zh-tw	用上面的規則開啟一個新的搜尋
 start time	common	zh-tw	開始時間
 start with	common	zh-tw	開始於
 starting up...	common	zh-tw	開始中...
@@ -611,24 +934,42 @@ status	common	zh-tw	狀態
 stretched	common	zh-tw	樹狀
 subject	common	zh-tw	主題
 submit	common	zh-tw	送出
+submit form	common	zh-tw	送出表單
+submitbutton	common	zh-tw	送出按鈕
 substitutions and their meanings:	common	zh-tw	替代項目與他們的意義：
 sudan	common	zh-tw	蘇丹
 sunday	common	zh-tw	星期日
 suriname	common	zh-tw	SURINAME
 svalbard and jan mayen	common	zh-tw	SVALBARD AND JAN MAYEN
+swap	common	zh-tw	切換
+swap widget with next one	common	zh-tw	與下一個容器切換
+swap with next column	common	zh-tw	與下一個欄位切換
+swap with next row	common	zh-tw	與下一個資料列切換
 swaziland	common	zh-tw	SWAZILAND
 sweden	common	zh-tw	瑞典
+switch to a parent widget	common	zh-tw	與上一層容器切換
+switch to an other widgets of that container	common	zh-tw	與其他容器切換
 switzerland	common	zh-tw	SWITZERLAND
 syrian arab republic	common	zh-tw	SYRIAN ARAB REPUBLIC
+tabindex	common	zh-tw	跳位鍵索引
 table properties	common	zh-tw	表格屬性
+table unchanged, no write necessary !!!	common	zh-tw	表單沒有異動，不需要儲存！
+tablename	common	zh-tw	資料表名稱
+tabs	common	zh-tw	跳位
 taiwan	common	zh-tw	台灣/台北
 tajikistan	common	zh-tw	TAJIKISTAN
 tanzania, united republic of	common	zh-tw	TANZANIA, UNITED REPUBLIC OF
+template	common	zh-tw	樣版
+template deleted	common	zh-tw	樣版刪除了
+template saved	common	zh-tw	樣版儲存了
+text	common	zh-tw	文字
 text color:	common	zh-tw	文字顏色：
+textarea	common	zh-tw	文字區
 thailand	common	zh-tw	泰國
 the following applications require upgrades	common	zh-tw	下列應用程式需要升級
 the mail server returned	common	zh-tw	郵件伺服器傳回
 this name has been used already	common	zh-tw	這個名字已被使用！
+this text gets displayed if the input-field is empty and has no focus (blur)	common	zh-tw	如果文字方塊中沒有輸入任何文字且文字游標沒有在欄位中會顯示這些文字
 thursday	common	zh-tw	星期四
 tiled	common	zh-tw	展開
 time	common	zh-tw	時間
@@ -637,16 +978,20 @@ time zone offset	common	zh-tw	時區時差
 title	common	zh-tw	標題(職稱)
 to	common	zh-tw	到
 to correct this error for the future you will need to properly set the	common	zh-tw	為了在未來修正這個錯誤，您必須正確的設定
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	zh-tw	要停用：[! = not]<value>[=<check>]，例如 '!@data' 會在 data 沒有資料時停用
 to go back to the msg list, click <a href= %1 >here</a>	common	zh-tw	點選<a href="%1">這裡</a>回到訊息清單
+to start the db-tools	common	zh-tw	資料庫工具
+to start the etemplate editor	common	zh-tw	樣板編輯器
+to start the search	common	zh-tw	搜尋
 today	common	zh-tw	今天
 todays date, eg. "%1"	common	zh-tw	今天日期, 例： "%1"
 togo	common	zh-tw	TOGO
 tokelau	common	zh-tw	TOKELAU
 tonga	common	zh-tw	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh-tw	太多錯誤的登入：%1 使用者 '%2', %3 IP %4
-top	common	zh-tw	頂部
+top	common	zh-tw	頁首
 total	common	zh-tw	總計
-transparant bg for the icons?	common	zh-tw	圖示背景透明？
+tree	common	zh-tw	樹
 trinidad and tobago	common	zh-tw	TRINIDAD AND TOBAGO
 tuesday	common	zh-tw	星期二
 tunisia	common	zh-tw	TUNISIA
@@ -654,17 +999,22 @@ turkey	common	zh-tw	TURKEY
 turkmenistan	common	zh-tw	TURKMENISTAN
 turks and caicos islands	common	zh-tw	TURKS AND CAICOS ISLANDS
 tuvalu	common	zh-tw	TUVALU
-type	common	zh-tw	類型
+type	common	zh-tw	種類
+type of the column	common	zh-tw	欄位種類
+type of the field (select label if field should be empty)	common	zh-tw	儲存格種類(如果儲存格必須為空值請選擇標籤)
 uganda	common	zh-tw	UGANDA
 ukraine	common	zh-tw	UKRAINE
 underline	common	zh-tw	底線
+unique	common	zh-tw	唯一
 united arab emirates	common	zh-tw	UNITED ARAB EMIRATES
 united kingdom	common	zh-tw	UNITED KINGDOM
 united states	common	zh-tw	UNITED STATES
 united states minor outlying islands	common	zh-tw	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	zh-tw	未知
+unlink	common	zh-tw	刪除
 update	common	zh-tw	更新
-update the clock per minute or per second	common	zh-tw	更新時鐘頻率為每秒或是每分
+update a single entry by passing the fields.	common	zh-tw	透過第送的欄位更新一個單一事件
+update from version '%s' to	common	zh-tw	從版本 '%s'更新到
 upload	common	zh-tw	上傳
 upload directory does not exist, or is not writeable by webserver	common	zh-tw	上傳資料夾不存在，或是網頁伺服器無法寫入
 upload requires the directory to be writable by the webserver!	common	zh-tw	上傳功能需要網頁伺服器能夠寫入這個資料夾！
@@ -681,35 +1031,55 @@ username	common	zh-tw	使用者名稱
 users	common	zh-tw	使用者
 users choice	common	zh-tw	使用者選擇
 uzbekistan	common	zh-tw	UZBEKISTAN
+valign	common	zh-tw	垂直對齊
 value	common	zh-tw	數值
+value has to be at least '%1' !!!	common	zh-tw	數值最少必須是 '%1'！
+value has to be at maximum '%1' !!!	common	zh-tw	數值最大是 '%1' ！
 vanuatu	common	zh-tw	VANUATU
+vbox	common	zh-tw	VBox
 venezuela	common	zh-tw	VENEZUELA
 version	common	zh-tw	版本
+vertical alignment of row	common	zh-tw	資料列垂直對齊
 viet nam	common	zh-tw	越南
 view	common	zh-tw	檢視
+view this etemplate	common	zh-tw	瀏覽這個樣板
+view this linked entry in its application	common	zh-tw	在應用程式中顯示這個被連結的事件
 virgin islands, british	common	zh-tw	英屬威京群島
 virgin islands, u.s.	common	zh-tw	美屬威京群島
 wallis and futuna	common	zh-tw	WALLIS AND FUTUNA
 wednesday	common	zh-tw	星期三
+weekend	common	zh-tw	週末
 welcome	common	zh-tw	歡迎光臨
 western sahara	common	zh-tw	WESTERN SAHARA
-what color should all the blank space on the desktop have	common	zh-tw	桌面空白區域使用的顏色
-what style would you like the image to have?	common	zh-tw	圖片使用的風格為何？
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	zh-tw	超出的內容要如何處理： 顯示(預設)，隱藏，捲動，自動(由瀏覽器決定)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh-tw	當您選擇是，首頁與登出圖示會顯示在選單中。
 which groups	common	zh-tw	哪個群組
 whole query	common	zh-tw	整個查詢
+widget copied into clipboard	common	zh-tw	容器複製到剪貼簿
 width	common	zh-tw	寬度
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	zh-tw	欄位寬度(%或是畫素)，停用欄位：[! = not]<value>[=<check>] 例如： '!@data' 如果沒有內容就停用
+width of column (in % or pixel)	common	zh-tw	欄位寬度（百分比或像素）
+width of the table in % or pixels for the table-tag and (optional) div	common	zh-tw	表格或DIV標籤標籤的寬度（百分比或像素）
+width, disabled	common	zh-tw	寬度，停用
+wk	common	zh-tw	週
 work email	common	zh-tw	工作信箱
+working days	common	zh-tw	工作日
 would you like to display the page generation time at the bottom of every window?	common	zh-tw	您是否要在每個視窗的最下方顯示產生時間？
+write <app>/setup/tables_current.inc.php	common	zh-tw	寫入<app>/setup/tables_current.inc.php
+write langfile	common	zh-tw	寫入語言檔
+write tables	common	zh-tw	寫入表格
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	zh-tw	在應用程式的安裝資料夾寫入一個檔案 'etemplates.inc.php'
 writing	common	zh-tw	寫入中
 written by:	common	zh-tw	作者：
+xml-file to import	common	zh-tw	要匯入的XML檔案
+xslt template	common	zh-tw	XSLT樣版
 year	common	zh-tw	年
 yemen	common	zh-tw	葉門
 yes	common	zh-tw	是
 yes - delete	common	zh-tw	確定 - 刪除
 yes - delete including sub-entries	common	zh-tw	確定 - 刪除（包含附屬資料）
 you are required to change your password during your first login	common	zh-tw	您必須在第一次登入時修改您的密碼
-you can customize how many icons and toolbars the editor shows.	common	zh-tw	您可以自訂編輯器要顯示的圖示與工具列。
+you can respond by visiting:	common	zh-tw	檢視網址：
 you have been successfully logged out	login	zh-tw	您已經成功登出。
 you have not entered a title	common	zh-tw	您尚未輸入標題
 you have not entered a valid date	common	zh-tw	您尚未輸入正確的日期
@@ -727,432 +1097,3 @@ your settings have been updated	common	zh-tw	您的設定已經更新。
 zambia	common	zh-tw	尚比亞
 zimbabwe	common	zh-tw	辛巴威
 zoom	common	zh-tw	放大
-search for '%1'	common	zh-tw	搜尋 '%1'
-%1 (%2 new) messages writen for application '%3' and languages '%4'	common	zh-tw	以語言 '%4' 寫入%1筆(%2 新的)應用程式 '%3' 的訊息
-%1 etemplates deleted	common	zh-tw	刪除了 %1 個樣板
-%1 etemplates for application '%2' dumped to '%3'	common	zh-tw	應用程式 '%2' 的 %1 個樣板轉換到另一個應用程式 '%3'
-%1 etemplates found	common	zh-tw	找到 %1 個樣板
-%1 matches on search criteria	common	zh-tw	有 %1 筆符合搜尋條件的資料
-%1 new etemplates imported for application '%2'	common	zh-tw	匯入 %1 筆應用程式 '%2' 的樣板
-%s disabled	common	zh-tw	%s 停用
-%s needed	common	zh-tw	需要 %s
-%s notranslation	common	zh-tw	%s 未翻譯
-%s onchange	common	zh-tw	%s 調整中
-%s readonly	common	zh-tw	%s 唯讀
-'%1' has an invalid format !!!	common	zh-tw	'%1' 格式錯誤！
-'%1' is not a valid date !!!	common	zh-tw	'%1'不是有效的日期！
-'%1' is not a valid floatingpoint number !!!	common	zh-tw	'%1' 不是正確的浮點數！
-'%1' is not a valid integer !!!	common	zh-tw	'%1' 不是正確的整數！
-a pattern to be searched for	common	zh-tw	搜尋條件
-accesskey	common	zh-tw	存取鍵值
-accesskeys can also be specified with an & in the label (eg. &name)	common	zh-tw	存取鍵值也可以在標籤中包含一個 & （例如 &Name）
-account contactdata	common	zh-tw	新增聯絡人資料
-actions...	common	zh-tw	動作...
-add a new column (after the existing ones)	common	zh-tw	新增欄位(在已存在的之後)
-add a new entry of the selected application	common	zh-tw	在選擇的應用程式中新增一筆資料
-add a new multi-column index	common	zh-tw	新增多欄索引
-add column	common	zh-tw	新增欄位
-add index	common	zh-tw	新增索引
-add new	common	zh-tw	新增
-add table	common	zh-tw	新增表格
-advanced search	common	zh-tw	進階搜尋
-align	common	zh-tw	對齊
-alignment of label and input-field in table-cell	common	zh-tw	標題與表格輸入文字對齊方式
-alignment of the v/hbox containing table-cell	common	zh-tw	V/HBox的對齊方式
-all days	common	zh-tw	全部日數
-all operations save the template!	common	zh-tw	所有的操作儲存到樣板！
-all users	common	zh-tw	所有使用者
-am	common	zh-tw	上午
-an indexed column speeds up querys using that column (cost space on the disk !!!)	common	zh-tw	索引欄位可以提高搜尋資料的速度(但是會佔用硬碟的空間！)
-and	common	zh-tw	且
-application	common	zh-tw	應用程式
-application name needed to write a langfile or dump the etemplates !!!	common	zh-tw	應用程式需要有語言檔或是將樣板匯出！
-applications	common	zh-tw	應用程式
-applies the changes made	common	zh-tw	儲存異動
-applies the changes to the given version of the template	common	zh-tw	在這個樣板的指定版本儲存異動
-as default	common	zh-tw	如同預設
-attach	common	zh-tw	附加
-attach file	common	zh-tw	附加檔案
-baseline	common	zh-tw	基線
-blurtext	common	zh-tw	模糊文字
-border	common	zh-tw	框線
-border-line-thickness for the table-tag	common	zh-tw	表格標籤使用的框線厚度
-bottom	common	zh-tw	底部
-box	common	zh-tw	區塊
-box...	common	zh-tw	區塊...
-can not have special sql-value null	common	zh-tw	無法使用特出的SQL值 NULL
-cancel	common	zh-tw	取消
-cant delete a single widget from a grid !!!	common	zh-tw	無法從表格中刪除單一容器！
-cant delete the only column of a grid !!!	common	zh-tw	無法從表格中刪除唯一的欄位！
-cant delete the only row in a grid !!!	common	zh-tw	無法從表格中刪除唯一的資料列！
-category	common	zh-tw	類別
-category tree	common	zh-tw	類別樹
-cellpadding for the table-tag	common	zh-tw	表格文字與格線的距離
-cells	common	zh-tw	儲存格
-cellspacing for the table-tag	common	zh-tw	表格欄位與欄位文字的距離
-center	common	zh-tw	置中
-changed	common	zh-tw	已異動
-check all	common	zh-tw	全選
-check if content should only be displayed but not altered (the content is not send back then!)	common	zh-tw	如果內容只能被顯示而不能被改變請勾選
-check if field has to be filled by user	common	zh-tw	如果欄位址能夠讓使用者填入請勾選
-checkbox	common	zh-tw	核選方塊
-class	common	zh-tw	類別
-class, valign	common	zh-tw	類別，垂直對齊
-click here to attach the file	common	zh-tw	點選這裡來附加檔案
-click here to create the link	common	zh-tw	點選這裡來建立連結
-click here to start the search	common	zh-tw	點選這裡開始搜尋
-click here to upload the file	common	zh-tw	點選這裡來上傳檔案
-click to order after that criteria	common	zh-tw	點選這裡來排序搜尋結果
-clickable path	common	zh-tw	可點選路徑
-closes the window without saving the changes	common	zh-tw	關閉視窗且不儲存
-column...	common	zh-tw	欄位...
-columnname	common	zh-tw	欄位名稱
-comment	common	zh-tw	備註
-confirm	common	zh-tw	確認
-confirmation message or custom javascript (returning true or false)	common	zh-tw	確認訊息或是自訂的 javascript （傳回 true 或 false）
-confirmation necesary or custom java-script	common	zh-tw	需要確認或自訂的 javascript
-contact	common	zh-tw	聯絡人
-contact field to show	common	zh-tw	要顯示的聯絡人欄位
-contact fields	common	zh-tw	聯絡人欄位
-contains	common	zh-tw	包含
-create a new table for the application	common	zh-tw	為這個應用程式建立一個新的表格
-creates an english ('en') langfile from label and helptexts (for application in name)	common	zh-tw	從標籤與求助文字建立一個英文('en')的語言檔
-css class for the table-tag	common	zh-tw	表格標間的CSS類別
-css properties	common	zh-tw	CSS屬性
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	common	zh-tw	這一列的CSS類別，內定值：'nmh' = 下一筆符合條件的頁首，'nmr' = 改變下一列符合條件的資料，'nmr0'+'nmr1'下一列符合條件的資料
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	common	zh-tw	資料列的CSS類別名稱，預設為：'th' = 標題列, 'row' = 互換資料, 'row_off'+'row_on' 資料列
-css-styles	common	zh-tw	CSS風格
-custom	common	zh-tw	自訂
-custom fields	common	zh-tw	自訂欄位
-custom javascript for onchange	common	zh-tw	自訂 onChange 動作的 javascript
-cut	common	zh-tw	剪下
-date+time	common	zh-tw	日期+時間
-day	common	zh-tw	天
-days	common	zh-tw	天
-db ensures that every row has a unique value in that column	common	zh-tw	在那個欄位中資料庫能夠確保每一列可以有一個不重複的數值
-db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	common	zh-tw	特定資料庫索引選項(逗點分隔)，例如 mysql(FULLTEXT)或mysql(100)來設定欄位索引長度
-db-tools	common	zh-tw	資料庫工具
-deck	common	zh-tw	裝飾(內部)
-default	common	zh-tw	預設
-delete a single entry by passing the id.	common	zh-tw	依照送出的代碼來刪除一筆資料
-delete all selected etemplates, without further inquiry	common	zh-tw	刪除所有選取的樣板，不再確認
-delete and cut save the template!	common	zh-tw	刪除與剪下來儲存樣板！
-delete column	common	zh-tw	刪除欄位
-delete index	common	zh-tw	刪除索引
-delete the spezified etemplate	common	zh-tw	刪除指定樣板
-delete this column	common	zh-tw	刪除這個欄位
-delete this etemplate	common	zh-tw	刪除這個樣板
-delete this file	common	zh-tw	刪除這個檔案
-delete this row	common	zh-tw	刪除這個資料
-delete whole column (can not be undone!!!)	common	zh-tw	刪除整個欄位(無法復原！)
-deletes the above spez. etemplate from the database, can not be undone	common	zh-tw	從資料庫刪除上面指定的樣板，無法還原
-deletes the etemplate spez. above	common	zh-tw	刪除上面指定的樣板
-deletes this column	common	zh-tw	刪除這個欄位
-deletes this index	common	zh-tw	刪除這個索引
-discard changes	common	zh-tw	放棄異動
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	zh-tw	在輸入之前顯示或是基於標籤(送出按鈕的標籤或是圖片的檔案名稱)中的'%s'來插入輸入值
-displayed in statusline of browser if input-field gets focus	common	zh-tw	如果游標停在輸入欄位時在瀏覽器的狀態列顯示
-displayed in the top line of the groupbox (legend)	common	zh-tw	在群組區塊（範例）的最上方顯示
-do you want to save the changes you made in table %s?	common	zh-tw	您是否要儲存在表格 %s 的異動？
-document '%1' does not exist or is not readable for you!	preferences	zh-tw	文件 '%1' 不存在或是無法讀取！
-documentation	common	zh-tw	文件
-doesn't matter	common	zh-tw	沒關係
-drop a table - this can not be undone	common	zh-tw	移出一個資料表 - 將無法還原
-drop table	common	zh-tw	移除資料表
-dump4setup	common	zh-tw	匯出安裝所需資料
-duration	common	zh-tw	期間
-edit	common	zh-tw	編輯
-edit embeded css styles or of the applications app.css file	common	zh-tw	編輯嵌入的 CSS 風格或是應用程式的 app.css 檔案
-edit the etemplate spez. above	common	zh-tw	編輯上面指定的樣板
-edit...	common	zh-tw	編輯...
-editable templates - db-tools	common	zh-tw	可編輯樣板 - 資料庫工具
-editable templates - delete template	common	zh-tw	可編輯樣板 - 刪除樣板
-editable templates - editor	common	zh-tw	可編輯樣板 - 編輯器
-editable templates - search	common	zh-tw	可編輯樣板 - 搜尋
-editable templates - show template	common	zh-tw	可編輯樣板 - 顯示樣板
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	zh-tw	嵌入式CSS風格，例如'.red { background: red; }' (注意 '.' 在類別名稱之前) 或是 '@import url(...)' (類別名稱可以在整個網頁使用！)
-enable javascript onchange submit	common	zh-tw	啟用 JavaScript 異動時送出功能
-enter '' for an empty default, nothing mean no default	common	zh-tw	沒有意味著沒有預設值，輸入 '' 代表
-enter a search pattern	common	zh-tw	輸入搜尋條件
-enter filename to upload and attach, use [browse...] to search for it	common	zh-tw	輸入上傳與附加檔案的名稱，使用[瀏覽...]來選取
-enter the new version number here (> old_version), empty for no update-file	common	zh-tw	輸入新的版本編號(大於舊版)，空白表示沒有更新
-enter the new version number here (has to be > old_version)	common	zh-tw	輸入新的版本編號(必須大於舊版)
-entry saved	common	zh-tw	資料儲存了
-error: template not found !!!	common	zh-tw	錯誤：找不到樣板！
-error: webserver is not allowed to write into '%1' !!!	common	zh-tw	錯誤：網頁伺服器無法寫入檔案 '%1'！
-error: while saving !!!	common	zh-tw	錯誤：儲存時！
-error: writing file (no write-permission for the webserver) !!!	common	zh-tw	錯誤：寫入檔案時(網頁伺服器沒有寫入的權限)！
-etemplate	common	zh-tw	樣板管理
-etemplate '%1' imported, use save to put it in the database	common	zh-tw	匯入了樣板 '%1' ，點選儲存來將它放入資料庫中
-etemplate '%1' written to '%2'	common	zh-tw	樣板 '%1' 另存成 '%2'
-etemplate editor	common	zh-tw	樣板編輯器
-etemplate reference	common	zh-tw	樣板參考
-etemplate tutorial	common	zh-tw	樣板教學
-exchange this row with the one above	common	zh-tw	用上面的資料與這一列交換
-exchange this two columns	common	zh-tw	交換這兩個欄位
-export the loaded etemplate into a xml-file	common	zh-tw	將讀取的樣板匯出成XML檔案
-export xml	common	zh-tw	匯出XML
-extensions loaded:	common	zh-tw	已讀取外掛：
-field	common	zh-tw	欄位
-field must not be empty !!!	common	zh-tw	欄位不能空白！
-file	common	zh-tw	檔案
-file contains more than one etemplate, last one is shown !!!	common	zh-tw	檔案包含多個樣板，只顯示最後一筆！
-file writen	common	zh-tw	檔案寫入
-fileupload	common	zh-tw	檔案上傳
-first	common	zh-tw	第一筆
-floating point	common	zh-tw	浮點數
-foreign key	common	zh-tw	外部金鑰
-formatted text (html)	common	zh-tw	格式化文字(HTML)
-general fields:	preferences	zh-tw	一般欄位：
-go to the first entry	common	zh-tw	到第一筆資料
-go to the last entry	common	zh-tw	到最後一筆資料
-go to the next page of entries	common	zh-tw	下一頁資料
-go to the previous page of entries	common	zh-tw	上一頁資料
-grid	common	zh-tw	表格
-grid column attributes	common	zh-tw	表格欄位屬性
-grid row attributes	common	zh-tw	表格資料列屬性
-groupbox	common	zh-tw	群組區塊
-h	common	zh-tw	時
-hbox	common	zh-tw	HBox
-height	common	zh-tw	高度
-height of row (in % or pixel)	common	zh-tw	資料列高度（百分比或像素）
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	common	zh-tw	列高(%或是畫素)，停用列： [! = not]<value>[=<check>] ，例如'!@data' 會在該列沒有任何資料的時候停用
-height of the table in % or pixels for the table-tag and (optional) div	common	zh-tw	表格標籤的高度(%或是畫素)，或是其他div區塊
-height, disabled	common	zh-tw	高度，停用
-help	common	zh-tw	求助
-history log	common	zh-tw	歷史記錄
-horizontal rule	common	zh-tw	合併規則
-hour	common	zh-tw	小時
-hours	common	zh-tw	小時
-how many entries should the list show	common	zh-tw	清單要顯示多少筆資料
-html	common	zh-tw	HTML
-id	common	zh-tw	編號
-if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	zh-tw	如果儲存格被停用則會顯示一個空白的表格區，藉此(暫時)移除一個儲存格
-image	common	zh-tw	圖片
-import	common	zh-tw	匯入
-import an etemplate from a xml-file	common	zh-tw	從XML檔案匯入一個樣板
-import table-definitions from existing db-table	common	zh-tw	從既有的資料庫表單匯入表格設定
-import xml	common	zh-tw	匯入XML
-increment version to not overwrite the existing template	common	zh-tw	增加版本來避免覆蓋現有的樣板
-index/name of returned content (name of the template, link / method for image)	common	zh-tw	傳回內容的索引/名稱(樣板名稱，圖片的連結或方法)
-indexed	common	zh-tw	已索引
-indexoptions	common	zh-tw	索引選項
-insert a column before	common	zh-tw	在前面插入一個欄位
-insert a column behind	common	zh-tw	在後面插入一個欄位
-insert a row above	common	zh-tw	在上方插入一列
-insert a row below	common	zh-tw	在下方插入一列
-insert a widget before	common	zh-tw	在前面插入一個容器
-insert a widget behind	common	zh-tw	在後面插入一個容器
-insert in document	common	zh-tw	插入文件
-insert new column behind this one	common	zh-tw	在這一個之前插入新的欄位
-insert new column in front of all	common	zh-tw	在最前面插入新的欄位
-insert new row after this one	common	zh-tw	在這一個之後插入新的欄位
-insert new row in front of first line	common	zh-tw	在這一行之前插入新的欄位
-integer	common	zh-tw	整數
-key	common	zh-tw	鍵值
-label	common	zh-tw	標籤
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	common	zh-tw	標籤:[bold][italic] 文字:[len][,max] 數字:[min][,[max][,len]] 文字方塊:[rows][,cols] 核選方塊:[width] 範例l.:[IndexInContent] 下拉式選單:[multiselect] 日期:[values: eg. 'Y-m-d']
-lang	common	zh-tw	語言
-language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	common	zh-tw	獨立語言樣板(''會讀取使用者的偏好語言或是預設值，一般樣板預設是讀取英文)的語言縮寫(例如'en'代表english)
-last	common	zh-tw	最後
-left	common	zh-tw	左
-length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	common	zh-tw	字元長度，精確數字：2,4,8 和浮點數：4,8
-link	common	zh-tw	連結
-linkapps	common	zh-tw	連結模組
-linkentry	common	zh-tw	連結資料
-linklist	common	zh-tw	連結清單
-linkstring	common	zh-tw	連結文字
-linkto	common	zh-tw	連結網址
-load this template into the editor	common	zh-tw	將這個樣板載入編輯器中
-loading	common	zh-tw	載入中
-middle	common	zh-tw	中間
-minute	common	zh-tw	分
-minutes	common	zh-tw	分
-month	common	zh-tw	月
-more	common	zh-tw	更多
-multicolumn indices	common	zh-tw	多欄索引
-name	common	zh-tw	名稱
-name of other table where column is a key from	common	zh-tw	欄位是鍵值的其他表格名稱
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	common	zh-tw	樣板名稱(例如 verdilak)： '' = 預設(將會讀取偏好設定，預設讀取英文語系)
-name of table to add	common	zh-tw	新增表格的名稱
-name of the etemplate, should be in form application.function[.subtemplate]	common	zh-tw	樣板名稱，必須在表單 application.function[.subTemplate] 中
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	common	zh-tw	在表格中必須是唯一的且不是SQL的保留字，最好加上兩個英文與一個底線當作前置字元來表示應用程式
-new	common	zh-tw	新增
-new search	common	zh-tw	新的搜尋
-new table created	common	zh-tw	建立了新的表格
-newer version '%1' exists !!!	common	zh-tw	更新的版本 '%1'！
-nextmatch	common	zh-tw	下一個
-nextmatch accountfilter	common	zh-tw	下一個符合的帳號規則
-nextmatch custom filterheader	common	zh-tw	下一個符合的自訂規則頁首
-nextmatch filterheader	common	zh-tw	下一個條件頁首
-nextmatch header	common	zh-tw	下一個頁首
-nextmatch sortheader	common	zh-tw	下一個分類頁首
-no column to swap with !!!	common	zh-tw	沒有可以切換的欄位！
-no file	common	zh-tw	沒有檔案
-no filename given or selected via browse...	common	zh-tw	沒有檔案名稱或是從瀏覽器選取...
-no matches found	common	zh-tw	沒有找到符合的資料
-no row to swap with !!!	common	zh-tw	沒有可以切換的資料列！
-not null	common	zh-tw	NOT NULL
-nothing	common	zh-tw	無
-nothing found - try again !!!	common	zh-tw	找不到任何資料 - 重試一次！
-nothing in clipboard to paste !!!	common	zh-tw	剪貼簿沒有資料！
-nothing matched search criteria !!!	common	zh-tw	搜尋條件找不到任何資料
-now	common	zh-tw	現在
-number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	zh-tw	合併儲存格的數字或是輸入'all'來合併剩下的儲存格、CSS類別名稱(TD標籤)
-number of rows/cols in a v/hbox, cellpadding, cellspacing	common	zh-tw	V/HBox中列或是行的欄位間隔、文字與框線的距離
-of	common	zh-tw	的
-onchange	common	zh-tw	異動時
-onclick	common	zh-tw	點選時
-only an other version found !!!	common	zh-tw	只有找到一個其他版本！
-open the online help.	common	zh-tw	開啟線上說明
-operator	common	zh-tw	運算元
-optional note about the link	common	zh-tw	連結的附註
-options	common	zh-tw	選項
-or	common	zh-tw	或
-order to navigating by tab key through the form	common	zh-tw	表單中跳位鍵的順序
-overflow	common	zh-tw	超過
-padding	common	zh-tw	文框距離
-parent is a '%1' !!!	common	zh-tw	上一層是一個 '%1' ！
-paste	common	zh-tw	貼上
-path	common	zh-tw	路徑
-please enter table-name first !!!	common	zh-tw	請先輸入表格名稱！
-pm	common	zh-tw	下午
-popup	common	zh-tw	彈出式視窗
-precision	common	zh-tw	精密度
-primary key	common	zh-tw	主鍵
-primary key for the table, gets automaticaly indexed	common	zh-tw	表單的主鍵，用來自動產生索引
-radiobutton	common	zh-tw	核選按鈕
-read	common	zh-tw	讀取
-read a list of entries.	common	zh-tw	讀取事件列表
-read a single entry by passing the id and fieldlist.	common	zh-tw	透過ID與儲存格清單來讀取一筆資料
-read etemplate from database (for the keys above)	common	zh-tw	從資料庫讀取樣板(透過上面的鍵值)
-readonly	common	zh-tw	唯讀
-refresh	common	zh-tw	重新整理
-remove row (can not be undone!!!)	common	zh-tw	移除列(無法還原！)
-remove this link (not the entry itself)	common	zh-tw	移除這個連結(不是它的資料)
-required	common	zh-tw	必填
-reset	common	zh-tw	重設
-returns savely, without deleting	common	zh-tw	回上頁，不儲存
-right	common	zh-tw	正確
-row...	common	zh-tw	資料列...
-save all	common	zh-tw	儲存全部
-save selected columns as default preference for all users.	common	zh-tw	儲存選擇的欄位為所有使用者的預設值。
-save the changes made and close the window	common	zh-tw	儲存異動並且關閉視窗
-save the etemplate under the above keys (name, ...), change them for a saveas	common	zh-tw	以上面的鍵值(name,...)儲存樣板，另存到其他位置
-saves changes to tables_current.inc.php	common	zh-tw	儲存到tables_current.inc.php
-saves the template with given version number and closes the window	common	zh-tw	使用指定的版本編號儲存樣板後關閉視窗
-scale	common	zh-tw	尺度
-scale for float	common	zh-tw	小數點位數
-search	common	zh-tw	搜尋
-select a category	common	zh-tw	類別
-select a primary contact, to show in the list	common	zh-tw	選擇主要聯絡人來顯示在清單
-select access	common	zh-tw	存取
-select account	common	zh-tw	帳號
-select an app first !!!	common	zh-tw	請先選擇一個應用程式！
-select an app to search in	common	zh-tw	選擇要搜尋的應用程式
-select an application	common	zh-tw	應用程式
-select an application, (*) = uninstalled	common	zh-tw	應用程式，(*)表示未安裝
-select an entry to link with	common	zh-tw	選擇要連結的事件
-select an table of the application	common	zh-tw	選擇一個應用程式的資料表
-select application	common	zh-tw	應用程式
-select application to search	common	zh-tw	選擇要搜尋的應用程式
-select category	common	zh-tw	類別
-select columns	common	zh-tw	選擇欄位
-select country	common	zh-tw	國家
-select day	common	zh-tw	日期
-select day of week	common	zh-tw	選一週的一天
-select entry	common	zh-tw	選擇資料
-select hour	common	zh-tw	選擇時數
-select if content of field should not be translated (label gets always translated)	common	zh-tw	如果內容或儲存格不希望被翻譯(標籤都是會被翻譯的)
-select language	common	zh-tw	選擇語言
-select month	common	zh-tw	月份
-select number	common	zh-tw	數字
-select one ...	common	zh-tw	選擇一個...
-select percentage	common	zh-tw	選擇比率
-select priority	common	zh-tw	選擇優先次序
-select state	common	zh-tw	選擇狀態
-select the columns to display in the list	common	zh-tw	選擇清單中要顯示的欄位
-select the indexed columns in their desired order	common	zh-tw	在他們預期的順序中選擇索引欄位
-select this etemplate to delete it	common	zh-tw	選擇刪除這個樣板
-select which accounts to show	common	zh-tw	選擇要顯示的帳號
-select which values to show	common	zh-tw	選擇要顯示的數值
-select year	common	zh-tw	選擇年
-selectbox	common	zh-tw	下拉選單
-sets today as date	common	zh-tw	設定為今天
-should the form be submitted or any custom javascript be executed	common	zh-tw	表單是否要送出或是執行任何自訂的 javascript
-show	common	zh-tw	顯示
-show (no save)	common	zh-tw	顯示(不儲存)
-show values	common	zh-tw	顯示數值
-showing	common	zh-tw	顯示中
-shows / allows you to enter values into the etemplate for testing	common	zh-tw	顯示/允許您基於測試來輸入數值到樣版中
-shows/displays etemplate for testing, does not save it before	common	zh-tw	在儲存之前預覽/測試樣板
-spacing	common	zh-tw	空間
-span	common	zh-tw	分割
-span, class	common	zh-tw	分割，類別
-stack	common	zh-tw	堆疊
-start a new search, cancel this link	common	zh-tw	取消這個連結，開啟新的搜尋
-start new search for the above pattern	common	zh-tw	用上面的規則開啟一個新的搜尋
-submit form	common	zh-tw	送出表單
-submitbutton	common	zh-tw	送出按鈕
-swap	common	zh-tw	切換
-swap widget with next one	common	zh-tw	與下一個容器切換
-swap with next column	common	zh-tw	與下一個欄位切換
-swap with next row	common	zh-tw	與下一個資料列切換
-switch to a parent widget	common	zh-tw	與上一層容器切換
-switch to an other widgets of that container	common	zh-tw	與其他容器切換
-tabindex	common	zh-tw	跳位鍵索引
-table unchanged, no write necessary !!!	common	zh-tw	表單沒有異動，不需要儲存！
-tablename	common	zh-tw	資料表名稱
-tabs	common	zh-tw	跳位
-template	common	zh-tw	樣版
-template deleted	common	zh-tw	樣版刪除了
-template saved	common	zh-tw	樣版儲存了
-text	common	zh-tw	文字
-textarea	common	zh-tw	文字區
-this text gets displayed if the input-field is empty and has no focus (blur)	common	zh-tw	如果文字方塊中沒有輸入任何文字且文字游標沒有在欄位中會顯示這些文字
-time	common	zh-tw	時間
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	zh-tw	要停用：[! = not]<value>[=<check>]，例如 '!@data' 會在 data 沒有資料時停用
-to start the db-tools	common	zh-tw	資料庫工具
-to start the etemplate editor	common	zh-tw	樣板編輯器
-to start the search	common	zh-tw	搜尋
-today	common	zh-tw	今天
-top	common	zh-tw	頁首
-tree	common	zh-tw	樹
-type	common	zh-tw	種類
-type of the column	common	zh-tw	欄位種類
-type of the field (select label if field should be empty)	common	zh-tw	儲存格種類(如果儲存格必須為空值請選擇標籤)
-unique	common	zh-tw	唯一
-unlink	common	zh-tw	刪除
-update a single entry by passing the fields.	common	zh-tw	透過第送的欄位更新一個單一事件
-update from version '%s' to	common	zh-tw	從版本 '%s'更新到
-upload	common	zh-tw	上傳
-valign	common	zh-tw	垂直對齊
-value	common	zh-tw	數值
-value has to be at least '%1' !!!	common	zh-tw	數值最少必須是 '%1'！
-value has to be at maximum '%1' !!!	common	zh-tw	數值最大是 '%1' ！
-vbox	common	zh-tw	VBox
-version	common	zh-tw	版本
-version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	common	zh-tw	版本編號，格式：major.minor.revision.number (例如 0.9.13.001 所有數字用0來填滿)
-vertical alignment of row	common	zh-tw	資料列垂直對齊
-view this etemplate	common	zh-tw	瀏覽這個樣板
-view this linked entry in its application	common	zh-tw	在應用程式中顯示這個被連結的事件
-weekend	common	zh-tw	週末
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	zh-tw	超出的內容要如何處理： 顯示(預設)，隱藏，捲動，自動(由瀏覽器決定)
-widget copied into clipboard	common	zh-tw	容器複製到剪貼簿
-width	common	zh-tw	寬度
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	common	zh-tw	欄位寬度(%或是畫素)，停用欄位：[! = not]<value>[=<check>] 例如： '!@data' 如果沒有內容就停用
-width of column (in % or pixel)	common	zh-tw	欄位寬度（百分比或像素）
-width of the table in % or pixels for the table-tag and (optional) div	common	zh-tw	表格或DIV標籤標籤的寬度（百分比或像素）
-width, disabled	common	zh-tw	寬度，停用
-wk	common	zh-tw	週
-working days	common	zh-tw	工作日
-write <app>/setup/tables_current.inc.php	common	zh-tw	寫入<app>/setup/tables_current.inc.php
-write langfile	common	zh-tw	寫入語言檔
-write tables	common	zh-tw	寫入表格
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	common	zh-tw	在應用程式的安裝資料夾寫入一個檔案 'etemplates.inc.php'
-xml-file to import	common	zh-tw	要匯入的XML檔案
-xslt template	common	zh-tw	XSLT樣版
-year	common	zh-tw	年
-you can respond by visiting:	common	zh-tw	檢視網址：
-initial	common	zh-tw	初始的
-id	common	zh-tw	編號

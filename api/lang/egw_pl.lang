@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	pl	Znaleziono %1 katalogów %2!
 %1 email addresses inserted	common	pl	%1 adresów email dodane.
 %1 email(s) added into %2	common	pl	%1 email(e) dodane do %2
-%1 entries found, select one ...	common	pl	Znaleziono %1 wpisów, wybierz jeden ...
 %1 etemplates deleted	common	pl	Usunięto %1 e-Szablonów.
-%1 etemplates for application '%2' dumped to '%3'	common	pl	Zrzucono %1 e-Szablonów dla aplikacji '%2' do '%3'
 %1 etemplates found	common	pl	Znaleziono %1 eTemplate.
 %1 file	common	pl	%1 plik
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver!
-%1 matches on search criteria	common	pl	%1 spełniających kryteria wyszukiwania
 %1 more %2 selected ...	common	pl	Wybrano %1 więcej %2 ...
 %1 more...	common	pl	%1 więcej ...
-%1 new etemplates imported for application '%2'	common	pl	Zaimportowano %1 nowych eTemplate dla aplikacji '%2'
 %1 not implemented for %2!	common	pl	%1 nie zaimplementowany dla %2!
 %1 proxy of %2	common	pl	%1 proxy %2
 %1 setting "%2" = %3 disallows access via http!	admin	pl	%1 ustawienie "%2" = %3 uniemożliwia dostęp przez http!
@@ -27,8 +23,10 @@
 %s onchange	common	pl	%s onchange
 %s readonly	common	pl	%s tylko do odczytu
 '%1' copied to clipboard	common	pl	'%1' skopiowane do schowka
+'%1' does not match the required pattern '%2'	common	pl	'%1' nie pasuje do wymaganego wzorca ('%2')
 '%1' has an invalid format	common	pl	'%1' ma nieprawidłowy format
 '%1' has an invalid format !!!	common	pl	'%1' jest w nieprawidłowym formacie!
+'%1' is not a valid app-name ('%2')!	common	pl	'%1' NIE jest prawidłową nazwą aplikacji ('%2')!
 '%1' is not a valid date !!!	common	pl	'%1' nie jest datą w poprawnym formacie!
 '%1' is not a valid floatingpoint number !!!	common	pl	'%1' nie jest poprawną liczbą zmiennoprzecinkową!
 '%1' is not a valid integer !!!	common	pl	'%1' nie jest poprawną liczbą całkowitą!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	pl	'%1' nie jest prawidłową strefą czasową!
 '%1' is not allowed ('%2')!	common	pl	'%1' nie jest dopuszczony ('%2')!
 '%1' is not allowed%2)!	common	pl	'%1' NIE jest dozwolone (%2)!
+'%1' must not contain (back)slashes!	common	pl	'%1' nie może zawierać (tylnych) ukośników!
 (session restored in %1 seconds)	common	pl	Sesja będzie przywrócona po upływie %1 sekund.
 00 (disable)	admin	pl	00 (wyłączony)
 1 day	common	pl	jeden dzień
@@ -250,6 +249,7 @@ chad	common	pl	CZAD
 change	common	pl	Zmień
 change owner	common	pl	Zmień właściciela
 changed	common	pl	Zmieniono
+changes that you made may not be saved.	common	pl	Wprowadzone zmiany mogą nie zostać zapisane.
 charset	common	pl	Zestaw znaków
 check all	common	pl	Zaznacz wszystkie
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	pl	Sprawdzanie pustych wartości w instrukcjach IF. Przykład {{IF url~EMPTY~~Website:}} - Jeśli adres url nie jest pusty, wpisuje "Strona internetowa:"
@@ -939,6 +939,7 @@ open	common	pl	Otwórz
 open existing contact	common	pl	Otwarty istniejący kontakt
 open notify window	common	pl	Otwórz okno powiadamiania
 open popup window	common	pl	Otwórz okno typu popup
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pl	Logowanie OpenIDConnect powiodło się, ale użytkownik '%1' NIE istnieje w EGroupware, a automatyczne tworzenie użytkowników jest wyłączone!
 operator	common	pl	Operator
 optional note about the link	common	pl	Opcjonalna notatka związana z odnośnikiem
 options	common	pl	Opcje
@@ -1023,14 +1024,12 @@ private	common	pl	Prywatny
 programs	common	pl	Programy
 project	common	pl	Projekt
 properties	common	pl	Właściwości
-protocol is required	common	pl	Wymagany jest protokół
 public	common	pl	Publiczny
 puerto rico	common	pl	PORTORYKO
 qatar	common	pl	KATAR
 quick add	common	pl	Szybkie dodawanie
 radiobutton	common	pl	Radiobutton
 read	common	pl	Odczytaj
-read a list of entries.	common	pl	Odczytaj lstę wpisów.
 read a single entry by passing the id and fieldlist.	common	pl	Odczytaj pojedynczy wpis, podając ID oraz listę pól.
 read etemplate from database (for the keys above)	common	pl	Odczytaj eTemplate z bazy danych (dla powyższych kluczy)
 read this list of methods.	common	pl	Odczytaj listę metod.
@@ -1182,12 +1181,12 @@ show page generation time?	common	pl	Czy pokazywać czas generowania strony
 show password	common	pl	Pokaż hasło
 show values	common	pl	Pokaż wartości
 show/hide	common	pl	Pokaż/ukryj pasek boczny
-show_more_apps	common	pl	show_more_apps
 showing	common	pl	Wyświetlono
 showing %1	common	pl	Wyświetlono %1
 showing %1 - %2 of %3	common	pl	Wyświetlanie %1 - %2 z %3
 shows / allows you to enter values into the etemplate for testing	common	pl	pokazuje / zezwala na wprowadzenie zmian do eTemplate w celach testowych
 shows/displays etemplate for testing, does not save it before	common	pl	wyświetla eTemplate do testów, NIE zapisuje przed wyświetleniem
+show_more_apps	common	pl	show_more_apps
 sierra leone	common	pl	SIERRA LEONE
 sign up	common	pl	Zarejestruj się
 simple	common	pl	Prosty
@@ -1354,7 +1353,6 @@ weekend	common	pl	Weekend
 welcome	common	pl	Strona główna
 western european	common	pl	Europa Zachodnia
 western sahara	common	pl	SAHARA ZACHODNIA
-what color should all the blank space on the desktop have	common	pl	Jaki powinien być kolor wszelkich wolnych przestrzeni w obszarze roboczym?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware.

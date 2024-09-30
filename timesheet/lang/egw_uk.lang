@@ -18,11 +18,17 @@ max length of the input [, length of the inputfield (optional)]	timesheet	uk	м�
 modified	timesheet	uk	Змінено
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
 order	timesheet	uk	Послідовність
+pause	common	uk	Пауза
+pause time	timesheet	uk	Час паузи
+paused	timesheet	uk	На паузі
 saves the changes made and leaves	timesheet	uk	зберігає зроблені зміни та виходить
+start-time can not be before last stop- or pause-time %1!	common	uk	Час запуску не може бути раніше часу останньої зупинки або паузи %1!
+stop- or pause-time can not be before the start-time %1!	common	uk	Час зупинки або паузи не може бути раніше часу запуску %1!
 the text displayed to the user	timesheet	uk	текст, що показуються користувачу
 this month	timesheet	uk	Поточний місяць
 this week	timesheet	uk	Поточний тиждень
 this year	timesheet	uk	Поточний рік
+timer already running or paused	common	uk	Таймер вже запущено або призупинено
 values for selectbox	timesheet	uk	Значення для selectbox
 view this entry	timesheet	uk	Переглянути цей запис
 week	timesheet	uk	Тиждень

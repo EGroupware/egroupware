@@ -1,24 +1,17 @@
-%1 added	addressbook	zh	%1已添加
 %1 contact(s) %2	addressbook	zh	%1个联系人%2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	zh	%1 联系人 %2, %3 因 %4 而失败！
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	zh	%1个联系人%2, %3个错误，因没有足够权限！
 %1 contacts updated (%2 errors).	addressbook	zh	%1 联系人已更新（%2 错误）。
 %1 fields in %2 other organisation member(s) changed	addressbook	zh	在%2的其他组织成员中有%1个字段被更改
 %1 key(s) added to public keyserver "%2".	addressbook	zh	%1 密钥已添加到公共密钥服务器"%2"。
-%1 not implemented for %2!	addressbook	zh	%1 未执行 %2！
 %1 public keys added.	addressbook	zh	已添加 %1 公钥。
-%1 records imported	addressbook	zh	已导入%1条记录
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh	已读取%1条记录(但尚未导入，您可以去%2返回%3，并且取消"测试导入"复选框)
 %1 shared this contact on %2 with %3 %4	addressbook	zh	%1在 %2 %3 %4上分享了这个联系人
 %1 starts with '%2'	addressbook	zh	%1以'%2'开始
 %s please calculate the result	addressbook	zh	%s 请计算结果
 (e.g. 1969)	addressbook	zh	(例如:1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh	<b>操作失败！必须选择转换类型。</b>请从列表中选择一种转换类型
 @-eval() is only availible to admins!!!	addressbook	zh	只有管理员可调用@-eval()！
 account repository	admin	zh	帐户储存库
-accounts	addressbook	zh	帐户
-actions	addressbook	zh	操作
-add %1	addressbook	zh	添加%1
 add a contact to this organisation	addressbook	zh	添加联系人到这个组织
 add a new contact	addressbook	zh	添加联系人
 add a new list	addressbook	zh	添加新列表
@@ -48,7 +41,6 @@ addressbook preferences	addressbook	zh	首选项
 addressbook the contact should be saved to	addressbook	zh	通讯簿联系人应该保存到
 addressbook-fieldname	addressbook	zh	通讯簿 - 字段名
 addvcard	addressbook	zh	从 vCard 导入
-advanced search	addressbook	zh	高级搜索
 all addressbooks	addressbook	zh	所有通讯簿
 all contacts	addressbook	zh	所有联系人
 all types	addressbook	zh	所有类型
@@ -129,7 +121,6 @@ csv-filename	addressbook	zh	CSV - 文件名
 custom	addressbook	zh	自定义
 custom etemplate for the contactform	addressbook	zh	为联系人表单自定义模板
 custom fields	addressbook	zh	自定义字段
-debug output in browser	addressbook	zh	在浏览器调试输出
 default	addressbook	zh	默认
 default action on double-click	addressbook	zh	双击时的默认操作
 default address format	addressbook	zh	默认地址格式
@@ -200,7 +191,6 @@ exports contacts from your addressbook into a csv file. csv means 'comma separat
 extra	addressbook	zh	额外
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh	更改 %1 组织成员时发生错误(没有权限)！
 favorite phone	addressbook	zh	收藏电话
-favorites	addressbook	zh	收藏
 fax	addressbook	zh	传真
 fax number	common	zh	传真号码
 field %1 has been added !	addressbook	zh	字段%1已添加！
@@ -256,7 +246,6 @@ import from ldif, csv, or vcard	addressbook	zh	从 LDIF、CSV 或 vCard 导入�
 import from outlook	addressbook	zh	从 Outlook 导入
 import multiple vcard	addressbook	zh	导入多重 vCard
 import next set	addressbook	zh	导入下一个集合
-import_instructions	addressbook	zh	请按照下列方法从其他应用程序导出通讯簿, 以便导入 EGroupware 中：<p>在 Netscape 中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 LDIF 格式存放。<p>在 Outlook 中，选定将要导出的联系人文件夹，选定<b>文件菜单</b>的<b>导入和导出</b>项，导出的文件将以 CSV 格式存放。<p>在 Palm  Desktop 4.0 或更高版本中，打开通讯簿，选定<b>文件</b>菜单的<b>导出</b>项，导出的文件将以 vCard 格式存放。<p>Palm Desktop 4.0 或是更新的版本，在浏览通讯簿资料时在<b>文件</b>功能选择<b>导出</b>，导出的资料是 vCard 格式。
 importer's personal	addressbook	zh	导入者个人
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 imports contacts into your addressbook from a vcard file.	addressbook	zh	从 vCard 文件向通讯录导入联系人。
@@ -351,7 +340,6 @@ public key	addressbook	zh	公钥
 public sharing url	addressbook	zh	公开共享 URL
 publish into groups:	addressbook	zh	在群组中发布：
 read a list / search for entries.	addressbook	zh	读取列表/搜索条目
-read a list of entries.	addressbook	zh	读取条目列表。
 read a single entry by passing the id and fieldlist.	addressbook	zh	通过 id 及字段读取一条资料。
 read only	addressbook	zh	只读
 record access	addressbook	zh	记录访问
@@ -373,13 +361,10 @@ select a source address to be used in geolocation routing system	addressbook	zh	
 select a view	addressbook	zh	选择一个查看
 select addressbook type	addressbook	zh	选择通讯簿类型
 select all	addressbook	zh	全选
-select an action or addressbook to move to	addressbook	zh	选择一个操作或通讯簿以移动到
 select an opened dialog	addressbook	zh	选择已打开的对话框
 select migration type	admin	zh	选择迁移方式
 select multiple contacts for a further action	addressbook	zh	为下一步操作选择多个联系人
 select phone number as prefered way of contact	addressbook	zh	选择联系人的首选电话号码
-select the type of conversion	addressbook	zh	请选择转换类型
-select the type of conversion:	addressbook	zh	请选择转换类型：
 select where you want to store / retrieve contacts	admin	zh	选择你想要在什么位置储存/找回联系人
 selected contacts	addressbook	zh	选择的联系人
 send fax via email by replacing fax number with an email address	addressbook	zh	用电子邮件地址代替传真号码，通过电子邮件发送传真

@@ -15,6 +15,8 @@ day	setup	da	Dag
 default	setup	da	Standard
 default file system space per user/group ?	setup	da	Standard system plads pr bruger/gruppe?
 deny all users access to grant other users access to their entries ?	setup	da	Nægt alle brugere at give adgang til andre brugere til deres data
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	da	Deaktiver kun, hvis dit AD har problemer med VLV-kontroller OG kan returnere alle brugere i en enkelt forespørgsel!
+disable vlv controls	setup	da	Deaktiver VLV-kontroller
 download	setup	da	Download
 enter the hostname of the machine on which this server is running	setup	da	Indtast hostnavnet for computeren på hvor denne serveren kører
 enter the site password for peer servers	setup	da	Indtast site adgangskoden for peer serverene
@@ -59,6 +61,7 @@ not	setup	da	Ikke
 not set	setup	da	Ikke set
 one month	setup	da	En måned
 one week	setup	da	En uge
+openidconnect login	setup	da	OpenIDConnect-login
 optional, if only authentication and anonymous search is enabled	setup	da	valgfri, hvis kun autentificering OG anonym søgning er aktiveret
 or	setup	da	eller
 or leave empty and select openidconnect as authentication type above for single sign on	setup	da	eller lad den være tom, og vælg OpenID Connect som godkendelsestype ovenfor for single sign on
@@ -91,3 +94,4 @@ use cookies to pass sessionid	setup	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	setup	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
 would you like to show each application's upgrade status ?	setup	da	Vil du gerne have vist hver applikations opgraderings status?
 write	setup	da	Skriv
+you need to select your current charset!	setup	da	Du skal vælge dit nuværende tegnsæt!

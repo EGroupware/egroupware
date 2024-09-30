@@ -2,6 +2,7 @@
 account:	notifications	sk	Účet:
 all possible notification backends	notifications	sk	Všetky dostupné mechanizmy pre pripomienky
 are you sure you want to delete all notifications?	notifications	sk	Naozaj chcete odstrániť všetky upozornenie?
+automatic deleted notifications older than	admin	sk	Automatické vymazanie oznámení starších ako
 browser	notifications	sk	Prehliadač
 browser is starting.	notifications	sk	Prehliadač sa načítava
 cancal settings?	notifications	sk	Zrušiť nastavenia?
@@ -65,6 +66,7 @@ more info	notifications	sk	Viac informácií
 notification	common	sk	Pripomienka
 notifier	notifications	sk	Pripomína
 notify me by	notifications	sk	Pripomenúť mi pomocou
+only used if no push server available!	admin	sk	Používa sa len vtedy, ak nie je k dispozícii žiadny push server!
 open notified entry	notifications	sk	Otvoriť položku s oznámeniami
 optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily pre vonkajších poštových klientov
 page not found, please check serveraddress.	notifications	sk	Stránka sa nenašla, prosím skontrolujte adresu servera.

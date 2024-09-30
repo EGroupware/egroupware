@@ -98,7 +98,6 @@ current system-charset	setup	hr	Current system-charset
 current version	setup	hr	Current Version
 currently installed languages: %1 <br />	setup	hr	Currently installed languages: %1 <br />
 database successfully converted from '%1' to '%2'	setup	hr	Database successfully converted from '%1' to '%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	hr	Datetime port.<br />If using port 13, please set firewall rules appropriately before submitting this page.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	hr	Dan
 db host	setup	hr	DB Host
 db name	setup	hr	DB Name
@@ -209,8 +208,8 @@ mail server login type	setup	hr	Vrsta prijave mail poslužitelja
 make sure that your database is created and the account permissions are set	setup	hr	Make sure that your database is created and the account permissions are set
 manage applications	setup	hr	Manage Applications
 manage languages	setup	hr	Manage Languages
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	hr	max_execution_time is set to less than 30 (seconds): EGroupware sometimes needs a higher execution_time, expect occasional failures
 maximum account id (e.g. 65535 or 1000000)	setup	hr	Maximum account id (e.g. 65535 or 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	hr	max_execution_time is set to less than 30 (seconds): EGroupware sometimes needs a higher execution_time, expect occasional failures
 may be broken	setup	hr	may be broken
 mcrypt algorithm (default tripledes)	setup	hr	Mcrypt algorithm (default TRIPLEDES)
 mcrypt initialization vector	setup	hr	MCrypt initialization vector
@@ -223,7 +222,6 @@ modifications have been completed!	setup	hr	Modifications have been completed!
 modified	setup	hr	Promijenjeno
 modify	setup	hr	Modify
 month	setup	hr	Mjesec
-multi-language support setup	setup	hr	Multi-Language support setup
 name of database	setup	hr	Name of database
 name of db user egroupware uses to connect	setup	hr	Name of db user EGroupware uses to connect
 never	setup	hr	never
@@ -281,8 +279,8 @@ re-enter password	setup	hr	Re-enter password
 read translations from	setup	hr	Read translations from
 readable by the webserver	setup	hr	readable by the webserver
 really uninstall all applications	setup	hr	REALLY Uninstall all applications
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	hr	register_globals is turned On, EGroupware does NOT require it and it's generaly more secure to have it turned Off
 registered	setup	hr	registered
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	hr	register_globals is turned On, EGroupware does NOT require it and it's generaly more secure to have it turned Off
 rejected lines	setup	hr	Rejected lines
 remove	setup	hr	Remove
 remove all	setup	hr	Remove All

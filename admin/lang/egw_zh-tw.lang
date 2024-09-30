@@ -1,8 +1,6 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	zh-tw	未有帳號使用的 %1 筆 ACL 資料刪除了。
 %1 not found or not executable !!!	admin	zh-tw	找不到%1或是無法執行！
-(default no, leave it off if you dont use it)	admin	zh-tw	（預設為否，如果您不希望使用請不要修改）
 (no subject)	emailadmin	zh-tw	(沒有標題)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	zh-tw	(安裝應用程式必須透過<br><a href="setup/" target="setup">安裝程式</a> [管理應用程式] ！)
 -  type	admin	zh-tw	- 類型
 account active	admin	zh-tw	啟用帳號
 account has been created	common	zh-tw	成功新增帳號
@@ -73,7 +71,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	zh-tw	非同步服
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	zh-tw	嘗試使用正確的 FTP 檔案格式，而非預設的「application/octet-stream」
 authentication / accounts	admin	zh-tw	認證／帳號
 auto create account records for authenticated users	admin	zh-tw	自動建立所有授權使用者的帳號資料
-back to the list	admin	zh-tw	回到列表
 bad login name or password.	emailadmin	zh-tw	帳號或密碼有誤。
 bad or malformed request. server responded: %s	emailadmin	zh-tw	錯誤的請求，伺服器回應： %s
 bad request: %s	emailadmin	zh-tw	錯誤的請求： %s
@@ -81,8 +78,6 @@ bi-dir passthrough	admin	zh-tw	bi資料夾穿越
 bi-directional	admin	zh-tw	bi方向
 bottom	admin	zh-tw	底部
 calculate next run	admin	zh-tw	計算下次執行
-can be used by application	emailadmin	zh-tw	可以取用資料的模組
-can be used by group	emailadmin	zh-tw	可以取用資料的群組
 can change password	admin	zh-tw	允許改變密碼
 cancel testjob!	admin	zh-tw	刪除測試工作
 categories list	admin	zh-tw	類別清單
@@ -156,11 +151,6 @@ disabled (not recomended)	admin	zh-tw	停用(不建議)
 display	admin	zh-tw	顯示
 displaying html messages is disabled	emailadmin	zh-tw	顯示 html 信件的功能停用中
 do not delete the category and return back to the list	admin	zh-tw	不要刪除這個類別並且回到清單
-do not validate certificate	emailadmin	zh-tw	沒有可用的執照
-do you also want to delete all global subcategories ?	admin	zh-tw	您確定要移除所有的全區子分類嗎？
-do you really want to delete this profile	emailadmin	zh-tw	您確定要刪除這個資料
-do you want to delete all global subcategories ?	admin	zh-tw	您確定要刪除全域子類別
-do you want to move all global subcategories one level down ?	admin	zh-tw	您要將所有的子類別向下移一個階層？
 document root (default)	admin	zh-tw	文件根目錄（預設）
 domainname	emailadmin	zh-tw	網域名稱
 down	admin	zh-tw	下
@@ -526,10 +516,8 @@ you must add at least 1 permission or group to this account	admin	zh-tw	您必�
 you must enter a group name.	admin	zh-tw	您必須輸入群組名稱
 you must enter a lastname	admin	zh-tw	您必須輸入使用者姓名
 you must enter a loginid	admin	zh-tw	您必須輸入使用者帳號
-you must enter an application name and title.	admin	zh-tw	您必須輸入應用程式名稱及標頭。
 you must enter an application name.	admin	zh-tw	您必須輸入應用程式名稱
 you must enter an application title.	admin	zh-tw	您必須輸入應用程式標題
-you must select a file type	admin	zh-tw	您必須選擇一種檔案型態。
 you must select at least one group member.	admin	zh-tw	您必須選擇至少一個群組成員。
 you will need to remove the subcategories before you can delete this category	admin	zh-tw	您必須在刪除這個類別前刪除所有的子類別！
 your name	emailadmin	zh-tw	您的名稱

@@ -22,10 +22,7 @@
 %1 token %2.	admin	sv	%1 token %2.
 %1 user %2	admin	sv	%1 användare %2
 (de)activate mail accounts	admin	sv	(de)Aktivera e-postkonton
-(default no, leave it off if you dont use it)	admin	sv	(standard Nej, lämna tom om du inte använder det)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sv	(imapclass måste stödja denna funktion genom att fråga efter motsvarande konfigurationsvärde och skicka det som defaultquota till IMAP-servern)
 (no subject)	admin	sv	(ingen rubrik)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sv	(För att installera nya applikationer används<br><a href="setup/" target="setup">Installationen</a> [Hantera Applikationer]!
 -  type	admin	sv	- typ
 1 year	admin	sv	1 år
 2 month	admin	sv	2 månader
@@ -62,6 +59,9 @@ add new application	admin	sv	Lägg till ny application
 add peer server	admin	sv	Lägg till Peer Server
 add profile	admin	sv	Skapa profil
 add sub-category	admin	sv	Lägg till underkategori
+add to group	admin	sv	Lägg till i grupp
+add user	admin	sv	Lägg till användare
+add user or group	admin	sv	Lägg till användare eller grupp
 admin dn	admin	sv	Admin DN
 admin email	admin	sv	Admin e-postadress
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	sv	Administrativa e-postadresser (komma-separerad) som skall notifieras om blockeringen. (lämna tom om ingen notifiering skall ske)
@@ -75,6 +75,7 @@ all applications	admin	sv	Samtliga applikationer
 all records and account information will be lost!	admin	sv	Alla förteckningar och användarinformation kommer att försvinna!
 all users	admin	sv	Alla användare
 allow anonymous access to this app	admin	sv	Tillåt anonym åtkomst till applikationen
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	sv	Tillåt användaren att lagra sitt lösenord under ”Säkerhet & lösenord” för SingleSignOn.
 alternate email address	admin	sv	Alternerande e-post adress
 anonymous user	admin	sv	Anonym användare
 anonymous user (not shown in list sessions)	admin	sv	Anonym användare (visas inte bland sessioner)
@@ -102,19 +103,22 @@ asyncservices not yet installed or other error (%1) !!!	admin	sv	Asynkrona tjän
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	sv	Försök att använda korrekt mime-typ istället för standard 'application/octet-stream'
 authentication / accounts	admin	sv	Autentisering / Konton
 auto create account records for authenticated users	admin	sv	Skapa kontoposter automatiskt för autentiserade användare
-back to the list	admin	sv	Tillbaks till listan
 bad login name or password.	admin	sv	Ogiltigt användarna eller lösenord
 bad or malformed request. server responded: %s	admin	sv	Ogiltig eller ofullständig förfrågan. Server svarade: %s
 bad request: %s	admin	sv	Ogiltig förfrågan: %s
 bi-dir passthrough	admin	sv	dubbelriktad genomströmmning
 bi-directional	admin	sv	dubbelriktad
 bottom	admin	sv	Nederst
+bulk changes	admin	sv	Massändringar
+bulk password reset	admin	sv	Återställning av lösenord i bulk
 calculate next run	admin	sv	Beräkna nästa körtid
+can be used to show groups by container, if enabled	admin	sv	Kan användas för att visa grupper per behållare, om aktiverat
 can change password	admin	sv	Kan byta lösenord
 cancel testjob!	admin	sv	Avbryt testkörning
 categories list	admin	sv	Kategorilista
 category %1 has been saved !	admin	sv	Kategori %1 har sparats
 category list	admin	sv	Kategorilista
+change access	admin	sv	Ändra åtkomsträttigheter
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
 change login screen message	admin	sv	Ändra Startsidans meddelande
@@ -123,6 +127,7 @@ check items to <b>%1</b> to %2 for %3	admin	sv	Kontrollera punkterna till <b>%1<
 click to select a color	admin	sv	Klicka för att välja färg
 color	admin	sv	Färg
 connection dropped by imap server.	admin	sv	Anslutningen stängd av IMAP server
+container	admin	sv	Behållare
 continue	admin	sv	Fortsätt
 could not complete request. reason given: %s	admin	sv	Kunde inte fullfölja förfrågan. Svaret: %s
 could not open secure connection to the imap server. %s : %s.	admin	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
@@ -184,11 +189,6 @@ disabled (not recomended)	admin	sv	Inaktiverad (rekommenderas ej)
 display	admin	sv	Visa
 displaying html messages is disabled	admin	sv	Cisa HTML meddelanden är inaktiverat
 do not delete the category and return back to the list	admin	sv	Ta EJ bort kategorin och gå tillbaka till listan
-do not validate certificate	admin	sv	Validera inte certifikat
-do you also want to delete all global subcategories ?	admin	sv	Vill du samtidigt radera alla globala underkategorier?
-do you really want to delete this profile	admin	sv	Vill du verkligen radera profilen?
-do you want to delete all global subcategories ?	admin	sv	Vill du radera alla globala underkategorier?
-do you want to move all global subcategories one level down ?	admin	sv	Vill du flytta alla globala underkategorier en nivå nedåt?
 domainname	admin	sv	Domän namn
 down	admin	sv	Ner
 edit account	admin	sv	Ändra konto
@@ -263,6 +263,7 @@ group ?	admin	sv	Grupp?
 group has been added	common	sv	Grupp har lagts till
 group has been deleted	common	sv	Grupp har raderats
 group has been updated	common	sv	Grupp har uppdaterats
+group hierarchy	admin	sv	Grupphierarki
 group list	admin	sv	Grupplista
 group manager	admin	sv	Gruppansvarig
 group name	admin	sv	Gruppnamn
@@ -411,6 +412,7 @@ quota size in mbyte	admin	sv	Kvotstorlek i Mb
 re-enter password	admin	sv	Skriv in lösenord igen
 read this list of methods.	admin	sv	Läst denna lista över metoder
 register application hooks	admin	sv	Registera applikationskopplingar
+regular expression to find part to use as container	admin	sv	Reguljärt uttryck för att hitta en del som ska användas som behållare
 remove	admin	sv	Radera
 requested	admin	sv	Begärt
 rows	admin	sv	Rader
@@ -443,6 +445,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	sv	Visa Accesslogg
 show current action	admin	sv	Visa nuvarande aktivitet
 show error log	admin	sv	Visa fellogg
+show groups in container based on	admin	sv	Visa grupper i behållaren baserat på
 show phpinfo()	admin	sv	Visa phpinfo()
 show session ip address	admin	sv	Visa IP adress för sessionen
 sieve server hostname or ip address	admin	sv	Sieve server hostnamn eller IP adress
@@ -541,9 +544,7 @@ you must add at least 1 permission or group to this account	admin	sv	Du måste a
 you must enter a group name.	admin	sv	Du måste ange ett gruppnamn
 you must enter a lastname	admin	sv	Du måste ange ett efternamn
 you must enter a loginid	admin	sv	Du måste ange ett inloggnings ID
-you must enter an application name and title.	admin	sv	Du måste ange namn och titel för applikationen
 you must enter an application name.	admin	sv	Du måste ange ett namn för applikationen
 you must enter an application title.	admin	sv	Du måste ange en titel för applikationen
-you must select a file type	admin	sv	Du måste välja en filtyp
 you will need to remove the subcategories before you can delete this category	admin	sv	Du måste ta bort underkategorierna innan du kan ta bort denna kategori
 your session could not be verified.	admin	sv	Din session kunde inte verifieras

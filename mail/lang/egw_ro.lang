@@ -28,6 +28,7 @@ certificate info for email %1	mail	ro	Informații despre certificat pentru e-mai
 certificate issued by	mail	ro	Certificat eliberat de
 changing subject failed because of %1	mail	ro	Schimbarea subiectului a eșuat din cauza lui %1
 changing subject failed folder %1 does not exist	mail	ro	Schimbarea subiectului a eșuat folderul %1 nu există
+checking admin credentials failed	mail	ro	Verificarea acreditărilor de administrator a eșuat
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
 contact label	mail	ro	Etichetă de contact
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
@@ -59,7 +60,7 @@ file into	mail	ro	Treceți la
 file into:	mail	ro	Treceți la:
 filemode has been switched to %1	mail	ro	Modul de fișier a fost schimbat în: %1
 flag / unflag	mail	ro	Steguleț / Dezarhivare
-flagged %1 messages as %2 in %3	mail	ro	Mesaj(e) %1 marcat(e) ca %2 în %3
+flagged %1 messages as %2 in %3	mail	ro	Mesaj(e) %1 marcat(e) ca "%2" în %3.
 flagged %1 messages as flagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca fiind marcat(e) în %2
 flagged %1 messages as unflagged in %2	mail	ro	Mesaj(e) %1 marcat(e) ca ne-marcat(e) în %2
 folder %1 %2 failed because of %3!	mail	ro	Dosarul %1 %2 a eșuat din cauza lui %3!
@@ -104,6 +105,7 @@ mail	common	ro	Mail
 mail acl	mail	ro	Drepturi de acces
 mail filter	mail	ro	Filtru de poștă
 mail filter rule	mail	ro	Regula de filtrare a corespondenței
+mail probably has no text-body	mail	ro	Mailul probabil nu are text
 mail settings	mail	ro	Setări poștă
 mail source	mail	ro	Sursa de poștă
 mail-address	mail	ro	Adresa de e-mail
@@ -170,6 +172,7 @@ remove all	mail	ro	Eliminați toate
 removing %1 from blacklisted email addresses failed because of %2	mail	ro	Eliminarea lui %1 din adresele de e-mail de pe lista neagră a eșuat din cauza lui %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	ro	Eliminarea lui %1 din adresele de e-mail de pe lista albă a eșuat din cauza lui %2
 replace 'http://' in image urls with (trailing / required!)	mail	ro	Înlocuiți "http://" în uralele de imagini cu (este necesar / la sfârșit!)
+reply with attachments	mail	ro	Răspundeți cu atașamente
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	ro	Răspunsul la acest mesaj a eșuat deoarece conținutul acestui mesaj pare să fie criptat și nu poate fi decriptat corespunzător. Dacă doriți totuși să includeți conținutul acestui mesaj criptat, puteți încerca să utilizați în schimb expedierea ca atașament.
 report as ham	mail	ro	Raportează ca Ham
 report as spam	mail	ro	Raportează ca spam

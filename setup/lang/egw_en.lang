@@ -33,7 +33,6 @@ access denied: wrong username or password to configure the domain '%1(%2)' !!!	s
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	en	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encryption{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | crypt | md5}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
-activate safe password check	setup	en	Activate safe password check
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 add new database instance (egw domain)	setup	en	Add new database instance (EGw domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	en	add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -158,8 +157,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support ...
-checking for jpgraph in %1	setup	en	Checking for JPGraph in %1
-checking for tnef application	setup	en	Checking for tnef application
 checking function %1 exists	setup	en	Checking function %1 exists
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	en	Checking if php.ini setting session.save_path='%1' is writable by the web server
 checking package %1 is installed	setup	en	Checking package %1 is installed
@@ -214,21 +211,18 @@ creating tables	setup	en	Creating tables.
 creation of %1 in %2 failed !!!	setup	en	Creation of %1 in %2 failed!
 current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system charset
-current system-charset is %1.	setup	en	Current system charset is %1.
 current version	setup	en	Current version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1<br>
 custom attribute	setup	en	custom attribute
 custom handler: %1	setup	en	Custom handler: %1
 custom oid	setup	en	custom OID
 custom set via %1	setup	en	Custom set via %1
-cyrus imap: admin user,password	setup	en	Cyrus IMAP: admin user, password
 daily	setup	en	daily
 database	setup	en	Database
 database instance (egw domain)	setup	en	Database instance (EGw domain)
 database is version %1 and up to date.	setup	en	Database is version %1 and up to date.
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datebase %1 droped.	setup	en	Database %1 dropped.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	en	Date time port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	en	Day
 day of week<br />(0-6, 0=sunday)	setup	en	Day of week<br>(0 - 6, 0 = sunday)
 db backup and restore	setup	en	DB backup and restore
@@ -452,7 +446,6 @@ login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration
 logout	setup	en	Logout
 logs to	setup	en	logs to
-mail account of %1 migraged	setup	en	Mail account of %1 migraged
 mail account of %1 migrated	setup	en	Mail account of %1 migrated
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
 mail server login type	setup	en	Mail server login type
@@ -484,7 +477,6 @@ modify	setup	en	Modify
 month	setup	en	Month
 more information	setup	en	More information
 mount backup directory to %1	setup	en	Mount backup directory to %1
-multi-language support setup	setup	en	Multi language support setup
 name for service provider	setup	en	Name for Service Provider
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user EGroupware uses to connect

@@ -40,7 +40,7 @@ all	common	lo	ທັງໝົດ
 all fields	common	lo	ຟີລທັງໝົດ
 all in one	groupdav	lo	ລວມໃນໜຶ່ງດຽວ
 all languages	common	lo	ພາສາທັງໝົດ
-alphabet	common	lo	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+all users	common	lo	ຜູ້ໃຊ້ທັງໝົດ
 alternate style-sheet:	common	lo	ສະລັບຮູບແບບ
 american samoa	common	lo	AMERICAN SAMOA
 an error happened	common	lo	ຂໍ້ຜິດພາດເກີດຂຶ້ນ
@@ -51,7 +51,9 @@ angola	common	lo	ANGOLA
 anguilla	common	lo	ANGUILLA
 antarctica	common	lo	ANTARCTICA
 antigua and barbuda	common	lo	ANTIGUA AND BARBUDA
+api	common	lo	phpgwapi
 application	common	lo	ແອັບພຼິເຄຊັນ
+applications	common	lo	ແອັບພຼິເຄຊັນ
 apply	common	lo	ນໍາໃຊ້
 april	common	lo	ເມສາ
 are you sure you want to delete these entries ?	common	lo	ທ່ານແນ່ໃຈບໍວ່າຈະລຶບສ່ວນນີ້ ?
@@ -63,10 +65,6 @@ august	common	lo	ສິງຫາ
 australia	common	lo	AUSTRALIA
 austria	common	lo	AUSTRIA
 author	common	lo	ຜູ້ຮຽບຮຽງ
-autohide sidebox menu's	common	lo	ຊ່ອນລາຍການ Side ອັດຕະໂນມັດຂອງ
-autohide sidebox menus	common	lo	ຊ່ອນລາຍການ Side ອັດຕະໂນມັດ
-automatically hide the sidebox menu's?	common	lo	ຈະເຊື່ອງກ່ອງດ້ານຂ້າງຂອງເມນູແບບອັດຕະໂນມັດບໍ?
-automatically hide the sidebox menus?	common	lo	ຈະເຊື່ອງລາຍການ Side ໂດຍອັດຕະໂນມັດ ຫຼືບໍ?
 autosave default category	common	lo	ບັນທຶກຄ່າເລີ່ມຕົ້ນໝວດໝູ່ອັດຕະໂນມັດ
 azerbaijan	common	lo	AZERBAIJAN
 back	common	lo	ກັບຄືນ
@@ -122,6 +120,7 @@ central african republic	common	lo	CENTRAL AFRICAN REPUBLIC
 chad	common	lo	CHAD
 change	common	lo	ປ່ຽນ
 charset	common	lo	utf-8
+check all	common	lo	ກວດສອບທັງໝົດ
 check installation	common	lo	ກວດສອບການຕິດຕັ້ງ
 check now	common	lo	ກວດສອບ
 chile	common	lo	CHILE
@@ -138,8 +137,6 @@ clear	common	lo	ລຶບລ້າງ
 clear form	common	lo	ລຶບລ້າງຟອມ
 click	common	lo	ຄຼີກ
 click here to resume your egroupware session.	common	lo	ຄຼີກທີ່ນີ້ກັບEGroupware Session ຂອງທ່ານ.
-click or mouse over to show menus	common	lo	ຄຼີກຫຼືເອົາເມົ້າໄປໄສ່ເພື່ອສະແດງເມນູ
-click or mouse over to show menus?	common	lo	ຄຼີກຫຼືເອົາເມົ້າໄປໄສ່ເພື່ອສະແດງເມນູ?
 click this image on the navbar: %1	common	lo	ຄຼີກທີ່ຮູບໃນແທບສະແດງ:%1
 close	common	lo	ປິດ
 close sidebox	common	lo	ປິດແທບດ້ານຂ້າງ
@@ -147,6 +144,7 @@ cocos (keeling) islands	common	lo	COCOS(KEELING) ISLANDS
 collection empty.	common	lo	ຄໍເລັກຊັນເປົ່າ
 collection listing	common	lo	ລາຍການຄໍເລັກຊັນ
 colombia	common	lo	COLOMBIA
+comment	common	lo	ຄວາມຄິດເຫັນ
 common preferences	common	lo	ຕັ້ງຄ່າທົວໄປ
 comoros	common	lo	COMOROS
 company	common	lo	ບໍ່ລິສັດ
@@ -156,6 +154,7 @@ contacting server...	common	lo	ກໍາລັງຕິດຕໍ່ເຊິບ�
 content type	common	lo	ປະເພດເນື້ອຫາ
 cook islands	common	lo	COOK ISLANDS
 copy	common	lo	ສໍາເນົາ
+copy to clipboard	common	lo	ສໍາເນົາໄປທີ່ຄຼິບບອດ
 costa rica	common	lo	CASTA RICA
 cote d ivoire	common	lo	COTE DIVOIRE
 could not contact server. operation timed out!	common	lo	ບໍ່ສາມາດຕິດຕໍ່ຫາເຊີບເວີ້. Operation Timed out!
@@ -166,6 +165,8 @@ cuba	common	lo	CUBA
 currency	common	lo	ສະກຸນເງິນ
 current	common	lo	ປັດຈຸບັນ
 current users	common	lo	ຜູ້ໃຊ້ປັດຈຸບັນ
+custom fields	common	lo	ກໍານົດ fields
+cut	common	lo	ຕັດ
 cyprus	common	lo	CYPRUS
 czech republic	common	lo	CZECH REPUBLIC
 database error	common	lo	ຖານຂໍ້ມູນມີປັນຫາ
@@ -173,7 +174,10 @@ database error!	common	lo	ຖານຂໍ້ມູນມີປັນຫາ!
 date	common	lo	ວັນທີ
 date due	common	lo	ຮອດມື້ທີ່ກໍານົດ
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	lo	ພອດວັນທີ ແລະ ເວລາ. <br>ຖ້າໃຊ້ພອດ 13, ກະລຸນາຕັ້ງກົດການຄ່າປ້ອງກັນ(firewall)ໃຫ້ເໝາະສົມ ກ່ອນຈະຢືນຢັນໜ້ານີ້<br>(ພອດ: 13 / ໂຮສ:129.6.15.28)
+day	common	lo	ມື້
+days	common	lo	ວັນ
 december	common	lo	ທັນວາ
+default	common	lo	ຄ່າເລີ່ມຕົ້ນ
 default category	common	lo	ໝວດໝູ່ເລີ່ມຕົ້ນ
 default height for the windows	common	lo	ຄວາມສູງເດີມຂອງ Windows
 default width for the windows	common	lo	ຄວາມກວ້າງເດີມຂອງ Windows
@@ -185,14 +189,8 @@ denmark	common	lo	DENMARK
 description	common	lo	ລາຍລະອຽດ
 detail	common	lo	ລາຍລະອຽດ
 details	common	lo	ລາຍລະອຽດ
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	lo	ປິດການເຮັດວຽກ bugfixscript ສໍາລັບ Inernet Explorer 5.5 ແລະ ສະແດງຮູບພາບໃຫ້ໂປງໃສສູງຂື້ນ
-direction left to right	common	lo	ໄດເລັກເທີລີ້ ຊ້າຍຫາຂວາ
 directory	common	lo	ໄດເລັກເທີລີ້
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	lo	ໄດເລັກເທີລີ້ບໍ່ມີ, ມັນບໍ່ສາມາດອ່ານໄດ້ດ້ວຍເວບເຊີບເວີ້ ຫຼື ບໍ່ມີສໍາພັນໃດກັບ root document!
-disable internet explorer png-image-bugfix	common	lo	ປິດການໃຊ້ Internet Explorer png-image-bugfig
-disable slider effects	common	lo	ປິດຄຸນລັກສະນະການເລື່ອນ
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	lo	ປິດພາບເຄື່ອນໄຫວທີ່ສະແດງຫຼືບັງບໍ່ໃຫ້ເຫັນ?
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	lo	ປິດການໃຊ້ Internet Explorer 5.5 ຫຼືສູງກ່ວາທີ່ສາມາດສະແດງ PNG ຮູບ?
 disabled	common	lo	ປິດນໍາໃຊ້ງານ
 djibouti	common	lo	DJIBOUTI
 do you also want to delete all subcategories ?	common	lo	ຕັດສິນໃຈລຶມທຸກໝວດໝູ່ຍ່ອຍບໍ່?
@@ -206,6 +204,7 @@ dominica	common	lo	DOMINICA
 dominican republic	common	lo	DOMINICAN REPUBLIC
 done	common	lo	ສໍາເລັດ
 download	common	lo	ດາວໂຫຼດ
+duration	common	lo	ໄລຍະເວລາ
 e-mail	common	lo	ອີເມລ
 east timor	common	lo	EAST TIMOR
 eastern european	common	lo	Eastern european
@@ -250,6 +249,7 @@ features of the editor?	common	lo	ຄຸນສົມບັດເຄື່ອງ�
 february	common	lo	ກຸມພາ
 fields	common	lo	ຟີລ
 fiji	common	lo	FIJI
+file	common	lo	ຟາຍ
 files	common	lo	ຟາຍ
 filter	common	lo	ຕົວກັ່ນຕອງ
 finland	common	lo	FINLAND
@@ -301,6 +301,7 @@ guatemala	common	lo	GUATEMALA
 guinea	common	lo	GUINEA
 guinea-bissau	common	lo	GUINEA-BISSAU
 guyana	common	lo	GUYANA
+h	common	lo	ຊົ່ວໂມງ
 haiti	common	lo	HAITI
 heard island and mcdonald islands	common	lo	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	lo	ຄວາມສູງ
@@ -310,19 +311,20 @@ highest	common	lo	ສູງສຸດ
 holy see (vatican city state)	common	lo	HOLY SEE(VATICAN CITY STATE)
 home	common	lo	ໜ້າຫຼັກ
 home email	common	lo	ອີເມລຫຼັກ
+home screen	common	lo	ໜ້າຈໍຫຼັກ
 honduras	common	lo	HONDURAS
 hong kong	common	lo	HONG KONG
+hours	common	lo	ຊົ່ວໂມງ
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	lo	ຈະມີໄອຄອນຫຼາຍເທົ່າໃດໃນຊ່ອງຕົວເລືອກດ້ານເທິງຂອງໜ້າ. ໄອຄອນອື່ນຈະຢູ່ທີ່ເມນູເລື່ອນລົງ, ສາມາດຮ້ອງໃຊ້ດ້ວຍໄອຄອນທີ່ຢູ່ຂວາສຸດໃນຊ່ອງຕົວເລືອກ.
-how to show the general egroupware menu ?	common	lo	ຈະສະແດງເມນູປົກກະຕິຂອງຕາຕະລາເວລາ?
 hungary	common	lo	HUNGARY
 iceland	common	lo	ICELAND
-iespell not detected. click ok to go to download page.	common	lo	ieSpell ບໍ່ພົບເຫັນ,ຄຼີກຕົກລົງເພື່ອໄປທີ່ໜ້າດາວໂຫຼດ.
-if the clock is enabled would you like it to update it every second or every minute?	common	lo	ຖ້ານໍາໃຊ້ເວລາປັບປຸງ,ທຸກວິນາທີຫຼືວ່າທຸກນາທີ?
+id	common	lo	ລະຫັດ
 if there are some images in the background folder you can choose the one you would like to see.	common	lo	ຖ້າມີີຮູບທີ່ເປັນພື້ນຫຼັງຂອງໂຟນເດີ້, ທ່ານສາມາດເລືອກຮູບທີ່ທ່ານມັກໄດ້
 image directory relative to document root (use / !), example:	common	lo	ຮູບໄດເລັກເທີລີທີ່ຊີ້ໄປເອກະສານເດີ(ໃຊ້ /!),ຕົວຢ່າງ:
 image url	common	lo	ຮູບ URL
 india	common	lo	INDIA
 indonesia	common	lo	INDONESIA
+initial	common	lo	ເບືອງຕົ້ນ
 insert all %1 addresses of the %2 contacts in %3	common	lo	ນໍາເອົາທຸກທີ່ຢູ່%1ຂອງ%2ເຂົ້າໃນ%3
 insert column after	common	lo	ເພີ່ມຖັນຫຼັງຈາກນັ້ນ
 insert column before	common	lo	ເພີ່ມຖັນຫຼັກ່ອນຈາກນັ້ນ
@@ -364,6 +366,7 @@ kyrgyzstan	common	lo	KYRGYZSTAN
 language	common	lo	ພາສາ
 language_direction_rtl	common	lo	language_direction_rtl
 lao peoples democratic republic	common	lo	ສປປ ລາວ
+last	common	lo	ສຸດທ້າຍ
 last modified	common	lo	ປ່ຽນແປງລ່າສຸດ
 last name	common	lo	ນາມສະກຸມ
 last name of the user, eg. "%1"	common	lo	ນາມສະກຸມຂອງຜູ້ໃຊ້, ເຊັ່ນ:"%1"
@@ -380,6 +383,8 @@ license	common	lo	ການອະນຸຍາດ
 liechtenstein	common	lo	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	lo	Line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	lo	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
+link	common	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
+link target %1 not found!	common	lo	ບໍ່ພົບເປົ້າໝາຍການເຊື່ອມຕໍ່ %1
 list	common	lo	ລາຍການ
 list members	common	lo	ລາຍການຊະມາຊິກ
 lithuania	common	lo	LITHUNIA
@@ -397,7 +402,6 @@ macedonia, the former yugoslav republic of	common	lo	MACEDONIA, THE FORMER YUGOS
 madagascar	common	lo	MADAGACAR
 mail domain, eg. "%1"	common	lo	ເມລ domain, ເຊັ່ນ:"%1"
 main category	common	lo	ໝວດໝູ່ຫຼັັກ
-home screen	common	lo	ໜ້າຈໍຫຼັກ
 maintainer	common	lo	ຜູ້ບໍາລຸງຮັກສາ
 malawi	common	lo	MALAWI
 malaysia	common	lo	MALAYSIA
@@ -409,7 +413,6 @@ marshall islands	common	lo	MARSHALL ISLANDS
 martinique	common	lo	MARTINQUE
 mauritania	common	lo	MAURITANIA
 mauritius	common	lo	MAURITIUS
-max number of icons in navbar	common	lo	ຈໍານວນສູງສຸດຂອງໄອຄອນ
 may	common	lo	ພຶດສະພາ
 mayotte	common	lo	MAYOTTE
 medium	common	lo	ລະດັບກາງ
@@ -418,11 +421,13 @@ message	common	lo	ຂໍ້ຄວາມ
 mexico	common	lo	MEXICO
 micronesia, federated states of	common	lo	MICRONESIA, FEDERATED STATES OF
 minute	common	lo	ນາທີ
+minutes	common	lo	ນາທີ
 moldova, republic of	common	lo	MOLDOVA, REPUBLIC OF
 monaco	common	lo	MONACO
 monday	common	lo	ວັນຈັນ
 mongolia	common	lo	MONGOLIA
 montenegro	common	lo	MONTENEGRO
+month	common	lo	ເດືອນ
 montserrat	common	lo	MONTSERRAT
 morocco	common	lo	MOROCCO
 mozambique	common	lo	MOZAMBIQUE
@@ -451,6 +456,7 @@ niue	common	lo	NIUE
 no	common	lo	ບໍ່ຕົກລົງ
 no entries found, try again ...	common	lo	ບໍ່ພົບ, ກະລຸນາລອງໃໝ່...
 no history for this record	common	lo	ບໍ່ມີການບັນທຶກ
+no matches found	common	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ
 no savant2 template directories were found in:	common	lo	ບໍ່ມີຮູບແບບ Savant2:
 no subject	common	lo	ບໍ່ມີຫົວຂໍ້
 none	common	lo	ບໍ່ມີ
@@ -512,7 +518,6 @@ personal	common	lo	ສ່ວນບຸກຄນ
 peru	common	lo	PERU
 philippines	common	lo	PHILIPINES
 phone number	common	lo	ເບີໂທລະສັບ
-api	common	lo	phpgwapi
 pitcairn	common	lo	PITCAIRN
 please %1 by hand	common	lo	ກະລຸນາ %1 ດ້ວຍມື
 please enter a name	common	lo	ກະລຸນາພິມຊື່ໃສ່ !
@@ -553,6 +558,7 @@ remove shortcut	common	lo	ລຶບເສັ້ນທາງລັດ
 rename	common	lo	ປ່ຽນຊື່
 replace	common	lo	ແທນທີ່
 replace with	common	lo	ແທນທີ່ດ້ວຍ
+reset	common	lo	ຕັ້ງຄ່າຄືນໃໝ່
 resource type	common	lo	ປະເພດຫ້ອງປະຊຸມ ຫຼື ລົດ
 resources	common	lo	ແຫຼ່ງຂໍ້ມູນ
 restore failed	common	lo	ກູ້ຄືນໄດ້ຫຼົ້ມເຫຼວ
@@ -580,10 +586,12 @@ save	common	lo	ບັນທຶກ
 search	common	lo	ຄົ້ນຫາ
 search %1 '%2'	common	lo	ຄົ້ນຫາ %1 '%2'
 search accounts	common	lo	ຄົ້ນຫາ ບັນຊີຜູ້ໃຊ້
+search for '%1'	common	lo	ຄົ້ນຫາ '% 1'
 search or select accounts	common	lo	ຄົ້ນຫາ ຫຼື ເລືອກ ບັນຊີຜູ້ໃຊ້
 second	common	lo	ວິນາທີ
 section	common	lo	ພາກສ່ວນ
 select	common	lo	ເລືອກ
+select a category	common	lo	ເລືອກໝວດໝູ່
 select action	common	lo	ເລືອກເອົາທັງໝົດ %1 %2 for %3
 select all %1 %2 for %3	common	lo	ເລືອກໝວດໝູ່
 select category	common	lo	ເລືອກວັນທີ
@@ -596,6 +604,7 @@ select the default height for the application windows	common	lo	ເລືອກ�
 select the default width for the application windows	common	lo	ເລືອກຄວາມກວ້າງເລີ່ມຕົ້ນສໍາລັບ Windows ແອັບພຼິເຄຊັນ
 select user	common	lo	ເລືອກຜູ້ໃຊ້
 select work email address	common	lo	ເລືອກທີ່່ຢູ່ອີເມລບ່ອນເຮັດວຽກ
+selectbox	common	lo	ຊ່ອງສໍາລັບເລືອກ
 selection	common	lo	ການເລືອກເອົາ
 send	common	lo	ສົ່ງ
 senegal	common	lo	SENEGAL
@@ -608,21 +617,15 @@ session has been killed	common	lo	ເຊັສຊັ້ນໄດ້ຖືກທ�
 setup	common	lo	ຕິດຕັ້ງ
 setup main menu	common	lo	ຕິດຕັ້ງເມນູຫຼັກ
 seychelles	common	lo	SEYCHELLES
+show	common	lo	ສະແດງ
 show all	common	lo	ສະແດງທັງໝົດ
 show all categorys	common	lo	ສະແດງໝວດໝູ່ທັງໝົດ
-show as topmenu	common	lo	ສະແດງເປັນເມນູດ້ານເຖິງ
-show clock?	common	lo	ສະແດງເວລາບໍ່(Clock)?
-show home and logout button in main application bar?	common	lo	ສະແດງໜ້າຫຼັກແລະອອກຈາກລະບົບທີ່ແທບແອບພຼິເຄຊັນ
-show in sidebox	common	lo	ສະແດງຢູ່ກ່ອງດ້ານຂ້າງ
-show logo's on the desktop.	common	lo	ສະແດງໂລໂກ້ຢູ່ເທິງພື້ນທີ່ໜ້າຈໍ
-show menu	common	lo	ສະແດງເມນູ
 show page generation time	common	lo	ສະແດງໜ້າເວລາໃໝ່
 show page generation time on the bottom of the page?	common	lo	ສະແດງໜ້າເວລາໃໝ່ຢູ່ດ້ານລຸ່ມຂອງໜ້າບໍ?
 show page generation time?	common	lo	ສະແດງໜ້າເວລາໃໝ່
-show the logo's of egroupware and x-desktop on the desktop.	common	lo	ສະແດງໂລໂກ້ຂອງ EGroupware ແລະ X-desktop ຢູ່ເທິງພື້ທີ່ໜ້າຈໍ
-show_more_apps	common	lo	ສະແດງແອບພຼິເຄຊັນອີກ
 showing %1	common	lo	ກໍາລັງສະແດງ %1
 showing %1 - %2 of %3	common	lo	ກໍາລັງສະແດງ %1 - %2 of %3
+show_more_apps	common	lo	ສະແດງແອບພຼິເຄຊັນອີກ
 sierra leone	common	lo	SIERRA LEONE
 simple	common	lo	ທໍາມະດາ
 singapore	common	lo	SINGAPORE
@@ -681,7 +684,6 @@ tonga	common	lo	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lo	ເຂົ້າສູ່ລະບົບ:%1 ສໍາລັບຜູ້ໃຊ້ '%2',%3 ໄອພີ %4
 top	common	lo	ດ້ານເທິງ
 total	common	lo	ຜົນລວມ
-transparant bg for the icons?	common	lo	ໃຫ້ພື້ນຫຼັງຂອງໄອຄອນໂປງໃສບໍ?
 trinidad and tobago	common	lo	TRINIDAD AND TOBAGO
 tuesday	common	lo	ວັນອັງຄານ
 tunisia	common	lo	TUNISIA
@@ -699,7 +701,6 @@ united states	common	lo	UNITED STATES
 united states minor outlying islands	common	lo	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	lo	ບໍ່ຮູ້
 update	common	lo	ປັບປຸງ
-update the clock per minute or per second	common	lo	ຕໍ່ນາທີຫຼືວິນາທີໃນການປັບປຸງເວລາ
 upload	common	lo	ອັບໂຫຼດ
 upload directory does not exist, or is not writeable by webserver	common	lo	ບໍ່ມີການອັບໂຫຼດໄດເລັກເທີລີ ຫຼື ບໍ່ໄດ້ຂຽນໂດຍເວບເຊີເວີ້
 upload requires the directory to be writable by the webserver!	common	lo	ການອັບໂຫຼດຕ້ອງມີໄດເລັກເທີລີທີ່ຈະຂຽນໄດ້ໂດຍເວບເຊີເວີ້
@@ -729,12 +730,11 @@ wednesday	common	lo	ວັນພຸດ
 welcome	common	lo	ຍິນດີຕ້ອນຮັບ
 western european	common	lo	ເອີລຶບຕະເວັນອອກ
 western sahara	common	lo	WESTERN SAHARA
-what color should all the blank space on the desktop have	common	lo	ສີໃດຄວນໃສ່ໃນພື້ນທີວ່າງຢູ່ໜ້າຈໍ
-what style would you like the image to have?	common	lo	ທ່ານຢາກໄດ້ຮູບພາບແບບໃດ?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	lo	ເມື່ອທ່ານຕອບວ່າແມ່ນແລ້ວ, ຈະໄດ້ສະແດງປຸ່ມໜ້າຫຼັກ ແລະ ປຸ່ມອອກສູ່ລະບົບຄືກັບແອັບພຼິເຄຊັນຢູ່ໃນແຖບແອັບພຼິເຄຊັນຫຼັກຂ້າງເທິງ
 where and how will the egroupware links like preferences, about and logout be displayed.	common	lo	ສະຖານທີ ແລະ ວິທີຈະລີ້ງ egroupware ຄືກັບການຕັ້ງຄ່າ, ໄດ້ສະແດງການອອກສູລະບົບ
 which groups	common	lo	ກຸ່ມໃດ
 width	common	lo	ຄວາມກວ້າງ
+wk	common	lo	ອາທິດໜຶ່ງ
 work email	common	lo	ອີເມວທີ່ເຮັດວຽກ
 would you like to display the page generation time at the bottom of every window?	common	lo	ທ່ານຕ້ອງການສະແດງເວລາການສ້າງໜ້າຢູ່ຂ້າງລຸ່ມຂອງໜ້າຕ່າງ
 writing	common	lo	ບັນທຶກລົງ
@@ -743,7 +743,6 @@ year	common	lo	ປີ
 yemen	common	lo	YEMEN
 yes	common	lo	ແມ່ນແລ້ວ
 you are required to change your password during your first login	common	lo	ທ່ານຈະຕ້ອງໄດ້ປ່ຽນລະຫັດຜ່ານເມື່ທ່ານເຂົ້າສູ່ລະບົບຄັ້ງທໍາອິດ
-you can customize how many icons and toolbars the editor shows.	common	lo	ທ່ານສາມາດກໍາໜົດຈໍານວນໄອຄອນ ແລະ ແຖບເຄື່ອງມືແກ້ໄຂ
 you have been successfully logged out	login	lo	ທ່ານໄດ້ອອກຈາກລະບົບຮຽບຮ້ອຍແລ້ວ
 you have not entered a title	common	lo	ທ່ານບໍ່ທັນໄດ້ປ້ອນຫົວຂໍ້
 you have not entered a valid date	common	lo	ທ່ານບໍ່ໄດ້ປ້ອນວັນທີທີ່ຖືກຕ້ອງ
@@ -763,32 +762,3 @@ your settings have been updated	common	lo	ໄດ້ປັບປຸງການ�
 zambia	common	lo	ZAMBIA
 zimbabwe	common	lo	ZIMBABWE
 zoom	common	lo	ຂະຫຍາຍ
-search for '%1'	common	lo	ຄົ້ນຫາ '% 1'
-all users	common	lo	ຜູ້ໃຊ້ທັງໝົດ
-applications	common	lo	ແອັບພຼິເຄຊັນ
-check all	common	lo	ກວດສອບທັງໝົດ
-comment	common	lo	ຄວາມຄິດເຫັນ
-copy to clipboard	common	lo	ສໍາເນົາໄປທີ່ຄຼິບບອດ
-custom fields	common	lo	ກໍານົດ fields
-cut	common	lo	ຕັດ
-day	common	lo	ມື້
-days	common	lo	ວັນ
-default	common	lo	ຄ່າເລີ່ມຕົ້ນ
-duration	common	lo	ໄລຍະເວລາ
-file	common	lo	ຟາຍ
-h	common	lo	ຊົ່ວໂມງ
-hours	common	lo	ຊົ່ວໂມງ
-id	common	lo	ລະຫັດ
-last	common	lo	ສຸດທ້າຍ
-link	common	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
-link target %1 not found!	common	lo	ບໍ່ພົບເປົ້າໝາຍການເຊື່ອມຕໍ່ %1
-minutes	common	lo	ນາທີ
-month	common	lo	ເດືອນ
-no matches found	common	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ
-reset	common	lo	ຕັ້ງຄ່າຄືນໃໝ່
-select a category	common	lo	ເລືອກໝວດໝູ່
-selectbox	common	lo	ຊ່ອງສໍາລັບເລືອກ
-show	common	lo	ສະແດງ
-wk	common	lo	ອາທິດໜຶ່ງ
-initial	common	lo	ເບືອງຕົ້ນ
-id	common	lo	ລະຫັດ

@@ -1,12 +1,9 @@
-%1 records imported	addressbook	fa	%1 رکورد وارد شد
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fa	تعداد %1  رکورد خوانده شد.(هنوز وارد نشده، شما می توانید بر گردید و آزمایش ورود را غیر فعال کنید)
 (e.g. 1969)	addressbook	fa	(مثلا: 1969)
-actions	addressbook	fa	اعمال
 add a single entry by passing the fields.	addressbook	fa	افزودن ورودی با ارسال فیلدها
 add custom field	addressbook	fa	افزودن فیلد سفارشی
 added	addressbook	fa	اضافه شد
 address book	common	fa	اطلاعات اشخاص
-address book - vcard in	addressbook	fa	مخاطبین - VCard در
 address book - view	addressbook	fa	اطلاعات اشخاص - نمایش
 address line 2	addressbook	fa	آدرس خط دوم
 address type	addressbook	fa	نوع آدرس
@@ -14,7 +11,6 @@ addressbook	common	fa	اطلاعات اشخاص
 addressbook preferences	addressbook	fa	پیشفرض اطلاعات اشخاص
 addressbook-fieldname	addressbook	fa	اطلاعات اشخاص - نام فیلد
 addvcard	addressbook	fa	افزودن کارت ویزیت
-advanced search	addressbook	fa	جستجوی پیشرفته
 alt. csv import	addressbook	fa	وارد کردن CSV دیگر
 always	addressbook	fa	همیشه
 are you shure you want to delete this contact?	addressbook	fa	آیا برای حذف این مخاطب مطمئنید؟
@@ -56,7 +52,6 @@ csv-fieldname	addressbook	fa	نام فیلد-csv
 csv-filename	addressbook	fa	نام پرونده - csv
 custom	addressbook	fa	سفارشی
 custom fields	addressbook	fa	فیلدهای سفارشی
-debug output in browser	addressbook	fa	نمایش خروجی اشکالزدائی در مرورگر
 default	addressbook	fa	پیش فرض
 default filter	addressbook	fa	صافی پیش فرض
 delete a single entry by passing the id.	addressbook	fa	حذف یک ورودی با ارسال شناسه
@@ -113,7 +108,6 @@ import from ldif, csv, or vcard	addressbook	fa	وارد کردن از LDIF, CSV,
 import from outlook	addressbook	fa	وارد کردن از Outlook
 import multiple vcard	addressbook	fa	وارد کردن چند VCard
 import next set	addressbook	fa	وارد کردن سری بعدی
-import_instructions	addressbook	fa	مراحل وارد کردن
 income	addressbook	fa	ورودی
 infolog-contact	addressbook	fa	کارها
 international	addressbook	fa	بین المللی
@@ -154,15 +148,12 @@ prefix	addressbook	fa	پیش شماره
 public key	addressbook	fa	کلید عمومی
 publish into groups:	addressbook	fa	انتشار در گروه:
 read a list / search for entries.	addressbook	fa	خواندن فهرست/جستجو برای ورودی
-read a list of entries.	addressbook	fa	خواندن یک فهرست از ورودیها
 read a single entry by passing the id and fieldlist.	addressbook	fa	خواندن یک ورودی با وارد کردن شناسه و فهرست فیلد ها
 record access	addressbook	fa	دسترسی رکورد
 record owner	addressbook	fa	مالک رکورد
 repetition	addressbook	fa	تکرار
 role	addressbook	fa	وظیفه
 select all	addressbook	fa	انتخاب همه
-select the type of conversion	addressbook	fa	نوع تبدیل را انتخاب کنید
-select the type of conversion:	addressbook	fa	نوع تبدیل را انتخاب کنید:
 show	addressbook	fa	نمایش
 start	admin	fa	شروع
 startrecord	addressbook	fa	رکورد شروع

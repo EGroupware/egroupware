@@ -22,10 +22,7 @@
 %1 token %2.	admin	ru	%1 токен %2.
 %1 user %2	admin	ru	%1 пользователь %2
 (de)activate mail accounts	admin	ru	(де)Активация почтовых учетных записей
-(default no, leave it off if you dont use it)	admin	ru	По умолчанию — «Нет», оставьте если не используете
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ru	(класс IMAP должен поддерживать возможность запроса соответствующего параметра конфигурации и передачи серверу IMAP как квоту по умолчанию)
 (no subject)	admin	ru	(без темы)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ru	Для установки новых приложений используйте<br><a href="setup/" target="setup">Установка</a> [Управление приложениями]!
 -  type	admin	ru	- тип
 1 year	admin	ru	1 год
 2 month	admin	ru	2 месяц
@@ -73,6 +70,9 @@ add new email address:	admin	ru	Добавить новый адрес эл. п�
 add peer server	admin	ru	Добавить равноправный сервер
 add profile	admin	ru	Добавить Профиль
 add sub-category	admin	ru	Добавить подкатегорию
+add to group	admin	ru	Добавить в группу
+add user	admin	ru	Добавить пользователя
+add user or group	admin	ru	Добавить пользователя или группу
 admin dn	admin	ru	администратор домена
 admin email	admin	ru	Адрес электронной почты администратора
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	ru	Адреса электронной почты администратора (разделённые запятыми) для извещения о блокировке (оставить пустым, если извещать не надо)
@@ -88,6 +88,7 @@ all records and account information will be lost!	admin	ru	Все записи �
 all users	admin	ru	Все пользователи
 allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
 allow remote administration from following install id's (comma separated)	admin	ru	Разрешить удалённое администрирование со следующих идентификаторов установки (разделённых запятыми)
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	ru	Разрешите пользователю хранить свой пароль в разделе «Безопасность и пароли» для SingleSignOn.
 alternate email address	admin	ru	Добавочный адрес эл. почты
 anonymous user	admin	ru	Анонимный пользователь
 anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сеансов)
@@ -122,9 +123,6 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	ru	Идентификация / учётные записи
 auto create account records for authenticated users	admin	ru	Автоматическое создание записей для идентифицированных пользователей
 available placeholders	admin	ru	Доступные заместители
-back to admin/grouplist	admin	ru	Назад к Администрированию/Списку групп
-back to admin/userlist	admin	ru	Назад к Администрированию/Списку пользователей
-back to the list	admin	ru	Назад к списку
 backup directory %1 mounted as %2	admin	ru	Backup каталог %1 смонтирован как %2
 bad login name or password.	admin	ru	Неверное имя пользователя или пароль.
 bad or malformed request. server responded: %s	admin	ru	Неверный или нераспознанный запрос. Ответ Сервера: %s
@@ -132,12 +130,11 @@ bad request: %s	admin	ru	Неверный запрос: %s
 bi-dir passthrough	admin	ru	Двунаправленное прохождение паролей
 bi-directional	admin	ru	Двунаправленный
 bottom	admin	ru	Низ
+bulk changes	admin	ru	Массовые изменения
 bulk password reset	admin	ru	Пакетный сброс паролей
 calculate next run	admin	ru	Вычислить следующий запуск
 calendar recurrence horizont in days (default 1000)	admin	ru	Горизонт рекурсии календаря в днях. По умолчанию — 1000
-can be used by application	admin	ru	Может быть использовано приложением
-can be used by group	admin	ru	Может быть использовано группой
-can be used by user	admin	ru	может быть использовано пользователем
+can be used to show groups by container, if enabled	admin	ru	Может использоваться для отображения групп по контейнерам, если включено
 can change password	admin	ru	Возможно изменять пароль
 cancel testjob!	admin	ru	Прервать тестовое задание!
 cancel this scheduled command	admin	ru	Прервать запланированную команду
@@ -146,6 +143,7 @@ category %1 has been saved !	admin	ru	Категория %1 сохранена!
 category deleted.	admin	ru	Категория удалена
 category list	admin	ru	Список категорий
 category saved.	admin	ru	Категория сохранена
+change access	admin	ru	Изменение прав доступа
 change account_id	admin	ru	Сменить идентификатор учётной записи
 change acl rights	admin	ru	Сменить права ACL
 change config settings	admin	ru	Сменить настройки конфигурации
@@ -167,6 +165,7 @@ command scheduled to run at %1	admin	ru	Команда запланирован�
 commercial: all sorts of companies	admin	ru	Коммерческие: все виды компаний
 config password or md5 hash from the header.inc.php	admin	ru	Пароль конфигурации или хэш md5 из header.inc.php
 connection dropped by imap server.	admin	ru	Соединение разорвано сервером IMAP
+container	admin	ru	Контейнер
 continue	admin	ru	Продолжить
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	ru	Cookie-домен. По умолчанию пуст и позволяет использовать полное имя домена. Например, в менеджере сайта (SiteMgr) ".domain.ru" можно использовать один cookie-файл для egw.domain.ru и www.domain.ru
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	ru	Cookie-путь. Позволяет одновременно работать нескольким сессиям с различными каталогами
@@ -246,12 +245,6 @@ display	admin	ru	Отобразить
 displaying html messages is disabled	admin	ru	Показ сообщений как HTML отключен
 displaying plain messages is disabled	admin	ru	Показ сообщений как текст отключен.
 do not delete the category and return back to the list	admin	ru	НЕ удалять категорию и вернуться назад к списку
-do not validate certificate	admin	ru	не проверять сертификат
-do you also want to delete all global subcategories ?	admin	ru	Вы также хотите удалить все подкатегории?
-do you really want to delete this profile	admin	ru	Вы уверены, что хотите удалить этот Профиль
-do you really want to reset the filter for the profile listing	admin	ru	Вы уверены что хотите очистить фильтр для создания списка Профилей
-do you want to delete all global subcategories ?	admin	ru	Вы хотите удалить все общие подкатегории?
-do you want to move all global subcategories one level down ?	admin	ru	Вы хотите переместить все подкатегории на уровень ниже?
 document root (default)	admin	ru	Корневой каталог документов (по умолчанию)
 domainname	admin	ru	Имя Домена
 down	admin	ru	Вниз
@@ -363,6 +356,7 @@ group excepted from above export limit (admins are always excepted)	admin	ru	Г�
 group has been added	common	ru	Группа добавлена
 group has been deleted	common	ru	Группа удалена
 group has been updated	common	ru	Группа обновлена
+group hierarchy	admin	ru	Иерархия групп
 group list	admin	ru	Список групп
 group manager	admin	ru	Менеджер группы
 group name	admin	ru	Имя группы
@@ -573,6 +567,7 @@ quota size in mbyte	admin	ru	Размер квоты в МБ
 re-enter password	admin	ru	Введите пароль ещё раз
 read this list of methods.	admin	ru	Читать этот список методов
 register application hooks	admin	ru	Зарегистрировать хуки приложения
+regular expression to find part to use as container	admin	ru	Регулярное выражение для поиска части, используемой в качестве контейнера
 remote administration instances	admin	ru	Экземпляры системы, администрируемые удалённо
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	ru	Удалённое администрирование должно быть включено в соответствующем пункте меню администрируемой удаленно системы: <b>Администратор > Конфигурация сайта</b>!
 remote instance saved	admin	ru	Удалённая запись сохранена
@@ -624,6 +619,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	ru	Показать журнал доступа
 show current action	admin	ru	Показать текущее действие
 show error log	admin	ru	Показать журнал ошибок
+show groups in container based on	admin	ru	Показать группы в контейнере на основе
 show phpinfo()	admin	ru	Показать информацию php
 show session ip address	admin	ru	Показать IP-адрес сеанса
 sieve server hostname or ip address	admin	ru	Имя компьютера или IP сервера Sieve
@@ -776,10 +772,8 @@ you must add at least 1 permission or group to this account	admin	ru	Добав�
 you must enter a group name.	admin	ru	Нужно ввести имя группы
 you must enter a lastname	admin	ru	Нужно ввести фамилию
 you must enter a loginid	admin	ru	Нужно ввести логин
-you must enter an application name and title.	admin	ru	Нужно ввести имя и заголовок приложения
 you must enter an application name.	admin	ru	Нужно ввести имя приложения
 you must enter an application title.	admin	ru	Нужно ввести заголовок приложения
-you must select a file type	admin	ru	Нужно выбрать тип файла
 you must select at least one group member.	admin	ru	Нужно выбрать как минимум одного участника группы
 you need to enter install id and password!	admin	ru	Нужно указать идентификатор установки и пароль!
 you need to select as least one action!	admin	ru	Нужно выбрать как минимум одно действие!

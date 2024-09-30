@@ -134,7 +134,7 @@ password contains only %1 of required %2 character classes: no %3	preferences	de
 password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	de	Passwort enthält mit "%1" einen Teil Ihres Benutzernamens oder vollständigen Namen (3 oder mehr Zeichen lang)
 password is invalid	preferences	de	Das Passwort ist ungültig
 password must have at least %1 characters	preferences	de	Passwort muss mindestens %1 Zeichen lang sein
-password stored	preferences	de	Passwort gespeichert
+password stored	preferences	de	Passwort gespeichert.
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.

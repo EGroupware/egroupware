@@ -55,7 +55,6 @@ export definition to use for nextmatch export	timesheet	km	នាំចេញន
 export to openoffice spreadsheet	timesheet	km	នាំចេញទៅសៀវភៅបញ្ជី OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	km	នាំចេញធាតុពី Time Sheet ទៅជាឯកសារ CSV  CSV មានន័យថា 'តម្លៃបំបែកដោយសញ្ញាក្បៀស' នៅក្នុងផ្ទាំងជម្រើស អ្នកក៏អាចជ្រើសរើសសញ្ញាបំបែកផ្សេងទៀត
-favorites	timesheet	km	ចំណូលចិត្ត
 field must not be empty !!!	timesheet	km	វាលមិនត្រូវទទេ!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	km	សម្រាប់អក្សរសៀរៀលប្រើស្លាកនេះ ដាក់មាតិកា អ្នកចង់ធ្វើម្តងទៀតរវាងស្លាកពីរ
 forgot to switch off working time?	common	km	ភ្លេចបិទម៉ោងធ្វើការមែនទេ?

@@ -72,6 +72,9 @@ number of row for a multiline inputfield or line of a multi-select-box	timesheet
 or endtime	timesheet	nl	of eindtijd
 order	timesheet	nl	Volgorde
 parent	timesheet	nl	Ouder
+pause	common	nl	Pauze
+pause time	timesheet	nl	Tijd pauze
+paused	timesheet	nl	Gepauzeerd
 permission denied!!!	timesheet	nl	Toegang geweigerd!!!
 price	timesheet	nl	Tarief
 projectmanager integration	admin	nl	ProjectManager integratie
@@ -86,8 +89,10 @@ select a price	timesheet	nl	Selecteer een tarief
 select a project	timesheet	nl	Selecteer een project
 show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
 start	timesheet	nl	Start
+start-time can not be before last stop- or pause-time %1!	common	nl	Starttijd kan niet voor de laatste stop- of pauzetijd %1 liggen!
 starttime	timesheet	nl	Aanvangstijd
 starttime has to be before endtime !!!	timesheet	nl	Aanvangstijd moet voor de eindtijd liggen !!!
+stop- or pause-time can not be before the start-time %1!	common	nl	Stop- of pauzetijd kan niet voor de starttijd liggen %1!
 sum %1:	timesheet	nl	Sommeer %1:
 tag to mark positions for address labels	timesheet	nl	Tag voor markering tbv adreslabels
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
@@ -98,6 +103,7 @@ this month	timesheet	nl	Deze maand
 this week	timesheet	nl	Deze week
 this year	timesheet	nl	Dit jaar
 ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
+timer already running or paused	common	nl	Timer loopt al of is gepauzeerd
 timesheet	common	nl	Urenregistratie
 timesheet csv export	timesheet	nl	Urenregistratie CSV export
 timesheet openoffice export	timesheet	nl	Urenregistratie OpenOffice export

@@ -22,10 +22,7 @@
 %1 token %2.	admin	sk	%1 token %2.
 %1 user %2	admin	sk	%1 používateľ %2
 (de)activate mail accounts	admin	sk	(de)Aktivovať poštové účty
-(default no, leave it off if you dont use it)	admin	sk	Zvyčajne Nie; ak to nepoužívate, ponechajte prázdne
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	sk	(imapclass musí podporovať túto funkcionalitu - získať príslušnú hodnotu a odovzdať ju ako predvolenú kvótu serveru IMAP)
 (no subject)	admin	sk	(bez predmetu)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sk	(Pre nainštalovanie nových aplikácií použite<br><a href="setup/" target="setup">Inštalátor</a> [Správa aplikácií]!)
 -  type	admin	sk	- typ
 1 year	admin	sk	1 rok
 2 month	admin	sk	2 mesiace
@@ -87,6 +84,7 @@ add new email address:	admin	sk	Pridať novú E-mailovú adresu:
 add peer server	admin	sk	Pridať peer server
 add profile	admin	sk	Pridať profil
 add sub-category	admin	sk	Pridať podkategóriu
+add to group	admin	sk	Pridať do skupiny
 add user	admin	sk	Pridať používateľa
 add user or group	admin	sk	Pridať používateľa alebo skupinu
 added	admin	sk	pridané
@@ -109,6 +107,7 @@ all records and account information will be lost!	admin	sk	Všetky záznamy a in
 all users	admin	sk	Všetci používatelia
 allow anonymous access to this app	admin	sk	Povoliť anonymnému používateľovi prístup k tejto aplikácii
 allow remote administration from following install id's (comma separated)	admin	sk	Povoliť vzdialenú správu z nasledovných ID inštalácie (oddelené čiarkou).
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	sk	Povoľte používateľovi uložiť jeho heslo v časti „Zabezpečenie a heslá“ pre SingleSignOn.
 allow user to set 'remember me' token	admin	sk	Povoliť používateľovi nastaviť príznak 'Zapamätaj si ma'
 allow users to change forwards	admin	sk	Povoliť používateľom zmeniť preposielania
 allow users to create identities for aliases	admin	sk	Povoliť používateľom vytvárať identity pre aliasy
@@ -156,9 +155,6 @@ authentication / accounts	admin	sk	Overovanie / Účty
 auto create account records for authenticated users	admin	sk	Automaticky vytvoriť záznamy pre overených používateľov.
 automatically transfer entries owned by the user:	admin	sk	Automaticky presunúť položky vo vlastníctve používateľa:
 available placeholders	admin	sk	Dostupné premenné
-back to admin/grouplist	admin	sk	Späť na Správu/Skupiny
-back to admin/userlist	admin	sk	Späť na Správu/Používateľov
-back to the list	admin	sk	Naspäť na zoznam
 backup directory %1 mounted as %2	admin	sk	Zálohovací priečinok %1 primontovaný ako %2
 bad login name or password.	admin	sk	Chybné prihlasovacie meno alebo heslo.
 bad or malformed request. server responded: %s	admin	sk	Chybná požiadavka. Odpoveď servera: %s
@@ -167,12 +163,11 @@ bi-dir passthrough	admin	sk	obojsmerné prepojenie
 bi-directional	admin	sk	obojsmerné
 blocking after wrong password	admin	sk	Blokované kvôli chybnému heslu
 bottom	admin	sk	Naspodku
+bulk changes	admin	sk	Hromadné zmeny
 bulk password reset	admin	sk	Reset hesla
 calculate next run	admin	sk	Vypočítať ďalší prechod
 calendar recurrence horizont in days (default 1000)	admin	sk	Horizont opakovania v kalendári (predvolené: 1000)
-can be used by application	admin	sk	Môže byť použité aplikáciou
-can be used by group	admin	sk	Môže byť použité skupinou
-can be used by user	admin	sk	Môže byť použité používateľom
+can be used to show groups by container, if enabled	admin	sk	Môže sa použiť na zobrazenie skupín podľa kontajnera, ak je povolené
 can change password	admin	sk	Môže zmeniť heslo
 can not change users into groups, same sign required!	admin	sk	NEmôžem zmeniť používateľov na skupiny, značka musí byť rovnaká!
 cancel changes	admin	sk	Zrušiť zmeny
@@ -187,6 +182,7 @@ category saved.	admin	sk	Kategória uložená.
 certificate	admin	sk	Certifikát
 certificate details	admin	sk	Podrobnosti o certifikáte
 certificate validation in days	admin	sk	Platnosť certifikátu v dňoch
+change access	admin	sk	Zmena prístupových práv
 change account_id	admin	sk	Zmeniť ID účtu
 change acl rights	admin	sk	Zmeniť prístupové práva (ACL)
 change config settings	admin	sk	Zmeniť voľby nastanení
@@ -218,6 +214,7 @@ configuration	admin	sk	Konfigurácia
 configuration saved.	admin	sk	Konfigrácia bola uložená.
 connection dropped by imap server.	admin	sk	Spojenie prerušené IMAP serverom.
 connection is not secure! everyone can read eg. your credentials.	admin	sk	Pripojenie NIE je bezpečné! Ktokoľvek si môže napr. prečítať vaše prihlasovacie údaje.
+container	admin	sk	Kontajner
 continue	admin	sk	Pokračovať
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sk	Doména cookie (predvolené prázdne znamená, že sa použije plné doménové meno, pre SiteMgr napr. ".domain.com" povoľuje použitie tej istej cookie pre egw.domain.com a www.domain.com).
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sk	Cesta Cookie. Umožňuje viacero relácií EGw s rozličnými priečinkami.
@@ -332,12 +329,6 @@ do not generate email addresses	admin	sk	Negenerovať e-mailovú adresu
 do not offer introduction video	admin	sk	Neponúkať úvodné video
 do not send cookie	admin	sk	neposielať cookie
 do not set attribute	admin	sk	Nenastavovať atribút
-do not validate certificate	admin	sk	Neoverovať certifikát
-do you also want to delete all global subcategories ?	admin	sk	Chcete zároveň odstrániť všetky globálne podkategórie?
-do you really want to delete this profile	admin	sk	Naozaj chcete odstrániť tento profil?
-do you really want to reset the filter for the profile listing	admin	sk	Naozaj chcete vynulovať filter pre výpis profilu?
-do you want to delete all global subcategories ?	admin	sk	Chcete odstrániť všetky globálne podkategórie?
-do you want to move all global subcategories one level down ?	admin	sk	Chcete presunúť všetky globálne podkategórie o jednu úroveň nižšie?
 document root (default)	admin	sk	Koreňový adresár dokumentov
 domainname	admin	sk	Názov domény
 down	admin	sk	Dole
@@ -477,6 +468,7 @@ group excepted from above export limit (admins are always excepted)	admin	sk	Sku
 group has been added	common	sk	Skupina bola pridaná.
 group has been deleted	common	sk	Skupina bola odstránená.
 group has been updated	common	sk	Skupina bola aktualizovaná.
+group hierarchy	admin	sk	Hierarchia skupín
 group list	admin	sk	Zoznam skupín
 group manager	admin	sk	Správca skupín
 group name	admin	sk	Názov skupiny
@@ -732,6 +724,7 @@ quota size in mbyte	admin	sk	Veľkosť kvóty v Megabajtoch
 re-enter password	admin	sk	Zadajte heslo znovu
 read this list of methods.	admin	sk	Načítaj tento zoznam metód.
 register application hooks	admin	sk	Zaregistruj všetky aplikácie
+regular expression to find part to use as container	admin	sk	Regulárny výraz na vyhľadanie časti, ktorá sa má použiť ako kontajner
 reject passwords containing part of username or full name (3 or more characters long)	admin	sk	Odmietnuť heslá ktoré obsahujú časti plného alebo používateľského mena (v dĺžke 3 a viac znakov)
 relay access checked	admin	sk	Relačný prístup bol skontrolovaný
 remark	admin	sk	Poznámka
@@ -809,6 +802,7 @@ show as optional, but required once user has it setup	admin	sk	Zobraziť ako vol
 show as required, but only once user has it setup	admin	sk	Zobraziť ako voliteľné, ale vyžadovať akonáhle si to používateľ nastaví
 show current action	admin	sk	Zobraziť aktuálnu akciu
 show error log	admin	sk	Zobraziť záznamy o chybách
+show groups in container based on	admin	sk	Zobrazenie skupín v kontajneri na základe
 show members	admin	sk	Zobraziť členov
 show phpinfo()	admin	sk	Zobraziť phpinfo()
 show session ip address	admin	sk	Zobraziť IP adresu relácie
@@ -1006,10 +1000,8 @@ you must add at least 1 permission or group to this account	admin	sk	Tomuto úč
 you must enter a group name.	admin	sk	Musíte zadať názov skupiny.
 you must enter a lastname	admin	sk	Musíte zadať priezvisko.
 you must enter a loginid	admin	sk	Musíte zadať prihlasovacie ID.
-you must enter an application name and title.	admin	sk	Musíte zadať názov a titulok aplikácie.
 you must enter an application name.	admin	sk	Musíte zadať názov aplikácie.
 you must enter an application title.	admin	sk	Musíte zadať titulok aplikácie.
-you must select a file type	admin	sk	Musíte zadať typ súboru.
 you must select at least one group member.	admin	sk	Musíte zadať aspoň jedného člena skupiny.
 you need to enter install id and password!	admin	sk	Musíte zadať ID inštalácie a heslo!
 you need to select as least one action!	admin	sk	Najprv vyberte aspoň jednu akciu!
@@ -1017,6 +1009,5 @@ you need to select some users first!	admin	sk	Najprv vyberte nejakého používa
 you need to specify a forwarding address, when checking "%1"!	admin	sk	Keď vyberáte "%1" tak musíte zadať preposielaciu adresu!
 you will need to remove the subcategories before you can delete this category	admin	sk	Než odstránite túto kategóriu, musíte odstrániť všetky podkategórie!
 your last submission was less then %1 days ago!	admin	sk	Naposledy ste odosielali pred menej než %1 dňami!
-your message to  %1 was displayed.	admin	sk	Vaša správa pre %1 bola zobrazená.
 your name	admin	sk	Vaše meno
 your session could not be verified.	admin	sk	Vašu reláciu sa nepodarilo overiť.

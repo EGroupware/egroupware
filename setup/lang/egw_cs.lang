@@ -28,13 +28,11 @@
 80 (http)	setup	cs	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	cs	<b>používat znakovou sadu</b>(použijte UTF-8 pokud plánujete používat jazyky s rozdílnými znakovými sadami)
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	cs	==> jiná skupina '%1' s tímto gidNumber %2, nemohu nastavit členství!
-[header-password],[header-user],[new-password],[new-user]	setup	cs	[hlavička-heslo],[hlavička-uživatel],[nové heslo],[nový uživatel]
 access denied: wrong username or password for manage-header !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro správu hlaviček!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro konfiguraci domény '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	cs	databáze účtů{sql(výchozí) | ldap},[autentikace{sql | ldap | mail | ads | http | ...}],[sql šifrování{md5 | blowfish_crypt | md5_crypt | crypt}],[zaškrtnout uložení hesla{ (výchozí)|True}],[povolit autentikaci přes cookies{ (výchozí)|True}]
 accounts existing	setup	cs	Stávající účty
 actions	setup	cs	Akce
-activate safe password check	setup	cs	Aktivovat kontrolu bezpečnosti hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	cs	Přidat automaticky vytvořené uživatele do této skupiny (Ponecháte-li prázdné, zkusím skupinu 'Default'.)
 add new database instance (egw domain)	setup	cs	Přidat novou instanci databáze (EGw doménu)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	cs	přidat nebo editovat doménu:[název domény(default)],[název databáze(egroupware)],[uživatel databáze(egroupware)],heslo databáze,[typ databáze(mysql)],[databázový server(localhost)],[port databáze(db specific)],[administrátor konfigurace(jako admin. hlaviček)],[heslo administrátora konfigurace(jako admin. hlaviček)]
@@ -159,8 +157,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	cs	Kontroluji, zda je rozšíření %1 načtené nebo ho lze načíst
 checking file-permissions of %1 for %2 %3: %4	setup	cs	Kontroluji souborová oprávnění %1 pro %2 %3: %4
 checking for gd support...	setup	cs	Kontroluji podporu GD...
-checking for jpgraph in %1	setup	cs	Kontroluji přítomnost JPGraph v %1
-checking for tnef application	setup	cs	Kontroluji aplikaci tnef
 checking function %1 exists	setup	cs	Kontroluji existenci funkce %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	cs	Kontroluji zda do umístění nastaveného v php.ini parametrem session.save_path='%1' může zapisovat webový server
 checking package %1 is installed	setup	cs	Kontrola, zda je nainstalován balíček %1
@@ -215,20 +211,17 @@ creating tables	setup	cs	Vytvářím tabulky
 creation of %1 in %2 failed !!!	setup	cs	Vytvoření %1 v %2 selhalo!
 current configuration:	setup	cs	Aktuální konfigurace:
 current system-charset	setup	cs	Aktuální znaková sada systému
-current system-charset is %1.	setup	cs	Aktuální znaková sada systému je %1.
 current version	setup	cs	Aktuální verze
 currently installed languages: %1 <br />	setup	cs	Aktuálně instalované jazyky: %1 <br>
 custom handler: %1	setup	cs	Uživatelský správce: %1
 custom oid	setup	cs	vlastní OID
 custom set via %1	setup	cs	Uživatelské nastavení přes %1
-cyrus imap: admin user,password	setup	cs	Cyrus IMAP: Uživatelské jméno administrátora, heslo
 daily	setup	cs	denně
 database	setup	cs	Databáze
 database instance (egw domain)	setup	cs	Instance databáze (EGw doména)
 database is version %1 and up to date.	setup	cs	databáze je verze %1 a je aktuální.
 database successfully converted from '%1' to '%2'	setup	cs	Databáze úspěšně zkonvertována z '%1' na '%2'
 datebase %1 droped.	setup	cs	Databáze %1 byla smazána.
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	cs	Port pro datum a čas.<br>Pokud používáte port 13, nastavte prosím patřičným způsobem pravidla na firewallu dříve, než odešlete tuto stránku.<br>(Port: 13 / Host: 129.6.15.28)
 day	setup	cs	Den
 day of week<br />(0-6, 0=sunday)	setup	cs	Den týdne <br>(0-6, 0=neděle)
 db backup and restore	setup	cs	Zálohování a obnova databáze
@@ -258,6 +251,8 @@ deregistered	setup	cs	Odregistrované
 details for admin account	setup	cs	Podrobnosti k účtu administrátora
 developers' table schema toy	setup	cs	Hračka pro vývojáře se schématy tabulek
 did not find any valid db support!	setup	cs	Nebyla nalezena žádná vhodná podpora pro databáze!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	cs	Zakázat pouze v případě, že váš AD má problémy s kontrolou VLV A může vrátit všechny uživatele v jednom dotazu!
+disable vlv controls	setup	cs	Zakázat ovládací prvky VLV
 distribution-lists too	setup	cs	Také distribuční seznamy
 do not check for deleted user	setup	cs	NEkontrolovat smazané uživatele
 do you want persistent connections (higher performance, but consumes more resources)	setup	cs	Chcete trvalá spojení (vyšší výkon, ale spotřebovávají více zdrojů)
@@ -303,10 +298,10 @@ enable mcrypt	setup	cs	Povolit MCrypt
 enforce ssl (allows to specify just a path above)	setup	cs	Vynutit SSL (dovoluje specifikovat cestu výše)
 enter some random text for app session encryption	setup	cs	Vložte nějaký náhodný text pro šifrování aplikační relace
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	cs	Vložte nějaký náhodný text pro šifrování <br>aplikační relace (vyžaduje mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory<br>Příklad:  /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory<br>Příklad:  /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	cs	Zadejte plnou cestu ke složce pro soubory uživatelů a skupin<br>Příklad:  /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	cs	Zadejte plnou cestu ke složce pro dočasné soubory<br>Příklad:  /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	cs	Zadejte celou cestu k adresáři se soubory uživatelů a skupin.<br>Například: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	cs	Zadejte plnou cestu ke složce pro soubory uživatelů a skupin<br>Příklad:  /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	cs	Zadejte celou cestu k adresáři se zálohami.<br>Ponecháte-li prázdné, bude jím adresář pro soubory
 enter the hostname of the machine on which this server is running	setup	cs	Zadejte DNS jméno stroje, na kterém tento server běží
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	cs	Zadejte URL umístění eGroupWaru.<br>Příklad: https://egw.domena.cz/egroupware   nebo   /egroupware<br><b>Bez koncového lomítka</b>
@@ -442,7 +437,6 @@ login as user postgres, eg. by using su as root	setup	cs	Přihlásit se jako už
 login to mysql -	setup	cs	Přihlásit do mysql -
 loginname needed for domain configuration	setup	cs	Přihlašovací jméno potřebné pro konfiguraci domény
 logout	setup	cs	Odhlásit
-mail account of %1 migraged	setup	cs	E-mailový účet %1 byl přenesen
 mail account of %1 migrated	setup	cs	Poštovní účet %1 migrován
 mail domain (for virtual mail manager)	setup	cs	Poštovní doména (pro Virtuálního správce pošty)
 mail server login type	setup	cs	Typ přihlášení na poštovní server
@@ -451,8 +445,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	cs	Spravovat aplikace
 manage languages	setup	cs	Spravovat jazyky
 manual / help	setup	cs	Manuál / Nápověda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	cs	Parametr max_execution_time je nastaven na méně než 30 (vteřin): EGroupware někdy potřebuje vyšší hodnotu, očekávejte nahodilé chyby
 maximum account id (e.g. 65535 or 1000000)	setup	cs	Maximální id účtu (např. 65535 nebo 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	cs	Parametr max_execution_time je nastaven na méně než 30 (vteřin): EGroupware někdy potřebuje vyšší hodnotu, očekávejte nahodilé chyby
 may be broken	setup	cs	Může být poškozen
 mcrypt algorithm (default tripledes)	setup	cs	Mcrypt algoritmus (výchozí TRIPLEDES)
 mcrypt initialization vector	setup	cs	Mcrypt inicializační vektor
@@ -470,7 +464,6 @@ modified	setup	cs	Změněno
 modify	setup	cs	Změnit
 month	setup	cs	Měsíc
 mount backup directory to %1	setup	cs	Složka zálohy byla připojena jako %1
-multi-language support setup	setup	cs	Nastavení podpory více jazyků
 name for service provider	setup	cs	Název pro poskytovatele služeb
 name of database	setup	cs	Název databáze
 name of db user egroupware uses to connect	setup	cs	Jméno databaz. uživatele, kterým se EGroupware připojuje
@@ -506,6 +499,7 @@ one month	setup	cs	Jeden měsíc
 one week	setup	cs	Jeden týden
 only add languages that are not in the database already	setup	cs	Přidat jen jazyky, které ještě nejsou v databázi
 only add new phrases	setup	cs	Jen přidat nové fráze
+openidconnect login	setup	cs	Přihlášení přes OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	cs	volitelné, pouze pokud je povolena autentikace a anonymní hledání
 or	setup	cs	nebo
 or %1continue to the header admin%2	setup	cs	nebo %1pokračovat k administraci hlaviček%2
@@ -560,8 +554,8 @@ read translations from	setup	cs	Načíst překlady z
 readable by the webserver	setup	cs	Čitelné webovým serverem
 really uninstall all applications	setup	cs	OPRAVDU odinstalovat všechny aplikace
 refusing to delete dn "%1"!	setup	cs	Odmítám smazat DN "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom EGroupware ho nepotřebuje a obecně je bezpečnější ho vypnout
 registered	setup	cs	Zaregistrované
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	cs	Parametr register_globals je zapnutý, přitom EGroupware ho nepotřebuje a obecně je bezpečnější ho vypnout
 regular expression to filter by dn	setup	cs	Regulární výraz pro filtrování podle DN
 rejected lines	setup	cs	Zamítnuté řádky
 remove	setup	cs	Odstranit
@@ -816,5 +810,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	cs	Vaše tabulky jsou aktuální
 your tables will be dropped and you will lose data	setup	cs	Vaše tabulky budou smazány a přijdete o svá data!
 your temporary directory '%1' %2	setup	cs	Váš dočasný adresář '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	cs	[hlavička-heslo],[hlavička-uživatel],[nové heslo],[nový uživatel]
 {db | php(default) | php-restore}	setup	cs	{db | php(výchozí) | php-restore}
 {off(default) | on}	setup	cs	{off(výchozí) | on}

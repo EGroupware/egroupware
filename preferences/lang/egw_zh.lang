@@ -47,11 +47,13 @@ how to update lists	preferences	zh	如何更新列表
 icon	preferences	zh	图标
 icons and text	preferences	zh	图标和文字
 icons only	preferences	zh	只显示图标
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	zh	如果启用，您通过单点登录时输入的密码将被存储并传递给其他服务器。
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	zh	图像链接到某一条目可以被显示为缩略图。你可以把将此关闭以加快网页显示。
 in which country are you. this is used to set certain defaults for you.	preferences	zh	您所在的国家/地区。这是用来为您设定默认。
 interface/template selection	preferences	zh	界面/模板选择
 it sets content size (text only) according to selected size.	preferences	zh	它根据选定的尺寸设置内容尺寸（仅文本）。
 language	preferences	zh	语言
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	zh	通过单点登录不提供密码，也不会将密码传递给邮件或文件服务器。
 max matches per page	preferences	zh	每页的最大匹配数
 max number of icons in navbar	preferences	zh	导航栏最多显示图标数量
 no default	preferences	zh	无默认值
@@ -59,6 +61,7 @@ no user-selection at all	common	zh	无任何用户选择
 note: this feature does *not* change your email password. this will	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码。这将
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码，这将需要通过手动更改。
 p: paragraph	preferences	zh	<p> 段落
+password stored	preferences	zh	存储密码。
 please, select a new theme	preferences	zh	请选择一个新主题
 popup with search	preferences	zh	弹出式搜索窗口
 re-enter your password	preferences	zh	重新输入您的密码
@@ -82,7 +85,9 @@ show navigation bar as	preferences	zh	导航栏显示模式为
 show number of current users	preferences	zh	显示当前用户数
 show text on navigation icons	preferences	zh	在导航栏图标上显示文字说明
 show_more_apps	common	zh	显示更多应用程序
+singlesignon and passwords	preferences	zh	单点登录和密码
 spellchecker language	addressbook	zh	拼写检查语言
+store password retrievable for singlesignon	common	zh	为 SingleSignOn 存储可检索的密码
 text only	preferences	zh	只显示文字
 the old password is not correct	preferences	zh	旧密码不正确
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	zh	选择框显示所有可用的用户 (在较大安装与较多用户情况下可能很缓慢)。弹出窗口可根据用户名或群组搜索用户。最后的两个选项限制了其它用户的可见性。所以他们应该是被强制的和不适用于管理员。

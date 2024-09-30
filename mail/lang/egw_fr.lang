@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	fr	cocher pour sauvegarder comme Evénement après l'envoi
 check to save as infolog on send	mail	fr	cocher pour sauvegarder comme Infolog après l'envoi
 check to save as tracker entry on send	mail	fr	cocher pour sauvegarder comme Traqueur après l'envoi
+checking admin credentials failed	mail	fr	La vérification des informations d'identification de l'administrateur a échoué
 choose file	mail	fr	Sélectionner un fichier
 common acl	mail	fr	ACL communs
 compose	mail	fr	Composer
@@ -243,7 +244,7 @@ files	mail	fr	Fichiers
 flag / unflag	mail	fr	Marquer / Non marquer
 flag or unflag a mail	mail	fr	Marquer ou non marquer un mail
 flagged	mail	fr	Marqué
-flagged %1 messages as %2 in %3	mail	fr	Message(s) marqué(s) %1 comme %2 dans %3
+flagged %1 messages as %2 in %3	mail	fr	Message(s) marqué(s) %1 comme "%2" dans %3.
 flagged %1 messages as flagged in %2	mail	fr	Message(s) marqué(s) %1 comme marqué(s) en %2
 flagged %1 messages as unflagged in %2	mail	fr	Marqué %1 message(s) comme non marqué dans %2
 flagged / unflagged	mail	fr	Marqué / Non marqué
@@ -336,6 +337,7 @@ mail	common	fr	Mail
 mail acl	mail	fr	ACL Mail
 mail filter	mail	fr	Filtre de mail
 mail filter rule	mail	fr	Règle de filtrre de message
+mail probably has no text-body	mail	fr	Le message n'a probablement pas de texte
 mail settings	mail	fr	Réglages email
 mail source	mail	fr	Source des emails
 mail-address	mail	fr	Adresse email
@@ -491,6 +493,7 @@ reply	mail	fr	Répondre
 reply all	mail	fr	Répondre à tous
 reply message type	mail	fr	Type de réponse
 reply to	mail	fr	Répondre à
+reply with attachments	mail	fr	Répondre avec des pièces jointes
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	fr	La réponse à ce message a échoué car le contenu de ce message semble être crypté et ne peut pas être décrypté correctement. Si vous souhaitez toujours inclure le contenu de ce message crypté, vous pouvez essayer de l'envoyer en tant que pièce jointe.
 replyto	mail	fr	Répondre A
 report as ham	mail	fr	Marqué comme HAM

@@ -87,7 +87,6 @@ checking extension %1 is loaded or loadable	setup	fa	بررسی الحاقیه %
 checking file-permissions of %1 for %2 %3: %4	setup	fa	بررسی مجوزهای پرونده از %1 برای %2 %3: %4
 checking for gd support...	setup	fa	بررسی برای پشتیبانی از GD...
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fa	بررسی اینکه تنظیمات php.ini برای setting session.save_path='%1' قابل نوشتن توسط کارگزار وب می باشد یا خیر
-checking pear%1 is installed	setup	fa	بررسی نصب PEAR%1
 checking php.ini	setup	fa	بررسی php.ini
 checking required php version %1 (recommended %2)	setup	fa	بررسی نسخه مورد نیاز PHP %1 ( نسخه %2 توصیه می شود)
 checking the egroupware installation	setup	fa	بررسی نصب گروه افزار
@@ -123,12 +122,10 @@ created	setup	fa	ایجاد شد
 created header.inc.php!	setup	fa	پرونده header.inc.php ایجاد شد!
 creating tables	setup	fa	ایجاد جداول
 current system-charset	setup	fa	مجموعه کاراکتر جاری سیستم
-current system-charset is %1.	setup	fa	مجموعه کاراکتر جاری %1 هست
 current version	setup	fa	نسخه جاری
 currently installed languages: %1 <br />	setup	fa	زبانهای نصب شده فعلی%1 <br />
 database instance (egw domain)	setup	fa	نمونه پایگاه داده (حوزه گروه افزار)
 database successfully converted from '%1' to '%2'	setup	fa	پایگاه داده با موفقیت از '%1' به '%2' تبدیل شد
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	fa	درگاه تاریخ و زمان.<br />اگر از درگاه 13 استفاده میکنید لطفا قبل از ثبت این صفحه از طریق دیوار آتش دسترسی به آنرا باز کنید
 day	setup	fa	روز
 day of week<br />(0-6, 0=sunday)	setup	fa	روز هفته <br />(0-6, 0=یکشنبه)
 db backup and restore	setup	fa	پشتیبان گیری و بازگرداندن پایگاه داده
@@ -171,10 +168,10 @@ enable for extra debug-messages	setup	fa	فعال سازی برای پیامها
 enable mcrypt	setup	fa	فعالسازی MCrypt
 enter some random text for app session encryption	setup	fa	کمی متن تصادفی برای رمزگذاری نشست وارد کنید
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fa	کمی متن تصادفی وارد کنید برای رمزگذاری app_session <br /> (mcrypt لازم دارد)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fa	مسیر کامل پرونده های موقت را وارد کنید مثلا: tmp, C:\TEMP/
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fa	مسیر کامل پرونده های موقت را وارد کنید مثلا: tmp, C:\TEMP/
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	fa	مسیر کامل پرونده های گروهها و کاربران را وارد کنید مثلا: files, E:\FILES/
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fa	مسیر کامل پرونده های موقت را وارد کنید مثلا: tmp, C:\TEMP/
 enter the full path for users and group files.<br />examples: /files, e:files	setup	fa	مسیر کامل پرونده های گروهها و کاربران را وارد کنید مثلا: files, E:\FILES/
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	fa	مسیر کامل پرونده های گروهها و کاربران را وارد کنید مثلا: files, E:\FILES/
 enter the full path to the backup directory.<br />if empty: files directory	setup	fa	مسیر کامل پوشه پشتیبان گیری را وارد کنید. اگر خالی باشد مسیر پرونده ها در نظر گرفته میشود
 enter the hostname of the machine on which this server is running	setup	fa	نام میزبانی را که کارگزار بر روی آن درحال اجراست وارد کنید
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fa	مسیر نشانی گروه افزار را وارد کنید مثلا: http://www.domain.com/egroupware   or   /egroupware<br /><b>بدون ممیز در ادامه</b>
@@ -261,8 +258,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	fa	مدیریت کاربردها
 manage languages	setup	fa	مدیریا زبانها
 manual / help	setup	fa	راهنما/کمک
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fa	max_execution_time برای کمتر از 30 ثانیه  تنظیم شده است. گروه افزار برخی وارد زمان بیشتری برای اجرا لازم دارد.خطاهای ناگهانی پیش می آید
 maximum account id (e.g. 65535 or 1000000)	setup	fa	حداکثر کدکاربری(مثلا: 65535 یا 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fa	max_execution_time برای کمتر از 30 ثانیه  تنظیم شده است. گروه افزار برخی وارد زمان بیشتری برای اجرا لازم دارد.خطاهای ناگهانی پیش می آید
 may be broken	setup	fa	شاید قطع شده باشد
 mcrypt algorithm (default tripledes)	setup	fa	الگوریتم Mcrypt (پیش فرض TRIPLEDES است)
 mcrypt initialization vector	setup	fa	بردار مقداردهی اولیه MCrypt
@@ -275,7 +272,6 @@ modifications have been completed!	setup	fa	تغییرات کامل شد!
 modified	setup	fa	تغییر یافته
 modify	setup	fa	تغییر
 month	setup	fa	ماه
-multi-language support setup	setup	fa	نصب با پشتیبانی از چند زبانگی
 name of database	setup	fa	نام پایگاه داده
 name of db user egroupware uses to connect	setup	fa	نام کاربرپایگاه داده گروه افزار که برای اتصال استفاده می شود
 never	setup	fa	هرگز
@@ -338,8 +334,8 @@ re-enter password	setup	fa	ورود مجدد گذرواژه
 read translations from	setup	fa	خواندن ترجمه ها از
 readable by the webserver	setup	fa	قابل خواندن توسط کارگزار وب
 really uninstall all applications	setup	fa	واقعا تمام کاربردها را عزل کنم
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fa	register_globals روشن است. گروه افزار به آن نیازی ندارد و امنیت بیشتر است اگر خاموشش کنید
 registered	setup	fa	ثبت شده
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fa	register_globals روشن است. گروه افزار به آن نیازی ندارد و امنیت بیشتر است اگر خاموشش کنید
 rejected lines	setup	fa	خطوط برگشت خورده
 remove	setup	fa	حذف
 remove all	setup	fa	حذف همه

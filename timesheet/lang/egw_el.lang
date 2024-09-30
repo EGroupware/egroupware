@@ -8,7 +8,7 @@ deleted	timesheet	el	διεγράφη
 deletes this field	timesheet	el	διαγράφει αυτό το πεδίο
 determines the order the fields are displayed	timesheet	el	καθορίζει τη σειρά εμφάνισης των πεδίων
 each value is a line like <id>[=<label>]	timesheet	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
-edit status	common	el	Επιμέλεια κατάστασης
+edit status	timesheet	el	Επιμέλεια κατάστασης
 edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
 end	timesheet	el	Τέλος
 existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
@@ -27,7 +27,10 @@ modified	timesheet	el	Τροποποιήθηκε
 no details	timesheet	el	συνοπτικά
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
 order	timesheet	el	Ταξινόμηση
-parent	admin	el	Μητρική
+parent	timesheet	el	Μητρική
+pause	common	el	Παύση
+pause time	timesheet	el	Χρόνος παύσης
+paused	timesheet	el	Παύση
 price	timesheet	el	Τιμή
 quantity	timesheet	el	Ποσότητα
 saves the changes made	timesheet	el	αποθηκεύει τις αλλαγές που έγιναν
@@ -35,8 +38,11 @@ saves the changes made and leaves	timesheet	el	αποθηκέυει όλες τ�
 select a price	timesheet	el	Επιλέξτε μια τιμή
 select a project	timesheet	el	Επιλέξτε ένα έργο
 start	timesheet	el	Έναρξη
+start-time can not be before last stop- or pause-time %1!	common	el	Ο χρόνος έναρξης δεν μπορεί να είναι πριν από τον τελευταίο χρόνο διακοπής ή παύσης %1!
+stop- or pause-time can not be before the start-time %1!	common	el	Ο χρόνος διακοπής ή παύσης δεν μπορεί να είναι πριν από τον χρόνο έναρξης %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
+timer already running or paused	common	el	Ο χρονοδιακόπτης εκτελείται ήδη ή έχει τεθεί σε παύση
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα
 yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί

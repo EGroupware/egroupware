@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	sl	Preverite, ali želite shraniti kot dogodek ob pošiljanju
 check to save as infolog on send	mail	sl	Preverite, ali želite shraniti kot InfoLog pri pošiljanju
 check to save as tracker entry on send	mail	sl	Preverite, ali želite shraniti kot zapis za sledenje pri pošiljanju
+checking admin credentials failed	mail	sl	Preverjanje poverilnic upravitelja ni uspelo
 choose file	mail	sl	Izberite datoteko
 common acl	mail	sl	Skupni ACL
 compose	mail	sl	Novo sporočilo
@@ -243,7 +244,7 @@ files	mail	sl	Datoteke
 flag / unflag	mail	sl	Oznaka / BrezOznake
 flag or unflag a mail	mail	sl	Oznaka ali BrezOznake v ePošti
 flagged	mail	sl	Označeno
-flagged %1 messages as %2 in %3	mail	sl	Označil %1 sporočilo kot %2 v %3
+flagged %1 messages as %2 in %3	mail	sl	Označil %1 sporočilo kot "%2" v %3.
 flagged %1 messages as flagged in %2	mail	sl	Označene oznake %1 označene kot označene v %2
 flagged %1 messages as unflagged in %2	mail	sl	Označil %1 sporočilo kot neuglagano v %2
 flagged / unflagged	mail	sl	Označeno / neoznačeno
@@ -336,6 +337,7 @@ mail	common	sl	Pošta
 mail acl	mail	sl	Pošta ACL
 mail filter	mail	sl	Mail filter
 mail filter rule	mail	sl	Pravilo poštnega filtra
+mail probably has no text-body	mail	sl	Pošta verjetno nima besedila
 mail settings	mail	sl	E-poštne nastavitve
 mail source	mail	sl	Poštni vir
 mail-address	mail	sl	Poštni naslov
@@ -491,6 +493,7 @@ reply	mail	sl	Odgovori
 reply all	mail	sl	Odgovori vsem
 reply message type	mail	sl	Vrsta odgovora
 reply to	mail	sl	Odgovori na naslov
+reply with attachments	mail	sl	Odgovorite s priponkami
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	sl	Odgovarjanje na to sporočilo ni uspelo, ker je vsebina tega sporočila šifrirana in je ni mogoče pravilno dešifrirati. Če še vedno želite vključiti vsebino tega šifriranega sporočila, lahko poskusite uporabiti naprej kot pripono.
 replyto	mail	sl	Odgovori na
 report as ham	mail	sl	Poročaj kot Ham

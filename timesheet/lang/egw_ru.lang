@@ -45,7 +45,6 @@ export definition to use for nextmatch export	timesheet	ru	Определени�
 export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	ru	Экспортирует записи Табеля в файл формата CSV
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
-favorites	timesheet	ru	Избранное
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для серии писем используйте этот тэг. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
@@ -91,6 +90,9 @@ only admin can edit this status	timesheet	ru	Только администрат
 or endtime	timesheet	ru	или Время окончания
 order	timesheet	ru	Назначение
 parent	timesheet	ru	Родитель
+pause	common	ru	Пауза
+pause time	timesheet	ru	Время паузы
+paused	timesheet	ru	Пауза
 permission denied!!!	timesheet	ru	Доступ запрещен!!!
 permissions error - %1 could not %2	timesheet	ru	Ошибка доступа - %1 не может быть %2
 prevent deleting	admin	ru	Предотвращение удаления
@@ -115,12 +117,14 @@ set to	timesheet	ru	Установить в
 show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показывать суммарное количество (напр. для суммирования перерасходов времени)
 skip record	timesheet	ru	Пропустить запись
 start	timesheet	ru	Старт
+start-time can not be before last stop- or pause-time %1!	common	ru	Время старта не может быть раньше последнего времени остановки или паузы %1!
 starttime	timesheet	ru	Время начала
 starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
 status	timesheet	ru	Состояние
 status deleted.	timesheet	ru	Состояние удалено.
 status of created timesheets	timesheet	ru	Состояние созданной записи Табеля
 status updated.	timesheet	ru	Состояние обновлено.
+stop- or pause-time can not be before the start-time %1!	common	ru	Время остановки или паузы не может быть раньше времени старта %1!
 sum %1:	timesheet	ru	Сумма %1:
 tag to mark positions for address labels	timesheet	ru	Тэг для отметки позиции для адресных меток
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	ru	Документ может содержать местоположение типа {{%3}} для замены данными. %1 полный список местоположений%2.
@@ -131,6 +135,7 @@ this month	timesheet	ru	Этот месяц
 this week	timesheet	ru	Эта неделя
 this year	timesheet	ru	Этот год
 ticket modified by %1 at %2	timesheet	ru	Запрос Трекера изменен %1 в %2
+timer already running or paused	common	ru	Таймер уже запущен или поставлен на паузу
 timesheet	common	ru	Табель
 timesheet csv export	timesheet	ru	Экспорт Табеля в CVS
 timesheet csv import	timesheet	ru	Импорт Табеля в формате CVS

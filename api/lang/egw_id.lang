@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	id	Direktori %1 %2 ditemukan!
 %1 email addresses inserted	common	id	%1 alamat email disisipkan.
 %1 email(s) added into %2	common	id	%1 email ditambahkan ke dalam %2
-%1 entries found, select one ...	common	id	%1 entri ditemukan, pilih satu ...
 %1 etemplates deleted	common	id	%1 eTemplate dihapus.
-%1 etemplates for application '%2' dumped to '%3'	common	id	%1 eTemplat untuk Aplikasi '%2' dituang ke '%3'
 %1 etemplates found	common	id	%1 eTemplate ditemukan.
 %1 file	common	id	berkas %1
 %1 is not executable by the webserver !!!	common	id	%1 tidak dapat dijalankan oleh server web!
-%1 matches on search criteria	common	id	cocok %1 sesuai kriteria pencarian
 %1 more %2 selected ...	common	id	%1 lebih banyak %2 yang dipilih ...
 %1 more...	common	id	%1 more ...
-%1 new etemplates imported for application '%2'	common	id	%1 eTemplate baru diimpor untuk Aplikasi '%2'
 %1 not implemented for %2!	common	id	%1 tidak di-implementasikan untuk %2!
 %1 proxy of %2	common	id	%1 proxy dari %2
 %1 to sync	groupdav	id	%1 untuk menyinkronkan
@@ -24,8 +20,10 @@
 %s onchange	common	id	%s onchange
 %s readonly	common	id	%s readonly
 '%1' copied to clipboard	common	id	'%1' disalin ke clipboard
+'%1' does not match the required pattern '%2'	common	id	'%1' tidak sesuai dengan pola yang diminta ('%2')
 '%1' has an invalid format	common	id	'%1' memiliki format yang tidak valid
 '%1' has an invalid format !!!	common	id	'%1' has an invalid format!
+'%1' is not a valid app-name ('%2')!	common	id	'%1' BUKAN nama aplikasi yang valid ('%2')!
 '%1' is not a valid date !!!	common	id	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	common	id	'%1' is not a valid floatingpoint number!
 '%1' is not a valid integer !!!	common	id	'%1' is not a valid integer!
@@ -33,6 +31,7 @@
 '%1' is not a valid timezone!	common	id	'%1' bukan zona waktu yang valid!
 '%1' is not allowed ('%2')!	common	id	'%1' TIDAK dibolehkan ('%2')!
 '%1' is not allowed%2)!	common	id	'%1' TIDAK diperbolehkan (%2)!
+'%1' must not contain (back)slashes!	common	id	'%1' tidak boleh mengandung garis miring (belakang)!
 (session restored in %1 seconds)	common	id	Sesi dipulihkan dalam %1 detik.
 00 (disable)	admin	id	00 (disable)
 1 day	common	id	1 Hari
@@ -211,6 +210,7 @@ central african republic	common	id	REPUBLIK AFRIKA TENGAH
 chad	common	id	CHAD
 change	common	id	Perubahan
 changed	common	id	Diubah
+changes that you made may not be saved.	common	id	Perubahan yang Anda buat mungkin tidak tersimpan.
 charset	common	id	Aksara
 check all	common	id	Contreng semua
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	id	Periksa nilai kosong dalam pernyataan IF. Contoh {{IF url~KOSONG~~Situs Web:}} - Jika url tidak kosong, tulis "Website:"
@@ -716,6 +716,7 @@ open	common	id	Open
 open existing contact	common	id	Buka kontak yang ada
 open notify window	common	id	Buka jendela pemberitahuan
 open popup window	common	id	Buka jendela popup
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	id	Login OpenIDConnect berhasil, namun pengguna '%1' TIDAK ada di EGroupware, DAN pembuatan pengguna otomatis dinonaktifkan!
 operator	common	id	Operator
 optional note about the link	common	id	Catatan opsional untuk tautan
 options	common	id	Options
@@ -891,10 +892,10 @@ show all / cancel filter	common	id	Tamplikan semua / batalkan saringan
 show all categorys	common	id	Tampilkan semua kategori
 show password	common	id	Tampilkan kata sandi
 show values	common	id	Tampilkan Nilai
-show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
 showing	common	id	Menampilkan
 showing %1	common	id	menampilkan %1
 showing %1 - %2 of %3	common	id	menampilkan %1 - %2 dari %3
+show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
 sierra leone	common	id	SIERRA LEONE
 sign up	common	id	Mendaftar
 singapore	common	id	SINGAPURA

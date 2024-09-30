@@ -22,10 +22,7 @@
 %1 token %2.	admin	pt	%1 token %2.
 %1 user %2	admin	pt	%1 utilizador %2
 (de)activate mail accounts	admin	pt	(des)Ativar contas de correio
-(default no, leave it off if you dont use it)	admin	pt	Por omissão: Não, mantenha-o assim se não o utilizar
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt	(a classe imap tem de suportar esta funcionalidade consultando o valor de configuração correspondente e passando-o como quota predefinida para o servidor IMAP)
 (no subject)	admin	pt	(sem assunto)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt	Para instalar novas aplicações clique em <br><a href="setup/" target="setup">Configurações</a> [Aplicações de Gestão]!
 -  type	admin	pt	- tipo
 1 year	admin	pt	1 ano
 2 month	admin	pt	2 meses
@@ -62,6 +59,9 @@ add new application	admin	pt	Adicionar nova aplicação
 add peer server	admin	pt	Adicionar servidor remoto
 add profile	admin	pt	Adicionar perfil
 add sub-category	admin	pt	Adicionar subcategorias
+add to group	admin	pt	Adicionar ao grupo
+add user	admin	pt	Adicionar utilizador
+add user or group	admin	pt	Adicionar utilizador ou grupo
 admin dn	admin	pt	DN do administrador
 admin email	admin	pt	Endereço de correio electrónico do Administrador
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pt	Endereços de correio electrónico de administradores (separados por vírgula) a avisar sobre o bloqueamento (deixar vazio para não avisar)
@@ -75,6 +75,7 @@ all applications	admin	pt	Todas as aplicações
 all records and account information will be lost!	admin	pt	Todos registos e dados de contas serão perdidos!
 all users	admin	pt	Todos os utilizadores
 allow anonymous access to this app	admin	pt	Permitir acesso anónimo a esta aplicação
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt	Permitir que o utilizador guarde a sua palavra-passe em 'Segurança e palavras-passe' para SingleSignOn.
 alternate email address	admin	pt	Endereço de correio electrónico alternativo
 anonymous user	admin	pt	Utilizador anónimo
 anonymous user (not shown in list sessions)	admin	pt	Utilizador anónimo (não exibido na lista de sessões)
@@ -104,18 +105,19 @@ asyncservices not yet installed or other error (%1) !!!	admin	pt	serviços assí
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	pt	Tentativa de utilizar o mimetype correcto para FTP em vez da 'aplicação/octet-stream' por omissão
 authentication / accounts	admin	pt	Autenticação/Contas
 auto create account records for authenticated users	admin	pt	Criar automaticamente registos da conta para utilizadores autenticados
-back to the list	admin	pt	Voltar à lista
 bi-dir passthrough	admin	pt	bi-dir passthrough
 bi-directional	admin	pt	bi-direcional
 bottom	admin	pt	Fundo
+bulk changes	admin	pt	Alterações em massa
+bulk password reset	admin	pt	Redefinição de palavra-passe em massa
 calculate next run	admin	pt	Calcular execução seguinte
-can be used by application	admin	pt	Pode ser utilizado pela aplicação
-can be used by group	admin	pt	Pode ser utilizado pelo grupo
+can be used to show groups by container, if enabled	admin	pt	Pode ser utilizado para mostrar grupos por contentor, se ativado
 can change password	admin	pt	Não é possível alterar a senha
 cancel testjob!	admin	pt	Cancelar trabalho de teste
 categories list	admin	pt	Lista de categorias
 category %1 has been saved !	admin	pt	A categoria %1 foi guardada!
 category list	admin	pt	Lista de categorias
+change access	admin	pt	Alterar direitos de acesso
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
 change login screen message	admin	pt	Alterar mensagem da página inicial
@@ -123,6 +125,7 @@ check ip address of all sessions	admin	pt	Verificar endereço IP de todas as ses
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
+container	admin	pt	Contentor
 continue	admin	pt	Continuar
 could not append message:	admin	pt	Não foi possível anexar Mensagem:
 country	admin	pt	País
@@ -184,10 +187,7 @@ display	admin	pt	Visualizar
 displaying html messages is disabled	admin	pt	exibir mensagens em HTML é desativada
 displaying plain messages is disabled	admin	pt	exibição de mensagens simples é desativado
 do not delete the category and return back to the list	admin	pt	NÃO eliminar a categoria e voltar para a lista
-do you also want to delete all global subcategories ?	admin	pt	Deseja eliminar também todas subcategorias gerais ?
-do you really want to delete this profile	admin	pt	Deseja relamente eliminar este perfil
-do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas as subcategorias gerais?
-do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo?
+do not generate email addresses	admin	pt	Não gerar endereços de correio eletrónico
 domainname	admin	pt	Nome de domínio
 down	admin	pt	baixo
 edit account	admin	pt	Editar conta
@@ -261,6 +261,7 @@ group ?	admin	pt	Grupo?
 group has been added	common	pt	O grupo foi  adicionado
 group has been deleted	common	pt	O grupo foi eliminado
 group has been updated	common	pt	O grupo foi actualizado
+group hierarchy	admin	pt	Hierarquia de grupos
 group list	admin	pt	Lista de grupos
 group manager	admin	pt	Manutenção de grupos
 group name	admin	pt	Nome do grupo
@@ -272,6 +273,7 @@ hostname or ip	admin	pt	Nome do host ou IP
 hour<br>(0-23)	admin	pt	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt	Os registos devem ser permanecer no registo de acessos quantos dias até serem eliminados (por omissão 90) ?
 how many minutes should an account or ip be blocked (default 1) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30) ?
+how should email addresses for new users be constructed?	admin	pt	Selecionar o formato de endereço de correio eletrónico predefinido para novas contas de utilizador
 icon	admin	pt	Ícone
 idle	admin	pt	Ocioso
 if different from email address	admin	pt	se for diferente do endereço de email
@@ -405,6 +407,7 @@ quota size in mbyte	admin	pt	Tamanho da quota em MBytes
 re-enter password	admin	pt	Re-insira a senha
 read this list of methods.	admin	pt	Ler esta lista de métodos
 register application hooks	admin	pt	Registar pontos de entrada de aplicações
+regular expression to find part to use as container	admin	pt	Expressão regular para encontrar a parte a utilizar como contentor
 remove	admin	pt	Remover
 required pear class mail/mimedecode.php not found.	admin	pt	Classe PEAR requeridos Correio/mimeDecode.php não encontrado.
 rows	admin	pt	Linhas
@@ -438,6 +441,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	pt	Exibir registo de acesso
 show current action	admin	pt	Exibir acção actual
 show error log	admin	pt	Exibir registo de erro
+show groups in container based on	admin	pt	Mostrar grupos no contentor com base em
 show phpinfo()	admin	pt	Exibir informação php()
 show session ip address	admin	pt	Exibir endereço IP da sessão
 sieve server hostname or ip address	admin	pt	Nome do servidor ou endereço IP do servidor Sieve
@@ -540,10 +544,8 @@ you must add at least 1 permission or group to this account	admin	pt	É necessá
 you must enter a group name.	admin	pt	É necessário atribuir um nome ao grupo
 you must enter a lastname	admin	pt	É necessário inserir um apelido
 you must enter a loginid	admin	pt	É necessário inserir um ID de acesso
-you must enter an application name and title.	admin	pt	É necessário atribuir um nome e título à aplicação
 you must enter an application name.	admin	pt	É necessário atribuir um nome à aplicação.
 you must enter an application title.	admin	pt	É necessário atribuir um título à aplicação.
-you must select a file type	admin	pt	É necessário seleccionar um tipo de ficheiro
 you will need to remove the subcategories before you can delete this category	admin	pt	É necessário remover as subcategorias para poder eliminar esta categoria !
 your name	admin	pt	O seu nome
 your session could not be verified.	admin	pt	A sua sessão expirou

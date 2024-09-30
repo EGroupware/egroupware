@@ -18,17 +18,17 @@ accepted	calendar	id	Diterima
 access denied to the calendar of %1 !!!	calendar	id	Akses ditolak untuk kalender dari %1!
 access to calendar of %1 denied!	calendar	id	Akses ke kalender %1 ditolak!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	id	Tindakan yang mengakibatkan notifikasi: Penambahan, Pembatalan, Penerimaan, Penolakan, ...
-actions	calendar	id	Tindakan
-actions...	calendar	id	Tindakan ...
 add alarm	calendar	id	Tambah alarm
 add appointments via shortened dialog or complete edit window	calendar	id	Menambahkan janji temu melalui dialog yang dipersingkat atau jendela edit lengkap
 add current view as favorite	calendar	id	Tambahkan tampilan saat ini sebagai favorit
 add new alarm	calendar	id	Tambahkan alarm baru
 add new event	calendar	id	Tambahkan janji temu baru
 add new participants or resource	calendar	id	Menambahkan peserta atau sumber daya baru
+add recurrence	calendar	id	Menambahkan pengulangan
 add timesheet entry	calendar	id	Tamba entri lembarwaktu
 added	calendar	id	Ditambahkan
 added by synchronization	calendar	id	Ditambahkan dengan sinkronisasi
+added recurrence on %1.	calendar	id	Menambahkan pengulangan pada %1.
 after	calendar	id	Setelah
 after %1	calendar	id	Setelah %1
 after current date	calendar	id	Setelah tanggal sekarang
@@ -40,7 +40,6 @@ alarm deleted	calendar	id	Alarm dibuang
 alarm for %1 at %2 in %3	calendar	id	Alarm untuk %1 pada %2 dalam %3
 alarm management	calendar	id	Pengelolaan alarm
 alarms	calendar	id	Alarm
-all categories	calendar	id	Semua kategori
 all day	calendar	id	Seharian
 all events	calendar	id	Semua kegiatan
 all exceptions are converted into single events.	calendar	id	Semua pengecualian diubah menjadi acara tunggal.
@@ -53,6 +52,7 @@ allow users to prevent change notifications ('do not notify')	calendar	id	Izinka
 always	calendar	id	Selalu
 always use full edit dialog	calendar	id	Selalu gunakan dialog edit lengkap
 always use the full edit dialog, not this little dialog	calendar	id	Selalu gunakan dialog edit lengkap, bukan dialog kecil ini
+apply changes to (future) exceptions too?	calendar	id	Menerapkan perubahan pada pengecualian (di masa mendatang) juga?
 apply the changes	calendar	id	Terapkan perubahan
 attention	calendar	id	Perhatian
 back half a month	calendar	id	Mundur setengah bulan
@@ -150,8 +150,8 @@ exception	calendar	id	Pengecualian
 exceptions	calendar	id	Pengecualian
 exclude weekend	calendar	id	Kecualikan Akhir Pekan
 existing links	calendar	id	Tautan yang ada
+explicit recurrences	calendar	id	Pengulangan eksplisit
 extended	calendar	id	Extended
-favorites	calendar	id	Favorit
 fieldseparator	calendar	id	Pemisah field
 filemanager	calendar	id	Manajer berkas
 filename	calendar	id	Nama berkas
@@ -213,6 +213,7 @@ location, start- and endtimes, ...	calendar	id	Lokasi, Waktu memulai dan berakhi
 mail all participants	calendar	id	Surati semua peserta
 manage mapping	calendar	id	Mengelola pemetaan
 maximum available quantity of %1 exceeded!	calendar	id	Jumlah maksimum yang tersedia sebesar %1 terlampaui!
+meeting request additional recurrence(s)	calendar	id	Rapat meminta pengulangan tambahan
 min days	calendar	id	Hari-hari minimum
 minimum number of users for showing day view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan hari sebagai konsolidasi.
 minimum number of users for showing week view as consolidated.	calendar	id	Jumlah minimum pengguna untuk menampilkan tampilan minggu sebagai konsolidasi.
@@ -251,8 +252,10 @@ one month	calendar	id	Satu bulan
 one week	calendar	id	Satu minggu
 one year	calendar	id	Satu tahun
 only group-events	calendar	id	Hanya kegiatan-kelompok
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	id	Hanya didukung oleh beberapa klien yang sepenuhnya patuh (misalnya dari Apple). Jika Anda harus memasukkan URL, kemungkinan besar URL tersebut tidak akan didukung!
 open todo's:	calendar	id	Buka ToDo:
 optional	calendar	id	Opsional
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	id	Jika tidak, perubahan pada judul, deskripsi, ... atau peserta baru tidak akan ditransfer ke pengecualian yang telah dibuat.
 output unit	calendar	id	Unit keluaran
 overlap holiday	calendar	id	Overlap holiday
 owner too	calendar	id	Termasuk Pemilik
@@ -263,6 +266,7 @@ people holiday	calendar	id	People holiday
 permission denied	calendar	id	Ijin Ditolak
 planner by category	calendar	id	Planner menurut kategori
 planner by user	calendar	id	Planner menurut pengguna
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	id	Harap diperhatikan: Pemeriksaan konflik tidak pernah dilakukan di masa lalu dan selalu dibatasi oleh horison pengulangan di atas.
 previous	calendar	id	Sebelumnya
 private event	calendar	id	Acara pribadi
 private only	calendar	id	Hanya Privat
@@ -290,7 +294,6 @@ saves the event ignoring the conflict	calendar	id	Simpan kegiatan - abaikan konf
 scheduling conflict	calendar	id	Penjadualan Konflik
 select a %1	calendar	id	Pilih %1
 select a time	calendar	id	Pilih waktu
-select an action	calendar	id	Pilih tindakan
 select multiple contacts for a further action	calendar	id	Pilih beberapa kontak untuk tindakan selanjutnya
 select resources	calendar	id	Pilih sumber daya
 select who should get the alarm	calendar	id	Pilih siapa saja yang akan menerima alarm
@@ -321,11 +324,13 @@ test import (show importable records <u>only</u> in browser)	calendar	id	Tes Imp
 the apple ical apps use this color to display events from this calendar.	calendar	id	Aplikasi Apple iCal menggunakan warna ini untuk menampilkan acara dari kalender ini.
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	id	Dokumen dapat berisi placeholder seperti {{%1}}, untuk diganti dengan data.
 the extern organizer changed the event!	calendar	id	Penyelenggara eksternal mengubah acara!
+the organizer changed the event!	calendar	id	Penyelenggara mengubah acara!
 the resource you selected is already overbooked:	calendar	id	Sumber daya yang anda pilih sudah dipesan:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	id	Pengirim "%1" BUKAN penyelenggara luar "%2", lanjutkan dengan hati-hati!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	id	Pengirim "%1" BUKAN peserta yang membalas "%2", lanjutkan dengan hati-hati!
 this day is shown as first day in the week or month view.	calendar	id	Hari tersebut akan ditampilkan sebagai hari pertama pada tampilann mingguan atau bulanan
 this entry is currently opened by %1!	calendar	id	Entri ini sedang dibuka oleh %1!
+this is a single recurrence of a recurring event.	calendar	id	Ini adalah pengulangan tunggal dari acara yang berulang.
 three month	calendar	id	Tiga bulan
 thu	calendar	id	Kam
 til	calendar	id	hingga
@@ -365,6 +370,7 @@ yearly planner	calendar	id	Planner Tahunan
 years	admin	id	tahun
 yearview	calendar	id	Tampilan Tahunan
 you are not allowed to book the resource selected:	calendar	id	Anda tidak dibolehkan memesan sumberdaya terpilih:
+you can only notify other users, not yourself!	calendar	id	Anda hanya dapat memberi tahu pengguna lain, bukan diri Anda sendiri!
 you have a meeting scheduled for %1	calendar	id	Anda dijadualkan rapat pada %1
 you have been uninvited from the meeting at %1	calendar	id	Anda batal diundang rapat pada %1
 your meeting scheduled for %1 has been canceled	calendar	id	Rapat anda yang dijadualkan pada %1 telah dibatalkan

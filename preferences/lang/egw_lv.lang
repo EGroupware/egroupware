@@ -34,14 +34,17 @@ how to update lists	preferences	lv	Kā atjaunināt sarakstus
 icon	preferences	lv	Ikona
 icons and text	preferences	lv	Ikonas un teksts
 icons only	preferences	lv	tikai ikonas
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	lv	Ja šī opcija ir iespējota, jūsu ievadītā parole tiks saglabāta un nodota citam serverim, kad pierakstīsieties, izmantojot SSO.
 in which country are you. this is used to set certain defaults for you.	preferences	lv	Kurā valstī tu atrodies? Tas tiek lietots, lai noteiktu tev nepieciešamos noklusējumus
 interface/template selection	preferences	lv	Saskarnes/Veidnes izvēle
 it sets content size (text only) according to selected size.	preferences	lv	Tā nosaka satura izmēru (tikai teksta) atbilstoši izvēlētajam izmēram.
 language	preferences	lv	Valoda
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	lv	Pieteikšanās, izmantojot SingleSignOn, nenodrošina paroles nodošanu pasta vai failu serveriem.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	lv	Padarīt lietojumprogrammu sarakstu ritināmu ar ritināšanas pogām uz augšu/uz leju (noderīgi lietotājiem, kas strādā ar peli bez ritināšanas ritenīša).
 max matches per page	preferences	lv	Maksimālo atbilstošo ierakstu skaits lapā
 max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku joslā
 no default	preferences	lv	Nav noklusējuma
+password stored	preferences	lv	Uzglabā paroli.
 please, select a new theme	preferences	lv	Lūdzu atzīmē jaunu tēmu
 popup with search	preferences	lv	Uzsākt ar meklēšanu
 re-enter your password	preferences	lv	Atkārto savu paroli
@@ -56,7 +59,9 @@ show navigation bar as	preferences	lv	Rādīt navigācijas joslu kā
 show number of current users	preferences	lv	Rādīt patreizējo lietotaju skaitu
 show text on navigation icons	preferences	lv	Rādīt tekstu uz navigācijas ikonām
 show_more_apps	common	lv	Rādīt vairāk aplikācijas
+singlesignon and passwords	preferences	lv	SingleSignOn un paroles
 small paragraph	preferences	lv	Mazs fonts
+store password retrievable for singlesignon	common	lv	Uzglabāt paroli, kas iegūstama vienotajam pierakstīšanās pakalpojumam SingleSignOn.
 text only	preferences	lv	Tikai teksts
 the two passwords are not the same	preferences	lv	Abas paroles nav vienādas
 theme (colors/fonts) selection	preferences	lv	Tēmas(krāsu/fontu) izvēle

@@ -23,12 +23,17 @@ how to update lists	preferences	et	Kuidas uuendada nimekirju
 icon	preferences	et	Ikoon
 icons and text	preferences	et	Ikoonid ja tekst
 icons only	preferences	et	ainult ikoonid
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	et	Kui see on lubatud, salvestatakse teie sisestatud parool ja edastatakse teistele serveritele, kui logite sisse SSO kaudu.
 it sets content size (text only) according to selected size.	preferences	et	See määrab sisu suuruse (ainult teksti) vastavalt valitud suurusele.
 language	preferences	et	Keel
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	et	SingleSignOn kaudu sisselogimine ei anna parooli edasi posti- või failiserverile.
 no default	preferences	et	Mitte vaikimisi
+password stored	preferences	et	Salasõna salvestatakse.
 re-enter your password	preferences	et	Sisesta parool uuesti
 set content size	preferences	et	Sisu suuruse määramine
 show_more_apps	common	et	Näita rohkem programme
+singlesignon and passwords	preferences	et	SingleSignOn ja paroolid
+store password retrievable for singlesignon	common	et	SingleSignOni jaoks taastatav salasõna salvestamine
 text only	preferences	et	Ainult tekst
 the old password is not correct	preferences	et	Vana parool pole õige
 the two passwords are not the same	preferences	et	Kaks parooli pole identsed

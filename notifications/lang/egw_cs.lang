@@ -2,6 +2,7 @@
 account:	notifications	cs	Účet:
 all possible notification backends	notifications	cs	Všechny dostupné backendy pro upozornění
 are you sure you want to delete all notifications?	notifications	cs	Opravdu chcete smazat všechna oznámení?
+automatic deleted notifications older than	admin	cs	Suppression automatique des notifications plus anciennes que
 browser	notifications	cs	Prohlížeč
 browser is starting.	notifications	cs	Spouští se prohlížeč.
 cancal settings?	notifications	cs	Zrušit nastavení?
@@ -65,6 +66,7 @@ more info	notifications	cs	Více informací
 notification	common	cs	Upozornění
 notifier	notifications	cs	Oznamovatel:
 notify me by	notifications	cs	Upozorni mě pomocí
+only used if no push server available!	admin	cs	Utilisé uniquement s'il n'y a pas de serveur push disponible !
 open notified entry	notifications	cs	otevřít oznámený záznam
 optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
 page not found, please check serveraddress.	notifications	cs	Stránka nebyla nalezena, zkontrolujte adresu serveru

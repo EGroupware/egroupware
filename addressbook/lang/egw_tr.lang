@@ -1,13 +1,8 @@
-%1 added	addressbook	tr	%1 eklendi
 %1 fields in %2 other organisation member(s) changed	addressbook	tr	2 diğer kuruluş üye(ler)indeki %1 alanları değişti.
-%1 records imported	addressbook	tr	%1 kayıt içe aktarıldı.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	tr	%1 kayıt okundu. Henüz içe aktarılmadı, %2geri%3'e gidebilir ve Test içe aktarma işaretini kaldırabilirsiniz.
 (e.g. 1969)	addressbook	tr	(ör. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	tr	<b>Hiçbir dönüştürme türü <none> bulunamadı.</b> Listeden bir dönüştürme türü seçin
 @-eval() is only availible to admins!!!	addressbook	tr	@-eval() sadece yöneticiler tarafından kullanılabilir!
 account repository	admin	tr	Hesaplar deposu
-accounts	addressbook	tr	Hesaplar
-actions	addressbook	tr	Eylemler
 add a contact to this organisation	addressbook	tr	Bu kuruluşa bir kişi ekleyin
 add a new contact	addressbook	tr	Yeni bir kişi ekleyin
 add a single entry by passing the fields.	addressbook	tr	Alanları geçerek tek bir giriş ekleyin
@@ -167,7 +162,6 @@ postal	common	tr	Posta
 pref	addressbook	tr	Ayar
 prefix	addressbook	tr	Önek
 public key	addressbook	tr	Genel Anahtar (Public Key)
-read a list of entries.	addressbook	tr	Bir girdi listesini oku.
 read a single entry by passing the id and fieldlist.	addressbook	tr	ID ve alan listesini tarayarak bir girdi oku.
 record access	addressbook	tr	Kayıt erişimi
 record owner	addressbook	tr	Sahibini kaydet
@@ -199,7 +193,7 @@ today is %1's birthday!	common	tr	Bugün %1'in doğum günü!
 tomorrow is %1's birthday.	common	tr	Yarın %1'in doğum günü.
 translation	addressbook	tr	Tercüme
 type	addressbook	tr	Tip
-unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	tr	"%1" hesap kimliğine dönüştürülemiyor. Sahip için eklenti ayarı (%2) kullanılıyor.
+unable to convert "%1" to account id.  using plugin setting (%2) for owner.	addressbook	tr	%1 hesap kimliğine dönüştürülemiyor. Sahip için eklenti ayarı (%2) kullanılıyor.
 unable to delete	addressbook	tr	Silinemiyor
 unable to import into %1, using %2	addressbook	tr	%2 kullanılarak %1 içine aktarılamıyor
 unknown type %1, imported as %2	addressbook	tr	Bilinmeyen tür %1, %2 olarak içe aktarıldı

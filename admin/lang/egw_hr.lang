@@ -1,6 +1,5 @@
 %1 not found or not executable !!!	admin	hr	%1 nisam našai ili nije izvršivo !!!
 (no subject)	admin	hr	(nema teme)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hr	(Radi instalacije novih aplikacija upotrijebite<br><a href="setup/" target="setup"></a> [Uređivanje aplikacija] !!!)
 account active	admin	hr	Arhiva korisničkih računa
 account has been created	common	hr	Korisnički račun je napravljen
 account has been deleted	common	hr	Korisnički račun je obrisan
@@ -63,7 +62,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	hr	Asinkrone uslug
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	hr	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	admin	hr	Authentication / Accounts
 auto create account records for authenticated users	admin	hr	Automatsko stvaranje arhive korisničkih računa za autorizirane korisnike
-back to the list	admin	hr	Povratak na listu
 bi-dir passthrough	admin	hr	bi-dir passthrough
 bi-directional	admin	hr	bi-directional
 bottom	admin	hr	dno
@@ -132,10 +130,6 @@ disable "auto completion" of the login form	admin	hr	Disable "auto completion" o
 disabled (not recomended)	admin	hr	onemogućeno (nije preporučeno)
 display	admin	hr	Prikaz
 do not delete the category and return back to the list	admin	hr	NE obriši kategoriju i vrati se na listu
-do you also want to delete all global subcategories ?	admin	hr	Želite li obrisati i sve globalne podkategorije ?
-do you really want to delete this profile	admin	hr	Do you really want to delete this Profile
-do you want to delete all global subcategories ?	admin	hr	Želite li obrisati i sve globalne podkategorije ?
-do you want to move all global subcategories one level down ?	admin	hr	Želite li pomaknuti sve globalne podkategorije za jedan nivo prema dolje ?
 domainname	admin	hr	domainname
 down	admin	hr	dolje
 edit account	admin	hr	Uredi korisnički račun
@@ -442,9 +436,7 @@ you must add at least 1 permission or group to this account	admin	hr	You must ad
 you must enter a group name.	admin	hr	Morate unijeti ime grupe.
 you must enter a lastname	admin	hr	Morate unijeti prezime.
 you must enter a loginid	admin	hr	You must enter a loginid
-you must enter an application name and title.	admin	hr	Morate unijeti ime i naslov aplikacije.
 you must enter an application name.	admin	hr	Morate unijeti ime aplikacije.
 you must enter an application title.	admin	hr	Morate unijeti naslov aplikacije.
-you must select a file type	admin	hr	Morate izabrati vrstu datoteke.
 you will need to remove the subcategories before you can delete this category	admin	hr	Morate obrisati sve podkategorije prije noego što obrišete ovu kategoriju !
 your session could not be verified.	admin	hr	Vašu sesiju nije moguće potvrditi.

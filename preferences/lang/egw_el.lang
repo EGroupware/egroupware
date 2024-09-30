@@ -16,9 +16,14 @@ how to update lists	preferences	el	Πώς να ενημερώσετε λίστε
 icon	preferences	el	Εικόνα
 icons and text	preferences	el	Εικόνες και κείμενο
 icons only	preferences	el	Μόνο εικόνες
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	el	Εάν είναι ενεργοποιημένο, ο κωδικός πρόσβασης που έχετε εισαγάγει θα αποθηκευτεί και θα μεταβιβαστεί σε άλλο διακομιστή, όταν συνδέεστε μέσω SSO.
 it sets content size (text only) according to selected size.	preferences	el	Ορίζει το μέγεθος του περιεχομένου (μόνο κείμενο) σύμφωνα με το επιλεγμένο μέγεθος.
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	el	Η σύνδεση μέσω SingleSignOn δεν παρέχει κωδικό πρόσβασης για να τον μεταβιβάσετε σε διακομιστές αλληλογραφίας ή αρχείων.
+password stored	preferences	el	Ο κωδικός πρόσβασης αποθηκεύεται.
 selectbox	preferences	el	Κουτί επιλογής
 set content size	preferences	el	Ορισμός μεγέθους περιεχομένου
+singlesignon and passwords	preferences	el	SingleSignOn και κωδικοί πρόσβασης
+store password retrievable for singlesignon	common	el	Αποθήκευση κωδικού πρόσβασης με δυνατότητα ανάκτησης για SingleSignOn
 text only	preferences	el	Μόνο κείμενο
 the two passwords are not the same	preferences	el	Τα δυο συνθηματικά δέν είναι ίδια
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.

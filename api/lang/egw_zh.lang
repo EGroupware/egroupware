@@ -2,12 +2,9 @@
 %1 email addresses inserted	common	zh	已插入%1个电子邮件地址
 %1 email(s) added into %2	common	zh	%1 电子邮件已添加到 %2 中
 %1 etemplates deleted	common	zh	%1 个模板已删除
-%1 etemplates for application '%2' dumped to '%3'	common	zh	%1 个模板为应用程序 '%2' 转储到 '%3'
 %1 etemplates found	common	zh	找到 %1 个模板
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
-%1 matches on search criteria	common	zh	有 %1 条符合搜索条件的资料
 %1 more %2 selected ...	common	zh	选择了 %1 更多 %2 ...
-%1 new etemplates imported for application '%2'	common	zh	导入 %1 条应用程序 '%2' 的模板
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br>或使得 Web 服务器可以写入%3。
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1EGroupware%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
 %s disabled	common	zh	%s 已禁用
@@ -16,11 +13,14 @@
 %s onchange	common	zh	%s onChange
 %s readonly	common	zh	%s 只读
 '%1' copied to clipboard	common	zh	'%1'被复制到剪贴板
+'%1' does not match the required pattern '%2'	common	zh	'%1'与所需模式（'%2'）不匹配
 '%1' has an invalid format !!!	common	zh	'%1' 格式错误！
+'%1' is not a valid app-name ('%2')!	common	zh	'%1'不是有效的应用程序名称（'%2'）！
 '%1' is not a valid date !!!	common	zh	'%1'不是有效的日期！
 '%1' is not a valid floatingpoint number !!!	common	zh	'%1' 不是正确的浮点数！
 '%1' is not a valid integer !!!	common	zh	'%1' 不是正确的整数！
 '%1' is not a valid json file!	common	zh	%1 "不是有效的 JSON 文件
+'%1' must not contain (back)slashes!	common	zh	'%1'不得包含（反）斜线！
 00 (disable)	admin	zh	00 (禁用)
 1 day	common	zh	1 天
 1 hour	common	zh	1 小时
@@ -203,6 +203,7 @@ central african republic	common	zh	中非共和国
 chad	common	zh	乍得湖
 change	common	zh	更改
 changed	common	zh	已更改
+changes that you made may not be saved.	common	zh	您所做的更改可能无法保存。
 charset	common	zh	字符集
 check all	common	zh	全选
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	zh	检查 IF 语句中的空值。示例 {{IF url~EMPTY~~Website:}} - 如果 url 不为空，则写入 "网站："
@@ -806,6 +807,7 @@ open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口·
 open sidebox	common	zh	打开侧边栏
 open the online help.	common	zh	开启在线帮助
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	zh	OpenIDConnect 登录成功，但 EGroupware 中不存在用户 '%1'，而且用户自动创建功能被禁用！
 operator	common	zh	操作符
 optional note about the link	common	zh	可选的关于链接的注释
 options	common	zh	选项
@@ -890,14 +892,12 @@ private	common	zh	私有条目
 programs	common	zh	程序
 project	common	zh	项目
 properties	common	zh	属性
-protocol is required	common	zh	需要协议
 public	common	zh	所有已授权者皆可访问
 puerto rico	common	zh	波多黎各
 qatar	common	zh	卡塔尔
 quick add	common	zh	快速添加
 radiobutton	common	zh	单选按钮
 read	common	zh	读取
-read a list of entries.	common	zh	读取条目列表。
 read a single entry by passing the id and fieldlist.	common	zh	通过ID和字段列表读取一单项条目。
 read etemplate from database (for the keys above)	common	zh	从数据库读取模板 (通过以上键值)
 read this list of methods.	common	zh	读取方法列表
@@ -1024,19 +1024,17 @@ show	common	zh	显示
 show (no save)	common	zh	显示 (不保存)
 show all	common	zh	全部显示
 show all categorys	common	zh	显示所有类别
-show logo's on the desktop.	common	zh	在桌面显示标示。
-show menu	common	zh	显示菜单
 show page generation time	common	zh	显示页面的生成耗时
 show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间。
 show page generation time?	common	zh	显示页面的生成耗时
 show password	common	zh	显示密码
 show values	common	zh	显示数值
-show_more_apps	common	zh	show_more_apps
 showing	common	zh	显示
 showing %1	common	zh	共有%1项
 showing %1 - %2 of %3	common	zh	显示%3的%1 - %2
 shows / allows you to enter values into the etemplate for testing	common	zh	显示/允许您输入用于测试的数值到模板中
 shows/displays etemplate for testing, does not save it before	common	zh	为测试显示/展示模板，在之前不保存
+show_more_apps	common	zh	show_more_apps
 sierra leone	common	zh	塞拉利昂
 sign up	common	zh	注册
 simple	common	zh	精简
@@ -1187,7 +1185,6 @@ wednesday	common	zh	星期三
 weekend	common	zh	周末
 welcome	common	zh	欢迎
 western sahara	common	zh	西撒哈拉
-what color should all the blank space on the desktop have	common	zh	桌面空白区域的颜色？
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	zh	发生内容超出：显示(默认)，隐藏，卷动，自动(由浏览器决定)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh	如果选择“是”，“首页”和“注销”图标将显示在应用程序工具条中。
 where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 EGroupware、关于及注销的链接。
@@ -1216,7 +1213,6 @@ yemen	common	zh	也门
 yes	common	zh	是
 yes - delete	common	zh	是
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
-you can customize how many icons and toolbars the editor shows.	common	zh	您可以通过选项来定制编辑器显示多少个图标与工具栏。
 you can respond by visiting:	common	zh	查看访问：
 you have been successfully logged out	login	zh	注销成功。
 you have not entered a title	common	zh	必须输入标题。

@@ -22,10 +22,7 @@
 %1 token %2.	admin	pt-br	%1 token %2.
 %1 user %2	admin	pt-br	%1 usuário %2
 (de)activate mail accounts	admin	pt-br	(Des)Ativar contas de e-mail
-(default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim se você não o usa)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	pt-br	(a classe imap deve oferecer suporte a esse recurso consultando o valor de configuração correspondente e passando-o como cota padrão para o servidor IMAP)
 (no subject)	admin	pt-br	(sem assunto)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos]!)
 -  type	admin	pt-br	- tipo
 1 year	admin	pt-br	1 ano
 2 month	admin	pt-br	2 meses
@@ -90,6 +87,7 @@ all records and account information will be lost!	admin	pt-br	Todos registros e 
 all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
 allow remote administration from following install id's (comma separated)	admin	pt-br	Permitir administração remota dos seguintes IDs (separados por vírgulas).
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	pt-br	Permitir que o usuário armazene sua senha em “Security & Passwords” para SingleSignOn.
 alternate email address	admin	pt-br	Endereço de e-mail alternativo
 and logged in	admin	pt-br	e registrada no
 anonymous user	admin	pt-br	Usuário Anônimo
@@ -128,9 +126,6 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	pt-br	Autenticação / Contas
 auto create account records for authenticated users	admin	pt-br	Automaticamente criar registros de conta para usuários autenticados.
 available placeholders	admin	pt-br	Espaços reservados disponíveis
-back to admin/grouplist	admin	pt-br	Voltar para Administração/Lista de Grupos
-back to admin/userlist	admin	pt-br	Voltar para Administração/Lista de Usuários
-back to the list	admin	pt-br	Voltar à lista
 backup directory %1 mounted as %2	admin	pt-br	Diretório de backup %1 montado como %2
 bad login name or password.	admin	pt-br	Nome de usuário ou senha inválido(s).
 bad or malformed request. server responded: %s	admin	pt-br	Solicitação inválida. Resposta do servidor: %s
@@ -142,9 +137,7 @@ bottom	admin	pt-br	Inferior
 bulk changes	admin	pt-br	Alterações em massa
 bulk password reset	admin	pt-br	Redefinição de senha em massa
 calculate next run	admin	pt-br	Calcular próxima execução
-can be used by application	admin	pt-br	Pode ser usado pela aplicação
-can be used by group	admin	pt-br	Pode ser usado pelo grupo
-can be used by user	admin	pt-br	Pode ser usado pelo usuário
+can be used to show groups by container, if enabled	admin	pt-br	Pode ser usado para mostrar grupos por contêiner, se ativado
 can change password	admin	pt-br	Permite alterar a senha
 cancel changes	admin	pt-br	Cancelar alterações
 cancel testjob!	admin	pt-br	Cancelar trabalhos de teste!
@@ -157,6 +150,7 @@ category saved.	admin	pt-br	Categoria salva.
 certificate	admin	pt-br	Certificado
 certificate details	admin	pt-br	Detalhes do certificado
 certificate validation in days	admin	pt-br	Validação do certificado em dias
+change access	admin	pt-br	Alterar direitos de acesso
 change account_id	admin	pt-br	Alterar ID da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
@@ -169,6 +163,7 @@ click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
 command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
 connection dropped by imap server.	admin	pt-br	Conexão interrompida pelo servidor IMAP.
+container	admin	pt-br	Contêiner
 continue	admin	pt-br	Continuar
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Caminho do cookie. Permite várias sessões do EGroupware com diretórios diferentes.
@@ -246,12 +241,6 @@ displayed length of input field (set rows=1 to limit length)	admin	pt-br	Comprim
 displaying html messages is disabled	admin	pt-br	exibir mensagens em HTML é desativada
 displaying plain messages is disabled	admin	pt-br	exibição de mensagens simples é desativado
 do not delete the category and return back to the list	admin	pt-br	NÃO remova essa categoria e retorne à lista
-do not validate certificate	admin	pt-br	Não validar certificado
-do you also want to delete all global subcategories ?	admin	pt-br	Deseja também remover todas subcategorias globais?
-do you really want to delete this profile	admin	pt-br	Tem certeza que deseja remover esse perfil?
-do you really want to reset the filter for the profile listing	admin	pt-br	Tem certeza que deseja reiniciar o filtro para a listagem do perfil?
-do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais?
-do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
 document root (default)	admin	pt-br	Pasta raiz (padrão)
 domainname	admin	pt-br	Nome do domínio
 down	admin	pt-br	Baixo
@@ -355,6 +344,7 @@ group csv import	admin	pt-br	Importação de CSV de grupo
 group has been added	common	pt-br	Grupo adicionado.
 group has been deleted	common	pt-br	Grupo removido.
 group has been updated	common	pt-br	Grupo atualizado.
+group hierarchy	admin	pt-br	Hierarquia de grupos
 group list	admin	pt-br	Lista de Grupos
 group manager	admin	pt-br	Manutenção de Grupos
 group name	admin	pt-br	Nome do Grupo
@@ -532,6 +522,7 @@ quota size in mbyte	admin	pt-br	Tamanho da cota em MByte
 re-enter password	admin	pt-br	Redigite a senha
 read this list of methods.	admin	pt-br	Ler esta lista de métodos.
 register application hooks	admin	pt-br	Registrar configurações das aplicações
+regular expression to find part to use as container	admin	pt-br	Expressão regular para encontrar a parte a ser usada como contêiner
 relay access checked	admin	pt-br	Acesso Relé verificado
 remote administration instances	admin	pt-br	Instâncias de administração remotas
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	pt-br	Administração remota deve ser habilitada na instância remoda em Administrador > Configuração do Servidor!
@@ -576,6 +567,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	pt-br	Exibir registros de acessos
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
+show groups in container based on	admin	pt-br	Mostrar grupos no contêiner com base em
 show phpinfo()	admin	pt-br	Exibir phpinfo()
 show session ip address	admin	pt-br	Exibir endereço IP das sessões
 sieve server hostname or ip address	admin	pt-br	Nome ou endereço IP do servidor Sieve
@@ -710,13 +702,10 @@ you must add at least 1 permission or group to this account	admin	pt-br	Você de
 you must enter a group name.	admin	pt-br	Você deve digitar um nome de grupo.
 you must enter a lastname	admin	pt-br	Você deve digitar um sobrenome.
 you must enter a loginid	admin	pt-br	Você deve digitar um código.
-you must enter an application name and title.	admin	pt-br	Você deve digitar um nome e um título para aplicação.
 you must enter an application name.	admin	pt-br	Você deve digitar um nome para a aplicação.
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
-you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo.
 you must select at least one group member.	admin	pt-br	Você deve selecionar ao menos um membro.
 you need to enter install id and password!	admin	pt-br	Você deve informar um ID de instalação E senha!
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria!
-your message to  %1 was displayed.	admin	pt-br	A sua mensagem para %1 foi exibido.
 your name	admin	pt-br	Seu nome
 your session could not be verified.	admin	pt-br	Sua sessão não pôde ser verificada.

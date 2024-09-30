@@ -1,8 +1,6 @@
 %1 acl records of not (longer) existing accounts deleted.	admin	fa	%1 اطلاعات حقوق دسترسی حسابهائی که دیگر موجود نیستند حذف شد
 %1 not found or not executable !!!	admin	fa	%1 یافت نشد یا اجرائی نبود !!!
-(default no, leave it off if you dont use it)	admin	fa	پیش فرض نه است. خالی بگذارید اگر استفاده نمی کنید
 (no subject)	admin	fa	(بدون عنوان)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fa	برای برپا سازی کاربردهای جدید از <br><a href="setup/" target="setup">برپاسازی</a> استفاده کنید. [مدیریت کاربردها]
 -  type	admin	fa	نوع -
 account active	admin	fa	حساب فعال
 account has been created	common	fa	حساب ساخته شد
@@ -72,12 +70,9 @@ asyncservices not yet installed or other error (%1) !!!	admin	fa	خدمات نا
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fa	تلاش برای استفاده از نوع مایم صحیح برای FTP بجای نوع پیش فرض 'application/octet-stream'
 authentication / accounts	admin	fa	تصدیق/حسابها
 auto create account records for authenticated users	admin	fa	ایجاد خودکار اطلاعات حساب کاربری برای کاربران تصدیق شده
-back to the list	admin	fa	بازگشت به فهرست
 bi-directional	admin	fa	دوجهته
 bottom	admin	fa	پائین
 calculate next run	admin	fa	اجرای بعدی محاسبه شود
-can be used by application	admin	fa	استفاده شود توسط کاربرد
-can be used by group	admin	fa	استفاده شود توسط گروه
 can change password	admin	fa	توانائی تغییر گذرواژه
 cancel testjob!	admin	fa	لغو کارآزمایشی!
 categories list	admin	fa	فهرست دسته ها
@@ -143,10 +138,6 @@ disable "auto completion" of the login form	admin	fa	غیرفعال کردن ت�
 disabled (not recomended)	admin	fa	غیر فعال (پیشنهاد نمی شود)
 display	admin	fa	نمایش
 do not delete the category and return back to the list	admin	fa	دسته را حذف نکن و به فهرست برگرد
-do you also want to delete all global subcategories ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را حذف کنید؟
-do you really want to delete this profile	admin	fa	آیا واقعا می خواهید این مجموعه تنظیمات را حذف کنید؟
-do you want to delete all global subcategories ?	admin	fa	آیا میخواهید همه زیر دسته های عمومی را هم حذف کنید؟
-do you want to move all global subcategories one level down ?	admin	fa	آیا میخواهید که همه زیر دسته های عمومی را تا یک سطح پایینترحذف کنید؟
 domainname	admin	fa	نام حوزه
 down	admin	fa	پائین
 edit account	admin	fa	ویراستن حساب
@@ -451,9 +442,7 @@ you must add at least 1 permission or group to this account	admin	fa	شما با
 you must enter a group name.	admin	fa	شما باید یک نام گروه وارد کنید
 you must enter a lastname	admin	fa	شما باید یک نام خانوادگی وارد کنید
 you must enter a loginid	admin	fa	شما باید یک شناسه کاربری وارد کنید
-you must enter an application name and title.	admin	fa	شما باید یک نام کاربرد و عنوان وارد کنید
 you must enter an application name.	admin	fa	شما باید یک نام کاربرد وارد کنید
 you must enter an application title.	admin	fa	شما باید یک عنوان کاربرد وارد کنید
-you must select a file type	admin	fa	شما باید یک نوع پرونده انتخاب کنید
 you will need to remove the subcategories before you can delete this category	admin	fa	شما باید قبل از حذف این دسته، زیر مجموعه ها را حذف کنید!
 your name	admin	fa	نام شما

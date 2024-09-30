@@ -134,6 +134,8 @@ dependency failure	setup	lv	Atkarības neizdošanās
 deregistered	setup	lv	Atreģistrēts
 details for admin account	setup	lv	Administratora konta info
 did not find any valid db support!	setup	lv	Neatrada nevienu derīgu DB atbalstu!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	lv	Izslēgt tikai tad, ja jūsu AD ir problēmas ar VLV kontroli UN var atgriezt visus lietotājus vienā vaicājumā!
+disable vlv controls	setup	lv	Izslēgt VLV kontroli
 do you want persistent connections (higher performance, but consumes more resources)	setup	lv	Vai vēlies pastāvīgus pieslēgumus (augstāks sniegums, bet izlieto vairāk resursu)
 do you want to manage homedirectory and loginshell attributes?	setup	lv	Vai tu vēlies pārvaldīt mājasdirektoriju un pieteikuma loga atribūtus?
 does not exist	setup	lv	Neeksistē
@@ -244,7 +246,6 @@ modifications have been completed!	setup	lv	Modifikācijas pabeigtas!
 modified	setup	lv	Pārveidots
 modify	setup	lv	Modificēt
 month	setup	lv	Mēnesis
-multi-language support setup	setup	lv	Daudzvalodu atbalsta iestatīšana
 name of database	setup	lv	Datubāzes nosaukums
 name of db user egroupware uses to connect	setup	lv	DB lietotāja vārds, ko EGroupware lieto, lai pieslēgtos
 never	setup	lv	Nekad
@@ -268,6 +269,7 @@ one month	setup	lv	Viens mēnesis
 one week	setup	lv	Viena nedēļa
 only add languages that are not in the database already	setup	lv	Pievieno tikai tās valodas, kuras nav datubāzē
 only add new phrases	setup	lv	Pievieno tikai jaunas frāzes
+openidconnect login	setup	lv	OpenIDConnect Pieteikšanās
 optional, if only authentication and anonymous search is enabled	setup	lv	nav obligāti, ja ir iespējota tikai autentifikācija UN anonīmā meklēšana.
 or	setup	lv	vai
 or %1continue to the header admin%2	setup	lv	vai %1Turpināt ar Galvenes administratoru

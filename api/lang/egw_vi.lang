@@ -27,7 +27,6 @@ albania	common	vi	ALBANIA
 algeria	common	vi	ALGERIA
 all	common	vi	T&#7845;t c&#7843;
 all fields	common	vi	t&#7845;t c&#7843; các tr&#432;&#7901;ng
-alphabet	common	vi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	vi	Style-sheet thay th&#7871;:
 american samoa	common	vi	AMERICAN SAMOA
 and	common	vi	V&#224;
@@ -47,8 +46,6 @@ august	common	vi	Tháng Tám
 australia	common	vi	AUSTRALIA
 austria	common	vi	AUSTRIA
 author	common	vi	Tác gi&#7843;
-autohide sidebox menus	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
-automatically hide the sidebox menus?	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
 autosave default category	common	vi	T&#7921; &#273;&#7897;ng l&#432;u nhóm m&#7863;c &#273;&#7883;nh
 azerbaijan	common	vi	AZERBAIJAN
 back	common	vi	Quay tr&#7903; l&#7841;i
@@ -104,8 +101,6 @@ christmas island	common	vi	CHRISTMAS ISLAND
 clear	common	vi	Xóa
 clear form	common	vi	Xóa bi&#7875;u m&#7851;u
 click	common	vi	Click
-click or mouse over to show menus	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu
-click or mouse over to show menus?	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu ?
 close	common	vi	&#272;óng
 cocos (keeling) islands	common	vi	COCOS (KEELING) ISLANDS
 colombia	common	vi	COLOMBIA
@@ -124,22 +119,21 @@ cuba	common	vi	CUBA
 currency	common	vi	Lo&#7841;i ti&#7873;n
 current	common	vi	Hi&#7879;n hành
 current users	common	vi	Các ng&#432;&#7901;i s&#7917; d&#7909;ng hi&#7879;n hành
+custom fields	common	vi	Các tr&#432;&#7901;ng t&#7921; t&#7841;o
 cyprus	common	vi	CYPRUS
 czech republic	common	vi	CZECH REPUBLIC
 date	common	vi	Ngày
 date due	common	vi	Ngày &#273;&#7871;n h&#7841;n
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
+days	common	vi	ngày
 december	common	vi	Tháng M&#432;&#7901;i Hai
 default category	common	vi	Nhóm m&#7863;c &#273;&#7883;nh
 delete	common	vi	Xóa
+delete a single entry by passing the id.	common	vi	Xóa 1 m&#7909;c b&#7857;ng cách truy&#7873;n id.
 denmark	common	vi	DENMARK
 description	common	vi	Di&#7877;n gi&#7843;i
 detail	common	vi	Chi ti&#7871;t
 details	common	vi	Các kho&#7843;n chi ti&#7871;t
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	vi	T&#7855;t vi&#7879;c th&#7921;c thi các &#273;o&#7841;n script s&#7917;a l&#7895;i c&#7911;a trình duy&#7879;t Internet Explorer 5.5 và các phiên b&#7843;n cao h&#417;n &#273;&#7875; hi&#7875;n th&#7883; &#273;&#432;&#7907;c các &#7843;nh d&#7841;ng PNG ?
-disable internet explorer png-image-bugfix	common	vi	T&#7855;t ch&#7913;c n&#259;ng s&#7917;a l&#7895;i &#7843;nh png c&#7911;a Internet Explorer
-disable slider effects	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t các menu trong trang? Các ng&#432;&#7901;i s&#7917; d&#7909;ng trình duy&#7879;t Opera và Konqueror h&#7847;u nh&#432; c&#7847;n làm nh&#432; v&#7847;y.
 disabled	common	vi	&#272;ã t&#7855;t
 djibouti	common	vi	DJIBOUTI
 do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n xóa luôn các nhóm con ph&#7843;i không ?
@@ -153,6 +147,7 @@ dominica	common	vi	DOMINICA
 dominican republic	common	vi	DOMINICAN REPUBLIC
 done	common	vi	&#272;ã xong
 download	common	vi	T&#7843;i v&#7873;
+duration	common	vi	Th&#7901;i gian
 e-mail	common	vi	E-Mail
 east timor	common	vi	EAST TIMOR
 ecuador	common	vi	ECUADOR
@@ -239,11 +234,14 @@ highest	common	vi	Cao nh&#7845;t
 holy see (vatican city state)	common	vi	HOLY SEE (VATICAN CITY STATE)
 home	common	vi	Trang ch&#7911;
 home email	common	vi	email riêng
+home screen	common	vi	Màn hình chính
 honduras	common	vi	HONDURAS
 hong kong	common	vi	HONG KONG
+hours	common	vi	gi&#7901;
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	vi	Nên có bao nhiêu bi&#7875;u t&#432;&#7907;ng hi&#7875;n th&#7883; &#7903; menu ngang (&#273;&#7847;u trang). Các bi&#7875;u t&#432;&#7907;ng n&#7857;m sau không &#273;&#7911; ch&#7895; hi&#7875;n th&#7883; trên menu ngang s&#7869; &#273;&#432;&#7907;c d&#7891;n xu&#7889;ng menu d&#7885;c n&#7857;m bên ph&#7843;i. Menu này có th&#7875; &#273;&#432;&#7907;c kích ho&#7841;t b&#7857;ng bi&#7875;u t&#432;&#7907;ng n&#7857;m &#7903; c&#7841;nh ph&#7843;i c&#7911;a menu ngang.
 hungary	common	vi	HUNGARY
 iceland	common	vi	ICELAND
+import	common	vi	Nh&#7853;p
 india	common	vi	INDIA
 indonesia	common	vi	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	vi	Chèn t&#7845;t c&#7843; %1 các &#273;&#7883;a ch&#7881; c&#7911;a %2 các thông tin liên h&#7879; trong %3
@@ -279,6 +277,7 @@ kuwait	common	vi	KUWAIT
 kyrgyzstan	common	vi	KYRGYZSTAN
 language	common	vi	Ngôn ng&#7919;
 lao peoples democratic republic	common	vi	LAO PEOPLES DEMOCRATIC REPUBLIC
+last	common	vi	cu&#7889;i
 last name	common	vi	H&#7885;
 last name of the user, eg. "%1"	common	vi	h&#7885; c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng,ví d&#7909;: "%1"
 last page	common	vi	Trang cu&#7889;i
@@ -290,6 +289,7 @@ liberia	common	vi	LIBERIA
 libyan arab jamahiriya	common	vi	LIBYAN ARAB JAMAHIRIYA
 license	common	vi	C&#7845;p phép
 liechtenstein	common	vi	LIECHTENSTEIN
+link	common	vi	Liên k&#7871;t
 list	common	vi	Danh sách
 list members	common	vi	Li&#7879;t kê các thành viên
 lithuania	common	vi	LITHUANIA
@@ -305,7 +305,6 @@ macedonia, the former yugoslav republic of	common	vi	MACEDONIA, THE FORMER YUGOS
 madagascar	common	vi	MADAGASCAR
 mail domain, eg. "%1"	common	vi	mail domain, eg. "%1"
 main category	common	vi	Nhóm chính
-home screen	common	vi	Màn hình chính
 maintainer	common	vi	Ng&#432;&#7901;i duy trì
 malawi	common	vi	MALAWI
 malaysia	common	vi	MALAYSIA
@@ -317,7 +316,6 @@ marshall islands	common	vi	MARSHALL ISLANDS
 martinique	common	vi	MARTINIQUE
 mauritania	common	vi	MAURITANIA
 mauritius	common	vi	MAURITIUS
-max number of icons in navbar	common	vi	S&#7889; l&#432;&#7907;ng nhi&#7873;u nh&#7845;t các bi&#7875;u t&#432;&#7907;ng trên menu ngang
 may	common	vi	Tháng N&#259;m
 mayotte	common	vi	MAYOTTE
 medium	common	vi	Trung bình
@@ -325,10 +323,12 @@ menu	common	vi	Menu
 message	common	vi	Tin nh&#7855;n
 mexico	common	vi	MEXICO
 micronesia, federated states of	common	vi	MICRONESIA, FEDERATED STATES OF
+minutes	common	vi	phút
 moldova, republic of	common	vi	MOLDOVA, REPUBLIC OF
 monaco	common	vi	MONACO
 monday	common	vi	Th&#7913; Hai
 mongolia	common	vi	MONGOLIA
+month	common	vi	Tháng
 montserrat	common	vi	MONTSERRAT
 morocco	common	vi	MOROCCO
 mozambique	common	vi	MOZAMBIQUE
@@ -355,6 +355,7 @@ niue	common	vi	NIUE
 no	common	vi	Không
 no entries found, try again ...	common	vi	không có m&#7909;c nào &#273;&#432;&#7907;c tìm th&#7845;y, th&#7917; l&#7841;i l&#7847;n n&#7919;a ...
 no history for this record	common	vi	Không có nh&#7853;t ký c&#7911;a m&#7849;u tin này
+no matches found	common	vi	Không tìm th&#7845;y
 no subject	common	vi	Không có ch&#7911; &#273;&#7873;
 none	common	vi	Không
 norfolk island	common	vi	NORFOLK ISLAND
@@ -421,10 +422,13 @@ public	common	vi	chung
 puerto rico	common	vi	PUERTO RICO
 qatar	common	vi	QATAR
 read	common	vi	&#272;&#7885;c
+read a single entry by passing the id and fieldlist.	common	vi	Li&#7879;t kê m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n id và fieldlist
 read this list of methods.	common	vi	Li&#7879;t kê các ph&#432;&#417;ng th&#7913;c
+refresh	common	vi	N&#7841;p l&#7841;i
 reject	common	vi	T&#7915; ch&#7889;i
 remove selected accounts	common	vi	xóa các tài kho&#7843;n &#273;ã ch&#7885;n
 rename	common	vi	&#272;&#7893;i tên
+reset	common	vi	Thi&#7871;t l&#7853;p l&#7841;i
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	vi	Tr&#7843; v&#7873; m&#7897;t danh sách &#273;&#7847;y &#273;&#7911; các tài kho&#7843;n trong h&#7879; th&#7889;ng. C&#7843;nh báo: K&#7871;t qu&#7843; tr&#7843; v&#7873; có th&#7875; r&#7845;t l&#7899;n
 returns an array of todo items	common	vi	Tr&#7843; v&#7873; m&#7897;t m&#7843;ng các công vi&#7879;c c&#7847;n làm
 returns struct of users application access	common	vi	Tr&#7843; v&#7873; k&#7871;t c&#7845;u truy c&#7853;p &#7913;ng d&#7909;ng c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
@@ -468,12 +472,11 @@ setup main menu	common	vi	Menu chính c&#7911;a cài &#273;&#7863;t
 seychelles	common	vi	SEYCHELLES
 show all	common	vi	hi&#7879;n t&#7845;t c&#7843;
 show all categorys	common	vi	Hi&#7879;n t&#7845;t c&#7843; các nhóm
-show menu	common	vi	hi&#7879;n menu
 show page generation time	common	vi	Hi&#7879;n th&#7901;i gian sinh trang
 show page generation time on the bottom of the page?	common	vi	Hi&#7879;n th&#7901;i gian sinh trang &#7903; cu&#7889;i trang
-show_more_apps	common	vi	hi&#7879;n_thêm_các &#7913;ng d&#7909;ng
 showing %1	common	vi	&#273;ang hi&#7879;n %1
 showing %1 - %2 of %3	common	vi	&#273;ang hi&#7879;n %1 - %2 of %3
+show_more_apps	common	vi	hi&#7879;n_thêm_các &#7913;ng d&#7909;ng
 sierra leone	common	vi	SIERRA LEONE
 singapore	common	vi	SINGAPORE
 slovakia	common	vi	SLOVAKIA
@@ -503,6 +506,7 @@ syrian arab republic	common	vi	SYRIAN ARAB REPUBLIC
 taiwan	common	vi	TAIWAN/TAIPEI
 tajikistan	common	vi	TAJIKISTAN
 tanzania, united republic of	common	vi	TANZANIA, UNITED REPUBLIC OF
+text	common	vi	Ph&#7847;n ghi
 text color:	common	vi	Màu ch&#7919; v&#259;n b&#7843;n:
 thailand	common	vi	THAILAND
 the following applications require upgrades	common	vi	Các &#7913;ng d&#7909;ng sau c&#7847;n &#273;&#432;&#7907;c nâng c&#7845;p
@@ -538,6 +542,7 @@ united states	common	vi	UNITED STATES
 united states minor outlying islands	common	vi	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	vi	Ch&#432;a bi&#7871;t
 update	common	vi	C&#7853;p nh&#7853;t
+update a single entry by passing the fields.	common	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n các tr&#432;&#7901;ng
 url	common	vi	URL
 uruguay	common	vi	URUGUAY
 use button to search for	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m
@@ -585,21 +590,3 @@ your search returned 1 match	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b
 your settings have been updated	common	vi	Các thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
 zambia	common	vi	ZAMBIA
 zimbabwe	common	vi	ZIMBABWE
-and	common	vi	V&#224;
-custom fields	common	vi	Các tr&#432;&#7901;ng t&#7921; t&#7841;o
-days	common	vi	ngày
-delete a single entry by passing the id.	common	vi	Xóa 1 m&#7909;c b&#7857;ng cách truy&#7873;n id.
-duration	common	vi	Th&#7901;i gian
-hours	common	vi	gi&#7901;
-import	common	vi	Nh&#7853;p
-last	common	vi	cu&#7889;i
-link	common	vi	Liên k&#7871;t
-minutes	common	vi	phút
-month	common	vi	Tháng
-no matches found	common	vi	Không tìm th&#7845;y
-read a list of entries.	common	vi	Li&#7879;t kê danh sách các m&#7909;c
-read a single entry by passing the id and fieldlist.	common	vi	Li&#7879;t kê m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n id và fieldlist
-refresh	common	vi	N&#7841;p l&#7841;i
-reset	common	vi	Thi&#7871;t l&#7853;p l&#7841;i
-text	common	vi	Ph&#7847;n ghi
-update a single entry by passing the fields.	common	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n các tr&#432;&#7901;ng

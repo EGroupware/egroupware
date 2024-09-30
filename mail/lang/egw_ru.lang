@@ -147,7 +147,7 @@ filemode has been switched to %1	mail	ru	Режим файла был перек
 flag / unflag	mail	ru	Флаг / Снять флаг
 flag or unflag a mail	mail	ru	Отметить/Cнять отметку сообщения
 flagged	mail	ru	Отмечено
-flagged %1 messages as %2 in %3	mail	ru	Отмечено %1 сообщение(я) как %2 в %3
+flagged %1 messages as %2 in %3	mail	ru	Отмечено %1 сообщение(я) как "%2" в %3.
 flagged %1 messages as flagged in %2	mail	ru	Отмечено %1 сообщение(я) как отмеченное в %2
 flagged %1 messages as unflagged in %2	mail	ru	Отмечено %1 сообщение(я) как не отмеченное в %2
 folder	mail	ru	Папка

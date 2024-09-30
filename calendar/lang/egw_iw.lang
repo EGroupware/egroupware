@@ -5,23 +5,18 @@
 accept	calendar	iw	קבל
 accepted	calendar	iw	התקבל
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	iw	...הפעולה שגרמה להודעה: נוסף, בוטל, התקבל, נדחה
-actions	calendar	iw	פעולות
 add alarm	calendar	iw	הוסף תזכורת
 added	calendar	iw	נוסף
 alarm	calendar	iw	תזכורת
 alarm for %1 at %2 in %3	calendar	iw	תזכורת עבור %1 ב-%2 ב-%3
 alarm management	calendar	iw	ניהול תזכורות
 alarms	calendar	iw	תזכורות
-all categories	calendar	iw	כל הקטגוריות
 all day	calendar	iw	כל היום
 always	calendar	iw	תמיד
-are you sure you want to delete this country ?	calendar	iw	?בטוח שברצומך למחוק ארץ זה
-are you sure you want to delete this holiday ?	calendar	iw	?בטוח שברצומך למחוק חג זה
 before the event	calendar	iw	לפני הארוע
 birthday	calendar	iw	יום הולדת
 birthdays	admin	iw	ימי הולדת
 calendar event	calendar	iw	אירוע לוח שנה
-calendar holiday management	admin	iw	ניהול חגי לוח שנה
 calendar preferences	calendar	iw	העדיפויות לוח שנה
 calendar settings	admin	iw	הגדרות לוח שנה
 calendar-fieldname	calendar	iw	לוח שנה - שם שדה
@@ -50,7 +45,6 @@ deleted	calendar	iw	נמחקו
 display status of events	calendar	iw	הצג סטוטס של אירועים
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	iw	ברצונך לקבל הודעות בדבר פגישות חדשות או שינוים בפגישות קימות? תקבל הודעה על שינוים אתה מבצע
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	iw	?ברצונך לקבל סיכום הפגישות שלך בדוא"ל בקביעות
-do you wish to autoload calendar holidays files dynamically?	admin	iw	?ברצונך להטעין קבצי חגים של לוח השנה אוטומטית באופו דינמי
 download	calendar	iw	הורדה
 duration	calendar	iw	משך
 edit series	calendar	iw	ערוך סדרה
@@ -80,10 +74,8 @@ here is your requested alarm.	calendar	iw	.הרי לך התזכורת המבוק
 high priority	calendar	iw	עדיפות גבוהה
 history	calendar	iw	היסטוריה
 holiday	calendar	iw	חג
-holiday management	calendar	iw	ניהול חגים
 holidays	calendar	iw	חגים
 hours	calendar	iw	שעות
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	iw	.אם מסומן, חגים החלים בסופי שבוע, מעוברים ליום השני של אחריו
 ignore conflict	calendar	iw	תתעלם מהתנגשות
 import	calendar	iw	ייבא
 import csv-file	common	iw	CSV ייצאו קובץ
@@ -94,7 +86,6 @@ lastname of person to notify	calendar	iw	שם משפחה של נמען ההוד�
 link to view the event	calendar	iw	קישור לתצוגת האירוע
 links	calendar	iw	קישורים
 location	calendar	iw	מיקום
-location to autoload from	admin	iw	המקום ממנו לטעון אוטומטית
 minutes	calendar	iw	דקות
 modified	calendar	iw	השתנה
 mon	calendar	iw	שני
@@ -152,7 +143,6 @@ reset	calendar	iw	איפוס
 rule	calendar	iw	חוק
 sat	calendar	iw	שבת
 scheduling conflict	calendar	iw	התנגשות זימון
-set a year only for one-time / non-regular holidays.	calendar	iw	.קבע שנה רק בעבור חגים חד-פעמיים או לא רגילים
 set new events to private	calendar	iw	קבע אירועים חדשים כפרטיים
 should new events created as private by default ?	calendar	iw	?האם ליצור אירועים חדשים כפרטיים כברירת מחדל
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	iw	?האם להציג את סטטוס של משתתפי האירוע (קיבל, דחה, ...) בסוגריים אחרי השם של כל משתתף

@@ -1,26 +1,19 @@
-%1 added	addressbook	pl	%1 dodany
 %1 contact(s) %2	addressbook	pl	%1 kontakt(ów) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pl	%1 kontakt(y) %2, %3 nie powiodło się z powodu %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pl	%1 kontakt(ów)%2, %3 nie było możliwe ponieważ nie masz odpowiednich praw!
 %1 contacts updated (%2 errors).	addressbook	pl	Zaktualizowano %1 kontaktów (%2 błędów).
 %1 fields in %2 other organisation member(s) changed	addressbook	pl	%1 pól w %2 członków innej organizacji zmieniono.
 %1 key(s) added to public keyserver "%2".	addressbook	pl	Klucz(e) %1 dodany(e) do publicznego serwera kluczy "%2".
-%1 not implemented for %2!	addressbook	pl	%1 nie zaimplementowany dla %2!
 %1 public keys added.	addressbook	pl	Dodano %1 kluczy publicznych.
-%1 records imported	addressbook	pl	Zaimportowano %1 rekordów.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pl	Wczytano %1 rekordów (ale jeszcze nie zaimportowano, możesz %2wrócić%3 i skasować zaznaczenie próbnego importu).
 %1 shared this contact on %2 with %3 %4	addressbook	pl	%1 udostępnił ten kontakt na %2 %3 %4
 %1 starts with '%2'	addressbook	pl	%1 zaczyna się od %2
 %s please calculate the result	addressbook	pl	%s proszę obliczyć rezultat
 (e.g. 1969)	addressbook	pl	(np. 1969)
 (empty = use global limit, no = no export at all)	admin	pl	(puste = użyj limitu globalnego, no = bez eksportu)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>Nie wybrano trybu konwersji typu <żaden>.</b> Proszę wybrać typ trybu konwersji z listy
 @-eval() is only availible to admins!!!	addressbook	pl	@-eval() jest dostępne wyłącznie dla administratorów!
 account id	addressbook	pl	ID konta
 account repository	admin	pl	Repozytorium kont
-accounts	addressbook	pl	Konta
-actions	addressbook	pl	Polecenia
-add %1	addressbook	pl	Dodaj %1
 add a contact to this organisation	addressbook	pl	Dodaj kontakty do tej organizacji
 add a new contact	addressbook	pl	Dodaj nowy kontakt
 add a new infolog	addressbook	pl	Dodaj nowy wpis Dziennika
@@ -57,7 +50,6 @@ addressbook vcard export	addressbook	pl	Eksport vCard książki adresowej
 addressbook vcard import	addressbook	pl	Import vCard książki adresowej
 addressbook-fieldname	addressbook	pl	Nazwa pola adresowego
 addvcard	addressbook	pl	Dodaj kartkę elektroniczną
-advanced search	addressbook	pl	Wyszukiwanie szczegółowe
 all addressbooks	addressbook	pl	Wszystkie książki adresowe
 all contacts	addressbook	pl	Wszystkie kontakty
 all types	addressbook	pl	Wszystkie typy
@@ -231,7 +223,6 @@ extra	addressbook	pl	Dodatkowe
 extra private	addressbook	pl	Dodatkowe prywatne
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pl	Nie udało się zmienić %1 członków organizacji (brak uprawnień)!
 favorite phone	addressbook	pl	Ulubiony telefon
-favorites	addressbook	pl	Ulubione
 fax	addressbook	pl	Faks
 fax number	common	pl	Numer faksu
 field %1 has been added !	addressbook	pl	Pole %1 zostało dodane!
@@ -290,7 +281,6 @@ import from ldif, csv, or vcard	addressbook	pl	Import z LDIF, CSV lub VCard
 import from outlook	addressbook	pl	Importuj z programu Outlook
 import multiple vcard	addressbook	pl	Importuj wiele plików VCard
 import next set	addressbook	pl	Importuj następny set
-import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Addressbook) i wybierz z menu <b>Plik</b> (File) pozycję <b>Eksport</b>. Plik zostanie wyeksportowany w formacie LDIF.<p> W Outlooku, wybierz folder Kontakty, wybierz z menu <b>Plik</b> pozycję <b>Import i eksport</b> i wyeksportuj swoje kontakty do pliku tekstowego oddzielanego kropką (CSV).<p>W Palm Desktop 4.0 (lub wyższym), wejdź do książki adresowej i wybierz <b>Export</b> z menu <b>Plik</b>. Zostanie on wyeksportowany w formacie VCard.
 importer's personal	addressbook	pl	Importer's personal
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
 imports contacts into your addressbook from a vcard file.	addressbook	pl	Importuje kontakty do książki adresowej z pliku vCard.
@@ -351,7 +341,6 @@ name of current user, all other contact fields are valid too	addressbook	pl	Nazw
 name, address	addressbook	pl	Imię, adres
 name, email, phone	addressbook	pl	Imię i nazwisko, e-mail, telefon
 new contact submitted by %1 at %2	addressbook	pl	Nowy kontakt przesłany przez %1 , %2
-new window opened to edit infolog for your selection	addressbook	pl	Nowe okno do edycji InfoLog.
 next date	addressbook	pl	Następna data
 no categories selected	addressbook	pl	Nie wybrano kategorii
 no country selected	addressbook	pl	Nie wybrano kraju
@@ -398,7 +387,6 @@ public key	addressbook	pl	Klucz publiczny
 public sharing url	addressbook	pl	Publiczny adres URL udostępniania
 publish into groups:	addressbook	pl	Opublikuj do grup:
 read a list / search for entries.	addressbook	pl	Czytaj listę / szukaj wpisów.
-read a list of entries.	addressbook	pl	Wczytaj listę wpisów
 read a single entry by passing the id and fieldlist.	addressbook	pl	Czytaj pojedynczy wpis szukając w/g ID i listy pól.
 read only	addressbook	pl	Tylko do odczytu
 record access	addressbook	pl	Dostęp do rekordu

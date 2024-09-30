@@ -24,17 +24,17 @@ accepted	calendar	bg	Прието
 access denied to the calendar of %1 !!!	calendar	bg	Отказан Ви е достъп до календара на %1!
 access to calendar of %1 denied!	calendar	bg	Достъп до календара на %1 отказан!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	bg	Действия, предизвикали известяването: Добавен, Отменен, Приет, Отказан, ...
-actions	calendar	bg	Действия
-actions...	calendar	bg	Действия ...
 add alarm	calendar	bg	Добавяне на "Аларма"
 add appointments via shortened dialog or complete edit window	calendar	bg	Добавяне на срещи, чрез съкратен диалогов прозорец или прозорец за редактиране
 add current view as favorite	calendar	bg	Добавяне на текущия изглед като любим
 add new alarm	calendar	bg	Добавяне на нова аларма
 add new event	calendar	bg	Добавяне на нова среща
 add new participants or resource	calendar	bg	Добавяне на нови участници или ресурс
+add recurrence	calendar	bg	Добавяне на повторение
 add timesheet entry	calendar	bg	Добави запис в Графика
 added	calendar	bg	Добавено
 added by synchronization	calendar	bg	Добавено чрез синхронизация
+added recurrence on %1.	calendar	bg	Добавено е повторение на %1.
 after	calendar	bg	След
 after %1	calendar	bg	След %1
 after current date	calendar	bg	След текущата дата
@@ -46,7 +46,6 @@ alarm deleted	calendar	bg	Напомнянето  е изтрита
 alarm for %1 at %2 in %3	calendar	bg	Напомняне за %1 - %2 в %3
 alarm management	calendar	bg	Редактиране на напомнянията
 alarms	calendar	bg	Аларми  / Напомняния
-all categories	calendar	bg	Всички категории
 all day	calendar	bg	Целия ден
 all events	calendar	bg	Всички събития
 all exceptions are converted into single events.	calendar	bg	Всички изключения са преобразувани в единични събития.
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	bg	Позволява отново ре�
 always	calendar	bg	Винаги
 always use full edit dialog	calendar	bg	Винаги използвай пълен диалогов прозорец за редактиране
 always use the full edit dialog, not this little dialog	calendar	bg	Винаги използвай пълен диалогов прозорец за редактиране, а не този малък ...
+apply changes to (future) exceptions too?	calendar	bg	Да се приложат промените и за (бъдещи) изключения?
 apply the action on the whole query, not only the shown events	calendar	bg	Приложи действието върху цялото запитване, НЕ само на показаните събития.
 apply the changes	calendar	bg	Прилагане на промените
 appointment settings	calendar	bg	Настройки на уговорените срещи
@@ -247,13 +247,12 @@ exclude weekend	calendar	bg	Изключване на уикенда
 execute a further action for this entry	calendar	bg	Изпълни допълнително за това събитие
 existing links	calendar	bg	Съществуващи връзки
 exists	calendar	bg	Съществува
-explicit dates	calendar	bg	Изрични събития
+explicit recurrences	calendar	bg	Явни повторения
 export definition to use for nextmatch export	calendar	bg	Определение за експорт, което да се използва за nextmatch export
 exports events from your calendar in ical format.	calendar	bg	Експортира събития от вашия календар в iCal формат.
 exports events from your calendar into a csv file.	calendar	bg	Експортира събития от вашия календар в CSV файл.
 extended	calendar	bg	Разширен
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	bg	Разширените актуализации винаги включват пълната информация за събитията. iCal файловете могат да бъдат импортирани в много други приложения за управление на календар.
-favorites	calendar	bg	Любими
 fieldseparator	calendar	bg	Разделител на полетата
 filemanager	calendar	bg	Файл мениджър
 filename	calendar	bg	Име на файл
@@ -370,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	bg	Ма
 maximum available quantity of %1 exceeded!	calendar	bg	Максималното налично количество от %1 е превишено!
 meeting canceled	calendar	bg	Срещата е отменена
 meeting request	calendar	bg	Покана за среща
+meeting request additional recurrence(s)	calendar	bg	Среща изисква допълнителна(и) повторяемост(и)
 meetingrequest to all participants	calendar	bg	Покана за среща до всички участници
 merge document...	calendar	bg	Обединяване на документа ...
 midnight	calendar	bg	Полунощ
@@ -442,11 +442,13 @@ one week	calendar	bg	една седмица
 one year	calendar	bg	една година
 only group-events	calendar	bg	Само групови събития
 only recurrences until %1 (excluding) have been checked!	calendar	bg	Проверени са само повтарянията до %1 (включително)
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	bg	Поддържа се само от няколко напълно съвместими клиенти (напр. от Apple). Ако трябва да въведете URL адрес, той най-вероятно няма да се поддържа!
 only the initial date of that recurring event is checked!	calendar	bg	Отбелязана е само първоначалната дата на това повтарящо се събитие!
 only used for first viewing of calendar, afterwards last selected view is used.	calendar	bg	Използва се само за първоначалния преглед на календара, след това се използва последният селектиран.
 open todo's:	calendar	bg	Отвори Задачите
 optional	calendar	bg	По избор
 organizer	calendar	bg	Организатор
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	bg	В противен случай промените в заглавието, описанието, ... или новите участници няма да бъдат прехвърлени към изключения, които вече са създадени.
 output unit	calendar	bg	Изходна единица
 overlap holiday	calendar	bg	Застъпване на празник
 owner too	calendar	bg	Собственик също
@@ -462,6 +464,7 @@ permission denied	calendar	bg	Не е позволено!
 planner by category	calendar	bg	План по категории
 planner by user	calendar	bg	План по потребители
 please first select participants on the left and then use plus button to add them	calendar	bg	Моля, първо изберете (от ляво) участниците и след това използвайте бутона "Плюс", за да ги добавите
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	bg	Моля, обърнете внимание: Проверката на конфликти никога не се извършва в миналото и винаги е ограничена от горния хоризонт на повторение.
 please note: you can configure the field assignments after you uploaded the file.	calendar	bg	Обърнете внимание: Може да конфигурирате назначението на полетата СЛЕД като сте качили файла.
 preselected group for entering the planner	calendar	bg	Група при влизане в "План"
 prevent deleting of entries	admin	bg	Предотвратяване на изтриването на записи
@@ -595,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	bg	Изключенията се изтриват заедно със серията.
 the extern organizer changed the event!	calendar	bg	Външният организатор е променил събитието!
 the following document-types are supported:	calendar	bg	Поддържа следните типове документи:
+the organizer changed the event!	calendar	bg	Организаторът е променил събитието!
 the original series will be terminated today and a new series be created.	calendar	bg	Оригиналната серия ще бъде прекратена днес и ще бъде създадена нова.
 the resource you selected is already overbooked:	calendar	bg	Избраният от вас ресурс вече е зает:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	bg	Изпращачът "%1" НЕ е външният организатор "%2", действайте внимателно!
@@ -607,6 +611,7 @@ this entry is opened by user:	calendar	bg	Записът е бил отваря�
 this event is part of a series	calendar	bg	Това събитие е част от серията
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	bg	При влизане в "План" ще виждате информацията за тази група. В Плана може да я променяте.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	bg	Това е повтарящо се събитие. Искате да изтриете само него или цялата серия?
+this is a single recurrence of a recurring event.	calendar	bg	Това е единично повторение на повтарящо се събитие.
 this mail cancels a meeting	calendar	bg	Имейл с такъв текст се използва за отмяна на среща
 this mail contains a meeting request	calendar	bg	Имейл с такъв текст съдържа покана за среща
 this mail contains a reply to a meeting request	calendar	bg	Имейл с такъв текст съдържа отговор на покана за среща
@@ -706,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	bg	Нямате пр
 you are not invited to that event!	calendar	bg	Не сте поканени на това събитие!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	bg	Искате да изпратите имейл с покана за среща до получателите по-горе. В зависимост от клиента, до когото изпращате писмото, останалите получатели ще могат или не, да видят съобщението по-долу, ще виждат само приложената заявка за среща.
 you can either set a year or a occurrence, not both !!!	calendar	bg	Може да изберете Година или Интервал на повторение, не и двете!
+you can only notify other users, not yourself!	calendar	bg	Можете да уведомявате само други потребители, но не и себе си!
 you can only set a year or a occurrence !!!	calendar	bg	Може да изберете само Година или Интервал на повторение!
 you do not have permission to read this record!	calendar	bg	Нямате права за четене на този запис!
 you have a meeting scheduled for %1	calendar	bg	Имате среща, насрочена за %1

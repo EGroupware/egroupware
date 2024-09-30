@@ -22,10 +22,7 @@
 %1 token %2.	admin	ja	%1 トークン %2。
 %1 user %2	admin	ja	%1 ユーザ %2
 (de)activate mail accounts	admin	ja	メール・アカウントを有効化/無効化
-(default no, leave it off if you dont use it)	admin	ja	既定 = いいえ（使用しない場合はいいえ）
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	ja	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)
 (no subject)	admin	ja	（件名無し）
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ja	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	ja	-  タイプ
 1 year	admin	ja	1年
 2 month	admin	ja	2ヶ月
@@ -102,6 +99,7 @@ all records and account information will be lost!	admin	ja	すべてのレコー
 all users	admin	ja	全てのユーザ
 allow anonymous access to this app	admin	ja	このアプリケーションに対する匿名ユーザのアクセスを許可
 allow remote administration from following install id's (comma separated)	admin	ja	リモート管理を許可するインストール ID（コンマ区切りで複数指定可）
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	ja	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 allow users to change forwards	admin	ja	ユーザによるフォワードの変更を許可する
 allow users to create identities for aliases	admin	ja	ユーザがエイリアスの ID を作成できるようにする
 alternate email address	admin	ja	代替メール・アドレス
@@ -142,9 +140,6 @@ attributes	admin	ja	属性
 authentication / accounts	admin	ja	認証 | アカウント情報
 auto create account records for authenticated users	admin	ja	認証したユーザ情報を自動的に作成します。
 available placeholders	admin	ja	利用可能なプレース・ホルダー
-back to admin/grouplist	admin	ja	管理者/グループ 一覧に戻る
-back to admin/userlist	admin	ja	管理者/グループ 一覧に戻る
-back to the list	admin	ja	一覧に戻る
 backup directory %1 mounted as %2	admin	ja	バックアップ・ディレクトリ %1 が %2 としてマウントされました。
 bad login name or password.	admin	ja	ログイン名またはパスワードが不正です。
 bad or malformed request. server responded: %s	admin	ja	不正な、または不正な形式の要求です。%s
@@ -157,9 +152,7 @@ bulk changes	admin	ja	一括変更
 bulk password reset	admin	ja	バルク・パスワード・リセット
 calculate next run	admin	ja	次回の実行日時を算出
 calendar recurrence horizont in days (default 1000)	admin	ja	Calendar recurrence horizon in days. Default = 1000.
-can be used by application	admin	ja	Can be used by application
-can be used by group	admin	ja	Can be used by group
-can be used by user	admin	ja	Can be used by user
+can be used to show groups by container, if enabled	admin	ja	コンテナごとにグループを表示することができます。
 can change password	admin	ja	パスワード変更可能
 can not change users into groups, same sign required!	admin	ja	Can NOT change users into groups, same sign required!
 cancel testjob!	admin	ja	テスト・ジョブをキャンセル!
@@ -172,6 +165,7 @@ category saved.	admin	ja	カテゴリを保存しました。
 certificate	admin	ja	証明書
 certificate details	admin	ja	証明書の詳細
 certificate validation in days	admin	ja	証明書検証日数
+change access	admin	ja	アクセス権の変更
 change account_id	admin	ja	アカウント ID を変更する
 change acl rights	admin	ja	ACL 権限を変更する
 change config settings	admin	ja	環境設定を変更
@@ -197,6 +191,7 @@ config password or md5 hash from the header.inc.php	admin	ja	Config password or 
 configuration saved.	admin	ja	設定を保存しました。
 connection dropped by imap server.	admin	ja	IMAP サーバーによって接続が切断されました。
 connection is not secure! everyone can read eg. your credentials.	admin	ja	Connection is NOT secure! Everyone can read eg. your credentials.
+container	admin	ja	コンテナ
 continue	admin	ja	次へ
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	ja	クッキー・ドメイン。空欄（既定）を指定するとフル・ドメイン名を使用。
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	ja	クッキー・パス
@@ -288,12 +283,6 @@ displaying plain messages is disabled	admin	ja	プレーン・テキスト・メ
 do not delete the category and return back to the list	admin	ja	カテゴリを削除せずに一覧に戻る
 do not generate email addresses	admin	ja	電子メール・アドレスを生成しない
 do not offer introduction video	admin	ja	紹介ビデオを提供しない
-do not validate certificate	admin	ja	証明書を検証しない
-do you also want to delete all global subcategories ?	admin	ja	全グローバル・サブ・カテゴリを併せて削除してよろしいですか？
-do you really want to delete this profile	admin	ja	このプロフィールを削除してよろしいですか？
-do you really want to reset the filter for the profile listing	admin	ja	プロフィール一覧用フィルターをリセットしてよろしいですか？
-do you want to delete all global subcategories ?	admin	ja	全グローバル・サブ・カテゴリを削除してよろしいですか？
-do you want to move all global subcategories one level down ?	admin	ja	全グローバル・サブ・カテゴリを1レベル下層に移動してよろしいですか？
 document root (default)	admin	ja	ドキュメント・ルート（既定）
 domainname	admin	ja	ドメイン名
 down	admin	ja	下
@@ -418,6 +407,7 @@ group excepted from above export limit (admins are always excepted)	admin	ja	上
 group has been added	common	ja	グループを追加しました。
 group has been deleted	common	ja	グループを削除しました。
 group has been updated	common	ja	グループを更新しました。
+group hierarchy	admin	ja	グループ階層
 group list	admin	ja	グループ一覧
 group manager	admin	ja	グループ管理
 group name	admin	ja	グループ名
@@ -654,6 +644,7 @@ quota size in mbyte	admin	ja	クォータ・サイズ（MB）
 re-enter password	admin	ja	パスワード再入力
 read this list of methods.	admin	ja	Read this list of methods.
 register application hooks	admin	ja	Register application hooks
+regular expression to find part to use as container	admin	ja	コンテナとして使用する部分を見つけるための正規表現
 reject passwords containing part of username or full name (3 or more characters long)	admin	ja	ユーザ名の一部または全部を含むパスワードを拒否(3文字以上）
 relay access checked	admin	ja	Relay access checked
 remote administration instances	admin	ja	リモート管理インスタンス
@@ -711,6 +702,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	ja	アクセス・ログを表示
 show current action	admin	ja	アクションを表示
 show error log	admin	ja	エラー・ログを表示
+show groups in container based on	admin	ja	コンテナ内のグループの表示
 show members	admin	ja	メンバーを表示
 show phpinfo()	admin	ja	phpinfo() を表示
 show session ip address	admin	ja	IPアドレス表示
@@ -890,10 +882,8 @@ you must add at least 1 permission or group to this account	admin	ja	少なく�
 you must enter a group name.	admin	ja	グループ名を入力してください。
 you must enter a lastname	admin	ja	姓を入力してください。
 you must enter a loginid	admin	ja	ログイン ID を入力してください。
-you must enter an application name and title.	admin	ja	アプリケーション名とタイトルを入力してください。
 you must enter an application name.	admin	ja	アプリケーション名を入力してください。
 you must enter an application title.	admin	ja	アプリケーション・タイトルを入力してください。
-you must select a file type	admin	ja	ファイル・タイプを選択してください。
 you must select at least one group member.	admin	ja	グループ・メンバーを選択してください。
 you need to enter install id and password!	admin	ja	インストール ID とパスワードを入力してください!
 you need to select as least one action!	admin	ja	アクションを選択してください!
@@ -901,6 +891,5 @@ you need to select some users first!	admin	ja	ユーザを選択してくださ�
 you need to specify a forwarding address, when checking "%1"!	admin	ja	You need to specify a forwarding address, when checking "%1"!
 you will need to remove the subcategories before you can delete this category	admin	ja	Remove the sub categories before deleting this category!
 your last submission was less then %1 days ago!	admin	ja	Your last submission was less than %1 days ago!
-your message to  %1 was displayed.	admin	ja	Your message to  %1 was displayed.
 your name	admin	ja	氏名
 your session could not be verified.	admin	ja	セッションを検証できませんでした。

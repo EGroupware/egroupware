@@ -6,8 +6,6 @@
 %1 not found or not executable !!!	admin	lo	%1 ບໍ່ພົບ ຫຼື ບໍ່ປະຕິບັດ !!!
 %1 rights for %2 and applications %3	admin	lo	%1 ສິດທິແລະການໃຊ້ງານ%2
 %1 user %2	admin	lo	%1 ຜູ້ໃຊ້ %2
-(default no, leave it off if you dont use it)	admin	lo	(ຄ່າເລີ່ມຕົ້ນ "ບໍ່", ປ່ອຍມັນໄວ້ ຖ້າເຈົ້າບໍ່ໃຊ້)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lo	(ຕິດຕັ້ງໂປຼແກຼມໃໝ່ ນໍາໃຊ້ href="setup/" <br> <a target="setup"> ການຕັ້ງຄ່າ </ a> [ຈັດການການໃຊ້ງານ]!)
 -  type	admin	lo	ຊະນິດ
 account %1 %2	admin	lo	ບັນຊີ %1 %2
 account '%1' deleted.	admin	lo	ບັນຊີ '%1' ຖືກລຶບ
@@ -81,7 +79,6 @@ asyncservices not yet installed or other error (%1) !!!	admin	lo	asyncservices �
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lo	ພະຍາຍາມທີຈະໃຊ້ mimetype ທີ່ຖືກຕ້ອງສໍາລັບ FTP ແທນທີ່ຈະໃຊ້ຄ່າເລີ່ມຕົນ 'application/octet-stream'
 authentication / accounts	admin	lo	ການຮັບຮອງ/ບັນຊີ
 auto create account records for authenticated users	admin	lo	ສ້າງຕົວບັນທຶກອັດຕະໂນມັດຂອງບັນຊີຜູ້ໃຊ້ເພື່ອຍືນຍັນສິດນໍາໃຊ້
-back to the list	admin	lo	ກັບຄືນຫາລາຍການ
 bi-dir passthrough	admin	lo	bi-dir ຜ່ານຕະຫຼອດ
 bi-directional	admin	lo	ສອງທິດທາງ
 bottom	admin	lo	ຜ່ານສ່ວນລຸ່ມ
@@ -164,9 +161,6 @@ disable "auto completion" of the login form	admin	lo	ປິດການໃຊ້
 disabled (not recomended)	admin	lo	ປິດການໃຊ້(ບໍ່ຂໍແນະນໍາ)
 display	admin	lo	ສະແດງ
 do not delete the category and return back to the list	admin	lo	ຫ້າມລຶບໝວດໝູ່ ແລະ ໃຫ້ກັບມາທີ່ໜ້າລາຍການ
-do you also want to delete all global subcategories ?	admin	lo	ທ່ານຍັງຕ້ອງການລຶບໝວດທົວໄປທັງໝົດບໍ່?
-do you want to delete all global subcategories ?	admin	lo	ທ່ານຕ້ອງການທີ່ຈະລຶບໝວດຍ່ອຍທົ່ວໄປທັງໝົດບໍ່?
-do you want to move all global subcategories one level down ?	admin	lo	ທ່ານຕ້ອງການຍ້າຍໝວດຍ່ອຍທົ່ວໄປ ທັງໝົດລົງໜຶ່ງລະດັບບໍ່?
 document root (default)	admin	lo	ເອກະສານຕົ້ນສະບັບ(ຄ່າເລີ່ມຕົ້ນ)
 edit account	admin	lo	ແກ້ໄຂບັນຊີ
 edit application	admin	lo	ແກ້ໄຂ ແອັບພຼິເຄຊັນ
@@ -526,10 +520,8 @@ you must add at least 1 permission or group to this account	admin	lo	ທ່າ�
 you must enter a group name.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ກຸ່ມ
 you must enter a lastname	admin	lo	ທ່ານຕ້ອງໃສ່ນາມສະກຸນ
 you must enter a loginid	admin	lo	ທ່ານຕ້ອງໃສ່ລະຫັດເຂົ້າສູ່ລະບົບ
-you must enter an application name and title.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ ແອັບພຼິເຄຊັນ ແລະ ຫົວຂໍ້
 you must enter an application name.	admin	lo	ທ່ານຕ້ອງໃສ່ຊື່ ແອັບພຼິເຄຊັນ
 you must enter an application title.	admin	lo	ທ່ານຕ້ອງໃສ່ຫົວຂໍ້ ແອັບພຼິເຄຊັນ
-you must select a file type	admin	lo	ທ່ານຕ້ອງເລືອກປະເພດຂອງໄຟລ
 you must select at least one group member.	admin	lo	ທ່ານຕ້ອງເລືອກຢ່າງໜ້ອຍໜື່ງສະມາຊິກຂອງກຸ່ມ
 you need to enter install id and password!	admin	lo	ທ່ານຕ້ອງໃສ່ ລະຫັດສ່ວນຕົວ ແລະ ລະຫັດຜ່ານໃນການຕິດຕັ້ງ
 you will need to remove the subcategories before you can delete this category	admin	lo	ທ່ານຕ້ອງລຶບໝວດໝູ່ຍ່ອຍກ່ອນທີ່ຈະລຶບໝວດໝູ່ນີ້

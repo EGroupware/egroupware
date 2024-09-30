@@ -44,10 +44,12 @@ how to update lists	preferences	pt	Como actualizar listas
 icon	preferences	pt	Ícone
 icons and text	preferences	pt	Ícones e texto
 icons only	preferences	pt	Apenas ícones
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	pt	Armazenar palavra-passe recuperável para SingleSignOn
 in which country are you. this is used to set certain defaults for you.	preferences	pt	O país em que se encontra. Isto é utilizado para configurar algumas definições por omissão por si.
 interface/template selection	preferences	pt	Selecção de Interface/Modelo
 it sets content size (text only) according to selected size.	preferences	pt	Estabelece o tamanho do conteúdo (apenas texto) de acordo com o tamanho seleccionado.
 language	preferences	pt	Idioma
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pt	O início de sessão através do SingleSignOn não fornece uma palavra-passe para a passar para os servidores de correio eletrónico ou de ficheiros.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pt	Faça com que a lista de aplicações possa ser deslocada com botões de deslocamento para cima/para baixo (útil para utilizadores que trabalham com o rato sem roda de rolagem)
 max matches per page	preferences	pt	Máximo de ocorrências por página
 max number of icons in navbar	preferences	pt	Número máximo de ícones na barra de navegação
@@ -55,6 +57,7 @@ no default	preferences	pt	Não definido por omissão
 note: this feature does *not* change your email password. this will	preferences	pt	nota: Esta funcionalidade *não* altera a sua senha de correio electrónico. Isto irá
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt	Nota: Esta função *não* altera sua senha de correio electrónico. Deverá fazê-lo manualmente.
 notification settings	preferences	pt	Configurações de notificação
+password stored	preferences	pt	Palavra-passe armazenada.
 please, select a new theme	preferences	pt	Por favor, seleccione um novo tema
 popup with search	preferences	pt	Janela popup com pesquisa
 re-enter your password	preferences	pt	Insira a sua senha novamente
@@ -73,6 +76,7 @@ show navigation bar as	preferences	pt	Exibir a barra de navegação como
 show number of current users	preferences	pt	Exibir número de utilizadores ligados
 show text on navigation icons	preferences	pt	Exibir o texto na barra de navegação
 show_more_apps	common	pt	Exibir mais aplicações
+singlesignon and passwords	preferences	pt	SingleSignOn e palavras-passe
 text only	preferences	pt	Apenas texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt	A aplicação por omissão será iniciada ao entrar no EGroupware ou ao clicar no ícone de página inicial.<br>Pode ter mais do que uma aplicação na sua página inicial, se não escolher uma aplicação específica aqui (tem de ser configurado nas preferências de cada aplicação).
 the old password is not correct	preferences	pt	A senha antiga não está correcta

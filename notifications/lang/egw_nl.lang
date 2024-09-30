@@ -2,6 +2,7 @@
 account:	notifications	nl	Account:
 all possible notification backends	notifications	nl	Alle mogelijke backends voor meldingen
 are you sure you want to delete all notifications?	notifications	nl	Weet je zeker dat je alle meldingen wilt verwijderen?
+automatic deleted notifications older than	admin	nl	Automatisch verwijderen van meldingen ouder dan
 browser	notifications	nl	Browser
 browser is starting.	notifications	nl	Browser wordt gestart.
 cancal settings?	notifications	nl	Instellingen annuleren?
@@ -18,14 +19,20 @@ delete all messages	notifications	nl	Alle berichten verwijderen
 delete notifications	notifications	nl	Meldingen verwijderen
 delete this message	notifications	nl	Dit bericht verwijderen
 disabled chains	notifications	nl	Uitgeschakelde lijsten
+do not notify me at all	notifications	nl	Helemaal geen meldingen
 domain not found, please check serveraddress.	notifications	nl	Domein niet gevonden, controleer serveradres.
+e-mail only	notifications	nl	Alleen e-mail
 egroupware has notifications for you	notifications	nl	EGroupware heeft meldingen voor u.
 egroupware login is starting, please wait.	notifications	nl	EGroupware login start, gelieve te wachten.
 egroupware logindomain:	notifications	nl	EGroupware Logindomein:
 egroupware logindomains founds, please select.	notifications	nl	EGroupware Logindomains gevonden, selecteer aub.
 egroupware not found by url or connection lost to server.	notifications	nl	EGroupware niet gevonden door URL of verbinding verloren met server.
 egroupware not found by url.	notifications	nl	EGroupware niet gevonden via URL.
+egroupware-popup and e-mail	notifications	nl	EGroupware popup en e-mail
+egroupware-popup and windows-popup	notifications	nl	EGroupware popup en Windows popup
 egroupware-popup backend	admin	nl	EGroupware popup backend
+egroupware-popup first, if that fails notify me by e-mail	notifications	nl	EGroupware popup eerst, als dat mislukt, breng me dan op de hoogte via e-mail
+egroupware-popup only	notifications	nl	Alleen EGroupware popup
 egroupware-popup verbosity	notifications	nl	EGroupware popup zichtbaarheid
 email notifications only, if user is not logged in	notifications	nl	Alleen meldingen per e-mail als gebruiker niet is ingelogd
 enable egroupware-popup backend	admin	nl	EGroupware popup backend inschakelen
@@ -56,6 +63,7 @@ more info	notifications	nl	Meer info
 notification	common	nl	Melding
 notifier	notifications	nl	Kennisgever
 notify me by	notifications	nl	Meld mij via
+only used if no push server available!	admin	nl	Alleen gebruikt als er geen pushserver beschikbaar is!
 open notified entry	notifications	nl	Melding openen
 optimize e-mails for external mail client	notifications	nl	Optimaliseer E-mails voor externe mail client
 page not found, please check serveraddress.	notifications	nl	Pagina niet gevonden, controleer serveradres.

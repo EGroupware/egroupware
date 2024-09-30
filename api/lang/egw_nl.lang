@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	nl	%1 mappen van %2 gevonden
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
 %1 email(s) added into %2	common	nl	%1 e-mail(s) toegevoegd in %2
-%1 entries found, select one ...	common	nl	%1 items gevonden, selecteer er een ...
 %1 etemplates deleted	common	nl	%1 eTemplates verwijderd
-%1 etemplates for application '%2' dumped to '%3'	common	nl	%1 eTemplates voor applicatie '%2' gedumpt naar '%3'
 %1 etemplates found	common	nl	%1 eTemplates gevonden
 %1 file	common	nl	%1 bestand
 %1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden!
-%1 matches on search criteria	common	nl	%1 komt overeen met zoekcriteria
 %1 more %2 selected ...	common	nl	%1 meer %2 geselecteerd ...
 %1 more...	common	nl	%1 meer ...
-%1 new etemplates imported for application '%2'	common	nl	%1 nieuwe eTemplates geïmporteerd voor applicatie '%2'
 %1 not implemented for %2!	common	nl	%1 niet geimplemnteerd voor %2!
 %1 proxy of %2	common	nl	%1 proxy van %2
 %1 setting "%2" = %3 disallows access via http!	admin	nl	%1 instelling "%2" = %3 blokkeert toegang via http!
@@ -27,8 +23,10 @@
 %s onchange	common	nl	%s bij Wijziging
 %s readonly	common	nl	%s alleen lezen
 '%1' copied to clipboard	common	nl	'%1' gekopieerd naar klembord
+'%1' does not match the required pattern '%2'	common	nl	%1' komt niet overeen met het vereiste patroon ('%2')
 '%1' has an invalid format	common	nl	'%1' heeft een ongeldig formaat
 '%1' has an invalid format !!!	common	nl	'%1' heeft een ongeldig formaat!
+'%1' is not a valid app-name ('%2')!	common	nl	%1' is GEEN geldige app-naam ('%2')!
 '%1' is not a valid date !!!	common	nl	'%1' is geen geldige datum!
 '%1' is not a valid floatingpoint number !!!	common	nl	'%1' is geen geldig drijvende komma getal!
 '%1' is not a valid integer !!!	common	nl	'%1' is geen geldig geheel getal!
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	nl	'%1' is geen geldige tijdzone!
 '%1' is not allowed ('%2')!	common	nl	'%1' is NIET toegestaan ('%2')!
 '%1' is not allowed%2)!	common	nl	'%1' is NIET toegestaan (%2)!
+'%1' must not contain (back)slashes!	common	nl	'%1' mag geen (back)slashes bevatten!
 (session restored in %1 seconds)	common	nl	(sessie hersteld in %1 seconden)
 00 (disable)	admin	nl	00 (uitschakelen)
 1 day	common	nl	1 dag
@@ -251,6 +250,7 @@ chad	common	nl	CHAD
 change	common	nl	Veranderen
 change owner	common	nl	Verander eigenaar
 changed	common	nl	Veranderd
+changes that you made may not be saved.	common	nl	Wijzigingen die u hebt aangebracht, worden mogelijk niet opgeslagen.
 charset	common	nl	Charset
 check all	common	nl	Markeer alles
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	nl	Controleer op lege waarden in IF statements. Voorbeeld {{IF url~EMPTY~~Website:}} - Als url niet leeg is, schrijft u "Website:".
@@ -960,6 +960,7 @@ open	common	nl	Open
 open existing contact	common	nl	Bestaand contact openen
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	nl	OpenIDConnect login succesvol, maar gebruiker '%1' bestaat NIET in EGroupware, EN automatisch gebruiker aanmaken is uitgeschakeld!
 operator	common	nl	Operator
 optional note about the link	common	nl	Optionele opmerking over de link
 options	common	nl	Opties
@@ -1051,14 +1052,12 @@ private	common	nl	Privé
 programs	common	nl	Programma's
 project	common	nl	Project
 properties	common	nl	Eigenschappen
-protocol is required	common	nl	Protocol is vereist
 public	common	nl	Publiek
 puerto rico	common	nl	PUERTO RICO
 qatar	common	nl	QATAR
 quick add	common	nl	Snel toevoegen
 radiobutton	common	nl	Radiobutton
 read	common	nl	Lezen
-read a list of entries.	common	nl	Lees een lijst van entries.
 read a single entry by passing the id and fieldlist.	common	nl	Lees één entry door het ID en veldlijst mee te geven.
 read etemplate from database (for the keys above)	common	nl	Lees eTemplate uit de database (voor de sleutels hierboven)
 read this list of methods.	common	nl	Lees deze lijst met methodes
@@ -1244,12 +1243,12 @@ show page generation time?	common	nl	Verlooptijd pagina weergeven
 show password	common	nl	Rodyti slaptažodį
 show values	common	nl	Waarden weergeven
 show/hide	common	nl	Zijbalk tonen/verbergen
-show_more_apps	common	nl	Meer applicaties weergeven
 showing	common	nl	Geeft weer
 showing %1	common	nl	weergegeven: %1
 showing %1 - %2 of %3	common	nl	weergegeven: %1 - %2 van %3
 shows / allows you to enter values into the etemplate for testing	common	nl	Toont / staat u toe om testwaardes in de eTemplate in te vullen
 shows/displays etemplate for testing, does not save it before	common	nl	Toont eTemplate om te testen, slaat het NIET eerder op
+show_more_apps	common	nl	Meer applicaties weergeven
 sierra leone	common	nl	SIERRA LEONE
 sign up	common	nl	Užsiregistruoti
 simple	common	nl	Eenvoudig
@@ -1433,7 +1432,6 @@ weekend	common	nl	Weekend
 welcome	common	nl	Welkom
 western european	common	nl	West europees
 western sahara	common	nl	WESTELIJK SAHARA
-what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	nl	Wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	nl	Wanneer je items samenvoegt in documenten, worden ze hier opgeslagen. Als er geen map is opgegeven, worden ze opgeslagen in je thuismap (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.

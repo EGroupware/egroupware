@@ -1,15 +1,11 @@
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	lv	%1 kontakts(-i) %2, %3 neizdevās, jo %4!
 %1 contacts updated (%2 errors).	addressbook	lv	%1 kontakti atjaunināti (%2 kļūdas).
 %1 key(s) added to public keyserver "%2".	addressbook	lv	%1 atslēga(-as) pievienota(-as) publiskajam atslēgu serverim "%2".
-%1 not implemented for %2!	addressbook	lv	%1 nav ieviests %2!
 %1 public keys added.	addressbook	lv	%1 pievienotas publiskās atslēgas.
-%1 records imported	addressbook	lv	Tika importēti %1 ieraksti.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	lv	%1 ieraksti nolasīti (vēl nav importēti, tu vari atgriezties %2 atpakaļ %3 un izslēgt Importēšanas pārbaudi)
 %1 shared this contact on %2 with %3 %4	addressbook	lv	%1 kopīgojis šo kontaktu %2 %3 %4
 (e.g. 1969)	addressbook	lv	(piem., 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	lv	<b>nav pārveidošanas tipa <neviens> nevar tikt novienots.</b> Lūdzu izvēlies pārveidošanas veidu no saraksta.
 @-eval() is only availible to admins!!!	addressbook	lv	@-eval() ir pieejams tikai administratoriem!
-actions	addressbook	lv	Darbības
 add a single entry by passing the fields.	addressbook	lv	Pievienot vienu ierakstu apejot laukus
 add custom field	addressbook	lv	Pievienot papildus lauku
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	lv	Pievienojiet adrešu grāmatas saitēm pielāgotu lauku, kas tiek rādīts citās lietojumprogrammās. Noklusējuma vērtība ir none customfield.
@@ -28,7 +24,6 @@ addressbook list	addressbook	lv	Adrešu grāmatas saraksts
 addressbook preferences	addressbook	lv	Adrešu grāmatas iestādījumi
 addressbook-fieldname	addressbook	lv	Adrešu grāmatas - Lauka nosaukums
 addvcard	addressbook	lv	Pievienot vCard
-advanced search	addressbook	lv	Uzlabota meklēšana
 all addressbooks	addressbook	lv	Visas adrešu grāmatas
 all types	addressbook	lv	Visi veidi
 allow	addressbook	lv	Atļaut
@@ -74,7 +69,6 @@ csv-fieldname	addressbook	lv	CSV-Lauka nosaukums
 csv-filename	addressbook	lv	CSV-Faila nosaukums
 custom	addressbook	lv	Mainīt
 custom fields	addressbook	lv	Mainīti lauki
-debug output in browser	addressbook	lv	Parādīt izvadu pārlūkprogrammā
 default	addressbook	lv	Noklusējums
 default action on double-click	addressbook	lv	Noklusējuma darbība pēc dubultklikšķa
 default filter	addressbook	lv	Filtrs pēc noklusēšanas
@@ -113,7 +107,6 @@ export from addressbook	addressbook	lv	Eksportēt no adrešu grāmatas
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	lv	Eksportē kontaktus no adrešu grāmatas CSV failā. CSV nozīmē "komatā atdalītas vērtības". Iespēju cilnē var izvēlēties arī citus atdalītājus.
 extra	addressbook	lv	Papildus
 favorite phone	addressbook	lv	Iecienītākais tālrunis
-favorites	addressbook	lv	Izlase
 fax	addressbook	lv	Fakss
 fax number	common	lv	Faksa numurs
 field %1 has been added !	addressbook	lv	Lauks %1 tika pievienots!
@@ -216,7 +209,6 @@ prevent deleting of contacts	admin	lv	Aizliegt kontaktu dzēšanu
 private address	addressbook	lv	Privātā adrese
 public key	addressbook	lv	Publiskā atslēga
 public sharing url	addressbook	lv	Publiskās kopīgošanas URL
-read a list of entries.	addressbook	lv	Lasīt ierakstu sarakstu.
 read a single entry by passing the id and fieldlist.	addressbook	lv	Lasīt vienu ierakstu, apejot ID un lauku sarakstu.
 record access	addressbook	lv	Piekļuve ierakstam
 record owner	addressbook	lv	Ieraksta īpašnieks
@@ -230,8 +222,6 @@ search letter	addressbook	lv	Meklēt burtu
 select a source address to be used in geolocation routing system	addressbook	lv	Izvēlieties avota adresi, kas tiks izmantota GeoLocation maršrutēšanas sistēmā
 select all	addressbook	lv	Iezīmēt visus
 select an opened dialog	addressbook	lv	Izvēlieties atvērto dialoglodziņu
-select the type of conversion	addressbook	lv	Iezīmēt sarunas veidu
-select the type of conversion:	addressbook	lv	Izvēlēties sarunas veidu:
 send fax via email by replacing fax number with an email address	addressbook	lv	Sūtīt faksu pa e-pastu, aizstājot faksa numuru ar e-pasta adresi
 send succeeded to %1	common	lv	Nosūtīt veiksmīgi uz %1
 share into addressbook	addressbook	lv	Kopīgot adrešu grāmatiņā

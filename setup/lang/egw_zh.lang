@@ -13,13 +13,11 @@
 13 (ntp)	setup	zh	13 (ntp)
 80 (http)	setup	zh	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	zh	<b>使用字符编码</b>(如果您希望使用多种语言环境，请输入 UTF-8)：
-[header-password],[header-user],[new-password],[new-user]	setup	zh	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	zh	登录失败：错误的 manage-header 帐户或密码！
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	zh	登录失败：域'%1(%2)'的设置帐户或密码有误！
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	zh	帐户储存库{sql (默认) | ldap},[认证{sql | ldap | mail | ads | http | ...}],[sql 加密方式{md5 | blowfish_crypt | md5_crypt | crypt}],[检查储存密码{ (默认)|True}],[允许通过 cookie 认证{ (默认)|True}]
 accounts existing	setup	zh	帐户已存在
 actions	setup	zh	操作
-activate safe password check	setup	zh	启用安全密码校验
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh	自动添加用户到该组 (如果留空则'默认'添加。)
 add new database instance (egw domain)	setup	zh	添加数据库实例 (EGw 域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh	添加或编辑域：[域名(默认)],[数据库名(egroupware)],[数据库帐号(egroupware)],数据库密码,[数据库类型(mysql)],[数据库主机(localhost)],[数据库端口(据 db 而定)],[用户名(同 header)],[密码(同 header)]
@@ -155,15 +153,12 @@ creating tables	setup	zh	正在创建数据表
 creation of %1 in %2 failed !!!	setup	zh	在 %2 创建 %1 时错误！
 current configuration:	setup	zh	目前设定：
 current system-charset	setup	zh	当前系统字符编码
-current system-charset is %1.	setup	zh	当前系统编码为 %1。
 current version	setup	zh	当前版本号
 currently installed languages: %1 <br />	setup	zh	当前已安装的语言：%1<br />
-cyrus imap: admin user,password	setup	zh	Cyrus IMAP: Admin user,Password
 database	setup	zh	Database
 database instance (egw domain)	setup	zh	数据库实例 (EGw 域)
 database is version %1 and up to date.	setup	zh	数据库版本为 %1 ，是最新版本
 database successfully converted from '%1' to '%2'	setup	zh	已成功将数据库'%1'转换为'%2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	zh	数据库端口。<br />如果使用13号端口，用请在提交之前设置正确的防火墙规则。<br />(例如端口号：13/主机：129.6.15.28)
 day	setup	zh	日
 day of week<br />(0-6, 0=sunday)	setup	zh	每周星期(0-6, 0=星期日)
 db backup and restore	setup	zh	数据库备份与还原
@@ -190,6 +185,8 @@ deregistered	setup	zh	取消注册
 details for admin account	setup	zh	管理员帐户详细信息
 developers' table schema toy	setup	zh	开发人员的表模工具
 did not find any valid db support!	setup	zh	找不到任何合法的数据库支持！
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	zh	只有当您的 AD 在 VLV 控制方面存在问题，并能在一次查询中返回所有用户时，才禁用 VLV 控制！
+disable vlv controls	setup	zh	禁用 VLV 控制
 do you want persistent connections (higher performance, but consumes more resources)	setup	zh	是否要保持连接？(保持连接将提高程序性能, 但是消耗更多资源)
 do you want to manage homedirectory and loginshell attributes?	setup	zh	是否管理主目录和 Loginshell 的属性？
 does not exist	setup	zh	不存在
@@ -221,10 +218,10 @@ enable for extra debug-messages	setup	zh	显示额外的调试信息
 enable mcrypt	setup	zh	启用加密功能
 enter some random text for app session encryption	setup	zh	用于加密应用程序会话的随机字符串
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	zh	用于加密应用程序会话的随机字符串<br />(需安装MCRYPT)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	zh	存放临时文件目录的完整路径.<br />例如: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	zh	存放临时文件目录的完整路径.<br />例如: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	zh	存放用户和组文件的目录的完整路径。<br />例如: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	zh	存放临时文件目录的完整路径.<br />例如: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	zh	存放用户和组文件的目录的完整路径。<br />例如: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	zh	存放用户和组文件的目录的完整路径。<br />例如: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	zh	输入存放备份文件的完整路径：<br />如果空白：一般文件目录
 enter the hostname of the machine on which this server is running	setup	zh	运行该服务器的机器主机名
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	zh	输入EGroupware的网址。<br />例如: http://www.domain.com/egroupware 或 /egroupware<br /><b>末尾不加"/"</b>
@@ -337,8 +334,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	zh	管理应用程序
 manage languages	setup	zh	管理语言
 manual / help	setup	zh	手册 / 帮助
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh	max_execution_time(最大执行时间)设为小于30(秒)：EGroupware有时需要更多的执行时间，特别是无法预期的错误。
 maximum account id (e.g. 65535 or 1000000)	setup	zh	帐户 ID 最大值 (如： 65535 or 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh	max_execution_time(最大执行时间)设为小于30(秒)：EGroupware有时需要更多的执行时间，特别是无法预期的错误。
 may be broken	setup	zh	可能被中断
 mcrypt algorithm (default tripledes)	setup	zh	Mcrypt 加密算法 (默认是 TRIPLEDES)
 mcrypt initialization vector	setup	zh	MCrypt 初始化向量
@@ -353,7 +350,6 @@ modifications have been completed!	setup	zh	修改完成！
 modified	setup	zh	修改
 modify	setup	zh	修改
 month	setup	zh	月
-multi-language support setup	setup	zh	多语言安装支持
 name of database	setup	zh	数据库名
 name of db user egroupware uses to connect	setup	zh	EGroupware 连接的数据库用户名
 never	setup	zh	永不
@@ -383,6 +379,7 @@ one month	setup	zh	一个月
 one week	setup	zh	一周
 only add languages that are not in the database already	setup	zh	仅添加数据库中没有的语言
 only add new phrases	setup	zh	仅添加新的短语
+openidconnect login	setup	zh	OpenIDConnect 登录
 optional, if only authentication and anonymous search is enabled	setup	zh	可选，如果只启用身份验证和匿名搜索
 or	setup	zh	或
 or %1continue to the header admin%2	setup	zh	或是%1继续 Header 管理%2
@@ -430,8 +427,8 @@ read translations from	setup	zh	读取转换信息
 readable by the webserver	setup	zh	网络服务器可读取
 really uninstall all applications	setup	zh	确实卸载所有应用程序
 refusing to delete dn "%1"!	setup	zh	拒绝删除 DN"%1"！
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，EGroupware 不需要这个设定，而且关闭它通常比较安全
 registered	setup	zh	注册
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，EGroupware 不需要这个设定，而且关闭它通常比较安全
 regular expression to filter by dn	setup	zh	通过 DN 过滤的正则表达式
 rejected lines	setup	zh	拒绝的行
 remove	setup	zh	删除
@@ -639,5 +636,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	zh	您的数据表是当前的
 your tables will be dropped and you will lose data	setup	zh	您的数据表将被移除，数据也将全部丢失！
 your temporary directory '%1' %2	setup	zh	您的暂存文件夹 '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	zh	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	zh	{db | php(默认) | php-restore}
 {off(default) | on}	setup	zh	{off(默认) | on}

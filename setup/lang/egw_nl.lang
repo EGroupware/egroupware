@@ -17,13 +17,11 @@
 13 (ntp)	setup	nl	13 (ntp)
 80 (http)	setup	nl	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	nl	<b>te gebruiken karakterset</b> (gebruik UTF-8 indien u van plan bent om talen met verschillende karaktersets te gaan gebruiken):
-[header-password],[header-user],[new-password],[new-user]	setup	nl	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor header beheer!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor het configureren van het domein '%1(%2)'!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	nl	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	nl	Bestaande accounts
 actions	setup	nl	Acties
-activate safe password check	setup	nl	Activeer de veilige wachtwoorden controle
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	nl	Automatisch gecreërde gebruikers toevoegen aan deze groep ('Standaard' wordt gebruikt als dit veld leeg is)
 add new database instance (egw domain)	setup	nl	Voeg een nieuwe database instantie toe (EGw domein)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	nl	Voeg toe of bewerk domein: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -170,17 +168,14 @@ creating tables	setup	nl	Tabellen aanmaken
 creation of %1 in %2 failed !!!	setup	nl	Aanmaken van %1 in %2 mislukt!
 current configuration:	setup	nl	Huidige configuratie:
 current system-charset	setup	nl	Huidige systeem karakterset
-current system-charset is %1.	setup	nl	Huidige systeem karakterset is %1.
 current version	setup	nl	Huidige versie
 currently installed languages: %1 <br />	setup	nl	Op dit moment geinstalleerde talen: %1<br>
 custom handler: %1	setup	nl	Custom handler: %1
 custom set via %1	setup	nl	Custom set via %1
-cyrus imap: admin user,password	setup	nl	Cyrus IMAP: Beheerder gebruiker, Wachtwoord
 database	setup	nl	Database
 database instance (egw domain)	setup	nl	Database instantie (EGw domein)
 database is version %1 and up to date.	setup	nl	Database is versie %1 en actueel
 database successfully converted from '%1' to '%2'	setup	nl	Database is met succes geconverteerd van '%1' naar %'2'
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	nl	Datetime poort.<br>Indien poort 13 gebruikt wordt, stel a.u.b. de firewall regels hiervoor in voordat u deze pagina verzendt.<br>(Poort: 13 / Host: 129.6.15.28)
 day	setup	nl	Dag
 day of week<br />(0-6, 0=sunday)	setup	nl	Dag van de week<br>(0-6, 0=zondag)
 db backup and restore	setup	nl	DB backup en herstel
@@ -207,6 +202,8 @@ deregistered	setup	nl	Gederegistreerd
 details for admin account	setup	nl	Details voor het beheerder account
 developers' table schema toy	setup	nl	Ontwikkelaars' tabelschema speelgoed
 did not find any valid db support!	setup	nl	Geen correcte DB ondersteuning gevonden!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	nl	Alleen uitschakelen als je AD problemen heeft met VLV controles EN alle gebruikers kan retourneren in een enkele query!
+disable vlv controls	setup	nl	VLV-besturingselementen uitschakelen
 do you want persistent connections (higher performance, but consumes more resources)	setup	nl	Wilt u peristent connecties gebruiken (hogere snelheid maar verbruikt meer systeembronnen)
 do you want to manage homedirectory and loginshell attributes?	setup	nl	Wilt u de homedirectory en loginshell attributen beheren?
 does not exist	setup	nl	Bestaat niet
@@ -239,10 +236,10 @@ enable for extra debug-messages	setup	nl	Inschakelen voor extra debug-messages
 enable mcrypt	setup	nl	MCrypt inschakelen
 enter some random text for app session encryption	setup	nl	Vul wat willekeurige tekst in om de toepassingssessie te versleutelen
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	nl	Vul wat willekeurige tekst in om de toepassingssessie te <br>versleutelen (vereist MCrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	nl	Vul het volledige pad naar de tijdelijke bestanden in,<br>Voorbeeld: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	nl	Vul het volledige pad naar de tijdelijke bestanden in,<br>Voorbeeld: /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br>Voorbeelden: /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	nl	Vul het volledige pad naar de tijdelijke bestanden in,<br>Voorbeeld: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br>Voorbeelden: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	nl	Vul het volledige pad naar de gebruikers- en groepsbestanden in. <br>Voorbeelden: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	nl	Vul het volledige pad naar de backup directory in,<br>indien leeg: bestanden directory
 enter the hostname of the machine on which this server is running	setup	nl	Vul de hostnaam in van de machine waarop deze server draait
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	nl	Vul de locatie van EGroupware's URL in.<br>Voorbeeld: http://www.domein.nl/egroupware  of  /egroupware<br><b>Geen afsluitende slash<b>
@@ -361,8 +358,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	nl	Toepassingen beheren
 manage languages	setup	nl	Talen beheren
 manual / help	setup	nl	Handleiding / help
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): EGroupware heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden
 maximum account id (e.g. 65535 or 1000000)	setup	nl	Maximum account id (voorbeeld 65535 of 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): EGroupware heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden
 may be broken	setup	nl	Kan verbroken zijn
 mcrypt algorithm (default tripledes)	setup	nl	MCrypt algoritme (standaard TRIPLEDES)
 mcrypt initialization vector	setup	nl	MCrypt initialisatie vector
@@ -378,7 +375,6 @@ modifications have been completed!	setup	nl	Aanpassingen zijn voltooid!
 modified	setup	nl	Gewijzigd
 modify	setup	nl	Aanpassen
 month	setup	nl	Maand
-multi-language support setup	setup	nl	Meertalige ondersteuning instellen
 name of database	setup	nl	Naam van de database
 name of db user egroupware uses to connect	setup	nl	Naam van de db gebruiker die EGroupware gebruikt om verbinding te maken
 never	setup	nl	Nooit
@@ -409,6 +405,7 @@ one month	setup	nl	Een maand
 one week	setup	nl	Een week
 only add languages that are not in the database already	setup	nl	Uitsluitend talen toevoegen die nog niet in de database aanwezig zijn
 only add new phrases	setup	nl	Alleen nieuwe frasen toevoegen
+openidconnect login	setup	nl	OpenIDConnect-login
 optional, if only authentication and anonymous search is enabled	setup	nl	optioneel, als alleen authenticatie EN anoniem zoeken is ingeschakeld
 or	setup	nl	of
 or %1continue to the header admin%2	setup	nl	of %1Ga door naar de Header Admin%2
@@ -460,8 +457,8 @@ read translations from	setup	nl	Vertalingen lezen uit
 readable by the webserver	setup	nl	Leesbaar door de webserver
 really uninstall all applications	setup	nl	WERKELIJK all toepassingen de-installeren
 refusing to delete dn "%1"!	setup	nl	Weigering om DN "%1" te verwijderen!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	nl	register_globals is ingeschakeld, EGroupware heeft dit niet nodig en het is in het algemeen veiliger om dit uitgeschakeld te houden
 registered	setup	nl	Geregistreerd
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	nl	register_globals is ingeschakeld, EGroupware heeft dit niet nodig en het is in het algemeen veiliger om dit uitgeschakeld te houden
 regular expression to filter by dn	setup	nl	Reguliere expressie om te filteren op DN
 rejected lines	setup	nl	Afgekeurde regels
 remove	setup	nl	Verwijderen
@@ -685,5 +682,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	nl	Uw tabellen zijn actueel
 your tables will be dropped and you will lose data	setup	nl	Uw tabellen worden verwijderd en alle gegevens gaan verloren!
 your temporary directory '%1' %2	setup	nl	Uw tijdelijke directory '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	nl	[header-password],[header-user],[new-password],[new-user]
 {db | php(default) | php-restore}	setup	nl	{db | php(default) | php-restore}
 {off(default) | on}	setup	nl	{off(default) | on}

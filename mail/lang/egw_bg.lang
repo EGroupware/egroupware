@@ -97,6 +97,7 @@ check to receive a notification when the message is read (note: not all clients 
 check to save as calendar event on send	mail	bg	поставете отметка, за да запазите като събитие при изпращане
 check to save as infolog on send	mail	bg	поставете отметка, за да запазите като infolog при изпращане
 check to save as tracker entry on send	mail	bg	поставете отметка, за да запазите като запис за проследяване при изпращане
+checking admin credentials failed	mail	bg	Проверката на пълномощията на администратора се провали
 choose file	mail	bg	Изберете файл
 common acl	mail	bg	Общ ACL
 compose	mail	bg	Ново съобщение
@@ -243,7 +244,7 @@ files	mail	bg	Файлове
 flag / unflag	mail	bg	Маркирай/ Размаркирай с флагче
 flag or unflag a mail	mail	bg	Маркирайте или отмаркирайте имейл с флагче
 flagged	mail	bg	с флагче
-flagged %1 messages as %2 in %3	mail	bg	маркирани %1 съобщение(я) с флагче като %2 в %3
+flagged %1 messages as %2 in %3	mail	bg	маркирани %1 съобщение(я) с флагче като "%2" в %3.
 flagged %1 messages as flagged in %2	mail	bg	маркирани %1 съобщение(я), като "маркирани с флаг" в %2
 flagged %1 messages as unflagged in %2	mail	bg	маркирани %1 съобщение(я), като "размаркирани с флаг" в %2
 flagged / unflagged	mail	bg	Маркирани/ Размаркирани
@@ -336,6 +337,7 @@ mail	common	bg	Поща
 mail acl	mail	bg	Права за достъп
 mail filter	mail	bg	Пощенски филтър
 mail filter rule	mail	bg	Правило за филтриране на пощата
+mail probably has no text-body	mail	bg	Mail вероятно няма текст
 mail settings	mail	bg	Настройки на пощата
 mail source	mail	bg	Източник на поща
 mail-address	mail	bg	Пощенски адрес
@@ -435,6 +437,7 @@ replied	mail	bg	изпратен отговор
 reply	mail	bg	Отговор
 reply all	mail	bg	Отговор до всички
 reply to	mail	bg	Отговор До
+reply with attachments	mail	bg	Отговорете с прикачени файлове
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	bg	Отговорът на това съобщение не е успешен, тъй като съдържанието на това съобщение изглежда е криптирано и не може да бъде декриптирано правилно. Ако все пак желаете да включите съдържанието на това криптирано съобщение, можете да опитате да използвате препращане като прикачен файл вместо това.
 replyto	mail	bg	Отговор До
 report as ham	mail	bg	Докладвайте като Ham

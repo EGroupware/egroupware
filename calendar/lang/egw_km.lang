@@ -23,8 +23,6 @@ accepted	calendar	km	ទទួលយក
 access denied to the calendar of %1 !!!	calendar	km	ការចូលប្រើត្រូវបានបដិសេធចំពោះប្រតិទិននៃ %1 !
 access to calendar of %1 denied!	calendar	km	ការចូលប្រើប្រតិទិននៃ %1 ត្រូវបានបដិសេធ!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	km	សកម្មភាពដែលបណ្តាលឱ្យមានការជូនដំណឹង៖ បន្ថែម លុបចោល ទទួលយក ច្រានចោល...
-actions	calendar	km	សកម្មភាព
-actions...	calendar	km	សកម្មភាព...
 add alarm	calendar	km	បន្ថែមសំឡេងរោទិ៍
 add appointments via shortened dialog or complete edit window	calendar	km	បន្ថែមការណាត់ជួបតាមរយៈប្រអប់ខ្លី ឬបំពេញបង្អួចកែសម្រួល
 add current view as favorite	calendar	km	បន្ថែមទិដ្ឋភាពបច្ចុប្បន្នជាចំណូលចិត្ត
@@ -45,7 +43,6 @@ alarm deleted	calendar	km	សំឡេងរោទិ៍ត្រូវបាន
 alarm for %1 at %2 in %3	calendar	km	ការជូនដំណឹងសម្រាប់ %1 នៅ %2 ក្នុង %3
 alarm management	calendar	km	ការគ្រប់គ្រងសំឡេងរោទិ៍
 alarms	calendar	km	សំឡេងរោទិ៍
-all categories	calendar	km	ប្រភេទ​ទាំងអស់
 all day	calendar	km	ពេញមួយថ្ងៃ
 all events	calendar	km	ព្រឹត្តិការណ៍ទាំងអស់
 all exceptions are converted into single events.	calendar	km	ការលើកលែងទាំងអស់ត្រូវបានបំប្លែងទៅជាព្រឹត្តិការណ៍តែមួយ។
@@ -244,7 +241,6 @@ exports events from your calendar in ical format.	calendar	km	នាំចេញ
 exports events from your calendar into a csv file.	calendar	km	នាំចេញព្រឹត្តិការណ៍ពីប្រតិទិនរបស់អ្នកទៅជាឯកសារ CSV ។
 extended	calendar	km	ពង្រីក
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	km	ការអាប់ដេតបន្ថែមតែងតែរួមបញ្ចូលព័ត៌មានលម្អិតនៃព្រឹត្តិការណ៍។ iCal អាច​ត្រូវ​បាន​នាំ​ចូល​ដោយ​កម្មវិធី​ប្រតិទិន​ផ្សេង​ទៀត។
-favorites	calendar	km	ចំណូលចិត្ត
 fieldseparator	calendar	km	អ្នកបំបែកវាល
 filemanager	calendar	km	កម្មវិធី​គ្រប់​គ្រង​ឯកសារ
 filename	calendar	km	ឈ្មោះ​ឯកសារ
@@ -511,8 +507,6 @@ search string for the events	calendar	km	ស្វែងរកខ្សែអក
 select a %1	calendar	km	ជ្រើសរើស %1
 select a color for this calendar	calendar	km	ជ្រើសរើសពណ៌សម្រាប់ប្រតិទិន
 select a time	calendar	km	ជ្រើសរើសពេលវេលាមួយ។
-select an action	calendar	km	ជ្រើសរើសសកម្មភាព
-select an action...	calendar	km	ជ្រើសរើសសកម្មភាព...
 select multiple contacts for a further action	calendar	km	ជ្រើសរើសទំនាក់ទំនងច្រើនសម្រាប់សកម្មភាពបន្ថែម
 select resources	calendar	km	ជ្រើសរើសធនធាន
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	km	ជ្រើសរើសថាតើអ្នកចង់ឱ្យស្ថានភាពអ្នកចូលរួមកំណត់ឡើងវិញទៅជាមិនស្គាល់ ប្រសិនបើព្រឹត្តិការណ៍មួយត្រូវបានផ្លាស់ប្តូរនៅពេលក្រោយ។ សម្រាប់ផ្នែកខាងក្រៅ យើងតែងតែកំណត់ស្ថានភាពអ្នកចូលរួមឡើងវិញទៅជាមិនស្គាល់។

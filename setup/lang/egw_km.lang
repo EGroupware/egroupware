@@ -15,8 +15,8 @@
 %1 not allowed to create in univention.	setup	km	%1 មិនអនុញ្ញាតឱ្យបង្កើតនៅក្នុង Univention ទេ។
 %1 password set in %2.	setup	km	ពាក្យសម្ងាត់ %1 បានកំណត់ក្នុង %2 ។
 %1 passwords updated, %3 errors	setup	km	%1 បានធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់ %3 កំហុស
-%1 users and %2 groups created, %3 errors	setup	km	អ្នកប្រើប្រាស់ %1 និងក្រុម %2 បានបង្កើត %3 កំហុស។
 %1 the configuration file.	setup	km	%1 ឯកសារកំណត់រចនាសម្ព័ន្ធ។
+%1 users and %2 groups created, %3 errors	setup	km	អ្នកប្រើប្រាស់ %1 និងក្រុម %2 បានបង្កើត %3 កំហុស។
 '%1' is no valid domain name!	setup	km	'%1' មិនមែនជាឈ្មោះដែនត្រឹមត្រូវទេ!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	km	'%1' មិនត្រូវបានអនុញ្ញាតជា%2 អាគុយម៉ង់នៃជម្រើស%3 !!!
 '%1' must be integer	setup	km	%1 ត្រូវតែជាតម្លៃចំនួនគត់។
@@ -28,13 +28,11 @@
 80 (http)	setup	km	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	km	<b>សំណុំតួអក្សរដែលត្រូវប្រើ។</b> ប្រើ utf-8 ប្រសិនបើអ្នកមានគម្រោងប្រើភាសាដែលមានតួអក្សរផ្សេងៗគ្នា៖
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	km	==> ក្រុមផ្សេងគ្នា '%1' នៅក្រោម gidNumber %2 មិនកំណត់សមាជិកភាពទេ!
-[header-password],[header-user],[new-password],[new-user]	setup	km	[header-password], [header-user], [new-password], [new-user]
 access denied: wrong username or password for manage-header !!!	setup	km	ការចូលប្រើត្រូវបានបដិសេធ៖ ឈ្មោះអ្នកប្រើខុស ឬពាក្យសម្ងាត់សម្រាប់ការគ្រប់គ្រងបឋមកថា !
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	km	ការចូលប្រើត្រូវបានបដិសេធ៖ ឈ្មោះអ្នកប្រើខុស ឬពាក្យសម្ងាត់ដើម្បីកំណត់រចនាសម្ព័ន្ធដែន '%1(%2)' !
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	km	ឃ្លាំងគណនី{sql(លំនាំដើម) | ldap},[ការផ្ទៀងផ្ទាត់{sql | ldap | សំបុត្រ | ពាណិជ្ជកម្ម | http | ... }],[sql encryption{sha512_crypt(default) | sha256_crypt | blowfish_crypt | md5_crypt | ssha | smd5 | គ្រីប | md5}],[ពិនិត្យរក្សាទុកពាក្យសម្ងាត់{ (លំនាំដើម)|ពិត}],[អនុញ្ញាតការផ្ទៀងផ្ទាត់ខូគី{ (លំនាំដើម)|ពិត}]
 accounts existing	setup	km	គណនីដែលមានស្រាប់
 actions	setup	km	សកម្មភាព
-activate safe password check	setup	km	បើកដំណើរការការត្រួតពិនិត្យពាក្យសម្ងាត់សុវត្ថិភាព
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	km	បន្ថែមអ្នកប្រើប្រាស់ដែលបង្កើតដោយស្វ័យប្រវត្តិទៅក្នុងក្រុមនេះ ('លំនាំដើម' នឹងត្រូវបានព្យាយាមប្រសិនបើវាទទេ។ )
 add new database instance (egw domain)	setup	km	បន្ថែមឧទាហរណ៍មូលដ្ឋានទិន្នន័យថ្មី (ដែន EGw)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	km	បន្ថែម ឬកែសម្រួលដែន៖ [ឈ្មោះដែន(លំនាំដើម)], [db-name(egroupware)], [db-user(egroupware)], db-password, [db-type(mysql)], [db-host (localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
@@ -158,8 +156,6 @@ checking dependencies: %1 packages are installed in the required version.	setup	
 checking extension %1 is loaded or loadable	setup	km	ការពិនិត្យមើលផ្នែកបន្ថែម%1 គឺត្រូវបានផ្ទុក ឬអាចផ្ទុកបាន។
 checking file-permissions of %1 for %2 %3: %4	setup	km	កំពុងពិនិត្យមើលការអនុញ្ញាតឯកសារនៃ%1 សម្រាប់ %2 %3: % 4
 checking for gd support...	setup	km	កំពុងពិនិត្យមើលការគាំទ្រ GD...
-checking for jpgraph in %1	setup	km	កំពុងពិនិត្យរក JPGraph ក្នុង%1
-checking for tnef application	setup	km	កំពុងពិនិត្យមើលកម្មវិធី tnef
 checking function %1 exists	setup	km	កំពុង​ពិនិត្យ​មើល​មុខងារ%1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	km	កំពុងពិនិត្យមើលថាតើការកំណត់ php.ini session.save_path='%1' អាចត្រូវបានសរសេរដោយម៉ាស៊ីនមេគេហទំព័រ
 checking package %1 is installed	setup	km	ការពិនិត្យមើលកញ្ចប់%1 ត្រូវបានដំឡើង
@@ -212,20 +208,17 @@ creating tables	setup	km	ការបង្កើតតារាង។
 creation of %1 in %2 failed !!!	setup	km	ការបង្កើត%1 ក្នុង%2 បានបរាជ័យ!
 current configuration:	setup	km	ការកំណត់រចនាសម្ព័ន្ធបច្ចុប្បន្ន៖
 current system-charset	setup	km	សំណុំតួអក្សរប្រព័ន្ធបច្ចុប្បន្ន
-current system-charset is %1.	setup	km	សំណុំតួអក្សរប្រព័ន្ធបច្ចុប្បន្នគឺ%1។
 current version	setup	km	កំណែបច្ចុប្បន្ន
 currently installed languages: %1 <br />	setup	km	ភាសាដែលបានដំឡើងបច្ចុប្បន្ន៖ %1 <br />
 custom handler: %1	setup	km	កម្មវិធីគ្រប់គ្រងផ្ទាល់ខ្លួន៖%1
 custom oid	setup	km	OID ផ្ទាល់ខ្លួន
 custom set via %1	setup	km	កំណត់ផ្ទាល់ខ្លួនតាមរយៈ%1
-cyrus imap: admin user,password	setup	km	Cyrus IMAP៖ អ្នកប្រើប្រាស់អ្នកគ្រប់គ្រង ពាក្យសម្ងាត់
 daily	setup	km	ប្រចាំថ្ងៃ
 database	setup	km	មូលដ្ឋានទិន្នន័យ
 database instance (egw domain)	setup	km	មូលដ្ឋានទិន្នន័យឧទាហរណ៍ (ដែន EGw)
 database is version %1 and up to date.	setup	km	មូលដ្ឋានទិន្នន័យគឺកំណែ%1 និងចុងក្រោយបង្អស់។
 database successfully converted from '%1' to '%2'	setup	km	មូលដ្ឋានទិន្នន័យត្រូវបានបម្លែងដោយជោគជ័យពី '%1' ទៅ '%2'
 datebase %1 droped.	setup	km	មូលដ្ឋានទិន្នន័យ%1 បានធ្លាក់ចុះ។
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	km	ច្រកពេលវេលាកាលបរិច្ឆេទ។<br />ប្រសិនបើប្រើច្រក 13 សូមកំណត់ច្បាប់ជញ្ជាំងភ្លើងឱ្យបានត្រឹមត្រូវមុនពេលបញ្ជូនទំព័រនេះ។<br />(ច្រក: 13 / ម៉ាស៊ីន: 129.6.15.28)
 day	setup	km	ថ្ងៃ
 day of week<br />(0-6, 0=sunday)	setup	km	ថ្ងៃនៃសប្តាហ៍<br />(0 - 6, 0 = ថ្ងៃអាទិត្យ)
 db backup and restore	setup	km	ការបម្រុងទុកនិងស្តារ DB
@@ -296,10 +289,10 @@ enable mcrypt	setup	km	បើកដំណើរការ MCrypt
 enforce ssl (allows to specify just a path above)	setup	km	ពង្រឹង SSL (អនុញ្ញាតឱ្យបញ្ជាក់ផ្លូវខាងលើ)
 enter some random text for app session encryption	setup	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ការអ៊ិនគ្រីបសម័យកម្មវិធី
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	km	បញ្ចូលអត្ថបទចៃដន្យមួយចំនួនសម្រាប់ app_session <br /> encryption (ទាមទារ mcrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br />ឧទាហរណ៍៖ /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br />ឧទាហរណ៍៖ /tmp, C:\TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br />ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់ឯកសារបណ្តោះអាសន្ន។<br />ឧទាហរណ៍៖ /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:files	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br />ឧទាហរណ៍៖ /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	km	បញ្ចូលផ្លូវពេញលេញសម្រាប់អ្នកប្រើប្រាស់ និងឯកសារក្រុម។<br />ឧទាហរណ៍៖ /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	km	បញ្ចូលផ្លូវពេញលេញទៅកាន់ថតចម្លង។<br />ប្រសិនបើទទេ៖ ថតឯកសារ
 enter the hostname of the machine on which this server is running	setup	km	បញ្ចូលឈ្មោះម៉ាស៊ីនរបស់ម៉ាស៊ីនដែលម៉ាស៊ីនមេនេះកំពុងដំណើរការ
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	km	បញ្ចូលទីតាំង URL របស់ EGroupware។<br />ឧទាហរណ៍៖ http://www.domain.com/egroupware ឬ /egroupware<br /><b>គ្មានសញ្ញាបន្តបន្ទាប់</b>
@@ -436,7 +429,6 @@ login to mysql -	setup	km	ចូលទៅ mysql -
 loginname needed for domain configuration	setup	km	ឈ្មោះចូលដែលត្រូវការសម្រាប់ការកំណត់រចនាសម្ព័ន្ធដែន
 logout	setup	km	ចាកចេញ
 logs to	setup	km	កំណត់ហេតុទៅ
-mail account of %1 migraged	setup	km	គណនីអ៊ីមែលនៃ%1 ត្រូវបានផ្ទេរ
 mail account of %1 migrated	setup	km	គណនីអ៊ីមែលនៃ%1 ត្រូវបានផ្ទេរ
 mail domain (for virtual mail manager)	setup	km	ដែនសំបុត្រ (សម្រាប់អ្នកគ្រប់គ្រងអ៊ីមែលនិម្មិត)
 mail server login type	setup	km	ប្រភេទចូលម៉ាស៊ីនមេ
@@ -446,8 +438,8 @@ manage applications	setup	km	គ្រប់គ្រងកម្មវិធី
 manage languages	setup	km	គ្រប់គ្រងភាសា
 manual / help	setup	km	សៀវភៅដៃ | ជំនួយ
 match saml usernames to existing ones (use strings or regular expression)	setup	km	ផ្គូផ្គងឈ្មោះអ្នកប្រើប្រាស់ SAML ទៅនឹងឈ្មោះដែលមានស្រាប់ (ប្រើខ្សែអក្សរ ឬកន្សោមធម្មតា)
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	km	max_execution_time ត្រូវបានកំណត់តិចជាង 30 (វិនាទី)៖ ជួនកាល EGroupware ត្រូវការពេលវេលាប្រតិបត្តិខ្ពស់ជាងមុន រំពឹងថានឹងមានការបរាជ័យម្តងម្កាល
 maximum account id (e.g. 65535 or 1000000)	setup	km	លេខសម្គាល់គណនីអតិបរមា (ឧទាហរណ៍ 65535 ឬ 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	km	max_execution_time ត្រូវបានកំណត់តិចជាង 30 (វិនាទី)៖ ជួនកាល EGroupware ត្រូវការពេលវេលាប្រតិបត្តិខ្ពស់ជាងមុន រំពឹងថានឹងមានការបរាជ័យម្តងម្កាល
 may be broken	setup	km	អាចនឹងខូច
 mcrypt algorithm (default tripledes)	setup	km	ក្បួនដោះស្រាយ Mcrypt (លំនាំដើម TRIPLEDES)
 mcrypt initialization vector	setup	km	វ៉ិចទ័រចាប់ផ្តើម MCrypt
@@ -468,7 +460,6 @@ modify	setup	km	កែប្រែ
 month	setup	km	ខែ
 more information	setup	km	ព័ត៌មាន​បន្ថែម
 mount backup directory to %1	setup	km	ដំឡើងថតចម្លងទៅ%1
-multi-language support setup	setup	km	ការដំឡើងការគាំទ្រពហុភាសា
 name for service provider	setup	km	ឈ្មោះសម្រាប់អ្នកផ្តល់សេវា
 name of database	setup	km	ឈ្មោះមូលដ្ឋានទិន្នន័យ
 name of db user egroupware uses to connect	setup	km	ឈ្មោះអ្នកប្រើប្រាស់ db EGroupware ប្រើដើម្បីភ្ជាប់
@@ -558,8 +549,8 @@ read translations from	setup	km	អានការបកប្រែពី
 readable by the webserver	setup	km	អាចអានបានដោយម៉ាស៊ីនមេគេហទំព័រ
 really uninstall all applications	setup	km	ពិត​ជា​លុប​កម្មវិធី​ទាំង​អស់
 refusing to delete dn "%1"!	setup	km	បដិសេធមិនលុប dn "%1"!
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	km	register_globals ត្រូវបានបើក EGroupware មិនទាមទារវាទេ ហើយជាទូទៅវាកាន់តែមានសុវត្ថិភាពក្នុងការបិទវា
 registered	setup	km	បានចុះឈ្មោះ
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	km	register_globals ត្រូវបានបើក EGroupware មិនទាមទារវាទេ ហើយជាទូទៅវាកាន់តែមានសុវត្ថិភាពក្នុងការបិទវា
 rejected lines	setup	km	បន្ទាត់ដែលបដិសេធ
 remove	setup	km	ដកចេញ
 remove all	setup	km	ដក​ចេញ​ទាំង​អស់
@@ -826,5 +817,6 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	km	តារាងរបស់អ្នកគឺបច្ចុប្បន្ន
 your tables will be dropped and you will lose data	setup	km	តារាងរបស់អ្នកនឹងត្រូវទម្លាក់ ហើយអ្នកនឹងបាត់បង់ទិន្នន័យ!
 your temporary directory '%1' %2	setup	km	ថតបណ្តោះអាសន្នរបស់អ្នក '%1' %2
+[header-password],[header-user],[new-password],[new-user]	setup	km	[header-password], [header-user], [new-password], [new-user]
 {db | php(default) | php-restore}	setup	km	{db | php (លំនាំដើម) | php-restore}
 {off(default) | on}	setup	km	{បិទ (លំនាំដើម) | បើក}

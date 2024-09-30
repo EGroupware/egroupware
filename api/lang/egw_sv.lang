@@ -3,14 +3,11 @@
 %1 email addresses inserted	common	sv	%1 e-postadresser tillagda.
 %1 email(s) added into %2	common	sv	%1 e-postmeddelande(n) tillagda i %2
 %1 etemplates deleted	common	sv	%1 eTemplate raderad.
-%1 etemplates for application '%2' dumped to '%3'	common	sv	%1 eTemplate för applikation '%2' skriven till '%3'
 %1 etemplates found	common	sv	Hittade %1 eTemplate.
 %1 file	common	sv	%1 fil
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
-%1 matches on search criteria	common	sv	%1 resultat hittade på sökning
 %1 more %2 selected ...	common	sv	%1 fler %2 valda ...
 %1 more...	common	sv	%1 mer ...
-%1 new etemplates imported for application '%2'	common	sv	%1 nya eTemplate importerade för applikation '%2'
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br> eller gör %3 skrivbar för webbservern.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1EGroupware%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 %s disabled	common	sv	%s Inaktiverad
@@ -18,13 +15,16 @@
 %s notranslation	common	sv	%s Inte översatt
 %s onchange	common	sv	%s onchange
 %s readonly	common	sv	%s Skrivskyddad
-'%1' copied to clipboard	common	sv	"%1" kopieras till urklipp
+'%1' copied to clipboard	common	sv	%1 kopieras till urklipp
+'%1' does not match the required pattern '%2'	common	sv	'%1' stämmer inte överens med det önskade mönstret ('%2')
 '%1' has an invalid format	common	sv	'%1' har ett ogiltigt format
 '%1' has an invalid format !!!	common	sv	'%1' har ett ogiltigt format!
+'%1' is not a valid app-name ('%2')!	common	sv	'%1' är INTE ett giltigt appnamn ('%2')!
 '%1' is not a valid date !!!	common	sv	'%1' är ett ogiltigt datum!
 '%1' is not a valid floatingpoint number !!!	common	sv	'%1' är inte ett giltigt flyttalsnummer!
 '%1' is not a valid integer !!!	common	sv	'%1' är inte ett giltig heltal!
 '%1' is not a valid json file!	common	sv	'%1' är inte en giltig JSON-fil
+'%1' must not contain (back)slashes!	common	sv	'%1' får inte innehålla (bak)snedstreck!
 (session restored in %1 seconds)	common	sv	Sessionen återställs om %1 sekunder.
 00 (disable)	admin	sv	00 (inaktivera)
 1 day	common	sv	1 dag
@@ -215,6 +215,7 @@ chad	common	sv	TCHAD
 change	common	sv	Ändra
 change owner	common	sv	Byt ägare
 changed	common	sv	Ändrad
+changes that you made may not be saved.	common	sv	Ändringar som du har gjort kanske inte sparas.
 charset	common	sv	Charset
 check all	common	sv	Markera alla
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	sv	Kontrollera om det finns tomma värden i IF-satser. Exempel {{IF url~EMPTY~~Webbplats:}} - Om url inte är tom, skriv "Webbplats:"
@@ -826,6 +827,7 @@ open	common	sv	Öppen
 open existing contact	common	sv	Öppna befintlig kontakt
 open notify window	common	sv	Öppna meddelande fönster
 open popup window	common	sv	Öppna popup fönster
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sv	OpenIDConnect-inloggningen lyckades, men användaren '%1' finns INTE i EGroupware, OCH automatiskt skapande av användare är inaktiverat!
 operator	common	sv	Operator
 optional note about the link	common	sv	Frivillig anteckning om länken
 options	common	sv	Alternativ
@@ -913,7 +915,6 @@ puerto rico	common	sv	PUERTO RICO
 qatar	common	sv	QUATAR
 radiobutton	common	sv	Radioknapp
 read	common	sv	Läs
-read a list of entries.	common	sv	Läs lista av poster.
 read a single entry by passing the id and fieldlist.	common	sv	Ange ID och fältlista för att läsa post.
 read etemplate from database (for the keys above)	common	sv	Läs eTemplate från databas (för ovanstående nycklar)
 read this list of methods.	common	sv	Läs lista på metoder
@@ -1056,12 +1057,12 @@ show page generation time?	common	sv	Visa sidans genereringstid
 show password	common	sv	Visa lösenord
 show values	common	sv	Visa värden
 show/hide	common	sv	Visa/dölj sidofältet
-show_more_apps	common	sv	Visa fler applikationer
 showing	common	sv	Visar
 showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
 shows / allows you to enter values into the etemplate for testing	common	sv	Visar / låter dig ange värden till eTemplate för testning
 shows/displays etemplate for testing, does not save it before	common	sv	visar eTemplate för testning, spara INTE före
+show_more_apps	common	sv	Visa fler applikationer
 sierra leone	common	sv	SIERRA LEONE
 sign up	common	sv	Registrera dig
 singapore	common	sv	SINGAPORE
@@ -1210,7 +1211,6 @@ wednesday	common	sv	Onsdag
 weekend	common	sv	Helg
 welcome	common	sv	Välkommen
 western sahara	common	sv	VÄSTRA SAHARA
-what color should all the blank space on the desktop have	common	sv	Vilken färg ska alla blanka utrymmen på skrivbordet ha?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sv	Vad händer med innehålls "overflow": synligt (default), göms, skroll, auto (browser bestämmer)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper

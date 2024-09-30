@@ -1,23 +1,16 @@
-%1 added	addressbook	sv	%1 skapad
 %1 contact(s) %2	addressbook	sv	%1 kontakt(er) %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	sv	%1 kontakt(er) %2, %3 misslyckades på grund av %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	sv	%1 kontakt(er) %2,%3 misslyckades pga otillräckliga rättigheter!
 %1 contacts updated (%2 errors).	addressbook	sv	%1 kontakter uppdaterade (%2 fel).
 %1 fields in %2 other organisation member(s) changed	addressbook	sv	%1 fält i %2 andra organisations medlemm(ar) ändrade.
 %1 key(s) added to public keyserver "%2".	addressbook	sv	%1 nyckel(ar) tillagd till publik nyckelserver "%2".
-%1 not implemented for %2!	addressbook	sv	%1 inte implementerad för %2!
 %1 public keys added.	addressbook	sv	%1 offentliga nycklar tillagda.
-%1 records imported	addressbook	sv	%1 poster importerade.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sv	%1 poster lästa (inte importerade ännu, du kan gå %2tillbaka%3 och kryssa ur "Testa Import").
 %1 shared this contact on %2 with %3 %4	addressbook	sv	%1 delade den här kontakten på %2 med %3 %4
 %1 starts with '%2'	addressbook	sv	%1 börjar med '%2'
 (e.g. 1969)	addressbook	sv	(ex.1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sv	<b> Ingen konverteringstyp <ingen> kunde hittas.</b> Var snäll och välj konverteringstyp från listan
 @-eval() is only availible to admins!!!	addressbook	sv	@-eval() är endast tillgängligt för administratörer!
 account repository	admin	sv	Kontaktdatabas
-accounts	addressbook	sv	Konton
-actions	addressbook	sv	Åtgärder
-add %1	addressbook	sv	Lägg till %1
 add a contact to this organisation	addressbook	sv	Lägg till kontakt till organisationen
 add a new contact	addressbook	sv	Lägg till ny kontakt
 add a single entry by passing the fields.	addressbook	sv	Lägg till en enstaka post genom att fylla i fälten
@@ -42,7 +35,6 @@ addressbook preferences	addressbook	sv	Adressbok alternativ
 addressbook the contact should be saved to	addressbook	sv	Adressbok kontakten skall sparas till
 addressbook-fieldname	addressbook	sv	Adressbok fältnamn
 addvcard	addressbook	sv	Lägg till vCard
-advanced search	addressbook	sv	Avanserad sökning
 all addressbooks	addressbook	sv	Alla adressböcker
 all contacts	addressbook	sv	Alla kontakter
 all types	addressbook	sv	Alla typer
@@ -173,7 +165,6 @@ exports contacts from your addressbook into a csv file. csv means 'comma separat
 extra	addressbook	sv	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	sv	kunde inte ändra %1 organisationens medlemmar (otillräckliga rättigheter)
 favorite phone	addressbook	sv	Favorit-telefon
-favorites	addressbook	sv	Favoriter
 fax	addressbook	sv	Telefax
 fax number	common	sv	Faxnummer
 field %1 has been added !	addressbook	sv	Fält %1 har lagts till!
@@ -314,7 +305,6 @@ public key	addressbook	sv	Publik kryptonyckel
 public sharing url	addressbook	sv	URL för offentlig delning
 publish into groups:	addressbook	sv	Publicera i grupperna:
 read a list / search for entries.	addressbook	sv	Titta på lista/sök efter poster.
-read a list of entries.	addressbook	sv	Läs lista över poster.
 read a single entry by passing the id and fieldlist.	addressbook	sv	Läs en enstaka post genom att ange ID och fältlista.
 read only	addressbook	sv	Skrivskyddad
 record access	addressbook	sv	Åtkomst till posten

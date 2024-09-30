@@ -22,10 +22,7 @@
 %1 token %2.	admin	nl	%1 token %2.
 %1 user %2	admin	nl	%1 gebruiker %2
 (de)activate mail accounts	admin	nl	(De)Activeer mailaccounts
-(default no, leave it off if you dont use it)	admin	nl	(standaard Nee, laat dit uit als je het niet gebruikt)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	nl	(imapclass moet deze functie ondersteunen door de corresponderende config-waarde op te vragen en door te geven als standaardquota aan de IMAP-server)
 (no subject)	admin	nl	(geen onderwerp)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	(Gebruik <a href="setup/" target="setup">Setup</a>[Beheer toepassingen] om nieuwe toepassingen te installeren.)
 -  type	admin	nl	- type
 1 year	admin	nl	1 jaar
 2 month	admin	nl	2 maanden
@@ -33,6 +30,7 @@
 2-factor-authentication for interactive login	admin	nl	2-Factor-Authenticatie voor interactief inloggen
 3 month	admin	nl	3 maanden
 6 month	admin	nl	6 maanden
+access control	admin	nl	Toegangsrechten wijzigen
 access token revoked.	admin	nl	Toegangstoken ingetrokken.
 account	admin	nl	Account
 account %1 %2	admin	nl	Account %1 %2
@@ -70,6 +68,9 @@ add new email address:	admin	nl	Voeg nieuw emailadres toe:
 add peer server	admin	nl	Peer-server toevoegen
 add profile	admin	nl	Profiel toevoegen
 add sub-category	admin	nl	Subcategorieën toevoegen
+add to group	admin	nl	Toevoegen aan groep
+add user	admin	nl	Gebruiker toevoegen
+add user or group	admin	nl	Gebruiker of groep toevoegen
 admin dn	admin	nl	Admin DN
 admin email	admin	nl	Emailadres beheerder
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	nl	Emailadressen beheerder (gescheiden door komma's) om gewaarschuwd te worden blokkeringen (laat leeg om geen notificaties te sturen)
@@ -85,6 +86,7 @@ all records and account information will be lost!	admin	nl	Alle records en gebru
 all users	admin	nl	Alle gebruikers
 allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot deze toepassing
 allow remote administration from following install id's (comma separated)	admin	nl	Sta beheer of afstand toe vanaf de volgende installatie IDs (komma gescheiden)
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	nl	Sta de gebruiker toe om zijn wachtwoord op te slaan onder 'Beveiliging & wachtwoorden' voor SingleSignOn.
 alternate email address	admin	nl	Alternatief emailadres
 anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
@@ -117,19 +119,16 @@ asyncservices not yet installed or other error (%1) !!!	admin	nl	Asynchrone serv
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	nl	Het juiste MIME-type proberen te gebruiken in plaats van de standaard 'application/octet-stream'
 authentication / accounts	admin	nl	Authenticatie / Accounts
 auto create account records for authenticated users	admin	nl	Automatisch accounts aanmaken for geauthenticeerde gebruikers
-back to admin/grouplist	admin	nl	Terug naar Beheer/Groepslijst
-back to admin/userlist	admin	nl	Terug naar Beheer/Gebruikerslijst
-back to the list	admin	nl	Terug naar de lijst
 bad login name or password.	admin	nl	Ongeldige login of paswoord
 bad or malformed request. server responded: %s	admin	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
 bad request: %s	admin	nl	Slechte vraag: %s
 bi-dir passthrough	admin	nl	bi-directionele doorgave
 bi-directional	admin	nl	bi-directioneel
 bottom	admin	nl	Onderaan
+bulk changes	admin	nl	Bulkwijzigingen
+bulk password reset	admin	nl	Bulk wachtwoord opnieuw instellen
 calculate next run	admin	nl	Volgende uitvoer berekenen
-can be used by application	admin	nl	Kan gebruikt worden door toepassing
-can be used by group	admin	nl	Kan gebruikt worden door groep
-can be used by user	admin	nl	Kan door gebruiker gebruikt worden
+can be used to show groups by container, if enabled	admin	nl	Kan worden gebruikt om groepen per container te tonen, indien ingeschakeld
 can change password	admin	nl	Kan wachtwoord wijzigen
 cancel testjob!	admin	nl	Annuleer testtaak!
 categories list	admin	nl	Categorieënlijst
@@ -149,6 +148,7 @@ click to select a color	admin	nl	Klik om een kleur te kiezen
 color	admin	nl	Kleur
 command scheduled to run at %1	admin	nl	Command is gepland om om %1 uitgevoerd te worden
 connection dropped by imap server.	admin	nl	Verbinding viel uit door IMAP server
+container	admin	nl	Container
 continue	admin	nl	Doorgaan
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	nl	Cook domein (standaard leeg wat betekent dat de volledige domeinnaam gebruikt wordt. Voorbeeld: ".domein.nl" maakt het mogelijk om hetzelfde cookie te gebruiken voor verschillende subdomeinen als egw.domein.nl en www.domein.nl.
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	nl	Cookie pad (maakt het mogelijk om meerdere EGroupware sessies in verschillende directories te gebruiken. Dit geeft problemen met SiteMgr!
@@ -218,12 +218,6 @@ display	admin	nl	Weergave
 displaying html messages is disabled	admin	nl	Weergeven van HTML berichten is uitgeschakeld
 displaying plain messages is disabled	admin	nl	Weergeven standaard vericht is uitgeschakeld
 do not delete the category and return back to the list	admin	nl	De categorie NIET verwijderen en terugkeren naar de lijst
-do not validate certificate	admin	nl	Het certificaat niet valideren
-do you also want to delete all global subcategories ?	admin	nl	Wilt u tevens alle globale subcategorieën verwijderen?
-do you really want to delete this profile	admin	nl	Weet u zeker dat u dit profiel wilt verwijderen
-do you really want to reset the filter for the profile listing	admin	nl	Wilt u werkelijk het filter voor de profielenlijst opnieuw instellen
-do you want to delete all global subcategories ?	admin	nl	Wilt u  alle globale subcategorieën verwijderen?
-do you want to move all global subcategories one level down ?	admin	nl	Wilt u alle globale subcategorieën een niveau naar beneden verplaatsen?
 document root (default)	admin	nl	Document root (standaard)
 domainname	admin	nl	Domeinnaam
 down	admin	nl	Omlaag
@@ -318,6 +312,7 @@ group ?	admin	nl	Groep?
 group has been added	common	nl	Groep is toegevoegd.
 group has been deleted	common	nl	Groep is verwijderd.
 group has been updated	common	nl	Groep is bijgewerkt.
+group hierarchy	admin	nl	Groep hiërarchie
 group list	admin	nl	Groepenlijst
 group manager	admin	nl	Groepsmanager
 group name	admin	nl	Groepsnaam
@@ -488,6 +483,7 @@ quota size in mbyte	admin	nl	Quota grootte in MByte
 re-enter password	admin	nl	Wachtwoord opnieuw invoeren
 read this list of methods.	admin	nl	Lees deze lijst met methodes.
 register application hooks	admin	nl	Registreer alle toepassingsproblemen
+regular expression to find part to use as container	admin	nl	Reguliere expressie om onderdeel te vinden om als container te gebruiken
 remote administration instances	admin	nl	Afstandbeheer  instanties
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	nl	Afstandbeheer moet ingeschakeld zijn in de afstand instantie onder Admin -> Site configuratie!
 remote instance saved	admin	nl	Afstandbeheer instantie opgeslagen
@@ -530,6 +526,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	nl	Toegangslogboek weergeven
 show current action	admin	nl	Huidige actie weergeven
 show error log	admin	nl	Foutenlogboek weergeven
+show groups in container based on	admin	nl	Groepen in container weergeven op basis van
 show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven
 show session ip address	admin	nl	Geef  Sessie IP-adres weer
 sieve server hostname or ip address	admin	nl	Sieve-serverhostnaam of IP-adres
@@ -653,10 +650,8 @@ you must add at least 1 permission or group to this account	admin	nl	U moet op z
 you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.
 you must enter a lastname	admin	nl	U moet een achternaam invoeren.
 you must enter a loginid	admin	nl	U moet een loginnaam invoeren.
-you must enter an application name and title.	admin	nl	U moet een toepassingsnaam en -titel invoeren.
 you must enter an application name.	admin	nl	U moet een toepassingsnaam invoeren.
 you must enter an application title.	admin	nl	U moet een toepassingstitel invoeren.
-you must select a file type	admin	nl	U moet een bestandstype invoeren
 you must select at least one group member.	admin	nl	U moet tenminse één groepslid selecteen.
 you need to enter install id and password!	admin	nl	U moet het installatie ID EN wachtwoord invoeren!
 you will need to remove the subcategories before you can delete this category	admin	nl	U moet eerst de subcategorieën verwijderen voordat u deze bovenliggende categorie kunt verwijderen!

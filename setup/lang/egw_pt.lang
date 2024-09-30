@@ -122,12 +122,10 @@ created	setup	pt	Criado
 created header.inc.php!	setup	pt	header.inc.php criado!
 creating tables	setup	pt	A criar tabelas
 current system-charset	setup	pt	Charset de sistema actual
-current system-charset is %1.	setup	pt	O charset de sistema actual é %1.
 current version	setup	pt	Versão actual
 currently installed languages: %1 <br />	setup	pt	Idiomas instalados actualmente: %1<br>
 database instance (egw domain)	setup	pt	Instância da base de dados (domínio do EGroupware)
 database successfully converted from '%1' to '%2'	setup	pt	A base de dados foi convertida de'%1' para '%2' com sucesso
-datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pt	Porto Datetime.<br>Se utilizar o porto 13, por favor configure as regras da firewall apropriadamente antes de enviar esta página.<br>(Porto: 13 / Servidor: 129.6.15.28)
 day	setup	pt	Dia
 day of week<br />(0-6, 0=sunday)	setup	pt	Dia da semana<br>(0-6, 0=domingo)
 db backup and restore	setup	pt	Cópia de segurança e reposição da base de dados
@@ -154,6 +152,8 @@ deregistered	setup	pt	Não registado
 details for admin account	setup	pt	Detalhes da conta do administrador
 developers' table schema toy	setup	pt	Table Schema Toy - Desenvolvimento
 did not find any valid db support!	setup	pt	Não foi possível encontrar nenhum suporte de base de dados válido!
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	pt	Desativar apenas se o seu AD tiver problemas com os controlos VLV E puder devolver todos os utilizadores numa única consulta!
+disable vlv controls	setup	pt	Desativar os controlos VLV
 do you want persistent connections (higher performance, but consumes more resources)	setup	pt	Deseja ligações persistentes (melhor desempenho, mas maior consumo de recursos)
 do you want to manage homedirectory and loginshell attributes?	setup	pt	Deseja gerir a directoria principal e os atributos da shell de acesso?
 does not exist	setup	pt	Não existe
@@ -266,8 +266,8 @@ make sure that your database is created and the account permissions are set	setu
 manage applications	setup	pt	Configurar aplicações
 manage languages	setup	pt	Configurar idiomas
 manual / help	setup	pt	Manual / ajuda
-max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt	O tempo máximo de execução (max_execution_time) é configurado para menos de 30 (segundos): o EGroupware necessita, por vezes, de um maior tempo de execução (execution_time). Espere falhas ocasionais.
 maximum account id (e.g. 65535 or 1000000)	setup	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
+max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt	O tempo máximo de execução (max_execution_time) é configurado para menos de 30 (segundos): o EGroupware necessita, por vezes, de um maior tempo de execução (execution_time). Espere falhas ocasionais.
 may be broken	setup	pt	pode estar partida
 mcrypt algorithm (default tripledes)	setup	pt	Algoritmo Mcrypt (por omissão TRIPLEDES)
 mcrypt initialization vector	setup	pt	Vector de inicialização Mcrypt
@@ -282,7 +282,6 @@ modifications have been completed!	setup	pt	As modificações foram concluídas!
 modified	setup	pt	Modificado
 modify	setup	pt	Modificar
 month	setup	pt	Mês
-multi-language support setup	setup	pt	Configuração de suporte a idiomas
 name of database	setup	pt	Nome da base de dados
 name of db user egroupware uses to connect	setup	pt	Nome do utilizador da base de dados que o EGroupware utiliza para aceder
 never	setup	pt	Nunca
@@ -309,6 +308,7 @@ one month	setup	pt	Um mês
 one week	setup	pt	Uma semana
 only add languages that are not in the database already	setup	pt	Somente adicionar idiomas que ainda não estão na base de dados
 only add new phrases	setup	pt	Somente adicionar novas frases
+openidconnect login	setup	pt	Início de sessão do OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	pt	opcional, se apenas a autenticação E a pesquisa anónima estiverem activadas
 or	setup	pt	ou
 or %1continue to the header admin%2	setup	pt	ou %1Continuar para a administração de cabeçalhos%2
@@ -351,8 +351,8 @@ re-enter password	setup	pt	Re-insira a senha
 read translations from	setup	pt	Ler traduções de
 readable by the webserver	setup	pt	Legível pelo servidor Web
 really uninstall all applications	setup	pt	Desinstalar REALMENTE  todas as aplicações
-register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt	A opção register_globals está activa. O EGroupware NÃO necessita desta opção. Geralmente é mais seguro desactivá-la.
 registered	setup	pt	Registado
+register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	pt	A opção register_globals está activa. O EGroupware NÃO necessita desta opção. Geralmente é mais seguro desactivá-la.
 rejected lines	setup	pt	Rejeitar linhas
 remove	setup	pt	Remover
 remove all	setup	pt	Remover todas

@@ -1,7 +1,10 @@
 %1 email(s) added into %2	common	ro	%1 e-mail(uri) adăugat(e) în %2
 %1 more %2 selected ...	common	ro	%1 mai multe %2 selectate ...
 '%1' copied to clipboard	common	ro	'%1' copiat în clipboard
-'%1' is not a valid json file!	common	ro	"%1" nu este un fișier JSON valid
+'%1' does not match the required pattern '%2'	common	ro	'%1' nu corespunde modelului cerut (”%2")
+'%1' is not a valid app-name ('%2')!	common	ro	'%1' NU este un nume de aplicație valid (”%2")!
+'%1' is not a valid json file!	common	ro	%1 nu este un fișier JSON valid
+'%1' must not contain (back)slashes!	common	ro	'%1' nu trebuie să conțină slash-uri (înapoi)!
 1 day	common	ro	1 zi
 1 hour	common	ro	1 oră
 1 minute	common	ro	1 minut
@@ -38,6 +41,7 @@ authenticate	common	ro	Autentificare
 avatar	common	ro	Avatar
 browser %1 %2 is not recommended. you may experience issues and not working features. please use the latest version of chrome, firefox or edge. thank you!	common	ro	Browserul %1 %2 nu este recomandat. Este posibil să întâmpinați probleme și să nu funcționeze funcțiile. Vă rugăm să utilizați cea mai recentă versiune de Chrome, Firefox sau Edge. Vă mulțumim!
 cancel	common	ro	Renunţă
+changes that you made may not be saved.	common	ro	Este posibil ca modificările pe care le-ați făcut să nu fie salvate.
 charset	common	ro	Set de caractere
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	ro	Verificați dacă există valori goale în declarațiile IF. Exemplu {{IF url~EMPTY~~~Website:}}} - Dacă url nu este gol, scrie "Website:"
 choose the default filename for merged documents.	preferences	ro	Alegeți numele de fișier implicit pentru documentele fuzionate.
@@ -113,6 +117,7 @@ no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
 open	common	ro	Deschideți
 open existing contact	common	ro	Deschidere contact existent
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ro	Logare OpenIDConnect reușită, dar utilizatorul „%1” NU există în EGroupware, iar crearea automată de utilizatori este dezactivată!
 ownership	common	ro	Proprietate
 permission denied!	common	ro	Permisiune refuzată!
 permission denied! this is an administration only feature.	common	ro	Permisiune refuzată! Aceasta este o funcție rezervată administratorilor.

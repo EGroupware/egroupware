@@ -19,16 +19,16 @@ accepted	calendar	pt	Aceite
 access denied to the calendar of %1 !!!	calendar	pt	Acesso negado ao calendário de %1!
 access to calendar of %1 denied!	calendar	pt	Acesso ao calendário de %1 negado!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt	Acção que gerou o aviso: Adicionada, Cancelada, Aceite, Rejeitada, ...
-actions	calendar	pt	Acções
-actions...	calendar	pt	Ações ...
 add alarm	calendar	pt	Adicionar aviso
 add appointments via shortened dialog or complete edit window	calendar	pt	Adicionar marcações através de uma caixa de diálogo abreviada ou de uma janela de edição completa
 add current view as favorite	calendar	pt	Adicionar a vista atual como favorita
 add new alarm	calendar	pt	Adicionar novo alarme
 add new event	calendar	pt	Adicionar novo compromisso
+add recurrence	calendar	pt	Adicionar recorrência
 add timesheet entry	calendar	pt	Adicionar registo da folha de tempo
 added	calendar	pt	Adicionado
 added by synchronization	calendar	pt	Adicionadas por sincronização
+added recurrence on %1.	calendar	pt	Recorrência adicionada em %1.
 after current date	calendar	pt	Após data actual
 alarm	calendar	pt	Aviso
 alarm added	calendar	pt	Aviso adicionado
@@ -36,7 +36,6 @@ alarm deleted	calendar	pt	Aviso eliminado
 alarm for %1 at %2 in %3	calendar	pt	Aviso para %1 às %2 em %3
 alarm management	calendar	pt	Gestor de avisos
 alarms	calendar	pt	Avisos
-all categories	calendar	pt	Todas as categorias
 all day	calendar	pt	Todo o dia
 all events	calendar	pt	Todos os eventos
 all participants	calendar	pt	Todos os participantes
@@ -47,6 +46,7 @@ allows to edit the event again	calendar	pt	Permite editar o evento
 always	calendar	pt	Sempre
 always use full edit dialog	calendar	pt	Utilizar sempre a caixa de diálogo de edição completa
 always use the full edit dialog, not this little dialog	calendar	pt	Utilizar sempre a caixa de diálogo de edição completa, não esta pequena caixa de diálogo
+apply changes to (future) exceptions too?	calendar	pt	Aplicar alterações a (futuras) excepções também?
 apply the changes	calendar	pt	Aplicar alterações
 attention	calendar	pt	Atenção
 back half a month	calendar	pt	Recuar meio mês
@@ -142,17 +142,14 @@ event deleted	calendar	pt	Evento eliminado
 event details follow	calendar	pt	Seguem detalhes do evento
 event saved	calendar	pt	Evento guardado
 event will occupy the whole day	calendar	pt	Evento de dia inteiro
-every user can invite other users and groups	admin	pt	Cada utilizador pode convidar outros utilizadores e grupos
 exception	calendar	pt	Excepção
-exception created - you can now edit or delete it	calendar	pt	Exceção criada - pode agora editá-la ou eliminá-la.
 exceptions	calendar	pt	Excepções
 exclude weekend	calendar	pt	Excluir fim de semana
 execute a further action for this entry	calendar	pt	Executar uma ação adicional para esta entrada
 existing links	calendar	pt	Ligações existentes
 exists	calendar	pt	Existe
+explicit recurrences	calendar	pt	Recorrências explícitas
 export definition to use for nextmatch export	calendar	pt	Definição Exportar para usar para exportação nextmatch
-exports events from your calendar in ical format.	calendar	pt	Exporta eventos do seu calendário no formato iCal.
-exports events from your calendar into a csv file.	calendar	pt	Exporta eventos do seu calendário para um ficheiro CSV.
 extended	calendar	pt	Avançado
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt	As actualizações avançadas incluem sempre os detalhes completos do evento. Os detalhes do iCal podem ser importados por outras aplicações do calendário.
 fieldseparator	calendar	pt	Separador de campos
@@ -230,6 +227,7 @@ mail all participants	calendar	pt	Enviar mensagens a todos os participantes
 make freebusy information available to not logged in persons?	calendar	pt	Deseja tornar acessível a informação sobre a disponibilidade a pessoas não ligadas?
 manage mapping	calendar	pt	Gerenciar mapeamento
 maximum available quantity of %1 exceeded!	calendar	pt	Quantidade máxima disponível de %1 excedida!
+meeting request additional recurrence(s)	calendar	pt	Reunião solicita recorrência(s) adicional(is)
 min days	calendar	pt	Dias mínimos
 minimum number of users for showing day view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista do dia como consolidada.
 minimum number of users for showing week view as consolidated.	calendar	pt	Número mínimo de utilizadores para mostrar a vista semanal como consolidada.
@@ -278,8 +276,10 @@ on time change of more than 4 hours too	calendar	pt	Por alterações de horário
 one month	calendar	pt	Um mês
 one week	calendar	pt	Uma semana
 one year	calendar	pt	Um ano
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	pt	Apenas suportado por alguns clientes totalmente compatíveis (por exemplo, da Apple). Se tiver de introduzir um URL, o mais provável é que não seja suportado!
 only the initial date of that recurring event is checked!	calendar	pt	Apenas será verificada a data de início de um evento recorrente!
 open todo's:	calendar	pt	Abrir lista de tarefas
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	pt	Caso contrário, as alterações ao título, descrição, ... ou novos participantes não serão transferidas para excepções que já tenham sido criadas.
 output unit	calendar	pt	Unidade de saída
 overlap holiday	calendar	pt	Saltar feriado
 participants	calendar	pt	Participantes
@@ -290,6 +290,7 @@ people holiday	calendar	pt	Aniversários
 permission denied	calendar	pt	Acesso negado
 planner by category	calendar	pt	Planeamento por categoria
 planner by user	calendar	pt	Planeamento por utilizador
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	pt	Nota: a verificação de conflitos nunca é efectuada no passado e é sempre limitada pelo horizonte de recorrência acima.
 please note: you can configure the field assignments after you uploaded the file.	calendar	pt	Nota: Pode configurar o campo de compromissos DEPOIS de enviar o ficheiro.
 preselected group for entering the planner	calendar	pt	Grupo pré-seleccionado para iniciar o planeamento
 previous	calendar	pt	Anterior
@@ -359,12 +360,14 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	pt	O documento pode conter um marcador de posição como {{%1}}, que será substituído pelos dados.
 the extern organizer changed the event!	calendar	pt	O organizador externo alterou o evento!
 the following document-types are supported:	calendar	pt	Os seguintes tipos de documentos são suportados:
+the organizer changed the event!	calendar	pt	O organizador alterou o evento!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	pt	O remetente "%1" NÃO é o organizador externo "%2", proceda com cuidado!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	pt	O remetente "%1" NÃO é o participante que está a responder "%2", tenha cuidado!
 this day is shown as first day in the week or month view.	calendar	pt	Este dia é exibido como o primeiro dia da visualização semanal ou mensal.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	pt	Este campo define o fim da sua visualização diária.<br>Os eventos fora deste horário serão exibidos abaixo da visualização diária.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	pt	Este campo define o início da sua visualização diária.<br>Este horário será igualmente aplicado como data de início de novos eventos por omissão.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pt	Grupo pré-seleccionado quando inicia o planeamento. Pode alterá-lo no planeamento sempre que quiser.
+this is a single recurrence of a recurring event.	calendar	pt	Esta é uma única repetição de um evento recorrente.
 this message is sent for canceled or deleted events.	calendar	pt	Esta mensagem é enviada para eventos cancelados ou eliminados
 this message is sent for modified or moved events.	calendar	pt	Esta mensagem é enviada para eventos modificados ou transferidos.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	pt	Esta mensagem é enviada para todos os participantes de eventos, que gere, que tenham pedido para ser avisados de novos eventos.<br>Pode utilizar certas variáveis a ser substituídas  pela data do evento. A primeira linha é o assunto da mensagem.
@@ -407,6 +410,7 @@ yearly	calendar	pt	Anual
 yearview	calendar	pt	Visualização anual
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 you can either set a year or a occurrence, not both !!!	calendar	pt	Pode definir um Ano ou uma Ocorrência. Não pode definir os dois!
+you can only notify other users, not yourself!	calendar	pt	Só pode notificar outros utilizadores, não a si próprio!
 you can only set a year or a occurrence !!!	calendar	pt	Pode apenas definir um ano ou uma ocorrência!
 you do not have permission to read this record!	calendar	pt	Não tem permissões para ler este registo!
 you have a meeting scheduled for %1	calendar	pt	Tem uma reunião agendada para %1

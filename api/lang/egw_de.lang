@@ -257,6 +257,7 @@ chad	common	de	TSCHAD
 change	common	de	Ändern
 change owner	common	de	Eigentümer ändern
 changed	common	de	Geändert
+changes that you made may not be saved.	common	de	Änderungen, die Sie vorgenommen haben, werden möglicherweise nicht gespeichert.
 charset	common	de	Zeichensatz
 check all	common	de	Alle auswählen
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	de	Sie können auch auf EMPTY prüfen in If-Abfragen. Beispiel {{IF url~EMPTY~~Webseite: }}{{IF url~EMPTY~~url}} - fügt Webseite & URL ein, falls das Feld url nicht leer ist.
@@ -1097,14 +1098,12 @@ private	common	de	Privat
 programs	common	de	Programme
 project	common	de	Projekt
 properties	common	de	Eigenschaften
-protocol is required	common	de	Protokoll ist erforderlich
 public	common	de	Öffentlich
 puerto rico	common	de	PUERTO RICO
 qatar	common	de	QATAR
 quick add	common	de	Schnelles Hinzufügen
 radiobutton	common	de	Radioknopf
 read	common	de	Lesen
-read a list of entries.	common	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	common	de	Liste einen einzelnen Eintrag durch Übergabe seiner ID und Feldliste.
 read etemplate from database (for the keys above)	common	de	Ließt ein eTemplate aus der Datenbank (für die Schlüssel darüber)
 read this list of methods.	common	de	Diese Liste der Methoden lesen.

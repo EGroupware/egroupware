@@ -71,6 +71,7 @@ changing subject failed folder %1 does not exist	mail	pt	Falha na alteração do
 check message against next rule also	mail	pt	Verifique mensagem contra seguinte regra também
 check to save as infolog on send	mail	pt	verificar para salvar como InfoLog em enviar
 check to save as tracker entry on send	mail	pt	verificar para salvar como trackerentry em enviar
+checking admin credentials failed	mail	pt	A verificação das credenciais de administrador falhou
 common acl	mail	pt	ACL comum
 compose	mail	pt	Compor
 compose as new	mail	pt	Compor como novo
@@ -197,7 +198,7 @@ files	mail	pt	Arquivos
 flag / unflag	mail	pt	Marcar / Retirar marcação
 flag or unflag a mail	mail	pt	Bandeira ou Unflag um e-mail
 flagged	mail	pt	marcado
-flagged %1 messages as %2 in %3	mail	pt	Sinalizado %1 %2 mensagens como em 3%
+flagged %1 messages as %2 in %3	mail	pt	Sinalizado %1 "%2" mensagens como em 3%.
 flagged %1 messages as flagged in %2	mail	pt	Sinalizado %1 mensagens, como assinalado no %2
 flagged %1 messages as unflagged in %2	mail	pt	Sinalizado %1 mensagens como unflagged em 2%
 flagged / unflagged	mail	pt	Sinalizadas / unflagged
@@ -285,6 +286,7 @@ mail	common	pt	Correio
 mail acl	mail	pt	Direitos de acesso
 mail filter	mail	pt	Filtro de correio
 mail filter rule	mail	pt	Regra do filtro de correio
+mail probably has no text-body	mail	pt	O correio provavelmente não tem texto
 mail settings	mail	pt	Configurações do correio electrónico
 mail source	mail	pt	Correio Fonte
 mail-address	mail	pt	Mail-Endereço
@@ -417,6 +419,7 @@ reply	mail	pt	Responder
 reply all	mail	pt	Responder a Todos
 reply message type	mail	pt	Responder tipo de mensagem
 reply to	mail	pt	Responder para
+reply with attachments	mail	pt	Responder com anexos
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	pt	A resposta a esta mensagem falhou porque o conteúdo da mensagem parece estar encriptado e não pode ser desencriptado corretamente. Se, mesmo assim, pretender incluir o conteúdo desta mensagem encriptada, pode tentar utilizar o reencaminhamento como anexo.
 replyto	mail	pt	Responder a
 report as ham	mail	pt	Reportar como Ham

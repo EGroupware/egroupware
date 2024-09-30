@@ -22,10 +22,7 @@
 %1 token %2.	admin	lv	%1 token %2.
 %1 user %2	admin	lv	%1 lietotājs %2
 (de)activate mail accounts	admin	lv	(de)aktivizēt pasta kontus
-(default no, leave it off if you dont use it)	admin	lv	Noklusējuma iestatījums = Nē, atstājiet to izslēgtu, ja to neizmantojat.
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	lv	(imapclass ir jāatbalsta šī funkcija, pieprasot attiecīgo config vērtību un nododot to kā noklusējuma kvotu IMAP serverim).
 (no subject)	admin	lv	(nav temata)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	lv	(lai instalētu jaunu programmatūru lieto <br><a href="setup/" target="setup">Setup</a> [Pārvaldi aplikācijas]!)
 1 year	admin	lv	1 gads
 2 month	admin	lv	2 mēneši
 2 weeks	admin	lv	2 nedēļas
@@ -76,6 +73,7 @@ all applications	admin	lv	Visas aplikācijas
 all records and account information will be lost!	admin	lv	Visi ieraksti un konta informācija tiks pazaudēta!
 all users	admin	lv	Visi lietotāji
 allow anonymous access to this app	admin	lv	Atļaut nezināmajam lietotājam piekļūt šai aplikācijai
+allow the user to store his password under 'security & passwords' for singlesignon.	admin	lv	Ļaujiet lietotājam saglabāt savu paroli sadaļā “Drošība un paroles” vienotai pieejai SingleSignOn.
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
 anonymous user	admin	lv	Nezināmais lietotājs
 anonymous user (not shown in list sessions)	admin	lv	Nezināmais lietotājs (Netiek parādīts sesiju sarakstā)
@@ -101,13 +99,13 @@ asyncservices not yet installed or other error (%1) !!!	admin	lv	Asinhronie paka
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	lv	Mēģināt lietot pareizu FTP MIMEtype noklusējuma 'application/octet-stream' vietā
 authentication / accounts	admin	lv	Autentifikācija/Konti
 auto create account records for authenticated users	admin	lv	Automātiski veidot konta ierakstus apstiprinātiem lietotājiem
-back to the list	admin	lv	Atpakaļ uz sarakstu
 bi-directional	admin	lv	divpusējs
 blocking after wrong password	admin	lv	Bloķēšana pēc nepareizas paroles
 bottom	admin	lv	Augšā
 bulk changes	admin	lv	Vairumtirdzniecības izmaiņas
 bulk password reset	admin	lv	Paroles masveida atjaunošana
 calculate next run	admin	lv	Izskaitļot nākošo darbību(next run)
+can be used to show groups by container, if enabled	admin	lv	Var izmantot, lai parādītu grupas pēc konteinera, ja tas ir iespējots.
 can change password	admin	lv	Var nomainīt paroli
 cancel testjob!	admin	lv	Atcelt Testa Darbību!
 categories list	admin	lv	Kategoriju saraksts
@@ -116,6 +114,7 @@ category list	admin	lv	Kategoriju saraksts
 certificate	admin	lv	Sertifikāts
 certificate details	admin	lv	Informācija par sertifikātu
 certificate validation in days	admin	lv	Sertifikāta apstiprināšana dienās
+change access	admin	lv	Mainīt piekļuves tiesības
 change acl rights	admin	lv	Mainīt ACL tiesības
 change config settings	admin	lv	Mainīt konfigurācijas iestatījumus
 change login screen message	admin	lv	Mainīt galvenā loga ziņojumu
@@ -123,6 +122,7 @@ check ip address of all sessions	admin	lv	Pārbaudīt IP adresi visām sesijām
 check items to <b>%1</b> to %2 for %3	admin	lv	Pārbaudīt vienības <b>%1</b> to %2 for %3
 click to select a color	admin	lv	Noklikšķini, lai izvēlētos krāsu
 color	admin	lv	Krāsa
+container	admin	lv	Konteiners
 continue	admin	lv	Turpināt
 country	admin	lv	Valsts
 country selection	admin	lv	Valsts Izvēle
@@ -178,10 +178,6 @@ disable "auto completion" of the login form	admin	lv	Neatļaut automātikso aizp
 disabled (not recomended)	admin	lv	Neatļauts (nav ieteicams)
 display	admin	lv	Attēlo(display)
 do not delete the category and return back to the list	admin	lv	Neizdzēst kategoriju in atgriezties uz sarakstu
-do you also want to delete all global subcategories ?	admin	lv	Vai vēlies dzēst arī vispārējas apakšgrupas?
-do you really want to delete this profile	admin	lv	Vai tu tiešām vēlies dzēst šo profilu?
-do you want to delete all global subcategories ?	admin	lv	Vai vēlies dzēst visas vispārējas apakšgrupas?
-do you want to move all global subcategories one level down ?	admin	lv	Vai vēlies pārvietot visas vispārējas apakšgrupas vienu līmeni zemāk?
 domainname	admin	lv	Domēna vārds
 down	admin	lv	Lejā
 edit account	admin	lv	Rediģēt kontu
@@ -245,6 +241,7 @@ group ?	admin	lv	Grupa?
 group has been added	common	lv	Grupa tika pievienota
 group has been deleted	common	lv	Grupa tika izdzēsta
 group has been updated	common	lv	Grupa tika atjaunināta
+group hierarchy	admin	lv	Grupu hierarhija
 group list	admin	lv	Grupu saraksts
 group manager	admin	lv	Grupu pārvaldnieks
 group name	admin	lv	Grupas nosaukums
@@ -371,6 +368,7 @@ profile list	admin	lv	Profila saraksts
 profile name	admin	lv	Profila vārds
 re-enter password	admin	lv	Atkārtoti ievadi paroli
 read this list of methods.	admin	lv	Izlasi šo metožu sarakstu
+regular expression to find part to use as container	admin	lv	Regulārā izteiksme, lai atrastu daļu, ko izmantot kā konteineru
 remove	admin	lv	Pārvietot
 rows	admin	lv	Rindas
 run asynchronous services	admin	lv	Palaist asinhronos pakalpojumus
@@ -402,6 +400,7 @@ should the login page include a language selectbox (useful for demo-sites) ?	adm
 show access log	admin	lv	Rādīt pieejas logu
 show current action	admin	lv	Rādīt pašreizējo darbību
 show error log	admin	lv	Rādīt kļudas logu
+show groups in container based on	admin	lv	Parādīt grupas konteinerā, pamatojoties uz
 show phpinfo()	admin	lv	Rādīt phpinfo()
 show session ip address	admin	lv	Rādīt sesijas IP adresi
 sieve server hostname or ip address	admin	lv	Sijāšanas servera hostname vai IP adrese
@@ -487,10 +486,8 @@ you must add at least 1 permission or group to this account	admin	lv	Tev jāpiev
 you must enter a group name.	admin	lv	Jums jāievada grupas vārds
 you must enter a lastname	admin	lv	Jums jāievada uzvārds
 you must enter a loginid	admin	lv	Jums jāievada pietekuma ID
-you must enter an application name and title.	admin	lv	Jums jāievada aplikācijas nosaukums un virsraksts
 you must enter an application name.	admin	lv	Jums jāievada aplikācijas nosaukums
 you must enter an application title.	admin	lv	Jums jāievada aplikācijas virsraksts
-you must select a file type	admin	lv	Jums jāizvēlas faila tips
 you will need to remove the subcategories before you can delete this category	admin	lv	Tev vajadzēs izdzēst apakšgrpu pirms tu varēsi izdzēst šo kategoriju!
 your name	admin	lv	Tavs vārds
 your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	it	%1 cartelle trovate!
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
 %1 email(s) added into %2	common	it	%1 email aggiunte in %2
-%1 entries found, select one ...	common	it	%1 voci trovate, selezionare una ...
 %1 etemplates deleted	common	it	%1 eTemplate cancellati
-%1 etemplates for application '%2' dumped to '%3'	common	it	%1 eTemplate per l'applicazione '%2' scaricati in '%3'
 %1 etemplates found	common	it	%1 eTemplate trovati.
 %1 file	common	it	%1 file
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver!
-%1 matches on search criteria	common	it	%1 occorrenze trovate
 %1 more %2 selected ...	common	it	%1 più %2 selezionati ...
 %1 more...	common	it	%1 ancora ...
-%1 new etemplates imported for application '%2'	common	it	%1 nuovi eTemplate importati per l'Applicazione '%2'
 %1 not implemented for %2!	common	it	%1 non implementato per %2!
 %1 proxy of %2	common	it	%1 proxy di %2
 %1 setting "%2" = %3 disallows access via http!	admin	it	L'impostazione %1 "2" = "%3" vieta l'accesso via http!
@@ -27,8 +23,10 @@
 %s onchange	common	it	%s onChange
 %s readonly	common	it	%s sola lettura
 '%1' copied to clipboard	common	it	'%1' copiato negli appunti
+'%1' does not match the required pattern '%2'	common	it	'%1' non corrisponde allo schema richiesto ('%2
 '%1' has an invalid format	common	it	'%1' ha un formato non valido
 '%1' has an invalid format !!!	common	it	'%1' ha un formato non valido!
+'%1' is not a valid app-name ('%2')!	common	it	'%1' NON è un nome di applicazione valido ('%2')!
 '%1' is not a valid date !!!	common	it	'%1'  non è una data valida!
 '%1' is not a valid floatingpoint number !!!	common	it	'%1' non è un numero in virgola mobile valido!
 '%1' is not a valid integer !!!	common	it	'%1' non è un intero valido
@@ -36,6 +34,7 @@
 '%1' is not a valid timezone!	common	it	'%1' non è un fuso orario valido!
 '%1' is not allowed ('%2')!	common	it	'%1' NON è permesso ('%2')!
 '%1' is not allowed%2)!	common	it	'%1' NON è permesso ('%2')!
+'%1' must not contain (back)slashes!	common	it	'%1' no coincide con el patrón requerido ('%2')
 (session restored in %1 seconds)	common	it	Sessione ripristinata in %1 secondi.
 00 (disable)	admin	it	00 (disabilitato)
 1 day	common	it	1 giorno
@@ -252,6 +251,7 @@ chad	common	it	CHAD
 change	common	it	Cambia
 change owner	common	it	Cambia proprietario
 changed	common	it	Modificato
+changes that you made may not be saved.	common	it	Es posible que no se guarden los cambios realizados.
 charset	common	it	Set di caratteri
 check all	common	it	Seleziona tutto
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	it	Controlla i valori vuoti nelle istruzioni IF. Esempio {{IF url~EMPTY~~Website:}} - Se url non è vuoto, scrive "Website:".
@@ -683,6 +683,7 @@ if you use "2-factor-authentication", please enter the code here.	common	it	Se s
 image	common	it	Immagine
 image directory relative to document root (use / !), example:	common	it	La cartella delle immagini relativa alla base dei documenti (docroot) (usare / !), esempio:
 image url	common	it	URL immagine
+images	common	it	Immagini
 import	common	it	Importa
 import an etemplate from a xml-file	common	it	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	it	Import table-definitions from existing DB-table
@@ -790,6 +791,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	it	Il collegamento viene allegato all'email permettendo ai destinatari di scaricare versioni aggiornate dei file
 link target %1 not found!	common	it	Destinazione %1 del collegamento non trovata!
 link title of current record	common	it	Link titolo del record corrente
+link to each entry	common	it	Collegamento a ciascuna voce
 linkapps	common	it	Applicazioni Link
 linked	common	it	Collegato
 linkentry	common	it	Voce Link
@@ -843,6 +845,10 @@ maybe	common	it	Forse
 mayotte	common	it	MAYOTTE
 medium	common	it	Medio
 menu	common	it	Menù
+merge	common	it	Unire
+merge & send	common	it	Unisci e invia
+merge individually	common	it	Unire individualmente
+merge options	common	it	Opzioni di fusione
 merged document filename	preferences	it	Nome del file del documento unito
 message	common	it	Messaggio
 message ...	common	it	Messaggio ...
@@ -981,6 +987,7 @@ open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 open sidebox	common	it	Apri riquadro laterale
 open the online help.	common	it	Apre help online.
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	it	L'accesso a OpenIDConnect è riuscito, ma l'utente '%1' NON esiste in EGroupware e la creazione automatica dell'utente è disabilitata!
 operator	common	it	Operatore
 optional note about the link	common	it	Optional note about the Link
 options	common	it	Opzioni
@@ -1072,14 +1079,12 @@ private	common	it	Privato
 programs	common	it	Programmi
 project	common	it	Progetto
 properties	common	it	Proprietà
-protocol is required	common	it	Protocollo richiesto
 public	common	it	Pubblico
 puerto rico	common	it	PUERTO RICO
 qatar	common	it	QATAR
 quick add	common	it	Aggiunta rapida
 radiobutton	common	it	Radiobutton
 read	common	it	Leggi
-read a list of entries.	common	it	Leggi un elenco di voci.
 read a single entry by passing the id and fieldlist.	common	it	Leggere una singola voce passando l'ID e l'elenco dei campi.
 read etemplate from database (for the keys above)	common	it	Leggere eTemplate dal database (per le chiavi di cui sopra)
 read this list of methods.	common	it	Leggi questo elenco di metodi
@@ -1152,6 +1157,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	it	Salva
 save all	common	it	Salva tutti
 save as	common	it	Salva con nome
+save as pdf	common	it	Salva come PDF
 save as zip	common	it	Salva come file compresso (ZIP)
 save selected columns as default preference for all users.	common	it	Salva le colonne come preferenza predefinita per tutti gli utenti.
 save the changes made and close the window	common	it	Salva le modifiche fatte e chiude la finestra
@@ -1275,12 +1281,12 @@ show page generation time?	common	it	Mostrare tempo generazione pagina
 show password	common	it	Mostra password
 show values	common	it	Mostra Valori
 show/hide	common	it	Mostra/nascondi barra laterale
-show_more_apps	common	it	show_more_apps
 showing	common	it	Mostra
 showing %1	common	it	Visualizzati %1
 showing %1 - %2 of %3	common	it	Visualizzati da %1 a %2 di %3
 shows / allows you to enter values into the etemplate for testing	common	it	Mostra / permette di inserire valori nell'eTemplate per il test
 shows/displays etemplate for testing, does not save it before	common	it	Mostra/visualizza l'eTemplate per il test, NON lo salva.
+show_more_apps	common	it	show_more_apps
 sierra leone	common	it	SIERRA LEONE
 sign up	common	it	Accedi
 simple	common	it	Semplice
@@ -1458,6 +1464,7 @@ version	common	it	Version
 vertical alignment of row	common	it	Allineamento verticale della riga
 vfs upload directory	common	it	Directory di upload VFS
 video tutorials	common	it	Tutorial video
+videos	common	it	Video
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 view linked %1 entries	common	it	Visualizza %1 voci collegate
@@ -1474,7 +1481,6 @@ weekend	common	it	Weekend
 welcome	common	it	Benvenuto
 western european	common	it	Europeo occidentale
 western sahara	common	it	SAHARA OCCIDENTALE
-what color should all the blank space on the desktop have	common	it	Di che colore dovrebbe essere lo spazio vuoto sul desktop?
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	Cosa succede con i contenuti in eccesso: visibile (default), nascosto, scroll, auto (decide il browser)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	it	Quando si uniscono le voci in un documento, queste vengono memorizzate qui. Se non viene fornita alcuna cartella, verranno memorizzate nella propria home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni.

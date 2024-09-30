@@ -51,11 +51,13 @@ how to update lists	preferences	pl	Jak aktualizować listy
 icon	preferences	pl	Ikona
 icons and text	preferences	pl	Ikony i tekst
 icons only	preferences	pl	Tylko ikony
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	pl	Jeśli ta opcja jest włączona, wprowadzone hasło będzie przechowywane i przekazywane do innych serwerów podczas logowania przez SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	pl	Obrazy podłączone do wpisu będą wyświetlane jako miniatury. Możesz to wyłączyć aby przyspieszyć wyświetlanie strony.
 in which country are you. this is used to set certain defaults for you.	preferences	pl	W jakim państwie się znajdujesz? EGroupware użyje tego ustawienia do wyboru pewnych konfiguracji domyślnych.
 interface/template selection	preferences	pl	Wybór interfejsu/szablonu
 it sets content size (text only) according to selected size.	preferences	pl	Ustawia rozmiar zawartości (tylko tekst) zgodnie z wybranym rozmiarem.
 language	preferences	pl	Język
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pl	Logowanie przez SingleSignOn nie zapewnia hasła do przekazania go do serwerów poczty lub plików.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pl	Możliwość przewijania listy aplikacji za pomocą przycisków przewijania góra/dół (przydatne dla użytkowników pracujących z myszką bez kółka do przewijania)
 max matches per page	preferences	pl	Maksymalna liczba trafień na stronie
 max number of icons in navbar	preferences	pl	Maksymalna liczba ikonek w pasku nawigacji
@@ -65,6 +67,7 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pl	Uwaga. Te polecenie NIE zmienia hasła do twojej skrzynki pocztowej! Należy to zrobić ręcznie.
 number format	preferences	pl	Format liczbowy
 p: paragraph	preferences	pl	p: Paragraf
+password stored	preferences	pl	Przechowywane hasło.
 permanent time zone selection	preferences	pl	Wybór stałej strefy czasowej
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	pl	Wybierz strefę czasową, będziesz mógł szybko przełączać się między strefami. Przełączanie nie jest możliwe jeśli mniej niż dwie strefy są wskazane.
 please select your timezone.	preferences	pl	Wybierz strefę czasową
@@ -91,7 +94,9 @@ show navigation bar as	preferences	pl	Wyświetlaj pasek nawigacji jako
 show number of current users	preferences	pl	Wyświetlaj liczbe zalogowanych użytkowników
 show text on navigation icons	preferences	pl	Wyświetlaj tekst na ikonach nawigacji
 show_more_apps	common	pl	Wyświetl wiecej aplikacji
+singlesignon and passwords	preferences	pl	SingleSignOn i hasła
 spellchecker language	addressbook	pl	Język sprawdzania pisowni
+store password retrievable for singlesignon	common	pl	Przechowuj hasło, które można odzyskać dla SingleSignOn
 text only	preferences	pl	Tylko tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do EGroupware lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).
 the old password is not correct	preferences	pl	Wprowadzone stare hasło nie jest poprawne

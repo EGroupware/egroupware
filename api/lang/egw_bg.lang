@@ -6,7 +6,10 @@
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1EGroupware%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
 '%1' copied to clipboard	common	bg	'%1' е копирано в клипборда
+'%1' does not match the required pattern '%2'	common	bg	'%1' не съответства на изисквания шаблон ('%2')
+'%1' is not a valid app-name ('%2')!	common	bg	'%1' НЕ е валидно име на приложение ('%2')!
 '%1' is not a valid json file!	common	bg	'%1' не е валиден JSON файл
+'%1' must not contain (back)slashes!	common	bg	'%1' не трябва да съдържа (обратни) наклонени черти!
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди).
 00 (disable)	admin	bg	00 (забранен)
 1 day	common	bg	1 ден
@@ -151,6 +154,7 @@ centered	common	bg	центриран
 central african republic	common	bg	Централноафриканска Републикя
 chad	common	bg	Чад
 change	common	bg	Промяна
+changes that you made may not be saved.	common	bg	Направените промени може да не бъдат запазени.
 charset	common	bg	Charset
 check all	common	bg	Маркира всички
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	bg	Проверка за празни стойности в декларациите IF. Пример {{IF url~EMPTY~~Website:}} - Ако url не е празен, пише "Уебсайт:"
@@ -585,6 +589,7 @@ open notify window	common	bg	Отваряне на прозореца за из�
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
 open sidebox	common	bg	Отваряне на страничната кутия
 open the online help.	common	bg	Отваряне на онлайн помощ
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	bg	Входът в OpenIDConnect е успешен, но потребител '%1' НЕ съществува в EGroupware, а автоматичното създаване на потребители е деактивирано!
 operator	common	bg	Оператор
 optional note about the link	common	bg	Незадължителна бележка за връзката
 options	common	bg	Опции
@@ -605,7 +610,7 @@ panama	common	bg	Панама
 papua new guinea	common	bg	Папуа Нова Гвинея
 paraguay	common	bg	Парагвай
 parcel	common	bg	Колет
-parent category	common	bg	"Родителска" категория
+parent category	common	bg	Родителска категория
 password	common	bg	Парола
 password could not be changed	common	bg	Паролата не може да бъде сменена!
 password has been updated	common	bg	Паролата беше обновена.
@@ -657,14 +662,12 @@ private	common	bg	Личен
 programs	common	bg	Програми
 project	common	bg	Проект
 properties	common	bg	Свойства
-protocol is required	common	bg	Протоколът е задължителен
 public	common	bg	общ
 puerto rico	common	bg	Пуерто Рико
 qatar	common	bg	Катар
 quick add	common	bg	Бързо добавяне
 radiobutton	common	bg	Радио бутон
 read	common	bg	Четене
-read a list of entries.	common	bg	Четене на списък със записи.
 read a single entry by passing the id and fieldlist.	common	bg	Четене на единичен запис чрез подаване на ID и списък с полета.
 read this list of methods.	common	bg	Четене на списъкът с методи
 reading	common	bg	четене
@@ -740,8 +743,6 @@ seychelles	common	bg	Сейшелски острови
 show	common	bg	Покажи
 show all	common	bg	показване на всички
 show all categorys	common	bg	Показване на всички категории
-show logo's on the desktop.	common	bg	Показване на логото на desktop-a.
-show menu	common	bg	Показване на меню
 show page generation time	common	bg	Показване на времето за създаване на страниците
 show page generation time on the bottom of the page?	common	bg	Да се показва ли най-отдолу времето за създаване на страниците.
 show page generation time?	common	bg	Да се показва ли времето за генериране на страниците
@@ -863,7 +864,6 @@ wallis and futuna	common	bg	Уолис и Футуна
 wednesday	common	bg	Сряда
 welcome	common	bg	Добре дошли
 western sahara	common	bg	Западна Сахара
-what color should all the blank space on the desktop have	common	bg	С какъв цвят да бъде запълнено празното пространство на desktop-а?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	bg	Ако отговорите ДА бутоните Home и Logout ще се появят като приложения в горната главна лента на приложенията.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на EGroupware като настройки, "относно" и Logout.
 which groups	common	bg	Кои групи
@@ -880,7 +880,6 @@ yes	common	bg	Да
 yes - delete	common	bg	Да - Изтриване
 yes - delete including sub-entries	common	bg	Да - Изтриване с под-записите
 you are required to change your password during your first login	common	bg	Трябва да смените паролата си при първото влизане
-you can customize how many icons and toolbars the editor shows.	common	bg	Може да определите колко икони и ленти с инструменти да показва Редактора.
 you can respond by visiting:	common	bg	За преглед посетете
 you have been successfully logged out	login	bg	Излизането ви от системата приключи успешно.
 you have not entered a title	common	bg	Не сте въвели заглавие.

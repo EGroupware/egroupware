@@ -24,17 +24,17 @@ accepted	calendar	sk	Prijaté
 access denied to the calendar of %1 !!!	calendar	sk	Prístup bol ODMIETNUTÝ, kalendár patrí používateľovi %1!
 access to calendar of %1 denied!	calendar	sk	Prístup ku kalendáru %1 bol odmietnutý!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zrušené, Prijaté, Odmietnuté, ...
-actions	calendar	sk	Akcie
-actions...	calendar	sk	Akcie ...
 add alarm	calendar	sk	Pridaj pripomienku
 add appointments via shortened dialog or complete edit window	calendar	sk	Pridať udalosti cez skrátený dialóg alebo úplne okno úprav
 add current view as favorite	calendar	sk	Pridať súčasný pohľad ako obľúbený
 add new alarm	calendar	sk	Pridať novú pripomienku
 add new event	calendar	sk	Pridať novú udalosť
 add new participants or resource	calendar	sk	Pridať nových účastníkov alebo zdroj
+add recurrence	calendar	sk	Pridanie recidívy
 add timesheet entry	calendar	sk	Pridať položku Harmonogramu
 added	calendar	sk	Pridané
 added by synchronization	calendar	sk	Pridané počas synchronizácie
+added recurrence on %1.	calendar	sk	Pridaná rekurencia na %1.
 after	calendar	sk	Po
 after %1	calendar	sk	Až po %1
 after current date	calendar	sk	Po súčasnom dátume
@@ -46,7 +46,6 @@ alarm deleted	calendar	sk	Pripomienka bola odstránená
 alarm for %1 at %2 in %3	calendar	sk	Pripomienka %1 %2 v %2
 alarm management	calendar	sk	Pripomienkovač
 alarms	calendar	sk	Pripomienky
-all categories	calendar	sk	Všetky kategórie
 all day	calendar	sk	Celý deň
 all events	calendar	sk	Všetky udalosti
 all exceptions are converted into single events.	calendar	sk	Všetky výnimky boli zmenené na samoztatné udalosti.
@@ -60,6 +59,7 @@ allows to edit the event again	calendar	sk	Povolí znovu upraviť udalosť
 always	calendar	sk	Vždy
 always use full edit dialog	calendar	sk	Vždy použiť plný dialóg pre úpravy
 always use the full edit dialog, not this little dialog	calendar	sk	Vždy použiť plný dialóg pre úpravy, nie tento malý dialóg
+apply changes to (future) exceptions too?	calendar	sk	Aplikovať zmeny aj na (budúce) výnimky?
 apply the action on the whole query, not only the shown events	calendar	sk	Vykonať túto akciu pre celý dopyt, NIELEN pre zobrazené udalosti
 apply the changes	calendar	sk	Vykonať uvedené zmeny
 appointment settings	calendar	sk	Nastavenia udalostí
@@ -247,13 +247,12 @@ exclude weekend	calendar	sk	Vylúčiť víkend
 execute a further action for this entry	calendar	sk	Vykonať ďalšiu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 exists	calendar	sk	Existuje
-explicit dates	calendar	sk	Explicitné udalosti
+explicit recurrences	calendar	sk	Explicitné rekurencie
 export definition to use for nextmatch export	calendar	sk	Exportná definícia pre použitie v exporte
 exports events from your calendar in ical format.	calendar	sk	Exportuje udalosti z vášho Kalendára vo formáte iCal.
 exports events from your calendar into a csv file.	calendar	sk	Exportuje udalosti z vášho Kalendára do súboru CSV.
 extended	calendar	sk	Rozšírené
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sk	Rozšírený formát obsahuje všetky podrobnosti o udalosti. Formát iCal sa dá importovať do niektorých ďalších kalendárnych aplikácií.
-favorites	calendar	sk	Obľúbené
 fieldseparator	calendar	sk	Oddeľovač polí
 filemanager	calendar	sk	Správca súborov
 filename	calendar	sk	Názov súboru
@@ -370,6 +369,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	sk	Maxi
 maximum available quantity of %1 exceeded!	calendar	sk	Prekročená najvyššie povolené množstvo %1!
 meeting canceled	calendar	sk	Stretnutie zrušené
 meeting request	calendar	sk	Požiadavka na stretnutie
+meeting request additional recurrence(s)	calendar	sk	Požiadavka na stretnutie o ďalšiu(-é) rekurenciu(-y)
 meetingrequest to all participants	calendar	sk	Požiadavka na stretnutie všetkým účastníkom
 merge document...	calendar	sk	Zlúčiť dokument ...
 midnight	calendar	sk	Polnoc
@@ -448,6 +448,7 @@ only used for first viewing of calendar, afterwards last selected view is used.	
 open todo's:	calendar	sk	Otvorené Úlohy:
 optional	calendar	sk	Voliteľné
 organizer	calendar	sk	Organizátor
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	sk	V opačnom prípade sa zmeny názvu, popisu, ... alebo noví účastníci neprenesú do už vytvorených výnimiek.
 output unit	calendar	sk	Výstupná jednotka
 overlap holiday	calendar	sk	Prekryť sviatky
 owner too	calendar	sk	Vrátane vlastníka
@@ -597,6 +598,7 @@ the document can contain placeholder like {{%3}}, to be replaced with the data (
 the exceptions are deleted together with the series.	calendar	sk	Výnimky boli odstránené spolu so sériou.
 the extern organizer changed the event!	calendar	sk	Externý organizér zmenil udalosť!
 the following document-types are supported:	calendar	sk	Podporované sú nasledovné typy dokumentov:
+the organizer changed the event!	calendar	sk	Organizátor zmenil udalosť!
 the original series will be terminated today and a new series be created.	calendar	sk	Pôvodná séria bude dneškom ukončená a vytvorí sa nová séria.
 the resource you selected is already overbooked:	calendar	sk	Tento zdroj je už rezervovaný:
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	sk	Odosielateľ "%1" NIE je externý organizér "%2", pokračujte opatrne!
@@ -609,6 +611,7 @@ this entry is opened by user:	calendar	sk	Tento záznam bol otvorený počas nas
 this event is part of a series	calendar	sk	Táto udalosť je súčasťou série
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sk	Táto skupina bude automaticky vybratá pri vstupe do plánovača. V plánovači ju môžete zmeniť podľa ľubovôle.
 this is a recurring event. do you want to delete just this recurrence or the whole series?	calendar	sk	Toto je opakovaná udalosť. Chcete odstrániť len tento dátum, alebo celú sériu?
+this is a single recurrence of a recurring event.	calendar	sk	Ide o jedno opakovanie opakujúceho sa podujatia.
 this mail cancels a meeting	calendar	sk	Táto správa ruší stretnutia
 this mail contains a meeting request	calendar	sk	Táto správa obsahuje požiadavku na stretnutie
 this mail contains a reply to a meeting request	calendar	sk	Táto sprá obsahuje odpoveď na požiadavku na stretnutie
@@ -708,6 +711,7 @@ you are not allowed to book the resource selected:	calendar	sk	Nemáte dovolené
 you are not invited to that event!	calendar	sk	K tejto udalosti nie ste pozvaní!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	sk	Pokúšate sa e-mailovať žiadosť o stretnutie vyššieuvedeným adresátom. V závislosti od vášho poštového klienta ktorým otvárate súrávu, adresát môže ale nemusí vidieť nižšieuvedenú správu; možno uvidí len žiadosť o stretnutie v prílohe.
 you can either set a year or a occurrence, not both !!!	calendar	sk	Môžete zadať buď rok, alebo výskyt, ale nie obidvoje !!!
+you can only notify other users, not yourself!	calendar	sk	Môžete to oznámiť len iným používateľom, nie sebe!
 you can only set a year or a occurrence !!!	calendar	sk	Môžete zadať buď rok alebo výskyt, ale nie obidvoje!!!
 you do not have permission to read this record!	calendar	sk	Nemáte právo čítať tento záznam!
 you have a meeting scheduled for %1	calendar	sk	Máte naplánované stretnutie na %1

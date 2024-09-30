@@ -73,6 +73,7 @@ check message against next rule also	mail	pt-br	Verifique mensagem contra seguin
 check to save as calendar event on send	mail	pt-br	Marcar o botão para criar como evento após o envio
 check to save as infolog on send	mail	pt-br	Verificar para salvar como infolog em enviar
 check to save as tracker entry on send	mail	pt-br	Verificar para salvar como trackerentry em enviar
+checking admin credentials failed	mail	pt-br	Falha na verificação das credenciais de administrador
 choose file	mail	pt-br	Selecionar arquivo
 common acl	mail	pt-br	ACL comum
 compose	mail	pt-br	Compor
@@ -193,7 +194,7 @@ filemode has been switched to %1	mail	pt-br	O modo de arquivo foi alterado para:
 files	mail	pt-br	Arquivos
 flag / unflag	mail	pt-br	Sinalizar / desmarcar
 flagged	mail	pt-br	sinalizado
-flagged %1 messages as %2 in %3	mail	pt-br	Mensagem(s) %1 sinalizada(s) como %2 em %3
+flagged %1 messages as %2 in %3	mail	pt-br	Mensagem(s) %1 sinalizada(s) como "%2" em %3.
 flagged %1 messages as flagged in %2	mail	pt-br	Mensagem(s) %1 sinalizada(s) como sinalizada(s) em %2
 flagged %1 messages as unflagged in %2	mail	pt-br	Mensagem(s) %1 sinalizada(s) como não sinalizada(s) em %2
 folder	mail	pt-br	Pasta
@@ -260,6 +261,7 @@ mail	common	pt-br	Correio
 mail acl	mail	pt-br	Direitos de acesso
 mail filter	mail	pt-br	Filtro de correio
 mail filter rule	mail	pt-br	Regra do filtro de correio
+mail probably has no text-body	mail	pt-br	O correio provavelmente não tem texto
 mail settings	mail	pt-br	Configurações de e-Mail
 mail source	mail	pt-br	Fonte do correio
 mail-address	mail	pt-br	Endereço de correio
@@ -355,6 +357,7 @@ replied	mail	pt-br	Respondido
 reply	mail	pt-br	Responde
 reply all	mail	pt-br	Responde a todos
 reply to	mail	pt-br	Responde a
+reply with attachments	mail	pt-br	Responder com anexos
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	pt-br	A resposta a essa mensagem falhou porque o conteúdo da mensagem parece estar criptografado e não pode ser descriptografado corretamente. Se você ainda deseja incluir o conteúdo dessa mensagem criptografada, pode tentar usar o encaminhamento como anexo.
 replyto	mail	pt-br	Responde a
 report as ham	mail	pt-br	Denunciar como Ham

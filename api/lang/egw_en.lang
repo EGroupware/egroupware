@@ -1098,14 +1098,12 @@ private	common	en	Private
 programs	common	en	Programs
 project	common	en	Project
 properties	common	en	Properties
-protocol is required	common	en	Protocol is required
 public	common	en	Public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
 quick add	common	en	Quick add
 radiobutton	common	en	Radio button
 read	common	en	Read
-read a list of entries.	common	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	common	en	Read a single entry by passing the ID and field list.
 read etemplate from database (for the keys above)	common	en	Read eTemplate from database (for the keys above)
 read this list of methods.	common	en	Read this list of methods

@@ -50,11 +50,13 @@ how to update lists	preferences	pt-br	Como atualizar listas
 icon	preferences	pt-br	Ícone
 icons and text	preferences	pt-br	Ícones e texto
 icons only	preferences	pt-br	Somente ícones
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	pt-br	Se ativada, a senha inserida será armazenada e transmitida a outro servidor quando você fizer login via SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	pt-br	Imagens linkadas a um registro podem ser exibidas como miniaturas. Você pode desabilitar esta função para acelerar o carregamento da página.
 in which country are you. this is used to set certain defaults for you.	preferences	pt-br	Em que País você está. Isto é usado para determinar alguns padrões.
 interface/template selection	preferences	pt-br	Seleção de Interface/Modelo
 it sets content size (text only) according to selected size.	preferences	pt-br	Ela define o tamanho do conteúdo (somente texto) de acordo com o tamanho selecionado.
 language	preferences	pt-br	Idioma
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	pt-br	O login via SingleSignOn não fornece uma senha para passá-la para servidores de correio eletrônico ou de arquivos.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	pt-br	Faça a lista de aplicações com botões de rolagem para cima/para baixo (útil para usuários que trabalham com o mouse sem roda de rolagem)
 max matches per page	preferences	pt-br	Máximo de ocorrências por página
 max number of icons in navbar	preferences	pt-br	Número máximo de ícones na barra de navegação
@@ -64,6 +66,7 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt-br	Nota: Esta função <b>NÃO</b> altera sua senha de email. Você deverá fazer isto manualmente.
 notification settings	preferences	pt-br	Configurações de notificação
 p: paragraph	preferences	pt-br	p: Parágrafo
+password stored	preferences	pt-br	Senha armazenada.
 please, select a new theme	preferences	pt-br	Por favor, selecione um novo tema
 popup with search	preferences	pt-br	Janela  instantânea com busca
 re-enter your password	preferences	pt-br	Digite sua senha novamente
@@ -87,7 +90,9 @@ show navigation bar as	preferences	pt-br	Exibir barra de navegação como
 show number of current users	preferences	pt-br	Exibir o número de usuários correntes
 show text on navigation icons	preferences	pt-br	Exibir texto na barra de navegação
 show_more_apps	common	pt-br	Exibir mais Aplicativos
+singlesignon and passwords	preferences	pt-br	SingleSignOn e senhas
 spellchecker language	addressbook	pt-br	Idioma do corretor gramatical
+store password retrievable for singlesignon	common	pt-br	Armazenar senha recuperável para o SingleSignOn
 text only	preferences	pt-br	Somente texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt-br	O aplicativo padrão será iniciado quando você entrar no EGroupware ou clicar no ícone página inicial.<br>Você pode ter mais de um aplicativo padrão mostrado na página inicial, caso não seja especificado aqui (precisa ser configurado nas preferências de cada aplicativo)
 the old password is not correct	preferences	pt-br	A antiga senha não está correta

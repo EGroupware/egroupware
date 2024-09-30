@@ -54,6 +54,8 @@ deny access	setup	ja	アクセス不可
 deny all users access to grant other users access to their entries ?	setup	ja	他のユーザ情報へのアクセスを全てのユーザに許可しない
 deregistered	setup	ja	登録解除しました
 details for admin account	setup	ja	管理者アカウントの詳細情報
+disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ja	ADがVLVコントロールに問題があり、かつ単一のクエリですべてのユーザを返すことができる場合のみ、無効にしてください！
+disable vlv controls	setup	ja	VLVコントロールを無効にする
 domain	setup	ja	ドメイン
 edit current configuration	setup	ja	環境設定
 enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
@@ -111,7 +113,6 @@ mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
 minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID   (例： 500 や 100 など)
 month	setup	ja	月
-multi-language support setup	setup	ja	言語環境設定
 never	setup	ja	無期限
 new	setup	ja	新規作成
 no	setup	ja	いいえ
@@ -124,6 +125,7 @@ one month	setup	ja	１ヶ月
 one week	setup	ja	１週間
 only add languages that are not in the database already	setup	ja	新しい言語すべてを追加（初めて追加する場合）
 only add new phrases	setup	ja	新しいフレーズの追加
+openidconnect login	setup	ja	OpenIDConnectログイン
 optional, if only authentication and anonymous search is enabled	setup	ja	認証と匿名検索のみを有効にする場合は任意
 or leave empty and select openidconnect as authentication type above for single sign on	setup	ja	または空のままにしておき、シングルサインオンのために上記の認証タイプとしてOpenID Connectを選択する。
 or leave empty and select saml as authentication type above for single sign on	setup	ja	または空のままにしておき、シングルサインオンの認証タイプとしてSAMLを選択する。
@@ -209,6 +211,7 @@ yes	setup	ja	はい
 you are ready for this stage, but this stage is not yet written.<br />	setup	ja	You are ready for this stage, but this stage is not yet written.<br />
 you do not have any languages installed. please install one now <br />	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br />
 you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。
+you need to select your current charset!	setup	ja	現在の文字セットを選択する必要があります！
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	ja	アンインストールした後再インストールするか、手動でインストールして下さい。
 your applications are current	setup	ja	アプリケーションのインストールは完了しました。
 your database does not exist	setup	ja	データベースが存在しません。

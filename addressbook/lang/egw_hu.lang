@@ -1,23 +1,16 @@
-%1 added	addressbook	hu	%1 hozzáadva
 %1 contact(s) %2	addressbook	hu	%1 kapcsolat %2
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	hu	%1 kapcsolat(ok) %2, %3 nem sikerült %4 miatt!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	hu	%1 kapcsolat %2, %3, mivel nem rendelkezik megfelelő jogosultsággal!
 %1 contacts updated (%2 errors).	addressbook	hu	%1 kapcsolat frissítve (%2 hiba).
 %1 fields in %2 other organisation member(s) changed	addressbook	hu	%1 mezők %2 más szervezet tagja(i)ban megváltoztak.
 %1 key(s) added to public keyserver "%2".	addressbook	hu	%1 kulcs(ok) hozzáadva a "%2" nyilvános kulcsszerverhez.
-%1 not implemented for %2!	addressbook	hu	%1 nem valósult meg %2 esetében!
 %1 public keys added.	addressbook	hu	%1 nyilvános kulcsok hozzáadása.
-%1 records imported	addressbook	hu	%1 bejegyzés importálva
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hu	%1 bejegyzés beolvasva (nincs importálva, importáláshoz %2vissza%3 kell lépni és meg kell szüntetni a 'Test Import' opciót).
 %1 starts with '%2'	addressbook	hu	%1 elindult '%2'-vel
 %s please calculate the result	addressbook	hu	%s kérem számolja ki az eredményt
 (e.g. 1969)	addressbook	hu	(pl.: 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	hu	<b>Nem találtam konverzió típust <none>.</b>Konverzió típus választása szükséges
 @-eval() is only availible to admins!!!	addressbook	hu	@-eval() csak adminisztrátoroknak érhető el!
 account repository	admin	hu	Felhasználói hozzáférések tárháza
-accounts	addressbook	hu	Hozzáférések
-actions	addressbook	hu	Műveletek
-add %1	addressbook	hu	%1 hozzáadása
 add a contact to this organisation	addressbook	hu	Kapcsolat hozzáadása ehhez a szervezethez
 add a new contact	addressbook	hu	Új kapcsolat hozzáadása
 add a new infolog	addressbook	hu	Új InfoLog hozzáadása
@@ -47,7 +40,6 @@ addressbook preferences	addressbook	hu	Címjegyzék tulajdonságok
 addressbook the contact should be saved to	addressbook	hu	Kapcsolat mentése a következő címjegyzékbe
 addressbook-fieldname	addressbook	hu	Címjegyzék-Mezőnév
 addvcard	addressbook	hu	vCard hozzáadása
-advanced search	addressbook	hu	Kiterjesztett keresés
 all addressbooks	addressbook	hu	Minden címjegyzék
 all contacts	addressbook	hu	Összes kapcsolat
 all types	addressbook	hu	Minden típus
@@ -198,7 +190,6 @@ exports contacts from your addressbook into a csv file. csv means 'comma separat
 extra	addressbook	hu	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	Nem sikerült megváltoztatni %1 szervezet tagja(i)t, nem megfelelőek a jogok!
 favorite phone	addressbook	hu	Kedvenc telefon
-favorites	addressbook	hu	Kedvencek
 fax	addressbook	hu	Fax
 fax number	common	hu	Fax Szám
 field %1 has been added !	addressbook	hu	%1 mező hozzáadva!
@@ -341,7 +332,6 @@ public key	addressbook	hu	Nyilvános kulcs
 public sharing url	addressbook	hu	Nyilvános megosztási URL
 publish into groups:	addressbook	hu	Megjelenítés a Csoportokban:
 read a list / search for entries.	addressbook	hu	Bejegyzések listája/keresése.
-read a list of entries.	addressbook	hu	Bejegyzés lista olvasása.
 read a single entry by passing the id and fieldlist.	addressbook	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
 read only	addressbook	hu	Csak olvasható
 record access	addressbook	hu	Rekord hozzáférés

@@ -39,6 +39,7 @@ certificate issued by	mail	zh	颁发证书的机构
 changing subject failed because of %1	mail	zh	更改主题失败，因为 %1
 changing subject failed folder %1 does not exist	mail	zh	更改主题失败 文件夹 %1 不存在
 check message against next rule also	mail	zh	也用下一个规则检查邮件
+checking admin credentials failed	mail	zh	检查管理员凭证失败
 compose	mail	zh	撰写
 compress folder	mail	zh	压缩文件夹
 condition	mail	zh	条件
@@ -96,7 +97,7 @@ file into:	mail	zh	移至：
 filemanager	mail	zh	文件管理器
 filemode has been switched to %1	mail	zh	文件模式已切换为 %1
 flagged	mail	zh	已标记
-flagged %1 messages as %2 in %3	mail	zh	在 %3 中将 %1 邮件标记为 %2
+flagged %1 messages as %2 in %3	mail	zh	在 %3 中将 %1 邮件标记为 "%2"。
 flagged %1 messages as flagged in %2	mail	zh	将 %1 邮件标记为 %2 邮件
 flagged %1 messages as unflagged in %2	mail	zh	在 %2 中将 %1 邮件标记为未标记邮件
 folder	mail	zh	邮件夹
@@ -152,6 +153,7 @@ mail	common	zh	邮件
 mail acl	mail	zh	访问权限
 mail filter	mail	zh	邮件过滤器
 mail filter rule	mail	zh	邮件过滤规则
+mail probably has no text-body	mail	zh	邮件可能没有文本
 mail settings	mail	zh	邮件设置
 mail source	mail	zh	邮件来源
 mail-address	mail	zh	邮件地址
@@ -238,6 +240,7 @@ replied	mail	zh	已回复
 reply	mail	zh	回复
 reply all	mail	zh	全部回复
 reply to	mail	zh	回复到
+reply with attachments	mail	zh	带附件回复
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	zh	回复此邮件失败，因为邮件内容似乎已加密，无法正常解密。如果您仍希望包含此加密邮件的内容，可以尝试使用转发作为附件。
 replyto	mail	zh	回复到
 report as ham	mail	zh	报告为垃圾邮件

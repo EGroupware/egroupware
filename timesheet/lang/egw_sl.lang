@@ -1,15 +1,9 @@
-%1 copied - the copy can now be edited	timesheet	sl	Kopirano je %1 - kopijo lahko zdaj urejate
 %1 timesheets(s) %2	timesheet	sl	%1 časovnic %2
 %1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	sl	%1 časovni listi %2, %3 ni uspel zaradi nezadostnih pravic!
 --> enter new name	timesheet	sl	--> vnesite novo ime
 2 month ago	timesheet	sl	Pred 2 meseci
 2 years ago	timesheet	sl	2 leti nazaj
 3 years ago	timesheet	sl	3 leta nazaj
-add	timesheet	sl	Dodaj
-add %1	timesheet	sl	Dodaj %1
-admin	timesheet	sl	Skrbnik
-all	timesheet	sl	vse
-all categories	timesheet	sl	Vse kategorije
 all projects	timesheet	sl	Vsi projekti
 and its members	timesheet	sl	In njegovi člani
 applies the changes	timesheet	sl	Uveljavi spremembe
@@ -22,22 +16,17 @@ changed status	timesheet	sl	Spremenjen status.
 check all	timesheet	sl	Preveri vse
 choose 'creator' of imported data	timesheet	sl	Izberite "ustvarjalec" uvoženih podatkov
 comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2
-copy of:	timesheet	sl	Kopija:
 create new links	timesheet	sl	Ustvari nove povezave
-created	timesheet	sl	Ustvarjeno
 creates a new field	timesheet	sl	Ustvari novo polje
 creating new entry	timesheet	sl	Ustvarjanje novega vnosa
 custom fields	timesheet	sl	Lastna polja
-date	timesheet	sl	Datum
 default document to insert entries	timesheet	sl	Privzeti dokument za vstavljanje
-delete	timesheet	sl	Izbriši
 delete this status	timesheet	sl	Izbriši ta status
 deleted	timesheet	sl	Zbrisano
 deletes this field	timesheet	sl	Ibriše to polje
 determines the order the fields are displayed	timesheet	sl	Določa vrstni red prikaza polj
 directory with documents to insert entries	timesheet	sl	Mapa z dokumenti za vstavljanje
 each value is a line like <id>[=<label>]	timesheet	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
-edit	timesheet	sl	Uredi
 edit status	common	sl	Uredi status
 edit this entry	timesheet	sl	Uredi ta vnos
 empty if identical to duration	timesheet	sl	Prazno, če je enako trajanju
@@ -48,7 +37,6 @@ error deleting the entry!!!	timesheet	sl	Napaka pri brisanju vnosa!
 error saving the entry!!!	timesheet	sl	Napaka pri shranjevanju vnosa!
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	sl	Primer {{IF n_prefix ~ Mr ~ Pozdravljeni g. ~ Pozdravljeni gospa}} - poiščite polje »n_prefix«, za »gospod«, če najdete, pišite Hello Hello, drugače pišite Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	sl	Primer {{LETTERPREFIXCUSTOM n_prefix naslov n_family}} - Primer: g. Dr. James Miller
-example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	timesheet	sl	Primer {{LETTERPREFIX}} - daje črkovno predpono brez dvojnih presledkov, če je naslov prazen, na primer
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	sl	Primer {{NELF vloga}} - če vloga v polju ni prazna, boste dobili novo vrstico z vrednostjo vloge na poljubnem mestu
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	timesheet	sl	Primer {{nenvlf role}} - če vloga v polju ni prazna, nastavite LF brez poljubne vrednosti polja
 existing links	timesheet	sl	Obstoječe povezave
@@ -56,8 +44,6 @@ exists	timesheet	sl	Obstaja
 export definition to use for nextmatch export	timesheet	sl	Izvozna definicija, ki jo je treba uporabiti za izvoz naslednjega računa
 export to openoffice spreadsheet	timesheet	sl	Izvozi v preglednico OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	sl	Izvozi vnose iz časovnega lista v datoteko CSV
-exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	sl	Izvozi vnose iz časovnega lista v datoteko CSV. CSV pomeni "vrednosti ločene z vejico". V zavihku z možnostmi lahko izberete tudi druge ločevalce.
-favorites	timesheet	sl	Priljubljene
 field must not be empty !!!	timesheet	sl	Polje ne sme biti prazno!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 full: use only projectmanager	admin	sl	Polno: uporabite samo vodja projektov
@@ -68,7 +54,6 @@ history logging	admin	sl	Beleženje zgodovine
 html link to the current record	timesheet	sl	Povezava HTML s trenutnim zapisom
 id	timesheet	sl	Šifra
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	sl	Če določite imenik (celotna pot vfs), bo %1 prikazalo dejanje za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki %1.
-if you specify a directory (full vfs path) here, Časovnica displays an action for each document. that action allows to download the specified document with the Časovnica data inserted. the document can contain placeholder like {{ts_title}}, to be replaced with the data. podprte so naslednje vrste dokumentov:txt,rtf,odt,ods,docx,xml,eml	timesheet	sl	Če podate naslov (celotno pot vfs) tukaj, Časovnica prikaže ukrep za vsak dokument. To dejanje omogoča prenos določenega dokumenta z vstavljenimi podatki Časovnica. Dokument lahko vsebuje vsebnik kot {{ts_title}}, ki ga je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: txt, rtf, odt, ods, docx, xml, eml
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	sl	Če določite dokument (celotno pot vfs) tukaj, %1 prikaže ikono dodatne ikone za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki.
 if you specify an export definition, it will be used when you export	timesheet	sl	Če določite definicijo izvoza, se bo uporabil, ko boste izvozili
 ignore	timesheet	sl	Prezri
@@ -90,7 +75,6 @@ links to specified application.  example: {{links/infolog}}	timesheet	sl	Povezav
 list of files linked to the current record	timesheet	sl	Seznam datotek, povezanih s trenutnim zapisom
 manage mapping	timesheet	sl	Upravljanje map
 max length of the input [, length of the inputfield (optional)]	timesheet	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
-menu	timesheet	sl	Meni
 modified	timesheet	sl	Spremenjeno
 modify status	timesheet	sl	Spremenjen status
 name of current user, all other contact fields are valid too	timesheet	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
@@ -99,15 +83,16 @@ new timesheet submitted by %1 at %2	timesheet	sl	Novi časovni list, ki ga je pr
 no details	timesheet	sl	Brez podrobnosti
 no project	timesheet	sl	Ni projekta
 no status	timesheet	sl	Ni statusa
-none	timesheet	sl	Brez
 none: use only free project-names	admin	sl	Brez: uporabite samo prosta imena projektov
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	sl	Število vrstic za večvrstično vnosno polje ali vrstica v polju z več izbirami
-old fixed definition	timesheet	sl	Stara določena opredelitev
 only admin	timesheet	sl	Samo admin
 only admin can edit this status	timesheet	sl	Samo skrbniki lahko uredijo časovni razpored s tem statusom
 or endtime	timesheet	sl	ali konec časa
 order	timesheet	sl	Vrstni red
 parent	timesheet	sl	Nadrejen
+pause	common	sl	Prekinitev
+pause time	timesheet	sl	Čas premora
+paused	timesheet	sl	Prekinitev
 permission denied!!!	timesheet	sl	Dovoljenje zavrnjeno!
 permissions error - %1 could not %2	timesheet	sl	Dovoljena napaka - %1 ni mogla %2
 prevent deleting	admin	sl	Preprečite brisanje
@@ -121,7 +106,6 @@ save & new	timesheet	sl	Shrani & novo
 saves the changes made	timesheet	sl	Shrani spremembe
 saves the changes made and leaves	timesheet	sl	Shrani narejene spremembe in zapusti program
 saves this entry and add a new one	timesheet	sl	Shrani ta vnos in dodajte novo
-search for '%1'	timesheet	sl	Poiščite »%1«
 select a price	timesheet	sl	Izberite ceno
 select a project	timesheet	sl	Izberite projekt
 select a status of the timesheet	timesheet	sl	Izberite stanje časovnega razporeda
@@ -131,18 +115,18 @@ select the predefined status, whan creating a new timesheet	preferences	sl	Če �
 select the predefined status, when creating a new timesheet	preferences	sl	Če želite ustvariti nov vnos, izberite vnaprej določen status
 set to	timesheet	sl	Nastavljena
 show a quantity sum (eg. to sum up negative overtime)	admin	sl	Prikaži količinsko vsoto, npr. da bi povzeli negativne nadure
-site configuration	timesheet	sl	Konfiguracija strani
 skip record	timesheet	sl	Preskoči zapis
 start	timesheet	sl	Začetek
+start-time can not be before last stop- or pause-time %1!	common	sl	Začetni čas ne sme biti pred zadnjim časom ustavitve ali prekinitve %1!
 starttime	timesheet	sl	Začetni čas
 starttime has to be before endtime !!!	timesheet	sl	Začetni čas mora biti pred koncem!
 status	timesheet	sl	Stanje
 status deleted.	timesheet	sl	Stanje je izbrisano.
 status of created timesheets	timesheet	sl	Stanje ustvarjenih časopisov
 status updated.	timesheet	sl	Stanje posodobljeno.
+stop- or pause-time can not be before the start-time %1!	common	sl	Čas zaustavitve ali premora ne more biti pred začetnim časom %1!
 sum %1:	timesheet	sl	Vsota %1:
 tag to mark positions for address labels	timesheet	sl	Oznaka za označitev položajev oznak adresarja
-the document can contain placeholder like {{%1}}, to be replaced with the data.	timesheet	sl	Dokument lahko vsebuje vsebnik kot {{%1}}, ki ga je treba zamenjati s podatki.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	timesheet	sl	Dokument lahko vsebuje mesto, na primer {{%3}}, ki ga je treba zamenjati s podatki (%1 popoln seznam imen imenika %2).
 the following document-types are supported:	timesheet	sl	Podprte so naslednje vrste dokumentov:
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	sl	Ime, uporabljeno interno (<= 20 znakov). Če ga spremenite, obstoječi podatki ne bodo več na voljo.
@@ -151,6 +135,7 @@ this month	timesheet	sl	Ta mesec
 this week	timesheet	sl	Ta teden
 this year	timesheet	sl	To leto
 ticket modified by %1 at %2	timesheet	sl	Vstopnica, spremenjena z %1 na %2
+timer already running or paused	common	sl	Časomer že teče ali je ustavljen
 timesheet	common	sl	Časovni list
 timesheet csv export	timesheet	sl	Časovni list CSV izvoza
 timesheet csv import	timesheet	sl	Časovni list CSV uvoza
@@ -163,19 +148,13 @@ timesheet status-%1 '%2' added.	timesheet	sl	Dodan je bil časovni list - %1 '%2
 timesheet-%1 '%2' updated.	timesheet	sl	Časovno obdobje - %1 '%2' je posodobljeno.
 timesheet-%1 deleted.	timesheet	sl	Časovno obdobje - %1 je izbrisano.
 titles of any entries linked to the current record, excluding attached files	timesheet	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
-total	timesheet	sl	skupaj
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	sl	Ni mogoče pretvoriti "%1" v ID računa. Uporaba nastavitve vtičnika (%2) za %3.
 unitprice	timesheet	sl	Cena na enoto
-update	timesheet	sl	nadgradnja
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
-username	timesheet	sl	Uporabniško ime
 values for selectbox	timesheet	sl	Vrednosti za izbirno polje
-view	timesheet	sl	Pogled
 view this entry	timesheet	sl	Poglej ta vnos
 week	timesheet	sl	Teden
 yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
 yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 yesterday	timesheet	sl	Včeraj
-you need to select some entries first!	timesheet	sl	Najprej morate izbrati nekaj vnosov!
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sl	Vaša podatkovna baza NI obnovljena (%1 vs. %2), prosimo poženite %3 nastavitev%4 za prenovo vaše podatkovne baze.
-Če določite dokument, celotno pot vfs, Časovnica prikaže ikono dodatne dokumentacije za vsak vnos. ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki. the document can contain placeholder like {{ts_title}}, to be replaced with the data. podprte so naslednje vrste dokumentov:txt,rtf,odt,ods,docx,xml,eml	timesheet	sl	Če določite dokument, celotno pot vfs, Časovnica prikaže ikono dodatne dokumentacije za vsak vnos. Ta ikona omogoča prenos določenega dokumenta z vstavljenimi podatki. Dokument lahko vsebuje vsebnik kot {{ts_title}}, ki ga je treba zamenjati s podatki. Podprte so naslednje vrste dokumentov: txt, rtf, odt, ods, docx, xml, eml

@@ -4,16 +4,12 @@
 %1 directories %2 found!	admin	no	%1 kataloger %2 funnet!
 %1 email addresses inserted	common	no	%1 email adresser lagt til
 %1 email(s) added into %2	common	no	%1 e-post(er) lagt til i %2
-%1 entries found, select one ...	common	no	%1 oppføringer funnet, velg en ...
 %1 etemplates deleted	common	no	%1 eMaler slettet.
-%1 etemplates for application '%2' dumped to '%3'	common	no	%1 eMaler for program '%2' overført til '%3'
 %1 etemplates found	common	no	%1 eMaler funnet.
 %1 file	common	no	%1-fil
 %1 is not executable by the webserver !!!	common	no	%1 er ikke eksekverbar på webtjener!
-%1 matches on search criteria	common	no	%1 treff for søkekriteria
 %1 more %2 selected ...	common	no	%1 flere %2 valgt ...
 %1 more...	common	no	%1 mer ...
-%1 new etemplates imported for application '%2'	common	no	%1 nye eMaler importert for program '%2'
 %1 not implemented for %2!	common	no	%1 ikke implementert for %2!
 %1 proxy of %2	common	no	%1 proxy av %2
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	no	%1EGroupware%2 er en flerbruker, web-basert gruppevare skrevet i %3PHP%4.
@@ -23,8 +19,10 @@
 %s onchange	common	no	%s ved endring
 %s readonly	common	no	%s kun lesbar
 '%1' copied to clipboard	common	no	'%1' kopiert til utklippstavlen
+'%1' does not match the required pattern '%2'	common	no	'%1' samsvarer ikke med det påkrevde mønsteret ('%2')
 '%1' has an invalid format	common	no	'%1' har et ugyldig format
 '%1' has an invalid format !!!	common	no	'%1' har feil format!
+'%1' is not a valid app-name ('%2')!	common	no	'%1' er IKKE et gyldig appnavn ('%2')!
 '%1' is not a valid date !!!	common	no	'%1' er ikke en gyldig dato!
 '%1' is not a valid floatingpoint number !!!	common	no	'%1' er ikke et gyldig flyttalls nummer!
 '%1' is not a valid integer !!!	common	no	'%1' er ikke et gyldig heltall!
@@ -32,6 +30,7 @@
 '%1' is not a valid timezone!	common	no	'%1' er ikke en gyldig tidssone!
 '%1' is not allowed ('%2')!	common	no	'%1' er IKKE tillatt ('%2')!
 '%1' is not allowed%2)!	common	no	'%1' er IKKE tillatt (%2)!
+'%1' must not contain (back)slashes!	common	no	'%1' må ikke inneholde (bak)skråstreker!
 (session restored in %1 seconds)	common	no	Økten gjenopprettes om %1 sekunder.
 00 (disable)	admin	no	00 (frakoblet)
 1 day	common	no	1 dag
@@ -204,6 +203,7 @@ chad	common	no	CHAD
 change	common	no	Endre
 change owner	common	no	Endre eier
 changed	common	no	Endret
+changes that you made may not be saved.	common	no	Det er ikke sikkert at endringene du har gjort, blir lagret.
 charset	common	no	Tegnsett
 check all	common	no	Kontroller alle
 check for empty values in if statements.  example {{if url~empty~~website:}} - if url is not empty, writes "website:"	common	no	Se etter tomme verdier i IF-setninger. Eksempel {{IF url~EMPTY~~Website:}} - Hvis url ikke er tom, skrives "Website:"
@@ -698,6 +698,7 @@ open	common	no	Åpne
 open existing contact	common	no	Åpne eksisterende kontakt
 open notify window	common	no	Åpne varslingsvindu
 open popup window	common	no	Åpne pop-up vindu
+openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	no	OpenIDConnect-pålogging vellykket, men brukeren '%1' finnes IKKE i EGroupware, OG automatisk brukeroppretting er deaktivert!
 optional note about the link	common	no	Valgri kommentar om denne lenken
 options	common	no	Alternativer
 or	common	no	ELLER
@@ -774,7 +775,6 @@ puerto rico	common	no	PUERTO RICO
 qatar	common	no	QATAR
 radiobutton	common	no	Radioknapp
 read	common	no	Lese
-read a list of entries.	common	no	Les en liste av oppføringer.
 read a single entry by passing the id and fieldlist.	common	no	Les ett enkelt innslag ved å gi ID og feltliste.
 read this list of methods.	common	no	Les metode-listen
 reading	common	no	Lesing
@@ -877,10 +877,10 @@ show page generation time on the bottom of the page?	common	no	Vise sidegenereri
 show password	common	no	Vis passord
 show values	common	no	Vis verdier
 show/hide	common	no	Vis/skjul sidefelt
-show_more_apps	common	no	Vis_flere_applikasjoner
 showing	common	no	Viser
 showing %1	common	no	Viser %1
 showing %1 - %2 of %3	common	no	Viser %1 - %2 of %3
+show_more_apps	common	no	Vis_flere_applikasjoner
 sierra leone	common	no	SIERRA LEONE
 sign up	common	no	Registrer deg
 singapore	common	no	SINGAPORE

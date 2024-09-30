@@ -2,19 +2,15 @@
 %1 hours	calendar	ca	%1 hores
 %1 records imported	calendar	ca	%1 registres importats
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ca	%1 registres llegits (encara sense importar, podeu tornar enrere i desmarcar Prova d'Importació)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	ca	<b>Atenció</b>: El calendari utilitza els festius del teu país, que és %1. Ho pots canviar al %2.<br />Els festius són %3 automàtic instal·lat de %4. Ho pots canviar a %5.
 a non blocking event will not conflict with other events	calendar	ca	Una cita no blocant no entrarà en conflicte amb altres cites
 accept	calendar	ca	acceptar
 accept or reject an invitation	calendar	ca	Accepta o rebutja una invitació
 accepted	calendar	ca	Acceptat
 access denied to the calendar of %1 !!!	calendar	ca	Accés denegat al calendari de %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ca	Acció que causà la notificació: Afegit, Cancel·lat, Acceptat, Rebutjat, ...
-actions	calendar	ca	Accions
-actions...	calendar	ca	Accions...
 add alarm	calendar	ca	Afegir alarma
 add timesheet entry	calendar	ca	Afegeix entrada d'horari
 added	calendar	ca	Afegit
-added by synchronisation	calendar	ca	afegit per sincronització
 after %1	calendar	ca	Després %1
 after current date	calendar	ca	Després de la data actual
 alarm	calendar	ca	Alarma
@@ -23,7 +19,6 @@ alarm deleted	calendar	ca	Alarma esborrada
 alarm for %1 at %2 in %3	calendar	ca	Alarma per %1 a les %2 en %3
 alarm management	calendar	ca	Gestió d'alarmes
 alarms	calendar	ca	Alarmes
-all categories	calendar	ca	Totes les categories
 all day	calendar	ca	Tot el dia
 all events	calendar	ca	Totes les cites
 all future	calendar	ca	Tot futur
@@ -31,8 +26,6 @@ all participants	calendar	ca	Tots els participants
 allows to edit the event again	calendar	ca	Permet editar de nou la cita
 always	calendar	ca	sempre
 apply the changes	calendar	ca	Aplica els canvis
-are you sure you want to delete this country ?	calendar	ca	Esteu segur d'esborrar aquest país?
-are you sure you want to delete this holiday ?	calendar	ca	Esteu segur d'esborrar aquesta festa?
 back half a month	calendar	ca	enrera mig mes
 back one month	calendar	ca	enrera un mes
 before %1	calendar	ca	Abans %1
@@ -43,7 +36,6 @@ birthdays	admin	ca	Aniversaris
 busy	calendar	ca	ocupat
 by	calendar	ca	per
 calendar event	calendar	ca	Cita de calendari
-calendar holiday management	admin	ca	Gestió de festius
 calendar menu	calendar	ca	Menú del Calendari
 calendar preferences	calendar	ca	Preferències - Calendari
 calendar settings	admin	ca	Calendari - Valors establerts
@@ -55,7 +47,6 @@ check all	calendar	ca	Comprova-ho tot
 choose a category	calendar	ca	Tria una categoria
 close the window	calendar	ca	Tanca la finestra
 compose a mail to all participants after the event is saved	calendar	ca	Edita un correu a tots els participants després de guardar la cita
-copy of:	calendar	ca	Còpia de:
 copy this event	calendar	ca	Copia aquesta cita
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	ca	Copia els teus canvis al portapapers, %1recarrega l'entrada%2 i ajunta-ho.
 countries	calendar	ca	Països
@@ -86,13 +77,11 @@ delete this event	calendar	ca	Esborra aquesta cita
 delete this exception	calendar	ca	Esborra aquesta excepció
 delete this series of recurring events	calendar	ca	Esborra aquesta sèrie de cites recurrents
 deleted	calendar	ca	eliminat
-uninvited	calendar	ca	Desinvitat
 display status of events	calendar	ca	Mostrar estat de les cites
 displayed view	calendar	ca	vista mostrada
 do you want a weekview with or without weekend?	calendar	ca	Vols una vista setmanal amb o sense cap de setmana?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ca	Voleu que us notifiquin les cites noves o modificades? Se us notificarà dels vostres propis canvis.<br>Podeu limitar les notificacions a només certs canvis. Cada element inclou tota la notificació llistada anteriorment. Totes les modificacions inclouen canvis de títol, participants, pero no les respostes dels participants. Si l'amo d'una cita demanà qualsevol notificació, sempre tindrà les respostes del participant, com les acceptacions o rebuigs.
 do you want to receive a regularly summary of your appointments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ca	Voleu rebre regularment per correu un resum de les vostres cites?<br>El resum s'enviarà al vostre correu electrònic habitual el mateix dia al matí o el dilluns per a resums setmanals.<br>Només s'envia si hi ha cites en aquest dia o setmana.
-do you wish to autoload calendar holidays files dynamically?	admin	ca	Voleu carregar automàticament al calendari els arxius de festes?
 download	calendar	ca	Descarregar
 download this event as ical	calendar	ca	Descarrega aquesta cita com a iCal
 duration	calendar	ca	Duració
@@ -114,7 +103,6 @@ error: no participants selected !!!	calendar	ca	Error: no s'han seleccionat part
 error: saving the event !!!	calendar	ca	Error guardant la cita !!!
 error: starttime has to be before the endtime !!!	calendar	ca	Error: L'hora d'inici ha de ser anterior a l'hora final !!!
 error: the entry has been updated since you opened it for editing!	calendar	ca	Error: l'entrada ha estat actualitzada des de que l'has obert per editar-la!
-event copied - the copy can now be edited	calendar	ca	Cita copiada - ara se pot editar la còpia
 event deleted	calendar	ca	Cita esborrada
 event details follow	calendar	ca	Segueixen els detalls de la cita
 event saved	calendar	ca	Cita guardada
@@ -156,7 +144,6 @@ hide private infos	calendar	ca	amaga informacions privades
 high priority	calendar	ca	prioritat alta
 history	calendar	ca	Història
 holiday	calendar	ca	Festiu
-holiday management	calendar	ca	Gestió de festius
 holidays	calendar	ca	Festius
 hours	calendar	ca	hores
 how far to search (from startdate)	calendar	ca	fins quan s'ha de cercar (a partir de la data d'inici)
@@ -167,7 +154,6 @@ ical export	calendar	ca	Exportació iCal
 ical file	calendar	ca	fitxer iCal
 ical import	calendar	ca	Importació iCal
 ical successful imported	calendar	ca	iCal importat correctament
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	ca	Si els festius marcats cauen en cap de setmana, passen al dilluns següent.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	ca	Si no poses una contrasenya aquí, la informació estarà disponible per a qualsevol que conegui la URL!!!
 ignore conflict	calendar	ca	Ignorar conflicte
 import	calendar	ca	Importar
@@ -183,7 +169,6 @@ links	calendar	ca	Enllaços
 links, attachments	calendar	ca	Enllaços, Adjunts
 listview	calendar	ca	vista de llistat
 location	calendar	ca	Lloc
-location to autoload from	admin	ca	Lloc des d'on carregar automàticament
 location, start- and endtimes, ...	calendar	ca	Lloc, hores d'inici i fi,...
 mail all participants	calendar	ca	correu de tots els participants
 make freebusy information available to not logged in persons?	calendar	ca	Fer que la informació lliure/ocupat estigui disponible per a les persones no registrades?
@@ -204,8 +189,8 @@ no response	calendar	ca	Sense resposta
 non blocking	calendar	ca	no blocant
 notification messages for added events	calendar	ca	Missatges de notificació per a cites afegides
 notification messages for canceled events	calendar	ca	Missatges de notificació per a cites cancel·lades
-notification messages for uninvited participants	calendar	ca	Missatges de notificació per a participants desconvidats
 notification messages for modified events	calendar	ca	Missatges de notificació per a cites modificades
+notification messages for uninvited participants	calendar	ca	Missatges de notificació per a participants desconvidats
 notification messages for your alarms	calendar	ca	Missatges de notificació per les vostres alarmes
 notification messages for your responses	calendar	ca	Missatges de notificació per les vostres respostes
 number of records to read (%1)	calendar	ca	Nombre de registres a llegir (%1)
@@ -266,7 +251,6 @@ select multiple contacts for a further action	calendar	ca	Seleccioneu múltiples
 select resources	calendar	ca	Selecciona recursos
 select who should get the alarm	calendar	ca	Selecciona qui hauria d'obtenir l'alarma
 selected range	calendar	ca	Gamma seleccionada
-set a year only for one-time / non-regular holidays.	calendar	ca	Establir l'any per als festius únics / no regulars.
 set new events to private	calendar	ca	Establir noves cites com a privades
 should new events created as private by default ?	calendar	ca	Establir noves cites com a privades per defecte?
 should the planner display an empty row for users or categories without any appointment.	calendar	ca	El planificador hauria de mostrar una fila buida per usuaris o categories sense cap cita.
@@ -294,8 +278,8 @@ this defines the start of your dayview. events before this time, are shown above
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ca	Aquest grup és el predeterminat en entrar al planificador. Podeu canviar-ho en el planificador quan volgueu.
 this message is sent for canceled or deleted events.	calendar	ca	Aquest missatge s'envia quan una cita s'esborra o es cancel·la.
 this message is sent for modified or moved events.	calendar	ca	Aquest missatge s'envia en modificar o moure cites.
-this message is sent to uninvited participants.	calendar	ca	Aquest missatge és enviat als participants desconvidats.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ca	Aquest missatge s'envia a cada participant de les cites de les que sou el propietari, qui ha demanat notificacions sobre noves cites.<br>Podeu usar certes variables a les que substitueixen les dades de la cita. La primera línia és l'assumpte del correu electrònic.
+this message is sent to uninvited participants.	calendar	ca	Aquest missatge és enviat als participants desconvidats.
 this message is sent when you accept, tentative accept or reject an event.	calendar	ca	Aquest missatge s'envia quan accepteu, accepteu l'intent o rebutgeu una cita.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ca	Aquest missatge s'envia quan establiu una alarma per una cita en concret. Incluiu tota la informació necessària.
 this module displays the current month	calendar	ca	Aquest mòdul mostra el mes actual
@@ -310,6 +294,7 @@ to many might exceed your execution-time-limit	calendar	ca	Quan temps es pot exc
 translation	calendar	ca	Traducció
 tue	calendar	ca	Dt
 two weeks	calendar	ca	dues setmanes
+uninvited	calendar	ca	Desinvitat
 updated	calendar	ca	Actualitzat
 use end date	calendar	ca	Utilitzar data final
 use the selected time and close the popup	calendar	ca	utilitza el temps seleccionat i tanca la finestra emergent

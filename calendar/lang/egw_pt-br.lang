@@ -22,14 +22,13 @@ accepted	calendar	pt-br	Aceito
 access denied to the calendar of %1 !!!	calendar	pt-br	Acesso negado à agenda de %1!
 access to calendar of %1 denied!	calendar	pt-br	Acesso ao calendário de %1 negada!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt-br	Ação que provocou a notificação: Adicionada, Cancelada, Aceita, Rejeitada, ...
-actions	calendar	pt-br	Ações
-actions...	calendar	pt-br	Ações ...
 add alarm	calendar	pt-br	Adicionar aviso
 add appointments via shortened dialog or complete edit window	calendar	pt-br	Adicionar compromissos por meio de uma caixa de diálogo reduzida ou de uma janela de edição completa
 add current view as favorite	calendar	pt-br	Adicionar visão atual como favorita
 add new alarm	calendar	pt-br	Adicionar novo alarme
 add new event	calendar	pt-br	Adicionar novo compromisso
 add new participants or resource	calendar	pt-br	Adicionar novos participantes ou recurso
+add recurrence	calendar	pt-br	Adicionar recorrência
 add timesheet entry	calendar	pt-br	Adicionar registro à planilha de tempo
 added	calendar	pt-br	Adicionado
 added by synchronization	calendar	pt-br	Adicionado por sincronização
@@ -44,7 +43,6 @@ alarm deleted	calendar	pt-br	Alarme removido.
 alarm for %1 at %2 in %3	calendar	pt-br	Alarme para %1 em %2 na %3
 alarm management	calendar	pt-br	Gerenciador de alarmes
 alarms	calendar	pt-br	Alarmes
-all categories	calendar	pt-br	Todas as categorias
 all day	calendar	pt-br	Todo o dia
 all events	calendar	pt-br	Todos os eventos
 all exceptions are converted into single events.	calendar	pt-br	Todas as exceções são convertidos em eventos individuais.
@@ -58,6 +56,7 @@ allows to edit the event again	calendar	pt-br	Permite editar o evento novamente
 always	calendar	pt-br	Sempre
 always use full edit dialog	calendar	pt-br	Sempre usar a caixa de diálogo de edição completa
 always use the full edit dialog, not this little dialog	calendar	pt-br	Sempre use a caixa de diálogo de edição completa, não essa pequena caixa de diálogo
+apply changes to (future) exceptions too?	calendar	pt-br	Aplicar alterações a exceções (futuras) também?
 apply the changes	calendar	pt-br	Aplicar as alterações
 attention	calendar	pt-br	Atendimento
 automatically purge old events after	admin	pt-br	Purgar automaticamente eventos antigos depois
@@ -214,6 +213,7 @@ exclude weekend	calendar	pt-br	Excluir fim de semana
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
 exists	calendar	pt-br	Existe
+explicit recurrences	calendar	pt-br	Adicionada recorrência em %1.
 export definition to use for nextmatch export	calendar	pt-br	Definição Exportar para usar para exportação nextmatch
 exports events from your calendar in ical format.	calendar	pt-br	Exportações eventos do Calendário em formato iCal.
 exports events from your calendar into a csv file.	calendar	pt-br	Exportações eventos de seu calendário em um arquivo CSV.
@@ -318,6 +318,7 @@ make freebusy information available to not logged in persons?	calendar	pt-br	Mos
 manage mapping	calendar	pt-br	Gerenciar mapeamento
 maximum available quantity of %1 exceeded!	calendar	pt-br	A quantidade máxima disponível de %1 excedido!
 meeting request	calendar	pt-br	Pedido de reunião
+meeting request additional recurrence(s)	calendar	pt-br	Reunião solicita recorrência(s) adicional(is)
 meetingrequest to all participants	calendar	pt-br	Meetingrequest a todos os participantes
 merge document...	calendar	pt-br	Mesclar documento ...
 min days	calendar	pt-br	Dias mínimos
@@ -382,8 +383,10 @@ on time change of more than 4 hours too	calendar	pt-br	Em mudanças superiores a
 one month	calendar	pt-br	Um mês
 one week	calendar	pt-br	Uma semana
 one year	calendar	pt-br	Um ano
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	pt-br	Somente suportado por alguns clientes totalmente compatíveis (por exemplo, da Apple). Se você tiver que inserir um URL, ele provavelmente não será compatível!
 only the initial date of that recurring event is checked!	calendar	pt-br	Somente a data inicial do evento recorrente foi informada!
 open todo's:	calendar	pt-br	Abrir tarefas:
+otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	pt-br	Caso contrário, as alterações no título, na descrição, ... ou os novos participantes não serão transferidos para as exceções que já foram criadas.
 output unit	calendar	pt-br	Unidade de saída
 overlap holiday	calendar	pt-br	Sobrepor feriado
 participants	calendar	pt-br	Participantes
@@ -394,6 +397,7 @@ people holiday	calendar	pt-br	Feriado pessoal
 permission denied	calendar	pt-br	Permissão negada
 planner by category	calendar	pt-br	Organizar por categoria
 planner by user	calendar	pt-br	Organizar por usuário
+please note: conflict check is never done in the past and always limited by above recurrence horizont.	calendar	pt-br	Observação: a verificação de conflitos nunca é feita no passado e é sempre limitada pelo horizonte de recorrência acima.
 please note: you can configure the field assignments after you uploaded the file.	calendar	pt-br	Atenção: Você pode configurar o campo de designação APÓS o carregamento do arquivo.
 preselected group for entering the planner	calendar	pt-br	Grupo pré-selecionado para entrada no organizador
 previous	calendar	pt-br	Anterior
@@ -470,6 +474,7 @@ the apple ical apps use this color to display events from this calendar.	calenda
 the document can contain placeholder like {{%1}}, to be replaced with the data.	calendar	pt-br	O documento pode conter um espaço reservado como {{%1}}, a ser substituído pelos dados.
 the extern organizer changed the event!	calendar	pt-br	O organizador externo alterou o evento!
 the following document-types are supported:	calendar	pt-br	Os seguintes tipos de documentos são suportados:
+the organizer changed the event!	calendar	pt-br	O organizador alterou o evento!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	pt-br	O remetente "%1" NÃO é o organizador externo "%2", proceda com cuidado!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	pt-br	O remetente "%1" NÃO é o participante que está respondendo "%2", prossiga com cuidado!
 this day is shown as first day in the week or month view.	calendar	pt-br	Esse dia será mostrado como primeiro dia da semana na visão semanal e mensal.
@@ -478,6 +483,7 @@ this defines the start of your dayview. events before this time, are shown above
 this entry is currently opened by %1!	calendar	pt-br	Este registro está atualmente aberto por %1!
 this entry is opened by user:	calendar	pt-br	Este registro foi aberto dentro do intervalo de tempo configurado pelo usuário:
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	pt-br	Esse grupo é pré-selecionado ao entrar no organizador. Você poderá modificá-lo a qualquer tempo.
+this is a single recurrence of a recurring event.	calendar	pt-br	Essa é uma única recorrência de um evento recorrente.
 this message is sent for canceled or deleted events.	calendar	pt-br	Essa mensagem é enviada para enventos cancelados ou apagados.
 this message is sent for modified or moved events.	calendar	pt-br	Esta mensagem é enviada para eventos modificados ou transferidos.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	pt-br	Essa mensagem é enviada para cada participante dos eventos que você criou, que pediram informações sobre novos eventos.<br>Você pode usar certas variáveis que subtituirão dados nos seus eventos. A primeira linha é o assunto do email.
@@ -526,6 +532,7 @@ yearly	calendar	pt-br	Anualmente
 yearview	calendar	pt-br	Visão Anual
 yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 you can either set a year or a occurrence, not both !!!	calendar	pt-br	Você pode especificar uma ocorrência única no ano ou recorrente, não ambos!
+you can only notify other users, not yourself!	calendar	pt-br	Você só pode notificar outros usuários, não a si mesmo!
 you can only set a year or a occurrence !!!	calendar	pt-br	Você pode selecionar ocorrência única ou recorrente!
 you do not have permission to read this record!	calendar	pt-br	Você não possui permissão para ler esse registro!
 you have a meeting scheduled for %1	calendar	pt-br	Você possui um compromisso agendado para %1

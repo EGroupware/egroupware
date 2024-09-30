@@ -50,11 +50,13 @@ how to update lists	preferences	nl	Hoe lijsten bijwerken
 icon	preferences	nl	Icoon
 icons and text	preferences	nl	Iconen en tekst
 icons only	preferences	nl	Alleen iconen
+if enabled, your entered password will be stored and passed on to other server, when you login via sso.	preferences	nl	Als dit is ingeschakeld, wordt je ingevoerde wachtwoord opgeslagen en doorgegeven aan andere servers wanneer je inlogt via SSO.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	nl	Afbeeldingen gekoppeld aan een record kunnen worden weergegeven als miniaturen. U kunt dit uitschakelen om de snelheid van weergave te verhogen.
 in which country are you. this is used to set certain defaults for you.	preferences	nl	In welk land bevindt u zich? Dit wordt gebruikt om bepaalde standaardinstellingen voor u te maken.
 interface/template selection	preferences	nl	Interface/Template Selectie
 it sets content size (text only) according to selected size.	preferences	nl	Het stelt de inhoudsgrootte (alleen tekst) in volgens de geselecteerde grootte.
 language	preferences	nl	Taal
+logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	nl	Inloggen via SingleSignOn geeft geen wachtwoord om door te geven aan mail- of file-servers.
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	nl	Toepassingenlijst scrolbaar maken met omhoog/omlaag knoppen (handig voor gebruikers die werken met een muis zonder scrollwiel)
 max matches per page	preferences	nl	Max. resultaten per pagina
 max number of icons in navbar	preferences	nl	Max. aantal iconen in de navigatiebalk
@@ -63,6 +65,7 @@ no user-selection at all	common	nl	Totaal geen gebruikersselectie
 note: this feature does *not* change your email password. this will	preferences	nl	Opmerking: Deze optie wijzigt uw email wachtwoord niet. Dit moet
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigt *niet* uw email-wachtwoord. Dit moet handmatig te gebeuren.
 p: paragraph	preferences	nl	p: Paragraaf
+password stored	preferences	nl	Wachtwoord opslaan.
 please, select a new theme	preferences	nl	Selecteer een nieuw thema
 popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
@@ -86,7 +89,9 @@ show navigation bar as	preferences	nl	Navigatiebalk weergeven als
 show number of current users	preferences	nl	Aantal huidige gebruikers weergeven
 show text on navigation icons	preferences	nl	Geef tekst weer op de navigatiebalk
 show_more_apps	common	nl	Meer toepassingen weergeven
+singlesignon and passwords	preferences	nl	SingleSignOn en wachtwoorden
 spellchecker language	addressbook	nl	Spellingcontrole
+store password retrievable for singlesignon	common	nl	Wachtwoord opslaan opvraagbaar voor SingleSignOn
 text only	preferences	nl	Alleen tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	nl	De standaard toepassing wordt direct geopend na het inloggen in EGroupware en wanneer u klikt op start.<br />U kunt ook informatie van meerdere applicaties weergeven op de startpagina door hier geen specifieke pagina te selecteren. Niet alle toepassingen kunnen informatie tonen op de startpagina. Een voorbeeld toepassing die het wel kan is 'Kalender'. Zie de voorkeuren van 'Kalender' voor meer informatie.
 the old password is not correct	preferences	nl	Het oude wachtwoord is onjuist

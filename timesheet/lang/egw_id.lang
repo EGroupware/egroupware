@@ -32,7 +32,6 @@ error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
 existing links	timesheet	id	Tautan yang ada
 export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
-favorites	timesheet	id	Favorit
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
 general fields:	timesheet	id	Field Umum:
@@ -62,6 +61,9 @@ only admin can edit this status	timesheet	id	hanya Admin yang dapat meng-edit st
 or endtime	timesheet	id	atau Waktu berakhir
 order	timesheet	id	Urutan
 parent	timesheet	id	Parent
+pause	common	id	Jeda
+pause time	timesheet	id	Jeda waktu
+paused	timesheet	id	Dijeda
 permission denied!!!	timesheet	id	Ijin ditolak!!!
 price	timesheet	id	Harga
 projectmanager integration	admin	id	Terpadu dengan ManajerProyek
@@ -76,16 +78,19 @@ select a status of the timesheet	timesheet	id	pilih status LembarWaktu
 select infolog	timesheet	id	pilih InfoLog
 select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
 start	timesheet	id	Mulai
+start-time can not be before last stop- or pause-time %1!	common	id	Waktu mulai tidak boleh sebelum waktu berhenti atau jeda terakhir %1!
 starttime	timesheet	id	Waktu memulai
 starttime has to be before endtime !!!	timesheet	id	Waktu memulai harus sebelum waktu berakhir!!!
 status deleted.	timesheet	id	Status dihapus.
 status of created timesheets	timesheet	id	Status lembarwaktu yang dibikin
 status updated.	timesheet	id	Status diperbarui.
+stop- or pause-time can not be before the start-time %1!	common	id	Waktu berhenti atau jeda tidak boleh sebelum waktu mulai %1!
 sum %1:	timesheet	id	Jumlah %1:
 this month	timesheet	id	Bulan ini
 this week	timesheet	id	Minggu ini
 this year	timesheet	id	Tahun ini
 ticket modified by %1 at %2	timesheet	id	Tiket diubah oleh %1 pada %2
+timer already running or paused	common	id	Pengatur waktu sudah berjalan atau dijeda
 timesheet	common	id	Lembaran Waktu
 timesheet csv export	timesheet	id	Ekspor CSV LembarWaktu
 timesheet modified by %1 at %2	timesheet	id	LembarWaktu diubah oleh %1 pada %2

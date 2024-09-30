@@ -31,6 +31,7 @@ certificate info for email %1	mail	lv	Sertifikāta informācija par e-pasta %1
 certificate issued by	mail	lv	Sertifikātu izdevis
 changing subject failed because of %1	mail	lv	Tēmas maiņa neizdevās, jo %1
 changing subject failed folder %1 does not exist	mail	lv	Mainīt tēmu neizdevās mape %1 neeksistē
+checking admin credentials failed	mail	lv	Pārbaudīt administratora akreditācijas datus neizdevās
 compose	mail	lv	Rakstīt jaunu
 compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
@@ -80,7 +81,7 @@ file into:	mail	lv	Pārvietot uz:
 filemanager	mail	lv	Datņu pārvaldnieks
 filemode has been switched to %1	mail	lv	Faila režīms ir pārslēgts uz: %1
 flagged	mail	lv	arkarodziņiem
-flagged %1 messages as %2 in %3	mail	lv	Ziņa(-as) %1 atzīmēta(-as) kā %2 %3
+flagged %1 messages as %2 in %3	mail	lv	Ziņa(-as) %1 atzīmēta(-as) kā "%2" %3.
 flagged %1 messages as flagged in %2	mail	lv	%1 ziņojums(-i) atzīmēts(-i) kā atzīmēts(-i) %2
 flagged %1 messages as unflagged in %2	mail	lv	%1 ziņojums(-i) atzīmēts(-i) kā neieskaitīts(-i) %2
 folder	mail	lv	Mape
@@ -132,6 +133,7 @@ mail	common	lv	Pasts
 mail acl	mail	lv	Piekļuves tiesības
 mail filter	mail	lv	Pasta filtrs
 mail filter rule	mail	lv	Pasta filtra noteikums
+mail probably has no text-body	mail	lv	Pastam, iespējams, nav teksta
 mail settings	mail	lv	Sūtījumu uzstādījumi
 mail source	mail	lv	Pasta avots
 mail-address	mail	lv	Pasta adrese
@@ -209,6 +211,7 @@ replied	mail	lv	atbildēts
 reply	mail	lv	Atbildēt
 reply all	mail	lv	Atbildēt visiem
 reply to	mail	lv	Atbildēt
+reply with attachments	mail	lv	Atbildēt ar pielikumiem
 replying to this message failed because the content of this message seems to be encrypted and can not be decrypted properly. if you still wish to include content of this encrypted message, you may try to use forward as attachment instead.	mail	lv	Atbildēt uz šo ziņojumu neizdevās, jo šķiet, ka ziņojuma saturs ir šifrēts un to nevar pienācīgi atšifrēt. Ja joprojām vēlaties iekļaut šī šifrētā ziņojuma saturu, tā vietā varat mēģināt izmantot pārsūtīšanu kā pielikumu.
 replyto	mail	lv	Atbildēt
 report as ham	mail	lv	Ziņot kā Ham

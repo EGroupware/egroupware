@@ -1,14 +1,10 @@
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	no	%1 kontakt(er) %2, %3 mislyktes på grunn av %4!
 %1 contacts updated (%2 errors).	addressbook	no	%1 kontakter oppdatert (%2 feil).
 %1 key(s) added to public keyserver "%2".	addressbook	no	%1-nøkkel(er) lagt til på den offentlige nøkkelserveren "%2".
-%1 not implemented for %2!	addressbook	no	%1 ikke implementert for %2!
 %1 public keys added.	addressbook	no	%1 offentlige nøkler lagt til.
-%1 records imported	addressbook	no	%1 rekker importert.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	no	%1 rekker lest (ikke importert enda, du kan gå %2tilbake%3 og fjerne haken på Test Import.
 (e.g. 1969)	addressbook	no	(eks. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	no	<b>Ingen oversettingstype <none> ble funnet.</b>Vennligst velg oversettingstype fra listen.
 @-eval() is only availible to admins!!!	addressbook	no	@-eval() er kun tilgjengelig for admins!
-actions	addressbook	no	Funksjoner
 add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved å fylle inn feltene
 add custom field	addressbook	no	Legg til egendefinert felt
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	no	Legg til egendefinert felt i lenker i adresseboken, som vises i andre programmer. Standardverdien er ingen egendefinerte felt.
@@ -27,7 +23,6 @@ addressbook list	addressbook	no	Liste over adressebøker
 addressbook preferences	addressbook	no	Adressebok preferanser
 addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
 addvcard	addressbook	no	Legg til vCard
-advanced search	addressbook	no	Avansert søk
 all addressbooks	addressbook	no	Alle adressebøker
 all types	addressbook	no	Alle typer
 allow	addressbook	no	Tillat
@@ -121,7 +116,6 @@ export from addressbook	addressbook	no	Eksport fra Adresseliste
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Eksporterer kontakter fra adresseboken til en CSV-fil. I alternativfanen kan du også velge andre separatorer.
 extra	addressbook	no	Ekstra
 favorite phone	addressbook	no	Favoritt-telefon
-favorites	addressbook	no	Favoritter
 fax	addressbook	no	Telefaks
 fax number	common	no	Telefaks Nummer
 field %1 has been added !	addressbook	no	Felt %1 ble lagt til!
@@ -158,7 +152,6 @@ import from ldif, csv, or vcard	addressbook	no	Importer fra LDIF, CSV eller vCar
 import from outlook	addressbook	no	Importer fra Outlook
 import multiple vcard	addressbook	no	Importer flere vCard
 import next set	addressbook	no	Importer neste sett
-import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på vCard format.
 importer's personal	addressbook	no	Importerer personlig
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	no	Importerer kontakter til adresseboken fra en CSV-fil. CSV betyr "kommaseparerte verdier". I alternativfanen kan du også velge andre separatorer.
 imports contacts into your addressbook from a vcard file.	addressbook	no	Importerer kontakter til adresseboken fra en vCard-fil.
@@ -223,7 +216,6 @@ public key	addressbook	no	Offentlig Nøkkel
 public sharing url	addressbook	no	URL for offentlig deling
 publish into groups:	addressbook	no	Publiser i grupper:
 read a list / search for entries.	addressbook	no	Les en liste / søk etter forekomster.
-read a list of entries.	addressbook	no	Lese liste.
 read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved å gi id og feltliste.
 record access	addressbook	no	Rekketilgang
 record owner	addressbook	no	Rekkeeier

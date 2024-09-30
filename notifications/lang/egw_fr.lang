@@ -2,6 +2,7 @@
 account:	notifications	fr	Compte :
 all possible notification backends	notifications	fr	Tous les backends de notification possibles
 are you sure you want to delete all notifications?	notifications	fr	Confirmez-vous vouloir supprimer toutes les notifications ?
+automatic deleted notifications older than	admin	fr	Suppression automatique des notifications plus anciennes que
 browser	notifications	fr	Navigateur
 browser is starting.	notifications	fr	Le navigateur se lance.
 cancal settings?	notifications	fr	Annuler le paramétrage ?
@@ -65,6 +66,7 @@ more info	notifications	fr	Plus d'info
 notification	common	fr	Notification
 notifier	notifications	fr	Notificateur
 notify me by	notifications	fr	Notifier avec mon compte
+only used if no push server available!	admin	fr	Utilisé uniquement s'il n'y a pas de serveur push disponible !
 open notified entry	notifications	fr	Ouvrir l'entrée notifiée
 optimize e-mails for external mail client	notifications	fr	Optimizer les emails pour des clients de messagerie externes
 page not found, please check serveraddress.	notifications	fr	Page non trouvée, veuillez vérifier l'adresse du esrveur
