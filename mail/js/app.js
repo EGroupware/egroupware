@@ -3693,7 +3693,7 @@ app.classes.mail = AppJS.extend(
 	 * @param _allMessagesChecked
 	 */
 	mail_callMove: function(_action,_senders,_target,_allMessagesChecked) {
-		var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
+		var target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 

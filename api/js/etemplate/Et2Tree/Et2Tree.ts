@@ -1291,6 +1291,12 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			return element.tagName == "SL-TREE-ITEM"
 		});
 		let action : EgwActionObject = this.widget_object.getObjectById(target.id);
+
+		// Create on the fly if not there?
+		if(!action)
+		{
+			debugger;
+		}
 		return {target: target, action: action};
 	}
 }
