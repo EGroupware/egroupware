@@ -314,7 +314,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     event: e, posx: _xy.posx,
                     posy: _xy.posy,
                     innerText: nodeToUse?.title || _node.innerText,//nodeToUse only exists on widgets that define findActionTarget
-                    target: nodeToUse?.target || _node,
+					target: nodeToUse || _node,
                 };
                 _callback.call(contextToUse || _context, _implContext, this);
             }
