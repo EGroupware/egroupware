@@ -67,11 +67,30 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		{
 			return;
 		}
+		if(this.stateChangeContext)
+		{
+			const target = this.tree.shadowRoot.querySelector("[id='" + this.stateChangeContext.id + "']");
+
+			// Just set the attribute, we're not changing the tree value
+			// The selected attribute will be reset by the tree next render()
+			if(target && egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
+			{
+				target.setAttribute("selected", "");
+			}
+			else if(target)
+			{
+				target.removeAttribute("selected");
+			}
+			if(target && egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
+			{
+				target.focus();
+			}
+		}
 
 		// Update the "focused" flag
 		if(egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
 		{
-			this.tree.focusItem(this.id);
+			this.tree.focus();
 		}
 		if(egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
 		{
