@@ -780,6 +780,7 @@ button.et2_timestamper:hover {
 et2-dialog .dialog_icon {
     vertical-align: middle;
     width: 2em;
+    font-size: 2em;
     margin: 0.5em;
 }
 
