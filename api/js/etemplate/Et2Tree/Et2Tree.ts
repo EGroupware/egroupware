@@ -13,7 +13,7 @@ import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 import {FindActionTarget} from "../FindActionTarget";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT} from "../../egw_action/egw_action_constants";
+import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_FLAG_IS_CONTAINER} from "../../egw_action/egw_action_constants";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -835,9 +835,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const typeMap = {
 			dragenter: EGW_AI_DRAG_ENTER,
 			dragleave: EGW_AI_DRAG_OUT,
-			drop: EGW_AI_DRAG_OUT,
 		}
-		this.widget_object.getObjectById(id).iface.triggerEvent(typeMap[event.type], event);
+		this.widget_object.iface.triggerEvent(typeMap[event.type] ?? event.type, event);
 	}
 
 	protected async finishedLazyLoading()
@@ -926,7 +925,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 								this.getDomNode(parentNode.id).loading = false
 							}
                             this.requestUpdate("_selectOptions")
-							this._link_actions(this.actions)
                         })
 
 					}
@@ -1082,16 +1080,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 					itemAO.remove();
 				}
 
-				// Need the DOM nodes to actually link the actions
-				this.updateComplete.then(() =>
-				{
-					this.linkLeafActions(
-						parentAO ?? this.widget_object,
-						_item,
-						this._get_action_links(this.actions)
-					);
-				});
-
 				return results;
 			});
 	}
@@ -1110,19 +1098,22 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// Get the top level element for the tree
 		let objectManager = egw_getAppObjectManager(true);
 		this.widget_object = objectManager.getObjectById(this.id);
+		const ao_impl = new et2_action_object_impl(this, this);
+		ao_impl.aoi = new EgwDragDropShoelaceTree(this);
 		if (this.widget_object == null)
 		{
 			// Add a new container to the object manager which will hold the widget
 			// objects
 			this.widget_object = objectManager.insertObject(false, new EgwActionObject(
 				//@ts-ignore
-				this.id, objectManager, (new et2_action_object_impl(this, this)).getAOI(),
-				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager
+				this.id, objectManager, ao_impl.getAOI(),
+				this._actionManager || objectManager.manager.getActionById(this.id) || objectManager.manager,
+				EGW_AO_FLAG_IS_CONTAINER
 			));
 		} else
 		{
 			// @ts-ignore
-			this.widget_object.setAOI((new et2_action_object_impl(this, this)).getAOI());
+			this.widget_object.setAOI(ao_impl.getAOI());
 		}
 
 		// Delete all old objects
@@ -1133,41 +1124,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		// 'allowed' for this widget at this time
 		var action_links = this._get_action_links(actions);
 		this.widget_object.updateActionLinks(action_links);
-		//Drop target enabeling
-		if (typeof this._selectOptions != 'undefined')
-		{
-			let self: Et2Tree = this
-			// Iterate over the options (leaves) and add action to each one
-			for (const selectOption of this._selectOptions)
-			{
-				this.linkLeafActions(this.widget_object, selectOption, action_links)
-			}
-		}
-	}
-
-	/**
-	 * Add actions on a leaf
-	 *
-	 * @param {EgwActionObject} parentActionObject
-	 * @param {TreeItemData} option
-	 * @param {string[]} action_links
-	 * @protected
-	 */
-	protected linkLeafActions(parentActionObject : EgwActionObject, option : TreeItemData, action_links : string[])
-	{
-		// Add a new action object to the object manager
-		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-
-		// @ts-ignore
-		let obj : EgwActionObject = parentActionObject.addObject(id, new EgwDragDropShoelaceTree(this, id));
-		obj.findActionTargetHandler = this;
-		obj.updateActionLinks(action_links);
-
-		const children = <TreeItemData[]><unknown>(option.children ?? option.item) ?? [];
-		for(let i = 0; i < children.length; i++)
-		{
-			this.linkLeafActions(obj, children[i], action_links);
-		}
 	}
 
 	/**
@@ -1260,7 +1216,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 
 	/**
-	 * returns the closest SlItem to the click position, and the corresponding EgwActionObject
+	 * returns the closest SlTreeItem to the click position, and the corresponding EgwActionObject
 	 * @param _event the click event
 	 * @returns { target:SlTreeItem, action:EgwActionObject }
 	 */
@@ -1272,11 +1228,18 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		});
 		let action : EgwActionObject = this.widget_object.getObjectById(target.id);
 
-		// Create on the fly if not there?
+		// Create on the fly if not there?  Action handlers might need the EgwActionObject
 		if(!action)
 		{
-			debugger;
+			// NOTE: FLAT object structure under the tree ActionObject to avoid nested selection
+			action = this.widget_object.addObject(target.id, this.widget_object.iface);
+			// Required to get dropped accepted, but also re-binds
+			action.updateActionLinks(this._get_action_links(this.actions));
 		}
+		// This is just the action system, which we override
+		this.widget_object.setAllSelected(false);
+		action.setSelected(true);
+
 		return {target: target, action: action};
 	}
 }

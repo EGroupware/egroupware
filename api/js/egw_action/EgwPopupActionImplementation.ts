@@ -41,20 +41,32 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			_aoi.findActionTargetHandler = parentNode;
 			isNew = true;
 		}
-
-		if(isNew)
-        {
-			//if a parent is available the context menu Event-listener will only be bound once on the parent
-			this._registerDefault(parentNode, _callback, parentAO);
-			this._registerContext(parentNode, _callback, parentAO);
-
-			return true;
-		}
-		else if(node && !parentNode)
+		if(typeof _aoi.handlers == "undefined")
 		{
-			this._registerDefault(node, _callback, _context);
-			this._registerContext(node, _callback, _context);
-			return true;
+			_aoi.handlers = {};
+		}
+		if(typeof _aoi.handlers[this.type] == "undefined")
+		{
+			_aoi.handlers[this.type] = [];
+		}
+
+		if(_aoi.handlers[this.type].length == 0)
+		{
+			_aoi.handlers[this.type].push({type: 'contextmenu', listener: _callback});
+			if(isNew)
+			{
+				//if a parent is available the context menu Event-listener will only be bound once on the parent
+				this._registerDefault(parentNode, _callback, parentAO);
+				this._registerContext(parentNode, _callback, parentAO);
+
+				return true;
+			}
+			else if(node && !parentNode)
+			{
+				this._registerDefault(node, _callback, _context);
+				this._registerContext(node, _callback, _context);
+				return true;
+			}
 		}
 		return false;
 
@@ -64,6 +76,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const node = _aoi.getDOMNode();
         //TODO jQuery replacement
         jQuery(node).off();
+
+		// Unregister handlers
+		if(_aoi.handlers)
+		{
+			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			delete _aoi.handlers[this.type];
+		}
         return true
     };
 

@@ -133,7 +133,11 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 			{
 				_aoi.handlers = {};
 			}
-			_aoi.handlers[this.type] = [];
+			if(typeof _aoi.handlers[this.type] == "undefined")
+			{
+				_aoi.handlers[this.type] = [];
+			}
+
 			// Prevent selection
             node.onselectstart = function () {
                 return false;
@@ -150,7 +154,13 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
                 return;
             }
 
-            // Bind mouse handlers
+			if(_aoi.handlers[this.type].length !== 0)
+			{
+				// Already bound
+				return;
+			}
+
+			// Bind mouse handlers
             //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via jQuery.mousedown
             //jQuery(node).off("mousedown",egwPreventSelect)
             //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
@@ -291,11 +301,10 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 			};
 
             // Drag Event listeners
-            node.addEventListener('dragstart', dragstart, false);
+			node.addEventListener('dragstart', dragstart, false);
 			_aoi.handlers[this.type].push({type: 'dragstart', listener: dragstart});
-            node.addEventListener('dragend', dragend, false);
+			node.addEventListener('dragend', dragend, false);
 			_aoi.handlers[this.type].push({type: 'dragend', listener: dragend});
-
 
             return true;
         }
