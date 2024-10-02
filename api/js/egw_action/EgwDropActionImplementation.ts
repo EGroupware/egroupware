@@ -46,7 +46,10 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 			{
 				_aoi.handlers = {};
 			}
-			_aoi.handlers[this.type] = [];
+			if(typeof _aoi.handlers[this.type] == "undefined")
+			{
+				_aoi.handlers[this.type] = [];
+			}
 			node.classList.add('et2dropzone');
             const dragover = (event)=> {
                 if (event.preventDefault) {
@@ -229,24 +232,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 event.preventDefault();
                 return false;
             };
-
-			// Bind events on parent, if provided, instead of individual node
-			if(_aoi.findActionTargetHandler)
-			{
-				// But only bind once
-				if(parentAO && !parentAO.iface.handlers[this.type])
-				{
-					parentAO.iface.handlers[this.type] = parentAO.iface.handlers[this.type] ?? [];
-					// Swap objects, bind down below
-					_aoi = parentAO.iface;
-					node = parentAO.iface.getDOMNode();
-				}
-				else
-				{
-					return true;
-				}
-			}
-
+			
 			if(_aoi.handlers[this.type].length == 0)
 			{
 				// DND Event listeners

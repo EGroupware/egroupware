@@ -12,7 +12,7 @@ import {Et2Tree} from "../etemplate/Et2Tree/Et2Tree";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
 import {SlTreeItem} from "@shoelace-style/shoelace";
-import {EgwActionObject} from "./EgwActionObject";
+import {FindActionTarget} from "../etemplate/FindActionTarget";
 
 
 export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 1000
@@ -23,7 +23,7 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
     tree: Et2Tree;
 
 	// Reference to the widget that's handling actions for us
-	public findActionTargetHandler : EgwActionObject;
+	public findActionTargetHandler : FindActionTarget;
 
 	private timeout : ReturnType<typeof setTimeout>;
 
@@ -32,12 +32,13 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 
 		super();
 		this.tree = _tree
-		this.findActionTargetHandler = _tree.widget_object;
+		this.findActionTargetHandler = _tree;
 	}
 
-	public doTriggerEvent(egw_event : number, dom_event : Event)
+	public doTriggerEvent(egw_event : number, data : any)
 	{
-		const target = this.tree.findActionTarget(dom_event);
+		let dom_event = data.event ?? data;
+		const target = this.findActionTargetHandler.findActionTarget(dom_event);
 		if(egw_event == EGW_AI_DRAG_ENTER)
 		{
 			target.target.classList.add("draggedOver", "drop-hover");
@@ -54,10 +55,6 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 			target.target.classList.remove("draggedOver", "drop-hover");
 			clearTimeout(this.timeout)
 		}
-		else
-		{
-			debugger;
-		}
 		return true
 	}
 
@@ -71,16 +68,6 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		{
 			const target = this.tree.shadowRoot.querySelector("[id='" + this.stateChangeContext.id + "']");
 
-			// Just set the attribute, we're not changing the tree value
-			// The selected attribute will be reset by the tree next render()
-			if(target && egwBitIsSet(_state, EGW_AO_STATE_SELECTED))
-			{
-				target.setAttribute("selected", "");
-			}
-			else if(target)
-			{
-				target.removeAttribute("selected");
-			}
 			if(target && egwBitIsSet(_state, EGW_AO_STATE_FOCUSED))
 			{
 				target.focus();
@@ -96,6 +83,11 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		{
 			// _tree.selectItem(this.id, false);	// false = do not trigger onSelect
 		}
+	}
+
+	getWidget()
+	{
+		return this.tree;
 	}
 
 	doGetDOMNode()
