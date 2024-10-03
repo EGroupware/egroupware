@@ -273,6 +273,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 					background-color: var(--highlight-background-color);
 				}
 
+				sl-tree-item.drop-hover > *:not(sl-tree-item) {
+					pointer-events: none;
+				}
+
 				/*Mail specific style TODO move it out of the component*/
                 sl-tree-item.unread > .tree-item__label {
                         font-weight: bold;
@@ -843,8 +847,29 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			return;
 		}
-		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-		//console.log(event.type, id);
+
+		// Remove drop hover from any parent nodes
+		if(event.type == "dragenter")
+		{
+			event.stopPropagation();
+			let current = option.parentElement;
+			while(current)
+			{
+				current.classList.remove("draggedOver", "drop-hover");
+				current = current.parentElement;
+			}
+		}
+		// Ignore/stop events from child nodes, unless it's dragenter and the parent sl-tree-item isn't hovered yet
+		if(["dragenter", "dragleave"].includes(event.type) && event.target != option && event.composedPath().includes(option))
+		{
+			event.stopPropagation();
+			if(event.type != "dragenter" || option.classList.contains("drop-hover"))
+			{
+				return;
+			}
+		}
+		//let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
+		//console.log(event.type, id, event.target);
 
 		const typeMap = {
 			dragenter: EGW_AI_DRAG_ENTER,
