@@ -25,7 +25,8 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 	// Reference to the widget that's handling actions for us
 	public findActionTargetHandler : FindActionTarget;
 
-	private timeout : ReturnType<typeof setTimeout>;
+	// List of timeouts indexed by ID because drag out doesn't always happen before drag in
+	private timeouts : { [key : string] : ReturnType<typeof setTimeout> };
 
 	constructor(_tree : Et2Tree)
 	{
@@ -33,16 +34,17 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		super();
 		this.tree = _tree
 		this.findActionTargetHandler = _tree;
+		this.timeouts = {};
 	}
 
 	public doTriggerEvent(egw_event : number, data : any)
 	{
 		let dom_event = data.event ?? data;
 		const target = this.findActionTargetHandler.findActionTarget(dom_event);
-		if(egw_event == EGW_AI_DRAG_ENTER)
+		if(egw_event == EGW_AI_DRAG_ENTER && !target.target.classList.contains("draggedOver"))
 		{
 			target.target.classList.add("draggedOver", "drop-hover");
-			this.timeout = setTimeout(() =>
+			this.timeouts[target.target.id] = setTimeout(() =>
 			{
 				if(target.target.classList.contains("draggedOver"))
 				{
@@ -53,7 +55,7 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		else if(egw_event == EGW_AI_DRAG_OUT)
 		{
 			target.target.classList.remove("draggedOver", "drop-hover");
-			clearTimeout(this.timeout)
+			clearTimeout(this.timeouts[target.target.id])
 		}
 		return true
 	}

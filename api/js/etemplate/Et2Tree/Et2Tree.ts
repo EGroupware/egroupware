@@ -20,12 +20,13 @@ export type TreeItemData = SelectOption & {
 	// Has children, but they may not be provided in item
 	child: Boolean | 1,
 	data?: Object,//{sieve:true,...} or {acl:true} or other
-	id: string,
+	//this is coming from SelectOption
+	value: string,
 	im0: String,
 	im1: String,
 	im2: String,
 	// Child items
-	item: TreeItemData[],
+	children: TreeItemData[],
 	checked?: Boolean,
 	nocheckbox: number | Boolean,
 	open: 0 | 1,
@@ -74,6 +75,8 @@ export const composedPathContains = (_ev: any, tag?: string, className?: string)
  * @event {{id: String, item:SlTreeItem}} sl-expand emmited when tree item expands
  * //TODO add for other events
  * @since 23.1.x
+ *
+ * @event et2-click Emitted when a tree item is clicked.  Clicks on the expand / collapse button and other slotted contents are excluded
  */
 export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements FindActionTarget
 {
@@ -99,6 +102,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	openIcon: String;
 	@property({type: Function})
 	onclick;// 	description: "JS code which gets executed when clicks on text of a node"
+	/**
+	 * If true, only leafs (NOT folders) are selectable
+	 */
+	@property({type:Boolean})
+	leafOnly = false
 
 
 	//onselect and oncheck only appear in multiselectTree
@@ -224,41 +232,55 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			css`
                 :host {
                     --sl-spacing-large: 1rem;
+					display: block;
                 }
 
-                ::part(expand-button) {
-                    rotate: none;
-                    padding: 0 0.2em 0 5em;
-                    margin-left: -5em;
 
-                }
+				::part(expand-button) {
+					rotate: none;
+					padding: 0 var(--sl-spacing-small);
+				}
 
-                /* Stop icon from shrinking if there's not enough space */
+				/* Stop icon from shrinking if there's not enough space */
                 /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
 
-                sl-tree-item sl-icon {
+                sl-tree-item et2-image {
                     flex: 0 0 1em;
                     font-size: calc(100% + 2px);
+					line-height: calc(100% - 2px);
+					padding-right: .4em;
+					width: 1em;
+					height: 1em;
+					display: inline-block;
                 }
 
-                ::part(label) {
-                    overflow: hidden;
-                }
+				::part(label) {
+					overflow: hidden;
+					flex: 1 1 auto;
+				}
 
-                ::part(label):hover {
-                    text-decoration: underline;
-                }
+				::part(label):hover {
+					text-decoration: underline;
+				}
 
-                .tree-item__label {
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
+				.tree-item__label {
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
 
-                sl-tree-item.drop-hover {
-                    background-color: var(--highlight-background-color);
-                }
-				
+				sl-tree-item.drop-hover {
+					background-color: var(--highlight-background-color);
+				}
+
+				sl-tree-item.drop-hover > *:not(sl-tree-item) {
+					pointer-events: none;
+				}
+
+				sl-tree-item.drop-hover > *:not(sl-tree-item) {
+					pointer-events: none;
+				}
+
 				/*Mail specific style TODO move it out of the component*/
                 sl-tree-item.unread > .tree-item__label {
                         font-weight: bold;
@@ -416,7 +438,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
 	{
-		this._tree.focus();
+		this._tree?.focus();
 	}
 
 	/** Removes focus from the control. */
@@ -829,8 +851,52 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			return;
 		}
-		let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-		console.log(event.type, id);
+
+		// Remove drop hover from any parent nodes
+		if(event.type == "dragenter")
+		{
+			event.stopPropagation();
+			let current = option.parentElement;
+			while(current)
+			{
+				current.classList.remove("draggedOver", "drop-hover");
+				current = current.parentElement;
+			}
+		}
+		// Ignore/stop events from child nodes, unless it's dragenter and the parent sl-tree-item isn't hovered yet
+		if(["dragenter", "dragleave"].includes(event.type) && event.target != option && event.composedPath().includes(option))
+		{
+			event.stopPropagation();
+			if(event.type != "dragenter" || option.classList.contains("drop-hover"))
+			{
+				return;
+			}
+		}
+		//let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
+		//console.log(event.type, id, event.target);
+
+		// Remove drop hover from any parent nodes
+		if(event.type == "dragenter")
+		{
+			event.stopPropagation();
+			let current = option.parentElement;
+			while(current)
+			{
+				current.classList.remove("draggedOver", "drop-hover");
+				current = current.parentElement;
+			}
+		}
+		// Ignore/stop events from child nodes, unless it's dragenter and the parent sl-tree-item isn't hovered yet
+		if(["dragenter", "dragleave"].includes(event.type) && event.target != option && event.composedPath().includes(option))
+		{
+			event.stopPropagation();
+			if(event.type != "dragenter" || option.classList.contains("drop-hover"))
+			{
+				return;
+			}
+		}
+		//let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
+		//console.log(event.type, id, event.target);
 
 		const typeMap = {
 			dragenter: EGW_AI_DRAG_ENTER,
@@ -878,16 +944,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 		//fallback to try and set icon if everything else failed
 		if (!img) img = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
-		if (img?.endsWith(".png"))
-		{
-			//sl-icon images need to be svgs if there is a png try to find the corresponding svg
-			img = img.replace(".png", ".svg");
-		}
-		//append image path, if img is only relative (does not start with / or https://)
-		if (img && typeof img === "string" && !img.match(/^(\/|https?:\/\/)/))
-		{
-			img = this.imagePath + img;
-		}
 
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
 		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
@@ -899,18 +955,34 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			})
 		}
 		const value = selectOption.value ?? selectOption.id;
+		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
 
 		return html`
             <sl-tree-item
                     part="item"
                     exportparts="checkbox, label, item:item-item"
-                    id=${selectOption.id}
-                    title=${selectOption.tooltip || nothing}
+                    id=${value}
+                    title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
-                    ?selected=${typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value)}
+                    ?selected=${selected}
                     ?expanded=${expandState}
+                    ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
+                    @click=${async(event) =>
+                    {
+                        // Don't react to expand or children
+                        if(event.target.hasAttribute("slot") || !event.target?.closest("sl-tree-item"))
+                        {
+                            return;
+                        }
+                        await this.updateComplete;
+                        event.target?.closest("sl-tree-item").dispatchEvent(new CustomEvent("et2-click", {
+                            detail: {item: event.target?.closest("sl-tree-item")},
+                            bubbles: true,
+                            composed: true
+                        }));
+                    }}
                     @sl-lazy-load=${(event) => {
                         // No need for this to bubble up, we'll handle it (otherwise the parent leaf will load too)
                         event.stopPropagation();
@@ -948,8 +1020,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             >
 
 
-				<sl-icon src="${img ?? nothing}"></sl-icon>
-                <span class="tree-item__label">
+                <et2-image src="${img ?? nothing}"></et2-image>
+                <span part="label_text" class="tree-item__label">
 					${selectOption.label ?? selectOption.text}
 				</span>
                 ${(selectOption.badge) ?
@@ -968,7 +1040,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             ${this.styleTemplate()}
             <sl-tree
                     part="tree"
-                    .selection=${/* implement unlinked multiple: this.multiple ? "multiple" :*/ "single"}
+                    .selection=${this.leafOnly?"leaf":"single"}
                     @sl-selection-change=${
                             (event: any) => {
                                 this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
@@ -1051,7 +1123,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             >
 				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
 				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
-                ${repeat(this._selectOptions, this._optionTemplate)}
+                ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>
 		`;
 	}
