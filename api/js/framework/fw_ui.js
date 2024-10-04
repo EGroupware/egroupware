@@ -1172,6 +1172,7 @@ window.egw_fw_ui_scrollarea.prototype.update = function()
 	this.contHeight = jQuery(this.scrollDiv).outerHeight();
 	this.boxHeight = jQuery(this.contDiv).height();
 
+	this.outerDiv.scrollIntoView();
 	this.toggleButtons(this.contHeight > this.boxHeight);
 	this.setScrollPos(this.scrollPos);
 };
