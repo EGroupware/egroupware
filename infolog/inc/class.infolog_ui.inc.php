@@ -225,10 +225,24 @@ class infolog_ui
 		{
 			$show_links = $this->prefs['show_links'];
 		}
+		$only_app = '';
+		switch($show_links)
+		{
+			case 'links':
+				$only_app = '!' . Link::VFS_APPNAME;
+				break;
+			case 'attach':
+				$only_app = Link::VFS_APPNAME;
+				break;
+			default:
+				$only_app = '';
+				break;
+		}
 		if(($show_links != 'none' && $show_links != 'no_describtion' ||
 				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], '', 'link_lastmod DESC', true, true))))
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, 20))))
 		{
+			$info['filelinks']['total'] = $show_links == 'attach' ? count($info['links']) : Link::$row_count;
 			$timesheets = array();
 			foreach($info['links'] as $link)
 			{

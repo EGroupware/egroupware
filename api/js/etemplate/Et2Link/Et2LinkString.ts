@@ -43,7 +43,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 					padding: 0px;
 				}
 
-				et2-link, et2-link::part(base) {
+				et2-link, et2-link::part(base), et2-description {
 					display: inline;
 				}
 
@@ -268,7 +268,9 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		return this._loadingPromise.then(() =>
 		{
 			const moreCount = this._totalResults - this._link_list.length;
-			const more = this.egw().lang("%1 more...", moreCount);
+			const more = html`
+                <et2-description statustext="${this.egw().lang("%1 more...", moreCount)}">...
+                </et2-description>`;
 			return html`${moreCount > 0 ? more : nothing}`;
 		});
 	}
