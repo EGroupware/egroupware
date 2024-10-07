@@ -240,7 +240,7 @@ class infolog_ui
 		}
 		if(($show_links != 'none' && $show_links != 'no_describtion' ||
 				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, 20))))
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']))))
 		{
 			$info['filelinks']['total'] = $show_links == 'attach' ? count($info['links']) : Link::$row_count;
 			$timesheets = array();
@@ -255,6 +255,7 @@ class infolog_ui
 
 				if($link['deleted'])
 				{
+					$info['filelinks']['total']--;
 					continue;
 				}    // skip deleted links, but incl. them in row_mod!
 
@@ -264,6 +265,10 @@ class infolog_ui
 					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != Link::VFS_APPNAME)))
 				{
 					$info['filelinks'][] = $link;
+				}
+				else
+				{
+					$info['filelinks']['total']--;
 				}
 				if (!$info['pm_id'] && $link['app'] == 'projectmanager')
 				{
