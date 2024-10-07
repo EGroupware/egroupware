@@ -18,8 +18,8 @@ import {FindActionTarget} from "../etemplate/FindActionTarget";
 export const EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT = 1000
 
 export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
-    node: SlTreeItem;
-    id: string;
+
+	id: string;
     tree: Et2Tree;
 
 	// Reference to the widget that's handling actions for us
