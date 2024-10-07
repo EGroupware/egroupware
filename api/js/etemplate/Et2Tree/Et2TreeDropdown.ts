@@ -516,7 +516,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			event.preventDefault();
 			this.hide()
 		}
-		this.blur();
+		if(this.hasFocus)
+		{
+			this.blur();
+		}
 	}
 
 	private handleFocus()
