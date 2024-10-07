@@ -56,7 +56,7 @@ if (Session::init_handler())
 {
 	if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
-		if (is_array($_SESSION[Session::EGW_INFO_CACHE]) && $_SESSION[Session::EGW_OBJECT_CACHE] && $_SESSION[Session::EGW_REQUIRED_FILES])
+		if (is_array($_SESSION[Session::EGW_INFO_CACHE]) && !empty($_SESSION[Session::EGW_OBJECT_CACHE]))
 		{
 			// marking the context as restored from the session, used by session->verify to not read the data from the db again
 			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
@@ -64,14 +64,6 @@ if (Session::init_handler())
 			// restoring the egw_info-array
 			$GLOBALS['egw_info'] = array_merge($_SESSION[Session::EGW_INFO_CACHE],array('flags' => $GLOBALS['egw_info']['flags']));
 
-			// include required class-definitions
-			if (is_array($_SESSION[Session::EGW_REQUIRED_FILES]))	// all classes, which can not be autoloaded
-			{
-				foreach($_SESSION[Session::EGW_REQUIRED_FILES] as $file)
-				{
-					require_once($file);
-				}
-			}
 			$GLOBALS['egw'] = unserialize($_SESSION[Session::EGW_OBJECT_CACHE], ['allowed_classes' => true]);
 
 			if (is_object($GLOBALS['egw']) && ($GLOBALS['egw'] instanceof Egw))	// only egw object has wakeup2, setups egw_minimal eg. has not!
@@ -86,14 +78,12 @@ if (Session::init_handler())
 			$GLOBALS['egw_info'] = array('flags'=>$GLOBALS['egw_info']['flags']);
 			unset($GLOBALS['egw_info']['flags']['restored_from_session']);
 			unset($_SESSION[Session::EGW_INFO_CACHE]);
-			unset($_SESSION[Session::EGW_REQUIRED_FILES]);
 			unset($_SESSION[Session::EGW_OBJECT_CACHE]);
 		}
 	}
 	else	// destroy the session-cache if called by login or logout
 	{
 		unset($_SESSION[Session::EGW_INFO_CACHE]);
-		unset($_SESSION[Session::EGW_REQUIRED_FILES]);
 		unset($_SESSION[Session::EGW_OBJECT_CACHE]);
 	}
 }
