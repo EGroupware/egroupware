@@ -2286,7 +2286,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders
 	 */
 	mail_emptySpam: function(action,_senders) {
-		var server = _senders[0].iface.id.split('::');
+		var server = _senders[0].id.split('::');
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
@@ -2318,7 +2318,7 @@ app.classes.mail = AppJS.extend(
 	 * @param {object} _senders
 	 */
 	mail_emptyTrash: function(action,_senders) {
-		var server = _senders[0].iface.id.split('::');
+		var server = _senders[0].id.split('::');
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
@@ -2352,7 +2352,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	mail_compressFolder: function(action,_senders) {
 		this.egw.message(this.egw.lang('compress folder'), 'success');
-		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].iface.id]);
+		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].id]);
 		//	.sendRequest(true);
 		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
 		// as the actions thereof are now bound to run after grid refresh
