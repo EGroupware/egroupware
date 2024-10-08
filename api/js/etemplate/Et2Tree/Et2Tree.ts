@@ -2,7 +2,7 @@ import {SlTreeItem} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
 import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
@@ -14,6 +14,7 @@ import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 import {FindActionTarget} from "../FindActionTarget";
 import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_FLAG_IS_CONTAINER} from "../../egw_action/egw_action_constants";
+import styles from "./Et2Tree.styles";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -28,6 +29,12 @@ export type TreeItemData = SelectOption & {
 	// Child items
 	children: TreeItemData[],
 	checked?: Boolean,
+
+	// For items with children, "disabled" will make the item not expandable.
+	// unselectable=true is like disabled=true, but will still allow the item to expand
+	// and show its children
+	unselectable? : boolean,
+
 	nocheckbox: number | Boolean,
 	open: 0 | 1,
 	parent: String,
@@ -227,101 +234,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		return [
 			shoelace,
-			// @ts-ignore
-			...super.styles,
-			css`
-                :host {
-                    --sl-spacing-large: 1rem;
-					display: block;
-                }
-
-
-				::part(expand-button) {
-					rotate: none;
-					padding: 0 var(--sl-spacing-small);
-				}
-
-				/* Stop icon from shrinking if there's not enough space */
-                /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
-
-                sl-tree-item et2-image {
-                    flex: 0 0 1em;
-                    font-size: calc(100% + 2px);
-					line-height: calc(100% - 2px);
-					padding-right: .4em;
-					width: 1em;
-					height: 1em;
-					display: inline-block;
-                }
-
-				::part(label) {
-					overflow: hidden;
-					flex: 1 1 auto;
-				}
-
-				::part(label):hover {
-					text-decoration: underline;
-				}
-
-				.tree-item__label {
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
-
-				sl-tree-item.drop-hover {
-					background-color: var(--highlight-background-color);
-				}
-
-				sl-tree-item.drop-hover > *:not(sl-tree-item) {
-					pointer-events: none;
-				}
-
-				/*Mail specific style TODO move it out of the component*/
-                sl-tree-item.unread > .tree-item__label {
-                        font-weight: bold;
-                    }
-				
-                sl-tree-item.mailAccount > .tree-item__label {
-                    font-weight: bold;
-                }
-				sl-tree > sl-tree-item:nth-of-type(n+2){
-					margin-top: 2px;
-				}
-				/* End Mail specific style*/
-
-                sl-tree-item.drop-hover sl-tree-item {
-                    background-color: var(--sl-color-neutral-0);
-                }
-
-                /*TODO color of selected marker in front should be #006699 same as border top color*/
-
-                sl-badge::part(base) {
-
-                    background-color: var(--badge-color); /* This is the same color as app color mail */
-                    font-size: 1em;
-                    font-weight: 900;
-                    position: absolute;
-                    top: 0;
-                    right: 0.5em;
-                    line-height: 60%;
-                }
-
-
-                @media only screen and (max-device-width: 768px) {
-                    :host {
-                        --sl-font-size-medium: 1.2rem;
-                    }
-
-                    sl-tree-item {
-                        padding: 0.1em;
-                    }
-
-
-                }
-            `
-
-
+			super.styles,
+			styles
 		]
 	}
 
@@ -878,6 +792,87 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		this.widget_object.iface.triggerEvent(typeMap[event.type] ?? event.type, event);
 	}
 
+	/**
+	 * Handle a change in selected items
+	 *
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected handleSelectionChange(event)
+	{
+		// Filter out unselectable nodes
+		let nodes = event.detail.selection.filter(node => !node.hasAttribute("unselectable"));
+		if(nodes.length != event.detail.selection.length)
+		{
+			event.detail.selection.forEach(n =>
+			{
+				if(!n.hasAttribute("unselectable"))
+				{
+					return;
+				}
+				n.removeAttribute("selected");
+				if(n.querySelectorAll(":scope > sl-tree-item").length > 0)
+				{
+					n.toggleAttribute("expanded");
+				}
+			});
+			event.stopPropagation();
+			this.requestUpdate("value");
+			return;
+		}
+
+		this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
+		this._currentOption = this.getNode(nodes[0].id) ?? this.optionSearch(nodes[0].id, this._selectOptions, 'id', 'item');
+		const ids = event.detail.selection.map(i => i.id);
+		// implemented unlinked multiple
+		if(this.multiple)
+		{
+			const idx = this.value.indexOf(ids[0]);
+			if(idx < 0)
+			{
+				this.value.push(ids[0]);
+			}
+			else
+			{
+				this.value.splice(idx, 1);
+			}
+			// sync tree-items selected attribute with this.value
+			this.selectedNodes = [];
+			Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) =>
+			{
+				if(this.value.includes(item.id))
+				{
+					item.setAttribute("selected", "");
+					this.selectedNodes.push(item);
+				}
+				else
+				{
+					item.removeAttribute("selected");
+				}
+			});
+			this._tree.requestUpdate();
+		}
+		else
+		{
+			this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
+		}
+		event.detail.previous = this._previousOption?.id;
+		this._currentSlTreeItem = nodes[0];
+		/* implemented unlinked-multiple
+		if(this.multiple)
+		{
+			this.selectedNodes = event.detail.selection
+		}*/
+		if(typeof this.onclick == "function")
+		{
+			// wait for the update, so app founds DOM in the expected state
+			this._tree.updateComplete.then(() =>
+			{
+				this.onclick(nodes[0].id, this, event.detail.previous)
+			});
+		}
+	}
+
 	protected async finishedLazyLoading()
 	{
 		await this.lazyLoading;
@@ -899,7 +894,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	//this.selectOptions = find_select_options(this)[1];
 	_optionTemplate(selectOption: TreeItemData): TemplateResult<1>
 	{
-
 		// Check to see if node is marked as open with no children.  If autoloadable, load the children
 		const expandState = (this.calculateExpandState(selectOption));
 
@@ -937,7 +931,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     id=${value}
                     title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
-                    ?selected=${selected}
+                    ?selected=${selected && !selectOption.unselectable}
+                    ?unselectable=${selectOption.unselectable}
                     ?expanded=${expandState}
                     ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
@@ -1014,59 +1009,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             <sl-tree
                     part="tree"
                     .selection=${this.leafOnly?"leaf":"single"}
-                    @sl-selection-change=${
-                            (event: any) => {
-                                this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
-                                this._currentOption = this.getNode(event.detail.selection[0].id) ?? this.optionSearch(event.detail.selection[0].id, this._selectOptions, 'id', 'item');
-                                const ids = event.detail.selection.map(i => i.id);
-								// implemented unlinked multiple
-								if (this.multiple)
-                                {
-                                    const idx = this.value.indexOf(ids[0]);
-                                    if (idx < 0)
-                                    {
-                                        this.value.push(ids[0]);
-                                    }
-                                    else
-                                    {
-                                        this.value.splice(idx, 1);
-                                    }
-									// sync tree-items selected attribute with this.value
-									this.selectedNodes = [];
-                                    Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) =>
-                                    {
-                                        if(this.value.includes(item.id))
-                                        {
-                                            item.setAttribute("selected", "");
-											this.selectedNodes.push(item);
-                                        }
-                                        else
-                                        {
-                                            item.removeAttribute("selected");
-                                        }
-                                    });
-                                    this._tree.requestUpdate();
-                                }
-								else
-                                {
-                                    this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
-                                }
-                                event.detail.previous = this._previousOption?.id;
-                                this._currentSlTreeItem = event.detail.selection[0];
-								/* implemented unlinked-multiple
-								if(this.multiple)
-								{
-									this.selectedNodes = event.detail.selection
-								}*/
-                                if(typeof this.onclick == "function")
-                                {
-									// wait for the update, so app founds DOM in the expected state
-									this._tree.updateComplete.then(() => {
-                                        this.onclick(event.detail.selection[0].id, this, event.detail.previous)
-									});
-                                }
-                            }
-                    }
+                    @sl-selection-change=${this.handleSelectionChange}
                     @sl-expand=${
                             (event) => {
                                 event.detail.id = event.target.id

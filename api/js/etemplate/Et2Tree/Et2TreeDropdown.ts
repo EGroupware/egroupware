@@ -984,7 +984,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 @et2-click=${(e) =>
                                 {
                                     // Always hide the popup when a tree item is clicked
-                                    this.hide();
+                                    //               this.hide();
                                 }}
                                 @keydown=${this.handleComboboxKeyDown}
                                 @sl-selection-change=${this.handleTreeChange}
