@@ -502,7 +502,7 @@ identity	admin	de	Identität
 identity deleted	admin	de	Identität gelöscht.
 identity saved.	admin	de	Identität gespeichert.
 idle	admin	de	Im Leerlauf
-if different from email address	admin	de	falls unterschiedlich zu E-Mail-Adresse
+if different from email address	admin	de	Falls unterschiedlich zu E-Mail-Adresse
 if disabled existing tokens immediatly stop working.	admin	de	Wenn deaktiviert funktionieren bereits existierende Token sofort nicht mehr.
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört, gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, möchten Sie Benutzerverzeichnisse und Kommandointerpreter verwalten?
@@ -826,7 +826,7 @@ site	admin	de	Site
 skip imap	admin	de	IMAP auslassen
 skipping imap configuration!	admin	de	IMAP-Konfiguration ausgelassen!
 smtp authentication	admin	de	SMTP-Anmeldung
-smtp only: to create only an smtp account	admin	de	SMTP only: nur ein SMTP Konto anzulegen
+smtp only: to create only an smtp account	admin	de	SMTP-only-Konto ohne IMAP anlegen
 smtp options	admin	de	SMTP-Optionen
 smtp server	admin	de	SMTP-Server
 smtp server name	admin	de	SMTP-Server Name

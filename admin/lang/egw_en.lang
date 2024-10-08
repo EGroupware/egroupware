@@ -502,7 +502,7 @@ identity	admin	en	Identity
 identity deleted	admin	en	Identity deleted.
 identity saved.	admin	en	Identity saved.
 idle	admin	en	Idle
-if different from email address	admin	en	if different from email address
+if different from email address	admin	en	If different from email address
 if disabled existing tokens immediatly stop working.	admin	en	If disabled existing tokens immediatly stop working.
 if no acl records for user or any group the user is a member of	admin	en	If no ACL records for user or any group the user is a member of
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	en	If using LDAP, do you want to manage home directory and loginshell attributes?
@@ -826,7 +826,7 @@ site	admin	en	Site
 skip imap	admin	en	Skip IMAP
 skipping imap configuration!	admin	en	Skipping IMAP configuration!
 smtp authentication	admin	en	SMTP authentication
-smtp only: to create only an smtp account	admin	en	SMTP only: to create only an SMTP account
+smtp only: to create only an smtp account	admin	en	Create SMTP-only account without IMAP
 smtp options	admin	en	SMTP options
 smtp server	admin	en	SMTP server
 smtp server name	admin	en	SMTP server name

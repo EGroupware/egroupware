@@ -2,6 +2,7 @@
 account:	notifications	da	Konto:
 all possible notification backends	notifications	da	Alle mulige notifikations-backends
 are you sure you want to delete all notifications?	notifications	da	Er du sikker på, at du vil slette alle notifikationer?
+automatic deleted notifications older than	admin	da	Slet automatisk notifikationer, der er ældre end
 browser	notifications	da	Browser
 browser is starting.	notifications	da	Browseren er ved at starte.
 cancal settings?	notifications	da	Annuller indstillinger?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	da	Cookies er nødvend
 delete all messages	notifications	da	Slet alle meddelelser
 delete notifications	notifications	da	Slet meddelelser
 delete this message	notifications	da	Slet denne besked
+do not notify me at all	notifications	da	Giv mig slet ikke besked
 domain not found, please check serveraddress.	notifications	da	Domæne ikke fundet, tjek venligst serveradressen.
+e-mail only	notifications	da	Kun e-mail
 egroupware login is starting, please wait.	notifications	da	EGroupware-login er ved at starte, vent venligst.
 egroupware logindomain:	notifications	da	EGroupware Logindomæne:
 egroupware logindomains founds, please select.	notifications	da	EGroupware Logindomains fundet, vælg venligst.
 egroupware not found by url or connection lost to server.	notifications	da	EGroupware ikke fundet via URL eller mistet forbindelse til server.
 egroupware not found by url.	notifications	da	EGroupware ikke fundet af URL.
+egroupware-popup and e-mail	notifications	da	EGroupware-popup og e-mail
+egroupware-popup and windows-popup	notifications	da	EGroupware-popup og Windows-popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	da	EGroupware-popup først, hvis det mislykkes, så giv mig besked via e-mail
+egroupware-popup only	notifications	da	Kun EGroupware-popup
 email notifications only, if user is not logged in	notifications	da	Kun e-mail-notifikationer, hvis brugeren ikke er logget ind
 error browser can`t start.	notifications	da	Fejl Browseren kan ikke starte.
 error on loading tray icon	notifications	da	Fejl ved indlæsning af Tray-ikon
@@ -44,6 +51,7 @@ message from	notifications	da	Besked fra
 minutes	notifications	da	Minutter
 more info	notifications	da	Mere info
 notifier	notifications	da	Notificering
+only used if no push server available!	admin	da	Bruges kun, hvis ingen push-server er tilgængelig!
 open notified entry	notifications	da	Åbn notificeret post
 page not found, please check serveraddress.	notifications	da	Siden blev ikke fundet, tjek venligst serveradressen.
 password:	notifications	da	Adgangskode:

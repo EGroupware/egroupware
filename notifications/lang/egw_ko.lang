@@ -2,6 +2,7 @@
 account:	notifications	ko	계정:
 all possible notification backends	notifications	ko	가능한 모든 알림 백엔드
 are you sure you want to delete all notifications?	notifications	ko	모든 알림을 삭제하시겠습니까?
+automatic deleted notifications older than	admin	ko	다음보다 오래된 자동 삭제 알림
 browser	notifications	ko	브라우저
 browser is starting.	notifications	ko	브라우저가 시작됩니다.
 cancal settings?	notifications	ko	설정을 취소하시겠습니까?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	ko	이 사이트에 �
 delete all messages	notifications	ko	모든 메시지 삭제
 delete notifications	notifications	ko	알림 삭제
 delete this message	notifications	ko	이 메시지 삭제
+do not notify me at all	notifications	ko	전혀 알림을 보내지 않음
 domain not found, please check serveraddress.	notifications	ko	도메인을 찾을 수 없습니다. 서버 주소를 확인해 주세요.
+e-mail only	notifications	ko	이메일만
 egroupware login is starting, please wait.	notifications	ko	E그룹웨어 로그인이 시작됩니다. 잠시만 기다려주세요.
 egroupware logindomain:	notifications	ko	이그룹웨어 로그도메인:
 egroupware logindomains founds, please select.	notifications	ko	이그룹웨어 로그 도메인을 찾았습니다.
 egroupware not found by url or connection lost to server.	notifications	ko	URL로 이그룹웨어를 찾을 수 없거나 서버와의 연결이 끊어졌습니다.
 egroupware not found by url.	notifications	ko	URL로 이그룹웨어를 찾을 수 없습니다.
+egroupware-popup and e-mail	notifications	ko	E그룹웨어 팝업 및 이메일
+egroupware-popup and windows-popup	notifications	ko	E그룹웨어 팝업 및 윈도우 팝업
+egroupware-popup first, if that fails notify me by e-mail	notifications	ko	EGroupware 팝업 먼저, 실패 시 이메일로 알려주기
+egroupware-popup only	notifications	ko	E그룹웨어 팝업만
 email notifications only, if user is not logged in	notifications	ko	사용자가 로그인하지 않은 경우에만 이메일 알림을 보냅니다.
 error browser can`t start.	notifications	ko	브라우저를 시작할 수 없습니다.
 error on loading tray icon	notifications	ko	트레이 아이콘 로드 중 오류
@@ -43,6 +50,7 @@ message from	notifications	ko	메세지 발송지
 minutes	notifications	ko	분
 more info	notifications	ko	추가 정보
 notifier	notifications	ko	알림
+only used if no push server available!	admin	ko	사용 가능한 푸시 서버가 없는 경우에만 사용!
 open notified entry	notifications	ko	알림 항목 열기
 page not found, please check serveraddress.	notifications	ko	페이지를 찾을 수 없습니다. 서버 주소를 확인하세요.
 password:	notifications	ko	비밀번호를 입력하세요:

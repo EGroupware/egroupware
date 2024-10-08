@@ -2,6 +2,7 @@
 account:	notifications	fi	Tili:
 all possible notification backends	notifications	fi	Kaikki mahdolliset huomautusviestien backendit
 are you sure you want to delete all notifications?	notifications	fi	Haluatko varmasti poistaa kaikki ilmoitukset?
+automatic deleted notifications older than	admin	fi	Poistaa automaattisesti ilmoitukset, jotka ovat vanhempia kuin
 browser	notifications	fi	Selain
 browser is starting.	notifications	fi	Selain avattaessa
 cancal settings?	notifications	fi	Keskeytä?
@@ -65,6 +66,7 @@ more info	notifications	fi	Lisätietoja
 notification	common	fi	Huomautusviesti
 notifier	notifications	fi	Ilmoittaja
 notify me by	notifications	fi	Lähetä huomautus:
+only used if no push server available!	admin	fi	Käytetään vain, jos push-palvelinta ei ole käytettävissä!
 open notified entry	notifications	fi	Avaa ilmoitettu merkintä
 optimize e-mails for external mail client	notifications	fi	Optimoi sähköpostit ulkoista sähköpostiohjelmaa varten
 page not found, please check serveraddress.	notifications	fi	Sivua ei löytynyt, tarkista palvelimen osoite

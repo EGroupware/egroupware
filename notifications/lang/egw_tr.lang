@@ -2,6 +2,7 @@
 account:	notifications	tr	Hesap:
 all possible notification backends	notifications	tr	Tüm olası bildirim arka uçları
 are you sure you want to delete all notifications?	notifications	tr	Tüm bildirimleri silmek istediğinizden emin misiniz?
+automatic deleted notifications older than	admin	tr	Automatisk radering av meddelanden äldre än
 browser	notifications	tr	Tarayıcı
 browser is starting.	notifications	tr	Tarayıcı başlatılıyor.
 cancal settings?	notifications	tr	Ayarları iptal et?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	tr	Bu siteye giriş ya
 delete all messages	notifications	tr	Tüm mesajları sil
 delete notifications	notifications	tr	Bildirimleri sil
 delete this message	notifications	tr	Bu mesajı sil
+do not notify me at all	notifications	tr	Meddela mig inte alls
 domain not found, please check serveraddress.	notifications	tr	Etki alanı bulunamadı, lütfen sunucu adresini kontrol edin.
+e-mail only	notifications	tr	Endast e-post
 egroupware login is starting, please wait.	notifications	tr	EGroupware oturum açma başlatılıyor, lütfen bekleyin.
 egroupware logindomain:	notifications	tr	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	tr	EGroupware Logindomains bulundu, lütfen seçin.
 egroupware not found by url or connection lost to server.	notifications	tr	EGroupware URL tarafından bulunamadı veya sunucuyla bağlantı kesildi.
 egroupware not found by url.	notifications	tr	EGroupware URL tarafından bulunamadı.
+egroupware-popup and e-mail	notifications	tr	EGroupware-popup och e-post
+egroupware-popup and windows-popup	notifications	tr	EGroupware-popup och Windows-popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	tr	EGroupware popup först, om det misslyckas meddelar du mig via e-post
+egroupware-popup only	notifications	tr	Endast EGroupware popup
 email notifications only, if user is not logged in	notifications	tr	Kullanıcı oturum açmamışsa yalnızca e-posta bildirimleri
 error browser can`t start.	notifications	tr	Hata Tarayıcı başlatılamıyor.
 error on loading tray icon	notifications	tr	Tepsi simgesi yüklenirken hata oluştu
@@ -45,6 +52,7 @@ more info	notifications	tr	Daha fazla bilgi
 notification	common	tr	Bildirim
 notifier	notifications	tr	Bildirici
 notify me by	notifications	tr	Bana haber ver
+only used if no push server available!	admin	tr	Används endast om ingen push-server är tillgänglig!
 open notified entry	notifications	tr	Açık bildirimli giriş
 optimize e-mails for external mail client	notifications	tr	E-postaları harici e-posta istemcisi için optimize edin
 page not found, please check serveraddress.	notifications	tr	Sayfa bulunamadı, lütfen sunucu adresini kontrol edin.

@@ -2,6 +2,7 @@
 account:	notifications	hu	Számla:
 all possible notification backends	notifications	hu	Minden lehetséges értesítési hátteret
 are you sure you want to delete all notifications?	notifications	hu	Biztos, hogy törölni szeretné az összes értesítést?
+automatic deleted notifications older than	admin	hu	Automatikusan törli a régebbi értesítéseket, mint
 browser	notifications	hu	Böngésző
 browser is starting.	notifications	hu	A böngésző elindult.
 cancal settings?	notifications	hu	Törölje a beállításokat?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	hu	Az oldalra való be
 delete all messages	notifications	hu	Minden üzenet törlése
 delete notifications	notifications	hu	Értesítések törlése
 delete this message	notifications	hu	Üzenet törlése
+do not notify me at all	notifications	hu	Egyáltalán ne értesítsen
 domain not found, please check serveraddress.	notifications	hu	Nem található tartomány, kérjük ellenőrizze a szerver címét.
+e-mail only	notifications	hu	Csak e-mailben
 egroupware login is starting, please wait.	notifications	hu	Az EGroupware bejelentkezés elindul, kérjük várjon.
 egroupware logindomain:	notifications	hu	EGroupware bejelentkezési domain:
 egroupware logindomains founds, please select.	notifications	hu	EGroupware Logindomain található, kérjük válasszon.
 egroupware not found by url or connection lost to server.	notifications	hu	EGroupware nem található az URL szerint, vagy megszakadt a kapcsolat a szerverrel.
 egroupware not found by url.	notifications	hu	Az EGroupware nem található az URL szerint.
+egroupware-popup and e-mail	notifications	hu	EGroupware felugró ablak és e-mail
+egroupware-popup and windows-popup	notifications	hu	EGroupware felugró ablak és Windows felugró ablak
+egroupware-popup first, if that fails notify me by e-mail	notifications	hu	Először EGroupware felugró ablak, ha ez nem sikerül, értesítsen e-mailben
+egroupware-popup only	notifications	hu	Csak EGroupware felugró ablak
 email notifications only, if user is not logged in	notifications	hu	Csak e-mail értesítések, ha a felhasználó nincs bejelentkezve
 error browser can`t start.	notifications	hu	Hiba A böngésző nem tud elindulni.
 error on loading tray icon	notifications	hu	Hiba a tálca ikon betöltésekor
@@ -44,6 +51,7 @@ message from	notifications	hu	Üzenet innen:
 minutes	notifications	hu	Percek
 more info	notifications	hu	További információ
 notifier	notifications	hu	Értesítő
+only used if no push server available!	admin	hu	Csak akkor használható, ha nincs elérhető push szerver!
 open notified entry	notifications	hu	Értesített bejegyzés megnyitása
 page not found, please check serveraddress.	notifications	hu	Az oldal nem található, kérjük ellenőrizze a szerver címét.
 password:	notifications	hu	Jelszó:

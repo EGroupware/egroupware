@@ -15,7 +15,7 @@
 %1 files moved.	filemanager	de	%1 Dateien verschoben
 %1 files or directories deleted in %2 seconds.	filemanager	de	%1 Dateien oder Ordner in %2 Sekunden gelöscht.
 %1 files unlocked.	filemanager	de	%1 Dateien entsperrt
-%1 shares deleted.	filemanager	de	%1 Freigabe(n) gelöscht
+%1 shares deleted.	filemanager	de	%1 Freigabe(n) gelöscht.
 %1 starts with '%2'	filemanager	de	%1 beginnt mit '%2'
 %1 successful unmounted.	filemanager	de	%1 erfolgreich unmounted
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen
@@ -33,7 +33,6 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht
 administrators	filemanager	de	Administratoren
-all files	filemanager	de	Alle Dateien
 all subdirectories	filemanager	de	Alle Unterordner
 all types	filemanager	de	Alle Typen
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Ordnerverweise
@@ -86,8 +85,8 @@ default document to insert entries	filemanager	de	Standarddokument zum Einfügen
 defines how to handle double click action on a document file. images are always opened in the expose-view and emails with email application. all other mime-types are handled by the browser itself.	filemanager	de	Legt fest, wie Dokumente behandelt werden beim Doppelklick auf die Datei. Bilder werden immer in der Exposé-Ansicht geöffnet und E-Mails mit der E-Mail-Anwendung. Alle anderen MIME-Typen werden vom Browser selbst behandelt.
 defines how to open a merge print document	filemanager	de	Was soll mit Dokumenten nach dem Füllen passieren?<br><br><b>Mit verfügbarem Collabora Online</b> können diese Dokumente direkt im Browser mit Collabora Online geöffnet (und weiter verarbeitet) werden.<br><br> <b>Ohne Collabora Online</b> wird ein gefülltes Dokument zum Herunterladen angeboten.<br><br>Mehr Informationen zu Collabora Online:<br> <a href="https://www.egroupware.org/online-office" target="_blank">Collabora Online Office in EGroupware</a>
 delete all older versions and deleted files older then %s days	filemanager	de	Lösche alle alten Versionen und gelöschte Dateien älter als %s Tage
-delete these files or directories?	filemanager	de	Diese Dateien oder Ordner löschen?
-delete these shares?	filemanager	de	Diese Freigaben löschen?
+delete these files or directories?	filemanager	de	Diese Dateie(n) oder Ordner löschen?
+delete these shares?	filemanager	de	Diese Freigabe(n) löschen?
 delete this extended acl?	filemanager	de	Diese erweiterten Zugriffrechte löschen?
 delete this file or directory	filemanager	de	Datei oder Ordner löschen
 deleted %1	filemanager	de	%1 gelöscht
