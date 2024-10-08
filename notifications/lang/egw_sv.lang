@@ -2,6 +2,7 @@
 account:	notifications	sv	Konto:
 all possible notification backends	notifications	sv	Alla möjliga backends för aviseringar
 are you sure you want to delete all notifications?	notifications	sv	Är du säker på att du vill ta bort alla aviseringar?
+automatic deleted notifications older than	admin	sv	Automatisk radering av meddelanden äldre än
 browser	notifications	sv	Webbläsare
 browser is starting.	notifications	sv	Webbläsaren startar.
 cancal settings?	notifications	sv	Avbryt inställningar?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	sv	Cookies krävs för
 delete all messages	notifications	sv	Radera alla meddelanden
 delete notifications	notifications	sv	Ta bort meddelanden
 delete this message	notifications	sv	Ta bort detta meddelande
+do not notify me at all	notifications	sv	Meddela mig inte alls
 domain not found, please check serveraddress.	notifications	sv	Domänen hittades inte, kontrollera serveradressen.
+e-mail only	notifications	sv	Endast e-post
 egroupware login is starting, please wait.	notifications	sv	EGroupware inloggning startar, vänligen vänta.
 egroupware logindomain:	notifications	sv	EGroupware Logindomän:
 egroupware logindomains founds, please select.	notifications	sv	EGroupware Logindomäner hittades, vänligen välj.
 egroupware not found by url or connection lost to server.	notifications	sv	EGroupware hittades inte av URL eller anslutningen förlorad till servern.
 egroupware not found by url.	notifications	sv	EGroupware hittades inte av URL.
+egroupware-popup and e-mail	notifications	sv	EGroupware-popup och e-post
+egroupware-popup and windows-popup	notifications	sv	EGroupware-popup och Windows-popup
+egroupware-popup first, if that fails notify me by e-mail	notifications	sv	EGroupware popup först, om det misslyckas meddelar du mig via e-post
+egroupware-popup only	notifications	sv	Endast EGroupware popup
 email notifications only, if user is not logged in	notifications	sv	Endast e-postmeddelanden om användaren inte är inloggad
 error browser can`t start.	notifications	sv	Fel Webbläsaren kan inte starta.
 error on loading tray icon	notifications	sv	Fel vid laddning av ikonen för facket
@@ -45,6 +52,7 @@ minutes	notifications	sv	Minuter
 more info	notifications	sv	Mer info
 notification	common	sv	Meddelande
 notifier	notifications	sv	Anmälare
+only used if no push server available!	admin	sv	Används endast om ingen push-server är tillgänglig!
 open notified entry	notifications	sv	Öppna aviserad post
 page not found, please check serveraddress.	notifications	sv	Sidan hittades inte, kontrollera serveradressen.
 password:	notifications	sv	Lösenord:

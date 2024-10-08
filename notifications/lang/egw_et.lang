@@ -2,6 +2,7 @@
 account:	notifications	et	Konto:
 all possible notification backends	notifications	et	Kõik võimalikud teavitamise tagaküljed: Kõik võimalikud teavitamise tagaküljed
 are you sure you want to delete all notifications?	notifications	et	Kas olete kindel, et soovite kustutada kõik teated?
+automatic deleted notifications older than	admin	et	Automaatselt kustutada teated, mis on vanemad kui
 browser	notifications	et	Brauser
 browser is starting.	notifications	et	Brauser käivitub.
 cancal settings?	notifications	et	Tühistage seaded?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	et	Sellele saidile sis
 delete all messages	notifications	et	Kustutage kõik sõnumid
 delete notifications	notifications	et	Kustutage teated
 delete this message	notifications	et	Kustutage see teade
+do not notify me at all	notifications	et	Mitte üldse mitte teavitada
 domain not found, please check serveraddress.	notifications	et	Domeeni ei leitud, palun kontrollige serveri aadressi.
+e-mail only	notifications	et	Ainult e-kiri
 egroupware login is starting, please wait.	notifications	et	EGroupware sisselogimine käivitub, palun oodake.
 egroupware logindomain:	notifications	et	EGroupware Logindomeen:
 egroupware logindomains founds, please select.	notifications	et	EGroupware Logindomeenid leitud, palun valige.
 egroupware not found by url or connection lost to server.	notifications	et	EGroupware ei leitud URL-i järgi või ühendus serveriga kadunud.
 egroupware not found by url.	notifications	et	EGroupware ei ole URL-i järgi leitud.
+egroupware-popup and e-mail	notifications	et	EGroupware hüpikaken ja e-kiri
+egroupware-popup and windows-popup	notifications	et	EGroupware hüpikaken ja Windowsi hüpikaken
+egroupware-popup first, if that fails notify me by e-mail	notifications	et	EGroupware popup esmalt, kui see ei õnnestu, teavitab mind e-posti teel
+egroupware-popup only	notifications	et	Ainult EGroupware popup
 email notifications only, if user is not logged in	notifications	et	Ainult e-posti teated, kui kasutaja ei ole sisse logitud.
 error browser can`t start.	notifications	et	Error Browser can`t start.
 error on loading tray icon	notifications	et	Tray ikooni laadimise viga
@@ -42,6 +49,7 @@ minutes	notifications	et	Minutit
 more info	notifications	et	Rohkem infot
 notification	common	et	Teavitus
 notifier	notifications	et	Teavitaja
+only used if no push server available!	admin	et	Kasutatakse ainult siis, kui push-server ei ole saadaval!
 open notified entry	notifications	et	Avage teavitatud kanne
 page not found, please check serveraddress.	notifications	et	Lehekülge ei leitud, palun kontrollige serveri aadressi.
 password:	notifications	et	Parool:

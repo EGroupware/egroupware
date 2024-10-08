@@ -2,6 +2,7 @@
 account:	notifications	ru	Учётная запись
 all possible notification backends	notifications	ru	Все возможные уведомления обработаны
 are you sure you want to delete all notifications?	notifications	ru	Вы уверены, что хотите удалить все уведомления?
+automatic deleted notifications older than	admin	ru	Автоматическое удаление уведомлений старше
 browser	notifications	ru	Обзор (браузер)
 browser is starting.	notifications	ru	Браузер запущен
 cancal settings?	notifications	ru	Установки отмены
@@ -65,6 +66,7 @@ more info	notifications	ru	Дополнительная информация
 notification	common	ru	Извещения
 notifier	notifications	ru	Уведомитель
 notify me by	notifications	ru	Уведомлять меня через
+only used if no push server available!	admin	ru	Используется только при отсутствии push-сервера!
 open notified entry	notifications	ru	Открыть запись с уведомлением
 optimize e-mails for external mail client	notifications	ru	Оптимизировать эл. письма для внешних почтовых клиентов
 page not found, please check serveraddress.	notifications	ru	Страница не найдена. Проверьте адрес сервера

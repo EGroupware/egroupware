@@ -2,6 +2,7 @@
 account:	notifications	ja	アカウント:
 all possible notification backends	notifications	ja	利用可能な全通知バックエンド
 are you sure you want to delete all notifications?	notifications	ja	全ての通知を削除してよろしいですか？
+automatic deleted notifications older than	admin	ja	より古い通知を自動削除
 browser	notifications	ja	ブラウザ
 browser is starting.	notifications	ja	ブラウザを開始します。
 cancal settings?	notifications	ja	設定をキャンセルしますか？
@@ -65,6 +66,7 @@ more info	notifications	ja	詳細情報
 notification	common	ja	通知
 notifier	notifications	ja	通知元
 notify me by	notifications	ja	通知方法
+only used if no push server available!	admin	ja	プッシュサーバーがない場合のみ使用
 open notified entry	notifications	ja	通知項目を開く
 optimize e-mails for external mail client	notifications	ja	外部クライアント向けに電子メールを最適化
 page not found, please check serveraddress.	notifications	ja	ページが見つかりません。サーバー・アドレスを確認してください。

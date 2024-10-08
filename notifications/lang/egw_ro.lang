@@ -2,6 +2,7 @@
 account:	notifications	ro	Cont:
 all possible notification backends	notifications	ro	Toate backend-urile de notificare posibile
 are you sure you want to delete all notifications?	notifications	ro	Sunteți sigur că doriți să ștergeți toate notificările?
+automatic deleted notifications older than	admin	ro	Ștergere automată a notificărilor mai vechi de
 browser	notifications	ro	Browser
 browser is starting.	notifications	ro	Browserul este în curs de pornire.
 cancal settings?	notifications	ro	Anulați setările?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	ro	Cookie-urile sunt n
 delete all messages	notifications	ro	Ștergeți toate mesajele
 delete notifications	notifications	ro	Ștergeți notificările
 delete this message	notifications	ro	Ștergeți acest mesaj
+do not notify me at all	notifications	ro	Nu mă notificați deloc
 domain not found, please check serveraddress.	notifications	ro	Domeniul nu a fost găsit, vă rugăm să verificați adresa serverului.
+e-mail only	notifications	ro	Doar e-mail
 egroupware login is starting, please wait.	notifications	ro	Începe autentificarea EGroupware, vă rugăm să așteptați.
 egroupware logindomain:	notifications	ro	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	ro	EGroupware Logindomains found, please select.
 egroupware not found by url or connection lost to server.	notifications	ro	EGroupware nu a fost găsit prin URL sau s-a pierdut conexiunea cu serverul.
 egroupware not found by url.	notifications	ro	EGroupware nu a fost găsit prin URL.
+egroupware-popup and e-mail	notifications	ro	Pop-up EGroupware și e-mail
+egroupware-popup and windows-popup	notifications	ro	Pop-up EGroupware și pop-up Windows
+egroupware-popup first, if that fails notify me by e-mail	notifications	ro	Întâi pop-up EGroupware, dacă nu reușește, anunțați-mă prin e-mail
+egroupware-popup only	notifications	ro	Doar popup EGroupware
 email notifications only, if user is not logged in	notifications	ro	Notificări prin e-mail numai dacă utilizatorul nu este logat
 error browser can`t start.	notifications	ro	Eroare Browserul nu poate porni.
 error on loading tray icon	notifications	ro	Eroare la încărcarea pictogramei Tray
@@ -40,6 +47,7 @@ mark all as read	notifications	ro	Marcați toate ca fiind citite
 mark as read	notifications	ro	Marcați ca citit
 more info	notifications	ro	Mai multe informații
 notifier	notifications	ro	Notifier
+only used if no push server available!	admin	ro	Utilizat numai dacă nu este disponibil niciun server push!
 open notified entry	notifications	ro	Deschideți intrarea notificată
 page not found, please check serveraddress.	notifications	ro	Pagina nu a fost găsită, vă rugăm să verificați adresa serverului.
 password:	notifications	ro	Parola:

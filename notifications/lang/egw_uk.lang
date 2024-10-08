@@ -2,6 +2,7 @@
 account:	notifications	uk	Обліковий запис:
 all possible notification backends	notifications	uk	Всі можливі бекенди сповіщень
 are you sure you want to delete all notifications?	notifications	uk	Ви впевнені, що хочете видалити всі сповіщення?
+automatic deleted notifications older than	admin	uk	Автоматично видаляти сповіщення старше
 browser	notifications	uk	Браузер
 browser is starting.	notifications	uk	Запускається браузер.
 cancal settings?	notifications	uk	Скасувати налаштування?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	uk	Для входу �
 delete all messages	notifications	uk	Видалити всі повідомлення
 delete notifications	notifications	uk	Видалити повідомлення
 delete this message	notifications	uk	Видалити це повідомлення
+do not notify me at all	notifications	uk	Не повідомляти мене взагалі
 domain not found, please check serveraddress.	notifications	uk	Домен не знайдено, перевірте адресу сервера.
+e-mail only	notifications	uk	Лише електронною поштою
 egroupware login is starting, please wait.	notifications	uk	Починається вхід в EGroupware, будь ласка, зачекайте.
 egroupware logindomain:	notifications	uk	Домен для входу в EGroupware:
 egroupware logindomains founds, please select.	notifications	uk	EGroupware Логіндомени знайдено, будь ласка, виберіть.
 egroupware not found by url or connection lost to server.	notifications	uk	EGroupware не знайдено за URL-адресою або втрачено з'єднання з сервером.
 egroupware not found by url.	notifications	uk	EGroupware не знайдено за URL-адресою.
+egroupware-popup and e-mail	notifications	uk	Спливаюче вікно EGroupware та електронна пошта
+egroupware-popup and windows-popup	notifications	uk	Спливаюче вікно EGroupware та спливаюче вікно Windows
+egroupware-popup first, if that fails notify me by e-mail	notifications	uk	Спочатку спливаюче вікно EGroupware, якщо це не спрацює, повідомте мене електронною поштою
+egroupware-popup only	notifications	uk	Тільки спливаюче вікно EGroupware
 email notifications only, if user is not logged in	notifications	uk	Тільки сповіщення на електронну пошту, якщо користувач не ввійшов в систему
 error browser can`t start.	notifications	uk	Помилка Браузер не запускається.
 error on loading tray icon	notifications	uk	Помилка при завантаженні іконки в треї
@@ -36,6 +43,7 @@ java desktop notification app	preferences	uk	Java додаток для спов
 last month	notifications	uk	Минулого місяця
 mail account to use for notifications	admin	uk	Поштовий акаунт для сповіщень
 minutes	notifications	uk	Протоколи
+only used if no push server available!	admin	uk	Використовується лише за відсутності пуш-сервера!
 open notified entry	notifications	uk	Відкрити сповіщений запис
 permission	notifications	uk	Дозвіл
 permission denied for notifications application.	notifications	uk	Відмовлено в дозволі на застосування сповіщень.

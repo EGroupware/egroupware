@@ -2,6 +2,7 @@
 account:	notifications	lv	Konts:
 all possible notification backends	notifications	lv	Visi iespējamie paziņojuma backendi
 are you sure you want to delete all notifications?	notifications	lv	Vai esat pārliecināts, ka vēlaties dzēst visus paziņojumus?
+automatic deleted notifications older than	admin	lv	Automātiski dzēst paziņojumus, kas vecāki par
 browser	notifications	lv	Pārlūkprogramma
 browser is starting.	notifications	lv	Tiek palaists pārlūks.
 cancal settings?	notifications	lv	Atcelt iestatījumus?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	lv	Lai pieteiktos šaj
 delete all messages	notifications	lv	Dzēst visus ziņojumus
 delete notifications	notifications	lv	Dzēst paziņojumus
 delete this message	notifications	lv	Dzēst šo ziņojumu
+do not notify me at all	notifications	lv	Nepaziņot man vispār
 domain not found, please check serveraddress.	notifications	lv	Domēns nav atrasts, lūdzu, pārbaudiet servera adresi.
+e-mail only	notifications	lv	Tikai pa e-pastu
 egroupware login is starting, please wait.	notifications	lv	Sākas EGroupware pieteikšanās, lūdzu, uzgaidiet.
 egroupware logindomain:	notifications	lv	EGroupware pieteikšanāsdomēna:
 egroupware logindomains founds, please select.	notifications	lv	EGroupware Logindomains atrasts, lūdzu, izvēlieties.
 egroupware not found by url or connection lost to server.	notifications	lv	EGroupware nav atrasts pēc URL vai ir zaudēts savienojums ar serveri.
 egroupware not found by url.	notifications	lv	EGroupware nav atrasts pēc URL.
+egroupware-popup and e-mail	notifications	lv	EGroupware uznirstošais logs un e-pasts
+egroupware-popup and windows-popup	notifications	lv	EGroupware uznirstošais logs un Windows uznirstošais logs
+egroupware-popup first, if that fails notify me by e-mail	notifications	lv	Vispirms EGroupware uznirstošais logs, ja tas neizdodas, paziņojiet man pa e-pastu
+egroupware-popup only	notifications	lv	Tikai EGroupware uznirstošais logs
 email notifications only, if user is not logged in	notifications	lv	Tikai e-pasta paziņojumi, ja lietotājs nav pieteicies
 error browser can`t start.	notifications	lv	Kļūda Pārlūkprogrammu nevar palaist.
 error on loading tray icon	notifications	lv	Kļūda, ielādējot Tray ikonu
@@ -44,6 +51,7 @@ message from	notifications	lv	Ziņa no
 minutes	notifications	lv	Minūtes
 more info	notifications	lv	Vairāk informācijas
 notifier	notifications	lv	Paziņotājs
+only used if no push server available!	admin	lv	Izmanto tikai tad, ja nav pieejams push serveris!
 open notified entry	notifications	lv	Atvērt paziņojumu ierakstu
 page not found, please check serveraddress.	notifications	lv	Lapa nav atrasta, lūdzu, pārbaudiet servera adresi.
 password:	notifications	lv	Parole:

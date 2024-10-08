@@ -2,6 +2,7 @@
 account:	notifications	bg	Сметка:
 all possible notification backends	notifications	bg	Всички възможни обратни връзки за уведомяване
 are you sure you want to delete all notifications?	notifications	bg	Сигурни ли сте, че искате да изтриете всички известия?
+automatic deleted notifications older than	admin	bg	Автоматично изтриване на известия, по-стари от
 browser	notifications	bg	Браузър
 browser is starting.	notifications	bg	Браузърът се стартира.
 cancal settings?	notifications	bg	Отменяте ли настройките?
@@ -15,12 +16,18 @@ cookies are required to login to this site.	notifications	bg	Необходим�
 delete all messages	notifications	bg	Изтриване на всички съобщения
 delete notifications	notifications	bg	Изтриване на известия
 delete this message	notifications	bg	Изтриване на това съобщение
+do not notify me at all	notifications	bg	Не ме уведомявайте изобщо
 domain not found, please check serveraddress.	notifications	bg	Домейнът не е намерен, моля, проверете адреса на сървъра.
+e-mail only	notifications	bg	Само по имейл
 egroupware login is starting, please wait.	notifications	bg	Започва влизането в EGroupware, моля изчакайте.
 egroupware logindomain:	notifications	bg	EGroupware Logindomain:
 egroupware logindomains founds, please select.	notifications	bg	EGroupware Logindomains founds, please select.
 egroupware not found by url or connection lost to server.	notifications	bg	EGroupware not found by URL (EGroupware не е намерен по URL адрес) или е загубена връзката със сървъра.
 egroupware not found by url.	notifications	bg	EGroupware не е намерен от URL адреса.
+egroupware-popup and e-mail	notifications	bg	Изскачащ прозорец и имейл на EGroupware
+egroupware-popup and windows-popup	notifications	bg	Изскачащ прозорец на EGroupware и изскачащ прозорец на Windows
+egroupware-popup first, if that fails notify me by e-mail	notifications	bg	Първо изскачащ прозорец на EGroupware, ако не успее, ме уведомява по имейл
+egroupware-popup only	notifications	bg	Само изскачащ прозорец на EGroupware
 email notifications only, if user is not logged in	notifications	bg	Известия само по имейл, ако потребителят не е влязъл в системата
 error browser can`t start.	notifications	bg	Error Browser can`t start.
 error on loading tray icon	notifications	bg	Грешка при зареждане на икона Tray
@@ -40,6 +47,7 @@ message from	notifications	bg	Съобщение от
 minutes	notifications	bg	минути
 more info	notifications	bg	Повече информация
 notifier	notifications	bg	Уведомител
+only used if no push server available!	admin	bg	Използва се само ако няма наличен push сървър!
 open notified entry	notifications	bg	Отваряне на запис с известие
 page not found, please check serveraddress.	notifications	bg	Страницата не е намерена, моля, проверете адреса на сървъра.
 password:	notifications	bg	Парола:

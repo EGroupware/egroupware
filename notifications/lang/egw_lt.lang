@@ -2,6 +2,7 @@
 account:	notifications	lt	Sąskaita:
 all possible notification backends	notifications	lt	Visi galimi pranešimų galiniai serveriai
 are you sure you want to delete all notifications?	notifications	lt	Ar tikrai norite ištrinti visus pranešimus?
+automatic deleted notifications older than	admin	lt	Automatiškai ištrinti senesnius nei
 browser	notifications	lt	Naršyklė
 browser is starting.	notifications	lt	Naršyklė paleidžiama.
 cancal settings?	notifications	lt	Atšaukti nustatymus?
@@ -16,12 +17,18 @@ cookies are required to login to this site.	notifications	lt	Norint prisijungti 
 delete all messages	notifications	lt	Ištrinti visus pranešimus
 delete notifications	notifications	lt	Ištrinti pranešimus
 delete this message	notifications	lt	Ištrinti šį pranešimą
+do not notify me at all	notifications	lt	Visai nepranešti man
 domain not found, please check serveraddress.	notifications	lt	Domenas nerastas, patikrinkite serverio adresą.
+e-mail only	notifications	lt	Tik el. paštu
 egroupware login is starting, please wait.	notifications	lt	Pradedamas "EGroupware" prisijungimas, palaukite.
 egroupware logindomain:	notifications	lt	EGroupware prisijungimo domenas:
 egroupware logindomains founds, please select.	notifications	lt	EGroupware Logindomains rasta, pasirinkite.
 egroupware not found by url or connection lost to server.	notifications	lt	EGroupware nerastas pagal URL arba prarastas ryšys su serveriu.
 egroupware not found by url.	notifications	lt	EGroupware nerastas pagal URL adresą.
+egroupware-popup and e-mail	notifications	lt	EGroupware iššokantis langas ir el. paštas
+egroupware-popup and windows-popup	notifications	lt	EGroupware iššokantis langas ir „Windows“ iššokantis langas
+egroupware-popup first, if that fails notify me by e-mail	notifications	lt	Pirmiausia EGroupware iššokantis langas, jei nepavyksta pranešti el. paštu
+egroupware-popup only	notifications	lt	Tik EGroupware iššokantis langas
 email notifications only, if user is not logged in	notifications	lt	Tik el. pašto pranešimai, jei naudotojas nėra prisijungęs
 error browser can`t start.	notifications	lt	Klaida Naršyklė negali įsijungti.
 error on loading tray icon	notifications	lt	Klaida įkeliant dėklo piktogramą
@@ -40,6 +47,7 @@ mark all as read	notifications	lt	Pažymėti visus kaip perskaitytus
 mark as read	notifications	lt	Pažymėti kaip perskaitytą
 more info	notifications	lt	Daugiau informacijos
 notifier	notifications	lt	Pranešėjas
+only used if no push server available!	admin	lt	Naudojama tik tuo atveju, jei nėra „push“ serverio!
 open notified entry	notifications	lt	Atidaryti įrašą su pranešimais
 page not found, please check serveraddress.	notifications	lt	Puslapis nerastas, patikrinkite serverio adresą.
 password:	notifications	lt	Slaptažodis:
