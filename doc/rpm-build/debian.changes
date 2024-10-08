@@ -1,3 +1,9 @@
+egroupware-docker (23.1.20241008) hardy; urgency=low
+
+  * Mail: fix not working drag-n-drop and context menu und lazy-loaded 2nd mail account
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 08 Oct 2024 09:09:27 +0200
+
 egroupware-docker (23.1.20240930) hardy; urgency=low
 
   * PHP Security Update to 8.3.12
