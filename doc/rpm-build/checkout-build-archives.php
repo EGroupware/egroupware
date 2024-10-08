@@ -1,4 +1,4 @@
-#!/usr/bin/env php -qC
+#!/usr/bin/env php -qCd memory_limit=-1
 <?php
 /**
  * EGroupware - checkout, build and release archives, build Debian and rpm packages
