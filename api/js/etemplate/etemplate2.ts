@@ -1710,9 +1710,14 @@ export class etemplate2
 				(<et2_baseWidget>widget).showMessage(_response.data[id], 'validation_error');
 
 			}
-			else if(typeof widget.set_validation_error == "function")
+			else if(widget && typeof widget.set_validation_error == "function")
 			{
 				widget.set_validation_error(_response.data[id]);
+			}
+			else if(!widget)
+			{
+				console.warn(`Validation error without widget.  ID:${id} - ${_response.data[id]}`);
+				continue;
 			}
 			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
 			let tmpWidget = widget;
