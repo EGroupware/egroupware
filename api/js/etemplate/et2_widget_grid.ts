@@ -871,7 +871,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		// outer table.
 		if(_sender == this || typeof _sender == 'undefined')
 		{
-			return this.wrapper != null ? this.wrapper[0] : this.table[0];
+			return this.wrapper != null ? this.wrapper[0] : this.table != null ? this.table[0] : null;
 		}
 
 		// Check whether the _sender object exists inside the management array
