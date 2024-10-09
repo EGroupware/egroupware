@@ -677,8 +677,19 @@ app.classes.mail = AppJS.extend(
 						break;
 					case 'add':
 						const current_id = tree.getValue();
-						// need to wait tree is refreshed: current and new id are there AND current folder is selected again
-						tree.refreshItem(0).then(() => {
+
+						tree._selectOptions.push({
+							id: "" + _id,
+							label: this.egw.lang("Loading..."),
+							selected: false,
+							loading: true,
+							lazy: true
+						});
+						tree.requestUpdate("_selectOptions");
+						tree.updateComplete.then(async () =>
+						{
+							// need to wait tree is refreshed: current and new id are there AND current folder is selected again
+							await tree.refreshItem(_id);
 							if (tree.getNode(_id) && tree.getNode(current_id))
 							{
 								if (!tree.getSelectedNode())
@@ -689,16 +700,19 @@ app.classes.mail = AppJS.extend(
 								{
 									// open new account
 									// need to wait new folders are loaded AND current folder is selected again
-									tree.openItem(_id, true).then(() => {
-										if (tree.getNode(_id + '::INBOX')) {
-											if (!tree.getSelectedNode()) {
-												tree.reSelectItem(current_id);
-											} else {
-												this.mail_changeFolder(_id + '::INBOX', tree, current_id);
-												tree.reSelectItem(_id + '::INBOX');
-											}
+									await tree.openItem(_id, true);
+									if (tree.getNode(_id + '::INBOX'))
+									{
+										if (!tree.getSelectedNode())
+										{
+											tree.reSelectItem(current_id);
 										}
-									});
+										else
+										{
+											this.mail_changeFolder(_id + '::INBOX', tree, current_id);
+											tree.reSelectItem(_id + '::INBOX');
+										}
+									}
 								}
 							}
 						});

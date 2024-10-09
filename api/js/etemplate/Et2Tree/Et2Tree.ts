@@ -509,7 +509,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			let item = this.getNode(_id);
 			// if the item does not exist in the tree yet no need to refresh
-			if(item == null) return
+			if(item == null)
+			{
+				return Promise.resolve();
+			}
 			return this.handleLazyLoading(item).then((result) => {
 				item.item = [...result.item]
 				this.requestUpdate("_selectOptions")
@@ -1039,6 +1042,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             >
 				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
 				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
+                <slot></slot>
                 ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>
 		`;
