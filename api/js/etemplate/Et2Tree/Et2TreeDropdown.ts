@@ -575,7 +575,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		}
 	}
 
-	private handleSearchFocus()
+	private handleSearchFocus(event)
 	{
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
@@ -584,7 +584,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
 
-		this.show();
+		// Don't show if only tabbed into
+		if(!event.relatedTarget)
+		{
+			this.show();
+		}
 	}
 
 	private handleInternalBlur(event)
@@ -613,11 +617,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			event.stopPropagation();
 			return;
 		}
-		// Show options if popup is closed
-		if(event.key == "ArrowDown" && !this.open && !this.resultsOpen)
+		// Show options if popup is closed on arrow down or space
+		if((event.key == "ArrowDown" || event.key == " " && this._searchNode.value == "") && !this.open && !this.resultsOpen)
 		{
 			this.show();
 			event.stopPropagation();
+			event.preventDefault();
 		}
 		// Move to tree if popup is open & tree is showing
 		else if(event.key == "ArrowDown" && this.treeOrSearch == "tree")
@@ -754,7 +759,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		{
 			placeholder = "";
 		}
-		else if(this.open)
+		else if(this.hasFocus)
 		{
 			placeholder = this.egw().lang("Search");
 		}
@@ -931,6 +936,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                             placement=${this.placement || "bottom"}
 							strategy="fixed"
                             ?disabled=${this.disabled}
+                            @sl-after-hide=${() => {this.resultsOpen = false;}}
                     >
                         <div
                                 part="combobox control"
