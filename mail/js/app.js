@@ -657,6 +657,8 @@ app.classes.mail = AppJS.extend(
 				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
 				var node = tree.getNode(_id);
+				// Make sure ID is a string, that's what tree uses
+				_id = "" + _id;
 				switch(_type)
 				{
 					case 'delete':
