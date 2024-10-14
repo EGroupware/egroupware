@@ -173,8 +173,9 @@ class Script
 						$rule['ctype'] = ($bits[14]??null);
 						$rule['field_ctype_val'] = ($bits[15]??null);
 						$rule['unconditional']	= 0;
-						if (!$rule['from'] && !$rule['to'] && !$rule['subject'] &&
-							!$rule['field'] && !$rule['size'] && $rule['action']) {
+						if ($rule['action'] && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
+							!$rule['field'] && !$rule['size'] && !$rule['field_bodytransform'] && !$rule['ctype'])
+						{
 							$rule['unconditional'] = 1;
 						}
 
@@ -301,7 +302,7 @@ class Script
 				}
 				$started = 0;
 
-				if (!$rule['unconditional']) {
+				if (empty($rule['unconditional'])) {
 						if (!$continue) $newruletext .= "els";
 						$newruletext .= "if " . $anyall . " (";
 						if ($rule['from']) {
@@ -388,7 +389,7 @@ class Script
 
 				// actions
 
-				if (!$rule['unconditional']) $newruletext .= ") {\n\t";
+				if (empty($rule['unconditional'])) $newruletext .= ") {\n\t";
 
 				if (preg_match("/folder/i",$rule['action'])) {
 						$newruletext .= "fileinto \"" . ($utf7imap_fileinto ?
@@ -420,11 +421,11 @@ class Script
 				{
 					$newruletext .= "\n\tset \"action\" \"$rule[action]\";";
 				}
-				if (!$rule['unconditional']) $newruletext .= "\n}";
+				if (empty($rule['unconditional'])) $newruletext .= "\n}";
 
 				$continue = 0;
 				if ($rule['continue']) $continue = 1;
-				if ($rule['unconditional']) $continue = 1;
+				if (!empty($rule['unconditional'])) $continue = 1;
 
 				$newscriptbody .= $newruletext . "\n\n";
 
