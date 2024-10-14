@@ -214,6 +214,9 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			for(let field_name in this.options.customfields)
 			{
+				// check if we have a type-filter and field does NOT match it --> ignore / skip field
+				if (this.options.type_filter && this.options.fields[field_name] !== true) continue;
+
 				if (exclude.indexOf(field_name) >= 0)
 				{
 					this.options.fields[field_name] = false;
