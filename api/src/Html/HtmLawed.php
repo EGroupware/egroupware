@@ -389,7 +389,9 @@ function hl_email_tag_transform($element, $attribute_array=0)
 		// $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs'] ? '' : 'match' => '/^cid:.*/'),
 		if (isset($attribute_array['src']))
 		{
-			if (!(strlen($attribute_array['src'])>4 && strlen($attribute_array['src'])<800))
+			// explicitly exclude data-uris of images from the length limit of 800 chars
+			if (!preg_match('#^data:image/[a-z]+;base64,#i',$attribute_array['src']) &&
+				!(strlen($attribute_array['src'])>4 && strlen($attribute_array['src'])<800))
 			{
 					$attribute_array['alt']= $attribute_array['alt'].' [blocked (reason: url length):'.$attribute_array['src'].']';
 					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
