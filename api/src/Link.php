@@ -735,16 +735,17 @@ class Link extends Link\Storage
 				$app2 = $link['link_app2'];
 				$id2 = $link['link_id2'];
 			}
-			if ($app && $app2)
+			// only history-log and notify, if there were any links deleted
+			if (($deleted = Link\Storage::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge)))
 			{
-				Storage\History::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
-				Storage\History::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
+				if ($app && $app2)
+				{
+					Storage\History::static_add($app,$id,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app2.':'.$id2);
+					Storage\History::static_add($app2,$id2,$GLOBALS['egw_info']['user']['account_id'],'~link~','',$app.':'.$id);
+				}
+				// only notify on real links, not the one cached for writing or fileattachments
+				self::notify_unlink($deleted);
 			}
-			$deleted = Link\Storage::unlink($link_id,$app,$id,$owner,$app2 != '!'.self::VFS_APPNAME ? $app2 : '',$id2,$hold_for_purge);
-
-			// only notify on real links, not the one cached for writing or fileattachments
-			self::notify_unlink($deleted);
-
 			return count($deleted);
 		}
 		if (!$link_id) $link_id = self::temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
