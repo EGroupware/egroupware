@@ -47,6 +47,10 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 					display: inline;
 				}
 
+				et2-link::part(icon) {
+					display: none;
+				}
+
 				et2-link:hover {
 					text-decoration: underline;
 				}
@@ -379,6 +383,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		for(let k in _values)
 		{
 			this[k] = _values[k];
+			this.requestUpdate(k);
 		}
 	}
 }
