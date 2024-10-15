@@ -10,13 +10,14 @@
  */
 
 
-import {css, html, LitElement, PropertyValues, render, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, PropertyValues, render, TemplateResult} from "lit";
 import {until} from "lit/directives/until.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {LinkInfo} from "./Et2Link";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
+import {repeat} from "lit/directives/repeat.js";
 
 /**
  * Display a list of entries in a comma separated list
@@ -36,30 +37,34 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		return [
 			...super.styles,
 			css`
-			  :host {
-				list-style-type: none;
-				display: inline;
-				padding: 0px;
-			  }
+				:host {
+					list-style-type: none;
+					display: inline;
+					padding: 0px;
+				}
 
-			  ::slotted(*) {
-				display: inline;
-			  }
+				et2-link, et2-link::part(base), et2-description {
+					display: inline;
+				}
 
-			  ::slotted(*):hover {
-				text-decoration: underline;
-			  }
+				et2-link::part(icon) {
+					display: none;
+				}
+
+				et2-link:hover {
+					text-decoration: underline;
+				}
 
 
-			  /* CSS for child elements */
+				/* CSS for child elements */
 
-			  ::slotted(*):after {
-				content: ", "
-			  }
+				et2-link::part(title):after {
+					content: ", "
+				}
 
-			  ::slotted(*:last-child):after {
-				content: initial;
-			  }
+				et2-link:last-child::part(title):after {
+					content: initial;
+				}
 			`
 		];
 	}
@@ -112,13 +117,14 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	@property({type: Number})
 	limit = 20;
 
-	protected _link_list : LinkInfo[];
-	protected _loadingPromise : Promise<LinkInfo[]>;
+	protected _totalResults : number = 0;
+	protected _link_list : LinkInfo[] = [];
+	protected _loadingPromise : Promise<LinkInfo[]> = Promise.resolve([]);
+	protected _loading = false;
 
 	constructor()
 	{
 		super();
-		this._link_list = []
 	}
 
 	async getUpdateComplete()
@@ -144,6 +150,12 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	public set_value(_value : string | { to_app : string, to_id : string } | LinkInfo[])
 	{
 		this._link_list = [];
+		if(typeof _value["total"] !== "undefined")
+		{
+			this._totalResults = _value["total"];
+			delete _value["total"];
+		}
+
 		if(typeof _value == "object" && !Array.isArray(_value) && !_value.to_app && this.application)
 		{
 			_value.to_app = this.application;
@@ -155,7 +167,12 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			this.application = _value.to_app;
 			this.entryId = _value.to_id;
-			this.get_links();
+
+			// Let update complete finish first, if it's not done yet
+			this.updateComplete.then(() =>
+			{
+				this.get_links();
+			})
 			return;
 		}
 
@@ -166,9 +183,9 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			ids.forEach((id) => (<LinkInfo[]>this._link_list).push(<LinkInfo>{app: this.application, id: id}));
 		}
 		// List of LinkInfo
-		else if(Array.isArray(_value))
+		else if(Array.isArray(_value) || typeof _value[0] == "object")
 		{
-			this._link_list = _value;
+			this._link_list = <LinkInfo[]>Object.values(_value);
 		}
 		// List of LinkInfo stuffed into to_id - entry is not yet saved
 		else if(_value.to_id && typeof _value.to_id !== "string")
@@ -179,8 +196,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				this._link_list.push(<LinkInfo>_value.to_id[key]);
 			});
 		}
-		this._addLinks(this._link_list);
-		super.requestUpdate();
+		this.requestUpdate();
 	}
 
 	public updated(changedProperties : PropertyValues)
@@ -200,20 +216,21 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		// This shows loading template until loadingPromise resolves, then shows _listTemplate
 		return html`
-            ${this._loadingPromise ? until(
-                    this._loadingPromise?.then(res =>
+            ${until(this._loadingPromise?.then(res =>
                     {
-                        this._listTemplate();
+                        return this._listTemplate();
                     }),
                     this._loadingTemplate()
-            ) : this._listTemplate()}
+            )}
+            ${until(this.moreResultsTemplate(), nothing)}
 		`;
 	}
 
 	protected _listTemplate()
 	{
 		return html`
-            <slot></slot>`;
+            ${repeat(this._link_list, l => l.link_id, this._linkTemplate)}
+		`;
 	}
 
 	/**
@@ -227,22 +244,9 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	{
 		const id = typeof link.id === "string" ? link.id : link.link_id;
 		return html`
-            <et2-link app="${link.app}" entryId="${id}" .value=${link} ._parent=${this}></et2-link>`;
-	}
-
-	/**
-	 * Render "more links available"
-	 *
-	 * @param link
-	 * @returns {TemplateResult}
-	 * @protected
-	 */
-	protected _moreAvailableTemplate(link : LinkInfo) : TemplateResult
-	{
-		return html`
-            <et2-button image="${link.icon}" label="${link.title}" .onclick="${() => {
-				this.get_links();
-			}}" ._parent=${this} slot="link_exceeded"></et2-button>`;
+            <et2-link part="link" class="et2_link"
+                      app="${link.app}" entryId="${id}" .value=${link} ._parent=${this}
+            ></et2-link>`;
 	}
 
 	/**
@@ -252,7 +256,27 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 */
 	protected _loadingTemplate() : TemplateResult
 	{
-		return html`loading...`;
+		return html`
+            <div class="search__loading">
+                <sl-spinner></sl-spinner>
+            </div>
+		`;
+	}
+
+	protected async moreResultsTemplate()
+	{
+		if(this._totalResults <= 0 || !this._loadingPromise)
+		{
+			return nothing;
+		}
+		return this._loadingPromise.then(() =>
+		{
+			const moreCount = this._totalResults - this._link_list.length;
+			const more = html`
+                <et2-description statustext="${this.egw().lang("%1 more...", moreCount)}">...
+                </et2-description>`;
+			return html`${moreCount > 0 ? more : nothing}`;
+		});
 	}
 
 	/**
@@ -264,6 +288,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 */
 	protected _addLinks(links : LinkInfo[])
 	{
+		return;
 		// Remove anything there right now
 		while(this.lastChild)
 		{
@@ -273,7 +298,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		links.forEach((link) =>
 		{
 			let temp = document.createElement("div");
-			render(link.app === 'exceeded' ? this._moreAvailableTemplate(link) : this._linkTemplate(link), temp);
+			render(this._linkTemplate(link), temp);
 			temp.childNodes.forEach((node) => this.appendChild(node));
 		})
 
@@ -297,8 +322,15 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * Called internally to fetch the list.  May be called externally to trigger a refresh if a link is added.
 	 *
 	 */
-	public get_links(not_saved_links? : LinkInfo[])
+	public get_links(not_saved_links? : LinkInfo[], offset = 0)
 	{
+		if(this._loading)
+		{
+			// Already waiting
+			return;
+		}
+		this._loading = true;
+
 		if(typeof not_saved_links === "undefined")
 		{
 			not_saved_links = [];
@@ -308,31 +340,31 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			to_id: this.entryId,
 			only_app: this.onlyApp,
 			show_deleted: this.showDeleted,
-			limit: this.limit
+			limit: [offset, /* num_rows: */this.limit]
 		};
-		this.limit *= 2;	// double number of loaded links on next call
-
-		if(this._loadingPromise)
-		{
-			// Already waiting
-			return;
-		}
 
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				if(_value && Array.isArray(_value))
+				if(typeof _value.total)
 				{
-					for(let link of <LinkInfo[]>_value)
+					this._totalResults = _value.total;
+					delete _value.total;
+				}
+				if(_value)
+				{
+					for(let link of <LinkInfo[]>Object.values(_value))
 					{
-						if(!not_saved_links.some(l => l.app == link.app && l.id == link.id))
+						// Avoid duplicates, files are always sent
+						if(!not_saved_links.some(l => l.app == link.app && l.id == link.id) &&
+							!this._link_list.some(l => l.app == link.app && l.id == link.id))
 						{
-							not_saved_links.push(link);
+							this._link_list.push(link);
 						}
 					}
 				}
-				this._addLinks(not_saved_links);
-				this._loadingPromise = null;
+				this._loading = false;
+				this.requestUpdate();
 			})
 	}
 
@@ -351,6 +383,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		for(let k in _values)
 		{
 			this[k] = _values[k];
+			this.requestUpdate(k);
 		}
 	}
 }
