@@ -67,6 +67,15 @@ class admin_customfields
 	 */
 	protected $content_type = null;
 
+	/**
+	 * @var Api\Storage\Base
+	 */
+	protected $so;
+	/**
+	 * @var Api\Db
+	 */
+	protected $db;
+
 	var $public_functions = array(
 		'index' => true,
 		'edit' => True
@@ -124,6 +133,7 @@ class admin_customfields
 			$this->content_types = Api\Config::get_content_types($this->appname);
 		}
 		$this->so = new Api\Storage\Base('api','egw_customfields',null,'',true);
+		$this->db = $GLOBALS['egw']->db;
 
 		// Make sure app css & lang get loaded, extending app might cause et2 to miss it
 		Framework::includeCSS('admin','app');
@@ -764,7 +774,7 @@ class admin_customfields
 			}
 			else
 			{
-				$query['col_filter'][0] = '(cf_type2 IS NULL OR cf_type2='.$GLOBALS['egw']->db->quote($t2).')';
+				$query['col_filter'][0] = '(cf_type2 IS NULL OR '.$this->db->concat("','", 'cf_type2', "','").' LIKE '.$GLOBALS['egw']->db->quote('%,'.$t2.',%').')';
 			}
 			unset($query['col_filter']['cf_type2']);
 		}
