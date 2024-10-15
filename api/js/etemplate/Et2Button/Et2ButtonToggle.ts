@@ -24,7 +24,9 @@ export class Et2ButtonToggle extends Et2SwitchIcon
 				}
 
 				sl-switch {
-					--width: var(--height);
+					font-size: inherit;
+					--width: 1em;
+					--height: 1em;
 				}
 
 				sl-switch:not([checked]) slot[name="off"] {

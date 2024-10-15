@@ -16,6 +16,9 @@ import {SlSwitch} from "@shoelace-style/shoelace";
  * @cssproperty --height - The height of the switch.
  * @cssproperty --width - The width of the switch.
  * @cssproperty --indicator-color - The color of the selected image
+ *
+ * @csspart form-control-label The label's wrapper
+ * @csspart control The control's wrapper
  */
 @customElement("et2-switch-icon")
 export class Et2SwitchIcon extends Et2InputWidget(LitElement)
@@ -95,7 +98,14 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 
 	set value(new_value : string | boolean)
 	{
-		this.switch.checked = !!new_value;
+		if(this.switch)
+		{
+			this.switch.checked = !!new_value;
+		}
+		else
+		{
+			this.updateComplete.then(() => this.value = new_value);
+		}
 	}
 
 	get value()
@@ -111,6 +121,7 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
                     class="form-control__label">${this.label}
 			</span>` : nothing}
             <span
+                    part="control"
                     class=${classMap({
                         "label": true,
                         "on": this.checked,

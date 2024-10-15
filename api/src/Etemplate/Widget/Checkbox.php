@@ -132,4 +132,5 @@ class Checkbox extends Etemplate\Widget
 }
 
 Etemplate\Widget::registerWidget(__NAMESPACE__ . '\\Checkbox', array('et2-checkbox', 'et2-radio', 'et2-switch',
+																	 'et2-switch-icon', 'et2-button-toggle',
 																	 'checkbox', 'radio'));
