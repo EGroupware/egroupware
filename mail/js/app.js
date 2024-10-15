@@ -682,7 +682,8 @@ app.classes.mail = AppJS.extend(
 
 						tree._selectOptions.push({
 							id: "" + _id,
-							label: this.egw.lang("Loading..."),
+							// Use text instead of label because server side is only sending text
+							text: this.egw.lang("Loading..."),
 							selected: false,
 							loading: true,
 							lazy: true
