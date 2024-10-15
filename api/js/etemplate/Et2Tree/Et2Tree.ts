@@ -604,7 +604,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				return Promise.resolve();
 			}
 			return this.handleLazyLoading(item).then((result) => {
-				item.item = [...result.item]
+				Object.assign(item, result);
 				this.requestUpdate("_selectOptions")
 			})
 		}
