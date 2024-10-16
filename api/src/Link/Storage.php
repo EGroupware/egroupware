@@ -208,6 +208,7 @@ class Storage
 		if ($only_app && $not_only == ($linked_app == $only_app) || !$GLOBALS['egw_info']['user']['apps'][$app])
 		{
 			#echo "$linked_app == $only_app, ";var_dump($linked_app == $only_app);echo "	->dont return a link<br>";
+			self::$row_count--;
 			return;
 		}
 		#echo "returning ".(($only_app && !$not_only) ? " linkid:".$linked_id : " full array with linkid $linked_id")."<br>";
