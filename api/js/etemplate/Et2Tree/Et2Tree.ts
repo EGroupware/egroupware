@@ -1227,10 +1227,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			action = this.widget_object.addObject(target.id, this.widget_object.iface)
 			action.setSelected = (set) =>
 			{
-				target.selected = set;
+				target.action_selected = set;
 				this.widget_object.updateSelectedChildren(action, set);
 			}
-			action.getSelected = () => target.selected;
+			action.getSelected = () => target.action_selected;
 			// Required to get dropped accepted, but also re-binds
 			action.updateActionLinks(this._get_action_links(this.actions));
 		}
