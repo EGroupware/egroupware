@@ -201,8 +201,8 @@ class Link extends Etemplate\Widget
 		$app = $value['to_app'];
 		$id = $value['to_id'];
 
-		$links = Api\Link::get_links($app, $id, $value['only_app'] ?? '', 'link_lastmod DESC', true, $value['show_deleted'], $value['limit'] ?? null);
-		$limit_exceeded = !empty($value['limit']) && Api\Link::$limit_exceeded;
+		$links = Api\Link::get_links($app, $id, $value['only_app'], 'link_lastmod DESC, link_id DESC', true, $value['show_deleted'], $value['limit']);
+
 		$only_links = [];
 		if($value['only_app'])
 		{
@@ -244,19 +244,12 @@ class Link extends Etemplate\Widget
 				$link['help'] = lang('Remove this link (not the entry itself)');
 			}
 		}
-		if ($limit_exceeded)
-		{
-			$links[] = [
-				'app' => 'exceeded',
-				'id' => 'exceeded',
-				'title' => lang('Load more links ...'),
-				'icon' => 'box-arrow-down',
-			];
-		}
 
 		$response = Api\Json\Response::get();
 		// Strip keys, unneeded and cause index problems on the client side
-		$response->data(array_values($links));
+		$result = array_values($links);
+		$result['total'] = Api\Link\Storage::$row_count;
+		$response->data($result);
 	}
 
 	/**
@@ -321,9 +314,17 @@ class Link extends Etemplate\Widget
 		}
 		else
 		{
-			foreach($files as $target)
+			if(!str_ends_with($dest_file, '/') && count($files) == 1 && is_int($id))
 			{
-				Api\Link::link_file($app, $id, $target);
+				// 1 file to a specific filename
+				Api\Vfs::symlink($files[0], Api\Link::vfs_path($app, $id));
+			}
+			else
+			{
+				foreach($files as $target)
+				{
+					Api\Link::link_file($app, $id, $target);
+				}
 			}
 		}
 	}
