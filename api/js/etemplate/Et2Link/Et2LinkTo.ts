@@ -24,6 +24,7 @@ import {Et2VfsSelectButton} from "../Et2Vfs/Et2VfsSelectButton";
 import {Et2LinkPasteDialog, getClipboardFiles} from "./Et2LinkPasteDialog";
 import {waitForEvent} from "../Et2Widget/event";
 import {classMap} from "lit/directives/class-map.js";
+import {Et2VfsSelectDialog} from "../Et2Vfs/Et2VfsSelectDialog";
 
 /**
  * Choose an existing entry, VFS file or local file, and link it to the current entry.
@@ -100,7 +101,9 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 	private get pasteButton() : Et2VfsSelectButton { return this.shadowRoot?.querySelector("#paste"); }
 
-	private get pasteDialog() { return this.pasteButton?.querySelector("et2-link-paste-dialog"); }
+	private get pasteDialog() : Et2LinkPasteDialog { return <Et2LinkPasteDialog><unknown>this.pasteButton?.querySelector("et2-link-paste-dialog"); }
+
+	private get vfsDialog() : Et2VfsSelectDialog { return <Et2VfsSelectDialog><unknown>this.shadowRoot.querySelector("#link")?.shadowRoot.querySelector("et2-vfs-select-dialog")}
 
 	constructor()
 	{
@@ -150,7 +153,10 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 			getClipboardFiles().then((files) =>
 			{
-				this.pasteButton.disabled = files.length == 0;
+				if(files.length > 0)
+				{
+					this.pasteButton.removeAttribute("disabled");
+				}
 			});
 		}
 
@@ -166,17 +172,17 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     .buttonLabel=${this.egw().lang('Link')}
                     @change=${async() =>
                     {
-                        this.handleVfsSelected(await this.shadowRoot.getElementById("link")._dialog.getComplete());
+                        this.handleVfsSelected(await this.vfsDialog.getComplete());
                     }}
             >
                 <et2-button slot="footer" image="copy" id="copy" style="order:3" noSubmit="true"
                             label=${this.egw().lang("copy")}></et2-button>
-                <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true"
+                <et2-button slot="footer" image="move" id="move" style="order:3" noSubmit="true" ?disabled=${!method_id}
                             label=${this.egw().lang("move")}></et2-button>
             </et2-vfs-select>
             <et2-vfs-select
                     id="paste"
-                    image="linkpaste" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
+                    image="clipboard-data" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}
                     ?readonly=${this.readonly}
                     disabled
@@ -192,7 +198,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
                                 waitForEvent(e.target._dialog, "sl-after-show").then(async() =>
                                 {
-                                    this.handleVfsSelected(await this.pasteButton._dialog.getComplete());
+                                    this.handleFilePaste(await this.pasteDialog.getComplete());
                                 });
                             }}
             >
@@ -491,30 +497,39 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		}
 	}
 
-	handleFilePaste([button, files])
+	handleFilePaste([button, selected])
 	{
-		if(!button)
+		let fileInfo = []
+		selected.forEach(file =>
 		{
-			return;
-		}
-		let values = {};
-		for(var i = 0; i < files.length; i++)
-		{
-			values['link:' + files[i]] = {
-				app: 'link',
-				id: files[i],
-				type: 'unknown',
-				icon: 'link',
-				remark: '',
-				title: files[i]
-			};
-		}
-		this._link_result(values);
+			fileInfo.push({...this.pasteDialog.fileInfo(file), app: "link"});
+		})
+		this.handleVfsFile(button, fileInfo);
+		this.pasteButton.value = [];
 	}
 
 	handleVfsSelected([button, selected])
 	{
-		if(!button || !selected?.length)
+		let fileInfo = []
+		selected.forEach(file =>
+		{
+			let info = {
+				...this.vfsDialog.fileInfo(file)
+			}
+
+			if(!this.value.to_id || typeof this.value.to_id == 'object')
+			{
+				info['app'] = button == "copy" ? "file" : "link";
+				info['path'] = button == "copy" ? "vfs://default" + info.path : info.path;
+			}
+			fileInfo.push(info);
+		})
+		this.handleVfsFile(button, fileInfo);
+	}
+
+	protected handleVfsFile(button, selectedFileInfo)
+	{
+		if(!button)
 		{
 			return;
 		}
@@ -523,31 +538,30 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		if(!this.value.to_id || typeof this.value.to_id == 'object')
 		{
 			values = this.value.to_id || {};
-			for(let i = 0; i < selected.length; i++)
+			selectedFileInfo.forEach(info =>
 			{
-				const info = this.pasteDialog.fileInfo(selected[i]);
-				values['link:' + selected[i]] = {
-					app: info?.app == "filemanager" ? "link" : info?.app,
-					id: info?.app == "filemanager" ? selected[i] : info?.id,
+				debugger;
+				values['link:' + info.path] = {
+					app: info?.app,
+					id: info.path ?? info.id,
 					type: 'unknown',
 					icon: 'link',
 					remark: '',
-					title: selected[i]
+					title: info.path
 				};
-			}
+			});
 		}
 		else
 		{
 			// Send to server to link
 			const files = [];
 			const links = [];
-			selected.forEach(id =>
+			selectedFileInfo.forEach(info =>
 			{
-				const info = this.pasteDialog.fileInfo(id);
 				switch(info?.app)
 				{
 					case "filemanager":
-						files.push(id);
+						files.push(info.path);
 						break;
 					default:
 						links.push({app: info.app, id: info.id});
@@ -567,7 +581,6 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 				this.createLink(links);
 			}
 		}
-		this.pasteButton.value = [];
 		this._link_result(values);
 	}
 

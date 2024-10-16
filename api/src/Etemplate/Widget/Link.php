@@ -314,7 +314,7 @@ class Link extends Etemplate\Widget
 		}
 		else
 		{
-			if(!str_ends_with($dest_file, '/') && count($files) == 1)
+			if(!str_ends_with($dest_file, '/') && count($files) == 1 && is_int($id))
 			{
 				// 1 file to a specific filename
 				Api\Vfs::symlink($files[0], Api\Link::vfs_path($app, $id));

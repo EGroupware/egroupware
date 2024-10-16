@@ -78,6 +78,7 @@ export class Et2LinkList extends Et2LinkString
 
 				et2-link::part(icon) {
 					width: 1rem;
+					display: inline-block;
 				}
 
 				et2-link {
