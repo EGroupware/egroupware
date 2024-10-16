@@ -43,6 +43,11 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		const target = this.findActionTargetHandler.findActionTarget(dom_event);
 		if(egw_event == EGW_AI_DRAG_ENTER && !target.target.classList.contains("draggedOver"))
 		{
+			// Remove drag classes from all items
+			this.tree.shadowRoot.querySelectorAll("sl-tree-item.draggedOver").forEach(n =>
+			{
+				n.classList.remove("draggedOver", "drop-hover");
+			});
 			target.target.classList.add("draggedOver", "drop-hover");
 			this.timeouts[target.target.id] = setTimeout(() =>
 			{
