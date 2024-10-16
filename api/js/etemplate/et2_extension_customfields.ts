@@ -914,16 +914,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 			// Create upload widget
 			let upload_attrs = {...attrs};
-			if(typeof field.values?.noUpload !== "undefined")
-			{
-				upload_attrs.class = "hideme";
-			}
 			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, upload_attrs, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
 
+			// Should we show the upload button
+			if(typeof field.values?.noUpload !== "undefined")
+			{
+				widget.node.querySelector('et2-button').classList.add("hideme");
+			}
 			// should we show the VfsSelect
 			if (!field.values || typeof field.values !== 'object' || !field.values.noVfsSelect)
 			{
@@ -958,6 +959,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
 					const info = e.target._dialog.fileInfo(e.target.value);
 					e.target.getParent().getWidgetById("#filemanager")?._addFile(info);
+					e.target.getParent().getWidgetById("#filemanager").getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}

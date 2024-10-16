@@ -314,9 +314,17 @@ class Link extends Etemplate\Widget
 		}
 		else
 		{
-			foreach($files as $target)
+			if(!str_ends_with($dest_file, '/') && count($files) == 1)
 			{
-				Api\Link::link_file($app, $id, $target);
+				// 1 file to a specific filename
+				Api\Vfs::symlink($files[0], Api\Link::vfs_path($app, $id));
+			}
+			else
+			{
+				foreach($files as $target)
+				{
+					Api\Link::link_file($app, $id, $target);
+				}
 			}
 		}
 	}
