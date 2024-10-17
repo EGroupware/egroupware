@@ -2617,6 +2617,28 @@ table.egwGridView_outer thead tr th.noResize:hover {
 	top: 100%;
 }
 
+.et2_toolbar et2-switch-icon {
+	font-size: 2.4em;
+	height: 1em;
+}
+
+.et2_toolbar et2-switch-icon::part(form-control-label) {
+	position: absolute;
+	top: 100%;
+	visibility: hidden;
+}
+
+.et2_toolbar et2-switch-icon::part(switch-label) {
+	top: calc(-1.1 * var(--sl-spacing-medium));
+}
+
+et2-switch-icon:hover:not([disabled])::part(control) {
+	background-color: var(--sl-color-gray-150);
+	border-color: var(--sl-input-border-color-hover);
+	color: var(--sl-input-color-hover);
+}
+
+
 .et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(prefix) {
 	padding: 0;
 }

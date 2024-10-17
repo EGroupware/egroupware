@@ -605,7 +605,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		let self = this;
 
 		const isCheckbox = action && action.checkbox;
-		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off;
+		const isToggleSwitch = action.data?.toggle_on || action.data?.toggle_off || action.data?.onIcon || action.data?.offIcon;
 
 		const actionHandler = function(action, e)
 		{
@@ -626,13 +626,27 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 
 		if (isToggleSwitch)
 		{
-			widget = <Et2Checkbox>loadWebComponent('et2-switch', {
+			let component = "et2-switch";
+			let attrs = {
 				id: `${this.id}-${action.id}`,
 				label: action.caption,
 				toggleOn: action.data.toggle_on,
 				toggleOff: action.data.toggle_off,
 				class: `et2_toolbar_draggable${this.id}`,
-			}, this);
+			};
+			if(action.data.onIcon || action.data.offIcon)
+			{
+				component = "et2-switch-icon";
+				if(action.data.onIcon)
+				{
+					attrs["onIcon"] = action.data.onIcon;
+				}
+				if(action.data.offIcon)
+				{
+					attrs["offIcon"] = action.data.offIcon;
+				}
+			}
+			widget = <Et2Checkbox>loadWebComponent(component, attrs, this);
 			widget.style.backgroundImage = `url(${action.iconUrl})`;
 			widget.value = action.checked;
 			action.data.widget = widget;

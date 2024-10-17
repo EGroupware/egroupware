@@ -19,6 +19,7 @@ import {SlSwitch} from "@shoelace-style/shoelace";
  *
  * @csspart form-control-label The label's wrapper
  * @csspart control The control's wrapper
+ * @csspart switch-label The internal control's wrapper (sometimes needed for positioning)
  */
 @customElement("et2-switch-icon")
 export class Et2SwitchIcon extends Et2InputWidget(LitElement)
@@ -30,10 +31,12 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 			css`
 				:host {
 					--indicator-color: var(--sl-color-primary-600);
+					display: flex;
 				}
 
 				sl-switch {
-					--sl-toggle-size-medium: 2em;
+					font-size: 1em;
+					--height: 1em;
 				}
 
 				::part(control) {
@@ -63,6 +66,10 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 
 				sl-switch[checked] slot[name="on"], sl-switch:not([checked]) slot[name="off"] {
 					color: var(--indicator-color, inherit);
+				}
+
+				sl-switch::part(label) {
+					margin-inline-start: 0px;
 				}
 
 				.label:hover {
@@ -142,12 +149,18 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 	{
 		return html`
             <sl-switch
+                    exportparts="base:switch-label"
                     .label=${this.label}
                     .value=${live(this.value)}
                     .checked=${live(this.checked)}
                     .disabled=${live(this.disabled)}
                     .required=${this.required}
                     .helpText=${this.helpText}
+                    @sl-change=${async(e) =>
+                    {
+                        await this.updateComplete;
+                        this.dispatchEvent(new Event("change", {bubbles: true}));
+                    }}
             >
                 ${this.labelTemplate()}
             </sl-switch>
