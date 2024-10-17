@@ -22,9 +22,9 @@ namespace EGroupware\Api\Cache;
  * $GLOBALS['egw_info']['server']['cache_provider_instance'] = array('EGroupware\Api\Cache\Memcached','localhost'[,'otherhost:port']);
  * and optional also $GLOBALS['egw_info']['server']['cache_provider_tree'] (defaults to instance)
  *
- * You can set more then one server and specify a port, if it's not the default one 11211.
+ * You can set more than one server and specify a port, if it's not the default one 11211.
  *
- * It allows addtional named parameters "timeout" (default 20ms), "retry" (default not) and "prefix".
+ * It allows additional named parameters "timeout" (default 20ms), "retry" (default not) and "prefix".
  *
  * If igbinary extension is available, it is prefered over PHP (un)serialize.
  */
@@ -61,6 +61,11 @@ class Memcached extends Base implements ProviderMultiple
 	private $retry = 0;
 
 	/**
+	 * @var array
+	 */
+	protected $params;
+
+	/**
 	 * Constructor, eg. opens the connection to the backend
 	 *
 	 * @throws Exception if connection to backend could not be established
@@ -70,7 +75,7 @@ class Memcached extends Base implements ProviderMultiple
 	 */
 	function __construct(array $params=null)
 	{
-		$this->params = $params ? $params : array('localhost');	// some reasonable default
+		$this->params = $params ?: array('localhost');	// some reasonable default
 
 		if (isset($params['timeout']))
 		{
