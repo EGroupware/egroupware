@@ -2762,6 +2762,15 @@ div.et2_toolbar.ui-widget-header {
 	height: 18px;
 }
 
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch-label),
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch) {
+	width: 100%;
+}
+
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(control) {
+	width: 100%;
+	justify-content: space-evenly;
+}
 et2-button.transparent-button {
 	border: none;
 	background: transparent;

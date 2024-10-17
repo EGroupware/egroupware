@@ -428,7 +428,6 @@ class calendar_uiviews extends calendar_ui
 					$actions[$key]['toolbarDefault'] = true;
 				}
 			}
-			$actions['weekend']['data'] = array('toggle_off' => '7', 'toggle_on' => '5');
 			unset($actions['pgp']);
 		}
 		return $actions;
