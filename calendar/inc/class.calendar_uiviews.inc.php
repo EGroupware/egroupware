@@ -326,14 +326,13 @@ class calendar_uiviews extends calendar_ui
 			),
 			'weekend' => array(
 				'caption' => 'Weekend',
-				'icon' => '7_day_view',
 				'checkbox'	=> true,
 				'checked' => is_array($this->cal_prefs['saved_states']) ? $this->cal_prefs['saved_states']['weekend']:false,
 				'group' => $group,
 				'onExecute' => 'javaScript:app.calendar.toolbar_action',
 				'hint' => 'Toggle weekend',
 				'toolbarDefault' => false,
-				'data' => array('toggle_off' => '5', 'toggle_on' => '7')
+				'data' => array('onIcon' => '7-square', 'offIcon' => '5-square'),
 			),
 			'previous' => array(
 				'caption' => 'Previous',
