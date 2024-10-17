@@ -1181,6 +1181,16 @@ function do_copy()
 	// we need to stash uncommited changes, before copying
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
+    // verify version in composer.json matches release-tag
+	if (!($json = file_get_contents($path=$config['checkoutdir'].'/composer.json')) || !($json = json_decode($json, true)) || !is_array($json))
+	{
+		throw new Exception("Can NOT read $path to verify version!");
+	}
+    if ($json['version'] !== $config['version'])
+    {
+        throw new Exception("Version in composer.json does not match: '$json[version]' !== '$config[version] --> aborting!");
+    }
+
 	try {
 		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
 		run_cmd($cmd);
