@@ -13,7 +13,12 @@ import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 import {FindActionTarget} from "../FindActionTarget";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_FLAG_IS_CONTAINER} from "../../egw_action/egw_action_constants";
+import {
+	EGW_AI_DRAG,
+	EGW_AI_DRAG_ENTER,
+	EGW_AI_DRAG_OUT,
+	EGW_AO_FLAG_IS_CONTAINER
+} from "../../egw_action/egw_action_constants";
 import styles from "./Et2Tree.styles";
 
 export type TreeItemData = SelectOption & {
@@ -789,6 +794,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		//console.log(event.type, id, event.target);
 
 		const typeMap = {
+			dragstart: EGW_AI_DRAG,
 			dragenter: EGW_AI_DRAG_ENTER,
 			dragleave: EGW_AI_DRAG_OUT,
 		}
@@ -926,6 +932,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 		const value = selectOption.value ?? selectOption.id;
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
+		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj.type == "drag").length > 0
 
 		return html`
             <sl-tree-item
@@ -940,6 +947,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
+                    draggable=${draggable}
                     @click=${async(event) =>
                     {
                         // Don't react to expand or children
@@ -1036,6 +1044,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
                             }
                     }
+                    @dragstart=${(event) => {this.handleDragEvent(event);}}
                     @dragenter=${(event) => {this.handleDragEvent(event);}}
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
 					@drop=${(event) => {this.handleDragEvent(event);}}
@@ -1218,6 +1227,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		let target = e.composedPath().find(element => {
 			return element.tagName == "SL-TREE-ITEM"
 		});
+		if(!target)
+		{
+			return {target: null, action: null};
+		}
 		let action : EgwActionObject = this.widget_object.getObjectById(target.id);
 
 		// Create on the fly if not there?  Action handlers might need the EgwActionObject
@@ -1225,6 +1238,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			// NOTE: FLAT object structure under the tree ActionObject to avoid nested selection
 			action = this.widget_object.addObject(target.id, this.widget_object.iface)
+			action._context = target;
 			action.setSelected = (set) =>
 			{
 				target.action_selected = set;

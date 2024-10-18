@@ -103,6 +103,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 if (!self.getTheDraggedDOM()) return;
 
 				let dropActionObject = _context;
+				const helper = self.getHelperDOM();
 
                 // remove the hover class
                 this.classList.remove('drop-hover');
@@ -111,16 +112,23 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 				{
 					dropActionObject = this.findActionTarget(event).action ?? _context;
 				}
+				else if(self.isTheDraggedDOM(this))
+				{
+					// clean up the helper dom
+					if(helper)
+					{
+						helper.remove();
+					}
+					return;
+				}
 
-                const helper = self.getHelperDOM();
                 let ui = self.getTheDraggedData();
                 ui.position = {top: event.clientY, left: event.clientX};
                 ui.offset = {top: event.offsetY, left: event.offsetX};
 
+				let data = JSON.parse(event.dataTransfer.getData('application/json'));
 
-                let data = JSON.parse(event.dataTransfer.getData('application/json'));
-
-				if(!self.isAccepted(data, dropActionObject, _callback, undefined) || self.isTheDraggedDOM(this))
+				if(!self.isAccepted(data, dropActionObject, _callback, undefined))
 				{
                     // clean up the helper dom
                     if (helper) helper.remove();
