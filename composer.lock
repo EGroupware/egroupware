@@ -839,12 +839,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/activesync.git",
-                "reference": "f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236"
+                "reference": "971d265ce2a27fd979d9d660467dba25723b6c27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236",
-                "reference": "f78ab4d18ca2c5a85c5ee206cbaaf3c0511a1236",
+                "url": "https://api.github.com/repos/EGroupware/activesync/zipball/971d265ce2a27fd979d9d660467dba25723b6c27",
+                "reference": "971d265ce2a27fd979d9d660467dba25723b6c27",
                 "shasum": ""
             },
             "require": {
@@ -875,7 +875,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/activesync/tree/master"
             },
-            "time": "2023-02-28T07:49:35+00:00"
+            "time": "2024-08-24T11:48:41+00:00"
         },
         {
             "name": "egroupware/adodb-php",
@@ -944,12 +944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/bookmarks.git",
-                "reference": "6c538b1f277c87038444190a1cecbffc84c75d00"
+                "reference": "c2590cb8567cd8ab6007adba532916df0afc1e04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/6c538b1f277c87038444190a1cecbffc84c75d00",
-                "reference": "6c538b1f277c87038444190a1cecbffc84c75d00",
+                "url": "https://api.github.com/repos/EGroupware/bookmarks/zipball/c2590cb8567cd8ab6007adba532916df0afc1e04",
+                "reference": "c2590cb8567cd8ab6007adba532916df0afc1e04",
                 "shasum": ""
             },
             "default-branch": true,
@@ -969,7 +969,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/bookmarks/tree/master"
             },
-            "time": "2023-02-28T07:49:35+00:00"
+            "time": "2024-08-24T11:46:35+00:00"
         },
         {
             "name": "egroupware/collabora",
@@ -977,12 +977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/collabora.git",
-                "reference": "c04d84ef4bf4817f8bf1455011432bceb91248a1"
+                "reference": "3d698da381b97c6a1bbbce3f082af0dae9dfa445"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/c04d84ef4bf4817f8bf1455011432bceb91248a1",
-                "reference": "c04d84ef4bf4817f8bf1455011432bceb91248a1",
+                "url": "https://api.github.com/repos/EGroupware/collabora/zipball/3d698da381b97c6a1bbbce3f082af0dae9dfa445",
+                "reference": "3d698da381b97c6a1bbbce3f082af0dae9dfa445",
                 "shasum": ""
             },
             "default-branch": true,
@@ -1010,7 +1010,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/collabora/tree/master"
             },
-            "time": "2023-03-30T16:19:54+00:00"
+            "time": "2024-10-02T22:29:06+00:00"
         },
         {
             "name": "egroupware/compress",
@@ -1426,16 +1426,16 @@
         },
         {
             "name": "egroupware/icalendar",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
-                "reference": "cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e"
+                "reference": "7f0436361e521a4be06c4b0ca337a86bde57d4b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e",
-                "reference": "cdcd9580952b8424f5ef85f3f51eb78f81cd6e1e",
+                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/7f0436361e521a4be06c4b0ca337a86bde57d4b6",
+                "reference": "7f0436361e521a4be06c4b0ca337a86bde57d4b6",
                 "shasum": ""
             },
             "require": {
@@ -1484,9 +1484,9 @@
             "description": "iCalendar and vCard library",
             "homepage": "https://www.horde.org/libraries/Horde_Icalendar",
             "support": {
-                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.1"
+                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.2"
             },
-            "time": "2019-02-09T00:00:00+00:00"
+            "time": "2024-07-02T00:00:00+00:00"
         },
         {
             "name": "egroupware/idna",
@@ -1889,12 +1889,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/news_admin.git",
-                "reference": "aae99a9699ef6be4d75aeaa90a61ff6d049223b2"
+                "reference": "660d3e6245d3883d4682a26c08e45520246c7fd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/aae99a9699ef6be4d75aeaa90a61ff6d049223b2",
-                "reference": "aae99a9699ef6be4d75aeaa90a61ff6d049223b2",
+                "url": "https://api.github.com/repos/EGroupware/news_admin/zipball/660d3e6245d3883d4682a26c08e45520246c7fd4",
+                "reference": "660d3e6245d3883d4682a26c08e45520246c7fd4",
                 "shasum": ""
             },
             "default-branch": true,
@@ -1914,7 +1914,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/news_admin/tree/master"
             },
-            "time": "2023-04-12T09:14:09+00:00"
+            "time": "2024-08-24T11:43:17+00:00"
         },
         {
             "name": "egroupware/nls",
@@ -1978,12 +1978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3"
+                "reference": "8a63db3178e4a7603776286709d74e5927c9e647"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3",
-                "reference": "7f994cbbbe60eb3d04cf391bed8f6d854af1d3c3",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8a63db3178e4a7603776286709d74e5927c9e647",
+                "reference": "8a63db3178e4a7603776286709d74e5927c9e647",
                 "shasum": ""
             },
             "require": {
@@ -2023,7 +2023,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/openid/tree/master"
             },
-            "time": "2023-02-28T07:49:36+00:00"
+            "time": "2024-07-08T07:23:25+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -2031,12 +2031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "9c423e14805242861e2e265bec1d3620f41cefd5"
+                "reference": "09c1fb9296168266762ca3f281ef6653db31af88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/9c423e14805242861e2e265bec1d3620f41cefd5",
-                "reference": "9c423e14805242861e2e265bec1d3620f41cefd5",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/09c1fb9296168266762ca3f281ef6653db31af88",
+                "reference": "09c1fb9296168266762ca3f281ef6653db31af88",
                 "shasum": ""
             },
             "require": {
@@ -2067,7 +2067,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/projectmanager/tree/master"
             },
-            "time": "2023-04-17T22:19:37+00:00"
+            "time": "2024-10-08T14:21:08+00:00"
         },
         {
             "name": "egroupware/registration",
@@ -2075,12 +2075,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/registration.git",
-                "reference": "2d117c3ea86183f9f6736873b2b97ca2c698fcfc"
+                "reference": "6d6ee2347b8476f94ebaa7f872735f3b8714fb02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/registration/zipball/2d117c3ea86183f9f6736873b2b97ca2c698fcfc",
-                "reference": "2d117c3ea86183f9f6736873b2b97ca2c698fcfc",
+                "url": "https://api.github.com/repos/EGroupware/registration/zipball/6d6ee2347b8476f94ebaa7f872735f3b8714fb02",
+                "reference": "6d6ee2347b8476f94ebaa7f872735f3b8714fb02",
                 "shasum": ""
             },
             "default-branch": true,
@@ -2117,7 +2117,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/registration/tree/master"
             },
-            "time": "2023-04-12T09:11:51+00:00"
+            "time": "2024-09-30T06:13:41+00:00"
         },
         {
             "name": "egroupware/rocketchat",
@@ -2125,12 +2125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/rocketchat.git",
-                "reference": "82c216d22446cbb878ee2d5026fbe7a501d517ec"
+                "reference": "fc2cf993bfdeebf133ff4a3e93b166ed6fce8ebb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/82c216d22446cbb878ee2d5026fbe7a501d517ec",
-                "reference": "82c216d22446cbb878ee2d5026fbe7a501d517ec",
+                "url": "https://api.github.com/repos/EGroupware/rocketchat/zipball/fc2cf993bfdeebf133ff4a3e93b166ed6fce8ebb",
+                "reference": "fc2cf993bfdeebf133ff4a3e93b166ed6fce8ebb",
                 "shasum": ""
             },
             "default-branch": true,
@@ -2158,7 +2158,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/rocketchat/tree/master"
             },
-            "time": "2023-04-12T09:10:52+00:00"
+            "time": "2024-09-04T16:35:18+00:00"
         },
         {
             "name": "egroupware/secret",
@@ -2223,12 +2223,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/smallpart.git",
-                "reference": "4f344885e09a9baf73deee6febf43ca4a5ad7fff"
+                "reference": "07d158d3deb5f3efe215adbcde429c44c792a1cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/4f344885e09a9baf73deee6febf43ca4a5ad7fff",
-                "reference": "4f344885e09a9baf73deee6febf43ca4a5ad7fff",
+                "url": "https://api.github.com/repos/EGroupware/smallpart/zipball/07d158d3deb5f3efe215adbcde429c44c792a1cd",
+                "reference": "07d158d3deb5f3efe215adbcde429c44c792a1cd",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2264,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/smallpart/tree/master"
             },
-            "time": "2023-04-19T09:26:48+00:00"
+            "time": "2024-10-10T17:01:03+00:00"
         },
         {
             "name": "egroupware/smtp",
@@ -2377,12 +2377,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "c082ba5b2f0716aa21392b7975cf54261547631c"
+                "reference": "f51d7f462d9ef8da9acc6aa24bb606a3b1ac0008"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/c082ba5b2f0716aa21392b7975cf54261547631c",
-                "reference": "c082ba5b2f0716aa21392b7975cf54261547631c",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/f51d7f462d9ef8da9acc6aa24bb606a3b1ac0008",
+                "reference": "f51d7f462d9ef8da9acc6aa24bb606a3b1ac0008",
                 "shasum": ""
             },
             "require": {
@@ -2413,7 +2413,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/status/tree/master"
             },
-            "time": "2023-04-12T09:10:08+00:00"
+            "time": "2024-09-30T06:12:18+00:00"
         },
         {
             "name": "egroupware/stream-filter",
@@ -2585,12 +2585,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/swoolepush.git",
-                "reference": "c8b7842c98d187a2448753e7491b80075acb3c32"
+                "reference": "5587ad2d04b6d462199f6355237d4c3984846aad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/c8b7842c98d187a2448753e7491b80075acb3c32",
-                "reference": "c8b7842c98d187a2448753e7491b80075acb3c32",
+                "url": "https://api.github.com/repos/EGroupware/swoolepush/zipball/5587ad2d04b6d462199f6355237d4c3984846aad",
+                "reference": "5587ad2d04b6d462199f6355237d4c3984846aad",
                 "shasum": ""
             },
             "require": {
@@ -2622,7 +2622,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/swoolepush/tree/master"
             },
-            "time": "2023-02-28T07:49:34+00:00"
+            "time": "2024-02-06T08:25:56+00:00"
         },
         {
             "name": "egroupware/text-diff",
@@ -2736,12 +2736,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/tracker.git",
-                "reference": "748cd9febc832adad4b470162d21a44598ea7383"
+                "reference": "edc22b903a78ee58d74f4ad643779215d21f539d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/748cd9febc832adad4b470162d21a44598ea7383",
-                "reference": "748cd9febc832adad4b470162d21a44598ea7383",
+                "url": "https://api.github.com/repos/EGroupware/tracker/zipball/edc22b903a78ee58d74f4ad643779215d21f539d",
+                "reference": "edc22b903a78ee58d74f4ad643779215d21f539d",
                 "shasum": ""
             },
             "default-branch": true,
@@ -2769,7 +2769,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/tracker/tree/master"
             },
-            "time": "2023-04-12T09:09:17+00:00"
+            "time": "2024-10-14T12:16:20+00:00"
         },
         {
             "name": "egroupware/translation",
