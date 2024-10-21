@@ -698,7 +698,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		async validate(skipManual = false)
 		{
-			return validate(this,skipManual)
+			return validate(this, skipManual).then(() => this.requestUpdate());
 		}
 
 		set_validation_error(err : string | false)
@@ -799,7 +799,7 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		protected _helpTextTemplate() : TemplateResult | typeof nothing
 		{
 			const hasHelpTextSlot = this.hasSlotController?.test('help-text');
-			const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
+			const hasHelpText = this.helpText ? true : !!hasHelpTextSlot || this.hasFeedbackFor.length > 0;
 			return hasHelpText ? html`
                 <div
                         part="form-control-help-text"
