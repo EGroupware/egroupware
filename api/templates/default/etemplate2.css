@@ -2729,6 +2729,15 @@ div.et2_toolbar.ui-widget-header {
     margin-left: 7px;
 }
 
+.et2_toolbar et2-button {
+	--et2-button-image-padding-left: 0px;
+}
+
+.et2_toolbar et2-button::part(base) {
+	padding-inline-start: 0px;
+	justify-content: center;
+}
+
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
 	width: 24px;
 	height: 24px;
@@ -2738,8 +2747,7 @@ div.et2_toolbar.ui-widget-header {
 	background-color: #fafafa;
 }
 
-.et2_toolbar .et2_toolbar_actionlist et2-button,
-.et2_toolbar .et2_toolbar_actionlist et2-switch {
+.et2_toolbar .et2_toolbar_actionlist > span > * {
 	margin-right: 1ex;
 	min-width: 35px;
 }
