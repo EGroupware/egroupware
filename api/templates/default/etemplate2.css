@@ -36,6 +36,7 @@
 	--primary-color: #26537C;
     --primary-background-color: #4177a2;
     --highlight-background-color: rgba(153, 204, 255, .4);
+	--required-background-color: #ffffd0;
 
     --label-color: #000000;
     /* For fixed width labels - use class 'et2-label-fixed'*/
