@@ -394,6 +394,7 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
                             @change=${this.handleAppChange}
                     ></et2-link-apps>
                     <et2-link-search
+                            exportparts="combobox:control"
                             ?placeholder=${this.placeholder}
                             ?required=${this.required}
                             ?disabled=${this.disabled}
