@@ -64,11 +64,18 @@ export class Et2SwitchIcon extends Et2InputWidget(LitElement)
 					color: var(--sl-color-neutral-400);
 				}
 
+				sl-switch {
+					display: flex;
+					align-items: center;
+				}
+
 				sl-switch[checked] slot[name="on"], sl-switch:not([checked]) slot[name="off"] {
 					color: var(--indicator-color, inherit);
 				}
 
-				sl-switch::part(label) {
+				sl-switch::part(label), sl-switch::part(form-control) {
+					display: flex;
+					align-items: center;
 					margin-inline-start: 0px;
 				}
 

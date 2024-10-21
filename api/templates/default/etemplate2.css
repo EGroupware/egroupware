@@ -2619,8 +2619,12 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 .et2_toolbar et2-switch-icon {
-	font-size: 2.4em;
-	height: 1em;
+	font-size: 20px;
+	border-radius: var(--sl-border-radius-medium);
+	border-color: var(--sl-input-border-color);
+	border-width: var(--sl-input-border-width);
+	border-style: solid;
+	padding: 0px var(--sl-spacing-medium);
 }
 
 .et2_toolbar et2-switch-icon::part(form-control-label) {
@@ -2630,10 +2634,10 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 .et2_toolbar et2-switch-icon::part(switch-label) {
-	top: calc(-1.1 * var(--sl-spacing-medium));
+	top: calc(-0.3 * var(--sl-spacing-medium));
 }
 
-et2-switch-icon:hover:not([disabled])::part(control) {
+et2-switch-icon:hover:not([disabled]), et2-switch-icon:hover:not([disabled])::part(control) {
 	background-color: var(--sl-color-gray-150);
 	border-color: var(--sl-input-border-color-hover);
 	color: var(--sl-input-color-hover);
