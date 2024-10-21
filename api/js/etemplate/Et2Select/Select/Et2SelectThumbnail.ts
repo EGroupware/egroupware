@@ -26,7 +26,8 @@ export class Et2SelectThumbnail extends Et2Select
 				display: none;
 			}
 			/* Hide dropdown icon */
-			::part(icon), .select__icon {
+
+				::part(expand-icon), .expand-icon {
 				display: none;
 			}
 			`
@@ -101,7 +102,9 @@ export class Et2SelectThumbnail extends Et2Select
 	{
 		// Different image - slot in just an image so we can have complete control over styling
 		return html`
-            <et2-thumbnail-tag>
+            <et2-thumbnail-tag
+                    ?removable=${this.multiple && !this.readonly}
+            >
                 <img
                         part="image"
                         slot="prefix"
