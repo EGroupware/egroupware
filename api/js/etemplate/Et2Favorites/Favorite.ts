@@ -18,7 +18,7 @@ export class Favorite
 		// Default blank filter
 		let favorites : { [name : string] : Favorite } = {
 			'blank': {
-				name: egw.lang("No filters"),
+				name: window.egw.lang("No filters"),
 				state: {},
 				group: false
 			}
@@ -26,7 +26,7 @@ export class Favorite
 
 		// Load saved favorites
 		let sortedList = [];
-		let preferences : any = await egw.preference("*", app, true);
+		let preferences : any = await window.egw.preference("*", app, true);
 		for(let pref_name in preferences)
 		{
 			if(pref_name.indexOf(Favorite.PREFIX) == 0 && typeof preferences[pref_name] == 'object')
@@ -58,7 +58,7 @@ export class Favorite
 				sortedList.push(name);
 			}
 		}
-		egw.set_preference(app, 'fav_sort_pref', sortedList);
+		window.egw.set_preference(app, 'fav_sort_pref', sortedList);
 		if(sortedList.length > 0)
 		{
 			let sortedListObj = {};
@@ -72,7 +72,7 @@ export class Favorite
 				else
 				{
 					sortedList.splice(i, 1);
-					egw.set_preference(app, 'fav_sort_pref', sortedList);
+					window.egw.set_preference(app, 'fav_sort_pref', sortedList);
 				}
 			}
 			favorites = Object.assign(sortedListObj, favorites);
