@@ -59,7 +59,8 @@
     display: inline-block !important;
   }
   #filemanager-index_nm .nextmatch_header.nm_header_hide .header_row_right,
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer {
+  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer,
+  #filemanager-index_nm .nextmatch_header.nm_header_hide .header_count {
     display: none;
   }
   #filemanager-index_nm .nextmatch_header .nextmatch_header_row {
