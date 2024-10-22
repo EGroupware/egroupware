@@ -65,6 +65,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
             #main {
             	flex: 1 1 auto;
             }
+
+				et2-image {
+					width: 1em;
+				}
             `,
 		];
 	}
