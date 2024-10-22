@@ -958,8 +958,8 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				{
 					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
 					const info = e.target._dialog.fileInfo(e.target.value);
-					e.target.getParent().getWidgetById("#filemanager")?._addFile(info);
-					e.target.getParent().getWidgetById("#filemanager").getDOMNode().classList.remove("hideme");
+					e.target.getParent().getWidgetById(attrs.id)?._addFile(info);
+					e.target.getParent().getWidgetById(attrs.id).getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}
