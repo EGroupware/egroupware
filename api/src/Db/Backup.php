@@ -201,12 +201,12 @@ class Backup
 		}
 		if (!$name)
 		{
+			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 			if (empty($this->backup_dir) || !is_writable($this->backup_dir))
 			{
 				$this->log($name, $reading, null, lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 				throw new Exception(lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 			}
-			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 		}
 		// remove the extension, to use the correct wrapper based on the extension
 		elseif ($un_compress)
