@@ -370,8 +370,6 @@
                             <tab id="details" label="Details" statustext="Categories, Notes, ..."/>
                             <tab id="links" label="Links" statustext="Links"/>
                             <tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-                            <tab id="custom" label="Extra" statustext="Custom fields"/>
-                            <tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
                             <tab id="ownership" label="Ownership"/>
                         </tabs>
                         <tabpanels>
@@ -380,8 +378,6 @@
                             <template id="addressbook.edit.details"/>
                             <template id="addressbook.edit.links"/>
                             <template id="addressbook.edit.distribution_list"/>
-                            <template id="addressbook.edit.custom"/>
-                            <template id="addressbook.edit.custom_private"/>
                             <template id="addressbook.edit.ownership"/>
                         </tabpanels>
                     </et2-tabbox>
