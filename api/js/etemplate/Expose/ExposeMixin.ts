@@ -654,7 +654,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 			if(active)
 			{
-				this._gallery.activeIndicator = this._gallery.indicators[index];
+				this._gallery.setActiveIndicator(this._gallery.indicators[index])
 			}
 
 			// positions
