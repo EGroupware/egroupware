@@ -34,9 +34,8 @@
 						<et2-date-time-today  id="${row}[info_startdate]" readonly="true" options=",8"></et2-date-time-today>
 						<et2-vbox>
 							<et2-hbox  class="infoType">
-								<et2-image  label="$row_cont[info_type]" src="${row}[info_type]" defaultSrc="infolog/navbar"></et2-image>
+                                <et2-image label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar" align="right"></et2-image>
 							</et2-hbox>
-
 							<et2-hbox  class="infoPercent">
 								<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 							</et2-hbox>

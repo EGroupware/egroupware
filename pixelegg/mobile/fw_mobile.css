@@ -8861,6 +8861,7 @@ table.egwGridView_grid img.et2_appicon {
     height: 12px;
   }
   body .et2_nextmatch table.egwGridView_grid tr et2-image {
+    font-size: 12px;
     width: 12px;
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr.focused {

@@ -100,15 +100,9 @@
   }
   .infolog_CompletedClmn .infoPercent {
     height: 23px;
-    float: right;
   }
   .infolog_CompletedClmn .infoType {
-    position: relative;
-    height: 30px;
-  }
-  .infolog_CompletedClmn .infoType img {
-    position: absolute;
-    right: 0;
+    padding-right: 1em;
   }
   #infolog-edit_timestamp::part(base) {
     background: transparent;
