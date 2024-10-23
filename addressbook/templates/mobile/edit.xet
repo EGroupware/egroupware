@@ -97,7 +97,7 @@
 				</row>
 				<row>
 					<et2-description  for="role" value="Role"></et2-description>
-					<et2-textbox  id="role" maxlength="64" autocomplete="section-one" ></et2-textbox>
+					<et2-textbox  id="role" maxlength="128" autocomplete="section-one" ></et2-textbox>
 				</row>
 				<row>
 					<et2-description  value="Room"></et2-description>
@@ -339,7 +339,7 @@
 				</row>
 				<row>
 					<et2-description  for="title" value="Title"></et2-description>
-					<et2-textbox  id="title" maxlength="64" autocomplete="organization-title" placeholder="title"></et2-textbox>
+					<et2-textbox  id="title" maxlength="128" autocomplete="organization-title" placeholder="title"></et2-textbox>
 				</row>
 				<row>
 					<et2-description  for="org_unit" value="department"></et2-description>

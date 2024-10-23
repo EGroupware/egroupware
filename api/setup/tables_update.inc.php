@@ -1005,3 +1005,21 @@ function api_upgrade23_1_008()
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.009';
 }
+
+function api_upgrade23_1_009()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_title',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'scale' => '0',
+		'comment' => 'jobtittle'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_role',array(
+		'type' => 'varchar',
+		'precision' => '128',
+		'scale' => '0',
+		'comment' => 'role'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '23.1.010';
+}

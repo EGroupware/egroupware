@@ -48,7 +48,7 @@
                 <row>
                     <et2-description  for="role" value="Role"></et2-description>
                     <et2-hbox>
-                        <et2-textbox  id="role" tabindex="20" width="60%" maxlength="64" autocomplete="section-one"></et2-textbox>
+                        <et2-textbox  id="role" tabindex="20" width="60%" maxlength="128" autocomplete="section-one"></et2-textbox>
                         <et2-textbox  id="room" tabindex="21" placeholder="Room"></et2-textbox>
                     </et2-hbox>
                     <et2-description></et2-description>
@@ -368,7 +368,7 @@
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_cell" ro_true="&amp;hearts;" />
                     <et2-description  for="title" value="Title"></et2-description>
-                    <et2-textbox  id="title" maxlength="64" tabindex="9" autocomplete="organization-title"></et2-textbox>
+                    <et2-textbox  id="title" maxlength="128" tabindex="9" autocomplete="organization-title"></et2-textbox>
                     <et2-description></et2-description>
                 </row>
                 <row class="dialogHeader4">
