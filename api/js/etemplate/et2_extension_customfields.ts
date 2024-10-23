@@ -956,9 +956,20 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				// Update link list & show file in upload
 				widget.addEventListener("change", (e) =>
 				{
+					// Update lists
 					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
-					const info = e.target._dialog.fileInfo(e.target.value);
-					e.target.getParent().getWidgetById(attrs.id)?._addFile(info);
+
+					// Show file(s)
+					const value = typeof e.target.value == "string" ? [e.target.value] : e.target.value;
+					value.forEach(v =>
+					{
+						const info = e.target._dialog.fileInfo(v);
+						if(!e.target.multiple)
+						{
+							info.name = field.name;
+						}
+						e.target.getParent().getWidgetById(attrs.id)?._addFile(info);
+					});
 					e.target.getParent().getWidgetById(attrs.id).getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
