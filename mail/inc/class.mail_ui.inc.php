@@ -1073,9 +1073,9 @@ class mail_ui
 				)
 			)
 		);
-		$params = Mail\Account::read($this->mail_bo->profileID)->getParamOverwrites();
+		$account = Mail\Account::read($this->mail_bo->profileID);
 		// spamTitan actions
-		if ($params['acc_spam_api'] && class_exists('stylite_mail_spamtitan'))
+		if (($account->acc_spam_api || !empty($account->getParamOverwrites()['acc_spam_api'])) && class_exists('stylite_mail_spamtitan'))
 		{
 			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], stylite_mail_spamtitan::getActions());
 		}
