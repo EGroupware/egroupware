@@ -59,8 +59,7 @@
     display: inline-block !important;
   }
   #filemanager-index_nm .nextmatch_header.nm_header_hide .header_row_right,
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer,
-  #filemanager-index_nm .nextmatch_header.nm_header_hide .header_count {
+  #filemanager-index_nm .nextmatch_header.nm_header_hide .filtersContainer {
     display: none;
   }
   #filemanager-index_nm .nextmatch_header .nextmatch_header_row {
@@ -127,9 +126,6 @@
     height: 60px !important;
     background-position: center;
     z-index: 100;
-    background-image: url(../../../api/templates/default/images/topmenu_items/mobile/plus_white.svg) !important;
-    background-repeat: no-repeat;
-    background-size: 24px 24px;
     margin: 0;
     padding: 0;
     border: none;
@@ -153,6 +149,26 @@
     left: 0;
     top: 0px;
     width: 93%;
+  }
+  #filemanager-index_filemanager-index-header_left et2-image.plus_button {
+    position: fixed !important;
+    right: 15px;
+    bottom: 15px;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    line-height: 60px;
+    color: #fff;
+    text-align: center;
+    font-weight: bolder;
+    display: inline-block;
+    z-index: 101;
+    pointer-events: none;
+    background-color: transparent;
+  }
+  #filemanager-index_filemanager-index-header_left et2-image.plus_button::before {
+    content: "\f64d";
+    font-family: bootstrap-icons !important;
   }
   .previewImage img {
     max-width: 100%;
