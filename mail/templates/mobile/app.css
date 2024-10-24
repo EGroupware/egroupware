@@ -235,12 +235,22 @@
     width: 95%;
     display: inline-block;
   }
+  #mail-index td .icons et2-image {
+    padding: initial;
+  }
+  #mail-index td .icons et2-image img {
+    padding: initial;
+    height: initial;
+  }
   #mail-index td span[id^='mail-index_'][id$='attachments]'] {
-    float: right;
+    margin-left: auto;
+    order: 1;
+    text-align: initial;
   }
   #mail-index td span[id^='mail-index_'][id$='attachments]'] img {
     width: 16px;
     height: 16px;
+    padding: initial;
   }
   #mail-index td et2-description[id^='mail-index_'][id$='subject]'] {
     overflow: hidden;
