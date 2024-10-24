@@ -963,10 +963,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					const value = typeof e.target.value == "string" ? [e.target.value] : e.target.value;
 					value.forEach(v =>
 					{
-						const info = e.target._dialog.fileInfo(v);
+						const info = {...e.target._dialog.fileInfo(v)};
 						if(!e.target.multiple)
 						{
 							info.name = field.name;
+							info.path = "/apps/" + e.target.methodId.replaceAll(":", "/");
 						}
 						e.target.getParent().getWidgetById(attrs.id)?._addFile(info);
 					});

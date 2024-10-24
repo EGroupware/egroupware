@@ -316,7 +316,11 @@ class Link extends Etemplate\Widget
 		{
 			if(!str_ends_with($dest_file, '/') && count($files) == 1)
 			{
-				// 1 file to a specific filename
+				// 1 file to a specific filename, overwrite if already there
+				if(file_exists(Api\Link::vfs_path($app, $id)))
+				{
+					unlink(Api\Link::vfs_path($app, $id));
+				}
 				Api\Vfs::symlink($files[0], Api\Link::vfs_path($app, $id));
 			}
 			else
