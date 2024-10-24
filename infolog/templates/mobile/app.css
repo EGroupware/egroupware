@@ -16,12 +16,10 @@
   }
   .infoDescRow {
     height: 32px;
-    font-size: 10pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-top: 8px;
   }
   div.infoLinksRow,
   div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {

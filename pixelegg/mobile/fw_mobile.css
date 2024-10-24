@@ -8902,8 +8902,7 @@ table.egwGridView_grid img.et2_appicon {
   body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox,
   body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_textbox_ro,
   body .et2_nextmatch table.egwGridView_grid tbody tr td .et2_email,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td img,
-  body .et2_nextmatch table.egwGridView_grid tbody tr td span {
+  body .et2_nextmatch table.egwGridView_grid tbody tr td img {
     padding: 8px 0px 0px 0px;
   }
   body .et2_nextmatch table.egwGridView_grid tbody tr td time.et2_label,

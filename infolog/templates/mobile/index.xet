@@ -19,7 +19,7 @@
 
 				</row>
 				<row class="$row_cont[class]" valign="top">
-					<et2-description  class="cat_$row_cont[info_cat] mobile_cat_col"></et2-description>
+                    <et2-description class="cat_$row_cont[info_cat] mobile_cat_col" style="background-color: var(--cat_${row_cont[info_cat]}_color);"></et2-description>
 					<et2-vbox  class="infolog_fullWidth">
 						<customfields-list id="$row" class="customfields" app="infolog" disabled="true"/>
 						<et2-hbox  class="infoSubRow">
@@ -32,14 +32,14 @@
 					</et2-vbox>
 					<et2-vbox  class="infolog_CompletedClmn">
 						<et2-date-time-today  id="${row}[info_startdate]" readonly="true" options=",8"></et2-date-time-today>
-						<et2-vbox>
+                        <et2-hbox>
 							<et2-hbox  class="infoType">
-                                <et2-image label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar" align="right"></et2-image>
+                                <et2-image label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar"></et2-image>
 							</et2-hbox>
 							<et2-hbox  class="infoPercent">
 								<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
 							</et2-hbox>
-						</et2-vbox>
+                        </et2-hbox>
 						<et2-date-time-today  id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"></et2-date-time-today>
 					</et2-vbox>
 				</row>
