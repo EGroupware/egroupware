@@ -214,7 +214,7 @@ class Link extends Etemplate\Widget
 			{
 				$only_id = $link;
 				$link = array_merge(
-					$only_links[$link][$link_id],
+					$only_links[$link][$link_id] ?? [],
 					['id' => $only_id, 'app' => $value['only_app']]
 				);
 			}
