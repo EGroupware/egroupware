@@ -1081,9 +1081,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${this._extraTemplate()}
                 <slot name="prefix" slot="prefix"></slot>
                 <slot></slot>
-                <div slot="help-text">
-                    <slot name="feedback"></slot>
-                </div>
+                ${this._helpTextTemplate()}
             </sl-select>
 		`;
 	}
