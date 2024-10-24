@@ -104,10 +104,10 @@ class Customfields extends Transformer
 		}
 		else
 		{
-			$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
-			if($this->getElementAttribute($form_name, 'app'))
+			$app =& self::setElementAttribute(self::GLOBAL_VALS, 'app');
+			if(self::getElementAttribute($form_name, 'app'))
 			{
-				$app =& $this->getElementAttribute($form_name, 'app');
+				$app =& self::setElementAttribute($form_name, 'app');
 			}
 			else
 			{
@@ -116,15 +116,15 @@ class Customfields extends Transformer
 			}
 		}
 
-		if($this->getElementAttribute($form_name, 'customfields'))
+		if(self::getElementAttribute($form_name, 'customfields'))
 		{
-			$customfields =& $this->getElementAttribute($form_name, 'customfields');
+			$customfields =& self::setElementAttribute($form_name, 'customfields');
 		}
 		elseif($app)
 		{
 			// Checking creates it even if it wasn't there
 			unset(self::$request->modifications[$form_name]['customfields']);
-			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+			$customfields =& self::setElementAttribute(self::GLOBAL_VALS, 'customfields');
 		}
 
 		if(!$app && !$customfields)
@@ -484,13 +484,13 @@ class Customfields extends Transformer
 		// if we have no id / use self::GLOBAL_ID, we have to set $value_in in global namespace for regular widgets validation to find
 		if (!$this->id) $content = array_merge($content, (array)$value_in);
 		//error_log(__METHOD__."($cname, ...) form_name=$form_name, private={$this->attrs['private']}, value_in=".array2string($value_in));
-		if($this->getElementAttribute($form_name, 'customfields'))
+		if(self::getElementAttribute($form_name, 'customfields'))
 		{
-			$customfields =& $this->getElementAttribute($form_name, 'customfields');
+			$customfields =& self::setElementAttribute($form_name, 'customfields');
 		}
 		else
 		{
-			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
+			$customfields =& self::setElementAttribute(self::GLOBAL_VALS, 'customfields');
 		}
 		if(is_array($value_in))
 		{

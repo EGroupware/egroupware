@@ -41,7 +41,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 	public function beforeSendToClient($cname, Array $expand = Array())
 	{
 		$form_name = self::form_name($cname, $this->id);
-		if($this->getElementAttribute($form_name, 'customfields'))
+		if(self::getElementAttribute($form_name, 'customfields'))
 		{
 			// Already done?  Still need to process, or sel_options may be missing
 			unset(self::$request->modifications[$form_name]);

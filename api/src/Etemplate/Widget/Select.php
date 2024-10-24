@@ -149,9 +149,10 @@ class Select extends Etemplate\Widget
 		{
 			$widget_type = substr($widget_type, 4);
 		}
-		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
-		$allowFreeEntries = $this->attrs['allowFreeEntries'] || $this->getElementAttribute($form_name, 'allowFreeEntries') ||
-			$this->attrs['searchUrl'] || $this->getElementAttribute($form_name, 'searchUrl');
+		$multiple = $this->attrs['multiple'] || self::getElementAttribute($form_name, 'multiple') ||
+			self::getElementAttribute($form_name, 'rows') > 1;
+		$allowFreeEntries = $this->attrs['allowFreeEntries'] || self::getElementAttribute($form_name, 'allowFreeEntries') ||
+			$this->attrs['searchUrl'] || self::getElementAttribute($form_name, 'searchUrl');
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))

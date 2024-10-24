@@ -54,7 +54,7 @@ class Tabbox extends Etemplate\Widget
 		$form_name = self::form_name($params[0], $this->id, $params[1]);
 
 		// Make sure additional tabs are processed for any method
-		if(!($tabs =& self::getElementAttribute($form_name, 'extraTabs')))
+		if(!($tabs =& self::setElementAttribute($form_name, 'extraTabs')))
 		{
 			$tabs = $this->attrs['extraTabs'];
 		}
@@ -231,7 +231,7 @@ class Tabbox extends Etemplate\Widget
 			}
 		}
 		// filter out previously added custom-field tabs, as they might change due to cfTypeFilter
-		if (($extra_tabs =& self::getElementAttribute($this->id, 'extraTabs')))
+		if (($extra_tabs =& self::setElementAttribute($this->id, 'extraTabs')))
 		{
 			$extra_tabs = array_filter($extra_tabs, static function($tab)
 			{

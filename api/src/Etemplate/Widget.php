@@ -1075,14 +1075,15 @@ class Widget
 	/**
 	 * Returns reference to an attribute in a named cell
 	 *
-	 * Currently we always return a reference to an not set value, unless it was set before.
-	 * We do not return a reference to the actual cell, as it get's contructed on client-side!
+	 * We no longer return a reference to the attribute!
+	 *
+	 * If you need a reference, use: $attr =& setElementAttribute($name, $attr)
 	 *
 	 * @param string $name cell-name
 	 * @param string $attr attribute-name
-	 * @return mixed reference to attribute, usually NULL
+	 * @return mixed attribute, usually NULL
 	 */
-	public function &getElementAttribute($name, $attr)
+	public function getElementAttribute($name, $attr)
 	{
 		//error_log(__METHOD__."('$name', '$attr')");
 		return self::$request->modifications[$name][$attr];
@@ -1098,7 +1099,7 @@ class Widget
 	 * @param mixed $val if not NULL sets attribute else returns it
 	 * @return reference to attribute
 	 */
-	public static function &setElementAttribute($name,$attr,$val)
+	public static function &setElementAttribute($name,$attr,$val=null)
 	{
 		if (!isset(self::$request))
 		{
@@ -1106,7 +1107,7 @@ class Widget
 		}
 		//error_log(__METHOD__."('$name', '$attr', ...) request=".get_class(self::$request).", response=".get_class(self::$response).function_backtrace());
 		$ref =& self::$request->modifications[$name][$attr];
-		if(self::$request && self::$response)
+		if(self::$request && self::$response && isset($val))
 		{
 			// In an AJAX response - automatically add
 			self::$response->generic('assign',array(
@@ -1119,8 +1120,10 @@ class Widget
 			self::$request->unset_to_process('');
 			//error_log(__METHOD__."('$name', '$attr', ...) ".function_backtrace());
 		}
-		if (!is_null($val)) $ref = $val;
-
+		if (isset($val))
+		{
+			$ref = $val;
+		}
 		//error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');
 		return $ref;
 	}
@@ -1130,7 +1133,7 @@ class Widget
 	 *
 	 * @param string $name cell-name
 	 * @param boolean $disabled =true disable or enable a cell, default true=disable
-	 * @return reference to attribute
+	 * @return attribute
 	 */
 	public function disableElement($name,$disabled=True)
 	{

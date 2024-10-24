@@ -110,7 +110,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$content = array();
 				$etemplate->read('calendar.planner');
 				$etemplate->set_dom_id($id);
-				$this->actions =& $etemplate->getElementAttribute('planner', 'actions');
+				$this->actions =& $etemplate->setElementAttribute('planner', 'actions');
 				// Don't notify the calendar app of date changes
 				$etemplate->setElementAttribute('planner','onchange',false);
 				$ui->planner_view = $this->favorite['state']['planner_view'];
@@ -120,7 +120,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			case 'weekN':
 				$etemplate->read('calendar.view');
 				$etemplate->set_dom_id($id);
-				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				$this->actions =& $etemplate->setElementAttribute('view', 'actions');
 
 				$ui->month($this->favorite['state']['view'] == 'month' ?
 					0 :
@@ -131,7 +131,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 			case 'week':
 				$etemplate->read('calendar.view');
 				$etemplate->set_dom_id($id);
-				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				$this->actions =& $etemplate->setElementAttribute('view', 'actions');
 				// Don't notify the calendar app of date changes
 				$etemplate->setElementAttribute('view[0]','onchange',false);
 				$ui->week(array(), $etemplate);
@@ -143,7 +143,7 @@ class calendar_favorite_portlet extends home_favorite_portlet
 				$days = $this->favorite['state']['days'] ? $this->favorite['state']['days'] : (
 					$this->favorite['state']['view'] == 'day' ? 1 : 4
 				);
-				$this->actions =& $etemplate->getElementAttribute('view', 'actions');
+				$this->actions =& $etemplate->setElementAttribute('view', 'actions');
 				$ui->week($days, $etemplate);
 				return;
 		}

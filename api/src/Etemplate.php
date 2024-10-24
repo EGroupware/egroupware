@@ -644,7 +644,7 @@ class Etemplate extends Etemplate\Widget\Template
 	 * @return mixed reference to attribute, usually NULL
 	 * @deprecated use getElementAttribute($name, $attr)
 	 */
-	public function &get_cell_attribute($name,$attr)
+	public function get_cell_attribute($name,$attr)
 	{
 		return self::getElementAttribute($name, $attr);
 	}
