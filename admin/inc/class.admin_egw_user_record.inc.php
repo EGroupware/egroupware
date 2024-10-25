@@ -96,6 +96,7 @@ class admin_egw_user_record implements importexport_iface_egw_record
 	 */
 	public function set_record(array $_record){
 		$this->user = $_record;
+		if(!array_key_exists('account_groups', $_record))
 		$this->account_groups = $GLOBALS['egw']->accounts->memberships($this->identifier, true);
 	}
 
