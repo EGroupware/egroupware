@@ -26,7 +26,7 @@
 					</et2-vbox>
 					<et2-vbox>
 						<et2-hbox>
-							<et2-date-time-today  align="center" class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
+                            <et2-date-time-today class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time-today>
 						</et2-hbox>
                         <et2-hbox class="icons">
                             <et2-description class="status_img $row_cont[class]" align="right"></et2-description>
