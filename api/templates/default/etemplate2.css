@@ -2813,9 +2813,10 @@ et2-button.transparent-button::part(container) {
 .nextmatch_header_row button,
 .et2_toolbar div.et2_progress,
 .nextmatch_header_row div.et2_progress {
-    border-radius: 3px;
+	border-radius: var(--sl-border-radius-medium, 3px);
     background-color: #fafafa;
     border: 1px solid silver;
+	overflow: hidden;
 }
 
 .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
