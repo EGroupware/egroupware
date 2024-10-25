@@ -960,18 +960,32 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
 
 					// Show file(s)
+					const list = e.target.getParent().getWidgetById(attrs.id);
 					const value = typeof e.target.value == "string" ? [e.target.value] : e.target.value;
 					value.forEach(v =>
 					{
 						const info = {...e.target._dialog.fileInfo(v)};
 						if(!e.target.multiple)
 						{
+							// Clear list here, _addFile won't replace with the cachebuster
+							list.list.empty();
+							list._children.forEach((c) =>
+							{
+								if(typeof c.remove == "function")
+								{
+									c.remove();
+								}
+								c.getParent().removeChild(c);
+								c.destroy();
+							});
 							info.name = field.name;
-							info.path = "/apps/" + e.target.methodId.replaceAll(":", "/");
+
+							// Use a cache buster since file has the same name
+							info.path = "/apps/" + e.target.methodId.replaceAll(":", "/") + "#" + new Date().getTime();
 						}
-						e.target.getParent().getWidgetById(attrs.id)?._addFile(info);
+						list?._addFile(info);
 					});
-					e.target.getParent().getWidgetById(attrs.id).getDOMNode().classList.remove("hideme");
+					list.getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}
