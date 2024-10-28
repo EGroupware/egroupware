@@ -1429,7 +1429,7 @@ img.calendar_print_appicon {
   height: 1.6em;
   padding: 4px 3px 3px;
   background: #b4cee773;
-  border-radius: 3px;
+  border-radius: var(--sl-border-radius-medium, 3px);
   min-width: fit-content;
   border: 1px solid #d4d4d8;
   text-align: center;
@@ -1498,7 +1498,7 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
   display: inline-block;
   vertical-align: top;
   border: 1px solid var(--sl-color-neutral-300);
-  border-radius: 3px;
+  border-radius: var(--sl-border-radius-medium, 3px);
 }
 .ui-toolbar-menulist et2-switch,
 .ui-toolbar-menulist et2-switch::part(base),
