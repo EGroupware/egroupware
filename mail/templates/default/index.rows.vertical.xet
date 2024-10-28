@@ -28,7 +28,7 @@
                         <et2-hbox>
                             <et2-date-time class="$row_cont[class]" id="${row}[date]" readonly="true"></et2-date-time>
                         </et2-hbox>
-                        <et2-hbox>
+                        <et2-hbox class="status_icons">
                             <et2-image  src="$row_cont[smime]" height="16px"></et2-image>
                             <html id="${row}[attachments]"/>
                             <et2-description  class="status_img $row_cont[class]"></et2-description>

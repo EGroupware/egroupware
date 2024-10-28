@@ -301,6 +301,10 @@ pre {
 .mail-index_QuotaRed > div {
 	background-color: red !important;
 }
+
+#mail-index #mail-index_nm .status_icons {
+	margin-right: 1em;
+}
 /*
  influence the tree display and scrolling behavior
 */
