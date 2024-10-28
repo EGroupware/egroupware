@@ -931,6 +931,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				// Add a link to existing VFS file
 				const required = attrs.needed ?? attrs.required;
 				delete attrs.needed;
+				const path = widget.options.path ?? attrs.path;
 				const select_attrs = {
 					...attrs,
 					// Filemanager select
@@ -939,13 +940,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						mode: widget.options.multiple ? 'open-multiple' : 'open',
 						multiple: widget.options.multiple,
 						method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
-						methodId: widget.options.path ?? attrs.path,
+						methodId: path,
 						buttonLabel: this.egw().lang('Link')
 					},
 					type: 'et2-vfs-select',
 					required: required
 				}
 				select_attrs.id = attrs.id + '_vfs_select';
+
+				// No links if no ID - server can't handle links
+				let s = path.split(":");
+				select_attrs.disabled = (s.length != 3 || s[1] == '');
 
 				// This controls where the button is placed in the DOM
 				this.rows[select_attrs.id] = cf[0];
