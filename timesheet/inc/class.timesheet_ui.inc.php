@@ -1031,25 +1031,29 @@ class timesheet_ui extends timesheet_bo
 		{
 			$content['nm']['no_kanban'] = true;
 		}
-		$read_grants = $this->grant_list(Acl::READ);
-		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 		if($GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'])
 		{
 			$content['nm']['selectcols'] = $GLOBALS['egw_info']['user']['preferences']['timesheet']['nextmatch-timesheet.index.rows'];
 		}
 		$sel_options = array(
-			'ts_owner'  => $read_grants,
 			'pm_id'     => array(lang('No project')),
 			'cat_id'    => array(array('value' => '', 'label' => lang('all categories')),
 								 array('value' => 0, 'label' => lang('None'))),
 			'ts_status' => $this->status_labels + array(lang('No status')),
 		);
-		// Special handling for if you have a LOT of accounts - use a regular account widget
-		if(count($sel_options['ts_owner']) > Api\Accounts::HUGE_LIMIT)
+		// Special handling for having access to a LOT of accounts - use a regular account widget
+		if(count(array_filter($this->grants, static function($grant)
+			{
+				return (bool)($grant & Acl::READ);
+			})) > Api\Accounts::HUGE_LIMIT)
 		{
-			unset($sel_options['ts_owner']);
 			$etpl->setElementAttribute('ts_owner', 'type', 'et2-nextmatch-header-account');
 			$etpl->setElementAttribute('ts_owner', 'accountType', 'accounts');
+		}
+		else
+		{
+			$sel_options['ts_owner'] = $this->grant_list(Acl::READ);
+			$content['nm']['no_owner_col'] = count($sel_options['ts_owner']) === 1;
 		}
 		if($this->config_data['history'])
 		{
@@ -1060,7 +1064,7 @@ class timesheet_ui extends timesheet_bo
 
 		if ($this->pm_integration != 'full')
 		{
-			$projects =& $this->query_list('ts_project');
+			$projects = $this->query_list('ts_project');
 			if (!is_array($projects)) $projects = array();
 			$sel_options['ts_project'] = $projects + array(lang('No project'));
 		}
