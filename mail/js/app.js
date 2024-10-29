@@ -5724,7 +5724,7 @@ app.classes.mail = AppJS.extend(
 			email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
 			domain = email.split('@')[1];
 		}
-		switch (_action.id)
+		switch (_action.id.replace(/_all$/, ''))
 		{
 			case 'whitelist_email_add':
 				_action.set_caption(this.egw.lang('Add "%1" into whitelisted emails', email));
@@ -5750,7 +5750,6 @@ app.classes.mail = AppJS.extend(
 			case 'blacklist_domain_remove':
 				_action.set_caption(this.egw.lang('Remove "%1" from blacklisted domains', domain));
 				break;
-
 		}
 
 		return true;

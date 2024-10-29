@@ -1077,7 +1077,24 @@ class mail_ui
 		// spamTitan actions
 		if (($account->acc_spam_api || !empty($account->getParamOverwrites()['acc_spam_api'])) && class_exists('stylite_mail_spamtitan'))
 		{
-			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], stylite_mail_spamtitan::getActions());
+			$actions['spamfilter']['children'] = array_merge($actions['spamfilter']['children'], $spam_actions=stylite_mail_spamtitan::getActions());
+
+			// allow EGroupware admins to white- or blacklist for everyone/whole domain
+			if (!empty($GLOBALS['egw_info']['apps']['admin']))
+			{
+				foreach($spam_actions as $id => $action)
+				{
+					$children = [];
+					foreach($action['children'] as $child_id => $child)
+					{
+						$children[$child_id.'_all'] = $child;
+					}
+					$actions['spamfilter']['children'][$id.'_all'] = [
+						'caption' => lang('%1 for all users', $action['caption']),
+						'children' => $children,
+					]+$action;
+				}
+			}
 		}
 		return $actions;
 	}
