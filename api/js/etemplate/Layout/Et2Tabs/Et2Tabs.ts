@@ -26,7 +26,12 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			...super.styles,
 			colorsDefStyles,
 			...shoelace,
+			//keyframes definition can't get into shadow root from css files, so we declare it here
 			css`
+				/*scroll detection detect if scrollbar is available scroll detection only works in chromium not in Firefox or Safari*/
+				@keyframes detect-scroll {
+					from, to { --can-scroll:0;}
+				}
 			.tab-group--top {
 				height: 100%;
 				min-height: fit-content;

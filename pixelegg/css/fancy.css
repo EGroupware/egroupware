@@ -7160,6 +7160,7 @@ img.et2_button_icon[src*="svg"]:hover {
   --sl-border-radius-small: 1rem;
   --sl-input-border-radius-medium: var(--sl-border-radius-medium);
   --et2-button-image-padding-left: 0.6rem;
+  --can-scroll: 1;
 }
 :root et2-button:not(imageOnly) > et2-image[class*="circle"],
 :host et2-button:not(imageOnly) > et2-image[class*="circle"],
@@ -7189,10 +7190,12 @@ img.et2_button_icon[src*="svg"]:hover {
 :host et2-tabbox::part(body),
 .sl-theme-light et2-tabbox::part(body),
 .sl-theme-dark et2-tabbox::part(body) {
+  animation: detect-scroll 1s linear;
+  animation-timeline: scroll(self);
   border: 1px solid var(--sl-color-neutral-300);
   border-radius: var(--sl-border-radius-medium);
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
+  border-bottom-right-radius: calc(var(--can-scroll)*var(--sl-border-radius-medium));
+  border-top-right-radius: calc(var(--can-scroll)*var(--sl-border-radius-medium));
   padding: var(--sl-spacing-medium);
 }
 :root et2-tabbox et2-tab::part(base),
