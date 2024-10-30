@@ -108,7 +108,7 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_toolbar._attributes, _child || {}));
 
 		this.div = jQuery(document.createElement('div'))
-			.addClass('et2_toolbar ui-widget-header ui-corner-all');
+			.addClass('et2_toolbar');
 
 		// Set proper id and dom_id for the widget
 		this.set_id(this.id);

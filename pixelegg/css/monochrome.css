@@ -1024,8 +1024,6 @@
 */
   .et2_toolbar {
     background: none;
-    margin: 0 !important;
-    padding: 0 !important;
   }
   .et2_toolbar-dropdown button {
     /*        height: 100% !important;
@@ -1320,9 +1318,6 @@ option:checked {
 .ui-widget-content .ui-state-error-text,
 .ui-widget-header .ui-state-error-text {
   color: #FF0000;
-}
-.drop-hover {
-  background-color: #FFDD73;
 }
 .ui-icon-close {
   background-image: url("../../node_modules/bootstrap-icons/icons/x-square.svg");

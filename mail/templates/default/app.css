@@ -477,7 +477,6 @@ et2-details.details {width: 100%}
 }
 #mail-compose_composeToolbar {
 	padding: 0px !important;
-	border: none;
 }
 #mail-compose_composeToolbar > button {
 	padding: .2em .4em;
@@ -516,7 +515,6 @@ et2-details.details {width: 100%}
 	top: 0;
 }
 #mail-index_toolbar {
-	padding: 0px;
 	height: 35px;
 }
 #mail-index_toolbar > button > span {

@@ -2601,8 +2601,10 @@ table.egwGridView_outer thead tr th.noResize:hover {
 .et2_toolbar {
     border: none;
     background: none;
-    margin: 0 !important;
-    padding: 0 !important;
+
+	border-bottom-width: var(--sl-panel-border-width);
+	border-color: var(--sl-panel-border-color);
+	border-bottom-style: solid;
 }
 
 .et2_toolbar *[class ^="et2_toolbar_draggable"] {cursor: pointer !important;}
@@ -2618,13 +2620,27 @@ table.egwGridView_outer thead tr th.noResize:hover {
 	top: 100%;
 }
 
-.et2_toolbar et2-switch-icon {
+.et2_toolbar et2-button:not(:hover)::part(base) {
+	border-color: transparent;
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button:hover::part(base) {
+	background-color: var(--sl-input-background-color);
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch-icon {
 	font-size: 20px;
 	border-radius: var(--sl-border-radius-medium);
-	border-color: var(--sl-input-border-color);
+	border-color: transparent;
 	border-width: var(--sl-input-border-width);
 	border-style: solid;
 	padding: 0px var(--sl-spacing-medium);
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch:hover {
+	border-color: var(--sl-input-border-color-hover);
+	border-width: var(--sl-input-border-width);
+	border-style: solid;
 }
 
 .et2_toolbar et2-switch-icon::part(form-control-label) {
@@ -2637,8 +2653,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
 	top: calc(-0.3 * var(--sl-spacing-medium));
 }
 
-et2-switch-icon:hover:not([disabled]), et2-switch-icon:hover:not([disabled])::part(control) {
-	background-color: var(--sl-color-gray-150);
+et2-switch-icon:hover:not([disabled]) {
 	border-color: var(--sl-input-border-color-hover);
 	color: var(--sl-input-color-hover);
 }
@@ -2733,7 +2748,7 @@ div.et2_toolbar.ui-widget-header {
 	--et2-button-image-padding-left: 0px;
 }
 
-.et2_toolbar et2-button::part(base) {
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button::part(base) {
 	padding-inline-start: 0px;
 	justify-content: center;
 }
