@@ -131,6 +131,13 @@
 #calendar-toolbar > div {
   display: flex;
 }
+#calendar-toolbar #calendar-toolbar_add::part(base) {
+  border-style: hidden;
+}
+#calendar-toolbar #calendar-toolbar_add:hover::part(base) {
+  border-style: solid;
+  background-color: var(--sl-input-background-color);
+}
 #calendar-toolbar .et2_toolbar {
   background: inherit;
   border: none;

@@ -11,6 +11,15 @@
 /**
  * CSS for new eTemplate filemanager UI
  */
+#filemanager-index_nm .et2_file {
+	width: auto;
+}
+
+#filemanager-index_nm .et2_file et2-button::part(label) {
+	position: initial;
+	top: auto;
+}
+
 /* Override default filter width since there's only one, and limited space left */
 #filemanager-index_nm_filter {
     max-width: initial;

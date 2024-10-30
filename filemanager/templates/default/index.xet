@@ -78,6 +78,6 @@
 		<et2-button  statustext="File a file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
-		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left" header_row="filemanager.index.header_row" header_right="filemanager.index.header_right"/>
+        <nextmatch id="nm" class="et2_toolbar" template="filemanager.index.rows" header_left="filemanager.index.header_left" header_row="filemanager.index.header_row" header_right="filemanager.index.header_right"/>
 	</template>
 </overlay>
