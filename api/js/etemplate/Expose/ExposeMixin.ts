@@ -507,7 +507,11 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 				// Try for all exposable of the same type in the parent widget
 				try
 				{
-					const others = (this.getParent().closest("[exposable]") || this.getParent().getDOMNode()).querySelectorAll(this.localName);
+					let others = (this.getParent().closest("[exposable]") || this.getParent().getDOMNode()).querySelectorAll(this.localName);
+					//might be in elements shadow root e.g. Links in LinksTab of edit windows
+					if(!others || others.length === 0){
+						others = this.getParent().getDOMNode().shadowRoot.querySelectorAll(this.localName)
+					}
 					others.forEach((exposable, index) =>
 					{
 						if(exposable === this)
