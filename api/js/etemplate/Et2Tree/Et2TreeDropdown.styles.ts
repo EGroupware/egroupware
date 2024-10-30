@@ -63,6 +63,7 @@ export default css`
 		justify-content: space-between;
 		vertical-align: middle;
 
+		color: var(--sl-input-color);
 		background-color: var(--sl-input-background-color);
 		border: solid var(--sl-input-border-width) var(--sl-input-border-color);
 
@@ -83,7 +84,15 @@ export default css`
 		align-items: flex-start
 	}
 
-	.tree-dropdown--disabled {
+	:host([readonly]) .tree-dropdown__combobox {
+		background: none;
+		opacity: 1;
+		border: none;
+		outline: none;
+		cursor: not-allowed;
+	}
+
+	.tree-dropdown--disabled, .tree-dropdown--disabled .tree-dropdown__combobox {
 		background-color: var(--sl-input-background-color-disabled);
 		border-color: var(--sl-input-border-color-disabled);
 		color: var(--sl-input-color-disabled);
@@ -92,6 +101,10 @@ export default css`
 		outline: none;
 	}
 
+	.tree-dropdown--disabled .tree-dropdown__expand-icon {
+		cursor: not-allowed;
+		color: var(--sl-input-color-disabled);
+	}
 	:not(.tree-dropdown--disabled).tree-dropdown--open .tree-dropdown__combobox,
 	:not(.tree-dropdown--disabled).tree-dropdown--focused .tree-dropdown__combobox {
 		background-color: var(--sl-input-background-color-focus);

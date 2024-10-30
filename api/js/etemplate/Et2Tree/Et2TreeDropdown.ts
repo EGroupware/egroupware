@@ -524,6 +524,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	private handleFocus()
 	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
 		this.requestUpdate("hasFocus");
@@ -712,6 +716,11 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	handleTriggerClick(event)
 	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
+
 		event.stopPropagation();
 
 		this.hasFocus = true;
@@ -771,6 +780,10 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		{
 			const option = this.optionSearch(this.value, this.select_options, 'value', 'children');
 			image = option ? this.iconTemplate(option?.option ?? option) : null;
+		}
+		if(this.disabled || this.readonly)
+		{
+			return html`${image}${this.displayLabel || this.emptyLabel || placeholder}`;
 		}
 		return html`
             ${image}
@@ -936,6 +949,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                             placement=${this.placement || "bottom"}
 							strategy="fixed"
                             ?disabled=${this.disabled}
+                            ?readonly=${this.readonly}
                             @sl-after-hide=${() => {this.resultsOpen = false;}}
                     >
                         <div
