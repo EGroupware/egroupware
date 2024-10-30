@@ -27,6 +27,15 @@
             gap: var(--sl-spacing-medium);
         }
 
+        // left rounded box around the tab content to visually group it
+        &::part(body){
+            border: 1px solid var(--sl-color-neutral-300);
+            border-radius: var(--sl-border-radius-medium);
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+            padding: var(--sl-spacing-medium);
+        }
+
         et2-tab {
             &::part(base) {
                 border: 1px solid;
@@ -45,11 +54,6 @@
 
         .tabLabel {
             max-height: 1.1em;
-        }
-        et2-tab-panel{
-            border: 1px solid var(--sl-color-neutral-300);
-            border-radius: var(--sl-border-radius-medium);
-            padding: var(--sl-spacing-medium);
         }
 
         .et2_toolbar input.et2_textbox, .nextmatch_header_row input.et2_textbox{

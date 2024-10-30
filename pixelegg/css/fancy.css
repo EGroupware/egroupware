@@ -7185,6 +7185,16 @@ img.et2_button_icon[src*="svg"]:hover {
   padding-top: var(--sl-spacing-large);
   gap: var(--sl-spacing-medium);
 }
+:root et2-tabbox::part(body),
+:host et2-tabbox::part(body),
+.sl-theme-light et2-tabbox::part(body),
+.sl-theme-dark et2-tabbox::part(body) {
+  border: 1px solid var(--sl-color-neutral-300);
+  border-radius: var(--sl-border-radius-medium);
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  padding: var(--sl-spacing-medium);
+}
 :root et2-tabbox et2-tab::part(base),
 :host et2-tabbox et2-tab::part(base),
 .sl-theme-light et2-tabbox et2-tab::part(base),
@@ -7204,14 +7214,6 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-light et2-tabbox .tabLabel,
 .sl-theme-dark et2-tabbox .tabLabel {
   max-height: 1.1em;
-}
-:root et2-tabbox et2-tab-panel,
-:host et2-tabbox et2-tab-panel,
-.sl-theme-light et2-tabbox et2-tab-panel,
-.sl-theme-dark et2-tabbox et2-tab-panel {
-  border: 1px solid var(--sl-color-neutral-300);
-  border-radius: var(--sl-border-radius-medium);
-  padding: var(--sl-spacing-medium);
 }
 :root et2-tabbox .et2_toolbar input.et2_textbox,
 :host et2-tabbox .et2_toolbar input.et2_textbox,
