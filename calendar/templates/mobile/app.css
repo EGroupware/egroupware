@@ -142,6 +142,7 @@
 }
 #calendar-toolbar > div {
   display: flex;
+  align-items: center;
 }
 #calendar-toolbar #calendar-toolbar_add::part(base) {
   border-style: hidden;
@@ -1444,7 +1445,7 @@ img.calendar_print_appicon {
 /*weekend slideSwitch in toolbar*/
 #calendar-toolbar_app_header {
   color: #000;
-  font-size: 14px;
+  font-size: var(--sl-font-size-large);
   height: 1.6em;
   padding: 4px 3px 3px;
   background: #b4cee773;
@@ -2689,6 +2690,9 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #calendar-view_view.hideDayColHeader tr .calendar_calGridHeader > et2-description {
   width: calc(100% - 58px);
+}
+#calendar-toolbar {
+  margin-bottom: 0.3em;
 }
 #calendar-toolbar_toolbar et2-switch .label.on span.off {
   filter: opacity(0.4);

@@ -129,6 +129,7 @@
 }
 #calendar-toolbar > div {
 	display: flex;
+	align-items: center;
 }
 #calendar-toolbar #calendar-toolbar_add::part(base) {
 	border-style: hidden;
