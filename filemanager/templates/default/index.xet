@@ -55,7 +55,7 @@
         <et2-image id="logo" disabled="!@show_refresh" hideOnReadonly="true" style="max-width: 150px"></et2-image>
         <et2-button  id="reload" statustext="Reload" onclick="app.filemanager.et2.getInstanceManager().refresh()"
 			disabled="!@show_refresh" hideOnReadonly="true" image="reload" noSubmit="true"></et2-button>
-        <file label="Upload" statustext="Select file to upload in current directory" id="upload"
+        <file label="Upload" statustext="Select file to upload in current directory" id="upload" class="et2_toolbar_hasCaption"
               progress_dropdownlist="true" drop_target="filemanager-index" multiple="true"
               onFinishOne="app.filemanager.uploadOnOne"/>
     </template>

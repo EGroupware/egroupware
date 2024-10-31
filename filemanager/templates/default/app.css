@@ -15,6 +15,11 @@
 	width: auto;
 }
 
+/* Cancel toolbar styles removes border, just for upload button */
+#filemanager-index_nm .et2_file et2-button:not(:hover)::part(base) {
+	border-color: var(--sl-input-border-color);
+}
+
 #filemanager-index_nm .et2_file et2-button::part(label) {
 	position: initial;
 	top: auto;
