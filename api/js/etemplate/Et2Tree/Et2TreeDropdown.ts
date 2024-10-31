@@ -118,6 +118,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		return this._tree?.leafOnly;
 	}
 
+	/**
+	 * set the corresponding attribute if you want the tree to scroll to the selected item, when it is opened
+	 * Please already supply the parents of the current selection in an open state from the server side if possible
+	 */
+	@property({type: Boolean}) openAtSelection = false
+
 	@state() currentTag: Et2Tag;
 
 	// We show search results in the same dropdown
@@ -289,9 +295,14 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			this.requestUpdate("open", true);
 			return this.updateComplete;
 		}
-
 		this.open = true;
 		this.requestUpdate("open", false)
+		if (this.openAtSelection)
+		{
+			//TODO check what to wait on, waiting on updateComplete does not work
+			setTimeout(() =>
+				this._tree.scrollToSelected(),100)
+		}
 		return this.updateComplete
 	}
 

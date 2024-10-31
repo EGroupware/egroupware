@@ -668,6 +668,59 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 
 	/**
+	 * scroll to item with given id
+	 * make sure all parents of the item are expanded else scroll will fail
+	 * @param _id
+	 */
+	public scrollToItem(_id: string)
+	{
+		const item: SlTreeItem = this.getDomNode(_id);
+		if (item == null) return
+		item.scrollIntoView();
+	}
+
+	/**
+	 * scrolls to the (first) selected slTreeItem into view
+	 * this function delays, if not all parents of the item are expanded
+	 *
+	 */
+	public scrollToSelected()
+	{
+		try
+		{
+			const item: SlTreeItem = this.shadowRoot.querySelector('sl-tree-item[selected]');
+			if (item == null) return
+
+
+			//this might not work because item pant is not expanded
+			//in that case expand all parents and wait before trying to scroll again
+			let parent: SlTreeItem = item.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>item.parentElement : null;
+			//scroll and exit if parent does not need expansion
+			if (!parent || parent.expanded)
+			{
+				item.scrollIntoView()
+				return
+			}
+			//fallback
+			//expand all parent items
+			while (parent)
+			{
+				if (!parent.expanded) parent.expanded = true;
+				parent = parent.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>parent.parentElement : null;
+			}
+			// this.updateComplete.then(
+			// 	(bool: boolean) =>
+			// 		item.scrollIntoView()
+			// )
+			// waiting for update complete is not enough
+			setTimeout(()=> item.scrollIntoView(),500)
+		} catch (e)
+		{
+			console.log("Could not scroll to item");
+		}
+	}
+
+	/**
 	 * Open an item, which might trigger lazy-loading
 	 *
 	 * @param string _id

@@ -381,6 +381,7 @@ class preferences_hooks
 				'attributes' => array(
 					'search' => true,
 					'leafOnly' => true, // don't allow to select continents
+                    'openAtSelection' => true, // scroll to selected item on open
 				)
 			),
 			'tz_selection' => array(
