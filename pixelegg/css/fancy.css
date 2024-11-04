@@ -7170,6 +7170,26 @@ img.et2_button_icon[src*="svg"]:hover {
 .sl-theme-dark et2-button:not(imageOnly) > et2-image[class*="clock"] {
   --et2-button-image-padding-left: 0.2rem;
 }
+:root et2-button:not([label])::part(base),
+:host et2-button:not([label])::part(base),
+.sl-theme-light et2-button:not([label])::part(base),
+.sl-theme-dark et2-button:not([label])::part(base),
+:root et2-button-timestamp::part(base),
+:host et2-button-timestamp::part(base),
+.sl-theme-light et2-button-timestamp::part(base),
+.sl-theme-dark et2-button-timestamp::part(base) {
+  --sl-input-border-color: transparent;
+}
+:root et2-vfs-select::part(base),
+:host et2-vfs-select::part(base),
+.sl-theme-light et2-vfs-select::part(base),
+.sl-theme-dark et2-vfs-select::part(base),
+:root et2-link-to::part(button_base),
+:host et2-link-to::part(button_base),
+.sl-theme-light et2-link-to::part(button_base),
+.sl-theme-dark et2-link-to::part(button_base) {
+  --sl-input-border-color: transparent;
+}
 :root et2-tabbox,
 :host et2-tabbox,
 .sl-theme-light et2-tabbox,

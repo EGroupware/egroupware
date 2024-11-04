@@ -163,6 +163,8 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		return html`
             <slot name="before"></slot>
             <et2-vfs-select
+                    part="vfs button"
+                    exportparts="base:button_base"
                     id="link"
                     ?readonly=${this.readonly}
                     method=${method || nothing}
@@ -181,6 +183,8 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                             label=${this.egw().lang("move")}></et2-button>
             </et2-vfs-select>
             <et2-vfs-select
+                    part="vfs button clipboard"
+                    exportparts="base:button_base"
                     id="paste"
                     image="clipboard-data" aria-label=${this.egw().lang("clipboard contents")} noSubmit="true"
                     title=${this.egw().lang("Clipboard contents")}

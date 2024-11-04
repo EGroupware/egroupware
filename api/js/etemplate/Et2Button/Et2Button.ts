@@ -22,7 +22,7 @@ export class Et2Button extends ButtonMixin(Et2InputWidget(SlButton))
 	{
 		return {
 			...super.properties,
-			label: {type: String, noAccessor: true}
+			label: {type: String, noAccessor: true, reflect: true}
 		}
 	}
 

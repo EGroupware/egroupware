@@ -19,6 +19,13 @@
         --et2-button-image-padding-left: .2rem;
     }
 
+	et2-button:not([label])::part(base), et2-button-timestamp::part(base) {
+	  --sl-input-border-color: transparent;
+	}
+	et2-vfs-select::part(base), et2-link-to::part(button_base) {
+	  --sl-input-border-color: transparent;
+	}
+
     et2-tabbox {
         --track-width: 0px;
 
