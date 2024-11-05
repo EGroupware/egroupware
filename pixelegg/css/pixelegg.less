@@ -384,6 +384,9 @@ div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl tr.sub
 div.dhtmlxMenu_egw_SubLevelArea_Polygon table.dhtmlxMebu_SubLevelArea_Tbl div.complex_arrow {
   background-image: url('../../api/templates/default/images/dhxmenu_subar.svg');
 }
+body > .egw_menu::part(popup) {
+  z-index: var(--sl-z-index-dropdown);
+}
 body > .egw_menu egw-menu-shoelace {
   --sl-shadow-x-large: 0 4px 16px hsl(240 3.8% 46.1% / 60%);
 }

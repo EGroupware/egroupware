@@ -15,6 +15,7 @@ import {SearchMixin, SearchResult, SearchResultElement, SearchResultsInterface} 
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {Required} from "../Validators/Required";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {EgwMenuShoelace} from "../../egw_action/EgwMenuShoelace";
 
 
 interface TreeSearchResults extends SearchResultsInterface<TreeItemData>
@@ -612,7 +613,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		let o = event.relatedTarget;
 		while(o)
 		{
-			if(o == this.shadowRoot)
+			if(o == this.shadowRoot || o instanceof EgwMenuShoelace)
 			{
 				return;
 			}
