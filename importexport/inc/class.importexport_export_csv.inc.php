@@ -410,7 +410,8 @@ class importexport_export_csv implements importexport_iface_export_record
 			if ($record->$name !== null)
 			{
 				$names = array();
-				foreach((array)$record->$name as $_name) {
+				foreach(is_array($record->$name) ? $record->$name : explode(',', $record->$name) as $_name)
+				{
 					$names[] = Api\Accounts::title((int)$_name ?: $_name);
 				}
 				$record->$name = implode(', ', $names);
