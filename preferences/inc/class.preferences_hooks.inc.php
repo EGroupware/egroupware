@@ -322,6 +322,17 @@ class preferences_hooks
 				'admin'   => False,
 				'default' => 'lastname',
 			),
+			'avatar_display' => [
+				'type'    => 'select',
+				'label'   => 'What to display for an avatar, if there is no photo',
+				'name'    => 'avatar_display',
+				'values'  => [
+					'0' => lang('Use initials from first and last name'),
+					'2' => lang('Use first %1 letters from username', 2),
+					'3' => lang('Use first %1 letters from username', 3),
+					'4' => lang('Use first %1 letters from username', 4),
+				],
+			],
 			'show_currentusers'     => array(
 				'type'  => 'check',
 				'label' => 'Show number of current users',

@@ -54,7 +54,8 @@ class Lavatar
 	 *		array (
 	 *			'firstname' => [userFirstname],
 	 *			'lastname'  => [userLastname],
-	 *			'id'		=> [user id]
+	 *			'id'		=> [user id],
+	 *          'account_lid' => [username],
 	 *		)
 	 * @param array $_color = null an array of RGB color, default
 	 * is nul to get a random color from color library.
@@ -65,21 +66,27 @@ class Lavatar
 	 *			0  // BLUE
 	 *		)
 	 * @param int $_size = 128 image size, default size is 128
+	 * @param int $use_account_lid 0: use initials, >0 use this number of chars from account_lid
 	 */
-	public static function generate($_content = null, $_color = null, $_size = 128)
+	public static function generate($_content = null, $_color = null, $_size = 128, int $use_account_lid=0)
 	{
-		// firstname
-		$firstname = isset($_content['firstname'])? $_content['firstname'] : '';
-		//lastname
-		$lastname = isset($_content['lastname'])? $_content['lastname'] : '';
-		// id
-		$id = isset($_content['id'])? $_content['id']: '';
+		$firstname = $_content['firstname'] ?? '';
+		$lastname = $_content['lastname'] ?? '';
+		$id = $_content['id'] ?? '';
+		$account_lid = $_content['account_lid'] ?? '#'.$_content['id'] ?? '';
 
 		// Array of RGB color as background color
 		$bgcolor = $_color ? $_color : self::_getBgColor($firstname.$lastname.$id);
 
 		// Letters to be shown
-		$text = strtoupper(mb_substr($firstname, 0, 1).mb_substr($lastname, 0, 1));
+		if ($use_account_lid)
+		{
+			$text = mb_strtoupper(mb_substr($account_lid, 0, $use_account_lid));
+		}
+		else
+		{
+			$text = mb_strtoupper(mb_substr($firstname, 0, 1).mb_substr($lastname, 0, 1));
+		}
 
 		//create an image
 		$image = imagecreatetruecolor($_size, $_size);
@@ -93,7 +100,7 @@ class Lavatar
 		// create a rectangle
 		imagefilledrectangle($image, 0, 0, $_size, $_size, $bg);
 
-		$fontsize = $_size / self::$_FONT_SIZE_RATIO;
+		$fontsize = $_size / (1.1*$use_account_lid ?: self::$_FONT_SIZE_RATIO);
 
 		$box = imagettfbbox($fontsize, 0, EGW_SERVER_ROOT.self::$_FONT_PATH, $text);
 
