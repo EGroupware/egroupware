@@ -607,6 +607,7 @@ class Sql extends Api\Storage
 			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
+			$extra_cols[] = 'account_lid AS account_lid';
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
 				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);

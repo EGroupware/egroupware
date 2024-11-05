@@ -134,6 +134,7 @@ class Ldap
 	var $schema2egw = array(
 		'posixaccount' => array(
 			'account_id'	=> 'uidnumber',
+			'account_lid'   => 'uid',
 			'shadowexpire',
 		),
 		'inetorgperson' => array(
@@ -199,6 +200,7 @@ class Ldap
 			'pubkey'		=> 'usersmimecertificate',
 			'uid'			=> 'objectguid',
 			'id'			=> 'objectguid',
+			'account_lid'   => 'samaccountname',
 		],
 		#displayName
 		#mozillaCustom1
