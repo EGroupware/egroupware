@@ -195,7 +195,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.lazyLoading = this.handleLazyLoading({item: this._selectOptions}).then((results) =>
 			{
-				this._selectOptions = results?.item ?? [];
+				this._selectOptions = results?.children ?? results?.item ?? [];
 				this._initCurrent()
 				this.requestUpdate("_selectOptions");
 				this.updateComplete.then((value) => {
@@ -976,14 +976,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
 		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
+		const value = selectOption.value ?? selectOption.id;
 		if(expandState && this.autoloading && lazy)
 		{
 			this.updateComplete.then(() =>
 			{
-				this.getDomNode(selectOption.id)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
+				this.getDomNode(value)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
 			})
 		}
-		const value = selectOption.value ?? selectOption.id;
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
 		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj.type == "drag").length > 0
 
@@ -1022,12 +1022,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 						this.lazyLoading = this.handleLazyLoading(selectOption).then((result) => {
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
                             const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
-                            parentNode.item = [...result.item]
-							if (parentNode.item.length == 0)
+                            if(!parentNode || !parentNode.item || parentNode.item.length == 0)
 							{
 								parentNode.child = false;
-								this.getDomNode(parentNode.id).loading = false
+                                parentNode.open = false;
+                                this.requestUpdate("lazy", "true");
 							}
+                            this.getDomNode(parentNode.id).loading = false
                             this.requestUpdate("_selectOptions")
                         })
 
@@ -1114,7 +1115,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
 			{
-				id: _item.id
+				id: _item.value ?? _item.id
 			})
 
 		let result: Promise<TreeItemData> = egw().request(requestLink, [])
@@ -1122,10 +1123,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		return result
 			.then((results) => {
-				_item = results;
+				Object.assign(_item, results);
 
 				// Add actions
-				const itemAO = this.widget_object.getObjectById(_item.id);
+				const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
 				let parentAO = null;
 				if(itemAO && itemAO.parent)
 				{

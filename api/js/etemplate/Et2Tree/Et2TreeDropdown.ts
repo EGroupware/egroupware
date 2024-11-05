@@ -272,6 +272,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 				this.displayLabel = option.label;
 			}
 		}
+
+		if(this._tree)
+		{
+			this._tree._selectOptions = <TreeItemData[]>new_options;
+			this._tree.requestUpdate("_selectOptions");
+		}
 	}
 
 	/** Sets focus on the control. */
@@ -1006,7 +1012,6 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
                                 value=${this.multiple ? nothing : this.value}
-                                ._selectOptions=${options}
                                 .actions=${this.actions}
                                 .styleTemplate=${() => this.styleTemplate()}
 								.autoloading="${this.autoloading}"
