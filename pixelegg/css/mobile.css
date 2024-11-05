@@ -4259,7 +4259,7 @@ body.scrollVertical {
 #egw_fw_header #egw_divLogo img {
   max-width: 210px;
   border: none;
-  height: 45px;
+  height: 42px;
 }
 #egw_fw_header #egw_fw_topmenu ul,
 #egw_fw_header #egw_fw_topmenu > * > ul > li,

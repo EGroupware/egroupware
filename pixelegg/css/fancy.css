@@ -4256,7 +4256,7 @@ body.scrollVertical {
 #egw_fw_header #egw_divLogo img {
   max-width: 210px;
   border: none;
-  height: 45px;
+  height: 42px;
 }
 #egw_fw_header #egw_fw_topmenu ul,
 #egw_fw_header #egw_fw_topmenu > * > ul > li,
@@ -7281,6 +7281,10 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:last-child {
 }
 #egw_fw_sidebar #egw_fw_sidemenu .egw_fw_ui_sidemenu_entry_header_active h1 {
   text-transform: none;
+}
+#egw_fw_header #egw_divLogo img {
+  margin-top: 2px;
+  height: 41px;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header {
   gap: 1em;
