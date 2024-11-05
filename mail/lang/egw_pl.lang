@@ -23,6 +23,7 @@ always show notifiction	mail	pl	Zawsze pokazuj powiadomienia
 answered	mail	pl	Odpowiedź na
 any of	mail	pl	dowolny z
 any status	mail	pl	dowolny status
+archive folder	mail	pl	Folder archiwum
 attach files	mail	pl	Dołączanie plików
 attach users vcard at compose to every new mail	mail	pl	Dołączanie wizytówki vCard użytkownika podczas tworzenia wiadomości do każdego nowego maila.
 attachment has been saved successfully.	mail	pl	Załącznik został pomyślnie zapisany.
@@ -48,11 +49,12 @@ condition	mail	pl	Warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
 contact label	mail	pl	Etykieta kontaktu
 contains	mail	pl	zawiera
+convert mail to item and attach its attachments to this item (standard)	mail	pl	Konwertowanie wiadomości e-mail na element i dołączanie załączników do tego elementu (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pl	Konwersja wiadomości e-mail do elementu, dołączenie załączników i dodanie nieprzetworzonej wiadomości (.eml) jako załącznika
+convert only mail to item (ignore possible attachments)	mail	pl	Konwertowanie tylko wiadomości e-mail do elementu (ignorowanie ewentualnych załączników)
 copy to	mail	pl	Kopiuj do
 cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
 current subject	mail	pl	Aktualny temat
-date(newest first)	mail	pl	Data (od najnowszych)
-date(oldest first)	mail	pl	Data (od najstarszych)
 default sorting order	mail	pl	Domyślny porządek sortowania
 default toolbar actions shown in mail's html editor	mail	pl	Funkcje włączone w pasku narzędzi edytora HTML podczas tworzenia wiadomości e-mail
 default value for remembering s/mime passphrase in minutes	mail	pl	Domyślna wartość pamiętania hasła S/MIME w minutach
@@ -137,6 +139,7 @@ greater than	mail	pl	Większe niż
 ham folder	mail	pl	Folder Ham
 handling of external http images / mixed content in mails	mail	pl	Obsługa zewnętrznych obrazów http / zawartości mieszanej w wiadomościach e-mail
 header lines	mail	pl	Linie nagłówka
+high priority	mail	pl	Wysoki priorytet
 how to forward messages	mail	pl	Sposób przekazywania wiadomości
 html	mail	pl	HTML
 html mode	mail	pl	Tryb HTML
@@ -176,6 +179,7 @@ learning as spam failed because of %1	mail	pl	Nauka jako spam nie powiodła się
 less than	mail	pl	mniej niż
 limit mailing list results when searching for addresses	mail	pl	Ograniczanie wyników list mailingowych podczas wyszukiwania adresów
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pl	Lista akcji, które mają być domyślnie włączone/aktywowane (np. akcja Mail composose zapisz jako InfoLog).
+low priority	mail	pl	Niski priorytet
 mail	common	pl	Poczta
 mail acl	mail	pl	Prawa dostępu
 mail filter	mail	pl	Filtr poczty
@@ -199,6 +203,7 @@ modify subject	mail	pl	Zmień temat
 modify subject of this message	mail	pl	Zmień temat tej wiadomości
 move selected to	mail	pl	Przenieś wiadomości do
 move to	mail	pl	Przenieś do
+move to archive	mail	pl	Przenieś do folderu archiwum
 move to trash	mail	pl	Przenieś do kosza
 name and domain	mail	pl	Nazwa i domena
 name and email	mail	pl	Imię i adres e-mail
@@ -282,7 +287,6 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	pl	Zgłoś tę treść wiadomości e-mail jako spam - rozwiązania antyspamowe, takie jak spamTitan, będą się uczyć
 required pear class mail/mimedecode.php not found.	mail	pl	Nie znaleziono wymaganej klasy PEAR Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pl	Wymagane do wyłączenia, jeśli używasz Dovecot z prywatnymi flagami widocznymi w folderze współdzielonym lub folderze użytkownika!
-row order style	mail	pl	styl porządku wierszy
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pl	Szyfrowanie S/MIME nie powiodło się, ponieważ nie znaleziono certyfikatu dla adresu nadawcy: %1
 save all	mail	pl	Zapisz wszystko
 save all attachments to filemanager	mail	pl	Zapisz wszystkie załączniki do menadżera plików
@@ -321,13 +325,11 @@ show vertical with all columns	mail	pl	Pokaż w pionie ze wszystkimi kolumnami
 show/hide preview pane in mail list view	mail	pl	Pokaż/ukryj panel podglądu w widoku listy wiadomości.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pl	Wyświetla tymczasowo widoczne powiadomienie zawierające adres, temat i fragment wiadomości e-mail.
 sieve	mail	pl	Sieve
-sieve script name	mail	pl	Nazwa skryptu Sieve
 sign your message with smime certificate	mail	pl	Podpisz wiadomość certyfikatem S/MIME
 signature	mail	pl	Sygnaturka
 signature at top	mail	pl	podpis na górze
 signature position and visibility	mail	pl	Pozycja i widoczność podpisu
 signed by	mail	pl	Podpisany przez
-small view	mail	pl	widok uproszczony
 smime encrypted message	mail	pl	Komunikat zaszyfrowany S/MIME
 smime signed message	mail	pl	Komunikat podpisany S/MIME
 smtp	mail	pl	SMTP
@@ -349,7 +351,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	pl	Ta wiadomość jest szyfrowana S/MIME i chroniona hasłem.
 timeout on connections to your imap server	mail	pl	Limit czasu połączeń z serwerem IMAP
 to do	mail	pl	Aby wykonać
-toggle all folders view for %1	mail	pl	Przełącz widok wszystkich folderów dla %1
 toggled on actions	mail	pl	Włączone akcje
 trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
@@ -366,9 +367,6 @@ whole message	mail	pl	Cała wiadomość
 write	mail	pl	Zapisz
 wrote	mail	pl	zapisano
 yes, offer copy option	mail	pl	Tak, oferuj opcję kopii
-yes, only trigger connection reset	mail	pl	tak, wyzwalać tylko reset połączenia
-yes, show all debug information available for the user	mail	pl	tak, wyświetla wszystkie informacje debugowania dostępne dla użytkownika
-you can either choose to save as infolog or tracker, not both.	mail	pl	Możesz wybrać zapisywanie jako InfoLog LUB tracker, nie oba.
 you can select what info to be displayed on email tag	mail	pl	Możesz wybrać, jakie informacje mają być wyświetlane w tagu e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pl	Możesz użyć $$start$$ dla powyższej daty początkowej i $$end$$ dla daty końcowej.
 you may add this certificate into your contact, if you trust this signature.	mail	pl	Możesz dodać ten certyfikat do swojego kontaktu, jeśli ufasz temu podpisowi.

@@ -819,7 +819,7 @@ list members	common	de	Mitglieder anzeigen
 list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
 lithuania	common	de	LITAUEN
 load	common	de	Daten werden geladen
-load more links ...	common	de	Weitere Verknüpfungen laden ...
+load more links ...	common	de	Weitere Links laden ...
 load this template into the editor	common	de	Lädt diese Template zum Bearbeiten
 loading	common	de	Lade
 local	common	de	Lokal
@@ -1002,7 +1002,6 @@ open	common	de	Öffnen
 open existing contact	common	de	Vorhandenen Kontakt öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Pop-up Fenster öffnen
-open sidebox	common	de	Seitenmenü öffnen
 open the online help.	common	de	Öffnet die Online-Hilfe
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	de	OpenIDConnect Anmeldung erfolgreich, aber der Benutzer '%1' existiert NICHT in EGroupware, UND das automatische Anlegen von Benutzers ist ausgeschaltet!
 operator	common	de	Operator
@@ -1183,7 +1182,7 @@ save as zip	common	de	Als ZIP-Datei speichern
 save selected columns as default preference for all users.	common	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	common	de	Speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
-saved column sizes to preferences.	common	de	Spaltengrößen in den Voreinstellungen gespeichert
+saved column sizes to preferences.	common	de	Spaltengrößen in den Voreinstellungen gespeichert.
 saves changes to tables_current.inc.php	common	de	Speichert die Änderungen in tables_current.inc.php
 saves the template with given version number and closes the window	common	de	Speichert das Template unter der angegebenen Versionsnummer und schließt das Fenster.
 scale	common	de	Scale

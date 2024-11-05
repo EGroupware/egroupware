@@ -357,7 +357,6 @@ tables installed, unless there are errors printed above	setup	ko	이상 출력�
 tables upgraded	setup	ko	테이블이 업그레이드됨
 target version	setup	ko	타겟 버전
 tcp port number of database server	setup	ko	데이터베이스의 TCP 포트 번호
-text entry	setup	ko	텍스트 엔트리
 the %1 extension is needed, if you plan to use a %2 database.	setup	ko	%2 데이터베이스를 사용할 계획이라면 %1 확장이 필요합니다
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ko	이 서버에서 기본설정 %1 db_type 은 지원하지 않습니다. 먼저 지원하는 타입을 선택하세요
 the file	setup	ko	** 파일(the file)

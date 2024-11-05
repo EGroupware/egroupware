@@ -9,18 +9,12 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	nl	Weet u zeker dat u deze categorie wilt verwijderen
 br	preferences	nl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	nl	Wijzig een gebruikerswachtwoord door de oude en de nieuwe mee te geven. Geeft TRUE terug bij succesvolle wijziging, FALSE bij fouten.
-change your password	preferences	nl	Verander uw wachtwoord
-change your profile	preferences	nl	Verander uw profiel
-change your settings	preferences	nl	Verander uw instellingen
-charset for the csv export	addressbook	nl	Karakterset voor de CSV export
-click to select a color	preferences	nl	Klik om een kleur te kiezen
 color	preferences	nl	Kleur
 country	preferences	nl	Land
 dark mode theme	preferences	nl	Thema donkere modus
 data exchange settings	preferences	nl	Data exchange instellingen
 date format	preferences	nl	Datumweergave
 default	preferences	nl	standaard
-default application	preferences	nl	Standaard toepassing
 default preferences	preferences	nl	Standaard voorkeuren
 delete categories	preferences	nl	Verwijder categorieën
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
@@ -66,16 +60,12 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	nl	Let op: Deze optie wijzigt *niet* uw email-wachtwoord. Dit moet handmatig te gebeuren.
 p: paragraph	preferences	nl	p: Paragraaf
 password stored	preferences	nl	Wachtwoord opslaan.
-please, select a new theme	preferences	nl	Selecteer een nieuw thema
 popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
 read prefs for the specified application.	preferences	nl	Lees voorkeuren voor de opgegeven toepassing
-rich text editor theme	preferences	nl	Rich text editor theme
-select different theme	preferences	nl	Selecteer een ander thema
 select one	preferences	nl	Selecteer één
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in EGroupware. <br />Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
 select the language of the spellchecker integrated into the rich text editor.	preferences	nl	Kies de taal van de spellingcontrole die is geintegreerde rich text editor.
-select the theme (visualization) of the rich text editor.	preferences	nl	Kies het theme (vormgeving) van de rich text editor.
 selectbox	preferences	nl	Keuzevenster
 selectbox with groupmembers	common	nl	Keuzevenster met groepsleden
 selectbox with primary group and search	preferences	nl	Keuzevenster met primaire groep en zoekveld
@@ -111,5 +101,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	nl	U kunt de gekoppelde records weergeven met alleen ikonen, ikonen met toepassingsnaam of beiden.
 you do not have permission to set acl's in this mode!	preferences	nl	U heeft geen toelating om de ACL's in te stellen in deze modus!
 you must enter a password	preferences	nl	U moet een wachtwoord invoeren
-your current theme is: %1	preferences	nl	uw huidige thema is %1
 your preferences	preferences	nl	Uw voorkeuren

@@ -1002,7 +1002,6 @@ open	common	en	Open
 open existing contact	common	en	Open existing contact
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
-open sidebox	common	en	Open side box
 open the online help.	common	en	Open the online help
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	en	OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!
 operator	common	en	Operator
@@ -1259,7 +1258,7 @@ select work email address	common	en	Select work email address
 select year	common	en	Select year
 selectbox	common	en	Select box
 selection	common	en	Selection
-selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder.  %1 files unselected.
+selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder. %1 files unselected.
 send	common	en	Send
 send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL

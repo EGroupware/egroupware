@@ -124,8 +124,6 @@ cross account forward attachment is not allowed!	mail	el	Δεν επιτρέπε
 current folder	mail	el	Τρέχον φάκελος
 current subject	mail	el	Τρέχον θέμα
 currently:	mail	el	Αυτή τη στιγμή:
-date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
-date(oldest first)	mail	el	Ημερομηνία (πρώτα η πιο παλιά)
 deactive	mail	el	Απενεργοποίηση
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
 default toolbar actions shown in mail's html editor	mail	el	Ενεργοποίηση λειτουργιών στη γραμμή εργαλείων του επεξεργαστή HTML κατά τη σύνταξη ενός email
@@ -183,7 +181,6 @@ drafts	mail	el	Προσχέδια
 drafts folder	mail	el	φάκελος για προσχέδια
 edit account	mail	el	Επεξεργασία λογαριασμού
 edit account ...	mail	el	Επεξεργασία λογαριασμού ...
-edit folder acl	mail	el	Επεξεργασία δικαιωμάτων φακέλου
 edit folder acl ...	mail	el	Επεξεργασία δικαιωμάτων φακέλου ...
 edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
 effective only if server supports acl at all	admin	el	Αποτελεσματικό μόνο αν ο διακομιστής υποστηρίζει δικαιώματα πρόσβασης στο email
@@ -268,6 +265,7 @@ handling of external http images / mixed content in mails	mail	el	Χειρισμ
 header	mail	el	Κεφαλή
 header lines	mail	el	Γραμμές κεφαλής
 high	mail	el	υψηλό
+high priority	mail	el	Υψηλή προτεραιότητα
 hold %1 to drag files to your computer	mail	el	Κρατήστε πατημένο το %1 για να σύρετε αρχεία στον υπολογιστή σας
 hostname or ip	mail	el	Όνομα υπολογιστή ή διεύθυνση IP
 how often to check with the server for new mail	mail	el	Πόσο συχνά να ελέγχεται ο εξυπηρετητής για νέα μηνύματα
@@ -322,6 +320,7 @@ learning as spam failed because of %1	mail	el	Η εκμάθηση ως spam απ
 less than	mail	el	μικρότερο από
 limit mailing list results when searching for addresses	mail	el	Περιορισμός των αποτελεσμάτων της λίστας αλληλογραφίας κατά την αναζήτηση διευθύνσεων
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	el	Λίστα ενεργειών που πρέπει να ενεργοποιούνται/ενεργοποιούνται από προεπιλογή (π.χ. Mail σύνταξη αποθήκευση ως ενέργεια InfoLog).
+low priority	mail	el	Χαμηλή προτεραιότητα
 mail	common	el	Mail
 mail acl	mail	el	Δικαιώματα πρόσβασης
 mail filter	mail	el	Φίλτρα μηνυμάτων
@@ -474,7 +473,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 resend after how many days?	mail	el	Επαναποστολή μετά από πόσες ημέρες;
 restrict acl management	admin	el	Περιορισμός διαχείρισης ACL
 rights	mail	el	Δικαιώματα
-row order style	mail	el	Στυλ ταξινόμησης σειράς
 rule priority position	mail	el	Κανόνας προτεραιότητα θέση
 rule with priority	mail	el	κανόνας με προτεραιότητα
 rules	mail	el	κανόνες
@@ -551,14 +549,12 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	el	Sieve
 sieve connection status	mail	el	Κατάσταση επικοινωνίας Sieve
 sieve not activated	mail	el	Η λειτουργία Sieve δεν είναι ενεργοποιημένη
-sieve script name	mail	el	όνομα Sieve σεναρίου
 sieve server	mail	el	Εξυπηρετητής Sieve
 sign your message with smime certificate	mail	el	Εφαρμόστε ένα πιστοποιητικό S/MIME στο μήνυμά σας
 signature	mail	el	Υπογραφή
 signature at top	mail	el	υπογραφή στο πάνω μέρος
 signature position and visibility	mail	el	Θέση υπογραφής και κατάσταση εμφάνισης
 signed by	mail	el	Υπογραφή από
-small view	mail	el	μικρή προβολή
 smime encrypted message	mail	el	Κρυπτογραφημένο μήνυμα S/MIME
 smime signed message	mail	el	Υπογεγραμμένο μήνυμα S/MIME
 smtp	mail	el	SMTP
@@ -579,7 +575,6 @@ subscribe to folder %1	mail	el	Συνδρομή στον φάκελο %1
 subscription folders	mail	el	Συνδρομές σε φακέλους
 subscription successfully saved.	mail	el	Η συνδρομή αποθηκεύθηκε επιτυχώς.
 succeeded on %1 folders, failed on %2	mail	el	Επιτυχία σε %1 φακέλους, αποτυχία σε %2
-successfully connected	mail	el	Συνδέθηκε επιτυχώς
 switch off encryption?	mail	el	Να απενεργοποιηθεί η κρυπτογράφηση;
 template folder	mail	el	φάκελος υποδειγμάτων
 templates	mail	el	Υποδείγματα
@@ -596,7 +591,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	el	Αυτό το μήνυμα είναι κρυπτογραφημένο με S/MIME και προστατεύεται με κωδικό πρόσβασης.
 timeout on connections to your imap server	mail	el	Χρονικό όριο στις συνδέσεις με τον διακομιστή IMAP
 to do	mail	el	Για να κάνετε
-toggle all folders view for %1	mail	el	Εναλλαγή της προβολής όλων των φακέλων για το %1
 toggled on actions	mail	el	Εναλλαγή σε ενέργειες
 trash	mail	el	Κάδος αχρήστων
 trash folder	mail	el	Φάκελος κάδου αχρήστων
@@ -628,13 +622,7 @@ with message:	mail	el	Με μήνυμα:
 wizard	mail	el	Βοηθός
 write	mail	el	Γραφή
 wrote	mail	el	γράφτηκε
-yes, but mask all passwords	mail	el	ναι, αλλά να αποκρύπτονται οι κωδικοί πρόσβασης
-yes, but mask all usernames and passwords	mail	el	ναι, αλλά να αποκρύπτονται τα ονόματα λογαριασμών και οι κωδικοί πρόσβασης
 yes, offer copy option	mail	el	ναι, να προτείνεται δυνατότητα αντιγραφής
-yes, only trigger connection reset	mail	el	ναι, να γίνεται πρόκληση επαναφοράς της σύνδεσης
-yes, show all debug information available for the user	mail	el	ναι, να εμφανίζονται όλες οι πληροφορίες αποσφαλμάτωσης που είναι διαθέσιμες για τον χρήστη
-yes, show basic info only	mail	el	ναι, εμφάνιση μόνο βασικών πληροφοριών
-you can either choose to save as infolog or tracker, not both.	mail	el	Μπορείτε να επιλέξετε είτε να αποθηκεύσετε ως InfoLog Ή ως tracker, όχι και τα δύο.
 you can select what info to be displayed on email tag	mail	el	Μπορείτε να επιλέξετε ποιες πληροφορίες θα εμφανίζονται στην ετικέτα email.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	el	Μπορείτε να χρησιμοποιήσετε $$start$$ για την παραπάνω ημερομηνία έναρξης και $$end$$ για την ημερομηνία λήξης.
 you may add this certificate into your contact, if you trust this signature.	mail	el	Μπορείτε να προσθέσετε αυτό το πιστοποιητικό στην επαφή σας, αν εμπιστεύεστε αυτή την υπογραφή.

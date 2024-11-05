@@ -78,7 +78,6 @@ requires "reset password" privilege, to change passwords!	setup	tr	Şifreleri de
 select where you want to store/retrieve user accounts	setup	tr	Kullanıcı hesaplarını saklamak istediğiniz yeri seçiniz
 selectbox	setup	tr	Seçim kutusu
 show 'powered by' logo on	setup	tr	'Powered by' logosunun gösterileceği yer
-text entry	setup	tr	Metin Girdisi
 top	setup	tr	Maks
 use cookies to pass sessionid	setup	tr	Oturum id'sini taşımak için çerez kullan (cookie)
 use pure html compliant code (not fully working yet)	setup	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalışmamaktadır)

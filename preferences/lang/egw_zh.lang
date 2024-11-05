@@ -9,17 +9,11 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	zh	您确定要删除该类别吗?
 br	preferences	zh	<br> 换行
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh	以现有旧密码和一个新密码更改用户密码，如果成功将返回 TRUE，否则返回 FALSE。
-change your password	preferences	zh	更改密码
-change your profile	preferences	zh	更改您的配置文件
-change your settings	preferences	zh	更改您的设置
-charset for the csv export	addressbook	zh	用于 CSV 输出的字符集
-click to select a color	preferences	zh	点击选择一颜色
 color	preferences	zh	颜色
 country	preferences	zh	国家
 dark mode theme	preferences	zh	黑暗模式主题
 date format	preferences	zh	日期格式
 default	preferences	zh	默认
-default application	preferences	zh	默认应用程序
 default preferences	preferences	zh	默认用户参数
 delete categories	preferences	zh	删除类别
 description can not exceed 255 characters in length !	preferences	zh	描述的长度不能超过255个字符！
@@ -62,16 +56,12 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码，这将需要通过手动更改。
 p: paragraph	preferences	zh	<p> 段落
 password stored	preferences	zh	存储密码。
-please, select a new theme	preferences	zh	请选择一个新主题
 popup with search	preferences	zh	弹出式搜索窗口
 re-enter your password	preferences	zh	重新输入您的密码
 read prefs for the specified application.	preferences	zh	为指定应用程序读取配置文件。
-rich text editor theme	preferences	zh	FCKeditor 文本编辑器主题
-select different theme	preferences	zh	选择不同的主题
 select one	preferences	zh	选择一个
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh	选择 EGroupware 内部文本和讯息的语言。<br>有些语言不可能包含所有讯息, 在这种情况下您会看到一条英文讯息。
 select the language of the spellchecker integrated into the rich text editor.	preferences	zh	选择整合到 FCKeditor 文本编辑器的拼写检查语言。
-select the theme (visualization) of the rich text editor.	preferences	zh	选择 FCKeditor 文本编辑器的主题(外观)。
 selectbox	preferences	zh	选择框
 selectbox with groupmembers	common	zh	组成员选择框
 selectbox with primary group and search	preferences	zh	基本群组和搜索选择框
@@ -105,5 +95,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。
 you do not have permission to set acl's in this mode!	preferences	zh	您没有在该模式下设置 ACL 的权限！
 you must enter a password	preferences	zh	您必须输入密码
-your current theme is: %1	preferences	zh	您当前使用的主题是：%1
 your preferences	preferences	zh	您的参数选择

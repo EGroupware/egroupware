@@ -102,7 +102,6 @@ blocked, too many attempts	common	fa	بلاک شده، تلاش زياد
 blurtext	common	fa	متن بلوری
 bold	common	fa	درشت
 border	common	fa	کادر
-border-line-thickness for the table-tag	common	fa	ضخامت خط کادر برای علامت جدول
 bosnia and herzegovina	common	fa	بوسنی و هرز گوين
 bottom	common	fa	پایین
 box	common	fa	جعبه
@@ -558,7 +557,6 @@ only yours	common	fa	فقط برای شما
 open	common	fa	کارهای باز
 open notify window	common	fa	باز کردن پنجره آگاهی
 open popup window	common	fa	باز کردن پنجره جدا
-open sidebox	common	fa	باز کردن جعبه کناری
 open the online help.	common	fa	باز کردن راهنمای برخط
 operator	common	fa	عملگر
 optional note about the link	common	fa	یادداشت دلخواه برای پیوند

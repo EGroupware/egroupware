@@ -8,16 +8,10 @@ acl grants have been updated	preferences	lo	ACLອະນຸຍາດໄດ້ຮ
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	lo	ໃນລາຍການຕາຕະລາງເວລາຈະສະແດງຈໍານວນແຖວຕໍ່ໜ້າໜຶ່ງ. <br> ຫຼຸດລົງຫຼາຍເກີນໄປ
 are you sure you want to delete this category ?	preferences	lo	ທ່ານແນ່ໃຈບໍ່ຕ້ອງການລຶບໝວດນີ້?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	lo	ປ່ຽນລະຫັດຜ່ານຂອງຜູ້ໃຊ້ໂດຍການສົ່ງລະຫັດເກົ່າ ແລະ ໃສ່ລະຫັດໃໝ່. ສົ່ງຄ່າຄືນ TRUE ໃນຄວາມສໍາເລັດ,  FALSE ໃນຄວາມລົ້ມເຫຼວ
-change your password	preferences	lo	ປ່ຽນລະຫັດຜ່ານຂອງທ່ານ
-change your profile	preferences	lo	ປ່ຽນຂໍ້ມູນສ່ວນຕົວຂອງທ່ານ
-change your settings	preferences	lo	ປ່ຽນການຕັ້ງຄ່າຂອງທ່ານ
-charset for the csv export	addressbook	lo	ລະຫັດຕົວອັກສອນສໍາຫຼັບການສົ່ງອອກ  CSV
-click to select a color	preferences	lo	ຄຼີກເພື່ອເລືອກສີ
 color	preferences	lo	ສີ
 country	preferences	lo	ປະເທດ
 date format	preferences	lo	ຮູບແບບວັນທີ
 default	preferences	lo	ຄ່າເລີ່ມຕົ້ນ
-default application	preferences	lo	ແອັບພຼິເຄເຊັນເລີ່ມຕົ້ນ
 default preferences	preferences	lo	ການຕັ້ງຄ່າເລີ່ມຕົ້ນ
 delete categories	preferences	lo	ລຶບໝວດໝູ່
 description can not exceed 255 characters in length !	preferences	lo	ລາຍລະອຽດບໍ່ເກີນ 255 ຕົວອັກສອນ
@@ -55,16 +49,12 @@ p: paragraph	preferences	lo	p: ຫຍໍ້ໜ້າ
 permanent time zone selection	preferences	lo	ການເລືອກເຂດເວລາແບບຖາວອນ
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາ, ທ່ານສາມາດສະລັບໄປມາຢ່າງໄວ. ຖ້າເລືອກໜ້ອຍກວ່າສອງ ຈະບໍ່ສະແດງ
 please select your timezone.	preferences	lo	ກະລຸນາເລືອກເຂດເວລາຂອງທ່ານ
-please, select a new theme	preferences	lo	ກະລຸນາເລືອກຮູບແບບໃໝ່
 popup with search	preferences	lo	Popup ສໍາລັບການຄົ້ນຫາ
 re-enter your password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຊໍ້າຄືນອີກ
 read prefs for the specified application.	preferences	lo	ຕັ້ງຄ່າການອ່ານສຳລັບແອບພຼິເຄຊັນພິເສດ
-rich text editor theme	preferences	lo	ຮູບແບບຂໍ້ຄວາມແກ້ໄຂສົມບູນ
-select different theme	preferences	lo	ເລືອກຮູບແບບທີ່ແຕກຕ່າງກັນ
 select one	preferences	lo	ເລືອກ
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	lo	ເລືອກພາສາຂອງຂໍ້ຄວາມ ແລະ ຂໍ້ຄວາມພາຍໃນຕາຕະລາງເວລາ. <br> ບາງພາສາອາດຈະບໍ່ມີຂໍ້ຄວາມທັງໝົດ, ໃນກໍລະນີນັ້ນທ່ານຈະເຫັນຂໍ້ຄວາມເປັນພາສາອັງກິດ
 select the language of the spellchecker integrated into the rich text editor.	preferences	lo	ເລືອກພາສາຂອງຕົວກວດສອບສະກົດຄຳຢູ່ໃນການແກ້ໄຂຂໍ້ຄວາມທີ່ສົມບູນ
-select the theme (visualization) of the rich text editor.	preferences	lo	ເລືອກຮູບແບບ (ສະແດງຜົນ) ຂໍ້ຄວາມແກ້ໄຂສົມບູນ
 selectbox	preferences	lo	ຊ່ອງສໍາລັບເລືອກ
 selectbox with groupmembers	common	lo	ຊ່ອງເລືອກສະມະຊິກກຸ່ມ
 selectbox with primary group and search	preferences	lo	ຊ່ອງເລືອກກຸ່ມທໍາອິດ ແລະ ຄົ້ນຫາ
@@ -96,5 +86,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
 you do not have permission to set acl's in this mode!	preferences	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຕັ້ງ ACL
 you must enter a password	preferences	lo	ທ່ານຕ້ອງໃສ່ລະຫັດຜ່ານ
-your current theme is: %1	preferences	lo	ຮູບແບບຂອງທ່ານປັດຈຸບັນແມ່ນ: %1
 your preferences	preferences	lo	ການຕັ້ງຄ່າຂອງທ່ານ

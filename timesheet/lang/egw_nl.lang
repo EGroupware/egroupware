@@ -4,10 +4,14 @@
 3 years ago	timesheet	nl	3 jaar geleden
 all projects	timesheet	nl	Alle projecten
 applies the changes	timesheet	nl	past de wijzigingen toe
+ask to start and stop working time with session	timesheet	nl	Vraag om werktijd te starten en te stoppen met sessie
 both: allow to use projectmanager and free project-names	admin	nl	Beiden: accepteer het gebruik van ProjectManager en zelfgekozen projectnamen
 by	timesheet	nl	door
+category for 'working time'	admin	nl	Categorie voor 'Werktijd'
+change owner when updating	timesheet	nl	Eigenaar wijzigen bij bijwerken
 check all	timesheet	nl	Markeer alles
 comment by %1 at %2:	timesheet	nl	Commentaar door %1 op %2:
+create a single 'working time' timesheet per	timesheet	nl	Maak een enkel 'Werktijd' timesheet per
 create new links	timesheet	nl	Creëer nieuwe links
 creates a new field	timesheet	nl	creëert een nieuw veld
 creating new entry	timesheet	nl	een nieuw item aanmaken
@@ -18,6 +22,10 @@ deleted	timesheet	nl	verwijderd
 deletes this field	timesheet	nl	verwijdert dit veld
 determines the order the fields are displayed	timesheet	nl	bepaalt de volgorde waarin de velden worden getoond
 directory with documents to insert entries	timesheet	nl	Map met dokumenten om gegevens in tevoeren
+disable timers	timesheet	nl	Timers uitschakelen
+do you want to associate it with the selected %1 entry?	common	nl	Wilt u het koppelen aan het geselecteerde item %1?
+do you want to start your working time?	common	nl	Wil je je werktijd starten?
+do you want to stop your working time?	common	nl	Wil je je werktijd stoppen?
 each value is a line like <id>[=<label>]	timesheet	nl	iedere waarde is een regel zoals <id>[=<label>]
 edit status	timesheet	nl	Wijzig status
 edit this entry	timesheet	nl	Wijzig dit item
@@ -27,6 +35,7 @@ entry deleted	timesheet	nl	Item verwijderd
 entry saved	timesheet	nl	Item opgeslagen
 error deleting the entry!!!	timesheet	nl	Fout bij verwijderen van het item !!!
 error saving the entry!!!	timesheet	nl	Fout bij opslaan van het item !!!
+error storing working time	timesheet	nl	Fout bij het opslaan van werktijd
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	nl	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	nl	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	nl	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
@@ -38,6 +47,7 @@ export to openoffice spreadsheet	timesheet	nl	Export naar OpenOffice rekenblad
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	nl	Exporteert records uit uw urenregistratie naar een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het opties tabblad kunt u ook andere scheidingstekens kiezen.
 field must not be empty !!!	timesheet	nl	Veld mag niet leeg zijn !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
+forgot to switch off working time?	common	nl	Vergeten de werktijd uit te schakelen?
 full: use only projectmanager	admin	nl	Volledig: alleen de ProjectManager gebruiken
 general fields:	timesheet	nl	Algemene velden:
 global categories	timesheet	nl	Algemene categoriën
@@ -71,6 +81,8 @@ none: use only free project-names	admin	nl	Geen: gebruik uitsluitend zelfgekozen
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	nl	aantal rijen voor een meer-regelig invoerveld of regel in een meervoudige selectie veld
 or endtime	timesheet	nl	of eindtijd
 order	timesheet	nl	Volgorde
+overwrite time	common	nl	Overschrijftijd
+overwriting start or stop time	timesheet	nl	Start- of stoptijd overschrijven
 parent	timesheet	nl	Ouder
 pause	common	nl	Pauze
 pause time	timesheet	nl	Tijd pauze
@@ -79,8 +91,10 @@ permission denied!!!	timesheet	nl	Toegang geweigerd!!!
 price	timesheet	nl	Tarief
 projectmanager integration	admin	nl	ProjectManager integratie
 quantity	timesheet	nl	Hoeveelheid
+recorded	timesheet	nl	Opgenomen
 recovered	timesheet	nl	Teruggezet
 replacements for inserting entries into documents	timesheet	nl	Vervanging voor het invoeren van gegevens in documenten
+restore this entry	timesheet	nl	Herstel deze invoer
 save & new	timesheet	nl	Opslaan & Nieuw
 saves the changes made	timesheet	nl	Bewaar de gemaakte wijzigingen
 saves the changes made and leaves	timesheet	nl	bewaart de gemaakte wijzigingen en verlaat
@@ -89,6 +103,8 @@ select a price	timesheet	nl	Selecteer een tarief
 select a project	timesheet	nl	Selecteer een project
 show a quantity sum (eg. to sum up negative overtime)	admin	nl	Toont een optelling van hoeveelheid (bijvoorbeeld om negatieve overtijd op te tellen)
 start	timesheet	nl	Start
+start & stop timer	common	nl	Timer starten & stoppen
+start timer	common	nl	Start timer
 start-time can not be before last stop- or pause-time %1!	common	nl	Starttijd kan niet voor de laatste stop- of pauzetijd %1 liggen!
 starttime	timesheet	nl	Aanvangstijd
 starttime has to be before endtime !!!	timesheet	nl	Aanvangstijd moet voor de eindtijd liggen !!!
@@ -106,13 +122,20 @@ ticket modified by %1 at %2	timesheet	nl	Melding gewijzigd door %1 op %2
 timer already running or paused	common	nl	Timer loopt al of is gepauzeerd
 timesheet	common	nl	Urenregistratie
 timesheet csv export	timesheet	nl	Urenregistratie CSV export
-timesheet openoffice export	timesheet	nl	Urenregistratie OpenOffice export
 titles of any entries linked to the current record, excluding attached files	timesheet	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 unitprice	timesheet	nl	Eenheidstarief
+use field from csv if possible	timesheet	nl	Gebruik veld uit CSV indien mogelijk
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	nl	Gebruik deze tag voor adres labels.Plaats de inhoud welke je wilt herhalen tussen twee tags.
 values for selectbox	timesheet	nl	Waarden voor selectbox
 view this entry	timesheet	nl	Dit item weergeven
 week	timesheet	nl	Week
+what should be done with unknown values?	timesheet	nl	Wat moet er gebeuren met onbekende waarden?
+will be created when saving ...	common	nl	Worden aangemaakt bij het opslaan ...
+working time	common	nl	Werktijd
+working time and timer	timesheet	nl	Werktijd en timer
+working time from %1	timesheet	nl	Werktijd van %1
+working time of %1 hours stored	timesheet	nl	Werktijd van %1 uur opgeslagen
+would you like to be asked, to start and stop working time, when login in or off	timesheet	nl	Wilt u gevraagd worden om de werktijd te starten en te stoppen wanneer u inlogt of uitlogt?
 yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
 yes, users can purge their deleted items	admin	nl	Ja, gebruikers kunnen hun verwijderde items defintief verwijderen
 yesterday	timesheet	nl	Gisteren

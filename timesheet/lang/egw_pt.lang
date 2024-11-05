@@ -3,10 +3,14 @@
 3 years ago	timesheet	pt	Há 3 anos atrás
 all projects	timesheet	pt	Todos os projetos
 applies the changes	timesheet	pt	Aplicar as alterações
+ask to start and stop working time with session	timesheet	pt	Pedir para iniciar e parar o tempo de trabalho com a sessão
 by	timesheet	pt	por
+category for 'working time'	admin	pt	Categoria para 'Tempo de trabalho'
 change category	timesheet	pt	Alterar categoria
+change owner when updating	timesheet	pt	Alterar o proprietário ao atualizar
 changed category to %1	timesheet	pt	Categoria alterada para 1%
 check all	timesheet	pt	Marcar todas
+create a single 'working time' timesheet per	timesheet	pt	Criar uma única folha de tempos “Tempo de trabalho” por
 create new links	timesheet	pt	Criar novas ligações
 creates a new field	timesheet	pt	cria um novo campo
 custom fields	timesheet	pt	Personalizar campos
@@ -15,6 +19,10 @@ deleted	timesheet	pt	eliminado/a
 deletes this field	timesheet	pt	eliminar este campo
 determines the order the fields are displayed	timesheet	pt	determina a ordem de apresentação dos campos
 directory with documents to insert entries	timesheet	pt	Diretório com documentos para inserir entradas
+disable timers	timesheet	pt	Desativar temporizadores
+do you want to associate it with the selected %1 entry?	common	pt	Pretende associá-lo à entrada %1 selecionada?
+do you want to start your working time?	common	pt	Pretende iniciar o seu tempo de trabalho?
+do you want to stop your working time?	common	pt	Pretende parar o seu tempo de trabalho?
 each value is a line like <id>[=<label>]	timesheet	pt	cada valor é uma linha como <id>[=<etiqueta>]
 edit status	timesheet	pt	Editar estado
 edit this entry	timesheet	pt	Editar este registo
@@ -24,10 +32,12 @@ entry deleted	timesheet	pt	Registo eliminado
 entry saved	timesheet	pt	Registo guardado
 error deleting the entry!!!	timesheet	pt	Erro ao eliminar o registo!!!
 error saving the entry!!!	timesheet	pt	Erro ao guardar o registo!!!
+error storing working time	timesheet	pt	Erro na memorização do tempo de trabalho
 existing links	timesheet	pt	Ligações existentes
 exists	timesheet	pt	Existe
 export definition to use for nextmatch export	timesheet	pt	Definição Exportar para usar para exportação NextMatch
 field must not be empty !!!	timesheet	pt	O campo não pode estar vazio !!!
+forgot to switch off working time?	common	pt	Esqueceu-se de desligar o tempo de trabalho?
 general fields:	timesheet	pt	Campos gerais:
 global categories	timesheet	pt	Categorias gerais
 history	timesheet	pt	Histórico
@@ -51,6 +61,8 @@ no details	timesheet	pt	Sem detalhes
 no project	timesheet	pt	Nenhum projeto
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
 order	timesheet	pt	Ordenar
+overwrite time	common	pt	Tempo de sobregravação
+overwriting start or stop time	timesheet	pt	Substituir a hora de início ou de paragem
 parent	timesheet	pt	Principal
 pause	common	pt	Pausa
 pause time	timesheet	pt	Tempo de pausa
@@ -59,7 +71,9 @@ permission denied!!!	timesheet	pt	Permissão negada!!!
 permissions error - %1 could not %2	timesheet	pt	Erro de permissões -% 1 não pôde% 2
 price	timesheet	pt	Preço
 quantity	timesheet	pt	Quantidade
+recorded	timesheet	pt	Gravado
 replacements for inserting entries into documents	timesheet	pt	Substitutos para a inserção de entradas em documentos
+restore this entry	timesheet	pt	Restaurar este registo
 save & new	timesheet	pt	Guardar e criar novo
 saves the changes made	timesheet	pt	Guarda as alterações efectuadas
 saves the changes made and leaves	timesheet	pt	guarda as alterações e deixa
@@ -67,6 +81,8 @@ saves this entry and add a new one	timesheet	pt	Guarda este registo e adiciona u
 select a price	timesheet	pt	Seleccione um preço
 select a project	timesheet	pt	Seleccione um projecto
 start	timesheet	pt	Início
+start & stop timer	common	pt	Iniciar e parar o temporizador
+start timer	common	pt	Temporizador de arranque
 start-time can not be before last stop- or pause-time %1!	common	pt	A hora de início não pode ser anterior à última hora de paragem ou pausa %1!
 stop- or pause-time can not be before the start-time %1!	common	pt	A hora de paragem ou pausa não pode ser anterior à hora de início %1!
 sum %1:	timesheet	pt	Sum %1:
@@ -80,9 +96,17 @@ this year	timesheet	pt	Este ano
 timer already running or paused	common	pt	O temporizador já está a funcionar ou em pausa
 timesheet	common	pt	Folha de tempo
 unitprice	timesheet	pt	Preço por unidade
+use field from csv if possible	timesheet	pt	Utilizar o campo do CSV, se possível
 values for selectbox	timesheet	pt	Valores para a caixa de selecção
 view this entry	timesheet	pt	Ver este registo
 week	timesheet	pt	Semana
+what should be done with unknown values?	timesheet	pt	O que deve ser feito com os valores desconhecidos?
+will be created when saving ...	common	pt	Serão criados ao guardar ...
+working time	common	pt	Tempo de trabalho
+working time and timer	timesheet	pt	Tempo de trabalho e temporizador
+working time from %1	timesheet	pt	Tempo de trabalho a partir de %1
+working time of %1 hours stored	timesheet	pt	Tempo de trabalho de %1 horas guardado
+would you like to be asked, to start and stop working time, when login in or off	timesheet	pt	Gostaria que lhe fosse pedido para iniciar e parar o tempo de trabalho, ao iniciar ou terminar a sessão?
 yes, only admins can purge deleted items	admin	pt	Sim, só os administradores podem remover os itens excluídos
 yesterday	timesheet	pt	Ontem
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt	A sua base de dados NÃO está actualizada (%1 vs. %2). Por favor, execute a %3configuração%4 para actualizar a sua base de dados.

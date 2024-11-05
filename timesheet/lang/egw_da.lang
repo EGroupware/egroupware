@@ -1,16 +1,26 @@
 applies the changes	timesheet	da	udfør ændringerne
+ask to start and stop working time with session	timesheet	da	Bed om at starte og stoppe arbejdstid med session
 by	timesheet	da	af
+category for 'working time'	admin	da	Kategori for 'Arbejdstid'
+change owner when updating	timesheet	da	Skift ejer ved opdatering
+create a single 'working time' timesheet per	timesheet	da	Opret en enkelt timeseddel for 'Arbejdstid' pr.
 create new links	timesheet	da	Lav nyt link
 creates a new field	timesheet	da	opretter et nyt felt
 custom fields	timesheet	da	Valgfri Felter
 deleted	timesheet	da	slettet
 deletes this field	timesheet	da	sletter dette felt
 determines the order the fields are displayed	timesheet	da	bestemmer rækkefølgen felterne bliver vist
+disable timers	timesheet	da	Slå timere fra
+do you want to associate it with the selected %1 entry?	common	da	Vil du knytte den til den valgte %1-post?
+do you want to start your working time?	common	da	Vil du starte din arbejdstid?
+do you want to stop your working time?	common	da	Vil du stoppe din arbejdstid?
 each value is a line like <id>[=<label>]	timesheet	da	hver værdi er en linie som <id>[=<label>]
 edit status	timesheet	da	Redigér status
 edit this entry	timesheet	da	Redigér denne indstasning
 end	timesheet	da	Slut
+error storing working time	timesheet	da	Fejl ved lagring af arbejdstid
 existing links	timesheet	da	eksisterende links
+forgot to switch off working time?	common	da	Har du glemt at slukke for arbejdstiden?
 global categories	timesheet	da	Globale Kategorier
 history	timesheet	da	Historisk
 id	timesheet	da	ID
@@ -23,18 +33,32 @@ modified	timesheet	da	Modificeret
 no details	timesheet	da	Ingen detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
 order	timesheet	da	Rækkefølge
+overwrite time	common	da	Overskrivningstid
+overwriting start or stop time	timesheet	da	Overskrivning af start- eller stoptid
 parent	timesheet	da	Overstående
 pause	common	da	Pause
 pause time	timesheet	da	Tid for pause
 paused	timesheet	da	Pauseret
+recorded	timesheet	da	Optaget
+restore this entry	timesheet	da	Gendan denne post
 saves the changes made	timesheet	da	gem ændringer
 saves the changes made and leaves	timesheet	da	gem ændringerne og afslut
 start	timesheet	da	Start
+start & stop timer	common	da	Start og stop timer
+start timer	common	da	Start timer
 start-time can not be before last stop- or pause-time %1!	common	da	Starttidspunktet kan ikke være før sidste stop- eller pausetidspunkt %1!
 stop- or pause-time can not be before the start-time %1!	common	da	Stop- eller pausetidspunktet kan ikke være før starttidspunktet %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
 the text displayed to the user	timesheet	da	teksten som vises til brugeren
 timer already running or paused	common	da	Timer kører allerede eller er sat på pause
+use field from csv if possible	timesheet	da	Brug felt fra CSV, hvis det er muligt
 values for selectbox	timesheet	da	Værdier for selectboks
 week	timesheet	da	Uge
+what should be done with unknown values?	timesheet	da	Hvad skal der gøres med ukendte værdier?
+will be created when saving ...	common	da	Vil blive oprettet, når du gemmer ...
+working time	common	da	Arbejdstid
+working time and timer	timesheet	da	Arbejdstid og timer
+working time from %1	timesheet	da	Arbejdstid fra %1
+working time of %1 hours stored	timesheet	da	Arbejdstid på %1 timer gemt
+would you like to be asked, to start and stop working time, when login in or off	timesheet	da	Vil du gerne blive bedt om at starte og stoppe arbejdstiden, når du logger ind eller ud?
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	da	Din database er ikke up to date (%1 vs. %2) Kør %3setup%4 for at opdatere database.

@@ -127,8 +127,6 @@ cross account forward attachment is not allowed!	mail	en	Cross account forward a
 current folder	mail	en	current folder
 current subject	mail	en	Current subject
 currently:	mail	en	Currently:
-date(newest first)	mail	en	date(newest first)
-date(oldest first)	mail	en	date(oldest first)
 deactive	mail	en	Deactive
 default sorting order	mail	en	Default sorting order
 default toolbar actions shown in mail's html editor	mail	en	Functions enabled in the HTML editor toolbar when composing an email
@@ -190,7 +188,6 @@ drafts	mail	en	Drafts
 drafts folder	mail	en	Drafts Folder
 edit account	mail	en	Edit Account
 edit account ...	mail	en	Edit account ...
-edit folder acl	mail	en	Email access rights
 edit folder acl ...	mail	en	Email access rights ...
 edit vacation settings	mail	en	Edit vacation notice
 effective only if server supports acl at all	admin	en	Effective only if server supports email access rights at all
@@ -474,7 +471,7 @@ refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder Inbox
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders
 reject with	mail	en	reject with
-reloaded account %1	mail	en	Reloaded account %1
+reloaded account %1	mail	en	Reloaded account %1.
 reloaded folder %1	mail	en	Reloaded folder %1
 remember the password for	mail	en	Remember the password for
 remove "%1" from blacklisted domains	mail	en	Remove "%1" from blacklisted domains
@@ -509,7 +506,6 @@ resend after how many days?	mail	en	Resend after how many days?
 respond to mail sent to:	mail	en	Respond to email sent to:
 restrict acl management	admin	en	Restrict access rights management
 rights	mail	en	Rights
-row order style	mail	en	row order style
 rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	Rules
@@ -591,7 +587,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	en	Sieve
 sieve connection status	mail	en	Sieve Connection Status
 sieve not activated	mail	en	Sieve not activated
-sieve script name	mail	en	Sieve script name
 sieve server	mail	en	Sieve server
 sieve_edit_instructions	mail	en	(*) Wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "Use regular expressions" you must use valid regular expressions. In order to escape of exclamation mark (!) at the beginning not being used as "NOT", use regex and backslash (\) (e.g. \!)
 sign your message with smime certificate	mail	en	Sign your message with S/MIME certificate
@@ -599,7 +594,6 @@ signature	mail	en	Signature
 signature at top	mail	en	signature at top
 signature position and visibility	mail	en	Signature position and visibility
 signed by	mail	en	Signed by
-small view	mail	en	small view
 smime encrypted message	mail	en	S/MIME encrypted message
 smime signed message	mail	en	S/MIME signed message
 smtp	mail	en	SMTP
@@ -623,7 +617,6 @@ subscribe to folder %1	mail	en	Subscribe to folder %1
 subscription folders	mail	en	Subscription folders
 subscription successfully saved.	mail	en	Subscription successfully saved.
 succeeded on %1 folders, failed on %2	mail	en	Succeeded on %1 folders, failed on %2
-successfully connected	mail	en	Successfully connected
 switch off encryption?	mail	en	Switch off encryption?
 template folder	mail	en	Template Folder
 templates	mail	en	Templates
@@ -649,7 +642,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server
 to do	mail	en	To do
-toggle all folders view for %1	mail	en	Toggle all folders view for %1
 toggled on actions	mail	en	Toggled on actions
 trash	mail	en	Trash
 trash folder	mail	en	Trash folder
@@ -674,7 +666,7 @@ vacation notice	mail	en	Vacation notice
 vacation notice is active	mail	en	Vacation notice is active
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	mail	en	Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)
 vacation notice sucessfully updated.	mail	en	Vacation notice successfully updated.
-vacation notice update failed	mail	en	Vacation notice update failed
+vacation notice update failed	mail	en	Vacation notice update failed.
 vacation start-date must be before the end-date!	mail	en	Vacation start-date must be BEFORE the end-date!
 vacation update failed	mail	en	vacation update failed
 valid for	mail	en	Valid for
@@ -700,13 +692,7 @@ wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
 wrote	mail	en	wrote
-yes, but mask all passwords	mail	en	yes, but mask all passwords
-yes, but mask all usernames and passwords	mail	en	yes, but mask all usernames and passwords
 yes, offer copy option	mail	en	Yes, offer copy option
-yes, only trigger connection reset	mail	en	yes, only trigger connection reset
-yes, show all debug information available for the user	mail	en	yes, show all debug information available for the user
-yes, show basic info only	mail	en	yes, show basic info only
-you can either choose to save as infolog or tracker, not both.	mail	en	You can either choose to save as InfoLog OR tracker, not both.
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.

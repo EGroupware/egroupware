@@ -22,6 +22,7 @@
 %1 token %2.	admin	hu	%1 token %2.
 %1 user %2	admin	hu	%1 felhasználó %2
 (de)activate mail accounts	admin	hu	Mailfiókok (de)aktiválása
+(default no, leave it off if you dont use it)	admin	hu	Alapértelmezett = Nem, hagyja ki, ha nem használja.
 (no subject)	admin	hu	(nincs tárgy)
 -  type	admin	hu	- típus
 1 year	admin	hu	1 év
@@ -337,11 +338,13 @@ host information	admin	hu	Host információ
 hostname or ip	admin	hu	Hostnév vagy IP
 hour<br>(0-23)	admin	hu	Óra<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	hu	A hozzáférési listában hány napig legyenek megőrizve az adatok, mielőtt törlődnének (alapértelmezett 90 nap)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	hu	Hány bejegyzést exportálhatnak a nem rendszergazdák. Üres = nincs korlátozás, Nem = nincs exportálás.
 how many minutes should an account or ip be blocked (default 1) ?	admin	hu	Hány percig legyenek blokkolva a hozzáférések vagy IP címek (alapértelmezett 30 perc)
 how should email addresses for new users be constructed?	admin	hu	Új felhasználók email címét hogyan készítsük el
 html/plaintext	admin	hu	HTML/Szöveg
 icon	admin	hu	Ikon
 idle	admin	hu	Inaktív
+if different from email address	admin	hu	Ha eltér az e-mail címtől
 if no acl records for user or any group the user is a member of	admin	hu	Ha a felhasználónak vagy összes csoportjának nincs ACL meghatározva
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	hu	Ha LDAP-ot használ, kívánja kezelni a Saját könyvtárat és a bejelentkezési héj tulajdonságait?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	hu	SSL vagy TLS használatához a PHP openssl kiterjesztését telepíteni kell.
@@ -436,6 +439,7 @@ no alternate email address	admin	hu	Nincs alternatív email cím
 no encryption	admin	hu	Titkosítás nélkül
 no forwarding email address	admin	hu	Nincs továbbküldési email cím
 no jobs in the database !!!	admin	hu	Nem található feladat az adatbázisban!
+no limit	admin	hu	Nincs korlátozás
 no login history exists for this user	admin	hu	Ehhez a felhasználóhoz nem található belépési történet!
 no matches found	admin	hu	Nincs egyezés!
 no message returned.	admin	hu	Nincs visszaadott üzenet
@@ -550,6 +554,7 @@ sieve server port	admin	hu	Sieve szerver port
 sieve settings	admin	hu	SIEVE beállítások
 site	admin	hu	Oldal
 smtp authentication	admin	hu	SMTP azonosítás
+smtp only: to create only an smtp account	admin	hu	Csak SMTP-fiók létrehozása IMAP nélkül
 smtp options	admin	hu	SMTP opciók
 smtp server	admin	hu	SMTP szerver
 smtp server name	admin	hu	SMTP szerver neve
@@ -572,14 +577,8 @@ submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
 subtype	admin	hu	Altípus
 switch it off, if users are randomly thrown out	admin	hu	Kapcsolja ki, a felhasználókat véletlenszerűen kidobja a rendszer
-template selection	admin	hu	Sablon választás
 templates	admin	hu	Sablonok
-text entry	admin	hu	Szöveges bejegyzés
-that application name already exists.	admin	hu	Ez az alkalmazás név már létezik.
-that application order must be a number.	admin	hu	Az alkalmazás sorrend szám kell legyen.
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt.
-that name has been used already	admin	hu	Ez a név már használatban van.
-that server name has been used already !	admin	hu	Ez a szerver név már használatban van!
 the api is current	admin	hu	Az API nem igényel frissítést
 the api requires an upgrade	admin	hu	Az API frissítést igényel
 the groups must include the primary group	admin	hu	A csoportoknak az elsődleges csoportot tartalmaznia kell.

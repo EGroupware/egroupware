@@ -12,6 +12,7 @@ after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
+archive folder	mail	lt	Archyvo aplankas
 attach files	mail	lt	Pridėti failus
 attach users vcard at compose to every new mail	mail	lt	Pridėti naudotojų vCard prie kiekvieno naujo laiško sudarymo metu
 attachment has been saved successfully.	mail	lt	Priedas sėkmingai išsaugotas.
@@ -27,9 +28,15 @@ certificate info for email %1	mail	lt	Sertifikato informacija apie el. pašto %1
 certificate issued by	mail	lt	Sertifikatą išdavė
 changing subject failed because of %1	mail	lt	Pakeisti temą nepavyko dėl %1
 changing subject failed folder %1 does not exist	mail	lt	Pakeisti temą nepavyko aplankas %1 neegzistuoja
+check to save as calendar event on send	mail	lt	Pažymėkite mygtuką, kad po išsiuntimo būtų sukurtas kaip įvykis
+check to save as infolog on send	mail	lt	Pažymėkite mygtuką, kad po išsiuntimo sukurtumėte kaip informacinį žurnalą
+check to save as tracker entry on send	mail	lt	Pažymėkite mygtuką, jei norite sukurti kaip bilietą po išsiuntimo
 checking admin credentials failed	mail	lt	Nepavyko patikrinti administratoriaus įgaliojimų
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
 contact label	mail	lt	Kontaktų etiketė
+convert mail to item and attach its attachments to this item (standard)	mail	lt	Konvertuoti el. laišką į elementą ir pridėti jo priedus prie šio elemento (standartinis)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lt	Konvertuoti el. laišką į elementą, pridėti jo priedus ir pridėti neapdorotą pranešimą (.eml) kaip priedą
+convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik el. laišką į elementą (ignoruoti galimus priedus)
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
 default toolbar actions shown in mail's html editor	mail	lt	HTML redaktoriaus įrankių juostoje įjungtos funkcijos kuriant el. laišką
@@ -64,6 +71,7 @@ folder %1 has been created successfully, although the subscription failed becaus
 get acl rights failed from imap server!	mail	lt	Nepavyko gauti ACL teisių iš IMAP serverio!
 ham folder	mail	lt	Kumpio aplankas
 handling of external http images / mixed content in mails	mail	lt	Išorinių http vaizdų / mišraus turinio tvarkymas el. laiškuose
+high priority	mail	lt	Aukštas prioritetas
 html	mail	lt	HTML
 ident name	mail	lt	Identifikatoriaus pavadinimas
 ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
@@ -96,6 +104,7 @@ learning as spam failed because of %1	mail	lt	Mokymasis kaip šlamštas nepavyko
 less than	mail	lt	mažiau nei
 limit mailing list results when searching for addresses	mail	lt	Apriboti pašto sąrašo rezultatus ieškant adresų
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	lt	Veiksmų, kurie turi būti įjungti ir (arba) įjungti pagal numatytuosius nustatymus, sąrašas (pvz., veiksmas "Mail kompose išsaugoti kaip "InfoLog")
+low priority	mail	lt	Mažas prioritetas
 mail	common	lt	Paštas
 mail acl	mail	lt	Prieigos teisės
 mail filter	mail	lt	Pašto filtras
@@ -218,13 +227,9 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	lt	Šis laiškas užšifruotas S/MIME ir apsaugotas slaptažodžiu.
 timeout on connections to your imap server	mail	lt	Jungčių prie IMAP serverio laiko limitas
 to do	mail	lt	Atlikti
-toggle all folders view for %1	mail	lt	Perjunkite visų aplankų rodinį %1
 toggled on actions	mail	lt	Perjungti veiksmus
 trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
-yes, only trigger connection reset	mail	lt	taip, tik paleisti ryšio atstatymą
-yes, show all debug information available for the user	mail	lt	taip, rodo visą naudotojui prieinamą derinimo informaciją
-you can either choose to save as infolog or tracker, not both.	mail	lt	Galite pasirinkti, ar norite išsaugoti kaip "InfoLog", ar kaip "Tracker", bet ne kaip abu.
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lt	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.

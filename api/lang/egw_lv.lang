@@ -91,6 +91,7 @@ all	common	lv	Visi
 all addressbooks	groupdav	lv	Visas adrešu grāmatas
 all categories	common	lv	Visas kategorijas
 all fields	common	lv	Visi lauki
+all files	common	lv	Visi faili
 all in one	groupdav	lv	Viss vienā
 all users	common	lv	Visi lietotāji
 allow editing the %1	common	lv	Atļaut rediģēt %1
@@ -150,7 +151,6 @@ blocked, too many attempts	common	lv	Bloķēts, pārāk daudz neveiksmīgu mēģ
 blurtext	common	lv	neskaidrs teksts
 bolivia	common	lv	BOLĪVIJA
 border	common	lv	Robeža
-border-line-thickness for the table-tag	common	lv	Tabulas taga robežlīnijas biezums
 bosnia and herzegovina	common	lv	BOSNIJA UN HERCOGOVINA
 botswana	common	lv	BOTSVĀNA
 bottom	common	lv	Augšā
@@ -559,6 +559,7 @@ light mode	common	lv	Gaismas režīms
 link	common	lv	Saite
 link target %1 not found!	common	lv	Saites mērķis %1 nav atrasts!
 link title of current record	common	lv	Pašreizējā ieraksta saites nosaukums
+link to each entry	common	lv	Saite uz katru ierakstu
 linklist	common	lv	Saistīt sarakstu
 links and attached files	preferences	lv	Saites un pievienotie faili
 links to specified application.  example: {{links/addressbook}}	common	lv	Saites uz norādīto lietojumprogrammu. Piemērs: {{links/addressbook}}
@@ -568,6 +569,7 @@ list	common	lv	Saraksts
 list members	common	lv	Saraksta dalībnieki
 lithuania	common	lv	LIETUVA
 load	common	lv	Lelādēt
+load more links ...	common	lv	Ielādēt vairāk saites ...
 load this template into the editor	common	lv	Ielādēt šo veidni redaktorā
 local	common	lv	Vietējais
 login	common	lv	Pieteikties
@@ -601,6 +603,11 @@ may	common	lv	Maijs
 mayotte	common	lv	MAJOTA
 medium	common	lv	Vidēja
 menu	common	lv	Izvēlne
+merge	common	lv	Apvienot
+merge & send	common	lv	Apvienot un nosūtīt
+merge individually	common	lv	Apvienot atsevišķi
+merge options	common	lv	Apvienošanas opcijas
+merged document filename	preferences	lv	Apvienotais dokumenta faila nosaukums
 message	common	lv	Ziņa
 mexico	common	lv	MEKSIKA
 micronesia, federated states of	common	lv	MIKRONĒZIJAS FEDERATĪVĀS VALSTIS
@@ -814,6 +821,7 @@ saudi arabia	common	lv	SAŪDA ARĀBIJA
 save	common	lv	Saglabāt
 save all	common	lv	Saglabāt visus
 save as	common	lv	Saglabāt kā
+save as pdf	common	lv	Saglabāt kā PDF
 save as zip	common	lv	Saglabāt kā ZIP
 save selected columns as default preference for all users.	common	lv	Saglabāt kolonnas kā noklusējuma izvēli visiem lietotājiem.
 save the changes made and close the window	common	lv	Saglabājiet izmaiņas un aizveriet
@@ -867,6 +875,7 @@ select work email address	common	lv	Izvēlies e-pasta adresi darbā
 select year	common	lv	Atzīmē gadu
 selectbox	common	lv	Selectbox
 selection	common	lv	Izvēle
+selection of files can only be done in one folder.  %1 files unselected.	common	lv	Failu atlasi var veikt tikai vienā mapē. %1 faili nav atlasīti.
 send	common	lv	Sūtīt
 senegal	common	lv	SENEGĀLA
 september	common	lv	Septembris

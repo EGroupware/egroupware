@@ -475,7 +475,6 @@ tables installed, unless there are errors printed above	setup	zh-tw	資料表已
 tables upgraded	setup	zh-tw	資料表已升級
 target version	setup	zh-tw	目標版本
 tcp port number of database server	setup	zh-tw	資料庫伺服器的TCP連接埠號碼
-text entry	setup	zh-tw	文字記錄
 the %1 extension is needed, if you plan to use a %2 database.	setup	zh-tw	如果您希望使用%2資料庫，您需要外掛%1。
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zh-tw	這個伺服器不支援預設的資料庫(%1)，使用第一個使用的種類。
 the file	setup	zh-tw	檔案

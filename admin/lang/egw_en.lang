@@ -22,8 +22,7 @@
 %1 token %2.	admin	en	%1 token %2.
 %1 user %2	admin	en	%1 user %2
 (de)activate mail accounts	admin	en	(de)Activate mail accounts
-(default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the IMAP server)
+(default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you don't use it
 (no subject)	admin	en	(no subject)
 -  type	admin	en	- type
 1 year	admin	en	1 year
@@ -226,7 +225,7 @@ connection is not secure! everyone can read eg. your credentials.	admin	en	Conne
 container	admin	en	Container
 continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories.
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	en	Cookie path. Allows multiple EGroupware sessions with different directories
 copy of	admin	en	Copy of
 could not append message:	admin	en	Could not append Message:
 could not complete request. reason given: %s	admin	en	Could not complete request. %s
@@ -862,14 +861,8 @@ successfull, but no refresh-token received!	admin	en	Successfull, but NO refresh
 switch back to standard identity to save account.	admin	en	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	en	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	en	Switch it off, if users are randomly logged out
-template selection	admin	en	Template selection
 templates	admin	en	Templates
-text entry	admin	en	Text entry
-that application name already exists.	admin	en	That application name already exists.
-that application order must be a number.	admin	en	That application order must be a number.
 that loginid has already been taken	admin	en	That login ID has already been taken.
-that name has been used already	admin	en	That name has been used already.
-that server name has been used already !	admin	en	That server name has been used already!
 the api is current	admin	en	The API is current
 the api requires an upgrade	admin	en	The API requires an upgrade
 the cumulated and anonymised data will be publically available:	admin	en	The accumulated and anonymous data will be publicly available:

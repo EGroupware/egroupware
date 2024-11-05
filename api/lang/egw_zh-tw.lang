@@ -123,7 +123,6 @@ blurtext	common	zh-tw	模糊文字
 bold	common	zh-tw	粗體
 bolivia	common	zh-tw	玻利維亞
 border	common	zh-tw	框線
-border-line-thickness for the table-tag	common	zh-tw	表格標籤使用的框線厚度
 bosnia and herzegovina	common	zh-tw	BOSNIA AND HERZEGOVINA
 botswana	common	zh-tw	波紮那
 bottom	common	zh-tw	底部
@@ -701,7 +700,6 @@ only yours	common	zh-tw	屬於您的資料
 open	common	zh-tw	開啟
 open notify window	common	zh-tw	開啟警示視窗
 open popup window	common	zh-tw	開啟彈出式視窗
-open sidebox	common	zh-tw	開啟其他選單
 open the online help.	common	zh-tw	開啟線上說明
 operator	common	zh-tw	運算元
 optional note about the link	common	zh-tw	連結的附註

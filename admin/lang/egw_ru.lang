@@ -22,6 +22,7 @@
 %1 token %2.	admin	ru	%1 токен %2.
 %1 user %2	admin	ru	%1 пользователь %2
 (de)activate mail accounts	admin	ru	(де)Активация почтовых учетных записей
+(default no, leave it off if you dont use it)	admin	ru	По умолчанию = Нет, оставьте этот параметр, если вы его не используете
 (no subject)	admin	ru	(без темы)
 -  type	admin	ru	- тип
 1 year	admin	ru	1 год
@@ -373,6 +374,7 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	ru	На 
 how should email addresses for new users be constructed?	admin	ru	Как должен строиться e-mail адрес для новых пользователей?
 icon	admin	ru	Пиктограмма
 idle	admin	ru	Простой
+if different from email address	admin	ru	Если отличается от адреса электронной почты
 if no acl records for user or any group the user is a member of	admin	ru	Если нет ACL-записей для пользователя или группы, участником которой он является
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ru	При использовании LDAP - хотите ли управлять свойствами "Домашний каталог" и "Оболочка входа"
 if using ssl or tls, you must have the php openssl extension loaded.	admin	ru	При использовании SSL или TLS, у вас должен быть установлен PHP с загруженным расширением openssl
@@ -486,6 +488,7 @@ no alternate email address	admin	ru	Нет дополнительного эл. 
 no encryption	admin	ru	Без шифрования
 no forwarding email address	admin	ru	Нет адреса перенаправления
 no jobs in the database !!!	admin	ru	Нет заданий в базе данных!
+no limit	admin	ru	Нет лимита
 no login history exists for this user	admin	ru	Для данного пользователя история подключений не существует
 no matches found	admin	ru	Совпадений не найдено
 no message returned.	admin	ru	Нет ответа
@@ -627,6 +630,7 @@ sieve server port	admin	ru	Порт сервера Sieve
 sieve settings	admin	ru	Настройки Sieve
 site	admin	ru	Сайт
 smtp authentication	admin	ru	Авторизация SMTP
+smtp only: to create only an smtp account	admin	ru	Создать учетную запись только для SMTP без IMAP
 smtp options	admin	ru	Параметры SMTP
 smtp server name	admin	ru	Имя сервера SMTP
 smtp settings	admin	ru	Установки SMTP
@@ -653,14 +657,8 @@ submit to egroupware.org	admin	ru	Подтвердить на egroupware.org
 subtype	admin	ru	Подтип
 success	admin	ru	Успешно
 switch it off, if users are randomly thrown out	admin	ru	Выключите, если пользователи отключаются произвольно
-template selection	admin	ru	Выбор шаблона
 templates	admin	ru	Шаблоны
-text entry	admin	ru	Текстовая запись
-that application name already exists.	admin	ru	Такое имя приложения уже существует
-that application order must be a number.	admin	ru	Порядковое место этого приложения должно быть номером
 that loginid has already been taken	admin	ru	Этот логин уже занят
-that name has been used already	admin	ru	Это имя уже используется
-that server name has been used already !	admin	ru	Это имя сервера уже используется!
 the api is current	admin	ru	Обновление API не требуется
 the api requires an upgrade	admin	ru	API требует обновления
 the cumulated and anonymised data will be publically available:	admin	ru	Эти накопленные и анонимные данные могут быть опубликованы:

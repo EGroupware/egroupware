@@ -5,6 +5,7 @@ add files as %1	mail	ko	파일을 %1로 추가
 add this certificate into contact	mail	ko	이 인증서를 연락처에 추가
 adding %1 to blacklisted email addresses failed because of %2	mail	ko	%2 때문에 블랙리스트에 추가된 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
 adding %1 to whiltelisted email addresses failed because of %2	mail	ko	%2 때문에 허용되지 않은 전자 메일 주소에 %1을(를) 추가하지 못했습니다.
+archive folder	mail	ko	보관 폴더
 attach files	mail	ko	파일 첨부
 attach users vcard at compose to every new mail	mail	ko	모든 새 메일에 작성 시 사용자 vCard를 첨부합니다.
 attachment has been saved successfully.	mail	ko	첨부 파일이 성공적으로 저장되었습니다.
@@ -20,8 +21,14 @@ certificate info for email %1	mail	ko	이메일 %1에 대한 인증서 정보
 certificate issued by	mail	ko	인증서 발급처
 changing subject failed because of %1	mail	ko	%1 때문에 제목을 변경하지 못했습니다
 changing subject failed folder %1 does not exist	mail	ko	제목 변경 실패 폴더 %1이(가) 존재하지 않습니다
+check to save as calendar event on send	mail	ko	전송 후 이벤트로 생성하려면 확인 버튼 선택
+check to save as infolog on send	mail	ko	전송 후 인포로그로 만들려면 확인 버튼 선택
+check to save as tracker entry on send	mail	ko	전송 후 티켓으로 만들려면 확인 버튼 선택
 checking admin credentials failed	mail	ko	관리자 자격 증명 확인에 실패했습니다.
 contact label	mail	ko	연락처 레이블
+convert mail to item and attach its attachments to this item (standard)	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 이 항목에 첨부하기(표준)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 첨부하며 원시 메시지(.eml)를 첨부 파일로 추가합니다.
+convert only mail to item (ignore possible attachments)	mail	ko	이메일만 항목으로 변환(가능한 첨부 파일 무시)
 delete selected folders	mail	ko	選択したフォルダを削除する
 deleted	mail	ko	삭제됨
 do you really want to toggle flag %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 플래그를 전환하시겠습니까?
@@ -55,6 +62,7 @@ general	admin	ko	일반
 get acl rights failed from imap server!	mail	ko	IMAP 서버에서 ACL 권한 가져오기에 실패했습니다!
 ham folder	mail	ko	햄 폴더
 handling of external http images / mixed content in mails	mail	ko	전자 메일의 외부 http 이미지/혼합 콘텐츠 처리
+high priority	mail	ko	높은 우선순위
 html	mail	ko	HTML
 ident name	mail	ko	아이디 이름
 ident name email	mail	ko	아이디 이름 [이메일]
@@ -87,6 +95,7 @@ learning as spam failed because of %1	mail	ko	%1 때문에 스팸으로 학습�
 less than	mail	ko	미만
 limit mailing list results when searching for addresses	mail	ko	주소 검색 시 메일 그룹 결과 제한
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ko	기본적으로 전환/활성화할 작업 목록(예: 메일 작성 InfoLog 작업으로 저장)
+low priority	mail	ko	낮은 우선순위
 mail probably has no text-body	mail	ko	메일에 텍스트가 없을 수 있습니다.
 mail settings	mail	ko	메일 설정
 mails can be copied to that folder via context menu, if folder is configured.	mail	ko	폴더가 구성된 경우 상황에 맞는 메뉴를 통해 해당 폴더로 메일을 복사할 수 있습니다.
@@ -176,7 +185,6 @@ show/hide preview pane in mail list view	mail	ko	메일 목록 보기에서 미�
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	ko	보낸 사람 주소, 제목 및 이메일 스니펫을 포함하여 임시로 표시되는 알림을 표시합니다.
 sign your message with smime certificate	mail	ko	S/MIME 인증서로 메시지 서명
 signed by	mail	ko	서명자
-small view	mail	ko	미니뷰
 the imap server need to meet certain requirements and be configured for it:	mail	ko	IMAP 서버는 특정 요구 사항을 충족해야 하며 이를 위해 구성되어야 합니다:
 the rule with priority %1 successfully saved!	mail	ko	우선 순위가 %1인 규칙이 성공적으로 저장되었습니다!
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	ko	체 스크립트를 저장할 공간이 없으므로 메일 서버의 구성에서 sieve_maxscriptsize 옵션을 확인하세요.
@@ -184,14 +192,10 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	ko	이 메시지는 S/MIME 암호화 및 비밀번호로 보호되어 있습니다.
 timeout on connections to your imap server	mail	ko	IMAP 서버에 대한 연결 시간 초과
 to do	mail	ko	할 일
-toggle all folders view for %1	mail	ko	%1에 대한 모든 폴더 보기 토글
 toggled on actions	mail	ko	동작 토글
 trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
 write	mail	ko	쓰기
-yes, only trigger connection reset	mail	ko	예, 연결 재설정만 트리거
-yes, show all debug information available for the user	mail	ko	예, 사용자가 사용할 수 있는 모든 디버그 정보 표시
-you can either choose to save as infolog or tracker, not both.	mail	ko	InfoLog 또는 트래커로 저장하도록 선택할 수 있지만 둘 다 저장할 수는 없습니다.
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ko	위의 시작 날짜는 $$start$$로, 종료 날짜는 $$end$$로 사용할 수 있습니다.
 you may add this certificate into your contact, if you trust this signature.	mail	ko	이 서명을 신뢰하는 경우 이 인증서를 연락처에 추가할 수 있습니다.

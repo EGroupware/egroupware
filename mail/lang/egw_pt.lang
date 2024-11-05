@@ -44,6 +44,7 @@ answered	mail	pt	Respondeu
 any of	mail	pt	algum de
 any status	mail	pt	qualquer estado
 append	mail	pt	anexar
+archive folder	mail	pt	Pasta de arquivo
 attach files	mail	pt	Anexar ficheiros
 attach users vcard at compose to every new mail	mail	pt	anexar usuários VCard a compor a cada novo e-mail.
 attach vcard	mail	pt	Anexar vCard
@@ -69,6 +70,7 @@ changed profile	mail	pt	perfil alterado
 changing subject failed because of %1	mail	pt	A alteração do assunto falhou devido a %1
 changing subject failed folder %1 does not exist	mail	pt	Falha na alteração do assunto A pasta %1 não existe
 check message against next rule also	mail	pt	Verifique mensagem contra seguinte regra também
+check to save as calendar event on send	mail	pt	Marcar o botão para criar um evento após o envio
 check to save as infolog on send	mail	pt	verificar para salvar como InfoLog em enviar
 check to save as tracker entry on send	mail	pt	verificar para salvar como trackerentry em enviar
 checking admin credentials failed	mail	pt	A verificação das credenciais de administrador falhou
@@ -86,6 +88,9 @@ connection status	mail	pt	Status da conexão
 contact label	mail	pt	Etiqueta de contacto
 contains	mail	pt	Contém
 contains(*)	mail	pt	Contém (*)
+convert mail to item and attach its attachments to this item (standard)	mail	pt	Converter o correio eletrónico num item e anexar os seus anexos a este item (padrão)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt	Converter o correio eletrónico em item, anexar os seus anexos e adicionar a mensagem em bruto (.eml) como anexo
+convert only mail to item (ignore possible attachments)	mail	pt	Converter apenas o correio eletrónico para o item (ignorar possíveis anexos)
 copied %1 message(s) from %2 to %3	mail	pt	Copiados %1 mensagem (s) de %2 a 3%
 copy to	mail	pt	Copiar para
 could not append message:	mail	pt	Não foi possível anexar Mensagem:
@@ -93,8 +98,6 @@ create new account	mail	pt	Criar nova conta
 cross account forward attachment is not allowed!	mail	pt	Não é permitido o envio de anexos de contas cruzadas!
 current subject	mail	pt	Assunto actual
 currently:	mail	pt	Atualmente:
-date(newest first)	mail	pt	Data (+ recente primeiro)
-date(oldest first)	mail	pt	Data (+ antiga primeiro)
 deactive	mail	pt	Desativado
 default sorting order	mail	pt	Ordenar por (por omissão)
 default toolbar actions shown in mail's html editor	mail	pt	Funções activadas na barra de ferramentas do editor HTML ao compor um e-mail
@@ -150,7 +153,6 @@ drafts	mail	pt	Rascunhos
 drafts folder	mail	pt	Pasta Rascunhos
 edit account	mail	pt	Editar Conta
 edit account ...	mail	pt	Editar conta ...
-edit folder acl	mail	pt	Pasta Editar ACL
 edit folder acl ...	mail	pt	Editar pasta ACL ...
 edit vacation settings	mail	pt	Editar configurações de férias
 effective only if server supports acl at all	admin	pt	efetiva apenas se o servidor suporta ACL em tudo
@@ -229,6 +231,7 @@ ham folder	mail	pt	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt	Tratamento de imagens http externas / conteúdo misto em mensagens de correio eletrónico
 header	mail	pt	Cabeçalho
 header lines	mail	pt	Linhas de cabeçalho
+high priority	mail	pt	Alta prioridade
 home page folders	mail	pt	pastas home page
 hostname or ip	mail	pt	Nome do host ou IP
 how often to check with the server for new mail	mail	pt	Quantas vezes a verificar com o servidor para novas mensagens
@@ -282,6 +285,7 @@ learning as spam failed because of %1	mail	pt	A aprendizagem como spam falhou de
 less than	mail	pt	menos de
 limit mailing list results when searching for addresses	mail	pt	Limitar os resultados da lista de correio eletrónico ao procurar endereços
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pt	Lista de acções a ativar/ativar por predefinição (por exemplo, ação de composição de correio eletrónico guardar como InfoLog)
+low priority	mail	pt	Baixa prioridade
 mail	common	pt	Correio
 mail acl	mail	pt	Direitos de acesso
 mail filter	mail	pt	Filtro de correio
@@ -403,6 +407,7 @@ refresh time in minutes	mail	pt	Actualizar (em minutos)
 refused to delete folder inbox	mail	pt	Recusou-se a eliminar a pasta INBOX
 refused to delete folder with subfolders	mail	pt	recusou-se a excluir a pasta com subpastas
 reject with	mail	pt	rejeitar com
+reloaded account %1	mail	pt	Conta recarregada %1.
 remember the password for	mail	pt	Lembrar a palavra-passe para
 remove all	mail	pt	Remover tudo
 remove immediately	mail	pt	Eliminar imediatamente
@@ -431,7 +436,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 resend after how many days?	mail	pt	Reenviar após quantos dias?
 respond to mail sent to:	mail	pt	Responda ao e-mail enviado para:
 restrict acl management	admin	pt	restringir gestão ACL
-row order style	mail	pt	estilo ordem de linha
 rule priority position	mail	pt	Regra posição prioridade
 rule with priority	mail	pt	governar com prioridade
 rules	mail	pt	Regras
@@ -502,14 +506,12 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	pt	Peneira
 sieve connection status	mail	pt	Peneira Status da conexão
 sieve not activated	mail	pt	Peneirar a não activação
-sieve script name	mail	pt	Nome do script peneira
 sieve server	mail	pt	Servidor Sieve
 sign your message with smime certificate	mail	pt	Assine a sua mensagem com um certificado S/MIME
 signature	mail	pt	Assinatura
 signature at top	mail	pt	assinatura no topo
 signature position and visibility	mail	pt	Posição da assinatura e visibilidade
 signed by	mail	pt	Assinado por
-small view	mail	pt	Sumário
 smime encrypted message	mail	pt	Mensagem encriptada S/MIME
 smime signed message	mail	pt	Mensagem assinada S/MIME
 smtp	mail	pt	SMTP
@@ -526,7 +528,6 @@ subscribe folder	mail	pt	Assinar pasta
 subscribe folder ...	mail	pt	Assinar pasta ...
 subscription folders	mail	pt	Pastas de Subscrição
 subscription successfully saved.	mail	pt	Assinatura salvo com sucesso.
-successfully connected	mail	pt	Conectado com sucesso
 template folder	mail	pt	Pasta de modelo
 templates	mail	pt	Templates
 templates folder	mail	pt	Pasta Modelos
@@ -545,7 +546,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	pt	Esta mensagem está encriptada com S/MIME e protegida por palavra-passe.
 timeout on connections to your imap server	mail	pt	Timeout em ligações para o seu servidor IMAP
 to do	mail	pt	Para fazer
-toggle all folders view for %1	mail	pt	Alternar todas as pastas para visualizar %1
 toggled on actions	mail	pt	Acções alternadas
 trash	mail	pt	Lixo
 trash folder	mail	pt	Pasta Lixo
@@ -581,13 +581,7 @@ which method to use when forwarding a message	mail	pt	Qual o método a ser usado
 with message:	mail	pt	Com a mensagem:
 write	mail	pt	escrever
 wrote	mail	pt	Escreveu
-yes, but mask all passwords	mail	pt	sim, mas mascarar todas as senhas
-yes, but mask all usernames and passwords	mail	pt	sim, mas mascarar todos os nomes de usuários e senhas
 yes, offer copy option	mail	pt	sim, oferecer opção de cópia
-yes, only trigger connection reset	mail	pt	sim, apenas desencadear redefinição de conexão
-yes, show all debug information available for the user	mail	pt	sim, mostrar todas as informações de depuração disponíveis para o utilizador
-yes, show basic info only	mail	pt	sim, mostrar apenas informações básicas
-you can either choose to save as infolog or tracker, not both.	mail	pt	Pode optar por guardar como InfoLog OU tracker, mas não como ambos.
 you can select what info to be displayed on email tag	mail	pt	Pode selecionar as informações a apresentar na etiqueta de correio eletrónico.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt	Pode utilizar $$start$$ para a data de início e $$end$$ para a data de fim.
 you may add this certificate into your contact, if you trust this signature.	mail	pt	Pode adicionar este certificado ao seu contacto, se confiar nesta assinatura.

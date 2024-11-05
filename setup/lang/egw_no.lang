@@ -401,7 +401,6 @@ tables installed, unless there are errors printed above	setup	no	Tabeller färdi
 tables upgraded	setup	no	Tabeller oppgraderte
 target version	setup	no	Målversion
 tcp port number of database server	setup	no	TCP-port för databasserver
-text entry	setup	no	Tekstfelt
 the %1 extension is needed, if you plan to use a %2 database.	setup	no	%1 utökningen behövs, om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	no	db_type i defaults (%1) supportas inte på denna server. Använder den första supportade typen
 the file	setup	no	Filen

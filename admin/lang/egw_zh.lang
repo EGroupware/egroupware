@@ -12,6 +12,7 @@
 %1 successful	admin	zh	%1 成功
 %1 token %2.	admin	zh	%1 标记 %2.
 %1 user %2	admin	zh	%1 用户 %2
+(default no, leave it off if you dont use it)	admin	zh	默认 = 否，如果不使用，请将其关闭
 (no subject)	admin	zh	(无主题)
 -  type	admin	zh	- 类型
 1 year	admin	zh	1年
@@ -305,6 +306,7 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	zh	多�
 how should email addresses for new users be constructed?	admin	zh	应该怎么为新用户创建邮箱地址？
 icon	admin	zh	图标
 idle	admin	zh	空闲
+if different from email address	admin	zh	如果与电子邮件地址不同
 if no acl records for user or any group the user is a member of	admin	zh	如果没有用户或任何小组的 ACL 纪录，该用户将作为成员属于
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh	如果使用 LDAP，您想要管理主目录和 Login Shell 属性吗？
 if using ssl or tls, you must have the php openssl extension loaded.	admin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
@@ -398,6 +400,7 @@ no alternate email address	admin	zh	无备用邮箱地址
 no encryption	admin	zh	未加密
 no forwarding email address	admin	zh	没有转发邮件地址
 no jobs in the database !!!	admin	zh	没有任务在数据库中！
+no limit	admin	zh	无限制
 no login history exists for this user	admin	zh	没有该用户登录的历史记录
 no matches found	admin	zh	未找到匹配
 no message returned.	admin	zh	无返回消息。
@@ -505,6 +508,7 @@ sieve server port	admin	zh	Sieve 服务器端口号
 sieve settings	admin	zh	Sieve 设置
 site	admin	zh	站点
 smtp authentication	admin	zh	SMTP 认证
+smtp only: to create only an smtp account	admin	zh	创建不带 IMAP 的 SMTP 专用账户
 smtp options	admin	zh	SMTP 选项
 smtp server name	admin	zh	SMTP 服务器名
 smtp settings	admin	zh	SMTP 设置
@@ -525,13 +529,7 @@ submit changes	admin	zh	提交更改
 submit the search string	admin	zh	提交查找字符串
 subtype	admin	zh	子类型
 switch it off, if users are randomly thrown out	admin	zh	如果用户任意地退出，请将它关闭
-template selection	admin	zh	模版选择
-text entry	admin	zh	文本条目
-that application name already exists.	admin	zh	应用程序名称已存在。
-that application order must be a number.	admin	zh	应用程序的次序必须为数字。
 that loginid has already been taken	admin	zh	该登录名已被使用
-that name has been used already	admin	zh	该名称已被使用
-that server name has been used already !	admin	zh	该服务器名称已被使用！
 the api is current	admin	zh	当前 API
 the api requires an upgrade	admin	zh	API 需要升级
 the groups must include the primary group	admin	zh	这个群组必须包含主要群组

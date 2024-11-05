@@ -510,7 +510,6 @@ tables installed, unless there are errors printed above	setup	zh	如果上面没
 tables upgraded	setup	zh	数据表升级
 target version	setup	zh	目标版本
 tcp port number of database server	setup	zh	数据库服务器 TCP 连接端口号
-text entry	setup	zh	文字条目
 the %1 extension is needed from: %2.	setup	zh	%1 扩展需要从：%2。
 the %1 extension is needed, if you plan to use a %2 database.	setup	zh	The %1 extension is needed, if you plan to use a %2 database.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	zh	这台服务器上不支持默认的(%1)。使用能支持的第一种类型的数据库。

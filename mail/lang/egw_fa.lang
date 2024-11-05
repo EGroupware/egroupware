@@ -9,8 +9,6 @@ compose	mail	fa	نامه جدید
 compress folder	mail	fa	فشرده سازی پوشه
 contains	mail	fa	شامل است
 copy to	mail	fa	نسخه برداری به
-date(newest first)	mail	fa	تاریخ (جدیدها اول)
-date(oldest first)	mail	fa	تاریخ (قدیمی ها اول)
 default sorting order	mail	fa	ترتیب مرتب سازی پیش فرض
 delete folder	mail	fa	حذف پوشه
 deleted	mail	fa	حذف شد
@@ -81,7 +79,6 @@ save all	mail	fa	ذخیره کردن همه
 select all	mail	fa	انتخاب همه
 sent folder	mail	fa	پوشه ارسال شده
 signature	mail	fa	امضاء
-small view	mail	fa	نمای کوچک
 sort order	mail	fa	ترتیب مرتب سازی
 text	mail	fa	متن
 the mimeparser can not parse this message.	mail	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست

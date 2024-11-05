@@ -13,19 +13,13 @@ automatically start with this font	preferences	ru	Автоматически з�
 automatically start with this font size	preferences	ru	Автоматически устанавливать данный размер шрифта при старте
 br	preferences	ru	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ru	Изменяет пароль пользователя при введении прежнего и нового пароля. Возвращает TRUE при успешном изменении, FALSE - пароль не изменен.
-change your password	preferences	ru	Изменить Ваш Пароль
-change your profile	preferences	ru	Изменить ваш профиль
-change your settings	preferences	ru	Изменить Ваши Настройки
-charset for the csv export	addressbook	ru	Кодировка для экспорта в CSV
 charset for the csv export/import	preferences	ru	Кодировка
-click to select a color	preferences	ru	Щелкните для выбора цвета
 color	preferences	ru	Цвет
 country	preferences	ru	Страна
 dark mode theme	preferences	ru	Темный режим темы
 data exchange settings	preferences	ru	Установки обмена данных
 date format	preferences	ru	Формат даты
 default	preferences	ru	по умолчанию
-default application	preferences	ru	Приложение по умолчанию
 default font	preferences	ru	Шрифт по умолчанию
 default font size	preferences	ru	Размер шрифта по умолчанию
 default preferences	preferences	ru	Настройки по умолчанию
@@ -91,19 +85,15 @@ password stored	preferences	ru	Хранение пароля.
 permanent time zone selection	preferences	ru	Постоянный часовой пояс
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	ru	Выберите часовой пояс для переключения между ними. Переключение не показывается, если выбрано менее двух часовых поясов.
 please select your timezone.	preferences	ru	Выберите ваш часовой пояс.
-please, select a new theme	preferences	ru	Пожалуйста, выбирите новую тему
 popup with search	preferences	ru	Всплывающее окна поиска
 pt: points (1/72 inch)	preferences	ru	pt – точка (1/72 дюйма)
 px: display pixels	preferences	ru	px – отображать пикселы
 re-enter your password	preferences	ru	Введите пароль еще раз
 read prefs for the specified application.	preferences	ru	Прочтите настройки для указанных приложений
-rich text editor theme	preferences	ru	Тема расширенного редактора текста
 select additional lines in lists by	preferences	ru	Выберите дополнительные строки в списке по
-select different theme	preferences	ru	Выберите другую тему
 select one	preferences	ru	Выберите одно
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в EGroupware. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
 select the language of the spellchecker integrated into the rich text editor.	preferences	ru	Выберите язык проверки орфографии, втроенной в расширенный редактор текста.
-select the theme (visualization) of the rich text editor.	preferences	ru	Выберите тему (визуализацию) расширенного редактора текста.
 selectbox	preferences	ru	Выбор
 selectbox with groupmembers	common	ru	Выбор с представителями группы
 selectbox with primary group and search	preferences	ru	Выбор с первоначальной группы и поиск
@@ -144,5 +134,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	ru	Вы можете показать связанные записи как только пиктограммами, пиктограммами с названиями приложений или оба.
 you do not have permission to set acl's in this mode!	preferences	ru	у вас нет прав на установку ACL в этом режиме!
 you must enter a password	preferences	ru	Вы должны ввести пароль
-your current theme is: %1	preferences	ru	ваша текущая тема: %1
 your preferences	preferences	ru	Ваши Настройки

@@ -26,6 +26,7 @@ always respond / auto-responder	mail	da	Always respond / auto-responder
 always show html emails	mail	da	Vis altid HTML e-mails
 always show notifiction	mail	da	Vis altid meddelelse
 answered	mail	da	Besvaret
+archive folder	mail	da	Arkivmappe
 are you sure you want to delete all selected folders?	mail	da	Er du sikker på, at du vil slette alle valgte mapper?
 are you sure you want to move folder %1 to folder %2?	mail	da	Er du sikker på, at du vil flytte mappe %1 til mappe %2?
 attach files	mail	da	Vedhæft filer
@@ -57,11 +58,12 @@ configured values will be set automatically on compose dialog for respected fiel
 connect to profile %1	mail	da	Opret forbindelse til profil %1
 contact label	mail	da	Kontakt-label
 contains	mail	da	indeholder
+convert mail to item and attach its attachments to this item (standard)	mail	da	Konverter e-mail til element og vedhæft vedhæftede filer til dette element (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	da	Konverter e-mail til element, vedhæft dets vedhæftede filer og tilføj rå besked (.eml) som vedhæftet fil
+convert only mail to item (ignore possible attachments)	mail	da	Konverter kun e-mail til emne (ignorér eventuelle vedhæftede filer)
 copy to	mail	da	Kopier til
 cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 current subject	mail	da	Nuværende emne
-date(newest first)	mail	da	Dato (nyeste først)
-date(oldest first)	mail	da	Dato (ældste først)
 default sorting order	mail	da	Standart soterings rækkefølge
 default toolbar actions shown in mail's html editor	mail	da	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	da	Standardværdi for hukommelse af S/MIME-passphrase i minutter
@@ -122,6 +124,7 @@ general	admin	da	Generelt
 get acl rights failed from imap server!	mail	da	Få ACL-rettigheder mislykkedes fra IMAP-server!
 ham folder	mail	da	Ham-mappe
 handling of external http images / mixed content in mails	mail	da	Håndtering af eksterne http-billeder / blandet indhold i mails
+high priority	mail	da	Høj prioritet
 html	mail	da	HTML
 ident name	mail	da	Ident navn
 ident name email	mail	da	Ident navn [E-mail]
@@ -155,6 +158,7 @@ learning as spam failed because of %1	mail	da	Læring som spam mislykkedes på g
 less than	mail	da	mindre end
 limit mailing list results when searching for addresses	mail	da	Begræns mailinglisteresultater, når du søger efter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	da	Liste over handlinger, der skal slås til/aktiveres som standard (f.eks. Mail compose save as InfoLog action)
+low priority	mail	da	Lav prioritet
 mail	common	da	Mail
 mail acl	mail	da	Adgangsrettigheder
 mail filter	mail	da	Mailfilter
@@ -284,7 +288,6 @@ signature	mail	da	Signatur
 signature at top	mail	da	signatur øverst
 signature position and visibility	mail	da	Signaturens placering og synlighed
 signed by	mail	da	Signeret af
-small view	mail	da	Lille overblik
 smime encrypted message	mail	da	S/MIME-krypteret meddelelse
 smime signed message	mail	da	S/MIME-signeret meddelelse
 smtp	mail	da	SMTP
@@ -299,7 +302,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	da	Denne besked er S/MIME-krypteret og adgangskodebeskyttet.
 timeout on connections to your imap server	mail	da	Timeout på forbindelser til din IMAP-server
 to do	mail	da	Sådan gør du
-toggle all folders view for %1	mail	da	Slå visning af alle mapper til for %1
 toggled on actions	mail	da	Aktiveret på handlinger
 trash	mail	da	Papirkurv
 trash folder	mail	da	Papirkurv-mappe
@@ -308,10 +310,6 @@ unread	mail	da	ulæst
 when deleting messages	mail	da	Når meddelser slettes
 write	mail	da	Skriv
 wrote	mail	da	skrev
-yes, only trigger connection reset	mail	da	ja, udløser kun nulstilling af forbindelsen
-yes, show all debug information available for the user	mail	da	ja, vis alle tilgængelige debug-informationer for brugeren
-yes, show basic info only	mail	da	ja, vis kun grundlæggende oplysninger
-you can either choose to save as infolog or tracker, not both.	mail	da	Du kan enten vælge at gemme som InfoLog ELLER tracker, ikke begge dele.
 you can select what info to be displayed on email tag	mail	da	Du kan vælge, hvilke oplysninger der skal vises på e-mail-tagget.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	da	Du kan bruge $$start$$ for ovenstående startdato og $$end$$ for slutdatoen.
 you may add this certificate into your contact, if you trust this signature.	mail	da	Du kan tilføje dette certifikat til din kontakt, hvis du stoler på denne signatur.

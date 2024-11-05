@@ -588,7 +588,6 @@ tables installed, unless there are errors printed above	setup	ru	таблицы 
 tables upgraded	setup	ru	таблицы обновлены
 target version	setup	ru	Конечная Версия
 tcp port number of database server	setup	ru	Номер порта TCP сервера базы данных
-text entry	setup	ru	Текстовая Запись
 the %1 extension is needed from: %2.	setup	ru	%2 нуждается в расширении %1
 the %1 extension is needed, if you plan to use a %2 database.	setup	ru	Если вы планируете использовать базу данных %2, то необходимо расширение %1
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	ru	Расширение ctype требуется HTMLpurifier для проверки содержимого FCKeditor на Cross Site Sсripting

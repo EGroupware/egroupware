@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	es-es	No está permitido a
 current folder	mail	es-es	carpeta actual
 current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
-date(newest first)	mail	es-es	fecha (la más reciente primero)
-date(oldest first)	mail	es-es	fecha (la más antigua primero)
 deactive	mail	es-es	Desactivar
 default sorting order	mail	es-es	Modo de ordenar predeterminado
 default toolbar actions shown in mail's html editor	mail	es-es	Funciones habilitadas en la barra de herramientas del editor HTML al redactar un correo electrónico
@@ -189,7 +187,6 @@ drafts	mail	es-es	Borradores
 drafts folder	mail	es-es	Carpeta de borradores
 edit account	mail	es-es	Editar cuenta
 edit account ...	mail	es-es	Editar cuenta ...
-edit folder acl	mail	es-es	Editar la lista de control de acceso de la carpeta
 edit folder acl ...	mail	es-es	Editar la lista de control de acceso de la carpeta ...
 edit vacation settings	mail	es-es	Editar configuración de vacaciones
 effective only if server supports acl at all	admin	es-es	eficaz sólo si el servidor admite lista de control de acceso en todo
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	es-es	Tratamiento
 header	mail	es-es	Encabezado
 header lines	mail	es-es	Líneas de encabezado
 high	mail	es-es	alto
+high priority	mail	es-es	Alta prioridad
 hold %1 to drag files to your computer	mail	es-es	Sostenga %1 para arrastrar archivos a su computadora
 home page folders	mail	es-es	carpetas de la página de inicio
 hostname or ip	mail	es-es	Nombre de host o IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló
 less than	mail	es-es	menor que
 limit mailing list results when searching for addresses	mail	es-es	Limitar los resultados de las listas de correo al buscar direcciones
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	es-es	Lista de acciones que deben activarse por defecto (por ejemplo, la acción Guardar como InfoLog de Mail composose).
+low priority	mail	es-es	Prioridad baja
 mail	common	es-es	Correo
 mail acl	mail	es-es	Lista de control de acceso del correo
 mail filter	mail	es-es	Filtrar
@@ -471,7 +470,7 @@ refresh time in minutes	mail	es-es	Tiempo de refresco en minutos
 refused to delete folder inbox	mail	es-es	Se negó a suprimir la carpeta INBOX
 refused to delete folder with subfolders	mail	es-es	Se negó a suprimir la carpeta con subcarpetas
 reject with	mail	es-es	rechazar con
-reloaded account %1	mail	es-es	Cuenta %1 recargada
+reloaded account %1	mail	es-es	Cuenta %1 recargada.
 reloaded folder %1	mail	es-es	Carpeta %1 recargada
 remember the password for	mail	es-es	Recordar la contraseña para
 remove "%1" from blacklisted domains	mail	es-es	Suprimir "%1" de los dominios en la lista negra
@@ -506,7 +505,6 @@ resend after how many days?	mail	es-es	¿Reenviar después de cuántos días?
 respond to mail sent to:	mail	es-es	Responder al correo enviado a:
 restrict acl management	admin	es-es	Restringir gestión de lista de control de acceso
 rights	mail	es-es	Derechos
-row order style	mail	es-es	estilo de ordenar filas
 rule priority position	mail	es-es	Posición de prioridad de la regla
 rule with priority	mail	es-es	Regla con prioridad
 rules	mail	es-es	Reglas
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	es-es	Sieve
 sieve connection status	mail	es-es	Estado de la conexión Sieve
 sieve not activated	mail	es-es	Sieve no está activado
-sieve script name	mail	es-es	Nombre del script Sieve
 sieve server	mail	es-es	Servidor Sieve
 sieve_edit_instructions	mail	es-es	(*) Se pueden utilizar comodines (*,?). Si está intentando igualar * o? en sí, debe escapar estos con una barra invertida (\). Si marca "Utilizar expresiones regulares" debe utilizar expresiones regulares válidas. Con el fin de escapar de signo de exclamación (!) en el inicio no siendo usado "NO", utilizar regex y barra invertida (\) (e.g. \!)
 sign your message with smime certificate	mail	es-es	Firme su mensaje con un certificado S/MIME
@@ -596,7 +593,6 @@ signature	mail	es-es	Firma
 signature at top	mail	es-es	firma en la parte superior
 signature position and visibility	mail	es-es	Posición y visibilidad de la firma
 signed by	mail	es-es	Firmado por
-small view	mail	es-es	Vista reducida
 smime encrypted message	mail	es-es	Mensaje cifrado S/MIME
 smime signed message	mail	es-es	Mensaje firmado S/MIME
 smtp	mail	es-es	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	es-es	Suscribirse a la carpeta %1
 subscription folders	mail	es-es	Carpetas de suscripción
 subscription successfully saved.	mail	es-es	La suscripción se ha grabado correctamente.
 succeeded on %1 folders, failed on %2	mail	es-es	Se ha realizado correctamente en %1 carpetas, ha fallado en %2
-successfully connected	mail	es-es	Conectado correctamente
 switch off encryption?	mail	es-es	¿Desea desactivar el cifrado?
 template folder	mail	es-es	Carpeta de plantillas
 templates	mail	es-es	Plantillas
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	es-es	Este mensaje está encriptado S/MIME y protegido por contraseña.
 timeout on connections to your imap server	mail	es-es	Tiempo de espera en las conexiones a su servidor IMAP
 to do	mail	es-es	Por hacer
-toggle all folders view for %1	mail	es-es	Activar la vista de todas las carpetas para %1
 toggled on actions	mail	es-es	Activar acciones
 trash	mail	es-es	Papelera
 trash folder	mail	es-es	Carpeta Papelera
@@ -697,13 +691,7 @@ wizard	mail	es-es	Asistente
 writable sharing requires epl version!	mail	es-es	¡Compartir escritura requiere la versión EPL!
 write	mail	es-es	escribir
 wrote	mail	es-es	escribió
-yes, but mask all passwords	mail	es-es	si, pero enmascarar todas las contraseñas
-yes, but mask all usernames and passwords	mail	es-es	si, pero enmascarar todos los usuarios y las contraseñas
 yes, offer copy option	mail	es-es	sí, ofrecer la opción de copiar
-yes, only trigger connection reset	mail	es-es	sí, sólo desencadenar el restablecimiento de la conexión
-yes, show all debug information available for the user	mail	es-es	si, mostrar toda la información de depuración disponible para el usuario
-yes, show basic info only	mail	es-es	si, sólo mostrar información básica
-you can either choose to save as infolog or tracker, not both.	mail	es-es	Puede elegir guardar como infolog o seguimiento, no ambos.
 you can select what info to be displayed on email tag	mail	es-es	Puede seleccionar la información que se mostrará en la etiqueta de correo electrónico.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	es-es	Puede utilizar $$start$$ para la fecha de inicio y $$end$$ para la fecha de finalización.
 you may add this certificate into your contact, if you trust this signature.	mail	es-es	Puede añadir este certificado a su contacto, si confía en esta firma.

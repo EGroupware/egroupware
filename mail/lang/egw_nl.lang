@@ -116,8 +116,6 @@ cross account forward attachment is not allowed!	mail	nl	Cross account forward a
 current folder	mail	nl	huidige map
 current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
-date(newest first)	mail	nl	Datum (meest recente eerst)
-date(oldest first)	mail	nl	Datum (oudste eerst)
 deactive	mail	nl	Niet actief
 default sorting order	mail	nl	Standaard volgorde
 default toolbar actions shown in mail's html editor	mail	nl	Functies ingeschakeld in de HTML editor werkbalk bij het samenstellen van een e-mail
@@ -178,7 +176,6 @@ drafts	mail	nl	Concepten
 drafts folder	mail	nl	Concept map
 edit account	mail	nl	Bewerk account
 edit account ...	mail	nl	Bewerk account ...
-edit folder acl	mail	nl	Bewerk map ACL
 edit folder acl ...	mail	nl	Bewerk map ACL ...
 edit vacation settings	mail	nl	Bewerk afwezigheid instellingen
 effective only if server supports acl at all	admin	nl	Werkt alleen als server ACL ondersteund
@@ -257,6 +254,7 @@ handling of external http images / mixed content in mails	mail	nl	Omgaan met ext
 header	mail	nl	Kop
 header lines	mail	nl	Kop lijnen
 high	mail	nl	Hoog
+high priority	mail	nl	Hoge prioriteit
 hold %1 to drag files to your computer	mail	nl	Houd %1 ingedrukt om bestanden naar je computer te slepen
 home page folders	mail	nl	Thuis mappen
 hostname or ip	mail	nl	Hostnaam of IP
@@ -313,6 +311,7 @@ learning as spam failed because of %1	mail	nl	Leren als spam mislukt vanwege %1
 less than	mail	nl	minder dan
 limit mailing list results when searching for addresses	mail	nl	Resultaten van mailinglijsten beperken bij het zoeken naar adressen
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	nl	Lijst met acties die standaard ingeschakeld/geactiveerd moeten worden (bijv. Mail compose opslaan als InfoLog actie).
+low priority	mail	nl	Lage prioriteit
 mail	common	nl	Mail
 mail acl	mail	nl	Toegangsrechten
 mail filter	mail	nl	Berichten filter
@@ -346,6 +345,7 @@ modify subject of this message	mail	nl	Wijzig het onderwerp van dit bericht
 move selected mails to archive	mail	nl	Geselecteerde e-mails naar archief verplaatsen
 move selected to	mail	nl	Verplaats geselecteeerde
 move to	mail	nl	Verplaats naar
+move to archive	mail	nl	Verplaatsen naar archiefmap
 move to trash	mail	nl	Verplaatsen naar prullenmand
 moved %1 message(s) from %2 to %3	mail	nl	%1 bericht verplaatst van %2 naar %3
 name and domain	mail	nl	Naam en domein
@@ -471,7 +471,6 @@ resend after how many days?	mail	nl	Opnieuw verzenden na hoeveel dagen?
 respond to mail sent to:	mail	nl	Antwoord op bericht verzonden aan:
 restrict acl management	admin	nl	Beperk ACL beheer
 rights	mail	nl	Rechten
-row order style	mail	nl	rijvolgorde stijl
 rule priority position	mail	nl	Regel prioriteit positie
 rule with priority	mail	nl	regels met prioriteit
 rules	mail	nl	Regels
@@ -542,7 +541,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	nl	Sieve
 sieve connection status	mail	nl	Status Sieve connectie
 sieve not activated	mail	nl	Sieve niet geactiveerd
-sieve script name	mail	nl	Sieve script naam
 sieve server	mail	nl	Sieve server
 sieve_edit_instructions	mail	nl	*) jokertekens (*,?) mogen worden gebruikt. Als je probeert om * of ? zelf te evenaren, moet je ze escapen met een backslash (?). Als je "Reguliere expressies gebruiken" aanvinkt, moet je geldige reguliere expressies gebruiken. Om een uitroepteken (!) aan het begin dat niet als "NOT" wordt gebruikt te omzeilen, moet je een regex en een backslash (^) gebruiken (bijv. ^!).
 sign your message with smime certificate	mail	nl	Onderteken uw bericht met een S/MIME certificaat
@@ -550,7 +548,6 @@ signature	mail	nl	Handtekening
 signature at top	mail	nl	Ondertekeing bovenaan
 signature position and visibility	mail	nl	Positie en zichtbaarheid handtekening
 signed by	mail	nl	Ondertekend door
-small view	mail	nl	kleine weergave
 smime encrypted message	mail	nl	S/MIME gecodeerd bericht
 smime signed message	mail	nl	S/MIME ondertekend bericht
 smtp	mail	nl	SMTP
@@ -570,7 +567,6 @@ subscribe folder ...	mail	nl	Abonneer op map ...
 subscription folders	mail	nl	Gabonneerde mappen
 subscription successfully saved.	mail	nl	Het abonnerren op deze map is succesvol bewaard.
 succeeded on %1 folders, failed on %2	mail	nl	Gelukt op %1 mappen, mislukt op %2
-successfully connected	mail	nl	Succesvol verbonden
 template folder	mail	nl	Sjabloon folder
 templates	mail	nl	Sjablonen
 templates folder	mail	nl	Sjablonen map
@@ -591,7 +587,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	nl	Dit bericht is S/MIME gecodeerd en beveiligd met een wachtwoord.
 timeout on connections to your imap server	mail	nl	Timeout op connecties met de IMAP server
 to do	mail	nl	Te doen
-toggle all folders view for %1	mail	nl	Toogle alle mappen in overzicht %1
 toggled on actions	mail	nl	Acties inschakelen
 trash	mail	nl	Prullenbak
 trash folder	mail	nl	Prullenbak map
@@ -636,13 +631,7 @@ with message:	mail	nl	Met bericht:
 writable sharing requires epl version!	mail	nl	Schrijfbaar delen vereist EPL versie!
 write	mail	nl	Schrijf
 wrote	mail	nl	schreef
-yes, but mask all passwords	mail	nl	ja, maar verberg alle wachtwoorden
-yes, but mask all usernames and passwords	mail	nl	ja, maar verberg alle gebruikersnamen en wachtwoorden
 yes, offer copy option	mail	nl	ja, stel kopieer functie voor
-yes, only trigger connection reset	mail	nl	ja, geef alleen herinitialering verbinding aam
-yes, show all debug information available for the user	mail	nl	ja, toon alle debug infromatie welke is beschikbaar voor de gebruiker
-yes, show basic info only	mail	nl	ja, toon alleen basis infromatie
-you can either choose to save as infolog or tracker, not both.	mail	nl	U kunt kiezen om het bericht te bewaren als InfoLog of Tracker maar niet allebei
 you can select what info to be displayed on email tag	mail	nl	U kunt selecteren welke informatie op de e-mailtag moet worden weergegeven.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	nl	U kunt $$start$$ gebruiken voor de bovenstaande begindatum en $$end$$ voor de einddatum.
 you may add this certificate into your contact, if you trust this signature.	mail	nl	Je kunt dit certificaat toevoegen aan je contactpersoon als je deze handtekening vertrouwt.

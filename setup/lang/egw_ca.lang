@@ -452,7 +452,6 @@ tables installed, unless there are errors printed above	setup	ca	taules instal·
 tables upgraded	setup	ca	taules actualitzades
 target version	setup	ca	Versió destí
 tcp port number of database server	setup	ca	Número del pot TCP del servidor de la base de dades
-text entry	setup	ca	Entrada de text
 the %1 extension is needed from: %2.	setup	ca	L'extensió %1 és necessària per: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	ca	L'extensió %1 és necessaria si vols utilitzar una base de dades %2.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ca	El tipus de base de dades en predeterminats (%1) no està suportat en aquest servidor. Es fa servir el primer tipus suportat

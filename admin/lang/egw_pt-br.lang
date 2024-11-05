@@ -22,6 +22,7 @@
 %1 token %2.	admin	pt-br	%1 token %2.
 %1 user %2	admin	pt-br	%1 usuário %2
 (de)activate mail accounts	admin	pt-br	(Des)Ativar contas de e-mail
+(default no, leave it off if you dont use it)	admin	pt-br	Padrão = Não, deixe-o desativado se você não o usar
 (no subject)	admin	pt-br	(sem assunto)
 -  type	admin	pt-br	- tipo
 1 year	admin	pt-br	1 ano
@@ -462,6 +463,7 @@ no alternate email address	admin	pt-br	Sem conta de e-mail alternativa
 no encryption	admin	pt-br	Sem criptografia
 no forwarding email address	admin	pt-br	Sem conta de e-mail para encaminhar
 no jobs in the database !!!	admin	pt-br	Nenhum trabalho na base de dados!
+no limit	admin	pt-br	Sem limite
 no login history exists for this user	admin	pt-br	Não existe histórico de conexões para este usuário!
 no matches found	admin	pt-br	Nenhuma ocorrência encontrada!
 no message returned.	admin	pt-br	Nenhuma mensagem retornada
@@ -577,6 +579,7 @@ site	admin	pt-br	Site
 skip imap	admin	pt-br	Ir IMAP
 skipping imap configuration!	admin	pt-br	Ignorando configuração IMAP!
 smtp authentication	admin	pt-br	Autenticação smtp
+smtp only: to create only an smtp account	admin	pt-br	Criar conta somente SMTP sem IMAP
 smtp options	admin	pt-br	Opções smtp
 smtp server	admin	pt-br	Servidor SMTP
 smtp server name	admin	pt-br	Nome do Servidor SMTP
@@ -603,14 +606,8 @@ subtype	admin	pt-br	Sub tipo
 successful connected to %1 server%2.	admin	pt-br	Successful ligado ao %1servidor%2.
 switch back to standard identity to save account.	admin	pt-br	Volte para a identidade padrão para salvar conta.
 switch it off, if users are randomly thrown out	admin	pt-br	Desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
-template selection	admin	pt-br	Seleção de modelos
 templates	admin	pt-br	Templates
-text entry	admin	pt-br	Entrada de texto
-that application name already exists.	admin	pt-br	Este nome de aplicativo já existe.
-that application order must be a number.	admin	pt-br	O campo ordem de aplicativo deve ser um número.
 that loginid has already been taken	admin	pt-br	Este código de usuário já existe.
-that name has been used already	admin	pt-br	Este nome já está em uso.
-that server name has been used already !	admin	pt-br	Este nome de servidor já está em uso!
 the api is current	admin	pt-br	A base (API) do EGroupware está atualizada
 the api requires an upgrade	admin	pt-br	A base (API) do EGroupware precisa ser atualizada
 the groups must include the primary group	admin	pt-br	.Os grupos devem incluír o grupo primário

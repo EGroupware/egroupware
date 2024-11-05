@@ -74,6 +74,7 @@ all	common	hu	Összes
 all addressbooks	groupdav	hu	Minden címjegyzék
 all categories	common	hu	Minden kategória
 all fields	common	hu	Összes mező
+all files	common	hu	Minden fájl
 all in one	groupdav	hu	Mindent egyben
 all languages	common	hu	Minden nyelv
 all users	common	hu	Összes felhasználó
@@ -270,6 +271,7 @@ detail	common	hu	Részlet
 details	common	hu	Részletek
 directory	common	hu	Mappa
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	hu	A könyvtár nem létezik, vagy nem olvasható a webszerverrel vagy a dokumentum gyökérkönyvtárához képest nem helyes a relatív útvonal!
+directory for storing merged documents	preferences	hu	Mappa az egyesített dokumentumok tárolására
 disabled	common	hu	Letiltva
 djibouti	common	hu	Dzsibuti
 do you also want to delete all subcategories ?	common	hu	Az alkategóriákat is törölni szeretné?
@@ -510,10 +512,12 @@ line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ign
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	hu	%1 sor: '%2'<br><b>a csv adatok nem egyeznek a(z) %3 táblázat oszlopszámaival ==> kihagyva</b>
 link	common	hu	Hivatkozás
 link target %1 not found!	common	hu	Link célpontja nem található (%1)!
+link to each entry	common	hu	Link az egyes bejegyzésekhez
 list	common	hu	Lista
 list members	common	hu	Listatagok
 lithuania	common	hu	Litvánia
 load	common	hu	Betöltés
+load more links ...	common	hu	További linkek betöltése ...
 loading	common	hu	Betöltés
 local	common	hu	Helyi
 locations	common	hu	Helyek
@@ -549,6 +553,11 @@ may	common	hu	Május
 mayotte	common	hu	Mayotte
 medium	common	hu	Közepes
 menu	common	hu	Menü
+merge	common	hu	Egyesítés
+merge & send	common	hu	Egyesítés és küldés
+merge individually	common	hu	Egyesítés külön-külön
+merge options	common	hu	Összevonási lehetőségek
+merged document filename	preferences	hu	Egyesített dokumentum fájlneve
 message	common	hu	Üzenet
 mexico	common	hu	Mexikó
 micronesia, federated states of	common	hu	Mikronézia
@@ -751,6 +760,8 @@ saudi arabia	common	hu	Szaúd Arábia
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	hu	A Savant2 verziója és wrappere különbözik. <br>Ez a verzió: %1 <br>Savant verzió: %2
 save	common	hu	Elment
 save all	common	hu	Összes mentése
+save as pdf	common	hu	Mentés PDF-ként
+save as zip	common	hu	Mentés ZIP-ként
 saved column sizes to preferences.	common	hu	Elmentett oszlopméretek a preferenciákhoz.
 search	common	hu	Keres
 search %1 '%2'	common	hu	Keres %1 '%2'
@@ -913,6 +924,7 @@ weekend	common	hu	Hétvége
 welcome	common	hu	Üdvözlet
 western european	common	hu	Nyugat-európai
 western sahara	common	hu	Nyugat-Szahara
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	hu	Amikor a bejegyzéseket dokumentumokká egyesíti, azok itt kerülnek tárolásra. Ha nincs mappa megadva, akkor a fájlok az otthoni könyvtárban (%1) lesznek tárolva
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hu	Igen választása esetén a Kezdőlap és Kilépés gombok megjelennek a felső alkalmazás tálcán.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	hu	Hol és hogyan legyenek az EGroupware link szerű tulajdonságok, leírások és kijelentkezés megjelenítve.
 which groups	common	hu	Melyik csoport

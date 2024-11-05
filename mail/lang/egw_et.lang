@@ -25,6 +25,7 @@ always show html emails	mail	et	Alati näita HTML emaile
 always show notifiction	mail	et	Näita alati teavitust
 answered	mail	et	Vastatud
 any status	mail	et	kõik staatused
+archive folder	mail	et	Arhiivikaust
 attach files	mail	et	Failide lisamine
 attach users vcard at compose to every new mail	mail	et	Lisada kasutajate vCard iga uue posti koostamisel.
 attach vcard	mail	et	Kinnita vCard
@@ -52,10 +53,11 @@ checking admin credentials failed	mail	et	Administraatori volituste kontrollimin
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	et	Konfigureeritud väärtused määratakse automaatselt koostamise dialoogis kinnipeetavale väljale, kui koostate uue e-kirja.
 contact label	mail	et	Kontakt silt
 contains	mail	et	sisaldab
+convert mail to item and attach its attachments to this item (standard)	mail	et	E-posti muutmine elemendiks ja selle manuste lisamine sellele elemendile (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	et	Teisenda e-kiri elemendiks, lisa selle manuseid ja lisa manusena toorsõnum (.eml)
+convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
 copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
-date(newest first)	mail	et	Kuupäev (uuemad enne)
-date(oldest first)	mail	et	Kuupäev (vanemad enne)
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
 default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
@@ -108,6 +110,7 @@ general	admin	et	Üldine
 get acl rights failed from imap server!	mail	et	ACL-õiguste saamine IMAP-serverist ebaõnnestus!
 ham folder	mail	et	Ham kaust
 handling of external http images / mixed content in mails	mail	et	Välise http-pildi / segatud sisu käsitlemine e-kirjades
+high priority	mail	et	Kõrge prioriteet
 html	mail	et	HTML
 ident name	mail	et	Tunnuse nimi
 ident name email	mail	et	Ident name [Email]
@@ -138,6 +141,7 @@ learning as spam failed because of %1	mail	et	Õppimine rämpspostina ebaõnnest
 less than	mail	et	vähem kui
 limit mailing list results when searching for addresses	mail	et	Postiloendi tulemuste piiramine aadresside otsimisel
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	et	Loetelu tegevustest, mis tuleb vaikimisi sisse lülitada/aktiveerida (nt Mail compose save as InfoLog action).
+low priority	mail	et	Madal prioriteet
 mail	common	et	E-postid
 mail acl	mail	et	Juurdepääsuõigused
 mail filter	mail	et	Maili filter
@@ -256,7 +260,6 @@ signature	mail	et	Allkiri
 signature at top	mail	et	allkiri üleval
 signature position and visibility	mail	et	Allkirja asukoht ja nähtavus
 signed by	mail	et	Allkirjastanud
-small view	mail	et	väike vaade
 smime encrypted message	mail	et	S/MIME krüpteeritud sõnum
 smime signed message	mail	et	S/MIME allkirjastatud sõnum
 smtp	mail	et	SMTP
@@ -269,15 +272,11 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	et	See sõnum on S/MIME-krüpteeritud ja parooliga kaitstud.
 timeout on connections to your imap server	mail	et	IMAP-serveriga ühenduse aegumistähtaeg
 to do	mail	et	Teha
-toggle all folders view for %1	mail	et	Lülitage kõigi kaustade vaade %1 jaoks ümber
 toggled on actions	mail	et	Tegevuste sisselülitamine
 trash	mail	et	Prügikasti
 trash folder	mail	et	Prügikasti kaust
 unread	mail	et	lugematta
 write	mail	et	Kirjuta
-yes, only trigger connection reset	mail	et	jah, ainult ühenduse lähtestamine
-yes, show all debug information available for the user	mail	et	jah, näidata kogu kasutajale kättesaadavat silumisandmeid
-you can either choose to save as infolog or tracker, not both.	mail	et	Saate valida, kas salvestada InfoLogi VÕI jälgimisseadmena, mitte mõlemat.
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	et	Saate kasutada $$start$$ ülaltoodud alguskuupäeva ja $$end$$$ lõppkuupäeva jaoks.
 you may add this certificate into your contact, if you trust this signature.	mail	et	Te võite lisada selle sertifikaadi oma kontakti, kui te usaldate seda allkirja.

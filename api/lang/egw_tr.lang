@@ -43,6 +43,7 @@ administration	common	tr	Yönetim
 advanced search	common	tr	Gelişmiş arama
 all addressbooks	groupdav	tr	Tüm adres defterleri
 all categories	common	tr	Tüm kategoriler
+all files	common	tr	Tüm dosyalar
 all in one	groupdav	tr	Hepsi bir arada
 allow editing the %1	common	tr	%1'in düzenlenmesine izin ver
 and	common	tr	Ve
@@ -88,6 +89,7 @@ date + time	common	tr	Tarih + Saat
 date+time	common	tr	Tarih+Saat
 delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
+directory for storing merged documents	preferences	tr	Birleştirilmiş belgeleri saklamak için klasör
 disabled	common	tr	Engellendi
 domestic	common	tr	Ev
 don't ask again!	common	tr	Tekrar sorma!
@@ -137,7 +139,9 @@ invalid email	common	tr	Geçersiz e-posta
 invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
 light mode	common	tr	Işık modu
+link to each entry	common	tr	Her girişe bağlantı
 load	common	tr	Yükle
+load more links ...	common	tr	Daha fazla bağlantı yükle ...
 login rejected by epl firewall, please contact your administrator	common	tr	Giriş EGroupware güvenlik duvarı tarafından reddedildi, lütfen yöneticinize başvurun.
 loginid	common	tr	Kullanýcý Adý
 logout	common	tr	Oturum Kapatma
@@ -146,6 +150,11 @@ lost password	common	tr	Kayıp şifre
 lowest	common	tr	En düþük
 mailvelope addon installation failed! please try again.	common	tr	Mailvelope eklentisi kurulumu başarısız oldu! Lütfen tekrar deneyin.
 mailvelope addon installation succeded. now you may configure the options.	common	tr	Mailvelope eklentisi kurulumu başarılı oldu. Şimdi seçenekleri yapılandırabilirsiniz.
+merge	common	tr	Birleştirme
+merge & send	common	tr	Birleştir ve gönder
+merge individually	common	tr	Ayrı ayrı birleştirin
+merge options	common	tr	Birleştirme seçenekleri
+merged document filename	preferences	tr	Birleştirilmiş belge dosya adı
 message	common	tr	Mesaj
 minute	common	tr	Dakika
 more	common	tr	Daha fazla
@@ -190,6 +199,8 @@ primary group	common	tr	Ana grup
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
 repeat password	common	tr	Şifreyi tekrarla
+save as pdf	common	tr	PDF olarak kaydet
+save as zip	common	tr	ZIP olarak kaydet
 saved column sizes to preferences.	common	tr	Sütun boyutlarını tercihlere kaydedin.
 search accounts	common	tr	Hesaplarý ara
 select all	common	tr	Tümünü seçin
@@ -206,6 +217,7 @@ user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri
 version	common	tr	Sürüm
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	tr	Girdileri belgelerle birleştirdiğinizde, burada saklanacaktır. Herhangi bir klasör belirtilmemişse, bunlar ev dizininizde (%1) saklanacaktır
 you have not entered a title	common	tr	Bir baþlýk girmediniz.
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz.
 you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz.

@@ -22,6 +22,7 @@
 %1 token %2.	admin	sk	%1 token %2.
 %1 user %2	admin	sk	%1 používateľ %2
 (de)activate mail accounts	admin	sk	(de)Aktivovať poštové účty
+(default no, leave it off if you dont use it)	admin	sk	Predvolené nastavenie = Nie, ak ho nepoužívate, nechajte ho vypnuté
 (no subject)	admin	sk	(bez predmetu)
 -  type	admin	sk	- typ
 1 year	admin	sk	1 rok
@@ -630,6 +631,7 @@ no default account found!	admin	sk	Predvolený účet sa nenašiel!
 no encryption	admin	sk	Bez šifrovania
 no forwarding email address	admin	sk	Bez emailovej adresy pre preposielanie
 no jobs in the database !!!	admin	sk	V databáze nie sú žiadne úlohy!
+no limit	admin	sk	Žiadny limit
 no login history exists for this user	admin	sk	Pre používateľa neexistuje žiadna história prihlásení!
 no matches found	admin	sk	Nenašlo sa!
 no message returned.	admin	sk	Žiadne správy sa nevrátili
@@ -813,6 +815,7 @@ site	admin	sk	Stránka
 skip imap	admin	sk	Vynechať IMAP
 skipping imap configuration!	admin	sk	Vynechávam nastavenia IMAP!
 smtp authentication	admin	sk	SMTP overovanie
+smtp only: to create only an smtp account	admin	sk	Vytvorenie účtu len SMTP bez IMAP
 smtp options	admin	sk	SMTP možnosti
 smtp server	admin	sk	SMTP server
 smtp server name	admin	sk	Názov SMTP servera
@@ -847,14 +850,8 @@ successfull, but no refresh-token received!	admin	sk	Úspech, ale NEdostali sme 
 switch back to standard identity to save account.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie účtu.
 switch back to standard identity to save other account data.	admin	sk	Prepnúť naspäť na štandardnú identitu pre uloženie údajov účtu.
 switch it off, if users are randomly thrown out	admin	sk	Vypnite to, ak sú používatelia náhodne odpájaní
-template selection	admin	sk	Výber šablóny
 templates	admin	sk	Šablóny
-text entry	admin	sk	Textová položka
-that application name already exists.	admin	sk	Takýto názov aplikácie už existuje.
-that application order must be a number.	admin	sk	Poradie aplikácie musí byť číslom.
 that loginid has already been taken	admin	sk	Takéto ID prihlásenia sa už používa.
-that name has been used already	admin	sk	Toto meno sa už používa.
-that server name has been used already !	admin	sk	Toto meno servera sa už používa!
 the api is current	admin	sk	API je aktuálne
 the api requires an upgrade	admin	sk	API potrebuje aktualizáciu
 the cumulated and anonymised data will be publically available:	admin	sk	Zhromaždené anonymizované údaje budú verejne dostupné:

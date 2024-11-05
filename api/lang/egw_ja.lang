@@ -114,6 +114,7 @@ all addressbooks	groupdav	ja	全アドレス帳
 all categories	common	ja	全カテゴリ
 all days	common	ja	全ての日
 all fields	common	ja	全項目
+all files	common	ja	すべてのファイル
 all in one	groupdav	ja	ひとつにまとめる
 all languages	common	ja	全言語
 all operations save the template!	common	ja	All operations save the template!
@@ -196,7 +197,6 @@ blocked, too many attempts	common	ja	ブロックされました（試行回数�
 blurtext	common	ja	blurText
 bold	common	ja	太字
 border	common	ja	ボーダー
-border-line-thickness for the table-tag	common	ja	テーブル・タグのボーダー線の太さ
 bosnia and herzegovina	common	ja	ボスニア・ヘルツェゴビナ
 botswana	common	ja	ボツワナ
 bottom	common	ja	下部
@@ -781,6 +781,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	ja	Link is appended to mail allowing recipients to download up to date version of files
 link target %1 not found!	common	ja	Link target %1 not found!
 link title of current record	common	ja	現在のレコードのリンクタイトル
+link to each entry	common	ja	各エントリーへのリンク
 linkapps	common	ja	Link apps
 linked	common	ja	Linked
 linkentry	common	ja	Link entry
@@ -794,6 +795,7 @@ list members	common	ja	メンバー一覧
 list of files linked to the current record	preferences	ja	List of files linked to the current record
 lithuania	common	ja	リトアニア
 load	common	ja	ロード
+load more links ...	common	ja	もっとリンクをロードする
 load this template into the editor	common	ja	テンプレートをエディタにロード
 loading	common	ja	ロード中
 local	common	ja	ローカル
@@ -833,6 +835,10 @@ maybe	common	ja	Maybe
 mayotte	common	ja	マヨット
 medium	common	ja	中
 menu	common	ja	メニュー
+merge	common	ja	マージ
+merge & send	common	ja	マージして送信
+merge individually	common	ja	個別にマージ
+merge options	common	ja	マージオプション
 merged document filename	preferences	ja	マージされたドキュメントのファイル名
 message	common	ja	メッセージ
 message ...	common	ja	メッセージ ...
@@ -1131,6 +1137,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	ja	保存
 save all	common	ja	全て保存
 save as	common	ja	名前を付けて保存
+save as pdf	common	ja	PDFとして保存
 save as zip	common	ja	圧縮して保存
 save selected columns as default preference for all users.	common	ja	Save columns as default preference for all users.
 save the changes made and close the window	common	ja	Save changes and close
@@ -1210,6 +1217,7 @@ select work email address	common	ja	メール・アドレスを選択
 select year	common	ja	年を選択
 selectbox	common	ja	セレクト・ボックス
 selection	common	ja	選択
+selection of files can only be done in one folder.  %1 files unselected.	common	ja	ファイルの選択は 1 つのフォルダでのみ可能です。ファイル %1 が選択されていません。
 send	common	ja	送信
 send succeeded to %1	common	ja	%1宛のメールを送信しました
 senegal	common	ja	セネガル

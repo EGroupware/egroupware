@@ -16,21 +16,14 @@ automatically start with this font size	preferences	ja	このフォント・サ�
 br	preferences	ja	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ja	新旧パスワードを設定してパスワードを変更します（TRUE=成功, FALSE=失敗）。
 change password	preferences	ja	パスワード変更
-change your password	preferences	ja	パスワード変更
-change your profile	preferences	ja	プロフィール変更
-change your settings	preferences	ja	設定変更
-charset for the csv export	addressbook	ja	CSV エクスポート用文字セット
 charset for the csv export/import	preferences	ja	文字セット
-click to select a color	preferences	ja	クリックして色を選択
 color	preferences	ja	色
 country	preferences	ja	国
 custom login box color, defaults to above color darkened	common	ja	ログイン・ボックスの色。
 custom sidebar menu active color, defaults to above color darkened	common	ja	サイドバー・メニューのアクティブ色。
-dark moono theme	preferences	ja	Dark Moono Theme
 data exchange settings	preferences	ja	データ交換設定
 date format	preferences	ja	日付書式
 default	preferences	ja	既定値
-default application	preferences	ja	既定のアプリケーション
 default font	preferences	ja	既定のフォント
 default font size	preferences	ja	既定のフォント・サイズ
 default preferences	preferences	ja	設定の既定値
@@ -79,15 +72,12 @@ images linked to an entry can be displayed as thumbnails.  you can turn this off
 in which country are you. this is used to set certain defaults for you.	preferences	ja	国を選択してください。カレンダー等での既定値として使用されます。
 interface/template selection	preferences	ja	テンプレート選択
 just clicking on the line, like a checkbox	preferences	ja	チェックボックスのように単純クリックで選択
-kama theme	preferences	ja	Kama theme
 language	preferences	ja	言語
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	ja	SingleSignOn経由でログインしても、メールサーバやファイルサーバにパスワードを渡すことはできません。
 look & feel	preferences	ja	ルック&フィール
 lowercase letters	preferences	ja	小文字
 max matches per page	preferences	ja	１ページ最大行数
 max number of icons in navbar	preferences	ja	ナビゲーション・バーで表示する最大アイコン数
-moono color theme	preferences	ja	Moono color theme
-moono theme (default)	preferences	ja	Moono theme (Default)
 no default	preferences	ja	既定値無し
 no user-selection at all	common	ja	選択子を提供しない
 note: this feature does *not* change your email password. this will	preferences	ja	※注意：電子メールのパスワードは変更しません。電子メールのパスワードは、手動で変更してください。
@@ -105,20 +95,16 @@ password stored	preferences	ja	パスワードの保存。
 permanent time zone selection	preferences	ja	タイム・ゾーン
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	ja	Select time zones to switch between. Switch is NOT shown, if less than two time zones are selected.
 please select your timezone.	preferences	ja	タイム・ゾーンを選択してください。
-please, select a new theme	preferences	ja	新テーマを選択してください
 popup with search	preferences	ja	検索ウィンドウを開く
 preferences saved.	preferences	ja	設定を保存しました。
 pt: points (1/72 inch)	preferences	ja	pt: ポイント (1/72 インチ)
 px: display pixels	preferences	ja	px: ピクセル
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 read prefs for the specified application.	preferences	ja	アプリケーション個別設定を読み込みます。
-rich text editor theme	preferences	ja	Rich text editor theme
 select additional lines in lists by	preferences	ja	複数行を選択する方法
-select different theme	preferences	ja	異なるテーマを選択してください。
 select one	preferences	ja	選択してください
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ja	表示言語を選択して下さい。
 select the language of the spellchecker integrated into the rich text editor.	preferences	ja	リッチテキスト・エディタに統合されているスペル・チェッカーの言語を選択してください。
-select the theme (visualization) of the rich text editor.	preferences	ja	リッチテキスト・エディタのテーマを選択してください。
 selectbox	preferences	ja	セレクトボックス
 selectbox with groupmembers	common	ja	グループ・メンバーのみのセレクト・ボックス
 selectbox with primary group and search	preferences	ja	プライマリ・グループのセレクト・ボックス（検索機能付き）
@@ -161,7 +147,6 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	ja	アプリケーションのは、アイコンだけ、アイコン＋アプリケーション名、またはその両方で表示できます。
 you do not have permission to set acl's in this mode!	preferences	ja	このモードで ACL を設定する権限がありません!
 you must enter a password	preferences	ja	パスワードを入力してください。
-your current theme is: %1	preferences	ja	現在のテーマ: %1
 your password does not have required strength:	preferences	ja	パスワード強度が要件を満たしません:
 your password might not match the password policy.	preferences	ja	パスワード・ポリシーに適合しません。
 your preferences	preferences	ja	個人設定

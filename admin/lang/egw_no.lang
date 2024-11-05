@@ -22,6 +22,7 @@
 %1 token %2.	admin	no	%1 token %2.
 %1 user %2	admin	no	%1 bruker %2
 (de)activate mail accounts	admin	no	(de)aktivere e-postkontoer
+(default no, leave it off if you dont use it)	admin	no	Standard = Nei, la den være av hvis du ikke bruker den
 (no subject)	admin	no	(uten emne)
 access token revoked.	admin	no	Tilgangstoken tilbakekalt.
 account	admin	no	Konto
@@ -247,9 +248,11 @@ home screen message	admin	no	Melding på hovedside
 host information	admin	no	Vertsinformasjon
 hour<br>(0-23)	admin	no	Time <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	no	Hvor mange dager skal innhold være i tilgangsloggen før de blir slettet (standard 90)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	no	Hvor mange oppføringer skal ikke-administratorer kunne eksportere? Tom = ingen grense, Nei = ingen eksport
 how many minutes should an account or ip be blocked (default 1) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)?
 icon	admin	no	Ikon
 idle	admin	no	Idle
+if different from email address	admin	no	Hvis forskjellig fra e-postadressen
 if no acl records for user or any group the user is a member of	admin	no	Dersom ingen ACL post for bruker eller noen gruppe bruker medlem av
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	no	Om LDAP används, vill du hantera attribut för hemktalog och programskal?
 imap admin password	admin	no	IMAP Administrasjonspassord
@@ -326,6 +329,7 @@ no algorithms available	admin	no	Ingen algoritmer tilgjengelig
 no alternate email address	admin	no	Ingen alternativ e-mailadresse
 no forwarding email address	admin	no	Ingen e-mailadresse for videresending
 no jobs in the database !!!	admin	no	Ingen jobber i databasen
+no limit	admin	no	Ingen grense
 no login history exists for this user	admin	no	Ingen login historikk for denne brukeren
 no matches found	admin	no	Ingen treff funnet
 no modes available	admin	no	Ingen modus tilgjengelig
@@ -404,6 +408,7 @@ sieve server hostname or ip address	admin	no	Tjenernavn eller IP-adresse for Sie
 sieve server port	admin	no	Sieve tjenerport
 sieve settings	admin	no	Sieve innstillinger
 site	admin	no	Nettsted
+smtp only: to create only an smtp account	admin	no	Opprett SMTP-konto uten IMAP
 smtp server name	admin	no	SMTP Tjenernavn
 smtp settings	admin	no	SMTP innstillinger
 smtp-server hostname or ip address	admin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
@@ -421,13 +426,7 @@ start	admin	no	Start
 start testjob!	admin	no	Start testjobb!
 submit changes	admin	no	Bekreft endringene
 submit the search string	admin	no	Bekreft søkestrengen
-template selection	admin	no	Valg av mal
-text entry	admin	no	Tekstfelt
-that application name already exists.	admin	no	Programnavnet er allerede i bruk
-that application order must be a number.	admin	no	Programrekkefølgen må være et nummer
 that loginid has already been taken	admin	no	Den loginID er opptatt
-that name has been used already	admin	no	Det navnet er allerede benyttet
-that server name has been used already !	admin	no	Det tjenernavnet er allerede benyttet!
 the api is current	admin	no	API er gjeldende
 the api requires an upgrade	admin	no	API trenger en oppgradering
 the groups must include the primary group	admin	no	Gruppen må inkludere primærgruppen

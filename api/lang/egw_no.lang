@@ -97,6 +97,7 @@ align	common	no	Juster
 all	common	no	Alle
 all days	common	no	Alle dager
 all fields	common	no	Alle felt
+all files	common	no	Alle filer
 all in one	groupdav	no	Alt i ett
 all languages	common	no	Alle språk
 all operations save the template!	common	no	Alle operasjoner lagrer malen!
@@ -570,6 +571,7 @@ libyan arab jamahiriya	common	no	LIBYA
 license	common	no	Lisens
 liechtenstein	common	no	LIECHTENSTEIN
 link	common	no	Lenke
+link to each entry	common	no	Lenke til hver oppføring
 linklist	common	no	Lenkeliste
 linkstring	common	no	Lenkestreng
 linkto	common	no	Lenk til
@@ -577,6 +579,7 @@ list	common	no	Liste
 list members	common	no	Liste medlemmer
 lithuania	common	no	LITAUEN
 load	common	no	Last inn
+load more links ...	common	no	Last inn flere lenker ...
 load this template into the editor	common	no	Laste denne malen inn i tekstbehandleren
 local	common	no	Lokal
 login	common	no	Login
@@ -610,6 +613,11 @@ may	common	no	Mai
 mayotte	common	no	MAYOTTE
 medium	common	no	Medium
 menu	common	no	Meny
+merge	common	no	Slå sammen
+merge & send	common	no	Slå sammen og send
+merge individually	common	no	Slå sammen enkeltvis
+merge options	common	no	Alternativer for sammenslåing
+merged document filename	preferences	no	Filnavn for sammenslått dokument
 message	common	no	Melding
 mexico	common	no	MEXICO
 micronesia, federated states of	common	no	MIKRONESIA
@@ -813,6 +821,8 @@ saturday	common	no	Lørdag
 saudi arabia	common	no	SAUDI-ARABIA
 save	common	no	Lagre
 save all	common	no	Lagre alle
+save as pdf	common	no	Lagre som PDF
+save as zip	common	no	Lagre som ZIP
 save the changes made and close the window	common	no	Lagre utførte endringer og så lukke vinduet
 saves changes to tables_current.inc.php	common	no	Lagre endringer til tables_current.inc.php
 saves the template with given version number and closes the window	common	no	Lagre malen med gitt versjonsnummer og så lukke vinduet.
@@ -858,6 +868,7 @@ select work email address	common	no	Velg jobb-epost adresse
 select year	common	no	Velg år
 selectbox	common	no	Valgboks
 selection	common	no	Valg
+selection of files can only be done in one folder.  %1 files unselected.	common	no	Valg av filer kan bare gjøres i én mappe. %1 filer ikke valgt.
 send	common	no	Send
 senegal	common	no	SENEGAL
 september	common	no	September

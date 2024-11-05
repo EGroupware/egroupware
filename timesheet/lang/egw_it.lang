@@ -8,14 +8,18 @@ all projects	timesheet	it	Tutti i progetti
 and its members	timesheet	it	E i suoi membri
 applies the changes	timesheet	it	applica le modifiche
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	it	Applica l'azione all'intera query, NON solo i fogli ore visibili
+ask to start and stop working time with session	timesheet	it	Chiedere di avviare e interrompere l'orario di lavoro con la sessione
 both: allow to use projectmanager and free project-names	admin	it	Entrambi: permetti di usare Gestione Progetti e nomi-progetto liberi
 by	timesheet	it	di
+category for 'working time'	admin	it	Categoria per 'Orario di lavoro'
 change category	timesheet	it	Modifica categoria
+change owner when updating	timesheet	it	Cambiare il proprietario durante l'aggiornamento
 changed category to %1	timesheet	it	Categoria modificata in %1
 changed status	timesheet	it	Stato modificato
 check all	timesheet	it	Seleziona tutto
 choose 'creator' of imported data	timesheet	it	Seleziona "creatore" dei dati importati
 comment by %1 at %2:	timesheet	it	Commento di %1 il %2:
+create a single 'working time' timesheet per	timesheet	it	Creare un singolo timesheet 'Orario di lavoro' per
 create new links	timesheet	it	Crea nuovi collegamenti
 creates a new field	timesheet	it	Crea un nuovo campo
 creating new entry	timesheet	it	creazione di una nuova voce
@@ -26,6 +30,10 @@ deleted	timesheet	it	cancellato
 deletes this field	timesheet	it	Cancella questo campo
 determines the order the fields are displayed	timesheet	it	Determina l'ordine di visualizzazione dei campi
 directory with documents to insert entries	timesheet	it	Cartella con documenti per l'inserimento
+disable timers	timesheet	it	Disattivare i timer
+do you want to associate it with the selected %1 entry?	common	it	Si desidera associarlo alla voce %1 selezionata?
+do you want to start your working time?	common	it	Vuoi avviare il tuo orario di lavoro?
+do you want to stop your working time?	common	it	Vuoi interrompere il tuo orario di lavoro?
 each value is a line like <id>[=<label>]	timesheet	it	ogni valore è una linea come <id>[=<label>]
 edit status	timesheet	it	Modifica lo Stato
 edit this entry	timesheet	it	Modifica questa voce
@@ -35,6 +43,7 @@ entry deleted	timesheet	it	Voce eliminata
 entry saved	timesheet	it	Voce salvata
 error deleting the entry!!!	timesheet	it	Errore durante cancellazione voce!!!
 error saving the entry!!!	timesheet	it	Errore durante salvataggio voce!!!
+error storing working time	timesheet	it	Errore nella memorizzazione dell'orario di lavoro
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	it	Esempio {{IF n_prefix~Sig~Hello Mr.~Salve Sig.ra.}} -  ricerca nel campo  "n_prefix", per "Sig", se trovato scrivere "Salve Sig" altrimenti scrivere "Salve Sig.ra"
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	it	Esempio {{LETTERPREFIXCUSTOM n_prefix title n_family}} Esempio: Sig. Dott. Giorgio Rossi
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	it	Esempio {{NELF role}} - se il campo "Ruolo" non è vuoto, si otterrà una riga con il valore del campo "Ruolo"
@@ -47,6 +56,7 @@ exports entries from your timesheet into a csv file.	timesheet	it	Esporta fogli 
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	it	Esporta fogli ore in CSV. CSV sta per 'Comma Separated Values' ovvero valori separati da virgola. Nelle opzioni è possibile scegliere altri separatori
 field must not be empty !!!	timesheet	it	Il campo non può essere vuoto !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
+forgot to switch off working time?	common	it	Avete dimenticato di disattivare l'orario di lavoro?
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
 general fields:	timesheet	it	Campi generali
 global categories	timesheet	it	Categorie Globali
@@ -89,6 +99,8 @@ only admin	timesheet	it	Solo amministratori
 only admin can edit this status	timesheet	it	Solo gli amministratori possono modificare fogli ore con stato
 or endtime	timesheet	it	o OraFine
 order	timesheet	it	Ordine
+overwrite time	common	it	Sovrascrivere l'ora
+overwriting start or stop time	timesheet	it	Sovrascrittura dell'orario di avvio o di arresto
 parent	timesheet	it	Superiore
 pause	common	it	Pausa
 pause time	timesheet	it	Tempo di pausa
@@ -100,8 +112,10 @@ price	timesheet	it	Prezzo
 project fields	timesheet	it	Campi progetto
 projectmanager integration	admin	it	Integrazione Gestione Progetti
 quantity	timesheet	it	Quantità
+recorded	timesheet	it	Registrato
 recovered	timesheet	it	recuperato
 replacements for inserting entries into documents	timesheet	it	Sostituzioni per inserimento voci in documenti
+restore this entry	timesheet	it	Ripristinare questa voce
 save & new	timesheet	it	Salva & Nuovo
 saves the changes made	timesheet	it	Salva le modifiche fatte
 saves the changes made and leaves	timesheet	it	salva le modifiche fatte ed esce
@@ -117,6 +131,8 @@ set to	timesheet	it	Imposta a
 show a quantity sum (eg. to sum up negative overtime)	admin	it	Mostra una somma p.es somma dello straordinario negativo
 skip record	timesheet	it	Salta voce
 start	timesheet	it	Inizio
+start & stop timer	common	it	Timer di avvio e di arresto
+start timer	common	it	Timer di avvio
 start-time can not be before last stop- or pause-time %1!	common	it	Il tempo di avvio non può essere precedente all'ultimo tempo di arresto o di pausa %1!
 starttime	timesheet	it	OraInizio
 starttime has to be before endtime !!!	timesheet	it	L'orario di inizio deve essere prima della fine
@@ -124,6 +140,7 @@ status	timesheet	it	Stato
 status deleted.	timesheet	it	Stato eliminato
 status of created timesheets	timesheet	it	Stato di fogli ore creati
 status updated.	timesheet	it	Stato aggiornato
+stop	common	it	Fermata
 stop- or pause-time can not be before the start-time %1!	common	it	Il tempo di stop o di pausa non può essere precedente al tempo di avvio %1!
 sum %1:	timesheet	it	Somma %1:
 tag to mark positions for address labels	timesheet	it	Tagga per marcare le posizioni per le etichette di indirizzo
@@ -150,10 +167,18 @@ timesheet-%1 deleted.	timesheet	it	Stato %1 eliminato
 titles of any entries linked to the current record, excluding attached files	timesheet	it	I titoli delle voci collegate a questa, allegati esclusi
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	it	Impossibile convertire "%1" a ID account. Impostazione plugin (%2) per %3 in uso.
 unitprice	timesheet	it	Prezzo unitario
+use field from csv if possible	timesheet	it	Utilizzare il campo da CSV, se possibile
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 values for selectbox	timesheet	it	Valori per la selectbox
 view this entry	timesheet	it	Vedi questa voce
 week	timesheet	it	Settimana
+what should be done with unknown values?	timesheet	it	Cosa si deve fare con i valori sconosciuti?
+will be created when saving ...	common	it	Verrà creato al momento del salvataggio ...
+working time	common	it	Orario di lavoro
+working time and timer	timesheet	it	Orario di lavoro e timer
+working time from %1	timesheet	it	Orario di lavoro da %1
+working time of %1 hours stored	timesheet	it	Orario di lavoro di %1 ore memorizzato
+would you like to be asked, to start and stop working time, when login in or off	timesheet	it	Volete che vi venga chiesto di avviare e interrompere l'orario di lavoro, al momento dell'accesso o dello spegnimento?
 yes, only admins can purge deleted items	admin	it	Sì, solo gli amministratori possono cancellare definitivamente gli elementi
 yes, users can purge their deleted items	admin	it	Sì, gli utenti possono rimuovere definitivamente gli elementi eliminati.
 yesterday	timesheet	it	Ieri

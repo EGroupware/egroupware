@@ -236,7 +236,6 @@ tables installed, unless there are errors printed above	setup	et	tabelid install
 tables upgraded	setup	et	Tabelid uuendatud
 target version	setup	et	Siht Versioon
 tcp port number of database server	setup	et	Andmebaasi serveri TCP pordi number
-text entry	setup	et	Järgmine Kirje
 the following applications need to be upgraded:	setup	et	Järgnevad rakendused vajavad uuendamis:
 this has to be outside the webservers document-root!!!	setup	et	See peab olema väljaspool weebiserverite document-root!
 this might take a while, please wait ...	setup	et	See võib võtta aega, palun oota ...

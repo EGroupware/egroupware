@@ -114,6 +114,7 @@ all addressbooks	groupdav	fi	Kaikki osoitekirjat
 all categories	common	fi	Kaikki luokat
 all days	common	fi	Kaikki päivät
 all fields	common	fi	Kaikki kentät
+all files	common	fi	Kaikki tiedostot
 all in one	groupdav	fi	Kaikki samaan
 all languages	common	fi	Kaikki kielet
 all operations save the template!	common	fi	Kaikki toiminnot tallentavat mallipohjan!
@@ -197,7 +198,6 @@ blurtext	common	fi	blurText
 bold	common	fi	Lihavoi
 bolivia	common	fi	BOLIVIA
 border	common	fi	Reunaviiva
-border-line-thickness for the table-tag	common	fi	Reunaviivan paksuus
 bosnia and herzegovina	common	fi	BOSNIA AND HERZEGOVINA
 botswana	common	fi	BOTSWANA
 bottom	common	fi	Alareuna
@@ -775,6 +775,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	fi	Linkki liitetään sähköpostiviestiin, jotta vastaanottajat voivat ladata tiedostojen ajantasaisen version
 link target %1 not found!	common	fi	Linkkikohdetta %1 ei löytynyt!
 link title of current record	common	fi	Nykyisen tietueen linkin otsikko
+link to each entry	common	fi	Linkki kuhunkin merkintään
 linkapps	common	fi	Linkki sovellukseen
 linked	common	fi	Linkitetty
 linkentry	common	fi	Linkki tietueeseen
@@ -788,6 +789,7 @@ list members	common	fi	Jäsenluettelo
 list of files linked to the current record	preferences	fi	Lista liitetyistä tiedostoista
 lithuania	common	fi	LIETTUIA
 load	common	fi	Lataa
+load more links ...	common	fi	Lataa lisää linkkejä ...
 load this template into the editor	common	fi	Lataa mallipohja muokattavaksi
 loading	common	fi	Ladataan
 local	common	fi	Paikallinen
@@ -826,6 +828,10 @@ may	common	fi	Toukokuu
 mayotte	common	fi	MAYOTTE
 medium	common	fi	Normaali
 menu	common	fi	Valikko
+merge	common	fi	Yhdistä
+merge & send	common	fi	Yhdistä & lähetä
+merge individually	common	fi	Yhdistä yksitellen
+merge options	common	fi	Yhdistämisvaihtoehdot
 merged document filename	preferences	fi	Yhdistetyn asiakirjan tiedostonimi
 message	common	fi	Viesti
 message ...	common	fi	Viesti ...
@@ -1102,6 +1108,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	fi	Tallenna
 save all	common	fi	Tallenna kaikki
 save as	common	fi	Tallenna nimellä
+save as pdf	common	fi	Tallenna PDF-tiedostona
 save as zip	common	fi	Tallenna ZIP-muodossa
 save selected columns as default preference for all users.	common	fi	Tallenna valitut sarakkeet oletusasetuksiksi kaikille käyttäjille.
 save the changes made and close the window	common	fi	Tallenna muutokset ja sulje ikkuna
@@ -1176,6 +1183,7 @@ select work email address	common	fi	Valitse työsähköpostiosoite
 select year	common	fi	Valitse vuosi
 selectbox	common	fi	Valintalaatikko
 selection	common	fi	Valinta
+selection of files can only be done in one folder.  %1 files unselected.	common	fi	Tiedostojen valinta voidaan tehdä vain yhdessä kansiossa. %1 tiedostoa ei ole valittu.
 send	common	fi	Lähetä
 send succeeded to %1	common	fi	Lähetä onnistui osoitteeseen %1
 senegal	common	fi	SENEGAL

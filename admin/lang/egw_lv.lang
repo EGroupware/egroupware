@@ -22,6 +22,7 @@
 %1 token %2.	admin	lv	%1 token %2.
 %1 user %2	admin	lv	%1 lietotājs %2
 (de)activate mail accounts	admin	lv	(de)aktivizēt pasta kontus
+(default no, leave it off if you dont use it)	admin	lv	Noklusējuma iestatījums = Nē, atstājiet to izslēgtu, ja to neizmantojat.
 (no subject)	admin	lv	(nav temata)
 1 year	admin	lv	1 gads
 2 month	admin	lv	2 mēneši
@@ -251,10 +252,12 @@ home screen message	admin	lv	Galvenā loga ziņojums
 host information	admin	lv	Host informācija
 hour<br>(0-23)	admin	lv	Stundas <br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	lv	Cik dienu vajadzētu saglabāt iesniegtos datus piekļuves loga, pirms tie tiek izdzēsti (noklusējums 90)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	lv	Cik daudz ierakstu var eksportēt personas, kas nav administratori. Tukšs = nav ierobežojuma, Nē = nav eksporta
 how many minutes should an account or ip be blocked (default 1) ?	admin	lv	Cik minūtes vajadzētu bloķēt kontu vai IP (noklusējums 30)?
 html/plaintext	admin	lv	HTML/Teksts
 icon	admin	lv	Ikona
 idle	admin	lv	Dīkstāve (idle)
+if different from email address	admin	lv	Ja atšķiras no e-pasta adreses
 if no acl records for user or any group the user is a member of	admin	lv	Ja nav ACL ierakstu lietotājiem vai kādai grupai, lietotājs ir ...?
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	lv	Vai vēlies pārvaldīt mājasdirektoriju un pieteikšanāsformas atribūtus, ja lieto LDAP
 imap admin password	admin	lv	IMAP administratora parole
@@ -330,6 +333,7 @@ no algorithms available	admin	lv	Nav pieejami algoritmi
 no alternate email address	admin	lv	Nav alternatīvas e-pasta adreses
 no forwarding email address	admin	lv	Nav pārsūtāmās e-pasta adreses
 no jobs in the database !!!	admin	lv	Datubāzē uzdevumu nav!
+no limit	admin	lv	Nav ierobežojuma
 no login history exists for this user	admin	lv	Šim lietotājam nav autorizāciju vētures
 no matches found	admin	lv	Nav atbilstošu ierakstu
 no modes available	admin	lv	Nav pieejamu režīmu
@@ -407,6 +411,7 @@ sieve server hostname or ip address	admin	lv	Sijāšanas servera hostname vai IP
 sieve server port	admin	lv	Sieve servera ports
 sieve settings	admin	lv	Sieve uzstadījumi
 site	admin	lv	Lapa(site)
+smtp only: to create only an smtp account	admin	lv	Izveidot tikai SMTP kontu bez IMAP
 smtp server name	admin	lv	SMTP servera nosaukums
 smtp settings	admin	lv	SMTP uzstādījumi
 smtp-server hostname or ip address	admin	lv	SMTP servera hosta vārds vai IP adrese
@@ -423,13 +428,7 @@ standard smtp-server	admin	lv	Standarta SMTP serveris
 start testjob!	admin	lv	Sākt testa darbu!
 submit changes	admin	lv	Apstiprināt Izmaiņas
 submit the search string	admin	lv	Apstiprināt meklēšamas stringu
-template selection	admin	lv	Veidnes izvēle
-text entry	admin	lv	Teksta Ievadīšana
-that application name already exists.	admin	lv	Šāds aplikācijas nosaukums jau eksistē
-that application order must be a number.	admin	lv	Aplikāciju secība jānorāda ar skaitli
 that loginid has already been taken	admin	lv	Šāds autorizācijas ID jau ir aizņemts
-that name has been used already	admin	lv	Šāds nosaukums jau tiek lietots
-that server name has been used already !	admin	lv	Šāds servera vārds jau tiek lietots!
 the api is current	admin	lv	Patreizējais API
 the api requires an upgrade	admin	lv	API pieprasa jauninājumus
 the groups must include the primary group	admin	lv	Grupām jāiekļauj pamatgrupa

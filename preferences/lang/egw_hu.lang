@@ -7,17 +7,11 @@ a theme defines the colors and fonts used by the template.	preferences	hu	Egy t�
 acl grants have been updated	preferences	hu	ACL engedélyek frissítése megtörtént
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	hu	Bármilyen lista az EGroupware-ben ennyi bejegyzést vagy sort fog oldalanként megmutatni.<br>A túl nagy szám lelassítja a megjelenítést, a túl kevés az átláthatóságot csökkenti. Ön dönt.
 are you sure you want to delete this category ?	preferences	hu	Biztosan törölni kívánja ezt a kategóriát?
-change your password	preferences	hu	Jelszó megváltoztatása
-change your profile	preferences	hu	Profil megváltoztatása
-change your settings	preferences	hu	Beállítások megváltoztatása
-charset for the csv export	addressbook	hu	Karakterkódolás CSV exporthoz
-click to select a color	preferences	hu	Színválasztás
 color	preferences	hu	Szín
 country	preferences	hu	Ország/állam
 dark mode theme	preferences	hu	Sötét üzemmódú téma
 date format	preferences	hu	Dátum formátum
 default	preferences	hu	alapértelmezett
-default application	preferences	hu	Alapértelmezett alkalmazás
 default preferences	preferences	hu	Alapértelmezett Tulajdonságok
 delete categories	preferences	hu	Kategóriák Törlése
 description can not exceed 255 characters in length !	preferences	hu	A leírás nem érheti el a 255 karakter hosszúságot!
@@ -63,15 +57,11 @@ password stored	preferences	hu	Tárolt jelszó.
 permanent time zone selection	preferences	hu	Állandó időzóna szelekció
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	hu	Kérlek válassz időzónát amelyek között váltani szeretnél. A változtatási lehetőség nem lesz feltüntetve ha kevesebb mint két időzóna lett kiválasztva.
 please select your timezone.	preferences	hu	Kérlek válassz időzónát.
-please, select a new theme	preferences	hu	Válasszon új témát
 popup with search	preferences	hu	Felugró ablak kereséssel
 re-enter your password	preferences	hu	Jelszó megerősítése
-rich text editor theme	preferences	hu	Egyszerű szöveg szerkesztő téma
-select different theme	preferences	hu	Másik téma választása
 select one	preferences	hu	Válasszon egyet
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	hu	Válassza ki a szövegek és üzenetek nyelvét.<br>Néhány nyelv nem tartalmaz minden üzenetet az ön nyelvére lefordítva, ebben az esetben angolul fog megjelenni az üzenet. Fordítási észrevételeit/javaslatait az előfordulás pontos helyének megjelölésével és a szöveg pontos idézésével küldje el a http://www.osbusiness.hu címre!
 select the language of the spellchecker integrated into the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztőbe integrált helyesírás-ellenőrzőt.
-select the theme (visualization) of the rich text editor.	preferences	hu	Válaszd ki a szövegszerkesztő témát.
 selectbox	preferences	hu	Kiválasztó doboz
 selectbox with groupmembers	common	hu	Kiválasztó doboz csoporttagokkal
 selectbox with primary group and search	preferences	hu	Kiválasztó doboz az elsődleges csoporttal és kereséssel
@@ -106,5 +96,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	hu	Csatolt elemeket ikonként, szövegként vagy mindkettőt feltüntetve lehet megjeleníteni.
 you do not have permission to set acl's in this mode!	preferences	hu	Ebben a helyzetben nincs jogosultsága az ACL-eket beállítani!
 you must enter a password	preferences	hu	Meg kell adnia egy jelszót
-your current theme is: %1	preferences	hu	az ön aktuális témája: %1
 your preferences	preferences	hu	Tulajdonságaim

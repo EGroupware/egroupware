@@ -375,7 +375,6 @@ tables installed, unless there are errors printed above	setup	lv	Tabulas uzinsta
 tables upgraded	setup	lv	Tabulas atjauninātas
 target version	setup	lv	Mērķa versija
 tcp port number of database server	setup	lv	Datubāzes servera TCP porta numurs
-text entry	setup	lv	Teksta ievadīšana
 the %1 extension is needed, if you plan to use a %2 database.	setup	lv	Ja domā lietot %2 datubāzi, nepieciešami paplašinajumi %1
 the file	setup	lv	datne
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	lv	Pirmais solis, instalējot EGroupware, ir pārliecināties, ka tavai videi ir neppieciešamie uzstādījumi, lai programmatūra darbotos pareizi

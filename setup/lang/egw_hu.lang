@@ -103,7 +103,6 @@ select where you want to store/retrieve user accounts	setup	hu	Válassza ki, hol
 selectbox	setup	hu	Kiválasztó doboz
 show 'powered by' logo on	setup	hu	'Powered by' logó megjelenítése
 size	setup	hu	Méret
-text entry	setup	hu	Szöveges bejegyzés
 two weeks	setup	hu	Két hét
 use cookies to pass sessionid	setup	hu	Használjon sütiket a session azonosító átadásához
 use pure html compliant code (not fully working yet)	setup	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)

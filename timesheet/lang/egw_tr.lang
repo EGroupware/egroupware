@@ -1,16 +1,40 @@
+ask to start and stop working time with session	timesheet	tr	Seans ile çalışma süresini başlatmayı ve durdurmayı isteyin
+category for 'working time'	admin	tr	Category for 'Çalışma süresi'
+change owner when updating	timesheet	tr	Güncelleme sırasında sahibi değiştir
+create a single 'working time' timesheet per	timesheet	tr	Her biri için tek bir 'Çalışma süresi' zaman çizelgesi oluşturun
 custom fields	timesheet	tr	Özel Alanlar
 deleted	timesheet	tr	Silindi
+disable timers	timesheet	tr	Zamanlayıcıları devre dışı bırak
+do you want to associate it with the selected %1 entry?	common	tr	Seçilen %1 girişi ile ilişkilendirmek istiyor musunuz?
+do you want to start your working time?	common	tr	Çalışma sürenizi başlatmak mı istiyorsunuz?
+do you want to stop your working time?	common	tr	Çalışma sürenizi durdurmak istiyor musunuz?
+error storing working time	timesheet	tr	Çalışma süresi kaydedilirken hata oluştu
+forgot to switch off working time?	common	tr	Çalışma süresini kapatmayı mı unuttunuz?
 global categories	timesheet	tr	Genel kategoriler
 modified	timesheet	tr	Değiştirilmiş
 order	timesheet	tr	Sıralama
+overwrite time	common	tr	Üzerine yazma süresi
+overwriting start or stop time	timesheet	tr	Başlangıç veya bitiş zamanının üzerine yazma
 pause	common	tr	Duraklat
 pause time	timesheet	tr	Duraklama süresi
 paused	timesheet	tr	Duraklatıldı
+recorded	timesheet	tr	Kaydedildi
+restore this entry	timesheet	tr	Bu girişi geri yükle
+start & stop timer	common	tr	Zamanlayıcıyı başlat ve durdur
+start timer	common	tr	Zamanlayıcıyı başlat
 start-time can not be before last stop- or pause-time %1!	common	tr	Başlangıç zamanı son durma veya duraklatma zamanı %1'den önce olamaz!
 stop- or pause-time can not be before the start-time %1!	common	tr	Durdurma veya duraklatma zamanı %1 başlangıç zamanından önce olamaz!
 this month	timesheet	tr	Bu Ay
 this week	timesheet	tr	Bu Hafta
 this year	timesheet	tr	Bu Yıl
 timer already running or paused	common	tr	Zamanlayıcı zaten çalışıyor veya duraklatılmış
+use field from csv if possible	timesheet	tr	Mümkünse CSV'deki alanı kullanın
 view this entry	timesheet	tr	Bu kaydı görüntüle
 week	timesheet	tr	Hafta
+what should be done with unknown values?	timesheet	tr	Bilinmeyen değerlerle ne yapılmalıdır?
+will be created when saving ...	common	tr	Kaydederken oluşturulacak ...
+working time	common	tr	Çalışma süresi
+working time and timer	timesheet	tr	Çalışma süresi ve zamanlayıcı
+working time from %1	timesheet	tr	%1'den itibaren çalışma süresi
+working time of %1 hours stored	timesheet	tr	%1 saatlik çalışma süresi kaydedildi
+would you like to be asked, to start and stop working time, when login in or off	timesheet	tr	Oturum açarken veya kapatırken çalışma süresini başlatmanız ve durdurmanızın istenmesini ister misiniz?

@@ -1,12 +1,19 @@
 applies the changes	timesheet	el	εφαρμόζει τις αλλαγές
+ask to start and stop working time with session	timesheet	el	Ζητήστε να ξεκινήσετε και να σταματήσετε το χρόνο εργασίας με τη συνεδρία
 by	timesheet	el	μέσω
+category for 'working time'	admin	el	Κατηγορία για 'Χρόνος εργασίας'
+change owner when updating	timesheet	el	Αλλαγή ιδιοκτήτη κατά την ενημέρωση
 check all	timesheet	el	Έλεγχος όλων
+create a single 'working time' timesheet per	timesheet	el	Δημιουργία ενός μόνο φύλλου εργασίας «Χρόνος εργασίας» ανά
 create new links	timesheet	el	Δημιουργία νέων συνδέσμων
 creates a new field	timesheet	el	δημιουργεί νέο πεδίο
 custom fields	timesheet	el	Προσαρμοσμένα πεδία
 deleted	timesheet	el	διεγράφη
 deletes this field	timesheet	el	διαγράφει αυτό το πεδίο
 determines the order the fields are displayed	timesheet	el	καθορίζει τη σειρά εμφάνισης των πεδίων
+disable timers	timesheet	el	Απενεργοποίηση χρονομέτρων
+do you want to start your working time?	common	el	Θέλετε να ξεκινήσετε τον χρόνο εργασίας σας;
+do you want to stop your working time?	common	el	Θέλετε να σταματήσετε το χρόνο εργασίας σας;
 each value is a line like <id>[=<label>]	timesheet	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
 edit status	timesheet	el	Επιμέλεια κατάστασης
 edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
@@ -27,12 +34,15 @@ modified	timesheet	el	Τροποποιήθηκε
 no details	timesheet	el	συνοπτικά
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
 order	timesheet	el	Ταξινόμηση
+overwrite time	common	el	Χρόνος αντικατάστασης
 parent	timesheet	el	Μητρική
 pause	common	el	Παύση
 pause time	timesheet	el	Χρόνος παύσης
 paused	timesheet	el	Παύση
 price	timesheet	el	Τιμή
 quantity	timesheet	el	Ποσότητα
+recorded	timesheet	el	Καταγεγραμμένο
+restore this entry	timesheet	el	Επαναφορά αυτής της καταχώρησης
 saves the changes made	timesheet	el	αποθηκεύει τις αλλαγές που έγιναν
 saves the changes made and leaves	timesheet	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί
 select a price	timesheet	el	Επιλέξτε μια τιμή
@@ -43,7 +53,10 @@ stop- or pause-time can not be before the start-time %1!	common	el	Ο χρόνο
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
 timer already running or paused	common	el	Ο χρονοδιακόπτης εκτελείται ήδη ή έχει τεθεί σε παύση
+use field from csv if possible	timesheet	el	Χρήση πεδίου από CSV εάν είναι δυνατόν
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα
+what should be done with unknown values?	timesheet	el	Τι πρέπει να γίνει με άγνωστες τιμές;
+will be created when saving ...	common	el	Θα δημιουργηθεί κατά την αποθήκευση ...
 yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.

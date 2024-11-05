@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	fr	La pièce jointe du com
 current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
-date(newest first)	mail	fr	Date (plus récente d'abord)
-date(oldest first)	mail	fr	Date (plus ancienne d'abord)
 deactive	mail	fr	Désactiver
 default sorting order	mail	fr	Ordre de tri par défaut
 default toolbar actions shown in mail's html editor	mail	fr	Fonctions activées dans la barre d'outils de l'éditeur HTML lors de la composition d'un courriel
@@ -189,7 +187,6 @@ drafts	mail	fr	Projets
 drafts folder	mail	fr	Dossier brouillons
 edit account	mail	fr	Modifier le compte
 edit account ...	mail	fr	Modifier le compte ...
-edit folder acl	mail	fr	Modifier le dossier ACL
 edit folder acl ...	mail	fr	Modifier le dossier ACL ...
 edit vacation settings	mail	fr	Modifier les paramètres de vacances
 effective only if server supports acl at all	admin	fr	Ne fonctionne que si le serveur supporte les ACL
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	fr	Traitement des
 header	mail	fr	En-tête
 header lines	mail	fr	Lignes d'en-tête
 high	mail	fr	haute
+high priority	mail	fr	Priorité élevée
 hold %1 to drag files to your computer	mail	fr	Maintenir la touche %1 pour déplacer les fichiers vers votre ordinateur
 home page folders	mail	fr	Dossiers de la page d'accueil
 hostname or ip	mail	fr	Serveur hôte ou IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	fr	L'apprentissage en tant que spam a
 less than	mail	fr	Moins que
 limit mailing list results when searching for addresses	mail	fr	Limiter les résultats de la liste de diffusion lors de la recherche d'adresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fr	Liste des actions à activer par défaut (par exemple, l'action "Mail compose save as InfoLog").
+low priority	mail	fr	Faible priorité
 mail	common	fr	Mail
 mail acl	mail	fr	ACL Mail
 mail filter	mail	fr	Filtre de mail
@@ -471,7 +470,7 @@ refresh time in minutes	mail	fr	Temps de rafraîchissement en minutes
 refused to delete folder inbox	mail	fr	Impossible de supprimer le dossier "boîte de réception"
 refused to delete folder with subfolders	mail	fr	Impossible de supprimer le dossier et ses sous-dossiers
 reject with	mail	fr	rejecter avec
-reloaded account %1	mail	fr	Compte %1 actualisé
+reloaded account %1	mail	fr	Compte %1 actualisé.
 reloaded folder %1	mail	fr	Dossier %1 actualisé
 remember the password for	mail	fr	Se souvenir du mot de passe pour
 remove "%1" from blacklisted domains	mail	fr	Retirer "%1" de la liste noire des domaines
@@ -506,7 +505,6 @@ resend after how many days?	mail	fr	Ré-envoyer après combien de jours ?
 respond to mail sent to:	mail	fr	Répondre à l'email envoyé à :
 restrict acl management	admin	fr	restreindre la gestion des ACL
 rights	mail	fr	Droits
-row order style	mail	fr	style d'ordonnancement de ligne
 rule priority position	mail	fr	Position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	Règles
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	fr	Sieve
 sieve connection status	mail	fr	Statut de connexion à Sieve
 sieve not activated	mail	fr	Sieve non activé
-sieve script name	mail	fr	Nom du script sieve
 sieve server	mail	fr	Serveur Sieve
 sieve_edit_instructions	mail	fr	(*) des caractères de remplacement (*,?) peuvent être utilisés.
 sign your message with smime certificate	mail	fr	Chiffrer votre message avec un certificat S/MIME
@@ -596,7 +593,6 @@ signature	mail	fr	Signature
 signature at top	mail	fr	Signature en haut
 signature position and visibility	mail	fr	Position et visibilité de la signature
 signed by	mail	fr	Signé par
-small view	mail	fr	Affichage réduit
 smime encrypted message	mail	fr	Message crypté S/MIME
 smime signed message	mail	fr	Message signé S/MIME
 smtp	mail	fr	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	fr	S'abonner au dossier %1
 subscription folders	mail	fr	Abonnement dossiers
 subscription successfully saved.	mail	fr	Abonnement sauvegardé avec succès
 succeeded on %1 folders, failed on %2	mail	fr	Réussi sur %1 dossiers, échoué sur %2
-successfully connected	mail	fr	Connecté avec succès !
 switch off encryption?	mail	fr	Désactiver l'encryption
 template folder	mail	fr	Dossier de modèles
 templates	mail	fr	Modèles
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	fr	Ce message est crypté S/MIME et protégé par un mot de passe.
 timeout on connections to your imap server	mail	fr	Timout sur les connexion à votre serveur IMAP
 to do	mail	fr	A faire
-toggle all folders view for %1	mail	fr	Basculer l'affichage de tous les dossiers pour %1
 toggled on actions	mail	fr	Actions activées
 trash	mail	fr	Corbeille
 trash folder	mail	fr	Dossier Corbeille
@@ -697,13 +691,7 @@ wizard	mail	fr	Assistant
 writable sharing requires epl version!	mail	fr	Les partages ouverts en écriture nécessitent la version EPL !
 write	mail	fr	Ecrire
 wrote	mail	fr	Ecrivait
-yes, but mask all passwords	mail	fr	Oui, mais masquer les mots de passe
-yes, but mask all usernames and passwords	mail	fr	Oui, mais masquer les noms d'utilisateur et mots de passe
 yes, offer copy option	mail	fr	oui, proposer une option de copie
-yes, only trigger connection reset	mail	fr	oui, seulement pour déclencher la réinitialisation de la connexion
-yes, show all debug information available for the user	mail	fr	oui, afficher toutes les informations de débogage disponibles pour l'utilisateur
-yes, show basic info only	mail	fr	Oui, afficher seulement les informations de base
-you can either choose to save as infolog or tracker, not both.	mail	fr	Vous pouvez choisir de sauvegarder soit dans infolog soit dans tracker, pas les 2.
 you can select what info to be displayed on email tag	mail	fr	Vous pouvez sélectionner les informations à afficher sur l'étiquette de l'e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	fr	Vous pouvez utiliser $$start$$ pour la date de début et $$end$$ pour la date de fin.
 you may add this certificate into your contact, if you trust this signature.	mail	fr	Vous pouvez ajouter ce certificat à votre contact si vous avez confiance en cette signature.

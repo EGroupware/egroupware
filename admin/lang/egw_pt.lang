@@ -22,6 +22,7 @@
 %1 token %2.	admin	pt	%1 token %2.
 %1 user %2	admin	pt	%1 utilizador %2
 (de)activate mail accounts	admin	pt	(des)Ativar contas de correio
+(default no, leave it off if you dont use it)	admin	pt	Predefinição = Não, deixe-a desligada se não a utilizar
 (no subject)	admin	pt	(sem assunto)
 -  type	admin	pt	- tipo
 1 year	admin	pt	1 ano
@@ -272,6 +273,7 @@ host information	admin	pt	Informações do servidor
 hostname or ip	admin	pt	Nome do host ou IP
 hour<br>(0-23)	admin	pt	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt	Os registos devem ser permanecer no registo de acessos quantos dias até serem eliminados (por omissão 90) ?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	pt	Quantas entradas devem os não-administradores poder exportar. Vazio = sem limite, Não = sem exportação
 how many minutes should an account or ip be blocked (default 1) ?	admin	pt	Uma conta ou IP deve ficar bloqueado durante quantos minutos (por omissão 30) ?
 how should email addresses for new users be constructed?	admin	pt	Selecionar o formato de endereço de correio eletrónico predefinido para novas contas de utilizador
 icon	admin	pt	Ícone
@@ -357,6 +359,7 @@ no algorithms available	admin	pt	Nenhum algoritmo disponível
 no alternate email address	admin	pt	Sem endereço de correio electrónico alternativo
 no forwarding email address	admin	pt	Sem endereço de correio electrónico para reencaminhamento
 no jobs in the database !!!	admin	pt	Nenhum trabalho na base de dados!
+no limit	admin	pt	Sem limite
 no login history exists for this user	admin	pt	Não existe histórico de acessos para este utilizador
 no matches found	admin	pt	Nenhuma ocorrência encontrada
 no modes available	admin	pt	Nenhum modo disponível
@@ -449,6 +452,7 @@ sieve server port	admin	pt	Porto do servidor Sieve
 sieve settings	admin	pt	Configurações do Sieve
 site	admin	pt	Sítio
 smtp authentication	admin	pt	Autenticação SMTP
+smtp only: to create only an smtp account	admin	pt	Criar conta apenas SMTP sem IMAP
 smtp options	admin	pt	Opções do SMTP
 smtp server name	admin	pt	Nome do servidor SMTP
 smtp settings	admin	pt	Definições do SMTP
@@ -468,14 +472,8 @@ start testjob!	admin	pt	Iniciar trabalho de teste!
 submit changes	admin	pt	Enviar alterações
 submit the search string	admin	pt	Enviar termo de pesquisa
 subtype	admin	pt	Subtipo
-template selection	admin	pt	Selecção de modelos
 templates	admin	pt	Templates
-text entry	admin	pt	Entrada de texto
-that application name already exists.	admin	pt	Este nome de aplicação já existe.
-that application order must be a number.	admin	pt	O campo ordem da aplicação tem d ser um número.
 that loginid has already been taken	admin	pt	Esse nome de utilizador já existe
-that name has been used already	admin	pt	Esse nome já existe
-that server name has been used already !	admin	pt	Esse nome de servidor já existe!
 the api is current	admin	pt	A base (API) do EGroupware está actualizada
 the api requires an upgrade	admin	pt	A base (API) do EGroupware precisa ser actualizada
 the groups must include the primary group	admin	pt	Os grupos têm de incluir o grupo primário

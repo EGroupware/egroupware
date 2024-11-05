@@ -7,15 +7,10 @@ a theme defines the colors and fonts used by the template.	preferences	ko	테마
 acl grants have been updated	preferences	ko	ACL 허용이 업데이트 되었습니다.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ko	EGroupware에서 사용되는 어떠한 리스트의 개수나 페이지당 라인은 설정한 수만큼 보입니다.<br>너무 큰 수는 페이지 표시가 느려지고 , 너무 작은 수는 전체적인 보기에 많은 시간을 소비하게 됩니다.
 are you sure you want to delete this category ?	preferences	ko	정말 이 카테고리를 삭제할까요?
-change your password	preferences	ko	암호 변경
-change your profile	preferences	ko	프로필 변경
-change your settings	preferences	ko	설정 바꾸기
-click to select a color	preferences	ko	클릭해서 색깔을 선택
 color	preferences	ko	색
 country	preferences	ko	국가
 date format	preferences	ko	날짜 형식
 default	preferences	ko	기본
-default application	preferences	ko	기본 응용프로그램
 default preferences	preferences	ko	기본 환경설정
 delete categories	preferences	ko	카테고리 삭제
 description can not exceed 255 characters in length !	preferences	ko	설명은 255 글자를 넘길수 없습니다!
@@ -44,10 +39,8 @@ max number of icons in navbar	preferences	ko	네비게이션바 에서 최대 �
 no default	preferences	ko	기본설정 없음
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ko	참고: e-mail의 암호는 변경되지 않습니다. 수동으로 변경하십시오.
 password stored	preferences	ko	비밀번호 저장.
-please, select a new theme	preferences	ko	새로운 테마를 선택하세요.
 popup with search	preferences	ko	팝업으로 검색
 re-enter your password	preferences	ko	새로운 암호 확인
-select different theme	preferences	ko	테마 바꾸기
 select one	preferences	ko	하나를 선택
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ko	EGroupware의 문장과 메세지의 언어를 선택하세요.<br>특정 언어는 모든 메세지를 포함하고 있지 않아서 영어로 보입니다.
 selectbox	preferences	ko	선택상자
@@ -75,5 +68,4 @@ which currency symbol or name should be used in egroupware.	preferences	ko	EGrou
 you can show the applications as icons only, icons with app-name or both.	preferences	ko	응용프로그램의 아이콘만 보이게 하거나 이름과 아이콘 동시에 보이게 할수 있습니다
 you do not have permission to set acl's in this mode!	preferences	ko	현재 ACL을 설정할 권한이 없습니다
 you must enter a password	preferences	ko	암호를 입력해야만 합니다.
-your current theme is: %1	preferences	ko	현재 테마는 %1 입니다.
 your preferences	preferences	ko	귀하의 환경설정

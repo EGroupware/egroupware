@@ -75,6 +75,7 @@ all addressbooks	groupdav	da	Alle adressebøger
 all categories	common	da	Alle kategorier
 all days	common	da	Alle dage
 all fields	common	da	Alle felter
+all files	common	da	Alle filer
 all in one	groupdav	da	Alle i én
 all users	common	da	Alle brugere
 allow editing the %1	common	da	Tillad redigering af %1
@@ -484,9 +485,11 @@ license	common	da	Licens
 liechtenstein	common	da	Liechenstein
 light mode	common	da	Lys tilstand
 link	common	da	Link
+link to each entry	common	da	Link til hver post
 list	common	da	Liste
 lithuania	common	da	Lithuania
 load	common	da	Indlæs
+load more links ...	common	da	Indlæs flere links ...
 local	common	da	Lokal
 login	common	da	Login
 login rejected by epl firewall, please contact your administrator	common	da	Login afvist af EGroupware firewall, kontakt venligst din administrator.
@@ -520,6 +523,10 @@ may	common	da	Maj
 mayotte	common	da	Mayotte
 medium	common	da	Medium
 menu	common	da	Menu
+merge	common	da	Flette
+merge & send	common	da	Flet og send
+merge individually	common	da	Flet individuelt
+merge options	common	da	Indstillinger for fletning
 merged document filename	preferences	da	Flettet dokument filnavn
 message	common	da	Besked
 message ...	common	da	Besked ...
@@ -724,6 +731,7 @@ saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
 save all	common	da	Gem alle
 save as	common	da	Gem som
+save as pdf	common	da	Gem som PDF
 save as zip	common	da	Gem som ZIP
 save selected columns as default preference for all users.	common	da	Gem kolonner som standardindstilling for alle brugere.
 save the changes made and close the window	common	da	Gem ændringer og luk
@@ -746,6 +754,7 @@ select one	common	da	Vælg en
 select user	common	da	Vælg bruger
 select work email address	common	da	Vælg arbejds e-mail adresse
 selectbox	common	da	Selectboks
+selection of files can only be done in one folder.  %1 files unselected.	common	da	Valg af filer kan kun ske i én mappe. %1 filer er ikke valgt.
 send	common	da	Send
 senegal	common	da	Senegal
 september	common	da	September

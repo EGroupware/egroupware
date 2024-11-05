@@ -70,6 +70,7 @@ all	common	bg	Всички
 all addressbooks	groupdav	bg	Всички адресни книги
 all categories	common	bg	Всички категории
 all fields	common	bg	всички полета
+all files	common	bg	Всички файлове
 all in one	groupdav	bg	Всичко в едно
 all users	common	bg	Всички потребители
 allow editing the %1	common	bg	Разрешете редактирането на %1
@@ -466,9 +467,11 @@ light mode	common	bg	Светъл режим
 line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv съдържат ##last-check-run## на таблица %3 ==> игнориран</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	bg	Ред %1: '%2'<br><b>данните в csv не съвпадат с броя на колоните в таблицата %3 ==> игнориран</b>
 link	common	bg	Връзка
+link to each entry	common	bg	Връзка към всеки запис
 list	common	bg	Списък
 list members	common	bg	Списък с членове
 lithuania	common	bg	Литва
+load more links ...	common	bg	Зареждане на още връзки...
 loading	common	bg	зареждане
 local	common	bg	Локален
 locations	common	bg	местоположения
@@ -504,6 +507,11 @@ may	common	bg	Май
 mayotte	common	bg	Майот
 medium	common	bg	Средно
 menu	common	bg	Меню
+merge	common	bg	Сливане
+merge & send	common	bg	Сливане и изпращане
+merge individually	common	bg	Сливане поотделно
+merge options	common	bg	Опции за сливане
+merged document filename	preferences	bg	Име на файла на обединения документ
 message	common	bg	Съобщение
 mexico	common	bg	Мексико
 micronesia, federated states of	common	bg	Микронезия
@@ -587,7 +595,6 @@ open	common	bg	отвори
 open existing contact	common	bg	Отваряне на съществуващ контакт
 open notify window	common	bg	Отваряне на прозореца за известяване
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
-open sidebox	common	bg	Отваряне на страничната кутия
 open the online help.	common	bg	Отваряне на онлайн помощ
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	bg	Входът в OpenIDConnect е успешен, но потребител '%1' НЕ съществува в EGroupware, а автоматичното създаване на потребители е деактивирано!
 operator	common	bg	Оператор
@@ -703,6 +710,8 @@ sao tome and principe	common	bg	Сао Томе и Принсипе
 saturday	common	bg	Събота
 saudi arabia	common	bg	Саудитска Арабия
 save	common	bg	Запис
+save as pdf	common	bg	Записване като PDF
+save as zip	common	bg	Записване като ZIP
 saved column sizes to preferences.	common	bg	Запазете размерите на колоните в предпочитанията.
 search	common	bg	Търсене
 search %1 '%2'	common	bg	Търсене на %1 '%2'
@@ -727,6 +736,7 @@ select the default width for the application windows	common	bg	Изберете 
 select user	common	bg	Изберете потребител
 select work email address	common	bg	Изберете служебен e-mail адрес
 selection	common	bg	Избор
+selection of files can only be done in one folder.  %1 files unselected.	common	bg	Избирането на файлове може да се извърши само в една папка. %1 файлове не са избрани.
 send	common	bg	Изпращане
 senegal	common	bg	Сенегал
 september	common	bg	Септември

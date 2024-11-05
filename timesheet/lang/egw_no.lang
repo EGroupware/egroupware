@@ -1,14 +1,22 @@
 2 month ago	timesheet	no	2 måneder siden
 2 years ago	timesheet	no	2 år siden
 3 years ago	timesheet	no	3 år siden
+ask to start and stop working time with session	timesheet	no	Be om å starte og stoppe arbeidstid med økt
 by	timesheet	no	av
+category for 'working time'	admin	no	Kategori for 'Arbeidstid'
+change owner when updating	timesheet	no	Endre eier ved oppdatering
 check all	timesheet	no	Kontroller alle
+create a single 'working time' timesheet per	timesheet	no	Opprett en enkelt timeseddel for 'Arbeidstid' per
 create new links	timesheet	no	Opprett nye lenker
 creates a new field	timesheet	no	lager nytt felt
 custom fields	timesheet	no	Egendefinerte Felter
 deleted	timesheet	no	slettet
 deletes this field	timesheet	no	sletter dette feltet
 determines the order the fields are displayed	timesheet	no	avgjør rekkefølge feltene vises i
+disable timers	timesheet	no	Deaktiver tidtakere
+do you want to associate it with the selected %1 entry?	common	no	Vil du knytte den til den valgte %1-oppføringen?
+do you want to start your working time?	common	no	Vil du starte arbeidstiden din?
+do you want to stop your working time?	common	no	Ønsker du å stoppe arbeidstiden din?
 each value is a line like <id>[=<label>]	timesheet	no	hver verdi er en linje som <id>[=<label>]
 edit status	timesheet	no	Endre status
 edit this entry	timesheet	no	Endre denne forekonsten
@@ -18,8 +26,10 @@ entry deleted	timesheet	no	Forekomst slettet
 entry saved	timesheet	no	Forekomst lagret
 error deleting the entry!!!	timesheet	no	Feil ved sletting av forekomst!
 error saving the entry!!!	timesheet	no	Feil ved lagring av forekomst!
+error storing working time	timesheet	no	Feil ved lagring av arbeidstid
 existing links	timesheet	no	Eksisterende lenker
 field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt!
+forgot to switch off working time?	common	no	Har du glemt å slå av arbeidstiden?
 global categories	timesheet	no	Globale Kategorier
 history	timesheet	no	Historikk
 id	timesheet	no	Id
@@ -36,6 +46,8 @@ modified	timesheet	no	Endret
 no details	timesheet	no	Ingen detaljer
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	no	antall rekker i multi-linje felter eller linjer i multi-valg bokser
 order	timesheet	no	Ordre
+overwrite time	common	no	Tid for overskriving
+overwriting start or stop time	timesheet	no	Overskriving av start- eller stopptid
 parent	timesheet	no	Overordnet
 pause	common	no	Pause
 pause time	timesheet	no	Tid for pause
@@ -43,6 +55,8 @@ paused	timesheet	no	Pauset
 permission denied!!!	timesheet	no	Adgang nektes!
 price	timesheet	no	Pris
 quantity	timesheet	no	Antall
+recorded	timesheet	no	Innspilt
+restore this entry	timesheet	no	Gjenopprett denne oppføringen
 save & new	timesheet	no	Lagre og ny
 saves the changes made	timesheet	no	Lagre endringene
 saves the changes made and leaves	timesheet	no	lagrer endringene og lukker
@@ -50,6 +64,8 @@ saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og oppre
 select a price	timesheet	no	Velg en pris
 select a project	timesheet	no	Velg et prosjekt
 start	timesheet	no	Start
+start & stop timer	common	no	Start- og stopptimer
+start timer	common	no	Start tidtaker
 start-time can not be before last stop- or pause-time %1!	common	no	Start-tidspunktet kan ikke være før siste stopp- eller pausetidspunkt %1!
 stop- or pause-time can not be before the start-time %1!	common	no	Stopp- eller pausetid kan ikke være før starttidspunktet %1!
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
@@ -60,8 +76,16 @@ this year	timesheet	no	Dette året
 timer already running or paused	common	no	Timeren kjører allerede eller er satt på pause
 timesheet	common	no	Timeregistrering
 unitprice	timesheet	no	Enhetspris
+use field from csv if possible	timesheet	no	Bruk felt fra CSV hvis mulig
 values for selectbox	timesheet	no	Verdier for valgboksene
 view this entry	timesheet	no	Vis denne forekomsten
 week	timesheet	no	Uke
+what should be done with unknown values?	timesheet	no	Hva skal gjøres med ukjente verdier?
+will be created when saving ...	common	no	Blir opprettet når du lagrer ...
+working time	common	no	Arbeidstid
+working time and timer	timesheet	no	Arbeidstid og tidtaker
+working time from %1	timesheet	no	Arbeidstid fra %1
+working time of %1 hours stored	timesheet	no	Arbeidstid på %1 timer lagret
+would you like to be asked, to start and stop working time, when login in or off	timesheet	no	Ønsker du å bli spurt om å starte og stoppe arbeidstiden når du logger inn eller ut?
 yesterday	timesheet	no	I går
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	no	Din databse er ikke oppdatert (%1 vs. %2), kjør %3setup%4 for å oppgradere databasen.

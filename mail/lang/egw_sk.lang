@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	sk	Pripojenie krížového
 current folder	mail	sk	Aktuálny priečinok
 current subject	mail	sk	Aktuálny predmet
 currently:	mail	sk	Aktuálne:
-date(newest first)	mail	sk	Dátum (novšie na začiatok)
-date(oldest first)	mail	sk	Dátum (staršie na začiatok)
 deactive	mail	sk	Deaktivovať
 default sorting order	mail	sk	Predvolené triedenie
 default toolbar actions shown in mail's html editor	mail	sk	Funkcie povolené na paneli nástrojov editora HTML pri vytváraní e-mailu
@@ -189,7 +187,6 @@ drafts	mail	sk	Návrhy
 drafts folder	mail	sk	Priečinok návrhov
 edit account	mail	sk	Upraviť účet
 edit account ...	mail	sk	Upraviť účet ...
-edit folder acl	mail	sk	Upraviť ACL priečinku
 edit folder acl ...	mail	sk	Upraviť ACL priečinku ...
 edit vacation settings	mail	sk	Upraviť nastavenia neprítomnosti
 effective only if server supports acl at all	admin	sk	Uplatní sa iba ak server podporuje ACL
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	sk	Spracovanie ex
 header	mail	sk	Hlavička
 header lines	mail	sk	Riadky hlavičky
 high	mail	sk	Vysoká
+high priority	mail	sk	Vysoká priorita
 hold %1 to drag files to your computer	mail	sk	Podržte %1 a presuňte súbory do počítača
 home page folders	mail	sk	Priečinky domovskej stránky
 hostname or ip	mail	sk	Názov stroja alebo IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	sk	Zapamätanie ako nevyžiadanej spr
 less than	mail	sk	menej než
 limit mailing list results when searching for addresses	mail	sk	Obmedziť výsledky poštového zoznamu pri vyhľadávaní adries
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sk	Zoznam akcií, ktoré majú byť predvolene zapnuté/aktivované (napr. akcia Mail kompose uložiť ako InfoLog)
+low priority	mail	sk	Nízka priorita
 mail	common	sk	E-mail
 mail acl	mail	sk	ACL pre Mail
 mail filter	mail	sk	Filter správ
@@ -506,7 +505,6 @@ resend after how many days?	mail	sk	Po koľkých dňoch znovu odoslať?
 respond to mail sent to:	mail	sk	Odpovedať na správu odoslanú na adresu:
 restrict acl management	admin	sk	Obmedziť spravovanie ACL
 rights	mail	sk	Práva
-row order style	mail	sk	Štýl usporiadania riadkov
 rule priority position	mail	sk	Pozícia priority pravidla
 rule with priority	mail	sk	Pravidlo s prioritou
 rules	mail	sk	Pravidlá
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	sk	Sieve
 sieve connection status	mail	sk	Stav spojenia Sieve
 sieve not activated	mail	sk	Sieve nie je zapnutý
-sieve script name	mail	sk	Názov Sieve skriptu
 sieve server	mail	sk	Sieve server
 sieve_edit_instructions	mail	sk	(*) Dajú sa použiť žolíky (*,?). Ak chcete hľadať práve tieto znaky (* alebo ?), musíte pred ne vložiť opačnú lomku (\). Keď zaškrtnete "použiť regulérne výrazy", musíte používať platné regulérne výrazy. Výkričník sa používa ako logický negátor (znak NIE). Ak chcete použiť výkričník ako bežný znak, musíte predeň vložiť opačnú lomku (\).
 sign your message with smime certificate	mail	sk	Podpísať správu pomocou S/MIME certifikátu
@@ -596,7 +593,6 @@ signature	mail	sk	Podpis
 signature at top	mail	sk	Podpis navrchu
 signature position and visibility	mail	sk	Umiestnenie a viditeľnosť podpisu
 signed by	mail	sk	Podpísaný
-small view	mail	sk	Zmenšený pohľad
 smime encrypted message	mail	sk	Šifrovaná správa S/MIME
 smime signed message	mail	sk	S/MIME podpísaná správa
 smtp	mail	sk	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	sk	Prihlásiť priečinok %1
 subscription folders	mail	sk	Prihlásené priečinky
 subscription successfully saved.	mail	sk	Stav prihlásenia úspešne uložené.
 succeeded on %1 folders, failed on %2	mail	sk	Úspešné na %1 priečinkov, neúspešné na %2
-successfully connected	mail	sk	Pripojenie úspešné
 switch off encryption?	mail	sk	Vypnúť šifrovanie?
 template folder	mail	sk	Priečinok Šablóny
 templates	mail	sk	Šablóny
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	sk	Táto správa je šifrovaná pomocou S/MIME a chránená heslom.
 timeout on connections to your imap server	mail	sk	Pripojenie na IMAP server - čas požiadavky vypršal.
 to do	mail	sk	Vybaviť
-toggle all folders view for %1	mail	sk	Prepnúť zobrazenie všetkých priečinkov pre %1
 toggled on actions	mail	sk	Prepínanie na akcie
 trash	mail	sk	Odpadkový kôš
 trash folder	mail	sk	Priečinok Odpadkový kôš
@@ -697,13 +691,7 @@ wizard	mail	sk	Sprievodca
 writable sharing requires epl version!	mail	sk	Zapisovateľné zdieľanie vyžaduje verziu EPL!
 write	mail	sk	Zapísať
 wrote	mail	sk	Zapísal
-yes, but mask all passwords	mail	sk	áno, ale skryť všetky heslá
-yes, but mask all usernames and passwords	mail	sk	áno, ale skryť všetky používateľské mená a heslá
 yes, offer copy option	mail	sk	Áno, ponúknuť možnosť kópie
-yes, only trigger connection reset	mail	sk	áno, spustiť iba reset pripojenia
-yes, show all debug information available for the user	mail	sk	áno, zobraziť všetky ladiace informácie dostupné používateľovi
-yes, show basic info only	mail	sk	áno, zobraziť len základné informácie
-you can either choose to save as infolog or tracker, not both.	mail	sk	Môžete si vybrať buď ukladanie do Záznamníka alebo Sledovača, ale nie oboje naraz.
 you can select what info to be displayed on email tag	mail	sk	Môžete vybrať, ktoré informácie sa majú zobrazovať na e-mailovej značke.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sk	Pre dátum začiatku môžete použiť $$start$$ a pre dátum ukončenia $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	sk	Môžete pridať tento certifikát do vášho kontaktu, ak dôverujete tomuto podpisu.

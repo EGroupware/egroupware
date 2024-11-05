@@ -27,6 +27,7 @@ and the rule with priority %1, now got the priority %2	mail	fi	Ja sääntö, jol
 answered	mail	fi	Vastattu
 any of	mail	fi	Mikä tahansa
 any status	mail	fi	Mikä tahansa tila
+archive folder	mail	fi	Arkistokansio
 are you sure you want to delete all selected folders?	mail	fi	Oletko varma, että haluat poistaa kaikki valitut kansiot?
 are you sure you want to move folder %1 to folder %2?	mail	fi	Haluatko varmasti siirtää kansion %1 kansioon %2?
 attach files	mail	fi	Tiedostojen liittäminen
@@ -59,10 +60,11 @@ condition	mail	fi	Ehdot
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fi	Määritetyt arvot asetetaan automaattisesti laatimisvalintaikkunassa arvostetulle kentälle, kun laadit uutta sähköpostia.
 contact label	mail	fi	Yhteystieto etiketti
 contains	mail	fi	Sisältää
+convert mail to item and attach its attachments to this item (standard)	mail	fi	Muunna sähköposti kohteeksi ja liitä sen liitteet tähän kohteeseen (vakio)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fi	Muunna sähköpostiviesti kohteeksi, liitä sen liitteet ja lisää raakaviesti (.eml) liitetiedostoksi
+convert only mail to item (ignore possible attachments)	mail	fi	Muunna vain sähköposti kohteeksi (jätä mahdolliset liitteet huomiotta)
 copy to	mail	fi	Kopio
 cross account forward attachment is not allowed!	mail	fi	Tilin rajat ylittävä eteenpäin kiinnittäminen ei ole sallittua!
-date(newest first)	mail	fi	Päivämäärä - uusin ensin
-date(oldest first)	mail	fi	Päivämäärä - vanhin ensin
 default sorting order	mail	fi	Oletus lajittelujärjestys
 default toolbar actions shown in mail's html editor	mail	fi	HTML-editorin työkalupalkissa sähköpostia laadittaessa käytössä olevat toiminnot
 default value for remembering s/mime passphrase in minutes	mail	fi	S/MIME-salasanan muistamisen oletusarvo minuutteina
@@ -143,6 +145,7 @@ greater than	mail	fi	Suurempi kuin
 ham folder	mail	fi	Ham-kansio
 handling of external http images / mixed content in mails	mail	fi	Ulkoisten http-kuvien / sekasisällön käsittely sähköpostiviesteissä
 header lines	mail	fi	Ylätunnisterivit
+high priority	mail	fi	Korkea prioriteetti
 how to forward messages	mail	fi	Kuinka viestejä välitetään
 html	mail	fi	HTML
 ident name	mail	fi	Tunnuksen nimi
@@ -181,6 +184,7 @@ learning as spam failed because of %1	mail	fi	Oppiminen roskapostina epäonnistu
 less than	mail	fi	Vähemmän kuin
 limit mailing list results when searching for addresses	mail	fi	Rajoita postituslistan tuloksia osoitteita etsittäessä
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	fi	Luettelo toiminnoista, jotka kytketään/aktivoidaan oletusarvoisesti päälle (esim. Mail kompositio tallenna InfoLog-toimintona).
+low priority	mail	fi	Vähäinen prioriteetti
 mail	common	fi	Sähköpostit
 mail acl	mail	fi	Käyttöoikeudet
 mail filter	mail	fi	Postisuodatin
@@ -287,7 +291,6 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	fi	Ilmoita tämä sähköpostin sisältö roskapostina - spamTitanin kaltaiset roskapostiratkaisut oppivat siitä
 required pear class mail/mimedecode.php not found.	mail	fi	Tarvittavaa PEAR-luokkaa Mail/mimeDecode.php ei löydy.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	fi	Vaaditaan poistettavaksi käytöstä, jos käytät Dovecotia, jossa on private seen -liput jaetussa tai käyttäjäkansiossa!
-row order style	mail	fi	Rivijärjestyksen muotoilu
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	fi	S/MIME-salaus epäonnistui, koska lähettäjän osoitteelle ei löytynyt sertifikaattia: %1
 save all	mail	fi	Tallenna kaikki
 save all attachments to filemanager	mail	fi	Tallenna kaikki liitetiedostot tiedostonhallintaan
@@ -329,13 +332,11 @@ show vertical with all columns	mail	fi	Näytä pystysuora näkymä kaikkine sara
 show/hide preview pane in mail list view	mail	fi	Näytä/piilota esikatseluruutu sähköpostiluettelonäkymässä.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	fi	Näyttää tilapäisen näkyvän ilmoituksen, joka sisältää lähettäjän osoitteen, aiheen ja pätkän sähköpostista.
 sieve	mail	fi	Sieve
-sieve script name	mail	fi	Sieve skriptin nimi
 sign your message with smime certificate	mail	fi	Allekirjoita viestisi S/MIME-varmenteella
 signature	mail	fi	Allekirjoitus
 signature at top	mail	fi	allekirjoitus ylhäällä
 signature position and visibility	mail	fi	Allekirjoituksen sijainti ja näkyvyys
 signed by	mail	fi	Allekirjoittanut
-small view	mail	fi	Pieni näkymä
 smime encrypted message	mail	fi	S/MIME-salattu viesti
 smime signed message	mail	fi	S/MIME-allekirjoitettu viesti
 smtp	mail	fi	SMTP
@@ -357,7 +358,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	fi	Tämä viesti on S/MIME-salattu ja salasanalla suojattu.
 timeout on connections to your imap server	mail	fi	IMAP-palvelimen yhteyksien aikakatkaisu
 to do	mail	fi	Toimi näin
-toggle all folders view for %1	mail	fi	Vaihda kaikki kansiot -näkymä %1:lle
 toggled on actions	mail	fi	Kytketty päälle toiminnot
 trash	mail	fi	Roskakori
 trash folder	mail	fi	Roskakori-kansio
@@ -374,10 +374,6 @@ which folders - in general - should not be automatically created, if not existin
 write	mail	fi	Kirjoita
 wrote	mail	fi	Kirjoitettu
 yes, offer copy option	mail	fi	Kyllä, tarjoa kopiointimahdollisuutta
-yes, only trigger connection reset	mail	fi	kyllä, vain yhteyden nollaaminen
-yes, show all debug information available for the user	mail	fi	kyllä, näyttää kaikki käyttäjän saatavilla olevat virheenkorjaustiedot
-yes, show basic info only	mail	fi	Kyllä, näytä vain perustiedot
-you can either choose to save as infolog or tracker, not both.	mail	fi	Voit tallentaa joko InfoLogina tai reklamaationa, et molempina.
 you can select what info to be displayed on email tag	mail	fi	Voit valita, mitä tietoja sähköpostitunnisteessa näytetään.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	fi	Voit käyttää $$start$$ edellä mainittua alkamispäivää ja $$end$$ loppumispäivää.
 you may add this certificate into your contact, if you trust this signature.	mail	fi	Voit lisätä tämän varmenteen yhteystietoihin, jos luotat tähän allekirjoitukseen.

@@ -160,11 +160,9 @@ timer already running or paused	common	km	កម្មវិធីកំណត�
 timesheet	common	km	តារាង​ពេលវេលា
 timesheet csv export	timesheet	km	ការនាំចេញ តារាងពេលវេលា CSV
 timesheet csv import	timesheet	km	ការនាំចូល តារាងពេលវេលា CSV
-timesheet fields:	timesheet	km	វាល តារាងពេលវេលា៖
 timesheet id	timesheet	km	លេខសម្គាល់ តារាងពេលវេលា
 timesheet list	timesheet	km	តារាងពេលវេលា
 timesheet modified by %1 at %2	timesheet	km	តារាងពេលវេលា បានកែប្រែដោយ%1 នៅ%2
-timesheet openoffice export	timesheet	km	ការនាំចេញ តារាងពេលវេលា OpenOffice
 timesheet status-%1 '%2' added.	timesheet	km	ស្ថានភាព តារាងពេលវេលា-%1 '%2' បានបន្ថែម
 timesheet-%1 '%2' updated.	timesheet	km	តារាងពេលវេលា-%1 '%2' បានធ្វើបច្ចុប្បន្នភាព
 timesheet-%1 deleted.	timesheet	km	តារាងពេលវេលា-%1 ត្រូវបានលុប

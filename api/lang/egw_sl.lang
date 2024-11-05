@@ -114,6 +114,7 @@ all addressbooks	groupdav	sl	Vsi adresarji
 all categories	common	sl	Vse kategorije
 all days	common	sl	Vsi dnevi
 all fields	common	sl	Vsa polja
+all files	common	sl	Vse datoteke
 all in one	groupdav	sl	Vse v enem
 all languages	common	sl	Vsi jeziki
 all operations save the template!	common	sl	Vse operacije shranijo predlogo!
@@ -197,7 +198,6 @@ blurtext	common	sl	Zamaži tekst
 bold	common	sl	Krepko
 bolivia	common	sl	BOLIVIJA
 border	common	sl	Rob
-border-line-thickness for the table-tag	common	sl	Debelina robov
 bosnia and herzegovina	common	sl	BOSNA IN HERCEGOVINA
 botswana	common	sl	BOCVANA
 bottom	common	sl	Noga
@@ -842,6 +842,10 @@ maybe	common	sl	Mogoče
 mayotte	common	sl	MAYOTTE
 medium	common	sl	Srednje
 menu	common	sl	Meni
+merge	common	sl	Združitev
+merge & send	common	sl	Združite in pošljite
+merge individually	common	sl	Združite posamezno
+merge options	common	sl	Možnosti združevanja
 merged document filename	preferences	sl	Ime datoteke združenega dokumenta
 message	common	sl	Sporočilo
 message ...	common	sl	Sporočilo ...
@@ -1146,6 +1150,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	sl	Shrani
 save all	common	sl	Shrani vse
 save as	common	sl	Shrani kot
+save as pdf	common	sl	Shrani kot PDF
 save as zip	common	sl	Shrani kot ZIP
 save selected columns as default preference for all users.	common	sl	Shrani izbrane stolpce kot privzeto nastavitev za vse uporabnike.
 save the changes made and close the window	common	sl	Shrani spremembe in zapri okno
@@ -1225,6 +1230,7 @@ select work email address	common	sl	Izberi službeni E-naslov
 select year	common	sl	Izberite leto
 selectbox	common	sl	Izbirno polje
 selection	common	sl	Izbor
+selection of files can only be done in one folder.  %1 files unselected.	common	sl	Izbira datotek se lahko izvede samo v eni mapi. %1 datotek ni izbranih.
 send	common	sl	Pošlji
 send succeeded to %1	common	sl	Pošiljanje je uspelo na %1
 senegal	common	sl	SENEGAL

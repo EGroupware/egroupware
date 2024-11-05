@@ -23,7 +23,6 @@
 %1 user %2	admin	it	%1 utente %2
 (de)activate mail accounts	admin	it	(dis)attivare account email
 (default no, leave it off if you dont use it)	admin	it	Predefinito = No, lascialo così se non lo usi
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	it	(imapclass deve supportare questa funzionalità interrogando il valore corrispondente in configurazione e passandolo come defaultquota al server IMAP)
 (no subject)	admin	it	(nessun oggetto)
 -  type	admin	it	- tipo
 1 year	admin	it	1 anno
@@ -492,7 +491,7 @@ hostname or ip	admin	it	Nome del computer o indirizzo IP
 hour<br>(0-23)	admin	it	Ore<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	it	Dimensione massima in pixel delle miniature per le immagini collegate
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	it	Quanti giorni le voci rimangono nel log di accesso prima che vengano cancellate (predefinito 90)
-how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	it	Quante voci possono esportare gli utenti semplici. Vuoto = nessun limite, no = nessuna esportazione consentita
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	it	Quante voci possono esportare gli utenti semplici. Vuoto = nessun limite, No = nessuna esportazione consentita
 how many minutes should an account or ip be blocked (default 1) ?	admin	it	Quanti minuti un account o un IP rimarrà bloccato (predefinito 30)
 how should email addresses for new users be constructed?	admin	it	Come deve essere strutturata la mail per i nuovi utenti
 how username get constructed	admin	it	Come viene costruito il nome utente
@@ -641,6 +640,7 @@ no default account found!	admin	it	Nessun account predefinito trovato!
 no encryption	admin	it	Nessuna cifratura
 no forwarding email address	admin	it	Nessun indirizzo email di inoltro
 no jobs in the database !!!	admin	it	Nessun job nel database!
+no limit	admin	it	Nessun limite
 no login history exists for this user	admin	it	Non esiste una cronologia di login per questo utente!
 no matches found	admin	it	Nessuna corrispondenza trovata!
 no message returned.	admin	it	Nessun messaggio ricevuto
@@ -825,6 +825,7 @@ site	admin	it	Sito
 skip imap	admin	it	Salta IMAP
 skipping imap configuration!	admin	it	Salta la configurazione IMAP!
 smtp authentication	admin	it	Autenticazione SMTP
+smtp only: to create only an smtp account	admin	it	Creare un account solo SMTP senza IMAP
 smtp options	admin	it	Opzioni SMTP
 smtp server	admin	it	Server SMTP (posta in uscita)
 smtp server name	admin	it	Nome server SMTP
@@ -859,14 +860,8 @@ successfull, but no refresh-token received!	admin	it	Successo, ma nessun refresh
 switch back to standard identity to save account.	admin	it	Ritornare all'identità standard per conservare l'account.
 switch back to standard identity to save other account data.	admin	it	Ritornare all'identità standard per conservare gli altri dati dell'account.
 switch it off, if users are randomly thrown out	admin	it	Spegnilo in caso di logout casuali degli utenti
-template selection	admin	it	Selezione Aspetto
 templates	admin	it	Modelli
-text entry	admin	it	Inserimento di Testo
-that application name already exists.	admin	it	Quel nome di applicazione esiste già.
-that application order must be a number.	admin	it	Quel numero d'ordine deve essere un numero.
 that loginid has already been taken	admin	it	Quel nome utente è già stato scelto.
-that name has been used already	admin	it	Quel nome è già stato utilizzato.
-that server name has been used already !	admin	it	Questo nome di server è già stato utilizzato!
 the api is current	admin	it	Le API sono aggiornate
 the api requires an upgrade	admin	it	Le API hanno bisogno di essere aggiornate
 the cumulated and anonymised data will be publically available:	admin	it	I dati accumulati e i dati anonimi saranno pubblicamente disponibili:

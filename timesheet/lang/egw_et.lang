@@ -1,19 +1,29 @@
 --> enter new name	timesheet	et	--> Sisesta uus nimi
 all projects	timesheet	et	Kõik projektid
+ask to start and stop working time with session	timesheet	et	Küsi, et alustada ja lõpetada tööaeg koos seansiga
+category for 'working time'	admin	et	Kategooria 'Tööaeg'
+change owner when updating	timesheet	et	Omaniku muutmine uuendamisel
 check all	timesheet	et	Kontrolli kõik
+create a single 'working time' timesheet per	timesheet	et	Looge üks 'Tööaja' tööajatabel iga
 create new links	timesheet	et	Tee uued lingid
 creates a new field	timesheet	et	teeb uue välja
 delete this status	timesheet	et	Kustuta see staatus
 deleted	timesheet	et	kustutatud
 deletes this field	timesheet	et	kustutab selle välja
+disable timers	timesheet	et	Taimerite väljalülitamine
+do you want to associate it with the selected %1 entry?	common	et	Kas soovite seda seostada valitud kirjega %1?
+do you want to start your working time?	common	et	Kas soovite alustada oma tööaega?
+do you want to stop your working time?	common	et	Kas soovite oma tööaja peatada?
 each value is a line like <id>[=<label>]	timesheet	et	iga väärtus on rida nagu <id>[=<label>]
 edit status	timesheet	et	Muuda staatust
 edit this entry	timesheet	et	Muuda seda kirjet
 end	timesheet	et	Lõpp
 entry saved	timesheet	et	Kirje salvestatud
 error saving the entry!!!	timesheet	et	Viga kirje salvestamisel !!!
+error storing working time	timesheet	et	Viga tööaja salvestamisel
 existing links	timesheet	et	Eksisteerivad lingid
 field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
+forgot to switch off working time?	common	et	Unustasite tööaja välja lülitada?
 global categories	timesheet	et	Globaalsed Kategooriad
 history	timesheet	et	Ajalugu
 id	timesheet	et	Id
@@ -26,20 +36,34 @@ links	timesheet	et	Lingid
 modified	timesheet	et	Muudetud
 no details	timesheet	et	mitte detailselt
 or endtime	timesheet	et	või Lõpuaeg
+overwrite time	common	et	Ümberkirjutamise aeg
+overwriting start or stop time	timesheet	et	Tööaja algus- või lõpuaja ülekirjutamine
 pause	common	et	Paus
 pause time	timesheet	et	Pausi aeg
 paused	timesheet	et	Pausitud
 permission denied!!!	timesheet	et	Ligipääs keelatud !!!
 price	timesheet	et	Hind
 quantity	timesheet	et	Kogus
+recorded	timesheet	et	Salvestatud
+restore this entry	timesheet	et	Selle kirje taastamine
 save & new	timesheet	et	Salvesta & Uus
 select a price	timesheet	et	Vali hind
 select a project	timesheet	et	Vali Projekt
 start	timesheet	et	Start
+start & stop timer	common	et	Tööaja käivitamine ja peatamine
+start timer	common	et	Käivitage taimer
 start-time can not be before last stop- or pause-time %1!	common	et	Start-aeg ei saa olla enne viimast stopp- või pausiaega %1!
 starttime	timesheet	et	Startimise aeg
 starttime has to be before endtime !!!	timesheet	et	Startimise aeg on pärast lõpetamise aega !!!
 stop- or pause-time can not be before the start-time %1!	common	et	Stopp- või pausiaeg ei saa olla enne stardiaega %1!
 timer already running or paused	common	et	Taimer juba töötab või on pausis
+use field from csv if possible	timesheet	et	Võimaluse korral kasutage välju CSV-st
 week	timesheet	et	Nädal
+what should be done with unknown values?	timesheet	et	Mida tuleks teha tundmatute väärtustega?
+will be created when saving ...	common	et	Luuakse salvestamisel ...
+working time	common	et	Tööaeg
+working time and timer	timesheet	et	Tööaeg ja taimer
+working time from %1	timesheet	et	Tööaeg alates %1
+working time of %1 hours stored	timesheet	et	Salvestatud tööaeg %1 tundi
+would you like to be asked, to start and stop working time, when login in or off	timesheet	et	Kas soovite, et sisse- või väljalogimisel küsitakse, kas tööaja käivitamine ja peatamine on võimalik?
 yesterday	timesheet	et	Eile

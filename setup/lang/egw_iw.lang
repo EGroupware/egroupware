@@ -334,7 +334,6 @@ tables installed, unless there are errors printed above	setup	iw	הטבלאות 
 tables upgraded	setup	iw	הטבלאות עודכנו
 target version	setup	iw	גירסת היעד
 tcp port number of database server	setup	iw	של שרת בסיס הנתונים TCP-פורט ה
-text entry	setup	iw	רשומת טקסט
 the %1 extension is needed, if you plan to use a %2 database.	setup	iw	.צריכים הרחבת %1 אם ברצונך להשתמש בבסיס נתונים מסוג %2
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	iw	.בסיס הנתונים בברירות המחדל (%1) לא נתמך בשרת זה, משתמש בסוג הראשון הנתמך
 the file	setup	iw	הקובץ

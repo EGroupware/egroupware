@@ -19,13 +19,8 @@ automatically start with this format block. small paragraph adds less line space
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change password	preferences	de	Passwort ändern
-change your password	preferences	de	Passwort ändern
-change your profile	preferences	de	Profil ändern
-change your settings	preferences	de	Einstellungen ändern
-charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset for the csv export/import	preferences	de	Zeichensatz
 click to install	preferences	de	Klicken zum Installieren
-click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 close after selection	preferences	de	Nach Auswahl schließen
 code is invalid	preferences	de	Der Code ist ungültig
 color	preferences	de	Farbe
@@ -34,11 +29,9 @@ current password	preferences	de	Aktuelles Passwort
 custom login box color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe der Anmelde-Seite, Vorgabe obige Farbe abgedunkelt
 custom sidebar menu active color, defaults to above color darkened	preferences	de	Benutzerdefinierte Farbe des Seitenmenü, Vorgabe obige Farbe abgedunkelt
 dark mode theme	preferences	de	Dark Mode-Thema
-dark moono theme	preferences	de	Dunkles Moono-Thema
 data exchange settings	preferences	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
-default application	preferences	de	Standard-Anwendung
 default font	preferences	de	Standard-Schrift
 default font size	preferences	de	Standard-Schriftgröße
 default format block	preferences	de	Standard-Formatierung
@@ -106,7 +99,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 it sets content size (text only) according to selected size.	preferences	de	Stellt die Schriftgröße des Inhalts (nur Text) entsprechend der gewählten Größe ein.
 just clicking on the line, like a checkbox	preferences	de	Einfaches anklicken der Zeile, wie eine Checkbox
-kama theme	preferences	de	Kama-Theme
 keep list open for selecting multiple	preferences	de	Liste für die Auswahl mehrerer Optionen offen halten
 language	preferences	de	Sprache
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	de	Das Anmelden per SingleSignOn liefert kein Passwort das an Mail- oder Datei-Server weiter gegeben werden kann.
@@ -115,8 +107,6 @@ lowercase letters	preferences	de	Kleinbuchstaben
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	de	Macht die Seitenleiste links mit Scroll-Button nach oben/unten scrollbar (nützlich für Benutzer auf Tablets).
 max matches per page	preferences	de	Maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
-moono color theme	preferences	de	Farbiges Thema (Moono)
-moono theme (default)	preferences	de	Einfarbiges Thema (Moono)
 new secret generated, you need to save it to disable the old one!	preferences	de	Neuer Schlüssel generiert, Sie müssen ihn jetzt speichern und den alten ungültig zu machen!
 no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
@@ -138,7 +128,6 @@ password stored	preferences	de	Passwort gespeichert.
 permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone.
-please, select a new theme	preferences	de	Bitte ein neues Thema wählen
 popup with search	preferences	de	Pop-up mit Suche
 preferences saved.	preferences	de	Einstellungen gespeichert
 preformatted	preferences	de	Vorformatiert
@@ -149,15 +138,12 @@ read prefs for the specified application.	preferences	de	Liest Einstellungen von
 reset qrcode	preferences	de	QR-Code zurücksetzen
 revoke	preferences	de	Zurückziehen
 revoke this token	preferences	de	Diese(s) Token(s) zurückziehen
-rich text editor theme	preferences	de	Thema des Editors
 scan qrcode with a time-based one-time password (totp) app:	preferences	de	QR-Code mit einer App für zeitbasierende Einmalpasswörter (TOTP Time-based One-Time Password) abscannen:
 secret deleted, two factor authentication disabled.	preferences	de	Schlüssel gelöscht, die Zweifaktor Authentifizierung ist jetzt abgeschaltet.
 select additional lines in lists by	preferences	de	Zusätzliche Zeilen in Listen auswählen durch
-select different theme	preferences	de	Anderes Thema wählen
 select one	preferences	de	Bitte wählen
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	de	Wählen sie die Sprache der Texte und Mitteilungen innerhalb der EGroupware.<br>Manche Sprachen enthalten evtl. nicht alle Texte, in diesem Fall wird der englische Text angezeigt.
 select the language of the spellchecker integrated into the rich text editor.	preferences	de	Sprache der integrierten Rechtschreibprüfung des Editors.
-select the theme (visualization) of the rich text editor.	preferences	de	Thema (Aussehen) des Editors auswählen.
 selectbox	preferences	de	Auswahlfeld
 selectbox with groupmembers	common	de	Auswahlbox mit Gruppenmitgliedern
 selectbox with primary group and search	preferences	de	Auswahlfeld mit primärer Gruppe und Suche
@@ -217,7 +203,6 @@ you do not have permission to set acl's in this mode!	preferences	de	Sie haben k
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	de	Sie können Funktionen auswählen, die in der Symbolleiste aktiviert werden sollen.
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 you need to enter your password to make any security changes!	preferences	de	Sie müssen Ihr Passwort eingeben um sicherheitskritische Änderungen zu machen.
-your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
 your password does not have required strength:	preferences	de	Ihr Passwort hat nicht die erforderliche Stärke:
 your password might not match the password policy.	preferences	de	Ihr Passwort erfüllt möglicherweise nicht die Passwort-Richtlinie.
 your preferences	preferences	de	Persönliche Einstellungen

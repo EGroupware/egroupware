@@ -70,7 +70,6 @@ blocked, too many attempts	common	iw	חסום, יותר מדי נסיונות
 blurtext	common	iw	טשטש טקסט
 bold	common	iw	מודגש
 border	common	iw	גבול
-border-line-thickness for the table-tag	common	iw	עובי קו הגבול של תג טבלה
 bottom	common	iw	תחתית
 calendar	common	iw	לוח שנה
 can not have special sql-value null	common	iw	NULL מיוחד SQL לא יכול לקבל ערך

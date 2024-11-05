@@ -22,6 +22,7 @@
 %1 token %2.	admin	sv	%1 token %2.
 %1 user %2	admin	sv	%1 användare %2
 (de)activate mail accounts	admin	sv	(de)Aktivera e-postkonton
+(default no, leave it off if you dont use it)	admin	sv	Standard = Nej, lämna den avstängd om du inte använder den
 (no subject)	admin	sv	(ingen rubrik)
 -  type	admin	sv	- typ
 1 year	admin	sv	1 år
@@ -273,10 +274,12 @@ home screen message	admin	sv	Meddelande på Startsidan
 host information	admin	sv	Värdinformation
 hour<br>(0-23)	admin	sv	Timma<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sv	Hur många dagar skall poster ligga kvar i accessloggen innan de raderas (standard 90)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	sv	Hur många poster ska icke-administratörer kunna exportera? Empty = ingen begränsning, No = ingen export
 how many minutes should an account or ip be blocked (default 1) ?	admin	sv	Hur många minuter skall ett konto eller IP adress blokeras (standard 30)?
 how should email addresses for new users be constructed?	admin	sv	Hur ska e-postadresser för nya användare formateras?
 icon	admin	sv	Ikon
 idle	admin	sv	Vilande
+if different from email address	admin	sv	Om det skiljer sig från e-postadressen
 if no acl records for user or any group the user is a member of	admin	sv	Om inga ACL poster för användare eller grupp blir användaren medlem i
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sv	Om LDAP används, vill du hantera hemkatalog och skal-egenskaper?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
@@ -360,6 +363,7 @@ no alternate email address	admin	sv	Ingen alternerande e-post adress
 no encryption	admin	sv	Ingen kryptering
 no forwarding email address	admin	sv	Ingen e-post vidarebefodrings adress
 no jobs in the database !!!	admin	sv	Inga jobb i databasen!
+no limit	admin	sv	Ingen gräns
 no login history exists for this user	admin	sv	Inloggningshistorik saknas för användaren
 no matches found	admin	sv	Inga träffar
 no message returned.	admin	sv	Inget svar meddelandes
@@ -452,6 +456,7 @@ sieve server hostname or ip address	admin	sv	Sieve server hostnamn eller IP adre
 sieve server port	admin	sv	Sieve server port
 sieve settings	admin	sv	Sieve alternativ
 site	admin	sv	Sajt
+smtp only: to create only an smtp account	admin	sv	Skapa konto för endast SMTP utan IMAP
 smtp server name	admin	sv	SMTP server namn
 smtp settings	admin	sv	SMTP alternativ
 smtp-server hostname or ip address	admin	sv	SMTP server hostnamn eller IP adress
@@ -470,13 +475,7 @@ start testjob!	admin	sv	Starta testjobb!
 submit changes	admin	sv	Verkställ förändring
 submit the search string	admin	sv	Verkställ sökning
 subtype	admin	sv	Undertyp
-template selection	admin	sv	Val av Mall
-text entry	admin	sv	Text
-that application name already exists.	admin	sv	En applikation med det namnet existerar redan.
-that application order must be a number.	admin	sv	Applikationsordning måste anges med siffror
 that loginid has already been taken	admin	sv	Detta inloggnings ID är redan upptaget
-that name has been used already	admin	sv	Det namnet används redan
-that server name has been used already !	admin	sv	Det servernamnet används redan!
 the api is current	admin	sv	API är aktuellt
 the api requires an upgrade	admin	sv	API behöver uppgraderas
 the groups must include the primary group	admin	sv	Grupperna måste inkludera en primärgrupp

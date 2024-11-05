@@ -33,6 +33,7 @@ admin settings for %1	common	ro	Setări administrative pentru %1
 advanced search	common	ro	Căutare avansată
 all addressbooks	groupdav	ro	Toate agendele de adrese
 all categories	common	ro	Toate categoriile
+all files	common	ro	Toate fișierele
 all in one	groupdav	ro	Toate într-una singură
 allow editing the %1	common	ro	Permiteți editarea lui %1
 answering no will not ask you again for this browser.	common	ro	Dacă răspundeți "nu", nu vi se va mai solicita acest browser.
@@ -67,6 +68,7 @@ created by %1	common	ro	Creat de %1
 dark mode	common	ro	Mod întunecat
 date + time	common	ro	Data + Ora
 date+time	common	ro	Data+Ora
+directory for storing merged documents	preferences	ro	Folder pentru stocarea documentelor fuzionate
 don't ask again!	common	ro	Nu întrebați din nou!
 egroupware	common	ro	EGroupware
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
@@ -101,12 +103,19 @@ invalid email	common	ro	E-mail invalid
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
 light mode	common	ro	Mod deschis
+link to each entry	common	ro	Link către fiecare intrare
+load more links ...	common	ro	Încărcați mai multe link-uri ...
 login rejected by epl firewall, please contact your administrator	common	ro	Autentificare respinsă de firewall-ul EGroupware, vă rugăm să contactați administratorul.
 logout	common	ro	Leșire
 lost login id	common	ro	ID de conectare pierdut
 lost password	common	ro	Parolă pierdută
 mailvelope addon installation failed! please try again.	common	ro	Instalarea addon-ului Mailvelope a eșuat! Vă rugăm să încercați din nou.
 mailvelope addon installation succeded. now you may configure the options.	common	ro	Instalarea addon-ului Mailvelope a reușit. Acum puteți configura opțiunile.
+merge	common	ro	Unificare
+merge & send	common	ro	Fuzionați și trimiteți
+merge individually	common	ro	Fuzionați individual
+merge options	common	ro	Opțiuni de fuzionare
+merged document filename	preferences	ro	Numele fișierului documentului fuzionat
 more	common	ro	Mai mult
 move	common	ro	Mutați
 moved %1 children from directory fs_id=%2 to %3	admin	ro	A mutat %1 copii din folderul fs_id=%2 în %3
@@ -138,10 +147,12 @@ preference	common	ro	Preferințe
 preferences	common	ro	Preferințe
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
+selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.
 show password	common	ro	Afișare parolă
 show/hide	common	ro	Afișați / ascundeți bara laterală
 sign up	common	ro	Înregistrare
 site configuration	common	ro	Configurația aplicației
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
 your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ro	Browserul dvs. nu este actualizat (compatibil cu JavaScript ES6), este posibil ca unele dintre caracteristici să nu funcționeze.
 your key has been restored successfully.	common	ro	Cheia dvs. a fost restaurată cu succes.

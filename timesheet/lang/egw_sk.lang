@@ -162,11 +162,9 @@ timer already running or paused	common	sk	Časovač už beží alebo je pozastav
 timesheet	common	sk	Harmonogram
 timesheet csv export	timesheet	sk	Harmonogram - export do CSV
 timesheet csv import	timesheet	sk	Harmonogram - import CSV
-timesheet fields:	timesheet	sk	Harmonogram - polia:
 timesheet id	timesheet	sk	Harmonogram - ID
 timesheet list	timesheet	sk	Zoznam Harmonogramu
 timesheet modified by %1 at %2	timesheet	sk	Harmonogram zmenil %1 ku %2
-timesheet openoffice export	timesheet	sk	Harmonogram - export do OpenOffice
 timesheet status-%1 '%2' added.	timesheet	sk	Stav harmonogramu-%1 '%2' bol pridaný.
 timesheet-%1 '%2' updated.	timesheet	sk	Harmonogram-%1 '%2' bol aktualizovaný.
 timesheet-%1 deleted.	timesheet	sk	Harmonogram-%1 bol odstránený.

@@ -2,9 +2,13 @@
 2 years ago	timesheet	bg	преди 2 години
 3 years ago	timesheet	bg	преди 3 години
 all projects	timesheet	bg	Всички проекти
+ask to start and stop working time with session	timesheet	bg	Попитайте за започване и спиране на работното време със сесията
 both: allow to use projectmanager and free project-names	admin	bg	Позволява използване на имена на проекти, както от Проект-мениджъра, така и собствени
 by	timesheet	bg	от
+category for 'working time'	admin	bg	Категория за 'Работно време'
+change owner when updating	timesheet	bg	Промяна на собственика при актуализиране
 check all	timesheet	bg	Маркира всички
+create a single 'working time' timesheet per	timesheet	bg	Създаване на един-единствен работен график „Работно време“ за
 create new links	timesheet	bg	Създаване на нови връзки
 creates a new field	timesheet	bg	създава ново поле
 creating new entry	timesheet	bg	създаване на нов запис
@@ -12,6 +16,9 @@ custom fields	timesheet	bg	Полета по избор
 deleted	timesheet	bg	изтрит
 deletes this field	timesheet	bg	изтрива това поле
 determines the order the fields are displayed	timesheet	bg	определя реда за показване на полетата
+do you want to associate it with the selected %1 entry?	common	bg	Искате ли да го свържете с избрания запис %1?
+do you want to start your working time?	common	bg	Деактивиране на таймерите
+do you want to stop your working time?	common	bg	Искате ли да спрете работното си време?
 each value is a line like <id>[=<label>]	timesheet	bg	всяка стойност е ред във формат <id>[=<label>]
 edit status	timesheet	bg	Редактиране на статуса
 edit this entry	timesheet	bg	Редактиране на записа
@@ -21,10 +28,12 @@ entry deleted	timesheet	bg	Записът е изтрит
 entry saved	timesheet	bg	Записът е запазен
 error deleting the entry!!!	timesheet	bg	Грешка при изтриване!!!
 error saving the entry!!!	timesheet	bg	Грешка при запис!!!
+error storing working time	timesheet	bg	Грешка при съхраняването на работното време
 existing links	timesheet	bg	Съществуващи връзки
 export to openoffice spreadsheet	timesheet	bg	Експорт в OpenOffice електронна таблица
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	bg	Експортира записите от Графика Ви в CSV-файл (стойности, разделени със запетая). Може да изберете друг разделител чрез таб Опции.
 field must not be empty !!!	timesheet	bg	Полето трябва да бъде попълнено !!!
+forgot to switch off working time?	common	bg	Забравили сте да изключите работното време?
 full: use only projectmanager	admin	bg	Пълна: използва само имена от Проект-мениджъра
 general fields:	timesheet	bg	Общи полета:
 global categories	timesheet	bg	Глобални категории
@@ -48,6 +57,8 @@ none: use only free project-names	admin	bg	Никаква: използва са
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	bg	Брой редове за многоредово текстово поле или множествен избор
 or endtime	timesheet	bg	или краен срок
 order	timesheet	bg	Ред
+overwrite time	common	bg	Време за презаписване
+overwriting start or stop time	timesheet	bg	Презаписване на начално или крайно време
 parent	timesheet	bg	Родителски
 pause	common	bg	Пауза
 pause time	timesheet	bg	Време за пауза
@@ -56,6 +67,8 @@ permission denied!!!	timesheet	bg	Достъпът отказан!!!
 price	timesheet	bg	Цена
 projectmanager integration	admin	bg	Интеграция с Проект-мениджъра
 quantity	timesheet	bg	Количество
+recorded	timesheet	bg	Записано
+restore this entry	timesheet	bg	Възстановяване на този запис
 save & new	timesheet	bg	Запазване и Нов
 saves the changes made	timesheet	bg	Запазва извършените промени
 saves the changes made and leaves	timesheet	bg	запазва направените промени и излиза
@@ -63,6 +76,8 @@ saves this entry and add a new one	timesheet	bg	Запазва записа и �
 select a price	timesheet	bg	Изберете цена
 select a project	timesheet	bg	Изберете проект
 start	timesheet	bg	Начало
+start & stop timer	common	bg	Стартиране и спиране на таймера
+start timer	common	bg	Стартиране на таймера
 start-time can not be before last stop- or pause-time %1!	common	bg	Началното време не може да бъде преди последното време на спиране или пауза %1!
 starttime	timesheet	bg	Начален час
 starttime has to be before endtime !!!	timesheet	bg	Началният час трябва да бъде преди крайния !!!
@@ -76,11 +91,18 @@ this year	timesheet	bg	Тази година
 timer already running or paused	common	bg	Таймерът вече работи или е спрян на пауза
 timesheet	common	bg	График
 timesheet csv export	timesheet	bg	График: експорт в CSV
-timesheet openoffice export	timesheet	bg	График: експорт в OpenOffice
 unitprice	timesheet	bg	Цена на артикул
+use field from csv if possible	timesheet	bg	Използвайте поле от CSV, ако е възможно
 values for selectbox	timesheet	bg	Стойности за избор
 view this entry	timesheet	bg	Преглед на записа
 week	timesheet	bg	Седмица
+what should be done with unknown values?	timesheet	bg	Какво трябва да се направи с неизвестните стойности?
+will be created when saving ...	common	bg	Ще бъдат създадени при записването ...
+working time	common	bg	Работно време
+working time and timer	timesheet	bg	Работно време и таймер
+working time from %1	timesheet	bg	Работно време от %1
+working time of %1 hours stored	timesheet	bg	Запазено работно време от %1 часа
+would you like to be asked, to start and stop working time, when login in or off	timesheet	bg	Искате ли да бъдете помолени да стартирате и спирате работното време, когато влизате или излизате?
 yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
 yesterday	timesheet	bg	Вчера
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	bg	Вашата база данни НЕ Е актуална (%1 вм. %2)! Моля, стартирайте %3setup%4 за да я актуализирате.

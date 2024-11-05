@@ -19,13 +19,8 @@ automatically start with this format block. small paragraph adds less line space
 br	preferences	cs	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	cs	Mění uživatelské heslo po zadání starého a nového hesla. Vrací TRUE je-li vše v pořádku, FALSE při chybě.
 change password	preferences	cs	Změna hesla
-change your password	preferences	cs	Změna hesla
-change your profile	preferences	cs	Změna profilu
-change your settings	preferences	cs	Změna nastavení
-charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
 charset for the csv export/import	preferences	cs	Znaková sada
 click to install	preferences	cs	Klepnutím na tlačítko nainstalujete
-click to select a color	preferences	cs	Klikněte pro výběr barvy
 close after selection	preferences	cs	Zavřít po výběru
 code is invalid	preferences	cs	Kód je neplatný
 color	preferences	cs	Barva
@@ -34,11 +29,9 @@ current password	preferences	cs	Aktuální heslo
 custom login box color, defaults to above color darkened	preferences	cs	Uživatelská barva přihlašovacího okna, přednastavená je tmavý odstín výše uvedené barvy
 custom sidebar menu active color, defaults to above color darkened	preferences	cs	Uživatelská barva postranní nabídky, přednastavená je tmavý odstín výše uvedené barvy
 dark mode theme	preferences	cs	Tmavý režim motivu
-dark moono theme	preferences	cs	téma temný měsíc
 data exchange settings	preferences	cs	Nastavení výměny dat
 date format	preferences	cs	Formát datumu
 default	preferences	cs	výchozí
-default application	preferences	cs	Výchozí aplikace
 default font	preferences	cs	Výchozí písmo
 default font size	preferences	cs	Výchozí velikost písma
 default format block	preferences	cs	Výchozí blok formátu
@@ -106,7 +99,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	cs	Výběr rozhranní/šablony
 it sets content size (text only) according to selected size.	preferences	cs	Nastaví velikost obsahu (pouze textu) podle zvolené velikosti.
 just clicking on the line, like a checkbox	preferences	cs	Pouze klikáním na řádek, jako u zaškrtávacího políčka
-kama theme	preferences	cs	téma Kama
 keep list open for selecting multiple	preferences	cs	Ponechání otevřeného seznamu pro výběr více
 language	preferences	cs	Jazyk
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	cs	Při přihlašování přes SingleSignOn není heslo předáváno poštovním nebo souborovým serverům.
@@ -115,8 +107,6 @@ lowercase letters	preferences	cs	malá písmena
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	cs	Umožnit posouvání seznamu aplikací pomocí tlačítek pro posouvání nahoru/dolů (užitečné pro uživatele pracující s myší bez rolovacího kolečka).
 max matches per page	preferences	cs	Maximální počet zobrazených výsledků na stránku
 max number of icons in navbar	preferences	cs	Maximální počet ikon v navigační liště
-moono color theme	preferences	cs	téma barevný měsíc
-moono theme (default)	preferences	cs	téma měsíc (výchozí)
 new secret generated, you need to save it to disable the old one!	preferences	cs	Vygenerována nová tajenka, je třeba ji uložit, aby se ta stará deaktivovala!
 no default	preferences	cs	Není výchozí
 no user-selection at all	common	cs	Žádný výběr uživatelem
@@ -138,7 +128,6 @@ password stored	preferences	cs	Heslo se ukládá.
 permanent time zone selection	preferences	cs	Trvalá volba časové zóny
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	cs	Vyberte prosím časové zóny, mezi kterými chcete mít možnost rychle přepínat. Přepínač se nezobrazuje, pokud nejsou vybrány alespoň dvě zóny.
 please select your timezone.	preferences	cs	Vyberte prosím svou časovou zónu.
-please, select a new theme	preferences	cs	Vyberte prosím nové téma
 popup with search	preferences	cs	Překryvné okno s hledáním
 preferences saved.	preferences	cs	Předvolby byly uloženy.
 preformatted	preferences	cs	Předformátovaný
@@ -149,15 +138,12 @@ read prefs for the specified application.	preferences	cs	Načíst předvolby pro
 reset qrcode	preferences	cs	Obnovení kódu QRCode
 revoke	preferences	cs	Odvolat
 revoke this token	preferences	cs	Odvolat tento token
-rich text editor theme	preferences	cs	Téma richtext editoru
 scan qrcode with a time-based one-time password (totp) app:	preferences	cs	Naskenujte QRCode pomocí aplikace TOTP (Time-based One-Time Password):
 secret deleted, two factor authentication disabled.	preferences	cs	Vymazání tajemství, dvoufaktorové ověřování zakázáno.
 select additional lines in lists by	preferences	cs	Další řádky v seznamu vybrat
-select different theme	preferences	cs	Vybrat jiné téma
 select one	preferences	cs	Vybrat jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	cs	Vyberte jazyk pro texty a hlášky v eGroupWaru.<br>Některé jazyky nemusí obsahovat překlad všech hlášek, v takovém případě se zobrazí anglický originál.
 select the language of the spellchecker integrated into the rich text editor.	preferences	cs	Vyberte jazyk pro kontrolu pravopisu v richtext editoru.
-select the theme (visualization) of the rich text editor.	preferences	cs	Vyberte téma (vizualizaci) richtext editoru.
 selectbox	preferences	cs	Rozbalovací nabídka
 selectbox with groupmembers	common	cs	Rozbalovací nabídka se členy skupiny
 selectbox with primary group and search	preferences	cs	Rozbalovací nabídka s primární skupinou a hledáním
@@ -214,7 +200,6 @@ you do not have permission to set acl's in this mode!	preferences	cs	Nemáte opr
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	cs	Na panelu nástrojů můžete vybrat funkce, které mají být povoleny.
 you must enter a password	preferences	cs	Musíte zadat heslo
 you need to enter your password to make any security changes!	preferences	cs	Chcete-li provést jakékoli změny zabezpečení, musíte zadat své heslo!
-your current theme is: %1	preferences	cs	Vaše aktuální téma je: %1
 your password does not have required strength:	preferences	cs	Vaše heslo nesplňuje stanovené požadavky:
 your password might not match the password policy.	preferences	cs	Vaše heslo nesplňuje stanovené požadavky.
 your preferences	preferences	cs	Vaše předvolby

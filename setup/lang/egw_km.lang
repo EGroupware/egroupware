@@ -653,7 +653,6 @@ tables upgraded	setup	km	តារាងត្រូវបានធ្វើឱ�
 target version	setup	km	កំណែគោលដៅ
 tcp port number of database server	setup	km	លេខច្រក TCP នៃម៉ាស៊ីនមេមូលដ្ឋានទិន្នន័យ
 technical contact	setup	km	ទំនាក់ទំនងបច្ចេកទេស
-text entry	setup	km	ការបញ្ចូលអត្ថបទ
 the %1 extension is needed from: %2.	setup	km	ផ្នែកបន្ថែម %1 ត្រូវការពី៖ %2 ។
 the %1 extension is needed, if you plan to use a %2 database.	setup	km	ផ្នែកបន្ថែម %1 ត្រូវការជាចាំបាច់ ប្រសិនបើអ្នកមានគម្រោងប្រើមូលដ្ឋានទិន្នន័យ %2 ។
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	km	ផ្នែកបន្ថែម ctype ត្រូវការដោយ HTMLpurifier ដើម្បីពិនិត្យមើលមាតិការបស់ FCKeditor ប្រឆាំងនឹង Cross Site Skripting ។

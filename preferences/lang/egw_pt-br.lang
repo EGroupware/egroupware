@@ -9,18 +9,12 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	pt-br	Tem certeza que deseja apagar essa categoria?
 br	preferences	pt-br	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pt-br	Alterar a senha de usuário informando a antiga e a nova senha. Retorna VERDADEIRO no sucesso, FALSO na falha.
-change your password	preferences	pt-br	Altere sua senha
-change your profile	preferences	pt-br	Altere seu perfil
-change your settings	preferences	pt-br	Altere suas preferências
-charset for the csv export	addressbook	pt-br	Códificação de caracteres para a exportação CSV
-click to select a color	preferences	pt-br	Clique para selecionar uma cor
 color	preferences	pt-br	Cor
 country	preferences	pt-br	País
 dark mode theme	preferences	pt-br	Tema do modo escuro
 data exchange settings	preferences	pt-br	Configurações de troca de dados
 date format	preferences	pt-br	Formato de data
 default	preferences	pt-br	padrão
-default application	preferences	pt-br	Aplicação padrão
 default preferences	preferences	pt-br	Preferências padrões
 delete categories	preferences	pt-br	Apagar Categorias
 description can not exceed 255 characters in length !	preferences	pt-br	A Descrição não deve exceder 255 caracteres!
@@ -67,16 +61,12 @@ note: this feature does *not* change your email password. this will need to be d
 notification settings	preferences	pt-br	Configurações de notificação
 p: paragraph	preferences	pt-br	p: Parágrafo
 password stored	preferences	pt-br	Senha armazenada.
-please, select a new theme	preferences	pt-br	Por favor, selecione um novo tema
 popup with search	preferences	pt-br	Janela  instantânea com busca
 re-enter your password	preferences	pt-br	Digite sua senha novamente
 read prefs for the specified application.	preferences	pt-br	Ler preferências do aplicativo específico
-rich text editor theme	preferences	pt-br	Tema do Editor Rich Text
-select different theme	preferences	pt-br	Selecione um tema diferente
 select one	preferences	pt-br	Selecione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do EGroupware.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
 select the language of the spellchecker integrated into the rich text editor.	preferences	pt-br	Selecione o idioma do corretor gramatical integrado ao editor rich text.
-select the theme (visualization) of the rich text editor.	preferences	pt-br	Selecione o tema (visualização) do editor rich text.
 selectbox	preferences	pt-br	Caixa de seleção
 selectbox with groupmembers	common	pt-br	Caixa de seleção com usuários de grupo
 selectbox with primary group and search	preferences	pt-br	Caixa de seleção com grupo principal e busca
@@ -112,5 +102,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	pt-br	Você pode exibir os registros linkados como ícones, ícones com o nome do aplicativo ou ambos.
 you do not have permission to set acl's in this mode!	preferences	pt-br	Você não possui permissão para determinar ACL´s nesse modo!
 you must enter a password	preferences	pt-br	Você deve digitar uma senha
-your current theme is: %1	preferences	pt-br	Seu tema atual é: %1
 your preferences	preferences	pt-br	Suas preferências

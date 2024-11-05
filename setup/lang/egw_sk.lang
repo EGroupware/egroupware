@@ -644,7 +644,6 @@ tables upgraded	setup	sk	Tabuľky boli aktualizované.
 target version	setup	sk	Cieľová verzia
 tcp port number of database server	setup	sk	Číslo TCP portu databázového servera
 technical contact	setup	sk	Technický kontakt
-text entry	setup	sk	Textová položka
 the %1 extension is needed from: %2.	setup	sk	Rozšírenie %1 je potrebné z: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	sk	Ak plánujete používať %2 databázu, je potrebné rozšírenie %1.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	sk	HTMLpurifier potrebuje rozšírenie ctype, aby mohol skontrolovať obsah FCKeditora na cross-site-skripting.

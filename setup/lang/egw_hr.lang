@@ -335,7 +335,6 @@ tables installed, unless there are errors printed above	setup	hr	tables installe
 tables upgraded	setup	hr	tables upgraded
 target version	setup	hr	Target Version
 tcp port number of database server	setup	hr	TCP port number of database server
-text entry	setup	hr	Text Entry
 the %1 extension is needed, if you plan to use a %2 database.	setup	hr	The %1 extension is needed, if you plan to use a %2 database.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	hr	The db_type in defaults (%1) is not supported on this server. using first supported type.
 the file	setup	hr	the file

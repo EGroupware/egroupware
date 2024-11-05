@@ -22,6 +22,7 @@
 %1 token %2.	admin	uk	%1 токен %2.
 %1 user %2	admin	uk	Користувач %1 користувач %2
 (de)activate mail accounts	admin	uk	(де)Активувати поштові облікові записи
+(default no, leave it off if you dont use it)	admin	uk	За замовчуванням = Ні, вимкніть, якщо не використовуєте його
 1 year	admin	uk	1 рік
 2 month	admin	uk	2 місяці
 2 weeks	admin	uk	2 тижні
@@ -214,9 +215,11 @@ home screen message	admin	uk	Повідомлення основного екр�
 host information	admin	uk	Інформація хосту
 hour<br>(0-23)	admin	uk	Година<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	uk	Скільки днів записи мають зберігатися в протоколі доступу (по замовченню 90)?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	uk	Скільки записів можуть експортувати неадміністратори. Порожнє = без обмежень, Ні = без експорту
 how many minutes should an account or ip be blocked (default 1) ?	admin	uk	На скільки хвилин блокується рахунок або IP (по замовченню 30)?
 html/plaintext	admin	uk	HTML/Tекст
 idle	admin	uk	простій
+if different from email address	admin	uk	Якщо відрізняється від адреси електронної пошти
 if no acl records for user or any group the user is a member of	admin	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?
 inbound	admin	uk	вхідний
@@ -273,6 +276,7 @@ new password [ leave blank for no change ]	admin	uk	Новий пароль [з�
 next run	admin	uk	Наступний запуск
 no algorithms available	admin	uk	Немає алгоритмів
 no jobs in the database !!!	admin	uk	В базі немає завдань
+no limit	admin	uk	Без обмежень
 no login history exists for this user	admin	uk	Для користувача немає історії входів
 no matches found	admin	uk	Відповідностей не знайдено
 no modes available	admin	uk	Немає режимів
@@ -342,6 +346,7 @@ show groups in container based on	admin	uk	Показувати групи в к
 show phpinfo()	admin	uk	Показати phpinfo()
 show session ip address	admin	uk	Показати IP адреси сесій
 site	admin	uk	Сайт
+smtp only: to create only an smtp account	admin	uk	Створити обліковий запис лише для SMTP без IMAP
 soap	admin	uk	SOAP
 sorry, that group name has already been taken.	admin	uk	Вибачте, така назва групи вже зайнята,
 sorry, the above users are still a member of the group %1	admin	uk	Вибачте, вищевказані користувачі все ще члени групи %1
@@ -352,13 +357,7 @@ standard	admin	uk	стандарт
 start testjob!	admin	uk	Стартувати тестове завдання!
 submit changes	admin	uk	Відіслати зміни
 submit the search string	admin	uk	Відіслати зразок пошуку
-template selection	admin	uk	Вибір шаблону
-text entry	admin	uk	Текстовий запис
-that application name already exists.	admin	uk	Така назва приложення вже існує.
-that application order must be a number.	admin	uk	Номер послідовності приложень має бути числом.
 that loginid has already been taken	admin	uk	Такий ідентифікатор користувача вже зайнято
-that name has been used already	admin	uk	Така назва вже використовується
-that server name has been used already !	admin	uk	Така назва серверу вже використовується
 the api is current	admin	uk	API не потребує оновлення
 the api requires an upgrade	admin	uk	API потребує оновлення
 the login and password can not be the same	admin	uk	Ідентифікатор користувача та пароль не можуть співпадати

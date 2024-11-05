@@ -46,7 +46,6 @@ re-enter password	setup	eu	Pasahitza baieztatu
 remove	setup	eu	ezabatu
 selectbox	setup	eu	Aukeraketa kuadroa
 size	setup	eu	Tamainua
-text entry	setup	eu	Testu sarrera
 two weeks	setup	eu	bi aste
 use cookies to pass sessionid	setup	eu	Cookiak erabili saioak gordetzeko
 use pure html compliant code (not fully working yet)	setup	eu	HTML kode garbia erabili (oraindik ez du guztiz funtzionatzen)

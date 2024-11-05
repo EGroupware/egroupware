@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	bg	Не е разреше�
 current folder	mail	bg	текуща папка
 current subject	mail	bg	текуща тема
 currently:	mail	bg	Понастоящем:
-date(newest first)	mail	bg	По дата (първо най-новите)
-date(oldest first)	mail	bg	По дата (първо най-старите)
 deactive	mail	bg	Деактивиране
 default sorting order	mail	bg	Подреждане по подразбиране
 default toolbar actions shown in mail's html editor	mail	bg	Функции, активирани в лентата с инструменти на редактора HTML при съставяне на имейл
@@ -189,7 +187,6 @@ drafts	mail	bg	Чернови
 drafts folder	mail	bg	Папка "Чернови"
 edit account	mail	bg	Редактиране на акаунта
 edit account ...	mail	bg	Редактиране на акаунта ...
-edit folder acl	mail	bg	Редактиране на ACL папката
 edit folder acl ...	mail	bg	Редактиране на ACL папката ...
 edit vacation settings	mail	bg	редактиране на настройките за "ваканция"
 effective only if server supports acl at all	admin	bg	използваем, само ако сървърът изобщо поддържа ACL
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	bg	Обработ
 header	mail	bg	Заглавка (Header)
 header lines	mail	bg	Заглавна част
 high	mail	bg	високо
+high priority	mail	bg	Висок приоритет
 hold %1 to drag files to your computer	mail	bg	Натиснете и задръжте %1, за да плъзнете файлове към вашия компютър
 home page folders	mail	bg	Папки за начална страница
 hostname or ip	mail	bg	Име на хост или IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	bg	Ученето като спам �
 less than	mail	bg	по-малко от
 limit mailing list results when searching for addresses	mail	bg	Ограничаване на резултатите от пощенски списъци при търсене на адреси
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	bg	Списък на действията, които трябва да се включат/активират по подразбиране (напр. действие Mail compose save as InfoLog)
+low priority	mail	bg	Нисък приоритет
 mail	common	bg	Поща
 mail acl	mail	bg	Права за достъп
 mail filter	mail	bg	Пощенски филтър
@@ -446,7 +445,6 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	bg	Докладвайте това имейл съдържание като спам - спам решения като spamTitan ще се научат
 required pear class mail/mimedecode.php not found.	mail	bg	Не е намерен необходимият PEAR клас Mail/mimeDecode.php.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	bg	Задължително се деактивира, ако използвате Dovecot с флагове за частно виждане на споделена или потребителска папка!
-row order style	mail	bg	Стил на изгледа
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	bg	S/MIME Криптирането е неуспешно, тъй като не е намерен сертификат за адреса на подателя: %1
 save all attachments to filemanager	mail	bg	Запазете всички във Файлов мениджър
 save as draft	mail	bg	запис като чернова
@@ -483,14 +481,12 @@ show vertical	mail	bg	Показване по вертикала (изглед �
 show vertical with all columns	mail	bg	Показвайте вертикално с всички колони
 show/hide preview pane in mail list view	mail	bg	Показване/скриване на панела за предварителен преглед в изгледа на списъка с имейли.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	bg	Показва временно видимо известие, включващо от адрес, тема и откъс от имейл.
-sieve script name	mail	bg	име на Sieve скрипт
 sieve_edit_instructions	mail	bg	(*) могат да се използват "заместващи символи" (*,?) Ако се опитвате да съчетаете помежду си * или ?, трябва да ги избегнете с наклонена черта (\). Ако поставите отметка „Използване на регулярни изрази“, трябва да използвате валидни регулярни изрази. За да избегнете удивителен знак (!) в началото, който не се използва като "НЕ", използвайте регекс и обратна черта (\) (например \!)
 sign your message with smime certificate	mail	bg	Подпишете съобщението си със сертификат S/MIME
 signature	mail	bg	Подпис
 signature at top	mail	bg	подпис в горната част
 signature position and visibility	mail	bg	Позиция и видимост на подписа
 signed by	mail	bg	Подписан от
-small view	mail	bg	умален изглед
 smime encrypted message	mail	bg	S/MIME криптирано съобщение
 smime signed message	mail	bg	S/MIME подписано съобщение
 smtp	mail	bg	SMTP
@@ -510,7 +506,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	bg	Това съобщение е S/MIME криптирано и защитено с парола.
 timeout on connections to your imap server	mail	bg	Време за изчакване на връзките с вашия IMAP сървър
 to do	mail	bg	За да направите
-toggle all folders view for %1	mail	bg	Превключване на изгледа на всички папки за %1
 toggled on actions	mail	bg	Превключване на действията
 trash	mail	bg	Кошче
 trash folder	mail	bg	Папка за отпадъци
@@ -523,10 +518,6 @@ view header lines	mail	bg	Заглавна част (Header)
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват
 wrote	mail	bg	написа
-yes, only trigger connection reset	mail	bg	да, само да задействате нулиране на връзката
-yes, show all debug information available for the user	mail	bg	да, показва цялата налична за потребителя информация за отстраняване на грешки
-yes, show basic info only	mail	bg	да, показва само основна информация
-you can either choose to save as infolog or tracker, not both.	mail	bg	Можете да изберете да запазите като InfoLog ИЛИ като тракер, но не и двете.
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	bg	Можете да използвате $$start$$ за горната начална дата и $$end$$ за крайната дата.
 you may add this certificate into your contact, if you trust this signature.	mail	bg	Можете да добавите този сертификат в контакта си, ако имате доверие на този подпис.

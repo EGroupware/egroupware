@@ -104,6 +104,7 @@ all addressbooks	groupdav	sv	Alla adressböcker
 all categories	common	sv	Alla kategorier
 all days	common	sv	Samtliga dagar
 all fields	common	sv	Alla fält
+all files	common	sv	Alla filer
 all in one	groupdav	sv	Alla i en
 all operations save the template!	common	sv	Alla operationer sparar template!
 all users	common	sv	Alla användare
@@ -170,7 +171,6 @@ blurtext	common	sv	Oskarptext
 bold	common	sv	Fet
 bolivia	common	sv	BOLIVIEN
 border	common	sv	Kantlinje
-border-line-thickness for the table-tag	common	sv	Kantlinjes tjocklek för tabell kod
 bosnia and herzegovina	common	sv	BOSNIEN OCH HERZEGOVINA
 botswana	common	sv	BOTSWANA
 bottom	common	sv	Nederst
@@ -666,6 +666,7 @@ liechtenstein	common	sv	LIECHTENSTEIN
 light mode	common	sv	Ljust läge
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sv	Rad %1: '%2'<br><b>CSV data motsvarar inte antalet kolumner i tabellen %3 ==> ignoreras</b>
 link	common	sv	Länk
+link to each entry	common	sv	Länk till varje post
 linkapps	common	sv	LinkApps
 linkentry	common	sv	Länka inmatning
 linklist	common	sv	Länklista
@@ -676,6 +677,7 @@ list members	common	sv	Lista medlemmar
 list of files linked to the current record	preferences	sv	Lista över filer som är länkade till den aktuella posten
 lithuania	common	sv	LITAUEN
 load	common	sv	Ladda
+load more links ...	common	sv	Ladda fler länkar ...
 load this template into the editor	common	sv	Ladda mallen i editorn
 loading	common	sv	Laddar
 local	common	sv	Lokal
@@ -714,6 +716,10 @@ may	common	sv	Maj
 mayotte	common	sv	MAYOTTE
 medium	common	sv	Medium
 menu	common	sv	Meny
+merge	common	sv	Sammanfoga
+merge & send	common	sv	Sammanfoga och skicka
+merge individually	common	sv	Sammanfoga individuellt
+merge options	common	sv	Alternativ för sammanfogning
 merged document filename	preferences	sv	Filnamn för sammanslaget dokument
 message	common	sv	Meddelande
 message prepared for sending.	common	sv	Meddelande förberett för sändning.
@@ -962,6 +968,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	sv	Spara
 save all	common	sv	Spara alla
 save as	common	sv	Spara som
+save as pdf	common	sv	Spara som PDF
 save as zip	common	sv	Spara som ZIP
 save the changes made and close the window	common	sv	Spara ändringar och stäng fönster
 save the etemplate under the above keys (name, ...), change them for a saveas	common	sv	Spara eTemplate under ovanstående nycklar (namn, ....), ändra för att Spara Som
@@ -1029,6 +1036,7 @@ select work email address	common	sv	Välj Företagets e-postadres
 select year	common	sv	Välj år
 selectbox	common	sv	Valruta
 selection	common	sv	Val
+selection of files can only be done in one folder.  %1 files unselected.	common	sv	Val av filer kan endast göras i en mapp. %1 filer har inte valts.
 send	common	sv	Skicka
 send succeeded to %1	common	sv	Skicka lyckats till %1
 senegal	common	sv	SENEGAL
@@ -1212,6 +1220,7 @@ weekend	common	sv	Helg
 welcome	common	sv	Välkommen
 western sahara	common	sv	VÄSTRA SAHARA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sv	Vad händer med innehålls "overflow": synligt (default), göms, skroll, auto (browser bestämmer)
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sv	När du sammanfogar poster till dokument lagras de här. Om ingen mapp anges kommer de att lagras i din hemkatalog (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper
 whole query	common	sv	Hela frågan

@@ -8,14 +8,18 @@ all projects	timesheet	sl	Vsi projekti
 and its members	timesheet	sl	In njegovi člani
 applies the changes	timesheet	sl	Uveljavi spremembe
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazani časovni listi!
+ask to start and stop working time with session	timesheet	sl	Vprašajte za začetek in konec delovnega časa s sejo
 both: allow to use projectmanager and free project-names	admin	sl	Oboje: dovolite uporabo vodje projekta in brezplačnih imen projekta
 by	timesheet	sl	od
+category for 'working time'	admin	sl	Kategorija za 'Delovni čas'
 change category	timesheet	sl	Spremeni kategorijo
+change owner when updating	timesheet	sl	Sprememba lastnika pri posodabljanju
 changed category to %1	timesheet	sl	Spremenjena kategorija v %1
 changed status	timesheet	sl	Spremenjen status.
 check all	timesheet	sl	Preveri vse
 choose 'creator' of imported data	timesheet	sl	Izberite "ustvarjalec" uvoženih podatkov
 comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2
+create a single 'working time' timesheet per	timesheet	sl	Ustvarite en delovni list „Delovni čas“ na
 create new links	timesheet	sl	Ustvari nove povezave
 creates a new field	timesheet	sl	Ustvari novo polje
 creating new entry	timesheet	sl	Ustvarjanje novega vnosa
@@ -26,6 +30,10 @@ deleted	timesheet	sl	Zbrisano
 deletes this field	timesheet	sl	Ibriše to polje
 determines the order the fields are displayed	timesheet	sl	Določa vrstni red prikaza polj
 directory with documents to insert entries	timesheet	sl	Mapa z dokumenti za vstavljanje
+disable timers	timesheet	sl	Onemogočite časovnike
+do you want to associate it with the selected %1 entry?	common	sl	Ali ga želite povezati z izbranim vnosom %1?
+do you want to start your working time?	common	sl	Želite začeti z delovnim časom?
+do you want to stop your working time?	common	sl	Ali želite ustaviti delovni čas?
 each value is a line like <id>[=<label>]	timesheet	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
 edit status	common	sl	Uredi status
 edit this entry	timesheet	sl	Uredi ta vnos
@@ -35,6 +43,7 @@ entry deleted	timesheet	sl	Vnos je izbrisan.
 entry saved	timesheet	sl	Vnos shranjen
 error deleting the entry!!!	timesheet	sl	Napaka pri brisanju vnosa!
 error saving the entry!!!	timesheet	sl	Napaka pri shranjevanju vnosa!
+error storing working time	timesheet	sl	Napaka pri shranjevanju delovnega časa
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	sl	Primer {{IF n_prefix ~ Mr ~ Pozdravljeni g. ~ Pozdravljeni gospa}} - poiščite polje »n_prefix«, za »gospod«, če najdete, pišite Hello Hello, drugače pišite Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	sl	Primer {{LETTERPREFIXCUSTOM n_prefix naslov n_family}} - Primer: g. Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	sl	Primer {{NELF vloga}} - če vloga v polju ni prazna, boste dobili novo vrstico z vrednostjo vloge na poljubnem mestu
@@ -46,6 +55,7 @@ export to openoffice spreadsheet	timesheet	sl	Izvozi v preglednico OpenOffice
 exports entries from your timesheet into a csv file.	timesheet	sl	Izvozi vnose iz časovnega lista v datoteko CSV
 field must not be empty !!!	timesheet	sl	Polje ne sme biti prazno!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
+forgot to switch off working time?	common	sl	Ste pozabili izklopiti delovni čas?
 full: use only projectmanager	admin	sl	Polno: uporabite samo vodja projektov
 general fields:	timesheet	sl	Splošna polja:
 global categories	timesheet	sl	Globalne kategorije
@@ -89,6 +99,8 @@ only admin	timesheet	sl	Samo admin
 only admin can edit this status	timesheet	sl	Samo skrbniki lahko uredijo časovni razpored s tem statusom
 or endtime	timesheet	sl	ali konec časa
 order	timesheet	sl	Vrstni red
+overwrite time	common	sl	Čas prepisovanja
+overwriting start or stop time	timesheet	sl	Prepisovanje začetnega ali končnega časa
 parent	timesheet	sl	Nadrejen
 pause	common	sl	Prekinitev
 pause time	timesheet	sl	Čas premora
@@ -100,8 +112,10 @@ price	timesheet	sl	Cena
 project fields	timesheet	sl	Polja projektna
 projectmanager integration	admin	sl	Integracija vodje projekta
 quantity	timesheet	sl	Količina
+recorded	timesheet	sl	Zapisano
 recovered	timesheet	sl	Obnovljeno
 replacements for inserting entries into documents	timesheet	sl	Zamenjava za vstavljanje vnose v dokumente
+restore this entry	timesheet	sl	Obnovi ta vnos
 save & new	timesheet	sl	Shrani & novo
 saves the changes made	timesheet	sl	Shrani spremembe
 saves the changes made and leaves	timesheet	sl	Shrani narejene spremembe in zapusti program
@@ -117,6 +131,8 @@ set to	timesheet	sl	Nastavljena
 show a quantity sum (eg. to sum up negative overtime)	admin	sl	Prikaži količinsko vsoto, npr. da bi povzeli negativne nadure
 skip record	timesheet	sl	Preskoči zapis
 start	timesheet	sl	Začetek
+start & stop timer	common	sl	Začetni in končni čas
+start timer	common	sl	Začetek časovnika
 start-time can not be before last stop- or pause-time %1!	common	sl	Začetni čas ne sme biti pred zadnjim časom ustavitve ali prekinitve %1!
 starttime	timesheet	sl	Začetni čas
 starttime has to be before endtime !!!	timesheet	sl	Začetni čas mora biti pred koncem!
@@ -139,21 +155,27 @@ timer already running or paused	common	sl	Časomer že teče ali je ustavljen
 timesheet	common	sl	Časovni list
 timesheet csv export	timesheet	sl	Časovni list CSV izvoza
 timesheet csv import	timesheet	sl	Časovni list CSV uvoza
-timesheet fields:	timesheet	sl	Polja časovnega lista:
 timesheet id	timesheet	sl	ID časovnega lista
 timesheet list	timesheet	sl	Seznam časovnih listov
 timesheet modified by %1 at %2	timesheet	sl	Časovni list, spremenjen z %1 na %2
-timesheet openoffice export	timesheet	sl	Izvoz časovnega lista OpenOffice
 timesheet status-%1 '%2' added.	timesheet	sl	Dodan je bil časovni list - %1 '%2'.
 timesheet-%1 '%2' updated.	timesheet	sl	Časovno obdobje - %1 '%2' je posodobljeno.
 timesheet-%1 deleted.	timesheet	sl	Časovno obdobje - %1 je izbrisano.
 titles of any entries linked to the current record, excluding attached files	timesheet	sl	Naslovi vseh vnosov, povezanih s trenutnim zapisom, brez priloženih datotek
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	sl	Ni mogoče pretvoriti "%1" v ID računa. Uporaba nastavitve vtičnika (%2) za %3.
 unitprice	timesheet	sl	Cena na enoto
+use field from csv if possible	timesheet	sl	Če je mogoče, uporabite polje iz CSV
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 values for selectbox	timesheet	sl	Vrednosti za izbirno polje
 view this entry	timesheet	sl	Poglej ta vnos
 week	timesheet	sl	Teden
+what should be done with unknown values?	timesheet	sl	Kaj je treba storiti z neznanimi vrednostmi?
+will be created when saving ...	common	sl	Ustvari se ob shranjevanju ...
+working time	common	sl	Delovni čas
+working time and timer	timesheet	sl	Delovni čas in časovnik
+working time from %1	timesheet	sl	Delovni čas od %1
+working time of %1 hours stored	timesheet	sl	Delovni čas od %1 ur shranjen
+would you like to be asked, to start and stop working time, when login in or off	timesheet	sl	Ali želite, da vas ob prijavi ali izklopu vprašamo za začetek in konec delovnega časa?
 yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
 yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 yesterday	timesheet	sl	Včeraj

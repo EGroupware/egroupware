@@ -108,7 +108,6 @@ blurtext	common	ca	Texto poco claro
 bold	common	ca	Negreta
 bolivia	common	ca	BOLIVIA
 border	common	ca	Borde
-border-line-thickness for the table-tag	common	ca	Grosor de la línea del borde de la etiqueta de la tabla
 bosnia and herzegovina	common	ca	BOSNIA I HERZEGOVINA
 botswana	common	ca	BOTSWANA
 bottom	common	ca	Part inferior
@@ -627,7 +626,6 @@ oops! you caught us in the middle of system maintainance.	common	ca	Ups! Ens heu
 open	common	ca	obert
 open notify window	common	ca	Obrir finestra de notificació
 open popup window	common	ca	Obrir finestra emergent
-open sidebox	common	ca	Obre el menú del costat
 optional note about the link	common	ca	nota opcional sobre el enlace
 options	common	ca	Opciones
 or	common	ca	o

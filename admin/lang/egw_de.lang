@@ -23,7 +23,6 @@
 %1 user %2	admin	de	%1 Benutzer %2
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe = Nein. Ausgeschaltet lassen, wenn nicht benutzt)
-(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	admin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfigurationswert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 (no subject)	admin	de	(Kein Betreff)
 -  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
@@ -225,8 +224,8 @@ connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann z. B. Ihr Passwort lesen.
 container	admin	de	Container
 continue	admin	de	Weiter
-cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain<br>(Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden).
-cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad. Ermöglicht mehrere EGroupware-Sitzungen mit unterschiedlichen Verzeichnissen..
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie-Domain. (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden).
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie-Pfad. Ermöglicht mehrere EGroupware-Sitzungen mit unterschiedlichen Verzeichnissen
 copy of	admin	de	Kopie von
 could not append message:	admin	de	Diese E-Mail lässt sich nicht anzeigen:
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
@@ -503,7 +502,7 @@ identity	admin	de	Identität
 identity deleted	admin	de	Identität gelöscht.
 identity saved.	admin	de	Identität gespeichert.
 idle	admin	de	Im Leerlauf
-if different from email address	admin	de	Falls unterschiedlich zu E-Mail-Adresse
+if different from email address	admin	de	falls unterschiedlich zu E-Mail-Adresse
 if disabled existing tokens immediatly stop working.	admin	de	Wenn deaktiviert funktionieren bereits existierende Token sofort nicht mehr.
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört, gibt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	de	Wenn Sie LDAP verwenden, möchten Sie Benutzerverzeichnisse und Kommandointerpreter verwalten?
@@ -827,7 +826,7 @@ site	admin	de	Site
 skip imap	admin	de	IMAP auslassen
 skipping imap configuration!	admin	de	IMAP-Konfiguration ausgelassen!
 smtp authentication	admin	de	SMTP-Anmeldung
-smtp only: to create only an smtp account	admin	de	SMTP-only-Konto ohne IMAP anlegen
+smtp only: to create only an smtp account	admin	de	SMTP only: nur ein SMTP Konto anzulegen
 smtp options	admin	de	SMTP-Optionen
 smtp server	admin	de	SMTP-Server
 smtp server name	admin	de	SMTP-Server Name
@@ -862,14 +861,8 @@ successfull, but no refresh-token received!	admin	de	Erfolgreich, aber keine Ref
 switch back to standard identity to save account.	admin	de	Kehren Sie zur Standard-Identität zurück um das Konto zu speichern.
 switch back to standard identity to save other account data.	admin	de	Kehren Sie zur Standard-Identität zurück um andere Kontendaten zu speichern.
 switch it off, if users are randomly thrown out	admin	de	Schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
-template selection	admin	de	Auswahl der Benutzeroberfläche
 templates	admin	de	Vorlagen
-text entry	admin	de	Texteingabe
-that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
-that application order must be a number.	admin	de	Die Anwendungsreihenfolge muss eine Zahl sein.
 that loginid has already been taken	admin	de	Diese Login-ID ist bereits vergeben.
-that name has been used already	admin	de	Dieser Name wird bereits verwendet.
-that server name has been used already !	admin	de	Dieser Server-Name wird bereits verwendet!
 the api is current	admin	de	Das API ist aktuell
 the api requires an upgrade	admin	de	Das API benötigt ein Upgrade
 the cumulated and anonymised data will be publically available:	admin	de	Die kumulierten und anonymisierten Daten werden öffentlich verfügbar sein:

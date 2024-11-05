@@ -562,7 +562,6 @@ tables installed, unless there are errors printed above	setup	pl	Zainstalowano t
 tables upgraded	setup	pl	Tabele zaktualizowano
 target version	setup	pl	Wersja docelowa
 tcp port number of database server	setup	pl	Port TCP serwera bazy danych
-text entry	setup	pl	Wpisywanie tekstu
 the %1 extension is needed from: %2.	setup	pl	Rozszerzenie %1 wymagane z: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	pl	Rozszerzenie %1 wymagane, jeśli planowane użycie bazy danych %2.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	pl	Rozszerzenie ctype wymagane przez HTMLpurifier do sprawdzenia zawartości FCKeditor w stosunku co do Cross Site Skripting.

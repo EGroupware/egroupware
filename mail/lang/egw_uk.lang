@@ -13,6 +13,7 @@ aliases+forwards	mail	uk	Псевдоніми + переадресація
 always respond / auto-responder	mail	uk	Завжди відповідати / автовідповідач
 always show notifiction	mail	uk	Завжди показувати сповіщення
 answered	mail	uk	Відповіли
+archive folder	mail	uk	Папка архіву
 attach files	mail	uk	Прикріплення файлів
 attach users vcard at compose to every new mail	mail	uk	Прикріплювати vCard користувача при створенні кожного нового листа.
 attachment has been saved successfully.	mail	uk	Вкладення успішно збережено.
@@ -28,9 +29,15 @@ certificate info for email %1	mail	uk	Інформація про сертифі
 certificate issued by	mail	uk	Сертифікат виданий
 changing subject failed because of %1	mail	uk	Не вдалося змінити тему через %1
 changing subject failed folder %1 does not exist	mail	uk	Змінити тему не вдалося, папка %1 не існує
+check to save as calendar event on send	mail	uk	Встановіть галочку, щоб створити подію після відправлення
+check to save as infolog on send	mail	uk	Поставити галочку, щоб створити інфо-журнал після відправлення
+check to save as tracker entry on send	mail	uk	Поставити галочку, щоб створити квиток після відправлення
 checking admin credentials failed	mail	uk	Не вдалося перевірити облікові дані адміністратора
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 contact label	mail	uk	Мітка контакту
+convert mail to item and attach its attachments to this item (standard)	mail	uk	Конвертувати лист в імейл і прикріпити його вкладення до цього імейлу (стандартно)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	uk	Конвертувати імейл в імейл, прикріпити його вкладення та додати сире повідомлення (.eml) як вкладення
+convert only mail to item (ignore possible attachments)	mail	uk	Конвертувати тільки імейл в елемент (ігнорувати можливі вкладення)
 cross account forward attachment is not allowed!	mail	uk	Перехресне прикріплення форвардного рахунку не допускається!
 current subject	mail	uk	Поточна тема
 default toolbar actions shown in mail's html editor	mail	uk	Функції, які вмикаються на панелі інструментів HTML-редактора під час створення листа
@@ -74,6 +81,7 @@ from	mail	uk	Від
 get acl rights failed from imap server!	mail	uk	Не вдалося отримати права ACL від сервера IMAP!
 ham folder	mail	uk	Тека "Шинка
 handling of external http images / mixed content in mails	mail	uk	Обробка зовнішніх http-зображень / змішаного контенту в листах
+high priority	mail	uk	Високий пріоритет
 html	mail	uk	HTML
 ident name	mail	uk	Ім'я користувача
 ident name email	mail	uk	Ідентифікаційне ім'я [Електронна пошта]
@@ -106,6 +114,7 @@ learning as spam failed because of %1	mail	uk	Навчання як спам н�
 less than	mail	uk	менше ніж
 limit mailing list results when searching for addresses	mail	uk	Обмежити результати списку розсилки при пошуку адрес
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	uk	Перелік дій, які вмикаються/вимикаються за замовчуванням (наприклад, дія "Скласти лист і зберегти як інфолог").
+low priority	mail	uk	Низький пріоритет
 mail	common	uk	Пошта
 mail acl	mail	uk	Права доступу
 mail filter	mail	uk	Поштовий фільтр
@@ -127,6 +136,7 @@ modify subject	mail	uk	Змінити тему
 modify subject of this message	mail	uk	Змінити тему цього повідомлення
 move selected to	mail	uk	Перемістити вибране до
 move to	mail	uk	Перемістити до
+move to archive	mail	uk	Перемістити до папки архіву
 name and domain	mail	uk	Ім'я та домен
 name and email	mail	uk	Ім'я та email
 name of account	mail	uk	Назва облікового запису
@@ -220,7 +230,6 @@ signature	mail	uk	Підпис
 signature at top	mail	uk	підпис зверху
 signature position and visibility	mail	uk	Положення та видимість підпису
 signed by	mail	uk	Підписано
-small view	mail	uk	маленький вигляд
 smime encrypted message	mail	uk	S/MIME зашифроване повідомлення
 smime signed message	mail	uk	Повідомлення з підписом S/MIME
 smtp	mail	uk	SMTP
@@ -233,14 +242,10 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	uk	Це повідомлення зашифровано у форматі S/MIME і захищено паролем.
 timeout on connections to your imap server	mail	uk	Таймаут з'єднання з вашим IMAP-сервером
 to do	mail	uk	Щоб зробити
-toggle all folders view for %1	mail	uk	Увімкнути перегляд усіх папок для %1
 toggled on actions	mail	uk	Увімкнені дії
 trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
 write	mail	uk	Записати
-yes, only trigger connection reset	mail	uk	так, запускати тільки скидання з'єднання
-yes, show all debug information available for the user	mail	uk	так, показувати всю інформацію про налагодження, доступну користувачеві
-you can either choose to save as infolog or tracker, not both.	mail	uk	Ви можете вибрати збереження як InfoLog або як трекер, але не обидва варіанти.
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	uk	Ви можете використовувати $$start$$ для вказаної вище дати початку і $$end$$ для дати завершення.
 you may add this certificate into your contact, if you trust this signature.	mail	uk	Ви можете додати цей сертифікат до свого контакту, якщо ви довіряєте цьому підпису.

@@ -17,13 +17,8 @@ automatically start with this font	preferences	sk	Automaticky začať s týmto p
 automatically start with this font size	preferences	sk	Automaticky začať s touto veľkosťou písma
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeniť používateľské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
 change password	preferences	sk	Zmeniť heslo
-change your password	preferences	sk	Zmeniť heslo
-change your profile	preferences	sk	Zmeniť váš profil
-change your settings	preferences	sk	Zmeniť vaše nastavenia
-charset for the csv export	addressbook	sk	Znaková sada pre export CSV
 charset for the csv export/import	preferences	sk	Znaková sada
 click to install	preferences	sk	Kliknutím nainštalujete
-click to select a color	preferences	sk	Ak chcete vybrať farbu, kliknite sem
 close after selection	preferences	sk	Zavrieť po výbere
 code is invalid	preferences	sk	Kód je chybný
 color	preferences	sk	Farba
@@ -32,11 +27,9 @@ current password	preferences	sk	Súčasné heslo
 custom login box color, defaults to above color darkened	preferences	sk	Vlastná farba pre prihlasovacie okno, predvolený je tmavší odtieň vyššieuvedenej farby
 custom sidebar menu active color, defaults to above color darkened	preferences	sk	Vlastná farba pre bočný panel, predvolený je tmavší odtieň vyššieuvedenej farby
 dark mode theme	preferences	sk	Téma tmavého režimu
-dark moono theme	preferences	sk	Tmavá Moono téma
 data exchange settings	preferences	sk	Nastavenia pre výmenu údajov
 date format	preferences	sk	Formát dátumu
 default	preferences	sk	Predvolený
-default application	preferences	sk	Predvolená aplikácia
 default font	preferences	sk	Predvolené písmo
 default font size	preferences	sk	Predvolená veľkosť písma
 default format block	preferences	sk	Predvolený formátovací blok
@@ -103,7 +96,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	sk	Výber vzhľadu rozhrania / šablóny
 it sets content size (text only) according to selected size.	preferences	sk	Nastaví veľkosť obsahu (iba textu) podľa zvolenej veľkosti.
 just clicking on the line, like a checkbox	preferences	sk	jednoducho kliknutím na riadok, ako začiarkávacie políčko
-kama theme	preferences	sk	Kama téma
 keep list open for selecting multiple	preferences	sk	Ponechať zoznam otvorený pre výber viacerých možností
 language	preferences	sk	Jazyk
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sk	Pri prihlásení cez SingleSignOn sa heslo neposkytuje na odovzdanie poštovým alebo súborovým serverom.
@@ -112,8 +104,6 @@ lowercase letters	preferences	sk	malé písmená
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sk	Nastaviť zoznam aplikácií posúvateľný pomocou posuvných tlačítok (užitočné pre používateľov s myšou bez kolieska)
 max matches per page	preferences	sk	Maximum záznamov na stránku
 max number of icons in navbar	preferences	sk	Maximálny počet ikoniek v navigačnom paneli
-moono color theme	preferences	sk	Moono farebná téma
-moono theme (default)	preferences	sk	Moono téma (predvolená)
 new secret generated, you need to save it to disable the old one!	preferences	sk	Nové tajomstvo je vygenerované, uložte si ho aby sa staré zablokovalo!
 no default	preferences	sk	Bez predvolených nastavení
 no user-selection at all	common	sk	Žiadny výber používateľov
@@ -135,7 +125,6 @@ password stored	preferences	sk	Uložené heslo.
 permanent time zone selection	preferences	sk	Výber trvalého časového pásma
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sk	Prosím, vyberte časové pásma, medzi ktorými chcete mať možnosť rýchleho prepínania. Prepínač sa NEZOBRAZÍ, ak vyberiete menej než dve.
 please select your timezone.	preferences	sk	Prosím, vyberte svoje časové pásmo.
-please, select a new theme	preferences	sk	Prosím, vyberte novú farebnú tému
 popup with search	preferences	sk	Vyhľadaním
 preferences saved.	preferences	sk	Predvoľby boli uložené.
 preformatted	preferences	sk	Predformátované
@@ -146,15 +135,12 @@ read prefs for the specified application.	preferences	sk	Načítať predvoľby p
 reset qrcode	preferences	sk	Reset QR kódu
 revoke	preferences	sk	Odvolať
 revoke this token	preferences	sk	Odvolať tento token
-rich text editor theme	preferences	sk	Téma textového editora
 scan qrcode with a time-based one-time password (totp) app:	preferences	sk	Naskenujte QR kód aplikáciou pre časové jednorázové heslo (TOTP):
 secret deleted, two factor authentication disabled.	preferences	sk	Tajomstvo odstránené, dvojfaktorová autentifikácia vypnutá.
 select additional lines in lists by	preferences	sk	Vybrať ďalšie riadky zoznamu pomocou
-select different theme	preferences	sk	Vybrať inú farebnú tému
 select one	preferences	sk	Vyberte si jeden
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sk	Vyberte jazyk pre texty a správy v rámci EGroupware.<br>Niektoré jazyky nemusia zahŕňať preklad všetkých hlášok - v takých prípadoch sa zobrazí hláška v angličtine.
 select the language of the spellchecker integrated into the rich text editor.	preferences	sk	Vyberte jazyk kontroly pravopisu v textovom editore.
-select the theme (visualization) of the rich text editor.	preferences	sk	Vyberte tému (vzhľad) textového editora.
 selectbox	preferences	sk	Výberom
 selectbox with groupmembers	common	sk	Výberom s členmi skupiny
 selectbox with primary group and search	preferences	sk	Výberom s primárnou skupinou a vyhľadaním
@@ -211,7 +197,6 @@ you do not have permission to set acl's in this mode!	preferences	sk	Nemáte opr
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	sk	Môžete si vybrať, ktoré funkcie budú v paneli nástrojov.
 you must enter a password	preferences	sk	Musíte zadať heslo
 you need to enter your password to make any security changes!	preferences	sk	Ak chcete robiť bezpečnostné zmeny, musíte zadať svoje heslo!
-your current theme is: %1	preferences	sk	Vaša súčasná farebná téma je: <b>%1</b>
 your password does not have required strength:	preferences	sk	Vaše heslo nedosahuje požadovanú silu:
 your password might not match the password policy.	preferences	sk	Vaše heslo možno nesplní požiadavky heslovej politiky.
 your preferences	preferences	sk	Vaše nastavenia

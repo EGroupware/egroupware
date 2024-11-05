@@ -664,7 +664,6 @@ tables upgraded	setup	es-es	Las tablas han sido actualizadas
 target version	setup	es-es	Versión destino
 tcp port number of database server	setup	es-es	Número del puerto TCP del servidor de la base de datos
 technical contact	setup	es-es	Contacto técnico
-text entry	setup	es-es	Entrada de texto
 the %1 extension is needed from: %2.	setup	es-es	La extensión %1 se necesita para: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	es-es	La extensión %1 es necesaria si tiene previsto usar una base de datos %2.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	es-es	La extensión ctype es necesaria para que HTMLpurifier compruebe el contenido de FCKeditor contra Cross Site Scripting.

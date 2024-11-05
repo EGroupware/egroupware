@@ -21,6 +21,7 @@ always show notifiction	mail	id	Selalu tampilkan pemberitahuan
 answered	mail	id	Menjawab
 any of	mail	id	sembarang
 any status	mail	id	status apapun
+archive folder	mail	id	Folder Arsip
 attach files	mail	id	Melampirkan file
 attach users vcard at compose to every new mail	mail	id	Lampirkan vCard pengguna saat menulis ke setiap email baru.
 attachment has been saved successfully.	mail	id	Lampiran telah berhasil disimpan.
@@ -38,6 +39,9 @@ certificate info for email %1	mail	id	Info sertifikat untuk email %1
 certificate issued by	mail	id	Sertifikat dikeluarkan oleh
 changing subject failed because of %1	mail	id	Mengubah subjek gagal karena %1
 changing subject failed folder %1 does not exist	mail	id	Mengubah subjek gagal folder %1 tidak ada
+check to save as calendar event on send	mail	id	Tombol centang untuk membuat sebagai acara setelah mengirim
+check to save as infolog on send	mail	id	Tombol centang untuk membuat sebagai InfoLog setelah mengirim
+check to save as tracker entry on send	mail	id	Tombol centang untuk membuat sebagai tiket setelah mengirim
 checking admin credentials failed	mail	id	Memeriksa kredensial admin gagal
 compose	mail	id	Tulis
 compose as new	mail	id	tulis sbg pesan baru
@@ -46,10 +50,11 @@ condition	mail	id	kondisi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	id	Nilai yang dikonfigurasi akan diatur secara otomatis pada dialog penulisan untuk bidang yang dihormati saat membuat email baru.
 contact label	mail	id	Label kontak
 contains	mail	id	mengandung
+convert mail to item and attach its attachments to this item (standard)	mail	id	Mengonversi email menjadi item dan melampirkan lampirannya ke item ini (standar)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	id	Mengonversi email menjadi item, melampirkan lampirannya dan menambahkan pesan mentah (.eml) sebagai lampiran
+convert only mail to item (ignore possible attachments)	mail	id	Hanya mengonversi email ke item (abaikan kemungkinan lampiran)
 copy to	mail	id	Salin ke
 cross account forward attachment is not allowed!	mail	id	Lampiran penerusan lintas akun tidak diperbolehkan!
-date(newest first)	mail	id	Tanggal (terbaru)
-date(oldest first)	mail	id	Tanggal (terkuno)
 default sorting order	mail	id	Pengurutan bawaan
 default toolbar actions shown in mail's html editor	mail	id	Fungsi yang diaktifkan di bilah alat editor HTML saat membuat email
 default value for remembering s/mime passphrase in minutes	mail	id	Nilai default untuk mengingat frasa sandi S/MIME dalam hitungan menit
@@ -109,6 +114,7 @@ greater than	mail	id	lebih dari
 ham folder	mail	id	Folder ham
 handling of external http images / mixed content in mails	mail	id	Penanganan gambar eksternal/konten campuran dalam email
 header lines	mail	id	Baris Header
+high priority	mail	id	Prioritas tinggi
 html	mail	id	HTML
 ident name	mail	id	Nama identitas
 ident name email	mail	id	Nama identitas [Email]
@@ -143,6 +149,7 @@ learning as spam failed because of %1	mail	id	Belajar sebagai spam gagal karena 
 less than	mail	id	kurang dari
 limit mailing list results when searching for addresses	mail	id	Membatasi hasil milis saat mencari alamat
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	id	Daftar tindakan yang akan diaktifkan/dialihkan secara default (misalnya, tindakan menulis surat simpan sebagai InfoLog).
+low priority	mail	id	Prioritas rendah
 mail	common	id	Surat
 mail acl	mail	id	Hak akses
 mail filter	mail	id	Filter surat
@@ -278,7 +285,6 @@ signature	mail	id	Tandatangan
 signature at top	mail	id	Tanda tangan di bagian atas
 signature position and visibility	mail	id	Posisi dan visibilitas tanda tangan
 signed by	mail	id	Ditandatangani oleh
-small view	mail	id	small view
 smime encrypted message	mail	id	Pesan terenkripsi S/MIME
 smime signed message	mail	id	Pesan yang ditandatangani S/MIME
 smtp	mail	id	SMTP
@@ -296,7 +302,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	id	Pesan ini dienkripsi S/MIME dan dilindungi kata sandi.
 timeout on connections to your imap server	mail	id	Batas waktu koneksi ke Server IMAP Anda
 to do	mail	id	Melakukan
-toggle all folders view for %1	mail	id	Mengalihkan tampilan semua Folder untuk %1
 toggled on actions	mail	id	Mengaktifkan tindakan
 trash	mail	id	Trash
 trash folder	mail	id	Trash Folder
@@ -306,10 +311,6 @@ vacation notice	mail	id	Pemberitahuan liburan
 write	mail	id	tulis
 wrote	mail	id	menulis
 yes, offer copy option	mail	id	Ya, tawarkan opsi salin
-yes, only trigger connection reset	mail	id	ya, hanya memicu pengaturan ulang koneksi
-yes, show all debug information available for the user	mail	id	ya, tampilkan semua informasi debug yang tersedia untuk pengguna
-yes, show basic info only	mail	id	ya, tampilkan info dasar saja
-you can either choose to save as infolog or tracker, not both.	mail	id	Anda dapat memilih untuk menyimpan sebagai InfoLog ATAU tracker, tidak keduanya.
 you can select what info to be displayed on email tag	mail	id	Anda dapat memilih informasi yang akan ditampilkan pada tag email.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	id	Anda dapat menggunakan $$start$$ untuk tanggal mulai di atas dan $$end$$ untuk tanggal akhir.
 you may add this certificate into your contact, if you trust this signature.	mail	id	Anda dapat menambahkan sertifikat ini ke dalam kontak Anda, jika Anda mempercayai tanda tangan ini.

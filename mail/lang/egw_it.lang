@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	it	Non è consentito l'att
 current folder	mail	it	cartella corrente
 current subject	mail	it	Oggetto corrente
 currently:	mail	it	Al momento:
-date(newest first)	mail	it	Data (prima più recenti)
-date(oldest first)	mail	it	Data (prima meno recenti)
 deactive	mail	it	Disattiva
 default sorting order	mail	it	Ordinamento predefinito
 default toolbar actions shown in mail's html editor	mail	it	Funzioni abilitate nella barra degli strumenti dell'editor HTML durante la composizione di un'email
@@ -189,7 +187,6 @@ drafts	mail	it	Bozze
 drafts folder	mail	it	Cartella bozze
 edit account	mail	it	Modifica account
 edit account ...	mail	it	Modifica account...
-edit folder acl	mail	it	Modifica i permessi della cartella
 edit folder acl ...	mail	it	Modifica i permessi della cartella ...
 edit vacation settings	mail	it	Modifica impostazioni messaggio "ferie"
 effective only if server supports acl at all	admin	it	effettivo solo se il server supporta l'impostazione di permessi ACL
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	it	Gestione di im
 header	mail	it	Intestazione (header)
 header lines	mail	it	Righe intestazione
 high	mail	it	alto
+high priority	mail	it	Alta priorità
 hold %1 to drag files to your computer	mail	it	Tieni premuto %1 per trascinare i file verso il tuo computer
 home page folders	mail	it	cartelle della home page
 hostname or ip	mail	it	Nome host oppure IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	it	Apprendimento come Spam fallito a 
 less than	mail	it	meno di
 limit mailing list results when searching for addresses	mail	it	Limitare i risultati delle mailing list durante la ricerca di indirizzi
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	it	Elenco di azioni da attivare/attivare per impostazione predefinita (ad esempio, l'azione di composizione della posta salva come InfoLog).
+low priority	mail	it	Priorità bassa
 mail	common	it	Mail
 mail acl	mail	it	Permessi ACL della posta
 mail filter	mail	it	Filtro
@@ -471,7 +470,7 @@ refresh time in minutes	mail	it	Tempo di aggiornamento in minuti
 refused to delete folder inbox	mail	it	rifiutato di eliminare la cartella INBOX
 refused to delete folder with subfolders	mail	it	rifiutato di eliminare la cartella con le sottocartelle
 reject with	mail	it	Rifiuta con
-reloaded account %1	mail	it	Account %1 ricaricato
+reloaded account %1	mail	it	Account %1 ricaricato.
 reloaded folder %1	mail	it	Cartella %1 ricaricata
 remember the password for	mail	it	RIcordare la password per
 remove "%1" from blacklisted domains	mail	it	Rimuovere %1 dalla blacklist dei domini
@@ -506,7 +505,6 @@ resend after how many days?	mail	it	Dopo quanti giorni tentare di reinviare?
 respond to mail sent to:	mail	it	Rispondi a email inviate a:
 restrict acl management	admin	it	restringi la gestione dei permessi ACL
 rights	mail	it	Permessi
-row order style	mail	it	Stile dell'ordinameno per righe
 rule priority position	mail	it	Posizione di priorità della regola
 rule with priority	mail	it	regola con priorità
 rules	mail	it	Regole
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	it	Sieve
 sieve connection status	mail	it	Stato della connessione Sieve
 sieve not activated	mail	it	Sieve non attivato
-sieve script name	mail	it	Nome script Sieve
 sieve server	mail	it	Server Sieve
 sieve_edit_instructions	mail	it	(*) possono essere usate le wildcard (jolly). Se si cerca il carattere * o ? invece, bisogna usare (\) davanti. Se si seleziona "Usa espressioni regolari" è necessario usare espressioni regolari valide. Per il punto esclamativo quando non usato come operatore "NOT", usare regex e backslash (\) (p.es. \!)
 sign your message with smime certificate	mail	it	Firma il messaggio con il certificato S/MIME
@@ -596,7 +593,6 @@ signature	mail	it	Firma
 signature at top	mail	it	firma in cima
 signature position and visibility	mail	it	Posizione e visibilità della firma
 signed by	mail	it	Firmato da
-small view	mail	it	visualizzazione ridotta
 smime encrypted message	mail	it	Messaggio criptato S/MIME
 smime signed message	mail	it	Messaggio firmato S/MIME
 smtp	mail	it	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	it	Sottoscrivi cartella %1
 subscription folders	mail	it	Cartelle da sottoscrivere
 subscription successfully saved.	mail	it	Sottoscrizione salvata corretamente.
 succeeded on %1 folders, failed on %2	mail	it	Riuscito su %1 cartelle, fallito su %2
-successfully connected	mail	it	Connesso con successo
 switch off encryption?	mail	it	Disabilitare la cifratura?
 template folder	mail	it	Cartella dei modelli
 templates	mail	it	Modelli
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	it	Questo messaggio è criptato via S/MIME e protetto da password.
 timeout on connections to your imap server	mail	it	Timeout della connessione al server IMAP
 to do	mail	it	Da fare
-toggle all folders view for %1	mail	it	Alterna la vista di tutte le cartelle per %1
 toggled on actions	mail	it	Attivare le azioni
 trash	mail	it	Cestino
 trash folder	mail	it	Cartella del cestino
@@ -697,13 +691,7 @@ wizard	mail	it	Procedura guidata
 writable sharing requires epl version!	mail	it	La condivisione scrivibile richiede la versione completa EPL!
 write	mail	it	scrivi
 wrote	mail	it	scritto
-yes, but mask all passwords	mail	it	sì, però maschera tutte le password
-yes, but mask all usernames and passwords	mail	it	sì, però maschera tutti i nomi utente e le password
 yes, offer copy option	mail	it	Sì, fornisci l'ozione di copia
-yes, only trigger connection reset	mail	it	Sì, innesca solo la reimpostazione della connessione
-yes, show all debug information available for the user	mail	it	sì mostra le informazioni di debug complete disponibili all'utente
-yes, show basic info only	mail	it	sì, mostra solo le informazioni di base
-you can either choose to save as infolog or tracker, not both.	mail	it	Puoi scegliere di salvare come Attività oppure Tracker, non entrambi.
 you can select what info to be displayed on email tag	mail	it	È possibile selezionare le informazioni da visualizzare sul tag e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	it	Puoi usare $$start$$ per la data di inizio e $$end$$ per la data fine.
 you may add this certificate into your contact, if you trust this signature.	mail	it	Puoi aggiungere questo certificato nel tuo contatto se ti fidi della firma.

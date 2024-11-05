@@ -675,7 +675,6 @@ tables upgraded	setup	en	Tables upgraded.
 target version	setup	en	Target version
 tcp port number of database server	setup	en	Port number of database server
 technical contact	setup	en	Technical contact
-text entry	setup	en	Text entry
 the %1 extension is needed from: %2.	setup	en	The %1 extension is needed from: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	en	The %1 extension is needed, if you plan to use a %2 database.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	en	The ctype extension is needed by HTMLpurifier to check content of FCKeditor against Cross Site Skripting.

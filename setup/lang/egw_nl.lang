@@ -549,7 +549,6 @@ tables installed, unless there are errors printed above	setup	nl	Tabellen geinst
 tables upgraded	setup	nl	Tabellen ge-upgrade
 target version	setup	nl	Doel versie
 tcp port number of database server	setup	nl	Poortnummer van de database server
-text entry	setup	nl	Text invoer
 the %1 extension is needed from: %2.	setup	nl	De %1 extensie is nodig voor: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	nl	De %1 extensie is vereist indien u van plan bent om een %2 database te gebruiken.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	nl	De db_type in standaardwaarden (%1) wordt niet ondersteund door deze server, gebruikt het eerste ondersteunde type.

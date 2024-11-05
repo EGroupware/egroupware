@@ -10,8 +10,6 @@ compose	mail	ca	Redactar
 compress folder	mail	ca	Comprimir carpeta
 contains	mail	ca	conté
 copy to	mail	ca	Copiar A
-date(newest first)	mail	ca	Data (la més recent primer)
-date(oldest first)	mail	ca	Data (la més antiga primer)
 default sorting order	mail	ca	Mode d'ordenació predeterminat
 delete folder	mail	ca	Esborrar carpeta
 deleted	mail	ca	eliminat
@@ -82,7 +80,6 @@ save all	mail	ca	Desar tot
 select all	mail	ca	Seleccionar tot
 sent folder	mail	ca	Carpeta d'enviats
 signature	mail	ca	Signatura
-small view	mail	ca	Vista reduïda
 sort order	mail	ca	Forma de ordenación
 text	mail	ca	Texto
 then	mail	ca	ALESHORES

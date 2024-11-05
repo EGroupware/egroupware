@@ -13,6 +13,7 @@ aliases+forwards	mail	ro	Aliasuri+Întoarcere
 always respond / auto-responder	mail	ro	Răspundeți întotdeauna / răspuns automat
 always show notifiction	mail	ro	Afișează întotdeauna notificarea
 answered	mail	ro	Răspunsuri
+archive folder	mail	ro	Dosar arhivă
 attach files	mail	ro	Atașați fișiere
 attach users vcard at compose to every new mail	mail	ro	Atașarea vCard-ului utilizatorului la fiecare e-mail nou în momentul compunerii.
 attachment has been saved successfully.	mail	ro	Atașamentul a fost salvat cu succes.
@@ -28,9 +29,15 @@ certificate info for email %1	mail	ro	Informații despre certificat pentru e-mai
 certificate issued by	mail	ro	Certificat eliberat de
 changing subject failed because of %1	mail	ro	Schimbarea subiectului a eșuat din cauza lui %1
 changing subject failed folder %1 does not exist	mail	ro	Schimbarea subiectului a eșuat folderul %1 nu există
+check to save as calendar event on send	mail	ro	Bifați butonul pentru a crea ca eveniment după trimitere
+check to save as infolog on send	mail	ro	Buton de verificare pentru a crea ca InfoLog după trimitere
+check to save as tracker entry on send	mail	ro	Buton de selectare pentru a crea un bilet după trimitere
 checking admin credentials failed	mail	ro	Verificarea acreditărilor de administrator a eșuat
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	ro	Valorile configurate vor fi setate automat în dialogul de compunere pentru câmpul respectat atunci când se compune un nou e-mail.
 contact label	mail	ro	Etichetă de contact
+convert mail to item and attach its attachments to this item (standard)	mail	ro	Conversia e-mailului în element și atașarea atașamentelor la acest element (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ro	Conversia e-mailului în element, atașarea atașamentelor acestuia și adăugarea mesajului brut (.eml) ca atașament
+convert only mail to item (ignore possible attachments)	mail	ro	Convertește numai e-mailul în element (ignoră eventualele atașamente)
 cross account forward attachment is not allowed!	mail	ro	Atașarea contului încrucișat nu este permisă!
 current subject	mail	ro	Subiect curent
 default toolbar actions shown in mail's html editor	mail	ro	Funcții activate în bara de instrumente a editorului HTML atunci când se compune un e-mail
@@ -68,6 +75,7 @@ folder %1 has been created successfully, although the subscription failed becaus
 get acl rights failed from imap server!	mail	ro	Obțineți drepturile ACL eșuate de pe serverul IMAP!
 ham folder	mail	ro	Dosarul Ham
 handling of external http images / mixed content in mails	mail	ro	Gestionarea imaginilor http externe / conținut mixt în e-mailuri
+high priority	mail	ro	Prioritate ridicată
 html	mail	ro	HTML
 ident name	mail	ro	Nume ident.
 ident name email	mail	ro	Nume identitate [Email]
@@ -101,6 +109,7 @@ learning as spam failed because of %1	mail	ro	Învățarea ca spam a eșuat din 
 less than	mail	ro	mai puțin de
 limit mailing list results when searching for addresses	mail	ro	Limitarea rezultatelor din listele de corespondență la căutarea de adrese
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ro	Listă de acțiuni care urmează să fie activate/activate în mod implicit (de exemplu, acțiunea de salvare a compoziției de e-mail ca InfoLog)
+low priority	mail	ro	Prioritate scăzută
 mail	common	ro	Mail
 mail acl	mail	ro	Drepturi de acces
 mail filter	mail	ro	Filtru de poștă
@@ -122,6 +131,7 @@ modify subject	mail	ro	Modificați subiectul
 modify subject of this message	mail	ro	Modificați subiectul acestui mesaj
 move selected to	mail	ro	Mutați selectat la
 move to	mail	ro	Mutarea la
+move to archive	mail	ro	Mutarea în folderul de arhivă
 name and domain	mail	ro	Nume și domeniu
 name and email	mail	ro	Nume și e-mail
 name of account	mail	ro	Numele contului
@@ -226,13 +236,9 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	ro	Acest mesaj este criptat S/MIME și protejat cu parolă.
 timeout on connections to your imap server	mail	ro	Timpul de așteptare a conexiunilor la serverul IMAP
 to do	mail	ro	Pentru a face
-toggle all folders view for %1	mail	ro	Comutați vizualizarea tuturor folderelor pentru %1
 toggled on actions	mail	ro	Toggled on actions
 trash	mail	ro	Coș de gunoi
 trash folder	mail	ro	Dosar coș de gunoi
-yes, only trigger connection reset	mail	ro	da, doar declanșează resetarea conexiunii
-yes, show all debug information available for the user	mail	ro	da, afișează toate informațiile de depanare disponibile pentru utilizator
-you can either choose to save as infolog or tracker, not both.	mail	ro	Puteți alege fie să salvați ca InfoLog, fie ca tracker, dar nu ambele.
 you can select what info to be displayed on email tag	mail	ro	Puteți selecta ce informații să fie afișate pe eticheta de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ro	Puteți folosi $$start$$ pentru data de început de mai sus și $$end$$$ pentru data de sfârșit.
 you may add this certificate into your contact, if you trust this signature.	mail	ro	Puteți adăuga acest certificat în contactul dumneavoastră, dacă aveți încredere în această semnătură.

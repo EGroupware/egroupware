@@ -8,16 +8,10 @@ acl grants have been updated	preferences	eu	ACL-ko baimenak gaurkotu egin dira.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	eu	Edozein zerrendak EGroupware-n sarrera kopuru eta orriko ilara kopuru hau erakutsiko du. <br>Gehiegik orrialdea moteltzen dute eta gutxiegi txarra da.
 are you sure you want to delete this category ?	preferences	eu	Ziur kategoria hau ezabatu nahi duzula?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	eu	Erabiltzaile baten pasahitza aldatu zaharra eta berria pasatuz. Zuzena bada TRUE azalduko da, bestela FALSE.
-change your password	preferences	eu	Zure pasahitza aldatu
-change your profile	preferences	eu	Zure profila aldatu
-change your settings	preferences	eu	Zure konfigurazioa aldau
-charset for the csv export	addressbook	eu	Fitxategiaren karaktere jokoa
-click to select a color	preferences	eu	Egin kilk kolorea aukeratzeko
 color	preferences	eu	Kolorea
 country	preferences	eu	Herrialdea
 date format	preferences	eu	Dataren formatua
 default	preferences	eu	Lehenetsia
-default application	preferences	eu	Lehenetsitako aplikazioa
 default preferences	preferences	eu	Lehenetsitako hobespenak
 delete categories	preferences	eu	Kategoriak ezabatu
 description can not exceed 255 characters in length !	preferences	eu	Deskribapenak ezin ditu 255 karaktere baino gehiago izan.
@@ -46,10 +40,8 @@ max number of icons in navbar	preferences	eu	Nabigazio barrako ikono kopuru maxi
 no default	preferences	eu	Lehenetsitako balorerik gabe
 note: this feature does *not* change your email password. this will	preferences	eu	oharra: ezaugarri honek *ez* du zure postako pasahitza aldatzen.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	eu	Oharra: aukera honek *ez* du zure postako pasahitza aldatzen. Hau eskuz egin behar da.
-please, select a new theme	preferences	eu	Mesedez, gai berri bat aukeratu
 re-enter your password	preferences	eu	Zure pasahitza baieztatu
 read prefs for the specified application.	preferences	eu	Aplikazio zehatzetarako hobespenak irakurri.
-select different theme	preferences	eu	Gai ezberdin bat aukeratu
 select one	preferences	eu	Aukeratu bat
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	eu	Testuen eta mezuen hizkuntza EGroupware-n aukeratu.<br>Baliteke hizkuntza batzuk mezu guztiak ez izatea, kasu horientan mezua ingelesez ikusiko duzu.
 selectbox	preferences	eu	Aukeratze koadroa
@@ -78,5 +70,4 @@ write prefs for the specified application.	preferences	eu	Hobespenak idatzi apli
 you can show the applications as icons only, icons with app-name or both.	preferences	eu	Ikonoak ikono moduan edota izenarekin ikus ditzakezu edota biak batera.
 you do not have permission to set acl's in this mode!	preferences	eu	Ez daukazu baimenik ACL modu honetan jartzeko
 you must enter a password	preferences	eu	Pasahitz bat sartu behar duzu
-your current theme is: %1	preferences	eu	Zure momentuko gaia da: %1
 your preferences	preferences	eu	Zure hobespenak

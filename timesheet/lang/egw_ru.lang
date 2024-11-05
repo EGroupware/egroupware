@@ -8,14 +8,18 @@ all projects	timesheet	ru	Все проекты
 and its members	timesheet	ru	И все члены
 applies the changes	timesheet	ru	Изменения применены
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	ru	Применить действие ко всему запросу, НЕ ТОЛЬКО к видимым записям табеля!
+ask to start and stop working time with session	timesheet	ru	Попросите начать и остановить рабочее время с помощью сессии
 both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
 by	timesheet	ru	к
+category for 'working time'	admin	ru	Категория для 'Рабочее время'
 change category	timesheet	ru	Изменить категорию
+change owner when updating	timesheet	ru	Смена владельца при обновлении
 changed category to %1	timesheet	ru	Категория изменена на %1
 changed status	timesheet	ru	Состояние изменено.
 check all	timesheet	ru	Проверить все
 choose 'creator' of imported data	timesheet	ru	Изменить "создателя" импортированных данных
 comment by %1 at %2:	timesheet	ru	Комментировать по %1 на %2
+create a single 'working time' timesheet per	timesheet	ru	Создать один табель учета рабочего времени на
 create new links	timesheet	ru	Создать новые ссылки
 creates a new field	timesheet	ru	Создает новое поле
 creating new entry	timesheet	ru	Создание новой записи
@@ -26,6 +30,10 @@ deleted	timesheet	ru	Удалено
 deletes this field	timesheet	ru	Удаляет это поле
 determines the order the fields are displayed	timesheet	ru	Определяет порядок показа полей
 directory with documents to insert entries	timesheet	ru	Каталог с документами для вставки записей
+disable timers	timesheet	ru	Отключить таймеры
+do you want to associate it with the selected %1 entry?	common	ru	Хотите ли вы связать его с выбранной записью %1?
+do you want to start your working time?	common	ru	Вы хотите начать свое рабочее время?
+do you want to stop your working time?	common	ru	Вы хотите остановить рабочее время?
 each value is a line like <id>[=<label>]	timesheet	ru	Каждая величина является строкой типа <id>[=<label>]
 edit status	timesheet	ru	Изменить состояние
 edit this entry	timesheet	ru	Редактировать эту запись
@@ -35,6 +43,7 @@ entry deleted	timesheet	ru	Запись удалена
 entry saved	timesheet	ru	Запись сохранена
 error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
 error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
+error storing working time	timesheet	ru	Ошибка сохранения рабочего времени
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	ru	Пример: {{NELF role}} — если поле «роль» не пусто, получает новую строку со значением поля «роль»
@@ -47,6 +56,7 @@ exports entries from your timesheet into a csv file.	timesheet	ru	Экспорт
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для серии писем используйте этот тэг. Поместите содержимое, которое нужно повторить, между двумя тэгами.
+forgot to switch off working time?	common	ru	Забыли выключить рабочее время?
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
 general fields:	timesheet	ru	Общие поля:
 global categories	timesheet	ru	Общие категории
@@ -89,6 +99,8 @@ only admin	timesheet	ru	Только администратор
 only admin can edit this status	timesheet	ru	Только администратор может редактировать записи Табеля с этим состоянием
 or endtime	timesheet	ru	или Время окончания
 order	timesheet	ru	Назначение
+overwrite time	common	ru	Время перезаписи
+overwriting start or stop time	timesheet	ru	Перезапись времени запуска или остановки
 parent	timesheet	ru	Родитель
 pause	common	ru	Пауза
 pause time	timesheet	ru	Время паузы
@@ -100,8 +112,10 @@ price	timesheet	ru	Цена
 project fields	timesheet	ru	Поля проекта
 projectmanager integration	admin	ru	Интеграция Управления проектами
 quantity	timesheet	ru	Количество
+recorded	timesheet	ru	Запись
 recovered	timesheet	ru	Восстановлено
 replacements for inserting entries into documents	timesheet	ru	Замены для вставки записей в документы
+restore this entry	timesheet	ru	Восстановить эту запись
 save & new	timesheet	ru	Сохранить и добавить новый
 saves the changes made	timesheet	ru	Сохраняет внесенные изменения
 saves the changes made and leaves	timesheet	ru	Сохраняет внесенные изменения и выходит из приложения
@@ -117,6 +131,8 @@ set to	timesheet	ru	Установить в
 show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показывать суммарное количество (напр. для суммирования перерасходов времени)
 skip record	timesheet	ru	Пропустить запись
 start	timesheet	ru	Старт
+start & stop timer	common	ru	Запуск и остановка таймера
+start timer	common	ru	Запуск таймера
 start-time can not be before last stop- or pause-time %1!	common	ru	Время старта не может быть раньше последнего времени остановки или паузы %1!
 starttime	timesheet	ru	Время начала
 starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
@@ -139,20 +155,25 @@ timer already running or paused	common	ru	Таймер уже запущен и�
 timesheet	common	ru	Табель
 timesheet csv export	timesheet	ru	Экспорт Табеля в CVS
 timesheet csv import	timesheet	ru	Импорт Табеля в формате CVS
-timesheet fields:	timesheet	ru	Поля Табеля:
 timesheet id	timesheet	ru	ID записи Табеля
 timesheet modified by %1 at %2	timesheet	ru	Запись Табеля изменена %1 в %2
-timesheet openoffice export	timesheet	ru	Экспорт Табеля в OpenOffice
 timesheet status-%1 '%2' added.	timesheet	ru	Состояние записи Табеля - %1 '%2' добавлено.
 timesheet-%1 '%2' updated.	timesheet	ru	Запись Табеля -  %1 '%2' обновлено.
 timesheet-%1 deleted.	timesheet	ru	Запись Табеля - %1 удалена.
 titles of any entries linked to the current record, excluding attached files	timesheet	ru	Заголовки записей, ссылающихся на текущую, исключая прикреплённые файлы
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ru	Невозможно преобразовать "%1" в ID учетной записи. Используйте установленный планин (%2) для %3.
 unitprice	timesheet	ru	Цена за ед.
+use field from csv if possible	timesheet	ru	Используйте поле из CSV, если это возможно
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ru	Используйте этот тэг для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 values for selectbox	timesheet	ru	Значения для выбранного ящика
 view this entry	timesheet	ru	Показать запись
 week	timesheet	ru	Неделя
+what should be done with unknown values?	timesheet	ru	Что делать с неизвестными значениями?
+working time	common	ru	Рабочее время
+working time and timer	timesheet	ru	Рабочее время и таймер
+working time from %1	timesheet	ru	Рабочее время от %1
+working time of %1 hours stored	timesheet	ru	Сохранение рабочего времени в %1 часов
+would you like to be asked, to start and stop working time, when login in or off	timesheet	ru	Хотите ли вы, чтобы при входе или выходе из системы вам предлагалось запускать и останавливать рабочее время?
 yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут очистить удалённые записи
 yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удалённые ими записи
 yesterday	timesheet	ru	Вчера

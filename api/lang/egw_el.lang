@@ -66,6 +66,7 @@ all	common	el	Ολα
 all addressbooks	groupdav	el	Όλα τα βιβλία διευθύνσεων
 all categories	common	el	Όλες οι κατηγορίες
 all fields	common	el	όλα τα πεδία
+all files	common	el	Όλα τα αρχεία
 all users	common	el	Ολοι οι χρήστες
 allow editing the %1	common	el	Επιτρέψτε την επεξεργασία του: %1
 alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου:
@@ -509,11 +510,13 @@ link	common	el	Σύνδεσμος
 link is appended to mail allowing recipients to download currently attached version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία επιτρέποντας στους παραλήπτες να κατεβάσουν την τρέχουσα επισυναπτόμενη έκδοση των αρχείων
 link is appended to mail allowing recipients to download or modify up to date version of files (epl only)	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν ή να τροποποιούν την ενημερωμένη έκδοση των αρχείων (μόνο EPL)
 link is appended to mail allowing recipients to download up to date version of files	common	el	Ο σύνδεσμος επισυνάπτεται στην αλληλογραφία που επιτρέπει στους παραλήπτες να κατεβάζουν την ενημερωμένη έκδοση των αρχείων
+link to each entry	common	el	Σύνδεσμος σε κάθε καταχώρηση
 links and attached files	preferences	el	Σύνδεσμοι και συνημμένα αρχεία
 list	common	el	Λίστα
 list members	common	el	Μέλη λίστας
 lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
 load	common	el	Φόρτωση
+load more links ...	common	el	Φόρτωση περισσότερων συνδέσμων ...
 loading	common	el	φόρτωση
 local	common	el	Τοπικός
 locations	common	el	τοποθεσίες
@@ -549,6 +552,10 @@ may	common	el	Μάϊος
 mayotte	common	el	ΜΑΓΙΟΤΕ
 medium	common	el	Μεσαίο
 menu	common	el	Μενού
+merge	common	el	Συγχώνευση
+merge & send	common	el	Συγχώνευση & αποστολή
+merge individually	common	el	Συγχώνευση μεμονωμένα
+merge options	common	el	Επιλογές συγχώνευσης
 merged document filename	preferences	el	Συγχωνευμένο όνομα αρχείου εγγράφου
 message	common	el	Μήνυμα
 mexico	common	el	ΜΕΞΙΚΟ
@@ -639,7 +646,6 @@ open	common	el	Άνοιγμα
 open existing contact	common	el	Άνοιγμα υπάρχουσας επαφής
 open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
 open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
-open sidebox	common	el	Άνοιγμα μενού
 open the online help.	common	el	Άνοιγμα της ηλεκτρονικής βοήθειας
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	el	Επιτυχής σύνδεση OpenIDConnect, αλλά ο χρήστης '%1' ΔΕΝ υπάρχει στο EGroupware, ΚΑΙ η αυτόματη δημιουργία χρηστών είναι απενεργοποιημένη!
 operator	common	el	Χειριστής
@@ -762,6 +768,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	el	Αποθήκευση
 save all	common	el	Αποθήκευση όλων
 save as	common	el	Αποθήκευση ως
+save as pdf	common	el	Αποθήκευση ως PDF
 save as zip	common	el	Αποθήκευση ως ZIP
 saved column sizes to preferences.	common	el	Αποθηκευμένα μεγέθη στηλών στις προτιμήσεις.
 search	common	el	Αναζήτηση
@@ -789,6 +796,7 @@ select user or group	common	el	Επιλογή χρήστη ή ομάδας
 select work email address	common	el	Επιλογή διεύθυνσης email eργασίας
 selectbox	common	el	Κουτί επιλογής
 selection	common	el	Επιλογή
+selection of files can only be done in one folder.  %1 files unselected.	common	el	Η επιλογή των αρχείων μπορεί να γίνει μόνο σε έναν φάκελο.  %1 αρχεία δεν έχουν επιλεγεί.
 send	common	el	Αποστολή
 senegal	common	el	ΣΕΝΕΓΑΛΗ
 september	common	el	Σεπτέμβριος

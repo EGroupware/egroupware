@@ -405,7 +405,6 @@ tables installed, unless there are errors printed above	setup	fa	جداول نص
 tables upgraded	setup	fa	جداول بهنگام شد
 target version	setup	fa	نسخه مقصد
 tcp port number of database server	setup	fa	درگاه  TCP کارگزار پایگاه داده
-text entry	setup	fa	ورودی متنی
 the %1 extension is needed, if you plan to use a %2 database.	setup	fa	الحاقیه  %1 مورد نیاز است، اگر شما قصد استفاده از پایگاه داده %2 را دارید
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fa	db_type در حالت پیش فرض(%1) توسط این کارگزار پشتیبانی نمی شود. از اولین نوع مورد پشتیبانی استفاده می شود
 the file	setup	fa	پرونده

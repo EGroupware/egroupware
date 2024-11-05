@@ -198,7 +198,6 @@ blurtext	common	it	blurText
 bold	common	it	Grassetto
 bolivia	common	it	BOLIVIA
 border	common	it	Bordo
-border-line-thickness for the table-tag	common	it	Spessore linea bordo per table-tag
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
 bottom	common	it	In fondo
@@ -805,6 +804,7 @@ list members	common	it	Elenco membri
 list of files linked to the current record	preferences	it	Elenco dei file collegati al record attuale
 lithuania	common	it	LITUANIA
 load	common	it	Carica
+load more links ...	common	it	Carica altri link
 load this template into the editor	common	it	Carica questo template nell'editor
 loading	common	it	Sto caricando
 local	common	it	Locale
@@ -985,7 +985,6 @@ open	common	it	Apri
 open existing contact	common	it	Aprire il contatto esistente
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
-open sidebox	common	it	Apri riquadro laterale
 open the online help.	common	it	Apre help online.
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	it	L'accesso a OpenIDConnect è riuscito, ma l'utente '%1' NON esiste in EGroupware e la creazione automatica dell'utente è disabilitata!
 operator	common	it	Operatore
@@ -1238,6 +1237,7 @@ select work email address	common	it	Selezione indirizzio e-mail ufficio
 select year	common	it	Seleziona Anno
 selectbox	common	it	Selectbox
 selection	common	it	Selezione
+selection of files can only be done in one folder.  %1 files unselected.	common	it	La selezione dei file può essere effettuata solo in una cartella. %1 file non selezionati.
 send	common	it	Invia
 send succeeded to %1	common	it	Invia i riuscito a %1
 senegal	common	it	SENEGAL

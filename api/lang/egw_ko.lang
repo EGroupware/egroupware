@@ -50,6 +50,7 @@ administration	common	ko	관리
 advanced search	common	ko	상세 검색
 all	common	ko	모두
 all fields	common	ko	모든 필드
+all files	common	ko	すべてのファイル
 all users	common	ko	모든 사용자
 and	common	ko	그리고(AND 연산)
 answering no will not ask you again for this browser.	common	ko	아니요라고 대답하면 더 이상 이 브라우저를 입력하라는 메시지가 표시되지 않습니다.
@@ -242,8 +243,10 @@ last page	common	ko	끝 페이지로
 lastname	common	ko	성
 left	common	ko	왼쪽
 link	common	ko	링크
+link to each entry	common	ko	各エントリーへのリンク
 list members	common	ko	멤버 목록
 load	common	ko	불러오기
+load more links ...	common	ko	もっとリンクをロードする
 login	common	ko	로그인
 login rejected by epl firewall, please contact your administrator	common	ko	E그룹웨어 방화벽에 의해 로그인이 거부된 경우 관리자에게 문의하세요.
 loginid	common	ko	로그인ID
@@ -260,6 +263,11 @@ maintainer	common	ko	관리자
 march	common	ko	3월
 may	common	ko	5월
 medium	common	ko	중간
+merge	common	ko	マージ
+merge & send	common	ko	マージして送信
+merge individually	common	ko	個別にマージ
+merge options	common	ko	マージオプション
+merged document filename	preferences	ko	マージされたドキュメントのファイル名
 message	common	ko	메세지
 minute	common	ko	분
 minutes	common	ko	분
@@ -381,6 +389,8 @@ returns struct of users application access	common	ko	사용자의 응용프로�
 right	common	ko	오른쪽
 saturday	common	ko	토요일
 save	common	ko	저장
+save as pdf	common	ko	PDFとして保存
+save as zip	common	ko	ZIPとして保存
 search	common	ko	검색
 search accounts	common	ko	계정 찾기
 search or select accounts	common	ko	계정 선택 혹은 검색
@@ -398,6 +408,7 @@ select the default width for the application windows	common	ko	이 응용프로�
 select user	common	ko	사용자 선택
 select work email address	common	ko	업무 메일주소 선택
 selectbox	common	ko	선택상자
+selection of files can only be done in one folder.  %1 files unselected.	common	ko	ファイルの選択は 1 つのフォルダでのみ可能です。ファイル %1 が選択されていません。
 send	common	ko	보내기
 september	common	ko	9월
 server %1 has been added	common	ko	%1 서버가 추가되었습니다.

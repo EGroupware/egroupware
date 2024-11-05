@@ -8,15 +8,10 @@ acl grants have been updated	preferences	fa	فهرست حقوق دسترسی ب�
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fa	هر فهرستی در گروه افزار این تعداد ورودی را در هر صفحه به شما نمایش خواهد داد.<br> بخاطر داشته باشید که تعداد زیاد نمایش صفحات را کند خواهد کرد. و تعداد خیلی کم دید کلی شما را با خستگی مواجه خواهد کرد.
 are you sure you want to delete this category ?	preferences	fa	آیا مطمئنید که می خواهید این دسته را حذف کنید؟
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fa	تغییر یک گذرواژه کاربری با ارسال گذرواژه قدیمی و جدید. در صورت موفقیت «درست» و در غیر اینضورت «نادرست» بر می گرداند
-change your password	preferences	fa	تغییر گذرواژه
-change your profile	preferences	fa	تغییر مشخصات
-change your settings	preferences	fa	تغییر تنظیمات
-click to select a color	preferences	fa	برای انتخاب رنگ کلیک کنید
 color	preferences	fa	رنگ
 country	preferences	fa	کشور
 date format	preferences	fa	قالب تاریخ
 default	preferences	fa	پیش فرض
-default application	preferences	fa	کاربرد پیش فرض
 default preferences	preferences	fa	تنظیمات پیش فرض
 delete categories	preferences	fa	حذف دسته ها
 description can not exceed 255 characters in length !	preferences	fa	توضیحات (شرح) نمی تواند بیش از ۲۵۵ کاراکتر باشد.
@@ -46,11 +41,9 @@ max number of icons in navbar	preferences	fa	حداکثر تعداد نمایه 
 no default	preferences	fa	بدون پیش فرض
 note: this feature does *not* change your email password. this will	preferences	fa	تذکر: این قابلیت گذرواژه رایانامه شما را تغییر نخواهد داد. باید بصورت دستی این کار را انجام دهید.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fa	تذکر:  این قابلیت گذرواژه رایانامه شما را تغییر نخواهد داد. باید بصورت دستی این کار را انجام دهید.
-please, select a new theme	preferences	fa	لطفا یک تم جدید انتخاب کنید
 popup with search	preferences	fa	پایین افتادنی با جستجو
 re-enter your password	preferences	fa	گذرواژه را مجددا وارد کنید
 read prefs for the specified application.	preferences	fa	خواندن تنظیمات برای کاربرد تعریف شده
-select different theme	preferences	fa	تم متفاوت انتخاب کنید
 select one	preferences	fa	انتخاب کنید
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fa	زبان متنها و پیامها در گروه افزار را انتخاب کنید.<br> برخی زبانها ممکن است همه پیامها را نداشته باشند در اینصورت آن پیامها به زبان انگلیسی نمایش داده می شوند
 selectbox	preferences	fa	جعبه انتخاب
@@ -79,5 +72,4 @@ write prefs for the specified application.	preferences	fa	نوشتن تنظیم�
 you can show the applications as icons only, icons with app-name or both.	preferences	fa	می توانید فقط نمایه، نمایه با متن، یا متن خالی نام کاربرد را در نوار ناوبری ببینید.
 you do not have permission to set acl's in this mode!	preferences	fa	شما دسترسی کافی ندارید.
 you must enter a password	preferences	fa	شما باید یک گذرواژه وارد کنید
-your current theme is: %1	preferences	fa	تم فعلی شما %1 است
 your preferences	preferences	fa	تنظیمات شما
