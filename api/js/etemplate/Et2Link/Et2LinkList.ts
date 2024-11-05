@@ -284,7 +284,10 @@ export class Et2LinkList extends Et2LinkString
 			// Add in new links from LinkTo
 			for(let link of <LinkInfo[]>Object.values(_ev.detail || []))
 			{
-				if(!this._link_list.some(l => l.app == link.app && l.id == link.id))
+				if(!this._link_list.some(l => l.app == link.app && (l.id == link.id ||
+					// Unsaved
+					typeof link.id == "object" && typeof l.id == "object" && link.id.id == l.id.id
+				)))
 				{
 					this._link_list.unshift(link);
 				}
