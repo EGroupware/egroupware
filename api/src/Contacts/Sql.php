@@ -716,6 +716,13 @@ class Sql extends Api\Storage
 			$this->sanitize_order_by = false;
 		}
 
+		// implement negated account_id filter
+		if (!empty($filter['account_id']) && ($not_account_ids = array_search('!', $filter['account_id'])) !== false)
+		{
+			$filter[] = $this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]);
+			unset($filter['account_id']);
+		}
+
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
 		if ($start === false) $this->total = is_array($rows) ? count($rows) : 0;	// so_sql sets total only for $start !== false!

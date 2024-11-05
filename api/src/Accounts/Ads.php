@@ -1062,7 +1062,15 @@ class Ads
 			}
 			if (!empty($param['account_id']))
 			{
+				if (($not_account_ids = array_search('!', $param['account_id'])) !== false)
+				{
+					unset($param['account_id'][$not_account_ids]);
+				}
 				$account_ids_filter = '(|(objectsid='.implode(')(objectsid=', array_map([$this, 'get_sid'], (array)$param['account_id'])).'))';
+				if ($not_account_ids !== false)
+				{
+					$account_ids_filter = '(!'.$account_ids_filter.')';
+				}
 				$filter = $filter ? "(&$filter$account_ids_filter)" : $account_ids_filter;
 			}
 			if (!empty($param['modified']))

@@ -185,7 +185,7 @@ class Ads extends Ldap
 	/**
 	 * Return LDAP filter for (multiple) account ids
 	 *
-	 * @param int|int[]|null $ids
+	 * @param int|int[]|null $ids use "!" to negate the whole filter
 	 * @return string
 	 */
 	protected function account_ids_filter($ids)
@@ -197,12 +197,20 @@ class Ads extends Ldap
 		}
 		elseif ($ids)
 		{
+			if (($not_account_ids = array_search('!', $ids)) !== false)
+			{
+				unset($ids[$not_account_ids]);
+			}
 			if (is_array($ids)) $filter = '(|';
 			foreach((array)$ids as $account_id)
 			{
 				$filter .= '(objectsid='.$this->accounts_ads->get_sid($account_id).')';
 			}
 			if (is_array($ids)) $filter .= ')';
+			if ($not_account_ids !== false)
+			{
+				$filter = '(!'.$filter.')';
+			}
 		}
 		return $filter;
 	}

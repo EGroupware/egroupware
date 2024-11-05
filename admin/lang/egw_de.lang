@@ -122,6 +122,7 @@ anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt).
 anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
 anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
+anonymous user. not shown in list sessions.	admin	de	Anonymer Benutzer. Wird nicht in der Liste der Sitzungen angezeigt.
 any application	admin	de	Jede Anwendung
 any group	admin	de	Jede Gruppe
 any user	admin	de	Jeder Benutzer
@@ -958,6 +959,7 @@ user csv import	admin	de	CSV-Import von Benutzern
 user data	common	de	Benutzerdaten
 user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP-Authentifizierung (leer lassen falls keine Authentifizierung nötig).
 user groups	admin	de	Benutzergruppen
+user hidden vom non-admins.	admin	de	Benutzer verborgen von nicht Administratoren.
 user-agent	admin	de	Browser
 userdata	admin	de	Benutzerkonto
 userid@domain eg. u1234@domain	admin	de	UserId@domain z.B. u1234@domain

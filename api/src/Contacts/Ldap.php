@@ -470,10 +470,11 @@ class Ldap
 	 * Return LDAP filter for (multiple) contact ids
 	 *
 	 * @param array|string $ids
+	 * @param bool $not=false true: negate the filter
 	 * @throws Api\Exception\AssertionFailed if $contact_id is no valid GUID (for ADS!)
 	 * @return string
 	 */
-	protected function ids_filter($ids)
+	protected function ids_filter($ids, bool $not=false)
 	{
 		if (!is_array($ids) || count($ids) == 1)
 		{
@@ -484,13 +485,13 @@ class Ldap
 		{
 			$filter[] = $this->id_filter($id);
 		}
-		return '(|'.implode('', $filter).')';
+		return ($not ? '(!' : '').'(|'.implode('', $filter).')'.($not ? ')' : '');
 	}
 
 	/**
 	 * Return LDAP filter for (multiple) account ids
 	 *
-	 * @param int|int[]|null $ids
+	 * @param int|int[]|null $ids use "!" to negate the whole filter
 	 * @return string
 	 */
 	protected function account_ids_filter($ids)
@@ -502,10 +503,14 @@ class Ldap
 		}
 		elseif ($ids)
 		{
+			if (($not_account_ids = array_search('!', $ids)) !== false)
+			{
+				unset($ids[$not_account_ids]);
+			}
 			$filter = $this->ids_filter(array_map(static function($account_id)
 			{
 				return $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
-			}, (array)$ids));
+			}, (array)$ids), $not_account_ids !== false);
 		}
 		return $filter;
 	}

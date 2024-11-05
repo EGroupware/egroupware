@@ -200,6 +200,32 @@ class Accounts
 	}
 
 	/**
+	 * Implement hidden account-filter via explicit account_id's and "hidden" ACL location
+	 *
+	 * @param bool|null $hidden false: do NOT return hidden users, true: return only hidden user, null: return all users
+	 * @param array|null $account_ids account_id filter, if set
+	 * @return array|int[] array of account_id's optionally with extra "!" for $hidden === false
+	 */
+	public static function hidden2account_id(bool $hidden=null, array $account_ids=null)
+	{
+		$hidden_account_ids = array_keys($GLOBALS['egw']->acl->get_all_rights('hidden', 'phpgwapi') ?: []);
+		if (empty($account_ids))
+		{
+			$account_ids = $hidden_account_ids;
+			if ($hidden === false) $account_ids[] = '!';
+		}
+		elseif ($hidden === true)
+		{
+			$account_ids = array_intersect($account_ids, $hidden_account_ids);
+		}
+		else
+		{
+			throw new \InvalidArgumentException(__METHOD__."(): Can NOT have hidden=false AND an account_id filter!");
+		}
+		return $account_ids;
+	}
+
+	/**
 	 * Searches / lists accounts: users and/or groups
 	 *
 	 * @ToDo improve and limit caching:
@@ -225,6 +251,7 @@ class Accounts
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
 	 * @param $param['active']=true boolean - true: return only acctive accounts, false: return expired or deactivated too
+	 * @param $param['hidden']=false boolean false: do NOT return hidden users, true: return only hidden user, null: return all users
 	 * @param $param['account_id'] int[] return only given account_id's
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
@@ -234,6 +261,8 @@ class Accounts
 		//error_log(__METHOD__.'('.array2string($param).') '.function_backtrace());
 		if (!isset($param['active'])) $param['active'] = true;	// default is true = only return active accounts
 		if (!empty($param['offset']) && !isset($param['start'])) $param['start'] = 0;
+		// show hidden users by default only to admin
+		if (!array_key_exists('hidden', $param)) $param['hidden'] = !empty($GLOBALS['egw_info']['user']['apps']['admin']) ? null : false;
 
 		// Check for lang(Group) in search - if there, we search all groups
 		$group_index = array_search(strtolower(lang('Group')), array_map('strtolower', $query = explode(' ',$param['query'] ?? '')));
@@ -258,6 +287,13 @@ class Accounts
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
 		$serial = self::cacheKey($param, $serial_unlimited);
+
+		// implement $param['hidden'] via $param['account_id']
+		if (isset($param['hidden']) && !in_array($param['type'],['groups', 'owngroups']))
+		{
+			$param['account_id'] = self::hidden2account_id($param['hidden'], $param['account_id']);
+		}
+		unset($param['hidden']);
 
 		// cache list of all groups on instance level (not session)
 		if ($serial_unlimited === self::cacheKey(['type'=>'groups','active'=>true]))
@@ -312,7 +348,7 @@ class Accounts
 				}
 				$param['type'] = $param['type'] == 'groupmembers+memberships' ? 'both' : 'accounts';
 			}
-			// call ourself recursive to get (evtl. cached) full search
+			// call ourselves recursive to get (evtl. cached) full search
 			$full_search = $this->search($param);
 
 			// filter search now on accounts with run-rights for app or a group

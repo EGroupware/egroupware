@@ -39,7 +39,10 @@
 					</et2-vbox>
 					<et2-description></et2-description>
 					<et2-description></et2-description>
-					<et2-checkbox  id="anonymous" label="Anonymous user. Not shown in list sessions."></et2-checkbox>
+					<et2-vbox>
+						<et2-checkbox  id="anonymous" label="Anonymous user. Not shown in list sessions."></et2-checkbox>
+						<et2-checkbox  id="hidden" label="User hidden vom non-admins."></et2-checkbox>
+					</et2-vbox>
 					<et2-description></et2-description>
 				</row>
 				<row disabled="!@ldap_extra_attributes">

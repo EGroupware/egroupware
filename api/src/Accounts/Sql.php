@@ -510,7 +510,11 @@ class Sql
 				$this->total = 0;
 				return array();
 			}
-			$filter[] = $this->db->expression($this->table, $this->table.'.', array(
+			if (($not_account_id = array_search('!', $filter['account_id'])) !== false)
+			{
+				unset($filter['account_id'][$not_account_id]);
+			}
+			$filter[] = ($not_account_id !== false ? ' NOT ' : '').$this->db->expression($this->table, $this->table.'.', array(
 				'account_id' => $filter['account_id'],
 			));
 			unset($filter['account_id']);
