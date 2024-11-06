@@ -388,14 +388,6 @@ class Vfs extends File
 					return;
 				}
 				break;
-			case 'vfs-name':
-			case 'et2-vfs-name':
-				if (!preg_match(self::VFS_NAME_REGEXP, $value))
-				{
-					self::set_validation_error($form_name, lang("'%1' must not contain (back)slashes!", $value));
-					return;
-				}
-				break;
 		}
 		if (!empty($this->id)) $valid = $value;
 	}
