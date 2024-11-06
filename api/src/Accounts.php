@@ -220,7 +220,7 @@ class Accounts
 		}
 		else
 		{
-			throw new \InvalidArgumentException(__METHOD__."(): Can NOT have hidden=false AND an account_id filter!");
+			$account_ids = array_diff($account_ids, $hidden_account_ids);
 		}
 		return $account_ids;
 	}
