@@ -556,20 +556,6 @@ class JsCalendar extends JsBase
 		return $duration;
 	}
 
-	/**
-	 * Parse a DateTime value
-	 *
-	 * @param string $value
-	 * @param string|null $timezone
-	 * @param bool $showWithoutTime true: return H:i set to 00:00
-	 * @return Api\DateTime
-	 * @throws Api\Exception
-	 */
-	protected static function parseDateTime(string $value, ?string $timezone=null, bool $showWithoutTime=false)
-	{
-		return new Api\DateTime($value, !empty($timezone) ? new \DateTimeZone($timezone) : null);
-	}
-
 	protected static function parseStartDuration(array $data)
 	{
 		$parsed = [];
@@ -999,17 +985,14 @@ class JsCalendar extends JsBase
 		{
 			foreach ($event['recur_exception'] as $timestamp)
 			{
-				foreach ($event['recur_exception'] as $timestamp)
+				$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
+				if (!empty($event['whole_day']))
 				{
-					$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
-					if (!empty($event['whole_day']))
-					{
-						$ex_date->setTime(0, 0, 0);
-					}
-					$overrides[self::DateTime($ex_date, $event['tzid'])] = [
-						'excluded' => true,
-					];
+					$ex_date->setTime(0, 0, 0);
 				}
+				$overrides[self::DateTime($ex_date, $event['tzid'])] = [
+					'excluded' => true,
+				];
 			}
 		}
 
