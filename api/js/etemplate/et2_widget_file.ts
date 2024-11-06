@@ -239,7 +239,7 @@ export class et2_file extends et2_inputWidget
 		{
 			this.progress = jQuery(document.createElement("div")).appendTo(this.node);
 		}
-		this.progress.addClass("progress");
+		this.progress.addClass("progress hideme");
 
 		if(this.options.multiple)
 		{
@@ -587,6 +587,7 @@ export class et2_file extends et2_inputWidget
 	private _build_progressDropDownList()
 	{
 		this.progress.addClass("progress_dropDown_fileList");
+		this.progress.removeClass("hideme");
 
 		//Add uploading indicator and bind hover handler on it
 		jQuery(this.node).find('span').addClass('totalProgress_loader');
