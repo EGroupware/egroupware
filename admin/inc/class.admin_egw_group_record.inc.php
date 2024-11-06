@@ -37,10 +37,15 @@ class admin_egw_group_record implements importexport_iface_egw_record
 	public function __construct( $_identifier='' ) {
 		if(is_array($_identifier)) {
 			$this->identifier = $_identifier['account_id'];
-		} else {
+		}
+		else
+		{
 			$this->identifier = $_identifier;
 		}
-		$this->set_record($GLOBALS['egw']->accounts->read($this->identifier));
+		if($this->identifier)
+		{
+			$this->set_record($GLOBALS['egw']->accounts->read($this->identifier));
+		}
 	}
 
 	/**

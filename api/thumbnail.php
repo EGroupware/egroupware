@@ -105,13 +105,12 @@ function get_maxsize()
 function read_thumbnail($src)
 {
 	//Check whether the source file is readable and exists
-	if (!file_exists($src) || !Vfs::is_readable($src))
+	if (!file_exists($src) || !(is_readable($src) || Vfs::is_readable($src)))
 	{
 		return false;
 	}
 
-	// Get the maxsize of an thumbnail. If thumbnailing is turned off, the value
-	// will be 0
+	// Get the maxsize of a thumbnail. If thumbnail is turned off, the value will be 0
 	$maxsize = get_maxsize();
 	if (isset($_GET['thheight']) && (int)$_GET['thheight'] > 0)
 	{
@@ -138,15 +137,6 @@ function read_thumbnail($src)
 	// had been successfully created (the cache class used in gen_dstfile does that).
 	$stat = Vfs::stat(Vfs::parse_url($src, PHP_URL_PATH));
 
-	// if pdf-thumbnail-creation is not available, generate a single scaled-down pdf-icon
-	if ($stat && Vfs::mime_content_type($src) == 'application/pdf' && !pdf_thumbnails_available())
-	{
-		list($app, $icon) = explode('/', Vfs::mime_icon('application/pdf'), 2);
-		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
-			Api\Image::find($app, $icon), 2);
-		$src = EGW_SERVER_ROOT.$path;
-		$stat = false;
-	}
 	$dst = gen_dstfile($stat && !empty($stat['url']) ? $stat['url'] : $src, $maxsize, $height, $width, $minsize);
 	$dst_dir = dirname($dst);
 	if(!file_exists($dst_dir) && !mkdir($dst_dir, 0700, true))
@@ -156,8 +146,8 @@ function read_thumbnail($src)
 	if(file_exists($dst_dir))
 	{
 		// Check whether the destination file already exists and is newer than
-		// the source file. Assume the file doesn't exist if thumbnailing is turned off.
-		$exists = file_exists($dst) && filemtime($dst) >= filemtime($src);
+		// the source file. Assume the file doesn't exist if thumbnail is turned off.
+		$exists = file_exists($dst) && filemtime($dst) >= max(filemtime($src), filemtime(__FILE__));
 		// Only generate the thumbnail if the destination file does not match the
 		// conditions mentioned above. Abort if $maxsize is 0.
 		$gen_thumb = !$exists;
@@ -177,7 +167,7 @@ function read_thumbnail($src)
 
 		$output_mime = 'image/png';
 
-		// If some error occured during thumbnail generation or thumbnailing is turned off,
+		// If some error occurred during thumbnail generation or thumbnail is turned off,
 		// simply output the mime type icon
 		if (!$exists)
 		{
@@ -186,6 +176,8 @@ function read_thumbnail($src)
 			list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
 				Api\Image::find($app, $icon), 2);
 			$dst = EGW_SERVER_ROOT.$path;
+			$_GET['thsize'] = 22;
+			return read_thumbnail($dst);
 			if (function_exists('mime_content_type'))
 			{
 				$output_mime = mime_content_type($dst);
@@ -199,7 +191,7 @@ function read_thumbnail($src)
 		if ($dst)
 		{
 			// Allow client to cache these, makes scrolling in filemanager much nicer
-			// setting maximum allow caching time of one year, if url contains (non-empty) moditication time
+			// setting maximum allow caching time of one year, if url contains (non-empty) modification time
 			Api\Session::cache_control(empty($_GET['mtime']) ? 300 : 31536000, true);	// true = private / browser only caching
 			header('Content-Type: '.$output_mime);
 			readfile($dst);
@@ -393,7 +385,7 @@ function gd_image_load($file,$maxw,$maxh)
 			$mime = Vfs::mime_content_type($file);
 			$tag_image = null;
 			corner_tag($thumb, $tag_image, $mime);
-			imagedestroy($tag_image);
+			if ($tag_image) imagedestroy($tag_image);
 		}
 		return $thumb;
 	}
@@ -506,7 +498,14 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 		list($app, $icon) = explode('/', Vfs::mime_icon($mime), 2);
 		list(, $path) = explode($GLOBALS['egw_info']['server']['webserver_url'],
 			Api\Image::find($app, $icon), 2);
-		$dst = EGW_SERVER_ROOT.$path;
+		$dst = EGW_SERVER_ROOT . $path;
+		// GD can not deal directly with SVG, we need have a PNG to add it
+		if (str_ends_with($dst, '.svg') &&
+			!file_exists($dst = EGW_SERVER_ROOT . '/api/templates/default/images/bi-'.
+				str_replace('bi-', '', basename($dst, '.svg')).'.png'))
+		{
+			return;
+		}
 		$tag_image = imagecreatefrompng($dst);
 	}
 
@@ -520,7 +519,7 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 	{
 		imagecopyresampled($target_image,$tag_image,
 			$target_width - $tag_width,
-			$target_height - $tag_height,
+			$target_height - round(1.1*$tag_height),
 			0,0,
 			$tag_width,
 			$tag_height,
@@ -531,7 +530,7 @@ function corner_tag(&$target_image, &$tag_image, $mime)
 }
 
 /**
- * Create an gd_image with transparent background.
+ * Create a gd_image with transparent background.
  *
  * @param int $w the width of the resulting image
  * @param int $h the height of the resutling image

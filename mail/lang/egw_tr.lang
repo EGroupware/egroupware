@@ -13,6 +13,7 @@ aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
 always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
 answered	mail	tr	Cevaplandı
+archive folder	mail	tr	Arşiv Klasörü
 attach files	mail	tr	Dosya ekleme
 attach users vcard at compose to every new mail	mail	tr	Her yeni postaya oluşturma sırasında kullanıcıların vCard'ını ekleyin.
 attachment has been saved successfully.	mail	tr	Ek başarıyla kaydedildi.
@@ -28,9 +29,15 @@ certificate info for email %1	mail	tr	E-posta %1 için sertifika bilgisi
 certificate issued by	mail	tr	Tarafından verilen sertifika
 changing subject failed because of %1	mail	tr	Konu değiştirme %1 nedeniyle başarısız oldu
 changing subject failed folder %1 does not exist	mail	tr	Konu değiştirme başarısız %1 klasörü mevcut değil
+check to save as calendar event on send	mail	tr	Gönderdikten sonra olay olarak oluşturmak için düğmeyi işaretleyin
+check to save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak oluşturmak için düğmeyi işaretleyin
+check to save as tracker entry on send	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
 checking admin credentials failed	mail	tr	Yönetici kimlik bilgilerinin denetlenmesi başarısız oldu
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
 contact label	mail	tr	İletişim etiketi
+convert mail to item and attach its attachments to this item (standard)	mail	tr	E-postayı öğeye dönüştürme ve eklerini bu öğeye ekleme (standart)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	tr	E-postayı öğeye dönüştürün, eklerini ekleyin ve ham mesajı (.eml) ek olarak ekleyin
+convert only mail to item (ignore possible attachments)	mail	tr	Yalnızca e-postayı öğeye dönüştürün (olası ekleri göz ardı edin)
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
 default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
@@ -74,6 +81,7 @@ from	mail	tr	Nereden
 get acl rights failed from imap server!	mail	tr	IMAP sunucusundan ACL haklarını alma başarısız oldu!
 ham folder	mail	tr	Ham klasörü
 handling of external http images / mixed content in mails	mail	tr	E-postalarda harici http görüntülerinin / karışık içeriğin işlenmesi
+high priority	mail	tr	Yüksek öncelik
 html	mail	tr	HTML
 ident name	mail	tr	Kimlik adı
 ident name email	mail	tr	Kimlik adı [E-posta]
@@ -104,6 +112,7 @@ learning as spam failed because of %1	mail	tr	Spam olarak öğrenme %1 nedeniyle
 less than	mail	tr	daha az
 limit mailing list results when searching for addresses	mail	tr	Adres ararken posta listesi sonuçlarını sınırlayın
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	tr	Varsayılan olarak açılacak/etkinleştirilecek eylemlerin listesi (örn. Mail compose olarak kaydet InfoLog eylemi).
+low priority	mail	tr	Düşük öncelik
 mail	common	tr	Posta
 mail acl	mail	tr	Erişim hakları
 mail filter	mail	tr	Posta filtresi
@@ -125,6 +134,7 @@ modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
 move selected to	mail	tr	Seçileni şuraya taşı
 move to	mail	tr	Şuraya git
+move to archive	mail	tr	Arşiv klasörüne taşı
 name and domain	mail	tr	İsim ve alan adı
 name of account	mail	tr	Hesap adı
 name of imap servers (space separated host or host:port)	mail	tr	IMAP sunucularının adı (boşluk bırakılarak ayrılmış ana bilgisayar veya ana bilgisayar:bağlantı noktası)
@@ -247,15 +257,11 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	tr	Bu mesaj S/MIME şifrelidir ve parola korumalıdır.
 timeout on connections to your imap server	mail	tr	IMAP Sunucunuza bağlantılarda zaman aşımı
 to do	mail	tr	Yapmak için
-toggle all folders view for %1	mail	tr	%1 için tüm Klasörler görünümünü aç / kapat
 toggled on actions	mail	tr	Eylemler üzerinde geçiş yapıldı
 trash	mail	tr	Çöp
 trash folder	mail	tr	Çöp klasörü
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 write	mail	tr	Yaz
-yes, only trigger connection reset	mail	tr	evet, sadece bağlantı sıfırlamayı tetikleyin
-yes, show all debug information available for the user	mail	tr	evet, kullanıcı için mevcut tüm hata ayıklama bilgilerini göster
-you can either choose to save as infolog or tracker, not both.	mail	tr	InfoLog veya tracker olarak kaydetmeyi seçebilirsiniz, ikisini birden seçemezsiniz.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.
 you may add this certificate into your contact, if you trust this signature.	mail	tr	Bu imzaya güveniyorsanız, bu sertifikayı kişinize ekleyebilirsiniz.
 you need to enter your s/mime passphrase to send this message.	mail	tr	Bu mesajı göndermek için S/MIME parolanızı girmeniz gerekir.

@@ -504,7 +504,6 @@ tables installed, unless there are errors printed above	setup	sv	Tabeller färdi
 tables upgraded	setup	sv	Tabeller uppgraderade
 target version	setup	sv	Målversion
 tcp port number of database server	setup	sv	TCP port för databasserver
-text entry	setup	sv	Textfält
 the %1 extension is needed from: %2.	setup	sv	Utökningen %1 behövs av: %2
 the %1 extension is needed, if you plan to use a %2 database.	setup	sv	Utökningen %1 behövs om du vill använda en %2 databas
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sv	db_type i defaults (%1) supporteras inte av servern. Använder den först supportade.

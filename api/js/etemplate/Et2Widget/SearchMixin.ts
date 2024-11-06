@@ -297,7 +297,9 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 */
 		public searchMatch<DataType extends SearchResult>(search : string, searchOptions : Object, option : DataType) : boolean
 		{
-			if(!option || !option.value)
+			if(!option || !option.value ||
+				// do NOT return folders, if leafOnly is set
+				this.leafOnly && typeof option.children !== 'undefined')
 			{
 				return false;
 			}
@@ -503,6 +505,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			{
 				this.value = [this.selectedResults[0]?.value] ?? [];
 			}
+			// Dispatch the change event
+			this.updateComplete.then(() =>
+			{
+				this.dispatchEvent(new Event("change", {bubbles: true}));
+			});
 			 */
 
 			this.updateComplete.then(() =>
@@ -559,7 +566,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 				this.setCurrentResult(suggestions[newIndex]);
 			}
 			// Close results on escape
-			else if(["Escape"].includes(event.key))
+			else if(["Escape", "Tab"].includes(event.key))
 			{
 				this.resultsOpen = false;
 				this._searchNode.focus();
@@ -567,7 +574,7 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			else if([" ", "Enter"].includes(event.key) && this.currentResult)
 			{
 				event.preventDefault();
-				this.currentResult.selected = true;
+				this.toggleResultSelection(this.currentResult, true);
 				this.searchResultSelected();
 			}
 		}
@@ -592,7 +599,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 					this.requestUpdate("resultsOpen", false)
 				}
 				event.stopPropagation();
-				this.setCurrentResult(this.currentResult ?? this._resultNodes[0]);
+
+				this.setCurrentResult(
+					this.currentResult && this.contains(this.currentResult) ?
+					this.currentResult : this._resultNodes[0]
+				);
 				return;
 			}
 

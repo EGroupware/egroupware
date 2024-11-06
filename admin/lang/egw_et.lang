@@ -13,6 +13,7 @@
 %1 successful	admin	et	%1 edukas
 %1 token %2.	admin	et	%1 sümbol %2.
 (de)activate mail accounts	admin	et	(de)Aktiveerige postikontod
+(default no, leave it off if you dont use it)	admin	et	Vaikimisi = Ei, jätke see välja, kui te seda ei kasuta.
 1 year	admin	et	1 aasta
 2 month	admin	et	2 kuud
 2 weeks	admin	et	2 nädalat
@@ -178,9 +179,11 @@ group name	admin	et	Grupi Nimi
 hide php information	admin	et	Peida PHP informatsioon
 home directory	admin	et	Kodu kataloog
 host information	admin	et	Hosti informatsioon
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	et	Kui palju kirjeid peaksid mitte-adminid saama eksportida. Tühi = piirangut ei ole, Ei = ei saa eksportida.
 how many minutes should an account or ip be blocked (default 1) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30)?
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
 icon	admin	et	Ikoon
+if different from email address	admin	et	Kui erineb e-posti aadressist
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja
 imap server	admin	et	IMAP Server
@@ -225,6 +228,7 @@ new name	admin	et	Uus nimi
 new password [ leave blank for no change ]	admin	et	Uus parool (Jäta tühjaks kui ei soovi muuta)
 no alternate email address	admin	et	Pole alternatiivset email aadressi
 no encryption	admin	et	Ilna krüpteeringutta
+no limit	admin	et	Piirangut ei ole
 no login history exists for this user	admin	et	Pole sisselogimise ajalugu sellel kasutajal
 no matches found	admin	et	Sobivaid ei leitud!
 no permission to add groups	admin	et	Pole õigusi gruppide lisamiseks!
@@ -275,6 +279,7 @@ show session ip address	admin	et	Näita sessiooni IP aadressi
 sieve server port	admin	et	Sieve serveri port
 sieve settings	admin	et	Sieve setingud
 site	admin	et	Sait
+smtp only: to create only an smtp account	admin	et	Ainult SMTP-konto loomine ilma IMAPita
 smtp server name	admin	et	SMTP serveri nimi
 smtp settings	admin	et	SMTP setingud
 smtp-server port	admin	et	SMTP serveri port
@@ -282,11 +287,7 @@ sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi
 ssl	admin	et	SSL
 start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
-text entry	admin	et	Järgmine Kirje
-that application name already exists.	admin	et	See rakenduse nimi juba eksisteerib.
 that loginid has already been taken	admin	et	See logimis-ID on juba võetud.
-that name has been used already	admin	et	See nimi on juba kasutusel.
-that server name has been used already !	admin	et	See serveri nimi on juba kasutusel!
 the api is current	admin	et	API on kaasaegne
 the api requires an upgrade	admin	et	API vajab uuendamist
 the login and password can not be the same	admin	et	Kasutajanimi ja parool ei tohi olla samad.

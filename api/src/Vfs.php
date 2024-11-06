@@ -1093,15 +1093,15 @@ class Vfs extends Vfs\Base
 		$mime_full = strtolower(str_replace	('/','_',$mime_type));
 		list($mime_part) = explode('_',$mime_full);
 
-		if (!($img=Image::find('etemplate',$icon='mime'.$size.'_'.$mime_full)) &&
+		if (!($img=Image::find('api',$icon='mime'.$size.'_'.$mime_full)) &&
 			// check mime-alias-map before falling back to more generic icons
 			!(isset(MimeMagic::$mime_alias_map[$mime_type]) &&
-				($img=Image::find('etemplate',$icon='mime'.$size.'_'.str_replace('/','_',MimeMagic::$mime_alias_map[$mime_full])))) &&
-			!($img=Image::find('etemplate',$icon='mime'.$size.'_'.$mime_part)))
+				($img=Image::find('api',$icon='mime'.$size.'_'.str_replace('/','_',MimeMagic::$mime_alias_map[$mime_full])))) &&
+			!($img=Image::find('api',$icon='mime'.$size.'_'.$mime_part)))
 		{
-			$img = Image::find('etemplate',$icon='mime'.$size.'_unknown');
+			$img = Image::find('api',$icon='mime'.$size.'_unknown');
 		}
-		return $et_image ? 'etemplate/'.$icon : $img;
+		return $et_image ? 'api/'.$icon : $img;
 	}
 
 	/**

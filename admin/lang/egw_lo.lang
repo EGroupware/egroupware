@@ -440,13 +440,7 @@ submit to egroupware.org	admin	lo	ສົ່ງໄປທີ່ egroupware.org
 subtype	admin	lo	ຊະນິດຍ່ອຍ
 success	admin	lo	ສໍາເລັດ
 switch it off, if users are randomly thrown out	admin	lo	ປິດການເຮັດວຽກ, ຖ້າຜູ້ໃຊ້ອອກລະບົບ
-template selection	admin	lo	ການເລືອກແມ່ແບບ
-text entry	admin	lo	ລາຍການຂໍ້ຄວາມ
-that application name already exists.	admin	lo	ຊື່ຂອງແອັບພຼິເຄຊັນ ມີແລ້ວ.
-that application order must be a number.	admin	lo	ລາຍການ ແອັບພຼິເຄຊັນ ຕ້ອງເປັນຕົວເລກ.
 that loginid has already been taken	admin	lo	ລະຫັດທີ່ໄດ້ເຂົ້າລະບົບແລ້ວ
-that name has been used already	admin	lo	ຊື່ນີ້ມີຜູ້ໃຊ້ແລ້ວ
-that server name has been used already !	admin	lo	ຊື່ ເຊີເວີ້ ນີ້ມີຜູ້ໃຊ້ແລ້ວ !
 the api is current	admin	lo	API ປັດຈຸບັນ
 the api requires an upgrade	admin	lo	API ຕ້ອງມີການປັບລຸ້ນ
 the cumulated and anonymised data will be publically available:	admin	lo	cumulated ແລະ anonymised ຂໍ້ມູນຈະຢູ່ໃນຖານະໃຫ້ບໍລິການ

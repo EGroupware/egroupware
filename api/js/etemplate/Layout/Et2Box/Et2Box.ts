@@ -61,6 +61,7 @@ export class Et2Box extends Et2Widget(LitElement) implements et2_IDetachedDOM
             ::slotted([align="right"]) {
             	margin-left: auto;
             	order: 1;
+				text-align: initial;
             }
             
             /* work around for chromium print bug, see render() */

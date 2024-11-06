@@ -5,15 +5,10 @@
 a theme defines the colors and fonts used by the template.	preferences	hr	Tema definira boje i vrstu slova koju upotrebljava predložak
 acl grants have been updated	preferences	hr	ACL je obnovljen
 are you sure you want to delete this category ?	preferences	hr	Da li ste sigurni da želite obrisati ovu kategoriju ?
-change your password	preferences	hr	Promijenite vašu zaporku
-change your profile	preferences	hr	Promijenite vaš profil
-change your settings	preferences	hr	Promijenite vaše postavke
-click to select a color	preferences	hr	Izaberite boju
 color	preferences	hr	Boja
 country	preferences	hr	Država
 date format	preferences	hr	Format datuma
 default	preferences	hr	početno postavljena vrijednost
-default application	preferences	hr	Početno postavljena aplikacija
 default preferences	preferences	hr	Početno postavljene postavke
 delete categories	preferences	hr	Obriši kategorije
 description can not exceed 255 characters in length !	preferences	hr	Opis nemože biti dulji od 255 znakova!
@@ -40,10 +35,8 @@ max matches per page	preferences	hr	Maksimalan broj podudarnosti po stranici
 max number of icons in navbar	preferences	hr	Maksimalan broj ikona na vrhu stranice
 no default	preferences	hr	Nema početnih vrijednosti
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	hr	Napomena: Ovime ne mijenjate vašu zaporku. To će te morati napraviti samostalno.
-please, select a new theme	preferences	hr	Molim vas izaberite novu temu
 popup with search	preferences	hr	Popup with search
 re-enter your password	preferences	hr	Ponovo unesite vašu zaporku
-select different theme	preferences	hr	Izaberite drugačiju temu
 select one	preferences	hr	Izaberite jednu
 selectbox	preferences	hr	Selectbox
 selectbox with primary group and search	preferences	hr	Selectbox with primary group and search
@@ -67,5 +60,4 @@ when you say yes the home and logout buttons are presented as applications in th
 you can show the applications as icons only, icons with app-name or both.	preferences	hr	You can show the applications as icons only, icons with app-name or both.
 you do not have permission to set acl's in this mode!	preferences	hr	You do not have permission to set ACL's in this mode!
 you must enter a password	preferences	hr	You must enter a password
-your current theme is: %1	preferences	hr	your current theme is: %1
 your preferences	preferences	hr	Your Preferences

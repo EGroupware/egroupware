@@ -1,6 +1,23 @@
+do you want to associate it with the selected %1 entry?	common	lt	Ar norite jį susieti su pasirinktu %1 įrašu?
+error storing working time	timesheet	lt	Klaida saugant darbo laiką
+forgot to switch off working time?	common	lt	Pamiršote išjungti darbo laiką?
+overwrite time	common	lt	Perrašymo laikas
+overwriting start or stop time	timesheet	lt	Perrašytas pradžios arba pabaigos laikas
 pause	common	lt	Pauzė
 pause time	timesheet	lt	Pauzės laikas
 paused	timesheet	lt	Pauzė
+recorded	timesheet	lt	Įrašyta
+restore this entry	timesheet	lt	Atkurti šį įrašą
+start & stop timer	common	lt	Paleidimo ir sustabdymo laikmatis
+start timer	common	lt	Paleisti laikmatį
 start-time can not be before last stop- or pause-time %1!	common	lt	Pradžios laikas negali būti ankstesnis už paskutinį sustabdymo arba pauzės laiką %1!
 stop- or pause-time can not be before the start-time %1!	common	lt	Sustabdymo arba pauzės laikas negali būti ankstesnis už pradžios laiką %1!
 timer already running or paused	common	lt	Laikmatis jau paleistas arba sustabdytas
+use field from csv if possible	timesheet	lt	Jei įmanoma, naudokite lauką iš CSV
+what should be done with unknown values?	timesheet	lt	Ką daryti su nežinomomis reikšmėmis?
+will be created when saving ...	common	lt	Bus sukurta išsaugant ...
+working time	common	lt	Darbo laikas
+working time and timer	timesheet	lt	Darbo laikas ir laikmatis
+working time from %1	timesheet	lt	Darbo laikas nuo %1
+working time of %1 hours stored	timesheet	lt	Išsaugotas darbo laikas nuo %1 val.
+would you like to be asked, to start and stop working time, when login in or off	timesheet	lt	Ar norėtumėte, kad prisijungus arba atsijungus būtų prašoma paleisti ir sustabdyti darbo laiką?

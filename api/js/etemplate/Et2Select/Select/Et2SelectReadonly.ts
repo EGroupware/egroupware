@@ -212,6 +212,25 @@ li {
 	}
 
 	/**
+	 * Flatten hierarchical option with children like e.g. categories for use with Et2SelectReadonly
+	 *
+	 * @param _options
+	 * @protected
+	 */
+	protected flattenOptions(_options : SelectOption[]) : SelectOption[]
+	{
+		const options: SelectOption[] = [];
+		_options.forEach(opt => {
+			options.push(opt);
+			if (opt.children && opt.children.length > 0)
+			{
+				options.push(...this.flattenOptions(opt.children));
+			}
+		});
+		return options;
+	}
+
+	/**
 	 * Set the select options
 	 *
 	 * @deprecated assign to select_options
@@ -375,7 +394,8 @@ export class Et2SelectCategoryReadonly extends Et2SelectReadonly
 		// Need to do this in find_select_options so attrs can be used to get proper options
 		so.cat(this).then(_options =>
 		{
-			this.select_options = _options;
+			// need to flatten hierarchical categories (with children) for use in Et2SelectReadonly
+			this.select_options = this.flattenOptions(_options);
 
 			// on first load we have the value before the options arrive --> need to request an update
 			if(this.value && (!Array.isArray(this.value) || this.value.length))

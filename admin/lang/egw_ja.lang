@@ -22,6 +22,7 @@
 %1 token %2.	admin	ja	%1 トークン %2。
 %1 user %2	admin	ja	%1 ユーザ %2
 (de)activate mail accounts	admin	ja	メール・アカウントを有効化/無効化
+(default no, leave it off if you dont use it)	admin	ja	デフォルト = いいえ、使用しない場合はオフのままにしてください。
 (no subject)	admin	ja	（件名無し）
 -  type	admin	ja	-  タイプ
 1 year	admin	ja	1年
@@ -556,6 +557,7 @@ no default account found!	admin	ja	既定のアカウントが見つかりませ
 no encryption	admin	ja	暗号化無し
 no forwarding email address	admin	ja	転送先アドレスがありません
 no jobs in the database !!!	admin	ja	No jobs in the database!
+no limit	admin	ja	制限なし
 no login history exists for this user	admin	ja	No login history exists for this user!
 no matches found	admin	ja	一致が見つかりません。
 no message returned.	admin	ja	No message returned
@@ -713,6 +715,7 @@ site	admin	ja	サイト
 skip imap	admin	ja	IMAP を飛ばす
 skipping imap configuration!	admin	ja	IMAP 設定を飛ばします!
 smtp authentication	admin	ja	SMTP 認証
+smtp only: to create only an smtp account	admin	ja	IMAPなしのSMTP専用アカウントを作成する
 smtp options	admin	ja	SMTP オプション
 smtp server	admin	ja	SMTPサーバー
 smtp server name	admin	ja	SMTP サーバー名
@@ -746,14 +749,8 @@ successful connected to %1 server%2.	admin	ja	%1 サーバー %2 に接続しま
 switch back to standard identity to save account.	admin	ja	Switch back to standard identity to save account.
 switch back to standard identity to save other account data.	admin	ja	Switch back to standard identity to save other account data.
 switch it off, if users are randomly thrown out	admin	ja	ユーザがランダムに強制ログアウトしてしまう場合は無効にしてください
-template selection	admin	ja	テンプレート選択
 templates	admin	ja	テンプレート
-text entry	admin	ja	テキスト入力
-that application name already exists.	admin	ja	このアプリケーション名は既に存在します。
-that application order must be a number.	admin	ja	That application order must be a number.
 that loginid has already been taken	admin	ja	ログインIDは既に登録済みです。
-that name has been used already	admin	ja	この名前は既に使われています
-that server name has been used already !	admin	ja	That server name has been used already!
 the api is current	admin	ja	The API is current
 the api requires an upgrade	admin	ja	The API requires an upgrade
 the cumulated and anonymised data will be publically available:	admin	ja	これまでに蓄積された匿名データは下記URLで参照可能です:

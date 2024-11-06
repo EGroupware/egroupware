@@ -2,22 +2,6 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
 	<template id="addressbook.mail_merge_dialog" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<et2-description  value="Do you want to send the message to all selected entries, WITHOUT further editing?"></et2-description>
-				</row>
-				<row>
-					<et2-hbox>
-						<et2-checkbox  id="infolog" label="Save as infolog"></et2-checkbox>
-						<et2-select  id="info_type"></et2-select>
-					</et2-hbox>
-				</row>
-			</rows>
-		</grid>
+        <et2-select id="info_type" emptyLabel="Save as infolog"></et2-select>
 	</template>
 </overlay>

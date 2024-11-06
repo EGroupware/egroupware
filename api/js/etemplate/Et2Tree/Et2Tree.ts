@@ -2,7 +2,7 @@ import {SlTreeItem} from "@shoelace-style/shoelace";
 import {egw} from "../../jsapi/egw_global";
 import {find_select_options, SelectOption} from "../Et2Select/FindSelectOptions";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
-import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
+import {html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {repeat} from "lit/directives/repeat.js";
 import shoelace from "../Styles/shoelace";
 import {property} from "lit/decorators/property.js";
@@ -13,7 +13,13 @@ import {EgwActionObject} from "../../egw_action/EgwActionObject";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwDragDropShoelaceTree} from "../../egw_action/EgwDragDropShoelaceTree";
 import {FindActionTarget} from "../FindActionTarget";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_FLAG_IS_CONTAINER} from "../../egw_action/egw_action_constants";
+import {
+	EGW_AI_DRAG,
+	EGW_AI_DRAG_ENTER,
+	EGW_AI_DRAG_OUT,
+	EGW_AO_FLAG_IS_CONTAINER
+} from "../../egw_action/egw_action_constants";
+import styles from "./Et2Tree.styles";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
@@ -28,6 +34,12 @@ export type TreeItemData = SelectOption & {
 	// Child items
 	children: TreeItemData[],
 	checked?: Boolean,
+
+	// For items with children, "disabled" will make the item not expandable.
+	// unselectable=true is like disabled=true, but will still allow the item to expand
+	// and show its children
+	unselectable? : boolean,
+
 	nocheckbox: number | Boolean,
 	open: 0 | 1,
 	parent: String,
@@ -183,7 +195,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.lazyLoading = this.handleLazyLoading({item: this._selectOptions}).then((results) =>
 			{
-				this._selectOptions = results?.item ?? [];
+				this._selectOptions = results?.children ?? results?.item ?? [];
 				this._initCurrent()
 				this.requestUpdate("_selectOptions");
 				this.updateComplete.then((value) => {
@@ -227,105 +239,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		return [
 			shoelace,
-			// @ts-ignore
-			...super.styles,
-			css`
-                :host {
-                    --sl-spacing-large: 1rem;
-					display: block;
-                }
-
-
-				::part(expand-button) {
-					rotate: none;
-					padding: 0 var(--sl-spacing-small);
-				}
-
-				/* Stop icon from shrinking if there's not enough space */
-                /* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
-
-                sl-tree-item et2-image {
-                    flex: 0 0 1em;
-                    font-size: calc(100% + 2px);
-					line-height: calc(100% - 2px);
-					padding-right: .4em;
-					width: 1em;
-					height: 1em;
-					display: inline-block;
-                }
-
-				::part(label) {
-					overflow: hidden;
-					flex: 1 1 auto;
-				}
-
-				::part(label):hover {
-					text-decoration: underline;
-				}
-
-				.tree-item__label {
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
-
-				sl-tree-item.drop-hover {
-					background-color: var(--highlight-background-color);
-				}
-
-				sl-tree-item.drop-hover > *:not(sl-tree-item) {
-					pointer-events: none;
-				}
-
-				sl-tree-item.drop-hover > *:not(sl-tree-item) {
-					pointer-events: none;
-				}
-
-				/*Mail specific style TODO move it out of the component*/
-                sl-tree-item.unread > .tree-item__label {
-                        font-weight: bold;
-                    }
-				
-                sl-tree-item.mailAccount > .tree-item__label {
-                    font-weight: bold;
-                }
-				sl-tree > sl-tree-item:nth-of-type(n+2){
-					margin-top: 2px;
-				}
-				/* End Mail specific style*/
-
-                sl-tree-item.drop-hover sl-tree-item {
-                    background-color: var(--sl-color-neutral-0);
-                }
-
-                /*TODO color of selected marker in front should be #006699 same as border top color*/
-
-                sl-badge::part(base) {
-
-                    background-color: var(--badge-color); /* This is the same color as app color mail */
-                    font-size: 1em;
-                    font-weight: 900;
-                    position: absolute;
-                    top: 0;
-                    right: 0.5em;
-                    line-height: 60%;
-                }
-
-
-                @media only screen and (max-device-width: 768px) {
-                    :host {
-                        --sl-font-size-medium: 1.2rem;
-                    }
-
-                    sl-tree-item {
-                        padding: 0.1em;
-                    }
-
-
-                }
-            `
-
-
+			super.styles,
+			styles
 		]
 	}
 
@@ -753,6 +668,59 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 
 	/**
+	 * scroll to item with given id
+	 * make sure all parents of the item are expanded else scroll will fail
+	 * @param _id
+	 */
+	public scrollToItem(_id: string)
+	{
+		const item: SlTreeItem = this.getDomNode(_id);
+		if (item == null) return
+		item.scrollIntoView();
+	}
+
+	/**
+	 * scrolls to the (first) selected slTreeItem into view
+	 * this function delays, if not all parents of the item are expanded
+	 *
+	 */
+	public scrollToSelected()
+	{
+		try
+		{
+			const item: SlTreeItem = this.shadowRoot.querySelector('sl-tree-item[selected]');
+			if (item == null) return
+
+
+			//this might not work because item pant is not expanded
+			//in that case expand all parents and wait before trying to scroll again
+			let parent: SlTreeItem = item.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>item.parentElement : null;
+			//scroll and exit if parent does not need expansion
+			if (!parent || parent.expanded)
+			{
+				item.scrollIntoView()
+				return
+			}
+			//fallback
+			//expand all parent items
+			while (parent)
+			{
+				if (!parent.expanded) parent.expanded = true;
+				parent = parent.parentElement?.tagName === "SL-TREE-ITEM" ? <SlTreeItem>parent.parentElement : null;
+			}
+			// this.updateComplete.then(
+			// 	(bool: boolean) =>
+			// 		item.scrollIntoView()
+			// )
+			// waiting for update complete is not enough
+			setTimeout(()=> item.scrollIntoView(),500)
+		} catch (e)
+		{
+			console.log("Could not scroll to item");
+		}
+	}
+
+	/**
 	 * Open an item, which might trigger lazy-loading
 	 *
 	 * @param string _id
@@ -878,34 +846,93 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		//let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
 		//console.log(event.type, id, event.target);
 
-		// Remove drop hover from any parent nodes
-		if(event.type == "dragenter")
-		{
-			event.stopPropagation();
-			let current = option.parentElement;
-			while(current)
-			{
-				current.classList.remove("draggedOver", "drop-hover");
-				current = current.parentElement;
-			}
-		}
-		// Ignore/stop events from child nodes, unless it's dragenter and the parent sl-tree-item isn't hovered yet
-		if(["dragenter", "dragleave"].includes(event.type) && event.target != option && event.composedPath().includes(option))
-		{
-			event.stopPropagation();
-			if(event.type != "dragenter" || option.classList.contains("drop-hover"))
-			{
-				return;
-			}
-		}
-		//let id = option.value ?? (typeof option.id == 'number' ? String(option.id) : option.id);
-		//console.log(event.type, id, event.target);
-
 		const typeMap = {
+			dragstart: EGW_AI_DRAG,
 			dragenter: EGW_AI_DRAG_ENTER,
 			dragleave: EGW_AI_DRAG_OUT,
 		}
 		this.widget_object.iface.triggerEvent(typeMap[event.type] ?? event.type, event);
+	}
+
+	/**
+	 * Handle a change in selected items
+	 *
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected handleSelectionChange(event)
+	{
+		// Filter out unselectable nodes
+		let nodes = event.detail.selection.filter(node => !node.hasAttribute("unselectable"));
+		if(nodes.length != event.detail.selection.length)
+		{
+			event.detail.selection.forEach(n =>
+			{
+				if(!n.hasAttribute("unselectable"))
+				{
+					return;
+				}
+				n.removeAttribute("selected");
+				if(n.querySelectorAll(":scope > sl-tree-item").length > 0)
+				{
+					n.toggleAttribute("expanded");
+				}
+			});
+			event.stopPropagation();
+			this.requestUpdate("value");
+			return;
+		}
+
+		this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
+		this._currentOption = this.getNode(nodes[0].id) ?? this.optionSearch(nodes[0].id, this._selectOptions, 'id', 'item');
+		const ids = event.detail.selection.map(i => i.id);
+		// implemented unlinked multiple
+		if(this.multiple)
+		{
+			const idx = this.value.indexOf(ids[0]);
+			if(idx < 0)
+			{
+				this.value.push(ids[0]);
+			}
+			else
+			{
+				this.value.splice(idx, 1);
+			}
+			// sync tree-items selected attribute with this.value
+			this.selectedNodes = [];
+			Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) =>
+			{
+				if(this.value.includes(item.id))
+				{
+					item.setAttribute("selected", "");
+					this.selectedNodes.push(item);
+				}
+				else
+				{
+					item.removeAttribute("selected");
+				}
+			});
+			this._tree.requestUpdate();
+		}
+		else
+		{
+			this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
+		}
+		event.detail.previous = this._previousOption?.id;
+		this._currentSlTreeItem = nodes[0];
+		/* implemented unlinked-multiple
+		if(this.multiple)
+		{
+			this.selectedNodes = event.detail.selection
+		}*/
+		if(typeof this.onclick == "function")
+		{
+			// wait for the update, so app founds DOM in the expected state
+			this._tree.updateComplete.then(() =>
+			{
+				this.onclick(nodes[0].id, this, event.detail.previous)
+			});
+		}
 	}
 
 	protected async finishedLazyLoading()
@@ -929,7 +956,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	//this.selectOptions = find_select_options(this)[1];
 	_optionTemplate(selectOption: TreeItemData): TemplateResult<1>
 	{
-
 		// Check to see if node is marked as open with no children.  If autoloadable, load the children
 		const expandState = (this.calculateExpandState(selectOption));
 
@@ -950,15 +976,16 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
 		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
+		const value = selectOption.value ?? selectOption.id;
 		if(expandState && this.autoloading && lazy)
 		{
 			this.updateComplete.then(() =>
 			{
-				this.getDomNode(selectOption.id)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
+				this.getDomNode(value)?.dispatchEvent(new CustomEvent("sl-lazy-load"));
 			})
 		}
-		const value = selectOption.value ?? selectOption.id;
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
+		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj.type == "drag").length > 0
 
 		return html`
             <sl-tree-item
@@ -967,11 +994,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     id=${value}
                     title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
-                    ?selected=${selected}
+                    ?selected=${selected && !selectOption.unselectable}
+                    ?unselectable=${selectOption.unselectable}
                     ?expanded=${expandState}
                     ?disabled=${selectOption.disabled}
                     ?lazy=${lazy}
                     ?focused=${selectOption.focused || nothing}
+                    draggable=${draggable}
                     @click=${async(event) =>
                     {
                         // Don't react to expand or children
@@ -993,12 +1022,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 						this.lazyLoading = this.handleLazyLoading(selectOption).then((result) => {
                             // TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
                             const parentNode = selectOption ?? this.getNode(selectOption.id) ?? this.optionSearch(selectOption.id, this._selectOptions, 'id', 'item');
-                            parentNode.item = [...result.item]
-							if (parentNode.item.length == 0)
+                            if(!parentNode || !parentNode.item || parentNode.item.length == 0)
 							{
 								parentNode.child = false;
-								this.getDomNode(parentNode.id).loading = false
+                                parentNode.open = false;
+                                this.requestUpdate("lazy", "true");
 							}
+                            this.getDomNode(parentNode.id).loading = false
                             this.requestUpdate("_selectOptions")
                         })
 
@@ -1044,59 +1074,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
             <sl-tree
                     part="tree"
                     .selection=${this.leafOnly?"leaf":"single"}
-                    @sl-selection-change=${
-                            (event: any) => {
-                                this._previousOption = this._currentOption ?? (this.value.length ? this.getNode(this.value[0]) : null);
-                                this._currentOption = this.getNode(event.detail.selection[0].id) ?? this.optionSearch(event.detail.selection[0].id, this._selectOptions, 'id', 'item');
-                                const ids = event.detail.selection.map(i => i.id);
-								// implemented unlinked multiple
-								if (this.multiple)
-                                {
-                                    const idx = this.value.indexOf(ids[0]);
-                                    if (idx < 0)
-                                    {
-                                        this.value.push(ids[0]);
-                                    }
-                                    else
-                                    {
-                                        this.value.splice(idx, 1);
-                                    }
-									// sync tree-items selected attribute with this.value
-									this.selectedNodes = [];
-                                    Array.from(this._tree.querySelectorAll('sl-tree-item')).forEach((item : SlTreeItem) =>
-                                    {
-                                        if(this.value.includes(item.id))
-                                        {
-                                            item.setAttribute("selected", "");
-											this.selectedNodes.push(item);
-                                        }
-                                        else
-                                        {
-                                            item.removeAttribute("selected");
-                                        }
-                                    });
-                                    this._tree.requestUpdate();
-                                }
-								else
-                                {
-                                    this.value = this.multiple ? ids ?? [] : ids[0] ?? "";
-                                }
-                                event.detail.previous = this._previousOption?.id;
-                                this._currentSlTreeItem = event.detail.selection[0];
-								/* implemented unlinked-multiple
-								if(this.multiple)
-								{
-									this.selectedNodes = event.detail.selection
-								}*/
-                                if(typeof this.onclick == "function")
-                                {
-									// wait for the update, so app founds DOM in the expected state
-									this._tree.updateComplete.then(() => {
-                                        this.onclick(event.detail.selection[0].id, this, event.detail.previous)
-									});
-                                }
-                            }
-                    }
+                    @sl-selection-change=${this.handleSelectionChange}
                     @sl-expand=${
                             (event) => {
                                 event.detail.id = event.target.id
@@ -1120,6 +1098,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
                             }
                     }
+                    @dragstart=${(event) => {this.handleDragEvent(event);}}
                     @dragenter=${(event) => {this.handleDragEvent(event);}}
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
 					@drop=${(event) => {this.handleDragEvent(event);}}
@@ -1136,7 +1115,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
 			{
-				id: _item.id
+				id: _item.value ?? _item.id
 			})
 
 		let result: Promise<TreeItemData> = egw().request(requestLink, [])
@@ -1144,10 +1123,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 		return result
 			.then((results) => {
-				_item = results;
+				Object.assign(_item, results);
 
 				// Add actions
-				const itemAO = this.widget_object.getObjectById(_item.id);
+				const itemAO = this.widget_object.getObjectById(_item.value ?? _item.id);
 				let parentAO = null;
 				if(itemAO && itemAO.parent)
 				{
@@ -1302,6 +1281,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		let target = e.composedPath().find(element => {
 			return element.tagName == "SL-TREE-ITEM"
 		});
+		if(!target)
+		{
+			return {target: null, action: null};
+		}
 		let action : EgwActionObject = this.widget_object.getObjectById(target.id);
 
 		// Create on the fly if not there?  Action handlers might need the EgwActionObject
@@ -1309,6 +1292,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			// NOTE: FLAT object structure under the tree ActionObject to avoid nested selection
 			action = this.widget_object.addObject(target.id, this.widget_object.iface)
+			action._context = target;
 			action.setSelected = (set) =>
 			{
 				target.action_selected = set;

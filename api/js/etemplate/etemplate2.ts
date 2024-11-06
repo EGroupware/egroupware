@@ -24,6 +24,7 @@ import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common";
 import './Layout/Et2Box/Et2Box';
 import './Layout/Et2Details/Et2Details';
+import './Layout/Et2Groupbox/Et2Groupbox';
 import './Layout/Et2Tabs/Et2Tab';
 import './Layout/Et2Tabs/Et2Tabs';
 import './Layout/Et2Tabs/Et2TabPanel';
@@ -35,6 +36,7 @@ import './Et2Button/Et2ButtonCopy';
 import './Et2Button/Et2ButtonIcon';
 import './Et2Button/Et2ButtonScroll';
 import './Et2Button/Et2ButtonTimestamper';
+import './Et2Button/Et2ButtonToggle';
 import './Et2Checkbox/Et2Checkbox';
 import './Et2Checkbox/Et2CheckboxReadonly';
 import './Et2Date/Et2Date';
@@ -73,6 +75,7 @@ import './Et2Nextmatch/Headers/AccountFilterHeader';
 import './Et2Nextmatch/Headers/CustomFilterHeader';
 import './Et2Nextmatch/Headers/EntryHeader';
 import './Et2Nextmatch/Headers/FilterHeader';
+import './Et2MenuItem/Et2MenuItem';
 import './Et2Select/Et2Listbox';
 import './Et2Select/Et2Select';
 import './Et2Select/SelectTypes';
@@ -82,6 +85,7 @@ import './Et2Select/Tag/Et2EmailTag';
 import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Spinner/Et2Spinner';
 import './Et2Switch/Et2Switch';
+import './Et2Switch/Et2SwitchIcon';
 import './Et2Textarea/Et2Textarea';
 import './Et2Textarea/Et2TextareaReadonly';
 import './Et2Textbox/Et2Textbox';
@@ -111,7 +115,6 @@ import "./Et2Textbox/Et2Password";
 import './Et2Textbox/Et2Searchbox';
 import "./Et2Tree/Et2Tree";
 import "./Et2Tree/Et2TreeDropdown";
-import "./Et2Tree/Et2TreeDropdownCategory";
 
 
 /* Include all widget classes here, we only care about them registering, not importing anything*/
@@ -120,7 +123,6 @@ import './et2_widget_template';
 import './et2_widget_grid';
 import './et2_widget_box';
 import './et2_widget_hbox';
-import './et2_widget_groupbox';
 import './et2_widget_button';
 import './et2_widget_entry';
 import './et2_widget_textbox';
@@ -745,7 +747,23 @@ export class etemplate2
 				// to run.
 				setTimeout(() =>
 				{
-					Promise.all(deferred).then(() =>
+					Promise.race([Promise.all(deferred),
+						// If loading takes too long, give some feedback so we can try to track down why
+						new Promise((resolve) =>
+						{
+							setTimeout(() =>
+								{
+									if(this.ready)
+									{
+										return;
+									}
+									egw.debug("error", "Loading timeout");
+									console.debug("Deferred widget list, look for widgets still pending.", deferred);
+									resolve()
+								}, 10000
+							);
+						})
+					]).then(() =>
 					{
 
 						console.timeEnd("deferred");
@@ -1694,9 +1712,14 @@ export class etemplate2
 				(<et2_baseWidget>widget).showMessage(_response.data[id], 'validation_error');
 
 			}
-			else if(typeof widget.set_validation_error == "function")
+			else if(widget && typeof widget.set_validation_error == "function")
 			{
 				widget.set_validation_error(_response.data[id]);
+			}
+			else if(!widget)
+			{
+				console.warn(`Validation error without widget.  ID:${id} - ${_response.data[id]}`);
+				continue;
 			}
 			// Handle validation_error (messages coming back from server as a response) if widget is children of a tabbox
 			let tmpWidget = widget;

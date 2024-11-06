@@ -247,7 +247,6 @@ extra encodings	addressbook	cs	Zvláštní kódování
 extra private	addressbook	cs	Extra soukromé
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	cs	Nepodařilo se změnit %1 členů organizace (nedostatečná práva)!
 favorite phone	addressbook	cs	Oblíbený telefon
-favorites	addressbook	cs	Oblíbené
 fax	addressbook	cs	Fax
 fax (private)	addressbook	cs	Fax (soukromá)
 fax number	common	cs	Faxové číslo

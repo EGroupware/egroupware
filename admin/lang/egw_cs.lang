@@ -364,6 +364,7 @@ html/plaintext	admin	cs	HTML/Text
 icon	admin	cs	Ikona
 identity deleted	admin	cs	Identita odstraněna.
 idle	admin	cs	Nečinný
+if different from email address	admin	cs	Pokud se liší od e-mailové adresy
 if no acl records for user or any group the user is a member of	admin	cs	Pokud pro uživatele nebo žádnou ze skupin které je členem neexistují ACL záznamy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	cs	Pokud používáte LDAP, chcete spravovat atributy pro domovský adresář a login shell?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	cs	Pokud chcete používat SSL nebo TLS, musíte mít nahráno openssl rozšíření PHP.
@@ -479,6 +480,7 @@ no alternate email address	admin	cs	Bez alternativní e-mailové adresy
 no encryption	admin	cs	Bez šifrování
 no forwarding email address	admin	cs	Bez e-mailové adresy pro přeposílání
 no jobs in the database !!!	admin	cs	Žádné úlohy v databázi!
+no limit	admin	cs	Bez omezení
 no login history exists for this user	admin	cs	Pro tohoto uživatele neexistuje historie přihlášení!
 no matches found	admin	cs	Nenalezeny žádné záznamy!
 no message returned.	admin	cs	Žádná zpráva se nevrátila
@@ -608,6 +610,7 @@ site	admin	cs	Web
 skip imap	admin	cs	Vynechat IMAP
 skipping imap configuration!	admin	cs	Přeskočení konfigurace IMAP!
 smtp authentication	admin	cs	SMTP autentikace
+smtp only: to create only an smtp account	admin	cs	Vytvoření účtu pouze SMTP bez IMAP
 smtp options	admin	cs	Volby SMTP
 smtp server	admin	cs	Server SMTP
 smtp server name	admin	cs	Jméno SMTP serveru
@@ -638,14 +641,8 @@ submit to egroupware.org	admin	cs	Odeslat na egroupware.org
 subtype	admin	cs	Podtyp
 success	admin	cs	Podařilo se
 switch it off, if users are randomly thrown out	admin	cs	Vypněte, pokud jsou uživatelé náhodně vyhazováni
-template selection	admin	cs	Výběr šablony
 templates	admin	cs	Šablony
-text entry	admin	cs	Textový záznam
-that application name already exists.	admin	cs	Takové jméno aplikace již existuje.
-that application order must be a number.	admin	cs	Pořadí aplikace musí být číslo.
 that loginid has already been taken	admin	cs	Takové přihlašovací id už bylo použito.
-that name has been used already	admin	cs	Takový název už byl použit.
-that server name has been used already !	admin	cs	Takový název serveru už byl použit!
 the api is current	admin	cs	API je aktuální
 the api requires an upgrade	admin	cs	API vyžaduje aktualizaci
 the cumulated and anonymised data will be publically available:	admin	cs	Souhrnné anonymní údaje budou veřejně k dispozici na:

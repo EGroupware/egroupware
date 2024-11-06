@@ -22,6 +22,7 @@
 %1 token %2.	admin	pl	%1 token %2.
 %1 user %2	admin	pl	%1 użytkownik %2
 (de)activate mail accounts	admin	pl	(de)Aktywacja kont pocztowych
+(default no, leave it off if you dont use it)	admin	pl	Domyślnie = Nie, pozostaw to wyłączone, jeśli z tego nie korzystasz.
 (no subject)	admin	pl	(bez tematu)
 -  type	admin	pl	- typ
 1 year	admin	pl	1 rok
@@ -337,6 +338,7 @@ how many minutes should an account or ip be blocked (default 1) ?	admin	pl	Na il
 how should email addresses for new users be constructed?	admin	pl	Jak tworzyć adresy mailowe dla nowych użytkowników?
 icon	admin	pl	Ikonka
 idle	admin	pl	Czas jałowy
+if different from email address	admin	pl	Jeśli inny niż adres e-mail
 if no acl records for user or any group the user is a member of	admin	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	Jeżeli używasz LDAP, czy chciałbyś administrować katalogiem domowym i atrybutami powłoki?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	pl	Jeżeli korzystasz z SSL lub TLS, musisz zapewnić obsługę OpenSSL w PHP.
@@ -440,6 +442,7 @@ no alternate email address	admin	pl	Brak zapasowego adresu e-mail
 no encryption	admin	pl	Brak szyfrowania
 no forwarding email address	admin	pl	Brak adresu poczty przesyłanej
 no jobs in the database !!!	admin	pl	Nie ma jobs w bazie
+no limit	admin	pl	Bez limitu
 no login history exists for this user	admin	pl	Nie ma historii logowania dla tego użytkownika
 no matches found	admin	pl	Nie znaleziono zgodnych
 no message returned.	admin	pl	Nie otrzymano wiadomości.
@@ -565,6 +568,7 @@ sieve server port	admin	pl	Port serwera Sieve
 sieve settings	admin	pl	Ustawienia Sieve
 site	admin	pl	Serwis
 smtp authentication	admin	pl	Autentykacja SMTP
+smtp only: to create only an smtp account	admin	pl	Utwórz konto tylko SMTP bez IMAP
 smtp options	admin	pl	Opcje SMTP
 smtp server name	admin	pl	Nazwa serwera SMTP
 smtp settings	admin	pl	Ustawienia SMTP
@@ -590,14 +594,8 @@ submit to egroupware.org	admin	pl	Prześlij do egroupware.org
 subtype	admin	pl	Pod-typ
 success	admin	pl	Sukces
 switch it off, if users are randomly thrown out	admin	pl	Wyłącz to, jeżeli użytkownicy są wyrzucani losowo
-template selection	admin	pl	Wybór szablonu
 templates	admin	pl	Szablony
-text entry	admin	pl	Wpisywanie tekstu
-that application name already exists.	admin	pl	Podana nazwa aplikacji już istnieje
-that application order must be a number.	admin	pl	Numer porządkowy aplikacji musi być liczbą
 that loginid has already been taken	admin	pl	Taki login już istnieje
-that name has been used already	admin	pl	Taka nazwa jest już użyta
-that server name has been used already !	admin	pl	Podana nazwa serwera jest już używana
 the api is current	admin	pl	Wersja API jest aktualna
 the api requires an upgrade	admin	pl	Wersja API wymaga aktualizacji
 the cumulated and anonymised data will be publically available:	admin	pl	Anonimowe dane które będą publicznie dostępne:

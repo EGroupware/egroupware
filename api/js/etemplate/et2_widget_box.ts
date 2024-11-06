@@ -162,7 +162,8 @@ export class et2_box extends et2_baseWidget implements et2_IDetachedDOM
 	}
 
 }
-et2_register_widget(et2_box, ["vbox", "box", "old-vbox", "old-box", "old-hbox"]);
+
+et2_register_widget(et2_box, ["vbox", "box", "old-box",]);
 
 /**
  * Details widget implementation

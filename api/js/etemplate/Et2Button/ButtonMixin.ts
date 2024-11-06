@@ -78,7 +78,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
             	display:none !important;
             }
 
-			/* Leave label there for accessability, but position it so it can't be seen */
+			/* Leave label there for accessibility, but position it so it can't be seen */
 			:host(.imageOnly) .button__label {
 				position: absolute;
 				left: -999px
@@ -90,9 +90,11 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
     			width: 16px !important;
 			}
             ::slotted(et2-image) {
-            	width: 20px;
+            	height: 20px;
                 max-width: 20px;
                 display: flex;
+				font-size: 20px !important;
+				padding-left: var(--et2-button-image-padding-left);
             }
             ::slotted([slot="icon"][src='']) {
 				display: none;
@@ -127,10 +129,13 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 				width: var(--sl-input-height-medium);
 				padding-inline-start: 0;			
 			}
+			.button--has-prefix:not(.button--has-label) ::slotted(et2-image) {
+				padding-left: 0;
+			}
 			
 			/* Override primary styling - we use variant=primary on first dialog button */
 			.button--standard.button--primary {
-				background-color: hsl(240deg 5% 96%);
+				background-color: var(--sl-color-gray-100);
 				border-color: var(--sl-color-gray-400);
 				color: var(--sl-input-color-hover);
 			}
@@ -193,7 +198,7 @@ export const ButtonMixin = <T extends Constructor>(superclass : T) => class exte
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
-		if(new_image.indexOf("http") >= 0 || new_image.indexOf(this.egw().webserverUrl) >= 0)
+		if(new_image.startsWith("http") || new_image.startsWith(this.egw().webserverUrl))
 		{
 			this.__image = new_image
 		}

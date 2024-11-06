@@ -26,6 +26,7 @@ import {Et2MergeDialog} from "../etemplate/Et2Dialog/Et2MergeDialog";
 import {EgwActionObject} from "../egw_action/EgwActionObject";
 import type {Et2Details} from "../etemplate/Layout/Et2Details/Et2Details";
 import {Et2Checkbox} from "../etemplate/Et2Checkbox/Et2Checkbox";
+import {egw_globalObjectManager} from "../egw_action/egw_action";
 
 /**
  * Type for push-message
@@ -846,6 +847,8 @@ export abstract class EgwApp
 		if(document.documents.length == 1 && document.documents[0].mime == "message/rfc822")
 		{
 			vars.document = document.documents[0].path;
+			// Remove not applicable options
+			['pdf', 'download'].forEach(k => delete vars.options[k]);
 			return this._mergeEmail(_action.clone(), vars);
 		}
 		else

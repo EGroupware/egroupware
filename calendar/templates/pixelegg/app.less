@@ -1121,10 +1121,14 @@ div#calendar-container {
 		.calendar_calGridHeader  > et2-description {width:~"calc(100% - 58px)";}
 	}
 }
+
+#calendar-toolbar {
+  margin-bottom: 0.3em;
+}
 #calendar-toolbar_toolbar {
 	et2-switch .label.on {
 		span.off {
-			filter: invert(1);
+			filter: opacity(.4);
 		}
 		span.on {
 			filter: none !important;
@@ -1138,7 +1142,7 @@ div#calendar-container {
 				background-position: center;
 				height: 28px;
 				top:0;
-				filter: invert(1);
+				filter: opacity(.4);
 			}
 			span.off {
 				background-size: 18px 18px;
@@ -1153,11 +1157,11 @@ div#calendar-container {
 		}
 	}
     #calendar-toolbar_toolbar-weekend .label span.on {
-	    background-image: url(../../../api/templates/default/images/7_day_view.svg);
+	    background-image: url(../../../node_modules/bootstrap-icons/icons/7-square.svg);
         width: 50%;
     }
     #calendar-toolbar_toolbar-weekend .label span.off {
-	    background-image: url(../../../api/templates/default/images/5_day_view.svg);
+	    background-image: url(../../../node_modules/bootstrap-icons/icons/5-square.svg);
         width: 50%;
     }
 }

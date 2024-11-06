@@ -77,6 +77,7 @@ module.exports = function (eleventyConfig)
 	// Etemplate2
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
+	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
 
 	//eleventyConfig.addPassthroughCopy({"../../vendor/**/*min.js": "assets/scripts/vendor/"});
 	//eleventyConfig.addPassthroughCopy("../dist/etemplate2.js", "assets/scripts/etemplate2.js");

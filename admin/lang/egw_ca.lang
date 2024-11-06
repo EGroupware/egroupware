@@ -396,13 +396,7 @@ submit changes	admin	ca	Enviar canvis
 submit the search string	admin	ca	Enviar la cadena de recerca
 subtype	admin	ca	Subtipus
 switch it off, if users are randomly thrown out	admin	ca	apaga-ho, si els usuaris són rebutjats aleatoriament
-template selection	admin	ca	Selecció de plantilla
-text entry	admin	ca	Entrada de text
-that application name already exists.	admin	ca	Aquest nom d'aplicació ja existeix.
-that application order must be a number.	admin	ca	L'ordre de la aplicació ha de ser un nombre.
 that loginid has already been taken	admin	ca	Aquest nom d'usuari ja es fa servir
-that name has been used already	admin	ca	Aquest nom ja s'ha fet servir
-that server name has been used already !	admin	ca	Aquest nom de servidor ja s'ha fet servir
 the api is current	admin	ca	L'API ja està actualitzada
 the api requires an upgrade	admin	ca	L'API necessita actualitzacions
 the groups must include the primary group	admin	ca	Els grups han d'incloure el grup principal

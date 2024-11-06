@@ -297,13 +297,7 @@ start testjob!	admin	eu	Froga lana hasi
 submit changes	admin	eu	Aldaketak bidali
 submit the search string	admin	eu	Bilaketa katea bidali
 subtype	admin	eu	Azpimota
-template selection	admin	eu	Pantaila aukeratu
-text entry	admin	eu	Testu sarrera
-that application name already exists.	admin	eu	Aplikazio izen hori existitzen da.
-that application order must be a number.	admin	eu	Aplikazioaren ordena zenbaki bat izan behar da.
 that loginid has already been taken	admin	eu	Erabiltzaile izen hori erabiltzen ari dira
-that name has been used already	admin	eu	Izen hori erabilia izan da
-that server name has been used already !	admin	eu	Zerbitzari izen hori erabilia izan da!
 the api is current	admin	eu	API-ak eguneratua dago
 the api requires an upgrade	admin	eu	API-ak eguneratzea behar du
 the groups must include the primary group	admin	eu	Taldeek talde nagusian sartu behar dira

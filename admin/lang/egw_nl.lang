@@ -22,6 +22,7 @@
 %1 token %2.	admin	nl	%1 token %2.
 %1 user %2	admin	nl	%1 gebruiker %2
 (de)activate mail accounts	admin	nl	(De)Activeer mailaccounts
+(default no, leave it off if you dont use it)	admin	nl	Standaard = Nee, laat uit als je het niet gebruikt
 (no subject)	admin	nl	(geen onderwerp)
 -  type	admin	nl	- type
 1 year	admin	nl	1 jaar
@@ -422,6 +423,7 @@ no alternate email address	admin	nl	Geen alternatief emailadres
 no encryption	admin	nl	Geen versleuteling
 no forwarding email address	admin	nl	Geen emailadres om naar door te sturen
 no jobs in the database !!!	admin	nl	Geen taken in DB
+no limit	admin	nl	Geen limiet
 no login history exists for this user	admin	nl	Er is geen loginhistorie aanwezig voor deze gebruiker
 no matches found	admin	nl	Geen overeenkomsten gevonden
 no message returned.	admin	nl	Geen bericht teruggekomen.
@@ -534,6 +536,7 @@ sieve server port	admin	nl	Sieve-serverpoort
 sieve settings	admin	nl	Sieve instellingen
 site	admin	nl	Site
 smtp authentication	admin	nl	SMTP authenticatie
+smtp only: to create only an smtp account	admin	nl	Alleen SMTP-account maken zonder IMAP
 smtp options	admin	nl	SMTP opties
 smtp server name	admin	nl	SMTP-servernaam
 smtp settings	admin	nl	SMTP instellingen
@@ -555,14 +558,8 @@ submit changes	admin	nl	Wijzigingen toepassen
 submit the search string	admin	nl	Verzend de zoekopdracht
 subtype	admin	nl	Subtype
 switch it off, if users are randomly thrown out	admin	nl	Schakel het uit, wanneer gebruiker willekeurig eruit gegooid worden
-template selection	admin	nl	Templateselectie
 templates	admin	nl	Sjablonen
-text entry	admin	nl	Tekstinvoer
-that application name already exists.	admin	nl	Die toepassingsnaam bestaat reeds.
-that application order must be a number.	admin	nl	De invoer van de toepassingsvolgorde moet numeriek zijn.
 that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
-that name has been used already	admin	nl	Die naam is reeds in Gebruik!
-that server name has been used already !	admin	nl	Die servernaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
 the api requires an upgrade	admin	nl	De API vereist een upgrade.
 the groups must include the primary group	admin	nl	De groepen moeten de primaire groep bevatten

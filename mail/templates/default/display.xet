@@ -9,8 +9,8 @@
             <et2-hbox  class="mailPreviewHeaders">
                 <et2-description  id="mail_displaysubject" readonly="true" hoverAction="app.mail.modifyMessageSubjectDialog" hoverActionTitle="Modify subject of this message"></et2-description>
                 <et2-hbox  class="mailPreviewHeaders smimeIcons">
-                    <et2-image  id="smime_signature" src="smime_sign" statustext="Smime signed message" disabled="!@smime=smime_sign" align="right" width="24"></et2-image>
-                    <et2-image  id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" disabled="!@smime=smime_encrypt" align="right" width="24"></et2-image>
+                    <et2-image  id="smime_signature" src="smime_sign" statustext="Smime signed message" hidden="!@smime=smime_sign" align="right" width="24"></et2-image>
+                    <et2-image  id="smime_encryption" src="smime_encrypt" statustext="Smime encrypted message" hidden="!@smime=smime_encrypt" align="right" width="24"></et2-image>
                 </et2-hbox>
             </et2-hbox>
             <et2-vbox  width="100%" class="mailPreviewHeaders onlyPrint">

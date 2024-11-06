@@ -118,6 +118,7 @@ all addressbooks	groupdav	es-es	Todas las libretas de direcciones
 all categories	common	es-es	Todas las categorías
 all days	common	es-es	Todos los días
 all fields	common	es-es	Todos los campos
+all files	common	es-es	Todos los archivos
 all in one	groupdav	es-es	Todo en uno
 all languages	common	es-es	Todos los idiomas
 all operations save the template!	common	es-es	¡Todas las operaciones guardan la plantilla!
@@ -202,7 +203,6 @@ blurtext	common	es-es	Texto poco claro
 bold	common	es-es	Negrita
 bolivia	common	es-es	BOLIVIA
 border	common	es-es	Borde
-border-line-thickness for the table-tag	common	es-es	Grosor de la línea del borde de la etiqueta de la tabla
 bosnia and herzegovina	common	es-es	BOSNIA AND HERZEGOVINA
 botswana	common	es-es	BOTSWANA
 bottom	common	es-es	Parte inferior
@@ -801,6 +801,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	es-es	El enlace se adjunta al correo-e, lo que permite a los destinatarios descargar una versión actualizada de los archivos
 link target %1 not found!	common	es-es	¡No se ha encontrado el enlace de destino %1!
 link title of current record	common	es-es	Vincular título del registro actual
+link to each entry	common	es-es	Enlace a cada entrada
 linkapps	common	es-es	Enlace a aplicaciones
 linked	common	es-es	Enlazado
 linkentry	common	es-es	Entrada de enlace
@@ -814,6 +815,7 @@ list members	common	es-es	Lista de miembros
 list of files linked to the current record	preferences	es-es	Lista de archivos vinculados al registro actual
 lithuania	common	es-es	LITUANIA
 load	common	es-es	Cargar
+load more links ...	common	es-es	Cargar más enlaces ...
 load this template into the editor	common	es-es	Cargar esta plantilla en el editor
 loading	common	es-es	Cargando
 local	common	es-es	Local
@@ -855,6 +857,10 @@ maybe	common	es-es	Tal vez
 mayotte	common	es-es	MAYOTTE
 medium	common	es-es	Medio
 menu	common	es-es	Menú
+merge	common	es-es	Fusionar
+merge & send	common	es-es	Fusionar y enviar
+merge individually	common	es-es	Fusionar individualmente
+merge options	common	es-es	Opciones de fusión
 merged document filename	preferences	es-es	Nombre de archivo del documento combinado
 message	common	es-es	Mensaje
 message ...	common	es-es	Mensaje ...
@@ -1166,6 +1172,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	es-es	Grabar
 save all	common	es-es	Guardar todo
 save as	common	es-es	Guardar como
+save as pdf	common	es-es	Guardar como PDF
 save as zip	common	es-es	Guardar como ZIP
 save selected columns as default preference for all users.	common	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	common	es-es	Guardar los cambios realizados y cerrar la ventana
@@ -1246,6 +1253,7 @@ select work email address	common	es-es	Seleccione dirección de correo del traba
 select year	common	es-es	Seleccione año
 selectbox	common	es-es	Cuadro de selección
 selection	common	es-es	Selección
+selection of files can only be done in one folder.  %1 files unselected.	common	es-es	La selección de archivos sólo puede hacerse en una carpeta. %1 ficheros no seleccionados.
 send	common	es-es	Enviar
 send succeeded to %1	common	es-es	Enviado correctamente a %1
 senegal	common	es-es	SENEGAL

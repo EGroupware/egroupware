@@ -19,13 +19,8 @@ automatically start with this format block. small paragraph adds less line space
 br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
 change password	preferences	fr	Changer votre mot de passe
-change your password	preferences	fr	Changer votre mot de passe
-change your profile	preferences	fr	Changer votre profil
-change your settings	preferences	fr	Changer vos paramètres
-charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
 charset for the csv export/import	preferences	fr	Jeu de caractères
 click to install	preferences	fr	cliquer pour installer
-click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 close after selection	preferences	fr	Fermer après sélection
 code is invalid	preferences	fr	Code invalide
 color	preferences	fr	Couleur
@@ -34,11 +29,9 @@ current password	preferences	fr	Mot de passe actuel
 custom login box color, defaults to above color darkened	preferences	fr	Couleur de la boîte de connexion personnalisée, par défaut, plus sombre
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark mode theme	preferences	fr	Thème du mode sombre
-dark moono theme	preferences	fr	Thème Dark Moono
 data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
-default application	preferences	fr	Application par défaut
 default font	preferences	fr	Police par défaut
 default font size	preferences	fr	Taille de police par défaut
 default format block	preferences	fr	Format de block par défaut
@@ -106,7 +99,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	fr	Sélection de l'interface/modèle
 it sets content size (text only) according to selected size.	preferences	fr	Il définit la taille du contenu (texte uniquement) en fonction de la taille sélectionnée.
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
-kama theme	preferences	fr	Thème Kama
 keep list open for selecting multiple	preferences	fr	Garder la liste ouverte pour la sélection multiple
 language	preferences	fr	Langue
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	fr	La connexion via SingleSignOn ne fournit pas de mot de passe pour le transmettre à des serveurs de courrier ou de fichiers.
@@ -115,8 +107,6 @@ lowercase letters	preferences	fr	lettres minuscules
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	fr	Rendre la liste d'applications scrollable avec les boutons haut/bas (utile pour les utilisateurs avec une souris sans molette)
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
-moono color theme	preferences	fr	Couleur de thème Moono
-moono theme (default)	preferences	fr	Thème Moono (défaut)
 new secret generated, you need to save it to disable the old one!	preferences	fr	Nouvelle clé secrète générée, vous devez sauvegarder pour désactiver l'ancienne !
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
@@ -138,7 +128,6 @@ password stored	preferences	fr	Mot de passe stocké.
 permanent time zone selection	preferences	fr	Fuseau horaire permanent
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
 please select your timezone.	preferences	fr	Sélectionnez votre fuseau horaire.
-please, select a new theme	preferences	fr	Sélectionner un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
 preferences saved.	preferences	fr	Préférences enregistrées.
 preformatted	preferences	fr	Préformaté
@@ -149,15 +138,12 @@ read prefs for the specified application.	preferences	fr	Lire les préférences 
 reset qrcode	preferences	fr	Réinitialiser le QRCode
 revoke	preferences	fr	Révoquer
 revoke this token	preferences	fr	Révoquer ce jeton
-rich text editor theme	preferences	fr	Thème de l'éditeur de texte
 scan qrcode with a time-based one-time password (totp) app:	preferences	fr	Scanner le QRCode avec un mot de passe à durée limitée (TOTP) :
 secret deleted, two factor authentication disabled.	preferences	fr	Clé secrète supprimée, authentification à double facteur désactivée.
 select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
-select different theme	preferences	fr	Choisissez un thème différent
 select one	preferences	fr	Choisissez un(e)
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans EGroupware.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fr	Sélectionner la langue du correcteur orthographique intégré à l'éditeur de texte.
-select the theme (visualization) of the rich text editor.	preferences	fr	Sélectionner le thème de l'éditeur de texte.
 selectbox	preferences	fr	Boîte de sélection
 selectbox with groupmembers	common	fr	Boîte de sélection avec membres du groupe
 selectbox with primary group and search	preferences	fr	Boîte de sélection avec groupe primaire et recherche
@@ -214,7 +200,6 @@ you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	fr	Vous devez sélectionner des fonctionnalité à activer dans la barre d'outils
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
 you need to enter your password to make any security changes!	preferences	fr	Vous devez entrer votre mot de passe pour effectuer des changements sur la sécurité !
-your current theme is: %1	preferences	fr	Votre thème actuel est: %1
 your password does not have required strength:	preferences	fr	Votre mot de passe n'a pas la complexité requise :
 your password might not match the password policy.	preferences	fr	Votre mot de passe pourrait ne pas répondre à la politique de complexité des mots de passe.
 your preferences	preferences	fr	Vos préférences

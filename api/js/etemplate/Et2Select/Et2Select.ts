@@ -102,151 +102,157 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			shoelace,
 			super.styles,
 			css`
-			  :host {
-				display: block;
-				flex: 1 0 auto;
-				--icon-width: 20px;
-			  }
+				:host {
+					display: block;
+					flex: 1 0 auto;
+					--icon-width: 20px;
+				}
 
 				.form-control--has-label::part(form-control-label) {
 					margin-right: var(--sl-spacing-medium);
 				}
 
-			  ::slotted(img), img {
-				vertical-align: middle;
-			}
-			
-			/* Get rid of padding before/after options */
-			sl-menu::part(base) {
-				padding: 0px;
-			}
-			/* No horizontal scrollbar, even if options are long */
-			.dropdown__panel {
-				overflow-x: clip;
-			  }
+				::slotted(img), img {
+					vertical-align: middle;
+				}
 
-			  /* Ellipsis when too small */
+				/* No wrapping */
 
-			  ::part(tags) {
-				max-width: 100%;
-			  }
-			  .select__label {
-				display: block;
-				text-overflow: ellipsis;
-				/* This is usually not used due to flex, but is the basis for ellipsis calculation */
-				width: 10ex;
-			  }
+				sl-option::part(base) {
+					white-space: nowrap;
+				}
 
-			  /** multiple=true uses tags for each value **/
-			  /* styling for icon inside tag (not option) */
+				/* No horizontal scrollbar, even if options are long */
 
-			  .tag_image {
-				margin-right: var(--sl-spacing-x-small);
-			  }
+				.dropdown__panel {
+					overflow-x: clip;
+				}
 
-			  /* Maximum height + scrollbar on tags (+ other styling) */
+				/* Ellipsis when too small */
 
-			  ::part(tags) {
-				overflow-y: auto;
-				margin-left: 0px;
-				max-height: initial;
-				min-height: auto;
-				gap: 0.1rem 0.5rem;
-			  }
+				::part(tags) {
+					max-width: 100%;
+				}
 
-			  :host([rows]) ::part(tags) {
-				max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
-			  }
+				.select__label {
+					display: block;
+					text-overflow: ellipsis;
+					/* This is usually not used due to flex, but is the basis for ellipsis calculation */
+					width: 10ex;
+				}
+
+				/** multiple=true uses tags for each value **/
+				/* styling for icon inside tag (not option) */
+
+				.tag_image {
+					margin-right: var(--sl-spacing-x-small);
+				}
+
+				/* Maximum height + scrollbar on tags (+ other styling) */
+
+				::part(tags) {
+					overflow-y: auto;
+					margin-left: 0px;
+					max-height: initial;
+					min-height: auto;
+					gap: 0.1rem 0.5rem;
+				}
+
+				:host([rows]) ::part(tags) {
+					max-height: calc(var(--rows, 5) * (var(--sl-input-height-medium) * 0.8))
+				}
 
 				:host([readonly][rows='1']) ::part(tags) {
-				overflow: hidden;
-			  }
+					overflow: hidden;
+				}
 
-			  /* No rows set, default height limit about 5 rows */
+				/* No rows set, default height limit about 5 rows */
 
-			  :host(:not([rows])) ::part(tags) {
-				max-height: 11em;
-			  }
+				:host(:not([rows])) ::part(tags) {
+					max-height: 11em;
+				}
 
-			  select:hover {
-				box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
-			  }
+				select:hover {
+					box-shadow: 1px 1px 1px rgb(0 0 0 / 60%);
+				}
 
-			  /* Hide dropdown trigger when multiple & readonly */
+				/* Hide dropdown trigger when multiple & readonly */
 
-			  :host([readonly][multiple]:not([rows='1']))::part(expand-icon) {
-				display: none;
-			  }
+				:host([readonly][multiple]:not([rows='1']))::part(expand-icon) {
+					display: none;
+				}
 
-			  /* Style for tag count if rows=1 */
+				/* Style for tag count if rows=1 */
 
-			  .tag_limit {
-				position: absolute;
-				right: 0px;
-				top: 0px;
-				bottom: 0px;
-				box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
-			  }
+				.tag_limit {
+					position: absolute;
+					right: 0px;
+					top: 0px;
+					bottom: 0px;
+					box-shadow: rgb(0 0 0/50%) -1.5ex 0px 1ex -1ex, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+				}
 
-			  .tag_limit::part(base) {
-				height: 100%;
-				background-color: var(--sl-input-background-color);
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
-				font-weight: bold;
-				min-width: 3em;
-				justify-content: center;
-			  }
+				.tag_limit::part(base) {
+					height: 100%;
+					background-color: var(--sl-input-background-color);
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+					font-weight: bold;
+					min-width: 3em;
+					justify-content: center;
+				}
 
-			  /* Show all rows on hover if rows=1 */
+				/* Show all rows on hover if rows=1 */
 
-			  :host([ readonly ][ multiple ][ rows ]) .hover__popup {
-				width: -webkit-fill-available;
-				width: -moz-fill-available;
-				width: fill-available;
-			  }
+				:host([ readonly ][ multiple ][ rows ]) .hover__popup {
+					width: -webkit-fill-available;
+					width: -moz-fill-available;
+					width: fill-available;
+				}
 
 				:host([readonly][multiple][rows]) .hover__popup::part(popup) {
 					z-index: var(--sl-z-index-dropdown);
 					background-color: var(--sl-color-neutral-0);
 				}
 
-			  :host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
-				display: flex;
-				flex-wrap: wrap;
-			  }
-			  ::part(listbox) {
-				z-index: 1;
-				background: var(--sl-input-background-color);
-				padding: var(--sl-input-spacing-small);
-				padding-left: 2px;
+				:host([ readonly ][ multiple ][ rows ]) .hover__popup .select__tags {
+					display: flex;
+					flex-wrap: wrap;
+				}
 
-				box-shadow: var(--sl-shadow-large);
-				min-width: fit-content;
-				border-radius: var(--sl-border-radius-small);
-				border: 1px solid var(--sl-color-neutral-200);
-				overflow-y: auto;
-			  }
+				::part(listbox) {
+					z-index: 1;
+					background: var(--sl-input-background-color);
+					padding: var(--sl-input-spacing-small);
+					padding-left: 2px;
 
-			  ::part(display-label) {
-				margin: 0;
-			  }
+					box-shadow: var(--sl-shadow-large);
+					min-width: fit-content;
+					border-radius: var(--sl-border-radius-small);
+					border: 1px solid var(--sl-color-neutral-200);
+					overflow-y: auto;
+				}
 
-			  :host::part(display-label) {
-				max-height: 8em;
-				overflow-y: auto;
-			  }
-			  :host([readonly])::part(combobox) {
-				background: none;
-				opacity: 1;
-				border: none;
-			  }
+				::part(display-label) {
+					margin: 0;
+				}
 
-			  /* Position & style of group titles */
+				:host::part(display-label) {
+					max-height: 8em;
+					overflow-y: auto;
+				}
 
-			  small {
-				padding: var(--sl-spacing-medium);
-			  }
+				:host([readonly])::part(combobox) {
+					background: none;
+					opacity: 1;
+					border: none;
+				}
+
+				/* Position & style of group titles */
+
+				small {
+					padding: var(--sl-spacing-medium);
+				}
 			`
 		];
 	}
@@ -339,7 +345,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			this.select?.popup?.handleAnchorChange();
 
 			// requestUpdate("value") above means we need to check tags again
-			this.select.updateComplete.then(() => {this.checkTagOverflow(); });
+			this.select?.updateComplete.then(() => {this.checkTagOverflow(); });
 		});
 	}
 
@@ -525,7 +531,6 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			const missing = filterBySelectOptions(value, this.select_options);
 			if(missing.length > 0)
 			{
-				debugger;
 				console.warn("Invalid option '" + missing.join(", ") + "' removed from " + this.id, this);
 				value = value.filter(item => missing.indexOf(item) == -1);
 			}
@@ -971,6 +976,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     tabindex="-1"
                     ?pill=${this.pill}
                     size=${this.size || "medium"}
+                    title=${option.title}
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     .editable=${isEditable}
@@ -1075,9 +1081,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                 ${this._extraTemplate()}
                 <slot name="prefix" slot="prefix"></slot>
                 <slot></slot>
-                <div slot="help-text">
-                    <slot name="feedback"></slot>
-                </div>
+                ${this._helpTextTemplate()}
             </sl-select>
 		`;
 	}

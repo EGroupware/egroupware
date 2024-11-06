@@ -120,8 +120,6 @@ cross account forward attachment is not allowed!	mail	km	ឯកសារភ្�
 current folder	mail	km	ថតបច្ចុប្បន្ន
 current subject	mail	km	ប្រធានបទបច្ចុប្បន្ន
 currently:	mail	km	បច្ចុប្បន្ន៖
-date(newest first)	mail	km	កាលបរិច្ឆេទ (ថ្មីបំផុតដំបូង)
-date(oldest first)	mail	km	កាលបរិច្ឆេទ (ចាស់ជាងគេដំបូង)
 deactive	mail	km	សកម្ម
 default sorting order	mail	km	លំដាប់​តម្រៀប​លំនាំដើម
 default toolbar actions shown in mail's html editor	mail	km	មុខងារត្រូវបានបើកនៅក្នុងរបារឧបករណ៍កម្មវិធីនិពន្ធ HTML នៅពេលសរសេរអុីមែល
@@ -182,7 +180,6 @@ drafts	mail	km	សេចក្តីព្រាង
 drafts folder	mail	km	ថតឯកសារព្រាង
 edit account	mail	km	កែសម្រួលគណនី
 edit account ...	mail	km	កែសម្រួលគណនី...
-edit folder acl	mail	km	កែសម្រួលថត ACL
 edit folder acl ...	mail	km	កែសម្រួល​ថត ACL...
 edit vacation settings	mail	km	កែសម្រួលការកំណត់វិស្សមកាល
 effective only if server supports acl at all	admin	km	មានប្រសិទ្ធភាពលុះត្រាតែម៉ាស៊ីនមេគាំទ្រ ACL ទាំងអស់។
@@ -485,7 +482,6 @@ resend after how many days?	mail	km	ផ្ញើឡើងវិញប៉ុន�
 respond to mail sent to:	mail	km	ឆ្លើយតបទៅសំបុត្រដែលបានផ្ញើទៅ៖
 restrict acl management	admin	km	ដាក់កម្រិតការគ្រប់គ្រង acl
 rights	mail	km	សិទ្ធិ
-row order style	mail	km	រចនាប័ទ្មលំដាប់ជួរ
 rule priority position	mail	km	គោលការណ៍អាទិភាព
 rule with priority	mail	km	គ្រប់គ្រងដោយអាទិភាព
 rules	mail	km	ច្បាប់
@@ -564,14 +560,12 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	km	Sieve
 sieve connection status	mail	km	ស្ថានភាពការតភ្ជាប់ Sieve
 sieve not activated	mail	km	Sieve មិនដំណើរការទេ។
-sieve script name	mail	km	ឈ្មោះស្គ្រីប sieve
 sieve server	mail	km	ម៉ាស៊ីនបម្រើ Sieve
 sieve_edit_instructions	mail	km	(*) អក្សរជំនួស (*,?) អាចត្រូវបានប្រើ។ ប្រសិនបើអ្នកកំពុងព្យាយាមផ្គូផ្គង * ឬ ? ដោយខ្លួនវាផ្ទាល់ អ្នកត្រូវតែគេចចេញពីពួកវាដោយប្រើសញ្ញាសម្គាល់ (\) ។ ប្រសិនបើអ្នកធីក "ប្រើកន្សោមធម្មតា" អ្នកត្រូវតែប្រើកន្សោមធម្មតាត្រឹមត្រូវ។ ដើម្បីគេចផុតពីសញ្ញាឧទាន (!) នៅដើមដំបូងមិនត្រូវបានប្រើជា "NO" សូមប្រើ regex និង backslash (\) (ឧ. \!)
 sign your message with smime certificate	mail	km	ចុះហត្ថលេខាលើសាររបស់អ្នកជាមួយវិញ្ញាបនបត្រ S/MIME
 signature	mail	km	ហត្ថលេខា
 signature at top	mail	km	ហត្ថលេខានៅខាងលើ
 signature position and visibility	mail	km	ទីតាំងហត្ថលេខា និងការមើលឃើញ
-small view	mail	km	ទិដ្ឋភាពតូច
 smtp	mail	km	SMTP
 sneak preview in list	mail	km	លួចមើលជាមុននៅក្នុងបញ្ជី
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	km	ម៉ាស៊ីនភ្ញៀវមួយចំនួនបរាជ័យក្នុងការរកឃើញសំណុំតួអក្សរត្រឹមត្រូវ ប្រសិនបើបន្ទាត់លំហូរត្រូវបានបើក។
@@ -593,7 +587,6 @@ subscribe to folder %1	mail	km	ជាវទៅថត%1
 subscription folders	mail	km	ថតការជាវ
 subscription successfully saved.	mail	km	ការជាវបានរក្សាទុកដោយជោគជ័យ។
 succeeded on %1 folders, failed on %2	mail	km	បាន​ជោគជ័យ​លើ​ថត %1 បរាជ័យ​នៅ​លើ %2
-successfully connected	mail	km	បានភ្ជាប់ដោយជោគជ័យ
 switch off encryption?	mail	km	បិទការអ៊ិនគ្រីប?
 template folder	mail	km	ថតពុម្ព
 templates	mail	km	គំរូ
@@ -619,7 +612,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	km	សារនេះត្រូវបានអ៊ិនគ្រីប S/MIME និងត្រូវបានការពារដោយពាក្យសម្ងាត់។
 timeout on connections to your imap server	mail	km	អស់ពេលលើការតភ្ជាប់ទៅម៉ាស៊ីនមេ IMAP របស់អ្នក។
 to do	mail	km	ធ្វើ
-toggle all folders view for %1	mail	km	បិទ/បើក​ទិដ្ឋភាព​ថត​ទាំងអស់​សម្រាប់ %1
 toggled on actions	mail	km	បានបិទបើកសកម្មភាព
 trash	mail	km	សំរាម
 trash folder	mail	km	ធុងសំរាម
@@ -670,13 +662,7 @@ wizard	mail	km	អ្នកជំនួយការ
 writable sharing requires epl version!	mail	km	ការចែករំលែកដែលអាចសរសេរបានទាមទារកំណែ EPL!
 write	mail	km	សរសេរ
 wrote	mail	km	បានសរសេរ
-yes, but mask all passwords	mail	km	យល់ព្រម ប៉ុន្តែបិទបាំងពាក្យសម្ងាត់ទាំងអស់។
-yes, but mask all usernames and passwords	mail	km	យល់ព្រម ប៉ុន្តែបិទបាំងឈ្មោះអ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់ទាំងអស់។
 yes, offer copy option	mail	km	យល់ព្រម ផ្តល់ជម្រើសចម្លង
-yes, only trigger connection reset	mail	km	យល់ព្រម មានតែការកេះការតភ្ជាប់ឡើងវិញប៉ុណ្ណោះ។
-yes, show all debug information available for the user	mail	km	យល់ព្រម បង្ហាញព័ត៌មានបំបាត់កំហុសទាំងអស់ដែលមានសម្រាប់អ្នកប្រើប្រាស់
-yes, show basic info only	mail	km	យល់ព្រម បង្ហាញតែព័ត៌មានមូលដ្ឋានប៉ុណ្ណោះ។
-you can either choose to save as infolog or tracker, not both.	mail	km	អ្នកអាចជ្រើសរើសរក្សាទុកជា infolog ឬកម្មវិធីតាមដាន មិនមែនទាំងពីរទេ។
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	km	អ្នកអាចប្រើ $$start$$ សម្រាប់កាលបរិច្ឆេទចាប់ផ្តើមខាងលើ និង $$end$$ សម្រាប់កាលបរិច្ឆេទបញ្ចប់។
 you may add this certificate into your contact, if you trust this signature.	mail	km	អ្នកអាចបន្ថែមវិញ្ញាបនបត្រនេះទៅក្នុងទំនាក់ទំនងរបស់អ្នក ប្រសិនបើអ្នកជឿជាក់លើហត្ថលេខានេះ។
 you need to enter your s/mime passphrase to send this message.	mail	km	អ្នកត្រូវបញ្ចូលឃ្លាសម្ងាត់ S/MIME របស់អ្នក ដើម្បីផ្ញើសារនេះ។

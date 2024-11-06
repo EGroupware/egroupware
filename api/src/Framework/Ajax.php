@@ -371,7 +371,8 @@ abstract class Ajax extends Api\Framework
 		}
 		$id = $app_data['id'] ? $app_data['id'] : ($app_data['name'] ? $app_data['name'] : $app_data['title']);
 		$title =  htmlspecialchars($alt_label ? $alt_label : $app_data['title']);
-		$this->topmenu_items[] = '<a id="topmenu_' . $id . '" href="'.htmlspecialchars($app_data['url']).'" title="'.$app_data['title'].'">'.$title.'</a>';
+		$this->topmenu_items[] = '<a id="topmenu_' . $id . '" href="'.htmlspecialchars($app_data['url']).'" title="'.$app_data['title'].'">'.
+			'<et2-image src="'.htmlspecialchars($app_data['icon'] ?? $app_data['name']).'"></et2-image> &nbsp; '.$title.'</a>';
 	}
 
 	/**

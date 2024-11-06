@@ -10,11 +10,15 @@
 
 
 import {css, PropertyValues} from "lit";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 import {Regex} from "../Validators/Regex";
-import {SlInput} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import IMask, {InputMask} from "imask";
+import {SlInput} from "@shoelace-style/shoelace";
 
+@customElement("et2-textbox")
 export class Et2Textbox extends Et2InputWidget(SlInput)
 {
 
@@ -42,19 +46,33 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Perl regular expression eg. '/^[0-9][a-f]{4}$/i'
-			 *
-			 * Not to be confused with this.validators, which is a list of validators for this widget
-			 */
-			validator: String,
-			onkeypress: Function,
-		}
-	}
+	/**
+	 * Placeholder text to show as a hint when the input is empty.
+	 */
+	@property()
+	placeholder;
+
+	/**
+	 * Mask the input to enforce format.  The mask is enforced as the user types, preventing invalid input.
+	 */
+	@property()
+	mask;
+
+	/**
+	 * Disables the input.  It is still visible.
+	 * @type {boolean}
+	 */
+	@property({type: Boolean})
+	disabled = false;
+
+	@property({type: Function})
+	onkeypress;
+
+	private __validator : any;
+	protected _mask : InputMask;
+
+	inputMode = "text";
+
 
 	static get translate()
 	{
@@ -73,6 +91,20 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 		super.connectedCallback();
 	}
 
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.removeEventListener("focus", this.handleFocus);
+	}
+
+	firstUpdated()
+	{
+		if(this.maskOptions.mask)
+		{
+			this.updateMask();
+		}
+	}
+
 	/** @param  changedProperties */
 	updated(changedProperties : PropertyValues)
 	{
@@ -83,8 +115,13 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 			this.validators = (this.validators || []).filter((validator) => !(validator instanceof Regex))
 			this.validators.push(new Regex(this.validator));
 		}
+		if(changedProperties.has('mask'))
+		{
+			this.updateMask();
+		}
 	}
 
+	@property()
 	get validator()
 	{
 		return this.__validator;
@@ -112,7 +149,85 @@ export class Et2Textbox extends Et2InputWidget(SlInput)
 			this.requestUpdate("validator");
 		}
 	}
-}
 
-// @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement
-customElements.define("et2-textbox", Et2Textbox);
+	@property()
+	get value()
+	{
+		return super.value;
+	}
+
+	set value(newValue : string)
+	{
+		const oldValue = this.value;
+		super.value = newValue;
+		this.requestUpdate("value", oldValue);
+	}
+	
+	/**
+	 * Get the options for masking.
+	 * Can be overridden by subclass for additional options.
+	 *
+	 * @see https://imask.js.org/guide.html#masked
+	 */
+	protected get maskOptions()
+	{
+		return {
+			mask: this.mask,
+			lazy: this.placeholder ? true : false,
+			autofix: true,
+			eager: "append",
+			overwrite: "shift"
+		}
+	}
+
+	protected updateMask()
+	{
+		// Skip if there's no mask desired
+		if(!this.maskOptions.mask)
+		{
+			return;
+		}
+
+		const input = this.shadowRoot.querySelector("input")
+		if(!this._mask)
+		{
+			this._mask = IMask(input, this.maskOptions);
+			this.addEventListener("focus", this.handleFocus)
+			window.setTimeout(() =>
+			{
+				this._mask.updateControl();
+			}, 1);
+		}
+		else
+		{
+			this._mask.updateOptions(this.maskOptions);
+		}
+
+		if(this._mask)
+		{
+			this.updateMaskValue();
+		}
+	}
+
+	protected updateMaskValue()
+	{
+		if(!this._mask)
+		{
+			return;
+		}
+		this._mask.unmaskedValue = "" + this.value;
+		this._mask.updateValue();
+		this.updateComplete.then(() =>
+		{
+			this._mask.updateControl();
+		});
+	}
+
+	protected handleFocus(event)
+	{
+		if(this._mask)
+		{
+			//	this._mask.updateValue();
+		}
+	}
+}

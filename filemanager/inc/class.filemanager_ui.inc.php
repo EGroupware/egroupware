@@ -1623,7 +1623,7 @@ class filemanager_ui
 			// add to existing tabs in template
 			$tpl->setElementAttribute('tabs', 'add_tabs', true);
 
-			$tabs =& $tpl->getElementAttribute('tabs', 'extraTabs');
+			$tabs =& $tpl->setElementAttribute('tabs', 'extraTabs');
 			if (true) $tabs = array();
 
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)

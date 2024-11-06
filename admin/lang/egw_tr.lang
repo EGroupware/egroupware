@@ -22,6 +22,7 @@
 %1 token %2.	admin	tr	%1 belirteci %2.
 %1 user %2	admin	tr	%1 kullanıcı %2
 (de)activate mail accounts	admin	tr	Posta hesaplarını (de)Etkinleştir
+(default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
 (no subject)	admin	tr	(konu yok)
 1 year	admin	tr	1 yıl
 2 month	admin	tr	2 ay
@@ -238,9 +239,11 @@ host information	admin	tr	Host bilgisi
 hostname or ip	admin	tr	Ana Bilgisayar Adı veya IP
 hour<br>(0-23)	admin	tr	Saat<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	tr	Erişim kütüklerindeki kayıtlar en fazla kaç günlük oalcaktır (varsayılan 90) ?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	tr	Yönetici olmayanlar kaç girişi dışa aktarabilmelidir. Boş = sınır yok, Hayır = dışa aktarma yok
 html/plaintext	admin	tr	HTML/metin
 icon	admin	tr	Simge
 idle	admin	tr	Boşta
+if different from email address	admin	tr	E-posta adresinden farklıysa
 if no acl records for user or any group the user is a member of	admin	tr	ACL kaydı olmayan herhangi bir kullanıcı/grup bu grup üyesi sayılacaktır
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	tr	LDAP kullanıyorsanız, ev dizini ve erişim ayarlarını yönetmek ister misiniz?
 inbound	admin	tr	gelen
@@ -295,6 +298,7 @@ new password [ leave blank for no change ]	admin	tr	Yeni şifre (Değişiklik ya
 next run	admin	tr	Sıradaki çalıştırma
 no algorithms available	admin	tr	Mevcut hiç algoritma yok
 no jobs in the database !!!	admin	tr	Veritabanında görev yok
+no limit	admin	tr	Sınır yok
 no login history exists for this user	admin	tr	Bu kullanıcı için giriş geçmişi bulunmamakta
 no matches found	admin	tr	Hiç eşleşme yok
 no modes available	admin	tr	Mevcut hiç mod yok
@@ -368,6 +372,7 @@ show groups in container based on	admin	tr	Kapsayıcıdaki grupları aşağıdak
 show phpinfo()	admin	tr	phpinfo() görüntüle
 show session ip address	admin	tr	Oturum IP adreslerini görüntüle
 site	admin	tr	Site
+smtp only: to create only an smtp account	admin	tr	IMAP olmadan yalnızca SMTP hesabı oluşturma
 soap	admin	tr	SOAP
 sorry, that group name has already been taken.	admin	tr	Üzgünüm, o group ismi kullanımda
 sorry, the above users are still a member of the group %1	admin	tr	Üzgünüm, yukarıdaki kullanıcılar hala %1 grubunun üyeleridir.
@@ -378,13 +383,7 @@ standard	admin	tr	Standart
 start testjob!	admin	tr	Test görevini başlat!
 submit changes	admin	tr	Değişiklikleri gönder!
 submit the search string	admin	tr	Arama kriterini gönder
-template selection	admin	tr	Şablon Seçimi
-text entry	admin	tr	Metin Girdisi
-that application name already exists.	admin	tr	Uygulama ismi kullanımda.
-that application order must be a number.	admin	tr	Uygulama sırası bir sayı olmalıdır.
 that loginid has already been taken	admin	tr	Bu kullanıcı adı kullanımda
-that name has been used already	admin	tr	Bu isim kullanımda
-that server name has been used already !	admin	tr	Bu sunucu ismi kullanımda
 the api is current	admin	tr	API güncel
 the api requires an upgrade	admin	tr	API güncelleme gerektiriyor
 the groups must include the primary group	admin	tr	Gruplar temel grubu içermelidir.

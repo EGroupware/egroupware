@@ -202,7 +202,6 @@ status	setup	id	Status
 tables dropped	setup	id	tables dropped
 tables upgraded	setup	id	tables upgraded
 target version	setup	id	Target Version
-text entry	setup	id	Text Entry
 the file	setup	id	the file
 the tables	setup	id	the tables
 top	setup	id	top

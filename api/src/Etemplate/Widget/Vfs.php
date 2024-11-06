@@ -304,7 +304,7 @@ class Vfs extends File
 			// check if path already contains a valid extension --> don't add another one
 			$path_parts = explode('.', Api\Vfs::basename($path));
 			if ((!($path_ext = array_pop($path_parts)) || Api\MimeMagic::ext2mime($path_ext) === 'application/octet-stream') &&
-				($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])))
+				(($extension = array_pop($parts) ?: Api\MimeMagic::mime2ext($file['mime'])) && $extension != $filename))
 			{
 				// add extension to path
 				$path .= '.'.$extension;
@@ -363,14 +363,30 @@ class Vfs extends File
 		{
 			case 'vfs-upload':
 				if(!is_array($value)) $value = array();
-				/* Check & skip files that made it asynchronously
-				list($app,$id,$relpath) = explode(':',$this->id,3);
-				//...
-				foreach($value as $tmp => $file)
+				/* Check & skip files that made it asynchronously, or they */
+				list($app, $id, $relpath) = explode(':', $this->attrs['path'], 3);
+				if($app && $id)
 				{
-					if(Api\Vfs::file_exists(self::get_vfs_path($id) . $relpath)) {}
-				}*/
-				parent::validate($cname, $expand, $content, $validated);
+					foreach($value as $index => $file)
+					{
+						if(!empty($file['path']) && Api\Vfs::file_exists($file['path']))
+						{
+							unset($value[$index]);
+						}
+					}
+				}
+				if(count($value))
+				{
+					parent::validate($cname, $expand, $content, $validated);
+				}
+				break;
+			case 'vfs-name':
+			case 'et2-vfs-name':
+				if (!preg_match(self::VFS_NAME_REGEXP, $value))
+				{
+					self::set_validation_error($form_name, lang("'%1' must not contain (back)slashes!", $value));
+					return;
+				}
 				break;
 			case 'vfs-name':
 			case 'et2-vfs-name':

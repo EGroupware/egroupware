@@ -114,6 +114,7 @@ all addressbooks	groupdav	cs	Všechny adresáře
 all categories	common	cs	Všechny kategorie
 all days	common	cs	Všechny dny
 all fields	common	cs	Všechna pole
+all files	common	cs	Všechny soubory
 all in one	groupdav	cs	Vše v jednom
 all languages	common	cs	Všechny jazyky
 all operations save the template!	common	cs	Všechny operace ukládají šablonu!
@@ -197,7 +198,6 @@ blurtext	common	cs	rozmazaný text
 bold	common	cs	Tučné
 bolivia	common	cs	BOLÍVIE
 border	common	cs	Okraj
-border-line-thickness for the table-tag	common	cs	Tloušťka okraje pro tag tabulky
 bosnia and herzegovina	common	cs	BOSNA A HERCEGOVINA
 botswana	common	cs	BOTSWANA
 bottom	common	cs	Dolní okraj
@@ -409,7 +409,6 @@ denmark	common	cs	DÁNSKO
 description	common	cs	Popis
 detail	common	cs	Detail
 details	common	cs	Podrobnosti
-direction left to right	common	cs	Směr zleva doprava
 directory	common	cs	Adresář
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	cs	Adresář neexistuje, web server pro něj nemá práva ke čtení nebo není relativní ke kořenovému adresáři dokumentů!
 directory for storing merged documents	preferences	cs	Složka pro ukládání sloučených dokumentů
@@ -668,7 +667,6 @@ how many days to sync in the past (default %1)	groupdav	cs	Kolik dní se má syn
 how many entries should the list show	common	cs	Kolik záznamů má seznam zobrazovat
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	cs	Kolik ikon se má zobrazovat v navigační liště (v záhlaví stránky). Další ikony se přesunou do roletového menu, které zobrazíte kliknutím na symbol na pravé straně navigační lišty.
 how many rows to print	common	cs	Kolik řádků se má vytisknout
-how to show the general egroupware menu ?	common	cs	Jak zobrazovat hlavní menu EGroupware
 html	common	cs	HTML
 html link to the current record	common	cs	HTML odkaz na současný záznam
 html links to any entries linked to the current record, excluding attached files	common	cs	HTML odkazy na všechny záznamy spojené s aktuálním záznamem, kromě připojených souborů
@@ -676,7 +674,6 @@ hungary	common	cs	MAĎARSKO
 iceland	common	cs	ISLAND
 id	common	cs	ID
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	common	cs	Pokud je položka zakázaná, je zobrazena prázdná buňka tabulky pro (dočasné) odstranění položky/buňky
-if the clock is enabled would you like it to update it every second or every minute?	common	cs	Pokud budou hodiny povoleny, chcete je aktualizovat každou vteřinu nebo každou minutu.
 if the error persists, contact your administrator for help and ask to check the error-log of the webserver.	common	cs	Pokud se chyba opakuje, kontaktujte svého správce pro pomoc a požádejte ho o prozkoumání chybových hlášení na webovém serveru.
 if there are some images in the background folder you can choose the one you would like to see.	common	cs	Pokud máte ve složce pozadí nějaké obrázky, můžete si vybrat ten, který se má zobrazovat.
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	cs	Pokud specifikujete složku (celou cestu VFS), %1 zobrazí se akce pro každý dokument. Touto akcí bude možné stáhnout požadovaný dokument s doplněnými údaji.
@@ -710,7 +707,6 @@ insert column after	common	cs	Vložit sloupec za
 insert column before	common	cs	Vložit sloupec před
 insert in %1	common	cs	Vložit do %1
 insert in document	common	cs	Vložit do dokumentu
-insert in dokument	common	cs	Vložit do dokumentu
 insert new column behind this one	common	cs	Vložit nový sloupec za tento
 insert new column in front of all	common	cs	Vložit nový sloupec před všechny ostatní
 insert new row after this one	common	cs	Vložit nový řádek za tento
@@ -793,6 +789,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	cs	Odkaz připojený k e-mailu dovoluje příjemcům stáhnout aktuální verzi souboru
 link target %1 not found!	common	cs	Propojení s %1 nebylo nalezeno!
 link title of current record	common	cs	Odkaz na název aktuálního záznamu
+link to each entry	common	cs	Odkaz na jednotlivé položky
 linkapps	common	cs	Propojit s aplikací
 linked	common	cs	Propojeno
 linkentry	common	cs	Záznam propojení
@@ -806,6 +803,7 @@ list members	common	cs	Seznam členů
 list of files linked to the current record	preferences	cs	Seznam souborů připojených k aktuálnímu záznamu
 lithuania	common	cs	LITVA
 load	common	cs	Nahrát
+load more links ...	common	cs	Načíst další odkazy ...
 load this template into the editor	common	cs	Načíst tuto šablonu do editoru
 loading	common	cs	Nahrávám
 local	common	cs	Lokální
@@ -840,13 +838,16 @@ marshall islands	common	cs	MARSHALLOVY OSTROVY
 martinique	common	cs	MARTINIK
 mauritania	common	cs	MAURITÁNIE
 mauritius	common	cs	MAURICIUS
-max number of icons in navbar	common	cs	Maximální počet ikon v navigační liště
 maximum size for uploads	filemanager	cs	Maximální velikost pro uploady
 may	common	cs	Květen
 maybe	common	cs	Možná
 mayotte	common	cs	MAYOTTE
 medium	common	cs	Střední
 menu	common	cs	Menu
+merge	common	cs	Sloučit
+merge & send	common	cs	Sloučení a odeslání
+merge individually	common	cs	Sloučit jednotlivě
+merge options	common	cs	Možnosti sloučení
 merged document filename	preferences	cs	Název souboru sloučeného dokumentu
 message	common	cs	Zpráva
 message ...	common	cs	Zpráva ...
@@ -983,7 +984,6 @@ open	common	cs	Otevřít
 open existing contact	common	cs	Otevřít stávající kontakt
 open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
-open sidebox	common	cs	Otevřít postranní panel
 open the online help.	common	cs	Otevřit online nápovědu
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	cs	Přihlášení pomocí OpenIDConnect proběhlo úspěšně, ale uživatel '%1' v EGroupware NEexistuje a automatické vytváření uživatelů je zakázáno!
 operator	common	cs	Operátor
@@ -1152,6 +1152,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	cs	Uložit
 save all	common	cs	Uložit vše
 save as	common	cs	Uložit jako
+save as pdf	common	cs	Uložit jako PDF
 save as zip	common	cs	Uložit jako ZIP soubor
 save selected columns as default preference for all users.	common	cs	Uložit vybrané sloupce jako výchozí předvolbu pro všechny uživatele.
 save the changes made and close the window	common	cs	Uložit provedené změny a zavřít okno
@@ -1231,6 +1232,7 @@ select work email address	common	cs	Vybrat pracovní e-mailovou adresu
 select year	common	cs	Vybrat rok
 selectbox	common	cs	Rozbalovací nabídka
 selection	common	cs	Výběr
+selection of files can only be done in one folder.  %1 files unselected.	common	cs	Výběr souborů lze provést pouze v jedné složce. %1 souborů nevybráno.
 send	common	cs	Odeslat
 send succeeded to %1	common	cs	Úspěšně odesláno na %1
 senegal	common	cs	SENEGAL
@@ -1267,13 +1269,7 @@ show (no save)	common	cs	Zobrazit (neukládat)
 show all	common	cs	zobrazit vše
 show all / cancel filter	common	cs	Zobrazit vše / zrušit filtr
 show all categorys	common	cs	Zobrazit všechny kategorie
-show as topmenu	common	cs	Zobrazit jako horní menu
-show in sidebox	common	cs	Zobrazit v postranním panelu
 show log of following device	groupdav	cs	Zobrazit log tohoto zařízení
-show logo's on the desktop.	common	cs	Zobrazit logo na pracovní ploše.
-show menu	common	cs	Zobrazit menu
-show next login	common	cs	Zobrazit při příštím přihlášení
-show now	common	cs	Zobrazit nyní
 show page generation time	common	cs	Zobrazit časy generování stránek
 show page generation time on the bottom of the page?	common	cs	Přejete si zobrazit čas generování stránky na jejím zápatí.
 show page generation time?	common	cs	Zobrazit čas generovaní stránky
@@ -1361,7 +1357,7 @@ textarea	common	cs	Textová oblast
 th	common	cs	Čt
 thailand	common	cs	THAJSKO
 the backup key has been deleted.	common	cs	Záloha klíče byla smazána.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	cs	Váš prohlížeč blokuje vyskakovací okna. Klikněte prosím na tlačítko pro zobrazení vyskakovacího okna.<br>Pokud příště nechcete, aby se zobrazilo toto upozornění, nastavte v prohlížeči, aby neblokoval vyskakovací okna z %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	cs	Váš prohlížeč blokuje vyskakovací okna. Klikněte prosím na tlačítko pro zobrazení vyskakovacího okna. Pokud příště nechcete, aby se zobrazilo toto upozornění, nastavte v prohlížeči, aby neblokoval vyskakovací okna z %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	cs	Dokument může obsahovat zástupce jako např. {{%3}}, které budou při zpracování nahrazeny skutečnými odpovídajícími hodnotami. %1Úplný seznam zástupců%2.
 the following applications require upgrades	common	cs	Následující aplikace vyžadují aktualizaci
 the following document-types are supported:	preferences	cs	Jsou podporovány následující typy souborů:
@@ -1515,7 +1511,6 @@ yes - delete including sub-entries	common	cs	Ano - Smazat včetně podpoložek
 yes and allow non-admin users to do that too (recommended)	common	cs	Ano a povolit také uživatelům, kteří nejsou správci (doporučeno)
 you are not allowed to export more than %1 entries!	common	cs	Nemáte oprávnění exportovat více než %1 záznamů!
 you are required to change your password during your first login	common	cs	Během svého prvního přihlášení si musíte změnit heslo
-you can customize how many icons and toolbars the editor shows.	common	cs	Můžete navolit kolik ikon a nástrojových lišt editor zobrazuje.
 you can not choose more then %1 item(s)!	common	cs	Není možné vybrat více než %1 položku(ek)!
 you can respond by visiting:	common	cs	Můžete odpovědět navštívením
 you have been successfully logged out	login	cs	Byl(a) jste úspěšně odhlášen(a).

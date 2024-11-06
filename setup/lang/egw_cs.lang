@@ -659,7 +659,6 @@ tables upgraded	setup	cs	Tabulky zaktualizovány
 target version	setup	cs	Cílová verze
 tcp port number of database server	setup	cs	Číslo TCP portu databázového serveru
 technical contact	setup	cs	Technický kontakt
-text entry	setup	cs	Textový záznam
 the %1 extension is needed from: %2.	setup	cs	Rozšíření %1 je vyžadováno (čím): %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	cs	Rozšíření %1 je zapotřebí, pokud plánujete použít databázi %2.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	cs	HTMLpurifier potřebuje rozšíření ctype, aby mohl kontrolovat obsah FCKeditoru na výskyt Cross Site Scriptingu.

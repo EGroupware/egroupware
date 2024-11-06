@@ -201,12 +201,12 @@ class Backup
 		}
 		if (!$name)
 		{
+			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 			if (empty($this->backup_dir) || !is_writable($this->backup_dir))
 			{
 				$this->log($name, $reading, null, lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 				throw new Exception(lang("backupdir '%1' is not writeable by the webserver", $this->backup_dir));
 			}
-			$name = $this->backup_dir.'/db_backup-'.date('YmdHi');
 		}
 		// remove the extension, to use the correct wrapper based on the extension
 		elseif ($un_compress)
@@ -567,7 +567,12 @@ class Backup
 					// do NOT create GUACAMOLE tables, just truncate them (as we have no abstraction to create the foreign keys)
 					if (preg_match(self::GUACAMOLE_REGEXP, $table_name))
 					{
-						$this->db->query('TRUNCATE TABLE '.$this->db->name_quote($table_name));
+						try {
+							$this->db->query('TRUNCATE TABLE '.$this->db->name_quote($table_name));
+						}
+						catch (Exception $e) {
+							echo "<p><b>Failed to TRUNCATE TABLE $table_name: ".$e->getMessage()."</b></p>\n";
+						}
 						continue;
 					}
 					// if column is longtext in current schema, convert text to longtext, in case user already updated column

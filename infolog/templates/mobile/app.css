@@ -16,12 +16,10 @@
   }
   .infoDescRow {
     height: 32px;
-    font-size: 10pt;
     max-width: 99%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding-top: 8px;
   }
   div.infoLinksRow,
   div.infoLinksRow ul[id^='infolog-index_'][id$='filelinks]'] {
@@ -100,15 +98,9 @@
   }
   .infolog_CompletedClmn .infoPercent {
     height: 23px;
-    float: right;
   }
   .infolog_CompletedClmn .infoType {
-    position: relative;
-    height: 30px;
-  }
-  .infolog_CompletedClmn .infoType img {
-    position: absolute;
-    right: 0;
+    padding-right: 1em;
   }
   #infolog-edit_timestamp::part(base) {
     background: transparent;

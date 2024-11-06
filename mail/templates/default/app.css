@@ -71,36 +71,36 @@ tr.mail.deleted  td:first-child{
 	width: 16px;
 	height: 16px;
 	background-repeat: no-repeat;
-	background-image: url(../default/images/kmmsgread.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-open.svg);
 	background-size: 16px 16px;
 }
 
 tr.deleted .status_img {
-	background-image: url(../default/images/kmmsgdel.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
 }
 
 tr.unseen .status_img {
-	background-image: url(../default/images/kmmsgunseen.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-fill.svg);
 }
 
 tr.flagged_seen .status_img {
-	background-image: url(../default/images/read_flagged_small.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/flag.svg) !important;
 }
 
 tr.flagged_unseen .status_img {
-	background-image: url(../default/images/unread_flagged_small.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/flag-fill.svg) !important;
 }
 
 tr.recent .status_img {
-	background-image: url(../default/images/kmmsgnew.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-plus.svg) !important;
 }
 
 tr.replied .status_img {
-	background-image: url(../default/images/mail_reply.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/reply.svg) !important;
 }
 
 tr.forwarded .status_img {
-	background-image: url(../default/images/mail_forward.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/forward.svg) !important;
 }
 
 .subjectBold
@@ -233,45 +233,6 @@ pre {
 	overflow: hidden;
 	overflow-y: auto;
 }
-.dtree {
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #666;
-	white-space: nowrap;
-}
-.dtree div {
-	width: 100%;
-}
-.dtree img {
-	border: 0px;
-	vertical-align: middle;
-}
-.dtree a {
-	color: #333;
-	text-decoration: none;
-}
-.dtree a.node, .dtree a.nodeSel {
-	white-space: nowrap;
-	padding: 1px 2px 1px 2px;
-}
-.dtree a.node:hover, .dtree a.nodeSel:hover {
-	color: #333;
-	text-decoration: underline;
-}
-.dtree a.nodeSel {
-	background-color: #c0d2ec;
-}
-.dtree .clip {
-	overflow: hidden;
-}
-.dtree table, .dtree tr, .dtree td {
-	border: none;
-}
-.dtree table {
-	overflow: hidden;
-	width: 100%;
-	display: table-row;
-}
 .useEllipsis {
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -339,6 +300,10 @@ pre {
 }
 .mail-index_QuotaRed > div {
 	background-color: red !important;
+}
+
+#mail-index #mail-index_nm .status_icons {
+	margin-right: 1em;
 }
 /*
  influence the tree display and scrolling behavior
@@ -430,7 +395,7 @@ div.mail-compose_fileselector {
 }
 .mail-compose_fileselector span.et2_file_span {
 	background-repeat: no-repeat;
-	background-image: url(../default/images/attach.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/paperclip.svg);
 	background-size: inherit;
 	background-position: left;
 }
@@ -442,7 +407,7 @@ div.mail-compose_fileselector {
 	font-weight: bold;
 	padding-left: 30px;
 	width: 80px;
-	background-image: url(../default/images/mail_send.svg) !important;
+	background-image: url(../../../node_modules/bootstrap-icons/icons/send.svg) !important;
 	background-position: left;
 	background-repeat: no-repeat;
 }
@@ -512,7 +477,6 @@ et2-details.details {width: 100%}
 }
 #mail-compose_composeToolbar {
 	padding: 0px !important;
-	border: none;
 }
 #mail-compose_composeToolbar > button {
 	padding: .2em .4em;
@@ -551,8 +515,7 @@ et2-details.details {width: 100%}
 	top: 0;
 }
 #mail-index_toolbar {
-	padding: 0px;
-	height: 35px;
+	height: 2.95em;
 }
 #mail-index_toolbar > button > span {
 	padding: .2em .4em;
@@ -1112,6 +1075,10 @@ et2-select-email::part(tag__content) {
 }
 et2-vbox.addresses::part(base) {
 	gap: 0px;
+}
+
+et2-vbox.addresses et2-hbox::part(base) {
+	align-items: center;
 }
 .mailPreviewHeaders et2-lavatar {
 	margin-top: 3px;

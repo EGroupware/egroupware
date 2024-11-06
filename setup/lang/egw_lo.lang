@@ -51,7 +51,6 @@ remove	setup	lo	ລຶບອອກ
 select where you want to store/retrieve user accounts	setup	lo	ເລືອກບ່ອນຈັດເກັບ / ຮ້ອງໃຊ້ ບັນຊີຜູ້ໃຊ້
 selectbox	setup	lo	ຊ່ອງສໍາລັບເລືອກ
 show 'powered by' logo on	setup	lo	Show 'powered by' logo on
-text entry	setup	lo	ລາຍການຂໍ້ຄວາມ
 true	setup	lo	ຖືກ
 two weeks	setup	lo	ສອງອາທິດ
 use cookies to pass sessionid	setup	lo	ໃຊ້ cookies ເພື່ອຜ່ານ sessionid

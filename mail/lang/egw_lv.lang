@@ -37,11 +37,12 @@ compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
 contact label	mail	lv	Kontakta etiķete
 contains	mail	lv	satur
+convert mail to item and attach its attachments to this item (standard)	mail	lv	Konvertēt e-pastu uz elementu un pievienot tā pielikumus šim elementam (standarta)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lv	Konvertēt e-pastu vienībā, pievienot tā pielikumus un pievienot neapstrādātu ziņojumu (.eml) kā pielikumu
+convert only mail to item (ignore possible attachments)	mail	lv	Konvertēt tikai e-pastu vienumam (neņemot vērā iespējamos pielikumus).
 copy to	mail	lv	Kopēt Uz:
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
 current subject	mail	lv	Pašreizējais temats
-date(newest first)	mail	lv	Datums (jaunākais pirmais)
-date(oldest first)	mail	lv	Datums (vecākais pirmais)
 default sorting order	mail	lv	Noklusētā kārtošanas secība
 default toolbar actions shown in mail's html editor	mail	lv	HTML redaktora rīkjoslā iespējotās funkcijas, veidojot e-pasta vēstuli
 default value for remembering s/mime passphrase in minutes	mail	lv	S/MIME paroles frāzes atcerēšanās noklusējuma vērtība minūtēs
@@ -256,7 +257,6 @@ signature	mail	lv	Paraksts
 signature at top	mail	lv	Paraksts augšpusē
 signature position and visibility	mail	lv	Paraksta pozīcija un redzamība
 signed by	mail	lv	Parakstījis
-small view	mail	lv	mazais skats
 smime encrypted message	mail	lv	S/MIME šifrēta ziņa
 smime signed message	mail	lv	S/MIME parakstīts ziņojums
 smtp	mail	lv	SMTP
@@ -271,7 +271,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	lv	Šī ziņa ir šifrēta ar S/MIME un aizsargāta ar paroli.
 timeout on connections to your imap server	mail	lv	Savienojumu ar IMAP serveri laika ierobežojums
 to do	mail	lv	Darīt
-toggle all folders view for %1	mail	lv	Pārslēdziet visu mapju skatījumu %1
 toggled on actions	mail	lv	Pārslēgt uz darbībām
 trash	mail	lv	Izmest atkritumus
 trash folder	mail	lv	Atkritumu mape
@@ -280,9 +279,6 @@ vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 when deleting messages	mail	lv	Kad dzēš vēstules
 write	mail	lv	Rakstīt
 wrote	mail	lv	rakstīja
-yes, only trigger connection reset	mail	lv	jā, tikai aktivizēt savienojuma atiestatīšanu
-yes, show all debug information available for the user	mail	lv	jā, parādīt visu lietotājam pieejamo atkļūdošanas informāciju
-you can either choose to save as infolog or tracker, not both.	mail	lv	Varat izvēlēties saglabāt kā InfoLog VAI kā izsekošanas līdzekli, bet ne kā abus.
 you can select what info to be displayed on email tag	mail	lv	Varat izvēlēties, kāda informācija tiks rādīta e-pasta birkā.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lv	Iepriekš minētajam sākuma datumam varat izmantot $$start$$, bet beigu datumam - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lv	Jūs varat pievienot šo sertifikātu savā kontaktā, ja uzticaties šim parakstam.

@@ -91,7 +91,6 @@ select where you want to store/retrieve user accounts	setup	el	Επιλέξτε 
 selectbox	setup	el	Κουτί επιλογής
 show 'powered by' logo on	setup	el	Εμφάνηση λογότυπου 'powered by'
 size	setup	el	Μέγεθος
-text entry	setup	el	Είσοδος κειμένου
 two weeks	setup	el	δύο εβδομάδες
 use cookies to pass sessionid	setup	el	Χρησημοποίηση cookies για να περάσεις την session ID
 use pure html compliant code (not fully working yet)	setup	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)

@@ -612,6 +612,7 @@ select which values to show	common	et	Vali mis väärtusi näidata
 select work email address	common	et	Vali töö email aadress
 select year	common	et	Vali Aasta
 selection	common	et	Valik
+selection of files can only be done in one folder.  %1 files unselected.	common	et	Failide valimist saab teha ainult ühes kaustas. %1 failid ei ole valitud.
 send	common	et	Saada
 senegal	common	et	SENEGAL
 september	common	et	September

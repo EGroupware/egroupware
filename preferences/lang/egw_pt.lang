@@ -8,17 +8,12 @@ acl grants have been updated	preferences	pt	As permissões ACL foram actualizada
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pt	Cada listagem do EGroupware irá conter este número de registos ou linhas por página.<br>Se o número for elevado, a apresentação da página será lenta; Se for reduzido, diminui a qualidade do sumário.
 are you sure you want to delete this category ?	preferences	pt	Tem a certeza de que deseja eliminar esta categoria ?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pt	Altere a senha de um utilizador fornecendo as senhas antiga e nova. Em caso de sucesso, devolve Verdadeiro. Em caso de erro, devolve Falso.
-change your password	preferences	pt	Altere a sua senha
-change your profile	preferences	pt	Altere o seu perfil
-change your settings	preferences	pt	Altere as suas preferências
-click to select a color	preferences	pt	Clique aqui para seleccionar uma cor
 color	preferences	pt	Cor
 country	preferences	pt	País
 dark mode theme	preferences	pt	Tema do modo negro
 data exchange settings	preferences	pt	Configurações de troca de dados
 date format	preferences	pt	Formato de data
 default	preferences	pt	por omissão
-default application	preferences	pt	Aplicação por omissão
 default preferences	preferences	pt	Preferências por omissão
 delete categories	preferences	pt	Eliminar categorias
 description can not exceed 255 characters in length !	preferences	pt	A descrição não pode exceder os 255 caracteres !
@@ -58,11 +53,9 @@ note: this feature does *not* change your email password. this will	preferences	
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	pt	Nota: Esta função *não* altera sua senha de correio electrónico. Deverá fazê-lo manualmente.
 notification settings	preferences	pt	Configurações de notificação
 password stored	preferences	pt	Palavra-passe armazenada.
-please, select a new theme	preferences	pt	Por favor, seleccione um novo tema
 popup with search	preferences	pt	Janela popup com pesquisa
 re-enter your password	preferences	pt	Insira a sua senha novamente
 read prefs for the specified application.	preferences	pt	Ler preferências da aplicação específica.
-select different theme	preferences	pt	Seleccione um tema diferente
 select one	preferences	pt	Seleccione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt	Seleccione o idioma dos textos e mensagens do EGroupware.<br>Alguns idiomas podem não conter todas as mensagens. Nesse caso verá uma mensagem em inglês.
 selectbox	preferences	pt	Caixa de selecção
@@ -93,5 +86,4 @@ write prefs for the specified application.	preferences	pt	Escreva as preferênci
 you can show the applications as icons only, icons with app-name or both.	preferences	pt	Pode exibir as aplicações apenas como ícones, nome da aplicação ou ambos.
 you do not have permission to set acl's in this mode!	preferences	pt	Não tem permissões para configurar as ACLs neste modo!
 you must enter a password	preferences	pt	É necessário inserir uma senha
-your current theme is: %1	preferences	pt	Seu tema actual é: %1
 your preferences	preferences	pt	As suas preferências

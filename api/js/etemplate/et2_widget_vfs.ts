@@ -580,7 +580,7 @@ export class et2_vfsUpload extends et2_file
 	getDOMNode(sender) {
 		if(sender && sender !== this && (sender.tagName && sender.tagName.indexOf("VFS") >= 0 || sender._type && sender._type.indexOf('vfs') >= 0))
 		{
-			let value = sender.getValue && sender.getValue() || sender.options?.value || false;
+			let value = sender.getValue && sender.getValue() || sender.value || false;
 			let row;
 			if(value && value.path)
 			{
@@ -648,7 +648,7 @@ export class et2_vfsUpload extends et2_file
 			for(var child_index = this._children.length-1; child_index >= 0; child_index--)
 			{
 				var child = this._children[child_index];
-				if(child.options.value.path === file_data.path)
+				if(!child.options.value || child.options.value.path === file_data.path)
 				{
 					this.removeChild(child);
 					child.destroy();
@@ -685,7 +685,7 @@ export class et2_vfsUpload extends et2_file
 				{
 					ev.stopPropagation();
 					// Pass it off to the associated vfsMime widget
-					jQuery('img', this.parentNode.parentNode).trigger("click");
+					this.parentNode.parentNode.querySelector("et2-vfs-mime")?.dispatchEvent(new Event("click"));
 					return false;
 				};
 			}

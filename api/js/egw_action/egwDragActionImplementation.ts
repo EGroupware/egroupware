@@ -46,10 +46,10 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             _selected[0]._context?._selectionMgr?._total : _selected.length;
 
 		// Clone nodes but use copy webComponent properties
-		const carefulClone = (node) =>
+		const carefulClone = (node, skip_text = false) =>
 		{
 			// Don't clone text nodes, it causes duplication in et2-description
-			if(node.nodeType == node.TEXT_NODE)
+			if(skip_text && node.nodeType == node.TEXT_NODE)
 			{
 				return;
 			}
@@ -65,7 +65,8 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 			// Children
 			node.childNodes.forEach(c =>
 			{
-				const child = carefulClone(c)
+				// Don't clone text in et2-description, it causes duplication
+				const child = carefulClone(c, skip_text || ["ET2-DESCRIPTION"].indexOf(c.tagName) != -1)
 				if(child)
 				{
 					clone.appendChild(child);
@@ -80,7 +81,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 
 		for(const egwActionObject of _selected)
 		{
-			const row : Node = carefulClone(egwActionObject.iface.getDOMNode());
+			let rowNode = egwActionObject.iface.getDOMNode();
+			if(egwActionObject._context && egwActionObject._context instanceof HTMLElement)
+			{
+				rowNode = egwActionObject._context;
+			}
+			const row : Node = carefulClone(rowNode);
 			if(row)
 			{
 				rows.push(row);
@@ -191,14 +197,20 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             const ai = this
             const dragstart = function (event) {
 
-                // The helper function is called before the start function
+				let dragActionObject = _context;
+				if(this.findActionTarget)
+				{
+					dragActionObject = this.findActionTarget(event).action ?? _context;
+				}
+
+				// The helper function is called before the start function
                 // is evoked. Call the given callback function. The callback
                 // function will gather the selected elements and action links
                 // and call the doExecuteImplementation function. This
                 // will call the onExecute function of the first action
                 // in order to obtain the helper object (stored in ai.helper)
                 // and the multiple dragDropTypes (ai.ddTypes)
-                _callback.call(_context, false, ai);
+				_callback.call(dragActionObject, false, ai);
 
 				// Stop parent elements from also starting to drag if we're nested
 				if(ai.selected.length)
@@ -208,9 +220,12 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 
 				if(action && egw.app_name() == 'filemanager')
 				{
-                    if (_context.isSelection(event)) return;
+					if(dragActionObject.isSelection(event))
+					{
+						return;
+					}
 
-                    // Get all selected
+					// Get all selected
                     const selected = ai.selected;
 
                     // Set file data

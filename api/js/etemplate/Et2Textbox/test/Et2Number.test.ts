@@ -44,26 +44,34 @@ describe("Number widget", () =>
 
 	it("handles precision", () =>
 	{
-		window.egw.preference = () => ".";
+		element.decimalSeparator = ".";
 		element.precision = 2;
 		element.value = "1.234";
-		assert.equal(element.value, "1.23", "Wrong number of decimals");
+		assert.equal(element.value, "1.23", "Wrong number of decimals (. separator");
 		element.precision = 0;
 		element.value = "1.234";
-		assert.equal(element.value, "1", "Wrong number of decimals");
+		assert.equal(element.value, "1", "Wrong number of decimals (. separator");
 
 
 		// Now do it with comma decimal separator
-		window.egw.preference = () => ",";
+		element.decimalSeparator = ","
 		element.precision = 2;
 		element.value = "1.234";
-		assert.equal(element.value, "1,23", "Wrong number of decimals");
+		assert.equal(element.value, "1,23", "Wrong number of decimals ( . -> , separator)");
 		element.value = "1,234";
-		assert.equal(element.value, "1,23", "Wrong number of decimals");
+		assert.equal(element.value, "1,23", "Wrong number of decimals (, separator)");
 		element.precision = 0;
 		element.value = "1,234";
-		assert.equal(element.value, "1", "Wrong number of decimals");
+		assert.equal(element.value, "1", "Wrong number of decimals (, separator)");
 	})
+
+	it("Min limit", () =>
+	{
+		element.value = 0;
+		element.min = 2;
+		element.value = "1.234";
+		assert.equal(element.value, "2", "Value allowed below minimum");
+	});
 
 	describe("Check number preferences", () =>
 	{
@@ -75,13 +83,14 @@ describe("Number widget", () =>
 				expected = set;
 			}
 			element.value = set;
-			assert.equal(element.value, expected);
+			assert.equal(element.getValue(), expected);
 
 		};
 
 		it("Handles . as decimal", () =>
 		{
 			window.egw.preference = () => ".";
+			element.decimalSeparator = ".";
 
 			checkValue("1");
 			assert.equal(element.valueAsNumber, 1, "Numeric value does not match");
@@ -94,10 +103,12 @@ describe("Number widget", () =>
 		it("Handles , as decimal", () =>
 		{
 			window.egw.preference = () => ",";
+			element.decimalSeparator = ",";
 
 			checkValue("1");
 			assert.equal(element.valueAsNumber, 1, "Numeric value does not match");
 			checkValue("1,1", "1.1");
+			assert.equal(element.getValue(), "1.1");
 			assert.equal(element.valueAsNumber, 1.1, "Numeric value does not match");
 
 			element.value = "Fail";

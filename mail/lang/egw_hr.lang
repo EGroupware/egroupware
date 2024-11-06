@@ -6,8 +6,6 @@ compose	mail	hr	Pisanje nove poruke
 compress folder	mail	hr	Smanjii mapu
 contains	mail	hr	sadrži
 copy to	mail	hr	Kopiraj u
-date(newest first)	mail	hr	po datumu (noviji prvo)
-date(oldest first)	mail	hr	po datumu (stariji prvo)
 default sorting order	mail	hr	Početno postavljen redoslijed sortiranja
 delete folder	mail	hr	Obriši mapu
 deleted	mail	hr	Obrisano
@@ -63,7 +61,6 @@ save all	mail	hr	Spremi sve
 select all	mail	hr	Označi Sve
 sent folder	mail	hr	Mapa poslano
 signature	mail	hr	Potpis
-small view	mail	hr	smanji pogled
 text	mail	hr	Text
 then	mail	hr	TADA
 trash folder	mail	hr	Mapa Smeće

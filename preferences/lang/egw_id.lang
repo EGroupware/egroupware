@@ -9,17 +9,11 @@ any listing in egw will show you this number of entries or lines per page.<br>to
 are you sure you want to delete this category ?	preferences	id	Anda yakin ingin menghapus kategori ini?
 br	preferences	id	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	id	Ubah password pengguna dengan mengisikan password lama dan baru. Memberikan nilai TRUE jika sukses, FALSE jika gagal.
-change your password	preferences	id	Ubah password anda
-change your profile	preferences	id	Ubah profil anda
-change your settings	preferences	id	Ubah pengaturan anda
-charset for the csv export	addressbook	id	Charset untuk ekspor CSV
-click to select a color	preferences	id	Klik untuk memilih warna
 color	preferences	id	Warna
 country	preferences	id	Negara
 dark mode theme	preferences	id	Tema mode gelap
 date format	preferences	id	Format tanggal
 default	preferences	id	bawaan
-default application	preferences	id	Aplikasi Bawaan
 default preferences	preferences	id	Kesukaan Bawaan
 delete categories	preferences	id	Hapus Kategori
 description can not exceed 255 characters in length !	preferences	id	Panjang uraian tidak boleh melebihi 255 karakter!
@@ -62,11 +56,8 @@ p: paragraph	preferences	id	p: Paragraph
 password stored	preferences	id	Kata sandi tersimpan.
 permanent time zone selection	preferences	id	Pilihan zona-waktu tetap
 please select your timezone.	preferences	id	Pilih zonawaktu anda.
-please, select a new theme	preferences	id	Pilih tema yang baru
 popup with search	preferences	id	Popup dengan pencarian
 re-enter your password	preferences	id	Ulangi masukan password
-rich text editor theme	preferences	id	Tema editor Rich text
-select different theme	preferences	id	Pilih tema berbeda
 select one	preferences	id	Pilih satu
 selectbox	preferences	id	Kotak pilihan
 selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok
@@ -94,5 +85,4 @@ which currency symbol or name should be used in egroupware.	preferences	id	Simbo
 write prefs for the specified application.	preferences	id	Tulis kesukaan untuk aplikasi
 you do not have permission to set acl's in this mode!	preferences	id	Anda tidak memiliki ijin untuk mengatur ACL!
 you must enter a password	preferences	id	Anda harus mengisikan password
-your current theme is: %1	preferences	id	Tema anda saat ini adalah: %1
 your preferences	preferences	id	Kesukaan Anda

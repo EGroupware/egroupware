@@ -8,11 +8,15 @@ all projects	timesheet	id	Semua Proyek
 and its members	timesheet	id	dan anggotanya
 applies the changes	timesheet	id	terapkan pengubahan
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	id	Tindakan berlaku untuk seluruh query, TIDAK cuma yang ditampilkan!!!
+ask to start and stop working time with session	timesheet	id	Meminta untuk memulai dan menghentikan waktu kerja dengan sesi
 both: allow to use projectmanager and free project-names	admin	id	Both: boleh menggunakan ManajerProyek dan proyek lain
 by	timesheet	id	oleh
+category for 'working time'	admin	id	Kategori untuk 'Waktu kerja'
+change owner when updating	timesheet	id	Ubah pemilik saat memperbarui
 changed status	timesheet	id	status yang diubah
 check all	timesheet	id	Contreng semua
 comment by %1 at %2:	timesheet	id	Komentar oleh %1 pada %2:
+create a single 'working time' timesheet per	timesheet	id	Membuat satu lembar waktu 'Waktu kerja' per
 create new links	timesheet	id	Bikin tautan baru
 creates a new field	timesheet	id	bikin field baru
 creating new entry	timesheet	id	membuat entri baru
@@ -21,6 +25,10 @@ delete this status	timesheet	id	Hapus status ini
 deleted	timesheet	id	terhapus
 deletes this field	timesheet	id	hapus field ini
 determines the order the fields are displayed	timesheet	id	menentukan urutan field ditampilkan
+disable timers	timesheet	id	Menonaktifkan pengatur waktu
+do you want to associate it with the selected %1 entry?	common	id	Apakah Anda ingin mengaitkannya dengan entri %1 yang dipilih?
+do you want to start your working time?	common	id	Apakah Anda ingin memulai waktu kerja Anda?
+do you want to stop your working time?	common	id	Apakah Anda ingin menghentikan waktu kerja Anda?
 each value is a line like <id>[=<label>]	timesheet	id	setiap nilai adalah sebuah baris seperti <id>[=<label>]
 edit status	timesheet	id	Edit status
 edit this entry	timesheet	id	Edit entri ini
@@ -30,9 +38,11 @@ entry deleted	timesheet	id	Entri dihapus
 entry saved	timesheet	id	Entri disimpan
 error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
+error storing working time	timesheet	id	Kesalahan menyimpan waktu kerja
 existing links	timesheet	id	Tautan yang ada
 export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
+forgot to switch off working time?	common	id	Lupa mematikan waktu kerja?
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
 general fields:	timesheet	id	Field Umum:
 global categories	timesheet	id	Kategori Global
@@ -60,6 +70,8 @@ only admin	timesheet	id	Hanya Admin
 only admin can edit this status	timesheet	id	hanya Admin yang dapat meng-edit status ini
 or endtime	timesheet	id	atau Waktu berakhir
 order	timesheet	id	Urutan
+overwrite time	common	id	Menimpa waktu
+overwriting start or stop time	timesheet	id	Menimpa waktu mulai atau berhenti
 parent	timesheet	id	Parent
 pause	common	id	Jeda
 pause time	timesheet	id	Jeda waktu
@@ -68,6 +80,8 @@ permission denied!!!	timesheet	id	Ijin ditolak!!!
 price	timesheet	id	Harga
 projectmanager integration	admin	id	Terpadu dengan ManajerProyek
 quantity	timesheet	id	Quantity
+recorded	timesheet	id	Direkam
+restore this entry	timesheet	id	Kembalikan entri ini
 save & new	timesheet	id	Simpan & Bikin baru
 saves the changes made	timesheet	id	Simpan perubahan
 saves the changes made and leaves	timesheet	id	simpan perubahan dan tinggalkan
@@ -78,6 +92,8 @@ select a status of the timesheet	timesheet	id	pilih status LembarWaktu
 select infolog	timesheet	id	pilih InfoLog
 select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
 start	timesheet	id	Mulai
+start & stop timer	common	id	Mulai & hentikan pengatur waktu
+start timer	common	id	Mulai pengatur waktu
 start-time can not be before last stop- or pause-time %1!	common	id	Waktu mulai tidak boleh sebelum waktu berhenti atau jeda terakhir %1!
 starttime	timesheet	id	Waktu memulai
 starttime has to be before endtime !!!	timesheet	id	Waktu memulai harus sebelum waktu berakhir!!!
@@ -94,11 +110,18 @@ timer already running or paused	common	id	Pengatur waktu sudah berjalan atau dij
 timesheet	common	id	Lembaran Waktu
 timesheet csv export	timesheet	id	Ekspor CSV LembarWaktu
 timesheet modified by %1 at %2	timesheet	id	LembarWaktu diubah oleh %1 pada %2
-timesheet openoffice export	timesheet	id	Ekspor LembarWaktu ke OpenOffice
 timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambahkan.
 timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.
 timesheet-%1 deleted.	timesheet	id	LembarWaktu-%1 dihapus.
 unitprice	timesheet	id	Satuan harga
+use field from csv if possible	timesheet	id	Gunakan bidang dari CSV jika memungkinkan
 view this entry	timesheet	id	Tampilkan entri ini
 week	timesheet	id	Minggu
+what should be done with unknown values?	timesheet	id	Apa yang harus dilakukan dengan nilai yang tidak diketahui?
+will be created when saving ...	common	id	Akan dibuat saat menyimpan ...
+working time	common	id	Waktu kerja
+working time and timer	timesheet	id	Waktu kerja dan pengatur waktu
+working time from %1	timesheet	id	Waktu kerja dari %1
+working time of %1 hours stored	timesheet	id	Waktu kerja dari %1 jam yang disimpan
+would you like to be asked, to start and stop working time, when login in or off	timesheet	id	Apakah Anda ingin ditanya, untuk memulai dan menghentikan waktu kerja, saat masuk atau keluar?
 yesterday	timesheet	id	Kemarin

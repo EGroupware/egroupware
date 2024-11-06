@@ -9,8 +9,6 @@ compress folder	mail	eu	Karpeta konprimatu
 condition	mail	eu	baldintza
 contains	mail	eu	dauka
 copy to	mail	eu	Kopiatu Hona
-date(newest first)	mail	eu	Data (berriak lehenik)
-date(oldest first)	mail	eu	Data (Zaharrak lehenik)
 default sorting order	mail	eu	sailkapen lehenetsia
 delete folder	mail	eu	Karpeta ezabatu
 deleted	mail	eu	ezabatua
@@ -75,7 +73,6 @@ save all	mail	eu	Gorde dena
 select all	mail	eu	Guztiak hautatu
 sent folder	mail	eu	Bidalitakoen karpeta
 signature	mail	eu	Sinadura
-small view	mail	eu	ikuspegi txikia
 then	mail	eu	ORDUAN
 trash folder	mail	eu	Zakar karpeta
 unflagged	mail	eu	bandera gabea

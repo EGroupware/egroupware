@@ -24,14 +24,14 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.image(_name, _app)
 	 */
-	var images = {};
+	let images;
 
 	/**
 	 * Mapping some old formats to the newer form, or any other aliasing for mime-types
 	 *
 	 * Should be in sync with ../inc/class.mime_magic.inc.php
 	 */
-	var mime_alias_map = {
+	const mime_alias_map = {
 		'text/vcard': 'text/x-vcard',
 		'text/comma-separated-values': 'text/csv',
 		'text/rtf': 'application/rtf',
@@ -68,6 +68,12 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			// For logging all paths tried
 			var tries = {};
 
+			if (!images)
+			{
+				console.log("calling egw.image('"+_name+"', '"+_app+"') before egw.set_images() returning null");
+				return null;
+			}
+
 			if (typeof _app === 'undefined')
 			{
 				// If the application name is not given, set it to the name of
@@ -87,26 +93,48 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				}
 			}
 
-			// own instance specific images in vfs have highest precedence
-			tries['vfs']=_name;
-			if (typeof images['vfs'] != 'undefined' && typeof images['vfs'][_name] == 'string')
+			// own instance specific images in vfs have the highest precedence
+			tries.vfs = _name;
+			if (typeof images.vfs !== 'undefined' && typeof images.vfs[_name] === 'string')
 			{
-				return this.webserverUrl+images['vfs'][_name];
+				return this.webserverUrl+images.vfs[_name];
+			}
+			if (typeof images.global !== 'undefined' && (_name !== 'navbar' || _app === 'api'))
+			{
+				tries.global = '('+_app+'/)'+_name;
+				let replace = images.global[_app+'/'+_name] || images.global[_name];
+				if (replace)
+				{
+					if (typeof images.bootstrap[replace] === 'string')
+					{
+						return this.webserverUrl+images.bootstrap[replace];
+					}
+					const parts = replace.split('/');
+					if (parts.length > 1)
+					{
+						_app = parts.shift();
+						_name = parts.join('/');
+					}
+					else
+					{
+						_name = replace;
+					}
+				}
 			}
 			tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
-			if (typeof images[_app] != 'undefined' && typeof images[_app][_name] == 'string')
+			if (typeof images[_app] !== 'undefined' && typeof images[_app][_name] === 'string')
 			{
 				return this.webserverUrl+images[_app][_name];
 			}
-			tries['api'] = _name;
-			if (typeof images['api'] != 'undefined' && typeof images['api'][_name] == 'string')
+			tries.bootstrap = _name;
+			if (typeof images.bootstrap !== 'undefined' && typeof images.bootstrap[_name] === 'string')
 			{
-				return this.webserverUrl+images['api'][_name];
+				return this.webserverUrl+images.bootstrap[_name];
 			}
-			tries['phpgwapi'] = _name;
-			if (typeof images['phpgwapi'] != 'undefined' && typeof images['phpgwapi'][_name] == 'string')
+			tries.api = _name;
+			if (typeof images.api !== 'undefined' && typeof images.api[_name] === 'string')
 			{
-				return this.webserverUrl+images['phpgwapi'][_name];
+				return this.webserverUrl+images.api[_name];
 			}
 			// if no match, check if it might contain an extension
 			var matches = _name.match(/\.(png|gif|jpg)$/i);
@@ -190,4 +218,3 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		}
 	};
 });
-

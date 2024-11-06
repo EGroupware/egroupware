@@ -11,6 +11,7 @@ all of	mail	no	alle av
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
 any of	mail	no	noen av
+archive folder	mail	no	Arkivmappe
 attach files	mail	no	Legge ved filer
 attach users vcard at compose to every new mail	mail	no	Legg ved brukerens vCard i hver ny e-post når du skriver den
 attachment has been saved successfully.	mail	no	Vedlegg har blitt lagret.
@@ -28,14 +29,18 @@ certificate issued by	mail	no	Sertifikat utstedt av
 changing subject failed because of %1	mail	no	Endring av emne mislyktes på grunn av %1
 changing subject failed folder %1 does not exist	mail	no	Endring av emne mislyktes mappe %1 eksisterer ikke
 check message against next rule also	mail	no	Kontroller melding mot neste regel også
+check to save as calendar event on send	mail	no	Kryss av for å opprette som hendelse etter sending
+check to save as infolog on send	mail	no	Kryss av for å opprette som InfoLog etter sending
+check to save as tracker entry on send	mail	no	Kryss av for å opprette som sak etter sending
 checking admin credentials failed	mail	no	Kontroll av administratorlegitimasjon mislyktes
 compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
 contact label	mail	no	Kontaktetikett
 contains	mail	no	inneholder
+convert mail to item and attach its attachments to this item (standard)	mail	no	Konverter e-post til element og legg ved vedleggene til dette elementet (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	no	Konverter e-post til element, legg ved vedleggene og legg til råmelding (.eml) som vedlegg
+convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
 copy to	mail	no	Kopier til
-date(newest first)	mail	no	Dato (nyeste først)
-date(oldest first)	mail	no	Dato (eldste først)
 default sorting order	mail	no	Standard sortering
 delete folder	mail	no	Slett Mappe
 delete selected folders	mail	no	Slett valgte mapper
@@ -91,6 +96,7 @@ greater than	mail	no	Større enn
 ham folder	mail	no	Mappe for søppelpost
 handling of external http images / mixed content in mails	mail	no	Håndtering av eksterne http-bilder / blandet innhold i e-poster
 header lines	mail	no	Hodelinjer
+high priority	mail	no	Høy prioritet
 html	mail	no	HTML
 html mode	mail	no	HTML-modus
 ident name	mail	no	Identnavn
@@ -125,6 +131,7 @@ learning as spam failed because of %1	mail	no	Læring som spam mislyktes på gru
 less than	mail	no	mindre enn
 limit mailing list results when searching for addresses	mail	no	Begrense postlisteresultater når du søker etter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	no	Liste over handlinger som skal slås på/aktiveres som standard (f.eks. handlingen Mail composer lagre som InfoLog).
+low priority	mail	no	Lav prioritet
 mail probably has no text-body	mail	no	Mailen har sannsynligvis ingen tekst
 mail settings	mail	no	Epost innstillinger
 mails can be copied to that folder via context menu, if folder is configured.	mail	no	E-postmeldinger kan kopieres til denne mappen via kontekstmenyen hvis mappen er konfigurert.
@@ -135,6 +142,7 @@ matches regexp	mail	no	treffer regexp
 message learned as spam and moved to spam folder	mail	no	Melding oppdaget som søppelpost og flyttet til søppelpostmappen
 move selected to	mail	no	Flytt valgt til
 move to	mail	no	Flytt til
+move to archive	mail	no	Flytt til arkivmappe
 move to trash	mail	no	Flytt til søppelkurv
 name and domain	mail	no	Navn og domene
 name and email	mail	no	Navn og e-post
@@ -224,7 +232,6 @@ shows a temporary visible notification including from address, subject and a sni
 sign your message with smime certificate	mail	no	Signer meldingen med S/MIME-sertifikat
 signature	mail	no	Signatur
 signed by	mail	no	Signert av
-small view	mail	no	liten visning
 sort order	mail	no	Sortering
 text	mail	no	Tekst
 the imap server need to meet certain requirements and be configured for it:	mail	no	IMAP-serveren må oppfylle visse krav OG være konfigurert for dette:
@@ -235,7 +242,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	no	Denne meldingen er S/MIME-kryptert og passordbeskyttet.
 timeout on connections to your imap server	mail	no	Tidsavbrudd på tilkoblinger til IMAP-serveren
 to do	mail	no	Å gjøre
-toggle all folders view for %1	mail	no	Slå på visning av alle mapper for %1
 toggled on actions	mail	no	Vekslet på handlinger
 trash	mail	no	Papirkurv
 trash folder	mail	no	Søppelmappe
@@ -246,9 +252,6 @@ vacation notice	mail	no	Ferie melding
 when deleting messages	mail	no	Når du sletter meldinger
 write	mail	no	Lagre
 wrote	mail	no	skrev
-yes, only trigger connection reset	mail	no	taip, tik paleisti ryšio atstatymą
-yes, show all debug information available for the user	mail	no	taip, rodo visą naudotojui prieinamą derinimo informaciją
-you can either choose to save as infolog or tracker, not both.	mail	no	Galite pasirinkti, ar norite išsaugoti kaip "InfoLog", ar kaip "Tracker", bet ne kaip abu.
 you can select what info to be displayed on email tag	mail	no	Du kan velge hvilken informasjon som skal vises på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	no	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	no	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.

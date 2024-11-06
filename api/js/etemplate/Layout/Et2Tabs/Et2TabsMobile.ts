@@ -31,6 +31,15 @@ export class Et2TabsMobile extends Et2Tabs
 		});
 	}
 
+	/**
+	 * Use the height of the first tab if height not set
+	 * @protected
+	 */
+	protected _sizeTabs(tabDates : Array<object>)
+	{
+		// no need to do anything, as we use details
+	}
+
 	getAllTabs(includeDisabled = false)
 	{
 		const slot = <Et2Details[]><unknown>this.shadowRoot.querySelectorAll('et2-details');

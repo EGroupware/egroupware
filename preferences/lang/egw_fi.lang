@@ -13,18 +13,12 @@ automatically start with this font	preferences	fi	Aloita automaattisesti valitse
 automatically start with this font size	preferences	fi	Aloita automaattisesti valitsemallasi kirjasinkoolla
 br	preferences	fi	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fi	Vaihda käyttäjän salasana. Mikäli vaihto onnistuu, palauttaa ohjelma arvon TRUE (totta), mikäli se epäonnistuu, palauttaa ohjelma arvon FALSE (väärin).
-change your password	preferences	fi	Vaihda salasana
-change your profile	preferences	fi	Vaihda profiili
-change your settings	preferences	fi	Muuta asetuksia
-charset for the csv export	addressbook	fi	CSV viennissä käytettävä merkistökoodi
 charset for the csv export/import	preferences	fi	Merkistökoodit
-click to select a color	preferences	fi	Valitse väri
 color	preferences	fi	Väri
 country	preferences	fi	Maa
 dark mode theme	preferences	fi	Tumman tilan teema
 date format	preferences	fi	Päivämäärän muoto
 default	preferences	fi	Oletus
-default application	preferences	fi	Oletussovellus
 default font	preferences	fi	Oletus kirjasinlaji
 default font size	preferences	fi	Oletus kirjasinkoko
 default preferences	preferences	fi	Oletusasetukset
@@ -82,17 +76,13 @@ password stored	preferences	fi	Salasana tallennetaan.
 permanent time zone selection	preferences	fi	Oletusaikavyöhyke
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fi	Valitse kaikki aikavyöhykkeet, joiden haluat näkyvän pudotusvalikossa sivun yläreunassa. Valitse vähintään kaksi aikavyöhykettä.
 please select your timezone.	preferences	fi	Valitse aikavyöhyke
-please, select a new theme	preferences	fi	Valitse teema
 popup with search	preferences	fi	Haun ponnahdusikkuna
 re-enter your password	preferences	fi	Anna salasana uudelleen
 read prefs for the specified application.	preferences	fi	Lukuoikeudet tiettyyn sovellukseen
-rich text editor theme	preferences	fi	Rich text editor -teema
 select additional lines in lists by	preferences	fi	Valitse lisärivit listanäkymässä
-select different theme	preferences	fi	Valitse toinen teema
 select one	preferences	fi	Valitse
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fi	Valitse käytettävä kieli. Osa kielistä ei ole täysin käännettyjä, kääntämättömät kohdat näkyvät silloin englanniksi.
 select the language of the spellchecker integrated into the rich text editor.	preferences	fi	Valitse oikolukuohjelman kieli. Se on integroitu Rich text editoriin.
-select the theme (visualization) of the rich text editor.	preferences	fi	Valitse Rich text editorin teema.
 selectbox	preferences	fi	Valintalista
 selectbox with groupmembers	common	fi	Ryhmänjäsenten valintalista
 selectbox with primary group and search	preferences	fi	Valintalista ensisijaisella ryhmällä ja haku
@@ -129,5 +119,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi määritellä käyttöoikeuksia tässä tilassa!
 you must enter a password	preferences	fi	Anna salasana
-your current theme is: %1	preferences	fi	Nykyinen teema on: %1
 your preferences	preferences	fi	Henkilökohtaiset asetukset

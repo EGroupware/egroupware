@@ -8,14 +8,18 @@ all projects	timesheet	ja	全プロジェクト
 and its members	timesheet	ja	、およびそのメンバー
 applies the changes	timesheet	ja	変更を適用
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	ja	クエリ全体にアクションを適用（非表示分の項目にも適用）
+ask to start and stop working time with session	timesheet	ja	セッションで作業時間の開始と停止を依頼する
 both: allow to use projectmanager and free project-names	admin	ja	両方: プロジェクト・マネージャを利用
 by	timesheet	ja	作業者:
+category for 'working time'	admin	ja	労働時間」のカテゴリー
 change category	timesheet	ja	カテゴリを変更
+change owner when updating	timesheet	ja	更新時に所有者を変更する
 changed category to %1	timesheet	ja	カテゴリを %1 に変更しました。
 changed status	timesheet	ja	状態を変更しました。
 check all	timesheet	ja	全て選択
 choose 'creator' of imported data	timesheet	ja	インポート・データの作成者を選択
 comment by %1 at %2:	timesheet	ja	%1が%2にコメント:
+create a single 'working time' timesheet per	timesheet	ja	作業時間'のタイムシートを1つずつ作成する
 create new links	timesheet	ja	新規リンクを作成
 creates a new field	timesheet	ja	Creates a new field
 creating new entry	timesheet	ja	新規項目を作成中
@@ -26,6 +30,10 @@ deleted	timesheet	ja	削除済み
 deletes this field	timesheet	ja	この項目を削除
 determines the order the fields are displayed	timesheet	ja	項目の表示順を指定
 directory with documents to insert entries	timesheet	ja	項目を挿入するディレクトリ/ドキュメント
+disable timers	timesheet	ja	タイマーを無効にする
+do you want to associate it with the selected %1 entry?	common	ja	選択した %1 エントリと関連付けますか?
+do you want to start your working time?	common	ja	作業時間を開始しますか？
+do you want to stop your working time?	common	ja	労働時間を停止しますか？
 each value is a line like <id>[=<label>]	timesheet	ja	各値は <id>[=<label>] 形式の行
 edit status	common	ja	状態を編集
 edit this entry	timesheet	ja	この項目を編集
@@ -35,6 +43,7 @@ entry deleted	timesheet	ja	項目を削除しました。
 entry saved	timesheet	ja	項目を保存しました。
 error deleting the entry!!!	timesheet	ja	項目の削除中にエラー!
 error saving the entry!!!	timesheet	ja	項目の保存中にエラー!
+error storing working time	timesheet	ja	作業時間の保存エラー
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	ja	例 {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - 項目 "n_prefix" を "Mr" で検索し, もし見つかれば「Hello Mr.」と出力し、見つからなければ「Hello Ms.」と出力。
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	ja	例 {{LETTERPREFIXCUSTOM n_prefix title n_family}} - 例: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	ja	例 {{NELF role}} - 項目のロールが空でない場合、項目ロールの値と改行を出力。
@@ -47,6 +56,7 @@ exports entries from your timesheet into a csv file.	timesheet	ja	タイムシ�
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	ja	タイムシートの項目をCSVファイルにエクスポートします。
 field must not be empty !!!	timesheet	ja	項目を空にすることはできません!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ja	シリアルレター向けタグ。任意のコンテンツをこのタグで囲んで使用します。
+forgot to switch off working time?	common	ja	作業時間をオフにするのを忘れましたか？
 full: use only projectmanager	admin	ja	Full: プロジェクト・マネージャだけを使用
 general fields:	timesheet	ja	一般項目:
 global categories	timesheet	ja	グローバルカテゴリ
@@ -89,6 +99,8 @@ only admin	timesheet	ja	管理者のみ
 only admin can edit this status	timesheet	ja	この状態のタイムシートは管理者のみ編集可能
 or endtime	timesheet	ja	終了時刻
 order	timesheet	ja	順序
+overwrite time	common	ja	上書き時間
+overwriting start or stop time	timesheet	ja	開始または停止時間の上書き
 parent	timesheet	ja	親
 pause	common	ja	一時停止
 pause time	timesheet	ja	一時停止時間
@@ -100,8 +112,10 @@ price	timesheet	ja	価格
 project fields	timesheet	ja	プロジェクト項目
 projectmanager integration	admin	ja	プロジェクト・マネージャ統合
 quantity	timesheet	ja	数量
+recorded	timesheet	ja	記録済み
 recovered	timesheet	ja	復旧済み
 replacements for inserting entries into documents	timesheet	ja	ドキュメントに挿入する項目の置換
+restore this entry	timesheet	ja	このエントリーを復元する
 save & new	timesheet	ja	保存 & 新規
 saves the changes made	timesheet	ja	変更を保存
 saves the changes made and leaves	timesheet	ja	変更を保存して終了
@@ -117,6 +131,8 @@ set to	timesheet	ja	設定値:
 show a quantity sum (eg. to sum up negative overtime)	admin	ja	合計を表示
 skip record	timesheet	ja	レコードを読み飛ばす
 start	timesheet	ja	開始日
+start & stop timer	common	ja	タイマーの開始と停止
+start timer	common	ja	タイマー開始
 start-time can not be before last stop- or pause-time %1!	common	ja	開始時刻を最後の停止時刻または一時停止時刻 %1 より前にすることはできません！
 starttime	timesheet	ja	開始時刻
 starttime has to be before endtime !!!	timesheet	ja	開始時刻は終了時刻よりも前である必要があります!
@@ -139,21 +155,27 @@ timer already running or paused	common	ja	タイマは既に実行中または�
 timesheet	common	ja	タイムシート
 timesheet csv export	timesheet	ja	タイムシート CSV エクスポート
 timesheet csv import	timesheet	ja	タイムシート CSV インポート
-timesheet fields:	timesheet	ja	タイムシート項目:
 timesheet id	timesheet	ja	タイムシート ID
 timesheet list	timesheet	ja	タイムシート一覧
 timesheet modified by %1 at %2	timesheet	ja	%1が%2にタイムシートを変更しました。
-timesheet openoffice export	timesheet	ja	タイムシート OpenOffice エクスポート
 timesheet status-%1 '%2' added.	timesheet	ja	タイムシート（状態:%1) '%2' を追加しました。
 timesheet-%1 '%2' updated.	timesheet	ja	タイムシート-%1 '%2' を更新しました。
 timesheet-%1 deleted.	timesheet	ja	タイムシート-%1 を削除しました。
 titles of any entries linked to the current record, excluding attached files	timesheet	ja	このレコードにリンクする項目のタイトル（添付ファイルを除く）
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	ja	%1 をアカウントIDに変換できません。%3にプラグイン設定(%2)を適用しました。
 unitprice	timesheet	ja	単価
+use field from csv if possible	timesheet	ja	可能ならCSVのフィールドを使う
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	ja	アドレスラベル向けタグ。任意のコンテンツをこのタグで囲んで使用します。
 values for selectbox	timesheet	ja	セレクトボックスで表示する値
 view this entry	timesheet	ja	項目を表示
 week	timesheet	ja	週
+what should be done with unknown values?	timesheet	ja	不明な値はどうすればよいですか？
+will be created when saving ...	common	ja	保存時に作成される
+working time	common	ja	作業時間
+working time and timer	timesheet	ja	作業時間とタイマー
+working time from %1	timesheet	ja	%1からの作業時間
+working time of %1 hours stored	timesheet	ja	%1時間分の勤務時間を保存
+would you like to be asked, to start and stop working time, when login in or off	timesheet	ja	ログイン時またはオフ時に、作業時間の開始と停止を尋ねられますか？
 yes, only admins can purge deleted items	admin	ja	はい（管理者だけが削除済みデータをパージ可能）
 yes, users can purge their deleted items	admin	ja	はい（ユーザ自身が削除済みデータをパージ可能）
 yesterday	timesheet	ja	昨日

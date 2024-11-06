@@ -675,7 +675,6 @@ tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel-Version
 tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
 technical contact	setup	de	Technischer Kontakt
-text entry	setup	de	Texteingabe
 the %1 extension is needed from: %2.	setup	de	Die %1 Erweiterung (PHP extension) wird benötigt von: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (PHP extension) wird benötigt, wenn Sie die %2 Datenbank einsetzen wollen.
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	de	Die ctype PHP Erweiterung wird von HTMLpurifier benutzt um FCKeditor Inhalte auf Cross Site Skripting zu überprüfen.

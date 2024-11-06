@@ -427,7 +427,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
                     <a title="${egw().lang('Close')}" class="close"></a>
                     <a title="${egw().lang('Play/Pause')}" class="play-pause"></a>
                     <a title="${egw().lang('Fullscreen')}" class="fullscreen"></a>
-                    <a title="${egw().lang('Save')}" class="download"></a>
+                    <a title="${egw().lang('Save')}" class="download" @click=${this.handleDownload.bind(this)}></a>
                     <ol class="indicator"></ol>
                 </div>
 			`;
@@ -544,6 +544,8 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 			// @ts-ignore
 			this._gallery = new blueimp.Gallery(mediaContent, options);
+			// @ts-ignore
+			document.body.querySelector("#blueimp-gallery").gallery = this._gallery
 		}
 
 		/**
@@ -658,7 +660,7 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 			}
 			if(active)
 			{
-				this._gallery.activeIndicator = this._gallery.indicators[index];
+				this._gallery.setActiveIndicator(this._gallery.indicators[index])
 			}
 
 			// positions
@@ -956,5 +958,13 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 		}
 
 		protected expose_onclosed() {}
+
+		protected handleDownload(e)
+		{
+			const gallery = document.body.querySelector("#blueimp-gallery").gallery;
+			const index = gallery.getIndex();
+			const data = gallery.list[index] ?? {};
+			this.getInstanceManager().download(data.download_href ?? data.download_url ?? data.href);
+		}
 	}
 }

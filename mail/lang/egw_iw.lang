@@ -6,8 +6,6 @@ compose	mail	iw	חדש
 compress folder	mail	iw	קבץ תיקיה
 contains	mail	iw	מכיל
 copy to	mail	iw	העתק אל
-date(newest first)	mail	iw	(תאריך (חדשים תחילה
-date(oldest first)	mail	iw	(תאריך (ישנים תחילה
 default sorting order	mail	iw	סדר מיון מחדלי
 delete folder	mail	iw	מחק תיקיה
 deleted	mail	iw	נמחקו
@@ -63,7 +61,6 @@ save all	mail	iw	שמור הכל
 select all	mail	iw	בחר הכל
 sent folder	mail	iw	תיקיית נשלחו
 signature	mail	iw	חתימה
-small view	mail	iw	תצוגה קטנה
 sort order	mail	iw	סדר אתר
 text	mail	iw	טקסט
 trash folder	mail	iw	תיקיית אשפה

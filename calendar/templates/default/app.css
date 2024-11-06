@@ -125,14 +125,22 @@
 
 /* Toolbar */
 #calendar-toolbar {
-	height: 3.6em;
-	margin-top: 0.3em;
+	height: auto;
 }
 #calendar-toolbar > div {
 	display: flex;
+	align-items: center;
+}
+#calendar-toolbar #calendar-toolbar_add::part(base) {
+	border-style: hidden;
+}
+#calendar-toolbar #calendar-toolbar_add:hover::part(base) {
+	border-style: solid;
+	background-color: var(--sl-input-background-color);
 }
 #calendar-toolbar .et2_toolbar {
 	background: inherit;
+	border:none;
 }
 #calendar-toolbar .egw_fw_ui_app_header_container {
 	border: none;
@@ -1471,7 +1479,7 @@ img.calendar_print_button, img.calendar_print_appicon {
 	height: 1.6em;
 	padding: 4px 3px 3px;
 	background: #b4cee773;
-	border-radius: 3px;
+	border-radius: var(--sl-border-radius-medium, 3px);
 	min-width: fit-content;
 	border: 1px solid #d4d4d8;
 	text-align: center;
@@ -1532,8 +1540,7 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {width: 100%; height: 1
 #calendar-toolbar_toolbar et2-switch {
 	display: inline-block;
 	vertical-align: top;
-	border: 1px solid var(--sl-color-neutral-300);
-	border-radius: 3px;
+	border-radius: var(--sl-border-radius-medium, 3px);
 }
 .ui-toolbar-menulist et2-switch,
 .ui-toolbar-menulist et2-switch::part(base),

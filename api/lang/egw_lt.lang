@@ -49,6 +49,7 @@ albania	common	lt	ALBANIJA
 algeria	common	lt	ALŽYRAS
 all addressbooks	groupdav	lt	Visos adresų knygelės
 all categories	common	lt	Visos kategorijos
+all files	common	lt	Visi failai
 all in one	groupdav	lt	Viskas viename
 allow editing the %1	common	lt	Leisti redaguoti %1
 andorra	common	lt	ANDORA
@@ -128,6 +129,7 @@ delete	common	lt	Trinti
 delete row	common	lt	Trinti eilutę
 denmark	common	lt	DANIJA
 description	common	lt	Apibūdinimas
+directory for storing merged documents	preferences	lt	Aplankas sujungtiems dokumentams saugoti
 djibouti	common	lt	DŽIBUTIS
 don't ask again!	common	lt	Nepaklauskite dar kartą!
 e-mail	common	lt	El. paštas
@@ -214,7 +216,9 @@ lastname	common	lt	Pavardė
 latvia	common	lt	LATVIJA
 liberia	common	lt	LIBERIJA
 light mode	common	lt	Šviesus režimas
+link to each entry	common	lt	Nuoroda į kiekvieną įrašą
 lithuania	common	lt	LIETUVA
+load more links ...	common	lt	Įkelti daugiau nuorodų...
 login rejected by epl firewall, please contact your administrator	common	lt	Mailvelope addon instalācija ir veiksmīga. Tagad varat konfigurēt opcijas.
 logout	common	lt	Atsijungimas
 lost login id	common	lt	Pamestas prisijungimo ID
@@ -229,6 +233,11 @@ mali	common	lt	MALIS
 malta	common	lt	MALTA
 march	common	lt	Kovas
 menu	common	lt	Meniu
+merge	common	lt	Sujungti
+merge & send	common	lt	Sujungti ir siųsti
+merge individually	common	lt	Sujungti atskirai
+merge options	common	lt	Sujungimo parinktys
+merged document filename	preferences	lt	Sujungto dokumento failo pavadinimas
 mexico	common	lt	MEKSIKA
 minute	common	lt	minutė
 monaco	common	lt	MONAKAS
@@ -295,7 +304,10 @@ print	common	lt	Spausdinti
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
 repeat password	common	lt	Pakartoti slaptažodį
+save as pdf	common	lt	Išsaugoti kaip PDF
+save as zip	common	lt	Išsaugoti kaip ZIP
 saved column sizes to preferences.	common	lt	Išsaugoti stulpelių dydžius nustatymuose.
+selection of files can only be done in one folder.  %1 files unselected.	common	lt	Atrinkti failus galima tik viename aplanke. %1 failai neatrinkti.
 show password	common	lt	Rodyti slaptažodį
 show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
@@ -303,6 +315,7 @@ site configuration	common	lt	Programos konfigūracija
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lt	Sujungus įrašus į dokumentus, jie bus saugomi čia. Jei aplankas nenurodytas, jie bus saugomi jūsų namų kataloge (%1)
 yemen	common	lt	JEMENAS
 your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lt	Jūsų naršyklė nėra atnaujinta (suderinama su JavaScript ES6), gali būti, kad neveiks kai kurios funkcijos.

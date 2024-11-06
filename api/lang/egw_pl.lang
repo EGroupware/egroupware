@@ -114,6 +114,7 @@ all addressbooks	groupdav	pl	Wszystkie książki adresowe
 all categories	common	pl	Wszystkie kategorie
 all days	common	pl	Wszystkie dni
 all fields	common	pl	Wszystkie pola
+all files	common	pl	Wszystkie pliki
 all in one	groupdav	pl	Wszystko w jednym
 all languages	common	pl	Wszystkie języki
 all operations save the template!	common	pl	Wszystkie operacje prowadzą do zapisu wzorca!
@@ -196,7 +197,6 @@ blurtext	common	pl	blurTExt
 bold	common	pl	Pogrubienie
 bolivia	common	pl	BOLIWIA
 border	common	pl	Ramka
-border-line-thickness for the table-tag	common	pl	Grubość ramki dla tagu table
 bosnia and herzegovina	common	pl	BOŚNIA I HERCEGOWINA
 botswana	common	pl	BOTSWANA
 bottom	common	pl	Do dolu
@@ -775,6 +775,7 @@ line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ign
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br><b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
 link	common	pl	Odnośnik
 link target %1 not found!	common	pl	Cel linku %1 nie odnaleziony!
+link to each entry	common	pl	Link do każdego wpisu
 linkapps	common	pl	LinkAplikacji
 linkentry	common	pl	LinkWpisu
 linklist	common	pl	LinkListy
@@ -784,6 +785,7 @@ list	common	pl	Lista
 list members	common	pl	Członkowie listy
 lithuania	common	pl	LITWA
 load	common	pl	Załaduj
+load more links ...	common	pl	Załaduj więcej linków ...
 load this template into the editor	common	pl	Załaduj ten szablon do edytora
 loading	common	pl	Ładowanie
 local	common	pl	Lokalny
@@ -820,6 +822,11 @@ may	common	pl	Maj
 mayotte	common	pl	MAYOTTE
 medium	common	pl	Średni
 menu	common	pl	Menu
+merge	common	pl	Scalanie
+merge & send	common	pl	Scal i wyślij
+merge individually	common	pl	Scalanie indywidualne
+merge options	common	pl	Opcje scalania
+merged document filename	preferences	pl	Nazwa pliku scalonego dokumentu
 message	common	pl	Komunikat
 message ...	common	pl	Wiadomość ...
 mexico	common	pl	MEKSYK
@@ -1081,6 +1088,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	pl	Zachowaj
 save all	common	pl	Zapisz wszystko
 save as	common	pl	Zapisz jako
+save as pdf	common	pl	Zapisz jako PDF
 save as zip	common	pl	Zapisz jako ZIP
 save selected columns as default preference for all users.	common	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
 save the changes made and close the window	common	pl	Zachowuje zmiany i zamyka okno
@@ -1153,6 +1161,7 @@ select work email address	common	pl	Wybierz służbowy adres e-meil
 select year	common	pl	Wybierz rok
 selectbox	common	pl	Wybór z listy
 selection	common	pl	Wybór
+selection of files can only be done in one folder.  %1 files unselected.	common	pl	Wyboru plików można dokonać tylko w jednym folderze. %1 plików niewybranych.
 send	common	pl	Wyślij
 send succeeded to %1	common	pl	Wybierz niektóre opcje
 senegal	common	pl	SENEGAL
@@ -1354,6 +1363,7 @@ welcome	common	pl	Strona główna
 western european	common	pl	Europa Zachodnia
 western sahara	common	pl	SAHARA ZACHODNIA
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pl	Po scaleniu wpisów w dokumenty zostaną one zapisane w tym folderze. Jeśli nie podano folderu, zostaną one zapisane w katalogu domowym (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania EGroupware.
 which groups	common	pl	Które grupy

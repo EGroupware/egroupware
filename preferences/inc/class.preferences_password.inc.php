@@ -197,7 +197,7 @@ class preferences_password
 		];
 
 		$tmpl->setElementAttribute('tabs', 'add_tabs', true);
-		$tabs =& $tmpl->getElementAttribute('tabs', 'extraTabs');
+		$tabs =& $tmpl->setElementAttribute('tabs', 'extraTabs');
 		if (($first_call = !isset($tabs)))
 		{
 			$tabs = array();

@@ -96,7 +96,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
 		 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
 		 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
-		 * - egw.open('','addressbook','view_list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
+		 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
 		 *
 		 * @param {string}|int|object id_data either just the id or if app=="" "app:id" or object with all data
 		 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"

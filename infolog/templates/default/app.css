@@ -34,7 +34,7 @@ table.infolog_fullWidth { width: 100%; }
 }
 
 tr.infolog_rowHasParent > td:first-child {
-    background-image: url(../../../api/templates/default/images/arrow_up.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
     background-repeat: no-repeat;
     background-size: 10px;
     background-position: 6px 6px;

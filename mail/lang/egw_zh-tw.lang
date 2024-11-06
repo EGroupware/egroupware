@@ -13,8 +13,6 @@ compress folder	mail	zh-tw	壓縮資料夾
 condition	mail	zh-tw	條件
 contains	mail	zh-tw	包含
 copy to	mail	zh-tw	複製到
-date(newest first)	mail	zh-tw	日期(新的在前)
-date(oldest first)	mail	zh-tw	日期(舊的在前)
 default sorting order	mail	zh-tw	預設排序
 delete folder	mail	zh-tw	刪除資料夾
 deleted	mail	zh-tw	刪除了
@@ -92,16 +90,13 @@ reply	mail	zh-tw	回信
 reply all	mail	zh-tw	全部回覆
 reply to	mail	zh-tw	回覆到
 replyto	mail	zh-tw	回覆到
-row order style	mail	zh-tw	列順序風格
 save all	mail	zh-tw	儲存全部
 save as draft	mail	zh-tw	儲存為草稿
 save as infolog	mail	zh-tw	儲存為記事
 save message to disk	mail	zh-tw	儲存訊息到硬碟
 select all	mail	zh-tw	選擇全部
 sent folder	mail	zh-tw	寄件備份
-sieve script name	mail	zh-tw	sieve 程式名稱
 signature	mail	zh-tw	簽名檔
-small view	mail	zh-tw	縮小
 sort order	mail	zh-tw	排序方式
 text	mail	zh-tw	文字
 the mimeparser can not parse this message.	mail	zh-tw	mime 解析程式無法處理這封郵件

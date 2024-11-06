@@ -668,7 +668,6 @@ tables upgraded	setup	fr	Tables mises à jour
 target version	setup	fr	Version de Destination
 tcp port number of database server	setup	fr	Numéro de port du serveur de base de données
 technical contact	setup	fr	Contact technique
-text entry	setup	fr	Zone de Texte
 the %1 extension is needed from: %2.	setup	fr	L'extension %1 est requise par : %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	fr	L'extension %1 est nécessaire si vous décidez d'utiliser la base de donnée %2<br>
 the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	fr	L'extension ctype est requise par HTMLpurifier pour vérfier le contenu de FCKeditor contre le Cross-Site Scripting

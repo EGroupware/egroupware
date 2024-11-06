@@ -376,13 +376,7 @@ start testjob!	admin	fa	شروع کار آزمایشی!
 submit changes	admin	fa	ثبت تغییرات
 submit the search string	admin	fa	ثبت رشته جستجو
 subtype	admin	fa	زیرنوع
-template selection	admin	fa	انتخاب قالب
-text entry	admin	fa	ورودی متن
-that application name already exists.	admin	fa	نام کاربرد وجود دارد
-that application order must be a number.	admin	fa	ترتیب کاربرد باید عدد باشد
 that loginid has already been taken	admin	fa	شناسه ورود قبلا گرفته شده است
-that name has been used already	admin	fa	نام قبلا گرفته شده است
-that server name has been used already !	admin	fa	نام کارگزار قبلا استفاده شده
 the api is current	admin	fa	API بروز است
 the api requires an upgrade	admin	fa	API بهنگام سازی لازم دارد
 the groups must include the primary group	admin	fa	گروهها باید شامل گروه اولیه باشند

@@ -69,6 +69,7 @@ class admin_account
 				$acl = new Acl($content['account_id']);
 				$acl->read_repository();
 				$account['anonymous'] = $acl->check('anonymous', 1, 'phpgwapi');
+				$account['hidden'] = $acl->check('hidden', 1, 'phpgwapi');
 				$account['changepassword'] = !$acl->check('nopasswordchange', 1, 'preferences');
 				$auth = new Api\Auth();
 				if (($account['account_lastpwd_change'] = $auth->getLastPwdChange($account['account_lid'])) === false)
@@ -116,7 +117,7 @@ class admin_account
 			// save old values to only trigger save, if one of the following values change (contact data get saved anyway)
 			$preserve = empty($content['id']) ? array() :
 				array('old_account' => array_intersect_key($account, array_flip(array(
-						'account_lid', 'account_status', 'account_groups', 'anonymous', 'changepassword',
+						'account_lid', 'account_status', 'account_groups', 'anonymous', 'hidden', 'changepassword',
 						'mustchangepassword', 'account_primary_group', 'homedirectory', 'loginshell',
 						'account_expires', 'account_firstname', 'account_lastname', 'account_email'))),
 						'deny_edit' => $deny_edit);
@@ -185,7 +186,7 @@ class admin_account
 			'account_groups',
 			// copy following fields to account
 			'account_lid',
-			'changepassword', 'anonymous', 'mustchangepassword',
+			'changepassword', 'anonymous', 'hidden', 'mustchangepassword',
 			'account_passwd', 'account_passwd_2',
 			'account_primary_group',
 			'account_expires', 'account_status',
@@ -215,6 +216,7 @@ class admin_account
 
 				case 'changepassword':	// boolean values: admin_cmd_edit_user understands '' as NOT set
 				case 'anonymous':
+				case 'hidden':
 				case 'mustchangepassword':
 					$account[$a_name] = (boolean)$content[$c_name];
 					break;

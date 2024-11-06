@@ -160,7 +160,6 @@ custom	addressbook	de	Benutzerdefiniert
 custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
 data exchange settings	addressbook	de	Einstellungen Datenaustausch
-debug output in browser	addressbook	de	Debug - Ausgabe in Browser
 default	addressbook	de	Standard
 default action on double-click	addressbook	de	Vorgabe beim Doppel-Klick einer Adresse
 default address format	addressbook	de	Vorgabe für Format der Adresse
@@ -248,7 +247,6 @@ extra encodings	addressbook	de	Extra encoding
 extra private	addressbook	de	Extra Privat
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte)!
 favorite phone	addressbook	de	Bevorzugtes Telefon
-favorites	addressbook	de	Favoriten
 fax	addressbook	de	Fax
 fax (private)	addressbook	de	Fax privat
 fax number	common	de	Faxnummer
@@ -308,7 +306,6 @@ import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder vCard
 import from outlook	addressbook	de	Aus Outlook importieren
 import multiple vcard	addressbook	de	Import mehrere vCards
 import next set	addressbook	de	Nächsten Satz importieren
-import_instructions	addressbook	de	In Netscape: Öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Format exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im vCard-Format exportiert.
 importer's personal	addressbook	de	Persönliche Adressbuch des Importierenden
 imports contacts into your addressbook from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
 imports contacts into your addressbook from a vcard file.	addressbook	de	Importiert Kontakte in Ihr Adressbuch von einer vCard-Datei
@@ -372,7 +369,6 @@ name of current user, all other contact fields are valid too	addressbook	de	Name
 name, address	addressbook	de	Name, Adresse
 name, email, phone	addressbook	de	Name, E-Mail, Telefon
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
-new window opened to edit infolog for your selection	addressbook	de	Es wird ein neues Fenster zum Erstellen des InfoLog-Eintrags geöffnet
 next date	addressbook	de	Nächster Termin
 no categories selected	addressbook	de	Keine Kategorien ausgewählt
 no country selected	addressbook	de	Kein Land ausgewählt
@@ -442,14 +438,10 @@ select a source address to be used in geolocation routing system	addressbook	de	
 select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen
-select an action or addressbook to move to	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen
-select an action or addressbook to move to...	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen...
 select an opened dialog	addressbook	de	Wählen Sie einen offenen Dialog
 select migration type	admin	de	Migrationstyp auswählen
 select multiple contacts for a further action	addressbook	de	Mehrere Adressen für weiteren Befehl auswählen
 select phone number as prefered way of contact	addressbook	de	Telefonnummer als präferierten Kontaktweg auswählen
-select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
-select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern möchten
 selected contacts	addressbook	de	Ausgewählte Kontakte
 send emailcopy to receiver	addressbook	de	Versendet eine Kopie der E-Mail zu dem Empfänger

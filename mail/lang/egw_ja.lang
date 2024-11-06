@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	ja	クロスアカウン�
 current folder	mail	ja	現在のフォルダ
 current subject	mail	ja	現在の件名
 currently:	mail	ja	現在値:
-date(newest first)	mail	ja	日時(新しい順)
-date(oldest first)	mail	ja	日時(古い順)
 deactive	mail	ja	無効化
 default sorting order	mail	ja	既定のソート順
 default toolbar actions shown in mail's html editor	mail	ja	メール作成時にHTMLエディタツールバーで有効になる機能
@@ -189,7 +187,6 @@ drafts	mail	ja	下書き
 drafts folder	mail	ja	下書きフォルダ
 edit account	mail	ja	アカウントを編集
 edit account ...	mail	ja	アカウントを編集 ...
-edit folder acl	mail	ja	フォルダ ACL を編集
 edit folder acl ...	mail	ja	フォルダ ACL を編集 ...
 edit vacation settings	mail	ja	不在案内設定を編集
 effective only if server supports acl at all	admin	ja	サーバーで ACL を利用可能である場合に限り有効
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	ja	メール内�
 header	mail	ja	メール・ヘッダを表示
 header lines	mail	ja	ヘッダ行
 high	mail	ja	高
+high priority	mail	ja	高い優先度
 hold %1 to drag files to your computer	mail	ja	%1 を押したままファイルをコンピュータにドラッグします。
 home page folders	mail	ja	ホーム・ページ・フォルダ
 hostname or ip	mail	ja	ホスト名またはIPアドレス
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	ja	スパム学習に失敗しまし�
 less than	mail	ja	指定値よりサイズが小さい
 limit mailing list results when searching for addresses	mail	ja	アドレス検索時にメーリング・リストの結果を制限する
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	ja	デフォルトでオン/オフにするアクションのリスト (例: メール作成時にInfoLogとして保存するアクション)。
+low priority	mail	ja	低い優先度
 mail	common	ja	メール
 mail acl	mail	ja	メール ACL
 mail filter	mail	ja	メール・フィルター
@@ -506,7 +505,6 @@ resend after how many days?	mail	ja	指定日数後に再送信?
 respond to mail sent to:	mail	ja	送信されたメールに応答する：
 restrict acl management	admin	ja	ACL 管理を制限
 rights	mail	ja	権限
-row order style	mail	ja	行順スタイル
 rule priority position	mail	ja	ルールの優先順位
 rule with priority	mail	ja	優先順位付きルール
 rules	mail	ja	ルール
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	ja	Sieve
 sieve connection status	mail	ja	Sieve 接続状態
 sieve not activated	mail	ja	Sieve 無効
-sieve script name	mail	ja	Sieve スクリプト名
 sieve server	mail	ja	Sieve サーバー
 sieve_edit_instructions	mail	ja	(*) ワイルドカード (*,?) を使用できます。文字 * や ? とマッチするには、バックスラッシュ（\）でエスケープする必要があります。正規表現を使う場合は、ワイルドカードでなく正規表現を使用してください。論理否定の目的でない行頭のエクスクラメーション記号（!）をエスケープする場合は、エスケープした正規表現（\!）を使用してください。
 sign your message with smime certificate	mail	ja	S/MIME証明書でメッセージに署名
@@ -596,7 +593,6 @@ signature	mail	ja	署名
 signature at top	mail	ja	署名を上部に表示
 signature position and visibility	mail	ja	署名の表示位置
 signed by	mail	ja	署名者
-small view	mail	ja	スモール・ビュー
 smime encrypted message	mail	ja	S/MIME暗号化メッセージ
 smime signed message	mail	ja	S/MIME署名付きメッセージ
 smtp	mail	ja	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	ja	フォルダ %1 を購読
 subscription folders	mail	ja	購読フォルダー
 subscription successfully saved.	mail	ja	購読フォルダーを更新しました
 succeeded on %1 folders, failed on %2	mail	ja	フォルダ %1 で成功しましたが、%2 で失敗しました
-successfully connected	mail	ja	接続成功
 switch off encryption?	mail	ja	暗号化を解除しますか？
 template folder	mail	ja	テンプレート・フォルダ
 templates	mail	ja	テンプレート
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	ja	このメッセージはS/MIME暗号化されておりパスワードで保護されています。
 timeout on connections to your imap server	mail	ja	IMAP サーバー接続でタイムアウトが発生
 to do	mail	ja	設定方法
-toggle all folders view for %1	mail	ja	全フォルダの表示を %1 に変更
 toggled on actions	mail	ja	アクションの切り替え
 trash	mail	ja	ゴミ箱
 trash folder	mail	ja	ゴミ箱フォルダ
@@ -697,13 +691,7 @@ wizard	mail	ja	ウィザード
 writable sharing requires epl version!	mail	ja	書き込み可能な共有を利用するには EPL 版が必要!
 write	mail	ja	書き込み
 wrote	mail	ja	書き込みました
-yes, but mask all passwords	mail	ja	はい（パスワードは非表示）
-yes, but mask all usernames and passwords	mail	ja	はい（ユーザ名,パスワードは非表示）
 yes, offer copy option	mail	ja	はい（コピー・オプションあり）
-yes, only trigger connection reset	mail	ja	はい（接続リセット付き）
-yes, show all debug information available for the user	mail	ja	はい（ユーザのデバッグ情報を表示）
-yes, show basic info only	mail	ja	はい（基本情報のみ表示）
-you can either choose to save as infolog or tracker, not both.	mail	ja	インフォログまたはトラッカーに保存することができます。
 you can select what info to be displayed on email tag	mail	ja	メールタグに表示する情報を選択できます。
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ja	開始日を $$start$$、終了日を $$end$$ で記述できます。
 you may add this certificate into your contact, if you trust this signature.	mail	ja	署名を信頼できる場合は、この証明書をアドレス帳に追加することができます。

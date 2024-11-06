@@ -19,13 +19,8 @@ automatically start with this format block. small paragraph adds less line space
 br	preferences	it	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change password	preferences	it	Cambia password
-change your password	preferences	it	Cambia la tua password
-change your profile	preferences	it	Cambia il tuo profilo
-change your settings	preferences	it	Cambia le tue impostazioni
-charset for the csv export	addressbook	it	Set di Caratteri per esportazione CSV
 charset for the csv export/import	preferences	it	Set di caratteri
 click to install	preferences	it	click per installare
-click to select a color	preferences	it	Clicca per selezionare un colore
 close after selection	preferences	it	Chiudere dopo la selezione
 code is invalid	preferences	it	Codice non valido
 color	preferences	it	Colore
@@ -34,11 +29,9 @@ current password	preferences	it	Password attuale
 custom login box color, defaults to above color darkened	preferences	it	Colore personalizzato per il box di login.
 custom sidebar menu active color, defaults to above color darkened	preferences	it	Colore della barra di menù attiva.
 dark mode theme	preferences	it	Tema Scuro
-dark moono theme	preferences	it	Tema Dark Moono
 data exchange settings	preferences	it	Impostazioni di scambio dati
 date format	preferences	it	Formato data
 default	preferences	it	predefinito
-default application	preferences	it	Applicazione predefinita
 default font	preferences	it	Font predefinito
 default font size	preferences	it	Dimensione font predefinita
 default format block	preferences	it	Blocco di formato predefinito
@@ -106,7 +99,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	it	Selezione Interfaccia/Template
 it sets content size (text only) according to selected size.	preferences	it	Imposta le dimensioni del contenuto (solo testo) in base alle dimensioni selezionate.
 just clicking on the line, like a checkbox	preferences	it	semplicemente cliccando sulla riga come se fosse una casella da spuntare
-kama theme	preferences	it	Tema Kama
 keep list open for selecting multiple	preferences	it	Mantenere l'elenco aperto per la selezione di più elementi
 language	preferences	it	Lingua
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	it	L'accesso tramite SingleSignOn non fornisce una password da trasmettere ai server di posta o di file.
@@ -115,8 +107,6 @@ lowercase letters	preferences	it	lettere minuscole
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	it	Rendere l'elenco delle applicazioni scrollabile con i pulsanti di scorrimento verso l'alto e verso il basso (utile per gli utenti che lavorano con il mouse senza rotellina).
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
-moono color theme	preferences	it	Colori tema Moono
-moono theme (default)	preferences	it	Tema Moono (predefinito)
 new secret generated, you need to save it to disable the old one!	preferences	it	Nuovo codice segreto generato. Bisogna salvarlo per disabilitare quello precedente!
 no default	preferences	it	Nessun predefinito
 no user-selection at all	common	it	Nessuna selezione
@@ -138,7 +128,6 @@ password stored	preferences	it	Password memorizzata.
 permanent time zone selection	preferences	it	Fuso orario permanente
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	it	Seleziona i fusi orari fra cui selezionare. Non verrebbe visualizzato un menù di scelta se almeno due fusi orari non fossero selezionati.
 please select your timezone.	preferences	it	Seleziona il fuso orario
-please, select a new theme	preferences	it	Per favore, selezionare un nuovo tema
 popup with search	preferences	it	Popup con ricerca
 preferences saved.	preferences	it	Preferenze salvate
 preformatted	preferences	it	Preformattato
@@ -149,15 +138,12 @@ read prefs for the specified application.	preferences	it	Legge le preferenze per
 reset qrcode	preferences	it	Reimposta codice QR
 revoke	preferences	it	Revoca
 revoke this token	preferences	it	Revoca questo token
-rich text editor theme	preferences	it	Tema editor avanzato
 scan qrcode with a time-based one-time password (totp) app:	preferences	it	Scansiona il codice QR con una apposita app:
 secret deleted, two factor authentication disabled.	preferences	it	Codice segreto eliminato, la autenticazione a due fattori è stata disabilitata.
 select additional lines in lists by	preferences	it	Selezionare righe aggiuntive nelle lista con
-select different theme	preferences	it	Seleziona un tema differente
 select one	preferences	it	Seleziona uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di EGroupware.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
 select the language of the spellchecker integrated into the rich text editor.	preferences	it	Selezionare la lingua del correttore ortografico integrato nell'editor avanzato
-select the theme (visualization) of the rich text editor.	preferences	it	Selezionare il tema dell'editor avanzato
 selectbox	preferences	it	Casella di selezione
 selectbox with groupmembers	common	it	Selezionare il box con i membri del gruppo
 selectbox with primary group and search	preferences	it	Casella di selezione con gruppo primario e ricerca
@@ -214,7 +200,6 @@ you do not have permission to set acl's in this mode!	preferences	it	Non hai il 
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	it	Puoi selezionare le funzionalità da abilitare nella barra degli strumenti.
 you must enter a password	preferences	it	Devi inserire una password
 you need to enter your password to make any security changes!	preferences	it	Dovresti inserire la tua password per poter effettuare modifiche alla sicurezza!
-your current theme is: %1	preferences	it	il tuo tema attuale è: %1
 your password does not have required strength:	preferences	it	La tua password non è sufficientemente efficace:
 your password might not match the password policy.	preferences	it	La tua password non corrisponde ai criteri di sicurezza predefiniti.
 your preferences	preferences	it	Preferenze personali

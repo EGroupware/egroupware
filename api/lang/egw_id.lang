@@ -105,6 +105,7 @@ all addressbooks	groupdav	id	Semua buku alamat
 all categories	common	id	Semua kategori
 all days	common	id	Seharian
 all fields	common	id	Semua field
+all files	common	id	Semua berkas
 all in one	groupdav	id	Semua dalam satu
 all languages	common	id	Semua bahasa
 all users	common	id	Semua pengguna
@@ -566,6 +567,7 @@ license	common	id	Lisensi
 liechtenstein	common	id	LIECHTENSTEIN
 light mode	common	id	Mode terang
 link	common	id	Tautan
+link to each entry	common	id	Tautan ke setiap entri
 linkapps	common	id	Tautkan aplikasi
 linkentry	common	id	Entri tautan
 linklist	common	id	Daftar tautan
@@ -576,6 +578,7 @@ list	common	id	Daftar
 list members	common	id	Daftar anggota
 lithuania	common	id	LITHUANIA
 load	common	id	Muatkan
+load more links ...	common	id	Memuat lebih banyak pranala ...
 load this template into the editor	common	id	Muatkan templat ini ke editor
 loading	common	id	Memuatkan
 local	common	id	Lokal
@@ -611,6 +614,10 @@ may	common	id	Mei
 mayotte	common	id	MAYOTTE
 medium	common	id	Medium
 menu	common	id	Menu
+merge	common	id	Gabungkan
+merge & send	common	id	Gabungkan & kirim
+merge individually	common	id	Gabungkan satu per satu
+merge options	common	id	Opsi penggabungan
 merged document filename	preferences	id	Nama file dokumen yang digabungkan
 message	common	id	Pesan
 message ...	common	id	Pesan ...
@@ -827,6 +834,7 @@ saudi arabia	common	id	ARAB SAUDI
 save	common	id	Simpan
 save all	common	id	Simpan semuanya
 save as	common	id	Simpan sebagai
+save as pdf	common	id	Simpan sebagai PDF
 save as zip	common	id	Simpan sebagai ZIP
 save the changes made and close the window	common	id	Simpan perubahan dan tutup
 saved column sizes to preferences.	common	id	Menyimpan ukuran kolom ke preferensi.
@@ -871,6 +879,7 @@ select work email address	common	id	Pilih alamat email kerja
 select year	common	id	Pilih Tahun
 selectbox	common	id	Selectbox
 selection	common	id	Pemilihan
+selection of files can only be done in one folder.  %1 files unselected.	common	id	Pemilihan file hanya dapat dilakukan dalam satu folder. %1 file tidak dipilih.
 send	common	id	Kirim
 send succeeded to %1	common	id	Pengiriman berhasil ke %1
 senegal	common	id	SENEGAL

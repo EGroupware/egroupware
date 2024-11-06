@@ -22,6 +22,7 @@
 %1 token %2.	admin	id	%1 token %2.
 %1 user %2	admin	id	%1 pengguna %2
 (de)activate mail accounts	admin	id	(de) Mengaktifkan akun email
+(default no, leave it off if you dont use it)	admin	id	Default = Tidak, biarkan saja jika Anda tidak menggunakannya
 (no subject)	admin	id	(tanpa subyek)
 -  type	admin	id	- tipe
 1 year	admin	id	1 tahun
@@ -227,8 +228,10 @@ home directory	admin	id	Direktori rumah
 home screen message	admin	id	Pesan layar utama
 host information	admin	id	Informasi host
 hour<br>(0-23)	admin	id	Jam<br>(0-23)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	id	Berapa banyak entri yang dapat diekspor oleh non-admin. Kosong = tidak ada batas, Tidak = tidak ada ekspor
 icon	admin	id	Ikon
 idle	admin	id	Menganggur
+if different from email address	admin	id	Tidak ada batasan
 imap admin password	admin	id	Password admin IMAP
 imap admin user	admin	id	Admin IMAP
 imap server	admin	id	IMAP Server
@@ -300,6 +303,7 @@ next run	admin	id	Jalankan berikutnya
 no algorithms available	admin	id	Tidak ada algoritma yang tersedia!
 no alternate email address	admin	id	Tanpa alamat email pengganti
 no encryption	admin	id	Tanpa enkripsi
+no limit	admin	id	Tidak ada batasan
 no matches found	admin	id	Tidak ditemukan kecocokan!
 no modes available	admin	id	Tidak ada mode yang tersedia!
 number of row for a multiline inputfield or line of a multi-select-box	admin	id	Jumlah baris untuk bidang input multi-baris atau baris dari kotak multi-pilihan
@@ -378,6 +382,7 @@ sieve server port	admin	id	Sieve server port
 sieve settings	admin	id	Pengaturan Sieve
 site	admin	id	Situs
 smtp authentication	admin	id	Otentikasi SMTP
+smtp only: to create only an smtp account	admin	id	Membuat akun khusus SMTP tanpa IMAP
 smtp options	admin	id	Opsi SMTP
 smtp server name	admin	id	Nama server SMTP
 smtp settings	admin	id	Pengaturan SMTP
@@ -399,9 +404,7 @@ submit statistic information	admin	id	Submit statistic information
 submit to egroupware.org	admin	id	Submit to egroupware.org
 subtype	admin	id	Subtype
 success	admin	id	Sukses
-template selection	admin	id	Pemilihan Templat
 templates	admin	id	Templat
-text entry	admin	id	Text Entry
 the api is current	admin	id	API saat ini
 the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	Pengguna berikut ini masih menjadi anggota kelompok %1

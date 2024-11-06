@@ -9,8 +9,31 @@
  */
 
 import {Et2Textbox} from "./Et2Textbox";
-import {css, html, render} from "lit";
+import {css, html, nothing, PropertyValues, render} from "lit";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 
+
+/**
+ * @summary Enter a numeric value.  Number formatting comes from preferences by default
+ * @since 23.1
+ *
+ * @dependency sl-input
+ *
+ * @slot label - The input's label. Alternatively, you can use the `label` attribute.
+ * @slot prefix - Used to prepend a presentational icon or similar element to the combobox.
+ * @slot suffix - Like prefix, but after
+ * @slot help-text - Text that describes how to use the input. Alternatively, you can use the `help-text` attribute.
+ *
+ * @event change - Emitted when the control's value changes.
+ *
+ * @csspart form-control - The form control that wraps the label, input, and help text.
+ * @csspart form-control-label - The label's wrapper.
+ * @csspart form-control-input - The input's wrapper.
+ * @csspart form-control-help-text - The help text's wrapper.
+ */
+
+@customElement("et2-number")
 export class Et2Number extends Et2Textbox
 {
 	static get styles()
@@ -20,50 +43,89 @@ export class Et2Number extends Et2Textbox
 			css`
 			  /* Scroll buttons */
 
-			  :host(:hover) ::slotted(et2-button-scroll) {
-				display: flex;
-			  }
+				:host(:hover) ::slotted(et2-button-scroll) {
+					visibility: visible;
+				}
 
-			  ::slotted(et2-button-scroll) {
-				display: none;
-			  }
+				::slotted(et2-button-scroll) {
+					visibility: hidden;
+					padding: 0px;
+					margin: 0px;
+					margin-left: var(--sl-spacing-small);
+					margin-inline-end: 0px;
+				}
 
-			  .input--medium .input__suffix ::slotted(et2-button-scroll) {
-				padding: 0px;
-			  }
+				:host([step]) .input--medium .input__control {
+					padding-right: 0px;
+				}
 
 				.form-control-input {
 					min-width: min-content;
-					max-width: 6em;
+					max-width: 7em;
+				}
+
+				.input__control {
+					text-align: right;
 				}
 
 			`,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-			/**
-			 * Minimum value
-			 */
-			min: Number,
-			/**
-			 * Maximum value
-			 */
-			max: Number,
-			/**
-			 * Step value
-			 */
-			step: Number,
-			/**
-			 * Precision of float number or 0 for integer
-			 */
-			precision: Number,
-		}
-	}
+	/**
+	 * Minimum value
+	 */
+	@property({type: Number})
+	min;
 
+	/**
+	 * Maximum value
+	 */
+	@property({type: Number})
+	max;
+
+	/**
+	 * Step value
+	 */
+	@property({type: Number})
+	step;
+
+
+	/**
+	 * Precision of float number or 0 for integer
+	 */
+	@property({type: Number})
+	precision;
+
+	/**
+	 * Thousands separator.  Defaults to user preference.
+	 */
+	@property()
+	thousandsSeparator;
+
+	/**
+	 * Decimal separator.  Defaults to user preference.
+	 */
+	@property()
+	decimalSeparator;
+
+	/**
+	 * Text placed before the value
+	 * @type {string}
+	 */
+	@property()
+	prefix = "";
+
+	/**
+	 * Text placed after the value
+	 * @type {string}
+	 */
+	@property()
+	suffix = "";
+
+	inputMode = "numeric";
+
+	get _inputNode() {return this.shadowRoot.querySelector("input");}
 
 	constructor()
 	{
@@ -76,8 +138,48 @@ export class Et2Number extends Et2Textbox
 	{
 		super.connectedCallback();
 
+		let numberFormat = ".";
+		if(this.egw() && this.egw().preference)
+		{
+			numberFormat = this.egw().preference("number_format", "common") ?? ".";
+		}
+		const decimal = numberFormat ? numberFormat[0] : '.';
+		const thousands = numberFormat ? numberFormat[1] : '';
+		this.decimalSeparator = this.decimalSeparator || decimal || ".";
+		this.thousandsSeparator = this.thousandsSeparator || thousands || "";
+
 		// Add spinners
 		render(this._incrementButtonTemplate(), this);
+		if(this.value)
+		{
+			this.value = formatNumber(this.value, this.decimalSeparator, this.thousandsSeparator, this.precision);
+		}
+	}
+
+	firstUpdated()
+	{
+		super.firstUpdated();
+
+		// Add content to slots
+		["prefix", "suffix"].forEach(slot =>
+		{
+			if(!this[slot])
+			{
+				return;
+			}
+			this.append(Object.assign(document.createElement("span"), {
+				slot: slot,
+				textContent: this[slot]
+			}));
+		});
+	}
+
+	willUpdate(changedProperties : PropertyValues)
+	{
+		if(this._mask && Object.keys(this.maskOptions).filter(v => changedProperties.has(v)).length > 0)
+		{
+			this._mask.updateOptions(this.maskOptions);
+		}
 	}
 
 	transformAttributes(attrs)
@@ -90,7 +192,6 @@ export class Et2Number extends Et2Textbox
 		{
 			attrs.validator = attrs.precision === 0 ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/';
 		}
-		attrs.inputmode = "numeric";
 		super.transformAttributes(attrs);
 	}
 
@@ -114,24 +215,16 @@ export class Et2Number extends Et2Textbox
 		// Do nothing
 	}
 
-	handleBlur()
-	{
-		this.value = this.input.value;
-		super.handleBlur();
-	}
-
+	@property({type: String})
 	set value(val)
 	{
+		const old = this.value;
 		if("" + val !== "")
 		{
-			// use decimal separator from user prefs
-			const format = this.egw().preference('number_format');
-			const sep = format ? format[0] : '.';
-
 			// Remove separator so parseFloat works
 			if(typeof val === 'string')
 			{
-				val = val.replace(",", '.');
+				val = val.replace(this.thousandsSeparator, "").replace(",", '.');
 			}
 
 			if(typeof this.precision !== 'undefined')
@@ -142,50 +235,138 @@ export class Et2Number extends Et2Textbox
 			{
 				val = parseFloat(val);
 			}
-			// Put separator back in, if different
-			if(typeof val === 'string' && format && sep && sep !== '.')
-			{
-				val = val.replace('.', sep);
-			}
 		}
-		super.value = val;
+		if(isNaN(val))
+		{
+			super.value = val;
+			this.requestUpdate("value", old);
+			return;
+		}
+		if(this.max && val > this.max)
+		{
+			val = this.max;
+		}
+		if(this.min && val < this.min)
+		{
+			val = this.min;
+		}
+		super.value = formatNumber(val, this.decimalSeparator, this.thousandsSeparator, this.precision);
+
+		this.requestUpdate("value", old);
 	}
 
-	get value()
+	get value() : string
 	{
 		return super.value;
 	}
 
+	protected updateMaskValue()
+	{}
+
+	/**
+	 * Value returned to server is always no thousands separator, "." decimal separator
+	 * @returns {any}
+	 */
 	getValue() : any
 	{
+		if(this.value == "" || typeof this.value == "undefined")
+		{
+			return "";
+		}
 		// Needs to be string to pass validator
 		return "" + this.valueAsNumber;
 	}
 
 	get valueAsNumber() : number
 	{
-		let val = super.value;
-
-		if("" + val !== "")
+		let formattedValue : string | number = "" + this.stripFormat(this.value);
+		if(formattedValue == "")
 		{
-			// remove decimal separator from user prefs
-			const format = this.egw().preference('number_format');
-			const sep = format ? format[0] : '.';
-			if(typeof val === 'string' && format && sep && sep !== '.')
+			return 0;
+		}
+		if(typeof this.precision !== 'undefined')
+		{
+			formattedValue = parseFloat(parseFloat(<string>formattedValue).toFixed(this.precision));
+		}
+		else
+		{
+			formattedValue = parseFloat(<string>formattedValue);
+		}
+		return formattedValue;
+	}
+
+	/**
+	 * Remove special formatting from a string to get just a number value
+	 * @param {string | number} formattedValue
+	 * @returns {number}
+	 */
+	stripFormat(formattedValue : string | number)
+	{
+		if("" + formattedValue !== "")
+		{
+			// remove thousands separator
+			if(typeof formattedValue === "string" && this.thousandsSeparator)
 			{
-				val = val.replace(sep, '.');
+				formattedValue = formattedValue.replaceAll(this.thousandsSeparator, "");
+			}
+			// remove decimal separator
+			if(typeof formattedValue === 'string' && this.decimalSeparator !== '.')
+			{
+				formattedValue = formattedValue.replace(this.decimalSeparator, '.');
 			}
 			if(typeof this.precision !== 'undefined')
 			{
-				val = parseFloat(parseFloat(val).toFixed(this.precision));
+				formattedValue = parseFloat(parseFloat(<string>formattedValue).toFixed(this.precision));
 			}
 			else
 			{
-				val = parseFloat(val);
+				formattedValue = parseFloat(<string>formattedValue);
 			}
 		}
-		return val;
+		return <number>formattedValue;
 	}
+
+	/**
+	 * Get the options for masking.
+	 * Overridden to use number-only masking
+	 *
+	 * @see https://imask.js.org/guide.html#masked-number
+	 */
+	protected get maskOptions()
+	{
+		let options = {
+			...super.maskOptions,
+			skipInvalid: true,
+			scale: 5,
+			// The initial options need to match an actual number
+			radix: this.decimalSeparator,
+			thousandsSeparator: this.thousandsSeparator,
+			//		mask: this.mask ?? Number,
+			lazy: false,
+			padFractionalZeros: (typeof this.precision !== "undefined"),
+			definitions: {
+				'#': {
+					mask: RegExp("[-\\d\\" + this.thousandsSeparator + "\\" + this.decimalSeparator + "]")
+					//RegExp("-?[\\d\\" + this.thousandsSeparator + "]+" + (this.precision ? "\\" + this.decimalSeparator + "\\d{" + this.precision + "}" : ''))
+				}
+			}
+		}
+		if(typeof this.precision != "undefined")
+		{
+			options.scale = this.precision;
+		}
+		if(typeof this.min != "undefined")
+		{
+			options.min = this.min;
+		}
+		if(typeof this.max != "undefined")
+		{
+			options.max = this.max;
+		}
+		return options;
+	}
+
+
 
 	private handleScroll(e)
 	{
@@ -201,7 +382,10 @@ export class Et2Number extends Et2Textbox
 		{
 			max = Number.MAX_SAFE_INTEGER;
 		}
-		this.value = "" + Math.min(Math.max(this.valueAsNumber + e.detail * (parseFloat(this.step) || 1), min), max);
+		this.value = formatNumber(
+			Math.min(Math.max((isNaN(this.valueAsNumber) ? 0 : this.valueAsNumber) + e.detail * (parseFloat(this.step) || 1), min), max),
+			this.decimalSeparator, this.thousandsSeparator, this.precision
+		);
 		this.dispatchEvent(new CustomEvent("sl-change", {bubbles: true}));
 		this.requestUpdate("value", old_value);
 	}
@@ -211,14 +395,35 @@ export class Et2Number extends Et2Textbox
 		// No increment buttons on mobile
 		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
-			return '';
+			return nothing;
+		}
+		// Other reasons for no buttons
+		if(this.disabled || this.readonly || !this.step)
+		{
+			return nothing;
 		}
 
-		return this.disabled ? '' : html`
+		return html`
             <et2-button-scroll class="et2-number__scrollbuttons" slot="suffix"
                                part="scroll"
                                @et2-scroll=${this.handleScroll}></et2-button-scroll>`;
 	}
 }
-// @ts-ignore TypeScript is not recognizing that Et2Textbox is a LitElement
-customElements.define("et2-number", Et2Number);
+
+/**
+ * Format a number according to user preferences
+ * @param {number} value
+ * @returns {string}
+ */
+export function formatNumber(value : string | number, decimalSeparator : string = ".", thousandsSeparator : string = "", decimalPlaces = undefined) : string
+{
+	// Split by . because value is a number, so . is decimal separator
+	let parts = ("" + value).split(".");
+
+	parts[0] = parts[0].replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, thousandsSeparator) || "0";
+	if(typeof decimalPlaces != "undefined" && decimalPlaces != 0)
+	{
+		parts[1] = (parts[1] ?? "").padEnd(decimalPlaces, "0").substr(0, decimalPlaces);
+	}
+	return parts.join(decimalSeparator);
+}

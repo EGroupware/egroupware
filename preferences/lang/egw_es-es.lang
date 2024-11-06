@@ -19,13 +19,8 @@ automatically start with this format block. small paragraph adds less line space
 br	preferences	es-es	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	es-es	Cambia la contraseña de un usuario pasando la contraseña anterior y la nueva. Si es correcto, devuelve TRUE, y si no, FALSE.
 change password	preferences	es-es	Cambiar contraseña
-change your password	preferences	es-es	Cambiar contraseña
-change your profile	preferences	es-es	Cambiar perfil
-change your settings	preferences	es-es	Cambiar su configuración
-charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
 charset for the csv export/import	preferences	es-es	Juego de caracteres
 click to install	preferences	es-es	haga clic para instalar
-click to select a color	preferences	es-es	Pulse para seleccionar un color
 close after selection	preferences	es-es	Cerrar después de la selección
 code is invalid	preferences	es-es	El código es no válido
 color	preferences	es-es	Color
@@ -34,11 +29,9 @@ current password	preferences	es-es	Contraseña actual
 custom login box color, defaults to above color darkened	preferences	es-es	Color del cuadro de inicio de sesión personalizado, por defecto el color anterior se oscureció
 custom sidebar menu active color, defaults to above color darkened	preferences	es-es	Color de menú de barra lateral personalizado activo, por defecto el color anterior se oscureció
 dark mode theme	preferences	es-es	Tema en modo oscuro
-dark moono theme	preferences	es-es	Tema Moono oscuro
 data exchange settings	preferences	es-es	Opciones para intercambio de datos
 date format	preferences	es-es	Formato de la fecha
 default	preferences	es-es	Predeterminado
-default application	preferences	es-es	Aplicación predeterminada
 default font	preferences	es-es	Tipografía predeterminada
 default font size	preferences	es-es	Tamaño predeterminado de tipografía
 default format block	preferences	es-es	Bloque de formato predeterminado
@@ -106,7 +99,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	es-es	Selección de interfaz/plantilla
 it sets content size (text only) according to selected size.	preferences	es-es	Establece el tamaño del contenido (sólo texto) según el tamaño seleccionado.
 just clicking on the line, like a checkbox	preferences	es-es	simplemente haciendo clic en la línea, como una casilla de verificación
-kama theme	preferences	es-es	Tema Kama
 keep list open for selecting multiple	preferences	es-es	Mantener la lista abierta para seleccionar varios
 language	preferences	es-es	Idioma
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	es-es	El inicio de sesión a través de SingleSignOn no proporciona una contraseña para pasarla a servidores de correo o archivos.
@@ -115,8 +107,6 @@ lowercase letters	preferences	es-es	letras minúsculas
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	es-es	Hacer que la lista de aplicaciones se pueda desplazar con botones de desplazamiento hacia arriba y hacia abajo (útil para los usuarios que trabajan con un ratón sin rueda de desplazamiento)
 max matches per page	preferences	es-es	Número máximo de coincidencias por página
 max number of icons in navbar	preferences	es-es	Número máximo de iconos en la barra de navegación
-moono color theme	preferences	es-es	Tema de color Moono
-moono theme (default)	preferences	es-es	Tema Moono (predeterminado)
 new secret generated, you need to save it to disable the old one!	preferences	es-es	Nuevo secreto generado, ¡necesitas guardarlo para desactivar el antiguo!
 no default	preferences	es-es	Sin valor predeterminado
 no user-selection at all	common	es-es	No hay ninguna selección del usuario
@@ -138,7 +128,6 @@ password stored	preferences	es-es	Contraseña almacenada.
 permanent time zone selection	preferences	es-es	Selección permanente de zona horaria
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	es-es	Por favor, seleccione las zonas horarias entre las que desee cambiar répidamente. El cambio NO se muestra si se seleccionan menos de dos.
 please select your timezone.	preferences	es-es	Por favor, seleccione su zona horaria.
-please, select a new theme	preferences	es-es	Por favor, seleccione un nuevo tema
 popup with search	preferences	es-es	Ventana emergente con búsqueda
 preferences saved.	preferences	es-es	Preferencias guardadas.
 preformatted	preferences	es-es	Preformateado
@@ -149,15 +138,12 @@ read prefs for the specified application.	preferences	es-es	Leer las preferencia
 reset qrcode	preferences	es-es	Reiniciar QRCode
 revoke	preferences	es-es	Revocar
 revoke this token	preferences	es-es	Revocar este token
-rich text editor theme	preferences	es-es	Tema del editor de texto enriquecido
 scan qrcode with a time-based one-time password (totp) app:	preferences	es-es	Escanee QRCode con una aplicación de contraseña de un solo uso basada en el tiempo (TOTP):
 secret deleted, two factor authentication disabled.	preferences	es-es	Secreto eliminado, autenticación de dos factores desactivada.
 select additional lines in lists by	preferences	es-es	Seleccionar líneas adicionales en listas mediante
-select different theme	preferences	es-es	Seleccione un tema diferente
 select one	preferences	es-es	Seleccione uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en EGroupware.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
 select the language of the spellchecker integrated into the rich text editor.	preferences	es-es	Seleccionar el idioma del corrector ortográfico en el editor de texto enriquecido.
-select the theme (visualization) of the rich text editor.	preferences	es-es	Seleccionar el tema (visualización) del editor de texto enriquecido.
 selectbox	preferences	es-es	Cuadro de selección
 selectbox with groupmembers	common	es-es	Lista desplegable con los miembros del grupo
 selectbox with primary group and search	preferences	es-es	Cuadro de selección con grupo principal y búsqueda
@@ -214,7 +200,6 @@ you do not have permission to set acl's in this mode!	preferences	es-es	Usted no
 you may select features to be enabled in toolbar. selecting any of the tools from here means seleted "feature of the editor" preference would be ignored.	preferences	es-es	Puede seleccionar las funciones que desea activar en la barra de herramientas.
 you must enter a password	preferences	es-es	Debe introducir una contraseña
 you need to enter your password to make any security changes!	preferences	es-es	Debe introducir su contraseña para realizar cambios de seguridad.
-your current theme is: %1	preferences	es-es	Su actual tema es: %1
 your password does not have required strength:	preferences	es-es	Su contraseña no tiene la fortaleza necesaria:
 your password might not match the password policy.	preferences	es-es	Su contraseña puede que no cumpla la política de contraseñas.
 your preferences	preferences	es-es	Sus preferencias

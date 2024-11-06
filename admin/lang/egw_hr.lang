@@ -370,13 +370,7 @@ standard smtp-server	admin	hr	Standard SMTP server
 start testjob!	admin	hr	Start TestJob!
 submit changes	admin	hr	Pošalji promjene
 submit the search string	admin	hr	Pošalji niz znakova za pretragu
-template selection	admin	hr	Izabir predloška
-text entry	admin	hr	Unos teksta
-that application name already exists.	admin	hr	Ime aplikacije već postoji
-that application order must be a number.	admin	hr	That application order must be a number.
 that loginid has already been taken	admin	hr	That loginid has already been taken
-that name has been used already	admin	hr	To ime je već upotrebljeno
-that server name has been used already !	admin	hr	To ime poslužitelja j eveć upotrijebljeno!
 the api is current	admin	hr	The API is current
 the api requires an upgrade	admin	hr	The API requires an upgrade
 the groups must include the primary group	admin	hr	grupe moraju sadržavati primarne grupe

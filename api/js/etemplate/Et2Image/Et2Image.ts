@@ -8,12 +8,17 @@
  * @author Nathan Gray
  */
 
-import {css, html, LitElement, render} from "lit";
+import {html, LitElement} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../et2_core_interfaces";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
+@customElement("et2-image")
 export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
+
+	/** Et2Image has no shadow DOM, styles in etemplate2.css
 	static get styles()
 	{
 		return [
@@ -30,64 +35,125 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
 				:host([icon]) {
 					height: 1.3rem;
+					font-size: 1.3rem !important;
 				}
 			`];
 	}
+	 */
 
-	static get properties()
+	/**
+	 * The label of the image
+	 * Actually not used as label, but we put it as title
+	 */
+	@property({type: String})
+	label = "";
+
+	/**
+	 * Image
+	 * Displayed image
+	 */
+	@property({type: String})
+	set src(_src)
 	{
-		return {
-			...super.properties,
+		this.classList.forEach(_class =>
+		{
+			if(_class.startsWith('bi-'))
+			{
+				this.classList.remove(_class);
+			}
+		});
 
-			/**
-			 * The label of the image
-			 * Actually not used as label, but we put it as title
-			 */
-			label: {
-				type: String
-			},
-
-			/**
-			 * Image
-			 * Displayed image
-			 */
-			src: {type: String},
-
-			/**
-			 * Default image
-			 * Image to use if src is not found
-			 */
-			defaultSrc: {type: String},
-
-			/**
-			 * Link Target
-			 * Link URL, empty if you don't wan't to display a link.
-			 */
-			href: {type: String},
-
-			/**
-			 * Link target
-			 * Link target descriptor
-			 */
-			extraLinkTarget: {type: String},
-
-			/**
-			 * Popup
-			 * widthxheight, if popup should be used, eg. 640x480
-			 */
-			extraLinkPopup: {type: String},
+		this.__src = _src;
+		let url = this.parse_href(_src) || this.parse_href(this.defaultSrc);
+		if(!url)
+		{
+			// Hide if no valid image
+			if (this._img) this._img.src = '';
+			return;
 		}
+		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+		if (bootstrap && !this._img)
+		{
+			this.classList.add('bi-' + bootstrap[1]);
+			return;
+		}
+		// change between bootstrap and regular img
+		this.requestUpdate();
+	}
+	get src()
+	{
+		return this.__src;
+	}
+	private __src: string;
+	/**
+	 * Default image
+	 * Image to use if src is not found
+	 */
+	@property({type: String})
+	defaultSrc = "";
+
+	/**
+	 * Link Target
+	 * Link URL, empty if you don't wan't to display a link.
+	 */
+	@property({type: String})
+	href = "";
+
+	/**
+	 * Link target
+	 * Link target descriptor
+	 */
+	@property({type: String})
+	extraLinkTarget = "_self";
+
+	/**
+	 * Popup
+	 * widthxheight, if popup should be used, eg. 640x480
+	 */
+	@property({type: String})
+	extraLinkPopup = "";
+
+	/**
+	 * Width of image:
+	 * - either number of px (e.g. 32) or
+	 * - string incl. CSS unit (e.g. "32px") or
+	 * - even CSS functions like e.g. "calc(1rem + 2px)"
+	 */
+	@property({type: String})
+	set width(_width : string)
+	{
+		if (this.style)
+		{
+			this.style.width = isNaN(_width) ? _width : _width+'px';
+		}
+	}
+	get width()
+	{
+		return this.style?.width;
+	}
+
+	/**
+	 * Height of image:
+	 * - either number of px (e.g. 32) or
+	 * - string incl. CSS unit (e.g. "32px") or
+	 * - even CSS functions like e.g. "calc(1rem + 2px)"
+	 */
+	@property({type: String})
+	set height(_height)
+	{
+		if (this.style)
+		{
+			this.style.height = isNaN(_height) ? _height : _height+'px';
+		}
+	}
+	get height()
+	{
+		return this.style.height;
 	}
 
 	constructor()
 	{
 		super();
-		this.src = "";
-		this.defaultSrc = "";
-		this.href = "";
-		this.label = "";
-		this.extraLinkTarget = "_self";
-		this.extraLinkPopup = "";
 
 		this._handleClick = this._handleClick.bind(this);
 	}
@@ -97,28 +163,40 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		super.connectedCallback();
 	}
 
-	_imageTemplate()
+	render()
 	{
-		let src = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
-		if(!src)
+		let url = this.parse_href(this.src) || this.parse_href(this.defaultSrc);
+		if(!url)
 		{
 			// Hide if no valid image
-			return '';
+			return html``;
+		}
+		// set title on et2-image for both bootstrap-image via css-class and embedded img tag
+		this.title = this.statustext || this.label || "";
+
+		const bootstrap = url.match(/\/node_modules\/bootstrap-icons\/icons\/([^.]+)\.svg/);
+		if (bootstrap)
+		{
+			this.classList.add('bi-'+bootstrap[1]);
+			return html``;
 		}
 		return html`
             <img ${this.id ? html`id="${this.id}"` : ''}
-                 src="${src}"
-                 alt="${this.label}"
+                 src="${url}"
+                 alt="${this.label || this.statustext}"
+				 style="${this.height ? 'max-height: 100%; width: auto' : 'max-width: 100%; height: auto'}"
                  part="image"
                  loading="lazy"
-                 title="${this.statustext || this.label}"
             >`;
 	}
 
-	render()
+	/**
+	 * Puts the rendered content / img-tag in light DOM
+	 * @link https://lit.dev/docs/components/shadow-dom/#implementing-createrenderroot
+	 */
+	protected createRenderRoot()
 	{
-		return html`
-            <slot></slot>`;
+		return this;
 	}
 
 	protected parse_href(img_href : string) : string
@@ -129,7 +207,7 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		{
 			return img_href;
 		}
-		let src = this.egw()?.image(img_href);
+		let src = this.egw() && typeof this.egw().image == "function" ? this.egw()?.image(img_href) : "";
 		if(src)
 		{
 			return src;
@@ -162,14 +240,6 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 	{
 		super.updated(changedProperties);
 
-		if(changedProperties.has("src") && !this._img)
-		{
-			render(this._imageTemplate(), this);
-		}
-		if(changedProperties.has("src") && this._img)
-		{
-			this._img.setAttribute("src", this.parse_href(this.src) || this.parse_href(this.defaultSrc));
-		}
 		// if there's an href or onclick, make it look clickable
 		if(changedProperties.has("href") || typeof this.onclick !== "undefined")
 		{
@@ -177,7 +247,8 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 		for(const changedPropertiesKey in changedProperties)
 		{
-			if(Et2Image.getPropertyOptions()[changedPropertiesKey])
+			if(Et2Image.getPropertyOptions()[changedPropertiesKey] &&
+				!(changedPropertiesKey === 'label' || changedPropertiesKey === 'statustext'))
 			{
 				this._img[changedPropertiesKey] = this[changedPropertiesKey];
 			}
@@ -236,5 +307,3 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 	}
 }
-
-customElements.define("et2-image", Et2Image)//, {extends: 'img'});

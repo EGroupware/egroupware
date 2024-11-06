@@ -438,13 +438,7 @@ submit changes	admin	zh-tw	送出更新資料
 submit the search string	admin	zh-tw	送出搜尋字串
 subtype	admin	zh-tw	副類型
 switch it off, if users are randomly thrown out	admin	zh-tw	如果使用者不定時被登出，請將它關閉
-template selection	admin	zh-tw	選擇畫面配置
-text entry	admin	zh-tw	文字資料
-that application name already exists.	admin	zh-tw	應用程式名稱已經存在
-that application order must be a number.	admin	zh-tw	應用程式順序必須是數字
 that loginid has already been taken	admin	zh-tw	該使用者代碼已被使用了
-that name has been used already	admin	zh-tw	這個名稱已經被使用了
-that server name has been used already !	admin	zh-tw	這個伺服器名稱已經被使用了
 the api is current	admin	zh-tw	API不需要升級
 the api requires an upgrade	admin	zh-tw	API需要升級
 the groups must include the primary group	admin	zh-tw	這個群組必須包含主要群組

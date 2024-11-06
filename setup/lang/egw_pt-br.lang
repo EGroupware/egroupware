@@ -531,7 +531,6 @@ tables installed, unless there are errors printed above	setup	pt-br	Caso não ex
 tables upgraded	setup	pt-br	Tabelas atualizadas
 target version	setup	pt-br	Versão de destino
 tcp port number of database server	setup	pt-br	Número da porta TCP do servidor da base de dados
-text entry	setup	pt-br	Entrada de texto
 the %1 extension is needed from: %2.	setup	pt-br	A extensão %1 é requerida por: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	pt-br	A extensão %1 é necessária, se você está planejando usar a base de dados %2
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt-br	O valor da variável db_type (%1) indica um banco de dados que não tem suporte nesse servidor. Usaremos o primeiro tipo encontrado que tenha suporte nesse servidor.

@@ -23,8 +23,10 @@
 %s onchange	common	en	%s onchange
 %s readonly	common	en	%s read-only
 '%1' copied to clipboard	common	en	'%1' copied to clipboard
+'%1' does not match the required pattern '%2'	common	en	'%1' does not match the required pattern ('%2')
 '%1' has an invalid format	common	en	'%1' has an invalid format
 '%1' has an invalid format !!!	common	en	'%1' has an invalid format!
+'%1' is not a valid app-name ('%2')!	common	en	'%1' is NOT a valid app-name ('%2')!
 '%1' is not a valid date !!!	common	en	'%1' is not a valid date!
 '%1' is not a valid floatingpoint number !!!	common	en	'%1' is not a valid floating point number!
 '%1' is not a valid integer !!!	common	en	'%1' is not a valid integer!
@@ -1000,7 +1002,6 @@ open	common	en	Open
 open existing contact	common	en	Open existing contact
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
-open sidebox	common	en	Open side box
 open the online help.	common	en	Open the online help
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	en	OpenIDConnect login successful, but user '%1' does NOT exist in EGroupware, AND automatic user creating is disabled!
 operator	common	en	Operator
@@ -1176,7 +1177,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	en	Save
 save all	common	en	Save all
 save as	common	en	Save as
-save as PDF	common	en	Save as PDF
+save as pdf	common	en	Save as PDF
 save as zip	common	en	Save as ZIP
 save selected columns as default preference for all users.	common	en	Save columns as default preference for all users.
 save the changes made and close the window	common	en	Save changes and close
@@ -1257,7 +1258,7 @@ select work email address	common	en	Select work email address
 select year	common	en	Select year
 selectbox	common	en	Select box
 selection	common	en	Selection
-selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder.  %1 files unselected.
+selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder. %1 files unselected.
 send	common	en	Send
 send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL
@@ -1384,7 +1385,7 @@ textarea	common	en	Text area
 th	common	en	Th
 thailand	common	en	THAILAND
 the backup key has been deleted.	common	en	The backup key has been deleted.
-the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up.<br>If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1
+the browser popup blocker is on. please click on ok button to see the pop-up.\n\nif you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1	common	en	The browser popup blocker is on. Please click on ok button to see the pop-up. If you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	en	The document can contain placeholder like {{%3}}, to be replaced with the data. %1Full list of placeholder names%2.
 the following applications require upgrades	common	en	The following applications require upgrades
 the following document-types are supported:	preferences	en	The following document types are supported:

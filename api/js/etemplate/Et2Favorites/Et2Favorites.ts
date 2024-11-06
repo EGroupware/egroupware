@@ -53,13 +53,14 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 			...super.styles,
 			css`
 			  :host {
-				min-width: 8ex;
+				  min-width: 8ex;
 			  }
 
 			  et2-image {
-				display: flex;
-				height: 100%;
-				width: ${egwIsMobile() ? css`4ex` : css`2ex`}
+				  display: block;
+				  position: relative;
+                font-size: ${egwIsMobile() ? css`4ex` : css`20px`};
+				top: -2px;
 			  }
 
 			  et2-image[src="trash"] {

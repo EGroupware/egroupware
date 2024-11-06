@@ -8,11 +8,15 @@ all projects	timesheet	cs	Všechny projekty
 and its members	timesheet	cs	A jeho členy
 applies the changes	timesheet	cs	Použije změny
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	cs	Aplikovat akci na celý dotaz, ne jen na zobrazené pracovní výkazy!!!
+ask to start and stop working time with session	timesheet	cs	Požádejte o zahájení a ukončení pracovní doby se sezením
 both: allow to use projectmanager and free project-names	admin	cs	Obojí: povolit použití Správce projektů i libovolných názvů projektů
 by	timesheet	cs	od
+category for 'working time'	admin	cs	Kategorie pro 'Pracovní doba'
+change owner when updating	timesheet	cs	Změna vlastníka při aktualizaci
 changed status	timesheet	cs	Změněný stav
 check all	timesheet	cs	Označit vše
 comment by %1 at %2:	timesheet	cs	Komentář od %1 v %2:
+create a single 'working time' timesheet per	timesheet	cs	Vytvořit jeden pracovní výkaz „Pracovní doba“ na
 create new links	timesheet	cs	Vytvořit nové odkazy
 creates a new field	timesheet	cs	vytvoří novou položku
 creating new entry	timesheet	cs	vytvářím nový záznam
@@ -21,6 +25,10 @@ delete this status	admin	cs	Smazat tento stav
 deleted	timesheet	cs	Smazané
 deletes this field	timesheet	cs	Smaže tuto položku
 determines the order the fields are displayed	timesheet	cs	Určuje pořadí, v jakém jsou položky zobrazeny
+disable timers	timesheet	cs	Zakázat časovače
+do you want to associate it with the selected %1 entry?	common	cs	Chcete ji přiřadit k vybrané položce %1?
+do you want to start your working time?	common	cs	Chcete spustit pracovní dobu?
+do you want to stop your working time?	common	cs	Chcete zastavit svou pracovní dobu?
 each value is a line like <id>[=<label>]	timesheet	cs	Každá hodnota je řádek ve tvaru <id>[=<popis>]
 edit status	common	cs	Editovat stav
 edit this entry	timesheet	cs	Editovat tento záznam
@@ -30,11 +38,13 @@ entry deleted	timesheet	cs	Záznam smazán
 entry saved	timesheet	cs	Záznam uložen
 error deleting the entry!!!	timesheet	cs	Chyba při mazání záznamu!
 error saving the entry!!!	timesheet	cs	Chyba při ukládání záznamu!
+error storing working time	timesheet	cs	Chyba při ukládání pracovní doby
 existing links	timesheet	cs	Stávající odkazy
 export to openoffice spreadsheet	timesheet	cs	Exportovat do formátu tabulky Office
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	cs	Exportuje záznamy z Vašeho Pracovního výkazu do CSV souboru. CSV znamená 'hodnoty oddělené čárkou'. Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
 field must not be empty !!!	timesheet	cs	Položka nesmí být prázdná!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
+forgot to switch off working time?	common	cs	Zapomněli jste vypnout pracovní dobu?
 full: use only projectmanager	admin	cs	Plné: použít jen Správce projektů
 general fields:	timesheet	cs	Obecné položky:
 global categories	timesheet	cs	Globální kategorie
@@ -64,6 +74,8 @@ only admin	admin	cs	Jen administrátor
 only admin can edit this status	admin	cs	Tento stav smí editovat jen administrátor
 or endtime	timesheet	cs	nebo Koncový čas
 order	timesheet	cs	Pořadí
+overwrite time	common	cs	Doba přepisu
+overwriting start or stop time	timesheet	cs	Přepsání počátečního nebo koncového času
 parent	admin	cs	Nadřazený
 pause	common	cs	Pauza
 pause time	timesheet	cs	Doba pauzy
@@ -72,6 +84,8 @@ permission denied!!!	timesheet	cs	Přístup zamítnut!
 price	timesheet	cs	Cena
 projectmanager integration	admin	cs	Integrace se Správcem projektů
 quantity	timesheet	cs	Množství
+recorded	timesheet	cs	Nahrané
+restore this entry	timesheet	cs	Obnovit tento záznam
 save & new	timesheet	cs	Uložit a Nový
 saves the changes made	timesheet	cs	Uloží provedené změny
 saves the changes made and leaves	timesheet	cs	Před ukončením uloží provedené změny
@@ -84,6 +98,8 @@ select multiple timeshhets for a further action	timesheet	cs	Vybrat více pracov
 select the predefined status, whan creating a new timesheet	preferences	cs	Vybrat předdefinovaný stav pro nově vytvářené pracovní výkazy
 show a quantity sum (eg. to sum up negative overtime)	admin	cs	Zobrazit součet množství (např. pro sečtení záporného přesčasu)
 start	timesheet	cs	Začátek
+start & stop timer	common	cs	Spuštění a zastavení časovače
+start timer	common	cs	Spuštění časovače
 start-time can not be before last stop- or pause-time %1!	common	cs	Čas spuštění nesmí být před posledním časem zastavení nebo pauzy %1!
 starttime	timesheet	cs	Počáteční čas
 starttime has to be before endtime !!!	timesheet	cs	Počáteční čas musí předcházet času ukončení!
@@ -108,10 +124,18 @@ timesheet status-%1 '%2' added.	timesheet	cs	Pracovní výkaz stav-%1 '%2' byl p
 timesheet-%1 '%2' updated.	timesheet	cs	Pracovní výkaz-%1 '%2' byl zaktualizován.
 timesheet-%1 deleted.	timesheet	cs	Pracovní výkaz-%1 byl smazán.
 unitprice	timesheet	cs	Jednotková cena
+use field from csv if possible	timesheet	cs	Použijte pole z CSV, pokud je to možné
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 values for selectbox	timesheet	cs	Hodnoty pro rozbalovací nabídku
 view this entry	timesheet	cs	Zobrazit tento záznam
 week	timesheet	cs	Týden
+what should be done with unknown values?	timesheet	cs	Co je třeba udělat s neznámými hodnotami?
+will be created when saving ...	common	cs	Vytvoří se při ukládání ...
+working time	common	cs	Pracovní čas
+working time and timer	timesheet	cs	Pracovní doba a časovač
+working time from %1	timesheet	cs	Pracovní doba od %1
+working time of %1 hours stored	timesheet	cs	Uložená pracovní doba z %1 hodin
+would you like to be asked, to start and stop working time, when login in or off	timesheet	cs	Chcete, aby se při přihlášení nebo vypnutí zobrazil dotaz na spuštění a zastavení pracovní doby?
 yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 yesterday	timesheet	cs	Včera
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	Vaše databáze NENÍ aktuální (%1 vs. %2), spusťte prosím %3setup%4 a zaktualizujte Vaší databázi.

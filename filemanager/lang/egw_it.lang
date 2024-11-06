@@ -142,7 +142,6 @@ extended access control list	filemanager	it	Lista di controllo degli accessi (AC
 extended acl	filemanager	it	ACL estesa
 failed to change permissions of %1!	filemanager	it	Non è stato possibilile modificare i permessi di %1!
 failed to create directory!	filemanager	it	Non è stato possibile creare la cartella!
-favorites	filemanager	it	Preferiti
 file	common	it	Archivia
 file %1 already exists	filemanager	it	Il file %1 esiste già
 file %1 could not be created.	filemanager	it	Il file %1 non può essere creato.

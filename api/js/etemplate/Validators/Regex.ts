@@ -9,7 +9,6 @@ export class Regex extends Pattern
 	 */
 	static async getMessage(data)
 	{
-		// TODO: This is a poor error message, it shows the REGEX
-		return data.formControl.egw().lang("'%1' has an invalid format !!!", data.params);
+		return data.formControl.egw().lang("'%1' does not match the required pattern '%2'", data.modelValue, data.params);
 	}
 }

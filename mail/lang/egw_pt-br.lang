@@ -41,6 +41,7 @@ answered	mail	pt-br	Respondeu
 any of	mail	pt-br	qualquer
 any status	mail	pt-br	qualquer status
 append	mail	pt-br	anexar
+archive folder	mail	pt-br	Pasta de arquivo
 are you sure you want to delete all selected folders?	mail	pt-br	Tem certeza de que deseja excluir todas as pastas selecionadas?
 are you sure you want to move folder %1 to folder %2?	mail	pt-br	Tem certeza de que deseja mover a pasta %1 para a pasta %2?
 attach files	mail	pt-br	Anexar arquivos
@@ -90,6 +91,8 @@ connection status	mail	pt-br	Status da conexão
 contact label	mail	pt-br	Etiqueta de contato
 contains	mail	pt-br	contém
 contains(*)	mail	pt-br	Contém (*)
+convert mail to item and attach its attachments to this item (standard)	mail	pt-br	Converter e-mail em item e anexar seus anexos a esse item (padrão)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt-br	Converter e-mail em item, anexar seus anexos e adicionar mensagem bruta (.eml) como anexo
 convert only mail to item (ignore possible attachments)	mail	pt-br	Converter somente o e-mail em item (ignorar possíveis anexos)
 copied %1 message(s) from %2 to %3	mail	pt-br	Copiados %1 mensagem(s) de %2 a 3%
 copy to	mail	pt-br	Copiar para
@@ -99,8 +102,6 @@ cross account forward attachment is not allowed!	mail	pt-br	Não é permitido o 
 current folder	mail	pt-br	pasta atual
 current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
-date(newest first)	mail	pt-br	Data (mais novas primeiro)
-date(oldest first)	mail	pt-br	Data (mais antigas primeiro)
 deactive	mail	pt-br	Desativado
 default sorting order	mail	pt-br	Ordem padrão de classificação
 default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilitadas na barra de ferramentas do editor HTML ao compor um e-mail
@@ -153,7 +154,6 @@ drafts	mail	pt-br	Rascunhos
 drafts folder	mail	pt-br	Pasta Rascunhos
 edit account	mail	pt-br	Editar Conta
 edit account ...	mail	pt-br	Editar conta ...
-edit folder acl	mail	pt-br	Pasta Editar ACL
 edit folder acl ...	mail	pt-br	Pasta Editar ACL
 edit vacation settings	mail	pt-br	Editar configurações de férias
 effective only if server supports acl at all	admin	pt-br	Efetiva apenas se o servidor suporta ACL em tudo
@@ -216,6 +216,7 @@ ham folder	mail	pt-br	Pasta de spam
 handling of external http images / mixed content in mails	mail	pt-br	Manuseio de imagens externas/conteúdo misto em e-mails
 header lines	mail	pt-br	Linhas de Cabeçalho
 high	mail	pt-br	Alto
+high priority	mail	pt-br	Alta prioridade
 hostname or ip	mail	pt-br	Nome do host ou IP
 how often to check with the server for new mail	mail	pt-br	Com que frequência verificar se há novos e-mails no servidor
 how to forward messages	mail	pt-br	Como encaminhar mensagens
@@ -257,6 +258,7 @@ learning as spam failed because of %1	mail	pt-br	O aprendizado como spam falhou 
 less than	mail	pt-br	menor que
 limit mailing list results when searching for addresses	mail	pt-br	Limitar os resultados da lista de mala direta ao pesquisar endereços
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	pt-br	Lista de ações a serem ativadas por padrão (por exemplo, ação de composição de e-mail salvar como InfoLog)
+low priority	mail	pt-br	Baixa prioridade
 mail	common	pt-br	Correio
 mail acl	mail	pt-br	Direitos de acesso
 mail filter	mail	pt-br	Filtro de correio
@@ -345,6 +347,7 @@ real name email	mail	pt-br	Nome real [e-mail]
 real name organization email	mail	pt-br	Nome real Organização [e-mail]
 refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
 reject with	mail	pt-br	rejeitar com
+reloaded account %1	mail	pt-br	Conta recarregada %1.
 remember the password for	mail	pt-br	Lembrar a senha de
 remove all	mail	pt-br	Remover tudo
 remove immediately	mail	pt-br	Remover imediatamente
@@ -366,7 +369,6 @@ report this email content as ham (not spam) - spam solutions like spamtitan will
 report this email content as spam - spam solutions like spamtitan will learn	mail	pt-br	Denunciar este conteúdo de e-mail como Spam - soluções de spam como o spamTitan aprenderão
 required pear class mail/mimedecode.php not found.	mail	pt-br	Classe PEAR requeridos Correio / mimeDecode.php não encontrado.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	pt-br	É necessário desativar se você usar o Dovecot com sinalizadores de visualização privada em pastas compartilhadas ou de usuário!
-row order style	mail	pt-br	estilo da ordem de linha
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pt-br	A criptografia S/MIME falhou porque nenhum certificado foi encontrado para o endereço do remetente: %1
 save all attachments to filemanager	mail	pt-br	Salvar todos os anexos para o gerenciador de arquivos
 save as draft	mail	pt-br	Salvar como rascunho
@@ -407,13 +409,11 @@ show vertical with all columns	mail	pt-br	Mostrar vertical com todas as colunas
 show/hide preview pane in mail list view	mail	pt-br	Mostrar/ocultar painel de visualização na exibição da lista de correio
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	pt-br	Mostra uma notificação visível temporária que inclui o endereço de origem, o assunto e um trecho do e-mail.
 sieve	mail	pt-br	Sieve
-sieve script name	mail	pt-br	Nome do script Sieve
 sign your message with smime certificate	mail	pt-br	Assine sua mensagem com o certificado S/MIME
 signature	mail	pt-br	Assinatura
 signature at top	mail	pt-br	assinatura no topo
 signature position and visibility	mail	pt-br	Posição da assinatura e visibilidade
 signed by	mail	pt-br	Assinado por
-small view	mail	pt-br	Visão resumida
 smime encrypted message	mail	pt-br	S/MIME mensagem criptografada
 smime signed message	mail	pt-br	Mensagem assinada S/MIME
 smtp	mail	pt-br	SMTP
@@ -437,7 +437,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	pt-br	Esta mensagem é criptografada por S/MIME e protegida por senha.
 timeout on connections to your imap server	mail	pt-br	Tempo limite nas conexões com o servidor IMAP
 to do	mail	pt-br	Como fazer
-toggle all folders view for %1	mail	pt-br	Alternar a visualização de todas as pastas para %1
 toggled on actions	mail	pt-br	Ativado em ações
 trash	mail	pt-br	Lixeira
 trash folder	mail	pt-br	Pasta Lixeira
@@ -450,10 +449,6 @@ view header lines	mail	pt-br	Exibir linhas de cabeçalho
 when deleting messages	mail	pt-br	Ao remover mensagens
 write	mail	pt-br	Gravar
 wrote	mail	pt-br	escreveu
-yes, only trigger connection reset	mail	pt-br	sim, apenas aciona a redefinição da conexão
-yes, show all debug information available for the user	mail	pt-br	sim, mostrar todas as informações de depuração disponíveis para o usuário
-yes, show basic info only	mail	pt-br	Sim, mostrar apenas informações básicas
-you can either choose to save as infolog or tracker, not both.	mail	pt-br	Você pode optar por salvar como InfoLog OU rastreador, mas não como ambos.
 you can select what info to be displayed on email tag	mail	pt-br	Você pode selecionar as informações a serem exibidas na tag de e-mail.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	pt-br	Você pode usar $$start$$ para a data de início acima e $$end$$ para a data de término.
 you may add this certificate into your contact, if you trust this signature.	mail	pt-br	Você pode adicionar esse certificado ao seu contato, se confiar nessa assinatura.

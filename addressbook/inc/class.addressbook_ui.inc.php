@@ -2282,7 +2282,6 @@ class addressbook_ui extends addressbook_bo
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
-			$content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $content['cat_id_tree'] : $content['cat_id'];
 
 			switch($button)
 			{
@@ -2650,9 +2649,6 @@ class addressbook_ui extends addressbook_bo
 		// Registry has view_id as contact_id, so set it (custom fields uses it)
 		$content['contact_id'] = $content['id'];
 
-		// Avoid ID conflict with tree & selectboxes
-		$content['cat_id_tree'] = $content['cat_id'];
-
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
@@ -2805,7 +2801,7 @@ class addressbook_ui extends addressbook_bo
 		$preserve['old_owner'] = $content['owner'];
 		unset($preserve['jpegphoto'], $content['jpegphoto']);	// unused and messes up json encoding (not utf-8)
 		$this->tmpl->setElementAttribute('tabs', 'add_tabs', true);
-		$tabs =& $this->tmpl->getElementAttribute('tabs', 'extraTabs');
+		$tabs =& $this->tmpl->setElementAttribute('tabs', 'extraTabs');
 		if (($first_call = !isset($tabs)))
 		{
 			$tabs = array();
@@ -3161,7 +3157,6 @@ class addressbook_ui extends addressbook_bo
 		{
 			$content['cat_id'] = $this->categories->check_list(Acl::READ,$content['cat_id']);
 		}
-		$content['cat_id_tree'] = $content['cat_id'];
 
 		$content['view'] = true;
 		$content['link_to'] = array(
@@ -3356,9 +3351,6 @@ class addressbook_ui extends addressbook_bo
 	{
 		if(!empty($_content))
 		{
-
-			$_content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $_content['cat_id_tree'] : $_content['cat_id'];
-
 			$response = Api\Json\Response::get();
 
 			$query = Api\Cache::getSession('addressbook', 'index');
@@ -3408,8 +3400,6 @@ class addressbook_ui extends addressbook_bo
 		$this->tmpl->read('addressbook.edit');
 		$content = Api\Cache::getSession('addressbook', 'advanced_search');
 		$content['n_fn'] = $this->fullname($content);
-		// Avoid ID conflict with tree & selectboxes
-		$content['cat_id_tree'] = $content['cat_id'];
 
 		for($i = -23; $i<=23; $i++)
 		{

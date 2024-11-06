@@ -8,16 +8,10 @@ acl grants have been updated	preferences	ca	Permisos de LCA actualitzats
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	ca	Qualsevol llistat en EGroupware mostrarà aquest número d'entrades o línies per plana.<br>Una quantitat elevada ralentitza la plana, massa poques poden no ser prou informació.
 are you sure you want to delete this category ?	preferences	ca	Esteu segurs d'esborrar aquesta categoria ?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	ca	Canvia la contrasenya d'un usuari quan li passes la contrassenya antiga i la nova. Retorna CERT si tot va bé, FALS en cas d'error.
-change your password	preferences	ca	Canvieu la vostra contrasenya
-change your profile	preferences	ca	Canvieu el vostre perfil
-change your settings	preferences	ca	Canvieu les vostres Configuracions
-charset for the csv export	addressbook	ca	Joc de caràcters per l'exportació CSV
-click to select a color	preferences	ca	Pitjeu per a seleccionar un color
 color	preferences	ca	Color
 country	preferences	ca	País
 date format	preferences	ca	Format de data
 default	preferences	ca	Defecte
-default application	preferences	ca	Aplicació per defecte
 default preferences	preferences	ca	Preferències per defecte
 delete categories	preferences	ca	Esborrar Categories
 description can not exceed 255 characters in length !	preferences	ca	La Descripció no pot passar de 255 caràcters de llarg !
@@ -50,11 +44,9 @@ no default	preferences	ca	Sense valor per defecte
 no user-selection at all	common	ca	No hi ha selecció d'usuari
 note: this feature does *not* change your email password. this will	preferences	ca	nota: Aquesta opció *NO* canvia la vostra contrasenya de correu. Serà
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ca	Nota: Aquesta opció *NO* canvia la vostra contrasenya de correu. Serà necessari fer-ho manualment.
-please, select a new theme	preferences	ca	Escolliu un nou tema
 popup with search	preferences	ca	Finestra emergent amb recerca
 re-enter your password	preferences	ca	Torneu a entrar la vostra contrasenya
 read prefs for the specified application.	preferences	ca	Llegeix prefs per l'aplicació especificada.
-select different theme	preferences	ca	Trieu un Tema diferent
 select one	preferences	ca	Trieu-ne un
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ca	Trieu l'idioma de missatges i text a EGroupware.<br>Alguns idiomes potser no tenen tots els missatges traduits, en aquest cas la resta la podeu veure en Anglès.
 selectbox	preferences	ca	Llista desplegable
@@ -85,5 +77,4 @@ write prefs for the specified application.	preferences	ca	Escriu prefs per l'apl
 you can show the applications as icons only, icons with app-name or both.	preferences	ca	Podeu mostrar les aplicacions com: només icones, només nom o bé ambdós.
 you do not have permission to set acl's in this mode!	preferences	ca	No teniu permís per establir LCA's en aquest mode!
 you must enter a password	preferences	ca	Heu d'entrar una contrasenya
-your current theme is: %1	preferences	ca	La vostra hora actual és: %1
 your preferences	preferences	ca	Les vostres Preferències

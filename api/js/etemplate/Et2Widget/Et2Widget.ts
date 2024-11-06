@@ -12,6 +12,7 @@ import {css, LitElement, PropertyValues, unsafeCSS} from "lit";
 import {dedupeMixin} from "@open-wc/dedupe-mixin";
 import type {et2_container} from "../et2_core_baseWidget";
 import type {et2_DOMWidget} from "../et2_core_DOMWidget";
+import bootstrapIcons from "../Styles/bootstrap-icons";
 
 /**
  * This mixin will allow any LitElement to become an Et2Widget
@@ -106,6 +107,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		{
 			return [
 				...(super.styles ? (Array.isArray(super.styles) ? super.styles : [super.styles]) : []),
+				bootstrapIcons,
 				css`
 					:host([disabled]) {
 						display: none;
@@ -311,11 +313,15 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			super.connectedCallback();
 
 			this.addEventListener("click", this._handleClick);
-
-			if(this.statustext && !egwIsMobile())
+			if (this.statustext && !egwIsMobile())
 			{
-				this.egw().tooltipBind(this, this.egw().lang(this.statustext));
+				this.bindTooltip();
 			}
+		}
+
+		bindTooltip()
+		{
+			this.egw().tooltipBind(this, this.egw().lang(this.statustext));
 		}
 
 		disconnectedCallback()
@@ -324,6 +330,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 
 			this.removeEventListener("click", this._handleClick);
 		}
+
 
 		/**
 		 * NOT the setter, since we cannot add to the DOM before connectedCallback()
@@ -511,7 +518,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				this.egw().tooltipUnbind(this);
 				if(this.statustext)
 				{
-					this.egw().tooltipBind(this, this.statustext);
+					this.bindTooltip()
 				}
 			}
 			if(changedProperties.has("onclick"))
@@ -709,7 +716,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					if(node.data.replace(/^\s+|\s+$/g, ''))
 					{
-						this.innerText = node.data;
+						this.appendChild(node.cloneNode());
 					}
 					continue;
 				}
@@ -778,6 +785,13 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			if(_nodeName.charAt(0) == '@' || _nodeName.indexOf('$') >= 0)
 			{
 				_nodeName = attributes["type"] = this.getArrayMgr('content').expandName(_nodeName);
+			}
+
+			// If using type attribute instead of nodeName makes things invalid, don't
+			// Some widgets use their type attribute
+			if(_node.hasAttribute("type") && !window.customElements.get(_nodeName) && typeof et2_registry[_nodeName] === "undefined" && window.customElements.get(_node.nodeName.toLowerCase()))
+			{
+				_nodeName = _node.nodeName.toLowerCase();
 			}
 
 			let widget;
@@ -1014,8 +1028,11 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				}
 			};
 			doLoadingFinished();
+			const updateComplete = this.updateComplete;
+			// Record widget for debug
+			updateComplete["widget"] = this;
 
-			promises.push(this.getUpdateComplete());
+			promises.push(updateComplete);
 		}
 
 		getWidgetById(_id)
@@ -1422,7 +1439,24 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			}
 
 			// If we're the root object, return the phpgwapi API instance
-			return typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? window['egw'] : null);
+			let egwInstance = typeof egw === "function" ? egw('phpgwapi', wnd) : (window['egw'] ? <IegwAppLocal><unknown>window['egw'] : null);
+
+			// Make sure required methods are there
+			// These methods are used inside widgets, but may not always be available depending on egw() loading (tests, docs)
+			const required = {
+				debug: () => {console.log(arguments);},
+				lang: (l) => {return l;},
+				preference: () => {return false;},
+			};
+			for(let functionName in required)
+			{
+				if(egwInstance && typeof egwInstance[functionName] !== "function")
+				{
+					egwInstance[functionName] = required[functionName];
+				}
+			}
+
+			return egwInstance;
 		}
 	}
 

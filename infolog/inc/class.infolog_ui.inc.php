@@ -225,10 +225,24 @@ class infolog_ui
 		{
 			$show_links = $this->prefs['show_links'];
 		}
+		$only_app = '';
+		switch($show_links)
+		{
+			case 'links':
+				$only_app = '!' . Link::VFS_APPNAME;
+				break;
+			case 'attach':
+				$only_app = Link::VFS_APPNAME;
+				break;
+			default:
+				$only_app = '';
+				break;
+		}
 		if(($show_links != 'none' && $show_links != 'no_describtion' ||
 				$this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) &&
-			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], '', 'link_lastmod DESC', true, true))))
+			(isset($info['links']) || ($info['links'] = Link::get_links('infolog', $info['info_id'], $only_app, 'link_lastmod DESC', true, true, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']))))
 		{
+			$info['filelinks']['total'] = $show_links == 'attach' ? count($info['links']) : Link::$row_count;
 			$timesheets = array();
 			foreach($info['links'] as $link)
 			{
@@ -241,6 +255,7 @@ class infolog_ui
 
 				if($link['deleted'])
 				{
+					$info['filelinks']['total']--;
 					continue;
 				}    // skip deleted links, but incl. them in row_mod!
 
@@ -250,6 +265,10 @@ class infolog_ui
 					($show_links == 'all' || ($show_links == 'links') === ($link['app'] != Link::VFS_APPNAME)))
 				{
 					$info['filelinks'][] = $link;
+				}
+				else
+				{
+					$info['filelinks']['total']--;
 				}
 				if (!$info['pm_id'] && $link['app'] == 'projectmanager')
 				{
@@ -1921,7 +1940,7 @@ class infolog_ui
 					$active_tab = $content['tabs'];
 					if (!($info_id = $this->bo->write($content, true, true, true, $content['no_notifications'])))
 					{
-						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
+						$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Permission denied!') :
 							lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
 							lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
 								htmlspecialchars(Egw::link('/index.php',array(

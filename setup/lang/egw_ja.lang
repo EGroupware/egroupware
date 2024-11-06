@@ -185,7 +185,6 @@ table change messages	setup	ja	テーブル変更メッセージ
 tables dropped	setup	ja	テーブルを削除しました
 tables installed, unless there are errors printed above	setup	ja	をインストールしました。エラー表示がなければ完了です。
 tables upgraded	setup	ja	テーブルを更新しました
-text entry	setup	ja	テキスト入力
 the tables	setup	ja	テーブル
 this stage is completed<br />	setup	ja	この段階は完了しました。<br />
 top	setup	ja	上部

@@ -496,7 +496,6 @@ tables installed, unless there are errors printed above	setup	fi	taulut asennett
 tables upgraded	setup	fi	Taulut päivitettý
 target version	setup	fi	Kohdeversio
 tcp port number of database server	setup	fi	Tietokantapalvelimen TCP-portti
-text entry	setup	fi	Tekstitietue
 the %1 extension is needed, if you plan to use a %2 database.	setup	fi	Laajennus %1 tarvitaan, jos haluat käyttää %2-tietokantaa.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fi	Oletuksena käytettävä tietokanta (%1) ei toimi tällä palvelimella. Käytetään ensimmäistä toimivaa tyyppiä.
 the file	setup	fi	Tiedosto

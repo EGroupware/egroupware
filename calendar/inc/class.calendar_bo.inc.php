@@ -119,6 +119,13 @@ class calendar_bo
 		'D' => 'Delegated',
 		'G' => 'Group invitation',
 	);
+    var $status_images = array(
+        'A' => 'check-lg',
+        'R' => 'x-circle',
+        'T' => 'clock-history',
+        'U' => 'question-lg',
+        'D' => 'share',
+    );
 	/**
 	 * @var array recur_types translates MCAL recur-types to verbose labels
 	 */

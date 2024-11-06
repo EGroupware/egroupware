@@ -23,6 +23,7 @@ always show notifiction	mail	sv	Visar alltid meddelande
 answered	mail	sv	Svarat
 any of	mail	sv	Någon av
 any status	mail	sv	Alla status
+archive folder	mail	sv	Arkivmapp
 are you sure you want to delete all selected folders?	mail	sv	Är du säker på att du vill ta bort alla markerade mappar?
 are you sure you want to move folder %1 to folder %2?	mail	sv	Är du säker på att du vill flytta mapp %1 till mapp %2?
 attach files	mail	sv	Bifoga filer
@@ -46,6 +47,9 @@ change editor type	mail	sv	Växla redigerare till HTML-läge
 changing subject failed because of %1	mail	sv	Byte av ämne misslyckades på grund av %1
 changing subject failed folder %1 does not exist	mail	sv	Byte av ämne misslyckades mappen %1 finns inte
 check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
+check to save as calendar event on send	mail	sv	Kontrollera knappen för att skapa som händelse efter sändning
+check to save as infolog on send	mail	sv	Kryssa i knappen för att skapa som InfoLog efter sändning
+check to save as tracker entry on send	mail	sv	Kontrollknapp för att skapa som ärende efter sändning
 checking admin credentials failed	mail	sv	Kontroll av administratörsuppgifter misslyckades
 compose	mail	sv	Skriv
 compose as new	mail	sv	Skriv som ny
@@ -56,12 +60,13 @@ configured values will be set automatically on compose dialog for respected fiel
 connect to profile %1	mail	sv	Anslut till profil %1
 contact label	mail	sv	Etikett för kontakt
 contains	mail	sv	Innehåller
+convert mail to item and attach its attachments to this item (standard)	mail	sv	Konvertera e-post till objekt och bifoga dess bilagor till detta objekt (standard)
+convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sv	Konvertera e-post till objekt, bifoga dess bilagor och lägg till råmeddelande (.eml) som bilaga
+convert only mail to item (ignore possible attachments)	mail	sv	Konvertera endast e-post till objekt (ignorera eventuella bilagor)
 copy to	mail	sv	Kopiera
 create new account	mail	sv	Skapa nytt konto
 cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
 current subject	mail	sv	Aktuellt ämne
-date(newest first)	mail	sv	Datum (nyaste först)
-date(oldest first)	mail	sv	Datum (äldsta först)
 default sorting order	mail	sv	Standard sorterings ordning
 default toolbar actions shown in mail's html editor	mail	sv	Funktioner som är aktiverade i HTML-redigerarens verktygsfält när du skriver ett e-postmeddelande
 default value for remembering s/mime passphrase in minutes	mail	sv	Standardvärde för att komma ihåg S/MIME-passfrasen i minuter
@@ -139,6 +144,7 @@ greater than	mail	sv	Större än
 ham folder	mail	sv	Ham-mappen
 handling of external http images / mixed content in mails	mail	sv	Hantering av externa http-bilder / blandat innehåll i e-postmeddelanden
 header lines	mail	sv	Brevhuvud
+high priority	mail	sv	Hög prioritet
 html	mail	sv	HTML
 html mode	mail	sv	HTML-läge
 ident name	mail	sv	Identnamn
@@ -177,6 +183,7 @@ learning as spam failed because of %1	mail	sv	Inlärning som spam misslyckades p
 less than	mail	sv	Mindre än
 limit mailing list results when searching for addresses	mail	sv	Begränsa resultat från e-postlistor vid sökning efter adresser
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sv	Lista över åtgärder som ska aktiveras/aktiveras som standard (t.ex. åtgärden Mail compos spara som InfoLog).
+low priority	mail	sv	Låg prioritet
 mail	common	sv	E-post
 mail acl	mail	sv	Tillträdesrättigheter
 mail filter	mail	sv	E-postfilter
@@ -203,6 +210,7 @@ modify subject of this message	mail	sv	Ändra ämnet för detta meddelande
 move selected mails to archive	mail	sv	Flytta markerade e-postmeddelanden till arkiv
 move selected to	mail	sv	Flytta valda till
 move to	mail	sv	Flytta till
+move to archive	mail	sv	Flytta till arkivmapp
 move to trash	mail	sv	Flytta till Borttaget
 moved %1 message(s) from %2 to %3	mail	sv	Flyttade %1 meddelande(n) från %2 till %3
 moving folders from one mailaccount to another is not supported	mail	sv	Flyttning av mappar från ett e-postkonto till ett annat stöds inte
@@ -285,7 +293,6 @@ report this email content as spam - spam solutions like spamtitan will learn	mai
 required pear class mail/mimedecode.php not found.	mail	sv	PEAR-klassen Mail/mimeDecode.php hittades inte.
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	sv	Krävs för att inaktivera om du använder Dovecot med privata flaggor på delad eller användarmapp!
 rights	mail	sv	Rättigheter
-row order style	mail	sv	Rad sortering
 save all	mail	sv	Spara alla
 save all attachments to filemanager	mail	sv	Spara alla bilagor i filhanteraren
 save as draft	mail	sv	Spara som utkast
@@ -326,13 +333,11 @@ show vertical with all columns	mail	sv	Visa vertikalt med alla kolumner
 show/hide preview pane in mail list view	mail	sv	Visa/dölj förhandsgranskningsfönstret i e-postlistan.
 shows a temporary visible notification including from address, subject and a snippet of the mail	mail	sv	Visar ett tillfälligt synligt meddelande inklusive från-adress, ämne och ett utdrag ur e-postmeddelandet.
 sieve	mail	sv	Sieve
-sieve script name	mail	sv	Sieve skript namn
 sieve server	mail	sv	Sikta server
 sign your message with smime certificate	mail	sv	Signera ditt meddelande med S/MIME-certifikat
 signature	mail	sv	Signatur
 signature at top	mail	sv	Signatur högst upp
 signature position and visibility	mail	sv	Signaturens position och synlighet
-small view	mail	sv	Liten vy
 smime encrypted message	mail	sv	S/MIME-krypterat meddelande
 smime signed message	mail	sv	S/MIME-signerat meddelande
 smtp	mail	sv	SMTP
@@ -352,7 +357,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	sv	Detta meddelande är S/MIME-krypterat och lösenordsskyddat.
 timeout on connections to your imap server	mail	sv	Timeout för anslutningar till din IMAP-server
 to do	mail	sv	Att göra
-toggle all folders view for %1	mail	sv	Växla vyn Alla mappar för %1
 toggled on actions	mail	sv	Kopplad till åtgärder
 trash	mail	sv	Papperskorg
 trash folder	mail	sv	Borttaget
@@ -363,10 +367,6 @@ view header lines	mail	sv	Visa brevhuvudet
 when deleting messages	mail	sv	Vid meddelande radering
 write	mail	sv	Skriv
 wrote	mail	sv	Skrev
-yes, only trigger connection reset	mail	sv	ja, endast utlösa återställning av anslutning
-yes, show all debug information available for the user	mail	sv	ja, visa all felsökningsinformation som är tillgänglig för användaren
-yes, show basic info only	mail	sv	ja, visa endast grundläggande information
-you can either choose to save as infolog or tracker, not both.	mail	sv	Du kan antingen välja att spara som InfoLog ELLER tracker, inte båda.
 you can select what info to be displayed on email tag	mail	sv	Du kan välja vilken information som ska visas på e-posttaggen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sv	Du kan använda $$start$$ för ovanstående startdatum och $$end$$ för slutdatum.
 you may add this certificate into your contact, if you trust this signature.	mail	sv	Du kan lägga till detta certifikat i din kontakt, om du litar på denna signatur.

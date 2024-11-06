@@ -182,10 +182,13 @@ export class et2_file extends et2_inputWidget
 		this.span = jQuery(document.createElement("et2-button"))
 			.addClass('et2_file_span')
 			.attr("image", "attach")
-			.attr('label', this.options.label || '')
 			.attr("noSubmit", true)
 			.appendTo(this.node);
-		
+		if(this.options.label)
+		{
+			this.span.attr('label', this.options.label || '')
+		}
+
 		let span = this.span;
 		this.input = jQuery(document.createElement("input"))
 			.attr("type", "file").attr("placeholder", this.options.blur)

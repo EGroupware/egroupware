@@ -261,7 +261,7 @@ export function cleanSelectOptions(options : SelectOption[] | string[] | object)
 			{
 				option.value = option.value.toString();
 			}
-			if(typeof option.label !== 'string')
+			if(option.label && typeof option.label !== 'string')
 			{
 				fixed_options.push(...cleanSelectOptions(option.label));
 			}

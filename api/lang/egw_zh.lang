@@ -94,6 +94,7 @@ all addressbooks	groupdav	zh	所有地址簿
 all categories	common	zh	所有类别
 all days	common	zh	全部日数
 all fields	common	zh	所有字段
+all files	common	zh	所有文件
 all in one	groupdav	zh	一体化
 all languages	common	zh	所有语言
 all operations save the template!	common	zh	所有操作保存模板！
@@ -647,6 +648,7 @@ liechtenstein	common	zh	列支敦士登
 light mode	common	zh	浅色模式
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh	第%1行：'%2'<br><b>csv 数据与数据表%3栏数不匹配 ==> 忽略</b>
 link	common	zh	链接
+link to each entry	common	zh	链接到每个条目
 linkapps	common	zh	链接应用程序
 linkentry	common	zh	链接条目
 linklist	common	zh	链接列表
@@ -656,6 +658,7 @@ list	common	zh	列表
 list members	common	zh	会员列表
 lithuania	common	zh	立陶宛
 load	common	zh	加载
+load more links ...	common	zh	加载更多链接...
 load this template into the editor	common	zh	载入该模板到编辑器中
 loading	common	zh	载入
 local	common	zh	本地
@@ -691,6 +694,11 @@ may	common	zh	五月
 mayotte	common	zh	马约特岛
 medium	common	zh	中间
 menu	common	zh	菜单
+merge	common	zh	合并
+merge & send	common	zh	合并并发送
+merge individually	common	zh	单独合并
+merge options	common	zh	合并选项
+merged document filename	preferences	zh	合并文件的文件名
 message	common	zh	消息
 mexico	common	zh	墨西哥
 micronesia, federated states of	common	zh	密克罗尼西亚联邦
@@ -805,7 +813,6 @@ open	common	zh	待决事项
 open existing contact	common	zh	打开现有联系人
 open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口·
-open sidebox	common	zh	打开侧边栏
 open the online help.	common	zh	开启在线帮助
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	zh	OpenIDConnect 登录成功，但 EGroupware 中不存在用户 '%1'，而且用户自动创建功能被禁用！
 operator	common	zh	操作符
@@ -943,6 +950,8 @@ saudi arabia	common	zh	沙特阿拉伯
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh	Savant2 版本不同于 Savant2 wrapper。<br/>这个版本：%1 <br/>Savants 版本：%2
 save	common	zh	保存
 save all	common	zh	保存所有
+save as pdf	common	zh	保存为 PDF
+save as zip	common	zh	保存为 ZIP
 save selected columns as default preference for all users.	common	zh	保存所选列作为所有用户默认首选。
 save the changes made and close the window	common	zh	保存所作更改并且关闭窗口
 save the etemplate under the above keys (name, ...), change them for a saveas	common	zh	在上面的键值(name,...)之下保存模板，把它们改为另存将
@@ -1005,6 +1014,7 @@ select work email address	common	zh	选择工作邮件地址
 select year	common	zh	选择年
 selectbox	common	zh	下拉选单
 selection	common	zh	选择
+selection of files can only be done in one folder.  %1 files unselected.	common	zh	只能在一个文件夹中选择文件。未选择 %1 文件。
 send	common	zh	发送
 senegal	common	zh	塞内加尔
 september	common	zh	九月

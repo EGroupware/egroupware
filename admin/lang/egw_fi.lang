@@ -22,6 +22,7 @@
 %1 token %2.	admin	fi	%1 merkki %2.
 %1 user %2	admin	fi	%1 käyttäjä %2
 (de)activate mail accounts	admin	fi	(de)aktivoi sähköpostitilit
+(default no, leave it off if you dont use it)	admin	fi	Oletusarvo = Ei, jätä pois päältä, jos et käytä sitä.
 (no subject)	admin	fi	Ei aihetta
 -  type	admin	fi	- muoto
 1 year	admin	fi	1 vuosi
@@ -359,11 +360,12 @@ host information	admin	fi	Palvelimen tiedot
 hour<br>(0-23)	admin	fi	Tunti<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fi	Thumbnailin maksimikoko linkitetyille kuville pikseleinä
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fi	Kuinka monta vuorokautta tietoja säilytetään käyttölokissa (oletus: 90)
-how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fi	Kuinka monta tietuetta käyttäjien (joilla EI ole ylläpiöoikeuksia) sallitaan viedä (tyhjä = ei rajoitusta, ei = ei vientiä)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fi	Kuinka monta tietuetta käyttäjien (joilla EI ole ylläpiöoikeuksia) sallitaan viedä (Tyhjä = ei rajoitusta, Ei = ei vientiä)
 how many minutes should an account or ip be blocked (default 1) ?	admin	fi	Kuinka moneksi minuutiksi tunnus tai IP-osoite lukitaan (oletus: 30)
 how should email addresses for new users be constructed?	admin	fi	Kuinka uusien käyttäjien sähköpostitunnus luodaan
 icon	admin	fi	Kuvake
 idle	admin	fi	Vapaa
+if different from email address	admin	fi	Jos eri kuin sähköpostiosoite
 if no acl records for user or any group the user is a member of	admin	fi	Jos käyttäjälle tai ryhmälle ei ole ACL -tietueita, kuuluu käyttäjä ryhmään
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
 if using ssl or tls, you must have the php openssl extension loaded.	admin	fi	Jos SSL tai TLS on käytössä, PHP openssl lisäosa pitää olla ladattuna.
@@ -478,6 +480,7 @@ no alternate email address	admin	fi	Ei vaihtoehtoista osoitetta
 no encryption	admin	fi	Ei suojausta
 no forwarding email address	admin	fi	Välityksen sähköpostiosoitetta ei löytynyt
 no jobs in the database !!!	admin	fi	Tietokannassa ei ole töitä!
+no limit	admin	fi	Ei rajoitusta
 no login history exists for this user	admin	fi	Käyttäjällä ei ole kirjautumishistoriaa!
 no matches found	admin	fi	Yhtään kohdetta ei löytynyt!
 no message returned.	admin	fi	Viestiä ei palautettu
@@ -611,6 +614,7 @@ sieve server port	admin	fi	Sieve -palvelimen portti
 sieve settings	admin	fi	Sieven asetukset
 site	admin	fi	Palvelu
 smtp authentication	admin	fi	SMTP -tunnistus
+smtp only: to create only an smtp account	admin	fi	Luo vain SMTP-tili ilman IMAP:tä
 smtp options	admin	fi	SMTP -asetukset
 smtp server name	admin	fi	SMTP -palvelimen nimi
 smtp settings	admin	fi	SMTP -asetukset
@@ -636,14 +640,8 @@ submit the search string	admin	fi	Hae merkkijonoa
 subtype	admin	fi	Alamuoto
 success	admin	fi	Onnistunut
 switch it off, if users are randomly thrown out	admin	fi	Ota pois käytöstä, jos käyttäjät ovat satunnaisesti hylätty
-template selection	admin	fi	Malliohjan valinta
 templates	admin	fi	Mallipohjat
-text entry	admin	fi	Tekstille
-that application name already exists.	admin	fi	Sovelluksen nimi on jo käytössä.
-that application order must be a number.	admin	fi	Järjestyksen pitää olla numero.
 that loginid has already been taken	admin	fi	Käyttäjätunnus on jo käytössä.
-that name has been used already	admin	fi	Nimi on jo käytössä.
-that server name has been used already !	admin	fi	Palvelimen nimi on jo käytössä!
 the api is current	admin	fi	API on ajan tasalla
 the api requires an upgrade	admin	fi	API vaatii päivityksen
 the groups must include the primary group	admin	fi	Ensisijainen ryhmä on valittava.

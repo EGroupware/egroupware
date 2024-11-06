@@ -657,6 +657,8 @@ app.classes.mail = AppJS.extend(
 				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
 				var node = tree.getNode(_id);
+				// Make sure ID is a string, that's what tree uses
+				_id = "" + _id;
 				switch(_type)
 				{
 					case 'delete':
@@ -2018,7 +2020,7 @@ app.classes.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
 			{
-					this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined'? "Reloaded Folder %1" : "Reloaded Account %1") ,
+				this.egw.message(this.egw.lang((typeof _status[i].parent !== 'undefined' ? "Reloaded Folder %1" : "Reloaded Account %1"),
 					(typeof _status[i] == "string" ? _status[i].replace(this._unseen_regexp, '') :
 							(_status[i].text ? _status[i].text.replace(this._unseen_regexp, '') : _status[i].id))), 'success');
 			}
@@ -3243,7 +3245,7 @@ app.classes.mail = AppJS.extend(
 	 */
 	vfsSaveCallback: function (_data)
 	{
-		egw.message(_data.msg, _data.success ? "success": "error");
+		egw.message(_data.msg, _data.success ? "success" : "error");
 	},
 
 	/**
@@ -3894,7 +3896,7 @@ app.classes.mail = AppJS.extend(
 		var targetProfile = destination.id.split('::');
 		if (sourceProfile[0]!=targetProfile[0])
 		{
-			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'),'error');
+			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'), 'error');
 			return;
 		}
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -5722,7 +5724,7 @@ app.classes.mail = AppJS.extend(
 			email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
 			domain = email.split('@')[1];
 		}
-		switch (_action.id)
+		switch (_action.id.replace(/_all$/, ''))
 		{
 			case 'whitelist_email_add':
 				_action.set_caption(this.egw.lang('Add "%1" into whitelisted emails', email));
@@ -5748,7 +5750,6 @@ app.classes.mail = AppJS.extend(
 			case 'blacklist_domain_remove':
 				_action.set_caption(this.egw.lang('Remove "%1" from blacklisted domains', domain));
 				break;
-
 		}
 
 		return true;

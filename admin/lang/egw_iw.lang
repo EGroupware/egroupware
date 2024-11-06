@@ -365,13 +365,7 @@ standard smtp-server	admin	iw	תקני SMTP שרת
 start testjob!	admin	iw	!החל עבודת הניסיון
 submit changes	admin	iw	הגש שינוים
 submit the search string	admin	iw	הגש את מחרוזת החיפוש
-template selection	admin	iw	בחירת תבנית
-text entry	admin	iw	רשומת טקסט
-that application name already exists.	admin	iw	.שם יישום זה כבר קיים
-that application order must be a number.	admin	iw	.סדר יישום זה חייב להיות מספרי
 that loginid has already been taken	admin	iw	זיהוי כניסה זה כבר תפוס
-that name has been used already	admin	iw	שם זה כבר בשימוש
-that server name has been used already !	admin	iw	!שם שרת זה כבר בשימוש
 the api is current	admin	iw	מעודכן API-ה
 the api requires an upgrade	admin	iw	זקוק לעדכון API-ה
 the groups must include the primary group	admin	iw	הקבוצות חייבות לכלול את הקבוצה הראשית

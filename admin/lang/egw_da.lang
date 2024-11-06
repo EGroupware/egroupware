@@ -14,6 +14,7 @@
 %1 successful	admin	da	%1 vellykket
 %1 token %2.	admin	da	%1 token %2.
 (de)activate mail accounts	admin	da	(de)Aktiver mailkonti
+(default no, leave it off if you dont use it)	admin	da	Standard = Nej, lad den være slået fra, hvis du ikke bruger den
 (no subject)	admin	da	(ingen emne)
 1 year	admin	da	1 år
 2 month	admin	da	2 måneder
@@ -246,8 +247,10 @@ home screen message	admin	da	Startside besked
 host information	admin	da	Host information
 hour<br>(0-23)	admin	da	Timer<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	da	Hvor mange poster skal ikke-administratorer kunne eksportere? Tom = ingen grænse, Nej = ingen eksport
 how many minutes should an account or ip be blocked (default 1) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)
 icon	admin	da	Ikon
+if different from email address	admin	da	Hvis forskellig fra e-mailadresse
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
 imap admin password	admin	da	IMAP admin adgangskode
@@ -331,6 +334,7 @@ no algorithms available	admin	da	Ingen algoritmer tilgængelig!
 no alternate email address	admin	da	Ingen alternativ e-mail adresse
 no forwarding email address	admin	da	Ingen viderestillet e-mail adresse
 no jobs in the database !!!	admin	da	Ingen jobs i databasen!
+no limit	admin	da	Ingen grænse
 no login history exists for this user	admin	da	Nogen login historie findes for denne bruger!
 no matches found	admin	da	Ingen resultater fundet!
 no permission to add groups	admin	da	Ingen rettigheder til at tilføje grupper!
@@ -415,6 +419,7 @@ sieve server port	admin	da	Sieve server port
 sieve settings	admin	da	Sieve indstillinger
 site	admin	da	Site
 smtp authentication	admin	da	SMTP-godkendelse
+smtp only: to create only an smtp account	admin	da	Opret kun SMTP-konto uden IMAP
 smtp options	admin	da	SMTP-indstillinger
 smtp server	admin	da	SMTP-server
 smtp server name	admin	da	SMTP server navn
@@ -434,13 +439,7 @@ start	admin	da	Start
 start testjob!	admin	da	Start testjob
 submit changes	admin	da	Gem ændringerne
 submit the search string	admin	da	Send søgningen
-template selection	admin	da	Vælg skabelon
-text entry	admin	da	Tekst indtastning
-that application name already exists.	admin	da	Applikations navnet findes allerede.
-that application order must be a number.	admin	da	Applikations rækkefølgenen skal være et nummer.
 that loginid has already been taken	admin	da	Det loginid er allerede brugt
-that name has been used already	admin	da	Det navn er allerede brugt
-that server name has been used already !	admin	da	Det servernavn er allerede brugt!
 the api is current	admin	da	API'en er den nyeste version
 the api requires an upgrade	admin	da	API'en behøver en opgradering
 the groups must include the primary group	admin	da	Grupperne skal indeholde en primær gruppe.

@@ -5,6 +5,12 @@ import {Et2Description} from "../Et2Description/Et2Description";
  */
 export class Et2TextareaReadonly extends Et2Description
 {
+	constructor()
+	{
+		super();
+
+		this.noLang = true;	// never translation r/o textareas
+	}
 }
 
 // We can't bind the same class to a different tag

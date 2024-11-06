@@ -400,7 +400,6 @@ tables dropped	setup	it	Tabelle cancellate
 tables installed, unless there are errors printed above	setup	it	Tabelle installate, a meno che non vi siano errori qui sopra
 tables upgraded	setup	it	Tabelle aggiornate
 target version	setup	it	Versione di destinazione
-text entry	setup	it	Voce di testo
 the file	setup	it	Il file
 the tables	setup	it	le tabelle
 this might take a while, please wait ...	setup	it	Questa operazione può richiedere del tempo, prego attendere...

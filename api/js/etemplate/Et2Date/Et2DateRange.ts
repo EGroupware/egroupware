@@ -23,12 +23,12 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 			...dateStyles,
 			css`
 
-              .input-group {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                align-items: baseline;
-              }
+				.form-control-input {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: nowrap;
+					align-items: baseline;
+				}
 			`,
 		];
 	}
@@ -54,6 +54,14 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		super();
 	}
 
+	_handleChange(event)
+	{
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
+	}
+
 	render()
 	{
 		const hasLabel = this.label ? true : false
@@ -74,7 +82,10 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
                         <slot name="label">${this.label}</slot>
                     </label>
                 </div>
-                <div class="form-control-input" part="form-control-input">${this._inputGroupTemplate()}</div>
+                <div class="form-control-input" part="form-control-input"
+                >
+                    ${this._inputGroupTemplate()}
+                </div>
 				<slot
 						name="help-text"
 						part="form-control-help-text"
@@ -112,7 +123,9 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
                     ?required=${this.required}
                     placeholder=${ifDefined(this.placeholder)}
                     .emptyLabel=${ifDefined(this.emptyLabel)}
-                    .select_options=${Et2DateRange.relative_dates}></et2-select>`;
+                    .select_options=${Et2DateRange.relative_dates}
+                    @change=${this._handleChange}
+            ></et2-select>`;
 	}
 
 	/**
@@ -129,16 +142,18 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
-				placeholder=${ifDefined(this.placeholder)}
+                placeholder=${ifDefined(this.placeholder || this.egw().lang("From"))}
 				defaultDate=${ifDefined(this.value?.from)}
+                @change=${this._handleChange}
             ></et2-date>
             <et2-date
                     name="to"
                     ?disabled=${this.disabled}
 				?readonly=${this.readonly}
 				?required=${this.required}
-				placeholder=${ifDefined(this.placeholder)}
+                    placeholder=${ifDefined(this.placeholder || this.egw().lang("To"))}
 				value=${ifDefined(this.value?.to)}
+                    @change=${this._handleChange}
             ></et2-date>
 		`;
 	}
@@ -193,14 +208,14 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 				new_value = Et2DateRange.relativeToAbsolute(new_value);
 
 			}
-			if(this.fromElement._instance)
+			if(this.fromElement._instance?.config?.mode == "range")
 			{
 				this.fromElement._instance.setDate([new_value?.from, new_value?.to], true);
 			}
 			else
 			{
-				this.fromElement.value = new_value?.from.toJSON() || "";
-				this.toElement.value = new_value?.to.toJSON() || "";
+				this.fromElement.value = new_value?.from?.toJSON() || "";
+				this.toElement.value = new_value?.to?.toJSON() || "";
 			}
 		}
 	}

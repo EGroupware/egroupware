@@ -24,6 +24,10 @@ import {LitElement} from "lit";
 import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
 
 import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
+import type {EgwAction} from "../../api/js/egw_action/EgwAction";
+import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
+import {Et2MergeDialog} from "../../api/js/etemplate/Et2Dialog/Et2MergeDialog";
+import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -1167,46 +1171,58 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
+	 * Ask the user for a target document to merge into
+	 *
+	 * Overridden from parent to add addressbook's options:
+	 * - save as infolog
+	 *
+	 * @returns {Promise<{document : string, pdf : boolean, mime : string}>}
+	 * @protected
+	 */
+	protected async _getMergeDocument(et2?, action? : EgwAction, selected? : EgwActionObject[]) : Promise<{
+		documents : { path : string; mime : string }[];
+		options : { [p : string] : string | boolean }
+	}>
+	{
+		const promise = super._getMergeDocument(et2, action, selected);
+
+		// Find dialog
+		const dialog = this.et2?.getDOMNode()?.querySelector('et2-merge-dialog') ?? document.body.querySelector('et2-merge-dialog');
+
+		// Add additional option UI by loading a template
+		const options = <Et2MergeDialog><unknown>et2_createWidget('template', {
+			application: this.appname,
+			id: this.appname + ".mail_merge_dialog",
+		}, dialog);
+		// Wait for template load
+		const wait = [];
+		options.loadingFinished(wait);
+		await Promise.all(wait);
+
+		// Get template values, add them in
+		const result = await promise;
+		result.options = {...this.et2.getInstanceManager().getValues(options), ...result.options};
+
+		return result;
+	}
+
+	/**
 	 * Merge the selected contacts into the target document.
 	 *
 	 * Normally we let the framework handle this, but in addressbook we want to
-	 * interfere and customize things a little to ask about saving to infolog.
+	 * interfere and customize things a little to save to infolog.
 	 *
 	 * @param {egwAction} action - The document they clicked
 	 * @param {egwActionObject[]} selected - Rows selected
 	 */
 	_mergeEmail(action, data)
 	{
-		// Special processing for email documents - ask about infolog
-		if(action && data && (data.id.length > 1 || data.select_all))
+		if(data.options.info_type)
 		{
-			const callback = (button, value) =>
-			{
-				if(button == Et2Dialog.OK_BUTTON)
-				{
-					if(value.infolog)
-					{
-						data.menuaction += '&to_app=infolog&info_type=' + value.info_type;
-					}
-					return super._mergeEmail(action, data);
-				}
-			};
-			let dialog = new Et2Dialog(this.egw);
-			dialog.transformAttributes({
-				callback: callback,
-				title: action.caption,
-				buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-				type: Et2Dialog.QUESTION_MESSAGE,
-				template: egw.webserverUrl + '/addressbook/templates/default/mail_merge_dialog.xet',
-				value: {content: {info_type: 'email'}, sel_options: this.et2.getArrayMgr('sel_options').data}
-			});
-			document.body.appendChild(<LitElement><unknown>dialog);
+			data.merge += '&to_app=infolog&info_type=' + data.options.info_type;
 		}
-		else
-		{
-			// Normal processing for only one contact selected
-			return super._mergeEmail(action, data);
-		}
+		// Normal processing otherwise
+		return super._mergeEmail(action, data);
 	}
 
 	/**

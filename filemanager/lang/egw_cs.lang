@@ -142,7 +142,6 @@ extended access control list	filemanager	cs	Rozšířený seznam přístupových
 extended acl	filemanager	cs	Rozšířený ACL
 failed to change permissions of %1!	filemanager	cs	Nepodařilo se změnit oprávnění %1!
 failed to create directory!	filemanager	cs	Nepodařilo se vytvořit adresář!
-favorites	filemanager	cs	Oblíbené
 file	common	cs	Soubor
 file %1 already exists	filemanager	cs	Soubor %1 již existuje
 file %1 could not be created.	filemanager	cs	Soubor %1 nemohl být vytvořen.

@@ -572,6 +572,14 @@ declare interface IegwGlobal
 	app(_app : string, _name : string) : string|undefined;
 	app(_app : string) : Iapplication|undefined;
 	/**
+	 * Same as app(), but use the translated app-name / title
+	 *
+	 * @param {string} _title
+	 * @param {string} _name attribute to return, default return whole app-data-object
+	 */
+	appByTitle(_title : string, _name : string) : string|undefined;
+	appByTitle(_title : string) : Iapplication|undefined;
+	/**
 	 * Get a list of accounts the user has access to
 	 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
 	 *

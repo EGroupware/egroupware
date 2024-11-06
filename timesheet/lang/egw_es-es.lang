@@ -8,13 +8,17 @@ all projects	timesheet	es-es	Todos los proyectos
 and its members	timesheet	es-es	y sus miembros
 applies the changes	timesheet	es-es	aplica los cambios
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	es-es	¡Aplicar la acción a toda la consulta, NO sólo a las hojas de tiempo mostradas!
+ask to start and stop working time with session	timesheet	es-es	Solicite iniciar y detener el tiempo de trabajo con la sesión
 both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
 by	timesheet	es-es	por
+category for 'working time'	admin	es-es	Categoría para 'Tiempo de trabajo'
 change category	timesheet	es-es	Cambiar categoría
+change owner when updating	timesheet	es-es	Cambiar propietario al actualizar
 changed category to %1	timesheet	es-es	La categoría se ha cambiado a %1
 changed status	timesheet	es-es	estado cambiado
 check all	timesheet	es-es	Marcar todo
 comment by %1 at %2:	timesheet	es-es	Comentario por %1 a las %2:
+create a single 'working time' timesheet per	timesheet	es-es	Crear una única hoja de horas de 'Tiempo de trabajo' por
 create new links	timesheet	es-es	Crear enlaces nuevos
 creates a new field	timesheet	es-es	crea un campo nuevo
 creating new entry	timesheet	es-es	creando nueva entrada
@@ -25,6 +29,10 @@ deleted	timesheet	es-es	borrado
 deletes this field	timesheet	es-es	borra este campo
 determines the order the fields are displayed	timesheet	es-es	determina el orden en que se muestran los campos
 directory with documents to insert entries	timesheet	es-es	Directorio con documentos para insertar entradas
+disable timers	timesheet	es-es	Desactivar temporizadores
+do you want to associate it with the selected %1 entry?	common	es-es	¿Desea asociarlo a la entrada %1 seleccionada?
+do you want to start your working time?	common	es-es	¿Desea iniciar su tiempo de trabajo?
+do you want to stop your working time?	common	es-es	¿Desea detener su tiempo de trabajo?
 each value is a line like <id>[=<label>]	timesheet	es-es	cada valor es una línea como <id>[=<etiqueta>]
 edit status	timesheet	es-es	Editar estado
 edit this entry	timesheet	es-es	Editar esta entrada
@@ -34,6 +42,7 @@ entry deleted	timesheet	es-es	Se ha borrado la entrada
 entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
+error storing working time	timesheet	es-es	Error al almacenar el tiempo de trabajo
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
@@ -45,6 +54,7 @@ export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de 
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
+forgot to switch off working time?	common	es-es	¿Ha olvidado desconectar el tiempo de trabajo?
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
 general fields:	timesheet	es-es	Campos generales:
 global categories	timesheet	es-es	Categorías globales
@@ -84,6 +94,8 @@ only admin	timesheet	es-es	Sólo el administrador
 only admin can edit this status	timesheet	es-es	sólo el administador puede editar el estado
 or endtime	timesheet	es-es	u hora de finalización
 order	timesheet	es-es	Orden
+overwrite time	common	es-es	Tiempo de sobrescritura
+overwriting start or stop time	timesheet	es-es	Sobrescribir hora de inicio o parada
 parent	timesheet	es-es	Padre
 pause	common	es-es	Pausa
 pause time	timesheet	es-es	Tiempo de pausa
@@ -93,7 +105,9 @@ permissions error - %1 could not %2	timesheet	es-es	Error en los permisos - %1 n
 price	timesheet	es-es	Precio
 projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
+recorded	timesheet	es-es	Grabado
 replacements for inserting entries into documents	timesheet	es-es	Sustituciones para insertar entradas en los documentos
+restore this entry	timesheet	es-es	Restaurar esta entrada
 save & new	timesheet	es-es	Guardar y crear
 saves the changes made	timesheet	es-es	Guardar los cambios realizados
 saves the changes made and leaves	timesheet	es-es	guarda los cambios realizados y sale
@@ -106,6 +120,8 @@ select multiple timeshhets for a further action	timesheet	es-es	Seleccionar múl
 select the predefined status, whan creating a new timesheet	preferences	es-es	Seleccionar el estado predefinido cuando se cree una hoja de tiempos nueva
 show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
+start & stop timer	common	es-es	Iniciar y detener temporizador
+start timer	common	es-es	Iniciar temporizador
 start-time can not be before last stop- or pause-time %1!	common	es-es	¡La hora de inicio no puede ser anterior a la última hora de parada o pausa %1!
 starttime	timesheet	es-es	Hora de inicio
 starttime has to be before endtime !!!	timesheet	es-es	¡La hora de comienzo tiene que ser antes que la hora de fin!
@@ -133,10 +149,18 @@ timesheet-%1 '%2' updated.	timesheet	es-es	Hoja de tiempo-%1 '%2' actualizado.
 timesheet-%1 deleted.	timesheet	es-es	Hoja de tiempo-%1 '%2' borrado.
 titles of any entries linked to the current record, excluding attached files	timesheet	es-es	Títulos de cualquier entrada vinculada al registro actual, excluyendo los ficheros adjuntos
 unitprice	timesheet	es-es	Precio por unidad
+use field from csv if possible	timesheet	es-es	Utilizar campo de CSV si es posible
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 values for selectbox	timesheet	es-es	Valores para la lista de selección.
 view this entry	timesheet	es-es	Ver esta entrada
 week	timesheet	es-es	Semana
+what should be done with unknown values?	timesheet	es-es	¿Qué hacer con los valores desconocidos?
+will be created when saving ...	common	es-es	Se crearán al guardar ...
+working time	common	es-es	Tiempo de trabajo
+working time and timer	timesheet	es-es	Tiempo de trabajo y temporizador
+working time from %1	timesheet	es-es	Tiempo de trabajo de %1
+working time of %1 hours stored	timesheet	es-es	Tiempo de trabajo de %1 horas almacenado
+would you like to be asked, to start and stop working time, when login in or off	timesheet	es-es	¿Le gustaría que se le preguntara, para iniciar y detener el tiempo de trabajo, al iniciar sesión o fuera?
 yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
 yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 yesterday	timesheet	es-es	Ayer

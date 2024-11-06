@@ -64,7 +64,6 @@ extended access control list	filemanager	el	Εκτεταμένη λίστα ελ
 extended acl	filemanager	el	Εκτεταμένη ACL
 failed to change permissions of %1!	filemanager	el	Απέτυχε η αλλαγή των δικαιωμάτων του %1!
 failed to create directory!	filemanager	el	Απέτυχε η δημιουργία φακέλου!
-favorites	filemanager	el	Αγαπημένα
 file	common	el	Αρχείο
 file %1 already exists	filemanager	el	Το αρχείο %1 υπάρχει ήδη
 file %1 could not be created.	filemanager	el	Το αρχείο %1 δεν μπόρεσε να δημιουργηθεί.

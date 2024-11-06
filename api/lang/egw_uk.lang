@@ -59,6 +59,7 @@ algeria	common	uk	АЛЖИР
 all	common	uk	Все
 all addressbooks	groupdav	uk	Всі адресні книги
 all categories	common	uk	Всі категорії
+all files	common	uk	Всі файли
 all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
 allow editing the %1	common	uk	Дозволити редагування %1
@@ -182,6 +183,7 @@ denmark	common	uk	ДАНІЯ
 description	common	uk	Опис
 detail	common	uk	Деталі
 details	common	uk	Деталі
+directory for storing merged documents	preferences	uk	Папка для зберігання об'єднаних документів
 disabled	common	uk	Вимкнено
 do you also want to delete all subcategories ?	common	uk	Чи хочете ви також видалити вся підкатегорії?
 domain	common	uk	Domain
@@ -333,9 +335,11 @@ license	common	uk	Ліцензія
 liechtenstein	common	uk	ЛІХТЕНШТЕЙН
 light mode	common	uk	Світлий режим
 link	common	uk	Посилання
+link to each entry	common	uk	Посилання на кожен запис
 list	common	uk	Перелік
 lithuania	common	uk	ЛИТВА
 load	common	uk	Вгрузити
+load more links ...	common	uk	Завантажити більше посилань ...
 local	common	uk	Локальний
 login	common	uk	Login
 login rejected by epl firewall, please contact your administrator	common	uk	Брандмауер EGroupware відхилив ваш логін, зверніться до вашого адміністратора.
@@ -359,6 +363,11 @@ mauritius	common	uk	МАВРІКІЙ
 may	common	uk	Травень
 medium	common	uk	Середній
 menu	common	uk	Меню
+merge	common	uk	Об'єднати
+merge & send	common	uk	Об'єднати та надіслати
+merge individually	common	uk	Об'єднати окремо
+merge options	common	uk	Параметри об'єднання
+merged document filename	preferences	uk	Ім'я файлу об'єднаного документа
 message	common	uk	Повідомлення
 mexico	common	uk	МЕКСІКА
 minute	common	uk	Хвилина
@@ -490,6 +499,8 @@ san marino	common	uk	САН-МАРІНО
 saturday	common	uk	Субота
 saudi arabia	common	uk	САУДІВСЬКА АРАВІЯ
 save	common	uk	Зберегти
+save as pdf	common	uk	Зберегти як PDF
+save as zip	common	uk	Зберегти як ZIP
 saved column sizes to preferences.	common	uk	Збережені розміри стовпців у налаштуваннях.
 search	common	uk	Шукати
 search accounts	common	uk	Шукати рахунки
@@ -600,6 +611,7 @@ view	common	uk	Перегляд
 view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні
 wednesday	common	uk	Середа
 welcome	common	uk	Вітаємо
+when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	uk	Коли ви об'єднаєте записи в документи, вони будуть збережені тут. Якщо папку не вказано, вони будуть збережені у вашій домашній директорії (%1)
 which groups	common	uk	Котрі групи
 work email	common	uk	робочий email
 written by:	common	uk	Написано:

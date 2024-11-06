@@ -64,7 +64,7 @@
 					text-align: left;
 					font-weight: normal;
 					padding-left: 20px;
-					background-image: url(../default/images/mail_send.svg);
+					background-image: url(../../../node_modules/bootstrap-icons/icons/send.svg);
 					background-position: left;
 					background-repeat: no-repeat;
 					background-size: 16px 16px;
@@ -174,11 +174,6 @@
 
 		}
 
-		.dtree {
-			div.containerTableStyle {
-				overflow: hidden;
-			}
-		}
 		#mail-compose {
 			.cke_chrome {
 				border:none;
@@ -203,18 +198,19 @@
 					&:first-child {
 						border-top: 1px solid silver;
 					}
-					span#mail-compose_cc_expander, span#mail-compose_cc_expander,
-					span#mail-compose_bcc_expander, span#mail-compose_bcc_expander,
-					span#mail-compose_folder_expander, span#mail-compose_folder_expander,
-					span#mail-compose_replyto_expander, span#mail-compose_replyto_expander
+
+				  #mail-compose_cc_expander, span#mail-compose_cc_expander,
+				  #mail-compose_bcc_expander, span#mail-compose_bcc_expander,
+				  #mail-compose_folder_expander, span#mail-compose_folder_expander,
+				  #mail-compose_replyto_expander, span#mail-compose_replyto_expander
 					{
 						background: transparent;
 						border: none;
 						color: #26537c;
-						text-decoration: underline;
 						.mob-fontsize-n;
 						width: 65px;
 						height:25px;
+						margin-left: initial;
 					}
 				}
 				div.et2_taglist > *, #mail-compose_subject, #mail-compose_mailaccount {
@@ -248,11 +244,25 @@
 				width: 95%;
 				display: inline-block;
 			}
+
+		  .icons {
+			et2-image {
+			  padding: initial;
+
+			  img {
+				padding: initial;
+				height: initial;
+			  }
+			}
+		  }
 			span[id^='mail-index_'][id$='attachments]'] {
-				float: right;
+			  margin-left: auto;
+			  order: 1;
+			  text-align: initial;
 				img {
 					width: 16px;
 					height: 16px;
+				  padding: initial;
 				}
 			}
 			et2-description[id^='mail-index_'][id$='subject]'] {
@@ -311,25 +321,25 @@
 				padding:0 2px 2px 0;
 			}
 			span.deleted.status_img {
-				background-image: url(../default/images/kmmsgdel.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/x-lg.svg);
 			}
 			span.unseen.status_img {
-				background-image: url(../default/images/kmmsgunseen.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-fill.svg);
 			}
 			span.flagged_seen.status_img {
-				background-image: url(../default/images/read_flagged_small.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/flag.svg);
 			}
 			span.flagged_unseen.status_img {
-				background-image: url(../default/images/unread_flagged_small.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/flag-fill.svg);
 			}
 			span.recent.status_img {
-				background-image: url(../default/images/kmmsgnew.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-plus.svg);
 			}
 			span.replied.status_img {
-				background-image: url(../default/images/mail_reply.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/reply.svg);
 			}
 			span.forwarded.status_img {
-				background-image: url(../default/images/mail_forward.svg);
+				background-image: url(../../../node_modules/bootstrap-icons/icons/forward.svg);
 			}
 			span.bodypreview {
 				text-overflow: ellipsis;

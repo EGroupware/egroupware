@@ -108,6 +108,7 @@ all addressbooks	groupdav	pt	Todos os livros de endereços
 all categories	common	pt	Todas as categorias
 all days	common	pt	Todos os dias
 all fields	common	pt	Todos os campos
+all files	common	pt	Todos os ficheiros
 all in one	groupdav	pt	Tudo em um
 all languages	common	pt	Todos os idiomas
 all operations save the template!	common	pt	Todas as operações foram guardadas no modelo!
@@ -176,7 +177,6 @@ blurtext	common	pt	Desfocar texto
 bold	common	pt	Negrito
 bolivia	common	pt	Bolívia
 border	common	pt	Contorno
-border-line-thickness for the table-tag	common	pt	Espessura da linha do contorno da tabela
 bosnia and herzegovina	common	pt	Bósnia-Herzegovina
 botswana	common	pt	Botsuana
 bottom	common	pt	Fundo
@@ -678,6 +678,7 @@ light mode	common	pt	Modo de luz
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt	Linha %1:'%2'<br><b>dados csv não coincidem com o número de colunas da tabela %3 ==> ignorado</b>
 link	common	pt	Ligação
 link target %1 not found!	common	pt	Destino do link% 1 não encontrado!
+link to each entry	common	pt	Ligação a cada entrada
 linkapps	common	pt	Ligação aplicativos
 linkentry	common	pt	Registo de ligações
 linklist	common	pt	Lista de ligações
@@ -689,6 +690,7 @@ list members	common	pt	Listar membros
 list of files linked to the current record	preferences	pt	Lista de arquivos vinculados ao registro atual
 lithuania	common	pt	Lituânia
 load	common	pt	Carregar
+load more links ...	common	pt	Carregar mais ligações ...
 load this template into the editor	common	pt	Carregar este modelo no editor
 local	common	pt	Local
 login	common	pt	Entrar
@@ -723,6 +725,10 @@ may	common	pt	Maio
 mayotte	common	pt	Mayotte
 medium	common	pt	Média
 menu	common	pt	Menu
+merge	common	pt	Fundir
+merge & send	common	pt	Fundir e enviar
+merge individually	common	pt	Fundir individualmente
+merge options	common	pt	Opções de fusão
 message	common	pt	Mensagem
 message ...	common	pt	Mensagem ...
 message prepared for sending.	common	pt	Mensagem preparado para o envio.
@@ -844,7 +850,6 @@ open	common	pt	Abrir
 open existing contact	common	pt	Abrir contacto existente
 open notify window	common	pt	Abrir janela de aviso
 open popup window	common	pt	Abrir janela popup
-open sidebox	common	pt	Abrir caixa lateral
 open the online help.	common	pt	Abrir ajuda em linha
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt	Início de sessão do OpenIDConnect bem sucedido, mas o utilizador '%1' NÃO existe no EGroupware, E a criação automática de utilizadores está desactivada!
 operator	common	pt	Operador
@@ -980,6 +985,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	pt	Guardar
 save all	common	pt	Salve todo
 save as	common	pt	Salvar como
+save as pdf	common	pt	Guardar como PDF
 save the changes made and close the window	common	pt	Guardar as alterações efectuadas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	common	pt	Guardar o modelo Web com as chaves de cima (nome, ...). Terá de alterá-las para "Guardar como ..."
 saved column sizes to preferences.	common	pt	Guarde os tamanhos das colunas de acordo com as preferências.
@@ -1044,6 +1050,7 @@ select work email address	common	pt	Seleccionar endereço de correio electrónic
 select year	common	pt	Seleccionar ano
 selectbox	common	pt	Caixa de selecção
 selection	common	pt	Selecção
+selection of files can only be done in one folder.  %1 files unselected.	common	pt	A seleção de ficheiros só pode ser feita numa pasta. %1 ficheiros não selecionados.
 send	common	pt	Enviar
 senegal	common	pt	Senegal
 september	common	pt	Setembro

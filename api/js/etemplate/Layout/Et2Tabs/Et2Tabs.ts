@@ -26,7 +26,12 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			...super.styles,
 			colorsDefStyles,
 			...shoelace,
+			//keyframes definition can't get into shadow root from css files, so we declare it here
 			css`
+				/*scroll detection detect if scrollbar is available scroll detection only works in chromium not in Firefox or Safari*/
+				@keyframes detect-scroll {
+					from, to { --can-scroll:0;}
+				}
 			.tab-group--top {
 				height: 100%;
 				min-height: fit-content;
@@ -217,6 +222,31 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 		this.createTabs(tabData);
 
 		// Use the height of the first tab if height not set
+		this._sizeTabs(tabData);
+
+		// Load any additional child nodes
+		for(let i = 0; i < _node.childNodes.length; i++)
+		{
+			let node = _node.childNodes[i];
+			let widgetType = node.nodeName.toLowerCase();
+
+			// Skip text & already handled nodes
+			if(["#comment", "#text", "tabs", "tabpanels"].includes(widgetType))
+			{
+				continue;
+			}
+
+			// Create the new element
+			this.createElementFromNode(node);
+		}
+	}
+
+	/**
+	 * Use the height of the first tab if height not set
+	 * @protected
+	 */
+	protected _sizeTabs(tabData : Array<object>)
+	{
 		if(!this.tabHeight && tabData.length > 0)
 		{
 			const firstTab = tabData[0].contentDiv;
@@ -245,22 +275,6 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 					firstTab.removeAttribute("active");
 				}
 			})
-		}
-
-		// Load any additional child nodes
-		for(let i = 0; i < _node.childNodes.length; i++)
-		{
-			let node = _node.childNodes[i];
-			let widgetType = node.nodeName.toLowerCase();
-
-			// Skip text & already handled nodes
-			if(["#comment", "#text", "tabs", "tabpanels"].includes(widgetType))
-			{
-				continue;
-			}
-
-			// Create the new element
-			this.createElementFromNode(node);
 		}
 	}
 
@@ -402,7 +416,10 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			}, this);
 
 			// Set tab label
-			tab.flagDiv.appendChild(document.createTextNode(tab.label));
+			const node = document.createElement("span")
+			node.appendChild(document.createTextNode(tab.label));
+			node.classList.add("tabLabel")
+			tab.flagDiv.appendChild(node);
 
 			if(tab.tabNode && tab.tabNode.children.length)
 			{

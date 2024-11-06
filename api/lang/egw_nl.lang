@@ -114,6 +114,7 @@ all addressbooks	groupdav	nl	Alle adresboeken
 all categories	common	nl	Alle categorieën
 all days	common	nl	Alle dagen
 all fields	common	nl	Alle velden
+all files	common	nl	Alle bestanden
 all in one	groupdav	nl	Alles in een
 all languages	common	nl	Alle talen
 all operations save the template!	common	nl	Alle bewerkingen slaan de template op!
@@ -197,7 +198,6 @@ blurtext	common	nl	Vage Text
 bold	common	nl	Vet
 bolivia	common	nl	BOLIVIA
 border	common	nl	Rand
-border-line-thickness for the table-tag	common	nl	Randlijndikte voor de table-tag
 bosnia and herzegovina	common	nl	BOSNIË-HERZEGOVINA
 botswana	common	nl	BOTSWANA
 bottom	common	nl	Onderzijde
@@ -778,6 +778,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 link	common	nl	Link
 link target %1 not found!	common	nl	Link doel %1 niet gevonden!
 link title of current record	common	nl	Link titel van huidig record
+link to each entry	common	nl	Link naar elk item
 linkapps	common	nl	Linktoepassingen
 linkentry	common	nl	Linkitem
 linklist	common	nl	Linklijst
@@ -790,6 +791,7 @@ list members	common	nl	Lijst van leden
 list of files linked to the current record	preferences	nl	Lijs van bestanden gelinkt aan huidig record
 lithuania	common	nl	LITOUWEN
 load	common	nl	Laad
+load more links ...	common	nl	Meer links laden ...
 load this template into the editor	common	nl	Laad deze tempate in de editor
 loading	common	nl	Wordt geladen
 local	common	nl	Lokaal
@@ -829,6 +831,10 @@ may	common	nl	Mei
 mayotte	common	nl	MAYOTTE
 medium	common	nl	Gemiddeld
 menu	common	nl	Menu
+merge	common	nl	Samenvoegen
+merge & send	common	nl	Samenvoegen & verzenden
+merge individually	common	nl	Afzonderlijk samenvoegen
+merge options	common	nl	Opties voor samenvoegen
 merged document filename	preferences	nl	Bestandsnaam samengevoegd document
 message	common	nl	Bericht
 message ...	common	nl	Bericht ...
@@ -1121,6 +1127,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	nl	Opslaan
 save all	common	nl	Bewaar alle
 save as	common	nl	Bewaar als
+save as pdf	common	nl	Opslaan als PDF
 save as zip	common	nl	Bewaar als ZIP
 save selected columns as default preference for all users.	common	nl	Bewaar geselecteerde kolommen als voorkeursstandaard voor alle gebruikers.
 save the changes made and close the window	common	nl	Bewaar de gemaakte wijzigingen en sluit het venster
@@ -1200,6 +1207,7 @@ select work email address	common	nl	Selecteer emailadres werk
 select year	common	nl	Selecteer jaar
 selectbox	common	nl	Selectieveld
 selection	common	nl	Selectie
+selection of files can only be done in one folder.  %1 files unselected.	common	nl	Bestanden kunnen alleen in één map worden geselecteerd. %1 bestanden niet geselecteerd.
 send	common	nl	Verzend
 send succeeded to %1	common	nl	Verzenden naar %1 gelukt
 senegal	common	nl	SENEGAL

@@ -22,6 +22,7 @@
 %1 token %2.	admin	fr	%1 jeton %2.
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
+(default no, leave it off if you dont use it)	admin	fr	Valeur par défaut = Non, laissez cette option désactivée si vous ne l'utilisez pas.
 (no subject)	admin	fr	Pas de sujet
 -  type	admin	fr	- type
 1 year	admin	fr	1 an
@@ -490,7 +491,7 @@ hostname or ip	admin	fr	Serveur hôte ou IP
 hour<br>(0-23)	admin	fr	Heure<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	fr	Taille maximale en pixels des vignettes pour les images liées
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès avant d'être effacées (90 par défaut)
-how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fr	Combien d'entrées les non-admins peuvent-ils exporter. Vide = pas de limite, no = pas d'export
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	fr	Combien d'entrées les non-admins peuvent-ils exporter. Vide = pas de limite, Non = pas d'export
 how many minutes should an account or ip be blocked (default 1) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut)
 how should email addresses for new users be constructed?	admin	fr	Comment former les adresses de messagerie des nouveaux utilisateurs
 how username get constructed	admin	fr	Comment les codes utiliateurs sont construits
@@ -639,6 +640,7 @@ no default account found!	admin	fr	Pas de compte par défaut trouvé !
 no encryption	admin	fr	Pas de chiffrement
 no forwarding email address	admin	fr	Pas d'adresse email de transfert
 no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !
+no limit	admin	fr	Pas de limite
 no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur !
 no matches found	admin	fr	Aucune occurrence trouvée !
 no message returned.	admin	fr	Aucun message n'est retourné
@@ -823,6 +825,7 @@ site	admin	fr	Site
 skip imap	admin	fr	Sauter la configuration IMAP
 skipping imap configuration!	admin	fr	Sauter la configuration IMAP !
 smtp authentication	admin	fr	Authentication SMTP
+smtp only: to create only an smtp account	admin	fr	Créer un compte SMTP uniquement sans IMAP
 smtp options	admin	fr	Options SMTP
 smtp server	admin	fr	Serveur SMTP
 smtp server name	admin	fr	Nom du serveur SMTP
@@ -857,14 +860,8 @@ successfull, but no refresh-token received!	admin	fr	Réussi, mais AUCUN refresh
 switch back to standard identity to save account.	admin	fr	Revenir à l'identité standard pour sauvegarder le compte.
 switch back to standard identity to save other account data.	admin	fr	Revenez à l'identité standard pour sauvegarder les autres données du compte.
 switch it off, if users are randomly thrown out	admin	fr	Décocher si des utilisateurs sont déconnectés par hasard
-template selection	admin	fr	Sélection du style
 templates	admin	fr	Templates
-text entry	admin	fr	Entrée de texte
-that application name already exists.	admin	fr	Ce nom d'application existe déjà.
-that application order must be a number.	admin	fr	Cet ordre d'application doit être un nombre.
 that loginid has already been taken	admin	fr	Ce LoginID a déjà été pris.
-that name has been used already	admin	fr	Ce nom a déjà été utilisé.
-that server name has been used already !	admin	fr	Ce nom de serveur a déjà été utilisé !
 the api is current	admin	fr	L'API est à jour
 the api requires an upgrade	admin	fr	L'API nécessite une mise à jour
 the cumulated and anonymised data will be publically available:	admin	fr	Les données accumulées et anonymes seront publiquement disponibles :

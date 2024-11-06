@@ -1,13 +1,23 @@
 applies the changes	timesheet	uk	Застосувати зміни
+ask to start and stop working time with session	timesheet	uk	Запит на початок та завершення робочого часу з сесією
+category for 'working time'	admin	uk	Категорія для 'Робочого часу'
+change owner when updating	timesheet	uk	Змінити власника при оновленні
+create a single 'working time' timesheet per	timesheet	uk	Створіть єдиний табель обліку робочого часу для кожного
 create new links	timesheet	uk	Створити нові посилання
 creates a new field	timesheet	uk	створює нові поля
 custom fields	timesheet	uk	Власні поля
 deleted	timesheet	uk	Видалено
 deletes this field	timesheet	uk	видаляє це поле
 determines the order the fields are displayed	timesheet	uk	визначає послідовність показу полів
+disable timers	timesheet	uk	Вимкнути таймери
+do you want to associate it with the selected %1 entry?	common	uk	Ви хочете пов'язати його з вибраним записом %1?
+do you want to start your working time?	common	uk	Ви хочете почати свій робочий час?
+do you want to stop your working time?	common	uk	Ви хочете зупинити свій робочий час?
 each value is a line like <id>[=<label>]	timesheet	uk	Кожне значення є рядком у вигляді <id>[=<label>]
 edit this entry	timesheet	uk	Редагувати цей запис
+error storing working time	timesheet	uk	Помилка збереження робочого часу
 existing links	timesheet	uk	Існуючі посилання
+forgot to switch off working time?	common	uk	Забули вимкнути робочий час?
 global categories	timesheet	uk	Глобальні категорії
 id	timesheet	uk	Id
 last modified	timesheet	uk	Востаннє змінено
@@ -18,10 +28,16 @@ max length of the input [, length of the inputfield (optional)]	timesheet	uk	м�
 modified	timesheet	uk	Змінено
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
 order	timesheet	uk	Послідовність
+overwrite time	common	uk	Час перезапису
+overwriting start or stop time	timesheet	uk	Перезапис часу запуску або зупинки
 pause	common	uk	Пауза
 pause time	timesheet	uk	Час паузи
 paused	timesheet	uk	На паузі
+recorded	timesheet	uk	Записано
+restore this entry	timesheet	uk	Відновити цей запис
 saves the changes made and leaves	timesheet	uk	зберігає зроблені зміни та виходить
+start & stop timer	common	uk	Таймер запуску та зупинки
+start timer	common	uk	Таймер запуску
 start-time can not be before last stop- or pause-time %1!	common	uk	Час запуску не може бути раніше часу останньої зупинки або паузи %1!
 stop- or pause-time can not be before the start-time %1!	common	uk	Час зупинки або паузи не може бути раніше часу запуску %1!
 the text displayed to the user	timesheet	uk	текст, що показуються користувачу
@@ -29,6 +45,14 @@ this month	timesheet	uk	Поточний місяць
 this week	timesheet	uk	Поточний тиждень
 this year	timesheet	uk	Поточний рік
 timer already running or paused	common	uk	Таймер вже запущено або призупинено
+use field from csv if possible	timesheet	uk	Використовуйте поле з CSV, якщо можливо
 values for selectbox	timesheet	uk	Значення для selectbox
 view this entry	timesheet	uk	Переглянути цей запис
 week	timesheet	uk	Тиждень
+what should be done with unknown values?	timesheet	uk	Що робити з невідомими значеннями?
+will be created when saving ...	common	uk	Буде створено при збереженні ...
+working time	common	uk	Робочий час
+working time and timer	timesheet	uk	Час роботи та таймер
+working time from %1	timesheet	uk	Час роботи від %1
+working time of %1 hours stored	timesheet	uk	Збережено робочий час %1 години
+would you like to be asked, to start and stop working time, when login in or off	timesheet	uk	Чи хотіли б ви, щоб при вході в систему або виході з неї вас запитували, коли починати і закінчувати робочий час?

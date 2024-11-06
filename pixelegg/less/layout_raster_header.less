@@ -37,7 +37,7 @@
 		img {
 			max-width: 210px;
 			border: none;
-			height: 45px;
+			height: 42px;
 		}
 
 	}
@@ -104,6 +104,9 @@
 			height: auto;
 			z-index: 1000;
 			top: 45px;
+			et2-image {
+				font-size: 120%;
+			}
 			#rc_status_select {
 				width: 50% !important;
 				margin-left: 10px;
@@ -184,7 +187,6 @@
 					a {
 						color: @gray_100;
 						text-decoration: none;
-						padding-left: 26px;
 						line-height: 1.9em;
 						display:inline-block;
 						&:hover {
@@ -200,56 +202,6 @@
 					:before{border: none;}
 				}
 				a {background-size: 20px;}
-				/*home*/
-				a#topmenu_home {
-					margin-left: 0px;
-					background-image: url(../../api/templates/default/images/topmenu_items/home.svg);
-					background-repeat: no-repeat;
-				}
-
-
-				/*Setup / Einstellungen*/
-				a#topmenu_prefs{
-					margin-left: 0px;
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/setup.svg);
-				}
-
-				/*access / Zugriff */
-				a#topmenu_acl{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/access.svg);
-				}
-				/*category*/
-				a#topmenu_cats{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/category.svg);
-				}
-				/*password*/
-				a#topmenu_password{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/password.svg);
-				}
-				/*help*/
-				a#topmenu_manual{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/help.svg);
-				}
-				/*Search*/
-				a#topmenu_current_user{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/users.svg);
-				}
-				/*logout*/
-				a#topmenu_logout{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/topmenu_items/logout.svg);
-				}
-				/*print*/
-				a#topmenu_print{
-					background-repeat: no-repeat;
-					background-image: url(../../api/templates/default/images/print.svg);
-				}
 			} // Ende ul
 			.timezone {
 				span {
@@ -284,7 +236,7 @@
 
  /*ICON List*/
 #egw_fw_topmenu_slide.slidedown{
-	background-image: url("../../api/templates/default/images/list.png");
+	background-image: url("../../node_modules/bootstrap-icons/icons/list.svg");
 	background-position: center center;
 	height: 15px;
 	width: 15px;

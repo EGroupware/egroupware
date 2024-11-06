@@ -11,11 +11,13 @@
 import {css, html} from "lit";
 import {Et2DateDuration, formatOptions} from "./Et2DateDuration";
 import {dateStyles} from "./DateStyles";
+import {customElement} from "lit/decorators/custom-element.js";
 
 
 /**
  * This is a stripped-down read-only widget used in nextmatch
  */
+@customElement("et2-date-duration_ro")
 export class Et2DateDurationReadonly extends Et2DateDuration
 {
 	static get styles()
@@ -101,6 +103,3 @@ export class Et2DateDurationReadonly extends Et2DateDuration
 		}
 	}
 }
-
-// @ts-ignore TypeScript is not recognizing that this widget is a LitElement
-customElements.define("et2-date-duration_ro", Et2DateDurationReadonly);

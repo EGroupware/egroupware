@@ -11,7 +11,10 @@ import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {css} from "lit";
 import {SlDetails} from "@shoelace-style/shoelace";
 import shoelace from "../../Styles/shoelace";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
+@customElement("et2-details")
 export class Et2Details extends Et2Widget(SlDetails)
 {
 	static get styles()
@@ -38,7 +41,7 @@ export class Et2Details extends Et2Widget(SlDetails)
             	/* Stop images from growing.  In general we want them to stay */
             	flex-grow: 0;
             }
-            ::slotted([align="left"]) {
+			::slotted([align="left"]) {
             	margin-right: auto;
             	order: -1;
             }
@@ -47,68 +50,61 @@ export class Et2Details extends Et2Widget(SlDetails)
             	order: 1;
             }
 
-              .details.hoist {
-                position: relative;
-              }
+				.details {
+					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+					margin: 0px;
+				}
+			.details.hoist {
+				position: relative;
+			}
 
-              .details.hoist .details__body {
-                position: absolute;
-                z-index: var(--sl-z-index-drawer);
-                background: var(--sl-color-neutral-0);
-                box-shadow: var(--sl-shadow-large);
-                width: 100%;
-                min-width: fit-content;
-                border-radius: var(--sl-border-radius-small);
-                border: 1px solid var(--sl-color-neutral-200);
-                max-height: 15em;
-                overflow-y: auto;
-              }
-              .details.hoist .details__body.overlaySummaryLeftAligned {
+				.details.hoist .details__body {
+				position: absolute;
+				z-index: var(--sl-z-index-drawer);
+				background: var(--sl-color-neutral-0);
+				box-shadow: var(--sl-shadow-large);
+				width: 100%;
+				min-width: fit-content;
+				border-radius: var(--sl-border-radius-small);
+				border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+				max-height: 15em;
+				overflow-y: auto;
+			}
+			.details.hoist .details__body.overlaySummaryLeftAligned {
 				top: 0;
 				left: 2em;
 				width: calc(100% - 2em);
-			  }
-              .details.hoist .details__body.overlaySummaryRightAligned {
-                top: 0;
-              }
+			}
+			.details.hoist .details__body.overlaySummaryRightAligned {
+				top: 0;
+			}
 			`,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
+	/**
+	 * Toggle when hover over
+	 */
+	@property({type: Boolean})
+	toggleOnHover = false;
 
-			/**
-			 * Toggle when hover over
-			 */
-			toggleOnHover: {
-				type: Boolean
-			},
+	/**
+	 * Makes details content fixed position to break out of the container
+	 */
+	@property({type: Boolean})
+	hoist = false;
 
-			/**
-			 * Makes details content fixed position to break out of the container
-			 */
-			hoist: {
-				type: Boolean
-			},
+	/**
+	 * set toggle alignment either to left or right. Default is right alignment.
+	 */
+	@property({type: String})
+	toggleAlign : "right" | "left" = "right";
 
-			/**
-			 * set toggle alignment either to left or right. Default is right alignment.
-			 */
-			toggleAlign: {
-				type: String
-			},
-
-			/**
-			 * Overlay summary container with the details container when in open state
-			 */
-			overlaySummaryOnOpen: {
-				type: Boolean
-			}
-		}
-	}
+	/**
+	 * Overlay summary container with the details container when in open state
+	 */
+	@property({type: Boolean})
+	overlaySummaryOnOpen = false;
 
 	/**
 	 * List of properties that get translated
@@ -121,16 +117,6 @@ export class Et2Details extends Et2Widget(SlDetails)
 			...super.translate,
 			summary: true
 		}
-	}
-
-
-	constructor(...args : any[])
-	{
-		super();
-		this.toggleOnHover = false;
-		this.toggleAlign = 'right';
-		this.hoist = false;
-		this.overlaySummaryOnOpen = false;
 	}
 
 	connectedCallback()
@@ -173,4 +159,3 @@ export class Et2Details extends Et2Widget(SlDetails)
 		if (!this.getDOMNode().contains(event.relatedTarget)) this.hide();
 	}
 }
-customElements.define("et2-details", Et2Details);

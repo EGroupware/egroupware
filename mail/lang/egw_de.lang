@@ -1,4 +1,5 @@
 %1 attachments	mail	de	%1 Anhänge
+%1 for all users	mail	de	%1 für alle Benutzer
 %1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blacklist hinzugefügt
 %1 has been added to whiltelisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Whitelist hinzugefügt
 %1 has been removed from blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse von der Blacklist entfernt
@@ -126,8 +127,6 @@ cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhan
 current folder	mail	de	Aktueller Ordner
 current subject	mail	de	Aktueller Betreff
 currently:	mail	de	Aktuell:
-date(newest first)	mail	de	Datum (neue zuerst)
-date(oldest first)	mail	de	Datum (alte zuerst)
 deactive	mail	de	Deaktiviert
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
@@ -189,7 +188,6 @@ drafts	mail	de	Entwürfe
 drafts folder	mail	de	Ordner für Entwürfe
 edit account	mail	de	Konto Einstellungen
 edit account ...	mail	de	Konto bearbeiten ...
-edit folder acl	mail	de	Berechtigungen bearbeiten
 edit folder acl ...	mail	de	Zugriffsrechte bearbeiten ...
 edit vacation settings	mail	de	Abwesenheitsnotiz bearbeiten
 effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
@@ -277,6 +275,7 @@ handling of external http images / mixed content in mails	mail	de	Behandlung von
 header	mail	de	Kopfzeilen
 header lines	mail	de	Kopfzeilen anzeigen
 high	mail	de	hoch
+high priority	mail	de	Hohe Priorität
 hold %1 to drag files to your computer	mail	de	%1 halten um Dateien auf Ihren Computer zu ziehen
 home page folders	mail	de	Darstellung von E-Mails auf der Startseite
 hostname or ip	mail	de	Hostname oder IP
@@ -333,6 +332,7 @@ learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da
 less than	mail	de	kleiner als
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern).
+low priority	mail	de	Niedrige Priorität
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
 mail filter	mail	de	Filter
@@ -471,7 +471,7 @@ refresh time in minutes	mail	de	Aktualisierungsintervall in Minuten
 refused to delete folder inbox	mail	de	Die Löschung des Ordners Posteingang wird verweigert
 refused to delete folder with subfolders	mail	de	Die Löschung eines Ordners mit Unterordnern wird verweigert
 reject with	mail	de	ablehnen mit
-reloaded account %1	mail	de	Lade das Konto %1 neu
+reloaded account %1	mail	de	Lade das Konto %1 neu.
 reloaded folder %1	mail	de	Ordner %1 neu geladen
 remember the password for	mail	de	Passwort merken für
 remove "%1" from blacklisted domains	mail	de	Lösche "%1" aus der Blacklist Domainliste
@@ -506,7 +506,6 @@ resend after how many days?	mail	de	Nach wie vielen Tagen erneut senden?
 respond to mail sent to:	mail	de	Benachrichtigung für:
 restrict acl management	admin	de	ACL-Verwaltung beschränken
 rights	mail	de	Zugriffsrechte
-row order style	mail	de	Spaltenanordnung
 rule priority position	mail	de	Priorität/Reihenfolge
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Regeln
@@ -588,7 +587,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	de	Sieve
 sieve connection status	mail	de	Sieve Verbindungsstatus
 sieve not activated	mail	de	Sieve nicht aktiviert
-sieve script name	mail	de	Stellen Sie den Sieve-Skript-Namen ein
 sieve server	mail	de	Sieve-Server
 sieve_edit_instructions	mail	de	(*) Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "reguläre Ausdrücke verwenden" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben. Zur Verwendung von Ausrufezeichen (!), das NICHT als "NICHT" interprtiert werden soll, muss ein regulärer Ausdruck verwendet werden und ein Backslash - also "\!"
 sign your message with smime certificate	mail	de	Signieren Sie Ihre Nachricht mit einem S/MIME-Zertifikat
@@ -596,7 +594,6 @@ signature	mail	de	Signatur
 signature at top	mail	de	Signatur am Anfang der Nachricht
 signature position and visibility	mail	de	Position und Sichtbarkeit der Signatur
 signed by	mail	de	Unterzeichnet von
-small view	mail	de	schmale Ansicht
 smime encrypted message	mail	de	S/MIME-verschlüsselte Nachricht
 smime signed message	mail	de	S/MIME-signierte Nachricht
 smtp	mail	de	Postausgangs-Server
@@ -620,7 +617,6 @@ subscribe to folder %1	mail	de	Ordner %1 abonieren
 subscription folders	mail	de	Ordner abonnieren
 subscription successfully saved.	mail	de	Das Abonnieren der Ordner wurde erfolgreich gespeichert.
 succeeded on %1 folders, failed on %2	mail	de	Erfolgreich bei %1 Ordnern, fehlgeschlagen bei %2
-successfully connected	mail	de	Erfolgreich verbunden
 switch off encryption?	mail	de	Verschlüsselung ausschalten?
 template folder	mail	de	Vorlagen Ordner
 templates	mail	de	Vorlagen
@@ -646,7 +642,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-verschlüsselt und mit Passwort geschützt.
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
 to do	mail	de	Zu erledigen
-toggle all folders view for %1	mail	de	Umschaltung der Alle-Ordner-anzeigen Ansicht für %1
 toggled on actions	mail	de	Folgende Aktionen sind immer eingeschaltet
 trash	mail	de	Papierkorb
 trash folder	mail	de	Ordner für gelöschte Nachrichten
@@ -697,13 +692,7 @@ wizard	mail	de	Assistent
 writable sharing requires epl version!	mail	de	Beschreibbare Freigaben benötigen die EPL Version!
 write	mail	de	schreiben
 wrote	mail	de	schrieb
-yes, but mask all passwords	mail	de	Ja, aber maskiere alle Passwörter
-yes, but mask all usernames and passwords	mail	de	Ja, aber maskiere Benutzernamen und Passwörter
 yes, offer copy option	mail	de	Ja, mit Kopier-Option
-yes, only trigger connection reset	mail	de	Ja, aber führe nur das zurücksetzen der Verbindung aus
-yes, show all debug information available for the user	mail	de	Ja, zeige alle dem Benutzer zugänglichen Informationen an.
-yes, show basic info only	mail	de	Ja, nur Basis Informationen anzeigen
-you can either choose to save as infolog or tracker, not both.	mail	de	Sie können eine E-Mail entweder als InfoLog-, ODER als Ticket-Eintrag speichern, nicht beides gleichzeitig.
 you can select what info to be displayed on email tag	mail	de	Sie können auswählen, welche Informationen auf dem E-Mail-Tag angezeigt werden sollen. Die zusätzliche Anzeige der E-Mail-Adresse ermöglicht die Absenderadresse zu überprüfen.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	de	Sie können $$start$$ für das obige Start- und $$end$$ für das End-Datum verwenden.
 you may add this certificate into your contact, if you trust this signature.	mail	de	Sie können dieses Zertifikat in Ihren Kontakt speichern, wenn Sie dieser Signatur trauen.

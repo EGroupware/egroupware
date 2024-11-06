@@ -565,7 +565,6 @@ tables installed, unless there are errors printed above	setup	sl	tabele namešč
 tables upgraded	setup	sl	Tabele nadgrajene
 target version	setup	sl	Ciljna različica
 tcp port number of database server	setup	sl	TCP vrata podatkovnega strežnika
-text entry	setup	sl	Besedilni vnos
 the %1 extension is needed from: %2.	setup	sl	Razširitev %1 je potrebna za: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	sl	Potrebujem dodatek: %1, če želite uporabljati %2 podatkovno bazo.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sl	Privzet tip podatkovne baze (%1) ni podprt na tem strežniku. Uporabljam prvi razpoložljivi tip.

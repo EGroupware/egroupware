@@ -107,6 +107,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		// automatic set anonymous flag for username "anonymous", to not allow to create anonymous user without it
 		$data['anonymous'] = ($data['account_lid'] ?: admin_cmd::$accounts->id2name($this->account)) === 'anonymous' ?
 			true : admin_cmd::parse_boolean($data['anonymous'],$this->account ? null : false);
+		$data['hidden'] = admin_cmd::parse_boolean($data['hidden'],null);
 
 		if ($data['mustchangepassword'] && $data['changepassword'])
 		{
@@ -185,6 +186,18 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 			else
 			{
 				admin_cmd::$acl->delete_repository('phpgwapi','anonymous',$data['account_id']);
+			}
+		}
+		if (isset($data['hidden']))
+		{
+			admin_cmd::_instanciate_acl();
+			if ($data['hidden'])
+			{
+				admin_cmd::$acl->add_repository('phpgwapi','hidden',$data['account_id'],1);
+			}
+			else
+			{
+				admin_cmd::$acl->delete_repository('phpgwapi','hidden',$data['account_id']);
 			}
 		}
 		if (!is_null($data['changepassword']))

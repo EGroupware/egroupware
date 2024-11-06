@@ -149,8 +149,10 @@ class Select extends Etemplate\Widget
 		{
 			$widget_type = substr($widget_type, 4);
 		}
-		$multiple = $this->attrs['multiple'] || $this->getElementAttribute($form_name, 'multiple') || $this->getElementAttribute($form_name, 'rows') > 1;
-		$allowFreeEntries = $this->attrs['allowFreeEntries'] || $this->getElementAttribute($form_name, 'allowFreeEntries');
+		$multiple = $this->attrs['multiple'] || self::getElementAttribute($form_name, 'multiple') ||
+			self::getElementAttribute($form_name, 'rows') > 1;
+		$allowFreeEntries = $this->attrs['allowFreeEntries'] || self::getElementAttribute($form_name, 'allowFreeEntries') ||
+			$this->attrs['searchUrl'] || self::getElementAttribute($form_name, 'searchUrl');
 
 		$ok = true;
 		if (!$this->is_readonly($cname, $form_name))
@@ -165,7 +167,7 @@ class Select extends Etemplate\Widget
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'] . ',' . $this->attrs['options'] : $this->attrs['options']),
 				$false, $false, $value_in
 			);
-			$allowed = array_merge($allowed2, array_keys($type_options));
+			$allowed = array_merge($allowed2, self::optionValues($type_options));
 
 			// add option children's values too, "" is not read, therefore we cast to string
 			foreach($this->children as $child)
@@ -243,7 +245,7 @@ class Select extends Etemplate\Widget
 						break;
 
 					case 'select-timezone':
-						if (!calendar_timezones::tz2id($val))
+						if (!calendar_timezones::tz2id($val) && !in_array($val, $allowed))
 						{
 							self::set_validation_error($form_name, lang("'%1' is NOT a valid timezone!", $val));
 						}
@@ -328,6 +330,35 @@ class Select extends Etemplate\Widget
 		{
 			//error_log($this . "($form_name) is read-only, skipping validate");
 		}
+	}
+
+	/**
+	 * Get all values from an option array, which can be an associate array with values as key, or a "real" array or arrays with key "value"
+	 *
+	 * $options can be a real array, still using the key as value:
+	 * - ["", "low", "normal", "high"]
+	 *
+	 * @param array|array[] $options incl. possible children
+	 * @return string[]
+	 */
+	static function optionValues(array $options)
+	{
+		if (!$options || !is_array(current($options)) || !isset(current($options)['value']) ||
+			(function_exists('array_is_list') && !array_is_list($options)) ||
+			(!function_exists('array_is_list') && !isset($options[0]) && !isset($options[count($options) - 1])))
+		{
+			return array_keys($options);
+		}
+		$option2value = static function (array $option) use (&$option2value)
+		{
+			if (!empty($option['children']))
+			{
+				return array_merge((array)(string)$option['value'], ...array_map($option2value, $option['children']));
+			}
+			return [(string)$option['value']];
+		};
+		$values = array_merge(...array_map($option2value, $options));
+		return $values;
 	}
 
 	/**
@@ -729,7 +760,7 @@ class Select extends Etemplate\Widget
 				{
 					$categories = $GLOBALS['egw']->categories;
 				}
-				else    // we need to instanciate a new cat object for the correct application
+				else    // we need to instantiate a new cat object for the correct application
 				{
 					$categories = new Api\Categories($type5, $application);
 				}
@@ -747,36 +778,41 @@ class Select extends Etemplate\Widget
 						break;
 				}
 				// we cast $type4 (parent) to int, to get default of 0 if omitted
-				foreach((array)$categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) as $cat)
+				$cats = $categories->return_sorted_array(0, False, '', '', '', $globalCategories, (int)$parentCat, true) ?: [];
+				$cat2option = static function(array $cat) use (&$cat2option, $globalCategories, $cats)
 				{
-					$s = str_repeat('&nbsp;', $cat['level']) . stripslashes($cat['name']);
-
-					if(Api\Categories::is_global($cat))
-					{
-						$s .= Api\Categories::$global_marker;
-					}
-					$options[$cat['id']] = array(
-						'label'    => $s,
-						'title'    => $cat['description'],
-						// These are extra info for easy dealing with categories
-						// client side, without extra loading
-						'main'     => (int)$cat['main'],
-						'children' => $cat['children'] ?? null,
-						//add different class per level to allow different styling for each category level:
-						'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}"
-					);
-					// Send data too
-					if(is_array($cat['data']))
-					{
-						$options[$cat['id']] += $cat['data'];
-						if($cat['data']['icon'])
-						{
-							$options[$cat['id']]['icon'] = \admin_categories::icon_url($cat['data']['icon']);
-						}
-					}
-				}
+					return array_filter([
+							'value'    => $cat['id'],
+							'label'    => stripslashes($cat['name']).(Api\Categories::is_global($cat) ? Api\Categories::$global_marker : ''),
+							'title'    => $cat['description'],
+							// These are extra info for easy dealing with categories
+							// client side, without extra loading
+							'main'     => (int)$cat['main'],
+							// if we have children, fetch and return them
+							'children' => empty($cat['children']) ? null :
+								array_values(array_map($cat2option, array_filter($cats, static function(array $child) use ($cat)
+								{
+									return $child['parent'] == $cat['id'];
+								}))),
+							//add different class per level to allow different styling for each category level:
+							'class'    => "cat_level" . $cat['level'] . " cat_{$cat['id']}",
+							'icon'     => empty($cat['data']['icon']) ? null :
+								(Api\Image::find('', 'images/'.$cat['data']['icon']) ?: Api\Image::find('vfs', $cat['data']['icon'])),
+							// send cat-date too
+						]+(is_array($cat['data']) ? $cat['data'] : []));
+				};
+				// filter out sub-categories, they get added as children above
+				$options = array_map($cat2option, array_values(array_filter($cats, static function(array $cat) use ($parentCat)
+				{
+					return $cat['parent'] == (int)$parentCat;
+				})));
 				// preserve unavailable cats (eg. private user-cats)
-				if (isset(self::$request) && $value && ($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$options))))
+				if (isset(self::$request) && $value &&
+					($unavailable = array_diff(is_array($value) ? $value : explode(',',$value),
+						array_map(static function(array $cat)
+						{
+							return $cat['id'];
+						}, $cats))))
 				{
 					// unavailable cats need to be merged in again
 					$unavailable_name = $form_name . self::UNAVAILABLE_CAT_POSTFIX;

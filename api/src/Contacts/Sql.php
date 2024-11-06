@@ -607,6 +607,7 @@ class Sql extends Api\Storage
 			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
+			$extra_cols[] = 'account_lid AS account_lid';
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] === '0')
 			{
 				$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),self::ACOUNT_ACTIVE_FILTER);
@@ -713,6 +714,13 @@ class Sql extends Api\Storage
 				$this->db->quote(str_replace('$', '\\', $group_container_replace))."), account_lid)";
 			$order_by = str_replace('account_dn', $order, $order_by);
 			$this->sanitize_order_by = false;
+		}
+
+		// implement negated account_id filter
+		if (!empty($filter['account_id']) && ($not_account_ids = array_search('!', $filter['account_id'])) !== false)
+		{
+			$filter[] = $this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]);
+			unset($filter['account_id']);
 		}
 
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);

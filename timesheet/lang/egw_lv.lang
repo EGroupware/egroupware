@@ -1,17 +1,27 @@
 applies the changes	timesheet	lv	apstiprināt izmaiņas
+ask to start and stop working time with session	timesheet	lv	Jautājiet, lai sāktu un pārtrauktu darba laiku ar sesiju
+category for 'working time'	admin	lv	Kategorija “Darba laiks
+change owner when updating	timesheet	lv	Īpašnieka maiņa, veicot atjaunināšanu
 check all	timesheet	lv	Parbaudīt visu
+create a single 'working time' timesheet per	timesheet	lv	Izveidot vienu darba laika uzskaites lapu “Darba laiks” uz
 create new links	timesheet	lv	Izveidot jaunas saites
 creates a new field	timesheet	lv	veido jaunu lauku
 custom fields	timesheet	lv	Mainīti lauki
 deleted	timesheet	lv	Izdzēsts
 deletes this field	timesheet	lv	dzēš šo lauku
 determines the order the fields are displayed	timesheet	lv	nosaka kārtību, kādā tiek attēloti lauki
+disable timers	timesheet	lv	Atslēgt taimerus
+do you want to associate it with the selected %1 entry?	common	lv	Vai vēlaties to saistīt ar atlasīto %1 ierakstu?
+do you want to start your working time?	common	lv	Vai vēlaties sākt darba laiku?
+do you want to stop your working time?	common	lv	Vai vēlaties apturēt savu darba laiku?
 each value is a line like <id>[=<label>]	timesheet	lv	katra vēr'tiba ir līniija kā <id>[=<iezīme>]
 edit status	timesheet	lv	Rediģēt statusu
 edit this entry	timesheet	lv	Rediģēt šo ierakstu
 entry saved	timesheet	lv	Ieraksts saglabāts
+error storing working time	timesheet	lv	Kļūda darba laika saglabāšanā
 existing links	timesheet	lv	Eksistējošas saites
 field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
+forgot to switch off working time?	common	lv	Aizmirsāt izslēgt darba laiku?
 global categories	timesheet	lv	Globālās kategorijas
 history	timesheet	lv	Vēsture
 id	timesheet	lv	ID
@@ -22,13 +32,19 @@ links	timesheet	lv	Saites
 max length of the input [, length of the inputfield (optional)]	timesheet	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
 modified	timesheet	lv	Pārveidots
 order	timesheet	lv	Kārtība
+overwrite time	common	lv	Pārrakstīšanas laiks
+overwriting start or stop time	timesheet	lv	Sākuma vai beigu laika pārrakstīšana
 parent	timesheet	lv	Vecāki
 pause	common	lv	Pauze
 pause time	timesheet	lv	Pauzes laiks
 paused	timesheet	lv	Pauzes
 quantity	timesheet	lv	Daudzums
+recorded	timesheet	lv	Ierakstīts
+restore this entry	timesheet	lv	Atjaunot šo ierakstu
 saves the changes made and leaves	timesheet	lv	saglabā izdarītās izmaiņas un aiziet
 select a project	timesheet	lv	atzīmēt projektu
+start & stop timer	common	lv	Sākuma un apturēšanas taimeris
+start timer	common	lv	Sākt taimeri
 start-time can not be before last stop- or pause-time %1!	common	lv	Sākuma laiks nevar būt pirms pēdējā apstāšanās vai pauzes laika %1!
 stop- or pause-time can not be before the start-time %1!	common	lv	Apstāšanās vai pauzes laiks nevar būt pirms sākuma laika %1!
 the text displayed to the user	timesheet	lv	lietotājam parādīts teksts
@@ -36,6 +52,14 @@ this month	timesheet	lv	Šis mēnesis
 this week	timesheet	lv	Šī nedēļa
 this year	timesheet	lv	Šis gads
 timer already running or paused	common	lv	Taimeris jau darbojas vai ir apturēts
+use field from csv if possible	timesheet	lv	Ja iespējams, izmantojiet lauku no CSV
 values for selectbox	timesheet	lv	Vērtības<i>selectboxam</i>
 view this entry	timesheet	lv	Rādīt šo ierakstu
 week	timesheet	lv	Nedēļa
+what should be done with unknown values?	timesheet	lv	Kas jādara ar nezināmām vērtībām?
+will be created when saving ...	common	lv	Tiks izveidots, kad saglabās ...
+working time	common	lv	Darba laiks
+working time and timer	timesheet	lv	Darba laiks un taimeris
+working time from %1	timesheet	lv	Darba laiks no %1
+working time of %1 hours stored	timesheet	lv	Saglabāts darba laiks %1 stundas
+would you like to be asked, to start and stop working time, when login in or off	timesheet	lv	Vai vēlaties, lai, pieslēdzoties vai izslēdzoties, jums tiktu piedāvāts sākt un apturēt darba laiku?

@@ -126,8 +126,6 @@ cross account forward attachment is not allowed!	mail	sl	Priključitev naprej me
 current folder	mail	sl	trenutna mapa
 current subject	mail	sl	Trenutna tema
 currently:	mail	sl	Trenutno:
-date(newest first)	mail	sl	Datum (najprej novejši)
-date(oldest first)	mail	sl	Datum (najprej starejši)
 deactive	mail	sl	Neaktiven
 default sorting order	mail	sl	Privzet način razvrščanja
 default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene v orodni vrstici urejevalnika HTML pri sestavljanju e-pošte
@@ -189,7 +187,6 @@ drafts	mail	sl	Osnutki
 drafts folder	mail	sl	Osnutek mape
 edit account	mail	sl	Urejanje računa
 edit account ...	mail	sl	Urejanje računa ...
-edit folder acl	mail	sl	Urejanje mape ACL
 edit folder acl ...	mail	sl	Urejanje mape ACL ...
 edit vacation settings	mail	sl	Uredi nastavitve odsotnosti
 effective only if server supports acl at all	admin	sl	deluje samo, če strežnik sploh podpira ACL
@@ -277,6 +274,7 @@ handling of external http images / mixed content in mails	mail	sl	Ravnanje z zun
 header	mail	sl	Glava
 header lines	mail	sl	Glava sporočila
 high	mail	sl	Visoko
+high priority	mail	sl	Visoka prioriteta
 hold %1 to drag files to your computer	mail	sl	Držite %1, da povlečete datoteke v računalnik
 home page folders	mail	sl	mape domače strani
 hostname or ip	mail	sl	Ime gostitelja ali IP
@@ -333,6 +331,7 @@ learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi 
 less than	mail	sl	Manj kot
 limit mailing list results when searching for addresses	mail	sl	Omejitev rezultatov poštnih seznamov pri iskanju naslovov
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	sl	Seznam akcij, ki bodo privzeto vklopljene/aktivirane (npr. akcija Mail composose shrani kot InfoLog)
+low priority	mail	sl	Nizka prioriteta
 mail	common	sl	Pošta
 mail acl	mail	sl	Pošta ACL
 mail filter	mail	sl	Mail filter
@@ -506,7 +505,6 @@ resend after how many days?	mail	sl	Ponovno pošlji po številu dni?
 respond to mail sent to:	mail	sl	Odgovorite na pošto, poslano na:
 restrict acl management	admin	sl	Omejiti upravljanje ACL
 rights	mail	sl	Pravice
-row order style	mail	sl	Slog zaporednih vrstic
 rule priority position	mail	sl	Položaj prednostnega pravila
 rule with priority	mail	sl	pravilo s prednostjo
 rules	mail	sl	Pravila
@@ -588,7 +586,6 @@ shows a temporary visible notification including from address, subject and a sni
 sieve	mail	sl	Sieve
 sieve connection status	mail	sl	Stanje povezave
 sieve not activated	mail	sl	Sito ni aktivirano
-sieve script name	mail	sl	Ime skripte Sieve
 sieve server	mail	sl	Sieve strežnik
 sieve_edit_instructions	mail	sl	(*) se lahko uporabijo nadomestni znaki (* ,?). Če se želite ujemati * ali? sami, jih morate pobegniti s poševnico (\). Če preverite "Uporabi regularne izraze", morate uporabiti veljavne regularne izraze. Da bi pobegnili z vlamalnim znakom (!) Na začetku, ki se ne uporablja kot "NE", uporabite regex in poševnico (\) (npr. \!)
 sign your message with smime certificate	mail	sl	Podpišite sporočilo s potrdilom S/MIME
@@ -596,7 +593,6 @@ signature	mail	sl	Podpis
 signature at top	mail	sl	podpis na vrhu
 signature position and visibility	mail	sl	Položaj podpisa in prepoznavnost
 signed by	mail	sl	Podpisal
-small view	mail	sl	Skrčen pogled
 smime encrypted message	mail	sl	Šifrirano sporočilo S/MIME
 smime signed message	mail	sl	Podpisano sporočilo S/MIME
 smtp	mail	sl	SMTP
@@ -620,7 +616,6 @@ subscribe to folder %1	mail	sl	Naročite se na mapo %1
 subscription folders	mail	sl	Naročniške mape
 subscription successfully saved.	mail	sl	Naročnina je uspešno shranjena.
 succeeded on %1 folders, failed on %2	mail	sl	Uspešno v %1 mapi, neuspešno v %2
-successfully connected	mail	sl	Uspešno povezana
 switch off encryption?	mail	sl	Izklopite šifriranje?
 template folder	mail	sl	Mapa s predlogami
 templates	mail	sl	Predloge
@@ -646,7 +641,6 @@ this mail contains external images served via insecure http protocol. be aware s
 this message is smime encrypted and password protected.	mail	sl	To sporočilo je šifrirano S/MIME in zaščiteno z geslom.
 timeout on connections to your imap server	mail	sl	Časovna omejitev povezave s strežnikom IMAP
 to do	mail	sl	Narediti
-toggle all folders view for %1	mail	sl	Preklopi pogled vseh map %1
 toggled on actions	mail	sl	Preklopi na dejanja
 trash	mail	sl	Koš
 trash folder	mail	sl	Mapa Koš
@@ -697,13 +691,7 @@ wizard	mail	sl	Čarovnik
 writable sharing requires epl version!	mail	sl	Za souporabo, ki omogoča pisanje, je potrebna različica EPL!
 write	mail	sl	Zapiši
 wrote	mail	sl	Je napisal
-yes, but mask all passwords	mail	sl	da, vendar prikrije vse gesla
-yes, but mask all usernames and passwords	mail	sl	da, vendar masko vsa uporabniška imena in gesla
 yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
-yes, only trigger connection reset	mail	sl	Da, samo sproži ponastavitev povezave
-yes, show all debug information available for the user	mail	sl	da, prikažite vse informacije o odpravi napak, ki so na voljo uporabniku
-yes, show basic info only	mail	sl	da, prikaži samo osnovne informacije
-you can either choose to save as infolog or tracker, not both.	mail	sl	Lahko se odločite, da shranite kot InfoLog OR tracker, ne oboje.
 you can select what info to be displayed on email tag	mail	sl	Izberete lahko, katere informacije bodo prikazane na e-poštni oznaki.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	sl	Za začetni datum in $$end$$ lahko uporabite $$start$$ za končni datum.
 you may add this certificate into your contact, if you trust this signature.	mail	sl	To potrdilo lahko dodate v stik, če zaupate temu podpisu.

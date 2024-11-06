@@ -198,6 +198,19 @@ function send_template()
 			return "<et2-details" . stringAttrs($attrs) . '>' . $matches[2] . "</et2-details>";
 		}, $str);
 
+		// Change groupbox <caption label="..."/> --> summary attribute
+		$str = preg_replace_callback('#<groupbox([^>]*?)>(.*?)</groupbox>#su', static function ($matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+
+			if (preg_match('#^\n?\s*<caption([^>]*?)/?>(.*?)(</caption>)?#su', $matches[2], $caption))
+			{
+				$attrs['summary'] = parseAttrs($caption[1])['label'];
+				$matches[2] = str_replace($caption[0], '', $matches[2]);
+			}
+			return "<et2-groupbox" . stringAttrs($attrs) . '>' . $matches[2] . "</et2-groupbox>";
+		}, $str);
+
 		// Change splitter dockside -> primary + vertical
 		$str = preg_replace_callback('#<split([^>]*?)>(.*?)</split>#su', static function ($matches)
 		{
@@ -352,7 +365,10 @@ function send_template()
 		}, $str);
 
 		// use et2-email instead of et2-select-email
-		$str = preg_replace('#<et2-select-email\s(.*?")\s*></et2-select-email>#s', '<et2-email $1></et2-email>', $str);
+		$str = preg_replace('#<et2-select-email\s(.*?")\s*/?>(</et2-select-email>)?#s', '<et2-email $1></et2-email>', $str);
+
+		// use et2-select-cat instead of et2-tree-cat
+		$str = preg_replace('#<et2-tree-cat\s(.*?")\s*/?>(</et2-tree-cat>)?#s', '<et2-select-cat $1></et2-select-cat>', $str);
 
 		// nextmatch headers
 		$str = preg_replace_callback('#<(nextmatch-)([^ ]+)(header|filter) ([^>]+?)/>#s', static function (array $matches)

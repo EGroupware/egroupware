@@ -22,6 +22,7 @@
 %1 token %2.	admin	ko	%1 토큰 %2.
 %1 user %2	admin	ko	%1 사용자 %2
 (de)activate mail accounts	admin	ko	메일 계정 (비)활성화
+(default no, leave it off if you dont use it)	admin	ko	기본값 = 아니요, 사용하지 않는 경우 그대로 둡니다.
 (no subject)	admin	ko	(제목 없음)
 access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
 account	admin	ko	계정
@@ -226,10 +227,12 @@ home screen message	admin	ko	주 화면 메세지
 host information	admin	ko	호스트 정보
 hour<br>(0-23)	admin	ko	시간<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	ko	접근 로그에 항목을 삭제되기까지 일간 유지할까요 (기본 90) ?
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ko	관리자가 아닌 사람이 내보낼 수 있는 항목 수입니다. 비어 있음 = 제한 없음, 아니요 = 내보내기 없음
 how many minutes should an account or ip be blocked (default 1) ?	admin	ko	몇분간 IP나 계정을 막을까요 (기본 30) ?
 html/plaintext	admin	ko	HTML/텍스트
 icon	admin	ko	아이콘
 idle	admin	ko	대기시간
+if different from email address	admin	ko	이메일 주소와 다른 경우
 if no acl records for user or any group the user is a member of	admin	ko	사용자나 어떤 그룹 사용자 ACL 레코드가 없다면 다음의 멤버 :
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ko	LDAP를 사용한다면, 홈디렉토리와 로그인쉘 속성을 관리 하시겠습니까?
 inbound	admin	ko	인바운드
@@ -288,6 +291,7 @@ new password [ leave blank for no change ]	admin	ko	새 패스워드[ 바꾸지 
 next run	admin	ko	다음 실행
 no algorithms available	admin	ko	어떠한 알고리즘도 가능하지 않습니다.
 no jobs in the database !!!	admin	ko	데이터베이스에 어떠한 작업도 없습니다 !
+no limit	admin	ko	제한 없음
 no login history exists for this user	admin	ko	이 사용자의 접속 기록은 없습니다
 no matches found	admin	ko	일치하는 것을 찾을수 없습니다
 no modes available	admin	ko	가능한 모드(mode)가 없습니다
@@ -352,6 +356,7 @@ show groups in container based on	admin	ko	コンテナ内のグループの表�
 show phpinfo()	admin	ko	phpinfo()를 보임
 show session ip address	admin	ko	세션 IP주소를 보임
 site	admin	ko	Site
+smtp only: to create only an smtp account	admin	ko	IMAP 없이 SMTP 전용 계정 만들기
 soap	admin	ko	SOAP
 sorry, that group name has already been taken.	admin	ko	죄송합니다, 입력하신 그룹이름은 이미 있습니다.
 sorry, the above users are still a member of the group %1	admin	ko	죄송합니다 위의 사용자는 아직 %1 그룹의 구성원입니다.
@@ -363,13 +368,7 @@ start	admin	ko	시작
 start testjob!	admin	ko	테스트작업(TestJob) 시작
 submit changes	admin	ko	변경된것을 보냄(Submit)
 submit the search string	admin	ko	검색 문자열 보냄
-template selection	admin	ko	템플릿 선택
-text entry	admin	ko	텍스트 엔트리(Text entry)
-that application name already exists.	admin	ko	응용프로그램 이름이 이미 있습니다
-that application order must be a number.	admin	ko	응용프로그램 순서는 반드시 정수여야 합니다
 that loginid has already been taken	admin	ko	이 접속ID는 이미 사용중입니다
-that name has been used already	admin	ko	이름이 이미 있습니다
-that server name has been used already !	admin	ko	이미 존재하는 서버이름 입니다!
 the api is current	admin	ko	API는 현재버전
 the api requires an upgrade	admin	ko	API의 업그레이드가 필요
 the groups must include the primary group	admin	ko	그룹은 반드시 주 그룹을 포함해야함

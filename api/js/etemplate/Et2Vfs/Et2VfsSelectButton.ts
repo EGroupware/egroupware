@@ -216,6 +216,7 @@ export class Et2VfsSelectButton extends Et2InputWidget(LitElement)
 
 		return html`
             <et2-button part="button"
+                        exportparts="base"
                         image=${image}
                         title=${this.title}
                         helptext=${this.helptext}

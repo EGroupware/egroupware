@@ -28,14 +28,21 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		return [
 			...super.styles,
 			css`
-			/* Larger maximum height before scroll*/
-			.select__tags {
-				max-height: 10em;
-			}
+				/* Larger maximum height before scroll*/
 
-			  .title {
-				float: right;
-			  }
+				.select__tags {
+					max-height: 10em;
+				}
+
+				.title {
+					float: right;
+				}
+
+				/* Hide unwanted vertical scrollbars with 1 row of tags */
+
+				::part(tag) {
+					overflow: hidden;
+				}
 			`
 		];
 	}
@@ -178,7 +185,7 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 		if(!option.fname && !option.lname && !option.icon && option.app)
 		{
 			return html`
-                <et2-image src="${option.app}/navbar" style="width: var(--icon-width)"></et2-image>`;
+                <et2-image src="${option.app}/navbar" style="width: var(--icon-width); display: inline-block"></et2-image>`;
 		}
 		// lavatar uses a size property, not a CSS variable
 		let style = getComputedStyle(this);

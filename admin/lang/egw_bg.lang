@@ -22,6 +22,7 @@
 %1 token %2.	admin	bg	%1 токен %2.
 %1 user %2	admin	bg	%1 потребител %2
 (de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
+(default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, оставете го изключено, ако не го използвате
 (no subject)	admin	bg	(без тема)
 -  type	admin	bg	- вид
 1 year	admin	bg	1 година
@@ -132,7 +133,9 @@ group has been added	common	bg	Групата е добавена.
 group has been deleted	common	bg	Групата е била изтрита.
 group has been updated	common	bg	Групата е актуализирана.
 group hierarchy	admin	bg	Йерархия на групите
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	bg	Колко записа трябва да могат да експортират неадминистраторите. Празно = няма ограничение, Не = няма експорт
 html/plaintext	admin	bg	HTML/текст
+if different from email address	admin	bg	Ако е различен от имейл адреса
 internal name max. 64 chars	admin	bg	Вътрешно име макс. 64 символа
 invalid format, must end in a group of digits e.g. %1 or %2	admin	bg	Невалиден формат, трябва да завършва с група цифри, например %1 или %2
 last updated	admin	bg	Последна актуализация
@@ -141,6 +144,7 @@ manage mapping	admin	bg	Управление на съответствията
 modified	admin	bg	Редактирано
 month	admin	bg	Месец
 name of tab to create and show field in	admin	bg	Име на раздела, в който се създава и показва полето
+no limit	admin	bg	Без ограничение
 no matches found	admin	bg	Не са открити съвпадения
 oauth authentiction	admin	bg	Удостоверяване на OAuth
 offer to installing egroupware as mail-handler	admin	bg	Оферта за инсталиране на EGroupware като mail-handler
@@ -158,6 +162,7 @@ requested	admin	bg	Заявена
 select accounts for which the custom field should be visible	admin	bg	Изберете сметки, за които потребителското поле трябва да бъде само за четене.
 serial number	admin	bg	Сериен номер
 show groups in container based on	admin	bg	Показване на групите в контейнера въз основа на
+smtp only: to create only an smtp account	admin	bg	Създаване на акаунт само за SMTP без IMAP
 start	admin	bg	Старт
 translation	admin	bg	Превод
 two weeks	admin	bg	две седмици

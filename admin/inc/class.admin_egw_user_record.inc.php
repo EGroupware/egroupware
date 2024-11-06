@@ -41,7 +41,10 @@ class admin_egw_user_record implements importexport_iface_egw_record
 		} else {
 			$this->identifier = $_identifier;
 		}
-		$this->set_record($GLOBALS['egw']->accounts->read($this->identifier));
+		if($this->identifier)
+		{
+			$this->set_record($GLOBALS['egw']->accounts->read($this->identifier));
+		}
 	}
 
 	/**

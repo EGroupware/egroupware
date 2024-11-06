@@ -14,6 +14,8 @@ import {css, html, LitElement, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import shoelace from "../Styles/shoelace";
+import {ifDefined} from "lit/directives/if-defined.js";
+import {property} from "lit/decorators/property.js";
 
 /**
  * A split button - a button with a dropdown list
@@ -63,6 +65,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
             #main {
             	flex: 1 1 auto;
             }
+
+				et2-image {
+					width: 1em;
+				}
             `,
 		];
 	}
@@ -73,6 +79,9 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 			...super.properties
 		};
 	}
+
+	@property()
+	placement:string = "bottom-end";
 
 	// Make sure imports stay
 	private _group : SlButtonGroup;
@@ -108,17 +117,20 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		}
 		return html`
             <sl-button-group>
-                <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main"
+                <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main" part="main"
                            ?disabled=${this.disabled}
                            @click=${this._handleClick}
                 >
                     ${this.label}
                 </sl-button>
-                <sl-dropdown placement="bottom-end" hoist>
-                    <sl-button size="${egwIsMobile() ? "large" : "medium"}" slot="trigger" caret
+                <sl-dropdown placement=${this.placement} hoist part="dropdown">
+                    <slot name="trigger" slot="trigger">
+                        <sl-button part="trigger" size="${egwIsMobile() ? "large" : "medium"}" slot="trigger" caret
                                ?disabled=${this.disabled}></sl-button>
-                    <sl-menu @sl-select=${this._handleSelect}>
+                    </slot>
+                    <sl-menu @sl-select=${this._handleSelect} part="menu">
                         ${(this.select_options || []).map((option : SelectOption) => this._optionTemplate(option))}
+                        <slot></slot>
                     </sl-menu>
                 </sl-dropdown>
             </sl-button-group>
@@ -131,7 +143,11 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
             <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
 
 		return html`
-            <sl-menu-item value="${option.value}">
+            <sl-menu-item
+                    value="${option.value}"
+                    type="${ifDefined(option.checkbox)}checkbox"
+                    ?checked=${option.checked}
+            >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}
             </sl-menu-item>`;

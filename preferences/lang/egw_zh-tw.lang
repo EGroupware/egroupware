@@ -8,16 +8,10 @@ acl grants have been updated	preferences	zh-tw	ACL 授權已經更新
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh-tw	任何 EGroupware 的列表都會顯示每頁的資料數或行數<br>當資料筆數過多時您可以先做預覽
 are you sure you want to delete this category ?	preferences	zh-tw	您確定要刪除這個分類？
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh-tw	修改一個使用者的密碼必須輸入原有以及新的密碼，成功時會傳回 TRUE ，失敗則為 FALSE 。
-change your password	preferences	zh-tw	變更您的密碼
-change your profile	preferences	zh-tw	變更您的個人設定
-change your settings	preferences	zh-tw	變更您的喜好設定
-charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
-click to select a color	preferences	zh-tw	選擇一個顏色
 color	preferences	zh-tw	顏色
 country	preferences	zh-tw	國家
 date format	preferences	zh-tw	日期格式
 default	preferences	zh-tw	預設
-default application	preferences	zh-tw	預設應用程式
 default preferences	preferences	zh-tw	預設偏好設定
 delete categories	preferences	zh-tw	刪除分類
 description can not exceed 255 characters in length !	preferences	zh-tw	說明不能夠超過255個字元
@@ -48,11 +42,9 @@ no default	preferences	zh-tw	沒有預設值
 no user-selection at all	common	zh-tw	沒有選擇使用者
 note: this feature does *not* change your email password. this will	preferences	zh-tw	注意：這個功能不會修改您的信箱密碼，這將會
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh-tw	備註：這個功能將「不會」更動您的電子郵件信箱密碼，您必須手動去更動密碼。
-please, select a new theme	preferences	zh-tw	請選擇一組新的畫面配置
 popup with search	preferences	zh-tw	跳出搜尋
 re-enter your password	preferences	zh-tw	重新輸入您的密碼
 read prefs for the specified application.	preferences	zh-tw	讀取指定應用程式的偏好設定。
-select different theme	preferences	zh-tw	選擇不同的畫面配置
 select one	preferences	zh-tw	請選擇
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh-tw	選擇EGroupware的語言<br>部分語言尚未完成翻譯，您會看到英文的敘述
 selectbox	preferences	zh-tw	下拉選單
@@ -84,5 +76,4 @@ write prefs for the specified application.	preferences	zh-tw	寫入指定應用�
 you can show the applications as icons only, icons with app-name or both.	preferences	zh-tw	您可以指定只顯示應用程式圖示或是加上它的名稱。
 you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒有權限設定ACL在這個模式
 you must enter a password	preferences	zh-tw	您必須輸入密碼
-your current theme is: %1	preferences	zh-tw	您目前的佈景是： %1
 your preferences	preferences	zh-tw	您的偏好設定

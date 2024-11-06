@@ -4,10 +4,14 @@
 3 years ago	timesheet	hu	3 évvel korábban
 all projects	timesheet	hu	Összes projekt
 applies the changes	timesheet	hu	változások végrehajtása
+ask to start and stop working time with session	timesheet	hu	Kérje a munkaidő indítását és leállítását a munkamenettel
 both: allow to use projectmanager and free project-names	admin	hu	Mindkettő: lehetővé teszi a ProjectManager és a szabad projekt nevek használatát
 by	timesheet	hu	by
+category for 'working time'	admin	hu	Kategória 'Munkaidő'
+change owner when updating	timesheet	hu	Tulajdonosváltás frissítéskor
 check all	timesheet	hu	Összes kijelölese
 comment by %1 at %2:	timesheet	hu	%1 megjegyzése ekkor %2:
+create a single 'working time' timesheet per	timesheet	hu	Egyetlen „Munkaidő” munkaidő-nyilvántartás létrehozása egyenként
 create new links	timesheet	hu	Új hivatkozás létrehozása
 creates a new field	timesheet	hu	Új mező létrehozása
 creating new entry	timesheet	hu	új bejegyzés létrehozása
@@ -15,6 +19,10 @@ custom fields	timesheet	hu	Egyedi mezõk
 deleted	timesheet	hu	törölve
 deletes this field	timesheet	hu	Aktuális mező törlése
 determines the order the fields are displayed	timesheet	hu	megjelenített mezők rendezésének meghatározása
+disable timers	timesheet	hu	Időzítők letiltása
+do you want to associate it with the selected %1 entry?	common	hu	A kiválasztott %1 bejegyzéshez szeretné társítani?
+do you want to start your working time?	common	hu	Szeretné elindítani a munkaidőt?
+do you want to stop your working time?	common	hu	Le szeretné állítani a munkaidejét?
 each value is a line like <id>[=<label>]	timesheet	hu	minden érték egy sor, ehhez hasonlóan: <id>[=<címke>]
 edit status	timesheet	hu	Állapot szerkesztése
 edit this entry	timesheet	hu	Bejegyzés szerkesztése
@@ -24,9 +32,11 @@ entry deleted	timesheet	hu	Bejegyzés törölve
 entry saved	timesheet	hu	Bejegyzés elmentve
 error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépett fel!!!
 error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!!!
+error storing working time	timesheet	hu	Hiba a munkaidő tárolásában
 existing links	timesheet	hu	Meglévő hivatkozások
 export to openoffice spreadsheet	timesheet	hu	Exportálás OpenOffice Táblázatkezelő formátumban
 field must not be empty !!!	timesheet	hu	A mezőt ki kell tölteni!!!
+forgot to switch off working time?	common	hu	Elfelejtette kikapcsolni a munkaidőt?
 full: use only projectmanager	admin	hu	Teljes: csak a ProjectManager használata
 general fields:	timesheet	hu	Általános mezők:
 global categories	timesheet	hu	Globális kategóriák
@@ -49,6 +59,8 @@ none: use only free project-names	admin	hu	Egy sem: csak szabad projekt nevek ha
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	hu	sorok száma a többsoros beviteli mező, vagy egy kiválasztó lista esetén (ilyen 'magas' lesz a doboz/szerkesztő mező)
 or endtime	timesheet	hu	vagy Befejezési idő
 order	timesheet	hu	Rendezés
+overwrite time	common	hu	Felülírási idő
+overwriting start or stop time	timesheet	hu	A kezdési vagy leállítási idő felülírása
 parent	timesheet	hu	Szülő
 pause	common	hu	Szünet
 pause time	timesheet	hu	Szünet ideje
@@ -57,6 +69,8 @@ permission denied!!!	timesheet	hu	Hozzáférés megtagadva!!!
 price	timesheet	hu	Ár
 projectmanager integration	admin	hu	ProjectManager integráció
 quantity	timesheet	hu	Mennyiség
+recorded	timesheet	hu	Felvett
+restore this entry	timesheet	hu	A bejegyzés visszaállítása
 save & new	timesheet	hu	Elment és Új
 saves the changes made	timesheet	hu	Változások elmentése
 saves the changes made and leaves	timesheet	hu	Változások mentése és kilépés
@@ -65,6 +79,8 @@ select a price	timesheet	hu	Ár kiválasztása
 select a project	timesheet	hu	Projekt kiválasztása
 show a quantity sum (eg. to sum up negative overtime)	admin	hu	Jelenítse meg a mennyiségi összesítést (pl. hogy összesítse a negatív túlmunkát is)
 start	timesheet	hu	Kezdés
+start & stop timer	common	hu	Az időzítő indítása és leállítása
+start timer	common	hu	Időzítő indítása
 start-time can not be before last stop- or pause-time %1!	common	hu	A kezdési idő nem lehet az utolsó megállási vagy szünetelési idő %1 előtt!
 starttime	timesheet	hu	Kezdési idő
 starttime has to be before endtime !!!	timesheet	hu	A kezdési időnek a befejezés előtt kell lennie!
@@ -78,11 +94,18 @@ this year	timesheet	hu	Folyó év
 timer already running or paused	common	hu	Az időzítő már fut vagy szünetel
 timesheet	common	hu	Regiszter
 timesheet csv export	timesheet	hu	Regiszter CSV export
-timesheet openoffice export	timesheet	hu	Regiszter OpenOffice export
 unitprice	timesheet	hu	Egységár
+use field from csv if possible	timesheet	hu	Ha lehetséges, használja a CSV mezőt
 values for selectbox	timesheet	hu	Éktékek a kiválasztódoboznak
 view this entry	timesheet	hu	Bejegyzés megtekintése
 week	timesheet	hu	hét
+what should be done with unknown values?	timesheet	hu	Mi a teendő az ismeretlen értékekkel?
+will be created when saving ...	common	hu	A mentéskor létrejön ...
+working time	common	hu	Munkaidő
+working time and timer	timesheet	hu	Munkaidő és időzítő
+working time from %1	timesheet	hu	Munkaidő %1-től
+working time of %1 hours stored	timesheet	hu	Munkaidő %1 óra tárolt
+would you like to be asked, to start and stop working time, when login in or off	timesheet	hu	Szeretné, ha megkérdeznénk, hogy indítsa el és állítsa le a munkaidőt, amikor be- vagy kijelentkezik?
 yes, only admins can purge deleted items	admin	hu	Igen, csak az adminisztrátorok távolíthatják el a törölt elemeket
 yesterday	timesheet	hu	Tegnap
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	hu	Az adatbázis nem friss (%1 <-> %2), kérjük %3frissítse%4 az adatbázist.

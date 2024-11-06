@@ -2758,7 +2758,7 @@ class Contacts extends Contacts\Storage
 			$email = strtolower(current(Mail::stripRFC822Addresses([$_GET['email']])));
 
 			if (!($contact = current($this->search(['contact_email' => $email, 'contact_email_home' => $email],
-				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag'],
+				['contact_id', 'email', 'email_home', 'n_fn', 'n_given', 'n_family', 'contact_files', 'etag', 'account_lid'],
 				'contact_files & '.self::FILES_BIT_PHOTO.' DESC', '', '', false, 'OR', [0, 1]) ?: [])) ||
 				!self::hasPhoto($contact))
 			{
@@ -2785,12 +2785,17 @@ class Contacts extends Contacts\Storage
 			}
 			if(is_array($contact))
 			{
+				$use_account_lid = empty($contact['account_lid']) && empty($contact['account_id']) ? 0 :
+					$GLOBALS['egw_info']['user']['preferences']['common']['avatar_display'] ?? 0;
+
 				header('Content-type: image/jpeg');
-				$contact['jpegphoto'] =  Contacts\Lavatar::generate(array(
+				$contact['jpegphoto'] =  Contacts\Lavatar::generate([
 					'id' => $contact['id'],
 					'firstname' => $contact['n_given'],
-					'lastname' => $contact['n_family'])
-				);
+					'lastname' => $contact['n_family'],
+					'account_lid' => $contact['account_lid'] ??
+						(empty($contact['account_id']) ? null : Accounts::getInstance()->id2name($contact['account_id'])),
+				], null, 128, $use_account_lid);
 			}
 		}
 

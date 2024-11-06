@@ -411,6 +411,21 @@ class preferences_settings
 		return null;
 	}
 
+	public static function defaultLabel(?string $type='user')
+	{
+		switch($type)
+		{
+			default:
+			case 'user':
+				return lang('Use default');
+			case 'default':
+			case 'group':
+				return lang('No default');
+			case 'forced';
+				return lang('Users choice');
+		}
+	}
+
 	/**
 	 * Get content, sel_options and readonlys for given appname and type
 	 *
@@ -540,40 +555,40 @@ class preferences_settings
 					break;
 			}
 			// move values/options to sel_options array
-			if (isset($setting['values']) && is_array($setting['values']) && !$setting['no_sel_options'])
+			if (isset($setting['values']) && is_array($setting['values']) && empty($setting['no_sel_options']))
 			{
-				Select::fix_encoded_options($setting['values'], true);
-				if ($old_type != 'multiselect' && $old_type != 'notify')
+				// if you use an et2-* widget as type, it's your responsibility to encode options correct!
+				if (str_starts_with($old_type, 'et2-'))
 				{
-					switch($type)
+					$setting['attributes']['placeholder'] = self::defaultLabel($type);
+				}
+				else
+				{
+					Select::fix_encoded_options($setting['values'], true);
+
+					if ($old_type != 'multiselect' && $old_type != 'notify' && $old_type != 'et2-tree-dropdown')
 					{
-						case 'user':
+						if($type === 'forced')
+						{
 							$setting['values'] = array_merge(
-								array(['value' => '', 'label' => lang('Use default')]),
+								array(['value' => '**NULL**', 'label' => self::defaultLabel($type)]),
 								$setting['values']
 							);
-							break;
-						case 'default':
-						case 'group':
+						}
+						else
+						{
 							$setting['values'] = array_merge(
-								array(['value' => '', 'label' => lang('No default')]),
+								array(['value' => '', 'label' => self::defaultLabel($type)]),
 								$setting['values']
 							);
-							break;
-						case 'forced';
-							$setting['values'] = array_merge(
-								array(['value' => '**NULL**', 'label' => lang('Users choice')]),
-								$setting['values']
-							);
-							break;
+						}
 					}
 				}
 				$sel_options[$setting['name']] = $setting['values'];
 			}
 			if ($type == 'user')
 			{
-				$default = $GLOBALS['egw']->preferences->group[$appname][$setting['name']] ?
-					$GLOBALS['egw']->preferences->group[$appname][$setting['name']] :
+				$default = $GLOBALS['egw']->preferences->group[$appname][$setting['name']] ?:
 					$GLOBALS['egw']->preferences->default[$appname][$setting['name']];
 
 				// replace default value(s) for selectboxes with selectbox labels
@@ -682,7 +697,7 @@ class preferences_settings
 	protected static function get_default_label($default, array $values, $lang=true)
 	{
 		// explode comma-separated multiple default values
-		if (!is_array($default) && !isset($values[$default]) && strpos($default, ',') !== false)
+		if(!is_array($default) && !isset($values[$default]) && strpos($default, ',') > 0)
 		{
 			$labels = explode(',', $default);
 		}

@@ -9,7 +9,13 @@
  */
 import {egwActionObjectInterface} from "./egw_action";
 import {Et2Tree} from "../etemplate/Et2Tree/Et2Tree";
-import {EGW_AI_DRAG_ENTER, EGW_AI_DRAG_OUT, EGW_AO_STATE_FOCUSED, EGW_AO_STATE_SELECTED} from "./egw_action_constants";
+import {
+	EGW_AI_DRAG,
+	EGW_AI_DRAG_ENTER,
+	EGW_AI_DRAG_OUT,
+	EGW_AO_STATE_FOCUSED,
+	EGW_AO_STATE_SELECTED
+} from "./egw_action_constants";
 import {egwBitIsSet} from "./egw_action_common";
 import {SlTreeItem} from "@shoelace-style/shoelace";
 import {FindActionTarget} from "../etemplate/FindActionTarget";
@@ -61,6 +67,10 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 		{
 			target.target.classList.remove("draggedOver", "drop-hover");
 			clearTimeout(this.timeouts[target.target.id])
+		}
+		else if(egw_event == EGW_AI_DRAG)
+		{
+			target.action.setSelected(true);
 		}
 		return true
 	}

@@ -3797,6 +3797,8 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				!select.select_options.filter(option => option.value === '').length)
 			{
 				select.emptyLabel = this.egw().lang('All categories');
+				// requestUpdate because widget is not firing update itself
+				select.requestUpdate("emptyLabel");
 			}
 			select.requestUpdate("value");
 		})

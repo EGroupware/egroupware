@@ -16,22 +16,15 @@ automatically start with this font size	preferences	sl	Samodejno začnite s to v
 br	preferences	sl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sl	Spremeni geslo uporabniku tako, da podate staro in novo geslo. Če se operacija uspešno izvede, vrne TRUE, drugače pa FALSE.
 change password	preferences	sl	Spremeni geslo
-change your password	preferences	sl	Spremenite svoje geslo
-change your profile	preferences	sl	Spremenite svoj profil
-change your settings	preferences	sl	Spremenite svoje nastavitve
-charset for the csv export	addressbook	sl	Nabor znakov za izvoz CSV
 charset for the csv export/import	preferences	sl	Komplet znakov
-click to select a color	preferences	sl	Izberite barvo
 color	preferences	sl	Barva
 country	preferences	sl	Država
 custom login box color, defaults to above color darkened	preferences	sl	Barva prijavnega okna po meri, privzeto, da je barva zatemnjena
 custom sidebar menu active color, defaults to above color darkened	preferences	sl	Aktivna barva menija na stranskih vrsticah po meri je privzeta, da je barva zatemnjena
 dark mode theme	preferences	sl	Tema temnega načina
-dark moono theme	preferences	sl	Dark Moono predloga
 data exchange settings	preferences	sl	Nastavitve za izmenjavo podatkov
 date format	preferences	sl	Oblika datuma
 default	preferences	sl	Privzeto
-default application	preferences	sl	Privzeta aplikacija
 default font	preferences	sl	Privzeta pisava
 default font size	preferences	sl	Privzeta velikost pisave
 default preferences	preferences	sl	Privzete nastavitve
@@ -84,7 +77,6 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	sl	Vmesnik/izbira predloge
 it sets content size (text only) according to selected size.	preferences	sl	Nastavi velikost vsebine (samo besedilo) glede na izbrano velikost.
 just clicking on the line, like a checkbox	preferences	sl	samo kliknite na vrstico, na primer potrditveno polje
-kama theme	preferences	sl	Kama predloga
 language	preferences	sl	Jezik
 logging in via singlesignon does not provide a password to pass it on to mail- or file-servers.	common	sl	Prijava prek SingleSignOn ne zagotavlja gesla za posredovanje poštnim ali datotečnim strežnikom.
 look & feel	preferences	sl	Poglej in občuti
@@ -92,8 +84,6 @@ lowercase letters	preferences	sl	male črke
 make applications list scrollable with up/down scroll buttons (usefull for users working with mouse with no scrollwheel)	preferences	sl	Seznam aplikacij je mogoče pomikati z gumboma za pomikanje navzgor in navzdol (uporabno za uporabnike, ki delajo z miško brez kolesca za pomikanje).
 max matches per page	preferences	sl	Največ zadetkov na stran
 max number of icons in navbar	preferences	sl	Največje število ikon v navigacijski vrstici
-moono color theme	preferences	sl	Mooo barva tema
-moono theme (default)	preferences	sl	Moono tema (privzeto)
 no default	preferences	sl	Ni privzetih vrednosti
 no user-selection at all	common	sl	Ni izbire za uporabnika
 note: this feature does *not* change your email password. this will	preferences	sl	Pozor: to *NE* bo zamenjalo gesla vaše E-pošte. To bo
@@ -111,20 +101,16 @@ password stored	preferences	sl	Shranjeno geslo.
 permanent time zone selection	preferences	sl	Stalni časovni pas
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	sl	Izberite časovne pasove za preklop med. Stikalo ni prikazano, če je izbrana manj kot dve časovni pasovi.
 please select your timezone.	preferences	sl	Izberite svoj časovni pas.
-please, select a new theme	preferences	sl	Izberite novo temo
 popup with search	preferences	sl	Okno za iskanje
 preferences saved.	preferences	sl	Nastavitve shranjene
 pt: points (1/72 inch)	preferences	sl	pt: točke (1/72 palca)
 px: display pixels	preferences	sl	px: prikaz slikovnih pik
 re-enter your password	preferences	sl	Ponovno vpišite geslo
 read prefs for the specified application.	preferences	sl	Preberite lastnosti izbrane aplikacije.
-rich text editor theme	preferences	sl	Tema obogatenega besedila
 select additional lines in lists by	preferences	sl	Izberite dodatne vrstice v seznamih z
-select different theme	preferences	sl	Izberite drugačno temo
 select one	preferences	sl	Izberite eno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporočil in besedil znotraj EGW.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisano besedilo v angleščini.
 select the language of the spellchecker integrated into the rich text editor.	preferences	sl	Izberite jezik črkovalnika, vgrajenega v urejevalnik  obogatenega besedila.
-select the theme (visualization) of the rich text editor.	preferences	sl	Izberite temo urejevalnika obogatenega besedila.
 selectbox	preferences	sl	Izbirno polje
 selectbox with groupmembers	common	sl	Izbirno polje s člani skupine
 selectbox with primary group and search	preferences	sl	Izbirno polje s primarno skupino in iskanjem
@@ -168,7 +154,6 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you can show the linked entries with icons only, icons with app-name or both.	common	sl	Vnose s povezavami lahko prikažete samo z ikonami, samo z imenom aplikacije ali z obojim.
 you do not have permission to set acl's in this mode!	preferences	sl	Nimate dovoljenja za nastavitev ACL v tem načinu!
 you must enter a password	preferences	sl	Vpisati morate geslo
-your current theme is: %1	preferences	sl	Vaša trenutna tema je: %1
 your password does not have required strength:	preferences	sl	Vaše geslo nima potrebne moči:
 your password might not match the password policy.	preferences	sl	Vaše geslo morda ne ustreza pravilniku o geslu.
 your preferences	preferences	sl	Vaše nastavitve

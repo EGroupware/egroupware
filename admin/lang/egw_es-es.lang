@@ -22,6 +22,7 @@
 %1 token %2.	admin	es-es	%1 token %2.
 %1 user %2	admin	es-es	%1 usuario %2
 (de)activate mail accounts	admin	es-es	(des)activar cuentas de correo
+(default no, leave it off if you dont use it)	admin	es-es	Por defecto = No, déjelo desactivado si no lo utiliza
 (no subject)	admin	es-es	(Sin asunto)
 -  type	admin	es-es	- tipo
 1 year	admin	es-es	1 año
@@ -490,7 +491,7 @@ hostname or ip	admin	es-es	Nombre de host o IP
 hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how big should thumbnails for linked images be (maximum in pixels) ?	admin	es-es	Qué tamaño deben tener las miniaturas para las imágenes vinculadas (máximo en pixels)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas (por defecto, 90)
-how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	es-es	Cuántas entradas deben poder exportar los usuarios que no son administradores (vacío=sin límite, no=no exportan)
+how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	es-es	Cuántas entradas deben poder exportar los usuarios que no son administradores (Vacío=sin límite, No=no exportan)
 how many minutes should an account or ip be blocked (default 1) ?	admin	es-es	Cuántos minutos debe permanecer bloqueada una cuenta o una IP (por defecto, 30)
 how should email addresses for new users be constructed?	admin	es-es	Cómo deben construirse las direcciones para los usuarios nuevos
 how username get constructed	admin	es-es	Cómo se construye el nombre de usuario
@@ -639,6 +640,7 @@ no default account found!	admin	es-es	¡No se encontró ninguna cuenta predeterm
 no encryption	admin	es-es	Sin cifrar
 no forwarding email address	admin	es-es	Sin dirección de correo para reenviar
 no jobs in the database !!!	admin	es-es	¡No hay trabajos en la base de datos!
+no limit	admin	es-es	Sin límite
 no login history exists for this user	admin	es-es	¡No existen registros de acceso para este usuario!
 no matches found	admin	es-es	¡No se encontraron resultados!
 no message returned.	admin	es-es	No se devolvió ningún mensaje
@@ -823,6 +825,7 @@ site	admin	es-es	Sitio
 skip imap	admin	es-es	Omitir IMAP
 skipping imap configuration!	admin	es-es	¡Omitiendo la configuración de IMAP!
 smtp authentication	admin	es-es	Identificación SMTP
+smtp only: to create only an smtp account	admin	es-es	Crear cuenta sólo SMTP sin IMAP
 smtp options	admin	es-es	Opciones SMTP
 smtp server	admin	es-es	Servidor SMTP
 smtp server name	admin	es-es	Nombre del servidor SMTP
@@ -857,14 +860,8 @@ successfull, but no refresh-token received!	admin	es-es	Con éxito, ¡pero NO se
 switch back to standard identity to save account.	admin	es-es	Vuelva a la identidad estándar para guardar la cuenta.
 switch back to standard identity to save other account data.	admin	es-es	Vuelva a la identidad estándar para guardar otros datos de la cuenta.
 switch it off, if users are randomly thrown out	admin	es-es	Desactivarlo si a los usuarios se les cierra la sesión aleatoriamente
-template selection	admin	es-es	Selección de plantilla
 templates	admin	es-es	Plantillas
-text entry	admin	es-es	Entrada de texto
-that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.
-that application order must be a number.	admin	es-es	El orden de la aplicación debe ser un número.
 that loginid has already been taken	admin	es-es	Ese nombre de usuario ya está siendo utilizado.
-that name has been used already	admin	es-es	Ese nombre ya ha sido usado.
-that server name has been used already !	admin	es-es	¡Ese nombre de servidor ya ha sido usado!
 the api is current	admin	es-es	La API está al día
 the api requires an upgrade	admin	es-es	La API requiere ser actualizada
 the cumulated and anonymised data will be publically available:	admin	es-es	Los datos acumulados y anónimos estarán disponibles públicamente:

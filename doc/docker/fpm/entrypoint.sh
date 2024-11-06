@@ -89,9 +89,9 @@ do
 		echo "Installing of EGroupware failed!"
 		break
 	fi
-	echo "Retrying EGroupware installation in 3 seconds ..."
+	echo "Retrying EGroupware installation in 5 seconds ..."
 	try=$((try+1))
-	sleep 3s
+	sleep 5s
 done 2>&1 | tee -a $LOG
 
 # as we can NOT exit from until (runs a subshell), we need to check and do it here

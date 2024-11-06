@@ -422,7 +422,6 @@ tables installed, unless there are errors printed above	setup	pt	Tabelas instala
 tables upgraded	setup	pt	Tabelas actualizadas
 target version	setup	pt	Versão de destino
 tcp port number of database server	setup	pt	Número do porto TCP do servidor de base de dados
-text entry	setup	pt	Entrada de texto
 the %1 extension is needed, if you plan to use a %2 database.	setup	pt	É necessária a extensão %1 se quiser utilizar a base de dados %2.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	pt	O tipo de base de dados (db_type) por omissão (%1) não é suportada neste servidor. Utilizar o primeiro tipo suportando.
 the file	setup	pt	O ficheiro

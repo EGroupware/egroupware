@@ -114,6 +114,7 @@ all addressbooks	groupdav	pt-br	Todos os catálogos de endereços
 all categories	common	pt-br	Todas as categorias
 all days	common	pt-br	Todos os dias
 all fields	common	pt-br	Todos os campos
+all files	common	pt-br	Todos os arquivos
 all in one	groupdav	pt-br	Tudo em um
 all languages	common	pt-br	Todos os idiomas
 all operations save the template!	common	pt-br	Todas as operações salvam o modelo!
@@ -195,7 +196,6 @@ blurtext	common	pt-br	Texto borrado
 bold	common	pt-br	Negrito
 bolivia	common	pt-br	BOLÍVIA
 border	common	pt-br	Borda
-border-line-thickness for the table-tag	common	pt-br	Espessura da linha de borda para a tabela
 bosnia and herzegovina	common	pt-br	BOSNIA E HERZEGOVINA
 botswana	common	pt-br	BOTSWANA
 bottom	common	pt-br	Fundo
@@ -766,6 +766,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	pt-br	O link é anexado ao e-mail, permitindo que os destinatários façam o download da versão atualizada dos arquivos
 link target %1 not found!	common	pt-br	Destino do link %1 não encontrado!
 link title of current record	common	pt-br	Título do link do registro atual
+link to each entry	common	pt-br	Link para cada registro
 linkapps	common	pt-br	Link de aplicativos
 linked	common	pt-br	Vinculado
 linkentry	common	pt-br	Entradas de link
@@ -779,6 +780,7 @@ list members	common	pt-br	Listar membros
 list of files linked to the current record	preferences	pt-br	Lista de arquivos vinculados ao registro atual
 lithuania	common	pt-br	LITUÂNIA
 load	common	pt-br	Carga
+load more links ...	common	pt-br	Carregar mais links ...
 load this template into the editor	common	pt-br	Carregar este modelo para o editor
 loading	common	pt-br	Carregando
 local	common	pt-br	Local
@@ -818,6 +820,10 @@ may	common	pt-br	Maio
 mayotte	common	pt-br	MAYOTTE
 medium	common	pt-br	Média
 menu	common	pt-br	Menú
+merge	common	pt-br	Mesclar
+merge & send	common	pt-br	Mesclar e enviar
+merge individually	common	pt-br	Mesclar individualmente
+merge options	common	pt-br	Opções de mesclagem
 merged document filename	preferences	pt-br	Nome do arquivo do documento mesclado
 message	common	pt-br	Mensagem
 message ...	common	pt-br	Mensagem ...
@@ -1112,6 +1118,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	pt-br	Salvar
 save all	common	pt-br	Salvar tudo
 save as	common	pt-br	Salvar como
+save as pdf	common	pt-br	Salvar como PDF
 save as zip	common	pt-br	Salvar como ZIP
 save selected columns as default preference for all users.	common	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
 save the changes made and close the window	common	pt-br	Salvar as alterações feitas e fechar a janela
@@ -1187,6 +1194,7 @@ select work email address	common	pt-br	Selecionar endereço de e-mail comercial
 select year	common	pt-br	Selecione o Ano
 selectbox	common	pt-br	Caixa de seleção
 selection	common	pt-br	Seleção
+selection of files can only be done in one folder.  %1 files unselected.	common	pt-br	A seleção de arquivos só pode ser feita em uma pasta. %1 arquivos não selecionados.
 send	common	pt-br	Enviar
 send succeeded to %1	common	pt-br	Enviar sucedeu %1
 senegal	common	pt-br	SENEGAL

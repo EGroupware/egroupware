@@ -118,6 +118,7 @@ all addressbooks	groupdav	sk	Všetky adresáre
 all categories	common	sk	Všetky kategórie
 all days	common	sk	Všetky dni
 all fields	common	sk	Všetky polia
+all files	common	sk	Všetky súbory
 all in one	groupdav	sk	Všetko v jednom
 all languages	common	sk	Všetky jazyky
 all operations save the template!	common	sk	Všetky operácie ukladajú šablónu!
@@ -201,7 +202,6 @@ blocked, too many attempts	common	sk	Zablokované, príliš veľa pokusov.
 bold	common	sk	Tučné
 bolivia	common	sk	BOLÍVIA
 border	common	sk	Hranica
-border-line-thickness for the table-tag	common	sk	Hrúbka okrajovej čiary pre tag tabuľky
 bosnia and herzegovina	common	sk	BOSNA A HERCEGOVINA
 botswana	common	sk	BOTSWANA
 bottom	common	sk	Spodok
@@ -800,6 +800,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	sk	K správe je pripojený odkaz, ktorý umožňuje adresátom stiahnuť si aktuálnu verziu súborov
 link target %1 not found!	common	sk	Cieľ odkazu %1 sa nenašiel!
 link title of current record	common	sk	Názov odkazu aktuálneho záznamu
+link to each entry	common	sk	Odkaz na každý záznam
 linkapps	common	sk	Aplikácia odkazu
 linked	common	sk	Odkazuje
 linkentry	common	sk	Záznam o odkaze
@@ -813,6 +814,7 @@ list members	common	sk	Zoznam členov
 list of files linked to the current record	preferences	sk	Zoznam súborov priložených k súčasnému záznamu
 lithuania	common	sk	LITVA
 load	common	sk	Načítať
+load more links ...	common	sk	Načítanie ďalších odkazov ...
 load this template into the editor	common	sk	Načítať túto šablónu do editora
 loading	common	sk	Načítava sa
 local	common	sk	Lokálny
@@ -854,6 +856,10 @@ maybe	common	sk	Možno
 mayotte	common	sk	MAYOTTE
 medium	common	sk	Stredná
 menu	common	sk	Ponuka
+merge	common	sk	Zlúčenie
+merge & send	common	sk	Zlúčiť a odoslať
+merge individually	common	sk	Zlúčiť jednotlivo
+merge options	common	sk	Možnosti zlúčenia
 merged document filename	preferences	sk	Názov súboru pre zlúčený dokument
 message	common	sk	Správa
 message ...	common	sk	Správa ...
@@ -1160,6 +1166,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	sk	Uložiť
 save all	common	sk	Uložiť všetko
 save as	common	sk	Uložiť ako
+save as pdf	common	sk	Uložiť ako PDF
 save as zip	common	sk	Uložiť ako ZIP
 save selected columns as default preference for all users.	common	sk	Uložiť vybrané stĺpce ako predvolené nastavenie pre všetkých používateľov.
 save the changes made and close the window	common	sk	Uložiť vykonané zmeny a zavrieť okno
@@ -1240,6 +1247,7 @@ select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
 select year	common	sk	Vyberte rok
 selectbox	common	sk	Výberové menu
 selection	common	sk	Výber
+selection of files can only be done in one folder.  %1 files unselected.	common	sk	Výber súborov je možné vykonať len v jednom priečinku. %1 súborov nevybraných.
 send	common	sk	Odoslať
 send succeeded to %1	common	sk	Odoslanie sa podarilo pre %1
 senegal	common	sk	SENEGAL

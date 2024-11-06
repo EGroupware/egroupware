@@ -306,15 +306,15 @@ a.et2_url {
 }
 
 a.et2_url.email {
-    background-image: url(images/email.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
 }
 
 a.et2_url.phone {
-    background-image: url(images/phone.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/telephone.svg);
 }
 
 a.et2_url.url {
-    background-image: url(images/url.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/globe2.svg);
 }
 
 .et2_url_email_contactPlus > img {
@@ -341,6 +341,17 @@ a.et2_url.url {
     margin-left: 0px;
 }
 
+/* et2-image has no shadow DOM, styles here */
+
+et2-image::slotted(img) {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+et2-image[icon] {
+	height: 1.3rem;
+	font-size: 1.3rem !important;
+}
 /**
  * Former button without background_image --> <et2-image class="et2-image-button"
  */
@@ -732,7 +743,7 @@ span.et2_date_duration span {
     margin-left: 3px;
     text-indent: 20px;
     background-size: contain;
-    background-image: url(images/datepopup.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/calendar3.svg);
 }
 
 .ui-datepicker .ui-datepicker-prev .ui-icon, .ui-datepicker .ui-datepicker-next .ui-icon {
@@ -770,6 +781,7 @@ button.et2_timestamper:hover {
 et2-dialog .dialog_icon {
     vertical-align: middle;
     width: 2em;
+    font-size: 2em;
     margin: 0.5em;
 }
 
@@ -811,7 +823,7 @@ td.et2_customfield_header et2-label {
 
 /* Custom field list inside nextmatch rows gets an icon for each row */
 .et2_nextmatch .egwGridView_grid .et2_customfield_list > tbody > tr {
-    background-image: url('images/dialog_info.svg');
+    background-image: url('../../../node_modules/bootstrap-icons/icons/info-circle.svg');
     background-repeat: no-repeat;
     background-size: 1em;
 }
@@ -834,11 +846,11 @@ Nextmatch print dialog
 }
 
 #nm_print_dialog et2-switch#_orientation .label .on {
-	background-image: url('images/portrait.svg');
+	background-image: url('../../../node_modules/bootstrap-icons/icons/tablet.svg');
 }
 
 #nm_print_dialog et2-switch#_orientation .label .off {
-	background-image: url('images/landscape.svg');
+	background-image: url('../../../node_modules/bootstrap-icons/icons/tablet-landscape.svg');
 }
 
 /*
@@ -996,7 +1008,7 @@ div.et2_file {
     height: 16px;
     float: right;
     display: block;
-    background-image: url("images/close.png");
+    background-image: url("../../../node_modules/bootstrap-icons/icons/x-lg.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 16px;
@@ -1018,7 +1030,7 @@ div.et2_file {
 span.et2_file_span {
     display: inline-block;
     background-position: 2px;
-    background-image: url(images/attach.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/paperclip.svg);
     background-repeat: no-repeat;
     background-size: 16px;
     cursor: pointer;
@@ -1192,11 +1204,11 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 
 .et2_link_to span.status.success {
-    background-image: url(images/tick.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/check-lg.svg);
 }
 
 .et2_link_to span.status.error {
-    background-image: url(images/error.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/exclamation-circle.svg);
 }
 
 .et2_link_to .progress {
@@ -1313,7 +1325,7 @@ et2-link-string et2-link::part(base) {
 
 .et2_link_list td div.delete, .et2_vfs td div.delete {
     visibility: hidden;
-    background-image: url("images/close.png");
+    background-image: url("../../../node_modules/bootstrap-icons/icons/x-lg.svg");
     background-position: center;
     background-repeat: no-repeat;
     padding: 0px;
@@ -1390,7 +1402,7 @@ div.et2_vfsPath li {
 }
 
 div.et2_vfsPath ul.scrollable li {
-    cursor: url(images/mouse_scroll_lr.svg) 20 1, pointer;
+    cursor: url(../../../node_modules/bootstrap-icons/icons/arrows.svg) 20 1, pointer;
 }
 
 li.vfsPath.et2_clickable:first-child {
@@ -1418,7 +1430,7 @@ li.vfsPath.et2_clickable:not(:first-child):after {
 }
 
 .et2_vfsPath input.et2_textbox.et2_vfs {
-	background-image: url(images/edit.png);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/pencil-square.svg);
 	background-repeat: no-repeat;
 	background-size: 16px;
 	background-position: center;
@@ -1688,7 +1700,7 @@ et2-tab-panel {
 
 .et2_taglist .mailinglist {
     width: 100%;
-    background-image: url(images/email.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
     padding-right: 20px;
     background-position: right;
     background-repeat: no-repeat;
@@ -1747,219 +1759,6 @@ table.egwGridView_grid .et2_taglist_thumbnail .et2_taglist_thumbnail_img {
 table.egwGridView_grid img.et2_avatar {
     height: auto;
 }
-
-/* Toggle single / multiple */
-.et2_taglist_toggle {
-    position: relative;
-    overflow: visible !important;
-}
-
-.et2_taglist_toggle > div.ms-ctn {
-    display: inline-block;
-    width: calc(100% - 10px);
-    padding-right: 2px;
-}
-
-.et2_taglist_toggle.ui-state-hover,
-.et2_taglist_toggle.ui-state-active {
-    z-index: 1;
-}
-
-.et2_taglist_toggle:not(.et2_taglist_single) .ms-ctn {
-    /*    height: 100%;*/
-}
-
-.et2_taglist_toggle > div.toggle {
-    top: 1px;
-    width: 23px;
-    height: 23px;
-    position: absolute;
-    right: 0px;
-    z-index: 5;
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url("images/foldertree_nolines_minus.gif");
-}
-
-.et2_taglist_toggle div.ms-ctn {
-    padding: 0;
-    padding-left: 10px;
-}
-
-.et2_taglist_toggle.et2_taglist_single:not(.expanded) > div.toggle {
-    display: none;
-}
-
-.et2_taglist_toggle.et2_taglist_single.expanded > div.toggle {
-    background-image: url("images/foldertree_nolines_plus.gif");
-    display: block;
-}
-
-.et2_taglist_toggle:not(.et2_taglist_single) .ms-trigger {
-    display: none;
-}
-
-/* Single select */
-.et2_taglist_single .ms-ctn {
-    padding: 0px 7px;
-    min-width: 50px;
-}
-
-.et2_taglist_single div.ms-ctn .ms-sel-item + input {
-    display: none;
-}
-
-.et2_taglist_single .ms-ctn .ms-trigger .ms-trigger-ico {
-    margin-top: 9px;
-}
-
-div .et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
-    border: none;
-    background: inherit;
-    margin-bottom: 0px;
-
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-div .et2_taglist_single:not(.et2_taglist_small) div.ms-sel-ctn div.ms-sel-item {
-    width: calc(100% - 30px);
-}
-
-.et2_taglist_single div.ms-sel-item > span:not(.ms-close-btn):not(.ms-edit-btn) {
-    max-width: 100%;
-    width: 100%;
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.et2_taglist_single .ms-edit-btn {
-    display: none;
-}
-
-.et2_taglist_toggle.et2_taglist_small.et2_taglist_single::before {
-    display: none;
-}
-
-.et2_taglist_single div.ms-sel-ctn .ms-close-btn {
-    position: relative;
-    top: 0px;
-    right: 20px;
-    float: none;
-    display: inline-block;
-}
-
-.et2_taglist_toggle .ms-ctn-focus {
-    box-shadow: none;
-}
-
-.et2_taglist.et2_taglist_toggle div.ms-ctn input {
-    border: none;
-}
-
-.et2_taglist.et2_taglist_single .ms-ctn.form-control {
-
-}
-
-.et2_taglist_single.et2_taglist_category .ms-sel-item > span:first-child {
-    padding: 0;
-}
-
-/* Taglist that is limited in size - does not grow */
-.et2_taglist.et2_taglist_small .ms-ctn,
-.et2_taglist.et2_taglist_small .ms-res-ctn {
-    min-width: auto;
-}
-
-.et2_taglist_small {
-    position: relative;
-    max-height: 3em;
-    overflow: hidden;
-}
-
-.et2_taglist_small::before {
-    content: attr(data-content) '';
-    text-align: right;
-    position: absolute;
-    z-index: 10;
-    bottom: 0px;
-    right: 0;
-    padding-top: 1em;
-    padding-bottom: 3px;
-    padding-right: 1em;
-    padding-left: 2em;
-    min-height: 1.2em;
-    min-width: 25%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 25%);
-}
-
-.et2_taglist_small:not(.et2_taglist_single) {
-    border-bottom: 1px solid silver;
-    border-right: 1px solid silver;
-}
-
-div .et2_taglist_small.et2_taglist_single div.ms-sel-ctn div.ms-sel-item {
-    max-width: calc(100% - 43px);
-    width: 100%;
-}
-
-.et2_taglist_toggle.et2_taglist_small::before {
-}
-
-.et2_taglist_small.ui-state-hover,
-.et2_taglist_small.ui-state-active {
-    max-height: none;
-    min-width: 10em;
-    background: white;
-    z-index: 5;
-    margin-top: 0px;
-    transition-duration: 0s;
-    font-weight: normal;
-    overflow: visible;
-}
-
-.et2_taglist_small.ui-state-hover::before,
-.et2_taglist_small.ui-state-active::before {
-    display: none;
-}
-
-.et2_taglist_small div.ms-sel-item {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.et2_taglist.et2_taglist_single.nm_filterheader_taglist div.ms-ctn input {
-    min-width: calc(100% - 30px);
-}
-
-/* Taglist category */
-.et2_taglist_category span[class*="cat_"]:not([class*="cat_level"]) {
-    height: 1.7em;
-    width: 6px;
-    margin: -3px -5px;
-    float: left;
-}
-
-.et2_taglist_category.et2_taglist_single span[class*="cat_"]:not([class*="cat_level"]) {
-    height: 2em;
-    margin-bottom: -6px;
-    position: absolute;
-    margin-left: -8px;
-    margin-top: -2px;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-}
-
-.et2_taglist_category .ms-res-item > span {
-    margin-left: 3px;
-}
-
-.et2_taglist_category .ms-sel-item > span:first-child {
-    padding-left: 5px;
-}
-
 
 /**
  * VFS widget(s)
@@ -2158,7 +1957,7 @@ egw-validation-feedback[type] {
     background-color: #e5f3d0;
     color: #98a930;
     border-color: #9ea930;
-    background-image: url(images/tick.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/check-lg.svg);
     background-repeat: no-repeat;
     background-size: contain;
     padding-left: 20px;
@@ -2170,7 +1969,7 @@ egw-validation-feedback[type] {
     background-color: #d9e2ed;
     border-color: #56729a;
     color: #56729a;
-    background-image: url(images/hint.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/info-circle.svg);
     background-repeat: no-repeat;
     padding-left: 20px;
 }
@@ -2242,6 +2041,7 @@ egw-validation-feedback[type] {
 .nextmatch_header_row > .filtersContainer > et2-select, .nextmatch_header_row > .filtersContainer > et2-select-cat {
     /* Make all filters the same size.  Otherwise they'll flex for different sized values */
     max-width: 33%;
+    width: calc(33% - 4px);
 }
 
 .nextmatch_header_row > .header_row_right {
@@ -2330,7 +2130,7 @@ egw-validation-feedback[type] {
     display: inline-block;
     padding: 0px 4px;
     margin: -2px 5px;
-    background-image: url(images/fav_filter.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/star.svg);
     background-size: 9px 9px;
 }
 
@@ -2389,12 +2189,12 @@ ul[id$='favorites_popup_state'] span.filter_value {
 
 .nextmatch_sortheader.asc {
     font-weight: bold;
-    background-image: url(images/up.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
 }
 
 .nextmatch_sortheader.desc {
     font-weight: bold;
-    background-image: url(images/down.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
 }
 
 .nextmatch_resize_helper {
@@ -2787,7 +2587,7 @@ table.egwGridView_outer thead tr th.noResize:hover {
     padding: 0px 0px 0px 2em;
     background-repeat: no-repeat;
     background-size: 1em;
-    background-image: url(images/check.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/check-lg.svg);
 }
 
 .long_task .message.error {
@@ -2801,8 +2601,10 @@ table.egwGridView_outer thead tr th.noResize:hover {
 .et2_toolbar {
     border: none;
     background: none;
-    margin: 0 !important;
-    padding: 0 !important;
+
+	border-bottom-width: var(--sl-panel-border-width);
+	border-color: var(--sl-panel-border-color);
+	border-bottom-style: solid;
 }
 
 .et2_toolbar *[class ^="et2_toolbar_draggable"] {cursor: pointer !important;}
@@ -2813,15 +2615,49 @@ table.egwGridView_outer thead tr th.noResize:hover {
 }
 
 /* Hide label visually */
-.et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(base) {
-	justify-content: center;
-	padding-inline-start: 0;
-}
-
 .et2_toolbar et2-button:not(.et2_toolbar_onlyCaption):not(.et2_toolbar_hasCaption)::part(label) {
 	position: absolute;
 	top: 100%;
 }
+
+.et2_toolbar et2-button:not(:hover)::part(base) {
+	border-color: transparent;
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button:hover::part(base) {
+	background-color: var(--sl-input-background-color);
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch-icon {
+	font-size: 20px;
+	border-radius: var(--sl-border-radius-medium);
+	border-color: transparent;
+	border-width: var(--sl-input-border-width);
+	border-style: solid;
+	padding: 0px var(--sl-spacing-medium);
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-switch:hover {
+	border-color: var(--sl-input-border-color-hover);
+	border-width: var(--sl-input-border-width);
+	border-style: solid;
+}
+
+.et2_toolbar et2-switch-icon::part(form-control-label) {
+	position: absolute;
+	top: 100%;
+	visibility: hidden;
+}
+
+.et2_toolbar et2-switch-icon::part(switch-label) {
+	top: calc(-0.3 * var(--sl-spacing-medium));
+}
+
+et2-switch-icon:hover:not([disabled]) {
+	border-color: var(--sl-input-border-color-hover);
+	color: var(--sl-input-color-hover);
+}
+
 
 .et2_toolbar et2-button:not(.et2_toolbar_hasCaption)::part(prefix) {
 	padding: 0;
@@ -2832,7 +2668,7 @@ div.et2_toolbar.ui-widget-header {
     background: none;
 }
 .et2_toolbar_more summary.ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(images/dots.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/three-dots-vertical.svg);
     background-size: 16px;
     height: 32px;
     width: 20px;
@@ -2859,7 +2695,7 @@ div.et2_toolbar.ui-widget-header {
     background-position: left;
 }
 .et2_toolbar .et2_toolbar_more summary .toolbar-admin-pref {
-    background-image: url(images/setup.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/gear.svg);
     background-repeat: no-repeat;
     background-size: 20px;
     width: 20px;
@@ -2891,7 +2727,7 @@ div.et2_toolbar.ui-widget-header {
     background-color: transparent;
 }
 .et2_toolbar details[open].et2_toolbar_more .ui-toolbar-menulistHeader.list_header-short {
-    background-image: url(images/arrow_down.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
     background-size: 12px;
     background-position: center;
     background-repeat: no-repeat;
@@ -2908,6 +2744,15 @@ div.et2_toolbar.ui-widget-header {
     margin-left: 7px;
 }
 
+.et2_toolbar et2-button {
+	--et2-button-image-padding-left: 0px;
+}
+
+.et2_toolbar *:not(.ui-toolbar-menulist) > et2-button::part(base) {
+	padding-inline-start: 0px;
+	justify-content: center;
+}
+
 .et2_toolbar .et2_toolbar_actionlist button.et2_button_with_image, .nextmatch_header_row .et2_button {
 	width: 24px;
 	height: 24px;
@@ -2917,10 +2762,9 @@ div.et2_toolbar.ui-widget-header {
 	background-color: #fafafa;
 }
 
-.et2_toolbar .et2_toolbar_actionlist et2-button,
-.et2_toolbar .et2_toolbar_actionlist et2-switch {
+.et2_toolbar .et2_toolbar_actionlist > span > * {
 	margin-right: 1ex;
-	min-width: 32px;
+	min-width: 35px;
 }
 
 /* Make toolbar switches clickable everywhere, not just the top half */
@@ -2946,6 +2790,15 @@ div.et2_toolbar.ui-widget-header {
 	height: 18px;
 }
 
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch-label),
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(switch) {
+	width: 100%;
+}
+
+.et2_toolbar .ui-toolbar-menulist et2-switch-icon::part(control) {
+	width: 100%;
+	justify-content: space-evenly;
+}
 et2-button.transparent-button {
 	border: none;
 	background: transparent;
@@ -2975,9 +2828,10 @@ et2-button.transparent-button::part(container) {
 .nextmatch_header_row button,
 .et2_toolbar div.et2_progress,
 .nextmatch_header_row div.et2_progress {
-    border-radius: 3px;
+	border-radius: var(--sl-border-radius-medium, 3px);
     background-color: #fafafa;
     border: 1px solid silver;
+	overflow: hidden;
 }
 
 .et2_toolbar div.et2_progress, .nextmatch_header_row div.et2_progress {
@@ -3647,7 +3501,7 @@ div.blueimp-gallery-playing > .play-pause {
     position: absolute;
     right: 120px;
     top: 20px;
-    background: url(images/apply.svg) 0 0 no-repeat;
+    background: url(../../../node_modules/bootstrap-icons/icons/floppy.svg) 0 0 no-repeat;
     background-size: 24px;
     height: 24px;
     width: 24px;
@@ -3883,7 +3737,7 @@ div.eml {
 }
 
 div.eml div.emlEdit {
-    background-image: url(images/edit.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/pencil-square.svg);
     background-position: center;
     width: 100%;
     height: 50%;
@@ -3894,7 +3748,7 @@ div.eml div.emlEdit {
 }
 
 div.eml div.emlDelete {
-    background-image: url(images/delete.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/trash3.svg);
     background-position: center;
     width: 100%;
     height: 50%;
@@ -3929,7 +3783,7 @@ div.eml div.emlDelete:hover, div.eml div.emlEdit:hover {
     height: 22px !important;
     padding: 0;
     background-position-x: 3px !important;
-    background-image: url(images/add.png);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/plus-circle.svg);
     overflow: hidden !important;
     text-indent: 100px !important;
 }
@@ -4024,7 +3878,7 @@ tr.disableIfNoEPL {
 }
 
 .et2_editable {
-    cursor: url(images/cursor_editable.svg), pointer;
+    cursor: url(../../../node_modules/bootstrap-icons/icons/copy.svg), pointer;
 }
 
 .dragover {
@@ -4043,7 +3897,7 @@ tr.disableIfNoEPL {
     font-size: 20pt;
     font-weight: bold;
     text-align: center;
-    background-image: url(images/drop.svg);
+    background-image: url(../../../node_modules/bootstrap-icons/icons/paperclip.svg);
     background-position: center;
     background-size: 20%;
     background-repeat: no-repeat;
@@ -4213,7 +4067,7 @@ button.shortcut-buttons-flatpickr-button {
     z-index: 790 !important;
 }
 
-/* Fix tinemce toolbar z-index is way higher (safari only) */
+/* Fix tinymce toolbar z-index is way higher (safari only) */
 .tox .tox-editor-container .tox-editor-header {
 	z-index: auto;
 }
@@ -4222,4 +4076,20 @@ button.shortcut-buttons-flatpickr-button {
 et2-vfs-select-dialog.egw_app_merge_document et2-checkbox {
 	order: 10;
 	margin-left: auto;
+}
+
+et2-vfs-mime {
+    position: relative;
+    font-size: 22px !important;
+}
+et2-vfs-mime img {
+    display: inline-block;
+}
+et2-vfs-mime img.overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 16px;
+    width: 16px;
+    z-index: 1;
 }

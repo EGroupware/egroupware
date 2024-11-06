@@ -450,6 +450,8 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 			if($record->$name && (string)$record->$name != '')
 			{
+				$raw = $name . '_-raw-';
+				$record->$raw = $record->$name;
 				if(!is_numeric($record->$name))
 				{
 					$record->$name = (float)(str_replace($dec_separator, '.', preg_replace('/[^\d'.preg_quote($dec_separator, '/').']/', '', $record->$name)));

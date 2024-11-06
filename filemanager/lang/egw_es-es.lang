@@ -142,7 +142,6 @@ extended access control list	filemanager	es-es	Listas de control de acceso exten
 extended acl	filemanager	es-es	ACL extendida
 failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permisos de %1
 failed to create directory!	filemanager	es-es	¡Fallo al crear el directorio!
-favorites	filemanager	es-es	Favoritos
 file	common	es-es	Archivo
 file %1 already exists	filemanager	es-es	El fichero %1 ya existe
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1

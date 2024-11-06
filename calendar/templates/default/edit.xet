@@ -260,7 +260,7 @@
 			<et2-button  statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 			<et2-select  statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" class="@action_class" emptyLabel="Actions..."></et2-select>
 			<et2-checkbox  label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"></et2-checkbox>
-			<et2-button  statustext="Find free timeslots where the selected participants are available for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="timesheet" span="all" noSubmit="true"></et2-button>
+			<et2-button  statustext="Find free timeslots where the selected participants are available for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search" image="clock-history" span="all" noSubmit="true"></et2-button>
 			<et2-button  align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="app.calendar.delete_btn(widget,$cont[query_delete_exceptions]);" image="delete"></et2-button>
 			<et2-textbox  type="hidden" id="delete_exceptions"></et2-textbox>
 			<et2-textbox type="hidden" id="apply_changes_to_exceptions"></et2-textbox>

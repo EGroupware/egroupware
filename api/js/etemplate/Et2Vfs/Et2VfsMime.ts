@@ -2,10 +2,15 @@ import {ExposeValue} from "../Expose/ExposeMixin";
 import {et2_vfsMode} from "../et2_widget_vfs";
 import {Et2ImageExpose} from "../Expose/Et2ImageExpose";
 import {css, html} from "lit";
+import {property} from "lit/decorators/property.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
-
+@customElement('et2-vfs-mime')
 export class Et2VfsMime extends Et2ImageExpose
 {
+	/**
+	 * @todo styles() are NOT working, probably because due to implementing createRenderRoot() returning this in Et2Image, there styles are moved to etemplate2.css
+	 */
 	static get styles()
 	{
 		return [
@@ -16,34 +21,26 @@ export class Et2VfsMime extends Et2ImageExpose
             }
             img.overlay {
             	position: absolute;
-            	bottom: 0px;
-            	right: 0px;
+            	bottom: 0;
+            	right: 0;
             	z-index: 1;
-            	width: 12px;
-            	height: 12px;
+            	width: 16px;
+            	height: 16px;
             }
             `,
 		];
 	}
 
-	static get properties()
-	{
-		return {
-			...super.properties,
-
-			/**
-			 * Mime type we're displaying
-			 */
-			mime: {type: String, reflect: true},
-			/**
-			 * Mark the file as a link
-			 */
-			symlink: {type: Boolean, reflect: true},
-
-			/** Allow to pass all data */
-			value: {type: Object}
-		}
-	}
+	/**
+	 * Mime type we're displaying
+	 */
+	@property({type: String, reflect: true})
+	mime = "";
+	/**
+	 * Mark the file as a link
+	 */
+	@property({type: Boolean, reflect: true})
+	symlink = false;
 
 	/**
 	 * Mime type of directories
@@ -56,8 +53,6 @@ export class Et2VfsMime extends Et2ImageExpose
 	constructor()
 	{
 		super();
-		this.__mime = "";
-		this.__symlink = false;
 		this.__download_url = "";
 	}
 
@@ -84,7 +79,7 @@ export class Et2VfsMime extends Et2ImageExpose
 	isExposable() : boolean
 	{
 		// do not try to expose directories, they are handled by the action system
-		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE)
+		if (this.exposeValue.mime === Et2VfsMime.DIR_MIME_TYPE || !this.value.download_url)
 		{
 			return false;
 		}
@@ -179,13 +174,21 @@ export class Et2VfsMime extends Et2ImageExpose
 		this.value = _value;
 	}
 
+	/**
+	 * Allow to pass all data as object with attributes "mime", "path", "download_url" and "mode"
+	 */
+	@property({type: Object})
 	set value(_value : ExposeValue | any)
 	{
 		if(!_value)
 		{
 			return;
 		}
-		if(typeof _value !== 'object')
+		if (typeof _value === 'string' && _value.indexOf('/') >= 0)
+		{
+			_value = {mime: _value};
+		}
+		else if(typeof _value !== 'object')
 		{
 			this.egw().debug("warn", "%s only has path, needs array with path & mime", this.id, _value);
 			// Keep going, will be 'unknown type'
@@ -195,9 +198,15 @@ export class Et2VfsMime extends Et2ImageExpose
 		{
 			this.mime = _value.mime;
 		}
+		this.label = '';
 		if(_value.path)
 		{
 			this.href = _value.path;
+			const parts = _value.path.split('.');
+			if (parts.length > 1)
+			{
+				this.label = egw.lang('%1 File', parts.pop())
+			}
 		}
 		if(_value.download_url)
 		{
@@ -238,9 +247,9 @@ export class Et2VfsMime extends Et2ImageExpose
 	render()
 	{
 		return html`
-            <slot></slot>
-            ${this.__symlink ? html`<img src="${this.egw().image("symlink", "api")}"
-                                         class="overlay"/>` : ""}
+            ${super.render()}
+            ${this.symlink ? html`<img src="${this.egw().image("symlink", "api")}"
+                class="overlay" style="position: absolute; bottom: 0; right: 0; height: 12px; width: 12px; z-index: 1"/>` : ""}
 		`;
 	}
 
@@ -256,7 +265,4 @@ export class Et2VfsMime extends Et2ImageExpose
 			this.egw().tooltipUnbind(this);
 		}
 	}
-
 }
-
-customElements.define("et2-vfs-mime", Et2VfsMime);

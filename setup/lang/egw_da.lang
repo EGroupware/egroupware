@@ -88,7 +88,6 @@ selectbox	setup	da	Selectboks
 settings	setup	da	Indstillinger
 show 'powered by' logo on	setup	da	Vis 'leveret af' logo i
 size	setup	da	Størrelse
-text entry	setup	da	Tekst indtastning
 two weeks	setup	da	To uger
 use cookies to pass sessionid	setup	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	setup	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)

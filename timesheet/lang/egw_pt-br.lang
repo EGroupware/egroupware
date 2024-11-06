@@ -4,11 +4,15 @@
 3 years ago	timesheet	pt-br	3 anos atrás
 all projects	timesheet	pt-br	Todos projetos
 applies the changes	timesheet	pt-br	aplicar as alterações
+ask to start and stop working time with session	timesheet	pt-br	Pedir para iniciar e parar o tempo de trabalho com a sessão
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
+category for 'working time'	admin	pt-br	Categoria para 'Tempo de trabalho'
 change category	timesheet	pt-br	alterar categoria
+change owner when updating	timesheet	pt-br	Alterar o proprietário ao atualizar
 check all	timesheet	pt-br	Verificar todos
 comment by %1 at %2:	timesheet	pt-br	Comentário feito por %1 em %2:
+create a single 'working time' timesheet per	timesheet	pt-br	Criar uma única planilha de horas de “Tempo de trabalho” por
 create new links	timesheet	pt-br	Criar novos links
 creates a new field	timesheet	pt-br	criar um novo campo
 creating new entry	timesheet	pt-br	criando novo registro
@@ -19,6 +23,10 @@ deleted	timesheet	pt-br	removido
 deletes this field	timesheet	pt-br	Remover este campo
 determines the order the fields are displayed	timesheet	pt-br	determinar a ordem de exibição dos campos
 directory with documents to insert entries	timesheet	pt-br	Diretório com documentos para inserir entradas
+disable timers	timesheet	pt-br	Desativar cronômetros
+do you want to associate it with the selected %1 entry?	common	pt-br	Deseja associá-lo à entrada %1 selecionada?
+do you want to start your working time?	common	pt-br	Deseja iniciar seu tempo de trabalho?
+do you want to stop your working time?	common	pt-br	Deseja interromper seu tempo de trabalho?
 each value is a line like <id>[=<label>]	timesheet	pt-br	cada valor é uma linha como <id>[=<label>]
 edit status	timesheet	pt-br	Editar o Status
 edit this entry	timesheet	pt-br	Editar este registro
@@ -28,6 +36,7 @@ entry deleted	timesheet	pt-br	Registro removido
 entry saved	timesheet	pt-br	Registro salvo
 error deleting the entry!!!	timesheet	pt-br	Erro removendo o registro!!
 error saving the entry!!!	timesheet	pt-br	Erro salvando o registro!!
+error storing working time	timesheet	pt-br	Erro ao armazenar o horário de trabalho
 existing links	timesheet	pt-br	Links existentes
 exists	timesheet	pt-br	Existe
 export definition to use for nextmatch export	timesheet	pt-br	Definição Exportar para usar para exportação NextMatch
@@ -35,6 +44,7 @@ export to openoffice spreadsheet	timesheet	pt-br	Exportar como Planilha do OpenO
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	pt-br	Exporta registros de sua Planilha de Tempo em um arquivo CSV. CSV significa 'Valores Separados por Vírgula'. Entretando, na aba Opções você pode escolher outros separadores.
 field must not be empty !!!	timesheet	pt-br	Campo não pode estar vazio !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
+forgot to switch off working time?	common	pt-br	Esqueceu-se de desativar o horário de trabalho?
 full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
 general fields:	timesheet	pt-br	Campos gerais:
 global categories	timesheet	pt-br	Categorias Globais
@@ -65,6 +75,8 @@ none: use only free project-names	admin	pt-br	Nenhum: usar apenas nomes de proje
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
 or endtime	timesheet	pt-br	or horário final
 order	timesheet	pt-br	Ordem
+overwrite time	common	pt-br	Tempo de sobregravação
+overwriting start or stop time	timesheet	pt-br	Substituição da hora de início ou de parada
 parent	timesheet	pt-br	Pai
 pause	common	pt-br	Pausa
 pause time	timesheet	pt-br	Tempo de pausa
@@ -73,7 +85,9 @@ permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
 projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
+recorded	timesheet	pt-br	Gravado
 replacements for inserting entries into documents	timesheet	pt-br	Substitutos para a inserção de entradas em documentos
+restore this entry	timesheet	pt-br	Restaurar esse registro
 save & new	timesheet	pt-br	Salvar e Novo
 saves the changes made	timesheet	pt-br	Salvar as alterações feitas
 saves the changes made and leaves	timesheet	pt-br	salvar as alterações feitas e sair
@@ -82,6 +96,8 @@ select a price	timesheet	pt-br	Selecionar um preço
 select a project	timesheet	pt-br	Selecionar um projeto
 show a quantity sum (eg. to sum up negative overtime)	admin	pt-br	Exibir uma soma de quantidade (exemplo: para somar tempo extra negativo)
 start	timesheet	pt-br	Início
+start & stop timer	common	pt-br	Iniciar e parar o cronômetro
+start timer	common	pt-br	Iniciar cronômetro
 start-time can not be before last stop- or pause-time %1!	common	pt-br	O horário de início não pode ser anterior ao último horário de parada ou pausa %1!
 starttime	timesheet	pt-br	Horário inicial
 starttime has to be before endtime !!!	timesheet	pt-br	Horário inicial deve ser anterior ao horário final !!!
@@ -98,11 +114,18 @@ ticket modified by %1 at %2	timesheet	pt-br	Ticket modificado por %1 em %2
 timer already running or paused	common	pt-br	O timer já está em execução ou pausado
 timesheet	common	pt-br	Planilha de Tempo
 timesheet csv export	timesheet	pt-br	Exportar Planilha - CSV
-timesheet openoffice export	timesheet	pt-br	Exportar Planilha OpenOffice
 unitprice	timesheet	pt-br	Unidade de preço
+use field from csv if possible	timesheet	pt-br	Use o campo do CSV, se possível
 values for selectbox	timesheet	pt-br	Valores para a caixa de seleção
 view this entry	timesheet	pt-br	Exibir este registro
 week	timesheet	pt-br	Semana
+what should be done with unknown values?	timesheet	pt-br	O que deve ser feito com os valores desconhecidos?
+will be created when saving ...	common	pt-br	Serão criados ao salvar ...
+working time	common	pt-br	Tempo de trabalho
+working time and timer	timesheet	pt-br	Hora de trabalho e cronômetro
+working time from %1	timesheet	pt-br	Tempo de trabalho de %1
+working time of %1 hours stored	timesheet	pt-br	Tempo de trabalho de %1 horas armazenado
+would you like to be asked, to start and stop working time, when login in or off	timesheet	pt-br	Você gostaria de ser solicitado a iniciar e parar o horário de trabalho ao fazer login ou sair?
 yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 yesterday	timesheet	pt-br	Ontem
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt-br	Sua base de dados NÃO está atualizada (%1 x %2). Por favor execute %3setup%4 para atualizá-la.

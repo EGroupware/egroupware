@@ -1,22 +1,24 @@
 import {LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {html, literal, StaticValue} from "lit/static-html.js";
-import {Et2Tree, TreeItemData, TreeSearchResult} from "./Et2Tree";
+import {Et2Tree, TreeItemData} from "./Et2Tree";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {property} from "lit/decorators/property.js";
 import {classMap} from "lit/directives/class-map.js";
 import {state} from "lit/decorators/state.js";
 import {HasSlotController} from "../Et2Widget/slot";
 import {map} from "lit/directives/map.js";
-import {SlPopup, SlRemoveEvent} from "@shoelace-style/shoelace";
+import {SlPopup, SlRemoveEvent, SlTreeItem} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2TreeDropdown.styles";
 import {Et2Tag} from "../Et2Select/Tag/Et2Tag";
-import {SearchMixin, SearchResult, SearchResultsInterface} from "../Et2Widget/SearchMixin";
+import {SearchMixin, SearchResult, SearchResultElement, SearchResultsInterface} from "../Et2Widget/SearchMixin";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {Required} from "../Validators/Required";
+import {SelectOption} from "../Et2Select/FindSelectOptions";
+import {EgwMenuShoelace} from "../../egw_action/EgwMenuShoelace";
 
 
-interface TreeSearchResults extends SearchResultsInterface<TreeSearchResult>
+interface TreeSearchResults extends SearchResultsInterface<TreeItemData>
 {
 }
 
@@ -45,9 +47,8 @@ type Constructor<T = {}> = new (...args : any[]) => T;
  * @since 23.1.x
  */
 
-export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeSearchResult, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
+export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidgetInterface & typeof LitElement, TreeItemData, TreeSearchResults>(Et2WidgetWithSelectMixin(LitElement))
 {
-
 	static get styles()
 	{
 		return [
@@ -57,16 +58,32 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		];
 	}
 
+	/**
+	 * List of properties that get translated
+	 * @returns object
+	 */
+	static get translate()
+	{
+		return {
+			...super.translate,
+			placeholder: true,
+		}
+	}
+
 	/** Placeholder text to show as a hint when the select is empty. */
 	@property() placeholder = "";
 
 	@property({type: Boolean, reflect: true}) multiple = false;
 
+	/** Adds a clear button when the dropdown is not empty. */
+	@property({type: Boolean}) clearable = false;
+
 	/** The component's help text. If you need to display HTML, use the `help-text` slot instead. */
 	@property({attribute: 'help-text'}) helpText = "";
 
+	/** "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id" */
 	@property({type: String})
-	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+	autoloading: string = "";
 
 	/**
 	 * Indicates whether the dropdown is open. You can toggle this attribute to show and hide the tree, or you can
@@ -80,18 +97,55 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	 */
 	@property({type: Object}) actions = {};
 
-	@state() currentTag : Et2Tag;
+	/**
+	 * If true, only leafs (NOT folders) are selectable
+	 */
+	@property()
+	set leafOnly(_leafOnly: boolean)
+	{
+		this.updateComplete.then(() => {
+			const tree = this._tree
+				if (tree)
+				{
+					tree.leafOnly = _leafOnly;
+					tree.requestUpdate("leafOnly")
+
+				}
+			}
+		)
+	}
+	get leafOnly()
+	{
+		return this._tree?.leafOnly;
+	}
+
+	/**
+	 * set the corresponding attribute if you want the tree to scroll to the selected item, when it is opened
+	 * Please already supply the parents of the current selection in an open state from the server side if possible
+	 */
+	@property({type: Boolean}) openAtSelection = false
+
+	@state() currentTag: Et2Tag;
 
 	// We show search results in the same dropdown
 	@state() treeOrSearch : "tree" | "search" = "tree";
 
-	private get _popup() : SlPopup { return this.shadowRoot.querySelector("sl-popup")}
-	private get _tree() : Et2Tree { return this.shadowRoot.querySelector("et2-tree")}
+	private get _popup(): SlPopup
+	{
+		return this.shadowRoot?.querySelector("sl-popup")
+	}
+
+	private get _tree(): Et2Tree
+	{
+		return this.shadowRoot?.querySelector("et2-tree")
+	}
 
 	private get _tags() : Et2Tag[] { return Array.from(this.shadowRoot.querySelectorAll("et2-tag"));}
 
 	protected readonly hasSlotController = new HasSlotController(<LitElement><unknown>this, "help-text", "label");
 	private __value : string[];
+
+	protected displayLabel = '';
 
 	constructor()
 	{
@@ -104,7 +158,6 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	connectedCallback()
 	{
 		super.connectedCallback();
-
 		document.addEventListener("click", this.handleDocumentClick);
 	}
 
@@ -112,6 +165,23 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	{
 		super.disconnectedCallback();
 		document.removeEventListener("click", this.handleDocumentClick);
+	}
+
+	willUpdate(changedProperties)
+	{
+		super.willUpdate(changedProperties);
+
+		// Child tree not updating when our emptyLabel changes
+		if(this._tree && (changedProperties.has("select_options") || changedProperties.has("emptyLabel")))
+		{
+			let options = this.multiple || !this.emptyLabel ? this.select_options : [{
+				value: "",
+				label: this.emptyLabel
+			}, ...this.select_options];
+
+			this._tree._selectOptions = <TreeItemData[]>options;
+			this._tree.requestUpdate("_selectOptions");
+		}
 	}
 
 	updated(changedProperties : PropertyValues)
@@ -149,6 +219,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 	@property()
 	set value(new_value : string | string[])
 	{
+		if(!new_value)new_value="";
+		// @ts-ignore handling invalid number type gracefully
+		if(typeof new_value === 'number')
+		{
+			new_value = ""+new_value;
+		}
 		if(typeof new_value === "string")
 		{
 			new_value = new_value.split(",")
@@ -156,6 +232,17 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		const oldValue = this.__value;
 		// Filter to make sure there are no trailing commas or duplicates
 		this.__value = Array.from(new Set(<string[]>new_value.filter(v => v)));
+
+		this.displayLabel = "";
+		if(!this.multiple)
+		{
+			const option = this.optionSearch(this.__value[0], this.select_options, 'value', 'children');
+			if(option)
+			{
+				this.displayLabel = option.label;
+			}
+		}
+
 		this.requestUpdate("value", oldValue);
 	}
 
@@ -166,47 +253,63 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		);
 	}
 
+
+	get select_options() : SelectOption[]
+	{
+		return super.select_options;
+	}
+
+	set select_options(new_options : SelectOption[])
+	{
+		super.select_options = new_options;
+
+		// Overridden so we can update displayLabel in the case where value got set before selectOptions
+		if(this.value && !this.multiple)
+		{
+			const option = this.optionSearch(typeof this.value == "string" ? this.value : this.value[0], this.select_options, 'value', 'children');
+			if(option)
+			{
+				this.displayLabel = option.label;
+			}
+		}
+
+		if(this._tree)
+		{
+			this._tree._selectOptions = <TreeItemData[]>new_options;
+			this._tree.requestUpdate("_selectOptions");
+		}
+	}
+
 	/** Sets focus on the control. */
 	focus(options? : FocusOptions)
 	{
-		this.hasFocus = true;
-		// Should not be needed, but not firing the update
-		this.requestUpdate("hasFocus");
-
-		if(this._searchNode)
-		{
-			this._searchNode.focus(options);
-		}
+		this.handleFocus();
 	}
 
 	/** Removes focus from the control. */
 	blur()
 	{
-		this.open = false;
-		this.treeOrSearch = "tree";
-		this.hasFocus = false;
-		this._popup.active = false;
-		// Should not be needed, but not firing the update
-		this.requestUpdate("open");
-		this.requestUpdate("hasFocus");
-		this._searchNode.blur();
-
-		clearTimeout(this._searchTimeout);
+		this.handleBlur();
 	}
 
 
 	/** Shows the tree. */
 	async show()
 	{
-		if(this.open || this.disabled)
+		if(this.readonly || this.disabled)
 		{
 			this.open = false;
 			this.requestUpdate("open", true);
-			return undefined;
+			return this.updateComplete;
 		}
-
 		this.open = true;
 		this.requestUpdate("open", false)
+		if (this.openAtSelection)
+		{
+			//TODO check what to wait on, waiting on updateComplete does not work
+			setTimeout(() =>
+				this._tree.scrollToSelected(),100)
+		}
 		return this.updateComplete
 	}
 
@@ -274,10 +377,25 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		return super.localSearch(search, searchOptions, this.select_options);
 	}
 
+	/**
+	 * Toggles a search result's selected state
+	 * Overridden to handle multiple attribute so only 1 result is selected
+	 */
+	protected toggleResultSelection(result : HTMLElement & SearchResultElement, force? : boolean)
+	{
+		if(!this.multiple)
+		{
+			this._resultNodes.forEach(t => t.selected = false);
+		}
+
+		super.toggleResultSelection(result, force);
+	}
+
 	protected searchResultSelected()
 	{
 		super.searchResultSelected();
 
+		const oldValue = [...this.value];
 		if(this.multiple && typeof this.value !== "undefined")
 		{
 			// Add in the new result(s), no duplicates
@@ -291,14 +409,55 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 		// Done with search, show the tree
 		this.treeOrSearch = "tree";
-		// Close the dropdown
-		this.hide();
-		this.requestUpdate("value");
+
+		// Close the dropdown, move on
+		if(!this.multiple || this.egw().preference("select_multiple_close") == "close")
+		{
+			this.blur();
+		}
+		else
+		{
+			this._tree.value = <string[]>this.value;
+		}
+
+		// Update values
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
+		this._tree.requestUpdate("value", oldValue);
+		this.requestUpdate("value", oldValue);
+	}
+
+	private handleClearClick(event : MouseEvent)
+	{
+		event.stopPropagation();
+
+		if(this.value.length > 0)
+		{
+			this.value = [];
+			this.displayInput.focus({preventScroll: true});
+
+			// Emit after update
+			this.updateComplete.then(() =>
+			{
+				this.emit('sl-clear');
+				this.emit('sl-input');
+				this.emit('sl-change');
+			});
+		}
+	}
+
+	private handleClearMouseDown(event : MouseEvent)
+	{
+		// Don't lose focus or propagate events when clicking the clear button
+		event.stopPropagation();
+		event.preventDefault();
 	}
 
 	/**
 	 * Keyboard events that the search input did not grab
-	 * (tags, otion navigation)
+	 * (tags, option navigation)
 	 *
 	 * @param {KeyboardEvent} event
 	 */
@@ -352,6 +511,15 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			{
 				this._searchNode.focus();
 			}
+			event.stopPropagation();
+			return;
+		}
+		// Close popup if focus is on tree
+		if(["Escape"].includes(event.key))
+		{
+			this.hide();
+			event.stopPropagation();
+			return;
 		}
 	}
 
@@ -366,14 +534,70 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 			event.preventDefault();
 			this.hide()
 		}
-		else
+		if(this.hasFocus)
 		{
 			this.blur();
 		}
-
 	}
 
-	private handleSearchFocus()
+	private handleFocus()
+	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
+		this.hasFocus = true;
+		// Should not be needed, but not firing the update
+		this.requestUpdate("hasFocus");
+
+		this.updateComplete.then(() =>
+		{
+			if(this._searchNode)
+			{
+				this._searchNode.focus();
+			}
+			else
+			{
+				this._tree.focus();
+			}
+
+			this.dispatchEvent(new Event("sl-focus"));
+		})
+	}
+
+	private handleBlur()
+	{
+		this.open = false;
+		this.treeOrSearch = "tree";
+		this.hasFocus = false;
+		this.resultsOpen = false;
+		this._popup.active = false;
+		// Should not be needed, but not firing the update
+		this.requestUpdate("resultsOpen");
+		this.requestUpdate("open");
+		this.requestUpdate("hasFocus");
+		this._searchNode?.blur();
+
+		clearTimeout(this._searchTimeout);
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("sl-blur"));
+		})
+	}
+
+	protected handleClick(event)
+	{
+		// Open if clicking somewhere in the widget
+		if(event.target.classList.contains("tree-dropdown__combobox"))
+		{
+			event.stopPropagation();
+			this.show();
+			this.handleFocus();
+		}
+	}
+
+	private handleSearchFocus(event)
 	{
 		this.hasFocus = true;
 		// Should not be needed, but not firing the update
@@ -382,11 +606,52 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		// Reset tags to not take focus
 		this.setCurrentTag(null);
 
+		// Don't show if only tabbed into
+		if(!event.relatedTarget)
+		{
+			this.show();
+		}
+	}
+
+	private handleInternalBlur(event)
+	{
+		// Focus lost to some other internal component - ignore it
+		let o = event.relatedTarget;
+		while(o)
+		{
+			if(o == this.shadowRoot || o instanceof EgwMenuShoelace)
+			{
+				return;
+			}
+			o = o.parentNode;
+		}
+		this.handleBlur();
 	}
 
 	handleSearchKeyDown(event)
 	{
 		super.handleSearchKeyDown(event);
+
+		// Hide popup if focus is on search
+		if(["Escape"].includes(event.key))
+		{
+			this.hide();
+			event.stopPropagation();
+			return;
+		}
+		// Show options if popup is closed on arrow down or space
+		if((event.key == "ArrowDown" || event.key == " " && this._searchNode.value == "") && !this.open && !this.resultsOpen)
+		{
+			this.show();
+			event.stopPropagation();
+			event.preventDefault();
+		}
+		// Move to tree if popup is open & tree is showing
+		else if(event.key == "ArrowDown" && this.treeOrSearch == "tree")
+		{
+			this._tree.focus();
+			event.stopPropagation();
+		}
 
 		// Left at beginning goes to tags
 		if(this._searchNode.selectionStart == 0 && event.key == "ArrowLeft")
@@ -419,7 +684,7 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.requestUpdate("value", oldValue);
 		// TODO: Clean up this scope violation
 		// sl-tree-item is not getting its selected attribute updated
-		Array.from(this._tree._tree.querySelectorAll('sl-tree-item')).forEach(e =>
+		Array.from(this._tree._tree.querySelectorAll('sl-tree-item')).forEach((e : SlTreeItem) =>
 		{
 			if(this.value.includes(e.id))
 			{
@@ -444,30 +709,38 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		// For single value, we can just grab selected from the tree.  For multiple, we need to manage it.
 		if(!this.multiple)
 		{
-			this.value = event?.detail?.selection?.map(i => i.id) ?? []
+			this.value = event?.detail?.selection?.map(i => i.id || i.value) ?? []
 		}
 		else
 		{
-			const id = event?.detail?.selection?.map(i => i.id).pop();
+			const id = event?.detail?.selection?.map(i => i.id || i.value).pop();
 			if(id && !this.value.includes(id))
 			{
 				// Copy so LitElement knows it changed
 				this.value = [...this.value, id];
 			}
 		}
+		this.requestUpdate("value", oldValue);
 
 		this.updateComplete.then(() =>
 		{
 			this.dispatchEvent(new Event("change", {bubbles: true}));
 		});
-		if(!this.multiple)
+		if(!this.multiple || this.egw().preference("select_multiple_close") == "close")
 		{
-			this.hide();
+			this.blur();
 		}
 	}
 
-	handleTriggerClick()
+	handleTriggerClick(event)
 	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
+
+		event.stopPropagation();
+
 		this.hasFocus = true;
 		if(this.open)
 		{
@@ -483,7 +756,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		this.requestUpdate("open");
 		this.updateComplete.then(() =>
 		{
-			this._tree.focus();
+			this._tree.style.minWidth = getComputedStyle(this).width;
+			this.focus();
 		})
 	}
 
@@ -506,18 +780,64 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 
 	inputTemplate()
 	{
+		let placeholder = "";
+		let image : symbol | TemplateResult = nothing;
+		if(this.disabled || this.readonly || (!this.open && this.multiple && this.value.length > 0))
+		{
+			placeholder = "";
+		}
+		else if(this.hasFocus)
+		{
+			placeholder = this.egw().lang("Search");
+		}
+		else
+		{
+			placeholder = this.emptyLabel || this.placeholder;
+		}
+		if(!this.multiple && this.value && !this.open)
+		{
+			const option = this.optionSearch(this.value, this.select_options, 'value', 'children');
+			image = option ? this.iconTemplate(option?.option ?? option) : null;
+		}
+		if(this.disabled || this.readonly)
+		{
+			return html`${image}${this.displayLabel || this.emptyLabel || placeholder}`;
+		}
 		return html`
+            ${image}
             <input id="search" type="text" part="input"
                    class="tree-dropdown__search search__input"
                    autocomplete="off"
+                   spellcheck="false"
+                   autocapitalize="off"
+                   aria-controls="listbox"
+                   aria-expanded=${this.open ? 'true' : 'false'}
+                   aria-haspopup="listbox"
+                   aria-labelledby="label"
+                   aria-disabled=${this.disabled ? 'true' : 'false'}
+                   aria-describedby="help-text"
+                   role="combobox"
+
                    ?disabled=${this.disabled}
                    ?readonly=${this.readonly}
-                   placeholder="${this.hasFocus || this.value.length > 0 || this.disabled || this.readonly ? "" : this.placeholder}"
+                   placeholder="${placeholder}"
                    tabindex="0"
+                   .value=${this.hasFocus ? "" : this.displayLabel}
                    @keydown=${this.handleSearchKeyDown}
-                   @blur=${() => {this.hasFocus = false;}}
+                   @blur=${this.handleInternalBlur}
                    @focus=${this.handleSearchFocus}
                    @paste=${this.handlePaste}
+            />
+            <input
+                    class="tree-dropdown__value-input"
+                    type="text"
+                    ?disabled=${this.disabled}
+                    ?required=${this.required}
+                    .value=${Array.isArray(this.value) ? this.value.join(', ') : this.value}
+                    tabindex="-1"
+                    aria-hidden="true"
+                    @focus=${this.handleFocus}
+                    @blur=${this.handleBlur}
             />
 		`;
 	}
@@ -538,15 +858,23 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		return literal`et2-tag`;
 	}
 
+	/**
+	 * Shows the currently selected values as tags when multiple=true
+	 *
+	 * @returns {TemplateResult}
+	 */
 	tagsTemplate()
 	{
 		const value = this.getValueAsArray();
-		return html`${map(value, (value, index) =>
-		{
-			// Deal with value that is not in options
-			const option = this.optionSearch(value, this.select_options, 'value', 'children');
-			return option ? this.tagTemplate(option) : nothing;
-		})}`;
+		return html`
+            <div part="tags" class="tree-dropdown__tags">
+                ${map(value, (value, index) =>
+                {
+                    // Deal with value that is not in options
+                    const option = this.optionSearch(value, this.select_options, 'value', 'children');
+                    return option ? this.tagTemplate(option) : nothing;
+                })}
+            </div>`;
 	}
 
 	tagTemplate(option : TreeItemData)
@@ -574,8 +902,8 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                     ?removable=${!readonly}
                     ?readonly=${readonly}
                     ?editable=${isEditable}
-                    .value=${option.id}
-                    @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, option.id)}
+                    .value=${option.value || option.id}
+                    @sl-remove=${(e : SlRemoveEvent) => this.handleTagRemove(e, option.value || option.id)}
                     @change=${this.handleTagEdit}
                     @dblclick=${this._handleDoubleClick}
                     @click=${typeof this.onTagClick == "function" ? (e) => this.onTagClick(e, e.target) : nothing}
@@ -593,8 +921,12 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasValue = this.value && this.value.length > 0;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const isPlaceholderVisible = this.placeholder && this.value.length === 0 && !this.disabled && !this.readonly;
-
+		const hasClearIcon = this.clearable && !this.disabled && this.value.length > 0;
+		const isPlaceholderVisible = (this.placeholder || this.emptyLabel) && this.value.length === 0 && !this.disabled && !this.readonly;
+		let options = this.multiple || !this.emptyLabel ? this.select_options : [{
+			value: "",
+			label: this.emptyLabel
+		}, ...this.select_options];
 		return html`
             <div
                     part="form-control"
@@ -622,31 +954,49 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 'tree-dropdown--disabled': this.disabled,
                                 'tree-dropdown--readonly': this.readonly,
                                 'tree-dropdown--focused': this.hasFocus,
+                                'tree-dropdown--multiple': this.multiple,
                                 'tree-dropdown--placeholder-visible': isPlaceholderVisible,
                                 'tree-dropdown--searching': this.treeOrSearch == "search",
                                 'tree-dropdown--has-value': hasValue
                             })}
                             flip
                             shift
-                            sync="width"
-                            auto-size="vertical"
+                            auto-size="both"
                             auto-size-padding="10"
                             ?active=${this.open}
                             placement=${this.placement || "bottom"}
-                            stay-open-on-select
+							strategy="fixed"
                             ?disabled=${this.disabled}
+                            ?readonly=${this.readonly}
+                            @sl-after-hide=${() => {this.resultsOpen = false;}}
                     >
                         <div
                                 part="combobox control"
                                 class="tree-dropdown__combobox"
                                 slot="anchor"
                                 @keydown=${this.handleComboboxKeyDown}
+                                @click=${this.handleClick}
                         >
                             <slot part="prefix" name="prefix" class="tree-dropdown__prefix"></slot>
-                            <div part="tags" class="tree-dropdown__tags">
-                                ${this.tagsTemplate()}
-                                ${this.inputTemplate()}
-                            </div>
+                            ${this.multiple ? this.tagsTemplate() : nothing}
+                            ${this.inputTemplate()}
+                            ${hasClearIcon
+                              ? html`
+                                        <button
+                                                part="clear-button"
+                                                class="select__clear"
+                                                type="button"
+                                                aria-label=${this.localize.term('clearEntry')}
+                                                @mousedown=${this.handleClearMouseDown}
+                                                @click=${this.handleClearClick}
+                                                tabindex="-1"
+                                        >
+                                            <slot name="clear-icon">
+                                                <sl-icon name="x-circle-fill" library="system"></sl-icon>
+                                            </slot>
+                                        </button>
+                                    `
+                              : ''}
                             <slot part="suffix" name="suffix" class="tree-dropdown__suffix"></slot>
                             <slot name="expand-icon" part="expand-icon" class="tree-dropdown__expand-icon"
                                   @click=${this.handleTriggerClick}>
@@ -658,15 +1008,22 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
                                 .id=${this.id + "_tree"}
                                 ._parent=${this}
                                 class="tree-dropdown__tree"
-                                exportparts=""
+                                exportparts="label"
                                 ?readonly=${this.readonly}
                                 ?disabled=${this.disabled}
                                 value=${this.multiple ? nothing : this.value}
-                                ._selectOptions=${this.select_options}
                                 .actions=${this.actions}
                                 .styleTemplate=${() => this.styleTemplate()}
 								.autoloading="${this.autoloading}"
+								?leafOnly = ${this.leafOnly}
 
+                                @blur=${this.handleInternalBlur}
+                                @et2-click=${(e) =>
+                                {
+                                    // Always hide the popup when a tree item is clicked
+                                    //               this.hide();
+                                }}
+                                @keydown=${this.handleComboboxKeyDown}
                                 @sl-selection-change=${this.handleTreeChange}
                         >
                         </et2-tree>

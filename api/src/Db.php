@@ -817,7 +817,7 @@ class Db
 		}
 		// PHP 8.1 mysqli throws its own exception
 		catch(\mysqli_sql_exception $e) {
-			if (!($reconnect && $this->Type == 'mysql' && ($e->getCode() == 2006 || $e->getMessage() === 'MySQL server has gone away')))
+			if (!($reconnect && $this->Type == 'mysql' && (in_array($e->getCode(), [2006, 4031]) || $e->getMessage() === 'MySQL server has gone away')))
 			{
 				if (in_array($e->getCode(), [
 					1064,   // You have an error in your SQL syntax

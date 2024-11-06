@@ -10,7 +10,7 @@ et2-select-country:not([open])::part(prefix), et2-select-country::part(flag) {
 }
 /* No country selected*/
 et2-select-country:not(.hasValue)::part(prefix), et2-select-country::part(emptyLabel) {
-    background-image: url(../images/internet.svg);
+    background-image: url(../../../../node_modules/bootstrap-icons/icons/globe2.svg);
     background-position: center;
     background-size: 20px;
     background-repeat: no-repeat;

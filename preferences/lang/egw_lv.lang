@@ -4,16 +4,11 @@
 24 hour	preferences	lv	24stundas
 a theme defines the colors and fonts used by the template.	preferences	lv	Temats definē krāsas un fontus, kurus lieto veidne
 are you sure you want to delete this category ?	preferences	lv	Esi pārliecināts, ka vēlies dzēst šo kategoriju?
-change your password	preferences	lv	Mainīt tavu paroli
-change your profile	preferences	lv	Mainīt tavu profilu
-change your settings	preferences	lv	Mainīt tavus uzstādījumus
-click to select a color	preferences	lv	Noklikšķini, lai izvēlētos krāsu
 color	preferences	lv	Krāsa
 country	preferences	lv	Valsts
 dark mode theme	preferences	lv	Tumšā režīma tēma
 date format	preferences	lv	Datuma formāts
 default	preferences	lv	noklusējums
-default application	preferences	lv	Noklusējuma programmatūra
 default preferences	preferences	lv	Noklusējuma iestatījumi
 delete categories	preferences	lv	Dzēst kategorijas
 description can not exceed 255 characters in length !	preferences	lv	Apraksts nevar pārsniegt 255 simbolu garumu!
@@ -45,10 +40,8 @@ max matches per page	preferences	lv	Maksimālo atbilstošo ierakstu skaits lapā
 max number of icons in navbar	preferences	lv	Maksimālais ikonu skaits rīku joslā
 no default	preferences	lv	Nav noklusējuma
 password stored	preferences	lv	Uzglabā paroli.
-please, select a new theme	preferences	lv	Lūdzu atzīmē jaunu tēmu
 popup with search	preferences	lv	Uzsākt ar meklēšanu
 re-enter your password	preferences	lv	Atkārto savu paroli
-select different theme	preferences	lv	Atzīmē citu tēmu
 select one	preferences	lv	Atzīmē vienu
 selectbox	preferences	lv	Izvēlne (selectbox)
 set content size	preferences	lv	Iestatīt satura izmēru
@@ -72,5 +65,4 @@ users choice	preferences	lv	Lietotāju izvēle
 you can show the applications as icons only, icons with app-name or both.	preferences	lv	Tu vari parādīt aplikācijas tikai kā ikonas, ikonas ar aplikācijas nosaukumu vai abus
 you do not have permission to set acl's in this mode!	preferences	lv	Tev nav atļaujas uzstā�īt ACL šajā režīmā
 you must enter a password	preferences	lv	Tev jaievada parole
-your current theme is: %1	preferences	lv	tava patreizējā tema ir:%1
 your preferences	preferences	lv	Tavi iestatījumi

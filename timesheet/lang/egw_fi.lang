@@ -8,14 +8,18 @@ all projects	timesheet	fi	Kaikki projektit
 and its members	timesheet	fi	ja sen jäsenet
 applies the changes	timesheet	fi	Lisää muutokset
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!!
+ask to start and stop working time with session	timesheet	fi	Pyydä aloittamaan ja lopettamaan työaika istunnolla
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
 by	timesheet	fi	Henkilö:
+category for 'working time'	admin	fi	Kategoria 'Työaika'
 change category	timesheet	fi	Muuta kategoria
+change owner when updating	timesheet	fi	Vaihda omistajaa päivityksen yhteydessä
 changed category to %1	timesheet	fi	Kategoria muutettu: %1
 changed status	timesheet	fi	Tila muutettu
 check all	timesheet	fi	Valitse kaikki
 choose 'creator' of imported data	timesheet	fi	Valitse omistaja tuodulle tiedostolle
 comment by %1 at %2:	timesheet	fi	Kommentoinut: %1, %1
+create a single 'working time' timesheet per	timesheet	fi	Luo yksi 'Työaika'-aikataulu per
 create new links	timesheet	fi	Luo uusi linkki
 creates a new field	timesheet	fi	Luo uuden kentän
 creating new entry	timesheet	fi	Uutta merkintää luodaan
@@ -26,6 +30,10 @@ deleted	timesheet	fi	Poistettu
 deletes this field	timesheet	fi	Poistaa tämän kentän
 determines the order the fields are displayed	timesheet	fi	Määrittelee järjestyksen, jossa kentät näytetään
 directory with documents to insert entries	timesheet	fi	Asiakirjan oletuskansio
+disable timers	timesheet	fi	Ajastimien poistaminen käytöstä
+do you want to associate it with the selected %1 entry?	common	fi	Haluatko yhdistää sen valittuun %1-merkintään?
+do you want to start your working time?	common	fi	Haluatko aloittaa työajan?
+do you want to stop your working time?	common	fi	Haluatko pysäyttää työaikasi?
 each value is a line like <id>[=<label>]	timesheet	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
 edit status	timesheet	fi	Muokkaa tilaa
 edit this entry	timesheet	fi	Muokkaa merkintää
@@ -35,6 +43,7 @@ entry deleted	timesheet	fi	Merkintä poistettu
 entry saved	timesheet	fi	Merkintä tallennettu
 error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkintää!
 error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkintää!
+error storing working time	timesheet	fi	Virhe työajan tallentamisessa
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
@@ -47,6 +56,7 @@ exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöj
 exports entries from your timesheet into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
+forgot to switch off working time?	common	fi	Unohditko kytkeä työajan pois päältä?
 full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
 general fields:	timesheet	fi	Yleiset kentät
 global categories	timesheet	fi	Yleiset kategoriat
@@ -87,6 +97,8 @@ only admin	timesheet	fi	Vain ylläpitäjä
 only admin can edit this status	timesheet	fi	Vain ylläpitäjät voivat muokata tätä tilaa.
 or endtime	timesheet	fi	tai päättymisaika
 order	timesheet	fi	Järjestys
+overwrite time	common	fi	Ylikirjoitusaika
+overwriting start or stop time	timesheet	fi	Aloitus- tai lopetusaika on ylikirjoitettu
 parent	timesheet	fi	Pää-
 pause	common	fi	Tauko
 pause time	timesheet	fi	Taukoaika
@@ -97,8 +109,10 @@ price	timesheet	fi	Hinta
 project fields	timesheet	fi	Projektikentät
 projectmanager integration	admin	fi	Projektinhallinnan integrointi
 quantity	timesheet	fi	Määrä
+recorded	timesheet	fi	Tallennettu
 recovered	timesheet	fi	Palautetut
 replacements for inserting entries into documents	timesheet	fi	Sijaismerkinnät asiakirjoihin
+restore this entry	timesheet	fi	Palauta tämä merkintä
 save & new	timesheet	fi	Tallenna & Uusi
 saves the changes made	timesheet	fi	Tallenna muutokset
 saves the changes made and leaves	timesheet	fi	Tallenna muutokset ja poistu
@@ -114,6 +128,8 @@ set to	timesheet	fi	Aseta
 show a quantity sum (eg. to sum up negative overtime)	admin	fi	Näytä määrän summa
 skip record	timesheet	fi	Ohita
 start	timesheet	fi	Alku
+start & stop timer	common	fi	Käynnistä ja pysäytä ajastin
+start timer	common	fi	Käynnistä ajastin
 start-time can not be before last stop- or pause-time %1!	common	fi	Aloitusaika ei voi olla ennen viimeisintä pysäytys- tai taukoaikaa %1!
 starttime	timesheet	fi	Aloitusaika
 starttime has to be before endtime !!!	timesheet	fi	Aloitusajan pitää olla ennen päättymiaikaa
@@ -136,20 +152,26 @@ timer already running or paused	common	fi	Ajastin on jo käynnissä tai tauolla
 timesheet	common	fi	Ajanhallinta
 timesheet csv export	timesheet	fi	Ajanhallinnan CSV-vienti
 timesheet csv import	timesheet	fi	Ajanhallinnan CSV-tuonti
-timesheet fields:	timesheet	fi	Ajanhallinnan kentät:
 timesheet id	timesheet	fi	Ajanhallinnan ID
 timesheet modified by %1 at %2	timesheet	fi	Merkintää muokannut %1, %2
-timesheet openoffice export	timesheet	fi	Ajanhallinnan OpenOffice-vienti
 timesheet status-%1 '%2' added.	timesheet	fi	Tila %1 '%2' lisätty.
 timesheet-%1 '%2' updated.	timesheet	fi	Merkintä %1 '%2' päivitetty.
 timesheet-%1 deleted.	timesheet	fi	Merkintä %1 poistettu.
 titles of any entries linked to the current record, excluding attached files	timesheet	fi	Linkitettyjen tietueiden otsikot/aiheet, poissulkien liitetyt tiedostot.
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	fi	'%1' ei voitu muuttaa tili IDksi. Käytetty sen sijaan (%2) %3
 unitprice	timesheet	fi	Yksikköhinta
+use field from csv if possible	timesheet	fi	Käytä kenttää CSV:stä, jos mahdollista
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	fi	Käytä tätä tägiä osoitteisiin. Lisää halutut tekstit kahden tägin väliin.
 values for selectbox	timesheet	fi	Valintalaatikon arvot
 view this entry	timesheet	fi	Näytä tämä merkintä
 week	timesheet	fi	Viikko
+what should be done with unknown values?	timesheet	fi	Mitä tehdään tuntemattomille arvoille?
+will be created when saving ...	common	fi	Luodaan tallennettaessa ...
+working time	common	fi	Työaika
+working time and timer	timesheet	fi	Työaika ja ajastin
+working time from %1	timesheet	fi	Työaika alkaen %1
+working time of %1 hours stored	timesheet	fi	Tallennettu työaika %1 tuntia
+would you like to be asked, to start and stop working time, when login in or off	timesheet	fi	Haluatko, että sinua pyydetään käynnistämään ja pysäyttämään työaika, kun kirjaudut sisään tai ulos?
 yes, only admins can purge deleted items	admin	fi	Kyllä, ainoastaan ylläpitäjät voivat (lopullisesti) poistaa tapahtumia
 yes, users can purge their deleted items	admin	fi	Kyllä, käyttäjät voivat (lopullisesti) poistaa tapahtumia
 yesterday	timesheet	fi	Eilen

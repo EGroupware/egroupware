@@ -914,22 +914,24 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 			// Create upload widget
 			let upload_attrs = {...attrs};
-			if(typeof field.values?.noUpload !== "undefined")
-			{
-				upload_attrs.class = "hideme";
-			}
 			let widget = this.widgets[field_name] = <et2_DOMWidget>et2_createWidget(attrs.type ? attrs.type : field.type, upload_attrs, this);
 
 			// This controls where the widget is placed in the DOM
 			this.rows[attrs.id] = cf[0];
 			jQuery(widget.getDOMNode(widget)).css('vertical-align','top');
 
+			// Should we show the upload button
+			if(typeof field.values?.noUpload !== "undefined")
+			{
+				widget.node.querySelector('et2-button').classList.add("hideme");
+			}
 			// should we show the VfsSelect
 			if (!field.values || typeof field.values !== 'object' || !field.values.noVfsSelect)
 			{
 				// Add a link to existing VFS file
 				const required = attrs.needed ?? attrs.required;
 				delete attrs.needed;
+				const path = widget.options.path ?? attrs.path;
 				const select_attrs = {
 					...attrs,
 					// Filemanager select
@@ -938,13 +940,17 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						mode: widget.options.multiple ? 'open-multiple' : 'open',
 						multiple: widget.options.multiple,
 						method: 'EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_existing',
-						methodId: widget.options.path ?? attrs.path,
+						methodId: path,
 						buttonLabel: this.egw().lang('Link')
 					},
 					type: 'et2-vfs-select',
 					required: required
 				}
 				select_attrs.id = attrs.id + '_vfs_select';
+
+				// No links if no ID - server can't handle links
+				let s = path.split(":");
+				select_attrs.disabled = (s.length != 3 || s[1] == '');
 
 				// This controls where the button is placed in the DOM
 				this.rows[select_attrs.id] = cf[0];
@@ -955,9 +961,36 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				// Update link list & show file in upload
 				widget.addEventListener("change", (e) =>
 				{
+					// Update lists
 					document.querySelectorAll('et2-link-list').forEach(l => {l.get_links();});
-					const info = e.target._dialog.fileInfo(e.target.value);
-					e.target.getParent().getWidgetById("#filemanager")?._addFile(info);
+
+					// Show file(s)
+					const list = e.target.getParent().getWidgetById(attrs.id);
+					const value = typeof e.target.value == "string" ? [e.target.value] : e.target.value;
+					value.forEach(v =>
+					{
+						const info = {...e.target._dialog.fileInfo(v)};
+						if(!e.target.multiple)
+						{
+							// Clear list here, _addFile won't replace with the cachebuster
+							list.list.empty();
+							list._children.forEach((c) =>
+							{
+								if(typeof c.remove == "function")
+								{
+									c.remove();
+								}
+								c.getParent().removeChild(c);
+								c.destroy();
+							});
+							info.name = field.name;
+
+							// Use a cache buster since file has the same name
+							info.path = "/apps/" + e.target.methodId.replaceAll(":", "/") + "#" + new Date().getTime();
+						}
+						list?._addFile(info);
+					});
+					list.getDOMNode().classList.remove("hideme");
 				});
 				jQuery(widget.getDOMNode(widget)).css('vertical-align','top').prependTo(cf);
 			}

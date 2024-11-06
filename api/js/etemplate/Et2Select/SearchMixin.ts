@@ -1366,7 +1366,9 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		protected searchMatch(search : string, option : SelectOption) : boolean
 		{
-			if(!option || !option.value)
+			if(!option || !option.value ||
+				// do NOT return folders, if leafOnly is set
+				this.leafOnly && typeof option.children === 'undefined')
 			{
 				return false;
 			}

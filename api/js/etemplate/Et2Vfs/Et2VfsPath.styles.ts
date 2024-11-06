@@ -19,7 +19,6 @@ export default css`
 
 		border-radius: var(--sl-input-border-radius-medium);
 		font-size: var(--sl-input-font-size-medium);
-		overflow-y: auto;
 		padding-block: 0;
 		padding-inline: var(--sl-input-spacing-medium);
 		padding-top: 0.1rem;
@@ -94,7 +93,7 @@ export default css`
 
 	et2-image {
 		flex: none;
-		height: 1.5em;
+		height: 2em;
 	}
 
 	sl-breadcrumb::part(base) {

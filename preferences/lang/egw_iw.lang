@@ -5,15 +5,10 @@
 a theme defines the colors and fonts used by the template.	preferences	iw	.ערכת נושא מגדירה את הצבעים ואת הגופנים שהתבנית משתמשת
 acl grants have been updated	preferences	iw	הרשאות רשימות גישה עודכנו
 are you sure you want to delete this category ?	preferences	iw	?בתוך שברצונך למחוק קטגוריה זו
-change your password	preferences	iw	שנה את הסיסמא שלך
-change your profile	preferences	iw	שנה את הפרופיל שלך
-change your settings	preferences	iw	שנה את ההגדרות שלך
-click to select a color	preferences	iw	הקלק לשינוי הצבע
 color	preferences	iw	צבע
 country	preferences	iw	ארץ
 date format	preferences	iw	פורמט של תאריך
 default	preferences	iw	ברירת מחדל
-default application	preferences	iw	יישום מחדלי
 default preferences	preferences	iw	עדיפויות מחדליות
 delete categories	preferences	iw	קטגוריות מחדליות
 description can not exceed 255 characters in length !	preferences	iw	!התיאור לא יכול לעלות על אורך של 255 תווים
@@ -40,10 +35,8 @@ max matches per page	preferences	iw	כמות התאמות מירבית לעמו�
 max number of icons in navbar	preferences	iw	כמות מירבית של צלמיות בפס ניווט
 no default	preferences	iw	ללא ברירות מחדל
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	iw	.הערה: תכונה זו *לא* משנה את הסיסמא שלך במערכת דואר אלקטרוני. את זה צריכים לבצע ידנית
-please, select a new theme	preferences	iw	נא לבחור ערכת נושא חדש
 popup with search	preferences	iw	חלונית קופצת עם חיפוש
 re-enter your password	preferences	iw	הקלד שנית את סיסמתך
-select different theme	preferences	iw	בחר ערכת נושא שונה
 select one	preferences	iw	בחר אחד
 selectbox	preferences	iw	תיבת בחירה
 selectbox with primary group and search	preferences	iw	תיבת בחירה עם קבוצה ראשית וחיפוש
@@ -67,5 +60,4 @@ when you say yes the home and logout buttons are presented as applications in th
 you can show the applications as icons only, icons with app-name or both.	preferences	iw	.ניתן להציג את היישומים כצלמיות בלבד, שם היישום או שניהם
 you do not have permission to set acl's in this mode!	preferences	iw	!אין לך הרשאות לקבוע רשימות גישה במצב זה
 you must enter a password	preferences	iw	עליך להקליד סיסמא
-your current theme is: %1	preferences	iw	ערכת הנושע הנוכחית היא: %1
 your preferences	preferences	iw	עדיפויות שלך

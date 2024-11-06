@@ -1,6 +1,6 @@
 # Styling
 
-Our overall styling is a combination of our site-wide style (pixelegg), etemplate2.css
+Our overall styling is a combination of our site-wide style (pixelegg / kdots), etemplate2.css
 and [Shoelace](https://shoelace.style/) styles
 
 Some handy excerpts:
@@ -22,6 +22,10 @@ Some handy excerpts:
 	--warning-color: rgba(255, 204, 0, .5);
 	--error-color: rgba(204, 0, 51, .5);
 
+	/* Inside a node with a category class like "cat_<category ID>", 
+      this is defined to the category's color 
+    */
+	--category-color: transparent
 }
 ```
 
@@ -77,6 +81,24 @@ These widgets are in an et2-vbox:
 |                               *Fixed width labels using et2-label-fixed*                                |
 |                 ![fixed label example #3](/assets/images/styling_et2-label-fixed_3.png)                 |
 | *--label_width CSS variable changed for more space*            <br/>Note how 'Responsible' widget wraps |
+
+### cat_\<ID>
+
+Adding a category class sets the category color CSS variable `--category-color` to that category's color. Individual
+category colors are also available with the `--cat-<ID>-color`.
+Usually used in the nextmatch, this will put the colored category indicator on the row.
+
+```
+<styles>
+    tr {
+        border-left: 3px solid var(--category-color);
+    }
+</styles>
+...
+<row class="cat_$row_cont[cat_id]">
+ // Row contents here
+</row>
+```
 
 ## Directly Customising Widgets
 

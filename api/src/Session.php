@@ -56,13 +56,6 @@ class Session
 	const EGW_APPSESSION_VAR = 'egw_app_session';
 
 	/**
-	 * key of eGW's required files in $_SESSION
-	 *
-	 * These files get set by Db and Egw class, for classes which get not autoloaded (eg. ADOdb, idots_framework)
-	 */
-	const EGW_REQUIRED_FILES = 'egw_required_files';
-
-	/**
 	 * key of  eGW's egw_info cached in $_SESSION
 	 */
 	const EGW_INFO_CACHE = 'egw_info_cache';
@@ -161,13 +154,6 @@ class Session
 	private $egw_domains;
 
 	/**
-	 * $_SESSION at the time the constructor was called
-	 *
-	 * @var array
-	 */
-	var $required_files;
-
-	/**
 	 * Nummeric code why session creation failed
 	 *
 	 * @var int
@@ -212,8 +198,6 @@ class Session
 	 */
 	function __construct(array $domain_names=null)
 	{
-		$this->required_files = $_SESSION[self::EGW_REQUIRED_FILES];
-
 		$this->sessionid = self::get_sessionid();
 		$this->kp3       = self::get_request('kp3');
 
@@ -983,13 +967,6 @@ class Session
 	 */
 	private function register_session($login,$user_ip,$now,$session_flags)
 	{
-		// restore session vars set before session was started
-		if (is_array($this->required_files))
-		{
-			$_SESSION[self::EGW_REQUIRED_FILES] = !is_array($_SESSION[self::EGW_REQUIRED_FILES] ?? null) ? $this->required_files :
-				array_unique(array_merge($_SESSION[self::EGW_REQUIRED_FILES],$this->required_files));
-			unset($this->required_files);
-		}
 		$_SESSION[self::EGW_SESSION_VAR] = array(
 			'session_id'     => $this->sessionid,
 			'session_lid'    => $login,
