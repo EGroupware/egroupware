@@ -178,19 +178,6 @@ export class Et2LinkEntry extends Et2InputWidget(LitElement)
 		return this._searchNode?.searchOptions;
 	}
 
-	set searchOptions(options)
-	{
-		this.updateComplete.then(() =>
-		{
-			this._searchNode.searchOptions = options;
-		});
-	}
-
-	get searchOptions()
-	{
-		return this._searchNode?.searchOptions;
-	}
-
 	get _appNode() : Et2LinkAppSelect
 	{
 		return this.shadowRoot?.querySelector("et2-link-apps");

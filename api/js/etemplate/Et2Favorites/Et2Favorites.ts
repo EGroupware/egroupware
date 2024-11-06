@@ -304,17 +304,6 @@ export class Et2Favorites extends Et2DropdownButton implements et2_INextmatchHea
 	}
 
 	/**
-	 * Handle the click from the main button
-	 *
-	 * @param {MouseEvent} event
-	 * @protected
-	 */
-	protected _handleClick(event : MouseEvent)
-	{
-		this._apply_favorite(this.preferred);
-	}
-
-	/**
 	 * Clicked a radio button
 	 *
 	 * @param _ev
