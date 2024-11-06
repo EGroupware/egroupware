@@ -291,7 +291,7 @@ class Accounts
 		// implement $param['hidden'] via $param['account_id']
 		if (isset($param['hidden']) && !in_array($param['type'],['groups', 'owngroups']))
 		{
-			$param['account_id'] = self::hidden2account_id($param['hidden'], $param['account_id']);
+			$param['account_id'] = self::hidden2account_id($param['hidden'], (array)$param['account_id']);
 		}
 		unset($param['hidden']);
 
