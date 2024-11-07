@@ -1641,7 +1641,11 @@ et2-button#calendar-toolbar_toolbar-today::part(label) {
   height: calc(100% - 78px);
 }
 #calendar_sidebox_content .egw_fw_ui_category_content {
-  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+div.flatpickr-calendar .flatpickr-current-month .flatpickr-monthDropdown-months {
+  width: 70%;
+  padding-right: 0 !important;
 }
 img.sideboxstar {
   width: 12px;
