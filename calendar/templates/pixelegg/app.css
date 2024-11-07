@@ -79,14 +79,15 @@
 #calendar-et2_target > div {
   position: relative;
 }
-#calendar-sidebox_cat_id {
-  margin-bottom: 5px;
-}
 #calendar-sidebox_cat_id ~ * {
   vertical-align: top;
   display: inline-block;
   border: none;
   box-shadow: none;
+}
+/*overrides above for disabled et2-box*/
+#calendar-sidebox_cat_id ~ et2-box[disabled] {
+  display: none;
 }
 #calendar-sidebox_weekend {
   /* Special css styling goes here */
@@ -1433,7 +1434,7 @@ img.calendar_print_appicon {
 /*weekend slideSwitch in toolbar*/
 #calendar-toolbar_app_header {
   color: #000;
-  font-size: var(--sl-font-size-large);
+  font-size: 14px;
   height: 1.6em;
   padding: 4px 3px 3px;
   background: #b4cee773;
