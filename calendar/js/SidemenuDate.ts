@@ -363,7 +363,7 @@ export class SidemenuDate extends Et2Date
 	{
 		// Plain input
 		return html`
-            <input type="text"></input>`;
+            <input type="text" style="display: none"></input>`;
 	}
 }
 

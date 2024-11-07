@@ -70,14 +70,16 @@
 #calendar-et2_target > div {
 	position: relative;
 }
-#calendar-sidebox_cat_id {
-	margin-bottom: 5px;
-}
 #calendar-sidebox_cat_id ~ * {
 	vertical-align: top;
 	display: inline-block;
     border: none;
     box-shadow: none;
+}
+
+/*overrides above for disabled et2-box*/
+#calendar-sidebox_cat_id ~ et2-box[disabled]{
+	display: none;
 }
 
 #calendar-sidebox_weekend {
