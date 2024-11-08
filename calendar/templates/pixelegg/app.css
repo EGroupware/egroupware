@@ -85,6 +85,9 @@
   border: none;
   box-shadow: none;
 }
+.flatpickr-current-month .numInputWrapper {
+  color: inherit;
+}
 /*overrides above for disabled et2-box*/
 #calendar-sidebox_cat_id ~ et2-box[disabled] {
   display: none;
