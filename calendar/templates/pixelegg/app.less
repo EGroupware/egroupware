@@ -39,9 +39,26 @@
 }
 
 //sidebox flatpickr
-div.flatpickr-calendar .flatpickr-current-month .flatpickr-monthDropdown-months {
-    width: 70%;
-    padding-right: 0 !important;
+div.flatpickr-calendar {
+    .flatpickr-months {
+        gap: 0;
+
+    }
+
+    .flatpickr-current-month {
+        .flatpickr-monthDropdown-months {
+            width: 65%;
+            padding-right: 0 !important;
+        }
+    }
+
+    .flatpickr-prev-month {
+        padding-right: 0;
+    }
+
+    .flatpickr-next-month {
+        padding-left: 0;
+    }
 }
 
 
