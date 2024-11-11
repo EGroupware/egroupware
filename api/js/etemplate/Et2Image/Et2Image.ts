@@ -185,8 +185,8 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 
         // our own svg images
         //only call unsafeHtml when we are inside /egroupware/
-        const ourSvg = url.match(/\/egroupware\/([^.]+)\.svg/);
-        if (ourSvg)
+        const ourSvg = url.startsWith(this.egw().webserverUrl + '/') //checks if source is trusted
+        if (ourSvg && url.match(/\/bi-.*\.svg/))
         {
             const svg = fetch(url)
                 .then(res => res.text()
