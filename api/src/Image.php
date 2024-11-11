@@ -234,7 +234,7 @@ class Image
 		'calendar/day'	=> '1-square',
 		'calendar/list_view'	=> 'list',
 		'calendar/month_view'	=> 'calendar/bi-31-square',
-		'calendar/multiweek_view'	=> 'calendar/bi-card-list',
+		'calendar/multiweek_view'	=> 'card-list',
 		'calendar/needs-action'	=> 'question-circle',
 		'calendar/next'	=> 'arrow-bar-right',
 		'calendar/nonblocking'	=> 'ban',
