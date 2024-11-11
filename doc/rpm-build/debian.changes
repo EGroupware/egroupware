@@ -1,3 +1,18 @@
+egroupware-docker (23.1.20241111) hardy; urgency=low
+
+  * All apps: new icons based on Bootstrap icons
+  * All apps: new "fancy" theme, which can be enabled in user general preferences
+  * Admin: allow to mark users as hidden, to show them only to admins e.g. to hide functional users from regular users
+  * Status, Addressbook: preference to use first letters of username for avatar instead of initials
+  * Addressbook: show username for accounts as a column in the list too
+  * Addressbook: change title and role to 128 characters
+  * Mail: explicitly allow data-uris of arbitrary length for images (were shown as red questionmark, when longer then 800 chars)
+  * Mail: fix Sieve editor considers mail body rules wrongly as unconditional, if there are more than one rule
+  * All apps: fix private custom-fields were shown independent of entry type-filter, if user was allowed to see the field
+  * EPL/Mail/SpamTitan: allow admins to white- or blacklist for all users / whole domain
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 11 Nov 2024 08:56:59 +0100
+
 egroupware-docker (23.1.20241008) hardy; urgency=low
 
   * Mail: fix not working drag-n-drop and context menu und lazy-loaded 2nd mail account
