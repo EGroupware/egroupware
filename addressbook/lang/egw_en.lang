@@ -517,7 +517,6 @@ upload or delete the photo	addressbook	en	Upload or delete the photo
 url (business)	addressbook	en	URL (business)
 url (private)	addressbook	en	URL (private)
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link phone numbers to. Use %1 = number to call, %u = account name, %t = account phone.
-use a category tree?	addressbook	en	Use a tree for selecting categories
 use addressbooks "own sorting" attribute	addressbook	en	Use addressbooks "own sorting" attribute
 use an extra tab for private custom fields?	admin	en	Use an extra tab for private custom fields
 use country list	addressbook	en	Use country list
