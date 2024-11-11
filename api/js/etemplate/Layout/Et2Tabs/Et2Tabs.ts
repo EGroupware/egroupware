@@ -269,7 +269,13 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				const initial = firstTab.hasAttribute("active");
 				firstTab.setAttribute("active", '');
 				const tabHeight = getComputedStyle(firstTab).height;
-				this.tabHeight = maxHeight != '0px' && parseInt(maxHeight) < parseInt(tabHeight) ? maxHeight : tabHeight;
+				if (parseInt(maxHeight) > 50 && parseInt(maxHeight) < parseInt(tabHeight))
+				{
+					this.tabHeight = maxHeight;
+				} else
+				{
+					this.tabHeight = tabHeight;
+				}
 				if(!initial)
 				{
 					firstTab.removeAttribute("active");
