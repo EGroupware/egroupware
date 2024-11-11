@@ -140,11 +140,9 @@
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%" overflow="auto">
 			<columns>
-				<column disabled="!@cat_tab=Tree" width="312"/>
-				<column disabled="@cat_tab=Tree" width="312"/>
-				<column width="50"/>
 				<column width="312"/>
 				<column width="50"/>
+				<column/>
 			</columns>
 			<rows>
 				<row valign="top">
@@ -153,7 +151,7 @@
 					<grid width="100%">
 						<columns>
 							<column width="92"/>
-							<column width="230"/>
+							<column/>
 						</columns>
 						<rows>
 							<row valign="top">
@@ -188,7 +186,6 @@
                             </row>
                         </rows>
                     </grid>
-                    <et2-description></et2-description>
                 </row>
             </rows>
         </grid>
