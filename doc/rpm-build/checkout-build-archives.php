@@ -1186,9 +1186,9 @@ function do_copy()
 	{
 		throw new Exception("Can NOT read $path to verify version!");
 	}
-    if ($json['version'] !== $config['version'])
+    if ($json['version'] !== $config['version'].'.'.$config['packaging'])
     {
-        throw new Exception("Version in composer.json does not match: '$json[version]' !== '$config[version] --> aborting!");
+        throw new Exception("Version in composer.json does not match: '$json[version]' !== '$config[version].$config[packaging] --> aborting!");
     }
 
 	try {
