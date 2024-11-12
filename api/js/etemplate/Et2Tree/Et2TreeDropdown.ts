@@ -161,6 +161,17 @@ export class Et2TreeDropdown extends SearchMixin<Constructor<any> & Et2InputWidg
 		document.addEventListener("click", this.handleDocumentClick);
 	}
 
+	firstUpdated()
+	{
+		let options = this.multiple || !this.emptyLabel ? this.select_options : [{
+			value: "",
+			label: this.emptyLabel
+		}, ...this.select_options];
+
+		this._tree._selectOptions = <TreeItemData[]>options;
+		this._tree.requestUpdate("_selectOptions");
+	}
+
 	disconnectedCallback()
 	{
 		super.disconnectedCallback();
