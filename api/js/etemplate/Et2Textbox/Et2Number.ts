@@ -236,7 +236,7 @@ export class Et2Number extends Et2Textbox
 				val = parseFloat(val);
 			}
 		}
-		if(isNaN(val))
+		if(val == "" || isNaN(val))
 		{
 			super.value = val;
 			this.requestUpdate("value", old);
