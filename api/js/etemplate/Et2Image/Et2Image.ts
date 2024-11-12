@@ -184,6 +184,9 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		}
 
         // our own svg images
+		// We have svg images prefixed "bi-". These are used like bootstrap font icons.
+		// We inline them to be able to control there color etc. directly via css
+
         //only call unsafeHtml when we are inside /egroupware/
         const ourSvg = url.startsWith(this.egw().webserverUrl + '/') //checks if source is trusted
         if (ourSvg && url.match(/\/bi-.*\.svg/))
