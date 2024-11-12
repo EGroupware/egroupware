@@ -63,7 +63,13 @@ describe("Number widget", () =>
 		element.precision = 0;
 		element.value = "1,234";
 		assert.equal(element.value, "1", "Wrong number of decimals (, separator)");
-	})
+	});
+
+	it("handles blank ('')", () =>
+	{
+		element.value = "";
+		assert.equal(element.value, "");
+	});
 
 	it("Min limit", () =>
 	{
