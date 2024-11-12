@@ -522,10 +522,10 @@ export class et2_file extends et2_inputWidget
 		// Hide any previous errors
 		this.hideMessage();
 
-
 		event.data = this;
 
 		//Add dropdown_progress
+		this.progress.removeClass("hideme");
 		if (this.options.progress_dropdownlist)
 		{
 			this._build_progressDropDownList();
@@ -587,7 +587,6 @@ export class et2_file extends et2_inputWidget
 	private _build_progressDropDownList()
 	{
 		this.progress.addClass("progress_dropDown_fileList");
-		this.progress.removeClass("hideme");
 
 		//Add uploading indicator and bind hover handler on it
 		jQuery(this.node).find('span').addClass('totalProgress_loader');
