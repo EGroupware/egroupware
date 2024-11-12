@@ -42,8 +42,23 @@ export type TreeItemData = SelectOption & {
 
 	nocheckbox: number | Boolean,
 	open: 0 | 1,
-	parent: String,
-	text: String,
+	/**
+	 * @deprecated Use "value"
+	 */
+	id : string,
+	/**
+	 * @deprecated No longer used, the nested data structure is used instead
+	 */
+	parent : string,
+	/**
+	 * @deprecated Use "label"
+	 */
+	text : string,
+	/**
+	 * @deprecated Use "children"
+	 */
+	item : object[],
+
 	tooltip: String,
 	userdata: any[]
 	//here we can store the number of unread messages, if there are any
@@ -1028,7 +1043,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                                 parentNode.open = false;
                                 this.requestUpdate("lazy", "true");
 							}
-                            this.getDomNode(parentNode.id).loading = false
+                            this.getDomNode(parentNode.id ?? parentNode.value).loading = false
                             this.requestUpdate("_selectOptions")
                         })
 
