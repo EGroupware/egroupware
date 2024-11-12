@@ -212,7 +212,10 @@ class Accounts
 		if (empty($account_ids))
 		{
 			$account_ids = $hidden_account_ids;
-			if ($hidden === false) $account_ids[] = '!';
+			if ($hidden === false && $account_ids)
+			{
+				$account_ids[] = '!';
+			}
 		}
 		elseif ($hidden === true)
 		{
@@ -289,9 +292,10 @@ class Accounts
 		$serial = self::cacheKey($param, $serial_unlimited);
 
 		// implement $param['hidden'] via $param['account_id']
-		if (isset($param['hidden']) && !in_array($param['type'],['groups', 'owngroups']))
+		if (isset($param['hidden']) && !in_array($param['type'],['groups', 'owngroups']) &&
+			($account_id_filter = self::hidden2account_id($param['hidden'], (array)($param['account_id']??null))))
 		{
-			$param['account_id'] = self::hidden2account_id($param['hidden'], (array)$param['account_id']);
+			$param['account_id'] = $account_id_filter;
 		}
 		unset($param['hidden']);
 

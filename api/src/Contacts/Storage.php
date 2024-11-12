@@ -660,9 +660,10 @@ class Storage
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
 		// add hidden user filter for non-admins
-		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) && empty($filter['owner']))
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) && empty($filter['owner']) &&
+			($account_id_filter = Api\Accounts::hidden2account_id(false, $filter['account_id'] ?? null)))
 		{
-			$filter['account_id'] = Api\Accounts::hidden2account_id(false, $filter['account_id']);
+			$filter['account_id'] = $account_id_filter;
 		}
 		// Handle 'None' country option
 		if(is_array($filter) && isset($filter['adr_one_countrycode']) && $filter['adr_one_countrycode'] === '-custom-')

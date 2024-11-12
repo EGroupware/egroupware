@@ -719,6 +719,7 @@ class Sql extends Api\Storage
 		// implement negated account_id filter
 		if (!empty($filter['account_id']) && ($not_account_ids = array_search('!', $filter['account_id'])) !== false)
 		{
+			unset($filter['account_id'][$not_account_ids]);
 			$filter[] = $this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]);
 			unset($filter['account_id']);
 		}
