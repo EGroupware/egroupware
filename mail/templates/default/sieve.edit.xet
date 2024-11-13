@@ -12,7 +12,7 @@
 					<et2-description  value="Match:"></et2-description>
 					<et2-select  id="anyof"></et2-select>
 				</row>
-				<row class="sieveRowActive">
+				<row>
 					<et2-description  value="If from contains:(*)"></et2-description>
 					<et2-textbox  id="from"></et2-textbox>
 				</row>
