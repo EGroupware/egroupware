@@ -18,7 +18,6 @@ import {egw} from "../jsapi/egw_global";
 import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
 import {et2_checkType} from "./et2_core_common";
 import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
-import {et2_loadXMLFromURL} from "./et2_core_xml";
 import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common";
@@ -226,15 +225,15 @@ export class etemplate2
 		// We share list of templates with iframes and popups
 		try
 		{
-			if(opener && opener.etemplate2)
+			if(opener && opener.Et2Template)
 			{
-				etemplate2.templates = opener.etemplate2.templates;
+				Et2Template.templateCache = opener.Et2Template.templateCache;
 			}
 			// @ts-ignore
-			else if(top.etemplate2)
+			else if(top.Et2Template)
 			{
 				// @ts-ignore
-				etemplate2.templates = top.etemplate2.templates;
+				Et2Template.templateCache = top.Et2Template.templateCache;
 			}
 		}
 		catch(e)
@@ -356,7 +355,7 @@ export class etemplate2
 		jQuery(this._DOMContainer).empty();
 
 		// Remove self from the index
-		for(const name in etemplate2.templates)
+		for(const name in Et2Template.templateCache)
 		{
 			if(typeof etemplate2._byTemplate[name] == "undefined")
 			{
@@ -712,12 +711,6 @@ export class etemplate2
 				}
 				etemplate2._byTemplate[_name].push(this);
 
-				// Read the XML structure of the requested template
-				if(etemplate2.templates[this.name].hasAttribute("slot"))
-				{
-					this.DOMContainer.setAttribute("slot", etemplate2.templates[this.name].getAttribute("slot"));
-				}
-
 				// Connect to the window resize event
 				jQuery(window).on("resize." + this.uniqueId, this, function(e)
 				{
@@ -786,9 +779,9 @@ export class etemplate2
 							detail: this
 						}));
 
-						if(etemplate2.templates[this.name].attributes.onload)
+						if(Et2Template.templateCache[this.name].attributes.onload)
 						{
-							let onload = et2_checkType(etemplate2.templates[this.name].attributes.onload.value, 'js', 'onload', {});
+							let onload = et2_checkType(Et2Template.templateCache[this.name].attributes.onload.value, 'js', 'onload', {});
 							if(typeof onload === 'string')
 							{
 								onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
@@ -820,50 +813,8 @@ export class etemplate2
 				});
 			};
 
-
 			// Load & process
-			try
-			{
-				if(etemplate2.templates[_name])
-				{
-					// Already have it
-					_load.apply(this, []);
-					return;
-				}
-			}
-			catch(e)
-			{
-				// weird security exception in IE denying access to template cache in opener
-				if(e.message == 'Permission denied')
-				{
-					etemplate2.templates = {};
-				}
-				// other error eg. in app.js et2_ready or event handlers --> rethrow it
-				else
-				{
-					throw e;
-				}
-			}
-
-			// Asynchronously load the XET file
-			return et2_loadXMLFromURL(_url, function(_xmldoc)
-			{
-				// Scan for templates and store them
-				for(let i = 0; i < _xmldoc.childNodes.length; i++)
-				{
-					const template = _xmldoc.childNodes[i];
-					if(template.nodeName.toLowerCase() != "template")
-					{
-						continue;
-					}
-					etemplate2.templates[template.getAttribute("id")] = template;
-					if(!_name)
-					{
-						this.name = template.getAttribute("id");
-					}
-				}
-				_load.apply(this, []);
-			}, this);
+			_load.apply(this, []);
 		});
 	}
 

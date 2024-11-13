@@ -12,7 +12,6 @@ import shoelace from "../Styles/shoelace";
 import styles from "./Et2Template.styles";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
-import {etemplate2} from "../etemplate2";
 import {et2_loadXMLFromURL} from "../et2_core_xml";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import {egw, IegwAppLocal} from "../../jsapi/egw_global";
@@ -69,6 +68,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	@property()
 	content : string;
 
+	public static templateCache = {};
 	protected loading : Promise<void>;
 	private __egw : IegwAppLocal = null;
 
@@ -264,9 +264,16 @@ export class Et2Template extends Et2Widget(LitElement)
 			// Read the XML structure of the requested template
 			if(typeof xml != 'undefined')
 			{
-				console.time("loadFromXML");
+				// Get any template attributes from XML template node
+				const attrs = {};
+				xml.getAttributeNames().forEach(attribute =>
+				{
+					attrs[attribute] = xml.getAttribute(attribute);
+				});
+				this.transformAttributes(attrs);
+
+				// Load children into template
 				this.loadFromXML(xml);
-				console.timeEnd("loadFromXML");
 			}
 			else
 			{
@@ -276,10 +283,6 @@ export class Et2Template extends Et2Widget(LitElement)
 
 			// Wait for widgets to be complete
 			await this.loadFinished();
-			if(egw.debug_level() >= 4 && console.timeStamp)
-			{
-				console.timeEnd("Template load");
-			}
 			console.groupEnd();
 
 			// Resolve promise, this.updateComplete now resolved
@@ -302,7 +305,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * @returns {Promise<any>}
 	 * @protected
 	 */
-	protected async findTemplate() : Promise<Node>
+	protected async findTemplate() : Promise<Element>
 	{
 		// Find template name
 		const parts = (this.template || this.id).split('?');
@@ -317,7 +320,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		}
 
 		// Check to see if the template is already known / loaded into global ETemplate cache
-		let xml = etemplate2.templates[template_name];
+		let xml = Et2Template.templateCache[template_name];
 
 		// Check to see if ID is short form --> prepend parent/top-level name
 		if(!xml && template_name.indexOf('.') < 0)
@@ -327,7 +330,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			if(top_name && template_name.indexOf('.') < 0)
 			{
 				template_name = top_name + '.' + template_name
-				xml = etemplate2.templates[template_name];
+				xml = Et2Template.templateCache[template_name];
 			}
 		}
 
@@ -345,15 +348,15 @@ export class Et2Template extends Et2Widget(LitElement)
 				{
 					continue;
 				}
-				etemplate2.templates[template.getAttribute("id")] = template;
+				Et2Template.templateCache[template.getAttribute("id")] = template;
 				if(template.getAttribute("id") == template_name)
 				{
 					xml = template;
 				}
 				fallback = template;
 			}
-			// Take last template in the file if we had no name
-			if(!xml && !template_name)
+			// Take last template in the file if we had no better match
+			if(!xml)
 			{
 				xml = fallback;
 			}
@@ -420,16 +423,26 @@ export class Et2Template extends Et2Widget(LitElement)
 			return this.url;
 		}
 
+		let url = "";
 		const parts = (this.template || this.id).split('?');
 		const cache_buster = parts.length > 1 ? parts.pop() : null;
 		let template_name = parts.pop();
 
-		const splitted = template_name.split('.');
-		const app = splitted.shift();
-		let url = this.egw().link(
-			'/' + app + "/templates/default/" + splitted.join('.') + ".xet",
-			{download: cache_buster ? cache_buster : (new Date).valueOf()}
-		);
+		// Full URL passed as template?
+		if(template_name.startsWith(this.egw().webserverUrl) && template_name.endsWith("xet"))
+		{
+			url = template_name;
+		}
+		else
+		{
+
+			const splitted = template_name.split('.');
+			const app = splitted.shift();
+			url = this.egw().link(
+				'/' + app + "/templates/default/" + splitted.join('.') + ".xet",
+				{download: cache_buster ? cache_buster : (new Date).valueOf()}
+			);
+		}
 
 		// if we have no cache-buster, reload daily
 		if(url.indexOf('?') === -1)

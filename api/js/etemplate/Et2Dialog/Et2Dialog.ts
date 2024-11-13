@@ -776,7 +776,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		}
 		this._template_widget = new etemplate2(this._contentNode);
 
-		// Fire an event so consumers can do their thing - etemplate will fire its own load event when its done
+		// Fire an event so consumers can do their thing - etemplate will fire its own load event when it's done
 		if(!this.dispatchEvent(new CustomEvent("before-load", {
 			bubbles: true,
 			cancelable: true,
@@ -786,38 +786,14 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			return;
 		}
 
-		if(this.__template.indexOf('.xet') > 0)
-		{
-			let template = this.__template;
-			// inject preprocessor, if not already in template-url
-			const webserverUrl = this.egw().webserverUrl;
-			if(!template.match(new RegExp(webserverUrl + '/api/etemplate.php')))
-			{
-				template = template.replace(new RegExp(webserverUrl), webserverUrl + '/api/etemplate.php');
-			}
-			// if we have no cache-buster, reload daily
-			if(template.indexOf('?') === -1)
-			{
-				template += '?' + ((new Date).valueOf() / 86400 | 0).toString();
-			}
-			// File name provided, fetch from server
-			this._template_widget.load("", template, this.__value || {content: {}},)
-				.then(() =>
-				{
-					this._templateResolver(true);
-				});
-		}
-		else
-		{
-			// Just template name, it better be loaded already
-			this._template_widget.load(this.__template, '', this.__value || {},
+		this._template_widget.load(this.__template, '', this.__value || {},
 				// true: do NOT call et2_ready, as it would overwrite this.et2 in app.js
 				undefined, undefined, true)
 				.then(() =>
 				{
 					this._templateResolver(true);
 				});
-		}
+
 
 		// Don't let dialog closing destroy the parent session
 		if(this._template_widget.etemplate_exec_id && this._template_widget.app)
