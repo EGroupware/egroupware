@@ -204,7 +204,7 @@ function run_command(admin_cmd $cmd)
 			}
 			else
 			{
-				error_log('You might need to clear the cache for changes to be visiable: Admin >> Clear cache!');
+				error_log('You might need to clear the cache for changes to become visible: Admin >> Clear cache!');
 			}
 		}
 	}
