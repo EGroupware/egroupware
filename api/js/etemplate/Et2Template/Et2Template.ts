@@ -472,9 +472,9 @@ export class Et2Template extends Et2Widget(LitElement)
 		if(this.content)
 		{
 			const old_id = this.id;
-			this.id = this.content;
+			this._widget_id = this.content;
 			super.checkCreateNamespace.apply(this, arguments);
-			this.id = old_id;
+			this._widget_id = old_id;
 		}
 	}
 
