@@ -7989,6 +7989,16 @@ table.egwGridView_grid img.et2_appicon {
     display: none;
   }
 }
+@media (max-device-width: 400px) {
+  .et2_toolbar .et2_toolbar_actionlist > span > * {
+    margin-right: 2px;
+  }
+}
+@media (max-device-width: 310px) {
+  .et2_toolbar .et2_toolbar_actionlist > span > * {
+    margin-right: 0px;
+  }
+}
 /*mobile etemplate2*/
 @media all {
   html * {
