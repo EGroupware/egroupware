@@ -1712,7 +1712,10 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 			continue;
 		}
 		// Set as property
+		const old_value = widget[attribute];
 		widget[attribute] = attrValue;
+		// Due to reactive properties not updating properly, make sure to trigger an update
+		widget.requestUpdate(attribute, old_value);
 	}
 
 	if(widget_class.getPropertyOptions("value") && widget.set_value)

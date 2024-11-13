@@ -3,8 +3,7 @@ import {css} from 'lit';
 export default css`
 	:host {
 		display: block;
-		position: relative;
-		height: 100%;
+		position: relative
 	}
 
 	.template--loading {
@@ -22,5 +21,9 @@ export default css`
 		z-index: var(--sl-z-index-dialog);
 
 		font-size: 5rem;
+	}
+
+	.template {
+		height: 100%;
 	}
 `;

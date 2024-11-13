@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {html, LitElement, nothing} from "lit";
+import {html, LitElement, nothing, PropertyValues} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2Template.styles";
@@ -14,7 +14,7 @@ import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {et2_loadXMLFromURL} from "../et2_core_xml";
 import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
-import {egw, IegwAppLocal} from "../../jsapi/egw_global";
+import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
@@ -68,9 +68,17 @@ export class Et2Template extends Et2Widget(LitElement)
 	@property()
 	content : string;
 
-	public static templateCache = {};
+	/**
+	 * Cache of known templates
+	 * @type {{[name : string] : Element}}
+	 */
+	public static templateCache : { [name : string] : Element } = {};
 	protected loading : Promise<void>;
+
 	private __egw : IegwAppLocal = null;
+
+	// Internal flag to indicate loading is in progress, since we can't monitor a promise
+	private __isLoading = false;
 
 
 	constructor(egw? : IegwAppLocal)
@@ -95,6 +103,10 @@ export class Et2Template extends Et2Widget(LitElement)
 		{
 			this.load();
 		}
+		else
+		{
+			console.info("Not loading template, missing info", this);
+		}
 	}
 
 	disconnectedCallback() : void
@@ -109,6 +121,22 @@ export class Et2Template extends Et2Widget(LitElement)
 		await this.loading;
 
 		return result;
+	}
+
+	willUpdate(changedProperties : PropertyValues)
+	{
+		// If content index was changed, re-check / create namespace
+		if(changedProperties.has("content"))
+		{
+			this.checkCreateNamespace();
+		}
+
+		// Load if template (template, id or URL) or content index changed
+		// (as long as we're not currently already loading, to prevent loops if load changes an attribute)
+		if(!this.__isLoading && ["template", "id", "url", "content"].filter(v => changedProperties.has(v)).length > 0)
+		{
+			this.load();
+		}
 	}
 
 	/**
@@ -240,17 +268,25 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * Get the template XML and create widgets from it
 	 *
 	 * Asks the server if we don't have that template on the client yet, then takes the template
-	 * node and goes through it, creating widgets.
+	 * node and goes through it, creating widgets.  This is normally called automatically when the
+	 * template is added to the DOM, but if you want to re-load or not put it in the DOM you need to call load() yourself.
 	 *
 	 * @returns {Promise<void>}
 	 * @protected
 	 */
 	public async load(newContent? : object)
 	{
+		if(this.disabled)
+		{
+			this.loading = Promise.resolve();
+			return this.loading;
+		}
+
 		if(typeof newContent != "undefined")
 		{
 			this.setArrayMgr("content", new et2_arrayMgr(newContent));
 		}
+		this.__isLoading = true;
 		this.loading = new Promise(async(resolve, reject) =>
 		{
 			// Empty in case load was called again
@@ -270,6 +306,8 @@ export class Et2Template extends Et2Widget(LitElement)
 				{
 					attrs[attribute] = xml.getAttribute(attribute);
 				});
+				// Don't change ID, keep what we've got
+				delete attrs["id"];
 				this.transformAttributes(attrs);
 
 				// Load children into template
@@ -284,6 +322,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			// Wait for widgets to be complete
 			await this.loadFinished();
 			console.groupEnd();
+			this.__isLoading = false;
 
 			// Resolve promise, this.updateComplete now resolved
 			resolve();
@@ -312,13 +351,6 @@ export class Et2Template extends Et2Widget(LitElement)
 		const cache_buster = parts.length > 1 ? parts.pop() : null;
 		let template_name = parts.pop();
 
-		console.groupCollapsed("Loading template " + template_name);
-		if(egw.debug_level() >= 4 && console.timeStamp)
-		{
-			console.timeStamp("Begin rendering template");
-			console.time("Template load");
-		}
-
 		// Check to see if the template is already known / loaded into global ETemplate cache
 		let xml = Et2Template.templateCache[template_name];
 
@@ -344,7 +376,7 @@ export class Et2Template extends Et2Widget(LitElement)
 			for(let i = 0; i < templates.childNodes.length; i++)
 			{
 				const template = templates.childNodes[i];
-				if(template.nodeName.toLowerCase() != "template")
+				if(!["template", "et2-template"].includes(template.nodeName.toLowerCase()))
 				{
 					continue;
 				}
@@ -374,7 +406,6 @@ export class Et2Template extends Et2Widget(LitElement)
 	 */
 	protected loadFinished()
 	{
-		console.time("loadFinished");
 		// List of Promises from widgets that are not quite fully loaded
 		let deferred = [];
 
@@ -405,15 +436,23 @@ export class Et2Template extends Et2Widget(LitElement)
 					}, 10000
 				);
 			})
-		]).then(() =>
+		]);
+	}
+
+	protected clear()
+	{
+		// Clear
+		if(this.childNodes.length > 0)
 		{
-			console.timeEnd("loadFinished");
-		});
+			console.info(this.templateName + " has children, clearing");
+			debugger;
+		}
+		while(this.firstChild) this.removeChild(this.lastChild);
 	}
 
 	loadFailed(reason? : any)
 	{
-		this.egw().debug("error", "Loading failed '" + (this.template ?? this.id) + "' @ " + this.getUrl() + (reason ? " \n" + reason : ""));
+		this.egw().debug("error", "Loading failed '" + (this.templateName) + "' @ " + this.getUrl() + (reason ? " \n" + reason : ""));
 	}
 
 	protected getUrl()
@@ -426,7 +465,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		let url = "";
 		const parts = (this.template || this.id).split('?');
 		const cache_buster = parts.length > 1 ? parts.pop() : null;
-		let template_name = parts.pop();
+		let template_name = this.templateName;
 
 		// Full URL passed as template?
 		if(template_name.startsWith(this.egw().webserverUrl) && template_name.endsWith("xet"))
@@ -462,6 +501,15 @@ export class Et2Template extends Et2Widget(LitElement)
 		return splitted.shift() || "";
 	}
 
+	public get templateName()
+	{
+		const parts = (this.template || this.id).split('?');
+		const cache_buster = parts.length > 1 ? parts.pop() : null;
+		let template_name = parts.pop() || "";
+
+		return template_name;
+	}
+
 	/**
 	 * Override parent to support content attribute
 	 * Templates always have ID set, but seldom do we want them to
@@ -480,7 +528,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	_createNamespace() : boolean
 	{
-		return true;
+		return this.content && this.content != this.id;
 	}
 
 	handleLoad(event)
