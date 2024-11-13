@@ -1011,7 +1011,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				if(!this._parent_node && this.getParent() instanceof et2_widget && (<et2_DOMWidget>this.getParent()).getDOMNode(this) != this.parentNode)
 				{
 					// @ts-ignore this is not an et2_widget, and Et2Widget is not a Node
-					(<et2_DOMWidget>this.getParent()).getDOMNode(this).append(this);
+					(<et2_DOMWidget>this.getParent()).getDOMNode(this)?.append(this);
 				}
 
 				// An empty text node causes problems with legacy widget children

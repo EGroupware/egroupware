@@ -9,7 +9,11 @@
  */
 
 
+import {Et2Template} from "./Et2Template/Et2Template";
+
 /**
  * @deprecated use Et2Template
  */
-export type et2_template = Et2Template;
+export class et2_template extends Et2Template
+{
+}

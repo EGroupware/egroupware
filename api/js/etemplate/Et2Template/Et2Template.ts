@@ -90,7 +90,8 @@ export class Et2Template extends Et2Widget(LitElement)
 		super.connectedCallback();
 		this.addEventListener("load", this.handleLoad);
 
-		if(this.template || this.id)
+		// If we can, start loading immediately
+		if(this.template || this.id || this.url)
 		{
 			this.load();
 		}
@@ -244,7 +245,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * @returns {Promise<void>}
 	 * @protected
 	 */
-	protected async load(newContent? : object)
+	public async load(newContent? : object)
 	{
 		if(typeof newContent != "undefined")
 		{
@@ -252,6 +253,13 @@ export class Et2Template extends Et2Widget(LitElement)
 		}
 		this.loading = new Promise(async(resolve, reject) =>
 		{
+			// Empty in case load was called again
+			while(this.childNodes.length > 0)
+			{
+				this.lastElementChild.remove();
+			}
+
+			// Get template XML
 			let xml = await this.findTemplate();
 			// Read the XML structure of the requested template
 			if(typeof xml != 'undefined')
@@ -273,8 +281,11 @@ export class Et2Template extends Et2Widget(LitElement)
 				console.timeEnd("Template load");
 			}
 			console.groupEnd();
+
+			// Resolve promise, this.updateComplete now resolved
 			resolve();
 
+			// Notification event
 			this.dispatchEvent(new CustomEvent("load", {
 				bubbles: true,
 				composed: true,
