@@ -115,6 +115,7 @@ connection status	mail	de	Verbindungsstatus
 contact label	mail	de	Anzeige Kontakt
 contains	mail	de	beinhaltet
 contains(*)	mail	de	enthält(*)
+continue	mail	de	Fortsetzen
 convert mail to item and attach its attachments to this item (standard)	mail	de	Konvertiere E-Mail zum Eintrag und füge die E-Mail-Anhänge hinzu (Standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	de	Konvertiere E-Mail zum Eintrag und füge die Anhänge sowie die original E-Mail (als .eml) hinzu
 convert only mail to item (ignore possible attachments)	mail	de	Konvertiere nur den E-Mail-Text zum Eintrag (keine Anhänge und keine E-Mail als .eml)
@@ -324,6 +325,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	de	Dienstlich
 junk	mail	de	Spam
 junk folder	mail	de	Ordner für Spam-Nachrichten
+keep a copy	mail	de	Eine Kopie behalten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
 kilobytes	mail	de	Kilobyte
 later	mail	de	Später
@@ -650,6 +652,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	de	Versuch der Wiederherstellung aus den gespeicherten Session-Daten
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	de	Deaktivieren Sie die horizontale Trennlinie zwischen dem Text Ihrer E-Mail und der Signatur.
 unable to fetch vacation!	mail	de	Abwesenheitsnotiz konnte nicht gelesen werden!
+unconditional	mail	de	immer
 undelete	mail	de	Als gelöscht markiert entfernen
 unflagged	mail	de	Markierung entfernen
 unread	mail	de	ungelesen
