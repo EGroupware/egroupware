@@ -1019,7 +1019,7 @@ class mail_sieve
 		$complete = lang('IF').' ';
 		if ($rule['unconditional'])
 		{
-			$complete = "[Unconditional] ";
+			$complete = '['.lang('Unconditional').'] ';
 		}
 		if ($rule['from'])
 		{
@@ -1121,11 +1121,11 @@ class mail_sieve
 		}
 		if ($rule['continue'])
 		{
-			$complete .= " [Continue]";
+			$complete .= ' ['.lang('Continue').']';
 		}
 		if ($rule['keep'])
 		{
-			$complete .= " [Keep a copy]";
+			$complete .= ' ['.lang('Keep a copy').']';
 		}
 		return $complete;
 	}

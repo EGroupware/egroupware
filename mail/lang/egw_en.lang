@@ -115,6 +115,7 @@ connection status	mail	en	Connection status
 contact label	mail	en	Contact label
 contains	mail	en	contains
 contains(*)	mail	en	contains(*)
+continue	mail	en	Continue
 convert mail to item and attach its attachments to this item (standard)	mail	en	Convert email to item and attach its attachments to this item (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
@@ -324,6 +325,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	en	Job
 junk	mail	en	Junk
 junk folder	mail	en	Junk folder
+keep a copy	mail	en	Keep a copy
 keep a copy of the message in your inbox	mail	en	Keep a copy of the message in your inbox
 kilobytes	mail	en	kilobytes
 later	mail	en	Later
@@ -650,6 +652,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	en	Trying to recover from session data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message.<br>If you use templates, this option is only applied to the text part of the message.
 unable to fetch vacation!	mail	en	Unable to fetch vacation!
+unconditional	mail	en	Unconditional
 undelete	mail	en	Undelete
 unflagged	mail	en	Unflagged
 unread	mail	en	unread
