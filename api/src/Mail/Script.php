@@ -411,6 +411,9 @@ class Script
 						// we need to delete From header, to be able to overwrite it!
 						$newruletext .= "\t".'deleteheader "from";'."\n";
 						$newruletext .= "\t".'addheader "From" "\'${from}\' <${user_email}>";'."\n\n";
+						// we need to delete the DKIM-Signature header, as we change the from
+						$newruletext .= 'if header :matches "DKIM-Signature" "*" { set "dkim_signature" "${1}"; }'."\n";
+						$newruletext .= "\t".'deleteheader "dkim-signature";'."\n";
 					}
 
 					foreach(preg_split('/, ?/',$rule['action_arg']) as $addr)
@@ -422,6 +425,8 @@ class Script
 						// we restore the From header, in case we keep the mail, or other rules
 						$newruletext .= "\n\t".'deleteheader "from";'."\n";
 						$newruletext .= "\t".'addheader "From" "${from_header}";'."\n";
+						// we restore the DKIM-Signature header
+						$newruletext .= "\t".'addheader "DKIM-Signature" "${dkim_signature}";'."\n";
 					}
 				}
 				if (preg_match("/discard/i",$rule['action'])) {
