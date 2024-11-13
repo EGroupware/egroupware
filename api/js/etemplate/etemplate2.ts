@@ -16,8 +16,6 @@ import {EgwApp} from "../jsapi/egw_app";
 import {et2_IInput, et2_IPrint, et2_IResizeable, et2_ISubmitListener} from "./et2_core_interfaces";
 import {egw} from "../jsapi/egw_global";
 import {et2_arrayMgr, et2_readonlysArrayMgr} from "./et2_core_arrayMgr";
-import {et2_checkType} from "./et2_core_common";
-import {et2_compileLegacyJS} from "./et2_core_legacyJSFunctions";
 import {et2_nextmatch, et2_nextmatch_header_bar} from "./et2_extension_nextmatch";
 import '../jsapi/egw_json.js';
 import {egwIsMobile} from "../egw_action/egw_action_common";
@@ -779,16 +777,6 @@ export class etemplate2
 							detail: this
 						}));
 
-						if(Et2Template.templateCache[this.name].attributes.onload)
-						{
-							let onload = et2_checkType(Et2Template.templateCache[this.name].attributes.onload.value, 'js', 'onload', {});
-							if(typeof onload === 'string')
-							{
-								onload = et2_compileLegacyJS(onload, this, this._widgetContainer);
-							}
-							onload.call(this._widgetContainer);
-						}
-
 						// Profiling
 						if(egw.debug_level() >= 4)
 						{
@@ -815,7 +803,7 @@ export class etemplate2
 
 			// Load & process
 			_load.apply(this, []);
-		});
+		}).then(async() => await this._widgetContainer.updateComplete);
 	}
 
 	public focusOnFirstInput()
