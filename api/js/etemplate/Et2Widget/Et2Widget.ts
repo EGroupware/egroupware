@@ -539,6 +539,14 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		@property({type: Object})
 		set actions(actions : EgwAction[] | { [id : string] : object })
 		{
+			if(!(Array.isArray(actions) && actions.length > 0 || Object.entries(actions).length > 0))
+			{
+				// Not trying to clear actions, just called automatic
+				if(!this._actionManager)
+				{
+					return;
+				}
+			}
 			if(this.id == "" || typeof this.id == "undefined")
 			{
 				this.egw().debug("warn", "Widget should have an ID if you want actions", this);
