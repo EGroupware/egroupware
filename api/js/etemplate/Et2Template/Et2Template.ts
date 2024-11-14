@@ -290,10 +290,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		this.loading = new Promise(async(resolve, reject) =>
 		{
 			// Empty in case load was called again
-			while(this.childNodes.length > 0)
-			{
-				this.lastElementChild.remove();
-			}
+			this.clear();
 
 			// Get template XML
 			let xml = await this.findTemplate();
@@ -442,11 +439,6 @@ export class Et2Template extends Et2Widget(LitElement)
 	protected clear()
 	{
 		// Clear
-		if(this.childNodes.length > 0)
-		{
-			console.info(this.templateName + " has children, clearing");
-			debugger;
-		}
 		while(this.firstChild) this.removeChild(this.lastChild);
 	}
 
