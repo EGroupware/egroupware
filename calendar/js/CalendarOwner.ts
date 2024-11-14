@@ -58,6 +58,25 @@ export class CalendarOwner extends Et2StaticSelectMixin(Et2Select)
 	}
 
 	/**
+	 * Some [part of a] value is missing from the available options, but should be there, so find and add it.
+	 *
+	 * This is used when not all options are sent to the client (search, link list).  Ideally we want to send
+	 * the options for the current value, but sometimes this is not the best option so here we search or create
+	 * the option as needed.  These are not free entries, but need to match some list somewhere.
+	 *
+	 * @param {string} newValueElement
+	 * @protected
+	 */
+	protected _missingOption(newValueElement : string)
+	{
+		// Call ajax_owner
+		return this.egw().request(this.egw().link(this.egw().ajaxUrl(this.egw().decodePath("calendar_owner_etemplate_widget::ajax_owner"))),
+			[newValueElement]).then((results) =>
+		{
+			return this._processResultCount(results);
+		});
+	}
+	/**
 	 * Override parent to show email address in options
 	 *
 	 * We use this in edit dialog, but the same widget is used in sidemenu where the email is hidden via CSS.
