@@ -3196,6 +3196,7 @@ div#popupMainDiv {
   padding: 8px;
   background-color: #FFFFFF;
   background-repeat: repeat-x;
+  overflow: auto;
 }
 div#popupMainDiv > * {
   margin: 0px;

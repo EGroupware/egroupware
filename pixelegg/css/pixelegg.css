@@ -3207,6 +3207,7 @@ div#popupMainDiv {
   padding: 8px;
   background-color: #FFFFFF;
   background-repeat: repeat-x;
+  overflow: auto;
 }
 div#popupMainDiv > * {
   margin: 0px;
@@ -4312,8 +4313,9 @@ body.scrollVertical {
   font-size: 120%;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select {
-  width: 70% !important;
+  width: auto;
   margin-left: 10px;
+  margin-right: 10px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item::part(checked-icon) {
   border-radius: 50%;
