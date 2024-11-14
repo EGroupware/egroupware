@@ -4312,7 +4312,7 @@ body.scrollVertical {
   font-size: 120%;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select {
-  width: 50% !important;
+  width: 70% !important;
   margin-left: 10px;
 }
 #egw_fw_header #egw_fw_topmenu #egw_fw_topmenu_items #rc_status_select sl-menu-item::part(checked-icon) {
