@@ -1589,6 +1589,11 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		widget.style.setProperty("flex", "0 0 auto");
 		delete attributes.width;
 	}
+	if(attributes.height)
+	{
+		widget.style.setProperty("height", attributes.height);
+		delete attributes.height;
+	}
 
 	// Apply any set attributes - widget will do its own coercion
 	for(let attribute in attributes)
