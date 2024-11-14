@@ -73,21 +73,6 @@ class Script
 		$this->extensions = [];
 	}
 
-	private function _setExtensionsStatus(Sieve $connection)
-	{
-		$this->extensions = [
-			'vacation' => $connection->hasExtension('vacation'),
-			'vacation-seconds' => $connection->hasExtension('vacation-seconds'),
-			'regex' => $connection->hasExtension('regex'),
-			'enotify' => $connection->hasExtension('enotify'),
-			'body' => $connection->hasExtension('body'),
-			'variables' => $connection->hasExtension('variables'),
-			'date' => $connection->hasExtension('date'),
-			'imap4flags' => $connection->hasExtension('imap4flags'),
-			'relational' => $connection->hasExtension('relational'),
-		];
-	}
-
 	// get sieve script rules for this user
 	/**
 	 * Retrieve the rules
@@ -103,7 +88,6 @@ class Script
 		$anyofbit = 4;
 		$keepbit = 8;
 		$regexbit = 128;
-		$this->_setExtensionsStatus($connection);
 
 		if (!isset($this->name)){
 			$this->errstr = 'retrieveRules: no script name specified';
@@ -273,19 +257,17 @@ class Script
 
 		//include "$default->lib_dir/version.php";
 
-		// set extensions status
-		$this->_setExtensionsStatus($connection);
-
-		if (!$this->extensions['vacation']) $this->vacation = false;
+		if (!$connection->hasExtension('vacation')) $this->vacation = false;
 
 		// for vacation with redirect we need to keep track were the mail goes, to add an explicit keep
-		if ($this->extensions['variables'] && $this->vacation)
+		if ($connection->hasExtension('variables') && $this->vacation)
 		{
 			$newscriptbody = 'set "action" "inbox";'."\n\n";
 		}
 		$continue = 1;
 
-		foreach ($this->rules as $rule) {
+		foreach ($this->rules as $rule)
+		{
 			$newruletext = "";
 
 			// don't print this rule if disabled.
@@ -302,7 +284,13 @@ class Script
 				}
 				$started = 0;
 
-				if (empty($rule['unconditional'])) {
+				if (!isset($rule['unconditional']))
+				{
+					$rule['unconditional'] = $rule['action'] && !$rule['from'] && !$rule['to'] && !$rule['subject'] &&
+						!$rule['field'] && !$rule['size'] && !$rule['field_bodytransform'] && !$rule['ctype'];
+				}
+				if (empty($rule['unconditional']))
+				{
 						if (!$continue) $newruletext .= "els";
 						$newruletext .= "if " . $anyall . " (";
 						if ($rule['from']) {
@@ -363,7 +351,7 @@ class Script
 								$newruletext .= "size " . $xthan . $rule['size'] . "K";
 								$started = 1;
 						}
-						if ($this->extensions['body']){
+						if ($connection->hasExtension('body')){
 							if (!empty($rule['field_bodytransform'])){
 								if ($started) $newruletext .= ", ";
 								$btransform	= " :raw ";
@@ -389,21 +377,57 @@ class Script
 
 				// actions
 
-				if (empty($rule['unconditional'])) $newruletext .= ") {\n\t";
+				if (empty($rule['unconditional'])) $newruletext .= ") {\n";
+				$newruletext .= "\t";
 
 				if (preg_match("/folder/i",$rule['action'])) {
 						$newruletext .= "fileinto \"" . ($utf7imap_fileinto ?
 							Translation::convert($rule['action_arg'],'utf-8', 'utf7-imap') : $rule['action_arg']) . "\";";
 				}
-				if (preg_match("/reject/i",$rule['action'])) {
+				if (preg_match("/reject/i",$rule['action']))
+				{
 						$newruletext .= "reject text: \n" . $rule['action_arg'] . "\n.\n;";
 						$rejectused = 1;
 				}
-				if (preg_match("/address/i",$rule['action'])) {
-						foreach(preg_split('/, ?/',$rule['action_arg']) as $addr)
+				if (preg_match("/address/i",$rule['action']))
+				{
+					// forward with recipients address as envelope and header From, to avoid SPF and DKIM problems,
+					// if editheader Sieve extension is available (needs to be enabled for Dovecot!)
+					// From header of forwarded mail will be "'sender-address' <recipient-address>", so original sender is still visible
+					if ($connection->hasExtension('editheader'))
+					{
+						$newruletext .= 'if header :matches "From" "*" { set "from_header" "${1}"; }'."\n";
+						$newruletext .= "\t".'if address :matches "From" "*" { set "from" "${1}"; }'."\n";
+						// we don't delete ReplyTo header to keep it, if it was already set
+						$newruletext .= "\t".'addheader "ReplyTo" "${from}";'."\n";
+						if ($connection->hasExtension('envelope'))
 						{
-							$newruletext .= "\tredirect \"".trim($addr)."\";\n";
+							$newruletext .= "\t".'if envelope :matches "to" "*" { set "user_email" "${1}"; }'."\n";
 						}
+						else
+						{
+							$newruletext .= "\t".'if address :matches "to" "*" { set "user_email" "${1}"; }'."\n";
+						}
+						// we need to delete From header, to be able to overwrite it!
+						$newruletext .= "\t".'deleteheader "from";'."\n";
+						$newruletext .= "\t".'addheader "From" "\'${from}\' <${user_email}>";'."\n";
+						// we need to delete the DKIM-Signature header, as we change the from
+						$newruletext .= "\t".'if header :matches "DKIM-Signature" "*" { set "dkim_signature" "${1}"; }'."\n";
+						$newruletext .= "\t".'deleteheader "dkim-signature";'."\n\n";
+					}
+
+					foreach(preg_split('/, ?/',$rule['action_arg']) as $addr)
+					{
+						$newruletext .= "\tredirect \"".trim($addr)."\";\n";
+					}
+					if ($connection->hasExtension('editheader'))
+					{
+						// we restore the From header, in case we keep the mail, or other rules
+						$newruletext .= "\n\t".'deleteheader "from";'."\n";
+						$newruletext .= "\t".'addheader "From" "${from_header}";'."\n";
+						// we restore the DKIM-Signature header
+						$newruletext .= "\t".'addheader "DKIM-Signature" "${dkim_signature}";'."\n";
+					}
 				}
 				if (preg_match("/discard/i",$rule['action'])) {
 						$newruletext .= "discard;";
@@ -416,7 +440,7 @@ class Script
 					$newruletext .= "\n\tkeep;";
 				}
 				// for vacation with redirect we need to keep track were the mail goes, to NOT add an explicit keep
-				elseif ($this->extensions['variables'] && $this->vacation &&
+				elseif ($connection->hasExtension('variables') && $this->vacation &&
 					preg_match('/(folder|reject|address|discard)/', $rule['action']))
 				{
 					$newruletext .= "\n\tset \"action\" \"$rule[action]\";";
@@ -458,7 +482,7 @@ class Script
 				$vac_rule = '';
 				if ($vacation['text'])
 				{
-					if ($this->extensions['regex'])
+					if ($connection->hasExtension('regex'))
 					{
 						$vac_rule .= "if header :regex " . '"X-Spam-Status" ' . '"\\\\bYES\\\\b"' . "{\n\tstop;\n}\n"; //stop vacation reply if it is spam
 						$regexused = 1;
@@ -484,9 +508,9 @@ class Script
 						$vac_rule .= "\tredirect \"" . trim($addr) . "\";\n";
 					}
 					// if there is no other action e.g. fileinto before, we need to add an explicit keep, as the implicit on is canceled by the vaction redirect!
-					if ($this->extensions['variables']) $vac_rule .= "\tif string :is \"\${action}\" \"inbox\" {\n";
+					if ($connection->hasExtension('variables')) $vac_rule .= "\tif string :is \"\${action}\" \"inbox\" {\n";
 					$vac_rule .= "\t\tkeep;\n";
-					if ($this->extensions['variables']) $vac_rule .= "\t}\n";
+					if ($connection->hasExtension('variables')) $vac_rule .= "\t}\n";
 					$vac_rule .= "}\n";
 				}
 				if (!isset($vacation['modus']) || $vacation['modus'] !== 'store')
@@ -527,7 +551,7 @@ class Script
 				{
 					$vac_rule .= "discard;\n";
 				}
-				if ($vacation['status'] === 'by_date' && $this->extensions['date'] && $vacation['start_date'] && $vacation['end_date'])
+				if ($vacation['status'] === 'by_date' && $connection->hasExtension('date') && $vacation['start_date'] && $vacation['end_date'])
 				{
 					$vac_rule = "if allof (\n".
 					"currentdate :value \"ge\" \"date\" \"". date('Y-m-d', $vacation['start_date']) ."\",\n".
@@ -549,10 +573,10 @@ class Script
 
 			// format notification body
 			$egw_site_title = $GLOBALS['egw_info']['server']['site_title'];
-			if ($this->extensions['enotify']==true)
+			if ($connection->hasExtension('enotify')==true)
 			{
 				$notification_body = lang("You have received a new message on the")." {$egw_site_title}";
-				if ($this->extensions['variables'])
+				if ($connection->hasExtension('variables'))
 				{
 					$notification_body .= ", ";
 					$notification_body .= 'From: ${from}';
@@ -595,18 +619,20 @@ class Script
 
 		if ($activerules) {
 			$newscripthead .= "require [\"fileinto\"";
-			if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
+			if ($connection->hasExtension('regex') && $regexused) $newscripthead .= ",\"regex\"";
 			if ($rejectused) $newscripthead .= ",\"reject\"";
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= (string)$this->vacation['days'] === '0' ? ',"vacation-seconds"' : ',"vacation"';
 			}
-			if ($this->extensions['body']) $newscripthead .= ",\"body\"";
-			if ($this->extensions['date']) $newscripthead .= ",\"date\"";
-			if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
-			if ($this->extensions['variables']) $newscripthead .= ",\"variables\"";
-			if ($this->extensions['imap4flags']) $newscripthead .= ",\"imap4flags\"";
+			if ($connection->hasExtension('body')) $newscripthead .= ",\"body\"";
+			if ($connection->hasExtension('date')) $newscripthead .= ",\"date\"";
+			if ($connection->hasExtension('relational')) $newscripthead .= ",\"relational\"";
+			if ($connection->hasExtension('variables')) $newscripthead .= ",\"variables\"";
+			if ($connection->hasExtension('imap4flags')) $newscripthead .= ",\"imap4flags\"";
+			if ($connection->hasExtension('envelope')) $newscripthead .= ",\"envelope\"";
+			if ($connection->hasExtension('editheader')) $newscripthead .= ",\"editheader\"";
 
-			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($this->extensions['enotify']?'e':'').'notify"'.($this->extensions['variables']?',"variables"':''); // Added email notifications
+			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($connection->hasExtension('enotify')?'e':'').'notify"'.($connection->hasExtension('variables')?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
 		} else {
 			// no active rules, but might still have an active vacation rule
@@ -614,10 +640,10 @@ class Script
 			if ($this->vacation)
 			{
 				$newscripthead .= 'require['.((string)$this->vacation['days'] === '0' ? '"vacation-seconds"' : '"vacation"');
-				if ($this->extensions['variables']) $newscripthead .= ',"variables"';
-				if ($this->extensions['regex'] && $regexused) $newscripthead .= ",\"regex\"";
-				if ($this->extensions['date']) $newscripthead .= ",\"date\"";
-				if ($this->extensions['relational']) $newscripthead .= ",\"relational\"";
+				if ($connection->hasExtension('variables')) $newscripthead .= ',"variables"';
+				if ($connection->hasExtension('regex') && $regexused) $newscripthead .= ",\"regex\"";
+				if ($connection->hasExtension('date')) $newscripthead .= ",\"date\"";
+				if ($connection->hasExtension('relational')) $newscripthead .= ",\"relational\"";
 
 				$closeRequired=true;
 			}
@@ -625,11 +651,11 @@ class Script
 			{
 				if ($this->vacation && $vacation_active)
 				{
-					$newscripthead .= ",\"".($this->extensions['enotify']?'e':'')."notify\"".($this->extensions['variables']?',"variables"':'')."];\n\n"; // Added email notifications
+					$newscripthead .= ",\"".($connection->hasExtension('enotify')?'e':'')."notify\"".($connection->hasExtension('variables')?',"variables"':'')."];\n\n"; // Added email notifications
 				}
 				else
 				{
-					$newscripthead .= "require [\"".($this->extensions['enotify']?'e':'')."notify\"".($this->extensions['variables']?',"variables"':'')."];\n\n"; // Added email notifications
+					$newscripthead .= "require [\"".($connection->hasExtension('enotify')?'e':'')."notify\"".($connection->hasExtension('variables')?',"variables"':'')."];\n\n"; // Added email notifications
 				}
 			}
 			if ($closeRequired) $newscripthead .= "];\n\n";
@@ -652,7 +678,7 @@ class Script
 				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" .
 				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" .
 				$rule['action_arg'] . "&&" . $rule['flg'] . "&&" . addslashes($rule['field']) . "&&" . addslashes($rule['field_val']) . "&&" . $rule['size'];
-				if ($this->extensions['body'] && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
+				if ($connection->hasExtension('body') && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
 				$newscriptfoot .= "\n";
 				$pcount = $pcount+2;
 				//error_log(__CLASS__."::".__METHOD__.__LINE__.array2string($newscriptfoot));
@@ -704,7 +730,7 @@ class Script
 				throw $e;
 			}
 			$this->errstr = 'updateScript: putscript failed: ' . $e->getMessage().($e->details?': '.$e->details:'');
-			if ($regexused && !$this->extensions['regex']) $this->errstr .= " REGEX is not an supported CAPABILITY";
+			if ($regexused && !$connection->hasExtension('regex')) $this->errstr .= " REGEX is not an supported CAPABILITY";
 			error_log(__METHOD__.__LINE__.' # Error: ->'.$this->errstr);
 			error_log(__METHOD__.__LINE__.' # ScriptName:'.$this->name.' Script:'.$newscript);
 			error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);

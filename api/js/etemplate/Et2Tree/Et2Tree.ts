@@ -940,14 +940,6 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		{
 			this.selectedNodes = event.detail.selection
 		}*/
-		if(typeof this.onclick == "function")
-		{
-			// wait for the update, so app founds DOM in the expected state
-			this._tree.updateComplete.then(() =>
-			{
-				this.onclick(nodes[0].id, this, event.detail.previous)
-			});
-		}
 	}
 
 	protected async finishedLazyLoading()

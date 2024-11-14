@@ -269,9 +269,11 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 				const initial = firstTab.hasAttribute("active");
 				firstTab.setAttribute("active", '');
 				const tabHeight = getComputedStyle(firstTab).height;
-				if (parseInt(maxHeight) > 50 && parseInt(maxHeight) < parseInt(tabHeight))
+				if (parseInt(maxHeight) > 50 && parseInt(maxHeight) < parseInt(tabHeight)) //there was a reasonable max height set
 				{
 					this.tabHeight = maxHeight;
+				} else if(maxHeight != '0px'){ //max height was set but is unreasonable small
+					this.tabHeight = '86vh' // use most of available space, but not all so Tabbox header fits too, and does not need second scrollbar
 				} else
 				{
 					this.tabHeight = tabHeight;
