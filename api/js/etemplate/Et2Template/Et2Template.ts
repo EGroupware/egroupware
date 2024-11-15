@@ -366,7 +366,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		// Ask the server for the template
 		if(!xml)
 		{
-			let templates = await et2_loadXMLFromURL(this.getUrl(), null, this, this.loadFailed);
+			let templates = await this.loadFromFile(this.getUrl());
 
 			// Scan the file for templates and store them
 			let fallback;
@@ -393,6 +393,19 @@ export class Et2Template extends Et2Widget(LitElement)
 		return xml;
 	}
 
+	/**
+	 * Load the xml from the given file
+	 *
+	 * Broken out here so it can be stubbed for testing
+	 *
+	 * @param path
+	 * @returns {Promise<Element | void>}
+	 * @protected
+	 */
+	protected loadFromFile(path)
+	{
+		return et2_loadXMLFromURL(path, null, this, this.loadFailed);
+	}
 	/**
 	 * The template has been loaded, wait for child widgets to be complete.
 	 *
