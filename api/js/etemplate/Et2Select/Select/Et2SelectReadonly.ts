@@ -458,6 +458,10 @@ export class Et2SelectDayOfWeekReadonly extends Et2StaticSelectMixin(Et2SelectRe
 
 	getValueAsArray()
 	{
+		if (Array.isArray(this.value))
+		{
+			return this.value;
+		}
 		let expanded_value = [];
 		let int_value = parseInt(this.value);
 		let options = this.select_options;
