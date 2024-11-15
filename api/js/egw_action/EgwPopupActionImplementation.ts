@@ -526,7 +526,8 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-        if (this.auto_paste && !window.egwIsMobile()&& !this._context.event.type.match(/touch/)) {
+		if(this.auto_paste && !window.egwIsMobile() && !this._context.event?.type.match(/touch/))
+		{
             this._addCopyPaste(_links, _selected);
         }
 

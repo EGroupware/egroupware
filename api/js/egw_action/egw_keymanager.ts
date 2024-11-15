@@ -139,7 +139,10 @@ ready(() => {//waits for DOM ready
 window.addEventListener("contextmenu", function(event)
 {
 	// Check for actual key press
-	if (!(event.originalEvent.x == 1 && event.originalEvent.y == 1)) return true;
+	if(!(event.x == 1 && event.y == 1))
+	{
+		return true;
+	}
 	if (!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
 	{
 		// If the key handler successfully passed the key event to some
