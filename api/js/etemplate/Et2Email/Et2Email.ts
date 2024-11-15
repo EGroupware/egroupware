@@ -1261,11 +1261,12 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	{
 		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
 		const value = (<string>option.value).replaceAll(" ", "___");
+		const isMobile = typeof egwIsMobile == "function" ? egwIsMobile() : false
 		return html`
             <sl-option
                     part="option"
                     exportparts="prefix:tag__prefix, suffix:tag__suffix, image"
-                    title="${!egwIsMobile() && option.title ? (this.noLang ? option.title : this.egw().lang(option.title)) : nothing}"
+                    title="${!isMobile && option.title ? (this.noLang ? option.title : this.egw().lang(option.title)) : nothing}"
                     class=${classMap({
                         ...classes
                     })}
