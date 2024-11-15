@@ -23,7 +23,7 @@ import styles from "./Et2Tree.styles";
 
 export type TreeItemData = SelectOption & {
 	focused?: boolean;
-	// Has children, but they may not be provided in item
+	// Has children, but they may not be provided in children (lazy loaded)
 	child: Boolean | 1,
 	data?: Object,//{sieve:true,...} or {acl:true} or other
 	//this is coming from SelectOption
@@ -989,8 +989,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		//fallback to try and set icon if everything else failed
 		if (!img) img = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
 
-		// lazy iff "child" is set and "item" is empty or item does not exist in the first place
-		const lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item)
+		// lazy iff "child" is set and "children" is empty or children does not exist in the first place
+		const lazy = typeof selectOption.item !== "undefined" ?
+					 (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item) :
+					 (selectOption.children?.length == 0 && selectOption.child);
 		const value = selectOption.value ?? selectOption.id;
 		if(expandState && this.autoloading && lazy)
 		{
