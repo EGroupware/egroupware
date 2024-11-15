@@ -55,13 +55,18 @@ export class EgwDragDropShoelaceTree extends egwActionObjectInterface{
 				n.classList.remove("draggedOver", "drop-hover");
 			});
 			target.target.classList.add("draggedOver", "drop-hover");
-			this.timeouts[target.target.id] = setTimeout(() =>
+
+			// Open nodes with children after a wait
+			if(target.target.hasAttribute("lazy") || target.target.querySelector(target.target.nodeName))
 			{
-				if(target.target.classList.contains("draggedOver"))
+				this.timeouts[target.target.id] = setTimeout(() =>
 				{
-					(<SlTreeItem>target.target).expanded = true
-				}
-			}, EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT)
+					if(target.target.classList.contains("draggedOver"))
+					{
+						(<SlTreeItem>target.target).expanded = true
+					}
+				}, EXPAND_FOLDER_ON_DRAG_DROP_TIMEOUT)
+			}
 		}
 		else if(egw_event == EGW_AI_DRAG_OUT)
 		{
