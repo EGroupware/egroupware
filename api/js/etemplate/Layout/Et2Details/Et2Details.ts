@@ -23,10 +23,10 @@ export class Et2Details extends Et2Widget(SlDetails)
 			...super.styles,
 			shoelace,
 			css`
-            :host {
+			:host {
 				display: block;
-            }
-            
+			}
+			
 			:host([align="right"]) > div {
 				justify-content: flex-end;
 			}
@@ -34,31 +34,31 @@ export class Et2Details extends Et2Widget(SlDetails)
 				justify-content: flex-start;
 			}
 			/* CSS for child elements */
-            ::slotted(*) {
-            	flex: 1 1 auto;
-            }
-            ::slotted(img),::slotted(et2-image) {
-            	/* Stop images from growing.  In general we want them to stay */
-            	flex-grow: 0;
-            }
+			::slotted(*) {
+				flex: 1 1 auto;
+			}
+			::slotted(img),::slotted(et2-image) {
+				/* Stop images from growing.  In general we want them to stay */
+				flex-grow: 0;
+			}
 			::slotted([align="left"]) {
-            	margin-right: auto;
-            	order: -1;
-            }
-            ::slotted([align="right"]) {
-            	margin-left: auto;
-            	order: 1;
-            }
+				margin-right: auto;
+				order: -1;
+			}
+			::slotted([align="right"]) {
+				margin-left: auto;
+				order: 1;
+			}
 
-				.details {
-					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-					margin: 0px;
-				}
+			.details {
+				border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+				margin: 0px;
+			}
 			.details.hoist {
 				position: relative;
 			}
 
-				.details.hoist .details__body {
+			.details.hoist .details__body {
 				position: absolute;
 				z-index: var(--sl-z-index-drawer);
 				background: var(--sl-color-neutral-0);
