@@ -80,16 +80,16 @@ export class Et2Url extends Et2InvokerMixin(Et2Textbox)
 	 */
 	_oldChange(_ev: Event): boolean
 	{
-		const value = this.modelValue;
+		const value = this.value;
 		if (typeof this.trailingSlash !== 'undefined' && value && this.trailingSlash !== (value.substr(-1)==='/'))
 		{
 			if (!this.trailingSlash)
 			{
-				this.modelValue = value.replace(/\/+$/, '');
+				this.value = value.replace(/\/+$/, '');
 			}
 			else
 			{
-				this.modelValue += '/';
+				this.value += '/';
 			}
 		}
 		return super._oldChange(_ev);
