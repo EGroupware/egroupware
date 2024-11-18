@@ -499,11 +499,11 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 			 * eg:
 			if(this.multiple && typeof this.value !== "undefined")
 			{
-				this.value = this.selectedResults.map(el => el.value);
+				this.value.splice(0, this.value.length, ...this.selectedResults.map(el => el.value));
 			}
 			else if (typeof this.value !== "undefined")
 			{
-				this.value = [this.selectedResults[0]?.value] ?? [];
+				this.value.splice(0,this.value.length, ...(this.selectedResults[0]?.value ?? []));
 			}
 			// Dispatch the change event
 			this.updateComplete.then(() =>
