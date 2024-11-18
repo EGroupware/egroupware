@@ -720,7 +720,8 @@ class Sql extends Api\Storage
 		if (!empty($filter['account_id']) && ($not_account_ids = array_search('!', $filter['account_id'])) !== false)
 		{
 			unset($filter['account_id'][$not_account_ids]);
-			$filter[] = $this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]);
+			$filter[] = '('.$this->table_name.'.account_id IS NULL OR '.    // "NULL NOT IN (1, 2)" is false in SQL, need to check it explicit
+				$this->db->expression($this->table_name, ' NOT ', $this->table_name.'.', ['account_id' => $filter['account_id']]).')';
 			unset($filter['account_id']);
 		}
 
