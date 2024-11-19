@@ -39,18 +39,15 @@ export class Et2Groupbox extends Et2Details
                     display: none;
                 }
 
-                details {
+				.details {
 					height: 100%;
                     position: relative;
-                    margin: 2px;
+					display: flex;
+					flex-direction: column;
                 }
 
-				/* work around details not respecting flex
-				height is 100% - header - border radius
-				 */
-
 				.details__body {
-					height: calc(100% - 2em - var(--sl-border-radius-medium)) !important;
+					flex: 1 1 auto;
 					position: relative;
 				}
 
@@ -62,21 +59,15 @@ export class Et2Groupbox extends Et2Details
 				.details__content {
 					overflow: hidden;
 					overflow-y: auto;
-					height: calc(100% - 2 * var(--sl-spacing-medium));
+					height: 100%;
 				}
 
-				/* end workaround */
-
 				summary {
+					flex: 0 0 auto;
                     pointer-events: none;
                 }
 
-                /*.details {
-					border-color: var(--sl-color-neutral-500);
-					border-width: 2px;
-				}*/
-
-                details.summaryOnTop > summary {
+				.details.summaryOnTop > summary {
                     position: absolute;
                     pointer-events: none;
                     width: fit-content;
@@ -86,10 +77,11 @@ export class Et2Groupbox extends Et2Details
                     background: var(--sl-color-neutral-0);
                 }
 
-                details.summaryOnTop {
+				.details.summaryOnTop {
                     padding-top: .5rem;
                     margin-top: .5rem;
 					height: auto;
+					overflow: visible;
                 }
 			`,
 		];
@@ -106,7 +98,7 @@ export class Et2Groupbox extends Et2Details
 	{
 		super.firstUpdated(changedProperties);
 
-		this.shadowRoot.querySelector('details').classList.toggle('summaryOnTop', !this.summaryInside);
+		this.shadowRoot.querySelector('.details').classList.toggle('summaryOnTop', !this.summaryInside);
 	}
 
 	/**
@@ -121,7 +113,7 @@ export class Et2Groupbox extends Et2Details
 
 		if (changedProperties.has('summaryInside'))
 		{
-			this.shadowRoot.querySelector('details').classList.toggle('summaryOnTop', !this.summaryInside);
+			this.shadowRoot.querySelector('.details').classList.toggle('summaryOnTop', !this.summaryInside);
 		}
 	}
 }
