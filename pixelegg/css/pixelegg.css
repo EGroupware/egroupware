@@ -6053,8 +6053,9 @@ table.egwGridView_grid img {
   height: 16px;
 }
 table.egwGridView_grid et2-image {
-  width: 16px;
-  font-size: 16px;
+  width: 1em;
+  font-size: 1.5em;
+  display: flex;
 }
 table.egwGridView_grid tbody {
   border-bottom: 1px solid #000000;
