@@ -952,7 +952,7 @@ user csv import	admin	en	User CSV import
 user data	common	en	User data
 user for smtp-authentication (leave it empty if no auth required)	admin	en	User for SMTP authentication. Leave it empty if no authentication is required.
 user groups	admin	en	User groups
-user hidden vom non-admins.	admin	en	User hidden vom non-admins.
+user hidden from non-admins.	admin	en	User hidden from non-admins.
 user-agent	admin	en	User-Agent
 userdata	admin	en	User data
 userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain
