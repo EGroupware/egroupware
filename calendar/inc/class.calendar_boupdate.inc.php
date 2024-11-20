@@ -3338,9 +3338,20 @@ class calendar_boupdate extends calendar_bo
 				$preferences = new Api\Preferences($event['owner']);
 			}
 			$part_prefs = $preferences->read_repository();
-			switch($part_prefs['calendar']['reset_stati'])
+			$reset_pref = !str_starts_with($uid, 'r') ? 'reset_stati' : 'reset_resource_status';
+			switch($part_prefs['calendar'][$reset_pref])
 			{
 				case 'no':
+					break;
+				case 'unavailable':
+					// Check new time, see if resource is available
+					static $resource_bo = new resources_bo();
+					$available = $resource_bo->checkUseable(substr($uid, 1), $event['start'], $event['end']);
+					if(!$available['useable'] || $available['useable'] < $q)
+					{
+						$status_reset = true;
+						$event['participants'][$uid] = calendar_so::combine_status('U', $q, $r);
+					}
 					break;
 				case 'startday':
 					if($sameday)
