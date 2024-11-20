@@ -2270,6 +2270,7 @@ class calendar_bo
 			'info_startdate' => $calendar['range_start'],
 			//'info_enddate' => $calendar['range_end'] ? $calendar['range_end'] : $calendar['uid']
 			'info_contact'   => 'calendar:'.$data['id'],
+			'info_responsible' => array_keys($calendar['participant_types']['u'] ?? [])
 		);
 
 		unset($content['id']);
