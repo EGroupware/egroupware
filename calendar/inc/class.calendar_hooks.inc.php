@@ -235,6 +235,9 @@ class calendar_hooks
 			'all'		=> lang('Always'),
 			'startday'	=> lang('If start day differs'),
 		);
+		$reset_resource_stati_on_shifts = array_merge($reset_stati_on_shifts, array(
+			'unavailable' => lang("If resource is unavailable"),
+		));
 		$freebusy_values = array(
 			0		=> lang('No'),
 			1		=> lang('Yes'),
@@ -454,6 +457,16 @@ class calendar_hooks
 				'default' => 'all',
 				'xmlrpc' => True,
 				'admin'  => False,
+			),
+			'reset_resource_status' => array(
+				'type'    => 'select',
+				'label'   => 'Reset resource status on event shifts',
+				'name'    => 'reset_resource_status',
+				'help'    => 'Select whether you want the resource status reset to unknown, if an event is shifted later on.',
+				'values'  => $reset_resource_stati_on_shifts,
+				'default' => 'all',
+				'xmlrpc'  => True,
+				'admin'   => False,
 			),
 			'no_category_custom_color' => array(
 				'type' => 'color',

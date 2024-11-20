@@ -24,6 +24,9 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	// Method under test with modified access
 	private $check_method = null;
 
+	// Events that need deleting
+	protected $event_ids = [];
+
 	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
@@ -49,6 +52,12 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 
 	protected function tearDown() : void
 	{
+		foreach($this->event_ids as $event_id)
+		{
+			$this->bo->delete($event_id, 0, true);
+			// Once again if keep deleted is on
+			$this->bo->delete($event_id, 0, true);
+		}
 
 		// Clean up user
 		$GLOBALS['egw']->accounts->delete($this->account_id);
@@ -107,7 +116,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			'account' => $this->account_id,
 			'pref' => 'user',
 			'app' => 'calendar',
-			'set' => array('reset_stati' => 'startday')
+			'set' => array('reset_stati' => 'startday', 'reset_resource_status', 'startday')
 		);
 		$pref_command = new \admin_cmd_edit_preferences($pref);
 		$pref_command->run();
@@ -124,9 +133,9 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 				// Current user, no change
 				$this->assertEquals($participant[$id], $status, "Participant $id was changed");
 			}
-			if(is_int($id))
+			if(is_int($id) || str_starts_with($id, 'c'))
 			{
-				// Users respect preference, in this case no change
+				// Users & resources respect preference, in this case no change
 				$this->assertEquals($participant[$id], $status, "Participant $id was changed");
 			}
 			else
@@ -161,7 +170,7 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			'account' => $this->account_id,
 			'pref' => 'user',
 			'app' => 'calendar',
-			'set' => array('reset_stati' => $change_preference)
+			'set' => array('reset_stati' => $change_preference, 'reset_resource_status' => $change_preference)
 		);
 		$pref_command = new \admin_cmd_edit_preferences($pref);
 		$pref_command->run();
@@ -189,6 +198,51 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 				$this->assertEquals('U', $event['participants'][$this->account_id][0]);
 				break;
 		}
+	}
+
+
+	/**
+	 * Test that moving the event to a different day resets or keeps status for
+	 * resources according to if the resource is available for the new time.
+	 * Other preference options are tested by testChangeUsesPreference.
+	 */
+	public function testResourceAvailability()
+	{
+		// Get test event
+		$event = $old_event = $this->get_event();
+		$participant = $event['participants'] = $old_event['participants'] = array(
+			'r1' => 'A1',
+			'r2' => 'A1',
+		);
+
+		// Set a conflict on r2 - need a real event in the DB
+		$conflict = $this->get_event();
+		$conflict['start'] += 24 * 3600;
+		$conflict['end'] += 24 * 3600;
+		$conflict['participants']['r2'] = 'A1';
+
+		$this->event_ids[] = $this->bo->save($conflict);
+
+		// Set preference
+		$pref = array(
+			'account' => $event['owner'],
+			'pref'    => 'user',
+			'app'     => 'calendar',
+			'set'     => array('reset_resource_status' => 'unavailable')
+		);
+		$pref_command = new \admin_cmd_edit_preferences($pref);
+		$pref_command->run();
+
+		// Forward 1 day
+		$event['start'] += 24 * 3600;
+		$event['end'] += 24 * 3600;
+
+		// Check & reset status
+		$reset = $this->check_method->invokeArgs($this->bo, array(&$event, $old_event));
+
+		$this->assertTrue($reset, "Resource status was not reset");
+		$this->assertEquals($event['participants']['r1'], 'A1', "Resource status was changed");
+		$this->assertEquals($event['participants']['r2'], 'U', "Resource status was not changed, should have been reset");
 	}
 
 	protected function get_event()
@@ -244,6 +298,18 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 			array('no'), // Never change status
 			array('all'),// Always change status
 			array('startday') // Change status of start date changes
+		);
+	}
+
+	/**
+	 * Different values for the status change on event change preference
+	 *
+	 * @see calendar_hooks::settings()
+	 */
+	public function resouceStatusPreferenceProvider()
+	{
+		return array(
+			array('unavailable') // Change status if resouce is unavailable
 		);
 	}
 
