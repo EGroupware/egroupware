@@ -362,7 +362,7 @@ class Image
 		'projectmanager/milestone'	=> 'check2-circle',
 		'projectmanager/pricelist'	=> 'currency-euro',
 		'status/videoconference'	=> 'camera-video',
-		'status/videoconference_call'	=> 'camera-video-off',
+		'status/videoconference_call'	=> 'camera-video',
 		'status/videoconference_join'	=> 'node-plus',
 		'timesheet/pause'	=> 'pause-fill',
 		'timesheet/pause-orange'	=> 'pause-fill',
