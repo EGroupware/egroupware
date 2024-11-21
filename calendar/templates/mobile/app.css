@@ -2851,7 +2851,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   }
   #calendar-toolbar .nm-mob-header {
     width: 100%;
-    position: absolute;
     display: inline-block;
     z-index: 100;
   }
@@ -2875,7 +2874,7 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   #calendar-toolbar .nm-mob-header #calendar-toolbar_toolbar .et2_toolbar_more {
     min-width: 30px;
   }
-  span#calendar-view_header_dateIndicator {
+  #calendar-view_header_dateIndicator {
     display: block;
     text-align: center;
     padding: 4px;
