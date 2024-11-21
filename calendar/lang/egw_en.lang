@@ -320,6 +320,7 @@ ical export	calendar	en	iCal export
 ical file	calendar	en	iCal file
 ical import	calendar	en	iCal import
 ical successful imported	calendar	en	iCal successful imported.
+if resource is unavailable	calendar	en	If resource is unavailable
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
@@ -508,6 +509,7 @@ requested meeting is in the past!	calendar	en	Requested meeting is in the past!
 require an acl grant to invite other users and groups	admin	en	Require an ACL grant to invite other users and groups
 required information (start, end, title, ...) missing!	calendar	en	Required information (start, end, title, ...) missing!
 reset	calendar	en	Reset
+reset resource status on event shifts	calendar	en	Reset resource status on event shifts
 reset participant stati on event shifts	calendar	en	Reset participant status on event shifts
 resources	calendar	en	Resources
 resources except conflicting ones	calendar	en	Resources except conflicting ones
@@ -528,6 +530,7 @@ select a time	calendar	en	Select a time
 select multiple contacts for a further action	calendar	en	Select multiple contacts for a further action
 select resources	calendar	en	Select resources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	en	Select whether you want the participant status reset to unknown, if an event is shifted later on. For externals we always reset participant status to unknown.
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	en	Select whether you want the resource status reset to unknown, if an event is shifted later on.
 select who should get the alarm	calendar	en	Select who should get the alarm
 selected range	calendar	en	Selected range
 selected users/groups	calendar	en	Selected users/groups
