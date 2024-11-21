@@ -51,10 +51,10 @@
 				</row>
 				<row class="toolbox">
 					<et2-hbox>
-						<et2-button  id="button[edit]" label="open" image="edit" onclick="app.addressbook.view_actions"></et2-button>
-						<et2-button  id="button[copy]" label="copy" image="copy" onclick="app.addressbook.view_actions"></et2-button>
+						<et2-button  id="button[edit]" statustext="open" image="edit" onclick="app.addressbook.view_actions"></et2-button>
+						<et2-button  id="button[copy]" statustext="copy" image="copy" onclick="app.addressbook.view_actions"></et2-button>
 						<et2-button  id="button[close]" statustext="close" readonly="false" image="close" onclick="app.addressbook.view_actions"></et2-button>
-						<et2-button  id="button[delete]" label="delete" image="delete" onclick="app.addressbook.view_actions" noSubmit="true"></et2-button>
+						<et2-button  id="button[delete]" statustext="delete" image="delete" onclick="app.addressbook.view_actions" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 			</rows>
