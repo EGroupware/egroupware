@@ -463,68 +463,42 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 		this.actionbox[0].classList.add(`et2_toolbar_dropzone_more${this.id}`);
 
 		this.actions = actions;
-		let dragPosition = {x:0,y:0};
-		let dragTranslate = {x:0, y:0};
-		let draggables = this.getDOMNode().querySelectorAll(`.et2_toolbar_draggable${this.id}`);
-		draggables.forEach(_item => {
-			interact(_item).draggable({
-				startAxis: 'xy',
-				listeners: {
-					start: function(e)
-					{
-						dragPosition = {x:e.page.x, y:e.page.y};
-						e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
-						e.target.style.position = 'fixed';
-						e.target.style.transform =
-							`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
-					},
-					move : function(e)
-					{
-						dragTranslate.x += e.delta.x;
-						dragTranslate.y += e.delta.y;
-						e.target.style.transform =
-							`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
-					},
-					end : function (e)
-					{
-						that._build_menu(that.actions);
+
+		if(!egwIsMobile())
+		{
+			let dragPosition = {x: 0, y: 0};
+			let dragTranslate = {x: 0, y: 0};
+			let draggables = this.getDOMNode().querySelectorAll(`.et2_toolbar_draggable${this.id}`);
+			draggables.forEach(_item =>
+			{
+				interact(_item).draggable({
+					startAxis: 'xy',
+					listeners: {
+						start: function(e)
+						{
+							dragPosition = {x: e.page.x, y: e.page.y};
+							e.target.setAttribute('style', `width:${e.target.clientWidth}px !important`);
+							e.target.style.position = 'fixed';
+							e.target.style.transform =
+								`translate(${dragPosition.x}px, ${dragPosition.y}px)`;
+						},
+						move: function(e)
+						{
+							dragTranslate.x += e.delta.x;
+							dragTranslate.y += e.delta.y;
+							e.target.style.transform =
+								`translate(${dragTranslate.x}px, ${dragTranslate.y}px)`;
+						},
+						end: function(e)
+						{
+							that._build_menu(that.actions);
+						}
 					}
-				}
+				});
 			});
-		});
-		interact(`.et2_toolbar_dropzone_list${this.id}`).unset();
-		interact(`.et2_toolbar_dropzone_list${this.id}`).dropzone({
-			checker: function (
-				dragEvent,         // related dragmove or dragend
-				event,             // Touch, Pointer or Mouse Event
-				dropped,           // bool default checker result
-				dropzone,          // dropzone Interactable
-				dropzoneElement,   // dropzone element
-				draggable,         // draggable Interactable
-				draggableElement   // draggable element
-			) {
-				return dropped && !dropzoneElement.contains(draggableElement);
-			},
-			accept: `.et2_toolbar_draggable${this.id}`,
-			ondrop: function(e)
-			{
-				that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), false);
-				that._build_menu(that.actions);
-			},
-			ondragenter: function(e)
-			{
-				e.target.classList.add('et2_dropZone');
-			},
-			ondragleave: function(e)
-			{
-				e.target.classList.remove('et2_dropZone');
-			}
-		});
-		const menulist = [`.et2_toolbar_dropzone_more${this.id}`, `#${this.id}-menulist`];
-		menulist.forEach(_item => {
-			interact(_item).unset();
-			interact(_item).dropzone({
-				checker: function (
+			interact(`.et2_toolbar_dropzone_list${this.id}`).unset();
+			interact(`.et2_toolbar_dropzone_list${this.id}`).dropzone({
+				checker: function(
 					dragEvent,         // related dragmove or dragend
 					event,             // Touch, Pointer or Mouse Event
 					dropped,           // bool default checker result
@@ -532,20 +506,14 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					dropzoneElement,   // dropzone element
 					draggable,         // draggable Interactable
 					draggableElement   // draggable element
-				) {
-					console.log(dragEvent);
-
+				)
+				{
 					return dropped && !dropzoneElement.contains(draggableElement);
 				},
 				accept: `.et2_toolbar_draggable${this.id}`,
 				ondrop: function(e)
 				{
-					that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), true);
-					if (that.actionlist.find(`.et2_toolbar_draggable${that.id}`).length == 0)
-					{
-						that.preference = {};
-						egw.set_preference(that.options.preference_app,that.options.preference_id,that.preference);
-					}
+					that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), false);
 					that._build_menu(that.actions);
 				},
 				ondragenter: function(e)
@@ -557,7 +525,47 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 					e.target.classList.remove('et2_dropZone');
 				}
 			});
-		});
+			const menulist = [`.et2_toolbar_dropzone_more${this.id}`, `#${this.id}-menulist`];
+			menulist.forEach(_item =>
+			{
+				interact(_item).unset();
+				interact(_item).dropzone({
+					checker: function(
+						dragEvent,         // related dragmove or dragend
+						event,             // Touch, Pointer or Mouse Event
+						dropped,           // bool default checker result
+						dropzone,          // dropzone Interactable
+						dropzoneElement,   // dropzone element
+						draggable,         // draggable Interactable
+						draggableElement   // draggable element
+					)
+					{
+						console.log(dragEvent);
+
+						return dropped && !dropzoneElement.contains(draggableElement);
+					},
+					accept: `.et2_toolbar_draggable${this.id}`,
+					ondrop: function(e)
+					{
+						that.set_prefered(e.draggable.target.id.replace(that.id + '-', ''), true);
+						if(that.actionlist.find(`.et2_toolbar_draggable${that.id}`).length == 0)
+						{
+							that.preference = {};
+							egw.set_preference(that.options.preference_app, that.options.preference_id, that.preference);
+						}
+						that._build_menu(that.actions);
+					},
+					ondragenter: function(e)
+					{
+						e.target.classList.add('et2_dropZone');
+					},
+					ondragleave: function(e)
+					{
+						e.target.classList.remove('et2_dropZone');
+					}
+				});
+			});
+		}
 
 		toolbox.on('toggle', (e)=>{
 			const details = <HTMLDetailsElement>e.target;
