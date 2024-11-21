@@ -3492,6 +3492,7 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 				{
 					if (self.nextmatch.getDOMNode().getElementsByClassName('selected').length>0)
 					{
+						e.stopPropagation();
 						self.nextmatch.getDOMNode().getElementsByClassName('selected')[0].dispatchEvent(new CustomEvent("tapandhold",{type:'tapandhold'}));
 					}
 				})
