@@ -40,6 +40,11 @@ function fakedTemplate(template_text)
 
 const SIMPLE_EMPTY = `<overlay><template id="simple.empty"></template></overlay>`;
 const TEMPLATE_ATTRIBUTES = `<overlay><template id="attributes" class="gotClass" slot="gotSlot"></template></overlay>`;
+const MULTIPLE = `<overlay>
+	<template id="multiple.one" class="one"/>
+	<template id="multiple.two" class="two"/>
+	<template id="multiple" class="multiple"></template>
+	</overlay>`;
 
 // Pre-fill cache
 Et2Template.templateCache["simple.empty"] = <Element>fakedTemplate(SIMPLE_EMPTY).childNodes.item(0);
@@ -126,5 +131,25 @@ describe("Loading", () =>
 		assert.isTrue(element.classList.contains("gotClass"), "Did not get class from template");
 		assert.isTrue(element.hasAttribute("slot"), "Did not get slot from template");
 		assert.equal(element.getAttribute("slot"), "gotSlot", "Did not get slot from template");
+	});
+	it("loads last template in file when it has no template", async() =>
+	{
+		// Stub the url to point to the fixture
+		let xml = fakedTemplate(MULTIPLE);
+
+		// @ts-ignore
+		sinon.stub(element, "loadFromFile").returns(xml);
+
+		const listener = oneEvent(element, "load");
+
+		// We don't set the template, just give the URL
+		element.url = "load a file that has several template"
+
+		// Wait for load & load event
+		await element.updateComplete;
+		const loadEvent = await listener;
+
+		assert.exists(loadEvent);
+		assert.isTrue(element.classList.contains("multiple"));
 	});
 });

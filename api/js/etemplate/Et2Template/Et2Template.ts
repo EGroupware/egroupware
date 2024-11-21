@@ -17,7 +17,6 @@ import {Et2InputWidgetInterface} from "../Et2InputWidget/Et2InputWidget";
 import type {IegwAppLocal} from "../../jsapi/egw_global";
 import {until} from "lit/directives/until.js";
 import {classMap} from "lit/directives/class-map.js";
-import {et2_arrayMgr} from "../et2_core_arrayMgr";
 
 // @ts-ignore
 /**
@@ -284,7 +283,8 @@ export class Et2Template extends Et2Widget(LitElement)
 
 		if(typeof newContent != "undefined")
 		{
-			this.setArrayMgr("content", new et2_arrayMgr(newContent));
+			// @ts-ignore ArrayMgr still expects et2_widgets
+			this.setArrayMgr("content", this.getArrayMgr("content").openPerspective(this, newContent));
 		}
 		this.__isLoading = true;
 		this.loading = new Promise(async(resolve, reject) =>
