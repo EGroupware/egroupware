@@ -9,7 +9,8 @@ export default css`
 
 	::part(expand-button) {
 		rotate: none;
-		padding: 0 var(--sl-spacing-small);
+		padding: 0 5px 0 10em;
+        margin: 0 0 0 -10em;
 	}
 
 	/* Stop icon from shrinking if there's not enough space */
