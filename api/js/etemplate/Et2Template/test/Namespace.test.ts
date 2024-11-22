@@ -53,7 +53,7 @@ describe("Namespaces", () =>
 {
 	// Setup run before each test
 	beforeEach(before);
-	it("Does not create a namespace with no 'content'", async() =>
+	it("Does not create a namespace with no 'content' attribute", async() =>
 	{
 		const listener = oneEvent(element, "load");
 		element.setArrayMgr("content", new et2_arrayMgr({
@@ -67,12 +67,12 @@ describe("Namespaces", () =>
 		await element.updateComplete;
 		const loadEvent = await listener;
 
-		const staticElement = element.querySelector(":scope > *:first-of-type");
+		const staticElement : HTMLElement = element.querySelector(":scope > *:first-of-type");
 		assert.isNotNull(staticElement, "Did not find test element");
 		assert.equal(staticElement.getAttribute("id"), "static", "Static child ID was wrong");
 		assert.equal(staticElement.innerText, "Static value");
 
-		const dynamicElement = element.querySelector(":scope > *:last-of-type");
+		const dynamicElement : HTMLElement = element.querySelector(":scope > *:last-of-type");
 		assert.isNotNull(dynamicElement, "Did not find test element");
 		assert.equal(dynamicElement.getAttribute("id"), "test", "Dynamic child ID was wrong");
 		assert.equal(dynamicElement.innerText, "Test");
@@ -101,12 +101,12 @@ describe("Namespaces", () =>
 		await element.updateComplete;
 		const loadEvent = await listener;
 
-		const staticElement = element.querySelector(":scope > *:first-of-type");
+		const staticElement : HTMLElement = element.querySelector(":scope > *:first-of-type");
 		assert.isNotNull(staticElement, "Did not find test element");
 		assert.equal(staticElement.getAttribute("id"), "sub_static", "Child ID was not namespaced");
 		assert.equal(staticElement.innerText, "Static value");
 
-		const dynamicElement = element.querySelector(":scope > *:last-of-type");
+		const dynamicElement : HTMLElement = element.querySelector(":scope > *:last-of-type");
 		assert.isNotNull(dynamicElement, "Did not find test element");
 		assert.notEqual(dynamicElement.getAttribute("id"), "Top level");
 		assert.equal(dynamicElement.innerText, "Namespaced");
@@ -126,11 +126,11 @@ describe("Namespaces", () =>
 		await element.updateComplete;
 		const loadEvent = await listener;
 
-		const staticElement = element.querySelector(":scope > *:first-of-type");
+		const staticElement : HTMLElement = element.querySelector(":scope > *:first-of-type");
 		assert.isNotNull(staticElement, "Did not find test element");
 		assert.equal(staticElement.innerText, "Static value");
 
-		let dynamicElement = element.querySelector(":scope > *:last-of-type");
+		let dynamicElement : HTMLElement = element.querySelector(":scope > *:last-of-type");
 		assert.isNotNull(dynamicElement, "Did not find test element");
 		assert.equal(dynamicElement.innerText, "Test");
 

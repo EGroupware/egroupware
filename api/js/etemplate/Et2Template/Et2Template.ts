@@ -6,7 +6,7 @@
  * @link https://www.egroupware.org
  * @author Nathan Gray
  */
-import {html, LitElement, nothing, PropertyValues} from "lit";
+import {html, LitElement, nothing, PropertyValues, render} from "lit";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import shoelace from "../Styles/shoelace";
 import styles from "./Et2Template.styles";
@@ -101,10 +101,6 @@ export class Et2Template extends Et2Widget(LitElement)
 		if(this.template || this.id || this.url)
 		{
 			this.load();
-		}
-		else
-		{
-			console.info("Not loading template, missing info", this);
 		}
 	}
 
@@ -230,6 +226,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * Set the value for a child widget, specified by the given ID
 	 *
 	 * @param id  string The ID you're searching for
+	 * @param value new value to set
 	 * @throws Error If the widget cannot be found, or it does not have a set_value() function
 	 */
 	setDisabledById(id : string, value : boolean)
@@ -270,11 +267,18 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * node and goes through it, creating widgets.  This is normally called automatically when the
 	 * template is added to the DOM, but if you want to re-load or not put it in the DOM you need to call load() yourself.
 	 *
+	 * If you need to set more than just content (select options, readonly or modifications), set it in the array manager
+	 * before calling load:
+	 * ```
+	 * template.setArrayMgr("readonlys", template.getArrayMgr("readonlys").openPerspective(template, newReadonlys));
+	 * ```
+	 *
 	 * @returns {Promise<void>}
 	 * @protected
 	 */
 	public async load(newContent? : object)
 	{
+		// @ts-ignore can't find disabled, it's in Et2Widget
 		if(this.disabled)
 		{
 			this.loading = Promise.resolve();
@@ -293,7 +297,16 @@ export class Et2Template extends Et2Widget(LitElement)
 			this.clear();
 
 			// Get template XML
-			let xml = await this.findTemplate();
+			let xml : Element;
+			try
+			{
+				xml = await this.findTemplate();
+			}
+			catch(e)
+			{
+				reject(e);
+				return;
+			}
 			// Read the XML structure of the requested template
 			if(typeof xml != 'undefined')
 			{
@@ -330,6 +343,9 @@ export class Et2Template extends Et2Widget(LitElement)
 				composed: true,
 				detail: this
 			}));
+		}).catch(reason =>
+		{
+			this.loadFailed(reason);
 		});
 		return this.loading;
 	}
@@ -366,18 +382,31 @@ export class Et2Template extends Et2Widget(LitElement)
 		// Ask the server for the template
 		if(!xml)
 		{
-			let templates = await this.loadFromFile(this.getUrl());
+			const url = this.getUrl();
+			let templates = <Element>{};
+			try
+			{
+				templates = await this.loadFromFile(url);
+				if(!templates)
+				{
+					throw new Error("No templates found in template file " + url);
+				}
+			}
+			catch(e)
+			{
+				throw new Error("Could not load template file " + url);
+			}
 
 			// Scan the file for templates and store them
 			let fallback;
-			for(let i = 0; i < templates.childNodes.length; i++)
+			for(let i = 0; i < templates.childNodes?.length; i++)
 			{
-				const template = templates.childNodes[i];
+				const template = <Element>templates.childNodes[i];
 				if(!["template", "et2-template"].includes(template.nodeName.toLowerCase()))
 				{
 					continue;
 				}
-				Et2Template.templateCache[template.getAttribute("id")] = template;
+				Et2Template.templateCache[template.getAttribute("id")] = <Element>template;
 				if(template.getAttribute("id") == template_name)
 				{
 					xml = template;
@@ -404,7 +433,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 */
 	protected loadFromFile(path)
 	{
-		return et2_loadXMLFromURL(path, null, this, this.loadFailed);
+		return et2_loadXMLFromURL(path, null, this);
 	}
 	/**
 	 * The template has been loaded, wait for child widgets to be complete.
@@ -457,7 +486,9 @@ export class Et2Template extends Et2Widget(LitElement)
 
 	loadFailed(reason? : any)
 	{
-		this.egw().debug("error", "Loading failed '" + (this.templateName) + "' @ " + this.getUrl() + (reason ? " \n" + reason : ""));
+		const message = (this.templateName) + " @ " + this.getUrl() + (reason ? " \n" + reason : "");
+		render(this.errorTemplate(message), this);
+		this.egw().debug("warn", "Loading failed: " + message);
 	}
 
 	protected getUrl()
@@ -559,6 +590,16 @@ export class Et2Template extends Et2Widget(LitElement)
 
 		return html`
             <div class="template--loading">${loading}</div>`;
+	}
+
+	errorTemplate(errorMessage = "")
+	{
+		return html`
+            <sl-alert variant="warning" open>
+                <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                <strong>Loading failed</strong><br/>
+                ${errorMessage}
+            </sl-alert>`
 	}
 
 	render()
