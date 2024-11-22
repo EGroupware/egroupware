@@ -510,7 +510,7 @@ require an acl grant to invite other users and groups	admin	de	Freigabe um ander
 required information (start, end, title, ...) missing!	calendar	de	Zwingend erforderliche Information (Start, Ende, Titel, ...) fehlen!
 reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen
-reset resource staus on event shifts	calendar	de	Rücksetzen des Ressourcenstatus beim Verschieben von Terminen
+reset resource status on event shifts	calendar	de	Rücksetzen des Ressourcenstatus beim Verschieben von Terminen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit Buchungskonflikt
