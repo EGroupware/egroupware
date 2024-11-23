@@ -1962,7 +1962,13 @@ class calendar_uiforms extends calendar_ui
 		if (!empty($preserved['lock_token'])) $content['lock_token'] = $preserved['lock_token'];
 
 		//Disable videoconference if the module is not enabled
-		$etpl->disableElement('videoconference', calendar_hooks::isVideoconferenceDisabled());
+		$etpl->disableElement('videoconference', $video_disabled=calendar_hooks::isVideoconferenceDisabled());
+
+		// disable mobile Join Videoconference button, if not available or enabled
+		if ($video_disabled || empty($content['id']) || empty($content['##videoconference']))
+		{
+			$readonlys['button[videoconference]'] = true;
+		}
 
 		$content['future_exceptions'] = !empty($content['id']) && !empty($content['recur_type']) &&
 			$this->bo->search(['start' => Api\DateTime::to('now', 'ts')], 'cal_reference='.(int)$content['id']);

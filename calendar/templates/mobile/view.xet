@@ -4,9 +4,8 @@ Egroupware
 @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 @package
 @subpackage
-@link http://www.egroupware.org
+@link https://www.egroupware.org
 @author Nathan Gray
-@version $Id$
 -->
 
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
@@ -21,7 +20,7 @@ Egroupware
 			<rows>
 				<row class="view_row">
 					<calendar-timegrid id="${row}"
-						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);let s = widget.getInstanceManager().app_obj.calendar.state;let d = new Date(s.date);import(egw.link('/api/js/etemplate/lib/date.js')).then((m)=>{widget.getInstanceManager().widgetContainer.getWidgetById('header_dateIndicator').set_value((s.view == 'day'?date('d', d)+'-':'')+egw.lang(date('M',d))+'-'+date('Y',d));});"
+						onchange="var state = {}; if(widget.options.start_date == widget.options.end_date) state.view = 'day'; app.calendar.update_state(state);let s = widget.getInstanceManager().app_obj.calendar.state;let d = new Date(s.date); import(egw.link('/api/js/etemplate/lib/date.js')).then((m)=>{const date=m.date; widget.getInstanceManager().widgetContainer.getWidgetById('header_dateIndicator').set_value((s.view == 'day'?date('d', d)+'-':'')+egw.lang(date('M',d))+'-'+date('Y',d));});"
 						onevent_change="app.calendar.event_change"
 					>
 					</calendar-timegrid>

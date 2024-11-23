@@ -195,6 +195,8 @@
 						<et2-button-icon  statustext="Find free timeslots where the selected participants are available for the given timespan"
 							id="freetime" label="Freetime" onclick="app.calendar.freetime_search" image="clock-history" noSubmit="true"></et2-button-icon>
                         <et2-button-toggle label="notifications" id="no_notifications" class="notification_check" onIcon="bell-fill" offIcon="bell-slash"/>
+						<et2-button-icon id="button[videoconference]" image="status/videoconference" noSubmit="true"
+							onclick="app.calendar.joinVideoConference.call(window, '$cont[##videoconference]', this.getArrayMgr('content').data)"></et2-button-icon>
                         <et2-textbox type="hidden" id="delete_exceptions"></et2-textbox>
 					</et2-hbox>
 				</row>
