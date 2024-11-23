@@ -999,7 +999,7 @@ class calendar_uilist extends calendar_ui
 		{
 			Api\Translation::add_app('status');
 			$actions['videoconference'] = [
-				'icon' => 'status/videoconference',
+				'icon' => 'camera-video',
 				'caption' => 'Video Conference',
 				'group' => $group,
 				'allowOnMultiple' => false,
@@ -1008,14 +1008,14 @@ class calendar_uilist extends calendar_ui
 				'children' => [
 					'join' => [
 						'caption' => 'Join',
-						'icon' => 'status/videoconference_join',
+						'icon' => 'camera-video',
 						'onExecute' => 'javaScript:app.calendar.videoConferenceAction',
 						'enabled' => !calendar_hooks::isVideoconferenceDisabled(),
 						'allowOnMultiple' => false,
 					],
 					'recordings' => [
 						'caption' => 'Recordings',
-						'icon' => 'status/videoconference_recordings',
+						'icon' => 'record-btn',
 						'onExecute' => 'javaScript:app.calendar.videoConferenceAction',
 						'enabled' => !calendar_hooks::isVideoconferenceDisabled()
 							|| calendar_hooks::isVCRecordingSupported(),
