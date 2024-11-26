@@ -81,6 +81,11 @@ export class Et2LinkList extends Et2LinkString
 					display: inline-block;
 				}
 
+				et2-link::part(remark) {
+					/* Reset from Et2LinkString */
+					display: initial;
+				}
+
 				et2-link {
 					display: block;
 					flex: 1 1 auto;
