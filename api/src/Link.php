@@ -1487,9 +1487,9 @@ class Link extends Link\Storage
 	 * @param string $id id in app
 	 * @return array with link_id => 'kind' of link-array pairs
 	 */
-	static function list_attached($app,$id)
+	static function list_attached($app, $id, $file = '')
 	{
-		$path = self::vfs_path($app,$id);
+		$path = self::vfs_path($app, $id, $file);
 		//error_log(__METHOD__."($app,$id) url=$url");
 
 		if (!($extra = self::get_registry($app,'find_extra'))) $extra = array();
