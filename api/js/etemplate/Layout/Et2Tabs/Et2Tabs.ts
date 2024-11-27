@@ -78,6 +78,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			/**
 			 * Set the height for tabs
 			 * Leave unset to size automatically from either parent height attribute, or height of first tabpanel
+			 * Set to 'auto' to allow tab height to flex to fill parent element
 			 */
 			tabHeight: {type: String},
 
@@ -396,7 +397,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 			if(body)
 			{
 				body.style.setProperty("height", this.tabHeight == parseInt(this.tabHeight) + "" ? this.tabHeight + "px" : this.tabHeight);
-				body.classList.toggle("tab-group__body-fixed-height", this.tabHeight !== '');
+				body.classList.toggle("tab-group__body-fixed-height", this.tabHeight !== '' && this.tabHeight !== 'auto');
 			}
 		}
 	}
@@ -684,7 +685,7 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 
 	resize(_height)
 	{
-		if(_height)
+		if(_height && this.tabHeight != 'auto')
 		{
 			this.tabHeight = parseInt(this.tabHeight) + parseInt(_height);
 		}
