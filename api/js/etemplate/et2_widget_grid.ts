@@ -740,6 +740,19 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		const h = this.rowCount = _cells.length;
 		const w = this.columnCount = (h > 0) ? _cells[0].length : 0;
 
+		// Create the table columns
+		let colgroup = document.createElement("colgroup");
+		this.table.prepend(colgroup);
+		_colData.forEach((col) =>
+		{
+			const attributes = {};
+			if(col.width)
+			{
+				attributes['style'] = "width:" + col.width + (isNaN(col.width) ? "" : "px");
+			}
+			colgroup.append(Object.assign(document.createElement("col"), attributes));
+		});
+
 		// Create the table rows.
 		for(let y = 0; y < h; y++)
 		{
@@ -811,12 +824,6 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 						{
 							cell.widget.disabled = cell.disabled;
 						}
-					}
-
-					// do NOT set cell width, if we have a colspan
-					if(cell.width !== "auto" && cell.colSpan <= 1)
-					{
-						td.width(cell.width);
 					}
 
 					if(cell.align)
