@@ -407,7 +407,10 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		{
 			this.controller.destroy();
 		}
-		this.dynheight.destroy();
+		if(this.dynheight)
+		{
+			this.dynheight.destroy();
+		}
 
 		super.destroy();
 	}
