@@ -46,45 +46,31 @@
         </grid>
     </template>
 	<template id="importexport.export_dialog.selection_tab" template="" lang="" group="0" version="">
-		<grid width="100%" height="200px">
-			<columns>
-				<column width="150"/>
-				<column width="300" disabled="@no_filter"/>
-			</columns>
-			<rows>
-				<row class="th" height="20" disabled="@plugin_selectors_template">
-					<et2-description></et2-description>
-					<et2-description  value="Definition filter"></et2-description>
-				</row>
-				<row valign="top" disabled="@plugin_selectors_template">
-					<html id="plugin_selectors_html" no_lang="1"/>
-					<et2-box  class="filters">
-						<filter id="filter_html"/>
-					</et2-box>
-				</row>
-				<row class="th" height="20" disabled="!@plugin_selectors_template">
-					<et2-description></et2-description>
-					<et2-description  value="Definition filter"></et2-description>
-				</row>
-				<row valign="top" disabled="!@plugin_selectors_template">
-                    <template id="@plugin_selectors_template"/>
-                    <et2-box
-                            onclick="document.getElementById('importexport-export_dialog_selection-filter').checked=true;"
-                            class="filters">
-                        <filter id="filter_tpl"/>
-                    </et2-box>
-                </row>
-			</rows>
-		</grid>
+        <et2-hbox disabled="@plugin_selectors_template">
+            <html id="plugin_selectors_html" no_lang="1"/>
+            <et2-box class="filters">
+                <filter id="filter_html"/>
+            </et2-box>
+        </et2-hbox>
+        <et2-hbox disabled="!@plugin_selectors_template">
+            <template id="@plugin_selectors_template"/>
+            <et2-groupbox summary="Definition filter" onclick="document.getElementById('importexport-export_dialog_selection-filter').checked=true;"
+                          class="filters">
+                <filter id="filter_tpl"/>
+            </et2-groupbox>
+        </et2-hbox>
 		<styles>
-			select[multiple] {
-  width: 400px;
-}
+            #importexport-export_dialog_importexport-export_dialog-selection_tab et2-hbox {
+            height: 100%;
+            }
 .filters {
-  max-height: 300px;
-  min-height: 150px;
+            flex-grow: 1;
+            min-height: 5em;
   overflow-y: auto;
 }
+            .filters > table {
+            min-height: 0px;
+            }
 		</styles>
 	</template>
 	<template id="importexport.export_dialog.options_tab" template="" lang="" group="0" version="">
@@ -125,16 +111,9 @@
 		</styles>
 	</template>
 	<template id="importexport.export_dialog" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-			</columns>
-            <rows>
-                <row>
-                    <et2-description  id="msg"></et2-description>
-                </row>
-                <row>
-                    <et2-tabbox  id="general_tab|selection_tab|options_tab">
+        <et2-vbox>
+            <et2-description id="msg"></et2-description>
+            <et2-tabbox id="general_tab|selection_tab|options_tab" tabHeight="auto">
                         <tabs>
                             <tab id="general_tab" label="General"/>
                             <tab id="selection_tab" label="Selection"/>
@@ -146,30 +125,43 @@
                             <template id="importexport.export_dialog.options_tab"/>
                         </tabpanels>
                     </et2-tabbox>
-                </row>
-                <row class="save_definition dialog-operators high">
-                    <et2-checkbox  label="Save as definition" id="save_as_definition"></et2-checkbox>
-                </row>
-                <row class="dialog-footer-toolbar">
-                    <et2-hbox  span="all">
+        </et2-vbox>
+
+        <et2-hbox class="dialog-footer-toolbar dialogFooterToolbar">
+            <et2-hbox style="flex: 1 1 auto">
                         <et2-hbox>
                             <et2-button  label="Export" id="export" image="export"></et2-button>
                             <et2-button  label="Preview" id="preview" onclick="app.importexport.export_preview" image="prieview"></et2-button>
                         </et2-hbox>
+                <et2-checkbox label="Save as definition" id="save_as_definition"></et2-checkbox>
                         <et2-button  class="cancel" align="right" label="Cancel" id="cancel" onclick="window.close(); return false;" image="cancel"></et2-button>
                     </et2-hbox>
-                </row>
-                <row>
+        </et2-hbox>
                     <et2-vbox  id="preview_box" span="all" class="preview">
                         <html id="preview-box" class="content"/>
                         <et2-box  align="center" id="preview-box-buttons" class="preview-box-buttons">
                             <et2-button  align="center" label="OK" onclick="jQuery(this).parents('.preview').css('display','none'); return false;"></et2-button>
                         </et2-box>
                     </et2-vbox>
-                </row>
-            </rows>
-		</grid>
 		<styles>
+            .popupMainDiv {
+            height: calc(100vh - 16px);
+            }
+            #importexport-export_dialog > div {
+            display: flex;
+            flex-direction: column;
+            }
+            #importexport-export_dialog > div > et2-vbox {
+            flex: 1 1 auto;
+            min-height: 5em;
+            }
+            et2-tabbox {
+            flex: 1 1;
+            min-height: 5em;
+            }
+            et2-tabbox::part(base) {
+            min-height: 5em;
+            }
 			div.preview_box {
   position: absolute;
   top: 0px;
