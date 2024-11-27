@@ -71,6 +71,11 @@
     height: 100%;
 }
 
+.et2_container > div:not([class]) > table {
+	table-layout: fixed;
+	width: 100%;
+}
+
 /**
  * Basic rules
  */
