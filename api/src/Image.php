@@ -477,7 +477,7 @@ class Image
 			self::get_extension($image, $name);
 			return self::find($app, $name, $extension, $add_cachebuster);
 		}
-		error_log(__METHOD__."('$app', '$image') image NOT found!");
+		//error_log(__METHOD__."('$app', '$image') image NOT found!");
 		return null;
 	}
 
