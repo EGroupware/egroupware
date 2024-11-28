@@ -6,11 +6,19 @@ export default css`
 		display: block;
 	}
 
-
+/* Style expand and collapse buttons so we can use technically larger images to increase clickable surface*/
 	::part(expand-button) {
 		rotate: none;
 		padding: 0 var(--sl-spacing-small);
+        width: 5em;
+        height: 1.2em;
+        margin-left: -2.4em;
+        margin-right: calc(-2em + 10px);
 	}
+    sl-icon[slot='collapse-icon'],sl-icon[slot='expand-icon']{
+        width: inherit;
+        height: inherit;
+    }
 
 	/* Stop icon from shrinking if there's not enough space */
 	/* increase font size by 2px this was previously done in pixelegg css but document css can not reach shadow root*/
