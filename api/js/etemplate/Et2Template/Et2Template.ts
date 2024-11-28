@@ -337,12 +337,16 @@ export class Et2Template extends Et2Widget(LitElement)
 			// Resolve promise, this.updateComplete now resolved
 			resolve();
 
-			// Notification event
-			this.dispatchEvent(new CustomEvent("load", {
-				bubbles: true,
-				composed: true,
-				detail: this
-			}));
+			// Yield to give anything else a chance to run
+			setTimeout(() =>
+			{
+				// Notification event
+				this.dispatchEvent(new CustomEvent("load", {
+					bubbles: true,
+					composed: true,
+					detail: this
+				}));
+			}, 0);
 		}).catch(reason =>
 		{
 			this.loadFailed(reason);
