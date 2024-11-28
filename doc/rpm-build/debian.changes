@@ -1,3 +1,15 @@
+egroupware-docker (23.1.20241128) hardy; urgency=low
+
+  * PHP: security update to 8.3.14
+  * All apps: many fixes in Fancy theme and new Bootstrap icons (see 23.1.20241111 pre-release)
+  * Tracker: desktop version uses now a nextmatch list for comments
+  * Calendar: new preference for changing resource status when event is moved
+  * Calendar: when opening calendar as infolog, event participants (user accounts) are copied to infolog responsible
+  * Projectmanager: Add a config setting to choose which project statuses we include for link search
+  * Mail: if Sieve editheader extension is available forward with a From header matching the recipient to avoid SPF and DKIM problems/misalignment (need to be enabled in Dovecot)
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 28 Nov 2024 10:59:43 +0100
+
 egroupware-docker (23.1.20241111) hardy; urgency=low
 
   * All apps: new icons based on Bootstrap icons
