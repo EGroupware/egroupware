@@ -1,7 +1,13 @@
+add a new definition	importexport	zh	添加新定义
+addressbook csv import	importexport	zh	通讯簿 CSV 导入
+addressbook vcard import	importexport	zh	通讯录 vCard 导入
 all users	importexport	zh	所有用户
 allowed users	importexport	zh	允许的用户
 automatically created by importexport	importexport	zh	导入导出自动地创建
+change allowed users	importexport	zh	更改允许的用户
+change owner when updating	importexport	zh	更新时更改所有者
 changed	importexport	zh	已更改
+changed owner	importexport	zh	更改所有者
 charset of file	importexport	zh	文件的字符集
 check all	importexport	zh	全选
 choose a name for this definition	importexport	zh	选择这个定义的名称

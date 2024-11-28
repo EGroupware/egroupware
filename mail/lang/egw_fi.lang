@@ -1,5 +1,7 @@
 %1 attachments	mail	fi	%1 liitetiedostot
+%1 for all users	mail	fi	%1 kaikille käyttäjille
 %1 is not writable by you!	mail	fi	%1, sinulla ei ole oikeutta kirjoittaa!
+%1 mails selected	mail	fi	%1 sähköpostia valittu
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	fi	%1 vaatii Sieve-laajennuksen %2, kokeile ehkä %1 tai suurempaa päivien määrää.
 (leave empty for no quota)	mail	fi	(Jätä tyhjäksi, jos kiintiötä ei ole)
 (no subject)	mail	fi	Ei aihetta

@@ -22,7 +22,6 @@
 %1 token %2.	admin	lv	%1 token %2.
 %1 user %2	admin	lv	%1 lietotājs %2
 (de)activate mail accounts	admin	lv	(de)aktivizēt pasta kontus
-(default no, leave it off if you dont use it)	admin	lv	Noklusējuma iestatījums = Nē, atstājiet to izslēgtu, ja to neizmantojat.
 (no subject)	admin	lv	(nav temata)
 1 year	admin	lv	1 gads
 2 month	admin	lv	2 mēneši
@@ -78,6 +77,7 @@ allow the user to store his password under 'security & passwords' for singlesign
 alternate email address	admin	lv	Alternatīvas e-pasta adreses
 anonymous user	admin	lv	Nezināmais lietotājs
 anonymous user (not shown in list sessions)	admin	lv	Nezināmais lietotājs (Netiek parādīts sesiju sarakstā)
+anonymous user. not shown in list sessions.	admin	lv	Anonīms lietotājs. Nav redzams saraksta sesijās
 appearance	admin	lv	Izskats
 application	admin	lv	Aplikācija
 application name	admin	lv	Programmatūras nosaukums
@@ -131,6 +131,7 @@ create group	admin	lv	Izveidot grupu
 created	admin	lv	Izveidots
 creates a new field	admin	lv	Veido jaunu lauku
 crontab only (recomended)	admin	lv	Tikai crontab (ieteicams)
+current certificate	admin	lv	Pašreizējais sertifikāts
 custom 1	admin	lv	Pielāgotais 1
 custom 2	admin	lv	Pielāgotais 2
 custom 3	admin	lv	Pielāgotais 3
@@ -148,6 +149,7 @@ delete account	admin	lv	Izdzēst kontu
 delete all records	admin	lv	Izdzēst visus ierakstus
 delete application	admin	lv	Izdzēst aplikāciju
 delete category	admin	lv	Izdzēst kategoriju
+delete certificate	admin	lv	Dzēst sertifikātu
 delete group	admin	lv	Izdzēst grupu
 delete peer server	admin	lv	Izdzēst vinādranga serveri
 delete the category	admin	lv	Izdzēst kategoriju
@@ -225,6 +227,7 @@ error canceling timer, maybe there's none set !!!	admin	lv	Kļūdas atceļot tai
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lv	Kļūda uzstādot taimeri, kļūdaina sintakse vai, iespējams, kāds jau ir palaists!
 error: %1 not found or other error !!!	admin	lv	Kļūda: %1 nav atrasts vai cita kļūda!
 expires	admin	lv	Beigas
+export certificate as p12	admin	lv	Eksportēt sertifikātu kā p12
 failed to change password.	admin	lv	Neizdevād nomainīt paroli.
 fallback (after each pageview)	admin	lv	Atkāpšanās (pēc katras lapas apskates)
 false	admin	lv	Nepatiess
@@ -237,6 +240,7 @@ forward email's to	admin	lv	Pārsūtīt e-pasta vēstules
 forward only	admin	lv	Tikai pārsūtīt
 full name	admin	lv	Pilns vārds
 general	admin	lv	Vispārējs
+generate certificate	admin	lv	Izveidot sertifikātu
 global categories	common	lv	Vispārējas (global) kategorijas
 group ?	admin	lv	Grupa?
 group has been added	common	lv	Grupa tika pievienota
@@ -454,6 +458,7 @@ trust level	admin	lv	Uzticības līmenis
 two weeks	admin	lv	Divas nedēļas
 up	admin	lv	Augšup
 updated	admin	lv	Atjaunināts
+upload your certificate .p12/.pfx file	admin	lv	Augšupielādējiet savu sertifikāta .p12/.pfx failu
 use cookies to pass sessionid	admin	lv	Lieto sīkdatnes lai pārietu sesijas ID
 use default	admin	lv	Lietot noklusējumu
 use ldap defaults	admin	lv	Lieto LDAP noklusējumus
@@ -466,6 +471,7 @@ user accounts	admin	lv	Lietotāja konti
 user data	common	lv	Lietotāja Dati
 user for smtp-authentication (leave it empty if no auth required)	admin	lv	Lietotājs SMTP- autentifikācijai (atstāt tukšu, ja nepieprasa autentifikāciju)
 user groups	admin	lv	Lietotāju grupas
+user hidden vom non-admins.	admin	lv	Lietotājs, kas nav administrators, ir paslēpts
 user-agent	admin	lv	User-Agent
 userdata	admin	lv	Lietotāja dati
 users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus

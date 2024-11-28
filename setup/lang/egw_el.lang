@@ -6,7 +6,9 @@ application title	setup	el	Τίτλος εφαρμογής
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	el	Επιχειρήθηκε να χρησημοοιηθεί σωστή ομοιοτυπία αντι του προκαθορισμένου 'εφαρμογή/octet-stream'
 authentication / accounts	setup	el	Ποιστοποίηση / λογαριασμοί
 auto create account records for authenticated users	setup	el	Αυτόματη δημιουργία εγραφών λογαριασμού για ποιστοποιημένους χρήστες
+backup files (needs ziparchive)	setup	el	Δημιουργία αντιγράφου ασφαλείας δεδομένων των αρχείων EGroupware (κατάλογος αρχείων) <br>(απαιτεί PHP ZipArchive)
 check ip address of all sessions	setup	el	Ελεγξε τις διευθύνσεις IP από όλα τα sessions
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	el	Συμπεριλάβετε αρχεία (κατάλογος αρχείων) στο αντίγραφο ασφαλείας δεδομένων.<br>(Μπορεί να δημιουργήσει μεγάλο όγκο δεδομένων και να διακόψει με πολλά αρχεία, τεκμηρίωση: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 completed	setup	el	Ολοκληρώθηκε
 configuration	setup	el	Διαμόρφωση
 country selection	setup	el	Επιλογή χώρας
@@ -50,6 +52,7 @@ ldap groups context	setup	el	LDAP περιβάλον ομάδων
 ldap host	setup	el	LDAP host
 ldap root password	setup	el	LDAP root συνθηματικό
 ldap rootdn	setup	el	LDAP Root DN
+mail account of %1 migrated	setup	el	Μεταφέρθηκε ο λογαριασμός αλληλογραφίας του %1.
 mail server login type	setup	el	Τύπος εισόδου μηνύματος server
 maximum account id (e.g. 65535 or 1000000)	setup	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
 min backup count	setup	el	Μέγιστος αριθμός διατηρούμενων αντιγράφων ασφαλείας (μηδέν: όλα)

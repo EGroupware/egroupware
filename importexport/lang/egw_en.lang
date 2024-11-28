@@ -25,7 +25,6 @@ basic csv import	importexport	en	Basic CSV import
 change allowed users	importexport	en	Change allowed users
 change owner when updating	importexport	en	Change owner when updating
 changed	importexport	en	Changed
-changed allowed_users	importexport	en	Changed allowed users
 changed owner	importexport	en	Changed owner
 charset of file	importexport	en	Charset of file
 check all	importexport	en	Check all

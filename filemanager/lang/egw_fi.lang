@@ -26,10 +26,7 @@
 accessrights	filemanager	fi	Käyttöoikeudet
 acl added.	filemanager	fi	Käyttöoikeus lisätty.
 acl deleted.	filemanager	fi	Käyttöoikeus poistettu.
-actions	filemanager	fi	Toiminnot
-add to clipboard	filemanager	fi	Lisää leikepöydälle
 administrators	filemanager	fi	Ylläpitäjät
-all files	filemanager	fi	Kaikki tiedostot
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fi	Konfiguroitavien kansiolinkkien maksimimäärä asetuksissa.
 and all it's childeren	filemanager	fi	ja kaikki sen aliosastot (subit)
 application fields	filemanager	fi	Sovelluskentät
@@ -120,7 +117,6 @@ extended access control list	filemanager	fi	Laajennetut ACL -oikeudet
 extended acl	filemanager	fi	Laajennetut ACL -oikeudet
 failed to change permissions of %1!	filemanager	fi	%1, oikeuksien myöntäminen epäonnistui!
 failed to create directory!	filemanager	fi	Hakemiston luominen epäonnistui
-favorites	filemanager	fi	Suosikit
 file	common	fi	Tiedosto
 file %1 already exists	filemanager	fi	Tiedosto %1 on jo olemassa
 file %1 could not be created.	filemanager	fi	Tiedostoa %1 ei voitu luoda.
@@ -200,7 +196,6 @@ password for webdav and smb, use $pass for password of logged in user	filemanage
 path %1 not found or not a directory!	filemanager	fi	Polkua %1 ei löytynyt tai kansiota ei ole olemassa!
 path and query-parameters, smb: share and optional path (with /)	filemanager	fi	Polku ja kyselyparametrit, SMB: jako ja valinnainen polku (/:n kanssa).
 percentage	filemanager	fi	Prosentti
-permission denied!	filemanager	fi	Pääsy estetty!
 permissions	filemanager	fi	ACL-oikeudet
 permissions of %1 changed.	filemanager	fi	ACL-oikeudet muutettu: %1
 please select a file to delete.	filemanager	fi	Valitse poistettava tiedosto.

@@ -22,7 +22,6 @@
 %1 token %2.	admin	en	%1 token %2.
 %1 user %2	admin	en	%1 user %2
 (de)activate mail accounts	admin	en	(de)Activate mail accounts
-(default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you don't use it
 (no subject)	admin	en	(no subject)
 -  type	admin	en	- type
 1 year	admin	en	1 year
@@ -56,7 +55,6 @@ acl added.	admin	en	ACL added.
 acl csv export	admin	en	ACL CSV export
 acl deleted.	admin	en	ACL deleted.
 acl entry deleted.	admin	en	ACL entry deleted.
-acl entry not found!	admin	en	ACL entry not found!
 acl manager	admin	en	ACL manager
 acl rights	common	en	ACL rights
 acl updated	admin	en	ACL updated
@@ -118,10 +116,10 @@ allowed just as second factor	admin	en	allowed just as second factor
 alternate email address	admin	en	Alternate email address
 and logged in	admin	en	and logged in
 anonymous user	admin	en	Anonymous user
-anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in sessions list.
+anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in sessions list
 anonymous user does not exist!	admin	en	Anonymous user does NOT exist!
 anonymous user has no run-rights for the application!	admin	en	Anonymous user has NO run-rights for the application!
-anonymous user. not shown in list sessions.	admin	en	Anonymous user. Not shown in list sessions.
+anonymous user. not shown in list sessions.	admin	en	Anonymous user. Not shown in list sessions
 any application	admin	en	Any application
 any group	admin	en	Any group
 any user	admin	en	Any user
@@ -952,7 +950,7 @@ user csv import	admin	en	User CSV import
 user data	common	en	User data
 user for smtp-authentication (leave it empty if no auth required)	admin	en	User for SMTP authentication. Leave it empty if no authentication is required.
 user groups	admin	en	User groups
-user hidden vom non-admins.	admin	en	User hidden vom non-admins.
+user hidden from non-admins.	admin	en	User hidden from non-admins.
 user-agent	admin	en	User-Agent
 userdata	admin	en	User data
 userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain

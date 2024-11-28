@@ -1,6 +1,12 @@
+add a new definition	importexport	id	Menambahkan definisi baru
+addressbook csv import	importexport	id	Impor CSV Buku Alamat
+addressbook vcard import	importexport	id	Impor vCard buku alamat
 all users	importexport	id	Semua pengguna
 allowed users	importexport	id	Pengguna yang dibolehkan
+change allowed users	importexport	id	Mengubah pengguna yang diizinkan
+change owner when updating	importexport	id	Mengubah pemilik saat memperbarui
 changed	importexport	id	Diubah
+changed owner	importexport	id	Mengubah pemilik
 charset of file	importexport	id	Charset of file
 check all	importexport	id	Contreng semua
 condition	importexport	id	kondisi

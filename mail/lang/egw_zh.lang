@@ -1,3 +1,7 @@
+%1 attachments	mail	zh	%1 附件
+%1 for all users	mail	zh	所有用户 %1
+%1 is not writable by you!	mail	zh	您不能写入 %1！
+%1 mails selected	mail	zh	选择了 %1 封电子邮件
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	zh	%1 需要 Sieve 扩展名 %2，也许可以尝试 %1 或更高的天数。
 (leave empty for no quota)	mail	zh	(留空表示没有配额)
 (no subject)	mail	zh	(无主题)

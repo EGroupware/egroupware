@@ -13,6 +13,8 @@
 *contact id cannot be changed by import	importexport	bg	* ID за контакт не може да бъде променен чрез импортиране
 add a new definition	importexport	bg	Добавете ново определение
 add an additional condition	importexport	bg	Добавете допълнително условие
+addressbook csv import	importexport	bg	Импортиране на CSV от адресната книга
+addressbook vcard import	importexport	bg	Импорт на vCard от адресната книга
 admin disabled exporting	importexport	bg	Експортирането на администратор е деактивирано
 all encodings	importexport	bg	Всички кодировки
 all users	importexport	bg	Всички потребители
@@ -22,7 +24,6 @@ basic csv import	importexport	bg	Основен CSV импорт
 change allowed users	importexport	bg	Промяна на разрешените потребители
 change owner when updating	importexport	bg	Промяна на собственика при актуализиране
 changed	importexport	bg	Променен(и)
-changed allowed_users	importexport	bg	Променени разрешени потребители
 changed owner	importexport	bg	Променен собственик
 charset of file	importexport	bg	Символен набор на файла
 check all	importexport	bg	Маркира всички

@@ -12,7 +12,6 @@
 %1 successful	admin	zh	%1 成功
 %1 token %2.	admin	zh	%1 标记 %2.
 %1 user %2	admin	zh	%1 用户 %2
-(default no, leave it off if you dont use it)	admin	zh	默认 = 否，如果不使用，请将其关闭
 (no subject)	admin	zh	(无主题)
 -  type	admin	zh	- 类型
 1 year	admin	zh	1年
@@ -79,6 +78,7 @@ anonymous user	admin	zh	匿名用户
 anonymous user (not shown in list sessions)	admin	zh	匿名用户 (不在会话列表中显示)
 anonymous user does not exist!	admin	zh	匿名用户不存在！
 anonymous user has no run-rights for the application!	admin	zh	匿名用户没有执行此应用程序的权限！
+anonymous user. not shown in list sessions.	admin	zh	匿名用户。不显示在列表会话中
 any application	admin	zh	任何用用程序
 any group	admin	zh	任何组
 appearance	admin	zh	外观
@@ -122,6 +122,9 @@ category %1 has been saved !	admin	zh	类别%1已保存！
 category deleted.	admin	zh	类别已删除。
 category list	admin	zh	类别列表
 category saved.	admin	zh	类别已保存。
+certificate	admin	zh	证书
+certificate details	admin	zh	证书详细信息
+certificate validation in days	admin	zh	证书有效天数
 change access	admin	zh	更改访问权限
 change account_id	admin	zh	更改帐户 ID
 change acl rights	admin	zh	更改 ACL 权限
@@ -150,6 +153,7 @@ created	admin	zh	创建日期
 created with id #%1	admin	zh	以 ID #%1 创建
 creates a new field	admin	zh	创建一新字段
 crontab only (recomended)	admin	zh	仅 Crontab (推荐命令)
+current certificate	admin	zh	当前证书
 custom 1	admin	zh	自定义 1
 custom 2	admin	zh	自定义 2
 custom 3	admin	zh	自定义 3
@@ -168,6 +172,7 @@ delete account %s	admin	zh	删除账户%s
 delete all records	admin	zh	删除所有记录
 delete application	admin	zh	删除应用程序
 delete category	admin	zh	删除类别
+delete certificate	admin	zh	删除证书
 delete group	admin	zh	删除组
 delete peer server	admin	zh	删除对等服务器
 delete the category	admin	zh	删除该类别
@@ -268,6 +273,7 @@ error! no appname found	admin	zh	错误！找不到应用程序名称
 error: %1 not found or other error !!!	admin	zh	错误: 无法找到%1或其他原因！
 event details follow	admin	zh	事件细节
 expires	admin	zh	期限
+export certificate as p12	admin	zh	以 p12 格式导出证书
 failed to change password.	admin	zh	更改密码失败。请联系系统管理员。
 fallback (after each pageview)	admin	zh	后退 (在每个页面请求后)
 false	admin	zh	错误的
@@ -283,6 +289,7 @@ forward emails to	admin	zh	转发邮件到
 forward only	admin	zh	转发
 full name	admin	zh	姓名
 general	admin	zh	通用
+generate certificate	admin	zh	生成证书
 global categories	common	zh	全局分类
 global options	admin	zh	全局选项
 grant	admin	zh	允许
@@ -570,6 +577,7 @@ unsupported action '%1' !!!	admin	zh	不支持 '%1'  的操作！
 up	admin	zh	向上
 update current email address:	admin	zh	更新当前邮件地址：
 updated	admin	zh	已更新
+upload your certificate .p12/.pfx file	admin	zh	上传证书 .p12/.pfx 文件
 use cookies to pass sessionid	admin	zh	使用 cookie 保存会话标识
 use default	admin	zh	使用默认值
 use ldap defaults	admin	zh	使用 LDAP 默认值
@@ -583,6 +591,7 @@ user can edit forwarding address	admin	zh	用户可以编辑转发地址
 user data	common	zh	用户数据
 user for smtp-authentication (leave it empty if no auth required)	admin	zh	SMTP 用户认证 (如果不需要则保持为空)
 user groups	admin	zh	用户组
+user hidden vom non-admins.	admin	zh	对非管理员用户隐藏
 userdata	admin	zh	用户数据
 username (standard)	admin	zh	用户名(标准)
 username@domainname (virtual mail manager)	admin	zh	用户名@域 (虚拟邮箱管理)

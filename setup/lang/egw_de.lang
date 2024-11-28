@@ -107,7 +107,7 @@ backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
 backup and restore	setup	de	Datensicherung und Wiederherstellung
 backup directory %1 mounted as %2	setup	de	Datensicherungsverzeichnis %1 unter %2 gemounted
 backup failed	setup	de	Datensicherung fehlgeschlagen
-backup files (needs ziparchive)	setup	de	Datensicherung der  EGroupware Dateien (Files Verzeichnis) (benötigt die PHP ZipArchive)
+backup files (needs ziparchive)	setup	de	Datensicherung der EGroupware-Dateien (Files Verzeichnis) <br>(benötigt PHP ZipArchive)
 backup finished	setup	de	Datensicherung beendet
 backup housekeeping	setup	de	Backups mit Standard-Namen können automatisch aufgeräumt werden. Umbenannte Backup-Dateien werden nie aufgeräumt.
 backup min count	setup	de	Min. Anzahl der Backups
@@ -152,7 +152,7 @@ charsets used by the different languages	setup	de	Zeichensätze die von den vers
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	de	Dieser Test kann nur durchgeführt werden, wenn der Aufruf über den Webserver erfolgt, da Benutzer-ID und -Name des Webservers nicht bekannt sind.
 check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP-Adresse bei allen Sessions überprüfen
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	de	Anhaken, um das Backup (und Restore) der  Dateiumgebung (Datei-Verzeichnis) zu aktivieren. (Diese Option kann große Mengen an Festplatten-Speicherplatz verbrauchen. Stellen Sie sicher, dass das Housekeeping entsprechend konfiguriert ist.)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	de	Dateien (Files-Verzeichnis) mit in die Datensicherung aufnehmen.<br>(Kann große Datenmengen erzeugen und bei vielen Dateien abbrechen, Doku: <a href="https://help.egroupware.org/t/backup-einer-egroupware/76069" target="_blank">Backup einer EGroupware</a>)
 checking dependencies: %1 packages are installed in the required version.	setup	de	Überprüfe Abhängigkeiten: %1 Pakete sind in der benötigten Version installiert.
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4

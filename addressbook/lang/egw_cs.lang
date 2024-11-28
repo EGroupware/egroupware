@@ -1,4 +1,4 @@
-%1 contact(s) %2	addressbook	cs	%1 kontakt(ů) %2
+%1 contact(s) %2	addressbook	cs	%1 kontakt(ů) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	cs	%1 kontakt(y) %2, %3 se nezdařil z důvodu %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	cs	%1 kontakt(ů) %2, %3 selhal(o) z důvodu nedostatečných oprávnění!
 %1 contacts updated (%2 errors).	addressbook	cs	%1 kontaktů zaktualizováno (chyb: %2).

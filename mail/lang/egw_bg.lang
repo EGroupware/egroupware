@@ -1,4 +1,5 @@
 %1 attachments	mail	bg	%1 прикачени файлове
+%1 for all users	mail	bg	%1 за всички потребители
 %1 has been added to blacklisted email addresses	mail	bg	%1 е добавен към имейл адресите в "черения списък"
 %1 has been added to whiltelisted email addresses	mail	bg	%1 е добавен към имейл адресите в "белия списък"
 %1 has been removed from blacklisted email addresses	mail	bg	%1 е премахнат от имейл адресите в "черения списък"
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	bg	(Оставете празна, за да нямате квота)
 (no subject)	mail	bg	(без тема)
 (not connected)	mail	bg	(няма връзка)
-(select mails by clicking on the line, like a checkbox)	mail	bg	(изберете имейли, като щракнете върху линията, като например: квадратче за отметка)
-(with checkbox enforced)	mail	bg	(изисква да се постави отметка)
 account editable by user	mail	bg	акаунт редактируем от потребителя
 acl rights retrieve failed, seems there are no rights set!	mail	bg	Извличането на ACL права не бе успешно, изглежда няма зададени права!
 acl rights retrieved successfully	mail	bg	ACL правата са изтеглени успешно

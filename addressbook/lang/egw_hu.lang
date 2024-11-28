@@ -5,7 +5,9 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	hu	%1 mezők %2 más szervezet tagja(i)ban megváltoztak.
 %1 key(s) added to public keyserver "%2".	addressbook	hu	%1 kulcs(ok) hozzáadva a "%2" nyilvános kulcsszerverhez.
 %1 public keys added.	addressbook	hu	%1 nyilvános kulcsok hozzáadása.
+%1 records imported	addressbook	hu	%1 rekord importálása.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hu	%1 bejegyzés beolvasva (nincs importálva, importáláshoz %2vissza%3 kell lépni és meg kell szüntetni a 'Test Import' opciót).
+%1 shared this contact on %2 with %3 %4	addressbook	hu	%1 megosztotta ezt a kontaktot %2-n %3-val %4
 %1 starts with '%2'	addressbook	hu	%1 elindult '%2'-vel
 %s please calculate the result	addressbook	hu	%s kérem számolja ki az eredményt
 (e.g. 1969)	addressbook	hu	(pl.: 1969)
@@ -33,11 +35,14 @@ address book - view	addressbook	hu	Címjegyzék - nézet
 address line 2	addressbook	hu	Címsor 2
 address type	addressbook	hu	Címtípus
 addressbook	common	hu	Címjegyzék
-addressbook csv export	addressbook	hu	Címjegyzék exportja CVS formátumban
+addressbook csv export	addressbook	hu	Címjegyzék CSV exportálása
+addressbook csv import	addressbook	hu	Címjegyzék CSV importálása
 addressbook list	addressbook	hu	Címjegyzék lista
 addressbook menu	addressbook	hu	Címjegyzék menü
 addressbook preferences	addressbook	hu	Címjegyzék tulajdonságok
 addressbook the contact should be saved to	addressbook	hu	Kapcsolat mentése a következő címjegyzékbe
+addressbook vcard export	addressbook	hu	Címjegyzék vCard exportálása
+addressbook vcard import	addressbook	hu	Címjegyzék vCard importálása
 addressbook-fieldname	addressbook	hu	Címjegyzék-Mezőnév
 addvcard	addressbook	hu	vCard hozzáadása
 all addressbooks	addressbook	hu	Minden címjegyzék
@@ -86,6 +91,7 @@ choose owner of imported data	addressbook	hu	Válassza ki az importált adatok t
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	hu	Előre meghatározott térképforrás kiválasztása vagy egyéni URL használata (%r = utca, %t = város, %c = ország, %z = irányítószám)
 chosse an etemplate for this contact type	admin	hu	eTemplate választása ehhez a típusú Kapcsolathoz
 city	common	hu	Város
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	hu	Címjegyzék mezőinek tisztítása, alkalmazása, ha a szinkronizálás duplikátumokat hoz létre
 company	common	hu	Cég
 company name	addressbook	hu	Cégnév
 configuration	common	hu	Konfiguráció
@@ -186,6 +192,7 @@ export file name	addressbook	hu	Export állomány neve
 export from addressbook	addressbook	hu	Export a Címjegyzékből
 export selection	addressbook	hu	Kijelölés exportálása
 exported	addressbook	hu	exportálva
+exports contacts from your addressbook into a csv file.	addressbook	hu	A címjegyzékből CSV fájlba exportálja a névjegyeket.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	hu	Kapcsolatok exportálása a Címjegyzékből CSV formátumban. Az opcióknál kiválasztható más elválasztó karakter is, nem csak a vessző.
 extra	addressbook	hu	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	hu	Nem sikerült megváltoztatni %1 szervezet tagja(i)t, nem megfelelőek a jogok!

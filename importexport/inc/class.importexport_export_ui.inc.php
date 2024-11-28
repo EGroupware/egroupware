@@ -125,7 +125,7 @@ class importexport_export_ui {
 		}
 		else {
 			$readonlys['plugin'] = true;
-			$readonlys['save_definition'] = true;
+			$readonlys['save_as_definition'] = true;
 
 			$definition = new importexport_definition($content['definition']);
 			if($definition) {

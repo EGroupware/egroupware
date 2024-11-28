@@ -1,6 +1,12 @@
+add a new definition	importexport	et	Uue määratluse lisamine
+addressbook csv import	importexport	et	Aadressiraamatu CSV import
+addressbook vcard import	importexport	et	Aadressiraamatu vCard-i import
 all users	importexport	et	Kõik kasutajad
 allowed users	importexport	et	Lubatud kasutajad
 automatically created by importexport	importexport	et	automaatselt tehtud Import-Eksport poolt
+change allowed users	importexport	et	Muuda lubatud kasutajaid
+change owner when updating	importexport	et	Omaniku muutmine uuendamisel
+changed owner	importexport	et	Muudetud omanik
 check all	importexport	et	Kontrolli kõik
 choose a name for this definition	importexport	et	Vali nimi selle definitsioonijaoks
 choose a plugin	importexport	et	Vali plugin

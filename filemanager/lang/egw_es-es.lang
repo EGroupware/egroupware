@@ -32,10 +32,7 @@
 accessrights	filemanager	es-es	Derechos de acceso
 acl added.	filemanager	es-es	Se ha añadido la ACL
 acl deleted.	filemanager	es-es	Se ha borrado la ACL
-actions	filemanager	es-es	Acciones
-add to clipboard	filemanager	es-es	Añadir al portapapeles
 administrators	filemanager	es-es	Administradores
-all files	filemanager	es-es	Todos los archivos
 all subdirectories	filemanager	es-es	Todos los subdirectorios
 all types	filemanager	es-es	Todos los tipos
 allow a maximum of the above configured folderlinks to be configured in settings	admin	es-es	permitir un máximo de los enlaces configurados arriba para configurarse en las preferencias

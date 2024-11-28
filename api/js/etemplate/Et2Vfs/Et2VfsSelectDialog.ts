@@ -262,7 +262,7 @@ export class Et2VfsSelectDialog
 		if(this.value.length && path != oldValue)
 		{
 			const length = this.value.length;
-			this.value = [];
+			this.value.length = 0;
 			this.updateComplete.then(() =>
 			{
 				render(html`
@@ -431,11 +431,14 @@ export class Et2VfsSelectDialog
 		{
 			case "select-dir":
 				// If they didn't pick a specific directory and didn't cancel, use the current directory
-				this.value = this.value.length ? this.value : [this.path];
+				if(this.value.length == 0)
+				{
+					this.value.splice(0, 0, this.path)
+				}
 				break;
 			case "saveas":
 				// Saveas wants a full path, including filename
-				this.value = [this.path + "/" + this._filenameNode.value ?? this.filename];
+				this.value.splice(0, this.value.length, this.path + "/" + this._filenameNode.value ?? this.filename);
 
 				// Check for existing file, ask what to do
 				if(this.fileInfo(this.value[0]))
@@ -445,7 +448,7 @@ export class Et2VfsSelectDialog
 					{
 						return;
 					}
-					this.value = [this.path + "/" + result];
+					this.value.splice(0, this.value.length, this.path + "/" + result);
 				}
 				break;
 		}
@@ -562,11 +565,11 @@ export class Et2VfsSelectDialog
 		// Update the value
 		if(this.multiple)
 		{
-			this.value = this.selectedResults.map(el => el.value.path);
+			this.value.splice(0, this.value.length, ...this.selectedResults.map(el => el.value.path));
 		}
 		else
 		{
-			this.value = (this.selectedResults?.length ? [this.selectedResults[0].value.path] : []) ?? [];
+			this.value.splice(0, this.value.length, ...(this.selectedResults?.length ? [this.selectedResults[0].value.path] : []) ?? []);
 		}
 	}
 
@@ -714,7 +717,7 @@ export class Et2VfsSelectDialog
 			super.handleSearchKeyDown(event);
 
 			event.preventDefault();
-			this.value = [];
+			this.value.length = 0;
 			this.hide();
 			return;
 		}

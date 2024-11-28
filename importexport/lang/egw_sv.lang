@@ -1,5 +1,11 @@
+add a new definition	importexport	sv	Lägg till en ny definition
+addressbook csv import	importexport	sv	Adressbok CSV-import
+addressbook vcard import	importexport	sv	Adressbok vCard-import
 all users	importexport	sv	Alla användare
+change allowed users	importexport	sv	Ändra tillåtna användare
+change owner when updating	importexport	sv	Ändra ägare vid uppdatering
 changed	importexport	sv	Ändrad
+changed owner	importexport	sv	Ändrad ägare
 charset of file	importexport	sv	Teckenuppsättning för filen
 check all	importexport	sv	Markera alla
 condition	importexport	sv	vilkor

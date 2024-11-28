@@ -1,6 +1,11 @@
+%1 attachments	mail	uk	%1 вкладення
+%1 for all users	mail	uk	%1 для всіх користувачів
+%1 is not writable by you!	mail	uk	%1 не може бути написаний вами!
+%1 mails selected	mail	uk	Вибрано %1 імейлів
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	uk	%1 вимагає розширення Sieve %2, можливо, спробуйте %1 або більшу кількість днів.
 (leave empty for no quota)	mail	uk	(Залишити порожнім за відсутності квоти)
 acl rights retrieve failed, seems there are no rights set!	mail	uk	Не вдалося отримати права ACL, здається, не встановлено жодних прав!
+activating by date requires a start- and end-date!	mail	uk	Активація за датою вимагає початкової та кінцевої дати!
 add all my aliases	mail	uk	Додати всі мої псевдоніми
 add as new	mail	uk	Додати як новий
 add files as %1	mail	uk	Додати файли як %1

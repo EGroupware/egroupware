@@ -6,7 +6,9 @@ admins	setup	da	Administratore
 all users	setup	da	Alle brugere
 application title	setup	da	Applikation titel
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
+backup files (needs ziparchive)	setup	da	Sikkerhedskopiering af EGroupware-filer (filkatalog) <br>(kræver PHP ZipArchive)
 check ip address of all sessions	setup	da	Kontrollere IP adresse for alle sessioner
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	da	Inkluder filer (filkatalog) i databackupen.<br>(Kan generere store mængder data og afbryde med mange filer, dokumentation: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 configuration	setup	da	Konfiguration
 country selection	setup	da	Vælg land
 created	setup	da	Oprettet
@@ -47,6 +49,7 @@ ldap groups context	setup	da	LDAP gruppe contekst
 ldap host	setup	da	LDAP host
 ldap root password	setup	da	LDAP root adgangskode
 ldap rootdn	setup	da	LDAP Root DN
+mail account of %1 migrated	setup	da	Mailkonto for %1 migreret.
 mail server login type	setup	da	Post server login type
 maximum account id (e.g. 65535 or 1000000)	setup	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 min backup count	setup	da	Maksimalt antal sikkerhedskopier, der bevares (nul: alle)

@@ -10,6 +10,7 @@
 (0-23)	importexport	ru	(0-23)
 (0-6, 0=sun)	importexport	ru	(0-6, 0=Воскресенье)
 *contact id cannot be changed by import	importexport	ru	* ID контакта не может быть изменено при импорте
+add a new definition	importexport	ru	Добавить новое определение
 addressbook csv import	importexport	ru	Импорт адресной книги в формате CSV
 addressbook vcard import	importexport	ru	Адресная книга, импорт vCard
 admin disabled exporting	importexport	ru	Администратор отключил экспортирование.
@@ -18,8 +19,9 @@ all users	importexport	ru	Все пользователи
 allowed users	importexport	ru	Пользователи имеющие доступ
 automatically created by importexport	importexport	ru	Автоматически создано с помощью"ИмпортЭкспорт"
 basic csv import	importexport	ru	Основной импорт CSV
+change allowed users	importexport	ru	Изменение разрешенных пользователей
+change owner when updating	importexport	ru	Изменение владельца при обновлении
 changed	importexport	ru	Изменен
-changed allowed_users	importexport	ru	Изменить пользователей
 changed owner	importexport	ru	Изменить владельца
 charset of file	importexport	ru	Кодировка файла
 check all	importexport	ru	Проверить всё

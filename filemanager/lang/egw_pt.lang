@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	pt	%1 já existe como um ficheiro
 %1 files unlocked.	filemanager	pt	%1 ficheiros desbloqueados.
-actions	filemanager	pt	Acções
 administrators	filemanager	pt	Administradores
 applications	common	pt	Aplicações
 cancel editing %1 without saving	filemanager	pt	Cancelar edição de %1 sem guardar

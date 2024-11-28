@@ -47,7 +47,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 					display: inline;
 				}
 
-				et2-link::part(icon) {
+				et2-link::part(icon), et2-link::part(remark) {
 					display: none;
 				}
 

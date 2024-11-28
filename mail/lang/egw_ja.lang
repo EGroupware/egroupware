@@ -1,4 +1,5 @@
 %1 attachments	mail	ja	%1 個の添付ファイル
+%1 for all users	mail	ja	すべてのユーザーに %1
 %1 has been added to blacklisted email addresses	mail	ja	ブラックリストに %1 を追加しました
 %1 has been added to whiltelisted email addresses	mail	ja	ホワイトリストに %1 を追加しました
 %1 has been removed from blacklisted email addresses	mail	ja	ブラックリストから %1 を削除しました
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	ja	（空欄にするとクォータ設定無し）
 (no subject)	mail	ja	(件名無し)
 (not connected)	mail	ja	(接続されていません)
-(select mails by clicking on the line, like a checkbox)	mail	ja	（行をクリックしてメールを選択）
-(with checkbox enforced)	mail	ja	（チェックボックス強制）
 account editable by user	mail	ja	ユーザによるアカウント編集可能
 acl rights retrieve failed, seems there are no rights set!	mail	ja	ACL 権限の取得に失敗しました（権限不足の可能性）!
 acl rights retrieved successfully	mail	ja	ACL 権限を取得しました

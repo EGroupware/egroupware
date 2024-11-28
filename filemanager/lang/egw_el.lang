@@ -2,9 +2,6 @@
 %1 files unlocked.	filemanager	el	%1 αρχεία ξεκλειδώθηκαν.
 %1 starts with '%2'	filemanager	el	%1 ξεκινά με '%2'
 accessrights	filemanager	el	Δικαιώματα πρόσβασης
-actions	filemanager	el	Ενέργειες
-add to clipboard	filemanager	el	Προσθήκη στο πρόχειρο
-all files	filemanager	el	Όλα τα αρχεία
 all types	filemanager	el	Όλοι οι τύποι
 applications	common	el	Εφαρμογές
 cancel editing %1 without saving	filemanager	el	Ακύρωση επεξεργασίας %1 χωρίς αποθήκευση

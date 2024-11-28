@@ -1,5 +1,7 @@
 %1 attachments	mail	pl	%1 załączników
+%1 for all users	mail	pl	%1 dla wszystkich użytkowników
 %1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
+%1 mails selected	mail	pl	Wybrano %1 wiadomości e-mail
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pl	%1 wymaga rozszerzenia Sieve %2, może wypróbuj %1 lub wyższą liczbę dni.
 (leave empty for no quota)	mail	pl	(Pozostaw puste miejsce dla braku kwoty)
 (no subject)	mail	pl	(bez tematu)

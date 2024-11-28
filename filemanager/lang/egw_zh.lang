@@ -11,7 +11,6 @@
 %1 starts with '%2'	filemanager	zh	%1以'%2'开始
 %1 the following files into current directory	filemanager	zh	以下文件%1在当前目录里
 %1 urls %2 to clipboard.	filemanager	zh	%1 URLs %2到剪贴板。
-actions	filemanager	zh	操作
 administrators	filemanager	zh	系统管理
 and all it's childeren	filemanager	zh	并且全部是自文件夹
 applications	common	zh	应用程序
@@ -73,7 +72,6 @@ extended access control list	filemanager	zh	扩展访问控制列表
 extended acl	filemanager	zh	扩展 ACL
 failed to change permissions of %1!	filemanager	zh	更改 %1 的权限失败！
 failed to create directory!	filemanager	zh	创建目录失败！
-favorites	filemanager	zh	收藏夹
 file	common	zh	文件
 file %1 already exists	filemanager	zh	文件 %1 已存在
 file %1 could not be created.	filemanager	zh	文件 %1 不能创建。

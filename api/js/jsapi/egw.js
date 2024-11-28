@@ -317,7 +317,14 @@ window.app = {classes: {}};
 		var resize_popup = function()
 		{
 			var $main_div = jQuery('#popupMainDiv');
-			var $et2 = jQuery('.et2_container');
+			let $et2 = jQuery('.et2_container');
+			let $layoutTable = jQuery(".et2_container > div > table", $main_div);
+			if ($layoutTable.length && $et2.width() < $layoutTable.width())
+			{
+				// Still using a layout table, and it's bigger.
+				// Use the layout table for width calculation
+				$et2 = $layoutTable;
+			}
 			var w = {
 				width: egw_getWindowInnerWidth(),
 				height: egw_getWindowInnerHeight()

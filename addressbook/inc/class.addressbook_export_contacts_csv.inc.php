@@ -194,7 +194,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				if(is_array($_contact) && array_key_exists('photo', $_contact)) {
 					unset($_contact['photo']);
 				}
-				if(is_array($_contact) && count($_contact) == 1 && $_contact['id']) {
+				// Contacts->search() does not respect only_keys, so may return a partial contact array
+				if(is_array($_contact) && $_contact['id'])
+				{
 					$_contact = $_contact['id'];
 				}
 				if(is_array($_contact) && $_contact['id']) {
@@ -272,7 +274,9 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			if(is_array($_contact) && array_key_exists('photo', $_contact)) {
 				unset($_contact['photo']);
 			}
-			if(is_array($_contact) && count($_contact) == 1 && $_contact['id']) {
+			// Contacts search does not respect only_keys
+			if(is_array($_contact) && $_contact['id'])
+			{
 				$_contact = $_contact['id'];
 			}
 			if(is_array($_contact) && $_contact['id']) {

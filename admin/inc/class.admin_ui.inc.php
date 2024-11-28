@@ -206,7 +206,7 @@ class admin_ui
 						if (!empty($item['options']) && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
 						{
 							$item['popup'] = $matches[2].'x'.$matches[3];
-							if (isset($matches[5])) $item['tooltip'] = $matches[5];
+							if (isset($matches[5])) $item[Tree::TOOLTIP] = $matches[5];
 							unset($item['options']);
 						}
 					}
@@ -322,7 +322,7 @@ class admin_ui
 					{
 						$item['popup'] = $matches[2].'x'.$matches[3];
 						$item['onExecute'] = 'javaScript:nm_action';
-						if (isset($matches[5])) $item['tooltip'] = $matches[5];
+						if (isset($matches[5])) $item[Tree::TOOLTIP] = $matches[5];
 						unset($item['options']);
 					}
 				}
@@ -543,7 +543,7 @@ class admin_ui
 	 */
 	public static function tree_data($root = '/')
 	{
-		$tree = array(Tree::ID => $root === '/' ? 0 : $root, Tree::CHILDREN => array(), 'child' => 1);
+		$tree = array(Tree::ID => $root === '/' ? 0 : $root, Tree::CHILDREN => array(), Tree::AUTOLOAD_CHILDREN => 1);
 
 		if ($root == '/')
 		{
@@ -576,7 +576,7 @@ class admin_ui
 					if (!empty($data['icon']))
 					{
 						$icon = $data['icon'];
-						if (!empty($data['child']) || !empty($data[Tree::CHILDREN]))
+						if (!empty($data[Tree::AUTOLOAD_CHILDREN]) || !empty($data[Tree::CHILDREN]))
 						{
 							$data[Tree::IMAGE_FOLDER_OPEN] = $data[Tree::IMAGE_FOLDER_CLOSED] = $icon;
 						}
@@ -613,14 +613,14 @@ class admin_ui
 								Tree::IMAGE_FOLDER_OPEN => $icon,
 								Tree::IMAGE_FOLDER_CLOSED => $icon,
 								Tree::CHILDREN => array(),
-								'child' => 1,
+								Tree::AUTOLOAD_CHILDREN => 1,
 							);
 							if ($path == '/admin') $parent[$path]['open'] = true;
 						}
 						$parent =& $parent[$path][Tree::CHILDREN];
 					}
 					$data[Tree::LABEL] = lang($data[Tree::LABEL]);
-					if (!empty($data['tooltip'])) $data['tooltip'] = lang($data['tooltip']);
+					if (!empty($data[Tree::TOOLTIP])) $data[Tree::TOOLTIP] = lang($data[Tree::TOOLTIP]);
 					// make sure keys are unique, as we overwrite tree entries otherwise
 					if (isset($parent[$data[Tree::ID]])) $data[Tree::ID] .= md5($data['link']);
 					$parent[$data[Tree::ID]] = Tree::fixUserdata($data);

@@ -22,7 +22,6 @@
 %1 token %2.	admin	es-es	%1 token %2.
 %1 user %2	admin	es-es	%1 usuario %2
 (de)activate mail accounts	admin	es-es	(des)activar cuentas de correo
-(default no, leave it off if you dont use it)	admin	es-es	Por defecto = No, déjelo desactivado si no lo utiliza
 (no subject)	admin	es-es	(Sin asunto)
 -  type	admin	es-es	- tipo
 1 year	admin	es-es	1 año
@@ -56,7 +55,6 @@ acl added.	admin	es-es	Se ha añadido la ACL.
 acl csv export	admin	es-es	Exportación en CSV de ACL
 acl deleted.	admin	es-es	Se ha borrado la ACL.
 acl entry deleted.	admin	es-es	Se ha borrado la entrada ACL.
-acl entry not found!	admin	es-es	¡No se ha encontrado la entrada de la ACL!
 acl manager	admin	es-es	Manejo de ACL
 acl rights	common	es-es	Permisos de ACL
 acl updated	admin	es-es	Se ha actualizado la ACL
@@ -121,6 +119,7 @@ anonymous user	admin	es-es	Usuario anónimo
 anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en la lista de sesiones).
 anonymous user does not exist!	admin	es-es	¡El usuario anónimo no existe!
 anonymous user has no run-rights for the application!	admin	es-es	¡El usuario anónimo NO tiene derecho de ejecución para la aplicación!
+anonymous user. not shown in list sessions.	admin	es-es	Usuario anónimo. No se muestra en la lista de sesiones
 any application	admin	es-es	Cualquier aplicación
 any group	admin	es-es	Cualquier grupo
 any user	admin	es-es	Calquier usuario
@@ -951,6 +950,7 @@ user csv import	admin	es-es	Importación CSV de usuarios
 user data	common	es-es	Datos del usuario
 user for smtp-authentication (leave it empty if no auth required)	admin	es-es	Usuario para identificación SMTP (dejar en blanco si no se necesita).
 user groups	admin	es-es	Grupos de usuarios
+user hidden vom non-admins.	admin	es-es	Usuario oculto a los no administradores
 user-agent	admin	es-es	User-Agent
 userdata	admin	es-es	Datos del usuario
 userid@domain eg. u1234@domain	admin	es-es	UserId@dominio ej. u1234@dominio

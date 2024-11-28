@@ -19,9 +19,7 @@
 accessrights	filemanager	pl	Prawa dostępu
 acl added.	filemanager	pl	Dodano ACL.
 acl deleted.	filemanager	pl	Usunięto ACL.
-actions	filemanager	pl	Polecenia
 administrators	filemanager	pl	Administratorzy
-all files	filemanager	pl	Wszystkie pliki
 allow a maximum of the above configured folderlinks to be configured in settings	admin	pl	zezwól na konfigurację maksymalnie powyższej liczby linków folderów
 and all it's childeren	filemanager	pl	i wszystkie elementy podrzędne
 applications	common	pl	Aplikacje
@@ -102,7 +100,6 @@ extended access control list	filemanager	pl	Rozszerzona lista kontroli dostępu
 extended acl	filemanager	pl	Rozszerzona ACL
 failed to change permissions of %1!	filemanager	pl	Błąd przy zmianie uprawnień do %1!
 failed to create directory!	filemanager	pl	Błąd przy tworzeniu katalogu!
-favorites	filemanager	pl	Ulubione
 file	common	pl	Plik
 file %1 already exists	filemanager	pl	Plik %1 już istnieje
 file %1 could not be created.	filemanager	pl	Plik %1 nie może być utworzony
@@ -172,7 +169,6 @@ operation	filemanager	pl	Operacja
 password for webdav and smb, use $pass for password of logged in user	filemanager	pl	Hasło dla WebDAV i SMB, użyj $pass dla hasła zalogowanego użytkownika
 path and query-parameters, smb: share and optional path (with /)	filemanager	pl	Ścieżka i parametry zapytania, SMB: udział i opcjonalna ścieżka (z /)
 percentage	filemanager	pl	w procentach
-permission denied!	filemanager	pl	Dostęp zabroniony!
 permissions	filemanager	pl	Uprawnienia
 permissions of %1 changed.	filemanager	pl	Zmieniono uprawnienia do %1
 please select a file to delete.	filemanager	pl	Proszę wybrać plik do skasowania.

@@ -32,10 +32,7 @@
 accessrights	filemanager	km	សិទ្ធិចូលប្រើ
 acl added.	filemanager	km	ACL បន្ថែម។
 acl deleted.	filemanager	km	ACL ត្រូវបានលុប។
-actions	filemanager	km	សកម្មភាព
-add to clipboard	filemanager	km	បន្ថែមទៅក្ដារតម្បៀតខ្ទាស់
 administrators	filemanager	km	អ្នកគ្រប់គ្រង
-all files	filemanager	km	ឯកសារ​ទាំងអស់
 all subdirectories	filemanager	km	ថតរងទាំងអស់។
 all types	filemanager	km	គ្រប់ប្រភេទ
 allow a maximum of the above configured folderlinks to be configured in settings	admin	km	ចំនួនអតិបរមានៃតំណភ្ជាប់ថតដែលត្រូវកំណត់រចនាសម្ព័ន្ធតាមចំណូលចិត្ត។
@@ -142,7 +139,6 @@ extended access control list	filemanager	km	បញ្ជីត្រួតពិ
 extended acl	filemanager	km	ACL បន្ថែម
 failed to change permissions of %1!	filemanager	km	បាន​បរាជ័យ​ក្នុង​ការ​ផ្លាស់​ប្តូ​រ​សិទ្ធិ​របស់ %1!
 failed to create directory!	filemanager	km	បរាជ័យក្នុងការបង្កើតថតឯកសារ!
-favorites	filemanager	km	ចំណូលចិត្ត
 file	common	km	ឯកសារ
 file %1 already exists	filemanager	km	ឯកសារ %1 មានរួចហើយ
 file %1 could not be created.	filemanager	km	មិន​អាច​បង្កើត​ឯកសារ %1 បានទេ។
@@ -231,7 +227,6 @@ paste link	filemanager	km	បិទភ្ជាប់តំណ
 path %1 not found or not a directory!	filemanager	km	រក​មិន​ឃើញ​ផ្លូវ %1 ឬ​មិន​មាន​ថត!
 path and query-parameters, smb: share and optional path (with /)	filemanager	km	ផ្លូវ និងប៉ារ៉ាម៉ែត្រសំណួរ SMB៖ ចែករំលែក និងផ្លូវស្រេចចិត្ត (ជាមួយ /)
 percentage	filemanager	km	ភាគរយ
-permission denied!	filemanager	km	ការអនុញ្ញាតត្រូវបានបដិសេធ!
 permissions	filemanager	km	ការអនុញ្ញាត
 permissions of %1 changed.	filemanager	km	ការអនុញ្ញាតនៃ%1 បានផ្លាស់ប្តូរ។
 please select a file to delete.	filemanager	km	សូមជ្រើសរើសឯកសារដែលត្រូវលុប

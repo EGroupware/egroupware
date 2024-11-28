@@ -50,7 +50,6 @@ acl added.	admin	km	ACL បន្ថែម។
 acl csv export	admin	km	ការនាំចេញ ACL CSV
 acl deleted.	admin	km	ACL ត្រូវបានលុប។
 acl entry deleted.	admin	km	ធាតុ ACL ត្រូវបានលុប។
-acl entry not found!	admin	km	រកមិនឃើញធាតុ ACL!
 acl manager	admin	km	អ្នកគ្រប់គ្រង ACL
 acl rights	common	km	សិទ្ធិ ACL
 acl updated	admin	km	ACL បានធ្វើបច្ចុប្បន្នភាព
@@ -110,6 +109,7 @@ anonymous user	admin	km	អ្នកប្រើប្រាស់អនាម�
 anonymous user (not shown in list sessions)	admin	km	អ្នកប្រើប្រាស់អនាមិក។ មិនត្រូវបានបង្ហាញនៅក្នុងវគ្គបញ្ជីទេ។
 anonymous user does not exist!	admin	km	អ្នកប្រើប្រាស់អនាមិកមិនមានទេ!
 anonymous user has no run-rights for the application!	admin	km	អ្នកប្រើប្រាស់អនាមិកមិនមានសិទ្ធិដំណើរការសម្រាប់កម្មវិធីទេ!
+anonymous user. not shown in list sessions.	admin	km	អ្នកប្រើប្រាស់អនាមិក។ មិនត្រូវបានបង្ហាញនៅក្នុងវគ្គបញ្ជីទេ។
 any application	admin	km	កម្មវិធីណាមួយ។
 any group	admin	km	ក្រុមណាមួយ។
 any user	admin	km	អ្នកប្រើប្រាស់ណាមួយ។

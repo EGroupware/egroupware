@@ -19,9 +19,7 @@
 accessrights	filemanager	hu	hozzáférés
 acl added.	filemanager	hu	hozzáférés engedélyezve
 acl deleted.	filemanager	hu	hozzáférés törölve
-actions	filemanager	hu	Akció
 administrators	filemanager	hu	Adminisztrátorok
-all files	filemanager	hu	minden file
 allow a maximum of the above configured folderlinks to be configured in settings	admin	hu	Maximálisan létrehozható linkek száma mappák számára
 and all it's childeren	filemanager	hu	és az összes bejegyzést
 applications	common	hu	Alkalmazások
@@ -101,7 +99,6 @@ extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátoz
 extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
 failed to change permissions of %1!	filemanager	hu	Hiba a %1 hozzáférés módosítása során!
 failed to create directory!	filemanager	hu	Hiba a mappa léterhozása során!
-favorites	filemanager	hu	Kedvencek
 file	common	hu	File
 file %1 already exists	filemanager	hu	%1 fájl már létezik
 file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
@@ -169,7 +166,6 @@ operation	filemanager	hu	Művelet
 password for webdav and smb, use $pass for password of logged in user	filemanager	hu	Jelszó a WebDAV és SMB esetében, a $pass a bejelentkezett felhasználó jelszavát jelöli.
 path and query-parameters, smb: share and optional path (with /)	filemanager	hu	Útvonal és lekérdezési paraméterek, SMB: megosztás és opcionális útvonal (/-vel)
 percentage	filemanager	hu	Százalék
-permission denied!	filemanager	hu	Hozzáférés elutasítva!
 permissions	filemanager	hu	Hozzáférés
 permissions of %1 changed.	filemanager	hu	%1 hozzáférése módosult
 please select a file to delete.	filemanager	hu	Kérem jelöljön ki egy állományt a törléshez.

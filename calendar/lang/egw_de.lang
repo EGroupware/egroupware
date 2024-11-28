@@ -320,6 +320,7 @@ ical export	calendar	de	iCal-Export
 ical file	calendar	de	iCal-Datei
 ical import	calendar	de	iCal-Import
 ical successful imported	calendar	de	iCal erfolgreich importiert
+if resource is unavailable	calendar	de	Wenn die Ressource nicht verfügbar ist
 if start day differs	calendar	de	Wenn die Starttage abweichen
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	de	Falls Sie einen Bereich (Monat, Woche, Tag) anstatt einer Liste von Einträge ausgewählt haben, können Sie folgende Platzhalter für Ihre Felder definieren.
@@ -509,6 +510,7 @@ require an acl grant to invite other users and groups	admin	de	Freigabe um ander
 required information (start, end, title, ...) missing!	calendar	de	Zwingend erforderliche Information (Start, Ende, Titel, ...) fehlen!
 reset	calendar	de	Zurücksetzen
 reset participant stati on event shifts	calendar	de	Rücksetzen des Teilnehmerstatus beim Verschieben von Terminen
+reset resource status on event shifts	calendar	de	Rücksetzen des Ressourcenstatus beim Verschieben von Terminen
 resources	calendar	de	Ressourcen
 resources except conflicting ones	calendar	de	Ressourcen ausgenommen bereits gebuchte
 resources with conflict detection	calendar	de	Ressourcen mit Buchungskonflikt
@@ -528,6 +530,7 @@ select a time	calendar	de	Eine Zeit auswählen
 select multiple contacts for a further action	calendar	de	Mehrere Adressen für weiteren Befehl auswählen
 select resources	calendar	de	Ressourcen auswählen
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird. Der Teilnehmerstatus von Externen wird immer zurückgesetzt!
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	de	Soll der Status einer Ressource auf "keine Antwort" zurückgesetzt werden, wenn ein Termin verschoben wird?
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
 selected users/groups	calendar	de	Ausgewählte Benutzer/Gruppen

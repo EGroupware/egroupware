@@ -22,7 +22,6 @@
 %1 token %2.	admin	pt-br	%1 token %2.
 %1 user %2	admin	pt-br	%1 usuário %2
 (de)activate mail accounts	admin	pt-br	(Des)Ativar contas de e-mail
-(default no, leave it off if you dont use it)	admin	pt-br	Padrão = Não, deixe-o desativado se você não o usar
 (no subject)	admin	pt-br	(sem assunto)
 -  type	admin	pt-br	- tipo
 1 year	admin	pt-br	1 ano
@@ -95,6 +94,7 @@ anonymous user	admin	pt-br	Usuário Anônimo
 anonymous user (not shown in list sessions)	admin	pt-br	Usuário Anônimo (não é exibido na lista de sessões).
 anonymous user does not exist!	admin	pt-br	Usuário Anônimo não existe!
 anonymous user has no run-rights for the application!	admin	pt-br	Usuário Anônimo não tem acesso de execução para este aplicativo!
+anonymous user. not shown in list sessions.	admin	pt-br	Usuário anônimo. Não é exibido nas sessões da lista
 any application	admin	pt-br	Qualquer aplicação
 any group	admin	pt-br	Qualquer grupo
 any user	admin	pt-br	Qualquer usuário
@@ -183,6 +183,7 @@ created	admin	pt-br	Criado
 created with id #%1	admin	pt-br	Criado com ID #%1
 creates a new field	admin	pt-br	Criar um novo campo
 crontab only (recomended)	admin	pt-br	Somente crontab (recomendado)
+current certificate	admin	pt-br	Certificado atual
 custom 1	admin	pt-br	Personalizada 1
 custom 2	admin	pt-br	Personalizada 2
 custom 3	admin	pt-br	Personalizada 3
@@ -204,6 +205,7 @@ delete account %s	admin	pt-br	Remover conta %s
 delete all records	admin	pt-br	Remover todos os registros
 delete application	admin	pt-br	Remover aplicativo
 delete category	admin	pt-br	Remover categoria
+delete certificate	admin	pt-br	Excluir certificado
 delete group	admin	pt-br	Remover grupo
 delete identity	admin	pt-br	Excluir identidade
 delete peer server	admin	pt-br	Remover servidor parceiro
@@ -315,6 +317,7 @@ error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou 
 event details follow	admin	pt-br	Detalhes do Evento seguir
 exists	admin	pt-br	Existe
 expires	admin	pt-br	Expira
+export certificate as p12	admin	pt-br	Exportar certificado como p12
 exports groups into a csv file.	admin	pt-br	Exportação de grupos em um arquivo CSV.
 failed to change password.	admin	pt-br	Erro ao moudar a senha.
 failed to delete account!	admin	pt-br	Falha ao excluir conta!
@@ -335,6 +338,7 @@ forward emails to	admin	pt-br	Encaminhar e-mails para
 forward only	admin	pt-br	Encaminhar somente
 full name	admin	pt-br	Nome Completo
 general	admin	pt-br	Geral
+generate certificate	admin	pt-br	Gerar certificado
 global categories	common	pt-br	Categorias globais
 global options	admin	pt-br	Opções globais
 grant	admin	pt-br	Conceder
@@ -648,6 +652,7 @@ unsupported action '%1' !!!	admin	pt-br	Ação não suportada: '%1'!
 up	admin	pt-br	Para cima
 update current email address:	admin	pt-br	Atualizar e-mail atual:
 updated	admin	pt-br	Atualizado
+upload your certificate .p12/.pfx file	admin	pt-br	Carregar o arquivo .p12/.pfx do seu certificado
 usage	admin	pt-br	Uso
 use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir ID de sessão
 use default	admin	pt-br	Usar o padrão
@@ -665,6 +670,7 @@ user can edit forwarding address	admin	pt-br	Usuário pode editar endereço de e
 user data	common	pt-br	Dados de usuários
 user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
+user hidden vom non-admins.	admin	pt-br	Usuário oculto para não administradores
 user-agent	admin	pt-br	User-Agent
 userdata	admin	pt-br	Dados de usuário
 userid@domain eg. u1234@domain	admin	pt-br	Domínio @ UserID por exemplo. u1234 @ domínio

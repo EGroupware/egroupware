@@ -22,7 +22,6 @@
 %1 token %2.	admin	pt	%1 token %2.
 %1 user %2	admin	pt	%1 utilizador %2
 (de)activate mail accounts	admin	pt	(des)Ativar contas de correio
-(default no, leave it off if you dont use it)	admin	pt	Predefinição = Não, deixe-a desligada se não a utilizar
 (no subject)	admin	pt	(sem assunto)
 -  type	admin	pt	- tipo
 1 year	admin	pt	1 ano
@@ -82,6 +81,7 @@ anonymous user	admin	pt	Utilizador anónimo
 anonymous user (not shown in list sessions)	admin	pt	Utilizador anónimo (não exibido na lista de sessões)
 anonymous user does not exist!	admin	pt	O utilizador anónimo NÃO existe!
 anonymous user has no run-rights for the application!	admin	pt	O utilizador anónimo NÃO tem permissões para correr a aplicação!
+anonymous user. not shown in list sessions.	admin	pt	Utilizador anónimo. Não aparece nas sessões da lista
 any application	admin	pt	Qualquer aplicação
 any group	admin	pt	Qualquer grupo
 appearance	admin	pt	Aparência
@@ -118,6 +118,9 @@ cancel testjob!	admin	pt	Cancelar trabalho de teste
 categories list	admin	pt	Lista de categorias
 category %1 has been saved !	admin	pt	A categoria %1 foi guardada!
 category list	admin	pt	Lista de categorias
+certificate	admin	pt	Certificado
+certificate details	admin	pt	Detalhes do certificado
+certificate validation in days	admin	pt	Validação do certificado em dias
 change access	admin	pt	Alterar direitos de acesso
 change acl rights	admin	pt	Alterar direitos de ACL
 change config settings	admin	pt	Alterar configurações
@@ -136,6 +139,7 @@ create new account	admin	pt	Criar nova conta
 created	admin	pt	Criado
 creates a new field	admin	pt	Cria um novo campo
 crontab only (recomended)	admin	pt	Apenas crontab (recomendado)
+current certificate	admin	pt	Certificado atual
 custom 1	admin	pt	Personalizado 1
 custom 2	admin	pt	Personalizado 2
 custom 3	admin	pt	Personalizado 3
@@ -153,6 +157,7 @@ delete account	admin	pt	Eliminar conta
 delete all records	admin	pt	Eliminar todos os registos
 delete application	admin	pt	Eliminar aplicações
 delete category	admin	pt	Eliminar categorias
+delete certificate	admin	pt	Eliminar certificado
 delete group	admin	pt	Eliminar grupos
 delete peer server	admin	pt	Eliminar servidor remoto
 delete the category	admin	pt	Eliminar a categoria
@@ -240,6 +245,7 @@ error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outr
 event details follow	admin	pt	Seguem detalhes do evento
 exists	admin	pt	Existe
 expires	admin	pt	Expira
+export certificate as p12	admin	pt	Exportar certificado como p12
 failed to change password.	admin	pt	Não foi possível alterar a senha.
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
 false	admin	pt	Falso
@@ -256,6 +262,7 @@ forward emails to	admin	pt	Reencaminhar mensagens para
 forward only	admin	pt	Reencaminhar apenas
 full name	admin	pt	Nome completo
 general	admin	pt	Geral
+generate certificate	admin	pt	Gerar certificado
 global categories	common	pt	Categorias gerais
 global options	admin	pt	Opções gerais
 group ?	admin	pt	Grupo?
@@ -506,6 +513,7 @@ type of customfield	admin	pt	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt	No windowz é necessário instalar o asyncservice %1manualmente%2 ou utilizar o modo Fallback. Este modo significa que as tarefas só serão verificadas depois de cada visualização de página.
 up	admin	pt	Para cima
 updated	admin	pt	Actualizado
+upload your certificate .p12/.pfx file	admin	pt	Carregar o ficheiro .p12/.pfx do seu certificado
 use cookies to pass sessionid	admin	pt	Utilizar cookies para transmitir ID de sessão
 use default	admin	pt	Utilizar definições por omissão
 use ldap defaults	admin	pt	Utilizar definições por omissão do LDAP
@@ -519,6 +527,7 @@ user can edit forwarding address	admin	pt	O utilizador pode editar endereços re
 user data	common	pt	Dados de utilizadores
 user for smtp-authentication (leave it empty if no auth required)	admin	pt	Utilizador para autenticação SMTP (deixar vazio se a autenticação não for necessária)
 user groups	admin	pt	Grupos de utilizadores
+user hidden vom non-admins.	admin	pt	Utilizador oculto para não-administradores
 user-agent	admin	pt	User-Agent
 userdata	admin	pt	Dados de utilizadores
 username (standard)	admin	pt	Nome de utilizador (por omissão)

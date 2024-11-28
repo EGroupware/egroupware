@@ -1,4 +1,5 @@
 %1 attachments	mail	el	%1 συννημένα
+%1 for all users	mail	el	%1 για όλους τους χρήστες
 %1 has been added to blacklisted email addresses	mail	el	%1 προστέθηκε στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
 %1 has been added to whiltelisted email addresses	mail	el	%1 προστέθηκε στη λευκή λίστα (whitelist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
 %1 has been removed from blacklisted email addresses	mail	el	%1 αφαιρέθηκε από την μαύρη λίστα των διευθύνσεων ηλεκτρονικού ταχυδρομείου
@@ -9,7 +10,6 @@
 (leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
 (no subject)	mail	el	(χωρίς θέμα)
 (not connected)	mail	el	(χωρίς σύνδεση)
-(select mails by clicking on the line, like a checkbox)	mail	el	(επιλέξτε μηνύματα κάνοντας κλικ στην γραμμή, όπως θα κάνατε σε περίπτωση checkbox)
 account editable by user	mail	el	ο λογαριασμός είναι επεξεργάσιμος από τον χρήστη
 acl rights retrieve failed, seems there are no rights set!	mail	el	Η λήψη των δικαιωμάτων ACL απέτυχε, φαίνεται πως δεν έχουν οριστεί δικαιώματα!
 acl rights retrieved successfully	mail	el	Οι ορισμοί δικαιώματων (ACL) ελήφθησαν επιτυχώς

@@ -982,9 +982,15 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		if (!img) img = selectOption.icon ?? selectOption.im0 ?? selectOption.im1 ?? selectOption.im2;
 
 		// lazy iff "child" is set and "children" is empty or children does not exist in the first place
-		const lazy = typeof selectOption.item !== "undefined" ?
-					 (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item) :
-					 (selectOption.children?.length == 0 && selectOption.child);
+		let lazy: Boolean | 1 | 0;
+		if (typeof selectOption.item !== "undefined")
+		{
+			lazy = (selectOption.item?.length === 0 && selectOption.child) || (selectOption.child && !selectOption.item);
+		} else
+		{
+			lazy = (typeof selectOption.children === "undefined" || selectOption.children?.length == 0)
+				&& selectOption.child;
+		}
 		const value = selectOption.value ?? selectOption.id;
 		if(expandState && this.autoloading && lazy)
 		{
@@ -1112,8 +1118,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
 					@drop=${(event) => {this.handleDragEvent(event);}}
             >
-				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
-				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-right")}" slot="expand-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-down")}" slot="collapse-icon"></sl-icon>
                 <slot></slot>
                 ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>

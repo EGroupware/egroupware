@@ -1,9 +1,13 @@
+add a new definition	importexport	nl	Een nieuwe definitie toevoegen
 addressbook csv import	importexport	nl	Adresboek CSV import
 addressbook vcard import	importexport	nl	Adresboek vCard import
 all users	importexport	nl	Alle gebruikers
 allowed users	importexport	nl	Toegestane gebruikers
 automatically created by importexport	importexport	nl	Automatisch aangemaakt door importexport
+change allowed users	importexport	nl	Toegestane gebruikers wijzigen
+change owner when updating	importexport	nl	Eigenaar wijzigen bij updaten
 changed	importexport	nl	Veranderd
+changed owner	importexport	nl	Eigenaar wijzigen
 charset of file	importexport	nl	Karakterset van bestand
 check all	importexport	nl	Markeer alles
 choose a name for this definition	importexport	nl	Kies een naam voor deze definitie

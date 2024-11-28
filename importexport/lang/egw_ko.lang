@@ -1,5 +1,11 @@
+add a new definition	importexport	ko	새 정의 추가
+addressbook csv import	importexport	ko	주소록 CSV 가져오기
+addressbook vcard import	importexport	ko	주소록 vCard 가져오기
 all users	importexport	ko	모든 사용자
+change allowed users	importexport	ko	허용된 사용자 변경
+change owner when updating	importexport	ko	업데이트 시 소유자 변경
 changed	importexport	ko	변경됨
+changed owner	importexport	ko	소유자 변경
 charset of file	importexport	ko	파일의 문자셋
 created	importexport	ko	생성됨
 deleted	importexport	ko	삭제됨

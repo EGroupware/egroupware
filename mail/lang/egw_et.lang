@@ -1,8 +1,11 @@
 %1 attachments	mail	et	%1 manused
+%1 for all users	mail	et	%1 kõigile kasutajatele
+%1 is not writable by you!	mail	et	%1 ei ole sinu poolt kirjutatav!
 %1 mails selected	mail	et	%1 valitud e-kirjad
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	et	%1 nõuab sõela laiendust %2, võib-olla proovige %1 või suuremat arvu päevi.
 (leave empty for no quota)	mail	et	(jäta tühjaks, kui kvooti ei ole)
 acl rights retrieve failed, seems there are no rights set!	mail	et	ACL-i õiguste päring ebaõnnestus, tundub, et õigusi ei ole määratud!
+activating by date requires a start- and end-date!	mail	et	Aktiveerimine kuupäeva järgi nõuab algus- JA lõpukuupäeva!
 add all my aliases	mail	et	Lisa kõik minu varjunimed
 add as new	mail	et	Lisada uueks
 add files as %1	mail	et	Lisage failid %1

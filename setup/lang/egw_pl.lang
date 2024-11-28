@@ -91,7 +91,7 @@ backup '%1' renamed to '%2'	setup	pl	Kopia zapasowa '%1' zmieniła nazwę na '%2
 backup '%1' restored	setup	pl	Odtworzono kopię zapasową '%1'
 backup and restore	setup	pl	Kopie zapasowe i odtwarzanie danych
 backup failed	setup	pl	Kopia zapasowa nie powiodła się
-backup files (needs ziparchive)	setup	pl	Kopia zapasowa plików (wymagany ZipArchive)
+backup files (needs ziparchive)	setup	pl	Kopia zapasowa danych plików EGroupware (katalog files) <br>(wymaga PHP ZipArchive)
 backup finished	setup	pl	Kopia zapasowa została wykonana
 backup housekeeping	setup	pl	Kopie bezpieczeństwa ze standardową nazwą mogą być czyszczone automatycznie. Zmień nazwę pliku kopi bezpieczeństwa by wyłączyć go z automatycznego czyszczenia.
 backup min count	setup	pl	Minimalna liczba kopi bezpieczeństwa
@@ -130,7 +130,7 @@ charsets used by the different languages	setup	pl	Zestaw znaków używany przez 
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pl	Test sprawdzający może być jedynie wykonany po wywołaniu z serwera WEB, ponieważ user-ID/-nazwa dla serwera WEB nie jest znana .
 check installation	setup	pl	Sprawdź instalację
 check ip address of all sessions	setup	pl	Sprawdzać IP dla wszystkich sesji
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	pl	Sprawdź kopię bezpieczeństwa i odtwórz katalog plików (może zająć dużo przestrzeni dyskowej, upewnij się, że masz skonfigurowane opcje utrzymania porządku.)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	pl	Uwzględnij pliki (katalog plików) w kopii zapasowej danych.<br>(Może generować duże ilości danych i przerwać z wieloma plikami, dokumentacja: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 checking extension %1 is loaded or loadable	setup	pl	Sprawdzam, czy rozszerzenie %1 jest załadowane lub możliwe do załadowania
 checking file-permissions of %1 for %2 %3: %4	setup	pl	Sprawdzam prawa dostępu obiektu %1 dla %2 %3: %4
 checking for gd support...	setup	pl	Sprawdzam wsparcie dla modułu GD ...
@@ -367,6 +367,7 @@ login as user postgres, eg. by using su as root	setup	pl	Zaloguj jako użytkowni
 login to mysql -	setup	pl	Logowanie do mysql -
 loginname needed for domain configuration	setup	pl	Login konieczny dla konfiguracji domeny
 logout	setup	pl	Wyloguj
+mail account of %1 migrated	setup	pl	Konto pocztowe %1 zmigrowane.
 mail domain (for virtual mail manager)	setup	pl	Domena mailowa (dla wirtualnego mail manadżera)
 mail server login type	setup	pl	Typ logowania do serwera poczty
 mail server protocol	setup	pl	Protokół serwera Mail

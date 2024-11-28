@@ -189,7 +189,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 uppercase letters	preferences	de	Großbuchstaben
 use default	preferences	de	Vorgabe benutzen
 use first %1 letters from username	preferences	de	Benutze die ersten %1 Buchstaben des Benutzernamens
-use initials from first and last name	preferences	de	Benutzer die Initialen von Vor- und Nachnamen
+use initials from first and last name	preferences	de	Benutze die Initialen von Vor- und Nachnamen
 users choice	preferences	de	Benutzerauswahl
 what to display for an avatar, if there is no photo	preferences	de	Was soll als Avatar angezeigt werden, wenn es kein Foto gibt
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	de	Wenn Sie mehrere Optionen auswählen können, soll die Optionsliste geöffnet bleiben, bis Sie sie schließen, oder geschlossen werden, nachdem Sie eine Option ausgewählt haben.

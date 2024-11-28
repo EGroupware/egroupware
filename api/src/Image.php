@@ -218,7 +218,7 @@ class Image
 		//'unlock'	=> 'unlock',
 		'up'	=> 'arrow-bar-up',
 		'update'	=> 'shield-exclamation',
-		'upload'	=> 'box-arrow-up',
+		'upload'	=> 'box-arrow-in-up',
 		'url'	=> 'link-45deg',
 		'users'	=> 'people',
 		'view'	=> 'search',
@@ -276,7 +276,7 @@ class Image
 		'filemanager/list_tile'	=> 'grid-3x3-gap',
 		'filemanager/linkpaste' => 'filemanager/bi-linkpaste',
 		'filemanager/mailpaste'	=> 'envelope-check',
-		'filemanager/upload'	=> 'upload',
+		'filemanager/upload'	=> 'box-arrow-in-up',
 		'images/blocks'	=> 'boxes',
 		'images/books'	=> 'journals',
 		'images/charts'	=> 'bar-chart-line',
@@ -362,7 +362,7 @@ class Image
 		'projectmanager/milestone'	=> 'check2-circle',
 		'projectmanager/pricelist'	=> 'currency-euro',
 		'status/videoconference'	=> 'camera-video',
-		'status/videoconference_call'	=> 'camera-video-off',
+		'status/videoconference_call'	=> 'camera-video',
 		'status/videoconference_join'	=> 'node-plus',
 		'timesheet/pause'	=> 'pause-fill',
 		'timesheet/pause-orange'	=> 'pause-fill',
@@ -477,7 +477,7 @@ class Image
 			self::get_extension($image, $name);
 			return self::find($app, $name, $extension, $add_cachebuster);
 		}
-		error_log(__METHOD__."('$app', '$image') image NOT found!");
+		//error_log(__METHOD__."('$app', '$image') image NOT found!");
 		return null;
 	}
 

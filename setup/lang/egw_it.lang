@@ -107,7 +107,7 @@ backup '%1' restored	setup	it	Backup '%1' ripristinato
 backup and restore	setup	it	Backup e ripristino
 backup directory %1 mounted as %2	setup	it	Cartella di backup %1 montata come %2
 backup failed	setup	it	Backup fallito!
-backup files (needs ziparchive)	setup	it	Effettua anche il backup  dei file (richiede ZipArchive)
+backup files (needs ziparchive)	setup	it	Backup dei dati dei file di EGroupware (directory dei file) <br>(richiede PHP ZipArchive)
 backup finished	setup	it	Backup terminato
 backup housekeeping	setup	it	I backup con nome standard possono essere rimossi automaticamente. Rinominando i file di backup, si escludono dalla rimozione automatica
 backup min count	setup	it	Numero minimo di backup
@@ -152,7 +152,7 @@ charsets used by the different languages	setup	it	Set di caratteri usati dalle d
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	it	Il controllo può essere effettuato solo se chiamato attraverso un web server, poiché il userid/nome del server web non sono noti
 check installation	setup	it	Controlla installazione
 check ip address of all sessions	setup	it	controlla l'indirizzo ip di tutte le sessioni
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	it	Controllare il backup e il ripristino della directory dei file. Può utilizzare molto spazio, assicurarsi di configurare l'housekeeping di conseguenza.
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	it	Includere i file (directory dei file) nel backup dei dati.<br>(Può generare grandi quantità di dati e interrompere con molti file, documentazione: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 checking dependencies: %1 packages are installed in the required version.	setup	it	Controllo delle dipendenze: i pacchetti %1 sono installati nella versione richiesta.
 checking extension %1 is loaded or loadable	setup	it	Verifica che l'estensione %1 sia caricata o caricabile
 checking file-permissions of %1 for %2 %3: %4	setup	it	Controllo dei permessi del file %1 per %2 %3: %4
@@ -283,6 +283,7 @@ ldap root password	setup	it	Password di root LDAP
 ldap rootdn	setup	it	LDAP Root DN
 login to mysql -	setup	it	Login a Mysql -
 logout	setup	it	Esci
+mail account of %1 migrated	setup	it	Account di posta di %1 migrato.
 mail server login type	setup	it	Mail server login type
 make sure that your database is created and the account permissions are set	setup	it	Controlla che il tuo database sia stato creato e che i permessi dell'utente siano corretti
 manage applications	setup	it	Gestione Applicazioni

@@ -1,5 +1,11 @@
+add a new definition	importexport	pt	Adicionar uma nova definição
+addressbook csv import	importexport	pt	Importação de CSV do livro de endereços
+addressbook vcard import	importexport	pt	Importação de vCard do livro de endereços
 all users	importexport	pt	Todos os utilizadores
+change allowed users	importexport	pt	Alterar os utilizadores permitidos
+change owner when updating	importexport	pt	Alterar o proprietário ao atualizar
 changed	importexport	pt	Alterado/a
+changed owner	importexport	pt	Proprietário alterado
 charset of file	importexport	pt	Charset do ficheiro
 check all	importexport	pt	Marcar todas
 condition	importexport	pt	Condição

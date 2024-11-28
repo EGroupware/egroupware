@@ -1,5 +1,4 @@
 %1 files unlocked.	filemanager	et	%1 failid on lukustamata.
-actions	filemanager	et	Tegevused
 applications	common	et	Rakendused
 check all	filemanager	et	Kontrolli kõik
 classic	filemanager	et	Standardne tööriistariba
@@ -29,7 +28,6 @@ extended access control list	filemanager	et	Laiendatud juurdepääsu kontrollnim
 extended acl	filemanager	et	Laiendatud ACL
 failed to change permissions of %1!	filemanager	et	Ei õnnestunud muuta õigusi %1!
 failed to create directory!	filemanager	et	Kausta loomine ebaõnnestus!
-favorites	filemanager	et	Lemmikud
 file	common	et	Pail
 file %1 already exists	filemanager	et	Fail %1 on juba olemas
 file %1 could not be created.	filemanager	et	Faili %1 ei saanud luua.

@@ -1,6 +1,11 @@
+%1 attachments	mail	tr	%1 ekler
+%1 for all users	mail	tr	Tüm kullanıcılar için %1
+%1 is not writable by you!	mail	tr	%1 sizin tarafınızdan yazılabilir DEĞİLDİR!
+%1 mails selected	mail	tr	%1 e-posta seçildi
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	tr	%1 için %2 Sieve uzantısı gerekiyor, belki %1 veya daha yüksek gün sayısını deneyebilirsiniz.
 (leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
 acl rights retrieve failed, seems there are no rights set!	mail	tr	ACL hakları geri alma başarısız oldu, ayarlanmış hak yok gibi görünüyor!
+activating by date requires a start- and end-date!	mail	tr	Tarihe göre etkinleştirme için başlangıç VE bitiş tarihi gerekir!
 add all my aliases	mail	tr	Tüm takma adlarımı ekle
 add as new	mail	tr	Yeni olarak ekle
 add files as %1	mail	tr	Dosyaları %1 olarak ekle

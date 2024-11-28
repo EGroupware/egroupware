@@ -32,10 +32,7 @@
 accessrights	filemanager	ja	アクセス権
 acl added.	filemanager	ja	ACL を追加しました。
 acl deleted.	filemanager	ja	ACL を削除しました。
-actions	filemanager	ja	動作
-add to clipboard	filemanager	ja	クリップボードに追加
 administrators	filemanager	ja	管理者
-all files	filemanager	ja	全ファイル
 all subdirectories	filemanager	ja	全サブディレクトリ
 all types	filemanager	ja	全タイプ
 allow a maximum of the above configured folderlinks to be configured in settings	admin	ja	フォルダ・リンクの最大値
@@ -142,7 +139,6 @@ extended access control list	filemanager	ja	拡張 ACL
 extended acl	filemanager	ja	拡張 ACL
 failed to change permissions of %1!	filemanager	ja	%1 のパーミッションの変更に失敗しました!
 failed to create directory!	filemanager	ja	ディレクトリの作成に失敗しました!
-favorites	filemanager	ja	お気に入り
 file	common	ja	ファイル
 file %1 already exists	filemanager	ja	ファイル %1 は既に存在します
 file %1 could not be created.	filemanager	ja	ファイル %1 を作成できませんでした。
@@ -229,7 +225,6 @@ paste link	filemanager	ja	リンクを貼り付ける
 path %1 not found or not a directory!	filemanager	ja	%1 が見つかりません!
 path and query-parameters, smb: share and optional path (with /)	filemanager	ja	パスとクエリパラメータ、SMB：共有とオプションのパス（/付き）
 percentage	filemanager	ja	パーセンテージ
-permission denied!	filemanager	ja	権限が拒否されました!
 permissions	filemanager	ja	パーミッション
 permissions of %1 changed.	filemanager	ja	%1 のパーミッションが変更されました。
 please select a file to delete.	filemanager	ja	削除するファイルを選択してください。

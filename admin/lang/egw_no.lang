@@ -22,7 +22,6 @@
 %1 token %2.	admin	no	%1 token %2.
 %1 user %2	admin	no	%1 bruker %2
 (de)activate mail accounts	admin	no	(de)aktivere e-postkontoer
-(default no, leave it off if you dont use it)	admin	no	Standard = Nei, la den være av hvis du ikke bruker den
 (no subject)	admin	no	(uten emne)
 access token revoked.	admin	no	Tilgangstoken tilbakekalt.
 account	admin	no	Konto
@@ -73,6 +72,7 @@ allow the user to store his password under 'security & passwords' for singlesign
 alternate email address	admin	no	Alternativ e-mailadresse
 anonymous user	admin	no	Anonym bruker
 anonymous user (not shown in list sessions)	admin	no	Anonym Bruker (vises ikke i sesjonsliste)
+anonymous user. not shown in list sessions.	admin	no	Anonym bruker. Vises ikke i listeøkter
 appearance	admin	no	Visning
 application	admin	no	Applikasjon
 application name	admin	no	Applikasjonsnavn
@@ -106,6 +106,9 @@ cancel testjob!	admin	no	Avbryt TestJob!
 categories list	admin	no	Kategoriliste
 category %1 has been saved !	admin	no	Kategori %1 er lagret
 category list	admin	no	Kategoriliste
+certificate	admin	no	Sertifikat
+certificate details	admin	no	Detaljer om sertifikatet
+certificate validation in days	admin	no	Sertifikatvalidering i dager
 change access	admin	no	Endre tilgangsrettigheter
 change acl rights	admin	no	Endre ACL rettigheter
 change config settings	admin	no	Endre innstillinger for konfigurasjon
@@ -122,6 +125,7 @@ create group	admin	no	Lag Gruppe
 created	admin	no	Opprettet
 creates a new field	admin	no	Lager nytt felt
 crontab only (recomended)	admin	no	Kun crontab (anbefalt)
+current certificate	admin	no	Gjeldende sertifikat
 custom 1	admin	no	Egendefinert 1
 custom 2	admin	no	Egendefinert 2
 custom 3	admin	no	Egendefinert 3
@@ -139,6 +143,7 @@ delete account	admin	no	Slett konto
 delete all records	admin	no	Slett alle instanser
 delete application	admin	no	Slett applikasjon
 delete category	admin	no	Slett kategori
+delete certificate	admin	no	Slett sertifikat
 delete group	admin	no	Slett gruppe
 delete peer server	admin	no	Slett peer tjener
 delete the category	admin	no	Slett denne kategorien
@@ -220,6 +225,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	no	Feil: Fant ikke %1, eller annen feil
 event details follow	admin	no	Hendelses Detaljer Følger
 expires	admin	no	Går ut
+export certificate as p12	admin	no	Eksporter sertifikat som p12
 failed to change password.	admin	no	Passordet kunne ikke endres.
 fallback (after each pageview)	admin	no	Tilbakefall (etter hver sidevisning)
 false	admin	no	Falsk
@@ -233,6 +239,7 @@ forward email's to	admin	no	Videresend e-mailer til
 forward only	admin	no	Bare videresending
 full name	admin	no	Fullt Navn
 general	admin	no	Generell
+generate certificate	admin	no	Generer sertifikat
 global categories	common	no	Globale kategorier
 group ?	admin	no	Gruppe?
 group has been added	common	no	Gruppen er lagt til
@@ -455,6 +462,7 @@ trust relationship	admin	no	Trust relasjoner
 two weeks	admin	no	To uker
 up	admin	no	Opp
 updated	admin	no	Oppdatert
+upload your certificate .p12/.pfx file	admin	no	Last opp sertifikatets .p12/.pfx-fil
 use cookies to pass sessionid	admin	no	Anvend cookies for å lagre sessionID
 use default	admin	no	Bruk standard
 use ldap defaults	admin	no	Bruk LDAP standaroppsett
@@ -467,6 +475,7 @@ user accounts	admin	no	Brukerkontoer
 user data	common	no	Brukerdata
 user for smtp-authentication (leave it empty if no auth required)	admin	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
 user groups	admin	no	Brukergrupper
+user hidden vom non-admins.	admin	no	Bruker skjult for ikke-admins
 user-agent	admin	no	User-Agent
 userdata	admin	no	Brukerdata
 users can define their own emailaccounts	admin	no	Brukere kan definere egne e-post kontoer

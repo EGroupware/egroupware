@@ -4386,7 +4386,7 @@ export class CalendarApp extends EgwApp
 					if (_value)
 					{
 						if (_value.err) egw.message(_value.err, 'error');
-						if(_value.url) egw.top.app.status.openCall(_value.url);
+						if(_value.url) egw.callFunc('app.status.openCall', _value.url);
 					}
 			}).sendRequest();
 	}
