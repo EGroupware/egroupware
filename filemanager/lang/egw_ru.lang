@@ -26,10 +26,7 @@
 accessrights	filemanager	ru	Права доступа
 acl added.	filemanager	ru	Права доступа ACL добавлены.
 acl deleted.	filemanager	ru	Права доступа ACL удалены.
-actions	filemanager	ru	Действия
-add to clipboard	filemanager	ru	Добавить буфер обмена
 administrators	filemanager	ru	Администраторы
-all files	filemanager	ru	Все файлы
 allow a maximum of the above configured folderlinks to be configured in settings	admin	ru	Максимальное количество папок для связи, отраженных в настройках
 and all it's childeren	filemanager	ru	и все дочерние записи
 application fields	filemanager	ru	Поля приложения
@@ -123,7 +120,6 @@ extended access control list	filemanager	ru	Расширенный лист ко
 extended acl	filemanager	ru	Расширенный ACL контроль доступа
 failed to change permissions of %1!	filemanager	ru	Неудача при изменении разрешений %1!
 failed to create directory!	filemanager	ru	Неудача при создании каталога!
-favorites	filemanager	ru	Избранное
 file	common	ru	Файл
 file %1 already exists	filemanager	ru	Файл %1 уже существует
 file %1 could not be created.	filemanager	ru	Файл %1 не может быть создан.
@@ -203,7 +199,6 @@ password for webdav and smb, use $pass for password of logged in user	filemanage
 path %1 not found or not a directory!	filemanager	ru	Путь %1 не найден или нет директории!
 path and query-parameters, smb: share and optional path (with /)	filemanager	ru	Путь и параметры запроса, SMB: общий ресурс и необязательный путь (с /)
 percentage	filemanager	ru	Проценты
-permission denied!	filemanager	ru	Отсутствует разрешение!
 permissions	filemanager	ru	Разрешения
 permissions of %1 changed.	filemanager	ru	Разрешения %1 изменены.
 please select a file to delete.	filemanager	ru	Выберите файл для удаления

@@ -185,7 +185,10 @@ two factor auth is already setup.	preferences	sk	Dvojfaktorová autentifikácia 
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	sk	Jednotka zobrazenia veľkosti písma: buď "px" ako je bežné pri webových stránkach, alebo "pt" ako pri textových editoroch.
 uppercase letters	preferences	sk	Veľké písmená
 use default	preferences	sk	Použiť predvolené
+use first %1 letters from username	preferences	sk	Použiť prvé %1 písmen z používateľského mena
+use initials from first and last name	preferences	sk	Použiť iniciály z mena a priezviska
 users choice	preferences	sk	Používateľova voľba
+what to display for an avatar, if there is no photo	preferences	sk	Čo sa má zobraziť pre avatara, ak nie je k dispozícii fotografia
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	sk	Keď môžete vybrať viacero možností, má ostať zoznam možností otvorený až kým ho nezavriete, alebo sa má zavrieť po výbere možnosti.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sk	Ak odpoviete [ Áno ], tlačítka [ Domov ] a [ Odhlásiť ] budú vyzerať rovnako ako aplikácie v hlavnom paneli aplikácií navrchu stránky.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu používať pri exporte do CSV. Predvolená je tá, ktorá je používaná ako znaková sada v tejto inštalácii EGroupware.

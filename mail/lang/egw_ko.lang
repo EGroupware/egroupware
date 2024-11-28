@@ -1,5 +1,10 @@
+%1 attachments	mail	ko	첨부 파일: %1개
+%1 for all users	mail	ko	모든 사용자에 대해 %1
+%1 is not writable by you!	mail	ko	%1은(는) 사용자가 쓸 수 없습니다!
+%1 mails selected	mail	ko	%1 이메일 선택됨
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ko	%1 には Sieve 拡張機能 %2 が必要です。%1 またはそれ以上の日数をお試しください。
 acl rights retrieve failed, seems there are no rights set!	mail	ko	ACL 권한 검색에 실패했습니다. 설정된 권한이 없는 것 같습니다.
+activating by date requires a start- and end-date!	mail	ko	날짜별로 활성화하려면 시작 날짜와 종료 날짜가 필요합니다!
 add as new	mail	ko	신규로 추가
 add files as %1	mail	ko	파일을 %1로 추가
 add this certificate into contact	mail	ko	이 인증서를 연락처에 추가

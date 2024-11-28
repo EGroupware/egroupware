@@ -1,4 +1,5 @@
 %1 attachments	mail	sl	%1 priloge
+%1 for all users	mail	sl	%1 za vse uporabnike
 %1 has been added to blacklisted email addresses	mail	sl	%1 je bilo dodanih na črno listirane e-poštne naslove
 %1 has been added to whiltelisted email addresses	mail	sl	%1 je bil dodan na podrejene e-poštne naslove
 %1 has been removed from blacklisted email addresses	mail	sl	%1 je bil odstranjen iz e-poštnih naslovov, naštetih na črno listo
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
 (no subject)	mail	sl	(brez zadeve)
 (not connected)	mail	sl	(brez povezave)
-(select mails by clicking on the line, like a checkbox)	mail	sl	(izberite pošto s klikom na vrstico, na primer potrditveno polje)
-(with checkbox enforced)	mail	sl	(s potrditvenim poljem)
 account editable by user	mail	sl	Račun, ki ga lahko uredi uporabnik
 acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
 acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene

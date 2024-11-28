@@ -11,8 +11,6 @@
 (leave empty for no quota)	mail	en	(Leave empty for no quota)
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
-(select mails by clicking on the line, like a checkbox)	mail	en	(select emails by clicking on the line, like a checkbox)
-(with checkbox enforced)	mail	en	(with checkbox enforced)
 account editable by user	mail	en	Account editable by user
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully

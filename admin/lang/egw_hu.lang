@@ -22,7 +22,6 @@
 %1 token %2.	admin	hu	%1 token %2.
 %1 user %2	admin	hu	%1 felhasználó %2
 (de)activate mail accounts	admin	hu	Mailfiókok (de)aktiválása
-(default no, leave it off if you dont use it)	admin	hu	Alapértelmezett = Nem, hagyja ki, ha nem használja.
 (no subject)	admin	hu	(nincs tárgy)
 -  type	admin	hu	- típus
 1 year	admin	hu	1 év
@@ -91,6 +90,7 @@ anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor).
 anonymous user does not exist!	admin	hu	Anonymous felhasználó nem létezik!
 anonymous user has no run-rights for the application!	admin	hu	Az Anonymous felhasználónak nincs futtatási joga az alkalmazáshoz!
+anonymous user. not shown in list sessions.	admin	hu	Admin: Névtelen felhasználó. Nem jelenik meg a listában munkamenetek
 any application	admin	hu	Bármelyik modul
 any group	admin	hu	Bármelyik csoport
 any user	admin	hu	Bármely felhasználó
@@ -172,6 +172,7 @@ creates / updates user accounts from csv file	admin	hu	Felhasználói fiókok l�
 creates / updates user groups from csv file	admin	hu	Felhasználói csoportok létrehozása/frissítése CSV fájlból
 creates a new field	admin	hu	Új mező létrehozása
 crontab only (recomended)	admin	hu	Csak crontab (ajánlott)
+current certificate	admin	hu	Jelenlegi tanúsítvány
 custom 1	admin	hu	Egyéni 1
 custom 2	admin	hu	Egyéni 2
 custom 3	admin	hu	Egyéni 3
@@ -303,6 +304,7 @@ error! no appname found	admin	hu	Hiba! Alkalmazásnév nem található!
 error: %1 not found or other error !!!	admin	hu	Hiba: %1 nem található vagy egyéb hiba!
 event details follow	admin	hu	Esemény jellemzőinek követése
 expires	admin	hu	Lejár
+export certificate as p12	admin	hu	Tanúsítvány exportálása p12 formátumban
 exports groups into a csv file.	admin	hu	Csoportok exportálása CSV-fájlba.
 exports users into a csv file.	admin	hu	Felhasználók exportálása CSV fájlba.
 failed to change password.	admin	hu	Sikertelen jelszó változtatás.
@@ -321,6 +323,7 @@ forward emails to	admin	hu	Email továbbítása ide
 forward only	admin	hu	Továbbítás csak ide
 full name	admin	hu	Teljes Neve
 general	admin	hu	Általános
+generate certificate	admin	hu	Tanúsítvány generálása
 global categories	common	hu	Globális kategóriák
 global options	admin	hu	Globális opciók
 group ?	admin	hu	Csoport?
@@ -635,6 +638,7 @@ user csv import	admin	hu	Felhasználói CSV import
 user data	common	hu	Felhasználó adatai
 user for smtp-authentication (leave it empty if no auth required)	admin	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni).
 user groups	admin	hu	Felhasználói csoportok
+user hidden vom non-admins.	admin	hu	Nem adminisztrátorok számára rejtett felhasználó
 user-agent	admin	hu	User-Agent
 userdata	admin	hu	Felhasználó adatai
 username (standard)	admin	hu	Felhasználó név (standard)

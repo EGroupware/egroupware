@@ -13,7 +13,6 @@
 %1 successful	admin	et	%1 edukas
 %1 token %2.	admin	et	%1 sümbol %2.
 (de)activate mail accounts	admin	et	(de)Aktiveerige postikontod
-(default no, leave it off if you dont use it)	admin	et	Vaikimisi = Ei, jätke see välja, kui te seda ei kasuta.
 1 year	admin	et	1 aasta
 2 month	admin	et	2 kuud
 2 weeks	admin	et	2 nädalat
@@ -63,6 +62,7 @@ alternate email address	admin	et	Alternatiivne email aadress
 anonymous user	admin	et	Anonymous kasutaja
 anonymous user (not shown in list sessions)	admin	et	Anonüümne Kasutaja (pole nähtav protsesside listis).
 anonymous user does not exist!	admin	et	Anonymous kasutaja EI eksisteeri!
+anonymous user. not shown in list sessions.	admin	et	Admin: Anonüümne kasutaja. Ei näidata nimekirjas seansse
 application	admin	et	Rakendus
 application name	admin	et	Rakenduse nimi
 application title	admin	et	Rakenduse pealkiri
@@ -85,6 +85,9 @@ can be used to show groups by container, if enabled	admin	et	Saab kasutada grupp
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
+certificate	admin	et	Sertifikaat
+certificate details	admin	et	Sertifikaadi andmed
+certificate validation in days	admin	et	Sertifikaadi valideerimine päevade jooksul
 change access	admin	et	Juurdepääsuõiguste muutmine
 change acl rights	admin	et	Muuda ACL Õigusi
 change login screen message	admin	et	Muuda pealehe sõnumit
@@ -98,6 +101,7 @@ country selection	admin	et	Riigi Valik
 create group	admin	et	Tee Grupp
 created	admin	et	Tehtud
 creates a new field	admin	et	Teeb uue välja
+current certificate	admin	et	Praegune sertifikaat
 custom 1	admin	et	Kohandatud 1
 custom 2	admin	et	Kohandatud 2
 custom 3	admin	et	Kohandatud 3
@@ -111,6 +115,7 @@ default	admin	et	Vaikimisi
 delete account	admin	et	Kustuta konto
 delete application	admin	et	Kustuta rakendus
 delete category	admin	et	Kustuta kategooria
+delete certificate	admin	et	Sertifikaadi kustutamine
 delete group	admin	et	Kustuta grupp
 delete this category	admin	et	Kustuta see kategooria
 delete this group	admin	et	Kustuta see grupp
@@ -167,9 +172,11 @@ error saving the entry!!!	admin	et	Viga kirje salvestamisel!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	et	Viga taimleri seadmisel, vale süntaks või võibolla üks juba töötab!
 error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga!
 expires	admin	et	Aegub
+export certificate as p12	admin	et	Sertifikaadi eksportimine p12 kujul
 field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba!
 full name	admin	et	Täis nimi
 general	admin	et	Üldine
+generate certificate	admin	et	Sertifikaadi genereerimine
 global categories	common	et	Globaalsed Kategooriad
 global options	admin	et	Globaalsed omadused
 group ?	admin	et	Grupp?
@@ -300,12 +307,14 @@ two weeks	admin	et	Kaks nädalat
 unknown account: %1 !!!	admin	et	Tundmatu konto: %1!
 up	admin	et	Üles
 updated	admin	et	Uuendatud
+upload your certificate .p12/.pfx file	admin	et	Laadige oma sertifikaadi .p12/.pfx fail üles.
 use default	admin	et	Kasuta vaikimisi
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	et	kasutage järgmisi valikuid:\nnoVfsSelect=1\nmime=application/pdf või /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
 use theme	admin	et	Kasuta nahka
 user accounts	admin	et	Kasutaja kontod
 user for smtp-authentication (leave it empty if no auth required)	admin	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav).
 user groups	admin	et	Kasutajate grupid
+user hidden vom non-admins.	admin	et	Kasutaja on peidetud mitteadminite eest
 user-agent	admin	et	User-Agent
 users choice	admin	et	Kasutajate Valik
 view access log	admin	et	Vaata sisselogimise logi

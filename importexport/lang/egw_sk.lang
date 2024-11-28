@@ -25,7 +25,6 @@ basic csv import	importexport	sk	Základný import CSV
 change allowed users	importexport	sk	Zmeniť oprávnených používateľov
 change owner when updating	importexport	sk	Zmeniť vlastníka pri aktualizácii
 changed	importexport	sk	Zmenil
-changed allowed_users	importexport	sk	Zmena oprávnených používateľov
 changed owner	importexport	sk	Zmena vlastníka
 charset of file	importexport	sk	Znaková sada súboru
 check all	importexport	sk	Označiť všetko

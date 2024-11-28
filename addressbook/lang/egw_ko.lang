@@ -1,8 +1,14 @@
+%1 contact(s) %2	addressbook	ko	%1 연락처 %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ko	%4 때문에 %1 연락처(들) %2, %3이(가) 실패했습니다!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ko	%1 연락처 %2, %3이(가) 권한 부족으로 실패했습니다!
 %1 contacts updated (%2 errors).	addressbook	ko	%1 연락처가 업데이트되었습니다(%2 오류).
+%1 fields in %2 other organisation member(s) changed	addressbook	ko	%2 다른 조직 구성원의 %1 필드가 변경되었습니다.
 %1 key(s) added to public keyserver "%2".	addressbook	ko	공개 키 서버 "%2"에 %1키가 추가되었습니다.
 %1 public keys added.	addressbook	ko	%1 공개 키가 추가되었습니다.
+%1 records imported	addressbook	ko	%1 레코드를 가져왔습니다.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
+%1 shared this contact on %2 with %3 %4	addressbook	ko	%1이(가) %2에서 %3 %4와 이 연락처를 공유했습니다.
+%1 starts with '%2'	addressbook	ko	%1이(가) '%2'로 시작합니다.
 (e.g. 1969)	addressbook	ko	예 1969
 @-eval() is only availible to admins!!!	addressbook	ko	@-eval() 은 관리자만 가능합니다!
 account repository	admin	ko	계정 저장소
@@ -23,8 +29,12 @@ address book - view	addressbook	ko	주소록 - 보기
 address line 2	addressbook	ko	주소 2
 address type	addressbook	ko	주소 형태
 addressbook	common	ko	주소록
+addressbook csv export	addressbook	ko	주소록 CSV 내보내기
+addressbook csv import	addressbook	ko	주소록 CSV 가져오기
 addressbook list	addressbook	ko	주소록 목록
 addressbook preferences	addressbook	ko	주소록 환경설정
+addressbook vcard export	addressbook	ko	주소록 vCard 내보내기
+addressbook vcard import	addressbook	ko	주소록 vCard 가져오기
 addressbook-fieldname	addressbook	ko	주소록-필드이름
 addvcard	addressbook	ko	VCard 추가
 all addressbooks	addressbook	ko	모든 주소록
@@ -58,6 +68,7 @@ change addressbook when updating	addressbook	ko	업데이트 시 주소록 변�
 charset of file	addressbook	ko	파일의 문자셋
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	ko	사전 정의된 지도 소스를 선택하거나 사용자 지정 URL 사용(%r = 거리, %t = 도시, %c = 국가, %z = 우편번호 사용)
 city	common	ko	도시
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	ko	주소록 필드 정리, 동기화로 인해 중복이 생성되는 경우 적용
 company	common	ko	회사
 company name	addressbook	ko	회사 이름
 configuration	common	ko	구성
@@ -115,6 +126,7 @@ export definition to use for nextmatch export	addressbook	ko	다음 매치 내�
 export definitition to use for nextmatch export	addressbook	ko	다음 매치 내보내기에 사용할 내보내기 정의
 export file name	addressbook	ko	파일이름 내보내기
 export from addressbook	addressbook	ko	주소록에서 내보내기
+exports contacts from your addressbook into a csv file.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	ko	주소록의 연락처를 CSV 파일로 내보냅니다.  CSV는 '쉼표로 구분된 값'을 의미합니다. 옵션 탭에서 다른 구분 기호를 선택할 수도 있습니다.
 extra	addressbook	ko	기타
 favorite phone	addressbook	ko	즐겨찾는 전화

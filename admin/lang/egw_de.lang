@@ -22,7 +22,6 @@
 %1 token %2.	admin	de	%1 Token %2.
 %1 user %2	admin	de	%1 Benutzer %2
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
-(default no, leave it off if you dont use it)	admin	de	(Vorgabe = Nein. Ausgeschaltet lassen, wenn nicht benutzt)
 (no subject)	admin	de	(Kein Betreff)
 -  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
@@ -56,7 +55,6 @@ acl added.	admin	de	ACL hinzugefügt.
 acl csv export	admin	de	ACL CSV Export
 acl deleted.	admin	de	ACL gelöscht.
 acl entry deleted.	admin	de	ACL Eintrag gelöscht.
-acl entry not found!	admin	de	ACL Eintrag nicht gefunden!
 acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
 acl updated	admin	de	ACL aktualisiert
@@ -121,7 +119,7 @@ anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt).
 anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
 anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
-anonymous user. not shown in list sessions.	admin	de	Anonymer Benutzer. Wird nicht in der Liste der Sitzungen angezeigt.
+anonymous user. not shown in list sessions.	admin	de	Anonymer Benutzer. Wird nicht in der Liste der Sitzungen angezeigt
 any application	admin	de	Jede Anwendung
 any group	admin	de	Jede Gruppe
 any user	admin	de	Jeder Benutzer

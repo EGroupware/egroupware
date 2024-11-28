@@ -29,7 +29,6 @@ extended access control list	filemanager	ro	Lista extinsă de control al accesul
 extended acl	filemanager	ro	ACL extinsă
 failed to change permissions of %1!	filemanager	ro	Nu s-a reușit modificarea permisiunilor lui %1!
 failed to create directory!	filemanager	ro	Nu s-a reușit crearea unui dosar!
-favorites	filemanager	ro	Favorite
 file	common	ro	Fișier
 file %1 already exists	filemanager	ro	Fișierul %1 există deja
 file %1 could not be created.	filemanager	ro	Fișierul %1 nu a putut fi creat.

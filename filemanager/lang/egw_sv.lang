@@ -1,7 +1,6 @@
 %1 already exists as a file	filemanager	sv	%1 finns redan som fil
 %1 files unlocked.	filemanager	sv	%1 filer är upplåsta.
 %1 starts with '%2'	filemanager	sv	%1 börjar med '%2'
-actions	filemanager	sv	Åtgärder
 applications	common	sv	Applikationer
 cancel editing %1 without saving	filemanager	sv	Avbryt ändring av %1 utan att spara
 cannot create directory because it begins or ends in a space	filemanager	sv	Kan inte skapa katalog eftersom namnet börjar eller slutar med ett mellanslag
@@ -61,7 +60,6 @@ extended access control list	filemanager	sv	Utökad åtkomstkontrollista
 extended acl	filemanager	sv	Utökad ACL
 failed to change permissions of %1!	filemanager	sv	Det gick inte att ändra behörigheten för %1!
 failed to create directory!	filemanager	sv	Det gick inte att skapa mappen!
-favorites	filemanager	sv	Favoriter
 file	common	sv	Fil
 file %1 already exists	filemanager	sv	Filen %1 finns redan
 file %1 could not be created.	filemanager	sv	Fil % kunde inte skapas

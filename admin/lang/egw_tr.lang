@@ -22,7 +22,6 @@
 %1 token %2.	admin	tr	%1 belirteci %2.
 %1 user %2	admin	tr	%1 kullanıcı %2
 (de)activate mail accounts	admin	tr	Posta hesaplarını (de)Etkinleştir
-(default no, leave it off if you dont use it)	admin	tr	Varsayılan = Hayır, kullanmıyorsanız kapalı bırakın
 (no subject)	admin	tr	(konu yok)
 1 year	admin	tr	1 yıl
 2 month	admin	tr	2 ay
@@ -80,6 +79,7 @@ allow anonymous access to this app	admin	tr	Bu uygulamaya anonim girişe izin ve
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	tr	Kullanıcının parolasını SingleSignOn için 'Güvenlik ve Parolalar' altında saklamasına izin verin.
 anonymous user	admin	tr	Anonim kullanıcı
 anonymous user (not shown in list sessions)	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez.
+anonymous user. not shown in list sessions.	admin	tr	Anonim kullanıcı. Liste oturumlarında gösterilmez
 appearance	admin	tr	Görünüm
 application	admin	tr	Uygulama
 application name	admin	tr	Uygulama Adı
@@ -132,6 +132,7 @@ country	admin	tr	Ülke
 country selection	admin	tr	Ülke seçimi
 create group	admin	tr	Grup oluştur
 crontab only (recomended)	admin	tr	Crontab sadece (önerilir)
+current certificate	admin	tr	Güncel sertifika
 custom 1	admin	tr	Özel 1
 custom 2	admin	tr	Özel 2
 custom 3	admin	tr	Özel 3
@@ -147,6 +148,7 @@ delete account	admin	tr	Hesabı sil
 delete all records	admin	tr	Tüm kayıtları sil
 delete application	admin	tr	Uygulamayı sil
 delete category	admin	tr	Kategori sil
+delete certificate	admin	tr	Sertifika silme
 delete group	admin	tr	Grup sil
 delete peer server	admin	tr	Peer sunucu sil
 delete the category	admin	tr	Kategoriyi sil
@@ -215,6 +217,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	tr	Hata: %1 bulunamıyor ya da başka bir hata!
 event details follow	admin	tr	Etkinlik Detayları Ektedir
 expires	admin	tr	Sona Eriyor
+export certificate as p12	admin	tr	Sertifikayı p12 olarak dışa aktarın
 fallback (after each pageview)	admin	tr	Fallback (her sayfa görüntülemeden sonra)
 file space	admin	tr	Dosya Kotası
 file space must be an integer	admin	tr	Dosya Kotası tam sayı olmalıdır
@@ -222,6 +225,7 @@ for the times above	admin	tr	yukarıdaki zamanlar için
 for the times below (empty values count as '*', all empty = every minute)	admin	tr	Aşağıdaki zamanlar için (boş değerler '*' yerine geçer, tümü boş=her dakika)
 force selectbox	admin	tr	Seçimn kurusunu mecburi tut
 full name	admin	tr	Tam isim
+generate certificate	admin	tr	Sertifika Oluştur
 global categories	common	tr	Genel kategoriler
 group ?	admin	tr	Grup?
 group has been added	common	tr	Grup eklendi
@@ -407,6 +411,7 @@ trust level	admin	tr	Güven seviyesi
 trust relationship	admin	tr	Güven ilişkisi
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	tr	Windows kullanıyorsanız asyncservice'i manuel oalrak yüklemeniz ya da fallback modunu kullanmanız gerekir. Fallback modu, görevlerin sadece her sayfa gösteriminin ardından kontrol edileceği anlamını taşır.
 updated	admin	tr	Güncelle
+upload your certificate .p12/.pfx file	admin	tr	Sertifika .p12/.pfx dosyanızı yükleyin
 use cookies to pass sessionid	admin	tr	Oturum id'sini taşımak için çerez kullan (cookie)
 use pure html compliant code (not fully working yet)	admin	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalışmamaktadır)
 use theme	admin	tr	Kullanılacak şablon
@@ -414,6 +419,7 @@ user accounts	admin	tr	Kullanıcı hesapları
 user data	common	tr	Kullanıcı verileri
 user for smtp-authentication (leave it empty if no auth required)	admin	tr	SMTP doğrulaması için kullanılacak kullanıcı (Doğrulama gerekmiyorsa boş bırakınız)
 user groups	admin	tr	Kullanıcı grupları
+user hidden vom non-admins.	admin	tr	Kullanıcı yönetici olmayanlardan gizlendi
 user-agent	admin	tr	User-Agent
 userdata	admin	tr	Kullanıcı verileri
 users choice	admin	tr	Kullanıcı Seçimleri

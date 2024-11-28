@@ -1,12 +1,11 @@
 %1 attachments	mail	nl	%1 bijlagen
+%1 for all users	mail	nl	%1 voor alle gebruikers
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	nl	%1 vereist Sieve-extensie %2, probeer misschien %1 of een hoger aantal dagen.
 (leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
 (no subject)	mail	nl	(geen onderwerp)
 (not connected)	mail	nl	(niet verbonden)
-(select mails by clicking on the line, like a checkbox)	mail	nl	(selecteer berichten door op te klikken op de regel, zoals bij een checkbox)
-(with checkbox enforced)	mail	nl	(met checkbox geforceerd)
 account editable by user	mail	nl	Account door gebruiker te wijzigen
 acl rights retrieve failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend!
 acl rights retrieved successfully	mail	nl	ACL rechten succesvol opgehaald

@@ -1,0 +1,6 @@
+add a new definition	importexport	ro	Adăugați o nouă definiție
+addressbook csv import	importexport	ro	Import CSV agendă
+addressbook vcard import	importexport	ro	Import carte de adrese vCard
+change allowed users	importexport	ro	Modificarea utilizatorilor autorizați
+change owner when updating	importexport	ro	Schimbarea proprietarului la actualizare
+changed owner	importexport	ro	Schimbare proprietar

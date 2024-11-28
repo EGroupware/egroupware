@@ -18,6 +18,7 @@ are you sure?	setup	bg	СИГУРНИ ЛИ СТЕ?
 available version	setup	bg	Налични версии
 back to the previous screen	setup	bg	Предишен екран
 back to user login	setup	bg	Потребителския вход
+backup files (needs ziparchive)	setup	bg	Архивиране на данни на файловете на EGroupware (директория с файлове) <br>(изисква PHP ZipArchive)
 because an application it depends upon was upgraded	setup	bg	защото приложение, от което зависи, е обновено
 because it depends upon	setup	bg	защото зависи от
 because it was manually disabled	setup	bg	защото е ръчно отменено
@@ -26,6 +27,7 @@ bottom	setup	bg	отдолу
 cancel	setup	bg	Отказ
 charset	setup	bg	utf-8
 check installation	setup	bg	Проверка на инсталацията
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	bg	Включете файлове (директория с файлове) в резервното копие на данните.<br>(Може да генерира големи количества данни и да прекъсне с много файлове, документация: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 checking for gd support...	setup	bg	Проверка за поддръжка на GD
 checking php.ini	setup	bg	Проверка на php.ini
 checking the egroupware installation	setup	bg	Проверка на инсталацията на EGroupware
@@ -72,6 +74,7 @@ invalid ip address	setup	bg	Невалиден IP адрес
 invalid password	setup	bg	Грешна парола
 login to mysql -	setup	bg	Свързване към MySQL -
 logout	setup	bg	Изход
+mail account of %1 migrated	setup	bg	Пощенският акаунт на %1 е мигриран.
 mail server login type	setup	bg	Тип на влизане (login) в Mail сървъра
 manage applications	setup	bg	Управление на приложенията
 manage languages	setup	bg	Управление на езиците

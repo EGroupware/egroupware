@@ -87,7 +87,7 @@ backup '%1' renamed to '%2'	setup	fi	varmuuskopio '%1' nimetty '%2'
 backup '%1' restored	setup	fi	varmuuskopio '%1' palautettu
 backup and restore	setup	fi	varmuuskopiointi ja palautus
 backup failed	setup	fi	Varmuuskopiointi epäonnistui
-backup files (needs ziparchive)	setup	fi	Varmuuskopion tiedostot (vaatii ZipArchive)
+backup files (needs ziparchive)	setup	fi	EGroupwaren tiedostojen (tiedostohakemisto) varmuuskopiointi <br>(vaatii PHP ZipArchive).
 backup finished	setup	fi	Varmuuskopiointi päättynyt
 backup housekeeping	setup	fi	Ainoastaan uudelleennimetyt backup tiedostot eivät ole postettavissa automaattisesti.
 backup min count	setup	fi	Varmuuskopioiden minimimäärä
@@ -121,6 +121,7 @@ charsets used by the different languages	setup	fi	Merkistöt, joita käytetään
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	fi	Tarkistus voidaan suorittaa vain web-palvelimen kautta kutsuttaessa, koska palvelimen käyttäjätunnusta ei tiedetä.
 check installation	setup	fi	Tarkista asennus
 check ip address of all sessions	setup	fi	Tarkista istuntojen ip-osoitteet
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	fi	Sisällytä tiedostot (tiedostohakemisto) varmuuskopiointiin.<br>(Voi tuottaa suuria tietomääriä ja keskeyttää monien tiedostojen kanssa, dokumentaatio.): <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>).
 checking extension %1 is loaded or loadable	setup	fi	Tarkistetaan, että laajennus %1 on ladattu tai ladattavissa
 checking file-permissions of %1 for %2 %3: %4	setup	fi	Tarkistetaan tiedostojen oikeudet %1 %2 %3: %4
 checking for gd support...	setup	fi	Tarkistetaan GD-tuki ...
@@ -332,6 +333,7 @@ list of availible translations	setup	fi	Saatavilla olevien kielipakttien lista
 login to mysql -	setup	fi	Kirjaudu mysql:ään -
 loginname needed for domain configuration	setup	fi	Domain konfiguraatio vaatii kirjautumisnimen
 logout	setup	fi	Kirjaudu ulos
+mail account of %1 migrated	setup	fi	Sähköpostitili %1 siirretty.
 mail server login type	setup	fi	Sähköpostipalvelimen kirjautumistyyppi
 make sure that your database is created and the account permissions are set	setup	fi	Varmista, että tietokanta on luotu ja käyttöoikeudet ovat kunnossa
 manage applications	setup	fi	Sovellusten hallinta

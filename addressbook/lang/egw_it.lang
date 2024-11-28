@@ -1,4 +1,4 @@
-%1 contact(s) %2	addressbook	it	%1 contatto(i) %2
+%1 contact(s) %2	addressbook	it	%1 contatto(i) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	it	%1 contatto/i %2, %3 non è riuscito a causa di %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	it	%1 contatto/i %2, %3 fallita a causa di diritti insufficienti!
 %1 contacts updated (%2 errors).	addressbook	it	%1 contatti aggiornati (%2 errori).

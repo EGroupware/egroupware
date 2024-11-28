@@ -28,14 +28,11 @@
 %d files successfully copied.	filemanager	bg	%d файла бяха копирани успешно.
 %d files successfully moved.	filemanager	bg	%d файла бяха успешно преместени.
 / = everywhere	filemanager	bg	/ = навсякъде
-0 means all, -n newer then n days	filemanager	bg	"0" означава всички, "-N" по-нови от "N" дни
+0 means all, -n newer then n days	filemanager	bg	0 означава всички, "-N" по-нови от "N" дни
 accessrights	filemanager	bg	Права за достъп
 acl added.	filemanager	bg	Списъкът за контрол на достъпа е добавен.
 acl deleted.	filemanager	bg	Списъкът за контрол на достъпа е изтрит.
-actions	filemanager	bg	Действия
-add to clipboard	filemanager	bg	Добавяне в клипборда
 administrators	filemanager	bg	Администратори
-all files	filemanager	bg	Всички файлове
 all subdirectories	filemanager	bg	Всички поддиректории
 all types	filemanager	bg	Всички видове
 allow a maximum of the above configured folderlinks to be configured in settings	admin	bg	Позволява макс. посочения брой връзки към папки да бъдат конфигурирани в настройките
@@ -137,7 +134,6 @@ extended access control list	filemanager	bg	Разширен списък за �
 extended acl	filemanager	bg	Разширен ACL
 failed to change permissions of %1!	filemanager	bg	Грешка при промяна на правата на %1!
 failed to create directory!	filemanager	bg	Грешка при създаване на директория!
-favorites	filemanager	bg	Любими
 file	common	bg	Файл
 file %1 already exists	filemanager	bg	Файл %1 вече съществува
 file %1 could not be created.	filemanager	bg	Неуспешно създаване на файла %1.
@@ -226,7 +222,6 @@ paste link	filemanager	bg	Поставяне на копираната връз�
 path %1 not found or not a directory!	filemanager	bg	Посочената директория %1 не е намерена или не е директория!
 path and query-parameters, smb: share and optional path (with /)	filemanager	bg	Път и параметри на заявката, SMB: дял и незадължителен път (с /)
 percentage	filemanager	bg	Процент
-permission denied!	filemanager	bg	Достъпът отказан!
 permissions	filemanager	bg	Права
 permissions of %1 changed.	filemanager	bg	Права на %1 променени.
 please select a file to delete.	filemanager	bg	Моля, изберете файл за изтриване.
@@ -242,7 +237,7 @@ quota	filemanager	bg	Квота
 quota exceeded	filemanager	bg	Превишена квота
 read & write access	filemanager	bg	Достъп за четене и запис
 read access only	filemanager	bg	Достъп само за четене
-readonly share link	filemanager	bg	"Само за четене" линк за споделяне
+readonly share link	filemanager	bg	Само за четене линк за споделяне
 recalculate	filemanager	bg	Преизчисляване на
 recalculate directory sizes	filemanager	bg	Преизчисляване на размерите на директориите
 recalculated %1 directories in %2 iterations and %3 seconds	filemanager	bg	Преизчислява %1 директории за %2 итерации и %3 секунди

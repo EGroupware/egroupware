@@ -32,10 +32,7 @@
 accessrights	filemanager	it	Diritti di accesso
 acl added.	filemanager	it	Regola ACL aggiunta.
 acl deleted.	filemanager	it	Regola ACL eliminata.
-actions	filemanager	it	Azioni
-add to clipboard	filemanager	it	Aggiungi agli appunti.
 administrators	filemanager	it	Amministratori
-all files	filemanager	it	Tutti i file
 all subdirectories	filemanager	it	Tutte le sottocartelle
 all types	filemanager	it	Tutti i tipi
 allow a maximum of the above configured folderlinks to be configured in settings	admin	it	Numero massimo di collegamenti a cartelle da configurare nelle preferenze

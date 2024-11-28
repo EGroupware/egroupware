@@ -63,7 +63,10 @@ theme (colors/fonts) selection	preferences	ko	테마 (컬러/폰트) 선택
 this server is located in the %1 timezone	preferences	ko	이 서버는 %1 시간대에 있습니다
 time format	preferences	ko	시간 형식
 use default	preferences	ko	기본 사용
+use first %1 letters from username	preferences	ko	사용자 이름에서 첫 %1글자 사용
+use initials from first and last name	preferences	ko	이름과 성에서 이니셜 사용
 users choice	preferences	ko	사용자 선택
+what to display for an avatar, if there is no photo	preferences	ko	사진이 없는 경우 아바타에 표시할 내용
 which currency symbol or name should be used in egroupware.	preferences	ko	EGroupware에서 사용할 현금단위의 이름이나 기호는 어떤것으로 할까요
 you can show the applications as icons only, icons with app-name or both.	preferences	ko	응용프로그램의 아이콘만 보이게 하거나 이름과 아이콘 동시에 보이게 할수 있습니다
 you do not have permission to set acl's in this mode!	preferences	ko	현재 ACL을 설정할 권한이 없습니다

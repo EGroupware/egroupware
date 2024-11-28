@@ -1,4 +1,5 @@
 %1 attachments	mail	pt	%1 anexos
+%1 for all users	mail	pt	%1 para todos os utilizadores
 %1 is not writable by you!	mail	pt	%1 não é gravável por você!
 %1 mails selected	mail	pt	%1 e-mails selecionados
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número de dias superior.
@@ -6,8 +7,6 @@
 (leave empty for no quota)	mail	pt	(Deixe em branco para nenhuma quota)
 (no subject)	mail	pt	(sem assunto)
 (not connected)	mail	pt	(Não conectado)
-(select mails by clicking on the line, like a checkbox)	mail	pt	(selecionar os e-mails clicando na linha, como uma caixa de verificação)
-(with checkbox enforced)	mail	pt	(Com caixa reforçado)
 account editable by user	mail	pt	onta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt	A recuperação de direitos ACL falhou, parece que não existem direitos definidos!
 acl rights retrieved successfully	mail	pt	Direitos ACL retrieved com sucesso

@@ -1,5 +1,4 @@
 %1 already exists as a file	filemanager	no	%1 finnes allerede som en fil
-actions	filemanager	no	Funksjoner
 administrators	filemanager	no	administratorer
 applications	common	no	Applikasjoner
 cancel editing %1 without saving	filemanager	no	Avbryt redigering %1 uten å lagre
@@ -50,7 +49,6 @@ extended access control list	filemanager	no	Utvidet tilgangskontrolliste
 extended acl	filemanager	no	Utvidet tilgangskontrolliste
 failed to change permissions of %1!	filemanager	no	Kunne ikke endre tillatelser for %1!
 failed to create directory!	filemanager	no	Opprettelse av mappe mislyktes!
-favorites	filemanager	no	Favoritter
 file	common	no	Fil
 file %1 already exists	filemanager	no	Filen %1 finnes allerede
 file %1 could not be created.	filemanager	no	Filen %1 kunne ikke opprettes

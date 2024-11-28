@@ -1,5 +1,4 @@
 %1 already exists as a file	filemanager	hr	%1 već postoji kao datoteka
-actions	filemanager	hr	Akcije
 applications	common	hr	Aplikacije
 cancel editing %1 without saving	filemanager	hr	Otkaži uređivanje %1 bez spremana
 cannot create directory because it begins or ends in a space	filemanager	hr	Nisam u mogućnosti napraviti mapu jer počinje i završava sa razmakom

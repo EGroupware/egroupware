@@ -25,7 +25,6 @@ basic csv import	importexport	fr	Import CSV simple
 change allowed users	importexport	fr	Changer les utilisateurs autorisés
 change owner when updating	importexport	fr	Changer le propriétaire lors de la mise à jour
 changed	importexport	fr	Modifié
-changed allowed_users	importexport	fr	Utilisateurs autorisés modifiés
 changed owner	importexport	fr	Propriétaires modifiés
 charset of file	importexport	fr	Jeu de caractères du fichier
 check all	importexport	fr	Tout cocher

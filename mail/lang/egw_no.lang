@@ -1,6 +1,11 @@
+%1 attachments	mail	no	%1 vedlegg
+%1 for all users	mail	no	%1 for alle brukere
+%1 is not writable by you!	mail	no	%1 kan IKKE skrives av deg!
+%1 mails selected	mail	no	%1 e-poster valgt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	no	%1 krever Sieve-utvidelsen %2, prøv kanskje %1 eller et høyere antall dager.
 (no subject)	mail	no	(uten emne)
 acl rights retrieve failed, seems there are no rights set!	mail	no	Henting av ACL-rettigheter mislyktes, ser ut til at det ikke er angitt noen rettigheter!
+activating by date requires a start- and end-date!	mail	no	Aktivering etter dato krever en start- OG sluttdato!
 add as new	mail	no	Legg til som ny
 add files as %1	mail	no	Legg til filer som %1
 add this certificate into contact	mail	no	Legg til dette sertifikatet i kontakt

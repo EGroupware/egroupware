@@ -1,4 +1,5 @@
 %1 attachments	mail	fr	%1 pièces jointes
+%1 for all users	mail	fr	%1 pour tous les utilisateurs
 %1 has been added to blacklisted email addresses	mail	fr	%1 ajouté à la liste noire
 %1 has been added to whiltelisted email addresses	mail	fr	%1 ajouté à la liste blanche
 %1 has been removed from blacklisted email addresses	mail	fr	%1 retiré de la liste noire
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
 (no subject)	mail	fr	Pas de sujet
 (not connected)	mail	fr	(non connecté)
-(select mails by clicking on the line, like a checkbox)	mail	fr	(sélectionner des emails en cliquant sur la ligne, comme pour une case à cocher)
-(with checkbox enforced)	mail	fr	avec les cases à cocher forcées
 account editable by user	mail	fr	compte modifiable par l'utilisateur
 acl rights retrieve failed, seems there are no rights set!	mail	fr	L'extraction des droits ACL a échoué, il semble qu'il n'y ait pas de droits définis !
 acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès

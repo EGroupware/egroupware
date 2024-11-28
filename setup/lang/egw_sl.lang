@@ -97,6 +97,7 @@ backup '%1' renamed to '%2'	setup	sl	Arhiv '%1' preimenovan v '%2'
 backup '%1' restored	setup	sl	Arhiv '%1' obnovljen
 backup and restore	setup	sl	Arhiviranje in obnavljanje
 backup failed	setup	sl	Arhiviranje je spodletelo
+backup files (needs ziparchive)	setup	sl	Varnostno kopiranje podatkov datotek EGroupware (imenik datotek) <br>(zahteva PHP ZipArchive)
 backup finished	setup	sl	Arhiviranje dokončano
 backup now	setup	sl	Arhiviraj takoj
 backup sets	setup	sl	Arhivski nizi
@@ -131,6 +132,7 @@ charsets used by the different languages	setup	sl	Nabori znakov, uporabljeni iz 
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	sl	Preverjanje je mogoče le, če se izvede v spletnem brskalniku. Uporabniški ID/ime spletnega strežnika ni znan.
 check installation	setup	sl	Preveri namestitev
 check ip address of all sessions	setup	sl	Preveri IP naslov vseh sej
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	sl	Vključite datoteke (imenik datotek) v varnostno kopijo podatkov.<br>(Lahko ustvari velike količine podatkov in prekine z veliko datotekami, dokumentacija: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 checking extension %1 is loaded or loadable	setup	sl	Preverjam če je dodatek %1 naložen in če ga je mogoče naložiti
 checking file-permissions of %1 for %2 %3: %4	setup	sl	Preverjam pravice datotek %1 za %2 %3: %4
 checking for gd support...	setup	sl	Preverjam GD podporo
@@ -367,6 +369,7 @@ login as user postgres, eg. by using su as root	setup	sl	Prijavi se kot uporabni
 login to mysql -	setup	sl	Prijava v mysql -
 loginname needed for domain configuration	setup	sl	Za domensko konfiguracijo je potrebno uporabniško ime
 logout	setup	sl	Odjava
+mail account of %1 migrated	setup	sl	Poštni račun %1 prenesen.
 mail domain (for virtual mail manager)	setup	sl	Poštna domena (za Virtual mail manager)
 mail server login type	setup	sl	Način prijave v poštni strežnik
 mail server protocol	setup	sl	Protokol poštnega strežnika

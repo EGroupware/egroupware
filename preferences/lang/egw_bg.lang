@@ -47,7 +47,10 @@ the two passwords are not the same	preferences	bg	Паролите не съвп
 theme (colors/fonts) selection	preferences	bg	Избор на тема (цветове и шрифтове)
 time format	preferences	bg	Формат на часа
 use default	preferences	bg	Използване на стойност по подразбиране
+use first %1 letters from username	preferences	bg	Използвайте първите %1 букви от потребителското име
+use initials from first and last name	preferences	bg	Използвайте инициалите от първото и фамилното име
 users choice	preferences	bg	По избор на потребителя
+what to display for an avatar, if there is no photo	preferences	bg	Какво да се показва за аватар, ако няма снимка
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на EGroupware.
 you must enter a password	preferences	bg	Трябва да въведете парола
 your preferences	preferences	bg	Вашите настройки

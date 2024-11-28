@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	zh-tw	%1 檔案已經存在
 %1 starts with '%2'	filemanager	zh-tw	%1 開始於 '%2'
-actions	filemanager	zh-tw	動作
 administrators	filemanager	zh-tw	管理者
 applications	common	zh-tw	應用程式
 cancel editing %1 without saving	filemanager	zh-tw	取消編輯%1，不儲存

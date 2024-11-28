@@ -188,7 +188,10 @@ two factor auth is already setup.	preferences	es-es	La autenticación de dos fac
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	es-es	Unidad de tamaño de las fuentes mostradas: "px", como se utiliza, por ejemplo, en las páginas web, o "pt", como se utiliza en el tratamiento de textos.
 uppercase letters	preferences	es-es	letras mayúsculas
 use default	preferences	es-es	Usar predeterminado
+use first %1 letters from username	preferences	es-es	Usar las primeras %1 letras del nombre de usuario
+use initials from first and last name	preferences	es-es	Usar las iniciales del nombre y apellidos
 users choice	preferences	es-es	Elegido por el usuario
+what to display for an avatar, if there is no photo	preferences	es-es	Qué mostrar para un avatar, si no hay foto
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	es-es	Cuando se pueden seleccionar varias opciones, ¿la lista de opciones debe permanecer abierta hasta que se cierre, o cerrarse después de elegir una opción?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de EGroupware.

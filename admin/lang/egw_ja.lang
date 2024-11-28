@@ -22,7 +22,6 @@
 %1 token %2.	admin	ja	%1 トークン %2。
 %1 user %2	admin	ja	%1 ユーザ %2
 (de)activate mail accounts	admin	ja	メール・アカウントを有効化/無効化
-(default no, leave it off if you dont use it)	admin	ja	デフォルト = いいえ、使用しない場合はオフのままにしてください。
 (no subject)	admin	ja	（件名無し）
 -  type	admin	ja	-  タイプ
 1 year	admin	ja	1年
@@ -55,7 +54,6 @@ account-id's have to be integers!	admin	ja	アカウント ID は整数である
 acl added.	admin	ja	ACL を追加しました。
 acl deleted.	admin	ja	ACL を削除しました。
 acl entry deleted.	admin	ja	ACL 項目を削除しました。
-acl entry not found!	admin	ja	ACL 項目が見つかりません!
 acl manager	admin	ja	ACL管理
 acl rights	common	ja	ACL権限
 acl updated	admin	ja	ACL を更新しました
@@ -109,6 +107,7 @@ anonymous user	admin	ja	匿名ユーザ
 anonymous user (not shown in list sessions)	admin	ja	匿名ユーザにする（セッション一覧で非表示）
 anonymous user does not exist!	admin	ja	匿名ユーザが存在しません!
 anonymous user has no run-rights for the application!	admin	ja	Anonymous user has NO run-rights for the application!
+anonymous user. not shown in list sessions.	admin	ja	匿名ユーザー。セッション一覧に表示されない
 any application	admin	ja	任意のアプリケーション
 any group	admin	ja	任意のグループ
 any user	admin	ja	任意のユーザ
@@ -212,6 +211,7 @@ creates / updates user accounts from csv file	admin	ja	CSV ファイルからア
 creates / updates user groups from csv file	admin	ja	CSV ファイルからグループを作成/更新する
 creates a new field	admin	ja	新規項目を作成します
 crontab only (recomended)	admin	ja	crontab のみ（推奨）
+current certificate	admin	ja	現在の証明書
 current hash	admin	ja	現在のハッシュ値:
 custom 1	admin	ja	カスタム1
 custom 2	admin	ja	カスタム2
@@ -235,6 +235,7 @@ delete account %s	admin	ja	アカウント %s を削除
 delete all records	admin	ja	全レコードを削除
 delete application	admin	ja	アプリケーションを削除
 delete category	admin	ja	カテゴリを削除
+delete certificate	admin	ja	証明書の削除
 delete group	admin	ja	グループを削除
 delete identity	admin	ja	名称を削除
 delete including sub-entries	admin	ja	サブ項目を含めて削除
@@ -365,6 +366,7 @@ event details follow	admin	ja	イベント詳細
 exists	admin	ja	存在
 expired	admin	ja	期限切れ
 expires	admin	ja	有効期限
+export certificate as p12	admin	ja	証明書をp12としてエクスポート
 exports groups into a csv file.	admin	ja	CSV ファイルにグループをエクスポートします。
 exports users into a csv file.	admin	ja	CSV ファイルにユーザをエクスポートします。
 failed to change password for account "%1"!	admin	ja	アカウント "%1" のパスワード変更に失敗しました!
@@ -393,6 +395,7 @@ forward only	admin	ja	Forward only
 forward only disables imap mailbox / storing of mails and just forwards them to given address.	admin	ja	Forward only disables IMAP mailbox / storing of mails and just forwards them to given address.
 full name	admin	ja	氏名
 general	admin	ja	一般
+generate certificate	admin	ja	証明書の生成
 global categories	common	ja	グローバルカテゴリ
 global options	admin	ja	全体オプション
 go directly to admin menu, returning here the next time you click on administration.	admin	ja	Go directly to admin menu, returning here the next time you click on administration.
@@ -830,6 +833,7 @@ user csv import	admin	ja	ユーザ CSV インポート
 user data	common	ja	ユーザ・データ
 user for smtp-authentication (leave it empty if no auth required)	admin	ja	SMTP 認証を使用します。認証が不要の場合は空欄のままにしてください。
 user groups	admin	ja	ユーザ・グループ
+user hidden vom non-admins.	admin	ja	管理者以外には表示されないユーザー
 user-agent	admin	ja	User-Agent
 userdata	admin	ja	ユーザ・データ
 userid@domain eg. u1234@domain	admin	ja	UserId@domain 例: u1234@domain

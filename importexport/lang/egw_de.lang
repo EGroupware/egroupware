@@ -25,7 +25,6 @@ basic csv import	importexport	de	Basis CSV Import
 change allowed users	importexport	de	Erlaubte Benutzer ändern
 change owner when updating	importexport	de	Besitzer ändern bei der Aktualisierung
 changed	importexport	de	Geändert
-changed allowed_users	importexport	de	Erlaubten Benutzer geändert
 changed owner	importexport	de	Besitzer geändert
 charset of file	importexport	de	Zeichensatz der Datei
 check all	importexport	de	Alle markieren

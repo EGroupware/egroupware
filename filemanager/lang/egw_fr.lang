@@ -32,10 +32,7 @@
 accessrights	filemanager	fr	Droits d'accès
 acl added.	filemanager	fr	ACL ajouté
 acl deleted.	filemanager	fr	ACL supprimé
-actions	filemanager	fr	Actions
-add to clipboard	filemanager	fr	Ajouter au presse-papier
 administrators	filemanager	fr	Administrateurs
-all files	filemanager	fr	Tous les fichiers
 all subdirectories	filemanager	fr	Tous les sous-répertoires
 all types	filemanager	fr	Tous les types
 allow a maximum of the above configured folderlinks to be configured in settings	admin	fr	Nombre max de liens vers des dossiers pouvant être configuré dans les préférences.

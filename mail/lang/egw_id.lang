@@ -1,4 +1,5 @@
 %1 attachments	mail	id	%1 lampiran
+%1 for all users	mail	id	%1 untuk semua pengguna
 %1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
 %1 mails selected	mail	id	%1 email yang dipilih
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	id	%1 memerlukan ekstensi Sieve %2, mungkin coba %1 atau jumlah hari yang lebih tinggi.

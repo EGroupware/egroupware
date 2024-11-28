@@ -61,7 +61,10 @@ theme (colors/fonts) selection	preferences	lv	Tēmas(krāsu/fontu) izvēle
 this server is located in the %1 timezone	preferences	lv	Šis serveris atrodas %1laika joslā
 time format	preferences	lv	Laika formāts
 use default	preferences	lv	Lietot noklusējumu
+use first %1 letters from username	preferences	lv	Izmantot pirmos %1 lietotājvārda burtus
+use initials from first and last name	preferences	lv	Izmantot iniciāļus no vārda un uzvārda
 users choice	preferences	lv	Lietotāju izvēle
+what to display for an avatar, if there is no photo	preferences	lv	Ko rādīt avatāram, ja nav fotoattēla
 you can show the applications as icons only, icons with app-name or both.	preferences	lv	Tu vari parādīt aplikācijas tikai kā ikonas, ikonas ar aplikācijas nosaukumu vai abus
 you do not have permission to set acl's in this mode!	preferences	lv	Tev nav atļaujas uzstā�īt ACL šajā režīmā
 you must enter a password	preferences	lv	Tev jaievada parole

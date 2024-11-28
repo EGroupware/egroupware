@@ -1,10 +1,11 @@
-%1 contact(s) %2	addressbook	ru	%1 контакт(а, ов) %2
+%1 contact(s) %2	addressbook	ru	%1 контакт(а, ов) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	ru	%1 контакт(ы) %2, %3 не удался из-за %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	ru	%1 контакт(а, ов) %2, %3 не завершено из-за недостаточных прав!
 %1 contacts updated (%2 errors).	addressbook	ru	%1 контактов обновлено (%2 ошибок).
 %1 fields in %2 other organisation member(s) changed	addressbook	ru	%1 полей в %2 других представителей организации/й изменено.
 %1 key(s) added to public keyserver "%2".	addressbook	ru	%1 ключ(и) добавлен(ы) на публичный сервер ключей "%2".
 %1 public keys added.	addressbook	ru	Добавлен %1 открытый ключ.
+%1 records imported	addressbook	ru	Импортирована %1 запись.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ru	Прочитано %1 записей (пока не импортировано, можно вернуться %2назад%3 и снять отметку «Тестовый импорт»).
 %1 shared this contact on %2 with %3 %4	addressbook	ru	%1 поделился этим контактом на %2 с %3 %4
 %1 starts with '%2'	addressbook	ru	%1 начинается с %2

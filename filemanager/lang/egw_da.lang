@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	da	%1 eksistere allerede som fil
 %1 files unlocked.	filemanager	da	%1 filer er låst op.
-actions	filemanager	da	Handling
 administrators	filemanager	da	administratorer
 applications	common	da	Applikationer
 cancel editing %1 without saving	filemanager	da	annullere redigéring af %1 uden at gemme
@@ -49,7 +48,6 @@ extended access control list	filemanager	da	Udvidet adgangskontrol-liste
 extended acl	filemanager	da	Udvidet ACL
 failed to change permissions of %1!	filemanager	da	Kunne ikke ændre tilladelser for %1!
 failed to create directory!	filemanager	da	Kunne ikke oprette mappe!
-favorites	filemanager	da	Favoritter
 file	common	da	Fil
 file %1 already exists	filemanager	da	Filen %1 findes allerede
 file %1 could not be created.	filemanager	da	Filen %1 kunne ikke oprettes.

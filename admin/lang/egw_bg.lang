@@ -22,7 +22,6 @@
 %1 token %2.	admin	bg	%1 токен %2.
 %1 user %2	admin	bg	%1 потребител %2
 (de)activate mail accounts	admin	bg	(де)активиране на имейл акаунти
-(default no, leave it off if you dont use it)	admin	bg	По подразбиране = Не, оставете го изключено, ако не го използвате
 (no subject)	admin	bg	(без тема)
 -  type	admin	bg	- вид
 1 year	admin	bg	1 година
@@ -56,7 +55,6 @@ acl added.	admin	bg	ACL е добавен.
 acl csv export	admin	bg	Експорт на ACL CSV
 acl deleted.	admin	bg	ACL е изтрит.
 acl entry deleted.	admin	bg	ACL записът е изтрит.
-acl entry not found!	admin	bg	ACL записът не е намерен!
 acl manager	admin	bg	ACL мениджър
 acl rights	common	bg	ACL права
 acl updated	admin	bg	ACL е актуализиран

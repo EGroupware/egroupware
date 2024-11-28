@@ -1,10 +1,11 @@
-%1 contact(s) %2	addressbook	es-es	%1 contactos %2
+%1 contact(s) %2	addressbook	es-es	%1 contactos %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	es-es	¡%1 contacto(s) %2, %3 falló debido a %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	es-es	%1 contactos %2, %3 fallaron debido a privilegios insuficientes!
 %1 contacts updated (%2 errors).	addressbook	es-es	Se han actualizado %1 contactos (%2 errores).
 %1 fields in %2 other organisation member(s) changed	addressbook	es-es	%1 campos en %2 miembros de otra organización cambiados.
 %1 key(s) added to public keyserver "%2".	addressbook	es-es	Se han añadido %1 claves al servidor de clves públicas "%2".
 %1 public keys added.	addressbook	es-es	Se han añadido %1 claves públicas.
+%1 records imported	addressbook	es-es	%1 registros importados.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	es-es	Se han leído %1 registros (no importados todavía, puede volver %2atrás%3 y desmarcar la prueba de importación).
 %1 shared this contact on %2 with %3 %4	addressbook	es-es	%1 compartió este contacto en %2 %3 %4
 %1 starts with '%2'	addressbook	es-es	%1 empieza por '%2'

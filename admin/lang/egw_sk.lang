@@ -22,7 +22,6 @@
 %1 token %2.	admin	sk	%1 token %2.
 %1 user %2	admin	sk	%1 používateľ %2
 (de)activate mail accounts	admin	sk	(de)Aktivovať poštové účty
-(default no, leave it off if you dont use it)	admin	sk	Predvolené nastavenie = Nie, ak ho nepoužívate, nechajte ho vypnuté
 (no subject)	admin	sk	(bez predmetu)
 -  type	admin	sk	- typ
 1 year	admin	sk	1 rok
@@ -56,7 +55,6 @@ acl added.	admin	sk	ACL bolo pridané.
 acl csv export	admin	sk	Export ACL CSV
 acl deleted.	admin	sk	ACL bolo odstránené.
 acl entry deleted.	admin	sk	Položka ACL odstránená.
-acl entry not found!	admin	sk	Položka ACL sa nenašla!
 acl manager	admin	sk	Správa prístupov (ACL)
 acl rights	common	sk	Prístupové práva (ACL)
 acl updated	admin	sk	ACL boli aktualizované
@@ -119,6 +117,7 @@ anonymous user	admin	sk	Anonymný používateľ
 anonymous user (not shown in list sessions)	admin	sk	Anonymný používateľ (nezobrazuje sa na zozname relácií).
 anonymous user does not exist!	admin	sk	Anonymný používateľ NEexistuje!
 anonymous user has no run-rights for the application!	admin	sk	Anonymný používateľ NEMÁ právo spustiť túto aplikáciu!
+anonymous user. not shown in list sessions.	admin	sk	Anonymný používateľ. Nezobrazuje sa v reláciách zoznamu
 any application	admin	sk	Ktorákoľvek aplikácia
 any group	admin	sk	Ktorákoľvek skupina
 any user	admin	sk	Ktorýkoľvek používateľ
@@ -941,6 +940,7 @@ user csv import	admin	sk	CSV import používateľov
 user data	common	sk	Používateľské údaje
 user for smtp-authentication (leave it empty if no auth required)	admin	sk	Používateľ pre SMTP overovanie (ak netreba, ponechajte prázdne).
 user groups	admin	sk	Používateľské skupiny
+user hidden vom non-admins.	admin	sk	Používateľ skrytý pre používateľov, ktorí nie sú administrátormi
 user-agent	admin	sk	User-Agent
 userdata	admin	sk	Používateľské údaje
 userid@domain eg. u1234@domain	admin	sk	PoužívateľskéID@doména napr. u1234@domain

@@ -1,9 +1,12 @@
 %1 attachments	mail	da	%1 vedhæftede filer
+%1 for all users	mail	da	%1 for alle brugere
+%1 is not writable by you!	mail	da	%1 kan IKKE skrives af dig!
 %1 mails selected	mail	da	%1 e-mails valgt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	da	%1 kræver Sieve-udvidelsen %2, prøv måske %1 eller et højere antal dage.
 (leave empty for no quota)	mail	da	(Lad det være tomt for ingen kvote)
 (no subject)	mail	da	(ingen emne)
 acl rights retrieve failed, seems there are no rights set!	mail	da	ACL-rettighedshentning mislykkedes, der er tilsyneladende ikke indstillet nogen rettigheder!
+activating by date requires a start- and end-date!	mail	da	Aktivering efter dato kræver en start- OG slutdato!
 add a new folder to %1:	mail	da	Tilføj en ny mappe til %1:
 add all my aliases	mail	da	Tilføj alle mine aliasser
 add as new	mail	da	Tilføj som ny

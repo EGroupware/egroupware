@@ -93,7 +93,7 @@ backup '%1' restored	setup	ru	Резервная копия '%1' восстан�
 backup and restore	setup	ru	Резервное копирование и восстановление
 backup directory %1 mounted as %2	setup	ru	Каталог резервной копии %1 подключен как %2
 backup failed	setup	ru	Ошибка резервного копирования.
-backup files (needs ziparchive)	setup	ru	Файлы резервной копии (требуется ZipArchive)
+backup files (needs ziparchive)	setup	ru	Резервное копирование файлов EGroupware (каталог files) <br>(требуется PHP ZipArchive)
 backup finished	setup	ru	создание резервной копии завершено
 backup housekeeping	setup	ru	Резервные копии со стандартными именами затираются автоматически. Переименование файлов резервных копий исключает их затирание.
 backup min count	setup	ru	Минимальное число резервных копий
@@ -135,7 +135,7 @@ charsets used by the different languages	setup	ru	Кодировки испол�
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ru	Проверка может производться только если вызывается с помощью веб-сервера пользователем с именем не известным веб-серверу.
 check installation	setup	ru	Проверка установки
 check ip address of all sessions	setup	ru	Проверить ip адреса всех сессий
-check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ru	Проверить файловый каталог на резервное копирование и восстановление. Использует дополнительное место, убедитесь в его наличии.
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ru	Включить файлы (каталог файлов) в резервную копию данных.<br> (Может генерировать большие объемы данных и прерываться при большом количестве файлов, документация: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 checking extension %1 is loaded or loadable	setup	ru	Проверка расширения %1 загружена или загружаема
 checking file-permissions of %1 for %2 %3: %4	setup	ru	Проверка доступа к файлам %1 для %2 %3: %4
 checking for gd support...	setup	ru	Проверка графической (GD) поддержки ...
@@ -380,6 +380,7 @@ login as user postgres, eg. by using su as root	setup	ru	Войти как по�
 login to mysql -	setup	ru	Вход в mysql -
 loginname needed for domain configuration	setup	ru	Для конфигурирования домена необходимо имя входа
 logout	setup	ru	Выход
+mail account of %1 migrated	setup	ru	Почтовый аккаунт %1 перенесен.
 mail domain (for virtual mail manager)	setup	ru	Домен почты (для управления Виртуальной почтой)
 mail server login type	setup	ru	Тип входа в сервер почты
 mail server protocol	setup	ru	Протокол связи с сервером почты

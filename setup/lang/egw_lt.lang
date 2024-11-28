@@ -1,3 +1,5 @@
+backup files (needs ziparchive)	setup	lt	EGroupware failų (failų katalogo) duomenų atsarginė kopija <br>(reikia PHP ZipArchive)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	lt	Įtraukti failus (failų katalogą) į duomenų atsarginę kopiją.<br>(Gali būti generuojamas didelis duomenų kiekis ir nutraukiama daug failų, dokumentacija: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	lt	Išjungti tik tada, jei jūsų AD turi problemų su VLV valdikliais IR gali grąžinti visus naudotojus viena užklausa!
 disable vlv controls	setup	lt	Išjungti VLV valdiklius
 error searching "dn=%1" for "%2"!	setup	lt	Klaida ieškant "DN=%1" pagal "%2"!
@@ -8,6 +10,7 @@ failed to mount backup directory!	setup	lt	Nepavyko prijungti atsarginės kopijo
 failed updating user "%1" dn="%2"!	setup	lt	Nepavyko atnaujinti naudotojo "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	lt	Nepavyko įrašyti konfigūracijos failo header.inc.php, patikrinkite teises!
 fallback authentication	setup	lt	Atsarginis autentiškumo nustatymas
+mail account of %1 migrated	setup	lt	Perkelta %1 pašto paskyra.
 min backup count	setup	lt	Didžiausias saugomų atsarginių kopijų skaičius (nulis: visos)
 openidconnect login	setup	lt	OpenIDConnect prisijungimas
 optional, if only authentication and anonymous search is enabled	setup	lt	neprivaloma, jei įjungta tik autentifikacija IR anoniminė paieška.

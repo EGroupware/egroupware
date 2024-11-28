@@ -23,10 +23,7 @@
 accessrights	filemanager	pt-br	Direitos de acesso
 acl added.	filemanager	pt-br	ACL adicionada
 acl deleted.	filemanager	pt-br	ACL removida.
-actions	filemanager	pt-br	Ações
-add to clipboard	filemanager	pt-br	Adicionar à prancheta
 administrators	filemanager	pt-br	Administradores
-all files	filemanager	pt-br	Todos os arquivos
 allow a maximum of the above configured folderlinks to be configured in settings	admin	pt-br	permite um número máximo de links para pastas acima indicado, a serem definidos nas configurações
 and all it's childeren	filemanager	pt-br	e todos seus subdiretórios
 application fields	filemanager	pt-br	campos de aplicação
@@ -200,7 +197,6 @@ paste link	filemanager	pt-br	Colar vínculo
 path %1 not found or not a directory!	filemanager	pt-br	Path% 1 não foi encontrado ou não um diretório!
 path and query-parameters, smb: share and optional path (with /)	filemanager	pt-br	Caminho e parâmetros de consulta, SMB: compartilhamento e caminho opcional (com /)
 percentage	filemanager	pt-br	percentagem
-permission denied!	filemanager	pt-br	Permissão negada!
 permissions	filemanager	pt-br	Permissões
 permissions of %1 changed.	filemanager	pt-br	Permissão% 1 mudou.
 please select a file to delete.	filemanager	pt-br	Por favor, selecione um arquivo para remoção.

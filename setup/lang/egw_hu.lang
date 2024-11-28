@@ -13,11 +13,13 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	setup	hu	Azonosítás / Azonosítók
 auto create account records for authenticated users	setup	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
 back to user login	setup	hu	Vissza a felhasználói bejelentkezéshez
+backup files (needs ziparchive)	setup	hu	Adatmentés az EGroupware fájljairól (files könyvtár) <br>(PHP ZipArchive szükséges)
 bottom	setup	hu	Legalsó
 cancel	setup	hu	Mégsem
 charset	setup	hu	Betűkészlet
 check installation	setup	hu	Telepítés ellenőrzése
 check ip address of all sessions	setup	hu	Összes session IP cím ellenőrzése
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	hu	Fájlok (fájlkönyvtár) felvétele az adatmentésbe.<br>(Nagy mennyiségű adatot generálhat, és sok fájl esetén megszakíthatja a mentést, dokumentáció: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 completed	setup	hu	Teljesítve
 configuration	setup	hu	Konfiguráció
 contain	setup	hu	Tartalmaz
@@ -67,6 +69,7 @@ ldap groups context	setup	hu	LDAP csoport környezet
 ldap host	setup	hu	LDAP hoszt
 ldap root password	setup	hu	LDAP root jelszava
 ldap rootdn	setup	hu	LDAP root DN
+mail account of %1 migrated	setup	hu	A %1 e-mail fiókja áttelepült.
 mail server login type	setup	hu	Mail szerver bejelentkezés típusa
 maximum account id (e.g. 65535 or 1000000)	setup	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 min backup count	setup	hu	A mentések maximális száma (nulla: minden)

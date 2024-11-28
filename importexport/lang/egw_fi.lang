@@ -8,13 +8,16 @@
 (0-23)	importexport	fi	(0-23)
 (0-6, 0=sun)	importexport	fi	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	fi	*Käyttäjätilin IDtä EI voi muuttaa tuonnissa
+add a new definition	importexport	fi	Lisää uusi määritelmä
 addressbook csv import	importexport	fi	Osoitekirjan CSV-vienti
+addressbook vcard import	importexport	fi	Osoitekirjan vCard-tuonti
 all users	importexport	fi	Kaikki käyttäjät
 allowed users	importexport	fi	Sallittu käyttäjille
 automatically created by importexport	importexport	fi	Luotu automaattisesti tuonnissa/viennissä.
 basic csv import	importexport	fi	Perus CSV -tuonti
+change allowed users	importexport	fi	Sallittujen käyttäjien muuttaminen
+change owner when updating	importexport	fi	Muuta omistajaa päivityksen yhteydessä
 changed	importexport	fi	Muutettu
-changed allowed_users	importexport	fi	Sallitut käyttäjät muutettu
 changed owner	importexport	fi	Omistaja muutettu
 charset of file	importexport	fi	Kirjasinmerkistö
 check all	importexport	fi	Valitse kaikki

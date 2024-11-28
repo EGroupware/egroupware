@@ -5,6 +5,7 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	ja	他の組織メンバ %2 の %1 フィールドが変更されました。
 %1 key(s) added to public keyserver "%2".	addressbook	ja	%1 個のキーを公開キー・サーバー "%2" に追加しました。
 %1 public keys added.	addressbook	ja	%1 公開キーを追加しました。
+%1 records imported	addressbook	ja	%1 つのレコードがインポートされました。
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ja	%1 個のレコードを読み込みましたが、まだインポートされていません。画面を戻って予行演習モードを解除してください。
 %1 shared this contact on %2 with %3 %4	addressbook	ja	%1 はこのコンタクトを %2 で %3 %4 と共有しました。
 %1 starts with '%2'	addressbook	ja	%1 を %2 で開始

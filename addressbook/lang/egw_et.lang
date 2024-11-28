@@ -1,5 +1,10 @@
+%1 contact(s) %2	addressbook	et	%1 kontakt(id) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestusid %4 tõttu!
-%1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	et	%1 kontakt(id) %2, %3 ebaõnnestus ebapiisavate õiguste tõttu!
+%1 contacts updated (%2 errors).	addressbook	et	%1 kontaktid uuendatud (%2 viga).
+%1 fields in %2 other organisation member(s) changed	addressbook	et	%1 väljad %2 muu(te) organisatsiooni liige(te)s muutunud.
+%1 records imported	addressbook	et	%1 kirjed imporditud.
+%1 shared this contact on %2 with %3 %4	addressbook	et	%1 jagas seda kontakti %2 %3 %4ga.
 add a new contact	addressbook	et	Lisa uus kontakt
 add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	et	Lisa aadressiraamatu linkidele kohandatud väli, mis kuvatakse teistes rakendustes. Vaikeväärtus on none customfield.
 add to bcc	addressbook	et	Lisa Pimekopeeringusse
@@ -9,6 +14,10 @@ add to distribution list:	addressbook	et	Lisada jaotamisnimekirja:
 add to to	addressbook	et	Lisa juurde
 added	addressbook	et	Lisatud
 added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
+addressbook csv export	addressbook	et	Aadressiraamatu CSV eksport
+addressbook csv import	addressbook	et	Aadressiraamatu CSV import
+addressbook vcard export	addressbook	et	Aadressiraamatu vCard eksport
+addressbook vcard import	addressbook	et	Aadressiraamatu vCard import
 allow	addressbook	et	Luba
 allow for contacts only	addressbook	et	Luba ainult kontaktidele
 always	addressbook	et	Alati
@@ -22,6 +31,7 @@ change addressbook when updating	addressbook	et	Muuda aadressiraamatut uuendamis
 check all	addressbook	et	Kontrolli kõik
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	et	Valige eelnevalt määratud kaardiallikas või kasutage kohandatud URL-i (kasutage %r = tänav, %t = linn, %c = riik, %z = postiindeks).
 city	common	et	Linn
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	et	Aadressiraamatu väljade puhastamine, kohaldatakse juhul, kui sünkroonimine tekitab dubleeringuid
 configuration	common	et	Konfiguratsioon
 contact	common	et	Kontakt
 contains	addressbook	et	Sisaldab
@@ -55,6 +65,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	et	Näide {{NELF roll}} - kui väli roll ei ole tühi, saate uue rea, kus on välja roll väärtus
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	addressbook	et	Näide {{nenvlf roll}} - kui väli roll ei ole tühi, seatakse LF ilma väljal oleva väärtuseta
 existing links	addressbook	et	Eksisteerivad lingid
+exports contacts from your addressbook into a csv file.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	et	Ekspordib kontaktid aadressiraamatust CSV-faili.  CSV tähendab 'Comma Separated Values' (komadega eraldatud väärtused). Valikute vahekaardil saate valida ka muid eraldajaid.
 favorite phone	addressbook	et	Lemmikutelefon
 fax	addressbook	et	Faks

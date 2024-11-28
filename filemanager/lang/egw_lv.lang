@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	lv	%1 jau pastāv kā fails
 %1 files unlocked.	filemanager	lv	%1 faili atbloķēti.
-actions	filemanager	lv	Darbības
 administrators	filemanager	lv	administratori
 applications	common	lv	Aplikācijas
 cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
@@ -50,7 +49,6 @@ extended access control list	filemanager	lv	Paplašinātais piekļuves kontroles
 extended acl	filemanager	lv	Paplašinātais ACL
 failed to change permissions of %1!	filemanager	lv	Neizdevās mainīt %1 atļaujas!
 failed to create directory!	filemanager	lv	Neizdevās izveidot mapi!
-favorites	filemanager	lv	Izlase
 file	common	lv	Faila
 file %1 already exists	filemanager	lv	Failiņš %1 jau pastāv
 file %1 could not be created.	filemanager	lv	Datne %1 netika izveidota.

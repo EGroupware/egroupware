@@ -10,6 +10,7 @@
 (0-23)	importexport	ja	(0-23)
 (0-6, 0=sun)	importexport	ja	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	ja	*Contact ID cannot be changed by import
+add a new definition	importexport	ja	新しい定義を追加する
 addressbook csv import	importexport	ja	Addressbook CSV Import
 addressbook vcard import	importexport	ja	Addressbook vCard import
 admin disabled exporting	importexport	ja	Admin disabled exporting
@@ -18,8 +19,9 @@ all users	importexport	ja	全てのユーザ
 allowed users	importexport	ja	Allowed users
 automatically created by importexport	importexport	ja	Automatically created by Import|Export
 basic csv import	importexport	ja	Basic CSV import
+change allowed users	importexport	ja	許可ユーザの変更
+change owner when updating	importexport	ja	更新時の所有者変更
 changed	importexport	ja	Changed
-changed allowed_users	importexport	ja	Changed allowed users
 changed owner	importexport	ja	Changed owner
 charset of file	importexport	ja	Charset of file
 check all	importexport	ja	Check all
@@ -98,15 +100,12 @@ no notifications	importexport	ja	通知を無視
 no records selected	importexport	ja	No records selected!
 none found	importexport	ja	None found
 old fixed definition	preferences	ja	Old fixed definition
-other	importexport	ja	その他
-owner	importexport	ja	所有者
 please select file to import	importexport	ja	インポートするファイル
 plugin	importexport	ja	Plugin
 preview	importexport	ja	プリビュー
 preview not supported by %1	importexport	ja	Preview not supported by %1
 previous	importexport	ja	Previous
 problems during import:	importexport	ja	Problems during import:
-recurrence enddate	importexport	ja	繰返し最終日
 save as definition	importexport	ja	定義ファイルとして保存
 schedule	common	ja	Schedule
 schedule import / export	common	ja	Schedule import | export
@@ -119,10 +118,8 @@ select...	importexport	ja	Select...
 skipped	importexport	ja	Skipped
 some nice text	importexport	ja	Some nice text
 some records may not have been imported	importexport	ja	Some records may not have been imported.
-space	importexport	ja	スペース
 stop	importexport	ja	Stop
 stylite template folder	importexport	ja	Stylite template folder
-tab	importexport	ja	タブ
 target	importexport	ja	Target
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	ja	Target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv
 target field	importexport	ja	Target field
@@ -136,9 +133,8 @@ unable to link to %1 "%2"	importexport	ja	Unable to link to %1 "%2"
 unable to schedule	importexport	ja	Unable to schedule.
 update categories	importexport	ja	Update categories
 use default	importexport	ja	デフォルトを使用
-use field from csv if possible	importexport	ja	Use field from CSV if possible
 use definition filter	common	ja	定義フィルターを用いる
-use given criteria:	common	ja	下記条件を用いる
+use field from csv if possible	importexport	ja	Use field from CSV if possible
 use search results	common	ja	検索結果を用いる
 user preference	importexport	ja	個人設定
 user template folder	importexport	ja	User template folder

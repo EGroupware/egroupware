@@ -96,6 +96,7 @@ anonymous user	admin	cs	Anonymní uživatel
 anonymous user (not shown in list sessions)	admin	cs	Anonymní uživatel (nezobrazuje se v seznamu relací).
 anonymous user does not exist!	admin	cs	Anonymní uživatel NEexistuje!
 anonymous user has no run-rights for the application!	admin	cs	Anonymní uživatel NEMÁ oprávnění ke spuštění aplikace!
+anonymous user. not shown in list sessions.	admin	cs	Anonymní uživatel. Nezobrazuje se v seznamu relací
 any application	admin	cs	Kterákoli aplikace
 any group	admin	cs	Kterákoli skupina
 any user	admin	cs	Kterýkoli uživatel
@@ -150,6 +151,9 @@ category '%1' deleted	admin	cs	Kategorie '%1' odstraněna
 category deleted.	admin	cs	Kategorie byla smazána.
 category list	admin	cs	Seznam kategorie
 category saved.	admin	cs	Kategorie byla uložena.
+certificate	admin	cs	Certifikát
+certificate details	admin	cs	Podrobnosti o certifikátu
+certificate validation in days	admin	cs	Ověření platnosti certifikátu ve dnech
 change access	admin	cs	Změnit přístupová práva
 change account_id	admin	cs	Změnit ID účtu
 change acl rights	admin	cs	Změnit ACL práva
@@ -182,6 +186,7 @@ created	admin	cs	Vytvořeno
 created with id #%1	admin	cs	Vytvořeno s ID #%1
 creates a new field	admin	cs	Vytvoří novou položku
 crontab only (recomended)	admin	cs	Jen crontab (doporučeno)
+current certificate	admin	cs	Aktuální certifikát
 custom 1	admin	cs	Vlastní 1
 custom 2	admin	cs	Vlastní 2
 custom 3	admin	cs	Vlastní 3
@@ -210,6 +215,7 @@ delete account %s	admin	cs	Smazat účet %s
 delete all records	admin	cs	Smazat všechny záznamy
 delete application	admin	cs	Smazat aplikaci
 delete category	admin	cs	Smazat kategorii
+delete certificate	admin	cs	Smazat certifikát
 delete group	admin	cs	Smazat skupinu
 delete peer server	admin	cs	Smazat peer server
 delete selected entries	admin	cs	Smazat vybrané záznamy
@@ -319,6 +325,7 @@ error! no appname found	admin	cs	Chyba: Název aplikace nenalezen!
 error: %1 not found or other error !!!	admin	cs	Chyba: %1 nenalezen nebo jiná chyba!
 event details follow	admin	cs	Následují detaily události
 expires	admin	cs	Vyprší
+export certificate as p12	admin	cs	Export certifikátu jako p12
 failed to change password.	admin	cs	Nepodařilo se změnit heslo.
 fallback (after each pageview)	admin	cs	Náhradní režim (po každém zobrazení stránky).
 false	admin	cs	Ne
@@ -336,6 +343,7 @@ forward emails to	admin	cs	Přeposlat e-maily na
 forward only	admin	cs	Jen přeposlat
 full name	admin	cs	Celé jméno
 general	admin	cs	Obecné
+generate certificate	admin	cs	Vygenerovat certifikát
 global categories	common	cs	Globální kategorie
 global options	admin	cs	Globální volby
 go directly to admin menu, returning here the next time you click on administration.	admin	cs	Jít přímo do administračního menu; sem se vrátíte jakmile příště kliknete na administraci.
@@ -696,6 +704,7 @@ unwilling to save category with current settings. check for inconsistency:	admin
 up	admin	cs	Nahoru
 update current email address:	admin	cs	Aktualizovat současnou e-mailovou adresu:
 updated	admin	cs	aktualizováno
+upload your certificate .p12/.pfx file	admin	cs	Nahrání souboru certifikátu .p12/.pfx
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	cs	URL instalace EGroupware, např. https://egw.domain.com/egroupware
 usage	admin	cs	Využití
 use cookies to pass sessionid	admin	cs	Požívat cookies pro předání ID relace
@@ -713,6 +722,7 @@ user can edit forwarding address	admin	cs	Uživatel smí editovat adresu pro př
 user data	common	cs	Uživatelská data
 user for smtp-authentication (leave it empty if no auth required)	admin	cs	Uživatel pro SMTP autentikaci (ponechte prázdné, není-li autentikace vyžadována).
 user groups	admin	cs	Skupiny uživatelů
+user hidden vom non-admins.	admin	cs	Uživatel skrytý pro uživatele, kteří nejsou administrátory
 user-agent	admin	cs	User-Agent
 userdata	admin	cs	Uživatelská data
 username (standard)	admin	cs	Uživatelské jméno (standardní)

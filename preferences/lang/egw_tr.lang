@@ -22,4 +22,7 @@ set content size	preferences	tr	İçerik boyutunu ayarla
 singlesignon and passwords	preferences	tr	SingleSignOn ve parolalar
 store password retrievable for singlesignon	common	tr	SingleSignOn için alınabilen parolayı sakla
 the two passwords are not the same	preferences	tr	İki şifre birbirinden farklı
+use first %1 letters from username	preferences	tr	Kullanıcı adının ilk %1 harfini kullan
+use initials from first and last name	preferences	tr	Ad ve soyadın baş harflerini kullanın
 users choice	preferences	tr	Kullanıcı Seçimleri
+what to display for an avatar, if there is no photo	preferences	tr	Fotoğraf yoksa avatar için ne görüntülenmeli

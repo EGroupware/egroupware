@@ -32,6 +32,7 @@ cancel	setup	id	Batal
 change system-charset	setup	id	Change system-charset
 charset	setup	id	Charset
 check installation	setup	id	Cek instalasi
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	id	Sertakan file (direktori file) dalam pencadangan data.<br>(Dapat menghasilkan data dalam jumlah besar dan membatalkan dengan banyak file, dokumentasi: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>)
 checking php.ini	setup	id	Checking php.ini
 click here	setup	id	Klik disini
 completed	setup	id	Tuntas
@@ -124,6 +125,7 @@ ldap root password	setup	id	LDAP root password
 ldap rootdn	setup	id	LDAP Root DN
 limit access	setup	id	Limit access
 logout	setup	id	Keluar
+mail account of %1 migrated	setup	id	Akun email %1 dimigrasi.
 manage applications	setup	id	Manage Applications
 manage languages	setup	id	Manage Languages
 minute	setup	id	menit
