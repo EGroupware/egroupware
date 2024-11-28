@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9257aed1d9de6b9358c6f12fc3dbe84",
+    "content-hash": "de45fc314c030117a58b2fc5adb72b23",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -743,16 +743,16 @@
         },
         {
             "name": "easyswoole/memcache",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-swoole/memcache.git",
-                "reference": "f3827a7d55e2ab043f5dc1429a4c26578754bd19"
+                "reference": "d98026de25d9c64a0cd9588ffa8178ecc2d88c64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-swoole/memcache/zipball/f3827a7d55e2ab043f5dc1429a4c26578754bd19",
-                "reference": "f3827a7d55e2ab043f5dc1429a4c26578754bd19",
+                "url": "https://api.github.com/repos/easy-swoole/memcache/zipball/d98026de25d9c64a0cd9588ffa8178ecc2d88c64",
+                "reference": "d98026de25d9c64a0cd9588ffa8178ecc2d88c64",
                 "shasum": ""
             },
             "require": {
@@ -776,9 +776,9 @@
             "description": "Coroutine version of Memcache client",
             "support": {
                 "issues": "https://github.com/easy-swoole/memcache/issues",
-                "source": "https://github.com/easy-swoole/memcache/tree/master"
+                "source": "https://github.com/easy-swoole/memcache/tree/1.1.0"
             },
-            "time": "2020-06-06T11:45:08+00:00"
+            "time": "2021-03-15T02:48:52+00:00"
         },
         {
             "name": "easyswoole/spl",
