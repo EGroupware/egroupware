@@ -2226,7 +2226,7 @@ div#loginMainDiv.stockLoginBackground div#centerBox form {
   background-image: url(../../node_modules/bootstrap-icons/icons/translate.svg);
 }
 #loginMainDiv div#centerBox form table.divLoginbox input[type="checkbox"] {
-  height: 25px;
+  height: 25px !important;
   margin-top: 7px;
   width: auto;
 }
