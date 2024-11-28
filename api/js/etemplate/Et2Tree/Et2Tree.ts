@@ -1126,8 +1126,8 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
                     @dragleave=${(event) => {this.handleDragEvent(event);}}
 					@drop=${(event) => {this.handleDragEvent(event);}}
             >
-				<sl-icon name="chevron-right" slot="expand-icon"></sl-icon>
-				<sl-icon name="chevron-down" slot="collapse-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-right")}" slot="expand-icon"></sl-icon>
+				<sl-icon src="${this.egw().image("bi-chevron-down")}" slot="collapse-icon"></sl-icon>
                 <slot></slot>
                 ${repeat(this._selectOptions, (o) => o.value, this._optionTemplate)}
             </sl-tree>
