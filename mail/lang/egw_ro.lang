@@ -1,6 +1,11 @@
+%1 attachments	mail	ro	%1 atașamente
+%1 for all users	mail	ro	%1 pentru toți utilizatorii
+%1 is not writable by you!	mail	ro	%1 NU poate fi scris de dumneavoastră!
+%1 mails selected	mail	ro	%1 e-mailuri selectate
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ro	%1 necesită extensia Sieve %2, poate încercați %1 sau un număr mai mare de zile.
 (leave empty for no quota)	mail	ro	(Lăsați gol pentru nici o cotă)
 acl rights retrieve failed, seems there are no rights set!	mail	ro	Recuperarea drepturilor ACL a eșuat, se pare că nu există drepturi setate!
+activating by date requires a start- and end-date!	mail	ro	Activarea în funcție de dată necesită o dată de început ȘI de sfârșit!
 add all my aliases	mail	ro	Adăugați toate pseudonimele mele
 add as new	mail	ro	Adăugați ca nou
 add files as %1	mail	ro	Adăugați fișiere ca %1

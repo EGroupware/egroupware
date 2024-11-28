@@ -1,5 +1,4 @@
 %1 files unlocked.	filemanager	tr	%1 dosyanın kilidi açıldı.
-actions	filemanager	tr	Eylemler
 applications	common	tr	Uygulamalar
 classic	filemanager	tr	Standart Araç Çubuğu
 custom fields	filemanager	tr	Özel Alanlar
@@ -35,7 +34,6 @@ extended access control list	filemanager	tr	Genişletilmiş erişim kontrol list
 extended acl	filemanager	tr	Genişletilmiş ACL
 failed to change permissions of %1!	filemanager	tr	%1'in izinleri değiştirilemedi!
 failed to create directory!	filemanager	tr	Klasör oluşturulamadı!
-favorites	filemanager	tr	Favoriler
 file	common	tr	Dosya
 file %1 already exists	filemanager	tr	%1 dosyası zaten mevcut
 file %1 could not be created.	filemanager	tr	%1 dosyası oluşturulamadı.

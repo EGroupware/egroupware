@@ -22,7 +22,6 @@
 %1 token %2.	admin	nl	%1 token %2.
 %1 user %2	admin	nl	%1 gebruiker %2
 (de)activate mail accounts	admin	nl	(De)Activeer mailaccounts
-(default no, leave it off if you dont use it)	admin	nl	Standaard = Nee, laat uit als je het niet gebruikt
 (no subject)	admin	nl	(geen onderwerp)
 -  type	admin	nl	- type
 1 year	admin	nl	1 jaar
@@ -93,6 +92,7 @@ anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
 anonymous user does not exist!	admin	nl	Anonieme gebruiker bestaat NIET!
 anonymous user has no run-rights for the application!	admin	nl	Anonieme gebruiker heeft geen uitvoer rechten voor deze toepassing.
+anonymous user. not shown in list sessions.	admin	nl	Anonieme gebruiker. Wordt niet weergegeven in lijstsessies
 any application	admin	nl	Ledere toepassing
 any group	admin	nl	Ledere groep
 any user	admin	nl	Iedere gebruiker
@@ -137,6 +137,9 @@ category %1 has been saved !	admin	nl	Categorie %1 is opgeslagen!
 category deleted.	admin	nl	Categorie verwijderd.
 category list	admin	nl	Categorieënlijst
 category saved.	admin	nl	Categorie opgeslagen.
+certificate	admin	nl	Certificaat
+certificate details	admin	nl	Details certificaat
+certificate validation in days	admin	nl	Validatie certificaat in dagen
 change account_id	admin	nl	Wijzig Account-ID
 change acl rights	admin	nl	Bewerk ACL-rechten
 change config settings	admin	nl	Bewerk configuratieinstellingen
@@ -166,6 +169,7 @@ created	admin	nl	Aangemaakt
 created with id #%1	admin	nl	Aangemaakt met ID #%1
 creates a new field	admin	nl	Creëert een nieuw veld
 crontab only (recomended)	admin	nl	Alleen crontab (aanbevolen)
+current certificate	admin	nl	Huidig certificaat
 custom 1	admin	nl	Aangepast 1
 custom 2	admin	nl	Aangepast 2
 custom 3	admin	nl	Aangepast 3
@@ -184,6 +188,7 @@ delete account %s	admin	nl	Account %s verwijderen
 delete all records	admin	nl	Alle records verwijderen
 delete application	admin	nl	Toepassing verwijderen
 delete category	admin	nl	Categorie verwijderen
+delete certificate	admin	nl	Certificaat verwijderen
 delete group	admin	nl	Groep verwijderen
 delete peer server	admin	nl	Peer-server verwijderen
 delete the category	admin	nl	De categorie verwijderen
@@ -288,6 +293,7 @@ error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een an
 event details follow	admin	nl	Afspraak details volgen
 exists	admin	nl	Bestaat
 expires	admin	nl	Verloopt
+export certificate as p12	admin	nl	Certificaat exporteren als p12
 failed to change password.	admin	nl	Wachtwoord kan niet worden gewijzigd.
 fallback (after each pageview)	admin	nl	Terugval (na iedere paginaweergave)
 false	admin	nl	Onwaar
@@ -306,6 +312,7 @@ forward emails to	admin	nl	Stuurt emails door naar
 forward only	admin	nl	Alleen doorsturen
 full name	admin	nl	Volledige naam
 general	admin	nl	Algemeen
+generate certificate	admin	nl	Certificaat genereren
 global categories	common	nl	Algemene Categorieën
 global options	admin	nl	Algemene opties
 grant	admin	nl	Sta toe
@@ -603,6 +610,7 @@ unsupported action '%1' !!!	admin	nl	Niet-ondersteunde actie '%1'
 up	admin	nl	Boven
 update current email address:	admin	nl	Huidige emailadres bijwerken:
 updated	admin	nl	Bijgewerkt
+upload your certificate .p12/.pfx file	admin	nl	Upload uw certificaat .p12/.pfx bestand
 use cookies to pass sessionid	admin	nl	Gebruik cookies om sessie-ID door te geven
 use default	admin	nl	Gebruik standaard
 use ldap defaults	admin	nl	Gebruik LDAP standaard instellingen
@@ -617,6 +625,7 @@ user can edit forwarding address	admin	nl	Gebruiker kan het doorstuuradres aanpa
 user data	common	nl	Gebruikersgegevens
 user for smtp-authentication (leave it empty if no auth required)	admin	nl	Gebruikersnaam voor SMTP-authenticatie (leeglaten indien geen auth vereist is)
 user groups	admin	nl	Gebruikersgroepen
+user hidden vom non-admins.	admin	nl	Gebruiker verborgen voor niet-admins
 user-agent	admin	nl	User-Agent
 userdata	admin	nl	Gebruikersgegevens
 username (standard)	admin	nl	Gebruikersnaam (standaard)

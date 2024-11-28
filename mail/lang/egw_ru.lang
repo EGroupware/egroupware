@@ -1,9 +1,10 @@
+%1 attachments	mail	ru	%1 вложение
+%1 for all users	mail	ru	%1 для всех пользователей
 %1 is not writable by you!	mail	ru	%1 недоступно для записи!
+%1 mails selected	mail	ru	%1 выбранных писем
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	ru	Для %1 требуется расширение Sieve %2, возможно, попробуйте %1 или большее количество дней.
 (leave empty for no quota)	mail	ru	(Оставьте пустым для отсутствия квоты)
 (no subject)	mail	ru	(без темы)
-(select mails by clicking on the line, like a checkbox)	mail	ru	(выберите письма нажатием на строчку, как место выбора)
-(with checkbox enforced)	mail	ru	(с отмеченным флажком)
 acl rights retrieve failed, seems there are no rights set!	mail	ru	Не удалось получить права ACL, похоже, права не установлены!
 activating by date requires a start- and end-date!	mail	ru	Активация по дате требует наличия начальной и конечной даты!
 add all my aliases	mail	ru	Добавить все мои псевдонимы

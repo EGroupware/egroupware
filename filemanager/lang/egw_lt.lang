@@ -20,7 +20,6 @@ extended access control list	filemanager	lt	Išplėstinis prieigos kontrolės s�
 extended acl	filemanager	lt	Išplėstinis ACL
 failed to change permissions of %1!	filemanager	lt	Nepavyko pakeisti %1 leidimų!
 failed to create directory!	filemanager	lt	Nepavyko sukurti aplanko!
-favorites	filemanager	lt	Mėgstamiausi
 file	common	lt	Failas
 file %1 already exists	filemanager	lt	Failas %1 jau egzistuoja
 file %1 could not be created.	filemanager	lt	Failo %1 nepavyko sukurti.

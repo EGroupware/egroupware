@@ -25,7 +25,6 @@ basic csv import	importexport	it	Importazione base CSV
 change allowed users	importexport	it	Modificare gli utenti consentiti
 change owner when updating	importexport	it	Cambiare il proprietario durante l'aggiornamento
 changed	importexport	it	Modificato
-changed allowed_users	importexport	it	Gli utenti consentiti sono stati modificati
 changed owner	importexport	it	Proprietario modificato
 charset of file	importexport	it	Set di Caratteri del file
 check all	importexport	it	Seleziona tutto

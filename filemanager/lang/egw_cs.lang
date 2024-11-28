@@ -32,10 +32,7 @@
 accessrights	filemanager	cs	Přístupová práva
 acl added.	filemanager	cs	ACL byly přidány.
 acl deleted.	filemanager	cs	ACL byly smazány.
-actions	filemanager	cs	Akce
-add to clipboard	filemanager	cs	Přidat do schránky
 administrators	filemanager	cs	Administrátoři
-all files	filemanager	cs	Všechny soubory
 all subdirectories	filemanager	cs	Všechny podadresáře
 all types	filemanager	cs	Všechny typy
 allow a maximum of the above configured folderlinks to be configured in settings	admin	cs	povolit konfiguraci maxima z výše konfigurovaných odkazů na složky v nastaveních

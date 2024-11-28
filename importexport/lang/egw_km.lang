@@ -25,7 +25,6 @@ basic csv import	importexport	km	ការនាំចូល CSV មូលដ្
 change allowed users	importexport	km	ផ្លាស់ប្តូរអ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត
 change owner when updating	importexport	km	ផ្លាស់ប្តូរម្ចាស់នៅពេលធ្វើបច្ចុប្បន្នភាព
 changed	importexport	km	បានផ្លាស់ប្តូរ
-changed allowed_users	importexport	km	បានផ្លាស់ប្តូរអ្នកប្រើប្រាស់ដែលបានអនុញ្ញាត
 changed owner	importexport	km	បានផ្លាស់ប្តូរម្ចាស់
 charset of file	importexport	km	សំណុំតួអក្សរ
 check all	importexport	km	ពិនិត្យ​ទាំងអស់

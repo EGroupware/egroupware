@@ -1,9 +1,15 @@
 %1 records processed	importexport	cs	%1 záznamů zpracováno
+add a new definition	importexport	cs	Přidat novou definici
+addressbook csv import	importexport	cs	Import adresáře CSV
+addressbook vcard import	importexport	cs	Import adresáře vCard
 all users	importexport	cs	Všichni uživatelé
 allowed users	importexport	cs	Oprávnění uživatelé
 automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
 basic csv import	importexport	cs	Základní CSV import
+change allowed users	importexport	cs	Změna povolených uživatelů
+change owner when updating	importexport	cs	Změna vlastníka při aktualizaci
 changed	importexport	cs	Změněno
+changed owner	importexport	cs	Změněný vlastník
 charset of file	importexport	cs	Znaková sada souboru
 check all	importexport	cs	Označit všechny
 choose a name for this definition	importexport	cs	Zvolte název pro tuto definici

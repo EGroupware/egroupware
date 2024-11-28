@@ -9,8 +9,6 @@
 (leave empty for no quota)	mail	km	(ទុកឲ្យទទេ ដោយគ្មានកូតា)
 (no subject)	mail	km	(គ្មាន​ប្រធាន)
 (not connected)	mail	km	(មិនបាន​តភ្ជាប់)
-(select mails by clicking on the line, like a checkbox)	mail	km	(ជ្រើសរើសសំបុត្រដោយចុចលើបន្ទាត់ ដូចជាប្រអប់ធីក)
-(with checkbox enforced)	mail	km	(ជាមួយប្រអប់ធីកត្រូវបានបង្ខំ)
 account editable by user	mail	km	គណនីដែលអាចកែសម្រួលបានដោយអ្នកប្រើប្រាស់
 acl rights retrieve failed, seems there are no rights set!	mail	km	ការទាញយកសិទ្ធិ ACL បានបរាជ័យ ហាក់ដូចជាមិនមានសិទ្ធិកំណត់ទេ!
 acl rights retrieved successfully	mail	km	ទទួលបានសិទ្ធិ ACL ដោយជោគជ័យ

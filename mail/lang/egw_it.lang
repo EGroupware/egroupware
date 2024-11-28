@@ -1,4 +1,5 @@
 %1 attachments	mail	it	%1 allegati
+%1 for all users	mail	it	%1 per tutti gli utenti
 %1 has been added to blacklisted email addresses	mail	it	%1 è stato aggiunto alla blacklist della posta elettronica
 %1 has been added to whiltelisted email addresses	mail	it	%1 è stato aggiunto alla whitelist della posta elettronica
 %1 has been removed from blacklisted email addresses	mail	it	%1 è stato rimosso dalla blacklist della posta elettronica
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
 (no subject)	mail	it	(nessun oggetto)
 (not connected)	mail	it	(non connesso)
-(select mails by clicking on the line, like a checkbox)	mail	it	(seleziona i messaggi cliccando sulla riga, come se fosse una casella da spuntare)
-(with checkbox enforced)	mail	it	(con checkbox forzato)
 account editable by user	mail	it	Account modificabile dall'utente
 acl rights retrieve failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
 acl rights retrieved successfully	mail	it	Diritti ACL recuperati con successo

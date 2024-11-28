@@ -1,4 +1,6 @@
 %1 attachments	mail	sv	%1 bilagor
+%1 for all users	mail	sv	%1 för alla användare
+%1 is not writable by you!	mail	sv	%1 är INTE skrivbar av dig!
 %1 mails selected	mail	sv	%1 e-postmeddelanden valda
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	sv	%1 kräver Sieve-tillägget %2, prova kanske %1 eller ett högre antal dagar.
 (leave empty for no quota)	mail	sv	(Lämna tomt för ingen kvot)

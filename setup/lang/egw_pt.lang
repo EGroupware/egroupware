@@ -62,6 +62,7 @@ backup '%1' renamed to '%2'	setup	pt	Cópia de segurança '%1' renomeada para '%
 backup '%1' restored	setup	pt	Cópia de segurança '%1' reposta
 backup and restore	setup	pt	Fazer cópia de segurança e repor
 backup failed	setup	pt	Cópia de segurança falhou
+backup files (needs ziparchive)	setup	pt	Cópia de segurança dos dados dos ficheiros do EGroupware (diretório de ficheiros) <br>(requer PHP ZipArchive)
 backup finished	setup	pt	Cópia de segurança concluída
 backup now	setup	pt	Fazer cópia de segurança agora
 backup sets	setup	pt	Definições da cópia de segurança
@@ -83,6 +84,7 @@ charset to convert to	setup	pt	Charset para converter para
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	pt	A verificação pode apenas ser executada através de um servidor Web, uma vez que a ID e o nome do utilizador do servidor Web não é conhecido.
 check installation	setup	pt	Verificar instalação
 check ip address of all sessions	setup	pt	Verificar endereço IP de todas sessões
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	pt	Incluir ficheiros (diretório de ficheiros) na cópia de segurança dos dados.<br>(Pode gerar grandes quantidades de dados e abortar com muitos ficheiros, documentação: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Cópia de segurança de um EGroupware</a>)
 checking extension %1 is loaded or loadable	setup	pt	A verificar se a extensão %1 está carregada ou se é carregável
 checking file-permissions of %1 for %2 %3: %4	setup	pt	A verificar ficheiro de permissões de %1 para %2 %3: %4
 checking for gd support...	setup	pt	A verificar a existência de suporte de GD ...
@@ -259,6 +261,7 @@ limit access to setup to the following addresses, networks or hostnames (e.g. 12
 login as user postgres, eg. by using su as root	setup	pt	Aceder como utilizador PostgreSQL, ex: utilizando su como root
 login to mysql -	setup	pt	Aceder ao mysql -
 logout	setup	pt	Sair
+mail account of %1 migrated	setup	pt	Conta de correio eletrónico de %1 migrada.
 mail domain (for virtual mail manager)	setup	pt	Domínio de correio electrónico (para gestor virtual de correio electrónico)
 mail server login type	setup	pt	Tipo de acesso ao servidor de correio electrónico
 mail server protocol	setup	pt	Protocolo de servidor de correio electrónico

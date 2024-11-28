@@ -6,8 +6,10 @@ application title	setup	uk	Найменування приложення
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	uk	Спроба використати вірний MIME-тип для FTP замість типового 'application/octet-stream'
 authentication / accounts	setup	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	setup	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
+backup files (needs ziparchive)	setup	uk	Резервне копіювання даних файлів EGroupware (каталог файлів) <br>(потрібен PHP ZipArchive)
 bottom	setup	uk	низ
 check ip address of all sessions	setup	uk	перевіряти ip адресу для всіх сесій
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	uk	Включити файли (каталог файлів) до резервної копії даних.<br>(Може створювати великі обсяги даних і перериватися при великій кількості файлів, документації: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 configuration	setup	uk	Конфігурація
 country selection	setup	uk	Вибір країни
 day	setup	uk	День
@@ -43,6 +45,7 @@ ldap groups context	setup	uk	Контекст LDAP груп
 ldap host	setup	uk	Хост LDAP
 ldap root password	setup	uk	root пароль LDAP
 ldap rootdn	setup	uk	LDAP root DN
+mail account of %1 migrated	setup	uk	Поштовий акаунт %1 перенесено.
 maximum account id (e.g. 65535 or 1000000)	setup	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minimum account id (e.g. 500 or 100, etc.)	setup	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minute	setup	uk	Хвилина

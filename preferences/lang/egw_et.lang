@@ -34,4 +34,7 @@ the old password is not correct	preferences	et	Vana parool pole õige
 the two passwords are not the same	preferences	et	Kaks parooli pole identsed
 time format	preferences	et	Aja formaat
 use default	preferences	et	Kasuta vaikimisi
+use first %1 letters from username	preferences	et	Kasuta kasutajanime esimesi %1 tähti
+use initials from first and last name	preferences	et	Kasuta ees- ja perekonnanime algustähti
+what to display for an avatar, if there is no photo	preferences	et	Mida kuvada avatariks, kui puudub foto.
 you must enter a password	preferences	et	Sa pead sisestama parooli

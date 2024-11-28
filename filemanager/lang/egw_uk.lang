@@ -1,5 +1,4 @@
 %1 files unlocked.	filemanager	uk	Розблоковано %1 файл.
-actions	filemanager	uk	Дії
 applications	common	uk	Приложення
 classic	filemanager	uk	Стандартна панель інструментів
 comment	filemanager	uk	Коментувати
@@ -36,7 +35,6 @@ extended access control list	filemanager	uk	Розширений список к
 extended acl	filemanager	uk	Розширений ACL
 failed to change permissions of %1!	filemanager	uk	Не вдалося змінити права доступу до %1!
 failed to create directory!	filemanager	uk	Не вдалося створити папку!
-favorites	filemanager	uk	Вибране
 file	common	uk	Файл
 file %1 already exists	filemanager	uk	Файл %1 вже існує
 file %1 could not be created.	filemanager	uk	Не вдалося створити файл %1.

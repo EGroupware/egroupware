@@ -139,7 +139,10 @@ time format	preferences	ja	時間書式
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	ja	フォント・サイズの単位: ウェブ等で用いられる"px"か、印刷等で用いられる "pt"。
 uppercase letters	preferences	ja	大文字
 use default	preferences	ja	既定を使用
+use first %1 letters from username	preferences	ja	ユーザー名の最初の %1 文字を使用
+use initials from first and last name	preferences	ja	姓と名のイニシャルを使う
 users choice	preferences	ja	ユーザ選択
+what to display for an avatar, if there is no photo	preferences	ja	写真がない場合、アバターに何を表示するか
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ja	ホームやログアウト・ボタンをアプリケーションのようにトップバーに表示します。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ja	CSV インポート/エクスポートで使う文字セットを選択してください。
 which currency symbol or name should be used in egroupware.	preferences	ja	通貨シンボル/通貨名

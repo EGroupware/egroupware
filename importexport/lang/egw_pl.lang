@@ -1,10 +1,15 @@
 %1 records processed	importexport	pl	Przetworzono %1 wpisów
+add a new definition	importexport	pl	Dodaj nową definicję
 addressbook csv import	importexport	pl	Import książki adresowej z CSV
+addressbook vcard import	importexport	pl	Import książki adresowej vCard
 all users	importexport	pl	Wszyscy użytkownicy
 allowed users	importexport	pl	Użytkownicy z dostępem
 automatically created by importexport	importexport	pl	Automatycznie utworzone przez Import/Export
 basic csv import	importexport	pl	Prosty import CSV
+change allowed users	importexport	pl	Zmiana dozwolonych użytkowników
+change owner when updating	importexport	pl	Zmiana właściciela podczas aktualizacji
 changed	importexport	pl	Zmieniono
+changed owner	importexport	pl	Zmieniony właściciel
 charset of file	importexport	pl	strona kodowa pliku
 check all	importexport	pl	Zaznacz wszystkie
 choose a name for this definition	importexport	pl	Wybierz nazwę dla tej definicji

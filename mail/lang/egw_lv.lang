@@ -1,7 +1,12 @@
+%1 attachments	mail	lv	%1 pielikumi
+%1 for all users	mail	lv	%1 visiem lietotājiem
+%1 is not writable by you!	mail	lv	%1 jums NAV rakstāms!
+%1 mails selected	mail	lv	atlasīti %1 e-pasti
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lv	%1 nepieciešams Sieve paplašinājums %2, varbūt izmēģiniet %1 vai lielāku dienu skaitu.
 (leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
 (no subject)	mail	lv	(nav temata)
 acl rights retrieve failed, seems there are no rights set!	mail	lv	ACL tiesību atgūšana neizdevās, šķiet, nav iestatītas tiesības!
+activating by date requires a start- and end-date!	mail	lv	Aktivizēšana pēc datuma prasa sākuma un beigu datumu!
 add all my aliases	mail	lv	Pievienot visus manus pseidonīmus
 add as new	mail	lv	Pievienot kā jaunu
 add files as %1	mail	lv	Pievienot failus kā %1

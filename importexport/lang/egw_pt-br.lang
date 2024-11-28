@@ -8,6 +8,7 @@
 (0-23)	importexport	pt-br	(0-23)
 (0-6, 0=sun)	importexport	pt-br	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	pt-br	* Contact ID não pode ser alterado por importação
+add a new definition	importexport	pt-br	Adicionar uma nova definição
 addressbook csv import	importexport	pt-br	Endereços CSV Import
 addressbook vcard import	importexport	pt-br	Importação de endereços vCard
 admin disabled exporting	importexport	pt-br	Exportação desativado Administrador
@@ -16,8 +17,9 @@ all users	importexport	pt-br	Todos usuários
 allowed users	importexport	pt-br	Usuários permitidos
 automatically created by importexport	importexport	pt-br	Automaticamente criado por importar/exportar
 basic csv import	importexport	pt-br	Importação CSV Básico
+change allowed users	importexport	pt-br	Alterar usuários permitidos
+change owner when updating	importexport	pt-br	Alterar o proprietário ao atualizar
 changed	importexport	pt-br	Alterado
-changed allowed_users	importexport	pt-br	Usuários permitidos Changed
 changed owner	importexport	pt-br	Proprietário Changed
 charset of file	importexport	pt-br	Charset do arquivo
 check all	importexport	pt-br	Verificar todos

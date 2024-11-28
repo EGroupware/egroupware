@@ -22,7 +22,6 @@
 %1 token %2.	admin	it	%1 token %2.
 %1 user %2	admin	it	%1 utente %2
 (de)activate mail accounts	admin	it	(dis)attivare account email
-(default no, leave it off if you dont use it)	admin	it	Predefinito = No, lascialo così se non lo usi
 (no subject)	admin	it	(nessun oggetto)
 -  type	admin	it	- tipo
 1 year	admin	it	1 anno
@@ -56,7 +55,6 @@ acl added.	admin	it	ACL aggiunta.
 acl csv export	admin	it	Salva ACL in CSV
 acl deleted.	admin	it	ACL eliminata.
 acl entry deleted.	admin	it	Voce ACL eliminata.
-acl entry not found!	admin	it	Voce ACL non trovata!
 acl manager	admin	it	Gestione ACL
 acl rights	common	it	Diritti ACL
 acl updated	admin	it	ACL aggiornata
@@ -118,9 +116,10 @@ allowed just as second factor	admin	it	consentito solo come secondo fattore
 alternate email address	admin	it	Indirizzo email alternativo
 and logged in	admin	it	e collegato
 anonymous user	admin	it	Utente anonimo
-anonymous user (not shown in list sessions)	admin	it	Utente Anonimo (non visualizzato nella lista delle sessioni).
+anonymous user (not shown in list sessions)	admin	it	Utente anonimo. Non mostrato nelle sessioni dell'elenco
 anonymous user does not exist!	admin	it	L'Utente Anonimo NON esiste!
 anonymous user has no run-rights for the application!	admin	it	L'Utente Anonimo NON ha diritti di esecuzione per l'applicazione!
+anonymous user. not shown in list sessions.	admin	it	Usuario anónimo. No se muestra en la lista de sesiones
 any application	admin	it	Ogni applicazione
 any group	admin	it	Ogni gruppo
 any user	admin	it	Qualsiasi utente
@@ -951,6 +950,7 @@ user csv import	admin	it	Importazione CSV utente
 user data	common	it	Dati utente
 user for smtp-authentication (leave it empty if no auth required)	admin	it	User per autenticazione SMTP (lascia vuoto se non è richiesta autenticazione)
 user groups	admin	it	Gruppi utenti
+user hidden vom non-admins.	admin	it	Utente nascosto ai non amministratori
 user-agent	admin	it	User-Agent
 userdata	admin	it	Dati utente
 userid@domain eg. u1234@domain	admin	it	UserId@dominio p.es. u1234@dominio

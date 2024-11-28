@@ -1,3 +1,5 @@
+backup files (needs ziparchive)	setup	ro	Kopia zapasowa danych plików EGroupware (katalog files) <br>(wymaga PHP ZipArchive)
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ro	Uwzględnij pliki (katalog plików) w kopii zapasowej danych.<br>(Może generować duże ilości danych i przerwać z wieloma plikami, dokumentacja: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 disable only if your ad has problems with vlv controls and can return all users in a single query!	setup	ro	Dezactivați numai dacă AD-ul dvs. are probleme cu controalele VLV ȘI poate returna toți utilizatorii într-o singură interogare!
 disable vlv controls	setup	ro	Dezactivați controalele VLV
 error searching "dn=%1" for "%2"!	setup	ro	Eroare la căutarea "DN=%1" pentru "%2"!
@@ -8,6 +10,7 @@ failed to mount backup directory!	setup	ro	A eșuat montarea directorului Backup
 failed updating user "%1" dn="%2"!	setup	ro	A eșuat actualizarea utilizatorului "%1" DN="%2"!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	ro	A eșuat la scrierea fișierului de configurare header.inc.php, verificați permisiunile!
 fallback authentication	setup	ro	Autentificare de rezervă
+mail account of %1 migrated	setup	ro	Konto pocztowe %1 zmigrowane.
 openidconnect login	setup	ro	Conectare OpenIDConnect
 optional, if only authentication and anonymous search is enabled	setup	ro	opcional, se apenas a autenticação E a pesquisa anônima estiverem ativadas
 or leave empty and select openidconnect as authentication type above for single sign on	setup	ro	ou deixe em branco e selecione OpenID Connect como tipo de autenticação acima para logon único

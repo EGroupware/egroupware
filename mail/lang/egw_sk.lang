@@ -1,4 +1,5 @@
 %1 attachments	mail	sk	%1 príloh
+%1 for all users	mail	sk	%1 pre všetkých používateľov
 %1 has been added to blacklisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na čiernu listinu
 %1 has been added to whiltelisted email addresses	mail	sk	E-mailová adresa %1 bola pridaná na bielu listinu
 %1 has been removed from blacklisted email addresses	mail	sk	E-mailová adresa %1 bola vyňatá z čiernej listiny
@@ -10,8 +11,6 @@
 (leave empty for no quota)	mail	sk	(Ak nechcete kvótu, ponechajte prázdne)
 (no subject)	mail	sk	(bez predmetu)
 (not connected)	mail	sk	(nepripojené)
-(select mails by clicking on the line, like a checkbox)	mail	sk	(správy označíte kliknutím na riadok, ako zaškrtávacie políčko)
-(with checkbox enforced)	mail	sk	(s vynútením zaškrtávacieho políčka)
 account editable by user	mail	sk	používateľ môže upraviť účet
 acl rights retrieve failed, seems there are no rights set!	mail	sk	Zlyhalo prevzatie ACL práv, zdá sa že žiadne práva nie sú nastavené!
 acl rights retrieved successfully	mail	sk	ACL práva boli úspešne prevzaté

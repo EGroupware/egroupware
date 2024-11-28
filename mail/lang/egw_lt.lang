@@ -1,6 +1,11 @@
+%1 attachments	mail	lt	%1 priedai
+%1 for all users	mail	lt	%1 visiems naudotojams
+%1 is not writable by you!	mail	lt	%1 NEGALIMA rašyti!
+%1 mails selected	mail	lt	pasirinktas %1 el. laiškas
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lt	%1 reikia "Sieve" plėtinio %2, galbūt pabandykite %1 arba didesnį dienų skaičių.
 (leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
 acl rights retrieve failed, seems there are no rights set!	mail	lt	ACL teisių atkūrimas nepavyko, atrodo, kad nėra nustatytų teisių!
+activating by date requires a start- and end-date!	mail	lt	Aktyvinant pagal datą reikia nurodyti pradžios ir pabaigos datą!
 add all my aliases	mail	lt	Pridėti visus mano slapyvardžius
 add as new	mail	lt	Pridėti kaip naują
 add files as %1	mail	lt	Pridėti failus kaip %1

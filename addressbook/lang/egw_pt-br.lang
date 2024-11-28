@@ -1,4 +1,4 @@
-%1 contact(s) %2	addressbook	pt-br	%1 contato(s) %2
+%1 contact(s) %2	addressbook	pt-br	%1 contato(s) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou devido a %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou(aram) por insuficiência de direiros de acesso!
 %1 contacts updated (%2 errors).	addressbook	pt-br	%1 contatos atualizados (%2 erros).
@@ -105,6 +105,7 @@ choose owner of imported data	addressbook	pt-br	Escolha o proprietário dos dado
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	pt-br	Escolha uma fonte de mapa predefinida ou use um URL personalizado (use %r = rua, %t = cidade, %c = país, %z = código postal)
 chosse an etemplate for this contact type	admin	pt-br	Escolha um eTemplate para este tipo de contato
 city	common	pt-br	Cidade
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	pt-br	Limpar campos do catálogo de endereços, aplicar se a sincronização criar duplicatas
 company	common	pt-br	Empresa
 company name	addressbook	pt-br	Nome da empresa
 configuration	common	pt-br	Configuração
@@ -210,6 +211,7 @@ export file name	addressbook	pt-br	Exportar arquivo
 export from addressbook	addressbook	pt-br	Exportar Livro de Contatos
 export selection	addressbook	pt-br	Exportar seleção
 exported	addressbook	pt-br	exportado
+exports contacts from your addressbook into a csv file.	addressbook	pt-br	Exporta contatos do catálogo de endereços para um arquivo CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Exporta seu Livro de Contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
 exports contacts from your addressbook into a vcard file.	addressbook	pt-br	Exporta contatos do seu catálogo de endereços para um arquivo vCard.
 extra	addressbook	pt-br	Extra

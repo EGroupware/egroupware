@@ -56,6 +56,7 @@ backup '%1' renamed to '%2'	setup	lv	Dublējums "%1" pārsaukts par "%2"
 backup '%1' restored	setup	lv	Dublējums "%1" atjaunots
 backup and restore	setup	lv	Dublēt un atjaunot
 backup failed	setup	lv	Dublēšana neizdevās
+backup files (needs ziparchive)	setup	lv	EGroupware failu (failu direktorija) datu dublējums <br>(nepieciešams PHP ZipArchive)
 backup finished	setup	lv	Dublēšana pabeigta
 backup now	setup	lv	Dublēt tagad
 backup started, this might take a few minutes ...	setup	lv	Dublēšana sākusies, tas var aizņemt dažas minūtes ...
@@ -70,6 +71,7 @@ charset	setup	lv	Charset
 charset to convert to	setup	lv	Rakstīmju kopa pārveidota uz
 check installation	setup	lv	Pārbaudīt installāciju
 check ip address of all sessions	setup	lv	pārbaudīt IP adresi visām sesijām
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	lv	Iekļaut failus (failu direktoriju) datu dublējumkopijā.<br>(Var ģenerēt lielu datu apjomu un pārtraukt darbu ar daudziem failiem, dokumentāciju: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of an EGroupware</a>))
 checking extension %1 is loaded or loadable	setup	lv	Pārbauda attiecināšanu %1 ir ielādēta vai ielādējama
 checking file-permissions of %1 for %2 %3: %4	setup	lv	Pārbauda faila atļaujas no %1 priekš %2 %3: %4
 checking for gd support...	setup	lv	Pārbauda GD atbalstu ...
@@ -227,6 +229,7 @@ ldap rootdn	setup	lv	LDAP saknesdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	lv	LDAP meklēšanas filtrs kontiem, noklusējums:"(uid=%lietotājs)",%domēns=EGw-domēns
 login to mysql -	setup	lv	Pieteikties msql -
 logout	setup	lv	Iziet
+mail account of %1 migrated	setup	lv	Migrēts %1 pasta konts.
 mail domain (for virtual mail manager)	setup	lv	Pasta domēns (Virtuālajam pasta pārvaldniekam)
 mail server login type	setup	lv	Pasta servera pieteikšanās tips
 mail server protocol	setup	lv	Pasta servera protokols

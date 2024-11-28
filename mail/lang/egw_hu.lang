@@ -1,4 +1,7 @@
+%1 attachments	mail	hu	%1 mellékletek
+%1 for all users	mail	hu	%1 minden felhasználó számára
 %1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
+%1 mails selected	mail	hu	%1 kiválasztott e-mail
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	hu	%1 Sieve kiterjesztést igényel %2, esetleg próbálja meg %1 vagy magasabb számú napot.
 (leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
 (no subject)	mail	hu	(nincs tárgy)

@@ -1,10 +1,11 @@
-%1 contact(s) %2	addressbook	id	%1 kontak %2
+%1 contact(s) %2	addressbook	id	%1 kontak %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	id	%1 kontak %2, %3 gagal karena %4!
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	id	%1 kontak %2, %3 gagal karena kurang kewenangan!
 %1 contacts updated (%2 errors).	addressbook	id	%1 kontak dikinikan (%2 kesalahan).
 %1 fields in %2 other organisation member(s) changed	addressbook	id	%1 field dalam %2 anggota organisasi lain diubah.
 %1 key(s) added to public keyserver "%2".	addressbook	id	%1 kunci ditambahkan ke server kunci publik "%2".
 %1 public keys added.	addressbook	id	%1 kunci publik ditambahkan.
+%1 records imported	addressbook	id	%1 catatan diimpor.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	id	%1 rekaman dibaca. Belum diimpor, anda dapat %2kembali%3 dan kosongkan Tes impor.
 %1 shared this contact on %2 with %3 %4	addressbook	id	%1 membagikan kontak ini pada %2 dengan %3 %4
 %1 starts with '%2'	addressbook	id	%1 diawali dengan '%2'
@@ -103,6 +104,7 @@ charset of file	addressbook	id	Charset of file
 check all	addressbook	id	Contreng semua
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	id	Pilih sumber peta yang telah ditentukan sebelumnya atau gunakan URL khusus (gunakan %r = jalan, %t = kota, %c = negara, %z = kode pos)
 city	common	id	Kota
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	id	Membersihkan bidang buku alamat, berlaku jika sinkronisasi membuat duplikat
 company	common	id	Lembaga
 company name	addressbook	id	Nama lembaga
 configuration	common	id	Konfigurasi

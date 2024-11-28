@@ -14,7 +14,6 @@
 %1 successful	admin	da	%1 vellykket
 %1 token %2.	admin	da	%1 token %2.
 (de)activate mail accounts	admin	da	(de)Aktiver mailkonti
-(default no, leave it off if you dont use it)	admin	da	Standard = Nej, lad den være slået fra, hvis du ikke bruger den
 (no subject)	admin	da	(ingen emne)
 1 year	admin	da	1 år
 2 month	admin	da	2 måneder
@@ -77,6 +76,7 @@ anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen).
 anonymous user does not exist!	admin	da	Anonym bruger eksisterer ikke!
 anonymous user has no run-rights for the application!	admin	da	Anonym bruger har IKKE udførelses rettigheder for applikationen!
+anonymous user. not shown in list sessions.	admin	da	Anonym bruger. Vises ikke i listesessioner
 appearance	admin	da	Udseende
 application	admin	da	Applikation
 application name	admin	da	Applikation navn
@@ -108,6 +108,9 @@ cancel testjob!	admin	da	Annuller testjob
 categories list	admin	da	Vis kategorier
 category %1 has been saved !	admin	da	Kategorien %1 er gemt!
 category list	admin	da	Vis kategori
+certificate	admin	da	Certifikat
+certificate details	admin	da	Detaljer om certifikatet
+certificate validation in days	admin	da	Certifikatvalidering i dage
 change access	admin	da	Skift adgangsrettigheder
 change acl rights	admin	da	Ændre ACL-rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
@@ -123,6 +126,7 @@ create group	admin	da	Opret gruppe
 created	admin	da	Oprettet
 creates a new field	admin	da	Opretter et nyt felt
 crontab only (recomended)	admin	da	Kun crontab (anbefalet)
+current certificate	admin	da	Nuværende certifikat
 custom 1	admin	da	Brugerdefineret 1
 custom 2	admin	da	Brugerdefineret 2
 custom 3	admin	da	Brugerdefineret 3
@@ -142,6 +146,7 @@ delete account	admin	da	Slet konto
 delete all records	admin	da	Slet alle posteringer
 delete application	admin	da	Slet applikation
 delete category	admin	da	Slet kategori
+delete certificate	admin	da	Slet certifikat
 delete group	admin	da	Slet gruppe
 delete peer server	admin	da	Slet peer server
 delete the category	admin	da	Slet kategorien
@@ -221,6 +226,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	da	Fejl: %1 ikke fundet eller en anden fejl!
 event details follow	admin	da	Hændelses detajler følger
 expires	admin	da	Udløber
+export certificate as p12	admin	da	Eksportér certifikat som p12
 failed to change password.	admin	da	Det lykkedes ikke at ændre adgangskoden.
 file space	admin	da	Fil plads
 file space must be an integer	admin	da	Fil plads skal være et helt tal
@@ -232,6 +238,7 @@ forward email's to	admin	da	Videresend e-mails til
 forward only	admin	da	Videresend kun
 full name	admin	da	Fulde Navn
 general	admin	da	Generelt
+generate certificate	admin	da	Generer certifikat
 global categories	common	da	Globale Kategorier
 group ?	admin	da	Gruppe?
 group has been added	common	da	Gruppen er tilføjet.
@@ -469,6 +476,7 @@ two weeks	admin	da	To uger
 type of customfield	admin	da	Type af brugerdefineret felt
 up	admin	da	Op
 updated	admin	da	Opdateret
+upload your certificate .p12/.pfx file	admin	da	Upload dit certifikats .p12/.pfx-fil
 use cookies to pass sessionid	admin	da	Brug cookies som sessionid
 use default	admin	da	Brug standard
 use ldap defaults	admin	da	Brug LDAP standarter
@@ -481,6 +489,7 @@ use tls encryption	admin	da	Brug TLS kryptering
 user accounts	admin	da	Bruger kontoer
 user data	common	da	Bruger data
 user groups	admin	da	Bruger grupper
+user hidden vom non-admins.	admin	da	Bruger skjult for ikke-admins
 user-agent	admin	da	User-Agent
 userdata	admin	da	Brugerdata
 users can define their own emailaccounts	admin	da	Brugere kan selv definere deres egne e-mail kontoer

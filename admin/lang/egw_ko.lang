@@ -22,7 +22,6 @@
 %1 token %2.	admin	ko	%1 토큰 %2.
 %1 user %2	admin	ko	%1 사용자 %2
 (de)activate mail accounts	admin	ko	메일 계정 (비)활성화
-(default no, leave it off if you dont use it)	admin	ko	기본값 = 아니요, 사용하지 않는 경우 그대로 둡니다.
 (no subject)	admin	ko	(제목 없음)
 access token revoked.	admin	ko	액세스 토큰이 해지되었습니다.
 account	admin	ko	계정
@@ -67,6 +66,7 @@ allow anonymous access to this app	admin	ko	이 응용프로그램에 익명 연
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ko	SingleSignOnの'Security & Passwords'にパスワードを保存できるようにする。
 anonymous user	admin	ko	익명 사용자
 anonymous user (not shown in list sessions)	admin	ko	익명 사용자 ( 세션 목록에 나타나지 않음 )
+anonymous user. not shown in list sessions.	admin	ko	익명 사용자. 목록 세션에 표시되지 않음
 appearance	admin	ko	보이기
 application	admin	ko	응용프로그램
 application name	admin	ko	응용프로그램 이름
@@ -120,6 +120,7 @@ create group	admin	ko	새 그룹 만들기
 created	admin	ko	생성됨
 creates a new field	admin	ko	새 필드 만들기
 crontab only (recomended)	admin	ko	크론탭 만 ( 추천 )
+current certificate	admin	ko	현재 인증서
 custom 1	admin	ko	사용자 지정 1
 custom 2	admin	ko	사용자 지정 2
 custom 3	admin	ko	사용자 지정 3
@@ -135,6 +136,7 @@ delete account	admin	ko	계정 삭제
 delete all records	admin	ko	모든 레코드 삭제
 delete application	admin	ko	응용프로그램 삭제
 delete category	admin	ko	카테고리 삭제
+delete certificate	admin	ko	인증서 삭제
 delete group	admin	ko	그룹 삭제
 delete peer server	admin	ko	피어 서버 삭제
 delete the category	admin	ko	카테고리 삭제
@@ -202,6 +204,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	ko	오류 : %1을 찾을수 없거나 다른 오류입니다!
 event details follow	admin	ko	다음은 이벤트-설명
 expires	admin	ko	만료
+export certificate as p12	admin	ko	인증서를 P12로 내보내기
 failed to change password.	admin	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 fallback (after each pageview)	admin	ko	폴백 (각 페이지보기 이후)
 false	admin	ko	거짓
@@ -212,6 +215,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	ko	강제 선택박스
 full name	admin	ko	이름
 general	admin	ko	일반
+generate certificate	admin	ko	인증서 생성
 global categories	common	ko	전역 카테고리
 group ?	admin	ko	그룹 ?
 group has been added	common	ko	그룹이 추가되었습니다
@@ -394,6 +398,7 @@ trust relationship	admin	ko	신용관계
 two weeks	admin	ko	보름
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ko	윈도우에서는 비동기 서비스를 설치하기위해 %1수동으로%2 하셔야 하거나 fallback 모드여야 합니다. fallback은 작업이 각 페이지-뷰를 마친후 체크되는 의미입니다!!!
 updated	admin	ko	갱신됨
+upload your certificate .p12/.pfx file	admin	ko	인증서 .p12/.pfx 파일 업로드
 use cookies to pass sessionid	admin	ko	session ID 를 전달하기 위해 쿠키 사용
 use default	admin	ko	기본 사용
 use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
@@ -402,6 +407,7 @@ user accounts	admin	ko	사용자 계정
 user data	common	ko	사용자 데이터
 user for smtp-authentication (leave it empty if no auth required)	admin	ko	사용자 SMTP-인증 (인증이 필요없을경우 비워둡니다)
 user groups	admin	ko	사용자 그룹
+user hidden vom non-admins.	admin	ko	관리자가 아닌 사용자에게 숨겨진 사용자
 user-agent	admin	ko	User-Agent
 userdata	admin	ko	사용자데이터
 users choice	admin	ko	사용자 선택

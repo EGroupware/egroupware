@@ -1,5 +1,11 @@
+add a new definition	importexport	da	Tilføj en ny definition
+addressbook csv import	importexport	da	CSV-import af adressebog
+addressbook vcard import	importexport	da	Import af adressebog vCard
 all users	importexport	da	Alle brugere
+change allowed users	importexport	da	Ændre tilladte brugere
+change owner when updating	importexport	da	Skift ejer ved opdatering
 changed	importexport	da	Ændret
+changed owner	importexport	da	Ændret ejer
 charset of file	importexport	da	Karakterset for fil
 created	importexport	da	Oprettet
 deleted	importexport	da	slettet

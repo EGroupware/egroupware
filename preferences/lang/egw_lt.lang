@@ -10,3 +10,6 @@ password stored	preferences	lt	Saugomas slaptažodis.
 set content size	preferences	lt	Nustatyti turinio dydį
 singlesignon and passwords	preferences	lt	SingleSignOn ir slaptažodžiai
 store password retrievable for singlesignon	common	lt	Saugoti slaptažodį, kurį galima gauti naudojant SingleSignOn
+use first %1 letters from username	preferences	lt	Naudokite pirmąsias %1 vartotojo vardo raides
+use initials from first and last name	preferences	lt	Naudoti vardo ir pavardės inicialus
+what to display for an avatar, if there is no photo	preferences	lt	Ką rodyti kaip avatarą, jei nėra nuotraukos

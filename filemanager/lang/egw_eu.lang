@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	eu	%1 fitxategia gisa existitzen da
 %1 starts with '%2'	filemanager	eu	%1 '%2'tik hasten da
-actions	filemanager	eu	Ekintzak
 applications	common	eu	Aplikazioak
 cancel editing %1 without saving	filemanager	eu	Kantzelatu %1 en edizioa gorde gabe
 cannot create directory because it begins or ends in a space	filemanager	eu	Direktorioa sortzea ezinezkoa izan da hasieran edo bukaeran zuriune bat duelako

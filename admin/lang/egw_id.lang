@@ -22,7 +22,6 @@
 %1 token %2.	admin	id	%1 token %2.
 %1 user %2	admin	id	%1 pengguna %2
 (de)activate mail accounts	admin	id	(de) Mengaktifkan akun email
-(default no, leave it off if you dont use it)	admin	id	Default = Tidak, biarkan saja jika Anda tidak menggunakannya
 (no subject)	admin	id	(tanpa subyek)
 -  type	admin	id	- tipe
 1 year	admin	id	1 tahun
@@ -85,6 +84,7 @@ all users	admin	id	Semua pengguna
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	id	Izinkan pengguna untuk menyimpan kata sandinya di bawah 'Keamanan & Kata Sandi' untuk SingleSignOn.
 alternate email address	admin	id	Alamat email pengganti
 anonymous user	admin	id	Pengguna Anonymous
+anonymous user (not shown in list sessions)	admin	id	Pengguna anonim. Tidak ditampilkan dalam sesi daftar
 any application	admin	id	Semua aplikasi
 any group	admin	id	Semua kelompok
 any user	admin	id	Semua pengguna
@@ -115,6 +115,9 @@ category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
 category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
 category saved.	admin	id	Kategori disimpan.
+certificate	admin	id	Sertifikat
+certificate details	admin	id	Detail sertifikat
+certificate validation in days	admin	id	Validasi sertifikat dalam hitungan hari
 change access	admin	id	Mengubah hak akses
 change account_id	admin	id	Ubah ID akun
 change acl rights	admin	id	Ubah Hak-hak ACL
@@ -134,6 +137,7 @@ created	admin	id	Dibuat
 created with id #%1	admin	id	Dibuat dengan ID #%1
 creates a new field	admin	id	Bikin field baru
 crontab only (recomended)	admin	id	Hanya crontab (rekomendasi)
+current certificate	admin	id	Sertifikat saat ini
 custom 1	admin	id	Kustom 1
 custom 2	admin	id	Kustom 2
 custom 3	admin	id	Kustom 3
@@ -149,6 +153,7 @@ delete account %s	admin	id	Hapus akoun %s
 delete all records	admin	id	Hapus semua Rekaman
 delete application	admin	id	Hapus aplikasi
 delete category	admin	id	Hapus kategori
+delete certificate	admin	id	Hapus sertifikat
 delete group	admin	id	Hapus kelompok
 delete peer server	admin	id	Hapus peer server
 delete selected entries	admin	id	Hapus entri terpilih
@@ -204,6 +209,7 @@ error saving account!	admin	id	Error menyimpan akoun!
 error saving the entry!!!	admin	id	Kesalahan menyimpan entri!
 event details follow	admin	id	Berikut adalah detil Kegiatan
 expires	admin	id	Kadaluarsa
+export certificate as p12	admin	id	Ekspor sertifikat sebagai p12
 failed to change password.	admin	id	Gagal mengubah password.
 false	admin	id	Salah
 file space	admin	id	Ruang file
@@ -212,6 +218,7 @@ filtered by group	admin	id	Saringan menurut Kelompok
 forward only	admin	id	Hanya Forward
 full name	admin	id	Nama Lengkap
 general	admin	id	Umum
+generate certificate	admin	id	Hasilkan Sertifikat
 global categories	common	id	Kategori Global
 global options	admin	id	Opsi Global
 group ?	admin	id	Kelompok?
@@ -426,11 +433,13 @@ unknown option %1	admin	id	Opsi %1 tak dikenal
 up	admin	id	Naik
 update current email address:	admin	id	Memperbarui alamat email saat ini:
 updated	admin	id	Dikinikan
+upload your certificate .p12/.pfx file	admin	id	Unggah file .p12/.pfx sertifikat Anda
 use default	admin	id	Gunakan bawaan
 use theme	admin	id	Gunakan tema
 user accounts	admin	id	Akoun pengguna
 user data	common	id	Data Pengguna
 user groups	admin	id	Kelompok Pengguna
+user hidden vom non-admins.	admin	id	Pengguna yang disembunyikan dari non-admin
 user-agent	admin	id	User-Agent
 userdata	admin	id	Data pengguna
 username (standard)	admin	id	Namapengguna (standar)

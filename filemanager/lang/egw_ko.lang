@@ -1,4 +1,3 @@
-actions	filemanager	ko	액션
 applications	common	ko	응용프로그램들
 classic	filemanager	ko	표준 도구 모음
 comment	filemanager	ko	커멘트
@@ -26,7 +25,6 @@ extended access control list	filemanager	ko	확장 액세스 제어 목록
 extended acl	filemanager	ko	확장 ACL
 failed to change permissions of %1!	filemanager	ko	%1의 권한을 변경하지 못했습니다!
 failed to create directory!	filemanager	ko	폴더를 만들지 못했습니다!
-favorites	filemanager	ko	즐겨찾기
 file	common	ko	파일
 file %1 already exists	filemanager	ko	%1 파일이 이미 있습니다.
 file %1 could not be created.	filemanager	ko	%1 파일을 만들 수 없습니다.

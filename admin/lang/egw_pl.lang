@@ -22,7 +22,6 @@
 %1 token %2.	admin	pl	%1 token %2.
 %1 user %2	admin	pl	%1 użytkownik %2
 (de)activate mail accounts	admin	pl	(de)Aktywacja kont pocztowych
-(default no, leave it off if you dont use it)	admin	pl	Domyślnie = Nie, pozostaw to wyłączone, jeśli z tego nie korzystasz.
 (no subject)	admin	pl	(bez tematu)
 -  type	admin	pl	- typ
 1 year	admin	pl	1 rok
@@ -93,6 +92,7 @@ anonymous user	admin	pl	Użytkownik anonimowy
 anonymous user (not shown in list sessions)	admin	pl	Użytkownik anonimowy (nie pojawia się w wykazie sesji)
 anonymous user does not exist!	admin	pl	Użytkownik anonimowy nie istnieje
 anonymous user has no run-rights for the application!	admin	pl	Użytkownik anonimowy nie ma praw do korzystania z tej aplikacji!
+anonymous user. not shown in list sessions.	admin	pl	Użytkownik anonimowy. Nie jest wyświetlany w sesjach listy
 any application	admin	pl	Dowolna aplikacja
 any group	admin	pl	Dowolna grupa
 any user	admin	pl	Dowolny użytkownik
@@ -139,6 +139,9 @@ category %1 has been saved !	admin	pl	Kategoria %1 została zapisana
 category deleted.	admin	pl	Kategoria usunięta.
 category list	admin	pl	Lista kategorii
 category saved.	admin	pl	Kategoria zapisana.
+certificate	admin	pl	Certyfikat
+certificate details	admin	pl	Szczegóły certyfikatu
+certificate validation in days	admin	pl	Walidacja certyfikatu w dniach
 change access	admin	pl	Zmiana praw dostępu
 change account_id	admin	pl	Zmień account_ID
 change acl rights	admin	pl	zmiana prawa dostępu (ACL)
@@ -169,6 +172,7 @@ created	admin	pl	Utworzony
 created with id #%1	admin	pl	Utworzono z ID #%1
 creates a new field	admin	pl	Utwórz nowe pole
 crontab only (recomended)	admin	pl	Wyłącznie crontab (zalecane!)
+current certificate	admin	pl	Bieżący certyfikat
 custom 1	admin	pl	Niestandardowe 1
 custom 2	admin	pl	Niestandardowe 2
 custom 3	admin	pl	Niestandardowe 3
@@ -187,6 +191,7 @@ delete account %s	admin	pl	Usuń konto %s
 delete all records	admin	pl	Usuń wszystkie rekordy
 delete application	admin	pl	Usuń aplikację
 delete category	admin	pl	Usuń kategorię
+delete certificate	admin	pl	Usuwanie certyfikatu
 delete group	admin	pl	Usuń grupę
 delete peer server	admin	pl	Skasuj server równorzędny
 delete selected entries	admin	pl	Skasuj wybrane wpisy
@@ -294,6 +299,7 @@ error: %1 not found or other error !!!	admin	pl	Błąd: %1 nie znaleziony lub in
 event details follow	admin	pl	Detale Wydarzenia Następują
 exists	admin	pl	Istnieje
 expires	admin	pl	Ważne do
+export certificate as p12	admin	pl	Eksport certyfikatu jako p12
 failed to change password.	admin	pl	Zmiana hasła nieudana.
 fallback (after each pageview)	admin	pl	Powrót (po każdym pokazaniu strony)
 false	admin	pl	Fałsz
@@ -312,6 +318,7 @@ forward emails to	admin	pl	prześlij maile dalej do
 forward only	admin	pl	Prześlij tylko
 full name	admin	pl	Pełna nazwa
 general	admin	pl	Główne
+generate certificate	admin	pl	Generowanie certyfikatu
 global categories	common	pl	Kategorie globalne
 global options	admin	pl	Ustawienia globalne
 go directly to admin menu, returning here the next time you click on administration.	admin	pl	Przy powrocie do storny administracji przejdź bezpośrednio do menu administracyjnego.
@@ -642,6 +649,7 @@ unsupported action '%1' !!!	admin	pl	Operacja nieobsługiwana '%1'!
 up	admin	pl	W górę
 update current email address:	admin	pl	Uaktualnij bieżący adres pocztowy
 updated	admin	pl	Uaktualniony
+upload your certificate .p12/.pfx file	admin	pl	Prześlij plik certyfikatu .p12/.pfx
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	pl	URL instalacji EGroupware, np. https://egw.domena.pl/egroupware
 usage	admin	pl	Użytkowanie
 use cookies to pass sessionid	admin	pl	Używaj ciasteczek do przekazywania identyfikatora sesji
@@ -659,6 +667,7 @@ user can edit forwarding address	admin	pl	Użytkownik może zmieniać adres prze
 user data	common	pl	Dane użytkownika
 user for smtp-authentication (leave it empty if no auth required)	admin	pl	Użytkownik dla logowania SMTP (pozostaw puste jeśli nie jest wymagane)
 user groups	admin	pl	Grupy użytkownikw
+user hidden vom non-admins.	admin	pl	Użytkownik ukryty przed użytkownikami niebędącymi administratorami
 user-agent	admin	pl	User-Agent
 userdata	admin	pl	Dane użytkownika
 username (standard)	admin	pl	Login (standardowo)

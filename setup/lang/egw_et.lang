@@ -32,6 +32,7 @@ backup '%1' renamed to '%2'	setup	et	Tagavarakoopia '%1' on ümber nimetatud '%2
 backup '%1' restored	setup	et	Tagavarakoopia '%1' taastatud
 backup and restore	setup	et	Tagavarakoopia ja taastamine
 backup failed	setup	et	Tagavarakoopia ebaõnnestus
+backup files (needs ziparchive)	setup	et	EGroupware failide (failide kataloog) <br>(nõuab PHP ZipArchive'i) andmete varundamist.
 backup finished	setup	et	Tagavarakoopia tehtud
 backup now	setup	et	Tee tagavarakoopia nüüd
 backup started, this might take a few minutes ...	setup	et	Tagavarakoopia tegemine alustatud. see võib võtta mõne minuti ...
@@ -43,6 +44,7 @@ change system-charset	setup	et	Muuda süsteemi charset
 charset	setup	et	charset
 charset to convert to	setup	et	Charset millesse konvertida
 charsets used by the different languages	setup	et	Charset-id kasutatud erinevatel keeltel
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	et	Kaasa failid (failide kataloog) andmete varundamisel.<br>(Võib luua suuri andmehulki ja katkestada paljude failide, dokumentatsiooni: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup an EGroupware</a>)
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	et	Kontrollin kas php.ini seadistus session.save_path='%1' on kirjutatav veebiserveri jaoks
 checking php.ini	setup	et	Kontrollin php.ini
 click here	setup	et	Vajuta siia
@@ -138,6 +140,7 @@ ldap encryption type	setup	et	LDAP krüptimise tüüp
 ldap root password	setup	et	LDAP root parool
 ldap rootdn	setup	et	LDAP Root DN
 logout	setup	et	Logi välja
+mail account of %1 migrated	setup	et	Maili konto %1 migreeriti.
 mail server login type	setup	et	Mail serveri sisselogimise tüüp
 mail server protocol	setup	et	Mail serveri protokol
 manage applications	setup	et	Manageeri Rakendusi

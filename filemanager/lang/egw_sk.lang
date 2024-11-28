@@ -32,10 +32,7 @@
 accessrights	filemanager	sk	Prístupové oprávnenia
 acl added.	filemanager	sk	ACL bolo pridané.
 acl deleted.	filemanager	sk	ACL bolo odstránené.
-actions	filemanager	sk	Akcie
-add to clipboard	filemanager	sk	Pridať do schránky
 administrators	filemanager	sk	Správcovia
-all files	filemanager	sk	Všetky súbory
 all subdirectories	filemanager	sk	Všetky podadresáre
 all types	filemanager	sk	Všetky typy
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sk	povoliť, aby bolo maximum z vyššienastavených priečinkov možné konfigurovať pomocou nastavení
@@ -142,7 +139,6 @@ extended access control list	filemanager	sk	Rozšírený zoznam prístupových o
 extended acl	filemanager	sk	Rozšírený ACL
 failed to change permissions of %1!	filemanager	sk	Nepodarilo sa zmeniť oprávnenia ku %1!
 failed to create directory!	filemanager	sk	Vytvorenie adresára sa nepodarilo!
-favorites	filemanager	sk	Obľúbené
 file	common	sk	Súbor
 file %1 already exists	filemanager	sk	Súbor %1 už existuje
 file %1 could not be created.	filemanager	sk	Súbor %1 sa nepodarilo vytvoriť.
@@ -231,7 +227,6 @@ paste link	filemanager	sk	Prilepiť odkaz
 path %1 not found or not a directory!	filemanager	sk	Cesta %1 sa nenašla alebo nie je priečinkom!
 path and query-parameters, smb: share and optional path (with /)	filemanager	sk	Cesta a parametre dopytu, SMB: sieťového úložiska, a voliteľne aj cesta (vrátane /)
 percentage	filemanager	sk	Percento
-permission denied!	filemanager	sk	Prístup bol odopretý!
 permissions	filemanager	sk	Prístupové oprávnenia
 permissions of %1 changed.	filemanager	sk	Prístupové oprávnenia ku %1 boli zmenené.
 please select a file to delete.	filemanager	sk	Prosím vyberte, ktorý súbor odstrániť.

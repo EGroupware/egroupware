@@ -1,6 +1,5 @@
 %1 already exists as a file	filemanager	ca	%1 ja existeix com a arxiu
 %1 starts with '%2'	filemanager	ca	%1 comença amb '%2'
-actions	filemanager	ca	Accions
 administrators	filemanager	ca	Administradors
 applications	common	ca	Aplicacions
 cancel editing %1 without saving	filemanager	ca	Cancelar la edición de %1 sin guardar

@@ -125,7 +125,10 @@ thousands separator is only used for displaying and not for editing numbers.	pre
 time format	preferences	ru	Формат времени
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	ru	Единицы размера шрифта: пиксели (px) для Web-страниц, или точки (pt) для текстового редактора
 use default	preferences	ru	использовать по умолчанию
+use first %1 letters from username	preferences	ru	Используйте первые %1 букв из имени пользователя
+use initials from first and last name	preferences	ru	Использовать инициалы из имени и фамилии
 users choice	preferences	ru	Выбор Пользователей
+what to display for an avatar, if there is no photo	preferences	ru	Что отображать в качестве аватара, если нет фотографии
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ru	Если Вы ответите "да" кнопки Домой ии Выйти будут присутствовать как приложения в главно верхней панели приложений
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ru	Какой набор символов (кодировку) следует использовать при экспорте в CSV. По умолчанию используется системный набор символов выбранный во время установки EGroupware.
 which currency symbol or name should be used in egroupware.	preferences	ru	Какой символ валюты или название должны использоваться в EGroupware.

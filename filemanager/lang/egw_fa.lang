@@ -1,5 +1,4 @@
 %1 already exists as a file	filemanager	fa	%1 قبلا بعنوان پرونده وجود دارد
-actions	filemanager	fa	اعمال
 administrators	filemanager	fa	مدیران
 applications	common	fa	کاربردها
 cancel editing %1 without saving	filemanager	fa	لغو ویرایش %1 بدون ذخیره سازی

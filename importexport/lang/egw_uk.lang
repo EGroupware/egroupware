@@ -1,4 +1,10 @@
+add a new definition	importexport	uk	Додати нове визначення
+addressbook csv import	importexport	uk	Імпорт адресної книги CSV
+addressbook vcard import	importexport	uk	Імпорт адресної книги vCard
 all users	importexport	uk	Всі користувачі
+change allowed users	importexport	uk	Зміна дозволених користувачів
+change owner when updating	importexport	uk	Зміна власника при оновленні
+changed owner	importexport	uk	Змінено власника
 charset of file	importexport	uk	Кодування файлу
 deleted	importexport	uk	Видалено
 export	importexport	uk	Експортувати

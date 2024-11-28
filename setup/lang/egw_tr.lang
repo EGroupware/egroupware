@@ -6,9 +6,11 @@ application title	setup	tr	Uygulama Başlığı
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doğru MIME type kullanınız.
 authentication / accounts	setup	tr	Doğrulama / Hesaplar
 auto create account records for authenticated users	setup	tr	Giriş yapan kullanıcılar için kayıt tut.
+backup files (needs ziparchive)	setup	tr	EGroupware dosyalarının veri yedeklemesi (dosyalar dizini) <br>(PHP ZipArchive gerektirir)
 bottom	setup	tr	Taban
 cancel	setup	tr	Iptal
 check ip address of all sessions	setup	tr	Bütün oturumların IP'leri kontrol et
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	tr	Veri yedeklemesine dosyaları (dosyalar dizini) dahil edin.<br>(Büyük miktarda veri oluşturabilir ve birçok dosya ile iptal edebilir, belgeler: <a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 configuration	setup	tr	Ayarlar
 country selection	setup	tr	Ülke seçimi
 day	setup	tr	Gün
@@ -45,6 +47,7 @@ ldap groups context	setup	tr	LDAP grup içeriği
 ldap host	setup	tr	LDAP hostları
 ldap root password	setup	tr	LDAP yönetici şifresi
 ldap rootdn	setup	tr	LDAP root DN
+mail account of %1 migrated	setup	tr	%1'in posta hesabı taşındı.
 maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap ID'si (ör: 65535 ya da 1000000)
 minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap ID'si (ör 500 ya da 100)
 minute	setup	tr	Dakika

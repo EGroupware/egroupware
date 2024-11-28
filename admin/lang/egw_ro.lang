@@ -22,7 +22,6 @@
 %1 token %2.	admin	ro	%1 token %2.
 %1 user %2	admin	ro	%1 utilizator %2
 (de)activate mail accounts	admin	ro	(de)Activarea conturilor de poștă electronică
-(default no, leave it off if you dont use it)	admin	ro	Implicit = Nu, lăsați-l dezactivat dacă nu îl utilizați
 1 year	admin	ro	1 an
 2 month	admin	ro	2 luni
 2 weeks	admin	ro	2 săptămâni
@@ -36,6 +35,7 @@ add to group	admin	ro	Adăugare la grup
 add user	admin	ro	Adaugă utilizator
 add user or group	admin	ro	Adăugare utilizator sau grup
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	ro	Permiteți utilizatorului să își stocheze parola sub „Securitate și parole” pentru SingleSignOn.
+anonymous user (not shown in list sessions)	admin	ro	Utilizator anonim. Nu este afișat în sesiunile listei
 blocking after wrong password	admin	ro	Blocare după o parolă greșită
 bulk changes	admin	ro	Modificări în masă
 bulk password reset	admin	ro	Resetare în masă a parolei
@@ -45,9 +45,13 @@ certificate details	admin	ro	Detalii certificat
 certificate validation in days	admin	ro	Validarea certificatului în zile
 change access	admin	ro	Modificarea drepturilor de acces
 container	admin	ro	Container
+current certificate	admin	ro	Certificat curent
 custom 1	admin	ro	Personalizat 1
 custom 2	admin	ro	Personalizat 2
 custom 3	admin	ro	Personalizat 3
+delete certificate	admin	ro	Ștergeți certificatul
+export certificate as p12	admin	ro	Exportați certificatul ca p12
+generate certificate	admin	ro	Generarea certificatului
 group hierarchy	admin	ro	Ierarhia grupurilor
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	ro	Câte intrări ar trebui să poată exporta non-admins. Empty = fără limită, No = fără export
 html/plaintext	admin	ro	HTML/Text
@@ -75,5 +79,7 @@ smtp only: to create only an smtp account	admin	ro	Creați cont numai SMTP făr�
 soap	admin	ro	SOAP
 ssl	admin	ro	SSL
 total records	admin	ro	Total înregistrări
+upload your certificate .p12/.pfx file	admin	ro	Încărcați fișierul .p12/.pfx al certificatului dvs
+user hidden vom non-admins.	admin	ro	Utilizator ascuns de persoanele care nu sunt administratori
 user-agent	admin	ro	User-Agent
 xml-rpc	admin	ro	XML-RPC

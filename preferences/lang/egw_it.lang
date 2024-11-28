@@ -188,7 +188,10 @@ two factor auth is already setup.	preferences	it	Autenticazione a due fattori gi
 unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	it	Unità delle dimensioni font visualizzate: "px" usato p.es. per pagine web o "pt" usato negli elaboratori di testo
 uppercase letters	preferences	it	lettere maiuscole
 use default	preferences	it	Usa il predefinito
+use first %1 letters from username	preferences	it	Usa le prime %1 lettere del nome utente
+use initials from first and last name	preferences	it	Usa le iniziali del nome e del cognome
 users choice	preferences	it	Scelta dell'utente
+what to display for an avatar, if there is no photo	preferences	it	Cosa visualizzare per un avatar, se non c'è una foto
 when you can select multiple options, should the option list stay open until you close it, or close after you pick an option.	preferences	it	Quando è possibile selezionare più opzioni, l'elenco delle opzioni deve rimanere aperto finché non lo si chiude o chiudersi dopo aver scelto un'opzione.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	it	Quando dici sì i pulsanti Home e Uscita sono presentati come applicazioni nella barra principale superiore.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	it	Seleziona un set di caratteri per l'importazione/esportazione CSV

@@ -32,10 +32,7 @@
 accessrights	filemanager	sl	Pravice dostopa
 acl added.	filemanager	sl	ACL dodan.
 acl deleted.	filemanager	sl	ACL izbrisan.
-actions	filemanager	sl	Dejanja
-add to clipboard	filemanager	sl	Vse v odložišče
 administrators	filemanager	sl	Administratorji
-all files	filemanager	sl	Vse datoteke
 all subdirectories	filemanager	sl	Vsi podimeniki
 all types	filemanager	sl	Vse vrste
 allow a maximum of the above configured folderlinks to be configured in settings	admin	sl	Dovoli največ toliko nastavitev povezav do map.
@@ -142,7 +139,6 @@ extended access control list	filemanager	sl	Razširjen seznam kontrol dostopa
 extended acl	filemanager	sl	Razširjen ACL
 failed to change permissions of %1!	filemanager	sl	Spreminjanje pravic za %1 ni bilo uspešno.
 failed to create directory!	filemanager	sl	Napaka pri ustvarjanju mape!
-favorites	filemanager	sl	Priljubljene
 file	common	sl	Datoteka
 file %1 already exists	filemanager	sl	Datoteka %1 že obstaja
 file %1 could not be created.	filemanager	sl	Ne morem ustvariti datoteke %1.
@@ -231,7 +227,6 @@ paste link	filemanager	sl	Prilepi povezavo
 path %1 not found or not a directory!	filemanager	sl	Pot %1 ni nila najdena ali pa ni mapa!
 path and query-parameters, smb: share and optional path (with /)	filemanager	sl	Pot in parametri poizvedbe, SMB: delež in neobvezna pot (z /)
 percentage	filemanager	sl	Odstotek
-permission denied!	filemanager	sl	Dostop zavrnjen!
 permissions	filemanager	sl	Pravice
 permissions of %1 changed.	filemanager	sl	Pravice za %1 so bile spremenjene.
 please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.

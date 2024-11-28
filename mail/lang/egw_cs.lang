@@ -1,4 +1,5 @@
 %1 attachments	mail	cs	%1 příloh
+%1 for all users	mail	cs	%1 pro všechny uživatele
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	cs	%1 vyžaduje rozšíření Sieve %2, možná zkuste %1 nebo vyšší počet dní.
@@ -6,8 +7,6 @@
 (leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
 (no subject)	mail	cs	(žádný předmět)
 (not connected)	mail	cs	(nepřipojeno)
-(select mails by clicking on the line, like a checkbox)	mail	cs	(vyberte e-maily kliknutím na řádek)
-(with checkbox enforced)	mail	cs	(se zaškrtávacími rámečky)
 account editable by user	mail	cs	Účet může být upraven uživatelem
 acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
 acl rights retrieved successfully	mail	cs	ACL práva byla získána úspěšně

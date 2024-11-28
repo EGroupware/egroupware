@@ -4,11 +4,17 @@
 (* for all)	importexport	es-es	(* para todos)
 (0-23)	importexport	es-es	(0-23)
 (0-6, 0=sun)	importexport	es-es	(0-6, 0=Dom)
+add a new definition	importexport	es-es	Añadir una nueva definición
+addressbook csv import	importexport	es-es	Importación CSV de libretas de direcciones
+addressbook vcard import	importexport	es-es	Importación de vCard de Agenda
 all users	importexport	es-es	Todos los usuarios
 allowed users	importexport	es-es	Usuarios permitidos
 automatically created by importexport	importexport	es-es	Creados automáticamente por importexport
 basic csv import	importexport	es-es	Importación CSV básica
+change allowed users	importexport	es-es	Cambiar usuarios permitidos
+change owner when updating	importexport	es-es	Cambiar propietario al actualizar
 changed	importexport	es-es	Modificado
+changed owner	importexport	es-es	Cambio de propietario
 charset of file	importexport	es-es	Juego de caracteres del fichero
 check all	importexport	es-es	Marcar todo
 choose a name for this definition	importexport	es-es	Elija un nombre para esta definición

@@ -1,8 +1,14 @@
+%1 contact(s) %2	addressbook	uk	%1 контакт(и) %2.
 %1 contact(s) %2, %3 failed because of %4 !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося встановити через %4!
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	uk	%1 контакт(и) %2, %3 не вдалося через недостатні права!
 %1 contacts updated (%2 errors).	addressbook	uk	Оновлено %1 контакт (%2 помилки).
+%1 fields in %2 other organisation member(s) changed	addressbook	uk	Змінено поля у %1 учасника(ів) інших організацій.
 %1 key(s) added to public keyserver "%2".	addressbook	uk	%1 ключ(и) додано до сервера відкритих ключів "%2".
 %1 public keys added.	addressbook	uk	Додано %1 публічних ключів.
+%1 records imported	addressbook	uk	Імпортовано %1 записів.
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	uk	%1 записів прочитано (ще не імпортовано, %2поверніться%3 та зніміть відмітку Тестувати Імпорт).
+%1 shared this contact on %2 with %3 %4	addressbook	uk	%1 поділився цим контактом на %2 з %3 %4
+%1 starts with '%2'	addressbook	uk	%1 починається з '%2'
 (e.g. 1969)	addressbook	uk	(наприклад 1969)
 @-eval() is only availible to admins!!!	addressbook	uk	@-eval() можуть використовувати тільки адміністратори!
 add a single entry by passing the fields.	addressbook	uk	Додати один запис шляхом заповнення полів
@@ -19,8 +25,12 @@ address book - view	addressbook	uk	Адресна Книга - перегляд
 address line 2	addressbook	uk	Рядок 2
 address type	addressbook	uk	Тип адреси
 addressbook	common	uk	Адресна Книга
+addressbook csv export	addressbook	uk	Експорт адресної книги у форматі CSV
+addressbook csv import	addressbook	uk	Імпорт адресної книги CSV
 addressbook list	addressbook	uk	Список адресних книг
 addressbook preferences	addressbook	uk	Параметри Адресної Книги
+addressbook vcard export	addressbook	uk	Експорт адресної книги vCard
+addressbook vcard import	addressbook	uk	Імпорт адресної книги у форматі vCard
 addressbook-fieldname	addressbook	uk	Адресна Книга - назва поля
 addvcard	addressbook	uk	Додати vCard
 all addressbooks	addressbook	uk	Всі адресні книги
@@ -51,6 +61,7 @@ change addressbook when updating	addressbook	uk	Змінювати адресн�
 charset of file	addressbook	uk	Кодування файлу
 choose pre-defined map source or use custom url (use %r = street, %t = city, %c = country, %z = zipcode)	admin	uk	Виберіть попередньо визначене джерело мапи або використовуйте власну URL-адресу (використовуйте %r = вулиця, %t = місто, %c = країна, %z = поштовий індекс)
 city	common	uk	Місто
+cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	uk	Очищення полів адресної книги, застосовується, якщо синхронізація створює дублікати
 company	common	uk	Компанія
 company name	addressbook	uk	Назва компанії
 configuration	common	uk	Конфігурація
@@ -98,6 +109,7 @@ export definition to use for nextmatch export	addressbook	uk	Визначенн�
 export definitition to use for nextmatch export	addressbook	uk	Визначення експорту для використання для експорту наступного матчу
 export file name	addressbook	uk	Назва файлу експорту
 export from addressbook	addressbook	uk	Експорт з Адресної книги
+exports contacts from your addressbook into a csv file.	addressbook	uk	Експорт контактів з адресної книги у CSV-файл.
 exports contacts from your addressbook into a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	addressbook	uk	Експортувати контакти з адресної книги у CSV-файл. На вкладці параметрів ви також можете вибрати інші роздільники.
 extra	addressbook	uk	Додаткове
 favorite phone	addressbook	uk	Улюблений телефон

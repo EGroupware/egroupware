@@ -23,6 +23,7 @@ authentication / accounts	setup	ja	認証/アカウント情報
 auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
 auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
 available version	setup	ja	利用可能なバージョン
+backup files (needs ziparchive)	setup	ja	EGroupwareファイル(filesディレクトリ)のデータバックアップ<br>(PHP ZipArchiveが必要)
 because it depends upon	setup	ja	理由は次のとおりです
 because it is not a user application, or access is controlled via acl	setup	ja	ユーザのアプリケーションでないか、ACL によってアクセス制限しています。
 because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br>テーブル定義が正しくありません。
@@ -33,6 +34,7 @@ bottom	setup	ja	下部
 cancel	setup	ja	キャンセル
 charset	setup	ja	文字セット
 check ip address of all sessions	setup	ja	全てのセッションで IP アドレスのチェックを行う
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ja	データバックアップにファイル(filesディレクトリ)を含める。<br>(大量のデータを生成し、多くのファイルで中断することができます、ドキュメント：<a href='https://help.egroupware.org/t/backup-of-egroupware/76071' target='_blank'>Backup of EGroupware</a>)
 click here	setup	ja	ここをクリックする
 configuration	setup	ja	環境設定
 configuration completed	setup	ja	環境設定は完了しました。
@@ -104,6 +106,7 @@ ldap host	setup	ja	LDAP ホスト名
 ldap root password	setup	ja	LDAP ルートパスワード
 ldap rootdn	setup	ja	LDAP Root DN
 logout	setup	ja	ログアウト
+mail account of %1 migrated	setup	ja	%1のメールアカウントが移行されました。
 make sure that your database is created and the account permissions are set	setup	ja	データベースの作成とアカウントに権限を与えます
 manage applications	setup	ja	アプリケーション設定
 manage languages	setup	ja	言語環境設定

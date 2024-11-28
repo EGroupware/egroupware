@@ -22,7 +22,6 @@
 %1 token %2.	admin	sv	%1 token %2.
 %1 user %2	admin	sv	%1 användare %2
 (de)activate mail accounts	admin	sv	(de)Aktivera e-postkonton
-(default no, leave it off if you dont use it)	admin	sv	Standard = Nej, lämna den avstängd om du inte använder den
 (no subject)	admin	sv	(ingen rubrik)
 -  type	admin	sv	- typ
 1 year	admin	sv	1 år
@@ -82,6 +81,7 @@ anonymous user	admin	sv	Anonym användare
 anonymous user (not shown in list sessions)	admin	sv	Anonym användare (visas inte bland sessioner)
 anonymous user does not exist!	admin	sv	Anonym användare saknas
 anonymous user has no run-rights for the application!	admin	sv	Anonym användare saknar åtkomst till applikationen
+anonymous user. not shown in list sessions.	admin	sv	Anonym användare. Visas inte i listans sessioner
 appearance	admin	sv	Utseende
 application	admin	sv	Applikation
 application name	admin	sv	Applikationens namn
@@ -119,6 +119,9 @@ cancel testjob!	admin	sv	Avbryt testkörning
 categories list	admin	sv	Kategorilista
 category %1 has been saved !	admin	sv	Kategori %1 har sparats
 category list	admin	sv	Kategorilista
+certificate	admin	sv	Certifikat
+certificate details	admin	sv	Detaljer om certifikatet
+certificate validation in days	admin	sv	Certifikatsvalidering i dagar
 change access	admin	sv	Ändra åtkomsträttigheter
 change acl rights	admin	sv	Ändra ACL behörigheter
 change config settings	admin	sv	Ändra inställningar
@@ -139,6 +142,7 @@ create group	admin	sv	Skapa grupp
 created	admin	sv	Skapad
 creates a new field	admin	sv	Skapar nytt fält
 crontab only (recomended)	admin	sv	Enbart crontab (rekommenderas)
+current certificate	admin	sv	Aktuellt certifikat
 custom 1	admin	sv	Anpassad 1
 custom 2	admin	sv	Anpassad 2
 custom 3	admin	sv	Anpassad 3
@@ -156,6 +160,7 @@ delete account	admin	sv	Radera konto
 delete all records	admin	sv	Radera alla poster
 delete application	admin	sv	Radera applikation
 delete category	admin	sv	Radera kategori
+delete certificate	admin	sv	Radera certifikat
 delete group	admin	sv	Radera grupp
 delete peer server	admin	sv	Radera peer server
 delete the category	admin	sv	Radera kategorin
@@ -244,6 +249,7 @@ error! no appname found	admin	sv	FEL: Inget appnamn kunde hittas
 error: %1 not found or other error !!!	admin	sv	FEL: %1 kunde inte hittas, eller annat fel!
 event details follow	admin	sv	Händelse detaljer följer
 expires	admin	sv	Förfaller
+export certificate as p12	admin	sv	Exportera certifikat som p12
 failed to change password.	admin	sv	Kunde inte ändra lösenordet.
 fallback (after each pageview)	admin	sv	fallback (efter varje sidvisning)
 false	admin	sv	Falskt
@@ -259,6 +265,7 @@ forward emails to	admin	sv	Vidarebefodra e-post till
 forward only	admin	sv	Vidarebefodra endast
 full name	admin	sv	Fullständigt namn
 general	admin	sv	Allmänt
+generate certificate	admin	sv	Generera certifikat
 global categories	common	sv	Globala kategorier
 group ?	admin	sv	Grupp?
 group has been added	common	sv	Grupp har lagts till
@@ -510,6 +517,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown imap response from the server. server responded: %s	admin	sv	Okänt IMAP svar från server. Svarade: %s
 up	admin	sv	Upp
 updated	admin	sv	Uppdaterad
+upload your certificate .p12/.pfx file	admin	sv	Ladda upp ditt certifikat .p12/.pfx-fil
 use cookies to pass sessionid	admin	sv	Använd cookies för att lagra sessionid
 use default	admin	sv	Använd standard
 use ldap defaults	admin	sv	Använd LDAP standarder
@@ -522,6 +530,7 @@ user accounts	admin	sv	Användarkonton
 user data	common	sv	Användardata
 user for smtp-authentication (leave it empty if no auth required)	admin	sv	Användare för SMTP autentisering (lämna tomt om autentisering ej krävs)
 user groups	admin	sv	Användargrupper
+user hidden vom non-admins.	admin	sv	Användaren är dold för andra än administratörer
 user-agent	admin	sv	User-Agent
 userdata	admin	sv	Användaradata
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton?

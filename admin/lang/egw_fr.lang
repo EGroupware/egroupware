@@ -22,7 +22,6 @@
 %1 token %2.	admin	fr	%1 jeton %2.
 %1 user %2	admin	fr	%1 utilisateur %2
 (de)activate mail accounts	admin	fr	(dés)activer les comptes email
-(default no, leave it off if you dont use it)	admin	fr	Valeur par défaut = Non, laissez cette option désactivée si vous ne l'utilisez pas.
 (no subject)	admin	fr	Pas de sujet
 -  type	admin	fr	- type
 1 year	admin	fr	1 an
@@ -56,7 +55,6 @@ acl added.	admin	fr	ACL ajouté.
 acl csv export	admin	fr	Export CSV des ACL
 acl deleted.	admin	fr	ACL supprimé.
 acl entry deleted.	admin	fr	Entrée ACL supprimée.
-acl entry not found!	admin	fr	Entrée ACL non trouvée !
 acl manager	admin	fr	Gestionnaire des droits d'accès (ACL)
 acl rights	common	fr	Droits d'accès
 acl updated	admin	fr	ACL mis à jour
@@ -121,6 +119,7 @@ anonymous user	admin	fr	Utilisateur anonyme
 anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions).
 anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
 anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
+anonymous user. not shown in list sessions.	admin	fr	Utilisateur anonyme. N'apparaît pas dans les sessions de la liste
 any application	admin	fr	Toutes les applications
 any group	admin	fr	Tous les groupes
 any user	admin	fr	Tous les utilisateurs
@@ -951,6 +950,7 @@ user csv import	admin	fr	Import des utilisateurs en CSV
 user data	common	fr	Données utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	admin	fr	Utilisateur pour l'authentification SMTP (laisser vide si pas requis).
 user groups	admin	fr	Groupes utilisateurs
+user hidden vom non-admins.	admin	fr	Utilisateur caché aux non-administrateurs
 user-agent	admin	fr	User-Agent
 userdata	admin	fr	Données utilisateur
 userid@domain eg. u1234@domain	admin	fr	UserId@domain ie. u1234@domain
