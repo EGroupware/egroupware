@@ -77,6 +77,7 @@ import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 import type {LitElement} from "lit";
 import {Et2Template} from "./Et2Template/Et2Template";
+import {waitForEvent} from "./Et2Widget/event";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -1305,9 +1306,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Bind a resize while we're here
 			if(tab.flagDiv)
 			{
-				tab.flagDiv.addEventListener("click", (e) =>
+				tab.flagDiv.addEventListener("click", async(e) =>
 				{
-					window.setTimeout(() => this.resize(), 1);
+					// Wait for the tab to be done being shown
+					await waitForEvent(tab.flagDiv.parentElement, "sl-tab-show");
+					// then resize
+					this.resize();
 				});
 			}
 			return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
