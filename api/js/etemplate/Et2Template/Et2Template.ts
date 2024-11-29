@@ -20,14 +20,13 @@ import {classMap} from "lit/directives/class-map.js";
 
 // @ts-ignore
 /**
- * @summary Load & populate a template (.xet file)
+ * @summary Load & populate a template (.xet file) into the DOM
  *
- *
+ * @slot - The template's contents
  * @event load - Emitted when all elements are loaded
  *
  * @csspart template - Wrapper around template content
- *
- * @cssproperty [--height=5] - The maximum height of the widget, to limit size when you have a lot of addresses.  Set by rows property, when set.
+ * @csspart loader - Displayed while the template contents are being loaded
  */
 @customElement("et2-template")
 export class Et2Template extends Et2Widget(LitElement)
@@ -43,26 +42,21 @@ export class Et2Template extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Name / ID of template with optional cache-buster ('?'+filemtime of template on server)
-	 * Template can be <app>.<template_file>.<template> form or short <template>.
+	 * Name / ID of template.
+	 * It can be full [app].[template_file].[template] form or just the last part.  Templates will be loaded from /[app]/templates/_interface_/[template_file].xet
 	 * To use the short form, the file must already be loaded.
 	 */
 	@property()
 	template : string;
 
 	/**
-	 * Url of template
-	 * A full URL to load template,  including cache-buster ('?'+filemtime of template on server)
-	 * @type {string}
+	 * A full URL to load template, optionally including cache-buster ('?'+filemtime of template on server)
 	 */
 	@property()
 	url : string;
 
 	/**
-	 * Content index
-	 *
-	 * Used for passing in specific content to the template other than what it would get by ID.
-	 * @type {string}
+	 * Used as index into content array for passing in specific content to the template other than what it would get by its ID
 	 */
 	@property()
 	content : string;
@@ -504,7 +498,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 		let url = "";
 		const parts = (this.template || this.id).split('?');
-		const cache_buster = parts.length > 1 ? parts.pop() : null;
+		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400 | 0).toString();
 		let template_name = this.templateName;
 
 		// Full URL passed as template?
@@ -519,14 +513,14 @@ export class Et2Template extends Et2Widget(LitElement)
 			const app = splitted.shift();
 			url = this.egw().link(
 				'/' + app + "/templates/default/" + splitted.join('.') + ".xet",
-				{download: cache_buster ? cache_buster : (new Date).valueOf()}
+				{download: cache_buster}
 			);
 		}
 
 		// if we have no cache-buster, reload daily
 		if(url.indexOf('?') === -1)
 		{
-			url += '?download=' + ((new Date).valueOf() / 86400 | 0).toString();
+			url += '?download=' + cache_buster;
 		}
 		return url;
 	}
@@ -593,7 +587,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 
 		return html`
-            <div class="template--loading">${loading}</div>`;
+            <div part="loader" class="template--loading">${loading}</div>`;
 	}
 
 	errorTemplate(errorMessage = "")
@@ -601,7 +595,7 @@ export class Et2Template extends Et2Widget(LitElement)
 		return html`
             <sl-alert variant="warning" open>
                 <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-                <strong>Loading failed</strong><br/>
+                <strong>${this.egw().lang("Loading failed")}</strong><br/>
                 ${errorMessage}
             </sl-alert>`
 	}
