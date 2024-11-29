@@ -1427,6 +1427,12 @@ abstract class Merge
 				foreach($this->numeric_fields as $fieldname)
 				{
 					$names[] = preg_quote($fieldname, '/');
+					$raw_placeholder = $this->prefix("", $fieldname . '_-raw-', '$');
+					if(!array_key_exists($raw_placeholder, $replacements))
+					{
+						$replacements[$raw_placeholder] = $replacements[$this->prefix("", $fieldname, '$')];
+						$replacements[$this->prefix("", $fieldname, '$')] = self::number_format($replacements[$raw_placeholder], 2, $this->mimetype);
+					}
 				}
 				$this->format_spreadsheet_numbers($content, $names, $mimetype . $mso_application_progid);
 			}
