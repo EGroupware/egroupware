@@ -1062,7 +1062,7 @@ class Ads
 			}
 			if (!empty($param['account_id']))
 			{
-				if (($not_account_ids = array_search('!', $param['account_id'])) !== false)
+				if (($not_account_ids = array_search('!', (array)$param['account_id'])) !== false)
 				{
 					unset($param['account_id'][$not_account_ids]);
 				}
