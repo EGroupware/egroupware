@@ -39,7 +39,8 @@ class timesheet_merge extends Api\Storage\Merge
 		'$$ts_duration$$',
 		'$$ts_paused$$',
 		'$$ts_quantity$$',
-		'$$ts_unitprice$$'
+		'$$ts_unitprice$$',
+		'$$ts_total$$'
 	);
 
 	/**
@@ -133,10 +134,6 @@ class timesheet_merge extends Api\Storage\Merge
 
 		$array = $record->get_record_array();
 		$array['ts_total'] = $array['ts_quantity'] * $array['ts_unitprice'];
-		foreach(array('ts_duration','ts_paused','ts_quantity','ts_unitprice','ts_total') as $key)
-		{
-			$array[$key] = self::number_format($array[$key],2,$this->mimetype);
-		}
 
 		// Set any missing custom fields, or the marker will stay
 		foreach(array_keys($this->bo->customfields) as $name)
