@@ -27,10 +27,9 @@
 	<template id="infolog.edit.project" template="" lang="" group="0" version="1.5.004">
 		<grid width="100%">
 			<columns>
-				<column width="100" class="infolog_normalWrap"/>
-				<column width="115"/>
-				<column width="100"/>
-				<column width="400"/>
+                <column width="120" class="infolog_normalWrap"/>
+                <column/>
+                <column width="7em"/>
 			</columns>
 			<rows>
 				<row class="row">
@@ -44,7 +43,6 @@
                                               onchange="let option = this.select_options.find(e=>e.value == this.value) || {label:''};window.app.infolog.et2.getWidgetById('info_price').set_value(option.label.lastIndexOf('(') &lt; 0 ? '' : option.label.slice(option.label.lastIndexOf('(')+1,-1));"
                                               emptyLabel="None" class="et2_fullWidth"/>
 					<et2-number  id="info_price"></et2-number>
-					<et2-description></et2-description>
 				</row>
 				<row class="row">
 					<et2-description  value="planned time" for="info_planned_time"></et2-description>
