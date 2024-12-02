@@ -356,6 +356,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
+	async getUpdateComplete()
+	{
+		const more = await super.getUpdateComplete();
+		await this.select.updateComplete;
+		return more;
+	}
+
 	_triggerChange(e)
 	{
 		if(super._triggerChange(e))
@@ -1063,8 +1070,8 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
                     placement=${this.placement}
                     tabindex="0"
                     .getTag=${this._tagTemplate}
-                    .maxOptionsVisible=${0}
-                    .value=${value}
+                    maxOptionsVisible=${0}
+                    value=${Array.isArray(value) ? value.join(" ") : value}
                     @sl-change=${this.handleValueChange}
                     @mouseenter=${this._handleMouseEnter}
                     @mouseup=${this.handleOptionClick}
