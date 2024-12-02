@@ -91,6 +91,10 @@ div#infolog-edit_infolog-edit-description iframe {
 	display: inline-block;
 }
 
+#infolog-edit_infolog-edit-project > table {
+	table-layout: fixed;
+}
+
 #infolog-index #infolog-index_nm .filtersContainer {
 	width: 60%;
 }

@@ -157,6 +157,8 @@ export class Et2DateDuration extends Et2InputWidget(LitElement)
 				flex: 1 1 auto;
 				  width: min-content;
 				  min-width: 5em;
+				  /* This is the same as max-width of the number field */
+				  max-width: 7em;
 				margin-right: -2px;
 			  }
 
