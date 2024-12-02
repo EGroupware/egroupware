@@ -60,8 +60,8 @@ export class Et2Number extends Et2Textbox
 				}
 
 				.form-control-input {
-					min-width: 4em;
-					max-width: 7em;
+					min-width: var(--width, 4em);
+					max-width: var(--width, 7em);
 				}
 
 				.input__control {
@@ -191,6 +191,11 @@ export class Et2Number extends Et2Textbox
 		if(typeof attrs.validator === 'undefined')
 		{
 			attrs.validator = attrs.precision === 0 ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/';
+		}
+		if(typeof attrs.width != "undefined")
+		{
+			this.style.setProperty("--width", attrs.width);
+			delete attrs.width;
 		}
 		super.transformAttributes(attrs);
 	}
