@@ -95,6 +95,9 @@ export class Et2WidgetWithSelect extends RowLimitedMixin(Et2WidgetWithSelectMixi
 // @ts-ignore SlSelect styles is a single CSSResult, not an array, so TS complains
 export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 {
+	// Solves some issues with focus
+	static shadowRootOptions = {...LitElement.shadowRootOptions, delegatesFocus: true};
+
 	static get styles()
 	{
 		return [
@@ -336,6 +339,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this.addEventListener("focusin", this.handleFocus);
 		this.updateComplete.then(() =>
 		{
 			this.addEventListener("sl-change", this._triggerChange);
@@ -353,6 +357,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	{
 		super.disconnectedCallback();
 
+		this.removeEventListener("focusin", this.handleFocus);
 		this.removeEventListener("sl-change", this._triggerChange);
 	}
 
@@ -623,6 +628,13 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		return literal`et2-tag`;
 	}
 
+	/** Sets focus on the control. */
+	focus(options? : FocusOptions)
+	{
+		this.handleFocus();
+	}
+
+	/** Removes focus from the control. */
 	blur()
 	{
 		if(typeof super.blur == "function")
@@ -630,6 +642,15 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 			super.blur();
 		}
 		this.hide();
+	}
+
+	private handleFocus()
+	{
+		if(this.disabled || this.readonly)
+		{
+			return;
+		}
+		this.select?.focus();
 	}
 
 	/**
