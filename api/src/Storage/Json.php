@@ -137,7 +137,7 @@ class Json extends Base
 			$data = &$this->data;
 		}
 		// json-encode non db columns into ths json blob
-		if ($this->json_column && is_array($data) && ($json = array_diff_key($data, array_flip($this->db_cols))))
+		if ($this->json_column && is_array($data) && ($json = array_diff_key($data, array_flip($this->db_cols+[self::USER_TIMEZONE_READ]))))
 		{
 			$data = [
 				$this->json_column => json_encode($json, JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR),
