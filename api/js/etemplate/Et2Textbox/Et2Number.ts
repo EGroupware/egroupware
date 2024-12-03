@@ -229,7 +229,18 @@ export class Et2Number extends Et2Textbox
 			// Remove separator so parseFloat works
 			if(typeof val === 'string')
 			{
-				val = val.replace(this.thousandsSeparator, "").replace(",", '.');
+				// Special exception if someone is entering a decimal using . even though their preference is , (N.A. number in Europe)
+				// Only 1 ".", no thousands separator and if precision is set decimal places must match
+				if(this.decimalSeparator != "." && val.indexOf(".") == val.lastIndexOf(".") && !val.includes(",") &&
+					(typeof this.precision == "undefined" || typeof this.precision != "undefined" && this.precision == val.length - val.indexOf(".") - 1)
+				)
+				{
+					// Leave it
+				}
+				else
+				{
+					val = val.replaceAll(this.thousandsSeparator, "").replace(",", '.');
+				}
 			}
 
 			if(typeof this.precision !== 'undefined')
