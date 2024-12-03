@@ -977,6 +977,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		this.thead.empty();
 		this.tfoot.empty();
 		this.tbody.empty();
+		this.table.find('colgroup').remove();
 
 		// Update array managers
 		for(let key in _value)
