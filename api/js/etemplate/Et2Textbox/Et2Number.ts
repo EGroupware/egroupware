@@ -231,9 +231,10 @@ export class Et2Number extends Et2Textbox
 			{
 				// Special exception if someone is entering a decimal using . even though their preference is , (N.A. number in Europe)
 				// Only 1 ".", no thousands separator and if precision is set decimal places must match
-				if(this.decimalSeparator != "." && val.indexOf(".") == val.lastIndexOf(".") && !val.includes(",") &&
-					(typeof this.precision == "undefined" || typeof this.precision != "undefined" && this.precision == val.length - val.indexOf(".") - 1)
-				)
+				if(this.decimalSeparator != "." && val.indexOf(".") == val.lastIndexOf(".") && !val.includes(",") && (
+					(typeof this.precision == "undefined" && (val.length - val.indexOf(".") - 1 != 3 || val.indexOf(".") > 4)) ||
+					typeof this.precision != "undefined" && this.precision == val.length - val.indexOf(".") - 1
+				))
 				{
 					// Leave it
 				}
