@@ -1445,6 +1445,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 			// These methods are used inside widgets, but may not always be available depending on egw() loading (tests, docs)
 			const required = {
 				debug: () => {console.log(arguments);},
+				image: () => "",
 				lang: (l) => {return l;},
 				preference: () => {return false;},
 			};
