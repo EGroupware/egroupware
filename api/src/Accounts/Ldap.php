@@ -843,7 +843,7 @@ class Ldap
 				if (!empty($param['account_id']))
 				{
 					// do we need a negated account_id filter
-					if (($not_account_ids = array_search('!', $param['account_id'])) !== false)
+					if (($not_account_ids = array_search('!', (array)$param['account_id'])) !== false)
 					{
 						$filter .= '(!';
 						unset($param['account_id'][$not_account_ids]);
