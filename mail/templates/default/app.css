@@ -356,6 +356,7 @@ div.mailUploadSection > div.et2_hbox > label {
 	min-width: 15ex;
 }
 #mail-compose_selectFromVFSForCompose{
+	display: none;
 	width:20px;
 	float:none;
 	background-color: transparent;
@@ -915,6 +916,10 @@ and (orientation : landscape) {
 /*Make file uploads in compose dialog invisible*/
 .mail-compose_toolbar_assist div.mail-compose_fileselector, .mail-compose_toolbar_assist {
 	display:none;
+}
+
+et2-vbox.mailComposeHeaderSection{
+	padding-bottom: 5px;
 }
 
 div.mailComposeHeaderSection>table {
