@@ -1590,7 +1590,7 @@ app.classes.mail = AppJS.extend(
 				var self = this;
 				var buttons = [
 					{label: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image: "delete"},
-					{label: this.egw.lang("Cancel"), id: "cancel"}
+					{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 				];
 				var server = [{iface:{id: _data.data.profileid+'::'}}];
 				Et2Dialog.show_dialog(function (_button_id)
@@ -2522,7 +2522,7 @@ app.classes.mail = AppJS.extend(
 			{
 				var buttons = [
 					{label: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
-					{label: this.egw.lang("Cancel"), id: "cancel"}
+					{label: this.egw.lang("Cancel"), id: "cancel", image: 'cancelDialog'},
 				];
 				var messageToDisplay = '';
 				var actionlabel =_action.id;
@@ -2563,24 +2563,24 @@ app.classes.mail = AppJS.extend(
 						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
 				return Et2Dialog.show_dialog(function (_button_id)
+				{
+					var rv = false;
+					switch (_button_id)
 					{
-						var rv = false;
-						switch (_button_id)
-						{
-							case "all":
-								rv = true;
-								break;
-							case "cancel":
-								rv = 'cancel';
-						}
-						if (rv != "cancel")
-						{
-							that.lock_tree();
-						}
-						switch (_action.id)
+						case "all":
+							rv = true;
+							break;
+						case "cancel":
+							rv = 'cancel';
+					}
+					if (rv != "cancel")
+					{
+						that.lock_tree();
+					}
+					switch (_action.id)
 					{
 						case "delete":
-							that.mail_callDelete(_action, _elems,rv);
+							that.mail_callDelete(_action, _elems, rv);
 							break;
 						case "readall":
 						case "unlabel":
@@ -2592,22 +2592,19 @@ app.classes.mail = AppJS.extend(
 						case "flagged":
 						case "read":
 						case "undelete":
-							that.mail_callFlagMessages(_action, _elems,rv);
+							that.mail_callFlagMessages(_action, _elems, rv);
 							break;
 						case "drop_move_mail":
-							that.mail_callMove(_action, _elems,_target, rv);
+							that.mail_callMove(_action, _elems, _target, rv);
 							break;
 						case "drop_copy_mail":
-							that.mail_callCopy(_action, _elems,_target, rv);
+							that.mail_callCopy(_action, _elems, _target, rv);
 							break;
 						default:
-							if (_action.id.substr(0,4)=='move') that.mail_callMove(_action, _elems,_target, rv);
-							if (_action.id.substr(0,4)=='copy') that.mail_callCopy(_action, _elems,_target, rv);
+							if (_action.id.substr(0, 4) == 'move') that.mail_callMove(_action, _elems, _target, rv);
+							if (_action.id.substr(0, 4) == 'copy') that.mail_callCopy(_action, _elems, _target, rv);
 					}
-				},
-				messageToDisplay,
-				this.egw.lang("Confirm"),
-				null, buttons);
+				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
 			}
 			else
 			{
@@ -3811,8 +3808,8 @@ app.classes.mail = AppJS.extend(
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
-			{label: this.egw.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-			{label: this.egw.lang("Cancel"), id: "cancel"}
+			{label: this.egw.lang("Add"), id: "add", image:'plus', "class": "ui-priority-primary", "default": true},
+			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
@@ -3852,7 +3849,7 @@ app.classes.mail = AppJS.extend(
 		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
 		var buttons = [
 			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
-			{label: this.egw.lang("Cancel"), id: "cancel"}
+			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt(function (_button_id, _value)
 			{
@@ -5917,8 +5914,8 @@ app.classes.mail = AppJS.extend(
 			},
 			title: egw.lang('Request for passphrase'),
 			buttons: [
-				{label: this.egw.lang("Send"), id: "send", "class": "ui-priority-primary", "default": true},
-				{label: this.egw.lang("Cancel"), id: "cancel"}
+				{label: this.egw.lang("Send"), id: "send", image:'send', "class": "ui-priority-primary", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 			],
 			value:{
 				content:{
@@ -6088,7 +6085,7 @@ app.classes.mail = AppJS.extend(
 		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
 		var buttons = [
 
-			{label: this.egw.lang("Close"), id: "close"}
+			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}
 		];
 		if (!_display)
 		{
