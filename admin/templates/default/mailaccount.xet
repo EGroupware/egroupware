@@ -372,7 +372,7 @@
 		<et2-hbox class="dialogFooterToolbar">
 			<et2-button label="Save" id="button[save]"></et2-button>
 			<et2-button label="Apply" id="button[apply]"></et2-button>
-			<et2-button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magicwand"></et2-button>
+			<et2-button statustext="Use wizard to detect or verify configuration" label="Wizard" id="button[wizard]" image="magic"></et2-button>
 			<et2-button label="Cancel" id="button[cancel]" onclick="window.close();"></et2-button>
 			<et2-button align="right" label="Delete" id="button[delete]" onclick="et2_dialog.confirm(widget,'Delete this account','Delete')" hideOnReadonly="true"></et2-button>
 			<et2-button align="right" label="Delete identity" id="button[delete_identity]" onclick="et2_dialog.confirm(widget,'Delete identity','Delete')" hideOnReadonly="true" image="delete"></et2-button>
