@@ -151,6 +151,8 @@ describe("'.' as thousands separator", () =>
 		{args: ["1,234.5"], expected: 1.2345},	// Both , and . means no assumption
 		{args: ["1,5"], expected: 1.5},
 		{args: ["1.5"], expected: 1.5}, // Assume user screwed up decimal, not that they meant 1,500 or 15
+		{args: [",5"], expected: 0.5},
+		{args: [".5"], expected: 0.5}
 	]
 	tests.forEach(({args, expected}) =>
 	{

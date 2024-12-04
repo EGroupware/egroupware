@@ -232,7 +232,11 @@ export class Et2Number extends Et2Textbox
 				// Special exception if someone is entering a decimal using . even though their preference is , (N.A. number in Europe)
 				// Only 1 ".", no thousands separator and if precision is set decimal places must match
 				if(this.decimalSeparator != "." && val.indexOf(".") == val.lastIndexOf(".") && !val.includes(",") && (
+					// Starts with .
+					val.indexOf(".") == 0 ||
+					// No precision, and it's not in a thousands place
 					(typeof this.precision == "undefined" && (val.length - val.indexOf(".") - 1 != 3 || val.indexOf(".") > 4)) ||
+					// Precision, and it's got the right number of decimals
 					typeof this.precision != "undefined" && this.precision == val.length - val.indexOf(".") - 1
 				))
 				{
