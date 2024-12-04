@@ -50,6 +50,7 @@ class Image
 		'calendar'	=> 'calendar3',
 		'call'	=> 'telephone',
 		'cancel'	=> 'x-square',
+        'cancelDialog'	=> 'x-lg',
 		'cancelled'	=> 'x-lg',
 		'check'	=> 'check-lg',
 		'close'	=> 'x-lg',
