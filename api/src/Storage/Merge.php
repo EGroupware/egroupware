@@ -1426,6 +1426,10 @@ abstract class Merge
 			{
 				foreach($this->numeric_fields as $fieldname)
 				{
+					if(!array_key_exists($fieldname, $replacements))
+					{
+						continue;
+					}
 					$names[] = preg_quote($fieldname, '/');
 					$raw_placeholder = $this->prefix("", $fieldname . '_-raw-', '$');
 					if(!array_key_exists($raw_placeholder, $replacements))
@@ -3052,7 +3056,7 @@ abstract class Merge
 	 */
 	static public function number_format($number, $num_decimal_places = 2, $_mimetype = '')
 	{
-		if((string)$number === '')
+		if(is_null($number) || (string)$number === '')
 		{
 			return '';
 		}
