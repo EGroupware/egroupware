@@ -1540,15 +1540,15 @@ abstract class Merge
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><$3>$4</$3></table:table-cell>';
+			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)([^>]+?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><$3$4>$5</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // tables in open office writer
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-				$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)[^>]*>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><text:p text:style-name="Standard">$4</text:p></table:table-cell>';
+			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)([^>]+?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><text:p $4>$5</text:p></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // open office writer
 			case 'application/xmlExcel.Sheet':    // Excel 2003
@@ -1562,15 +1562,15 @@ abstract class Merge
 			// Use raw value instead of formatted value for spreadsheets (when present), but don't interfere otherwise
 			$callback = function ($matches) use ($replacement)
 			{
-				if($matches[4] && ($fieldname = substr($matches[4], 2, -2)) && in_array($this->prefix("", $fieldname, '$'), $this->numeric_fields))
+				if($matches[5] && ($fieldname = substr($matches[5], 2, -2)) && in_array($this->prefix("", $fieldname, '$'), $this->numeric_fields))
 				{
-					$matches[5] = $this->prefix("", $fieldname . '_-raw-', '$');
+					$matches[6] = $this->prefix("", $fieldname . '_-raw-', '$');
 				}
 				else
 				{
-					$matches[5] = $matches[4];
+					$matches[6] = $matches[5];
 				}
-				return str_replace(['$0', '$1', '$2', '$3', '$4', '$5'], $matches, $replacement);
+				return str_replace(['$0', '$1', '$2', '$3', '$4', '$5', '$6'], $matches, $replacement);
 			};
 			// Dealing with backtrack limit per AmigoJack 10-Jul-2010 comment on php.net preg-replace docs
 			do
