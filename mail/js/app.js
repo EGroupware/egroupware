@@ -4713,8 +4713,8 @@ app.classes.mail = AppJS.extend(
 	 */
 	compose_fieldExpander: function(event,widget)
 	{
-		var expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
-		for (var name in expWidgets)
+		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
+		for (const name in expWidgets)
 		{
 			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
 		}
@@ -4727,37 +4727,37 @@ app.classes.mail = AppJS.extend(
 					jQuery(".mailComposeJQueryCc").show();
 					if (typeof expWidgets.cc !='undefined')
 					{
-						expWidgets.cc.set_disabled(true);
+						//expWidgets.cc.set_disabled(true);
 					}
 					break;
 				case 'bcc_expander':
 					jQuery(".mailComposeJQueryBcc").show();
 					if (typeof expWidgets.bcc !='undefined')
 					{
-						expWidgets.bcc.set_disabled(true);
+						//expWidgets.bcc.set_disabled(true);
 					}
 					break;
 				case 'folder_expander':
 					jQuery(".mailComposeJQueryFolder").show();
 					if (typeof expWidgets.folder !='undefined')
 					{
-						expWidgets.folder.set_disabled(true);
+						//expWidgets.folder.set_disabled(true);
 					}
 					break;
 				case 'replyto_expander':
 					jQuery(".mailComposeJQueryReplyto").show();
 					if (typeof expWidgets.replyto !='undefined')
 					{
-						expWidgets.replyto.set_disabled(true);
+						//expWidgets.replyto.set_disabled(true);
 					}
 					break;
 			}
 		}
 		else if (typeof widget == "undefined")
 		{
-			var widgets = {cc:{},bcc:{},folder:{},replyto:{}};
+			const widgets = {cc:{},bcc:{},folder:{},replyto:{}};
 
-			for(var widget in widgets)
+			for(const widget in widgets)
 			{
 				widgets[widget] = this.et2.getWidgetById(widget);
 
@@ -4767,30 +4767,30 @@ app.classes.mail = AppJS.extend(
 					{
 						case 'cc':
 							jQuery(".mailComposeJQueryCc").show();
-							if (typeof expWidgets.cc != 'undefiend')
+							if (typeof expWidgets.cc != 'undefined')
 							{
-								expWidgets.cc.set_disabled(true);
+								//expWidgets.cc.set_disabled(true);
 							}
 							break;
 						case 'bcc':
 							jQuery(".mailComposeJQueryBcc").show();
-							if (typeof expWidgets.bcc != 'undefiend')
+							if (typeof expWidgets.bcc != 'undefined')
 							{
-								expWidgets.bcc.set_disabled(true);
+								//expWidgets.bcc.set_disabled(true);
 							}
 							break;
 						case 'folder':
 							jQuery(".mailComposeJQueryFolder").show();
-							if (typeof expWidgets.folder != 'undefiend')
+							if (typeof expWidgets.folder != 'undefined')
 							{
-								expWidgets.folder.set_disabled(true);
+								//expWidgets.folder.set_disabled(true);
 							}
 							break;
 						case 'replyto':
 							jQuery(".mailComposeJQueryReplyto").show();
 							if (typeof expWidgets.replyto != 'undefiend')
 							{
-								expWidgets.replyto.set_disabled(true);
+								//expWidgets.replyto.set_disabled(true);
 							}
 							break;
 					}

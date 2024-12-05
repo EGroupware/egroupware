@@ -902,19 +902,9 @@ and (orientation : landscape) {
 
 }
 
-#mail-compose_cc_expander,
-#mail-compose_bcc_expander,
-#mail-compose_folder_expander,
-#mail-compose_replyto_expander {
-	width: 100%;
-	margin: 0px;
-	margin-left: 1em;
-	text-align: left;
-	padding: 0;
-	cursor: pointer;
-	border:	none;
-	color: rgb(38, 83, 124);
-	background-color: transparent;
+#mail-compose_cc_expander::part(main) {
+	margin-left:1em;
+
 }
 #mail-compose_mimeType{margin-left:1em;}
 /*Make file uploads in compose dialog invisible*/
