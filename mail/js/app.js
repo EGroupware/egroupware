@@ -385,7 +385,7 @@ app.classes.mail = AppJS.extend(
 					}
 					else
 					{
-						that.compose_fieldExpander();
+						//that.compose_fieldExpander();
 					}
 				});
 
@@ -4752,6 +4752,7 @@ app.classes.mail = AppJS.extend(
 					}
 					break;
 			}
+			widget.parentElement.hide()
 		}
 		else if (typeof widget == "undefined")
 		{
