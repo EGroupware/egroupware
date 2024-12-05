@@ -174,6 +174,9 @@ A.sieveRowInActive
 table tr.attachmentRow > td{
 	vertical-align: middle;
 }
+table tr.attachmentRow > td et2-description{
+	width: 84vw;
+}
 table tr.attachmentRow > td > img {
 	background:transparent;
 	padding-left: 5px;
@@ -237,7 +240,7 @@ pre {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	word-wrap: break-word;
+	overflow-wrap: anywhere;
 }
 #mail-index {
 	position: relative;
@@ -356,7 +359,7 @@ div.mailUploadSection > div.et2_hbox > label {
 	min-width: 15ex;
 }
 #mail-compose_selectFromVFSForCompose{
-	display: none;
+	height:0;
 	width:20px;
 	float:none;
 	background-color: transparent;

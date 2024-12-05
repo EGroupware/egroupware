@@ -1775,6 +1775,7 @@ ul.et2_vfs {
 }
 
 .et2_vfs li.vfsFilename {
+    overflow-wrap: anywhere;
     display: inline;
 }
 
