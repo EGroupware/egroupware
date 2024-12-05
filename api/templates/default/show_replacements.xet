@@ -5,7 +5,7 @@
         <et2-description  id="title" class="title"></et2-description>
         <grid id="placeholders" width="100%">
             <columns>
-                <column width="30%"/>
+                <column/>
                 <column/>
             </columns>
             <rows>
