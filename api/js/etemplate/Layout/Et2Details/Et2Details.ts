@@ -76,6 +76,24 @@ export class Et2Details extends Et2Widget(SlDetails)
 					display: block;
 				}
 
+				.details:not(.hoist).details--open.details--overlay-summary {
+					.details__summary {
+						visibility: hidden;
+					}
+
+					.details__body {
+						margin-top: calc(-1 * var(--sl-input-height-medium));
+					}
+
+					.details__body.overlaySummaryRightAligned {
+						padding-right: calc(3 * var(--sl-spacing-medium));
+					}
+
+					.details__body.overlaySummaryLeftAligned {
+						padding-left: calc(3 * var(--sl-spacing-medium));
+					}
+				}
+
 				.details.hoist .details__body {
 					position: absolute;
 					z-index: var(--sl-z-index-drawer);
@@ -182,6 +200,7 @@ export class Et2Details extends Et2Widget(SlDetails)
                         'details--open': this.open,
                         'details--disabled': this.disabled,
                         'details--rtl': isRtl,
+                        'details--overlay-summary': this.overlaySummaryOnOpen,
                         'hoist': this.hoist
                     })}
             >
