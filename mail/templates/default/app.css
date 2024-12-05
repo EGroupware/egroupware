@@ -176,6 +176,7 @@ table tr.attachmentRow > td{
 }
 table tr.attachmentRow > td et2-description{
 	width: 84vw;
+	overflow-wrap: anywhere;
 }
 table tr.attachmentRow > td > img {
 	background:transparent;
@@ -240,7 +241,7 @@ pre {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	overflow-wrap: anywhere;
+	word-wrap: break-word;
 }
 #mail-index {
 	position: relative;
