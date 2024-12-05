@@ -79,11 +79,13 @@ abstract class Merge
 
 	/**
 	 * Fields that are to be treated as datetimes, when merged into spreadsheets
+	 * Do not include placeholders in field list
 	 */
 	var $date_fields = [];
 
 	/**
 	 * Fields that are numeric, for special numeric handling
+	 * Do not include placeholders in field list
 	 */
 	protected $numeric_fields = [];
 
@@ -1426,11 +1428,11 @@ abstract class Merge
 			{
 				foreach($this->numeric_fields as $fieldname)
 				{
-					if(!array_key_exists($fieldname, $replacements))
+					if(!array_key_exists($this->prefix("", $fieldname, '$'), $replacements))
 					{
 						continue;
 					}
-					$names[] = preg_quote($fieldname, '/');
+					$names[] = preg_quote($this->prefix("", $fieldname, '$'), '/');
 					$raw_placeholder = $this->prefix("", $fieldname . '_-raw-', '$');
 					if(!array_key_exists($raw_placeholder, $replacements))
 					{
@@ -1540,15 +1542,15 @@ abstract class Merge
 		{
 			case 'application/vnd.oasis.opendocument.spreadsheet':        // open office calc
 			case 'application/vnd.oasis.opendocument.spreadsheet-template':
-			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([a-z].*?)([^>]+?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><$3$4>$5</$3></table:table-cell>';
+			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)(?:calcext:value-type="[^"]+")?>.?<([^ >]+?)( ?[^>]*?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$6"$2><$3$4>$5</$3></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // tables in open office writer
 			case 'application/vnd.oasis.opendocument.presentation':
 			case 'application/vnd.oasis.opendocument.text-template':
 			case 'application/vnd.oasis.opendocument.presentation-template':
-			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([a-z].*?)([^>]+?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
-			$replacement = '<table:table-cell$1office:value-type="float" office:value="$5"$2><text:p $4>$5</text:p></table:table-cell>';
+			$format = '/<table:table-cell([^>]+?)office:value-type="[^"]+"([^>]*?)>.?<([^ >]+?)( ?[^>]*?)>(' . implode('|', $names) . ')<\/\3>.?<\/table:table-cell>/s';
+			$replacement = '<table:table-cell$1office:value-type="float" office:value="$6"$2><text:p $4>$5</text:p></table:table-cell>';
 				break;
 			case 'application/vnd.oasis.opendocument.text':        // open office writer
 			case 'application/xmlExcel.Sheet':    // Excel 2003
@@ -1562,7 +1564,7 @@ abstract class Merge
 			// Use raw value instead of formatted value for spreadsheets (when present), but don't interfere otherwise
 			$callback = function ($matches) use ($replacement)
 			{
-				if($matches[5] && ($fieldname = substr($matches[5], 2, -2)) && in_array($this->prefix("", $fieldname, '$'), $this->numeric_fields))
+				if($matches[5] && ($fieldname = substr($matches[5], 2, -2)) && in_array($fieldname, $this->numeric_fields))
 				{
 					$matches[6] = $this->prefix("", $fieldname . '_-raw-', '$');
 				}
@@ -1727,11 +1729,11 @@ abstract class Merge
 			{
 				case 'float':
 				case 'int':
-					$this->numeric_fields[] = "$$#{$fieldname}$$";
+				$this->numeric_fields[] = "#{$fieldname}";
 					break;
 				case 'date':
 				case 'datetime':
-					$this->date_fields[] = "$$#{$fieldname}$$";
+				$this->date_fields[] = "#{$fieldname}";
 			}
 		}
 
