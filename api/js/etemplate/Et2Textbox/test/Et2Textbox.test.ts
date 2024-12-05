@@ -34,16 +34,30 @@ describe("Textbox widget", () =>
 
 	// Setup run before each test
 	beforeEach(before);
-
+	const checkLabel = function(labelValue)
+	{
+		const label = element.querySelector(".et2_label");
+		assert.isNotNull(label);
+		assert.isTrue(label.checkVisibility(), "Label is not visible");
+		assert.equal(element.querySelector('.et2_label')?.textContent.trim(), labelValue);
+	}
 	it('is defined', () =>
 	{
 		assert.instanceOf(element, Et2Textbox);
 	});
 
-	it('has a label', () =>
+	it('gets a label via set_label()', async() =>
 	{
+		// Old set_label()
 		element.set_label("Yay label");
-		assert.isEmpty(element.shadowRoot.querySelectorAll('.et2_label'));
+		await element.updateComplete;
+		checkLabel("Yay label")
+	});
+	it('gets a label via property', async() =>
+	{
+		element.label = "Assign via property";
+		await element.updateComplete;
+		checkLabel("Assign via property");
 	})
 });
 inputBasicTests(before, "I'm a good test value", "input");

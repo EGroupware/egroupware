@@ -563,7 +563,8 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		{
 			if(!new_label || !new_label.includes("%s"))
 			{
-				return super.label = new_label;
+				super.set_label(new_label);
+				return;
 			}
 			this.__label = new_label;
 			const [pre, post] = et2_csvSplit(new_label, 2, "%s");
