@@ -6244,7 +6244,7 @@ app.classes.mail = AppJS.extend(
 					var widget = this.et2.getWidgetById(actions[i]);
 					if (widget)
 					{
-						jQuery(widget.getDOMNode()).trigger('click');
+					//	jQuery(widget.getDOMNode()).trigger('click');
 					}
 				}
 			}
