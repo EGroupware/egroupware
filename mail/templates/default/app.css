@@ -80,7 +80,7 @@ tr.deleted .status_img {
 }
 
 tr.unseen .status_img {
-	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope-fill.svg);
+	background-image: url(../../../node_modules/bootstrap-icons/icons/envelope.svg);
 }
 
 tr.flagged_seen .status_img {
