@@ -1392,8 +1392,12 @@ et2-image.calendar_print_button,
 et2-appicon.calendar_print_appicon,
 et2-appicon.calendar_print_appicon img {
   height: 24px;
-  width: 26px;
+  width: 24px;
   font-size: 24px;
+}
+et2-image.calendar_print_button::before {
+  vertical-align: -0.125em;
+  /*reset to bootstrap chosen alignment*/
 }
 /*Sortable views*/
 .srotable_cal_wk_ph {
