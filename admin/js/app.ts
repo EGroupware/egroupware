@@ -1574,16 +1574,30 @@ class AdminApp extends EgwApp
 	 */
 	clear_cache()
 	{
-		let wait = this.egw.message(this.egw.lang('Clear cache and register hooks')+"\n"+this.egw.lang('Please wait...'),'info');
-		let success = function (){
-			wait.close();
-			egw.message('Done');
-		};
-		this.egw.json('admin.admin_hooks.ajax_clear_cache', null, success).sendRequest(true, undefined, jQuery.proxy(function(_xmlhttp, _err)
-		{
-			this.egw.json('admin.admin_hooks.ajax_clear_cache&errored=1', null, success).sendRequest(true);
-		}, this));
+		let wait = this.egw.message(this.egw.lang('Clear cache and register hooks') + "\n" + this.egw.lang('Please wait...'), 'info');
+
+		this.egw.request('admin.admin_hooks.ajax_clear_cache', [])
+			.then(() => {
+				// If the first request succeeds
+				wait.close();
+				egw.message('Done');
+			})
+			.catch(() => {
+				// If the first request fails, retry with errored=1
+				this.egw.request('admin.admin_hooks.ajax_clear_cache&errored=1', [])
+					.then(() => {
+						// If the fallback request succeeds
+						wait.close();
+						egw.message('Done');
+					})
+					.catch(() => {
+						// If the fallback request also fails, handle the error
+						wait.close();
+						egw.message(this.egw.lang('Failed to clear cache. Please try again later.'), 'error');
+					});
+			});
 	}
+
 
 	/**
 	 * Action handler for clear credentials action
