@@ -318,7 +318,7 @@ window.app = {classes: {}};
 		{
 			var $main_div = jQuery('#popupMainDiv');
 			let $et2 = jQuery('.et2_container');
-			let $layoutTable = jQuery(".et2_container > div > table", $main_div);
+			let $layoutTable = jQuery(".et2_container > * > table", $main_div);
 			if ($layoutTable.length && $et2.width() < $layoutTable.width())
 			{
 				// Still using a layout table, and it's bigger.
@@ -344,7 +344,7 @@ window.app = {classes: {}};
 				delta_height = 0;
 			}
 			if((delta_width != 0 || delta_height != 0) &&
-				(delta_width >2 || delta_height >2 || delta_width<-2 || delta_height < -2) && (scrollHeight>0 || scrollWidth>0))
+				(delta_width > 2 || delta_height > 2 || delta_width < -2 || delta_height < -2))
 			{
 
 				if (window.framework && typeof window.framework.resize_popup != 'undefined')
@@ -376,7 +376,14 @@ window.app = {classes: {}};
 				const data = JSON.parse(node.getAttribute('data-etemplate')) || {};
 				if (popup || window.opener && !egwIsMobile()) {
 					// Resize popup when et2 load is done
-					jQuery(node).on('load', () => window.setTimeout(resize_popup, 50));
+					jQuery(node).on('load', (event) =>
+					{
+						// Only the top-level template, not any sub-templates
+						if (event.target == node)
+						{
+							window.setTimeout(resize_popup, 50)
+						}
+					});
 				}
 				const et2 = new etemplate2(node, data.data.menuaction);
 				et2.load(data.name, data.url, data.data);

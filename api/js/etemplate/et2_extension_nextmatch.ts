@@ -76,6 +76,8 @@ import {Et2AccountFilterHeader} from "./Et2Nextmatch/Headers/AccountFilterHeader
 import {Et2SelectCategory} from "./Et2Select/Select/Et2SelectCategory";
 import {Et2Searchbox} from "./Et2Textbox/Et2Searchbox";
 import type {LitElement} from "lit";
+import {Et2Template} from "./Et2Template/Et2Template";
+import {waitForEvent} from "./Et2Widget/event";
 
 //import {et2_selectAccount} from "./et2_widget_SelectAccount";
 let keep_import : Et2AccountFilterHeader
@@ -1304,9 +1306,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Bind a resize while we're here
 			if(tab.flagDiv)
 			{
-				tab.flagDiv.addEventListener("click", (e) =>
+				tab.flagDiv.addEventListener("click", async(e) =>
 				{
-					window.setTimeout(() => this.resize(), 1);
+					// Wait for the tab to be done being shown
+					await waitForEvent(tab.flagDiv.parentElement, "sl-tab-show");
+					// then resize
+					this.resize();
 				});
 			}
 			return new et2_dynheight(tab.contentDiv, this.innerDiv, 100);
@@ -2413,7 +2418,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_template(template_name : string)
 	{
-		const template = et2_createWidget("template", {"id": template_name}, this);
+		const template = <Et2Template>loadWebComponent("et2-template", {"id": template_name, class: "hideme"}, this);
 		if(this.template)
 		{
 			// Stop early to prevent unneeded processing, and prevent infinite
@@ -2482,10 +2487,11 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				return;
 			}
 
-			// Free the template again, but don't remove it
+			// Free the template and remove it
 			setTimeout(function()
 			{
 				template.destroy();
+				template.remove();
 			}, 1);
 
 			// Call the "setNextmatch" function of all registered
@@ -2525,13 +2531,9 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			this._set_autorefresh(this._get_autorefresh());
 		};
 
-		// Template might not be loaded yet, defer parsing
-		const promise = [];
-		template.loadingFinished(promise);
-
 		// Wait until template (& children) are done
 		// Keep promise so we can return it from doLoadingFinished
-		this.template_promise = Promise.all(promise).then(() =>
+		this.template_promise = template.updateComplete.then(() =>
 			{
 				parse.call(this, template);
 				if(!this.dynheight)
@@ -2558,6 +2560,12 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				});
 			}
 		).finally(() => this.template_promise = null);
+		this.template_promise.widget = this;
+
+		// Explictly add template to DOM since it won't happen otherwise, and webComponents need to be in the DOM
+		// to complete
+		this.div.append(template);
+		template.load();
 
 		return this.template_promise;
 	}
@@ -3650,47 +3658,37 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 
 		// Load the template
 		const self = this;
-		const header = <et2_template>et2_createWidget("template", {"id": template_name}, this);
+		const header = <Et2Template>loadWebComponent("et2-template", {"id": template_name}, this);
 		this.headers[id] = header;
-		const deferred = [];
-		header.loadingFinished(deferred);
+
+		// fix order in DOM by reattaching templates in correct position
+		switch(id)
+		{
+			case 0:	// header_left: prepend
+				jQuery(header.getDOMNode()).prependTo(self.header_div);
+				break;
+			case 1:	// header_right: before favorites and count
+				window.setTimeout(() =>
+					jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right')));
+				break;
+			case 2:	// header_row: after search
+				window.setTimeout(function()
+				{	// otherwise we might end up after filters
+					jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
+				}, 1);
+				break;
+			case 3:	// header_row2: below everything
+				window.setTimeout(function()
+				{	// otherwise we might end up after filters
+					jQuery(header.getDOMNode()).insertAfter(self.header_div);
+				}, 1);
+				break;
+		}
 
 		// Wait until all child widgets are loaded, then bind
-		Promise.all(deferred).then(() =>
+		header.updateComplete.then(() =>
 		{
-			// fix order in DOM by reattaching templates in correct position
-			switch(id)
-			{
-				case 0:	// header_left: prepend
-					jQuery(header.getDOMNode()).prependTo(self.header_div);
-					break;
-				case 1:	// header_right: before favorites and count
-					window.setTimeout(() =>
-						jQuery(header.getDOMNode()).prependTo(self.header_div.find('div.header_row_right')));
-					break;
-				case 2:	// header_row: after search
-					window.setTimeout(function()
-					{	// otherwise we might end up after filters
-						jQuery(header.getDOMNode()).insertAfter(self.header_div.find('div.search'));
-					}, 1);
-					break;
-				case 3:	// header_row2: below everything
-					window.setTimeout(function()
-					{	// otherwise we might end up after filters
-						jQuery(header.getDOMNode()).insertAfter(self.header_div);
-					}, 1);
-					break;
-			}
-			// Give child templates a chance to load before we bind inputs
-			let children = [];
-			header.iterateOver((_widget) =>
-			{
-				children.push(_widget.loading);
-			}, this, et2_template);
-			Promise.all(children).then(() =>
-			{
-				self._bindHeaderInput(header);
-			});
+			self._bindHeaderInput(header);
 		});
 	}
 
