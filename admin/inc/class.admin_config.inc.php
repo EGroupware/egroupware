@@ -282,8 +282,8 @@ class admin_config
 		{
 			// for security reasons we do not send all config to client-side, but only ones mentioned in templates
 			$matches = null;
-			preg_match_all('/id="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
-			foreach($matches[1] as $name)
+			preg_match_all('/(id|content)="newsettings\[([^]]+)\]/', file_get_contents($path), $matches, PREG_PATTERN_ORDER);
+			foreach($matches[2] as $name)
 			{
 				$content['newsettings'][$name] = isset($config[$name]) ? $config[$name] : '';
 			}
