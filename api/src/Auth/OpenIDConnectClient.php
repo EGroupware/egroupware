@@ -52,7 +52,7 @@ class OpenIDConnectClient extends \Jumbojett\OpenIDConnectClient
 				'hotmail\.(com|com\.(ar|au|br|hk|tr|vn)|co\.(in|il|jp|kr|za|th|uk)|be|ca|cz|cl|dk|fi|fr|gr|de|hu|it|lv|lt|my|nl|no|ph|rs|sg|sk|es|se)|'.
 				'live\.(com|com\.(ar|br|my|mx|ph|pt|sg)|co\.(il|kr|za|uk)|at|be|ca|cl|cn|dk|fi|fr|de|hk|ie|it|jp|nl|no|ru|se)|'.
 				'windowslive\.com|livemail\.tw)$/i' => ['outlook.office365.com', 'smtp.office365.com', 'login.microsoftonline.com/common/v2.0',
-			'e09fe57b-ffc5-496e-9ef8-3e6c7d628c09', 'Hd18Q~t-8_-ImvPFXlh8DSFjWKYyvpUTqURRJc7i',
+			'eb5e2a98-70a2-471c-9e0a-a665ba1dfb0e', '2Or8Q~ZzYqbuOUJCenyygzrttkkeGaGv1DSZscj9',
 			'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access email',
 			[/*self::ADD_CLIENT_TO_WELL_KNOWN => 'appid',*/ self::ADD_AUTH_PARAM => ['login_hint' => '$username', 'approval_prompt' => 'auto']],
 			null],
