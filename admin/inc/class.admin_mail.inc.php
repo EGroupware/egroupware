@@ -1236,7 +1236,7 @@ class admin_mail
 		// if account is for multiple user, change delete confirmation to reflect that
 		if (Mail\Account::is_multiple($content))
 		{
-			$tpl->setElementAttribute('button[delete]', 'onclick', "et2_dialog.confirm(widget,'This is NOT a personal mail account!\\n\\nAccount will be deleted for ALL users!\\n\\nAre you really sure you want to do that?','Delete this account')");
+			$tpl->setElementAttribute('button[delete]', 'onclick', "Et2Dialog.confirm(widget,'This is NOT a personal mail account!\\n\\nAccount will be deleted for ALL users!\\n\\nAre you really sure you want to do that?','Delete this account')");
 		}
 
 		// if no edit access, make whole dialog readonly

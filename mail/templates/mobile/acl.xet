@@ -32,7 +32,7 @@
 									<et2-hbox>
 										<et2-select  id="${row}[acl]" label="Rights" onchange="app.mail.acl_common_rights_selector"></et2-select>
 										<et2-checkbox  align="center" label="Recursively" id="${row}[acl_recursive]"></et2-checkbox>
-										<et2-button-icon  align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="et2_dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button-icon>
+                                        <et2-button-icon align="right" statustext="Delete this ACL" id="delete[${row}]" value="${row}" image="delete" onclick="Et2Dialog.confirm(widget,'Do you really want to remove all rights from this account?','Remove')"></et2-button-icon>
 									</et2-hbox>
 
 									<et2-hbox  class="aclDetails">

@@ -13,8 +13,7 @@
 
 import {AppJS} from "../../api/js/jsapi/app_base.js";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
-import {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {egw_getObjectManager} from '../../api/js/egw_action/egw_action';
 import {egwIsMobile, egwSetBit} from "../../api/js/egw_action/egw_action_common";
 import {EGW_AO_FLAG_DEFAULT_FOCUS} from "../../api/js/egw_action/egw_action_constants";
@@ -5899,8 +5898,7 @@ app.classes.mail = AppJS.extend(
 	{
 		var self = this;
 		var pass_exp = egw.preference('smime_pass_exp', 'mail');
-		et2_createWidget("dialog",
-		{
+		const dialog = loadWebComponent("et2-dialog", {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'send' && _value)
@@ -5926,7 +5924,8 @@ app.classes.mail = AppJS.extend(
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6107,8 +6106,7 @@ app.classes.mail = AppJS.extend(
 			'presets[org_unit]': _metadata.certDetails.subject.organizationUnitName
 		};
 		content.class="";
-		et2_createWidget("dialog",
-		{
+		const dialog = et2_createWidget('et2-dialog', {
 			callback: function(_button_id, _value)
 			{
 				if (_button_id == 'contact' && _value)
@@ -6130,7 +6128,8 @@ app.classes.mail = AppJS.extend(
 			value:{content:content},
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6177,7 +6176,7 @@ app.classes.mail = AppJS.extend(
 		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
 		var subject = data && data.data? data.data.subject : "";
 
-		et2_createWidget("dialog",
+		const dialog = et2_createWidget("et2-dialog",
 		{
 			callback: function(_button_id, _value) {
 				var newSubject = null;
@@ -6215,7 +6214,8 @@ app.classes.mail = AppJS.extend(
 			template: egw.webserverUrl + '/mail/templates/default/modifyMessageSubjectDialog.xet?1',
 			resizable: false,
 			width: 500
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**
@@ -6263,7 +6263,7 @@ app.classes.mail = AppJS.extend(
 		var pref_id = _senders[0].id.split('::')[0]+'_predefined_compose_addresses';
 		var prefs = egw.preference(pref_id, 'mail');
 
-		et2_createWidget("dialog",
+		const dialog = loadWebComponent("et2-dialog",
 		{
 			callback: function (_button_id, _value)
 			{
@@ -6281,7 +6281,8 @@ app.classes.mail = AppJS.extend(
 			minWidth: 410,
 			template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 			resizable: false,
-		}, et2_dialog._create_parent('mail'));
+		});
+		document.body.append(dialog);
 	},
 
 	/**

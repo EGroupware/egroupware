@@ -40,7 +40,7 @@
                                                 <et2-textbox  maxlength="150" id="${row}[name]" placeholder="--&gt; enter new name"></et2-textbox>
                                                 <et2-select  id="${row}[parent]" emptyLabel="Select one ..."></et2-select>
                                                 <et2-checkbox  id="${row}[admin]" statustext="Only admin can edit this status"></et2-checkbox>
-                                                <et2-button  image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="et2_dialog.confirm(widget,'Delete this status','Delete')"></et2-button>
+                                                <et2-button image="delete" label="Delete" align="center" id="delete[$row_cont[id]]" statustext="Delete this status" onclick="Et2Dialog.confirm(widget,'Delete this status','Delete')"></et2-button>
                                             </row>
                                         </rows>
                                     </grid>

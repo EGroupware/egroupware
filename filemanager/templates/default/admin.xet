@@ -88,7 +88,7 @@
 			<et2-hbox  disabled="!@versioning">
 				<et2-number  id="mtime" label="Delete all older versions and deleted files older then %s days" statustext="0 means all, -N newer then N days" precision="0"></et2-number>
 				<et2-textbox  label="under directory" id="versionedpath" statustext="/ = everywhere"></et2-textbox>
-				<et2-button  id="delete-versions" label="Finally delete" onclick="et2_dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete"></et2-button>
+                <et2-button id="delete-versions" label="Finally delete" onclick="Et2Dialog.confirm(widget,'Finally delete all older versions and deleted files under given directory.\n\nThis can NOT be undone!','Confirm final delete');" image="delete"></et2-button>
 			</et2-hbox>
 			<grid>
 				<columns>

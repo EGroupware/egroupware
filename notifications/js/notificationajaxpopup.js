@@ -949,12 +949,13 @@
 			$egwpopup_fw.click(function(){window.app.notifications.toggle();});
 			jQuery(".egwpopup_deleteall", '#egwpopup').click(function(_ev){
 				_ev.stopPropagation();
-				et2_dialog.show_dialog( function(_button){
+				Et2Dialog.show_dialog(function (_button)
+					{
 						if (_button == 2) window.app.notifications.delete_all();
 					},
 					egw.lang('Are you sure you want to delete all notifications?'),
 					egw.lang('Delete notifications'),
-					null, et2_dialog.BUTTON_YES_NO, et2_dialog.WARNING_MESSAGE, undefined, egw
+					null, Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw
 				);
 			});
 			jQuery(".egwpopup_seenall", '#egwpopup').click(function(){window.app.notifications.mark_all_seen()});

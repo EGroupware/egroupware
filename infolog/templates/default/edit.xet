@@ -212,7 +212,7 @@
                         <et2-button  statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
                         <et2-select  statustext="Execute a further action for this entry" id="action" onchange="app.infolog.edit_actions()" emptyLabel="Actions..."></et2-select>
                         <et2-checkbox  label="Do not notify" id="no_notifications" statustext="Do not notify of these changes"></et2-checkbox>
-                        <et2-button  align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; et2_dialog.confirm(widget,'Delete this entry','Delete');" image="delete"></et2-button>
+                        <et2-button align="right" statustext="delete this entry" label="Delete" id="button[delete]" onclick="if($cont[info_anz_subs]) return $cont[info_anz_subs]; Et2Dialog.confirm(widget,'Delete this entry','Delete');" image="delete"></et2-button>
                     </et2-hbox>
                 </row>
 			</rows>
