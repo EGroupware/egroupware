@@ -174,7 +174,7 @@ A.sieveRowInActive
 table tr.attachmentRow > td{
 	vertical-align: middle;
 }
-table tr.attachmentRow > td et2-description{
+div#popupMainDiv #mail-compose table tr.attachmentRow > td et2-description{
 	width: 84vw;
 	overflow-wrap: anywhere;
 }
