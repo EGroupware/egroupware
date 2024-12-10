@@ -121,6 +121,14 @@ class notifications_push implements Json\PushBackend
 	 */
 	protected static function cleanup_push_msgs()
 	{
+		// rate limit the deletes: max. once per hour for the instance
+		$stamp = date('YmdH');
+		if (Api\Cache::getInstance(__CLASS__, __FUNCTION__) === $stamp)
+		{
+			return;
+		}
+		Api\Cache::setInstance(__CLASS__, __FUNCTION__, $stamp);
+
 		if (($ts = self::$db->from_unixtime(Api\Session::heartbeat_limit())))
 		{
 			try {
