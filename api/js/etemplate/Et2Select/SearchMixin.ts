@@ -17,6 +17,7 @@ import {Et2Textbox} from "../Et2Textbox/Et2Textbox";
 import {until} from "lit/directives/until.js";
 import {waitForEvent} from "../Et2Widget/event";
 import {Validator} from "../Validators/Validator";
+import {classMap} from "lit/directives/class-map.js";
 
 // Otherwise import gets stripped
 let keep_import : Et2Tag;
@@ -176,9 +177,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					z-index: var(--sl-z-index-dropdown);
 				  }
 
-				  :host([search]) et2-textbox::part(base) {
+					:host([search]) et2-textbox::part(base), #edit, #edit:focus-visible {
 					border: none;
 					box-shadow: none;
+						outline: none;
 				  }
 
 				  /* Search UI active - show textbox & stuff */
@@ -463,7 +465,10 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                 />`;
 			}
 			return html`
-                <div class="search_input" slot="prefix">
+                <div class=${classMap({
+                    search_input: true,
+                    novalue: (this.value?.length == 0)
+                })} slot="prefix">
                 <et2-textbox id="search" type="text" part="input"
                              exportparts="base:search__base"
                              clearable
@@ -799,7 +804,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				this._editInputNode.style.display = "";
 			}
 
-			this._activeControls?.classList.remove("active");
+			this._activeControls?.classList.remove("active", "editing");
 		}
 
 		_triggerChange(event)
@@ -973,6 +978,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				event.preventDefault();
 				this._searchInputNode.value = "";
+				if(!this.multiple)
+				{
+					this.stopEdit(false);
+				}
+
 				this.updateComplete.then(async() =>
 				{
 					// update sizing / position before getting ready for another one
@@ -1025,6 +1035,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				// Prevent default, since that would try to submit
 				event.preventDefault();
 				this.stopEdit();
+				// Try to pass focus on
+				if(!this.multiple)
+				{
+					waitForEvent(this, "sl-after-hide").then(() =>
+					{
+						this.blur();
+					})
+				}
 			}
 			// Abort edit, put original value back
 			else if(event.key == "Escape")
@@ -1482,23 +1500,21 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		 */
 		public startEdit(tag? : Et2Tag)
 		{
-			const tag_value = tag ? tag.value : this.value;
+			const tag_value = tag ? tag.value : this.value.toString();
 
-			// hide the menu
-			this.dropdown.hide()
-
-			waitForEvent(this, "sl-after-hide").then(() =>
-			{
 				// Turn on edit UI
 				this._activeControls.classList.add("editing", "active");
 
 				// Pre-set value to tag value
 				this._editInputNode.style.display = "";
 				this._editInputNode.value = tag_value
-				this._editInputNode.focus();
 
 				// If they abort the edit, they'll want the original back.
 				this._editInputNode.dataset.initial = tag_value;
+
+			waitForEvent(this.dropdown, "sl-after-show").then(() =>
+			{
+				this._editInputNode.focus();
 			})
 		}
 
@@ -1521,32 +1537,27 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			let value = abort ? original : this._editInputNode.value;
 			this._editInputNode.value = "";
 
-			if(value && value != original)
-			{
-				this.createFreeEntry(value);
-
-				this.updateComplete.then(() =>
-				{
-					const item = this.querySelector("[value='" + value.replace(/'/g, "\\\'") + "']");
-					item.dispatchEvent(new CustomEvent("sl-select", {detail: {item}}));
-				})
-			}
-
 			// Remove original from value & DOM
-			if(value != original)
+			if(value != original && original)
 			{
 				if(this.multiple)
 				{
 					this.value = this.value.filter(v => v !== original);
-					this.querySelector("[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
 				}
 				else
 				{
 					this.value = value;
 				}
 				this.select_options = this.select_options.filter(v => v.value !== original);
+				this.dropdown.querySelector(".freeEntry[value='" + original.replace(/'/g, "\\\'") + "']").remove();
 			}
 
+			if(value && value != original)
+			{
+				this.createFreeEntry(value);
+			}
+
+			this.requestUpdate("select_options");
 
 			this._activeControls.classList.remove("editing", "active");
 			if(!this.multiple)
@@ -1556,7 +1567,6 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					// Don't know why, but this doesn't always work leaving the value hidden by prefix
 					await this.dropdown.hide();
 					this.dropdown.classList.remove("select--open");
-					this.dropdown.panel.setAttribute("hidden", "");
 				});
 			}
 		}
