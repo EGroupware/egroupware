@@ -976,13 +976,23 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			event.stopImmediatePropagation();
 			if(Et2WidgetWithSearch.TAG_BREAK.indexOf(event.key) !== -1 && this.allowFreeEntries && this.createFreeEntry(this._searchInputNode.value))
 			{
-				event.preventDefault();
 				this._searchInputNode.value = "";
 				if(!this.multiple)
 				{
 					this.stopEdit(false);
+
+					// Mess with tabindexes to allow focus to easily go to next control
+					const input = this.select.shadowRoot.querySelector('[tabindex="0"]');
+					input.setAttribute("tabindex", "-1");
+					this.updateComplete.then(() =>
+					{
+						// Set it back so we can get focus again later
+						input.setAttribute("tabindex", "0");
+					})
+					return;
 				}
 
+				event.preventDefault();
 				this.updateComplete.then(async() =>
 				{
 					// update sizing / position before getting ready for another one
@@ -1531,11 +1541,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				abort = false;
 			}
 
-			const original = this._editInputNode.dataset.initial;
-			delete this._editInputNode.dataset.initial;
+			const original = this._editInputNode?.dataset.initial;
+			delete this._editInputNode?.dataset.initial;
 
-			let value = abort ? original : this._editInputNode.value;
-			this._editInputNode.value = "";
+			let value = abort ? original : this._editInputNode?.value;
+			if(this._editInputNode)
+			{
+				this._editInputNode.value = "";
+			}
 
 			// Remove original from value & DOM
 			if(value != original && original)
