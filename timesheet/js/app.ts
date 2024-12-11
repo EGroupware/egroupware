@@ -280,7 +280,7 @@ class TimesheetApp extends EgwApp
 		const dialog = new Et2Dialog(this.egw);
 		dialog.getUpdateComplete().then(() =>
 		{
-			const time = <Et2DateTime><any>dialog.template.widgetContainer.getWidgetById('time');
+			const time = <Et2DateTime><any>dialog.eTemplate.widgetContainer.getWidgetById('time');
 			// start-time set end-time as max
 			if (0+tse_type & 1)
 			{

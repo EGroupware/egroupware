@@ -667,10 +667,31 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		this.requestUpdate("template", old_template);
 	}
 
+
+	/**
+	 * Getter for template name.
+	 *
+	 * Historically this returned the etemplate2 widget, but this was incorrect and has been fixed.
+	 * Use `eTemplate` instead of `template` to access the etemplate2 widget.
+	 *
+	 * @returns {string}
+	 */
 	get template()
 	{
 		// Can't return undefined or requestUpdate() will not notice a change
 		return this.__template || null;
+	}
+
+	/**
+	 * The loaded etemplate2 object.
+	 *
+	 * Only available if `template` is set
+	 *
+	 * @returns {etemplate2}
+	 */
+	get eTemplate()
+	{
+		return this._template_widget;
 	}
 
 	/**
@@ -1454,10 +1475,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		dialog.getUpdateComplete().then(async function()
 		{
 			// Get access to template widgets
-			log = dialog.template.widgetContainer.getDOMWidgetById('log').getDOMNode();
-			progressbar = dialog.template.widgetContainer.getWidgetById('progressbar');
+			log = dialog.eTemplate.widgetContainer.getDOMWidgetById('log').getDOMNode();
+			progressbar = dialog.eTemplate.widgetContainer.getWidgetById('progressbar');
 			progressbar.set_label('0 / ' + _list.length);
-			totals.widget = dialog.template.widgetContainer.getWidgetById('totals');
+			totals.widget = dialog.eTemplate.widgetContainer.getWidgetById('totals');
 
 			for(let index = 0; index < _list.length && !cancel; index++)
 			{

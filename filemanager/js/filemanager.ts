@@ -1447,7 +1447,7 @@ export class filemanagerAPP extends EgwApp
 		document.body.appendChild(dialog);
 		dialog.addEventListener("load", () =>
 		{
-			dialog.template.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
+			dialog.eTemplate.widgetContainer.getWidgetById("share_link").onclick = copy_link_to_clipboard;
 		});
 	}
 
