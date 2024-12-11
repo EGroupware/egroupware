@@ -4645,7 +4645,7 @@ body.scrollVertical {
   margin: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  margin-top: 0.4em;
+  margin-top: 7px;
 }
 #egw_fw_main .egw_fw_ui_tab_content > div {
   width: 100%;
