@@ -418,11 +418,14 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.update(changedProperties);
 
 		// Flatpickr puts some inputs we don't have direct control over
-		if(changedProperties.has("disabled"))
+		if(changedProperties.has("disabled") && this._inputNode)
 		{
 			this._inputNode.disabled = this.disabled;
-			this._inputNode.requestUpdate("disabled");
-			this._inputNode.shadowRoot.querySelectorAll("input").forEach(i => i.disabled = this.disabled);
+			if(typeof this._inputNode.requestUpdate == "function")
+			{
+				this._inputNode?.requestUpdate("disabled");
+				this._inputNode.shadowRoot.querySelectorAll("input").forEach(i => i.disabled = this.disabled);
+			}
 		}
 	}
 
