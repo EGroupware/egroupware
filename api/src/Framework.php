@@ -16,6 +16,7 @@ namespace EGroupware\Api;
 use EGroupware\Api\Framework\Bundle;
 use EGroupware\Api\Framework\IncludeMgr;
 use EGroupware\Api\Header\ContentSecurityPolicy;
+use function Webmozart\Assert\Tests\StaticAnalysis\inArray;
 
 /**
  * Framework: virtual base class for all template sets
@@ -1175,7 +1176,8 @@ abstract class Framework extends Framework\Extra
 		{
 			while (($file = readdir($dh)))
 			{
-				if (preg_match('/'."\.css$".'/i', $file))
+                if (preg_match('/' . "\.css$" . '/i', $file) &&
+                    !in_array($file, ['mobile.css', 'mobile.min.css']))
 				{
 					list($name) = explode('.',$file);
 					if (!isset($list[$name])) $list[$name] = ucfirst ($name);

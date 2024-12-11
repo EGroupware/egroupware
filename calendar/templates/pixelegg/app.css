@@ -1523,9 +1523,6 @@ et2-switch#calendar-toolbar_toolbar-weekend::part(label) {
 .ui-toolbar-menulist et2-switch .label {
   width: 100%!important;
 }
-#calendar-toolbar_toolbar .et2_toolbar_more {
-  margin-top: 0;
-}
 #calendar-toolbar button#toolbar-today {
   color: #616161;
   font-weight: 500;
@@ -2704,6 +2701,10 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
 }
 #calendar-toolbar {
   margin-bottom: 0.3em;
+  margin-top: 0.3em;
+}
+#calendar-toolbar_toolbar .et2_toolbar_more {
+  margin-top: 0.5em;
 }
 #calendar-toolbar_toolbar et2-switch .label.on span.off {
   filter: opacity(0.4);
