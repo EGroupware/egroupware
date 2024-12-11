@@ -252,7 +252,7 @@ class Template extends Etemplate\Widget
 			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
 		}
 		//error_log("$this running $method_name() cname: {$this->id} -> expand_name: $expand_name");
-		if($expand_name && $expand_name != $this->id || $cname !== $old_cname)
+		if($expand_name && $expand_name != $this->id)
 		{
 			if (($row_template = self::instance($expand_name)))
 			{
