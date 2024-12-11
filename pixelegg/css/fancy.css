@@ -16,31 +16,6 @@
  * @package pixelegg
  */
 /**
- * EGroupware: Stylite Pixelegg template
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package pixelegg
- */
-/**
- * addapted from orginal styles.php
- */
-/**
- * All app_* files are now again in $app/templates/default/app.less&css and will be included independent
- *
- * If some settings are Pixelegg template specific, please create $app/templates/pixelegg.less&css
- * files AND include ../default/app.less from there
-*/
-/**
- * not sure about these files, in general it is not a good idea to replace
- * files from other projects, was we need to update them regulary.
- * Would be a lot better to include their css files and only overwrite
- * neccesarry settings
- */
-/**
  * EGroupware: Darkmode theme
  *
  * Please do NOT change css-files directly, instead change less-files and compile them!
@@ -69,8 +44,7 @@
  */
 @media all {
   html[data-darkmode='1'] {
-    background: #000;
-    filter: invert(1) hue-rotate(180deg) brightness(1);
+    filter: invert(0.82) hue-rotate(180deg) brightness(1);
     /* need to explicitly disable the filter on the img tag, if used, as it would be applied twice and therefore not at all */
   }
   html[data-darkmode='1'] sl-menu-item::part(prefix),
@@ -78,7 +52,6 @@
   html[data-darkmode='1'] et2-button::part(prefix),
   html[data-darkmode='1'] *::part(image),
   html[data-darkmode='1'] et2-image,
-  html[data-darkmode='1'] img,
   html[data-darkmode='1'] #blueimp-gallery:not(:fullscreen),
   html[data-darkmode='1'] #blueimp-gallery ol,
   html[data-darkmode='1'] et2-select-account::part(icon),
@@ -200,7 +173,6 @@
  * @version: 1
  * Stefan Reinhardt
  */
-/*@import (less) "../../api/templates/default/etemplate2.css";*/
 @media all {
   /**
  * Top level
@@ -1652,51 +1624,6 @@ div#ui-datepicker-div {
   background-image: none;
 }
 /**
- * EGroupware: Stylite Pixelegg template
- *
- * less file for magic suggest
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package pixelegg
- * @version $Id$
- */
-.ms-ctn,
-.ms-res-ctn {
-  /* It doesn't really work smaller than this */
-  border: solid 1px #e6e6e6;
-}
-.ms-ctn .ms-res-item-active,
-.ms-res-ctn .ms-res-item-active {
-  background-color: rgba(153, 204, 255, 0.4);
-}
-.ms-ctn .ms-trigger {
-  border-left: none;
-}
-/**
- * EGroupware: CSS with less preprocessor
-
- * traditional.less
- * included in pixelegg.less since 17/03/2014
-
-
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package pixelegg
- * @version $Id$
- */
-/*
-	font styling
-	allowed attributes: font-family,font-size,color,font-weight
-*/
-/**
  * layout_*.less files are Pixelegg template specific
  */
 /**
@@ -1842,6 +1769,120 @@ body {
  * @package pixelegg
  * @version $Id$
  */
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id: pixelegg.less 3017 2014-04-15 08:35:38Z ralfbecker $
+
+## Definitions of all used colors
+
+ */
+.background_color_egw_normal {
+  background-color: #ffc200;
+}
+.background_color_egw_light {
+  background-color: #FFD140;
+}
+.background_color_egw_lighter {
+  background-color: #FFDD73;
+}
+.background_color_egw_dark {
+  background-color: #0C5DA5;
+}
+.background_color_egw_darker {
+  background-color: #26537C;
+}
+/*@gray-100 : #000000;*/
+.color_0_gray {
+  color: #ffffff;
+}
+.color_5_gray {
+  color: #f2f2f2;
+}
+.color_10_gray {
+  color: #e6e6e6;
+}
+.color_15_gray {
+  color: #d9d9d9;
+}
+.color_20_gray {
+  color: #cccccc;
+}
+.color_25_gray {
+  color: #bfbfbf;
+}
+.color_30_gray {
+  color: #b3b3b3;
+}
+.color_40_gray {
+  color: #999999;
+}
+.color_50_gray {
+  color: #808080;
+}
+.color_60_gray {
+  color: #666666;
+}
+.color_70_gray {
+  color: #4d4d4d;
+}
+.color_80_gray {
+  color: #333333;
+}
+.color_90_gray {
+  color: #1a1a1a;
+}
+.color_100_gray {
+  color: #000000;
+}
+/*@darkgrey : .color_90_gray;*/
+.background_color_0_gray {
+  background-color: #ffffff;
+}
+.background_color_5_gray {
+  background-color: #fafafa;
+}
+.background_color_10_gray {
+  background-color: #f0f0f0;
+}
+.background_color_15_gray {
+  background-color: #d9d9d9;
+}
+.background_color_20_gray {
+  background-color: #cccccc;
+}
+.background_color_25_gray {
+  background-color: #bfbfbf;
+}
+.background_color_30_gray {
+  background-color: #b3b3b3 !important;
+}
+.background_color_40_gray {
+  background-color: #999999;
+}
+.background_color_50_gray {
+  background-color: #808080;
+}
+/*@active_button_border_bottom : @egw_color_2_d;*/
+/*optional / can field*/
+/*Listenausgabe*/
+/* Dialog Button panel Background Color*/
+/*Button edit + save + apply + copy = positive action         */
+/*Button Add-plus*/
+/*Button  cancel = do nothing action         */
+/*Button delete  = negative action         */
+.background_color_search {
+  background-color: #B4B4B4;
+}
+.background_table_cal_head {
+  background-color: #FFDD73;
+}
 @keyframes login-apps {
   0% {
     transform: translateY(30px);
@@ -6567,16 +6608,6 @@ span.egw_tutorial_title {
   white-space: nowrap;
   overflow-x: hidden;
 }
-/*@import "../less/layout_buttons_global.less";*/
-/*@import "../less/layout_chosen.less";*/
-/*@import "../less/layout_messages.less";*/
-/*@import "../less/layout_content_elements.less";*/
-/*@import "../less/layout_table.less";*/
-/*@import "../less/layout_loginPage.less";*/
-/*@import "../less/layout_raster.less";*/
-/*@import "../less/layout_nextmatch.less";*/
-/*@import "../less/layout_footer.less";*/
-/*@import "../less/layout_dialog.less";*/
 /**
  *
  * Mobile FW - Applications colors
@@ -7269,12 +7300,6 @@ et2-dialog div#add_favorite et2-select-account_ro {
 .et2_toolbar {
   padding: 0;
   border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-}
-.et2_nextmatch .nextmatch_header {
-  border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-}
-.et2_nextmatch .nextmatch_header .nextmatch_header_row {
-  padding-bottom: 0.25em;
 }
 div.flatpickr-calendar {
   border-radius: var(--sl-border-radius-medium);
