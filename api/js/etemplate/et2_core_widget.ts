@@ -97,9 +97,16 @@ export function et2_createWidget(_name: string, _attrs: object, _parent?: any): 
 	}
 
 	// check and return web-components in case widget is no longer available as legacy widget
-	if (typeof et2_registry[_name] === "undefined" && window.customElements.get('et2-'+_name))
+	if(typeof et2_registry[_name] === "undefined")
 	{
-		return loadWebComponent('et2-'+_name, _attrs, _parent);
+		if(window.customElements.get('et2-' + _name))
+		{
+			return loadWebComponent('et2-' + _name, _attrs, _parent);
+		}
+		else if(window.customElements.get(_name))
+		{
+			return loadWebComponent(_name, _attrs, _parent);
+		}
 	}
 
 	// Parse the "readonly" and "type" flag for this element here, as they
