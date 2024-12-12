@@ -7283,6 +7283,10 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:last-child {
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
   border-bottom-width: 0px !important;
 }
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header {
+  padding: 0 0.5em;
+  overflow: initial;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header h1 {
   display: none;
 }
@@ -7294,9 +7298,6 @@ div.flatpickr-calendar .shortcut-buttons-flatpickr-buttons button:last-child {
   padding-top: 0.2em;
   padding-right: 0.5em;
   padding-left: 0.5em;
-}
-#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header {
-  padding: 0 0.5em;
 }
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tab_close_button {
   background-size: 12px 12px;
