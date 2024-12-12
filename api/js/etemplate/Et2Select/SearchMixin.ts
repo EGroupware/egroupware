@@ -1042,22 +1042,24 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 			if(Et2WidgetWithSearch.TAG_BREAK.indexOf(event.key) !== -1 && this.allowFreeEntries)
 			{
-				// Prevent default, since that would try to submit
-				event.preventDefault();
 				this.stopEdit();
-				// Try to pass focus on
-				if(!this.multiple)
+
+				// Mess with tabindexes to allow focus to easily go to next control
+				const input = this.select.shadowRoot.querySelector('[tabindex="0"]');
+				input.setAttribute("tabindex", "-1");
+				this.updateComplete.then(() =>
 				{
-					waitForEvent(this, "sl-after-hide").then(() =>
-					{
-						this.blur();
-					})
-				}
+					// Set it back so we can get focus again later
+					input.setAttribute("tabindex", "0");
+				})
+				return;
 			}
 			// Abort edit, put original value back
 			else if(event.key == "Escape")
 			{
 				this.stopEdit(true);
+				// Prevent default, since that would try to close popup
+				event.preventDefault();
 			}
 		}
 
