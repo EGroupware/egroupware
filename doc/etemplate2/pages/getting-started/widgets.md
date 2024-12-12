@@ -22,3 +22,28 @@ If you just want to use existing widgets, you can put them in your .xet template
 ```
 
 <img src="/assets/images/widgets_rendered_example.png" alt="Rendered example template">
+
+## Attributes
+
+Widget behaviour is customised by setting attributes
+
+### ID
+
+// TODO, maybe some notes about content & namespaces.
+
+### Disabled vs Readonly vs Hidden
+
+Disabled widgets are fully shown, but in a way that indicates the value cannot be changed.
+
+Readonly widgets are shown in a special way that displays a value, but is not interactive. Often we switch to a
+different component for faster performance, such as a simple
+label. It is impossible to change the value of a readonly widget.
+
+Hidden widgets are not visible.
+
+```html:preview
+<et2-textbox label="Normal" value="Normal textbox" class="et2-label-fixed"></et2-textbox>
+<et2-textbox label="Disabled" disabled value="Disabled textbox" class="et2-label-fixed"></et2-textbox>
+<et2-textbox_ro label="Readonly" value="Readonly textbox" class="et2-label-fixed"></et2-textbox_ro>
+<et2-textbox label="Hidden" hidden>Hidden textbox</et2-textbox>
+```
