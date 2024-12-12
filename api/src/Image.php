@@ -215,7 +215,7 @@ class Image
 		'symlink'	=> 'reply',
 		'tag_message'	=> 'tag',
 		'tentative'	=> 'clock-history',
-		'timestamp'	=> 'magic',
+		'timestamp'	=> 'pin-map',
 		//'unlock'	=> 'unlock',
 		'up'	=> 'arrow-bar-up',
 		'update'	=> 'shield-exclamation',
