@@ -2703,9 +2703,6 @@ div#calendar-container div.calendar table tbody tr.rowhilite td {
   margin-bottom: 0.3em;
   margin-top: 0.3em;
 }
-#calendar-toolbar_toolbar .et2_toolbar_more {
-  margin-top: 0.5em;
-}
 #calendar-toolbar_toolbar et2-switch .label.on span.off {
   filter: opacity(0.4);
 }
