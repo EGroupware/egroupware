@@ -4619,6 +4619,12 @@ body.scrollVertical {
   margin: 0 15px 2px 2px;
   vertical-align: text-top;
 }
+#egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header img.egw_fw_ui_tab_icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 5px 1px 0 1em;
+}
 #egw_fw_main #egw_fw_tabs .egw_fw_ui_tabs_header .egw_fw_ui_tab_header_active {
   border-left: 1px solid #bfc0bf;
   border-right: 1px solid #bfc0bf;
