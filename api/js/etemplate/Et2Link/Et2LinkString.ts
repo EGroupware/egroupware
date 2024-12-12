@@ -115,7 +115,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * If number is exceeded, a "Load more links ..." button is displayed, which will load the double amount of links each time clicked
 	 */
 	@property({type: Number})
-	limit = 20;
+	limit = 0;
 
 	protected _totalResults : number = 0;
 	protected _link_list : LinkInfo[] = [];
@@ -125,6 +125,17 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	constructor()
 	{
 		super();
+		if(this.limit == 0)
+		{
+			this.egw().preference("maxmatchs", "common", true).then((pref) =>
+			{
+				// If limit was set via attribute, it will no longer be 0
+				if(this.limit == 0)
+				{
+					this.limit = parseInt(pref ?? 20);
+				}
+			});
+		}
 	}
 
 	async getUpdateComplete()
