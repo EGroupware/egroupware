@@ -153,7 +153,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 
 			getClipboardFiles().then((files) =>
 			{
-				if(files.length > 0)
+				if(files.length > 0 && !this.disabled && !this.readonly)
 				{
 					this.pasteButton.removeAttribute("disabled");
 				}
@@ -166,6 +166,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
                     part="vfs button"
                     exportparts="base:button_base"
                     id="link"
+                    ?disabled=${this.disabled}
                     ?readonly=${this.readonly}
                     method=${method || nothing}
                     method-id=${method_id || nothing}
@@ -235,6 +236,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
             <et2-link-entry .onlyApp="${this.onlyApp}"
                             .applicationList="${this.applicationList}"
                             .readonly=${this.readonly}
+                            ?disabled=${this.disabled}
                             @sl-change=${this.handleEntrySelected}
                             @sl-clear="${this.handleEntryCleared}">
             </et2-link-entry>
@@ -262,6 +264,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 			// Make the whole template a drop target
 			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
 			readonly: this.readonly,
+			disabled: this.disabled,
 
 			// Change to this tab when they drop
 			onStart: function(event, file_count)
