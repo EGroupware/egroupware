@@ -41,17 +41,21 @@ class addressbook_wizard_import_contacts_csv extends importexport_wizard_basic_i
 			{
 				$s .= ' &#9830;';
 			}
-			$cat_list['cat-'.$cat['id']] = empty($cat['description']) ? $s : array(
+			$cat_list[] = array(
+				'value' => 'cat-' . $cat['id'],
 				'label' => $s,
-				'title' => $cat['description'],
+				'title' => $cat['description']
 			);
 		}
 		if(count($cat_list) > 0) {
-			$this->mapping_fields[lang('Categories')] = $cat_list;
+			$this->mapping_fields[] = array(
+				'label'    => lang('Categories'),
+				'children' => $cat_list
+			);
 		}
 
 		foreach($bocontacts->customfields as $name => $data) {
-			$this->mapping_fields['#'.$name] = $data['label'];
+			$this->mapping_fields[] = ['value' => '#' . $name, 'label' => $data['label']];
 		}
 		unset($this->mapping_fields['jpegphoto']);        // can't cvs import that
 
