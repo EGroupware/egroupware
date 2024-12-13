@@ -33,17 +33,25 @@ Widget behaviour is customised by setting attributes
 
 ### Disabled vs Readonly vs Hidden
 
-Disabled widgets are fully shown, but in a way that indicates the value cannot be changed.
+Disabled widgets are fully shown, but in a way that indicates the value cannot be changed. Use disabled to indicate that
+at some point a user may be able to change the value, but not right now. The widget may be enabled via javascript.
 
 Readonly widgets are shown in a special way that displays a value, but is not interactive. Often we switch to a
 different component for faster performance, such as a simple
-label. It is impossible to change the value of a readonly widget.
+label. It is impossible to change the value of a readonly widget, and it cannot be made editable via javascript - the
+page must be reloaded.
 
-Hidden widgets are not visible.
+Hidden widgets are not visible, but may be enabled via javascript.
 
 ```html:preview
-<et2-textbox label="Normal" value="Normal textbox" class="et2-label-fixed"></et2-textbox>
-<et2-textbox label="Disabled" disabled value="Disabled textbox" class="et2-label-fixed"></et2-textbox>
-<et2-textbox_ro label="Readonly" value="Readonly textbox" class="et2-label-fixed"></et2-textbox_ro>
-<et2-textbox label="Hidden" hidden>Hidden textbox</et2-textbox>
+<table>
+<tr><td>Normal</td><td><et2-textbox value="Normal textbox" class="et2-label-fixed"></et2-textbox></td><td><et2-button label="Button"></et2-button></td></tr>
+<tr><td>Disabled</td><td><et2-textbox disabled value="Disabled textbox" class="et2-label-fixed"></et2-textbox></td><td><et2-button label="Button" disabled></et2-button></td></tr>
+<tr><td>Readonly</td><td><et2-textbox_ro value="Readonly textbox" class="et2-label-fixed"></et2-textbox_ro></td><td><et2-buttton disabled label="Button" readonly></et2-button></td></tr>
+<tr><td>Hidden</td><td><et2-textbox hidden>Hidden textbox</et2-textbox></td><td><et2-button label="Hidden" hidden></et2-button></td></tr>
+</table>
 ```
+
+When the page is submitted normal and hidden widgets will have their values returned and validated. Widgets that are
+disabled when the page is submitted will not return their value.
+Readonly widgets do not return a value.
