@@ -27,21 +27,22 @@
                     |barcode|itempicker|script|countdown|customfields-types|nextmatch|nextmatch-header
                     |nextmatch-customfields|nextmatch-sortheader|et2-nextmatch-header-account|et2-appicon|et2-avatar
                     |et2-avatar-group|et2-box|et2-button|et2-button-copy|et2-button-icon|et2-button-scroll
-                    |et2-button-timestamp|et2-category-tag|et2-checkbox|et2-colorpicker|et2-nextmatch-columnselection
-                    |et2-nextmatch-header-custom|et2-date|et2-date-duration|et2-date-range|et2-date-since|et2-date-time
-                    |et2-date-timeonly|et2-date-time-today|et2-description|et2-description-expose|et2-details|et2-dialog
-                    |et2-dropdown-button|et2-email|et2-email-tag|et2-nextmatch-header-entry|et2-favorites
-                    |et2-favorites-menu|et2-nextmatch-header-filter|et2-groupbox|et2-hbox|et2-iframe|et2-image
-                    |et2-image-expose|et2-lavatar|et2-label|et2-link|et2-link-add|et2-link-apps|et2-link-entry
-                    |et2-link-list|et2-link-paste-dialog|et2-link-search|et2-link-string|et2-link-to|et2-listbox
-                    |et2-merge-dialog|et2-number|et2-password|et2-portlet|et2-searchbox|et2-select|et2-select-access
-                    |et2-select-account|et2-select-app|et2-select-bitwise|et2-select-bool|et2-select-cat
-                    |et2-select-country|et2-select-day|et2-select-dow|et2-select-hour|et2-select-lang|et2-select-month
-                    |et2-select-number|et2-select-percent|et2-select-priority|et2-select-state|et2-select-tab
-                    |et2-select-thumbnail|et2-select-timezone|et2-select-year|et2-spinner|et2-split|et2-switch
-                    |et2-tabbox|et2-tag|et2-textarea|et2-textbox|et2-thumbnail-tag|et2-tree|et2-tree-dropdown
-                    |et2-tree-cat|et2-url|et2-url-email|et2-url-fax|et2-url-phone|et2-vbox|et2-vfs-gid|et2-vfs-mime
-                    |et2-vfs-name|et2-vfs-path|et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid">
+                    |et2-button-timestamp|et2-button-toggle|et2-category-tag|et2-checkbox|et2-colorpicker
+                    |et2-nextmatch-columnselection|et2-nextmatch-header-custom|et2-date|et2-date-duration|et2-date-range
+                    |et2-date-since|et2-date-time|et2-date-timeonly|et2-date-time-today|et2-description
+                    |et2-description-expose|et2-details|et2-dialog|et2-dropdown|et2-dropdown-button|et2-email
+                    |et2-email-tag|et2-nextmatch-header-entry|et2-favorites|et2-favorites-menu
+                    |et2-nextmatch-header-filter|et2-groupbox|et2-hbox|et2-iframe|et2-image|et2-image-expose|et2-lavatar
+                    |et2-label|et2-link|et2-link-add|et2-link-apps|et2-link-entry|et2-link-list|et2-link-paste-dialog
+                    |et2-link-search|et2-link-string|et2-link-to|et2-listbox|et2-menu-item|et2-merge-dialog|et2-number
+                    |et2-password|et2-portlet|et2-searchbox|et2-select|et2-select-access|et2-select-account
+                    |et2-select-app|et2-select-bitwise|et2-select-bool|et2-select-cat|et2-select-country|et2-select-day
+                    |et2-select-dow|et2-select-hour|et2-select-lang|et2-select-month|et2-select-number
+                    |et2-select-percent|et2-select-priority|et2-select-state|et2-select-tab|et2-select-thumbnail
+                    |et2-select-timezone|et2-select-year|et2-spinner|et2-split|et2-switch|et2-switch-icon|et2-tabbox
+                    |et2-tag|et2-textarea|et2-textbox|et2-thumbnail-tag|et2-tree|et2-tree-dropdown|et2-url|et2-url-email
+                    |et2-url-fax|et2-url-phone|et2-vbox|et2-vfs-gid|et2-vfs-mime|et2-vfs-name|et2-vfs-path
+                    |et2-vfs-select|et2-vfs-select-dialog|et2-vfs-select-row|et2-vfs-uid">
 
 <!ELEMENT overlay (template)*>
 
@@ -1576,6 +1577,40 @@
     variant (default|primary|success|neutral|warning|danger|text) #IMPLIED
     width CDATA #IMPLIED>
 
+<!ELEMENT et2-button-toggle EMPTY>
+
+<!ATTLIST et2-button-toggle
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    ariaLabel CDATA #IMPLIED
+    autocomplete CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    class CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    height CDATA #IMPLIED
+    helpText CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    icon CDATA #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    offIcon CDATA #IMPLIED
+    onchange CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    onIcon CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    readonly (false|true|1) #IMPLIED
+    required (false|true|1) #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    style CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    variant CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
 <!ELEMENT et2-category-tag EMPTY>
 
 <!ATTLIST et2-category-tag
@@ -1819,6 +1854,7 @@
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
     statustext CDATA #IMPLIED
+    step CDATA #IMPLIED
     style CDATA #IMPLIED
     tabindex CDATA #IMPLIED
     width CDATA #IMPLIED>
@@ -2027,6 +2063,7 @@
 
 <!ATTLIST et2-details
     accesskey CDATA #IMPLIED
+    accordionGroup CDATA #IMPLIED
     align CDATA #IMPLIED
     class CDATA #IMPLIED
     data CDATA #IMPLIED
@@ -2055,7 +2092,6 @@
 <!ATTLIST et2-dialog
     accesskey CDATA #IMPLIED
     align CDATA #IMPLIED
-    appendTo CDATA #IMPLIED
     buttons CDATA #IMPLIED
     callback CDATA #IMPLIED
     class CDATA #IMPLIED
@@ -2065,7 +2101,7 @@
     disabled (false|true|1) #IMPLIED
     height CDATA #IMPLIED
     hidden (false|true|1) #IMPLIED
-    hideOnEscape CDATA #IMPLIED
+    hideOnEscape (false|true|1) #IMPLIED
     icon CDATA #IMPLIED
     id CDATA #IMPLIED
     isModal (false|true|1) #IMPLIED
@@ -2084,6 +2120,34 @@
     template CDATA #IMPLIED
     title CDATA #IMPLIED
     value CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
+<!ELEMENT et2-dropdown EMPTY>
+
+<!ATTLIST et2-dropdown
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    class CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    distance CDATA #IMPLIED
+    height CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    hoist (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    onclick CDATA #IMPLIED
+    open (false|true|1) #IMPLIED
+    parentId CDATA #IMPLIED
+    placement CDATA #IMPLIED
+    skidding CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    stay-open-on-select (false|true|1) #IMPLIED
+    style CDATA #IMPLIED
+    sync CDATA #IMPLIED
     width CDATA #IMPLIED>
 
 <!ELEMENT et2-dropdown-button EMPTY>
@@ -2108,6 +2172,7 @@
     onchange CDATA #IMPLIED
     onclick CDATA #IMPLIED
     parentId CDATA #IMPLIED
+    placement CDATA #IMPLIED
     readonly (false|true|1) #IMPLIED
     required (false|true|1) #IMPLIED
     select_options CDATA #IMPLIED
@@ -2252,6 +2317,7 @@
     onchange CDATA #IMPLIED
     onclick CDATA #IMPLIED
     parentId CDATA #IMPLIED
+    placement CDATA #IMPLIED
     readonly (false|true|1) #IMPLIED
     required (false|true|1) #IMPLIED
     select_options CDATA #IMPLIED
@@ -2329,6 +2395,7 @@
 
 <!ATTLIST et2-groupbox
     accesskey CDATA #IMPLIED
+    accordionGroup CDATA #IMPLIED
     align CDATA #IMPLIED
     class CDATA #IMPLIED
     data CDATA #IMPLIED
@@ -2348,6 +2415,7 @@
     statustext CDATA #IMPLIED
     style CDATA #IMPLIED
     summary CDATA #IMPLIED
+    summaryInside (false|true|1) #IMPLIED
     toggleAlign CDATA #IMPLIED
     toggleOnHover (false|true|1) #IMPLIED
     width CDATA #IMPLIED>
@@ -2669,6 +2737,7 @@
     hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    limit CDATA #IMPLIED
     linkType CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
     onchange CDATA #IMPLIED
@@ -2781,6 +2850,7 @@
     hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    limit CDATA #IMPLIED
     linkType CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
     onclick CDATA #IMPLIED
@@ -2858,6 +2928,31 @@
     span (all|2|3|4) #IMPLIED
     statustext CDATA #IMPLIED
     style CDATA #IMPLIED
+    value CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
+<!ELEMENT et2-menu-item EMPTY>
+
+<!ATTLIST et2-menu-item
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    checked (false|true|1) #IMPLIED
+    class CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    height CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    loading (false|true|1) #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    onclick CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    style CDATA #IMPLIED
+    type (normal|checkbox) #IMPLIED
     value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
@@ -3345,13 +3440,14 @@
 
 <!ATTLIST et2-select-cat
     accesskey CDATA #IMPLIED
+    actions CDATA #IMPLIED
     align CDATA #IMPLIED
-    allowFreeEntries (false|true|1) #IMPLIED
     application CDATA #IMPLIED
     ariaDescription CDATA #IMPLIED
     ariaLabel CDATA #IMPLIED
     autocomplete CDATA #IMPLIED
     autofocus (false|true|1) #IMPLIED
+    autoloading CDATA #IMPLIED
     class CDATA #IMPLIED
     clearable (false|true|1) #IMPLIED
     data CDATA #IMPLIED
@@ -3364,24 +3460,23 @@
     hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    leafOnly CDATA #IMPLIED
     multiple (false|true|1) #IMPLIED
     noLang (false|true|1) #IMPLIED
     onchange CDATA #IMPLIED
     onclick CDATA #IMPLIED
-    onTagClick CDATA #IMPLIED
+    open (false|true|1) #IMPLIED
+    openAtSelection (false|true|1) #IMPLIED
     parentCat CDATA #IMPLIED
     parentId CDATA #IMPLIED
     placeholder CDATA #IMPLIED
-    placement (top|bottom) #IMPLIED
     readonly (false|true|1) #IMPLIED
     required (false|true|1) #IMPLIED
-    rows CDATA #IMPLIED
     select_options CDATA #IMPLIED
     slot CDATA #IMPLIED
     span (all|2|3|4) #IMPLIED
     statustext CDATA #IMPLIED
     style CDATA #IMPLIED
-    tabindex CDATA #IMPLIED
     value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
@@ -4064,6 +4159,38 @@
     value CDATA #IMPLIED
     width CDATA #IMPLIED>
 
+<!ELEMENT et2-switch-icon EMPTY>
+
+<!ATTLIST et2-switch-icon
+    accesskey CDATA #IMPLIED
+    align CDATA #IMPLIED
+    ariaDescription CDATA #IMPLIED
+    ariaLabel CDATA #IMPLIED
+    autocomplete CDATA #IMPLIED
+    autofocus (false|true|1) #IMPLIED
+    class CDATA #IMPLIED
+    data CDATA #IMPLIED
+    disabled (false|true|1) #IMPLIED
+    height CDATA #IMPLIED
+    helpText CDATA #IMPLIED
+    hidden (false|true|1) #IMPLIED
+    id CDATA #IMPLIED
+    label CDATA #IMPLIED
+    noLang (false|true|1) #IMPLIED
+    offIcon CDATA #IMPLIED
+    onchange CDATA #IMPLIED
+    onclick CDATA #IMPLIED
+    onIcon CDATA #IMPLIED
+    parentId CDATA #IMPLIED
+    readonly (false|true|1) #IMPLIED
+    required (false|true|1) #IMPLIED
+    slot CDATA #IMPLIED
+    span (all|2|3|4) #IMPLIED
+    statustext CDATA #IMPLIED
+    style CDATA #IMPLIED
+    tabindex CDATA #IMPLIED
+    width CDATA #IMPLIED>
+
 <!ELEMENT et2-tabbox (tabs,tabpanels)+>
 
 <!ATTLIST et2-tabbox
@@ -4291,6 +4418,7 @@
     imagePath CDATA #IMPLIED
     label CDATA #IMPLIED
     leafIcon CDATA #IMPLIED
+    leafOnly (false|true|1) #IMPLIED
     multiple CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
     onchange CDATA #IMPLIED
@@ -4321,6 +4449,7 @@
     autofocus (false|true|1) #IMPLIED
     autoloading CDATA #IMPLIED
     class CDATA #IMPLIED
+    clearable (false|true|1) #IMPLIED
     data CDATA #IMPLIED
     disabled (false|true|1) #IMPLIED
     emptyLabel CDATA #IMPLIED
@@ -4330,51 +4459,13 @@
     hidden (false|true|1) #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    leafOnly CDATA #IMPLIED
     multiple (false|true|1) #IMPLIED
     noLang (false|true|1) #IMPLIED
     onchange CDATA #IMPLIED
     onclick CDATA #IMPLIED
     open (false|true|1) #IMPLIED
-    parentId CDATA #IMPLIED
-    placeholder CDATA #IMPLIED
-    readonly (false|true|1) #IMPLIED
-    required (false|true|1) #IMPLIED
-    select_options CDATA #IMPLIED
-    slot CDATA #IMPLIED
-    span (all|2|3|4) #IMPLIED
-    statustext CDATA #IMPLIED
-    style CDATA #IMPLIED
-    value CDATA #IMPLIED
-    width CDATA #IMPLIED>
-
-<!ELEMENT et2-tree-cat EMPTY>
-
-<!ATTLIST et2-tree-cat
-    accesskey CDATA #IMPLIED
-    actions CDATA #IMPLIED
-    align CDATA #IMPLIED
-    application CDATA #IMPLIED
-    ariaDescription CDATA #IMPLIED
-    ariaLabel CDATA #IMPLIED
-    autocomplete CDATA #IMPLIED
-    autofocus (false|true|1) #IMPLIED
-    autoloading CDATA #IMPLIED
-    class CDATA #IMPLIED
-    data CDATA #IMPLIED
-    disabled (false|true|1) #IMPLIED
-    emptyLabel CDATA #IMPLIED
-    globalCategories (false|true|1) #IMPLIED
-    height CDATA #IMPLIED
-    help-text CDATA #IMPLIED
-    helpText CDATA #IMPLIED
-    hidden (false|true|1) #IMPLIED
-    id CDATA #IMPLIED
-    label CDATA #IMPLIED
-    multiple (false|true|1) #IMPLIED
-    noLang (false|true|1) #IMPLIED
-    onchange CDATA #IMPLIED
-    onclick CDATA #IMPLIED
-    open (false|true|1) #IMPLIED
+    openAtSelection (false|true|1) #IMPLIED
     parentId CDATA #IMPLIED
     placeholder CDATA #IMPLIED
     readonly (false|true|1) #IMPLIED
