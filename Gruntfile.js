@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 				files: {
 					"pixelegg/css/fancy.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/pixelegg.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/css/mobile.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"vendor/bower-asset/diff2html/dist/diff2html.css",
+						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
 					],
 					"pixelegg/mobile/fw_mobile.min.css": [
 						"node_modules/flatpickr/dist/themes/light.css",
-						"api/js/etemplate/lib/jsdifflib/diffview.css",
+						"node_modules/diff2html/bundles/css/diff2html.min.css",
 						"vendor/bower-asset/cropper/dist/cropper.min.css",
 						"api/templates/default/css/flags.css",
 						"api/templates/default/css/htmlarea.css",
