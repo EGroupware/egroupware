@@ -397,8 +397,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 * Wrapper on this.disabled because legacy had it.
 		 *
 		 * @deprecated Use widget.disabled for visually disabled, widget.hidden for visually hidden.
-		 * 	Widgets that are hidden from the server via attribute or $readonlys will not be created.
-		 * 	Widgets that are disabled from the server will not return a value to the application code.
+		 * <a href="/getting-started/widgets/#disabled-vs-readonly-vs-hidden">Disabled vs Readonly vs Hidden</a>
 		 *
 		 * @param {boolean} value
 		 */
