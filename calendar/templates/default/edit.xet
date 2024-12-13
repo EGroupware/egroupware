@@ -87,10 +87,10 @@
 	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column width="110"/>
-				<column width="208"/>
-				<column width="95"/>
-				<column width="208"/>
+                <column/>
+                <column/>
+                <column/>
+                <column/>
 				<column/>
 			</columns>
 			<rows>
