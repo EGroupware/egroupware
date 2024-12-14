@@ -1,3 +1,15 @@
+egroupware-docker (23.1.20241214) hardy; urgency=low
+
+  * LDAP/AD: bugfixes introduced by last maintenance release
+  * Mail: new microsoft app for oauth authentication for mail
+  * ViDoTeach: display videos from swivl.com
+  * API: removed not working themes, Standard and Fancy are the only ones now plus mobile device support
+  * Import/Export: fix not working CSV import wizard
+  * All apps: many fixes around new Bootstrap icons and the updated UI
+  * Invoices: preview of new EPL app to write and import e-invoices (ZugFerd or XRechnung)
+
+ -- Ralf Becker <rb@egroupware.org>  Sat, 14 Dec 2024 11:17:20 +0100
+
 egroupware-docker (23.1.20241128) hardy; urgency=low
 
   * PHP: security update to 8.3.14
