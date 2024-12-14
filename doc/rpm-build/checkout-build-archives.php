@@ -22,7 +22,7 @@ $config = array(
 	'packaging' => date('Ymd'), // '20160520'
 	'branch'  => 'master',        // checked out branch
 	'tag' => '$version.$packaging',	// name of tag
-    'last-tag' => '', // tag to generate changelog from, default latest tag of given branch
+	'last-tag' => '', // tag to generate changelog from, default latest tag of given branch
 	'checkoutdir' => '~/epl-23.1-checkout',	//realpath(__DIR__.'/../..'),
 	'egw_buildroot' => '/tmp/build_root/epl_23.1_buildroot',
 	'sourcedir' => '~/download/archives/egroupware-23.1',
@@ -35,7 +35,7 @@ $config = array(
 	'extra' => array('$stylitebase/$svnbranch/stylite', '$stylitebase/$svnbranch/esyncpro'), //'$stylitebase/trunk/archive'),//, '$stylitebase/$svnbranch/groups'), //,'svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
 	*/
 	// create an extra archive for given apps
-	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'kanban',
+	'extra' => array('functions' => array('stylite'), 'esyncpro', 'policy', 'webauthn', 'kanban', 'invoices'
 		// these apps are placed in egroupware-epl-contrib archive
 		//'contrib' => array('phpgwapi', 'etemplate', 'jdots', 'phpbrain', 'wiki', 'sitemgr')
 	),
@@ -223,16 +223,16 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 		$output = null;
 		run_cmd($cmd, $output);
 
-        $date_last_tag = new DateTime(preg_replace('/^\d+\.\d+\./', '', $last_tag));
+		$date_last_tag = new DateTime(preg_replace('/^\d+\.\d+\./', '', $last_tag));
 		foreach($output as $line)
 		{
-            if (substr($line, 0, 8) === "Date:   ")
-            {
-                $date_commit = new DateTime(substr($line, 8));
-            }
+			if (substr($line, 0, 8) === "Date:   ")
+			{
+				$date_commit = new DateTime(substr($line, 8));
+			}
 			if (substr($line, 0, 4) == "    " &&
-                $date_commit > $date_last_tag &&    // skip (rebased) commits older than the last tag
-                ($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
+				$date_commit > $date_last_tag &&    // skip (rebased) commits older than the last tag
+				($msg = _match_log_pattern(substr($line, 4), $log_pattern, $prefix)))
 			{
 				$changelog .= $msg."\n";
 			}
@@ -292,10 +292,10 @@ function get_last_git_tag()
 {
 	global $config;
 
-    if (!empty($config['last-tag']))
-    {
-        return $config['last-tag'];
-    }
+	if (!empty($config['last-tag']))
+	{
+		return $config['last-tag'];
+	}
 
 	if (!is_dir($config['checkoutdir']))
 	{
@@ -370,7 +370,7 @@ function do_tag()
 	$cmd = $config['composer'].' update --ignore-platform-reqs --no-dev --prefer-source egroupware/\*';
 	while(run_cmd($cmd, $output, 2))
 	{
-        ++$try;
+		++$try;
 		error_log("$try. retry in $timeout seconds ...");
 		sleep($timeout);
 	}
@@ -463,11 +463,11 @@ function do_upload()
 	if (empty($config['upload_url']))
 	{
 		$response = github_api("/repos/EGroupware/egroupware/releases", [], 'GET');
-        if (empty($response[0]['upload_url']))
-        {
-            throw new Exception("github_api('/repos/EGroupware/egroupware/releases', [], 'GET') responded with ".
-                json_encode($response, JSON_UNESCAPED_SLASHES));
-        }
+		if (empty($response[0]['upload_url']))
+		{
+			throw new Exception("github_api('/repos/EGroupware/egroupware/releases', [], 'GET') responded with ".
+				json_encode($response, JSON_UNESCAPED_SLASHES));
+		}
 		$config['upload_url'] = preg_replace('/{\?[^}]+}$/', '', $response[0]['upload_url']);	// remove {?name,label} template
 	}
 
@@ -635,7 +635,12 @@ function do_editchangelog()
 		if (substr($branch_url, -4) == '.git')
 		{
 			$path = key($modules);
-			$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
+			try {
+				$changelog .= get_changelog_from_git($path, $config['editchangelog'], $last_tag);
+			}
+			catch (\Throwable $t) {
+				// ignore, if we get an error querying the changelog
+			}
 		}
 		else
 		{
@@ -670,7 +675,7 @@ function do_editchangelog()
 	file_put_contents($changelog, update_changelog(file_get_contents($changelog)));
 
 	$api_setup = update_api_setup($config['checkoutdir']);
-    $package_json = update_package_json($config['checkoutdir']);
+	$package_json = update_package_json($config['checkoutdir']);
 
 	if (file_exists($config['checkoutdir'].'/.git'))
 	{
@@ -1001,7 +1006,7 @@ function update_package_json(string $egw_dir)
 	{
 		throw new Exception("Could not update file '$path' with maintenance-version!");
 	}
-    return $path;
+	return $path;
 }
 
 /**
@@ -1181,15 +1186,15 @@ function do_copy()
 	// we need to stash uncommited changes, before copying
 	if (file_exists($config['checkoutdir'].'/.git')) run_cmd("cd $config[checkoutdir]; git stash");
 
-    // verify version in composer.json matches release-tag
+	// verify version in composer.json matches release-tag
 	if (!($json = file_get_contents($path=$config['checkoutdir'].'/composer.json')) || !($json = json_decode($json, true)) || !is_array($json))
 	{
 		throw new Exception("Can NOT read $path to verify version!");
 	}
-    if ($json['version'] !== $config['version'].'.'.$config['packaging'])
-    {
-        throw new Exception("Version in composer.json does not match: '$json[version]' !== '$config[version].$config[packaging] --> aborting!");
-    }
+	if ($json['version'] !== $config['version'].'.'.$config['packaging'])
+	{
+		throw new Exception("Version in composer.json does not match: '$json[version]' !== '$config[version].$config[packaging] --> aborting!");
+	}
 
 	try {
 		$cmd = '/usr/bin/rsync -r --delete --delete-excluded --exclude .svn --exclude .git\* --exclude tests '.$config['checkoutdir'].'/ '.$config['egw_buildroot'].'/'.$config['aliasdir'].'/';
