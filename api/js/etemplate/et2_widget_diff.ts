@@ -196,6 +196,7 @@ export class et2_diff extends et2_valueWidget implements et2_IDetachedDOM
 	 */
 	setDetachedAttributes(_nodes, _values)
 	{
+		if (!_nodes) return;
 		this.div = _nodes[0];
 		if(typeof _values['label'] != 'undefined')
 		{
