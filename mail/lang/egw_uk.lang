@@ -40,6 +40,7 @@ check to save as tracker entry on send	mail	uk	Поставити галочку
 checking admin credentials failed	mail	uk	Не вдалося перевірити облікові дані адміністратора
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	uk	Налаштовані значення будуть автоматично встановлені в діалоговому вікні створення листа для відповідного поля при створенні нового листа.
 contact label	mail	uk	Мітка контакту
+continue	mail	uk	Продовжити
 convert mail to item and attach its attachments to this item (standard)	mail	uk	Конвертувати лист в імейл і прикріпити його вкладення до цього імейлу (стандартно)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	uk	Конвертувати імейл в імейл, прикріпити його вкладення та додати сире повідомлення (.eml) як вкладення
 convert only mail to item (ignore possible attachments)	mail	uk	Конвертувати тільки імейл в елемент (ігнорувати можливі вкладення)
@@ -56,6 +57,7 @@ disable caching of flags	mail	uk	Вимкнути кешування прапо�
 do you really want to toggle flag %1 for all messages in the current view?	mail	uk	Ви дійсно хочете ввімкнути прапорець %1 для ВСІХ повідомлень у поточному поданні?
 do you really want to toggle label %1 for all messages in the current view?	mail	uk	Ви дійсно хочете ввімкнути мітку %1 для ВСІХ повідомлень у поточному поданні?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	uk	Ви хочете, щоб вас запитували про підтвердження, перш ніж прикріплювати вибрані повідомлення до нового листа?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	uk	Ви хочете, щоб я запитував підтвердження перед переміщенням вибраних повідомлень до іншої папки?
 edit account	mail	uk	Редагувати рахунок
 email address	mail	uk	Адреса електронної пошти
 emailaddress	admin	uk	Адреса електронної пошти
@@ -111,6 +113,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	uk	Робота
 junk	mail	uk	Видалення
 junk folder	mail	uk	Тека " Видалення
+keep a copy	mail	uk	Зберегти копію
 keep a copy of the message in your inbox	mail	uk	зберігати копію повідомлення у папці "Вхідні
 kilobytes	mail	uk	кілобайт
 later	mail	uk	Пізніше
@@ -250,6 +253,7 @@ to do	mail	uk	Щоб зробити
 toggled on actions	mail	uk	Увімкнені дії
 trash	mail	uk	Смітник
 trash folder	mail	uk	папка сміття
+unconditional	mail	uk	Завжди
 write	mail	uk	Записати
 you can select what info to be displayed on email tag	mail	uk	Ви можете вибрати, яка інформація буде відображатися в тезі листа.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	uk	Ви можете використовувати $$start$$ для вказаної вище дати початку і $$end$$ для дати завершення.

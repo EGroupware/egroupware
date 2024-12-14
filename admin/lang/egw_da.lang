@@ -487,9 +487,12 @@ use theme	admin	da	Brug tema
 use tls authentication	admin	da	Brug TLS autorisation
 use tls encryption	admin	da	Brug TLS kryptering
 user accounts	admin	da	Bruger kontoer
+user choice	admin	da	Valg af bruger
+user csv export	admin	da	CSV-eksport af brugere
+user csv import	admin	da	CSV-import af bruger
 user data	common	da	Bruger data
 user groups	admin	da	Bruger grupper
-user hidden vom non-admins.	admin	da	Bruger skjult for ikke-admins
+user hidden from non-admins.	admin	da	Bruger skjult for ikke-admins
 user-agent	admin	da	User-Agent
 userdata	admin	da	Brugerdata
 users can define their own emailaccounts	admin	da	Brugere kan selv definere deres egne e-mail kontoer
@@ -503,6 +506,7 @@ view this user	admin	da	Vis denne bruger
 view user account	admin	da	Vis bruger konto
 virtual mail manager	admin	da	Virtuel post håndtering
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
+who would you like to transfer records owned by the deleted user to?	admin	da	Hvem vil du gerne overføre poster, der ejes af den slettede bruger, til?
 xml-rpc	admin	da	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	da	du kan indstille en startværdi, som øges, hver gang der genereres en ny serie
 you have entered an invalid expiration date	admin	da	Du har indtastet en ugyldig udløbsdato!
@@ -512,5 +516,6 @@ you must enter a lastname	admin	da	Du skal indtaste et efternavn.
 you must enter a loginid	admin	da	Du skal indtaste et loginID.
 you must enter an application name.	admin	da	Du skal indtaste et applikations navn.
 you must enter an application title.	admin	da	Du skal indtaste en applikations titel.
+you need to select some users first!	admin	da	Du skal vælge nogle brugere først!
 you will need to remove the subcategories before you can delete this category	admin	da	Du blive nød til at fjerne underkategorierne for du kan slette denne kategori!
 your session could not be verified.	admin	da	Din session kunne ikke verificeres

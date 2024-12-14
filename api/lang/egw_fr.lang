@@ -437,6 +437,7 @@ document '%1' does not exist or is not readable for you!	preferences	fr	Le docum
 document properties	common	fr	Propriétés du document
 document title:	common	fr	Titre du document:
 documentation	common	fr	Documentation
+documents	common	fr	Documents
 doesn't matter	common	fr	Pas d'importance
 domain	common	fr	Domaine
 domain name for mail-address, eg. "%1"	common	fr	Nom du domaine pour les adresses email, p.ex. "%1"
@@ -484,6 +485,7 @@ el salvador	common	fr	SALVADOR
 element role title	common	fr	Titre du rôle
 email	common	fr	Email
 email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
+emails	common	fr	Courriels
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fr	Styles CSS incorporés, p.e. '.rouge { fond: rouge; }' (notez le '.' avant le nom de la classe) ou '@import url(...)' (les noms de classe sont globaux pour la page entière!)
 empty file	common	fr	Fichier vide
 enable javascript onchange submit	common	fr	Activer la soumission sur changement en JavaScript
@@ -692,6 +694,7 @@ if you use "2-factor-authentication", please enter the code here.	common	fr	Si v
 image	common	fr	Image
 image directory relative to document root (use / !), example:	common	fr	Répertoire image relative à la racine des documents (utiliser / !), par exemple :
 image url	common	fr	URL de l'Image
+images	common	fr	Images
 import	common	fr	Importer
 import an etemplate from a xml-file	common	fr	Import an eTemplate from a XML-file
 import table-definitions from existing db-table	common	fr	Importer les définitions de table depuis la table de base de données existante
@@ -1322,6 +1325,7 @@ spain	common	fr	ESPAGNE
 span	common	fr	Envergure
 span, class	common	fr	Envergure, Classe
 special characters	common	fr	caractères spéciaux
+spreadsheets	common	fr	Feuilles de calcul
 sri lanka	common	fr	SRI LANKA
 stack	common	fr	Pile
 start a new search, cancel this link	common	fr	Démarre une nouvelle recherche, annule ce lien
@@ -1480,6 +1484,7 @@ version	common	fr	Version
 vertical alignment of row	common	fr	Alignement vertical de la ligne
 vfs upload directory	common	fr	Dossier d'upload VFS
 video tutorials	common	fr	Tutoriels vidéos
+videos	common	fr	Vidéos
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 view linked %1 entries	common	fr	Voir les %1 entrées liées

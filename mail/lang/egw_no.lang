@@ -42,6 +42,7 @@ compose	mail	no	Ny melding
 compress folder	mail	no	Komprimer mappe
 contact label	mail	no	Kontaktetikett
 contains	mail	no	inneholder
+continue	mail	no	Fortsett
 convert mail to item and attach its attachments to this item (standard)	mail	no	Konverter e-post til element og legg ved vedleggene til dette elementet (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	no	Konverter e-post til element, legg ved vedleggene og legg til råmelding (.eml) som vedlegg
 convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
@@ -57,6 +58,7 @@ display only when no plain text is available	mail	no	Vis bare når ingen normal 
 do you really want to toggle flag %1 for all messages in the current view?	mail	no	Vil du virkelig veksle mellom flagget %1 for ALLE meldinger i gjeldende visning?
 do you really want to toggle label %1 for all messages in the current view?	mail	no	Vil du virkelig veksle mellom etiketten %1 for ALLE meldinger i gjeldende visning?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	no	Vil du bli bedt om bekreftelse før du legger ved valgte meldinger i en ny e-post?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	no	Ønsker du å bli bedt om bekreftelse før du flytter valgte meldinger til en annen mappe?
 does not contain	mail	no	inneholder ikke
 does not match	mail	no	stemmer ikke
 does not match regexp	mail	no	stemmer ikke med regexp
@@ -128,6 +130,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	no	Arbeid
 junk	mail	no	Søppelpost
 junk folder	mail	no	søppelpost mappe
+keep a copy	mail	no	Behold en kopi
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
 kilobytes	mail	no	kilobytes
 later	mail	no	Senere
@@ -251,6 +254,7 @@ toggled on actions	mail	no	Vekslet på handlinger
 trash	mail	no	Papirkurv
 trash folder	mail	no	Søppelmappe
 trust servers seen / unseen info	mail	no	Papirkurv-mappe
+unconditional	mail	no	Alltid
 unflagged	mail	no	Avflagget
 unread	mail	no	Ulest
 vacation notice	mail	no	Ferie melding

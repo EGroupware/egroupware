@@ -87,6 +87,7 @@ connection status	mail	pt	Status da conexão
 contact label	mail	pt	Etiqueta de contacto
 contains	mail	pt	Contém
 contains(*)	mail	pt	Contém (*)
+continue	mail	pt	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	pt	Converter o correio eletrónico num item e anexar os seus anexos a este item (padrão)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt	Converter o correio eletrónico em item, anexar os seus anexos e adicionar a mensagem em bruto (.eml) como anexo
 convert only mail to item (ignore possible attachments)	mail	pt	Converter apenas o correio eletrónico para o item (ignorar possíveis anexos)
@@ -137,6 +138,7 @@ do you really want to remove all rights from this account?	mail	pt	Pretende mesm
 do you really want to toggle flag %1 for all messages in the current view?	mail	pt	Pretende realmente alternar a bandeira %1 para TODAS as mensagens na vista atual?
 do you really want to toggle label %1 for all messages in the current view?	mail	pt	Pretende realmente alternar a etiqueta %1 para TODAS as mensagens na vista atual?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	pt	Pretende que lhe seja pedida uma confirmação antes de anexar as mensagens seleccionadas a uma nova mensagem de correio eletrónico?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt	Pretende que lhe seja pedida uma confirmação antes de mover as mensagens selecionadas para outra pasta?
 does not contain	mail	pt	não contém
 does not exist on imap server.	mail	pt	não existe no servidor IMAP.
 does not match	mail	pt	não coincide
@@ -276,6 +278,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	pt	Trabalho
 junk	mail	pt	Lixo
 junk folder	mail	pt	Pasta de Lixo
+keep a copy	mail	pt	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt	kilobytes
 later	mail	pt	Lais tarde
@@ -551,6 +554,7 @@ trash folder	mail	pt	Pasta Lixo
 trust servers seen / unseen info	mail	pt	Servidores de confiança VISTO / info UNSEEN
 trying to recover from session data	mail	pt	Tentando recuperar de dados da sessão
 unable to fetch vacation!	mail	pt	Não foi possível buscar férias!
+unconditional	mail	pt	Sempre
 undelete	mail	pt	Undelete
 unflagged	mail	pt	Unflagged
 unread	mail	pt	Não lida

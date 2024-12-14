@@ -131,6 +131,7 @@ denmark	common	lt	DANIJA
 description	common	lt	Apibūdinimas
 directory for storing merged documents	preferences	lt	Aplankas sujungtiems dokumentams saugoti
 djibouti	common	lt	DŽIBUTIS
+documents	common	lt	Dokumentai
 don't ask again!	common	lt	Nepaklauskite dar kartą!
 e-mail	common	lt	El. paštas
 ecuador	common	lt	EKVADORAS
@@ -141,6 +142,7 @@ egypt	common	lt	EGIPTAS
 el salvador	common	lt	SALVADORAS
 email	common	lt	El. paštas
 email-address of the user, eg. "%1"	common	lt	Naudotojo el. pašto adresas, pvz., "%1"
+emails	common	lt	Elektroniniai laiškai
 error	common	lt	Klaida
 estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
@@ -184,6 +186,7 @@ html links to any entries linked to the current record, excluding attached files
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
 if you use "2-factor-authentication", please enter the code here.	common	lt	Jei naudojate "2 veiksnių autentifikavimą", čia įveskite kodą.
+images	common	lt	Vaizdai
 include access to any linked files (links tab)	common	lt	Įtraukite prieigą prie bet kokių susietų failų (skirtukas Nuorodos)
 india	common	lt	INDIJA
 indonesia	common	lt	INDONEZIJA
@@ -275,6 +278,7 @@ on *nix systems please type: %1	common	lt	*nix sistemose prašome rašyti: %1
 only private	common	lt	Tik privačius
 open	common	lt	Atviras
 open existing contact	common	lt	Atidaryti esamą kontaktą
+open the online help.	common	lt	Atidarykite internetinę pagalbą
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lt	Prisijungimas prie „OpenIDConnect“ pavyko, bet naudotojas „%1“ NĖRA „EGroupware“ sistemoje, o automatinis naudotojo kūrimas yra išjungtas!
 ownership	common	lt	Nuosavybė
 pakistan	common	lt	PAKISTANAS
@@ -312,9 +316,11 @@ show password	common	lt	Rodyti slaptažodį
 show/hide	common	lt	Rodyti/paslėpti šoninę juostą
 sign up	common	lt	Užsiregistruoti
 site configuration	common	lt	Programos konfigūracija
+spreadsheets	common	lt	Skaičiuoklės
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	common	lt	To disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty
 too many rows selected.<br />select all, or less than %1 rows	common	lt	Too many rows selected.<br>Select all, or less than %1 rows
 total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: %2 Failed: %3 Skipped: %4
+videos	common	lt	Vaizdo įrašai
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lt	Sujungus įrašus į dokumentus, jie bus saugomi čia. Jei aplankas nenurodytas, jie bus saugomi jūsų namų kataloge (%1)
 yemen	common	lt	JEMENAS
 your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.

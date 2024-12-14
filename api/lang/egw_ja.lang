@@ -428,6 +428,7 @@ document '%1' does not exist or is not readable for you!	preferences	ja	Document
 document properties	common	ja	ドキュメント・プロパティ
 document title:	common	ja	ドキュメント・タイトル:
 documentation	common	ja	ドキュメント
+documents	common	ja	ドキュメント
 doesn't matter	common	ja	Doesn't matter
 domain	common	ja	ドメイン
 domain name for mail-address, eg. "%1"	common	ja	メール・アドレスのドメイン名（例 "%1"）
@@ -475,6 +476,7 @@ el salvador	common	ja	エルサルバドル
 element role title	common	ja	Element role title
 email	common	ja	電子メール
 email-address of the user, eg. "%1"	common	ja	ユーザの電子メール・アドレス（例: "%1"）
+emails	common	ja	電子メール
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	ja	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	ja	空のファイル
 enable javascript onchange submit	common	ja	JavaScript onchange サブミットを有効化
@@ -679,6 +681,7 @@ if you use "2-factor-authentication", please enter the code here.	common	ja	2要
 image	common	ja	画像
 image directory relative to document root (use / !), example:	common	ja	Image directory relative to document root (use / !), example:
 image url	common	ja	画像 URL
+images	common	ja	画像
 import	common	ja	インポート
 import an etemplate from a xml-file	common	ja	eTemplate を XML ファイルからインポート
 import table-definitions from existing db-table	common	ja	Import table definitions from existing DB table
@@ -975,6 +978,7 @@ open	common	ja	開く
 open existing contact	common	ja	既存のコンタクトを開く
 open notify window	common	ja	通知ウィンドウを開く
 open popup window	common	ja	ポップアップ・ウィンドウを開く
+open the online help.	common	ja	オンラインヘルプを開く
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ja	OpenIDConnect ログインは成功しましたが、ユーザ '%1' が EGroupware に存在せず、ユーザの自動作成が無効になっています！
 operator	common	ja	Operator
 optional note about the link	common	ja	Optional note for Link
@@ -1283,6 +1287,7 @@ spain	common	ja	スペイン
 span	common	ja	スパン
 span, class	common	ja	スパン, クラス
 special characters	common	ja	特殊文字
+spreadsheets	common	ja	スプレッドシート
 sri lanka	common	ja	スリランカ
 stack	common	ja	Stack
 start a new search, cancel this link	common	ja	新規検索(このリンクをキャンセル）
@@ -1434,6 +1439,7 @@ version	common	ja	バージョン
 vertical alignment of row	common	ja	Vertical alignment of row
 vfs upload directory	common	ja	VFS アップロード・ディレクトリ
 video tutorials	common	ja	ビデオ・チュートリアル
+videos	common	ja	ビデオ
 viet nam	common	ja	ベトナム
 view	common	ja	表示
 view linked %1 entries	common	ja	%1 個のリンク項目を表示

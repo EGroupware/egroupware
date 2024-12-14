@@ -91,11 +91,13 @@ delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
 directory for storing merged documents	preferences	tr	Birleştirilmiş belgeleri saklamak için klasör
 disabled	common	tr	Engellendi
+documents	common	tr	Belgeler
 domestic	common	tr	Ev
 don't ask again!	common	tr	Tekrar sorma!
 done	common	tr	Tamam
 download	common	tr	İndir
 edit	common	tr	Düzenle
+emails	common	tr	E-postalar
 enabled	common	tr	Etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.<br>Örnek: https://egw.domain.com/egroupware yada /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
@@ -127,6 +129,7 @@ how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün 
 how many rows to print	common	tr	Kaç satır yazdırılacağı
 html links to any entries linked to the current record, excluding attached files	common	tr	Ekli dosyalar hariç olmak üzere, geçerli kayda bağlı tüm girişlere HTML bağlantıları
 if you use "2-factor-authentication", please enter the code here.	common	tr	2 Faktörlü Kimlik Doğrulama kullanıyorsanız, lütfen kodu buraya girin.
+images	common	tr	Görüntüler
 include access to any linked files (links tab)	common	tr	Bağlantılı dosyalara erişimi dahil edin (Bağlantılar sekmesi)
 infolog types to sync	common	tr	Senkronize edilecek InfoLog türleri
 insert placeholder	common	tr	Yer tutucu ekle
@@ -168,6 +171,7 @@ no filters	common	tr	Filtre yok
 ok	common	tr	Tamam
 open	common	tr	Açık
 open existing contact	common	tr	Mevcut kontağı aç
+open the online help.	common	tr	Çevrimiçi yardımı açın
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	tr	OpenIDConnect girişi başarılı, ancak '%1' kullanıcısı EGroupware'de mevcut DEĞİL VE otomatik kullanıcı oluşturma devre dışı!
 or	common	tr	ya da
 original	common	tr	Orjinal
@@ -207,6 +211,7 @@ select all	common	tr	Tümünü seçin
 show password	common	tr	Şifreyi göster
 sign up	common	tr	Kaydolun
 site configuration	common	tr	Konfigürasyon
+spreadsheets	common	tr	Elektronik Tablolar
 submit	common	tr	Gönder
 title	common	tr	Baþlýk
 today	common	tr	Bugün
@@ -217,6 +222,7 @@ user accounts	common	tr	Kullanýcý hesaplarý
 user groups	common	tr	Kullanýcý gruplarý
 users choice	common	tr	Kullanýcý Seçimleri
 version	common	tr	Sürüm
+videos	common	tr	Videolar
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	tr	Girdileri belgelerle birleştirdiğinizde, burada saklanacaktır. Herhangi bir klasör belirtilmemişse, bunlar ev dizininizde (%1) saklanacaktır
 you have not entered a title	common	tr	Bir baþlýk girmediniz.
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz.

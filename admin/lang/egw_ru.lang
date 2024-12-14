@@ -729,12 +729,13 @@ use tls encryption	admin	ru	Использовать шифрование TLS
 use users email-address (as seen in useraccount)	admin	ru	Используйте адреса эл.почты пользователя, как указано в настройках аккаунта пользователя.
 user accounts	admin	ru	Учётные записи пользователей
 user can edit forwarding address	admin	ru	Ползователь может редактировать адрес пересылки.
+user choice	admin	ru	Выбор пользователя
 user csv export	admin	ru	Экспорт пользователей в CSV
 user csv import	admin	ru	Импорт пользователей из CSV
 user data	common	ru	Данные пользователя
 user for smtp-authentication (leave it empty if no auth required)	admin	ru	Пользователь для SMTP-идентификации (оставьте пустым, если идентификация не нужна)
 user groups	admin	ru	Группы пользователя
-user hidden vom non-admins.	admin	ru	Пользователь скрыт от неадминистраторов
+user hidden from non-admins.	admin	ru	Пользователь скрыт для неадминистраторов
 user-agent	admin	ru	User-Agent
 userdata	admin	ru	Данные пользователя
 userid@domain eg. u1234@domain	admin	ru	UserId@domain например u1234@domain
@@ -743,8 +744,6 @@ username/password defined by admin	admin	ru	Имя пользователя/Па
 username@domainname (virtual mail manager)	admin	ru	username@domainname (Менеджер Виртуальной почты)
 users can define their own emailaccounts	admin	ru	Пользователь может назначать свои собственные учетные записи эл. почты.
 users can define their own identities	admin	ru	Пользователи могут устанавливать свои собственные данные идентификации
-users can define their own signatures	admin	ru	Пользователи могут устанавливать свои собственные подписи
-users can utilize these stationery templates	admin	ru	Пользователи могут использовать эти бланки шаблонов
 users choice	admin	ru	Выбор пользователя
 vacation messages with start- and end-date require an admin account to be set	admin	ru	Сообщения автоответчика с датами начала и окончания требуют установленной учетной записи администратора!
 value for column %1 is not unique!	admin	ru	Значение колонки %1 не уникально!
@@ -761,13 +760,12 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	ru	Информация запрашивается только для изучения распространённости EGroupware в мире
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	ru	Мы не храним никаких персональных данных
 who would you like to transfer all records owned by the deleted user to?	admin	ru	Кому передать ВСЕ записи, владельцем которых был удалённый пользователь?
+who would you like to transfer records owned by the deleted user to?	admin	ru	Кому вы хотите передать записи, принадлежащие удаленному пользователю?
 wrong account type: %1 is no %2 !!!	admin	ru	Неверный тип учётной записи: %1 НЕ %2!
 wrong admin-account or -password !!!	admin	ru	Неверная учетная запись администратора или пароль!
 xml-rpc	admin	ru	XML-RPC
 yes, but no scayt	admin	ru	Да, но не проверять правописание в режиме on-line
 yes, use browser based spell checking engine	admin	ru	Да, но использовать проверку правописания браузером
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	ru	Да, использовать учётные данные, указанные ниже только для предупреждений и напоминаний, в остальных случаях использовать учётные данные текущего пользователя.
-yes, use credentials of current user or if given credentials below	admin	ru	Да, использовать учётные данные текущего пользователя, или если указаны учётные данные ниже.
 yes, use webspellchecker	admin	ru	Да, использовать интерактивный WebSpellChecker
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	ru	Хэш можно сменить, если установлен случайный пароль или используются текстовые (plaintext) пароли!
 you have entered an invalid expiration date	admin	ru	Вы ввели неправильную дату окончания

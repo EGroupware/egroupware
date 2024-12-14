@@ -277,6 +277,7 @@ do you also want to delete all subcategories ?	common	el	Θέλετε να δι�
 document properties	common	el	Ιδιότητες εγγράφου
 document title:	common	el	Τίτλος εγγράφου:
 documentation	common	el	Τεκμηρίωση
+documents	common	el	Έγγραφα
 doesn't matter	common	el	δεν έχει σημασία
 domain	common	el	Τομέας
 domain name for mail-address, eg. "%1"	common	el	Όνομα Τομέα για διεύθυνση ηλεκτρονικού ταχυδρομείου π.χ. "%1"
@@ -307,6 +308,7 @@ egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
 email	common	el	Ε-Μail
 email-address of the user, eg. "%1"	common	el	E-mail του χρήστη π.χ. "%1"
+emails	common	el	Emails
 enabled	common	el	Ενεργοποιημένο
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	el	Ενεργοποιεί την καταγραφή της κίνησης CalDAV/CardDAV για τη διάγνωση προβλημάτων με συσκευές.
 end date	common	el	Ημερομηνία παράδοσης
@@ -430,6 +432,7 @@ if there are some images in the background folder you can choose the one you wou
 if you use "2-factor-authentication", please enter the code here.	common	el	Εάν χρησιμοποιείτε "2-Factor-Authentication", παρακαλούμε εισάγετε τον κωδικό εδώ.
 image directory relative to document root (use / !), example:	common	el	Κατάλογος εικόνας σχετικός με τη ρίζα εγγράφου (χρήση /!), π.χ.:
 image url	common	el	Εικόνα URL
+images	common	el	Εικόνες
 import	common	el	Εισαγωγή
 import xml	common	el	Εισαγωγή XML
 include access to any linked files (links tab)	common	el	Συμπεριλάβετε την πρόσβαση σε όλα τα συνδεδεμένα αρχεία (καρτέλα Σύνδεσμοι)
@@ -845,6 +848,7 @@ sorry, your login has expired	login	el	Η σύνδεσή σας έχει λήξ�
 south africa	common	el	ΝΟΤΙΑ ΑΦΡΙΚΗ
 south georgia and the south sandwich islands	common	el	ΝΟΤΙΑ ΓΕΩΡΓΙΑ & ΝΟΤΙΑ ΝΗΣΙΑ ΣΑΝΤΟΥΪΤΣ
 spain	common	el	ΙΣΠΑΝΙΑ
+spreadsheets	common	el	Υπολογιστικά φύλλα
 sri lanka	common	el	ΣΡΙ ΛΑΝΚΑ
 start a new search, cancel this link	common	el	έναρξη νέας αναζήτησης, ακύρωση αυτού του συνδέσμου
 start date	common	el	Hμερομηνία έναρξης
@@ -945,6 +949,7 @@ uzbekistan	common	el	ΟΥΖΜΠΕΚΙΣΤΑΝ
 vanuatu	common	el	ΒΑΝΟΥΑΤΟΥ
 venezuela	common	el	ΒΕΝΕΖΟΥΕΛΑ
 version	common	el	Έκδοση
+videos	common	el	Βίντεο
 viet nam	common	el	ΒΙΕΤΝΑΜ
 view	common	el	Προβολή
 view this linked entry in its application	common	el	εμφάνιση αυτής της συνδεδεμένης καταχώρησης στην αίτησή της

@@ -31,6 +31,7 @@ check to save as infolog on send	mail	ko	전송 후 인포로그로 만들려면
 check to save as tracker entry on send	mail	ko	전송 후 티켓으로 만들려면 확인 버튼 선택
 checking admin credentials failed	mail	ko	관리자 자격 증명 확인에 실패했습니다.
 contact label	mail	ko	연락처 레이블
+continue	mail	ko	계속
 convert mail to item and attach its attachments to this item (standard)	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 이 항목에 첨부하기(표준)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ko	이메일을 항목으로 변환하고 첨부 파일을 첨부하며 원시 메시지(.eml)를 첨부 파일로 추가합니다.
 convert only mail to item (ignore possible attachments)	mail	ko	이메일만 항목으로 변환(가능한 첨부 파일 무시)
@@ -39,6 +40,7 @@ deleted	mail	ko	삭제됨
 do you really want to toggle flag %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 플래그를 전환하시겠습니까?
 do you really want to toggle label %1 for all messages in the current view?	mail	ko	현재 보기의 모든 메시지에 대해 %1 레이블을 전환하시겠습니까?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	ko	선택한 메시지를 새 전자 메일에 첨부하기 전에 확인 메시지를 표시하시겠습니까?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	ko	선택한 메시지를 다른 폴더로 옮기기 전에 확인 메시지를 표시하시겠습니까?
 edit account	mail	ko	계정 편집
 email address	mail	ko	이메일 주소
 emailaddress	admin	ko	이메일 주소
@@ -92,6 +94,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	ko	작업
 junk	mail	ko	정크
 junk folder	mail	ko	정크 폴더
+keep a copy	mail	ko	사본 보관
 keep a copy of the message in your inbox	mail	ko	받은 편지함에 메시지 사본을 보관합니다
 kilobytes	mail	ko	킬로바이트
 later	mail	ko	나중에
@@ -200,6 +203,7 @@ to do	mail	ko	할 일
 toggled on actions	mail	ko	동작 토글
 trash	mail	ko	휴지통
 trash folder	mail	ko	휴지통 폴더
+unconditional	mail	ko	항상
 write	mail	ko	쓰기
 you can select what info to be displayed on email tag	mail	ko	이메일 태그에 표시할 정보를 선택할 수 있습니다.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	ko	위의 시작 날짜는 $$start$$로, 종료 날짜는 $$end$$로 사용할 수 있습니다.

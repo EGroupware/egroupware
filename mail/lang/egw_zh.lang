@@ -54,6 +54,7 @@ condition	mail	zh	条件
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	zh	在撰写新邮件时，配置的值将在撰写对话框中自动设置，用于尊重的领域。
 contact label	mail	zh	联系标签
 contains	mail	zh	包含
+continue	mail	zh	继续
 convert mail to item and attach its attachments to this item (standard)	mail	zh	将电子邮件转换为项目并将其附件附加到此项目（标准）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	zh	将电子邮件转换为项目，附加其附件，并将原始邮件（.eml）添加为附件
 convert only mail to item (ignore possible attachments)	mail	zh	仅将电子邮件转换为项目（忽略可能的附件）
@@ -76,6 +77,7 @@ displaying html messages is disabled	mail	zh	显示HTML邮件被禁用
 do you really want to toggle flag %1 for all messages in the current view?	mail	zh	您真的想在当前视图中为所有邮件切换标记 %1 吗？
 do you really want to toggle label %1 for all messages in the current view?	mail	zh	您真的想在当前视图中为所有邮件切换标签 %1 吗？
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	zh	您是否希望在将选定邮件附加到新邮件之前要求确认？
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	zh	在将选定的邮件移动到另一个文件夹之前，您是否希望要求确认？
 does not contain	mail	zh	不包含
 does not match	mail	zh	不符合
 does not match regexp	mail	zh	不符合条件
@@ -151,6 +153,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	zh	工作
 junk	mail	zh	垃圾邮件
 junk folder	mail	zh	垃圾邮件文件夹
+keep a copy	mail	zh	保留副本
 keep a copy of the message in your inbox	mail	zh	在收件箱保留一个邮件副本
 kilobytes	mail	zh	kb
 later	mail	zh	晚一点
@@ -314,6 +317,7 @@ to do	mail	zh	操作
 toggled on actions	mail	zh	切换操作
 trash	mail	zh	回收
 trash folder	mail	zh	回收站
+unconditional	mail	zh	总是
 unflagged	mail	zh	已清除标记
 unread	mail	zh	未读
 vacation notice	mail	zh	假期通知

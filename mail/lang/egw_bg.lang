@@ -113,6 +113,7 @@ connection status	mail	bg	Статус на връзката
 contact label	mail	bg	Етикет за контакт
 contains	mail	bg	съдържа
 contains(*)	mail	bg	Съдържа(*)
+continue	mail	bg	Продължи
 convert mail to item and attach its attachments to this item (standard)	mail	bg	конвертирайте Поща/Mail в елемент и прикачете своите прикачени файлове към този елемент (стандартно)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	bg	конвертирайте Поща/Mail в елемент, прикачете неговите прикачени файлове и добавете необработено съобщение (message/rfc822 (.eml)) като прикачен файл
 convert only mail to item (ignore possible attachments)	mail	bg	конвертиране само Поща/Mail в елемент (игнорирайте възможни прикачени файлове)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	bg	Работа
 junk	mail	bg	Нежелани
 junk folder	mail	bg	Папка с нежелани файлове
+keep a copy	mail	bg	Запазване на копие
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
 later	mail	bg	По-късно
@@ -508,6 +510,7 @@ to do	mail	bg	За да направите
 toggled on actions	mail	bg	Превключване на действията
 trash	mail	bg	Кошче
 trash folder	mail	bg	Папка за отпадъци
+unconditional	mail	bg	Винаги
 unflagged	mail	bg	немаркирано
 unread	mail	bg	Непрочетено
 vacation notice	mail	bg	ваканционна бележка

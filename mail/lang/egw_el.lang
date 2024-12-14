@@ -112,6 +112,7 @@ connection status	mail	el	Κατάσταση σύνδεσης
 contact label	mail	el	Ετικέτα επικοινωνίας
 contains	mail	el	περιέχει
 contains(*)	mail	el	Περιέχει(*)
+continue	mail	el	Συνέχεια
 convert mail to item and attach its attachments to this item (standard)	mail	el	Μετατροπή του μηνύματος ηλεκτρονικού ταχυδρομείου σε στοιχείο και επισύναψη των συνημμένων του σε αυτό το στοιχείο (στάνταρ)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	el	Μετατροπή email σε στοιχείο, επισύναψη των συνημμένων του και προσθήκη ακατέργαστου μηνύματος (.eml) ως συνημμένο
 convert only mail to item (ignore possible attachments)	mail	el	Μετατροπή μόνο του email σε στοιχείο (αγνοήστε τα πιθανά συνημμένα)
@@ -312,6 +313,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	el	Εργασία
 junk	mail	el	Junk
 junk folder	mail	el	Φάκελος Junk
+keep a copy	mail	el	Διατήρηση αντιγράφου
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
 kilobytes	mail	el	kilobytes
 later	mail	el	Αργότερα
@@ -594,6 +596,7 @@ to do	mail	el	Για να κάνετε
 toggled on actions	mail	el	Εναλλαγή σε ενέργειες
 trash	mail	el	Κάδος αχρήστων
 trash folder	mail	el	Φάκελος κάδου αχρήστων
+unconditional	mail	el	Πάντα
 undelete	mail	el	Επαναφορά
 unflagged	mail	el	Αφαιρέθηκε η σήμανση
 unread	mail	el	μη διαβασμένο

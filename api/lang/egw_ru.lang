@@ -411,6 +411,7 @@ document '%1' does not exist or is not readable for you!	preferences	ru	Доку
 document properties	common	ru	Свойства документа
 document title:	common	ru	Заголовок документа:
 documentation	common	ru	Документация
+documents	common	ru	Документы
 doesn't matter	common	ru	не важно
 domain	common	ru	Домен
 domain name for mail-address, eg. "%1"	common	ru	Доменное имя для почтового адреса, напр. "%1"
@@ -453,6 +454,7 @@ el salvador	common	ru	Сальвадор
 element role title	common	ru	Название роли элемента
 email	common	ru	Эл.почта
 email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, напр. "%1"
+emails	common	ru	Электронные письма
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	ru	встроенные стили css, yапр. '.red { background: red; }' (отметьте знак '.' gеред именем класса) или '@import url(...)' (имя класса глобально для всей страницы!)
 empty file	common	ru	Пустой файл
 enable javascript onchange submit	common	ru	разрешить подчинение JavaScript onchange
@@ -641,6 +643,7 @@ if you use "2-factor-authentication", please enter the code here.	common	ru	Ес
 image	common	ru	Картинка
 image directory relative to document root (use / !), example:	common	ru	Папка изображений относительно корня документов (используйте / !), пример:
 image url	common	ru	Ссылка на изображение
+images	common	ru	Изображения
 import	common	ru	Импортировать
 import an etemplate from a xml-file	common	ru	импорт е-Шаблона из xml-файла
 import table-definitions from existing db-table	common	ru	Импорт определений таблицы из существующей таблицы БД
@@ -1197,6 +1200,7 @@ spacing	common	ru	Интервал
 spain	common	ru	Испания
 span	common	ru	Span
 span, class	common	ru	Span, Class
+spreadsheets	common	ru	Электронные таблицы
 sri lanka	common	ru	Шри-Ланка
 stack	common	ru	Стек
 start a new search, cancel this link	common	ru	Запуск нового поиска, отказ от этой ссылки
@@ -1329,6 +1333,7 @@ venezuela	common	ru	Венесуэлла
 version	common	ru	Версия
 vertical alignment of row	common	ru	вертикальное выравнивание строки
 vfs upload directory	common	ru	VFS каталог выгрузки
+videos	common	ru	Видео
 viet nam	common	ru	Вьетнам
 view	common	ru	Просмотреть(вид)
 view this etemplate	common	ru	посмотреть этот е-Шаблон

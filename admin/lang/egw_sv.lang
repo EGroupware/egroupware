@@ -527,10 +527,13 @@ use theme	admin	sv	Använd tema
 use tls authentication	admin	sv	Använd TLS autentisering
 use tls encryption	admin	sv	Använd TLS kryptering
 user accounts	admin	sv	Användarkonton
+user choice	admin	sv	Выбор пользователя
+user csv export	admin	sv	Экспорт CSV данных пользователя
+user csv import	admin	sv	Импорт CSV пользователя
 user data	common	sv	Användardata
 user for smtp-authentication (leave it empty if no auth required)	admin	sv	Användare för SMTP autentisering (lämna tomt om autentisering ej krävs)
 user groups	admin	sv	Användargrupper
-user hidden vom non-admins.	admin	sv	Användaren är dold för andra än administratörer
+user hidden from non-admins.	admin	sv	Пользователь скрыт для неадминистраторов
 user-agent	admin	sv	User-Agent
 userdata	admin	sv	Användaradata
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton?
@@ -544,6 +547,7 @@ view this user	admin	sv	Visa användaren
 view user account	admin	sv	Visa användarkontot
 virtual mail manager	admin	sv	Virtuell E-post administration
 who would you like to transfer all records owned by the deleted user to?	admin	sv	Till vem vill du föra över SAMTLIGA poster som ägs av den raderade användaren?
+who would you like to transfer records owned by the deleted user to?	admin	sv	Кому вы хотите передать записи, принадлежащие удаленному пользователю?
 xml-rpc	admin	sv	XML-RPC
 you have entered an invalid expiration date	admin	sv	Du har angivit ett ogiltigt förfallodatum
 you have to enter a name, to create a new field!!!	admin	sv	Du måste ange ett namn för att skapa nytt fält!
@@ -554,5 +558,6 @@ you must enter a lastname	admin	sv	Du måste ange ett efternamn
 you must enter a loginid	admin	sv	Du måste ange ett inloggnings ID
 you must enter an application name.	admin	sv	Du måste ange ett namn för applikationen
 you must enter an application title.	admin	sv	Du måste ange en titel för applikationen
+you need to select some users first!	admin	sv	Сначала вам нужно выбрать некоторых пользователей!
 you will need to remove the subcategories before you can delete this category	admin	sv	Du måste ta bort underkategorierna innan du kan ta bort denna kategori
 your session could not be verified.	admin	sv	Din session kunde inte verifieras

@@ -113,6 +113,7 @@ connection status	mail	sl	Stanje povezave
 contact label	mail	sl	Oznaka za stike
 contains	mail	sl	Vsebuje
 contains(*)	mail	sl	Vsebuje (*)
+continue	mail	sl	Nadaljuj
 convert mail to item and attach its attachments to this item (standard)	mail	sl	Pretvorite pošto v element in priložite njene priloge temu elementu (standardni)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sl	Pretvorite Mail v postavko, priložite njene priloge in dodajte surovo sporočilo (.eml) kot prilogo
 convert only mail to item (ignore possible attachments)	mail	sl	Pretvorite samo pošto v postavko (prezrite morebitne priloge)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	sl	Delo
 junk	mail	sl	Smeti
 junk folder	mail	sl	Neželena mapa
+keep a copy	mail	sl	Ohrani kopijo
 keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
 kilobytes	mail	sl	Kilobajtov
 later	mail	sl	Pozneje
@@ -648,6 +650,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	sl	Poskus obnovitve iz podatkov o seji
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sl	Izklopite vodoravno črto med podpisom in sestavljenim sporočilom (to ni v skladu z RFC).<br>Če uporabljate predloge, se ta možnost uporablja samo za besedilni del sporočila.
 unable to fetch vacation!	mail	sl	Ni mogoče pridobiti počitnic!
+unconditional	mail	sl	Vedno
 undelete	mail	sl	Obnovi
 unflagged	mail	sl	Brez zastavice
 unread	mail	sl	Neprebrano

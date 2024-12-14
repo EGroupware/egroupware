@@ -113,6 +113,7 @@ connection status	mail	sk	Stav pripojenia
 contact label	mail	sk	Štítok kontaktu
 contains	mail	sk	obsahuje
 contains(*)	mail	sk	Obsahuje(*)
+continue	mail	sk	Pokračovať
 convert mail to item and attach its attachments to this item (standard)	mail	sk	Konvertovať e-mail na položku, vrátane jeho príloh (štandard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sk	Konvertovať e-mail na položku, vrátane jeho príloh, a pripojiť aj zdrojový kód správy (.eml)
 convert only mail to item (ignore possible attachments)	mail	sk	Konvertovať iba e-mail na položku (ignorovať prípadné prílohy)
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	sk	Práca
 junk	mail	sk	Spam
 junk folder	mail	sk	Priečinok Spam
+keep a copy	mail	sk	Ponechať si kópiu
 keep a copy of the message in your inbox	mail	sk	Ponechať kópiu správy v priečinku Doručenej pošty
 kilobytes	mail	sk	kilobajtov
 later	mail	sk	Neskôr
@@ -648,6 +650,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	sk	Pokušam sa obnoviť z údajov relácie
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	sk	Vypnúť vodorovnú čiaru medzi podpisom a napísanou správou (toto nie je v súlade s RFC).<br>Ak používate šablóny, táto možnosť sa uplatní len na textovú časť správy.
 unable to fetch vacation!	mail	sk	Nepodarilo sa zistiť údaje o neprítomnosti!
+unconditional	mail	sk	Vždy
 undelete	mail	sk	Obnoviť odstránené
 unflagged	mail	sk	Neoznačkovaná
 unread	mail	sk	neprečítané

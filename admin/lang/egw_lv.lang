@@ -468,10 +468,13 @@ use theme	admin	lv	Lieto tēmu
 use tls authentication	admin	lv	Lieto TLS autentifikāciju
 use tls encryption	admin	lv	Lieto TLS šifrēšanu
 user accounts	admin	lv	Lietotāja konti
+user choice	admin	lv	Lietotāja izvēle
+user csv export	admin	lv	Lietotāja CSV eksports
+user csv import	admin	lv	Lietotāja CSV imports
 user data	common	lv	Lietotāja Dati
 user for smtp-authentication (leave it empty if no auth required)	admin	lv	Lietotājs SMTP- autentifikācijai (atstāt tukšu, ja nepieprasa autentifikāciju)
 user groups	admin	lv	Lietotāju grupas
-user hidden vom non-admins.	admin	lv	Lietotājs, kas nav administrators, ir paslēpts
+user hidden from non-admins.	admin	lv	Lietotājs, kas nav administrators, ir paslēpts
 user-agent	admin	lv	User-Agent
 userdata	admin	lv	Lietotāja dati
 users can define their own emailaccounts	admin	lv	LIetotāji  paši var definēt savus e-pasta kontus
@@ -485,6 +488,7 @@ view this user	admin	lv	Parādīt šo lietotāju
 view user account	admin	lv	Parādīt lietotāja kontu
 virtual mail manager	admin	lv	VIrtuālais MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	lv	Kam tu vēlies pārsūtīt izdzēstā lietotāja AAL ierakstus?
+who would you like to transfer records owned by the deleted user to?	admin	lv	Kam vēlaties nodot ierakstus, kas pieder dzēstajam lietotājam?
 xml-rpc	admin	lv	XML-RPC
 you have entered an invalid expiration date	admin	lv	Tu esi ievadījis nederīgu izbeigšanās (expiration) datumu
 you must add at least 1 permission or group to this account	admin	lv	Tev jāpievieno vismaz 1 atļauja vai grupa šim kontam
@@ -493,6 +497,7 @@ you must enter a lastname	admin	lv	Jums jāievada uzvārds
 you must enter a loginid	admin	lv	Jums jāievada pietekuma ID
 you must enter an application name.	admin	lv	Jums jāievada aplikācijas nosaukums
 you must enter an application title.	admin	lv	Jums jāievada aplikācijas virsraksts
+you need to select some users first!	admin	lv	Vispirms ir jāizvēlas daži lietotāji!
 you will need to remove the subcategories before you can delete this category	admin	lv	Tev vajadzēs izdzēst apakšgrpu pirms tu varēsi izdzēst šo kategoriju!
 your name	admin	lv	Tavs vārds
 your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

@@ -55,6 +55,7 @@ condition	mail	hu	Feltétel
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
 contact label	mail	hu	Kapcsolat címke
 contains	mail	hu	tartalmaz
+continue	mail	hu	Folytassa
 convert mail to item and attach its attachments to this item (standard)	mail	hu	E-mail elemmé alakítása és a mellékletek csatolása ehhez az elemhez (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	hu	E-mail átalakítása elemmé, csatolmányainak csatolása és nyers üzenet (.eml) csatolmányként történő hozzáadása
 convert only mail to item (ignore possible attachments)	mail	hu	Csak az e-mailt alakítja át elemmé (figyelmen kívül hagyva az esetleges mellékleteket)
@@ -172,6 +173,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	hu	Munka
 junk	mail	hu	Szemét
 junk folder	mail	hu	Szemét mappa
+keep a copy	mail	hu	Megtartani egy másolatot
 keep a copy of the message in your inbox	mail	hu	Másolat megőrzése a Bejövő postafiókban
 kilobytes	mail	hu	kilobájt
 later	mail	hu	Később
@@ -352,6 +354,7 @@ to do	mail	hu	Tenni
 toggled on actions	mail	hu	Bekapcsolt műveletek
 trash	mail	hu	Szemét
 trash folder	mail	hu	Szemét mappa
+unconditional	mail	hu	Mindig
 unflagged	mail	hu	Jelöletlen
 unread	mail	hu	Olvasatlan
 vacation notice	mail	hu	Szabadság értesítés

@@ -166,7 +166,13 @@ translation	admin	bg	Превод
 two weeks	admin	bg	две седмици
 updated	admin	bg	Актуализиран
 use the following options:\nnovfsselect=1\nmime=application/pdf or /^image\//i\naccept=pdf,docx\nmax_upload_size=2m	admin	bg	Използвайте следните опции:\nnoVfsSelect=1\nmime=application/pdf или /^image\//i\naccept=pdf,docx\nmax_upload_size=2M
+user choice	admin	bg	Избор на потребител
+user csv export	admin	bg	Експортиране на потребители в CSV
+user csv import	admin	bg	Импорт на CSV от потребителя
+user hidden from non-admins.	admin	bg	Потребителят е скрит за неадминистратори
 user-agent	admin	bg	User-Agent
 using fallback via regular json requests	admin	bg	Използване на резервен вариант чрез обикновени JSON заявки
 using native swoole push	admin	bg	Използване на native Swoole Push
+who would you like to transfer records owned by the deleted user to?	admin	bg	На кого искате да прехвърлите записите, притежавани от изтрития потребител?
 you can set an initial value, which gets incremented every time a new serial get generated	admin	bg	можете да зададете първоначална стойност, която се увеличава всеки път, когато се генерира нов сериен файл
+you need to select some users first!	admin	bg	Първо трябва да изберете някои потребители!

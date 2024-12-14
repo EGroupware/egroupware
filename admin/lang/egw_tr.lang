@@ -416,10 +416,13 @@ use cookies to pass sessionid	admin	tr	Oturum id'sini taşımak için çerez kul
 use pure html compliant code (not fully working yet)	admin	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalışmamaktadır)
 use theme	admin	tr	Kullanılacak şablon
 user accounts	admin	tr	Kullanıcı hesapları
+user choice	admin	tr	Kullanıcı seçimi
+user csv export	admin	tr	Kullanıcı CSV dışa aktarımı
+user csv import	admin	tr	Kullanıcı CSV içe aktarma
 user data	common	tr	Kullanıcı verileri
 user for smtp-authentication (leave it empty if no auth required)	admin	tr	SMTP doğrulaması için kullanılacak kullanıcı (Doğrulama gerekmiyorsa boş bırakınız)
 user groups	admin	tr	Kullanıcı grupları
-user hidden vom non-admins.	admin	tr	Kullanıcı yönetici olmayanlardan gizlendi
+user hidden from non-admins.	admin	tr	Kullanıcı yönetici olmayanlar için gizli
 user-agent	admin	tr	User-Agent
 userdata	admin	tr	Kullanıcı verileri
 users choice	admin	tr	Kullanıcı Seçimleri
@@ -431,6 +434,7 @@ view sessions	admin	tr	Oturumları görüntüle
 view this user	admin	tr	Bu kullanıcıyı görüntüle
 view user account	admin	tr	Kullanıcı hesabını görüntüle
 who would you like to transfer all records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime taşımak istesiniz?
+who would you like to transfer records owned by the deleted user to?	admin	tr	Silinen kullanıcıya ait kayıtları kime aktarmak istersiniz?
 xml-rpc	admin	tr	XML-RPC
 you have entered an invalid expiration date	admin	tr	Geçersiz bir zaman aşım tarihi girdiniz
 you must add at least 1 permission or group to this account	admin	tr	Bu hesaba en az 1 izin ya da grup tanımlaması yapmalısınız
@@ -439,4 +443,5 @@ you must enter a lastname	admin	tr	Bir soyadı girmelisiniz
 you must enter a loginid	admin	tr	Bir kullanıcı adı girmelisiniz
 you must enter an application name.	admin	tr	Bir uygulama adı girmelisiniz
 you must enter an application title.	admin	tr	Bir uygulama başlığı girmelisiniz
+you need to select some users first!	admin	tr	Önce bazı kullanıcıları seçmeniz gerekiyor!
 you will need to remove the subcategories before you can delete this category	admin	tr	Bir kategoriyi silmeden önce o kategoriye ait tüm alt kategorileri kaldırmalısınız !

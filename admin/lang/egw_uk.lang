@@ -388,9 +388,12 @@ use default	admin	uk	По замовченню
 use pure html compliant code (not fully working yet)	admin	uk	Використовувати чистий HTML код (ще не повністю працює)
 use theme	admin	uk	Використовувати тему
 user accounts	admin	uk	Рахунки користувачів
+user choice	admin	uk	Вибір користувача
+user csv export	admin	uk	Експорт CSV користувача
+user csv import	admin	uk	Імпорт CSV користувача
 user data	common	uk	Дані користувача
 user groups	admin	uk	Групи користувачів
-user hidden vom non-admins.	admin	uk	Користувач, прихований від не-адміністраторів
+user hidden from non-admins.	admin	uk	Користувач прихований для неадміністраторів
 user-agent	admin	uk	User-Agent
 userdata	admin	uk	Дані користувача
 users choice	admin	uk	Вибір користувача
@@ -402,6 +405,7 @@ view sessions	admin	uk	Перегляд сесій
 view this user	admin	uk	переглянути цього користувача
 view user account	admin	uk	Перегляд рахунку користувача
 who would you like to transfer all records owned by the deleted user to?	admin	uk	Кому передати ВСІ записи користувача, що видаляється ?
+who would you like to transfer records owned by the deleted user to?	admin	uk	Кому ви хочете передати записи, що належать видаленому користувачеві?
 xml-rpc	admin	uk	XML-RPC
 you have entered an invalid expiration date	admin	uk	Ви ввели невірну дату припинення
 you must add at least 1 permission or group to this account	admin	uk	Необхідно надати рахунку хоча б один дозвіл чи групу.
@@ -410,5 +414,6 @@ you must enter a lastname	admin	uk	Необхідно ввести прізви�
 you must enter a loginid	admin	uk	Необхідно ввести ідентифікатор входу
 you must enter an application name.	admin	uk	Необхідно ввести назву приложення
 you must enter an application title.	admin	uk	Необхідно ввести найменування приложення
+you need to select some users first!	admin	uk	Спочатку потрібно вибрати кількох користувачів!
 you will need to remove the subcategories before you can delete this category	admin	uk	Необхідно видалити підкатегорії перед тим, як Ви зможете видалити цю категорію!
 your session could not be verified.	admin	uk	Неможливо перевірити Ваш вхід

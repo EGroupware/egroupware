@@ -39,6 +39,7 @@ check to save as tracker entry on send	mail	lt	Pažymėkite mygtuką, jei norite
 checking admin credentials failed	mail	lt	Nepavyko patikrinti administratoriaus įgaliojimų
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lt	Nustatytos reikšmės bus automatiškai nustatytos komponavimo dialogo lange gerbiamam laukui, kai kuriamas naujas el. laiškas.
 contact label	mail	lt	Kontaktų etiketė
+continue	mail	lt	Tęsti
 convert mail to item and attach its attachments to this item (standard)	mail	lt	Konvertuoti el. laišką į elementą ir pridėti jo priedus prie šio elemento (standartinis)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lt	Konvertuoti el. laišką į elementą, pridėti jo priedus ir pridėti neapdorotą pranešimą (.eml) kaip priedą
 convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik el. laišką į elementą (ignoruoti galimus priedus)
@@ -53,6 +54,7 @@ disable caching of flags	mail	lt	Išjungti vėliavų spartinimą
 do you really want to toggle flag %1 for all messages in the current view?	mail	lt	Ar tikrai norite perjungti žymę %1 VISIEMS dabartiniame rodinyje esantiems laiškams?
 do you really want to toggle label %1 for all messages in the current view?	mail	lt	Ar tikrai norite perjungti žymę %1 VISIEMS dabartiniame rodinyje esantiems pranešimams?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lt	Ar norite, kad prieš prisegant pasirinktus pranešimus prie naujo el. pašto būtų prašoma patvirtinimo?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	lt	Ar norite, kad prieš perkeliant pasirinktus laiškus į kitą aplanką būtų prašoma patvirtinimo?
 email address	mail	lt	El. pašto adresas
 emailaddress	admin	lt	El. pašto adresas
 emailadmin: profilemanagement	mail	lt	eMailAdmin: Profilio valdymas
@@ -101,6 +103,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	lt	Darbas
 junk	mail	lt	Šiukšlių
 junk folder	mail	lt	Šiukšlių aplankas
+keep a copy	mail	lt	Pasilikti kopiją
 keep a copy of the message in your inbox	mail	lt	Laikykite žinutės kopiją gautųjų laiškų dėžutėje
 kilobytes	mail	lt	kilobaitai
 later	mail	lt	Vėliau
@@ -235,6 +238,7 @@ to do	mail	lt	Atlikti
 toggled on actions	mail	lt	Perjungti veiksmus
 trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
+unconditional	mail	lt	Visada
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.
 you may add this certificate into your contact, if you trust this signature.	mail	lt	Šį sertifikatą galite įtraukti į savo kontaktą, jei pasitikite šiuo parašu.

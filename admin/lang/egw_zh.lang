@@ -588,15 +588,17 @@ use tls authentication	admin	zh	使用TLS 认证
 use tls encryption	admin	zh	使用TLS 加密
 user accounts	admin	zh	用户帐户
 user can edit forwarding address	admin	zh	用户可以编辑转发地址
+user choice	admin	zh	用户选择
+user csv export	admin	zh	用户 CSV 导出
+user csv import	admin	zh	用户 CSV 导入
 user data	common	zh	用户数据
 user for smtp-authentication (leave it empty if no auth required)	admin	zh	SMTP 用户认证 (如果不需要则保持为空)
 user groups	admin	zh	用户组
-user hidden vom non-admins.	admin	zh	对非管理员用户隐藏
+user hidden from non-admins.	admin	zh	非管理员隐藏用户
 userdata	admin	zh	用户数据
 username (standard)	admin	zh	用户名(标准)
 username@domainname (virtual mail manager)	admin	zh	用户名@域 (虚拟邮箱管理)
 users can define their own emailaccounts	admin	zh	用户可以自定义邮箱账户
-users can define their own signatures	admin	zh	用户可以定义他们自己的签名
 users choice	admin	zh	用户选择
 value for column %1 is not unique!	admin	zh	栏%1的值不是唯一的！
 view access log	admin	zh	查看访问日志
@@ -608,6 +610,7 @@ view this user	admin	zh	查看该用户
 view user account	admin	zh	查看用户帐户
 virtual mail manager	admin	zh	虚拟邮箱管理
 who would you like to transfer all records owned by the deleted user to?	admin	zh	需要把被删除用户的所有记录转移给谁？
+who would you like to transfer records owned by the deleted user to?	admin	zh	您想将已删除用户的记录转给谁？
 wrong account type: %1 is no %2 !!!	admin	zh	错误的帐户类型：%1没有%2！
 wrong admin-account or -password !!!	admin	zh	错误的管理员账户或密码！
 xml-rpc	admin	zh	XML-RPC
@@ -622,6 +625,7 @@ you must enter an application name.	admin	zh	必须为应用程序指定名称�
 you must enter an application title.	admin	zh	必须为应用程序指定标题。
 you must select at least one group member.	admin	zh	您必须至少选择一个组成员。
 you need to enter install id and password!	admin	zh	您需要输入安装 ID 和密码！
+you need to select some users first!	admin	zh	您需要先选择一些用户！
 you will need to remove the subcategories before you can delete this category	admin	zh	在删除该类别前，必须删除它的所有子类别！
 your name	admin	zh	您的名字
 your session could not be verified.	admin	zh	本次会话无法校验。

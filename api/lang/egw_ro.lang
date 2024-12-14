@@ -69,8 +69,10 @@ dark mode	common	ro	Mod întunecat
 date + time	common	ro	Data + Ora
 date+time	common	ro	Data+Ora
 directory for storing merged documents	preferences	ro	Folder pentru stocarea documentelor fuzionate
+documents	common	ro	Documente
 don't ask again!	common	ro	Nu întrebați din nou!
 egroupware	common	ro	EGroupware
+emails	common	ro	Email-uri
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
@@ -92,6 +94,7 @@ how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincron
 how many rows to print	common	ro	Câte rânduri să se tipărească
 html links to any entries linked to the current record, excluding attached files	common	ro	Legături HTML către orice intrări legate de înregistrarea curentă, cu excepția fișierelor atașate
 if you use "2-factor-authentication", please enter the code here.	common	ro	Dacă utilizați "Autentificare cu 2 factori", introduceți codul aici.
+images	common	ro	Imagini
 include access to any linked files (links tab)	common	ro	Includeți accesul la orice fișier legat (fila Links)
 infolog types to sync	common	ro	Tipuri de InfoLog de sincronizat
 insert placeholder	common	ro	Inserir espaço reservado
@@ -126,6 +129,7 @@ no filters	common	ro	Fără filtre
 ok	common	ro	Acceptă
 open	common	ro	Deschideți
 open existing contact	common	ro	Deschidere contact existent
+open the online help.	common	ro	Deschideți ajutorul online
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ro	Logare OpenIDConnect reușită, dar utilizatorul „%1” NU există în EGroupware, iar crearea automată de utilizatori este dezactivată!
 ownership	common	ro	Proprietate
 permission denied!	common	ro	Permisiune refuzată!
@@ -152,6 +156,8 @@ show password	common	ro	Afișare parolă
 show/hide	common	ro	Afișați / ascundeți bara laterală
 sign up	common	ro	Înregistrare
 site configuration	common	ro	Configurația aplicației
+spreadsheets	common	ro	Foi de calcul
+videos	common	ro	Videoclipuri
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
 your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ro	Browserul dvs. nu este actualizat (compatibil cu JavaScript ES6), este posibil ca unele dintre caracteristici să nu funcționeze.

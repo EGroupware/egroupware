@@ -822,12 +822,13 @@ use tls encryption	admin	sl	Uporabi TLS enkripcijo
 use users email-address (as seen in useraccount)	admin	sl	Uporabite e-poštni naslov uporabnikov, kot je določeno v uporabniškem računu
 user accounts	admin	sl	Uporabniški računi
 user can edit forwarding address	admin	sl	Uporabnik lahko določa posredovalni naslov
+user choice	admin	sl	Izbira uporabnika
 user csv export	admin	sl	Uporabniški CSV izvoz
 user csv import	admin	sl	Uvoz uporabnika CSV
 user data	common	sl	Podatki o uporabniku
 user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za avtentikacijo SMTP (pustite prazno, če ni zahtevana)
 user groups	admin	sl	Uporabniške skupine
-user hidden vom non-admins.	admin	sl	Uporabnik skrit za uporabnike, ki niso upravljavci
+user hidden from non-admins.	admin	sl	Uporabnik skrit za neadministratorje
 user-agent	admin	sl	User-Agent
 userdata	admin	sl	Podatki o uporabniku
 userid@domain eg. u1234@domain	admin	sl	UserId@domain eg. u1234@domain
@@ -857,13 +858,12 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	sl	Informacije se zahtevajo le, da dobite pregled o uporabi EGroupware po vsem svetu.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	sl	Ne shranjujemo podatkov o vaši identiteti.
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
+who would you like to transfer records owned by the deleted user to?	admin	sl	Na koga želite prenesti zapise, ki so v lasti izbrisanega uporabnika?
 wrong account type: %1 is no %2 !!!	admin	sl	Napačna vrsta računa: %1 je NO %2!
 wrong admin-account or -password !!!	admin	sl	Napačen skrbniški račun ali geslo!
 xml-rpc	admin	sl	XML-RPC
 yes, but no scayt	admin	sl	Da, vendar brez preverjanja črkovanja med vnašanjem (na spletu)
 yes, use browser based spell checking engine	admin	sl	Da, uporabite iskalnik za preverjanje črkovanja na podlagi brskalnika
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	sl	Da, uporabite spodnje poverilnice samo za alarme in obvestila, sicer uporabite poverilnice trenutnega uporabnika
-yes, use credentials of current user or if given credentials below	admin	sl	Da, uporabite poverilnice trenutnega uporabnika ali podate spodnje poverilnice
 yes, use webspellchecker	admin	sl	Da, uporabite spletno točko
 you can not use --dry-run together with --skip-checks!	admin	sl	Ne morete uporabljati --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	sl	Samo labelo lahko spremenite, če nastavite naključno geslo ali trenutno uporabljate gesla z navadnim besedilom!

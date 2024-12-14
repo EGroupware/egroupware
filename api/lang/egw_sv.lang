@@ -367,6 +367,7 @@ doctype:	common	sv	Dokumenttyp:
 document properties	common	sv	Dokument alternativ
 document title:	common	sv	Dokument rubrik:
 documentation	common	sv	Dokumentation
+documents	common	sv	Dokument
 doesn't matter	common	sv	Inte av betydelse
 domain	common	sv	Domän
 domain name for mail-address, eg. "%1"	common	sv	E-postadressens domän, ex. "%1"
@@ -403,6 +404,7 @@ egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
 email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1"
+emails	common	sv	E-postmeddelanden
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sv	Inbäddade CSS stilar, ex. '.red { background: red; }' (notera '.' före class namnet) eller '@import url(...)' (class namn är globala för hela sidan!)
 enable javascript onchange submit	common	sv	Aktivera JavaScript onchange submit
 enabled	common	sv	Aktiverad
@@ -568,6 +570,7 @@ if there are some images in the background folder you can choose the one you wou
 if you use "2-factor-authentication", please enter the code here.	common	sv	Om du använder "2-faktorsautentisering" ska du ange koden här.
 image	common	sv	Bild
 image url	common	sv	Bild URL
+images	common	sv	Bilder
 import	common	sv	Import
 import an etemplate from a xml-file	common	sv	Importera eTemplate från XML fil
 import table-definitions from existing db-table	common	sv	Importera tabell definitioner från existerande databas tabell
@@ -833,6 +836,7 @@ open	common	sv	Öppen
 open existing contact	common	sv	Öppna befintlig kontakt
 open notify window	common	sv	Öppna meddelande fönster
 open popup window	common	sv	Öppna popup fönster
+open the online help.	common	sv	Öppna onlinehjälpen
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sv	OpenIDConnect-inloggningen lyckades, men användaren '%1' finns INTE i EGroupware, OCH automatiskt skapande av användare är inaktiverat!
 operator	common	sv	Operator
 optional note about the link	common	sv	Frivillig anteckning om länken
@@ -1087,6 +1091,7 @@ spacing	common	sv	Utfyllnad
 spain	common	sv	SPANIEN
 span	common	sv	Span
 span, class	common	sv	Span, Class
+spreadsheets	common	sv	Kalkylblad
 sri lanka	common	sv	SRI LANKA
 stack	common	sv	Stack
 start a new search, cancel this link	common	sv	Gör ny sökning och avbryt denna länk
@@ -1208,6 +1213,7 @@ venezuela	common	sv	VENEZUELA
 version	common	sv	Version
 vertical alignment of row	common	sv	Vertikal justering av rad
 video tutorials	common	sv	Handledning för video
+videos	common	sv	Videor
 viet nam	common	sv	VIETNAM
 view	common	sv	Visa
 view this etemplate	common	sv	Visa eTemplate

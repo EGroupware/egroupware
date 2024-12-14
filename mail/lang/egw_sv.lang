@@ -62,6 +62,7 @@ configured values will be set automatically on compose dialog for respected fiel
 connect to profile %1	mail	sv	Anslut till profil %1
 contact label	mail	sv	Etikett för kontakt
 contains	mail	sv	Innehåller
+continue	mail	sv	Fortsätt
 convert mail to item and attach its attachments to this item (standard)	mail	sv	Konvertera e-post till objekt och bifoga dess bilagor till detta objekt (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	sv	Konvertera e-post till objekt, bifoga dess bilagor och lägg till råmeddelande (.eml) som bilaga
 convert only mail to item (ignore possible attachments)	mail	sv	Konvertera endast e-post till objekt (ignorera eventuella bilagor)
@@ -93,6 +94,7 @@ do you really want to remove all labels from all messages in the current folder?
 do you really want to toggle flag %1 for all messages in the current view?	mail	sv	Vill du verkligen växla flaggan %1 för ALLA meddelanden i den aktuella vyn?
 do you really want to toggle label %1 for all messages in the current view?	mail	sv	Vill du verkligen växla etiketten %1 för ALLA meddelanden i den aktuella vyn?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	sv	Vill du bli ombedd att bekräfta innan du bifogar valda meddelanden till ett nytt e-postmeddelande?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	sv	Vill du bli ombedd att bekräfta innan du flyttar markerade meddelanden till en annan mapp?
 does not contain	mail	sv	Innehåller inte
 does not match	mail	sv	Matchar inte
 does not match regexp	mail	sv	Matchar inte regexp
@@ -177,6 +179,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	sv	Arbete
 junk	mail	sv	Skräppost
 junk folder	mail	sv	Mapp för skräppost
+keep a copy	mail	sv	Behåll en kopia
 keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
 kilobytes	mail	sv	Kb
 later	mail	sv	Senare
@@ -362,6 +365,7 @@ to do	mail	sv	Att göra
 toggled on actions	mail	sv	Kopplad till åtgärder
 trash	mail	sv	Papperskorg
 trash folder	mail	sv	Borttaget
+unconditional	mail	sv	Alltid
 unflagged	mail	sv	Oflaggad
 unread	mail	sv	Oläst
 vacation notice	mail	sv	Frånvaro meddelande

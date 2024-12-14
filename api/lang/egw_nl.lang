@@ -431,6 +431,7 @@ document '%1' does not exist or is not readable for you!	preferences	nl	Document
 document properties	common	nl	Documenteigenschappen
 document title:	common	nl	Documenttitel:
 documentation	common	nl	Documentatie
+documents	common	nl	Documenten
 doesn't matter	common	nl	Maakt niets uit
 domain	common	nl	Domein
 domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
@@ -477,6 +478,7 @@ egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
 email	common	nl	Email
 email-address of the user, eg. "%1"	common	nl	Emailadres van de gebruiker, bijv. "%1"
+emails	common	nl	E-mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	nl	Ingebedde CSS stijlen, bijvoorbeeld '.red { background: red; }' (let op de '.' voor de klassenaam) of '@import url(...)' (klassenamen zijn globaal voor de hele pagina!)
 empty file	common	nl	Leeg bestand
 enable javascript onchange submit	common	nl	JavaScript onchange submit inschakelen
@@ -674,6 +676,7 @@ if you use "2-factor-authentication", please enter the code here.	common	nl	Als 
 image	common	nl	Afbeelding
 image directory relative to document root (use / !), example:	common	nl	Afbeeldingen directory relatief ten opzichte van de document root (gebruik / !), bijvoorbeeld:
 image url	common	nl	Afbeelding URL
+images	common	nl	Afbeeldingen
 import	common	nl	Importeren
 import an etemplate from a xml-file	common	nl	Importeer een eTemplate vanuit een XML-bestand
 import table-definitions from existing db-table	common	nl	Importeer tabeldefinities vanuit een bestaande DB tabel
@@ -966,6 +969,7 @@ open	common	nl	Open
 open existing contact	common	nl	Bestaand contact openen
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
+open the online help.	common	nl	Open de online help
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	nl	OpenIDConnect login succesvol, maar gebruiker '%1' bestaat NIET in EGroupware, EN automatisch gebruiker aanmaken is uitgeschakeld!
 operator	common	nl	Operator
 optional note about the link	common	nl	Optionele opmerking over de link
@@ -1276,6 +1280,7 @@ spain	common	nl	SPANJE
 span	common	nl	Span
 span, class	common	nl	Span, Class
 special characters	common	nl	speciale karakters
+spreadsheets	common	nl	Rekenbladen
 sri lanka	common	nl	SRI LANKA
 stack	common	nl	Stapel
 start a new search, cancel this link	common	nl	Start een nieuwe zoekopdracht, annuleer deze link
@@ -1426,6 +1431,7 @@ venezuela	common	nl	VENEZUELA
 version	common	nl	Versie
 vertical alignment of row	common	nl	Vertikale uitlijning van de rij
 vfs upload directory	common	nl	VFS map voor upload
+videos	common	nl	Video's
 viet nam	common	nl	VIETNAM
 view	common	nl	Bekijken
 view linked %1 entries	common	nl	Bekijk gekoppelde %1 items

@@ -312,6 +312,7 @@ doctype:	common	no	Dok.type:
 document properties	common	no	Dokumentegenskaper
 document title:	common	no	Dokumenttittel:
 documentation	common	no	Dokumentasjon
+documents	common	no	Dokumenter
 doesn't matter	common	no	Spiller ingen rolle
 domain	common	no	Domene
 domain name for mail-address, eg. "%1"	common	no	Domene navn for mail adresser, f.eks:"%1"
@@ -344,6 +345,7 @@ egypt	common	no	EGYPT
 el salvador	common	no	EL SALVADOR
 email	common	no	Epost
 email-address of the user, eg. "%1"	common	no	Brukerens epost-adresse, f.eks: "%1"
+emails	common	no	E-poster
 enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
@@ -491,6 +493,7 @@ id	common	no	ID
 if you use "2-factor-authentication", please enter the code here.	common	no	Hvis du bruker "2-faktor-autentisering", vennligst skriv inn koden her.
 image	common	no	Bilde
 image url	common	no	Bildets URL
+images	common	no	Bilder
 import	common	no	Importer
 import an etemplate from a xml-file	common	no	Importer en eTemplate fra en XML-fil
 import table-definitions from existing db-table	common	no	Importer en tabelldefinisjon fra en eksisterende tabell
@@ -706,6 +709,7 @@ open	common	no	Åpne
 open existing contact	common	no	Åpne eksisterende kontakt
 open notify window	common	no	Åpne varslingsvindu
 open popup window	common	no	Åpne pop-up vindu
+open the online help.	common	no	Åpne den elektroniske hjelpen
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	no	OpenIDConnect-pålogging vellykket, men brukeren '%1' finnes IKKE i EGroupware, OG automatisk brukeroppretting er deaktivert!
 optional note about the link	common	no	Valgri kommentar om denne lenken
 options	common	no	Alternativer
@@ -905,6 +909,7 @@ sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dat
 south africa	common	no	SØR_AFRIKA
 south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
 spain	common	no	SPANIA
+spreadsheets	common	no	Regneark
 sri lanka	common	no	SRI LANKA
 start a new search, cancel this link	common	no	Start nytt søk, annuller denne lenken
 start date	common	no	Startdato
@@ -1000,6 +1005,7 @@ vanuatu	common	no	VANUATU
 vbox	common	no	vBox
 venezuela	common	no	VENEZUELA
 version	common	no	Versjon
+videos	common	no	Videoer
 viet nam	common	no	VIETNAM
 view	common	no	Vis
 view this etemplate	common	no	Vis denne eTemplate

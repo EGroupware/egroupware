@@ -40,6 +40,7 @@ check to save as tracker entry on send	mail	tr	Gönderdikten sonra bilet olarak 
 checking admin credentials failed	mail	tr	Yönetici kimlik bilgilerinin denetlenmesi başarısız oldu
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	tr	Yapılandırılan değerler, yeni bir e-posta oluşturulurken saygı duyulan alan için oluşturma iletişim kutusunda otomatik olarak ayarlanacaktır.
 contact label	mail	tr	İletişim etiketi
+continue	mail	tr	Devam et
 convert mail to item and attach its attachments to this item (standard)	mail	tr	E-postayı öğeye dönüştürme ve eklerini bu öğeye ekleme (standart)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	tr	E-postayı öğeye dönüştürün, eklerini ekleyin ve ham mesajı (.eml) ek olarak ekleyin
 convert only mail to item (ignore possible attachments)	mail	tr	Yalnızca e-postayı öğeye dönüştürün (olası ekleri göz ardı edin)
@@ -56,6 +57,7 @@ disable caching of flags	mail	tr	Bayrakların önbelleğe alınmasını devre d�
 do you really want to toggle flag %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you really want to toggle label %1 for all messages in the current view?	mail	tr	Geçerli görünümdeki TÜM iletiler için %1 etiketini gerçekten değiştirmek istiyor musunuz?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	tr	Seçili mesajları başka bir klasöre taşımadan önce sizden onay istenmesini istiyor musunuz?
 edit account	mail	tr	Hesap düzenle
 email address	mail	tr	E-posta adresi
 emailaddress	admin	tr	E-posta adresi
@@ -109,6 +111,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	tr	İş
 junk	mail	tr	Hurda
 junk folder	mail	tr	Önemsiz klasör
+keep a copy	mail	tr	Bir kopyasını saklayın
 keep a copy of the message in your inbox	mail	tr	Mesajın bir kopyasını gelen kutunuzda saklayın
 kilobytes	mail	tr	kilobayt
 later	mail	tr	Daha sonra
@@ -265,6 +268,7 @@ to do	mail	tr	Yapmak için
 toggled on actions	mail	tr	Eylemler üzerinde geçiş yapıldı
 trash	mail	tr	Çöp
 trash folder	mail	tr	Çöp klasörü
+unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 write	mail	tr	Yaz
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.

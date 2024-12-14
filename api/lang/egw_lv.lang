@@ -297,6 +297,7 @@ do you want to save the changes you made in table %s?	common	lv	Vai vēlies sagl
 document properties	common	lv	Dokumenta rekvizīti
 document title:	common	lv	Dokumenta virsraksts:
 documentation	common	lv	Dokumentācija
+documents	common	lv	Dokumenti
 domain	common	lv	Domeins
 domain name for mail-address, eg. "%1"	common	lv	Domeina vārs e-pasta adresēm, piem. "%1"
 domestic	common	lv	Kopmītne
@@ -326,6 +327,7 @@ egypt	common	lv	ĒĢIPTE
 el salvador	common	lv	SALVADORA
 email	common	lv	E-Pasts
 email-address of the user, eg. "%1"	common	lv	Lietotāja e-pasta adrese, piemēram, "%1"
+emails	common	lv	E-pasti
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	lv	Iegultie CSS stili, piem.'.red { background: red; }' (atzīmē '.' pirms klases nosaukuma) or '@import url(...)' (klases nosaukums ir vispārējs visai lapai!)
 enable javascript onchange submit	common	lv	Aktivizē JavaScript uz Izmaiņu apstiprināšanas
 enabled	common	lv	Aktivizēts
@@ -476,6 +478,7 @@ if field is disabled an empty table-cell is displayed, for (temporal) removement
 if you use "2-factor-authentication", please enter the code here.	common	lv	Ja izmantojat "2 faktoru autentifikāciju", lūdzu, ievadiet kodu šeit.
 image	common	lv	Attēls
 image url	common	lv	Attēla URL
+images	common	lv	Attēli
 import	common	lv	Importēt
 import an etemplate from a xml-file	common	lv	importēt eveidni no XML datnes
 import table-definitions from existing db-table	common	lv	Importēt tabulas nosacījumus no eksistējošas DB tabulas
@@ -707,6 +710,7 @@ open	common	lv	Atvērt
 open existing contact	common	lv	Atvērt esošo kontaktu
 open notify window	common	lv	Atvērt informācijas logu
 open popup window	common	lv	Atvērt papildus logu
+open the online help.	common	lv	Atveriet tiešsaistes palīdzību
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lv	OpenIDConnect pieteikšanās ir veiksmīga, bet lietotājs '%1' EGroupware neeksistē, UN automātiskā lietotāju izveide ir atspējota!
 operator	common	lv	Operators
 optional note about the link	common	lv	Atzīme par saiti pēc izvēles
@@ -918,6 +922,7 @@ south africa	common	lv	DIENVIDĀFRIKA
 south georgia and the south sandwich islands	common	lv	DIENVIDDŽORDŽIJA UN DIENVIDSENDVIČU SALAS
 spacing	common	lv	Atstarpe
 spain	common	lv	SPĀNIJA
+spreadsheets	common	lv	Izklājlapas
 sri lanka	common	lv	ŠRILANKA
 stack	common	lv	Steks
 start a new search, cancel this link	common	lv	Sākt jaunu meklēšanu, atcelt šo saiti
@@ -1025,6 +1030,7 @@ vanuatu	common	lv	VANUATU
 vbox	common	lv	VBox
 venezuela	common	lv	VENECUĒLA
 version	common	lv	Versija
+videos	common	lv	Videoklipi
 viet nam	common	lv	VJETNAMA
 view	common	lv	Rādīt
 view this linked entry in its application	common	lv	Rādīt šo saistīto ierakstu tā aplikācijā

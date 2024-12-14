@@ -427,6 +427,7 @@ document '%1' does not exist or is not readable for you!	preferences	pt-br	Docum
 document properties	common	pt-br	Propriedades do documento
 document title:	common	pt-br	Título do documento:
 documentation	common	pt-br	Documentação
+documents	common	pt-br	Documentos
 doesn't matter	common	pt-br	Não importa
 domain	common	pt-br	Domínio
 domain name for mail-address, eg. "%1"	common	pt-br	Nome do domínio para endereços de e-mail, ex. "%1"
@@ -469,6 +470,7 @@ el salvador	common	pt-br	EL SALVADOR
 element role title	common	pt-br	Título papel de elemento
 email	common	pt-br	E-mail
 email-address of the user, eg. "%1"	common	pt-br	Endereço de e-mail do usuário, ex. "%1"
+emails	common	pt-br	E-mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt-br	Encaixado estivo CSS, ex. '.red { background: red; }' (note o '.' antes do nome-da-classe) ou '@import url(...)' (nomes de classe são globais para a página inteira!)
 empty file	common	pt-br	Arquivo vazio
 enable javascript onchange submit	common	pt-br	Ativar JavaScript sobre as alterações submetidas
@@ -661,6 +663,7 @@ if you use "2-factor-authentication", please enter the code here.	common	pt-br	S
 image	common	pt-br	Imagem
 image directory relative to document root (use / !), example:	common	pt-br	Diretório de imagem relativo à pasta raiz (use / !), por exemplo:
 image url	common	pt-br	URL da imagem
+images	common	pt-br	Imagens
 import	common	pt-br	Importar
 import an etemplate from a xml-file	common	pt-br	Importar um eModelo a partir de um arquivo XML
 import table-definitions from existing db-table	common	pt-br	Importar definições de tabela a partir de uma base de tabelas existente
@@ -956,6 +959,7 @@ open	common	pt-br	Abrir
 open existing contact	common	pt-br	Abrir contato existente
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
+open the online help.	common	pt-br	Abra a ajuda on-line
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	pt-br	O login do OpenIDConnect foi bem-sucedido, mas o usuário '%1' NÃO existe no EGroupware, e a criação automática de usuários está desativada!
 operator	common	pt-br	Operador
 optional note about the link	common	pt-br	Nota opcional para o link
@@ -1260,6 +1264,7 @@ spain	common	pt-br	ESPANHA
 span	common	pt-br	Span
 span, class	common	pt-br	Span, Class
 special characters	common	pt-br	caracteres especiais
+spreadsheets	common	pt-br	Planilhas eletrônicas
 sri lanka	common	pt-br	SRI LANKA
 stack	common	pt-br	Pilha
 start a new search, cancel this link	common	pt-br	Iniciar uma nova pesquisa, cancelar este link
@@ -1402,6 +1407,7 @@ version	common	pt-br	Versão
 vertical alignment of row	common	pt-br	Alinhamento vertical da linha
 vfs upload directory	common	pt-br	Letras maiúsculas
 video tutorials	common	pt-br	Tutoriais em vídeo
+videos	common	pt-br	Vídeos
 viet nam	common	pt-br	VIETNÃ
 view	common	pt-br	Exibir
 view linked %1 entries	common	pt-br	Exibir entradas %1 vinculadas

@@ -719,10 +719,13 @@ use tls authentication	admin	cs	Použít TLS autentikaci
 use tls encryption	admin	cs	Použít TLS šifrování
 user accounts	admin	cs	Uživatelské účty
 user can edit forwarding address	admin	cs	Uživatel smí editovat adresu pro přeposílání
+user choice	admin	cs	Volba uživatele
+user csv export	admin	cs	Export uživatele do CSV
+user csv import	admin	cs	Import CSV uživatele
 user data	common	cs	Uživatelská data
 user for smtp-authentication (leave it empty if no auth required)	admin	cs	Uživatel pro SMTP autentikaci (ponechte prázdné, není-li autentikace vyžadována).
 user groups	admin	cs	Skupiny uživatelů
-user hidden vom non-admins.	admin	cs	Uživatel skrytý pro uživatele, kteří nejsou administrátory
+user hidden from non-admins.	admin	cs	Uživatel skrytý pro neadminy
 user-agent	admin	cs	User-Agent
 userdata	admin	cs	Uživatelská data
 username (standard)	admin	cs	Uživatelské jméno (standardní)
@@ -730,8 +733,6 @@ username/password defined by admin	admin	cs	Uživatelské jméno/Heslo definovan
 username@domainname (virtual mail manager)	admin	cs	uživatelskéjméno@doména (Virtuální správce pošty)
 users can define their own emailaccounts	admin	cs	Uživatelé smí definovat vlastní poštovní účty
 users can define their own identities	admin	cs	Uživatelé smí definovat své vlastní identity
-users can define their own signatures	admin	cs	Uživatelé smí definovat své vlastní podpisy
-users can utilize these stationery templates	admin	cs	Uživatelé mohou využívat tyto šablony dopisů
 users choice	admin	cs	Uživatelská volba
 using fallback via regular json requests	admin	cs	Používání zpětné vazby prostřednictvím běžných požadavků JSON
 using native swoole push	admin	cs	Použití nativního Swoole Push
@@ -747,6 +748,7 @@ virtual mail manager	admin	cs	Virtuální správce pošty
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	cs	Tyto údaje poptáváme jen pro statistické účely, abychom získali obecný přehled o používání EGroupware ve světě.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	cs	Neuchováváme žádné údaje o Vaší identitě.
 who would you like to transfer all records owned by the deleted user to?	admin	cs	Komu chcete přesunout VŠECHNY záznamy vlastněné smazaným uživatelem?
+who would you like to transfer records owned by the deleted user to?	admin	cs	Na koho chcete přenést záznamy vlastněné smazaným uživatelem?
 wrong account type: %1 is no %2 !!!	admin	cs	Špatný typ účtu: %1 NENÍ %2!
 wrong admin-account or -password !!!	admin	cs	Špatný účet administrátora nebo heslo!
 xml-rpc	admin	cs	XML-RPC
@@ -764,6 +766,7 @@ you must enter an application name.	admin	cs	Musíte zadat název aplikace.
 you must enter an application title.	admin	cs	Musíte zadat titulek aplikace.
 you must select at least one group member.	admin	cs	Musíte vybrat alespoň jednoho člena skupiny.
 you need to enter install id and password!	admin	cs	Musíte zadat instalační ID a heslo!
+you need to select some users first!	admin	cs	Nejprve je třeba vybrat některé uživatele!
 you will need to remove the subcategories before you can delete this category	admin	cs	Než smažete tuto kategorii, musíte smazat všechny podkategorie!
 your last submission was less then %1 days ago!	admin	cs	Naposledy jste odeslal(a) údaje před méně jak %1 dnem/dny.
 your name	admin	cs	Vaše jméno

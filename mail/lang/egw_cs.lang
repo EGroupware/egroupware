@@ -104,6 +104,7 @@ connection status	mail	cs	Stav připojení
 contact label	mail	cs	Štítek kontaktu
 contains	mail	cs	obsahuje
 contains(*)	mail	cs	Obsahuje (*)
+continue	mail	cs	Pokračovat
 convert mail to item and attach its attachments to this item (standard)	mail	cs	Změnit e-mail na záznam a přílohy v e-mailu přiložit k tomuto záznamu (standardně)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	cs	Změnit e-mail na záznam a k záznamu přiložit původní e-mail jalo e-mailovou zprávu (message/rfc822 (.eml))
 convert only mail to item (ignore possible attachments)	mail	cs	Pouze změnit e-mail na záznam a případné přílohy v něm ignorovat
@@ -313,6 +314,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	cs	Obchodní
 junk	mail	cs	Nevyžádané
 junk folder	mail	cs	Složka nevyžádané pošty
+keep a copy	mail	cs	Ponechte si kopii
 keep a copy of the message in your inbox	mail	cs	Zachovat kopii zprávy ve vaší schránce
 kilobytes	mail	cs	kilobytů
 later	mail	cs	Později
@@ -635,6 +637,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	cs	Pokouším se obnovit data
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	cs	Nezobrazovat vodorovnou čáru mezi podpisem a textem zprávy (což neodpovídá RFC).<br>Pokud používáte šablony, tato volba bude aplikována pouze na textovou část zprávy.
 unable to fetch vacation!	mail	cs	Není možné získat automatickou odpověď
+unconditional	mail	cs	Vždy
 undelete	mail	cs	Obnovit
 unflagged	mail	cs	Bez příznaku
 unread	mail	cs	nepřečtené

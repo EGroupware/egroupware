@@ -331,6 +331,7 @@ document '%1' does not exist or is not readable for you!	preferences	id	Dokumen 
 document properties	common	id	Properti Dokumen
 document title:	common	id	Judul Dokumen:
 documentation	common	id	Dokumentasi
+documents	common	id	Dokumen
 doesn't matter	common	id	Tidak penting
 domain	common	id	Domain
 domestic	common	id	Domestik
@@ -357,6 +358,7 @@ egroupware version	common	id	Versi EGroupware
 egypt	common	id	MESIR
 el salvador	common	id	EL SALVADOR
 email	common	id	E-Mail
+emails	common	id	Email
 enabled	common	id	Enabled
 end date	common	id	Tanggal berakhir
 end time	common	id	Waktu berakhir
@@ -493,6 +495,7 @@ id	common	id	ID
 if you use "2-factor-authentication", please enter the code here.	common	id	Jika Anda menggunakan "Autentikasi 2 Faktor", masukkan kode di sini.
 image	common	id	Image
 image url	common	id	Image URL
+images	common	id	Gambar
 import	common	id	Impor
 import xml	common	id	Impor XML
 include access to any linked files (links tab)	common	id	Menyertakan akses ke file yang ditautkan (tab Tautan)
@@ -723,6 +726,7 @@ open	common	id	Open
 open existing contact	common	id	Buka kontak yang ada
 open notify window	common	id	Buka jendela pemberitahuan
 open popup window	common	id	Buka jendela popup
+open the online help.	common	id	Buka bantuan online
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	id	Login OpenIDConnect berhasil, namun pengguna '%1' TIDAK ada di EGroupware, DAN pembuatan pengguna otomatis dinonaktifkan!
 operator	common	id	Operator
 optional note about the link	common	id	Catatan opsional untuk tautan
@@ -921,6 +925,7 @@ spacing	common	id	Spacing
 spain	common	id	SPANYOL
 span	common	id	Span
 span, class	common	id	Span, Class
+spreadsheets	common	id	Spreadsheet
 sri lanka	common	id	SRI LANKA
 stack	common	id	Stack
 start a new search, cancel this link	common	id	Memulai pencarian baru, batalkan tautan ini
@@ -1011,6 +1016,7 @@ vbox	common	id	VBox
 venezuela	common	id	VENEZUELA
 version	common	id	Versi
 video tutorials	common	id	Tutorial Video
+videos	common	id	Video
 viet nam	common	id	VIETNAM
 view	common	id	View
 view this etemplate	common	id	Lihat eTemplat ini
