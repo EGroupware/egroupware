@@ -160,7 +160,6 @@ blurtext	common	zh	模煳文字
 bold	common	zh	粗体
 bolivia	common	zh	玻利维亚
 border	common	zh	边框
-border-line-thickness for the table-tag	common	zh	表格标签使用的框线宽度
 bosnia and herzegovina	common	zh	波黑
 botswana	common	zh	博茨瓦纳
 bottom	common	zh	底部
@@ -357,6 +356,7 @@ document '%1' does not exist or is not readable for you!	preferences	zh	文件'%
 document properties	common	zh	文件属性
 document title:	common	zh	文件标题：
 documentation	common	zh	文档
+documents	common	zh	文件
 doesn't matter	common	zh	没关系
 domain	common	zh	域
 domain name for mail-address, eg. "%1"	common	zh	邮件地址的域名，例如："%1"
@@ -392,6 +392,7 @@ egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
 email	common	zh	电子邮件
 email-address of the user, eg. "%1"	common	zh	用户的电子邮件地址，例如："%1"
+emails	common	zh	电子邮件
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	zh	CSS嵌入式样式表，例如'.red { background: red;}' (注意'.'在类名称之前)或是 '@import url(...)' (类名称可以在全局网页使用！)
 enable javascript onchange submit	common	zh	启用 JavaScript 改动时提交功能
 enabled	common	zh	已启用
@@ -554,6 +555,7 @@ if you use "2-factor-authentication", please enter the code here.	common	zh	如�
 image	common	zh	图片
 image directory relative to document root (use / !), example:	common	zh	相对文档根目录的图片目录(使用：/)，例如：
 image url	common	zh	图片网址
+images	common	zh	图片
 import	common	zh	导入
 import an etemplate from a xml-file	common	zh	从XML文件导入一个模板
 import table-definitions from existing db-table	common	zh	从已有的数据表导入表定义文件
@@ -1062,6 +1064,7 @@ spacing	common	zh	间隔
 spain	common	zh	西班牙
 span	common	zh	Span
 span, class	common	zh	Span, Class
+spreadsheets	common	zh	电子表格
 sri lanka	common	zh	斯里兰卡
 stack	common	zh	Stack
 start a new search, cancel this link	common	zh	取消此链接，开始新的搜索
@@ -1184,6 +1187,7 @@ vbox	common	zh	VBox
 venezuela	common	zh	委内瑞拉
 version	common	zh	版本
 vertical alignment of row	common	zh	行的垂直对齐
+videos	common	zh	视频
 viet nam	common	zh	越南
 view	common	zh	查看
 view this etemplate	common	zh	查看这个模板

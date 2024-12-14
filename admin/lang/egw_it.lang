@@ -885,7 +885,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	it	Questo controlla le esportazioni e le stampe unione.
 this is a mail account for all users!	admin	it	Questo è un account di posta per TUTTI gli utenti!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	it	Questo non è un account personale di email!<br>L'account verrà cancellato per TUTTI gli utenti!<br>Confermi?
-this key used in the html code your site serves to users.	admin	it	Questa chiave viene utilizzata nel codice HTML che il sito serve agli utenti.
 this php has no imap support compiled in!!	admin	it	PHP non è stato compilato con supporto IMAP!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	it	Timeout per i dati della sessione di un'applicazione in secondi (predefinito 86400 = 1 giorno)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	it	Timeout per la sessione in secondi (predefinito 14400 = 4 ore)
@@ -950,7 +949,7 @@ user csv import	admin	it	Importazione CSV utente
 user data	common	it	Dati utente
 user for smtp-authentication (leave it empty if no auth required)	admin	it	User per autenticazione SMTP (lascia vuoto se non è richiesta autenticazione)
 user groups	admin	it	Gruppi utenti
-user hidden vom non-admins.	admin	it	Utente nascosto ai non amministratori
+user hidden from non-admins.	admin	it	Utente nascosto per i non amministratori
 user-agent	admin	it	User-Agent
 userdata	admin	it	Dati utente
 userid@domain eg. u1234@domain	admin	it	UserId@dominio p.es. u1234@dominio
@@ -960,8 +959,6 @@ username/password defined by admin	admin	it	Nome utente / password definiti dall
 username@domainname (virtual mail manager)	admin	it	nomeutente@nome dominio (ManaGeR MAIL Virtuale)
 users can define their own emailaccounts	admin	it	Gli utenti possono definire i propri account email
 users can define their own identities	admin	it	Gli utenti possono definire le loro identità personali
-users can define their own signatures	admin	it	Gli utenti possono definire le loro firme personali
-users can utilize these stationery templates	admin	it	Gli utenti possono utilizzare questi modelli
 users choice	admin	it	Scelta dell'utente
 using data from mozilla ispdb for provider %1	admin	it	Utilizzo dei dati da Mozilla ISPDB per il provider %1
 using fallback via regular json requests	admin	it	Utilizzo del fallback tramite normali richieste JSON
@@ -991,8 +988,6 @@ wrong credentials to access the header.inc.php file!	admin	it	Credenziali sbagli
 xml-rpc	admin	it	XML-RPC
 yes, but no scayt	admin	it	Sì, ma senza controllo ortografico mentre si scrive
 yes, use browser based spell checking engine	admin	it	Sì, usa il motore di controllo ortografico del browser
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	it	Sì, utilizza le credenziali sottostanti solo per allarmi e notifiche, altrimenti usa le credenziali dell'utente attuale
-yes, use credentials of current user or if given credentials below	admin	it	Sì, utilizza le credenziali dell'utente attuale oppure, se date, e credenziali qui sotto
 yes, use webspellchecker	admin	it	Sì usa il WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	it	Non è possibile usare --dry-run insieme a --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	it	Puoi cambiare solo l'hash, se impostassi una pasword casuale o se usassi attualmente password di testo semplice!

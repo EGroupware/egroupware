@@ -90,6 +90,7 @@ connection status	mail	pt-br	Status da conexão
 contact label	mail	pt-br	Etiqueta de contato
 contains	mail	pt-br	contém
 contains(*)	mail	pt-br	Contém (*)
+continue	mail	pt-br	Continuar
 convert mail to item and attach its attachments to this item (standard)	mail	pt-br	Converter e-mail em item e anexar seus anexos a esse item (padrão)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pt-br	Converter e-mail em item, anexar seus anexos e adicionar mensagem bruta (.eml) como anexo
 convert only mail to item (ignore possible attachments)	mail	pt-br	Converter somente o e-mail em item (ignorar possíveis anexos)
@@ -249,6 +250,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	pt-br	Trabalho
 junk	mail	pt-br	Lixo
 junk folder	mail	pt-br	Pasta de lixo
+keep a copy	mail	pt-br	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt-br	Kbytes
 later	mail	pt-br	Depois
@@ -439,6 +441,7 @@ to do	mail	pt-br	Como fazer
 toggled on actions	mail	pt-br	Ativado em ações
 trash	mail	pt-br	Lixeira
 trash folder	mail	pt-br	Pasta Lixeira
+unconditional	mail	pt-br	Sempre
 unflagged	mail	pt-br	Uessinalizado
 unread	mail	pt-br	Não lido
 vacation notice	mail	pt-br	Notícia de ausência

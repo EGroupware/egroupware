@@ -257,6 +257,7 @@ doctype:	common	bg	Тип документ:
 document '%1' does not exist or is not readable for you!	preferences	bg	Документът '%1' не съществува или нямате право на достъп до него!
 document properties	common	bg	Свойства на документа
 document title:	common	bg	Заглавие на документа:
+documents	common	bg	Документи
 doesn't matter	common	bg	без значение
 domain	common	bg	Домейн
 domain name for mail-address, eg. "%1"	common	bg	Име на домейн за e-mail адреси, напр. "%1"
@@ -281,6 +282,7 @@ egypt	common	bg	Египет
 el salvador	common	bg	Ел Салвадор
 email	common	bg	E-Mail
 email-address of the user, eg. "%1"	common	bg	e-mail адрес на потребителя, напр. "%1"
+emails	common	bg	Електронни писма
 enabled	common	bg	Разрешено
 end date	common	bg	Крайна дата
 end time	common	bg	Краен час
@@ -395,6 +397,7 @@ if there are some images in the background folder you can choose the one you wou
 if you use "2-factor-authentication", please enter the code here.	common	bg	Ако използвате "2-факторно удостоверяване", моля, въведете кода тук.
 image directory relative to document root (use / !), example:	common	bg	Директория за изображенията, относително спрямо document root (използвайте / !), например:
 image url	common	bg	URL на изображението
+images	common	bg	Изображения
 import	common	bg	Импорт
 include access to any linked files (links tab)	common	bg	Включете достъп до всички свързани файлове (раздел Връзки)
 india	common	bg	Индия
@@ -774,6 +777,7 @@ sorry, your login has expired	login	bg	Съжаляваме, сесията Ви
 south africa	common	bg	Южна Африка
 south georgia and the south sandwich islands	common	bg	Южна Джорджия и Южни Сандвичеви острови
 spain	common	bg	Испания
+spreadsheets	common	bg	Електронни таблици
 sri lanka	common	bg	Шри-Ланка
 start a new search, cancel this link	common	bg	Започва ново търсене, отказва тази връзка
 start date	common	bg	Начална дата
@@ -865,6 +869,7 @@ uzbekistan	common	bg	Узбекистан
 vanuatu	common	bg	Вануату
 venezuela	common	bg	Венецуела
 version	common	bg	Версия
+videos	common	bg	Видеоклипове
 viet nam	common	bg	Виетнам
 view	common	bg	Преглед
 view this linked entry in its application	common	bg	показва свързания запис в съотв. приложение

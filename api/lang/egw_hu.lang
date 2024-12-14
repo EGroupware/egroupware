@@ -280,6 +280,7 @@ document '%1' does not exist or is not readable for you!	preferences	hu	A(z) '%1
 document properties	common	hu	Dokumentum jellemzők
 document title:	common	hu	Dokumentum címe:
 documentation	common	hu	Dokumentáció
+documents	common	hu	Dokumentumok
 doesn't matter	common	hu	Nem számít
 domain	common	hu	Tartomány
 domain name for mail-address, eg. "%1"	common	hu	Tartománynév az email címhez, pl. "%1"
@@ -306,6 +307,7 @@ egypt	common	hu	Egyiptom
 el salvador	common	hu	Salvador
 email	common	hu	E-Mail
 email-address of the user, eg. "%1"	common	hu	Felhasználó email címe, pl. "%1"
+emails	common	hu	E-mailek
 enabled	common	hu	Engedélyezve
 end date	common	hu	Befejezés dátuma
 end time	common	hu	Befejezés ideje
@@ -434,6 +436,7 @@ if you use "2-factor-authentication", please enter the code here.	common	hu	Ha "
 image	common	hu	Kép
 image directory relative to document root (use / !), example:	common	hu	Képkönyvtár relatív útvonala a dokumentum gyökérkönyvtárához képest (használja a / előtagot), például:
 image url	common	hu	Kép URL
+images	common	hu	Képek
 import	common	hu	Import
 include access to any linked files (links tab)	common	hu	Adja meg a linkelt fájlokhoz való hozzáférést (Linkek lap)
 india	common	hu	India
@@ -641,6 +644,7 @@ open	common	hu	Megnyit
 open existing contact	common	hu	Meglévő kapcsolat megnyitása
 open notify window	common	hu	Értesítő ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
+open the online help.	common	hu	Az online súgó megnyitása
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	hu	Az OpenIDConnect bejelentkezés sikeres, de a '%1' felhasználó NEM létezik az EGroupware-ben, ÉS az automatikus felhasználó létrehozása le van tiltva!
 options	common	hu	Opciók
 or	common	hu	vagy
@@ -827,6 +831,7 @@ south africa	common	hu	Dél Afrika
 south georgia and the south sandwich islands	common	hu	Déli-Georgia és Déli-Sandwich-szigetek
 spacing	common	hu	Betűköz
 spain	common	hu	Spanyolország
+spreadsheets	common	hu	Táblázatok
 sri lanka	common	hu	Sri Lanka
 start a new search, cancel this link	common	hu	Új keresés indítása, a link törlése
 start date	common	hu	Kezdés dátuma
@@ -913,6 +918,7 @@ uzbekistan	common	hu	Üzbegisztán
 vanuatu	common	hu	Vanuatu
 venezuela	common	hu	Venezuella
 version	common	hu	Verzió
+videos	common	hu	Videók
 viet nam	common	hu	Vietnám
 view	common	hu	Megtekint
 view this linked entry in its application	common	hu	Hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással

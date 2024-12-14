@@ -437,6 +437,7 @@ document '%1' does not exist or is not readable for you!	preferences	es-es	¡El 
 document properties	common	es-es	Propiedades del documento
 document title:	common	es-es	Título del documento:
 documentation	common	es-es	Documentación
+documents	common	es-es	Documentos
 doesn't matter	common	es-es	No importa
 domain	common	es-es	Dominio
 domain name for mail-address, eg. "%1"	common	es-es	Nombre del dominio para la dirección de correo, ej. "%1"
@@ -484,6 +485,7 @@ el salvador	common	es-es	EL SALVADOR
 element role title	common	es-es	Título del rol del elemento
 email	common	es-es	Correo electrónico
 email-address of the user, eg. "%1"	common	es-es	Dirección de correo electrónico del usuario, ej. '%1'
+emails	common	es-es	Correo electrónico
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	es-es	Estilos incrustados CSS, por ej. '.red { background: red; }' (ver el '.' delante del nombre de la clase) o '@import url(...)' (los nombres de las clases son globales para toda la página)
 empty file	common	es-es	Archivo vacío
 enable javascript onchange submit	common	es-es	Activar enviar JavaScript onchange
@@ -692,6 +694,7 @@ if you use "2-factor-authentication", please enter the code here.	common	es-es	S
 image	common	es-es	Imagen
 image directory relative to document root (use / !), example:	common	es-es	Directorio de imágenes relativo a la raíz de los documentos (use / !). Ejemplo:
 image url	common	es-es	URL de la imagen
+images	common	es-es	Imágenes
 import	common	es-es	Importar
 import an etemplate from a xml-file	common	es-es	Importar una eTemplate desde un archivo XML
 import table-definitions from existing db-table	common	es-es	Importar definiciones de tabla de una tabla de una base de datos existente
@@ -998,6 +1001,7 @@ open	common	es-es	Abrir
 open existing contact	common	es-es	Abrir contacto existente
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
+open the online help.	common	es-es	Abrir la ayuda en línea
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	es-es	El inicio de sesión OpenIDConnect se ha realizado correctamente, pero el usuario '%1' NO existe en EGroupware, ¡Y la creación automática de usuarios está desactivada!
 operator	common	es-es	Operador
 optional note about the link	common	es-es	Nota opcional sobre el enlace
@@ -1323,6 +1327,7 @@ spain	common	es-es	ESPAÑA
 span	common	es-es	Span
 span, class	common	es-es	span, clase
 special characters	common	es-es	Caracteres especiales
+spreadsheets	common	es-es	Hojas de cálculo
 sri lanka	common	es-es	SRI LANKA
 stack	common	es-es	Pila
 start a new search, cancel this link	common	es-es	Comienzar una nueva búsqueda, cancelar este enlace
@@ -1481,6 +1486,7 @@ version	common	es-es	Versión
 vertical alignment of row	common	es-es	Alineación vertical de la fila
 vfs upload directory	common	es-es	Directorio de subida de archivos VFS
 video tutorials	common	es-es	Tutoriales en video
+videos	common	es-es	Vídeos
 viet nam	common	es-es	VIETNAM
 view	common	es-es	Ver
 view linked %1 entries	common	es-es	Ver entradas vinculadas de %1

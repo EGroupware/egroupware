@@ -427,6 +427,7 @@ document '%1' does not exist or is not readable for you!	preferences	fi	Tiedosto
 document properties	common	fi	Asiakirjan ominaisuudet
 document title:	common	fi	Asiakirjan nimi:
 documentation	common	fi	Dokumentointi
+documents	common	fi	Asiakirjat
 doesn't matter	common	fi	Ei väliä
 domain	common	fi	Domain
 domain name for mail-address, eg. "%1"	common	fi	Sähköpostiosoitteen domain, esim. "%1"
@@ -473,6 +474,7 @@ egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
+emails	common	fi	Sähköpostit
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	fi	Upotetut CSS tyylit, esim. .red { background: red; }' (huomaa '.' ennen luokan nimeä) tai '@import url(...)' (luokan nimi on globaali koko sivulla!)
 empty file	common	fi	Tyhjä tiedosto
 enable javascript onchange submit	common	fi	Salli JavaScript onchange lähetys
@@ -673,6 +675,7 @@ if you use "2-factor-authentication", please enter the code here.	common	fi	Jos 
 image	common	fi	Kuva
 image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston suhteellinen dokumentin juurihakemisto (käytä / !), esimerkiksi:
 image url	common	fi	Kuvan URL
+images	common	fi	Kuvat
 import	common	fi	Tuonti
 import an etemplate from a xml-file	common	fi	Tuo eTemplate XML-tiedostosta
 import table-definitions from existing db-table	common	fi	Tuo taulumääritykset valmiista tietokannasta
@@ -955,6 +958,7 @@ open	common	fi	Avaa
 open existing contact	common	fi	Avaa olemassa oleva yhteyshenkilö
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
+open the online help.	common	fi	Avaa online-ohje
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	fi	OpenIDConnect-kirjautuminen onnistui, mutta käyttäjää '%1' EI ole olemassa EGroupwaressa, JA automaattinen käyttäjän luominen on poistettu käytöstä!
 operator	common	fi	Operaattori
 optional note about the link	common	fi	Linkin kuvaus (vapaaehtoinen)
@@ -1251,6 +1255,7 @@ spacing	common	fi	Spacing
 spain	common	fi	ESPANJA
 span	common	fi	Span
 span, class	common	fi	Span, Class
+spreadsheets	common	fi	Taulukot
 sri lanka	common	fi	SRI LANKA
 stack	common	fi	Pino
 start a new search, cancel this link	common	fi	Aloita uusi haku, peruuta tämä yhteys
@@ -1390,6 +1395,7 @@ venezuela	common	fi	VENEZUELA
 version	common	fi	Versio
 vertical alignment of row	common	fi	Rivin pystysuuntainen tasaus
 vfs upload directory	common	fi	VFS kansio
+videos	common	fi	Videot
 viet nam	common	fi	VIETNAM
 view	common	fi	Näytä
 view this etemplate	common	fi	Näytä eTemplate

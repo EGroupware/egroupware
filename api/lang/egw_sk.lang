@@ -436,6 +436,7 @@ document '%1' does not exist or is not readable for you!	preferences	sk	Dokument
 document properties	common	sk	Vlastnosti dokumentu
 document title:	common	sk	Nadpis dokumentu
 documentation	common	sk	Dokumentácia
+documents	common	sk	Dokumenty
 doesn't matter	common	sk	Nezáleží
 domain	common	sk	Doména
 domain name for mail-address, eg. "%1"	common	sk	Názov domény pre mailovú adresu, napr. "%1"
@@ -483,6 +484,7 @@ el salvador	common	sk	SALVADOR
 element role title	common	sk	Názov úlohy v prvku
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	E-mailová adresa používateľa, napr. "%1"
+emails	common	sk	E-maily
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sk	Embedded CSS styles, e.g. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	sk	Prázdny súbor
 enable javascript onchange submit	common	sk	Zapnúť odosielanie JavaScript onchange
@@ -691,6 +693,7 @@ if you use "2-factor-authentication", please enter the code here.	common	sk	Ak p
 image	common	sk	Obrázok
 image directory relative to document root (use / !), example:	common	sk	Adresár obrázkov vzťahujúci sa na koreňový adresár dokumentov (použite / !), príklad:
 image url	common	sk	URL adresa obrázka
+images	common	sk	Obrázky
 import	common	sk	Import
 import an etemplate from a xml-file	common	sk	Importovať eTemplate zo súboru XML
 import table-definitions from existing db-table	common	sk	Importovať definície tabuľky z existujúcej db-tabuľky
@@ -996,6 +999,7 @@ open	common	sk	Otvoriť
 open existing contact	common	sk	Otvoriť existujúci kontakt
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
+open the online help.	common	sk	Otvorenie online nápovedy
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sk	Prihlásenie do OpenIDConnect bolo úspešné, ale používateľ '%1' v EGroupware NEexistuje a automatické vytváranie používateľov je vypnuté!
 operator	common	sk	Operátor
 optional note about the link	common	sk	Voliteľná poznámka o Odkaze
@@ -1317,6 +1321,7 @@ spain	common	sk	ŠPANIELSKO
 span	common	sk	Span
 span, class	common	sk	Span, Class
 special characters	common	sk	špeciálne znaky
+spreadsheets	common	sk	Tabuľky
 sri lanka	common	sk	SRÍ LANKA
 stack	common	sk	Zásobník
 start a new search, cancel this link	common	sk	Začať nové hľadanie, zrušiť tento odkaz
@@ -1475,6 +1480,7 @@ version	common	sk	Verzia
 vertical alignment of row	common	sk	Zvislé zarovnanie riadku
 vfs upload directory	common	sk	VFS adresár pre odovzdanie
 video tutorials	common	sk	Videonávody
+videos	common	sk	Videá
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobraziť
 view linked %1 entries	common	sk	Zobraziť odkazovaných %1 položiek

@@ -65,6 +65,7 @@ confirm move to folder	mail	ru	Подтвердить перемещение в 
 connection status	mail	ru	Статус соединения
 contact label	mail	ru	Метка контакта
 contains	mail	ru	Содержит
+continue	mail	ru	Продолжить
 convert mail to item and attach its attachments to this item (standard)	mail	ru	Конвертировать сообщение как отдельное сообщение и прикрепить к этой части (стандартное)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ru	конвертировать сообщение как отдельное сообщение,прикрепить и добавить raw message (.eml) как вложение
 copy to	mail	ru	Копировать в
@@ -204,6 +205,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	ru	Работа
 junk	mail	ru	Спам
 junk folder	mail	ru	Папка нежелательной почты
+keep a copy	mail	ru	Сохранить копию
 keep a copy of the message in your inbox	mail	ru	Хранить копию сообщений в вашей папке Входящие (inbox)
 kilobytes	mail	ru	Килобайт
 later	mail	ru	Отложить
@@ -421,6 +423,7 @@ trust servers seen / unseen info	mail	ru	Доверять информации �
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	ru	Доверять информации серверов SEEN/UNSEEN при восстановлении состояния каталога. При выборе "Нет", происходит независимая инициализация поиска UNSEEN-сообщений и их анализ на предмет доверия соответствующим серверам.
 trying to recover from session data	mail	ru	Попытаться восстановить данные сессии
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	ru	Отключить вставку горизонтальной черты между текстом сообщения и подписью (не относится к RFC).<br>Если используются шаблоны, данная опция применяется только к создаваемой пользователем текстовой части сообщения.
+unconditional	mail	ru	Всегда
 undelete	mail	ru	Отменить удаление
 unflagged	mail	ru	Не отмечено флажком
 unread	mail	ru	Не прочитано

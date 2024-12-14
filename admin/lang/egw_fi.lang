@@ -712,12 +712,13 @@ use tls encryption	admin	fi	Käytä TLS -salausta
 use users email-address (as seen in useraccount)	admin	fi	Käytä käyttäjän sähköpostiosoitetta
 user accounts	admin	fi	Käyttäjätilit
 user can edit forwarding address	admin	fi	Käyttäjä voi muokata välitys osoitetta
+user choice	admin	fi	Käyttäjän valinta
 user csv export	admin	fi	Käyttäjätilien CSV vienti
 user csv import	admin	fi	Käyttäjätilien CsV tuonti
 user data	common	fi	Käyttäjän tiedot
 user for smtp-authentication (leave it empty if no auth required)	admin	fi	SMTP -käyttäjätunnus (tyhjä, jos ei käytetä)
 user groups	admin	fi	Käyttäjäryhmät
-user hidden vom non-admins.	admin	fi	Käyttäjä piilotettu muilta kuin järjestelmänvalvojilta
+user hidden from non-admins.	admin	fi	Käyttäjä piilotettu muille kuin ylläpitäjille
 user-agent	admin	fi	User-Agent
 userdata	admin	fi	Käyttäjän tiedot
 userid@domain eg. u1234@domain	admin	fi	käyttäjätunnus@verkkotunnus
@@ -726,8 +727,6 @@ username/password defined by admin	admin	fi	Ylläpidon määrittelemä käyttäj
 username@domainname (virtual mail manager)	admin	fi	käyttäjätunnus@verkkotunnus (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	fi	Käyttäjät voivat määritellä omia sähköpostitilejä
 users can define their own identities	admin	fi	Käyttäjät voivat määritellä omia identiteettejä
-users can define their own signatures	admin	fi	Käyttäjät voivat määritellä omia allekirjoituksia
-users can utilize these stationery templates	admin	fi	Käyttäjät voivat määritellä omia sähköpostin taustakuvamallipohjia
 users choice	admin	fi	Käyttäjä valitsee
 value for column %1 is not unique!	admin	fi	Sarakkeen arvo %1 ei ole ainutlaatuinen!
 vfs directory "%1" not found!	admin	fi	VFS tiedostoa "%1" ei löytynyt!
@@ -743,11 +742,10 @@ warn users about the need to change their password? the number set here should b
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	fi	Tietoja käytetään ainoastaan tilastolliseen tarkoitukseen.
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	fi	Mitään identiteetin paljastavaa tietoa ei tallenneta.
 who would you like to transfer all records owned by the deleted user to?	admin	fi	Kenelle siirretään KAIKKI poistetun käyttäjän tietueet?
+who would you like to transfer records owned by the deleted user to?	admin	fi	Kenelle haluat siirtää poistetun käyttäjän omistamat tietueet?
 wrong account type: %1 is no %2 !!!	admin	fi	Virheellinen tilityyppi: %1 ei ole %2!
 wrong admin-account or -password !!!	admin	fi	Virheellinen Admin-tunnus tai salasana!
 xml-rpc	admin	fi	XML-RPC
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	fi	Kyllä, Käytä annettua salasanaa vain hälytyksiin ja huomautusviesteihin, muulloin käyttäjän tunnuksia
-yes, use credentials of current user or if given credentials below	admin	fi	Kyllä, käyttäjän tunnukset, tai mahdolliset allaolevat tunnukset
 you can set an initial value, which gets incremented every time a new serial get generated	admin	fi	voit asettaa alkuarvon, jota kasvatetaan aina kun uusi sarja luodaan
 you have entered an invalid expiration date	admin	fi	Virheellinen vanhenemispäivä!
 you have no email address for your user set !!!	admin	fi	Sähköpostiosoitetta ei ole määritelty käyttäjälle!

@@ -431,6 +431,7 @@ document '%1' does not exist or is not readable for you!	preferences	it	Il docum
 document properties	common	it	Proprietà documento
 document title:	common	it	Titolo documento:
 documentation	common	it	Documentazione
+documents	common	it	Documenti
 doesn't matter	common	it	Non importa
 domain	common	it	Dominio
 domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-mail, es. "%1"
@@ -478,6 +479,7 @@ el salvador	common	it	EL SALVADOR
 element role title	common	it	Titolo ruolo elemento
 email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
+emails	common	it	Email
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	it	Embeded CSS styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)
 empty file	common	it	File vuoto
 enable javascript onchange submit	common	it	Abilita JavaScript onchange submit
@@ -1307,6 +1309,7 @@ spain	common	it	SPAGNA
 span	common	it	Span
 span, class	common	it	Classe, Span
 special characters	common	it	caratteri speciali
+spreadsheets	common	it	Fogli di calcolo
 sri lanka	common	it	SRI LANKA
 stack	common	it	Stack
 start a new search, cancel this link	common	it	Inizia una nuova ricerca, annulla questo link

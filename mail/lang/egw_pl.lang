@@ -51,6 +51,7 @@ condition	mail	pl	Warunek
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pl	Skonfigurowane wartości zostaną ustawione automatycznie w oknie dialogowym kompilacji dla wybranego pola podczas tworzenia nowej wiadomości e-mail.
 contact label	mail	pl	Etykieta kontaktu
 contains	mail	pl	zawiera
+continue	mail	pl	Fortsett
 convert mail to item and attach its attachments to this item (standard)	mail	pl	Konwertowanie wiadomości e-mail na element i dołączanie załączników do tego elementu (standard)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	pl	Konwersja wiadomości e-mail do elementu, dołączenie załączników i dodanie nieprzetworzonej wiadomości (.eml) jako załącznika
 convert only mail to item (ignore possible attachments)	mail	pl	Konwertowanie tylko wiadomości e-mail do elementu (ignorowanie ewentualnych załączników)
@@ -173,6 +174,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	pl	Służbowy
 junk	mail	pl	Śmieci
 junk folder	mail	pl	Folder śmieci
+keep a copy	mail	pl	Behold en kopi
 keep a copy of the message in your inbox	mail	pl	Zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
 later	mail	pl	Później
@@ -356,6 +358,7 @@ to do	mail	pl	Aby wykonać
 toggled on actions	mail	pl	Włączone akcje
 trash	mail	pl	Kosz
 trash folder	mail	pl	Folder Kosza
+unconditional	mail	pl	Alltid
 unflagged	mail	pl	Nie oflagowano
 unread	mail	pl	nieprzeczytane
 vacation notice	mail	pl	Powiadomienie urlopowe

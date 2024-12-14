@@ -274,6 +274,7 @@ document '%1' does not exist or is not readable for you!	preferences	da	Dokument
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
 documentation	common	da	Dokumentation
+documents	common	da	Dokumenter
 doesn't matter	common	da	Det gør ikke noget
 domain	common	da	Domæne
 domain name for mail-address, eg. "%1"	common	da	Domænenavn til e-mail adresser, f.eks "%1"
@@ -308,6 +309,7 @@ egypt	common	da	Egypten
 el salvador	common	da	El Salvador
 email	common	da	E-mail
 email-address of the user, eg. "%1"	common	da	E-mail-adresse for brugeren, f.eks. "%1"
+emails	common	da	E-mails
 enable logging	groupdav	da	Aktivér logning
 enabled	common	da	Slået til
 enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	da	Muliggør logning af CalDAV/CardDAV-trafik for at diagnosticere problemer med enheder.
@@ -420,6 +422,7 @@ iceland	common	da	Island
 id	common	da	ID
 if you use "2-factor-authentication", please enter the code here.	common	da	Hvis du bruger "2-Factor-Authentication", skal du indtaste koden her.
 image url	common	da	Billedets adresse
+images	common	da	Billeder
 import	common	da	Importer
 include access to any linked files (links tab)	common	da	Medtag adgang til eventuelle linkede filer (fanen Links)
 india	common	da	Indien
@@ -793,6 +796,7 @@ sorry, your login has expired	login	da	Desværre, Din session er udløbet.
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
+spreadsheets	common	da	Regneark
 sri lanka	common	da	Sri Lanka
 start a new search, cancel this link	common	da	Start en ny søgning, annullere dette link
 start date	common	da	Startdato
@@ -876,6 +880,7 @@ uzbekistan	common	da	Uzbekistan
 vanuatu	common	da	Vanuatu
 venezuela	common	da	Venezuela
 version	common	da	Version
+videos	common	da	Videoer
 viet nam	common	da	Viet Nam
 view	common	da	Se
 view this linked entry in its application	common	da	Se det linkede emne i dets program

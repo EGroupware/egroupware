@@ -80,6 +80,11 @@ soap	admin	ro	SOAP
 ssl	admin	ro	SSL
 total records	admin	ro	Total înregistrări
 upload your certificate .p12/.pfx file	admin	ro	Încărcați fișierul .p12/.pfx al certificatului dvs
-user hidden vom non-admins.	admin	ro	Utilizator ascuns de persoanele care nu sunt administratori
+user choice	admin	ro	Alegerea utilizatorului
+user csv export	admin	ro	Export CSV utilizator
+user csv import	admin	ro	Import CSV utilizator
+user hidden from non-admins.	admin	ro	Utilizator ascuns pentru non-admins
 user-agent	admin	ro	User-Agent
+who would you like to transfer records owned by the deleted user to?	admin	ro	Cui doriți să transferați înregistrările deținute de utilizatorul șters?
 xml-rpc	admin	ro	XML-RPC
+you need to select some users first!	admin	ro	Mai întâi trebuie să selectați câțiva utilizatori!

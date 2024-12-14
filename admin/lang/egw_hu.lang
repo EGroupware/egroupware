@@ -633,12 +633,13 @@ use tls authentication	admin	hu	TLS hitelesítés használata
 use tls encryption	admin	hu	TLS kódolás használata
 user accounts	admin	hu	Felhasználói hozzáférések
 user can edit forwarding address	admin	hu	Felhasználó szerkesztheti a továbbításkor a címeket
+user choice	admin	hu	Felhasználó választása
 user csv export	admin	hu	Felhasználói CSV export
 user csv import	admin	hu	Felhasználói CSV import
 user data	common	hu	Felhasználó adatai
 user for smtp-authentication (leave it empty if no auth required)	admin	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni).
 user groups	admin	hu	Felhasználói csoportok
-user hidden vom non-admins.	admin	hu	Nem adminisztrátorok számára rejtett felhasználó
+user hidden from non-admins.	admin	hu	Felhasználó elrejtve a nem adminok számára
 user-agent	admin	hu	User-Agent
 userdata	admin	hu	Felhasználó adatai
 username (standard)	admin	hu	Felhasználó név (standard)
@@ -646,8 +647,6 @@ username/password defined by admin	admin	hu	Az adminisztrátok által meghatáro
 username@domainname (virtual mail manager)	admin	hu	felhasználónév@tartománynév (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
 users can define their own identities	admin	hu	A felhasználók beállíthatják a saját azonosítójukat
-users can define their own signatures	admin	hu	A felhasználók beállíthatják a saját aláírásukat
-users can utilize these stationery templates	admin	hu	A felhasználók alkalmazhatják az irodaszer mintákat
 users choice	admin	hu	Felhasználói választás
 view access log	admin	hu	Elérési napló megtekintése
 view account	admin	hu	Azonosító megtekintése
@@ -658,6 +657,7 @@ view this user	admin	hu	Felhasználó megtekintése
 view user account	admin	hu	Felhasználói hozzáférés megjelenítése
 virtual mail manager	admin	hu	Virtuális MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	hu	Melyik felhasználónak másoljam át az Összes bejegyzést, ami a törölt felhasználóhoz tartozott?
+who would you like to transfer records owned by the deleted user to?	admin	hu	Kinek szeretné átadni a törölt felhasználó tulajdonában lévő rekordokat?
 wrong admin-account or -password !!!	admin	hu	Érvénytelen adminisztrátor felhasználó vagy jelszó!
 xml-rpc	admin	hu	XML-RPC
 you can set an initial value, which gets incremented every time a new serial get generated	admin	hu	beállíthat egy kezdeti értéket, amely minden egyes alkalommal növekszik, amikor egy új sorozatot generálnak
@@ -672,6 +672,7 @@ you must enter a loginid	admin	hu	Meg kell adnia egy bejelentkezési azonosító
 you must enter an application name.	admin	hu	Meg kell adnia egy alkalmazás nevét.
 you must enter an application title.	admin	hu	Meg kell adnia egy alkalmazás címet.
 you must select at least one group member.	admin	hu	Legalább egy csoport tagot ki kell jelölnie.
+you need to select some users first!	admin	hu	Először ki kell választania néhány felhasználót!
 you will need to remove the subcategories before you can delete this category	admin	hu	Mielőtt ezt a kategóriát törölné, el kell távolítania az összes alkategóriáját!
 your name	admin	hu	Az ön neve
 your session could not be verified.	admin	hu	Az ön munkamenete nem ellenőrizhető.

@@ -885,7 +885,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	de	Steuert den Export und den Merge Print von Dokumenten/E-Mails.
 this is a mail account for all users!	admin	de	Das ist ein Mail-Konto für ALLE Benutzer!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	de	Das ist KEIN persönliches Mail-Konto!<br>Das Konto wird für ALLE Benutzer gelöscht!<br>Sind Sie wirklich sicher, dass Sie das wollen?
-this key used in the html code your site serves to users.	admin	de	Dieser Schlüssel steht im HTML Code den Ihre Website ausliefert.
 this php has no imap support compiled in!!	admin	de	Dieses PHP hat keine IMAP Unterstützung!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	de	Zeit nach der Anwendungsdaten der Sitzung gelöscht werden in Sekunden (Vorgabe 86400 = 1 Tag)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	de	Zeit nach der Sitzungen verfallen (Vorgabe 14400 = 4 Stunden)
@@ -950,7 +949,7 @@ user csv import	admin	de	CSV-Import von Benutzern
 user data	common	de	Benutzerdaten
 user for smtp-authentication (leave it empty if no auth required)	admin	de	Benutzer für SMTP-Authentifizierung (leer lassen falls keine Authentifizierung nötig).
 user groups	admin	de	Benutzergruppen
-user hidden from non-admins.	admin	de	Benutzer verborgen von nicht Administratoren.
+user hidden from non-admins.	admin	de	Benutzer versteckt für Nicht-Administratoren
 user-agent	admin	de	Browser
 userdata	admin	de	Benutzerkonto
 userid@domain eg. u1234@domain	admin	de	UserId@domain z.B. u1234@domain
@@ -991,8 +990,6 @@ wrong credentials to access the header.inc.php file!	admin	de	Falsche Zugangsdat
 xml-rpc	admin	de	XML-RPC
 yes, but no scayt	admin	de	Ja, aber keine automatische Rechtschreibüberprüfung
 yes, use browser based spell checking engine	admin	de	Ja, benutze nur die im Browser eingebaute Rechtschreibhilfe
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers
-yes, use credentials of current user or if given credentials below	admin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter
 yes, use webspellchecker	admin	de	Ja, benutze nur den WebSpellChecker (online)
 you can not use --dry-run together with --skip-checks!	admin	de	Die Verwendung von --dry-run und --skip-checks zusammen ist nicht möglich!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	de	Sie können die Passwort-Verschlüsselung nur ändern, wenn sie ein zufälliges Passwort setzen oder bisher Passworte im Klartext gespeichert haben!

@@ -113,6 +113,7 @@ connection status	mail	ja	接続状態
 contact label	mail	ja	連絡先ラベル
 contains	mail	ja	含む
 contains(*)	mail	ja	含む(*)
+continue	mail	ja	続ける
 convert mail to item and attach its attachments to this item (standard)	mail	ja	メール本文と添付ファイルを保存（標準）
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	ja	メール本文、添付ファイル、およびRFC822 (.eml)形式のメール・ソースを保存
 convert only mail to item (ignore possible attachments)	mail	ja	メール本文を保存（添付ファイルを無視）
@@ -322,6 +323,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	ja	作業
 junk	mail	ja	ジャンク
 junk folder	mail	ja	ジャンク・フォルダ
+keep a copy	mail	ja	コピーを残す
 keep a copy of the message in your inbox	mail	ja	インボックスのメッセージのコピーを保持
 kilobytes	mail	ja	kB
 later	mail	ja	後で
@@ -648,6 +650,7 @@ trust the server when retrieving the folder status. if you select no, we will se
 trying to recover from session data	mail	ja	セッション・データから復旧を試行中
 turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	mail	ja	署名と本文の間の線を非表示にします(RFC非推奨)。<br>テンプレートを使用する場合、この設定は本文だけに適用されます。
 unable to fetch vacation!	mail	ja	不在案内を取得できません!
+unconditional	mail	ja	常に
 undelete	mail	ja	消去を取り消す
 unflagged	mail	ja	フラグを外す
 unread	mail	ja	未読

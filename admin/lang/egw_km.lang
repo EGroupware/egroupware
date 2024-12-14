@@ -838,7 +838,6 @@ this application requires an upgrade	admin	km	កម្មវិធីនេះ�
 this category is currently being used by applications as a parent category	admin	km	ប្រភេទនេះកំពុងត្រូវបានប្រើប្រាស់ដោយកម្មវិធីជាប្រភេទមេ។
 this controls exports and merging.	admin	km	វាគ្រប់គ្រងការនាំចេញ និងការបោះពុម្ពបញ្ចូលគ្នា។
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	km	នេះមិនមែនជាគណនីអ៊ីមែលផ្ទាល់ខ្លួនទេ!\n\nគណនីនឹងត្រូវបានលុបសម្រាប់អ្នកប្រើប្រាស់ទាំងអស់!\n\nតើអ្នកពិតជាចង់ធ្វើវាមែនទេ?
-this key used in the html code your site serves to users.	admin	km	គន្លឹះនេះប្រើក្នុងកូដ HTML គេហទំព័ររបស់អ្នកបម្រើដល់អ្នកប្រើប្រាស់។
 this php has no imap support compiled in!!	admin	km	PHP នេះមិនមានការគាំទ្រ IMAP ដែលត្រូវបានចងក្រងនៅក្នុង !!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	km	អស់ពេលសម្រាប់ទិន្នន័យសម័យកម្មវិធីគិតជាវិនាទី។ លំនាំដើម 86400 = 1 ថ្ងៃ។
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	km	អស់ពេលសម្រាប់វគ្គគិតជាវិនាទី។ លំនាំដើម 14400 = 4 ម៉ោង។
@@ -907,8 +906,6 @@ username/password defined by admin	admin	km	ឈ្មោះអ្នកប្រ
 username@domainname (virtual mail manager)	admin	km	username@domainname (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	km	អ្នកប្រើប្រាស់អាចកំណត់គណនីអ៊ីមែលផ្ទាល់ខ្លួនរបស់ពួកគេ។
 users can define their own identities	admin	km	អ្នកប្រើប្រាស់អាចកំណត់អត្តសញ្ញាណផ្ទាល់ខ្លួនរបស់ពួកគេ។
-users can define their own signatures	admin	km	អ្នកប្រើប្រាស់អាចកំណត់ហត្ថលេខាផ្ទាល់ខ្លួនរបស់ពួកគេ។
-users can utilize these stationery templates	admin	km	អ្នកប្រើប្រាស់អាចប្រើប្រាស់គំរូសម្ភារៈការិយាល័យទាំងនេះ
 users choice	admin	km	ការជ្រើសរើសអ្នកប្រើប្រាស់
 using data from mozilla ispdb for provider %1	admin	km	ការប្រើប្រាស់ទិន្នន័យពី Mozilla ISPDB សម្រាប់អ្នកផ្តល់សេវា%1
 using imap:%1, smtp:%2, oauth:%3:	admin	km	ការប្រើប្រាស់ IMAP:%1, SMTP:%2, OAUTH:%3៖
@@ -935,8 +932,6 @@ wrong credentials to access the header.inc.php file!	admin	km	លិខិតស
 xml-rpc	admin	km	XML-RPC
 yes, but no scayt	admin	km	បាទ/ចាស ប៉ុន្តែមិនមានការពិនិត្យអក្ខរាវិរុទ្ធដូចដែលអ្នកវាយបញ្ចូលទេ (តាមអ៊ីនធឺណិត)
 yes, use browser based spell checking engine	admin	km	បាទ/ចាស ប្រើម៉ាស៊ីនពិនិត្យអក្ខរាវិរុទ្ធផ្អែកលើកម្មវិធីរុករក
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	km	បាទ/ចាស ប្រើព័ត៌មានសម្គាល់ខាងក្រោមសម្រាប់តែម៉ោងរោទិ៍ និងការជូនដំណឹងប៉ុណ្ណោះ បើមិនដូច្នេះទេ ប្រើព័ត៌មានសម្ងាត់របស់អ្នកប្រើប្រាស់បច្ចុប្បន្ន
-yes, use credentials of current user or if given credentials below	admin	km	បាទ/ចាស ប្រើព័ត៌មានសម្ងាត់របស់អ្នកប្រើប្រាស់បច្ចុប្បន្ន ឬប្រសិនបើផ្តល់លិខិតសម្គាល់ខាងក្រោម
 yes, use webspellchecker	admin	km	បាទ/ចាស ប្រើ WebSpellChecker តាមអ៊ីនធឺណិត
 you can not use --dry-run together with --skip-checks!	admin	km	អ្នកមិនអាចប្រើ --dry-run រួមគ្នាជាមួយ --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	km	អ្នកអាចផ្លាស់ប្តូរលេខសម្ងាត់បានតែប្រសិនបើអ្នកកំណត់ពាក្យសម្ងាត់ចៃដន្យ ឬបច្ចុប្បន្នប្រើពាក្យសម្ងាត់អត្ថបទធម្មតា!

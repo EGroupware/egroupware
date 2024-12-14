@@ -885,7 +885,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	fr	Ceci contrôle les exports et les fusion d'impressions.
 this is a mail account for all users!	admin	fr	Ceci est un compte mail pour TOUS les utilisateurs !
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	fr	Ce n'est PAS un compte de messagerie personnel!<br>Le compte sera supprimé pour TOUS les utilisateurs!<br>Vous êtes vraiment sûr de vouloir faire ça ?
-this key used in the html code your site serves to users.	admin	fr	Cette clé est utilisée dans le code HTML que votre site sert aux utilisateurs.
 this php has no imap support compiled in!!	admin	fr	Ce PHP n'est pas compilé avec le support de l'IMAP !
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fr	Expiration pour les données session de l'application en secondes (par défaut 86400 = 1 jour)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fr	Expiration pour les sessions en secondes (par défaut 14400 = 4 heures)
@@ -950,7 +949,7 @@ user csv import	admin	fr	Import des utilisateurs en CSV
 user data	common	fr	Données utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	admin	fr	Utilisateur pour l'authentification SMTP (laisser vide si pas requis).
 user groups	admin	fr	Groupes utilisateurs
-user hidden vom non-admins.	admin	fr	Utilisateur caché aux non-administrateurs
+user hidden from non-admins.	admin	fr	Utilisateur caché pour les non-administrateurs
 user-agent	admin	fr	User-Agent
 userdata	admin	fr	Données utilisateur
 userid@domain eg. u1234@domain	admin	fr	UserId@domain ie. u1234@domain
@@ -960,8 +959,6 @@ username/password defined by admin	admin	fr	Login / mot de passe définis par l'
 username@domainname (virtual mail manager)	admin	fr	utilisateur@domaine (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	admin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
 users can define their own identities	admin	fr	Les utilisateurs peuvent définir leurs propres identités
-users can define their own signatures	admin	fr	les utilisateurs peuvent définir leurs propres signatures
-users can utilize these stationery templates	admin	fr	Les utilisateurs peuvent utiliser ces modèles de papiers
 users choice	admin	fr	Choix de l'utilisateur
 using data from mozilla ispdb for provider %1	admin	fr	Utilisation des données de Mozilla ISPDB pour le fournisseur %1
 using fallback via regular json requests	admin	fr	Utilisation d'une solution de repli via des requêtes JSON normales
@@ -991,8 +988,6 @@ wrong credentials to access the header.inc.php file!	admin	fr	Mauvais login ou m
 xml-rpc	admin	fr	XML-RPC
 yes, but no scayt	admin	fr	Oui, mais pas de correction automatique au cours de la frappe (en ligne)
 yes, use browser based spell checking engine	admin	fr	Oui, utiliser le moteur de correction orthographique du navigateur
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	fr	Oui, utiliser les infos ci-dessous seulement pour les alarmes et les notifications, autrement utiliser les informations du compte utilisateur actif
-yes, use credentials of current user or if given credentials below	admin	fr	Oui, utiliser les informations du compte utilisateur actif ou bien de ces informations ci-dessous si elles sont renseignées
 yes, use webspellchecker	admin	fr	Oui, utiliser le moteur de correcteur orthographique en ligne
 you can not use --dry-run together with --skip-checks!	admin	fr	Vous ne pouvez pas utiliser à la fois --dry-run et --skip-checks !
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	fr	Vous pouvez changer le type de cryptage seulement, si vous définissez un mot de passe aléatoire ou si vous utilisez actuellement des mots de passe texte en clair !

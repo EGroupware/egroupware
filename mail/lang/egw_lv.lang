@@ -42,6 +42,7 @@ compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
 contact label	mail	lv	Kontakta etiķete
 contains	mail	lv	satur
+continue	mail	lv	Turpināt
 convert mail to item and attach its attachments to this item (standard)	mail	lv	Konvertēt e-pastu uz elementu un pievienot tā pielikumus šim elementam (standarta)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	lv	Konvertēt e-pastu vienībā, pievienot tā pielikumus un pievienot neapstrādātu ziņojumu (.eml) kā pielikumu
 convert only mail to item (ignore possible attachments)	mail	lv	Konvertēt tikai e-pastu vienumam (neņemot vērā iespējamos pielikumus).
@@ -63,6 +64,7 @@ display only when no plain text is available	mail	lv	Parādīt tikai tad, kad pi
 do you really want to toggle flag %1 for all messages in the current view?	mail	lv	Vai tiešām vēlaties pārslēgt %1 karodziņu VISIEM pašreizējā skatā esošajiem ziņojumiem?
 do you really want to toggle label %1 for all messages in the current view?	mail	lv	Vai jūs patiešām vēlaties pārslēgt atzīmi %1 VISIEM ziņojumiem pašreizējā skatā?
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lv	Vai vēlaties, lai pirms atlasīto ziņojumu pievienošanas jaunam e-pastam tiktu pieprasīts apstiprinājums?
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	lv	Vai vēlaties, lai pirms atlasīto ziņojumu pārvietošanas uz citu mapi jums tiek prasīts apstiprinājums?
 does not contain	mail	lv	nesatur
 does not match	mail	lv	neatbilst
 don't use sent	mail	lv	Nelieto nosūtīts
@@ -127,6 +129,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	lv	Darbs
 junk	mail	lv	Junk
 junk folder	mail	lv	Surogātpasta mape
+keep a copy	mail	lv	Saglabāt kopiju
 keep a copy of the message in your inbox	mail	lv	saglabājiet ziņojuma kopiju savā iesūtnē
 kilobytes	mail	lv	kb
 later	mail	lv	Vēlāk
@@ -279,6 +282,7 @@ to do	mail	lv	Darīt
 toggled on actions	mail	lv	Pārslēgt uz darbībām
 trash	mail	lv	Izmest atkritumus
 trash folder	mail	lv	Atkritumu mape
+unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 when deleting messages	mail	lv	Kad dzēš vēstules

@@ -431,6 +431,7 @@ document '%1' does not exist or is not readable for you!	preferences	cs	Dokument
 document properties	common	cs	Vlastnosti dokumentu
 document title:	common	cs	Název dokumentu:
 documentation	common	cs	Dokumentace
+documents	common	cs	Dokumenty
 doesn't matter	common	cs	Nezáleží na tom
 domain	common	cs	Doména
 domain name for mail-address, eg. "%1"	common	cs	Jméno domény pro e-mailovou adresu, např. "%1"
@@ -478,6 +479,7 @@ el salvador	common	cs	EL SALVADOR
 element role title	common	cs	Základní název funkce
 email	common	cs	E-mail
 email-address of the user, eg. "%1"	common	cs	E-mailová adresa uživatele, např. "%1"
+emails	common	cs	E-maily
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	cs	Vložené CSS styly, např. '.red { background: red; }' (všimněte si tečky před názvem třídy) nebo '@import url(...)' (názvy tříd jsou všeobecné pro celou stránku!)
 empty file	common	cs	Prázdný soubor
 enable javascript onchange submit	common	cs	Povolit odesílání onchange v JavaScript
@@ -682,6 +684,7 @@ if you use "2-factor-authentication", please enter the code here.	common	cs	Poku
 image	common	cs	Obrázek
 image directory relative to document root (use / !), example:	common	cs	Adresář pro obrázky relativní ke kořenovému adresáři dokumentů (použijte / !), například:
 image url	common	cs	URL obrázku
+images	common	cs	Obrázky
 import	common	cs	Importovat
 import an etemplate from a xml-file	common	cs	Importovat eTemplate z XML souboru
 import table-definitions from existing db-table	common	cs	Importovat definice tabulky ze stavající databázové tabulky
@@ -1302,6 +1305,7 @@ spain	common	cs	ŠPANĚLSKO
 span	common	cs	Roztažení
 span, class	common	cs	Roztažení, Třída
 special characters	common	cs	zvláštní znaky
+spreadsheets	common	cs	Tabulky
 sri lanka	common	cs	SRÍ LANKA
 stack	common	cs	Zásobník
 start a new search, cancel this link	common	cs	Začít nové hledání, zrušit tento odkaz
@@ -1458,6 +1462,7 @@ version	common	cs	Verze
 vertical alignment of row	common	cs	Svislé zarovnání řádku
 vfs upload directory	common	cs	Nahrání složky na VFS
 video tutorials	common	cs	Videonávody
+videos	common	cs	Videa
 viet nam	common	cs	VIETNAM
 view	common	cs	Zobrazit
 view linked %1 entries	common	cs	Zobrazit %1 propojený(ch) záznam(ů)

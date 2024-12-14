@@ -404,10 +404,13 @@ use default	admin	ko	기본 사용
 use pure html compliant code (not fully working yet)	admin	ko	순수 HTML 호환 코드 사용 (아직 완전하지 않습니다)
 use theme	admin	ko	테마 사용
 user accounts	admin	ko	사용자 계정
+user choice	admin	ko	사용자 선택
+user csv export	admin	ko	사용자 CSV 내보내기
+user csv import	admin	ko	사용자 CSV 가져오기
 user data	common	ko	사용자 데이터
 user for smtp-authentication (leave it empty if no auth required)	admin	ko	사용자 SMTP-인증 (인증이 필요없을경우 비워둡니다)
 user groups	admin	ko	사용자 그룹
-user hidden vom non-admins.	admin	ko	관리자가 아닌 사용자에게 숨겨진 사용자
+user hidden from non-admins.	admin	ko	관리자가 아닌 사용자를 위한 사용자 숨김
 user-agent	admin	ko	User-Agent
 userdata	admin	ko	사용자데이터
 users choice	admin	ko	사용자 선택
@@ -419,6 +422,7 @@ view sessions	admin	ko	세션 보기
 view this user	admin	ko	이 사용자를보기
 view user account	admin	ko	사용자 계정 보기
 who would you like to transfer all records owned by the deleted user to?	admin	ko	누구에게 삭제된 사용자 소유의 모든 레코드를 전송 하시겠습니까?
+who would you like to transfer records owned by the deleted user to?	admin	ko	삭제된 사용자가 소유한 기록을 누구에게 이전하시겠습니까?
 xml-rpc	admin	ko	XML-RPC
 you have entered an invalid expiration date	admin	ko	부적절한 만료 날짜를 입력하셨습니다
 you must add at least 1 permission or group to this account	admin	ko	이 계정에 최소한 하나의 권한이나 그룹을 추가하셔야 합니다
@@ -427,5 +431,6 @@ you must enter a lastname	admin	ko	이름을 입력해야 합니다
 you must enter a loginid	admin	ko	접속ID를 입력해야 합니다
 you must enter an application name.	admin	ko	응용프로그램 이름을 입력해야 합니다
 you must enter an application title.	admin	ko	응용프로그램 제목을 입력해야 합니다
+you need to select some users first!	admin	ko	먼저 몇 명의 사용자를 선택해야 합니다!
 you will need to remove the subcategories before you can delete this category	admin	ko	이 카테고리를 삭제하기 전에 하위카테고리를 삭제해야 합니다!
 your session could not be verified.	admin	ko	세션이 검증되지 않았습니다

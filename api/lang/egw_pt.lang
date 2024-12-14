@@ -373,6 +373,7 @@ doctype:	common	pt	Tipo de documento:
 document properties	common	pt	Propriedades do documento
 document title:	common	pt	Título do documento
 documentation	common	pt	Documentação
+documents	common	pt	Documentos
 doesn't matter	common	pt	Não interessa
 domain	common	pt	Domínio
 domain name for mail-address, eg. "%1"	common	pt	Nome de domínio para endereço de correio electrónico. Ex: "%1"
@@ -407,6 +408,7 @@ el salvador	common	pt	Salvador
 element role title	common	pt	Título papel de elemento
 email	common	pt	Correio Electrónico
 email-address of the user, eg. "%1"	common	pt	Endereço de correio electrónico para o utilizador. Ex: "%1"
+emails	common	pt	E-mails
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	pt	Estilos de CSS embebidos. Ex: '.red { background: red; }' (repare no'.' antes do nome de classe) ou '@import url(...)' (nomes de classe são gerais para toda a página!)
 enable javascript onchange submit	common	pt	Activar a submissão de JavaScript onchange
 enabled	common	pt	Activado
@@ -581,6 +583,7 @@ if there are some images in the background folder you can choose the one you wou
 if you use "2-factor-authentication", please enter the code here.	common	pt	Se utilizar a "Autenticação de 2 factores", introduza o código aqui.
 image	common	pt	Imagem
 image url	common	pt	URL da imagem
+images	common	pt	Imagens
 import	common	pt	Importar
 import an etemplate from a xml-file	common	pt	Importar um modelo Web de um ficheiro XML
 import table-definitions from existing db-table	common	pt	Importar definições da tabela de uma tabela de base de dados existente
@@ -1102,6 +1105,7 @@ spacing	common	pt	Espaçamento
 spain	common	pt	Espanha
 span	common	pt	Extensão
 span, class	common	pt	Extensão, Classe
+spreadsheets	common	pt	Folhas de cálculo
 sri lanka	common	pt	Sri Lanka
 stack	common	pt	Empilhar
 start a new search, cancel this link	common	pt	Iniciar uma nova pesquisa. Cancelar esta ligação
@@ -1230,6 +1234,7 @@ vbox	common	pt	Caixa vertical
 venezuela	common	pt	Venezuela
 version	common	pt	Versão
 vertical alignment of row	common	pt	Alinhamento vertical da linha
+videos	common	pt	Vídeos
 viet nam	common	pt	Vietname
 view	common	pt	Ver
 view this etemplate	common	pt	Ver este modelo Web

@@ -885,7 +885,6 @@ this category is currently being used by applications as a parent category	admin
 this controls exports and merging.	admin	en	This controls exports and merge prints.
 this is a mail account for all users!	admin	en	This is a mail account for ALL users!
 this is not a personal mail account!\n\naccount will be deleted for all users!\n\nare you really sure you want to do that?	admin	en	This is NOT a personal mail account!<br>Account will be deleted for ALL users!<br>Are you really sure you want to do that?
-this key used in the html code your site serves to users.	admin	en	This key used in the HTML code your site serves to users.
 this php has no imap support compiled in!!	admin	en	This PHP has no IMAP support compiled in!
 timeout for application session data in seconds (default 86400 = 1 day)	admin	en	Timeout for application session data in seconds. Default 86400 = 1 day
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	en	Timeout for sessions in seconds. Default 14400 = 4 hours
@@ -950,7 +949,7 @@ user csv import	admin	en	User CSV import
 user data	common	en	User data
 user for smtp-authentication (leave it empty if no auth required)	admin	en	User for SMTP authentication. Leave it empty if no authentication is required.
 user groups	admin	en	User groups
-user hidden from non-admins.	admin	en	User hidden from non-admins.
+user hidden from non-admins.	admin	en	User hidden for non-admins
 user-agent	admin	en	User-Agent
 userdata	admin	en	User data
 userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain
@@ -991,8 +990,6 @@ wrong credentials to access the header.inc.php file!	admin	en	Wrong credentials 
 xml-rpc	admin	en	XML-RPC
 yes, but no scayt	admin	en	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	en	Yes, use browser based spell checking engine
-yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	admin	en	Yes, use credentials below only for alarms and notifications, otherwise use credentials of current user
-yes, use credentials of current user or if given credentials below	admin	en	Yes, use credentials of current user or if given credentials below
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
 you can not use --dry-run together with --skip-checks!	admin	en	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!

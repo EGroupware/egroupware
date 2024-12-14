@@ -667,10 +667,13 @@ use tls encryption	admin	pt-br	Usar encriptação TLS
 use users email-address (as seen in useraccount)	admin	pt-br	Use usuários endereço de e-mail, conforme definido na conta do usuário
 user accounts	admin	pt-br	Contas de usuários
 user can edit forwarding address	admin	pt-br	Usuário pode editar endereço de encaminhamento
+user choice	admin	pt-br	Escolha do usuário
+user csv export	admin	pt-br	Exportação de CSV de usuário
+user csv import	admin	pt-br	Importação de CSV de usuário
 user data	common	pt-br	Dados de usuários
 user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
-user hidden vom non-admins.	admin	pt-br	Usuário oculto para não administradores
+user hidden from non-admins.	admin	pt-br	Usuário oculto para não administradores
 user-agent	admin	pt-br	User-Agent
 userdata	admin	pt-br	Dados de usuário
 userid@domain eg. u1234@domain	admin	pt-br	Domínio @ UserID por exemplo. u1234 @ domínio
@@ -693,6 +696,7 @@ view this user	admin	pt-br	Exibir este usuário
 view user account	admin	pt-br	Exibir conta de usuário
 virtual mail manager	admin	pt-br	Virtual MAIL ManaGeR
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
+who would you like to transfer records owned by the deleted user to?	admin	pt-br	Para quem você gostaria de transferir os registros pertencentes ao usuário excluído?
 wrong account type: %1 is no %2 !!!	admin	pt-br	Tipo de conta errado: %1 NÃO é %2!
 wrong admin-account or -password !!!	admin	pt-br	Conta de administração ou -senha errada!
 xml-rpc	admin	pt-br	XML-RPC
@@ -709,6 +713,7 @@ you must enter an application name.	admin	pt-br	Você deve digitar um nome para 
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select at least one group member.	admin	pt-br	Você deve selecionar ao menos um membro.
 you need to enter install id and password!	admin	pt-br	Você deve informar um ID de instalação E senha!
+you need to select some users first!	admin	pt-br	Você precisa selecionar alguns usuários primeiro!
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria!
 your name	admin	pt-br	Seu nome
 your session could not be verified.	admin	pt-br	Sua sessão não pôde ser verificada.

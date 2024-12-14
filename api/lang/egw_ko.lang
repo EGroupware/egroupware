@@ -135,6 +135,7 @@ do you also want to delete all subcategories ?	common	ko	모든 하위 분류들
 doctype:	common	ko	문서형식:
 document properties	common	ko	문서 속성
 document title:	common	ko	문서 제목:
+documents	common	ko	문서
 domain	common	ko	도메인
 domain name for mail-address, eg. "%1"	common	ko	이메일 주소를 위한 도메인 (예 : %1)
 domestic	common	ko	기숙사
@@ -148,6 +149,7 @@ edit categories	common	ko	분류 수정
 edit category	common	ko	분류 수정
 egroupware: login blocked for user '%1', ip %2	common	ko	EGroupware: 사용자 %1 및 IP %2에 대한 로그인이 차단되었습니다.
 email	common	ko	E-Mail
+emails	common	ko	이메일
 enabled	common	ko	활성화됨
 end date	common	ko	종료일
 end time	common	ko	종료시간
@@ -208,6 +210,7 @@ hours	common	ko	시간
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
 html links to any entries linked to the current record, excluding attached files	common	ko	첨부 파일을 제외한 현재 레코드에 연결된 모든 항목에 대한 HTML 링크입니다.
 image url	common	ko	그림 URL
+images	common	ko	이미지
 import	common	ko	가져오기
 insert column after	common	ko	뒤에 행 넣기
 insert column before	common	ko	앞에 행 넣기
@@ -320,6 +323,7 @@ open	common	ko	개설
 open existing contact	common	ko	기존 연락처 열기
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
+open the online help.	common	ko	온라인 도움말 열기
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ko	OpenIDConnect 로그인에 성공했지만 사용자 '%1'이(가) EGroupware에 존재하지 않으며 자동 사용자 생성이 비활성화되었습니다!
 operator	common	ko	운영자
 optional note about the link	common	ko	링크에 대한 선택적 참고 사항
@@ -431,6 +435,7 @@ show_more_apps	common	ko	더 많은 응용프로그램 보기
 sign up	common	ko	가입하기
 site configuration	common	ko	앱 구성
 sorry, your login has expired	login	ko	귀하의 사용자ID는 만료되어 더 이상 사용하실수 없습니다.
+spreadsheets	common	ko	스프레드시트
 start a new search, cancel this link	common	ko	이 링크를 취소하고 새로 검색
 status	common	ko	상태
 subject	common	ko	제목
@@ -463,6 +468,7 @@ username	common	ko	사용자ID
 users	common	ko	사용자
 users choice	common	ko	사용자 선택
 version	common	ko	버전
+videos	common	ko	동영상
 view	common	ko	보기
 wednesday	common	ko	수요일
 welcome	common	ko	환영합니다

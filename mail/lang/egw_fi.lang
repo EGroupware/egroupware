@@ -62,6 +62,7 @@ condition	mail	fi	Ehdot
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fi	Määritetyt arvot asetetaan automaattisesti laatimisvalintaikkunassa arvostetulle kentälle, kun laadit uutta sähköpostia.
 contact label	mail	fi	Yhteystieto etiketti
 contains	mail	fi	Sisältää
+continue	mail	fi	Jatka
 convert mail to item and attach its attachments to this item (standard)	mail	fi	Muunna sähköposti kohteeksi ja liitä sen liitteet tähän kohteeseen (vakio)
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	fi	Muunna sähköpostiviesti kohteeksi, liitä sen liitteet ja lisää raakaviesti (.eml) liitetiedostoksi
 convert only mail to item (ignore possible attachments)	mail	fi	Muunna vain sähköposti kohteeksi (jätä mahdolliset liitteet huomiotta)
@@ -178,6 +179,7 @@ insert the signature at top of the new (or reply) message when opening compose d
 job	mail	fi	Työ
 junk	mail	fi	Roskaposti
 junk folder	mail	fi	Roskapostikansio
+keep a copy	mail	fi	Säilytä kopio
 keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxissa
 kilobytes	mail	fi	Kilotavu(a)
 later	mail	fi	Jälkeen
@@ -363,6 +365,7 @@ to do	mail	fi	Toimi näin
 toggled on actions	mail	fi	Kytketty päälle toiminnot
 trash	mail	fi	Roskakori
 trash folder	mail	fi	Roskakori-kansio
+unconditional	mail	fi	Aina
 unflagged	mail	fi	Tunnukseton
 unread	mail	fi	Lukematon
 vacation notice	mail	fi	Lomavastaaja

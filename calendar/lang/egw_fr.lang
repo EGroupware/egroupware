@@ -320,6 +320,7 @@ ical export	calendar	fr	Exportation iCal
 ical file	calendar	fr	Fichier iCal
 ical import	calendar	fr	Importation iCal
 ical successful imported	calendar	fr	Importation iCal réussie
+if resource is unavailable	calendar	fr	Si la ressource n'est pas disponible
 if start day differs	calendar	fr	Si le jour de début diffère
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fr	Si vous ne définissez pas de mot de passe ici, l'information est disponibles pour chaque personne connaissant l'URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	fr	Si vous choisissez une étendue (mois, semaine, etc) au lieu d'une liste d'éléments, ces champs supplémentaires sont disponibles.
@@ -509,6 +510,7 @@ require an acl grant to invite other users and groups	admin	fr	Nécessite un ACL
 required information (start, end, title, ...) missing!	calendar	fr	Il manque des informations nécessaires : début, fin, titre ... !
 reset	calendar	fr	Réinitialiser
 reset participant stati on event shifts	calendar	fr	Réinitialiser les statuts des participants au déplacement des rendez-vous
+reset resource status on event shifts	calendar	fr	Réinitialiser le statut de la ressource en cas de déplacement d'un événement
 resources	calendar	fr	Ressources
 resources except conflicting ones	calendar	fr	Ressources à l'exception de celles en conflit
 resources with conflict detection	calendar	fr	Ressources avec détection de conflits
@@ -528,6 +530,7 @@ select a time	calendar	fr	Sélectionnez une heure
 select multiple contacts for a further action	calendar	fr	Sélectionner plusieurs contacts pour une même action
 select resources	calendar	fr	Sélectionner les ressources
 select whether you want the participant stati reset to unknown, if an event is shifted later on.	calendar	fr	Sélectionner si vous souhaitez le statut du participant remis à "Pas de réponse", si un événement est déplacé plus tard
+select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	fr	Indiquez si vous souhaitez que le statut de la ressource soit réinitialisé à inconnu en cas de déplacement d'un événement. Pour les externes, nous réinitialisons toujours le statut du participant à inconnu.
 select who should get the alarm	calendar	fr	Sélectionner qui doit recevoir l'alarme
 selected range	calendar	fr	Etendue sélectionnée
 selected users/groups	calendar	fr	Utilisateurs/groupes sélectionnés

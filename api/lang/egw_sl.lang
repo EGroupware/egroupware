@@ -431,6 +431,7 @@ document '%1' does not exist or is not readable for you!	preferences	sl	Dokument
 document properties	common	sl	Lastnosti dokumenta
 document title:	common	sl	Naziv dokumenta
 documentation	common	sl	Dokumentacija
+documents	common	sl	Dokumenti
 doesn't matter	common	sl	Ni pomembno
 domain	common	sl	Domena
 domain name for mail-address, eg. "%1"	common	sl	Ime domene za E-naslov, npr. "%1"
@@ -478,6 +479,7 @@ el salvador	common	sl	SALVADOR
 element role title	common	sl	Naslov vloge elementa
 email	common	sl	E-pošta
 email-address of the user, eg. "%1"	common	sl	E-naslov uporabnika, npr. "%1"
+emails	common	sl	Elektronska sporočila
 embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	common	sl	Vključeni slogi CSS, npr. '.red { background: red; }' (pazite na '.' pred imenom razreda) ali '@import url(...)' (imena razredov so globalna za celo stran!)
 empty file	common	sl	Prazna datoteka
 enable javascript onchange submit	common	sl	Omogoči JavaScript onchange
@@ -682,6 +684,7 @@ if you use "2-factor-authentication", please enter the code here.	common	sl	Če 
 image	common	sl	Slika
 image directory relative to document root (use / !), example:	common	sl	Mapa slik, relativno na koren dokumentov (document root, uporabite /!). Primer:
 image url	common	sl	URL podobe
+images	common	sl	Slike
 import	common	sl	Uvoz
 import an etemplate from a xml-file	common	sl	Uvozi eTemplate iz datoteke XML
 import table-definitions from existing db-table	common	sl	Uvozi definicije tabele iz obstoječe tabele podatkovne baze
@@ -982,6 +985,7 @@ open	common	sl	Odpri
 open existing contact	common	sl	Odprite obstoječi stik
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri pojavno okno
+open the online help.	common	sl	Odprite spletno pomoč
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	sl	Prijava v OpenIDConnect je bila uspešna, vendar uporabnik '%1' NE obstaja v programu EGroupware in samodejno ustvarjanje uporabnikov je onemogočeno!
 operator	common	sl	Operator
 optional note about the link	common	sl	Morebitne opombe o povezavi
@@ -1300,6 +1304,7 @@ spain	common	sl	ŠPANIJA
 span	common	sl	Span
 span, class	common	sl	Span, Class
 special characters	common	sl	posebne znake
+spreadsheets	common	sl	Preglednice
 sri lanka	common	sl	ŠRI LANKA
 stack	common	sl	Sklad
 start a new search, cancel this link	common	sl	Začne novo iskanje, prekliče to povezavo
@@ -1457,6 +1462,7 @@ version	common	sl	Različica
 vertical alignment of row	common	sl	Navpična porvnava vrstice
 vfs upload directory	common	sl	Imenik nalaganja VFS
 video tutorials	common	sl	Video vadnice
+videos	common	sl	Videoposnetki
 viet nam	common	sl	VIETNAM
 view	common	sl	Pregled
 view linked %1 entries	common	sl	Oglejte si povezane vnose %1

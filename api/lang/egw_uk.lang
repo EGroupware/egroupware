@@ -186,6 +186,7 @@ details	common	uk	Деталі
 directory for storing merged documents	preferences	uk	Папка для зберігання об'єднаних документів
 disabled	common	uk	Вимкнено
 do you also want to delete all subcategories ?	common	uk	Чи хочете ви також видалити вся підкатегорії?
+documents	common	uk	Документи
 domain	common	uk	Domain
 domain name for mail-address, eg. "%1"	common	uk	Domain ім'я для email адреси. Наприклад "%1"
 domestic	common	uk	Місцевий
@@ -204,6 +205,7 @@ egroupware: login blocked for user '%1', ip %2	common	uk	Заблоковано 
 egypt	common	uk	ЄГИПЕТ
 email	common	uk	E-Mail
 email-address of the user, eg. "%1"	common	uk	email адреса користувача, наприклад "%1".
+emails	common	uk	Електронні листи
 enabled	common	uk	Ввімкнено
 end date	common	uk	Кінцева дата
 end time	common	uk	Кінцевий час
@@ -289,6 +291,7 @@ hungary	common	uk	УГОРЩИНА
 id	common	uk	Id
 if you use "2-factor-authentication", please enter the code here.	common	uk	Якщо ви використовуєте "2-факторну автентифікацію", будь ласка, введіть код тут.
 image url	common	uk	URL зображення
+images	common	uk	Зображення
 import	common	uk	Імпорт
 include access to any linked files (links tab)	common	uk	Включити доступ до будь-яких пов'язаних файлів (вкладка "Посилання")
 infolog types to sync	common	uk	Типи інфологів для синхронізації
@@ -425,6 +428,7 @@ open	common	uk	відкрито
 open existing contact	common	uk	Відкрити існуючий контакт
 open notify window	common	uk	Відкрити вікно повідомлень
 open popup window	common	uk	Відкрити вспливаюче вікно
+open the online help.	common	uk	Відкрити онлайн-довідку
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	uk	Вхід до OpenIDConnect виконано успішно, але користувача '%1' НЕ ІСНУЄ в EGroupware, а автоматичне створення користувачів вимкнено!
 original	common	uk	Оригінальне
 other	common	uk	Інше
@@ -543,6 +547,7 @@ slovenia	common	uk	СЛОВЕНІЯ
 somalia	common	uk	СОМАЛІ
 sorry, your login has expired	login	uk	Вибачте, Ваше право входу вичерпано.
 spain	common	uk	ІСПАНІЯ
+spreadsheets	common	uk	Електронні таблиці
 sri lanka	common	uk	ШРІ ЛАНКА
 start a new search, cancel this link	common	uk	Розпочати новий пошук, покинути це посилання
 start date	common	uk	Дата початку
@@ -606,6 +611,7 @@ users choice	common	uk	Вибір користувачів
 uzbekistan	common	uk	УЗБЕКИСТАН
 venezuela	common	uk	ВЕНЕСУЕЛА
 version	common	uk	Версія
+videos	common	uk	Відео
 viet nam	common	uk	В'ЄТНАМ
 view	common	uk	Перегляд
 view this linked entry in its application	common	uk	переглянути посилання в відповідному приложенні
