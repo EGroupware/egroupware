@@ -3,10 +3,8 @@
 <overlay>
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
 		<et2-hbox>
-			<et2-description  value="Start"></et2-description>
-			<et2-date  id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
-			<et2-description  value="End"></et2-description>
-			<et2-date  id="enddate" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
+			<et2-date label="Start" id="startdate" onchange="widget.getParent().getWidgetById('enddate').set_min(widget.getValue());return true;"></et2-date>
+			<et2-date label="End" id="enddate" onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
 		</et2-hbox>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
