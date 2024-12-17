@@ -37,7 +37,7 @@
 					</et2-vbox>
 					<nextmatch-sortheader label="Title" id="cal_title"/>
 					<nextmatch-sortheader label="Description" id="cal_description"/>
-					<nextmatch-sortheader label="Recurrence" id="recure"/>
+					<nextmatch-header label="Recurrence" id="recure"/>
 					<nextmatch-header label="Category" id="cat_id"/>
 					<et2-vbox>
 						<nextmatch-sortheader label="Owner" id="cal_owner" readonly="true"/>
