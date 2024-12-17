@@ -232,9 +232,10 @@ class DateTime extends \DateTime
 	 * @param int &$end
 	 * @param string $column name of timestamp column to use in returned sql
 	 * @param array $filters $name => list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) pairs with offsets
+	 * @param string $format ts: $column is a unix-timestamp/int, self::DATABASE: suitable for DateTime and Timestamp columns
 	 * @return string
 	 */
-	public static function sql_filter($name, &$start, &$end, $column, array $filters=array())
+	public static function sql_filter($name, &$start, &$end, $column, array $filters=array(), $format='ts')
 	{
 		if ($name == 'custom' && $start)
 		{
@@ -294,19 +295,19 @@ class DateTime extends \DateTime
 			}
 		}
 		// convert start + end from user to servertime for the filter
-		$sql = '('.DateTime::user2server($start, 'ts').' <= '.$column;
+		$sql = '('.$GLOBALS['egw']->db->quote(DateTime::user2server($start, $format), $format === 'ts' ? 'int' : 'string').' <= '.$column;
 		if($end)
 		{
-			$sql .=' AND '.$column.' < '.DateTime::user2server($end, 'ts');
+			$sql .=' AND '.$column.' < '.$GLOBALS['egw']->db->quote(DateTime::user2server($end, $format), $format === 'ts' ? 'int' : 'string');
 
-			// returned timestamps: $end is an inclusive date, eg. for today it's equal to start!
+			// returned timestamps: $end is an inclusive date, e.g. for today it's equal to start!
 			$end->add('-1day');
-			$end = $end->format('ts');
+			$end = $end->format($format);
 		}
 		$sql .= ')';
 		//error_log(__METHOD__."('$name', ...) syear=$syear, smonth=$smonth, sday=$sday, sweek=$sweek, eyear=$eyear, emonth=$emonth, eday=$eday, eweek=$eweek --> start=".$start->format().', end='.$end->format().", sql='$sql'");
 
-		$start = $start->format('ts');
+		$start = $start->format($format);
 
 		return $sql;
 	}
