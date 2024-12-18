@@ -358,6 +358,9 @@ export class et2_file extends et2_inputWidget
 			this.input.wrap('<form>').closest('form').get(0).reset();
 			this.input.unwrap();
 
+			// Reset progress
+			this.progress.empty();
+
 			return;
 		}
 
