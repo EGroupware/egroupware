@@ -906,7 +906,24 @@ and (orientation : landscape) {
 	margin-left:1em;
 
 }
-#mail-compose_mimeType{margin-left:1em;}
+
+#popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
+	border-bottom: 1px solid;
+	border-color: hsl(240 5% 64.9%);/*var(--sl-panel-border-color);*/
+
+	&::part(base){
+		gap: 1em;
+	}
+
+	#mail-compose_mimeType {
+		flex-grow: 0;
+	}
+	.et2_toolbar
+	{
+		border:none;
+	}
+}
+
 /*Make file uploads in compose dialog invisible*/
 .mail-compose_toolbar_assist div.mail-compose_fileselector, .mail-compose_toolbar_assist {
 	display:none;
