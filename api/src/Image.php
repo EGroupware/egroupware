@@ -86,7 +86,7 @@ class Image
 		'generate_password'	=> 'key',
 		'goup'	=> 'arrow-bar-up',
 		'group'	=> 'people',
-		'hangup'	=> 'telephone-minus',
+		'hangup'	=> 'x-lg',
 		'help'	=> 'question-circle',
 		'home'	=> 'house-door',
 		'ical'	=> 'box-arrow-down',
