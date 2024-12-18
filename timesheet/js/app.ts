@@ -91,7 +91,7 @@ class TimesheetApp extends EgwApp
 		{
 			egw.css("#timesheet-index span.timesheet_titleDetails","font-weight:" + (filter2.getValue() == '1' ? "bold;" : "normal;"));
 			// Show / hide descriptions
-			egw.css(".ts_description", "display:" + (filter2.getValue() == '1' ? "block;" : "none;"));
+			egw.css(".ts_description", "display:" + (filter2.getValue() == '1' ? "flex;" : "none;"));
 		}
 	}
 
