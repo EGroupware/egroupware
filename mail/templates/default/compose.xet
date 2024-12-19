@@ -24,12 +24,24 @@
 				<et2-password  id="smime_passphrase"></et2-password>
 				<et2-select  id="to_integrate_ids" multiple="true" allowFreeEntries="true" editModeEnabled="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search"></et2-select>
 				<et2-select  id="priority"></et2-select>
+				<et2-vbox class="expanderFirstRow">
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="composeID"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="serverID"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="processedmail_id"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="mode"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" id="lastDrafted"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="references"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="in-reply-to"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-topic"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="thread-index"></et2-textbox>
+					<et2-textbox  class="mail-index_quotaDisplayNone" readonly="true" id="list-id"></et2-textbox>
+				</et2-vbox>
 			</et2-hbox>
 
 			<grid  width="100%" resize_ratio="0">
 				<columns>
 					<column width="10%"/>
-					<column width="70%"/>
+					<column width="90%"/>
 				</columns>
 				<rows>
 					<row class="mailComposeHeaders" >
