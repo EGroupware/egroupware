@@ -145,13 +145,19 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					width: 100%;
 				}
 
-				  :host([search]) sl-select[open]::part(display-input), :host([allowfreeentries]) sl-select[open]::part(display-input) {
-					display: none;
-				}
+					:host([search]), :host([allowfreeentries]) {
+						sl-select[open]::part(display-input) {
+							display: none;
+						}
 
-				  :host([search]) sl-select[open]::part(expand-icon) {
-					display: none;
-				  }
+						sl-select[open]::part(clear-button) {
+							display: none;
+						}
+
+						sl-select[open]::part(expand-icon) {
+							display: none;
+						}
+					}
 
 				  sl-select[open][multiple]::part(tags) {
 					flex-basis: 100%;
