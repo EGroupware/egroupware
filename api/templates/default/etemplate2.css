@@ -3045,12 +3045,23 @@ et2-button.transparent-button::part(container) {
 .ui-toolbar-menulist et2-button::part(label) {
     font-size: 12px;
 }
-.ui-toolbar-menulist et2-button::part(base) {
+
+.ui-toolbar-menulist et2-button::part(base), .ui-toolbar-menulist et2-switch-icon::part(switch-label) {
     border: none;
     background-color: transparent;
     line-height: var(--sl-line-height-normal);
     padding: var(--sl-spacing-2x-small) var(--sl-spacing-2x-small);
     margin: 2px 8px 2px;
+}
+
+.ui-toolbar-menulist et2-switch-icon::part(form-control-label) {
+    visibility: visible;
+    top: 10%;
+    left: 100%;
+}
+
+.ui-toolbar-menulist et2-switch-icon::part(control) {
+    font-size: 20px; /*increase font size so bi icons are also big*/
 }
 .ui-toolbar-menulist et2-dropdown-button::part(base)
 {
