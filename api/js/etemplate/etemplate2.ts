@@ -1231,7 +1231,7 @@ export class etemplate2
 			this.unbind_unload();
 
 			const form = jQuery("<form id='form' action='" + egw().webserverUrl +
-				"/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&ajax=true' method='POST'>");
+				"/index.php?menuaction=" + this._widgetContainer.egw().getAppName() + ".EGroupware\\Api\\Etemplate.process_exec&cd=popup' method='POST'>");
 
 			const etemplate_id = jQuery(document.createElement("input"))
 				.attr("name", 'etemplate_exec_id')
