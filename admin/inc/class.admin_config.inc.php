@@ -100,6 +100,11 @@ class admin_config
 			Api\Framework::redirect_link('/index.php');
 		}
 
+		if (!empty($_GET['msg']))
+		{
+			Api\Framework::message($_GET['msg'], 'info');
+		}
+
 		// load the translations of the app we show too, so they dont need to be in admin!
 		if ($_appname != 'admin')
 		{
