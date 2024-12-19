@@ -502,6 +502,10 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 			return;
 		}
 
+		if(typeof document.activeElement?.blur == "function")
+		{
+			document.activeElement?.blur();
+		}
 		this.removeOpenListeners();
 		this._completeResolver([this._button_id, this.value]);
 
