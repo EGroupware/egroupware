@@ -51,6 +51,9 @@ export class EgwMenuShoelace extends LitElement
 					line-height: normal;
 					width: 1.3em;
 				}
+				et2-image::before {
+					font-size: 1.3em; /*make bi icons same size as et2-image img*/
+				}
 			`
 		]
 	}
