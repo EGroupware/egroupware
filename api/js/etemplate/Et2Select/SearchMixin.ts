@@ -928,6 +928,11 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			{
 				this._handleSearchAbort(e);
 			}
+			// Focus the widget again, ready for a search
+			this.updateComplete.then(() =>
+			{
+				this.dropdown.open = true;
+			})
 		}
 
 		/**
