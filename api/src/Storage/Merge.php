@@ -2641,7 +2641,12 @@ abstract class Merge
 				}
 				catch (\Exception $e)
 				{
-					throw new Api\Exception("Unable to send email", 100, $e);
+					$msg = "Unable to send email\n" . $e->getMessage();
+					if($e->details)
+					{
+						$msg .= "\n" . $e->details;
+					}
+					throw new Api\Exception($msg, 100, $e);
 				}
 				// Save to VFS so we can link to entry
 				if($link || $download)
