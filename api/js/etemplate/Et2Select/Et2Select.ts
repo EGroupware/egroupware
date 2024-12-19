@@ -311,6 +311,9 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 
 	private __value : string | string[] = "";
 
+	// Flag to avoid issues with free entries & fix_bad_value
+	private __inInitialSetup : boolean = true;
+
 	protected tagOverflowObserver : IntersectionObserver = null;
 
 	protected get dropdown() { return this.select; }
@@ -429,6 +432,10 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		}
 		// If no value is set, choose the first option
 		// Only do this on once during initial setup, or it can be impossible to clear the value
+		if(!this.__inInitialSetup)
+		{
+			return;
+		}
 
 		// value not in options --> use emptyLabel, if exists, or first option otherwise
 		if(this.select_options.filter((option) => valueArray.find(val => val == option.value) ||
@@ -562,7 +569,11 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		super.loadFromXML(_node);
 
 		// Wait for update to be complete before we check for bad value so extending selects can have a chance
-		this.updateComplete.then(() => this.fix_bad_value());
+		this.updateComplete.then(() =>
+		{
+			this.fix_bad_value();
+			this.__inInitialSetup = false;
+		});
 	}
 
 	/** @param changedProperties */
@@ -935,7 +946,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 		// Tag used must match this.optionTag, but you can't use the variable directly.
 		// Pass option along so SearchMixin can grab it if needed
 		const value = (<string>option.value).replaceAll(" ", "___");
-		const classes = option.class ? Object.fromEntries((option.class).split(" ").map(k => [k, true])) : {};
+		const classes = option.class ? Object.fromEntries((option.class).trim().split(" ").map(k => [k, true])) : {};
 		return html`
             <sl-option
                     part="option"

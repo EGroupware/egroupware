@@ -328,7 +328,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		async getUpdateComplete()
 		{
-			const result = super.getUpdateComplete();
+			const result = await super.getUpdateComplete();
 			if(this._searchInputNode)
 			{
 				await this._searchInputNode.updateComplete;
@@ -358,8 +358,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			if(changedProperties.has("value") && this.value)
 			{
 				// Overridden to add options if allowFreeEntries=true
-				if(this.allowFreeEntries && typeof this.value == "string" && !this.select_options.find(o => o.value == this.value &&
-					(!o.class || o.class && !o.class.includes('remote'))))
+				if(this.allowFreeEntries && typeof this.value == "string" && !this.select_options.find(o => o.value == this.value))
 				{
 					this.createFreeEntry(this.value);
 				}
@@ -1564,7 +1563,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 					this.value = value;
 				}
 				this.select_options = this.select_options.filter(v => v.value !== original);
-				this.dropdown.querySelector(".freeEntry[value='" + original.replace(/'/g, "\\\'") + "']").remove();
+				this.dropdown.querySelector(".freeEntry[value='" + original.replace(/'/g, "\\\'") + "']")?.remove();
 			}
 
 			if(value && value != original)
