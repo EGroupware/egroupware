@@ -1011,6 +1011,11 @@ et2-image.smime_cert_unknownemail {
   border: none;
   outline: none;
 }
+#mail-compose tr.mailComposeHeaders et2-dropdown et2-button::part(base){
+	margin-left: 1ex;
+	background-color: var(--sl-color-gray-150);
+}
+
 #mail-compose tr.mailComposeHeaders .et2_taglist .ms-ctn-focus {
   border: none;
   box-shadow: none;
