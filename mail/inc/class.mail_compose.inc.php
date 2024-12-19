@@ -1623,7 +1623,7 @@ class mail_compose
 			 * Use ajax_merge to merge & send multiple
 			 */
 			// Merge selected ID (in mailtocontactbyid or $mail_id) into given document
-			$merge_class = preg_match('/^([a-z_-]+_merge)$/', $_REQUEST['merge']) ? $_REQUEST['merge'] : 'EGroupware\\Api\\Contacts\\Merge';
+			$merge_class = preg_match('/^(EGroupware\\\\.+\\\\Merge|[a-z_-]+_merge)$/', $_REQUEST['merge']) ? $_REQUEST['merge'] : 'EGroupware\\Api\\Contacts\\Merge';
 			$document_merge = new $merge_class();
 			$this->mail_bo->openConnection();
 			$merge_ids = $_REQUEST['preset']['mailtocontactbyid'] ? $_REQUEST['preset']['mailtocontactbyid'] : $mail_id;
