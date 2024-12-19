@@ -448,6 +448,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 
 		render(this._contentTemplate(), this);
 
+		// Rendering content will change some things, SlDialog needs to update
+		this.requestUpdate()
+
 		// If we start open, fire handler to get setup done
 		if(this.open)
 		{
