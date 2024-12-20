@@ -162,6 +162,15 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			if (!_mime) _mime = 'unknown';
 			if (_mime == 'httpd/unix-directory') _mime = 'directory';
 
+			if (typeof _path == 'string' && _mime === 'directory')
+			{
+				const path_parts = _path.split('/');
+				if (path_parts.length === 3 && (path_parts[1] === 'apps' || path_parts[1] === 'templates'))
+				{
+					_mime = 'egw/'+path_parts[2];
+				}
+			}
+
 			var type  = _mime.toLowerCase().split('/');
 			var image = type[0] == 'egw' ? this.image('navbar',type[1]) : undefined;
 
