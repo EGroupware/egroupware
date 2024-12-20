@@ -1265,6 +1265,16 @@ app.classes.mail = AppJS.extend(
 						sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [collabora, ...actions];
 					}
 				}
+				// if mime-type is supported by invoices, add it at the end
+				if (egw.get_mime_info(_item.type, 'invoices'))
+				{
+					sel_options.attachmentsBlock[_item.attachment_number + "[actions]"] = [...actions, {
+						id: 'invoices',
+						label: 'invoices',
+						icon: 'invoices/navbar',
+						value: 'invoices'
+					}];
+				}
 			});
 
 			sel_options.attachmentsBlock.actions = actions;
@@ -3364,6 +3374,10 @@ app.classes.mail = AppJS.extend(
 						// No matter what, clear the waiting style
 						document.body.style.cursor = '';
 					});
+				break;
+			case 'invoices':
+			default:
+				egw.open_link(attachments[row_id].mime_data, '_blank', '', action, true, attachments[row_id].type);
 				break;
 		}
 	},
