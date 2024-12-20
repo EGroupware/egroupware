@@ -640,7 +640,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		isValid(messages)
 		{
 			var ok = true;
-			debugger;
 
 			// Check for required
 			if(this.required && !this.readonly && !this.disabled &&
