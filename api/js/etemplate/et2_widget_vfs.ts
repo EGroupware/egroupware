@@ -151,6 +151,10 @@ export class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
 						break;
 				}
 			}
+			else if (sub_path === '/templates' && path_parts.length === 1)
+			{
+				text = this.egw().lang(path_parts[0]);
+			}
 			let self = this;
 			var data = {path: path, type: i < path_parts.length-1 ? et2_vfs.DIR_MIME_TYPE : _value.mime };
 			var node = jQuery(document.createElement("li"))

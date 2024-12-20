@@ -262,7 +262,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	protected _getIcon(pathParts)
 	{
 		let image = this.egw().image("navbar", "filemanager");
-		if(pathParts.length > 2 && pathParts[1] == "apps")
+		if(pathParts.length > 2 && (pathParts[1] == "apps" || pathParts[1] == "templates"))
 		{
 			const app = this.egw().app(pathParts[2], 'name') || this.egw().appByTitle(pathParts[2], 'name');
 			if (app && !(image = this.egw().image('navbar', app)))
@@ -277,18 +277,18 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	protected pathPartTemplate(pathParts, path, index)
 	{
 		let pathName : string | TemplateResult<1> = path.trim();
-		if(pathParts.length > 1 && pathParts[1] == "apps")
+		if(pathParts.length > 1 && (pathParts[1] == "apps" || pathParts[1] == "templates"))
 		{
 			switch(index)
 			{
 				case 1:
-					pathName = this.egw().lang("applications");
+					pathName = this.egw().lang(pathParts[1] == "apps" ? "Applications" : "Templates");
 					break;
 				case 2:
 					pathName = this.egw().lang(pathName);
 					break;
 				case 3:
-					if(!isNaN(<number><unknown>pathName))
+					if(!isNaN(<number><unknown>pathName) && pathParts[1] !== "templates")
 					{
 						pathName = html`${until(this.egw().link_title(pathParts[2], pathParts[3], true) || pathName, pathName)}`
 					}
