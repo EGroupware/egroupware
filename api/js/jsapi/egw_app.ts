@@ -927,6 +927,7 @@ export abstract class EgwApp
 		options : { [p : string] : string | boolean }
 	}>
 	{
+		// Check path from action and user's preferred path
 		let path = action?.data?.merge_data?.directory ?? "";
 		let dirPref = <string>this.egw.preference('document_dir', this.appname) ?? "";
 		let dirs = dirPref.split('/[,\s]+\//');
@@ -937,6 +938,9 @@ export abstract class EgwApp
 				d = "/" + d;
 			}
 		});
+		dirs.push(path);
+		dirs = dirs.filter((d, index, array) => (d && array.indexOf(d) === index));
+
 		let fileSelect = <Et2MergeDialog><unknown>loadWebComponent('et2-merge-dialog', {
 			application: this.appname,
 			path: dirs.pop() || ""
