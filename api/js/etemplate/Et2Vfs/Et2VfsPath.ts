@@ -118,9 +118,14 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	public blur()
 	{
+		const oldEditing = this.editing;
 		this.editing = false;
+		this.requestUpdate("editing", oldEditing);
+		if(!this._edit)
+		{
+			return;
+		}
 
-		this.requestUpdate("editing");
 		let oldValue = this.value;
 		this.value = this._edit.value;
 
@@ -149,7 +154,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 	{
 		const wrapper = this.shadowRoot.querySelector(".vfs-path__scroll");
 		const path = wrapper?.querySelector("sl-breadcrumb");
-		const scroll = path?.shadowRoot.querySelector("nav");
+		const scroll = path?.shadowRoot?.querySelector("nav");
 		if(!wrapper || !scroll)
 		{
 			return;
@@ -183,14 +188,21 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 		switch(event.key)
 		{
 			case "Enter":
-				event.stopPropagation();
-				event.preventDefault();
-				this.editing = !this.editing;
-				this.requestUpdate("editing");
-				break;
+				const oldValue = this.value;
+				this.value = this._edit.value;
+				this.requestUpdate("value", oldValue);
+				if(oldValue != this.value)
+				{
+					this.updateComplete.then(() =>
+					{
+						this.dispatchEvent(new Event("change"));
+					});
+				}
+			// Fall through
 			case "Escape":
 				event.stopPropagation();
 				event.preventDefault();
+				this._edit.value = this.value;
 				this.blur();
 				break;
 		}
@@ -372,7 +384,6 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                 ?required=${this.required}
                                 .value=${this.value}
                                 tabindex="-1"
-                                aria-hidden="true"
                                 @blur=${() => this.blur()}
                                 @keydown=${this.handleKeyDown}
                         />
