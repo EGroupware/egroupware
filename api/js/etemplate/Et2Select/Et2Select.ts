@@ -864,7 +864,7 @@ export class Et2Select extends Et2WithSearchMixin(Et2WidgetWithSelect)
 	/** Hides the listbox. */
 	async hide()
 	{
-		this.select.hide();
+		return this.select.hide();
 	}
 
 	get open()
