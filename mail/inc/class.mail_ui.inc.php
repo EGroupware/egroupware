@@ -2527,7 +2527,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$acc_id = $hA['profileID'];
 
 				$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount', array(
-					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'], true
+					$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true
 				));
 				$attachmentHTML[$key]['size']=Vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
@@ -2638,7 +2638,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (empty($attachmentHTML[$key]['mime_data']))
 				{
 					$attachmentHTML[$key]['mime_url'] = Egw::link('/index.php',$linkData);
-					unset($attachmentHTML[$key]['mime_data']);
+					// always check invoices too and then add mime_data unconditionally
+					if (Link::get_mime_info($attachmentHTML[$key]['type'], 'invoices'))
+					{
+						$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], 'EGroupware\\Api\\Mail::getAttachmentAccount',
+							[$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true], true);
+					}
+					else
+					{
+						unset($attachmentHTML[$key]['mime_data']);
+					}
 				}
 				$attachmentHTML[$key]['windowName'] = $windowName;
 

@@ -200,8 +200,7 @@ class MimeMagic
 	 * a temp file creation and clean up method wrapper for analyze_file()
 	 *
 	 * @param string $data the data to analyze
-	 *
-	 * @param string MIME type false for none.
+	 * @return string|false MIME type false for none.
 	 *
 	 * @author skwashd
 	 */
